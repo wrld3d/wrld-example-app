@@ -11,6 +11,7 @@
 #include "AttractState.h"
 #include "IUserIdleService.h"
 #include "LatLongAltitude.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -39,7 +40,8 @@ namespace ExampleApp
                                                            const long long attractModeTimeout,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
-                                                           const Eegeo::Rendering::ScreenProperties& screenProperties)
+                                                           const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                           ExampleAppMessaging::TMessageBus& messageBus)
                 : m_appCameraController(appCameraController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
@@ -60,6 +62,7 @@ namespace ExampleApp
                 , m_cameraPositionSplinePoints(cameraPositionSplinePoints)
                 , m_cameraTargetSplinePoints(cameraTargetSplinePoints)
                 , m_screenProperties(screenProperties)
+                , m_messageBus(messageBus)
                 {
                     
                 }
@@ -104,7 +107,8 @@ namespace ExampleApp
                                                                                    m_attractModeTimeoutMs,
                                                                                    m_cameraPositionSplinePoints,
                                                                                    m_cameraTargetSplinePoints,
-                                                                                   m_screenProperties));
+                                                                                   m_screenProperties,
+                                                                                   m_messageBus));
                     }
 
                     return states;

@@ -13,6 +13,7 @@
 #include "AppCameraSplinePlaybackWrapper.h"
 #include "IUserIdleService.h"
 #include "CatmullRomSpline.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,7 @@ namespace ExampleApp
                     Eegeo::Geometry::CatmullRomSpline m_cameraPositionSpline;
                     AppCamera::SdkModel::AppCameraSplinePlaybackWrapper m_appCamera;
                     int m_cameraHandle;
+                    ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 public:
                     AttractState(AppModes::SdkModel::IAppModeModel& appModeModel,
@@ -44,7 +46,8 @@ namespace ExampleApp
                                  const long long attractModeTimeout,
                                  const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                  const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
-                                 const Eegeo::Rendering::ScreenProperties& screenProperties);
+                                 const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                 ExampleAppMessaging::TMessageBus& messageBus);
                     ~AttractState();
 
                     void Enter(int previousState);
