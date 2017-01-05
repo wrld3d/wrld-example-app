@@ -31,6 +31,7 @@ set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /LTC
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS} /NODEFAULTLIB:LIBCMT.lib")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /GL")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /DDEBUG /GF")
+set(CMAKE_SYSTEM_VERSION 8.1)
 
 remove_visual_studio_compiler_flag_debug("/RTC1")
 
@@ -38,13 +39,12 @@ set(linker_search_paths
 	libs/eegeo/prebuilt/${windows_abi_name}
 	libs/eegeo/ANGLE/${windows_abi_name}
 	libs/eegeo/pthread/${windows_abi_name}
-	"C:/Program\ Files\ (x86)/Microsoft\ SDKs/Windows/v7.1A/Lib/x64" 
 )
 
 include_directories(${headers})
 link_directories(${linker_search_paths})
 
-set(libs 
+set(libs
 	eegeo-sdk
 	libEGL
 	libGLESv2

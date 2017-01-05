@@ -26,7 +26,8 @@
                   android:windowSoftInputMode="adjustPan"
               	  android:launchMode="singleTask"
               	  android:hardwareAccelerated="true"
-              	  android:resizeableActivity="false">
+              	  android:resizeableActivity="false"
+              	  android:supportsPictureInPicture="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

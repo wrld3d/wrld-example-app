@@ -256,9 +256,10 @@ namespace ExampleAppWPF
         }
         private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
         {
+            bool canScroll = m_contentContainer.ExtentHeight > m_contentContainer.ActualHeight;
             if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
             {
-                if(m_headerFade.Opacity <= 0)
+                if(canScroll && m_headerFade.Opacity <= 0)
                 {
                     m_scrollFadeInAnim.Begin(m_headerFade);
                     m_scrollFadeInAnim.Begin(m_scrollUpButton);
@@ -278,13 +279,13 @@ namespace ExampleAppWPF
                     m_scrollFadeOutAnim.Begin(m_scrollUpButton);
                 }
 
-                if(m_footerFade.Opacity <= 0)
+                if(canScroll && m_footerFade.Opacity <= 0)
                 {
                     m_scrollFadeInAnim.Begin(m_footerFade);
                     m_scrollFadeInAnim.Begin(m_scrollDownButton);
                 }
             }
-            else
+            else if(canScroll)
             {
                 if (m_headerFade.Opacity <= 0)
                 {
@@ -307,6 +308,11 @@ namespace ExampleAppWPF
 
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
+            m_headerFade.Opacity = 0;
+            m_scrollUpButton.Opacity = 0;
+            m_footerFade.Opacity = 0;
+            m_scrollDownButton.Opacity = 0;
+
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
             YelpResultModel yelpResultModel = YelpResultModel.FromResultModel(model);
