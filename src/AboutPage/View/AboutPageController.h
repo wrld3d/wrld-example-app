@@ -8,6 +8,8 @@
 #include "IAboutPageViewModel.h"
 #include "IAboutPageView.h"
 #include "IMetricsService.h"
+#include "BidirectionalBus.h"
+#include "AppModeChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -24,16 +26,21 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewOpened;
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewClosed;
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewCloseTapped;
+                Eegeo::Helpers::TCallback1<AboutPageController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
                 
                 Metrics::IMetricsService& m_metricsService;
+
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 void OnOpen();
 
                 void OnClose();
 
                 void OnCloseTapped();
+
+                void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
             public:
-                AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel, Metrics::IMetricsService& metricsService);
+                AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel, Metrics::IMetricsService& metricsService, ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~AboutPageController();
             };

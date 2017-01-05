@@ -583,7 +583,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
         m_nativeState,
         app.AboutPageModule().GetAboutPageViewModel(),
-        *m_pWindowsFlurryMetricsService
+        *m_pWindowsFlurryMetricsService,
+        m_messageBus
         );
 
 

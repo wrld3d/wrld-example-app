@@ -15,12 +15,13 @@ namespace ExampleApp
             AboutPageViewModule::AboutPageViewModule(
                 AndroidNativeState& nativeState,
                 IAboutPageViewModel& aboutPageViewModel,
-                Metrics::IMetricsService& metricsService
+                Metrics::IMetricsService& metricsService,
+                ExampleAppMessaging::TMessageBus& messageBus
             )
             {
                 ASSERT_UI_THREAD
                 m_pView = Eegeo_NEW(AboutPageView)(nativeState);
-                m_pController = Eegeo_NEW(AboutPageController)(*m_pView, aboutPageViewModel, metricsService);
+                m_pController = Eegeo_NEW(AboutPageController)(*m_pView, aboutPageViewModel, metricsService, messageBus);
             }
 
             AboutPageViewModule::~AboutPageViewModule()
