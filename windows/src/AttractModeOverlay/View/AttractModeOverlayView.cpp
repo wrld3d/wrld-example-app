@@ -1,8 +1,9 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
 
+#include "AttractModeOverlayView.h"
 #include "IAppModeModel.h"
 #include "ReflectionHelpers.h"
-#include "AttractModeOverlayView.h"
+#include "VirtualKeyboardView.h"
 
 using namespace ExampleApp::Helpers::ReflectionHelpers;
 
@@ -18,12 +19,14 @@ namespace ExampleApp
             AttractModeOverlayView::AttractModeOverlayView(WindowsNativeState& nativeState,
                                                            AppModes::SdkModel::IAppModeModel& appModeModel,
                                                            ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                           ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel)
+                                                           ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                                           ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* pVirtualKeyboard)
                 : m_nativeState(nativeState)
                 , m_appModeChangedCallback(this, &AttractModeOverlayView::OnAppModeChanged)
                 , m_appModeModel(appModeModel)
                 , m_searchMenuViewModel(searchMenuViewModel)
                 , m_settingsMenuViewModel(settingsMenuViewModel)
+                , m_pVirtualKeyboard(pVirtualKeyboard)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.AttractModeOverlayView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
@@ -47,6 +50,10 @@ namespace ExampleApp
                 {
                     m_searchMenuViewModel.RemoveFromScreen();
                     m_settingsMenuViewModel.RemoveFromScreen();
+                    if (m_pVirtualKeyboard != nullptr)
+                    {
+                        m_pVirtualKeyboard->HideVirtualKeyboard();
+                    }
                     mOnAttractModeStart();
                 }
                 else
