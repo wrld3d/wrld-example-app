@@ -356,14 +356,14 @@
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                     <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardButtonStyle}"
                                                                      pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey">
-                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="⬆" />
+                                        <Image Source="/Assets/shift_key.png" Width="32" Height="32" />
                                     </pk:VirtualKeyboardSpecialButton>
                                     <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}"
                                                                      Width="858"
                                                                      pk:VirtualKeyboardControlButton.KeyControlInputValue="0x20" />
                                     <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardButtonStyle}"
                                                                      pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey">
-                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="⬆" />
+                                        <Image Source="/Assets/shift_key.png" Width="32" Height="32" />
                                     </pk:VirtualKeyboardSpecialButton>
                                 </StackPanel>
                             </StackPanel>
