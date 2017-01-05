@@ -630,7 +630,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                                                                                             m_pApp->GetAppModeModel(),
                                                                                                             app.SettingsMenuModule().GetSettingsMenuViewModel(),
                                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                                            m_pVirtualKeyboardView);
+                                                                                                            m_pVirtualKeyboardView,
+                                                                                                            app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());
     }
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();

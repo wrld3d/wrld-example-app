@@ -3,6 +3,7 @@
 #pragma once
 
 #include "IMenuViewModel.h"
+#include "IMyPinCreationDetailsViewModel.h"
 #include "ReflectionHelpers.h"
 #include "VirtualKeyboardView.h"
 #include "WindowsNativeState.h"
@@ -20,7 +21,8 @@ namespace ExampleApp
                                        AppModes::SdkModel::IAppModeModel& appModeModel,
                                        ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
                                        ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                       ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* pVirtualKeyboard);
+                                       ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* pVirtualKeyboard,
+                                       ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel);
                 ~AttractModeOverlayView();
 
             private:
@@ -35,6 +37,7 @@ namespace ExampleApp
 
                 ExampleApp::Menu::View::IMenuViewModel& m_searchMenuViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
+                ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& m_myPinCreationDetailsViewModel;
 
                 ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* m_pVirtualKeyboard;
 

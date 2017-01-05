@@ -2,6 +2,7 @@
 
 #include "AttractModeOverlayView.h"
 #include "IAppModeModel.h"
+#include "IMyPinCreationDetailsViewModel.h"
 #include "ReflectionHelpers.h"
 #include "VirtualKeyboardView.h"
 
@@ -20,13 +21,15 @@ namespace ExampleApp
                                                            AppModes::SdkModel::IAppModeModel& appModeModel,
                                                            ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
                                                            ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                                           ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* pVirtualKeyboard)
+                                                           ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* pVirtualKeyboard,
+                                                           ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel)
                 : m_nativeState(nativeState)
                 , m_appModeChangedCallback(this, &AttractModeOverlayView::OnAppModeChanged)
                 , m_appModeModel(appModeModel)
                 , m_searchMenuViewModel(searchMenuViewModel)
                 , m_settingsMenuViewModel(settingsMenuViewModel)
                 , m_pVirtualKeyboard(pVirtualKeyboard)
+                , m_myPinCreationDetailsViewModel(myPinCreationDetailsViewModel)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.AttractModeOverlayView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
@@ -48,6 +51,7 @@ namespace ExampleApp
             {
                 if (m_appModeModel.GetAppMode() == AppModes::SdkModel::AppMode::AttractMode)
                 {
+                    m_myPinCreationDetailsViewModel.Close();
                     m_searchMenuViewModel.RemoveFromScreen();
                     m_settingsMenuViewModel.RemoveFromScreen();
                     if (m_pVirtualKeyboard != nullptr)
