@@ -621,7 +621,10 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     if (m_pApp->GetApplicationConfiguration().IsAttractModeEnabled())
     {
-        m_pAttractModeOverlayView = Eegeo_NEW(ExampleApp::AttractModeOverlay::View::AttractModeOverlayView)(m_nativeState, m_pApp->GetAppModeModel());
+        m_pAttractModeOverlayView = Eegeo_NEW(ExampleApp::AttractModeOverlay::View::AttractModeOverlayView)(m_nativeState,
+                                                                                                            m_pApp->GetAppModeModel(),
+                                                                                                            app.SettingsMenuModule().GetSettingsMenuViewModel(),
+                                                                                                            app.SearchMenuModule().GetSearchMenuViewModel());
     }
 
     if (IsInKioskMode())
