@@ -31,6 +31,7 @@
         <ResourceDictionary Source="../Views/SearchResultPoi/YelpSearchResultsPoiView.xaml" />
         <ResourceDictionary Source="../Views/InteriorsExplorer/InteriorsExplorerView.xaml" />
         <ResourceDictionary Source="../Views/VirtualKeyboard/VirtualKeyboard.xaml" />
+        <ResourceDictionary Source="../Views/AttractModeOverlay/AttractModeOverlay.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
