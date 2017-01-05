@@ -31,16 +31,21 @@ namespace ExampleApp
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_searchMenuView(searchMenuView)
                 , m_searchClearedCallback(this, &DesktopSearchResultPoiController::OnPinCreationSelectedOrSearchCleared)
+                , m_appModeChangedHandler(this, &DesktopSearchResultPoiController::OnAppModeChangedMessage)
             {
                 m_pinCreationInitiationView.InsertSelectedCallback(m_onPinCreationSelected);
                 
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorChangedCallback);
 
                 m_searchMenuView.InsertSearchClearedCallback(m_searchClearedCallback);
+
+                GetMessageBus().SubscribeUi(m_appModeChangedHandler);
             }
 
             DesktopSearchResultPoiController::~DesktopSearchResultPoiController()
             {
+                GetMessageBus().UnsubscribeUi(m_appModeChangedHandler);
+
                 m_searchMenuView.RemoveSearchClearedCallback(m_searchClearedCallback);
 
                 m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorChangedCallback);
@@ -100,6 +105,22 @@ namespace ExampleApp
                 std::string imageUrl = "";
                 Search::SdkModel::TryParseImageDetails(searchResultModel, imageUrl);
                 GetMessageBus().Publish(SearchResultPoiViewOpenedMessage(imageUrl));
+            }
+
+            void DesktopSearchResultPoiController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
+            {
+                const bool appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode &&
+                                               message.GetAppMode() != AppModes::SdkModel::AttractMode;
+
+                if (!appModeAllowsOpen)
+                {
+                    ISearchResultPoiViewModel& viewModel = GetViewModel();
+
+                    if (viewModel.IsOpen())
+                    {
+                        viewModel.Close();
+                    }
+                }
             }
         }
     }
