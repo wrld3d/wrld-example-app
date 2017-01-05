@@ -8,15 +8,15 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="KeyboardButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Margin" Value="3" />
+        <Setter Property="Margin" Value="5" />
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="MinWidth" Value="80" />
-        <Setter Property="MinHeight" Value="50" />
+        <Setter Property="MinWidth" Value="114" />
+        <Setter Property="MinHeight" Value="80" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="FontSize" Value="14.667" />
+        <Setter Property="FontSize" Value="32" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -36,13 +36,13 @@
     </Style>
 
     <Style x:Key="KeyboardNumButtonStyle" BasedOn="{StaticResource KeyboardButtonStyle}" TargetType="{x:Type Button}">
-        <Setter Property="MinWidth" Value="80" />
-        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="MinWidth" Value="114" />
+        <Setter Property="MinHeight" Value="60" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Name="border" CornerRadius="0" Background="#003b92">
+                    <Border Name="border" CornerRadius="0" Background="#08408a">
                         <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -55,10 +55,14 @@
         </Setter>
     </Style>
 
+    <Style x:Key="KeyboardStackedButtonStyle" BasedOn="{StaticResource KeyboardButtonStyle}" TargetType="{x:Type Button}">
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+
     <Style x:Key="KeyTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="FontSize" Value="14.667" />
+        <Setter Property="FontSize" Value="32" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
@@ -238,8 +242,9 @@
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="l"
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue="L"/>
-                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}" Width="120"
-                                                              pk:VirtualKeyboardControlButton.KeyControlInputValue="0xd">
+                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}"
+                                                                     Width="176"
+                                                                     pk:VirtualKeyboardControlButton.KeyControlInputValue="0xd">
                                         <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Done" />
                                     </pk:VirtualKeyboardControlButton>
                                 </StackPanel>
@@ -279,7 +284,7 @@
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="m"
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue="M"/>
 
-                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardStackedButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.AutoLabel="False"
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="!"
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue=",">
@@ -288,6 +293,8 @@
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
                                                         <Setter Property="Text" Value="!" />
+                                                        <Setter Property="Margin" Value="0" />
+                                                        <Setter Property="Padding" Value="0" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsShiftPressed}" Value="True">
                                                                 <Setter Property="Text" Value="," />
@@ -312,7 +319,7 @@
                                         </StackPanel>
                                     </pk:VirtualKeyboardInputButton>
 
-                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardStackedButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.AutoLabel="False"
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="?"
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue=".">
@@ -351,8 +358,9 @@
                                                                      pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey">
                                         <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="⬆" />
                                     </pk:VirtualKeyboardSpecialButton>
-                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}" Width="620"
-                                                              pk:VirtualKeyboardControlButton.KeyControlInputValue="0x20" />
+                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}"
+                                                                     Width="858"
+                                                                     pk:VirtualKeyboardControlButton.KeyControlInputValue="0x20" />
                                     <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardButtonStyle}"
                                                                      pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey">
                                         <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="⬆" />
