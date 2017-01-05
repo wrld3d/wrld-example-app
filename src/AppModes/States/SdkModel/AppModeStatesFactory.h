@@ -15,6 +15,7 @@
 #include "IUserIdleService.h"
 #include "LatLongAltitude.h"
 #include "GlobalAppModeTransitionRules.h"
+#include "BidirectionalBus.h"
 
 #include "VisualMap.h"
 
@@ -52,6 +53,8 @@ namespace ExampleApp
                     const bool m_attractModeEnabled;
                     const long long m_attractModeTimeoutMs;
                     const Eegeo::Rendering::ScreenProperties& m_screenProperties;
+
+                    ExampleAppMessaging::TMessageBus& m_messageBus;
                     
                 public:
                     
@@ -74,7 +77,8 @@ namespace ExampleApp
                                          const long long attractModeTimeout,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
-                                         const Eegeo::Rendering::ScreenProperties& screenProperties);
+                                         const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                         ExampleAppMessaging::TMessageBus& messageBus);
                     
                     ~AppModeStatesFactory()
                     {

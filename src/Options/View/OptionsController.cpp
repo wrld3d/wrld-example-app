@@ -53,6 +53,21 @@ namespace ExampleApp
                 
                 m_messageBus.Publish(ClearCacheMessage());
             }
+
+            void OptionsController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
+            {
+                const AppModes::SdkModel::AppMode appMode = message.GetAppMode();
+                const bool appModeAllowsOpen = appMode != AppModes::SdkModel::TourMode &&
+                                               appMode != AppModes::SdkModel::AttractMode;
+
+                if (!appModeAllowsOpen)
+                {
+                    if (m_viewModel.IsOpen())
+                    {
+                        m_viewModel.Close();
+                    }
+                }
+            }
             
             OptionsController::OptionsController(IOptionsView& view,
                                                  IOptionsViewModel& viewModel,
@@ -67,6 +82,7 @@ namespace ExampleApp
             , m_viewStreamOverWifiOnlySelectionChanged(this, &OptionsController::OnViewStreamOverWifiOnlySelectionChanged)
             , m_viewCacheEnabledSelectionChanged(this, &OptionsController::OnViewCacheEnabledSelectionChanged)
             , m_viewClearCacheSelected(this, &OptionsController::OnViewClearCacheSelected)
+            , m_appModeChangedHandler(this, &OptionsController::OnAppModeChangedMessage)
             {
                 m_view.InsertCloseSelectedCallback(m_viewCloseSelected);
                 m_view.InsertStreamOverWifiOnlySelectionChangedCallback(m_viewStreamOverWifiOnlySelectionChanged);
@@ -79,10 +95,14 @@ namespace ExampleApp
 
                 m_view.SetStreamOverWifiOnlySelected(m_viewModel.StreamOverWifiOnly());
                 m_view.SetCacheEnabledSelected(m_viewModel.CachingEnabled());
+
+                m_messageBus.SubscribeUi(m_appModeChangedHandler);
             }
             
             OptionsController::~OptionsController()
             {
+                m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
+
                 m_viewModel.RemoveCacheClearCeremonyCompletedCallback(m_viewModelCacheClearCeremonyCompleted);
                 m_viewModel.RemoveOpenedCallback(m_viewModelOpened);
                 m_viewModel.RemoveClosedCallback(m_viewModelClosed);

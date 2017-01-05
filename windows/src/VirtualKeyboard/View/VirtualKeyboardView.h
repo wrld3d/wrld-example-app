@@ -19,9 +19,11 @@ namespace ExampleApp
                 ~VirtualKeyboardView();
 
                 void OnVisibilityChanged(const bool isVisible);
+                void HideVirtualKeyboard();
 
             private:
                 Helpers::ReflectionHelpers::Method<void> mDestroy;
+                Helpers::ReflectionHelpers::Method<void> mHideVirtualKeyboard;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 

@@ -45,6 +45,10 @@ namespace ExampleApp
                 ScreenControl::View::IScreenControlViewModel& m_interiorControlViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_searchMenuViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
+                bool m_showUiComponents;
+                Eegeo::Helpers::TCallback1<MyPinCreationCompositeViewModel, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
+
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
             };
         }
     }

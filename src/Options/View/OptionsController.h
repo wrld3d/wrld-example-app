@@ -8,6 +8,7 @@
 #include "IOptionsViewModel.h"
 #include "IOptionsView.h"
 #include "BidirectionalBus.h"
+#include "AppModeChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -29,6 +30,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewStreamOverWifiOnlySelectionChanged;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewCacheEnabledSelectionChanged;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheSelected;
+                Eegeo::Helpers::TCallback1<OptionsController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
 
                 void OnViewModelOpened();
 
@@ -43,6 +45,8 @@ namespace ExampleApp
                 void OnViewCacheEnabledSelectionChanged();
                 
                 void OnViewClearCacheSelected();
+
+                void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
             public:
                 OptionsController(IOptionsView& view,
                                   IOptionsViewModel& viewModel,

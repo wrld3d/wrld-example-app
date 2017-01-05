@@ -919,7 +919,8 @@ namespace ExampleApp
                                                                       m_applicationConfiguration.GetAttractModeTimeoutMs(),
                                                                       m_applicationConfiguration.GetAttractModeTargetSplinePoints(),
                                                                       m_applicationConfiguration.GetAttractModePositionSplinePoints(),
-                                                                      m_screenProperties);
+                                                                      m_screenProperties,
+                                                                      m_messageBus);
 
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules), AppModes::SdkModel::WorldMode, m_pGlobalAppModeTransitionRules);
     }

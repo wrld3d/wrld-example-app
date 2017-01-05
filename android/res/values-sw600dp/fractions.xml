@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <fraction name="poiCreationWidthPercentage">60%</fraction>
+    <fraction name="poiCreationHeightPercentage">60%</fraction>
+</resources>

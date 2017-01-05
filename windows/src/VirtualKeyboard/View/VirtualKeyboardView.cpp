@@ -24,6 +24,7 @@ namespace ExampleApp
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
                 m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
 
+                mHideVirtualKeyboard.SetupMethod(m_uiViewClass, m_uiView, "HideVirtualKeyboard");
                 mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
             }
 
@@ -35,6 +36,11 @@ namespace ExampleApp
             void VirtualKeyboardView::OnVisibilityChanged(const bool isVisible)
             {
                 m_messageBus.Publish(VirtualKeyboardStateChangedMessage(isVisible));
+            }
+
+            void VirtualKeyboardView::HideVirtualKeyboard()
+            {
+                mHideVirtualKeyboard();
             }
         }
     }
