@@ -45,11 +45,11 @@
                                 <VisualState x:Name="Disabled"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="rectangle1" Fill="{StaticResource PrimaryBG_colour}" Margin="0"/>
-                        <Rectangle x:Name="rectangle" Fill="{StaticResource PrimaryBG_Over_Colour}" Margin="0" Visibility="Hidden"/>
-                        <Rectangle x:Name="rectangle2" Fill="{StaticResource PrimaryBG_Down_Colour}" Margin="0" Visibility="Hidden"/>
-                        <Image x:Name="image" Source="/Assets/button_close_off.png"/>
-                        <Image x:Name="image1" Source="/Assets/button_close_on.png" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle1" Fill="{DynamicResource POIViewCloseButtonOffColour}" Margin="0"/>
+                        <Rectangle x:Name="rectangle" Fill="{DynamicResource POIViewCloseButtonOverColour}" Margin="0" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle2" Fill="{DynamicResource POIViewCloseButtonOnColour}" Margin="0" Visibility="Hidden"/>
+                        <Image x:Name="image" Source="{DynamicResource SwallowPOIViewCloseButtonOffImage}"/>
+                        <Image x:Name="image1" Source="{DynamicResource SwallowPOIViewCloseButtonOnImage}" Visibility="Hidden"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -60,25 +60,33 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SwallowDepartmentSearchResultsPoiView}">
-                    <Grid Name="DepartmentPoiContainer" Width="480" Height="Auto" Background="White" Margin="0,20,0,20">
-                        <Grid Width="440"  Margin="20,17,20,20">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="ScrollFadeIn">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:1"/>
+                        </Storyboard>
+                        <Storyboard x:Key="ScrollFadeOut">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.0" Duration="0:0:1"/>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <Grid Name="DepartmentPoiContainer" Width="{DynamicResource SwallowPOIViewContainerWidth}" Height="Auto" Background="White" Margin="{DynamicResource SwallowPOIViewContainerMargin}">
+                        <Grid Width="{DynamicResource SwallowPOIViewContainerInnerWidth}"  Margin="{DynamicResource SwallowPOIViewContainerInnerMargin}">
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="46"/>
+                                    <RowDefinition Height="{DynamicResource SwallowPOIViewContainerRow0Height}"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="48"/>
+                                    <RowDefinition Height="{DynamicResource SwallowPOIViewContainerRow2Height}"/>
                                 </Grid.RowDefinitions>
                                 <!--Title bar-->
                                 <Grid Margin="0,0,0,0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="404"/>
-                                        <ColumnDefinition Width="36"/>
+                                        <ColumnDefinition Width="{DynamicResource SwallowPOIViewTitleColumn0}"/>
+                                        <ColumnDefinition Width="{DynamicResource SwallowPOIViewTitleColumn1}"/>
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center">
-                                        <Image Name="CategoryIcon" Stretch="Uniform" Height="36" />
+                                        <Image Name="CategoryIcon" Stretch="Uniform" Height="{DynamicResource SwallowPOIViewTitleIconSize}"/>
                                         <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowDepartmentSearchResultsPoiView}}, Path=TitleText}"  
-                                                   MaxWidth="350" VerticalAlignment="Center" FontSize="22" Margin="4,1,0,0" 
+                                                   MaxWidth="{DynamicResource SwallowPOIViewTitleMaxWidth}" VerticalAlignment="Center" FontSize="{DynamicResource SwallowPOIViewTitleFontSize}" Margin="{DynamicResource SwallowDepartmentPOIViewTitleTextMargin}" 
                                                    Foreground="{DynamicResource PrimaryBG_Over_Colour}" 
                                                    FontFamily="{DynamicResource PrimaryUIFont}"
                                                    TextTrimming="CharacterEllipsis" 
@@ -87,48 +95,134 @@
                                                    LineHeight="21" 
                                                    TextOptions.TextFormattingMode="Display"/>
                                     </StackPanel>
-                                    <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="36"  Background="{StaticResource Gold}" Grid.Column="1">
-                                        <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="36" Height="36" />
+                                    <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="{DynamicResource POIViewCloseButtonSize}"  Background="{StaticResource White}" Grid.Column="1">
+                                        <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="{DynamicResource POIViewCloseButtonSize}" Height="{DynamicResource POIViewCloseButtonSize}" />
                                     </Border>
                                 </Grid>
 
-                                <Grid Grid.Row="1" >
-                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
+                                <Grid Grid.Row="1" Margin="{DynamicResource SwallowDepartmentPOIViewContentContainerMargin}">
+                                    <ScrollViewer Name="ContentContainer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="{DynamicResource SwallowPOIViewContentContainerScrollBarVisibility}" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
 
                                         <StackPanel VerticalAlignment="Top">
 
                                             <!-- Details Divider -->
-                                            <Grid Height="250">
+                                            <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="220"/>
-                                                    <ColumnDefinition Width="10"/>
-                                                    <ColumnDefinition Width="210"/>
+                                                    <ColumnDefinition Width="{DynamicResource SwallowPOIViewDetailsColumn0Width}"/>
+                                                    <ColumnDefinition Width="{DynamicResource SwallowPOIViewDetailsColumn1Width}"/>
+                                                    <ColumnDefinition Width="{DynamicResource SwallowPOIViewDetailsColumn2Width}"/>
                                                 </Grid.ColumnDefinitions>
                                                 <StackPanel VerticalAlignment="Top">
                                                     <Grid Margin="0,0,0,0">
-                                                        <Image Name="PoiImage" Source="/Assets/poi_placeholder.png" Width="220" Height="250" Stretch="UniformToFill" />
+                                                        <Image Name="PoiImage" Source="{DynamicResource POIViewPlaceholderImage}" Width="{DynamicResource SwallowPOIViewDetailsImageWidth}" Height="{DynamicResource SwallowPOIViewDetailsImageHeight}" Stretch="UniformToFill" />
                                                     </Grid>
                                                 </StackPanel>
                                             </Grid>
 
-                                            <!-- Details Divider -->
-                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="2" Background="{StaticResource Gold}" Margin="0,20"/>
+                                            <!-- Reviews Divider -->
+                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="{DynamicResource SwallowDepartmentPOIViewReviewsDividerMargin}"/>
 
-                                            <Grid Width="Auto" Height="Auto" Margin="5,0,0,0" >
-
-                                                <Canvas Name="ReviewsIcon" Margin="0,2,0,0">
-                                                    <Path Fill="#ff5f5f5f" Data="F1 M 0.000,8.457 L 0.000,15.457 L 7.000,15.457 L 7.000,8.457 L 3.398,8.457 C 3.398,6.457 5.000,4.221 7.000,3.520 L 7.000,3.457 L 7.000,0.457 L 7.000,0.000 C 3.000,0.789 0.000,4.457 0.000,8.457 Z"/>
-                                                    <Path Fill="#ff5f5f5f" Data="F1 M 9.000,8.457 L 9.000,15.457 L 16.000,15.457 L 16.000,8.457 L 12.398,8.457 C 12.398,6.457 14.000,4.221 16.000,3.520 L 16.000,3.457 L 16.000,0.457 L 16.000,0.000 C 12.000,0.789 9.000,4.457 9.000,8.457 Z"/>
-                                                </Canvas>
+                                            <Grid Width="Auto" Height="Auto" Margin="{DynamicResource SwallowDepartmentPOIViewReviewsMargin}" >
+                                                <Grid Width="{DynamicResource POIViewLowerDetailsIconSize}" Height="{DynamicResource POIViewLowerDetailsIconSize}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                    <Viewbox Stretch="Uniform">
+                                                        <Canvas Name="ReviewsIcon" Width="16" Height="16" Margin="{DynamicResource SwallowDepartmentPOIViewReviewsIconMargin}">
+                                                            <Path Fill="#ff5f5f5f" Data="F1 M 0.000,8.457 L 0.000,15.457 L 7.000,15.457 L 7.000,8.457 L 3.398,8.457 C 3.398,6.457 5.000,4.221 7.000,3.520 L 7.000,3.457 L 7.000,0.457 L 7.000,0.000 C 3.000,0.789 0.000,4.457 0.000,8.457 Z"/>
+                                                            <Path Fill="#ff5f5f5f" Data="F1 M 9.000,8.457 L 9.000,15.457 L 16.000,15.457 L 16.000,8.457 L 12.398,8.457 C 12.398,6.457 14.000,4.221 16.000,3.520 L 16.000,3.457 L 16.000,0.457 L 16.000,0.000 C 12.000,0.789 9.000,4.457 9.000,8.457 Z"/>
+                                                        </Canvas>
+                                                    </Viewbox>
+                                                </Grid>
                                                 <TextBlock Name="DescriptionText" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowDepartmentSearchResultsPoiView}}, Path=Description}" 
-								FontSize="18" Margin="25,-4,0,0" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}" TextWrapping="WrapWithOverflow"/>
+                                                           FontSize="{DynamicResource SwallowDepartmentPOIViewReviewsFontSize}" Margin="{DynamicResource SwallowDepartmentPOIViewReviewsTextMargin}" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}" TextWrapping="WrapWithOverflow"/>
                                             </Grid>
-
+                                            
                                             <!-- Bottom Spacer -->
-                                            <Grid Height="20"/>
+                                            <Grid Height="{DynamicResource SwallowPOIViewBottomSpacerHeight}"/>
                                         </StackPanel>
                                     </ScrollViewer>
+                                    <Image IsHitTestVisible="False" Name="HeaderFade" Source="{DynamicResource SwallowPOIViewFooterFadeImage}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{DynamicResource POIViewScrollButtonVisibility}" Width="{DynamicResource SwallowPOIViewFooterFadeWidth}" RenderTransformOrigin="0.5, 0.5" Margin="-4, 0, 0, 0">
+                                        <Image.RenderTransform>
+                                            <RotateTransform Angle="180"/>
+                                        </Image.RenderTransform>
+                                    </Image>
+                                    <Image IsHitTestVisible="False" Name="FooterFade" Source="{DynamicResource SwallowPOIViewFooterFadeImage}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Visible" Width="{DynamicResource SwallowPOIViewFooterFadeWidth}" Height="auto"/>
                                 </Grid>
+
+                                <RepeatButton Grid.Row="1" Name="POIViewScrollUpButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Top" Margin="{DynamicResource SwallowPOIViewScrollUpButtonMargin}">
+                                    <RepeatButton.Style>
+                                        <Style TargetType="{x:Type RepeatButton}">
+                                            <Style.Setters>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                            <Grid>
+                                                                <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="POIViewScrollUpButton" RenderTransformOrigin="0.5, 0.5">
+                                                                    <Image.RenderTransform>
+                                                                        <RotateTransform Angle="180"/>
+                                                                    </Image.RenderTransform>
+                                                                </Image>
+                                                            </Grid>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter TargetName="POIViewScrollUpButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
+                                                                </Trigger>
+
+                                                                <MultiTrigger>
+                                                                    <MultiTrigger.Conditions>
+                                                                        <Condition Property="IsPressed" Value="False"/>
+                                                                        <Condition Property="IsMouseOver" Value="True"/>
+                                                                    </MultiTrigger.Conditions>
+                                                                    <MultiTrigger.Setters>
+                                                                        <Setter TargetName="POIViewScrollUpButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
+                                                                    </MultiTrigger.Setters>
+                                                                </MultiTrigger>
+
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                </Trigger>
+
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style.Setters>
+                                        </Style>
+                                    </RepeatButton.Style>
+                                </RepeatButton>
+                                <RepeatButton Grid.Row="1" Name="POIViewScrollDownButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Bottom" Margin="0, 0, 0, 0">
+                                    <RepeatButton.Style>
+                                        <Style TargetType="{x:Type RepeatButton}">
+                                            <Style.Setters>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                            <Grid>
+                                                                <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="POIViewScrollDownButton"/>
+                                                            </Grid>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter TargetName="POIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
+                                                                </Trigger>
+
+                                                                <MultiTrigger>
+                                                                    <MultiTrigger.Conditions>
+                                                                        <Condition Property="IsPressed" Value="False"/>
+                                                                        <Condition Property="IsMouseOver" Value="True"/>
+                                                                    </MultiTrigger.Conditions>
+                                                                    <MultiTrigger.Setters>
+                                                                        <Setter TargetName="POIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
+                                                                    </MultiTrigger.Setters>
+                                                                </MultiTrigger>
+
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                </Trigger>
+
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style.Setters>
+                                        </Style>
+                                    </RepeatButton.Style>
+                                </RepeatButton>
                             </Grid>
                         </Grid>
                     </Grid>

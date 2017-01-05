@@ -56,8 +56,10 @@ namespace ExampleAppWPF
             OnPropertyChanged("");
 
             ShowAll();
-        }
 
+            base.DisplayCustomPoiInfo(modelObject);
+        }
+        
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
             if (hasImage)

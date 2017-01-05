@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -17,6 +18,17 @@ namespace ExampleAppWPF
         protected MainWindow m_currentWindow;
         protected FrameworkElement m_mainContainer;
         protected Button m_closeButton;
+        
+        protected ScrollViewer m_contentContainer;
+
+        protected Image m_headerFade;
+        protected Image m_footerFade;
+
+        protected Storyboard m_scrollFadeInAnim;
+        protected Storyboard m_scrollFadeOutAnim;
+
+        protected RepeatButton m_scrollDownButton;
+        protected RepeatButton m_scrollUpButton;
 
         protected bool m_closing;
         protected bool m_isPinned;
@@ -99,6 +111,92 @@ namespace ExampleAppWPF
             m_closeButton.Click += HandleCloseButtonClicked;
 
             TouchMove += OnTouchMove;
+
+            m_contentContainer = (ScrollViewer)GetTemplateChild("ContentContainer");
+            if(m_contentContainer!= null)
+            {
+                m_contentContainer.ManipulationBoundaryFeedback += OnBoundaryFeedback;
+                m_contentContainer.ScrollChanged += OnSearchResultsScrolled;
+            }
+
+            m_headerFade = (Image)GetTemplateChild("HeaderFade");
+            m_footerFade = (Image)GetTemplateChild("FooterFade");
+
+            m_scrollUpButton = (RepeatButton)GetTemplateChild("POIViewScrollUpButton");
+            if(m_scrollUpButton != null)
+            {
+                m_scrollUpButton.Click += HandleScrollUpButtonClicked;
+            }
+
+            m_scrollDownButton = (RepeatButton)GetTemplateChild("POIViewScrollDownButton");
+            if(m_scrollDownButton != null)
+            {
+                m_scrollDownButton.Click += HandleScrollDownButtonClicked;
+            }
+
+            Storyboard fadeInAnim = (Storyboard)Template.Resources["ScrollFadeIn"];
+            if(fadeInAnim != null)
+            {
+                m_scrollFadeInAnim = fadeInAnim.Clone();
+            }
+
+            Storyboard fadeOutAnim = (Storyboard)Template.Resources["ScrollFadeOut"];
+            if(fadeOutAnim != null)
+            {
+                m_scrollFadeOutAnim = fadeOutAnim.Clone();
+            }
+        }
+
+        protected virtual void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
+        {
+            if(m_contentContainer != null
+                && m_scrollFadeInAnim != null
+                && m_scrollFadeOutAnim != null)
+            {
+                bool canScroll = m_contentContainer.ExtentHeight > m_contentContainer.ActualHeight;
+                if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
+                {
+                    if (canScroll && m_headerFade.Opacity <= 0)
+                    {
+                        m_scrollFadeInAnim.Begin(m_headerFade);
+                        m_scrollFadeInAnim.Begin(m_scrollUpButton);
+                    }
+
+                    if (m_footerFade.Opacity >= 1)
+                    {
+                        m_scrollFadeOutAnim.Begin(m_footerFade);
+                        m_scrollFadeOutAnim.Begin(m_scrollDownButton);
+                    }
+                }
+                else if (m_contentContainer.VerticalOffset == 0)
+                {
+                    if (m_headerFade.Opacity >= 1)
+                    {
+                        m_scrollFadeOutAnim.Begin(m_headerFade);
+                        m_scrollFadeOutAnim.Begin(m_scrollUpButton);
+                    }
+
+                    if (canScroll && m_footerFade.Opacity <= 0)
+                    {
+                        m_scrollFadeInAnim.Begin(m_footerFade);
+                        m_scrollFadeInAnim.Begin(m_scrollDownButton);
+                    }
+                }
+                else if (canScroll)
+                {
+                    if (m_headerFade.Opacity <= 0)
+                    {
+                        m_scrollFadeInAnim.Begin(m_headerFade);
+                        m_scrollFadeInAnim.Begin(m_scrollUpButton);
+                    }
+
+                    if (m_footerFade.Opacity <= 0)
+                    {
+                        m_scrollFadeInAnim.Begin(m_footerFade);
+                        m_scrollFadeInAnim.Begin(m_scrollDownButton);
+                    }
+                }
+            }
         }
 
         private void OnTouchMove(object sender, TouchEventArgs e)
@@ -164,7 +262,34 @@ namespace ExampleAppWPF
                 ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
             }
         }
-        protected abstract void DisplayCustomPoiInfo(Object modelObject);
+
+        private void OnBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        protected virtual void DisplayCustomPoiInfo(Object modelObject)
+        {
+            if(m_headerFade != null)
+            {
+                m_headerFade.Opacity = 0;
+            }
+
+            if(m_scrollUpButton != null)
+            {
+                m_scrollUpButton.Opacity = 0;
+            }
+
+            if(m_footerFade != null)
+            {
+                m_footerFade.Opacity = 0;
+            }
+
+            if(m_scrollDownButton != null)
+            {
+                m_scrollDownButton.Opacity = 0;
+            }
+        }
 
         public void DisplayPoiInfo(Object modelObject, bool isPinned)
         {
@@ -180,6 +305,22 @@ namespace ExampleAppWPF
 
         public virtual void DismissPoiInfo()
         {
+            if(m_contentContainer != null)
+            {
+                m_contentContainer.ManipulationBoundaryFeedback -= OnBoundaryFeedback;
+                m_contentContainer.ScrollChanged -= OnSearchResultsScrolled;
+            }
+
+            if(m_scrollUpButton != null)
+            {
+                m_scrollUpButton.Click -= HandleScrollUpButtonClicked;
+            }
+
+            if(m_scrollDownButton != null)
+            {
+                m_scrollDownButton.Click -= HandleScrollDownButtonClicked;
+            }
+
             HideAll();
         }
 
@@ -214,6 +355,22 @@ namespace ExampleAppWPF
             }
 
             return false;
+        }
+
+        private void HandleScrollUpButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if(m_contentContainer != null)
+            {
+                m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset - 10);
+            }
+        }
+
+        private void HandleScrollDownButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if(m_contentContainer != null)
+            {
+                m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset + 10);
+            }
         }
 
         private bool ShowRemovePinDialog()

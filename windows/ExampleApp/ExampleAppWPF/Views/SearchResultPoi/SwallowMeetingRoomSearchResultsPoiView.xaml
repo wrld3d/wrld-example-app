@@ -45,11 +45,11 @@
                                 <VisualState x:Name="Disabled"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="rectangle1" Fill="{StaticResource PrimaryBG_colour}" Margin="0"/>
-                        <Rectangle x:Name="rectangle" Fill="{StaticResource PrimaryBG_Over_Colour}" Margin="0" Visibility="Hidden"/>
-                        <Rectangle x:Name="rectangle2" Fill="{StaticResource PrimaryBG_Down_Colour}" Margin="0" Visibility="Hidden"/>
-                        <Image x:Name="image" Source="/Assets/button_close_off.png"/>
-                        <Image x:Name="image1" Source="/Assets/button_close_on.png" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle1" Fill="{DynamicResource POIViewCloseButtonOffColour}" Margin="0"/>
+                        <Rectangle x:Name="rectangle" Fill="{DynamicResource POIViewCloseButtonOverColour}" Margin="0" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle2" Fill="{DynamicResource POIViewCloseButtonOnColour}" Margin="0" Visibility="Hidden"/>
+                        <Image x:Name="image" Source="{DynamicResource POIViewCloseButtonOffImage}"/>
+                        <Image x:Name="image1" Source="{DynamicResource POIViewCloseButtonOnImage}" Visibility="Hidden"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -71,7 +71,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/Assets/button_occupancy_available_on.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyAvailableOnImage}" Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}" Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -80,7 +80,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/Assets/button_occupancy_available_off.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyAvailableOffImage}" Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}" Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -103,7 +103,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/Assets/button_occupancy_availablesoon_on.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyAvailableSoonOnImage}" Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}" Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -112,7 +112,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/Assets/button_occupancy_availablesoon_off.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyAvailableSoonOffImage}" Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}" Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -135,7 +135,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/Assets/button_occupancy_occupied_on.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyAvailableOccupiedOnImage}" Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}" Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -144,7 +144,7 @@
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Visibility="Visible" Source="/Assets/button_occupancy_occupied_off.png" Width="192" Height="40" />
+                            <Image Visibility="Visible" Source="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyAvailableOccupiedOffImage}" Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}" Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -156,25 +156,33 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:SwallowMeetingRoomSearchResultsPoiView}">
-                    <Grid Name="MeetingRoomPoiContainer" Width="480" Height="Auto" Background="White" Margin="0,20,0,20">
-                        <Grid Width="440"  Margin="20,17,20,20">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="ScrollFadeIn">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:1"/>
+                        </Storyboard>
+                        <Storyboard x:Key="ScrollFadeOut">
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.0" Duration="0:0:1"/>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <Grid Name="MeetingRoomPoiContainer" Width="{DynamicResource SwallowPOIViewContainerWidth}" Height="Auto" Background="White" Margin="{DynamicResource SwallowPOIViewContainerMargin}">
+                        <Grid Width="{DynamicResource SwallowPOIViewContainerInnerWidth}"  Margin="{DynamicResource SwallowPOIViewContainerInnerMargin}">
                             <Grid Background="White">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="46"/>
+                                    <RowDefinition Height="{DynamicResource SwallowPOIViewContainerRow0Height}"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="48"/>
+                                    <RowDefinition Height="{DynamicResource SwallowPOIViewContainerRow2Height}"/>
                                 </Grid.RowDefinitions>
                                 <!--Title bar-->
                                 <Grid  Margin="0,0,0,0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="404"/>
-                                        <ColumnDefinition Width="36"/>
+                                        <ColumnDefinition Width="{DynamicResource SwallowPOIViewTitleColumn0}"/>
+                                        <ColumnDefinition Width="{DynamicResource SwallowPOIViewTitleColumn1}"/>
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" >
-                                        <Image Name="CategoryIcon" Stretch="Uniform" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}}, Path=CategoryIcon}" Height="36"/>
+                                        <Image Name="CategoryIcon" Stretch="Uniform" Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}}, Path=CategoryIcon}" Height="{DynamicResource SwallowPOIViewTitleIconSize}"/>
                                         <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}}, Path=TitleText}"  
-                                                   MaxWidth="350" VerticalAlignment="Center" FontSize="22" Margin="4,1,0,0" 
+                                                   MaxWidth="{DynamicResource SwallowPOIViewTitleMaxWidth}" VerticalAlignment="Center" FontSize="{DynamicResource SwallowPOIViewTitleFontSize}" Margin="{DynamicResource SwallowMeetingRoomPOIViewTitleTextMargin}" 
                                                    Foreground="{DynamicResource PrimaryBG_Over_Colour}" 
                                                    FontFamily="{DynamicResource PrimaryUIFont}"
                                                    TextTrimming="CharacterEllipsis" 
@@ -183,40 +191,46 @@
                                                    LineHeight="21" 
                                                    TextOptions.TextFormattingMode="Display"/>
                                     </StackPanel>
-                                    <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="36"  Background="{StaticResource Gold}" Grid.Column="1">
-                                        <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="36" Height="36" />
+                                    <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="{DynamicResource POIViewCloseButtonSize}"  Background="{StaticResource Gold}" Grid.Column="1">
+                                        <Button Style="{StaticResource POIcard_CloseButton}" Name="CloseButton" HorizontalAlignment="Right" Width="{DynamicResource POIViewCloseButtonSize}" Height="{DynamicResource POIViewCloseButtonSize}" />
                                     </Border>
                                 </Grid>
 
-                                <Grid Grid.Row="1" Margin="0,10,0,0" >
-                                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
+                                <Grid Grid.Row="1" Margin="{DynamicResource SwallowMeetingRoomPOIViewContentContainerMargin}" >
+                                    <ScrollViewer Name="ContentContainer" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="{DynamicResource SwallowPOIViewContentContainerScrollBarVisibility}" Background="{StaticResource White}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
 
                                         <StackPanel VerticalAlignment="Top">
 
                                             <!-- Details Divider -->
-                                            <Grid Height="250">
+                                            <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="220"/>
-                                                    <ColumnDefinition Width="10"/>
-                                                    <ColumnDefinition Width="210"/>
+                                                    <ColumnDefinition Width="{DynamicResource SwallowPOIViewDetailsColumn0Width}"/>
+                                                    <ColumnDefinition Width="{DynamicResource SwallowPOIViewDetailsColumn1Width}"/>
+                                                    <ColumnDefinition Width="{DynamicResource SwallowPOIViewDetailsColumn2Width}"/>
                                                 </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="{DynamicResource SwallowPOIViewDetailsRow0Height}"/>
+                                                    <RowDefinition Height="{DynamicResource SwallowPOIViewDetailsRow1Height}"/>
+                                                    <RowDefinition Height="auto"/>
+                                                </Grid.RowDefinitions>
                                                 <StackPanel VerticalAlignment="Top">
                                                     <StackPanel HorizontalAlignment="Stretch">
                                                         <ProgressBar Name="ImageProgress" HorizontalAlignment="Center" Visibility="Hidden"/>
                                                     </StackPanel>
                                                     <Grid Margin="0,0,0,0">
-                                                        <Image Name="PoiImage" Source="/Assets/poi_placeholder.png"/>
-                                                        <Grid Name="ImageGradient" Height="30" VerticalAlignment="Bottom"/>
+                                                        <Image Name="PoiImage" Source="{DynamicResource POIViewPlaceholderImage}" Width="{DynamicResource SwallowPOIViewDetailsImageWidth}" Height="{DynamicResource SwallowPOIViewDetailsImageHeight}"/>
+                                                        <Grid Name="ImageGradient" Height="{DynamicResource POIViewPlaceholderImageGradientHeight}" VerticalAlignment="Bottom"/>
                                                     </Grid>
                                                 </StackPanel>
-                                                <StackPanel Grid.Column="2" VerticalAlignment="Top" MaxHeight="280">
-                                                    <!--Phone-->
-                                                    <Grid Width="Auto" Margin="5,0,0,0">
+                                                <StackPanel Grid.Column="{DynamicResource SwallowPOIViewLowerDetailsColumn}" Grid.Row="{DynamicResource SwallowPOIViewLowerDetailsRow}" VerticalAlignment="Top">
+                                                    <Border BorderBrush="{x:Null}" Visibility="{DynamicResource SwallowMeetingRoomPOIViewDetailsInnerDividerVisibility}" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="{DynamicResource SwallowMeetingRoomPOIViewDetailsInnerDividerMargin}"/>
+                                                    <!-- Availability Buttons -->
+                                                    <Grid Width="Auto" Margin="{DynamicResource SwallowMeetingRoomPOIViewContentAvailabilityMargin}">
                                                         <StackPanel HorizontalAlignment="Center">
                                                             <StackPanel.Resources>
                                                                 <local:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
                                                             </StackPanel.Resources>
-                                                            <Border Background="{StaticResource Transparent}" Padding="0,10,0,5">
+                                                            <Border Background="{StaticResource Transparent}" Padding="{DynamicResource SwallowMeetingRoomPOIViewContentAvailableButtonPadding}">
                                                                 <RadioButton Name="AvailableButton"
                                                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}},
                                                                                  Path=Availability,
@@ -224,10 +238,10 @@
                                                                                  ConverterParameter={x:Static local:SwallowMeetingRoomSearchResultsPoiView+AvailalabilityType.Available}}"
                                                              Style="{StaticResource AvailableToggleImageStyle}"
                                                              GroupName="AvailabilityGroup"
-                                                             Width="192"
-                                                             Height="40"/>
+                                                             Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}"
+                                                             Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}"/>
                                                             </Border>
-                                                            <Border Background="{StaticResource Transparent}" Padding="0,5,0,5">
+                                                            <Border Background="{StaticResource Transparent}" Padding="{DynamicResource SwallowMeetingRoomPOIViewContentAvailableSoonButtonPadding}">
                                                                 <RadioButton Name="AvailableSoonButton"
                                                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}},
                                                                                  Path=Availability,
@@ -235,10 +249,10 @@
                                                                                  ConverterParameter={x:Static local:SwallowMeetingRoomSearchResultsPoiView+AvailalabilityType.AvailableSoon}}"
                                                              Style="{StaticResource AvailableSoonToggleImageStyle}"
                                                              GroupName="AvailabilityGroup"
-                                                             Width="192"
-                                                             Height="40"/>
+                                                             Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}"
+                                                             Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}"/>
                                                             </Border>
-                                                            <Border Background="{StaticResource Transparent}" Padding="0,5,0,5">
+                                                            <Border Background="{StaticResource Transparent}" Padding="{DynamicResource SwallowMeetingRoomPOIViewContentOccupiedButtonPadding}">
                                                                 <RadioButton Name="OccupiedButton"
                                                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowMeetingRoomSearchResultsPoiView}},
                                                                                  Path=Availability,
@@ -246,29 +260,110 @@
                                                                                  ConverterParameter={x:Static local:SwallowMeetingRoomSearchResultsPoiView+AvailalabilityType.Occupied}}"
                                                              Style="{StaticResource OccupiedToggleImageStyle}"
                                                              GroupName="AvailabilityGroup"
-                                                             Width="192"
-                                                             Height="40"/>
+                                                             Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}"
+                                                             Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}"/>
                                                             </Border>
                                                         </StackPanel>
                                                     </Grid>
 
                                                     <!--Address-->
                                                     <Grid Margin="5,15,0,0">
-                                                        
+
                                                     </Grid>
                                                 </StackPanel>
 
                                             </Grid>
 
                                             <!-- Details Divider -->
-                                            <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="2" Background="{StaticResource Gold}" Margin="0,20"/>
+                                            <Border Visibility="{DynamicResource SwallowMeetingRoomPOIViewDetailsDividerVisibility}" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="2" Background="{StaticResource Gold}" Margin="{DynamicResource SwallowMeetingRoomPOIViewDetailsDividerMargin}"/>
 
                                             <!-- Bottom Spacer -->
-                                            <Grid Height="20"/>
+                                            <Grid Height="{DynamicResource SwallowPOIViewBottomSpacerHeight}"/>
                                         </StackPanel>
                                     </ScrollViewer>
-
+                                    <Image IsHitTestVisible="False" Name="HeaderFade" Source="{DynamicResource SwallowPOIViewFooterFadeImage}" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="{DynamicResource POIViewScrollButtonVisibility}" Width="{DynamicResource SwallowPOIViewFooterFadeWidth}" RenderTransformOrigin="0.5, 0.5" Margin="-4, 0, 0, 0">
+                                        <Image.RenderTransform>
+                                            <RotateTransform Angle="180"/>
+                                        </Image.RenderTransform>
+                                    </Image>
+                                    <Image IsHitTestVisible="False" Name="FooterFade" Source="{DynamicResource SwallowPOIViewFooterFadeImage}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Visible" Width="{DynamicResource SwallowPOIViewFooterFadeWidth}" Height="auto"/>
                                 </Grid>
+                                <RepeatButton Grid.Row="1" Name="POIViewScrollUpButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Top" Margin="{DynamicResource SwallowPOIViewScrollUpButtonMargin}">
+                                    <RepeatButton.Style>
+                                        <Style TargetType="{x:Type RepeatButton}">
+                                            <Style.Setters>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                            <Grid>
+                                                                <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="POIViewScrollUpButton" RenderTransformOrigin="0.5, 0.5">
+                                                                    <Image.RenderTransform>
+                                                                        <RotateTransform Angle="180"/>
+                                                                    </Image.RenderTransform>
+                                                                </Image>
+                                                            </Grid>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter TargetName="POIViewScrollUpButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
+                                                                </Trigger>
+
+                                                                <MultiTrigger>
+                                                                    <MultiTrigger.Conditions>
+                                                                        <Condition Property="IsPressed" Value="False"/>
+                                                                        <Condition Property="IsMouseOver" Value="True"/>
+                                                                    </MultiTrigger.Conditions>
+                                                                    <MultiTrigger.Setters>
+                                                                        <Setter TargetName="POIViewScrollUpButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
+                                                                    </MultiTrigger.Setters>
+                                                                </MultiTrigger>
+
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                </Trigger>
+
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style.Setters>
+                                        </Style>
+                                    </RepeatButton.Style>
+                                </RepeatButton>
+                                <RepeatButton Grid.Row="1" Name="POIViewScrollDownButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Bottom" Margin="0, 0, 0, 0">
+                                    <RepeatButton.Style>
+                                        <Style TargetType="{x:Type RepeatButton}">
+                                            <Style.Setters>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type RepeatButton}">
+                                                            <Grid>
+                                                                <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="POIViewScrollDownButton"/>
+                                                            </Grid>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter TargetName="POIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
+                                                                </Trigger>
+
+                                                                <MultiTrigger>
+                                                                    <MultiTrigger.Conditions>
+                                                                        <Condition Property="IsPressed" Value="False"/>
+                                                                        <Condition Property="IsMouseOver" Value="True"/>
+                                                                    </MultiTrigger.Conditions>
+                                                                    <MultiTrigger.Setters>
+                                                                        <Setter TargetName="POIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
+                                                                    </MultiTrigger.Setters>
+                                                                </MultiTrigger>
+
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                </Trigger>
+
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style.Setters>
+                                        </Style>
+                                    </RepeatButton.Style>
+                                </RepeatButton>
                             </Grid>
                         </Grid>
                     </Grid>

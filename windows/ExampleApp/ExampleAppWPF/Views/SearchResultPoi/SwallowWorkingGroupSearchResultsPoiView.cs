@@ -82,8 +82,10 @@ namespace ExampleAppWPF
             m_poiImage.Source = new BitmapImage(new Uri("/Assets/poi_placeholder.png", UriKind.Relative));
             m_poiImage.Stretch = Stretch.Fill;
             ShowAll();
-        }
 
+            base.DisplayCustomPoiInfo(modelObject);
+        }
+        
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
             if (hasImage)

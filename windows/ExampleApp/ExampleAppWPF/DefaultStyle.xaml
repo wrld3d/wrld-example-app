@@ -33,12 +33,143 @@
     <System:Double x:Key="POIViewScrollButtonSize">64</System:Double>
     <Thickness x:Key="POIViewScrollUpButtonMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     
+    <!-- Swallow POI View -->
+	<ImageSource x:Key="SwallowPOIViewCloseButtonOffImage">/Assets/button_close_off.png</ImageSource>
+    <ImageSource x:Key="SwallowPOIViewCloseButtonOnImage">/Assets/button_close_on.png</ImageSource>
+
+    <System:Double x:Key="SwallowPOIViewContainerWidth">480</System:Double>
+    <Thickness x:Key="SwallowPOIViewContainerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    <System:Double x:Key="SwallowPOIViewContainerInnerWidth">440</System:Double>
+    <Thickness x:Key="SwallowPOIViewContainerInnerMargin" Left="20" Top="17" Right="20" Bottom="20"/>
+    <GridLength x:Key="SwallowPOIViewContainerRow0Height">46</GridLength>
+    <GridLength x:Key="SwallowPOIViewContainerRow2Height">48</GridLength>
+
+    <GridLength x:Key="SwallowPOIViewTitleColumn0">404</GridLength>
+    <GridLength x:Key="SwallowPOIViewTitleColumn1">36</GridLength>
+    <System:Double x:Key="SwallowPOIViewTitleIconSize">36</System:Double>
+    <System:Double x:Key="SwallowPOIViewTitleMaxWidth">350</System:Double>
+    <System:Double x:Key="SwallowPOIViewTitleFontSize">22</System:Double>
+
+    <ScrollBarVisibility x:Key="SwallowPOIViewContentContainerScrollBarVisibility">Auto</ScrollBarVisibility>
+
+    <System:Double x:Key="SwallowPOIViewDetailsContainerHeight">250</System:Double>
+    <System:Double x:Key="SwallowPOIViewDetailsImageWidth">220</System:Double>
+    <System:Double x:Key="SwallowPOIViewDetailsImageHeight">250</System:Double>
+    <GridLength x:Key="SwallowPOIViewDetailsColumn0Width">220</GridLength>
+    <GridLength x:Key="SwallowPOIViewDetailsColumn1Width">10</GridLength>
+    <GridLength x:Key="SwallowPOIViewDetailsColumn2Width">210</GridLength>
+    <GridLength x:Key="SwallowPOIViewDetailsRow0Height">auto</GridLength>
+    <GridLength x:Key="SwallowPOIViewDetailsRow1Height">0</GridLength>
+
+    <System:Int32 x:Key="SwallowPOIViewLowerDetailsColumn">2</System:Int32>
+    <System:Int32 x:Key="SwallowPOIViewLowerDetailsRow">0</System:Int32>
+
+    <Thickness x:Key="SwallowPOIViewScrollUpButtonMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+
+    <System:Double x:Key="SwallowPOIViewBottomSpacerHeight">20</System:Double>
+    <ImageSource x:Key="SwallowPOIViewFooterFadeImage">/Assets/search_results_fade.png</ImageSource>
+    <System:Double x:Key="SwallowPOIViewFooterFadeWidth">500</System:Double>
+    
+    <!-- Swallow Working Group POI View -->
+    <Thickness x:Key="SwallowWorkingGroupPOIViewTitleTextMargin" Left="4" Top="1" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="SwallowWorkingGroupPOIViewContentContainerMargin" Left="0" Top="10" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="SwallowWorkingGroupPOIViewDetailsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
+    <System:Double x:Key="SwallowWorkingGroupPOIViewReviewsFontSize">18</System:Double>
+    <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsTextMargin" Left="25" Top="-4" Right="0" Bottom="0"/>
+
+    <!-- Swallow Person POI View -->
+    <ImageSource x:Key="SwallowPersonPOIViewIconImage">/Assets/icon1_person_POI.png</ImageSource>
+
+    <Thickness x:Key="SwallowPersonPOIViewTitleTextMargin" Left="4" Top="1" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="SwallowPersonPOIViewContentContainerMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+
+    <Visibility x:Key="SwallowPersonPOIViewDetailsInnerDividerVisibility">Collapsed</Visibility>
+    <Thickness x:Key="SwallowPersonPOIViewDetailsInnerDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+
+    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsPhoneMargin" Left="5" Top="15" Right="0" Bottom="0"/>
+    <System:Double x:Key="SwallowPersonPOIViewLowerDetailsPhoneFontSize">18</System:Double>
+    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsPhoneTextMargin" Left="25" Top="0" Right="0" Bottom="0"/>
+    
+    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressMargin" Left="5" Top="15" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressIconMargin" Left="0" Top="0" Right="0" Bottom="7.94"/>
+    <System:Double x:Key="SwallowPersonPOIViewLowerDetailsAddressFontSize">18</System:Double>
+    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressTextMargin" Left="25" Top="-4" Right="0" Bottom="0"/>
+    
+    <Thickness x:Key="SwallowPOIViewDetailsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+
+    <Thickness x:Key="SwallowPersonPOIViewTagsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewTagsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
+    <System:Double x:Key="SwallowPersonPOIViewTagsFontSize">18</System:Double>
+    <Thickness x:Key="SwallowPersonPOIViewTagsTextMargin" Left="25" Top="-4" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="SwallowPOIViewReviewsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    <Thickness x:Key="SwallowPersonPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
+    <System:Double x:Key="SwallowPersonPOIViewReviewsFontSize">18</System:Double>
+    <Thickness x:Key="SwallowPersonPOIViewReviewsTextMargin" Left="25" Top="-4" Right="0" Bottom="0"/>
+
+    <!-- Swallow Facility POI View -->
+    <Thickness x:Key="SwallowFacilityPOIViewTitleTextMargin" Left="4" Top="1" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="SwallowFacilityPOIViewContentContainerMargin" Left="0" Top="10" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="SwallowFacilityPOIViewReviewsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    <Thickness x:Key="SwallowFacilityPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowFacilityPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
+    <System:Double x:Key="SwallowFacilityPOIViewReviewsFontSize">18</System:Double>
+    <Thickness x:Key="SwallowFacilityPOIViewReviewsTextMargin" Left="25" Top="-4" Right="0" Bottom="0"/>
+
+    <!-- Swallow Meeting Room POI View -->
+    <Thickness x:Key="SwallowMeetingRoomPOIViewTitleTextMargin" Left="4" Top="1" Right="0" Bottom="0"/>
+    
+    <System:Double x:Key="SwallowMeetingRoomPOIViewButtonOccupancyWidth">192</System:Double>
+    <System:Double x:Key="SwallowMeetingRoomPOIViewButtonOccupancyHeight">40</System:Double>
+    
+    <ImageSource x:Key="SwallowMeetingRoomPOIViewButtonOccupancyAvailableOffImage">/Assets/button_occupancy_available_off.png</ImageSource>
+    <ImageSource x:Key="SwallowMeetingRoomPOIViewButtonOccupancyAvailableOnImage">/Assets/button_occupancy_available_on.png</ImageSource>
+
+    <ImageSource x:Key="SwallowMeetingRoomPOIViewButtonOccupancyAvailableSoonOffImage">/Assets/button_occupancy_availablesoon_off.png</ImageSource>
+    <ImageSource x:Key="SwallowMeetingRoomPOIViewButtonOccupancyAvailableSoonOnImage">/Assets/button_occupancy_availablesoon_on.png</ImageSource>
+
+    <ImageSource x:Key="SwallowMeetingRoomPOIViewButtonOccupancyAvailableOccupiedOffImage">/Assets/button_occupancy_occupied_off.png</ImageSource>
+    <ImageSource x:Key="SwallowMeetingRoomPOIViewButtonOccupancyAvailableOccupiedOnImage">/Assets/button_occupancy_occupied_on.png</ImageSource>
+    
+    <Thickness x:Key="SwallowMeetingRoomPOIViewContentContainerMargin" Left="0" Top="10" Right="0" Bottom="0"/>
+    
+    <Visibility x:Key="SwallowMeetingRoomPOIViewDetailsInnerDividerVisibility">Collapsed</Visibility>
+    <Thickness x:Key="SwallowMeetingRoomPOIViewDetailsInnerDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    
+    <System:Double x:Key="SwallowMeetingRoomPOIViewLowerDetailsContainerMaxHeight">280</System:Double>
+    <Thickness x:Key="SwallowMeetingRoomPOIViewContentAvailabilityMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowMeetingRoomPOIViewContentAvailableButtonPadding" Left="0" Top="10" Right="0" Bottom="5"/>
+    <Thickness x:Key="SwallowMeetingRoomPOIViewContentAvailableSoonButtonPadding" Left="0" Top="5" Right="0" Bottom="5"/>
+    <Thickness x:Key="SwallowMeetingRoomPOIViewContentOccupiedButtonPadding" Left="0" Top="5" Right="0" Bottom="5"/>
+
+    <Visibility x:Key="SwallowMeetingRoomPOIViewDetailsDividerVisibility">Visible</Visibility>
+    <Thickness x:Key="SwallowMeetingRoomPOIViewDetailsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    
+    <!-- Swallow Department POI View -->
+    <Thickness x:Key="SwallowDepartmentPOIViewTitleTextMargin" Left="4" Top="1" Right="0" Bottom="0"/>
+    
+    <Thickness x:Key="SwallowDepartmentPOIViewContentContainerMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+
+    <Thickness x:Key="SwallowDepartmentPOIViewReviewsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
+    <Thickness x:Key="SwallowDepartmentPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowDepartmentPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
+    <System:Double x:Key="SwallowDepartmentPOIViewReviewsFontSize">18</System:Double>
+    <Thickness x:Key="SwallowDepartmentPOIViewReviewsTextMargin" Left="25" Top="-4" Right="0" Bottom="0"/>
+    
     <!-- Eegeo POI View -->
     <System:Double x:Key="EegeoPOIViewContainerWidth">480</System:Double>
     <Thickness x:Key="EegeoPOIViewContainerMargin" Left="0" Top="20" Right="0" Bottom="90"/>
     <System:Double x:Key="EegeoPOIViewContainerInnerWidth">440</System:Double>
     <Thickness x:Key="EegeoPOIViewContainerInnerMargin" Left="20" Top="17" Right="20" Bottom="20"/>
-    <System:Double x:Key="EegeoPOIViewContainerRow0Height">46</System:Double>
+    <GridLength x:Key="EegeoPOIViewContainerRow0Height">46</GridLength>
     <GridLength x:Key="EegeoPOIViewContainerRow2Height">48</GridLength>
 
     <Thickness x:Key="EegeoPOIViewTitleMargin" Left="0" Top="0" Right="0" Bottom="10"/>
