@@ -2,12 +2,32 @@
 #import "IndoorAtlasLocationManager.h"
 #import <IndoorAtlas/IALocationManager.h>
 #include "LatLongAltitude.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "AppHost.h"
+
+template <typename T>
+class FailureHandler
+{
+public:
+    FailureHandler(T* pContext) : m_pContext(pContext) {}
+    void HandleFailure()
+    {
+        [m_pContext handleFailure];
+    }
+private:
+    T* m_pContext;
+};
+
+typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
 
 @interface IndoorAtlasLocationManager()<IALocationManagerDelegate>
 {
     std::map<int, std::string> m_floorMap;
     int m_floorIndex;
     ExampleApp::IndoorAtlas::IndoorAtlasLocationService* m_pIndoorAtlasLocationService;
+    Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory *m_piOSAlertBoxFactory;
+    FailureHandlerType *m_failureHandlerWrapper;
+    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<IndoorAtlasLocationManager> > *m_failAlertHandler;
 }
 @property (nonatomic, strong) IALocationManager *locationManager;
 @end
@@ -15,10 +35,14 @@
 @implementation IndoorAtlasLocationManager
 
 -(instancetype) Init: (ExampleApp::IndoorAtlas::IndoorAtlasLocationService*) indoorAtlasLocationService
+  iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
 {
     if(self = [super init])
     {
         m_pIndoorAtlasLocationService = indoorAtlasLocationService;
+        m_piOSAlertBoxFactory = iOSAlertBoxFactory;
+        m_failureHandlerWrapper = new FailureHandlerType(self);
+        m_failAlertHandler = new Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<IndoorAtlasLocationManager> >(m_failureHandlerWrapper, &FailureHandlerType::HandleFailure);
     }
     
     return self;
@@ -70,6 +94,8 @@
 {
     [self.locationManager stopUpdatingLocation];
     self.locationManager.delegate = nil;
+    delete m_failAlertHandler;
+    delete m_failureHandlerWrapper;
     [super dealloc];
 }
 
@@ -90,6 +116,24 @@
     }
     
     return nil;
+}
+
+- (void)indoorLocationManager:(nonnull IALocationManager *)manager statusChanged:(nonnull IAStatus *)status
+{
+    if(status.type == ia_status_type::kIAStatusServiceUnavailable)
+    {
+        m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
+        (
+         "Indoor Atlas Unavailable",
+         "Recently lost connection to Indoor Atlas.",
+         *m_failAlertHandler
+         );
+    }
+}
+
+- (void)handleFailure
+{
+    
 }
 
 @end
