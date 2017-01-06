@@ -97,6 +97,7 @@
 #include "IUserIdleService.h"
 #include "CurrentLocationService.h"
 #include "AttractModeOverlayView.h"
+#include "WindowsProcessHelper.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -194,6 +195,11 @@ AppHost::AppHost(
     const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(windowsPlatformConfigBuilder, applicationConfiguration);
 
     bool enableTouchControls =  hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
+
+    if (enableTouchControls && applicationConfiguration.ShouldStartFullscreen())
+    {
+        Eegeo::Helpers::ProcessHelpers::SetEdgeTouchGesturesEnabled(false);
+    }
 
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig, enableTouchControls, m_maxDeviceTouchCount);
