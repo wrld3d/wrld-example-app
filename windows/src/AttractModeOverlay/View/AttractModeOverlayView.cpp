@@ -18,18 +18,18 @@ namespace ExampleApp
         namespace View
         {
             AttractModeOverlayView::AttractModeOverlayView(WindowsNativeState& nativeState,
-                                                           AppModes::SdkModel::IAppModeModel& appModeModel,
                                                            ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
                                                            ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                                            ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* pVirtualKeyboard,
-                                                           ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel)
-                : m_nativeState(nativeState)
+                                                           ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
+                                                           ExampleAppMessaging::TMessageBus& messageBus)
+                : m_messageBus(messageBus)
                 , m_appModeChangedCallback(this, &AttractModeOverlayView::OnAppModeChanged)
-                , m_appModeModel(appModeModel)
+                , m_nativeState(nativeState)
                 , m_searchMenuViewModel(searchMenuViewModel)
                 , m_settingsMenuViewModel(settingsMenuViewModel)
-                , m_pVirtualKeyboard(pVirtualKeyboard)
                 , m_myPinCreationDetailsViewModel(myPinCreationDetailsViewModel)
+                , m_pVirtualKeyboard(pVirtualKeyboard)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.AttractModeOverlayView");
                 ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
@@ -37,19 +37,20 @@ namespace ExampleApp
 
                 mOnAttractModeStart.SetupMethod(m_uiViewClass, m_uiView, "OnAttractModeStart");
                 mOnAttractModeStop.SetupMethod(m_uiViewClass, m_uiView, "OnAttractModeStop");
-                m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
                 mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
+
+                m_messageBus.SubscribeUi(m_appModeChangedCallback);
             }
 
             AttractModeOverlayView::~AttractModeOverlayView()
             {
-                m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
+                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
                 mDestroy();
             }
 
-            void AttractModeOverlayView::OnAppModeChanged()
+            void AttractModeOverlayView::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
             {
-                if (m_appModeModel.GetAppMode() == AppModes::SdkModel::AppMode::AttractMode)
+                if (message.GetAppMode() == AppModes::SdkModel::AppMode::AttractMode)
                 {
                     m_myPinCreationDetailsViewModel.Close();
                     m_searchMenuViewModel.RemoveFromScreen();
