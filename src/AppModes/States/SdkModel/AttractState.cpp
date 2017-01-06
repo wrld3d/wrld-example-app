@@ -76,6 +76,7 @@ namespace ExampleApp
                 {
                     m_startTimeMs = m_userIdleService.GetUserIdleTimeMs();
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
+                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                     m_flattenButtonModel.Unflatten();
                     m_cameraSplinePlaybackController.Play();
                     m_cameraController.TransitionToCameraWithHandle(m_cameraHandle);
@@ -94,6 +95,7 @@ namespace ExampleApp
                 {
                     m_cameraSplinePlaybackController.Stop();
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
+                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
                 }
             }
         }
