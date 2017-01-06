@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "BidirectionalBus.h"
 #include "IMenuViewModel.h"
 #include "IMyPinCreationDetailsViewModel.h"
 #include "ReflectionHelpers.h"
@@ -18,22 +19,21 @@ namespace ExampleApp
             {
             public:
                 AttractModeOverlayView(WindowsNativeState& nativeState,
-                                       AppModes::SdkModel::IAppModeModel& appModeModel,
                                        ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
                                        ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                        ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* pVirtualKeyboard,
-                                       ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel);
+                                       ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
+                                       ExampleAppMessaging::TMessageBus& messageBus);
                 ~AttractModeOverlayView();
 
             private:
-                void OnAppModeChanged();
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
 
-                Helpers::ReflectionHelpers::Method<void> mDestroy;
-                Helpers::ReflectionHelpers::Method<void> mOnAttractModeStart;
-                Helpers::ReflectionHelpers::Method<void> mOnAttractModeStop;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
-                AppModes::SdkModel::IAppModeModel& m_appModeModel;
-                Eegeo::Helpers::TCallback0<AttractModeOverlayView> m_appModeChangedCallback;
+                Eegeo::Helpers::TCallback1<AttractModeOverlayView, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
+
+                WindowsNativeState& m_nativeState;
 
                 ExampleApp::Menu::View::IMenuViewModel& m_searchMenuViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
@@ -41,7 +41,9 @@ namespace ExampleApp
 
                 ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* m_pVirtualKeyboard;
 
-                WindowsNativeState& m_nativeState;
+                Helpers::ReflectionHelpers::Method<void> mDestroy;
+                Helpers::ReflectionHelpers::Method<void> mOnAttractModeStart;
+                Helpers::ReflectionHelpers::Method<void> mOnAttractModeStop;
 
                 gcroot<System::Type^> m_uiViewClass;
                 gcroot<System::Object^> m_uiView;

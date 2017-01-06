@@ -628,11 +628,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     if (m_pApp->GetApplicationConfiguration().IsAttractModeEnabled())
     {
         m_pAttractModeOverlayView = Eegeo_NEW(ExampleApp::AttractModeOverlay::View::AttractModeOverlayView)(m_nativeState,
-                                                                                                            m_pApp->GetAppModeModel(),
                                                                                                             app.SettingsMenuModule().GetSettingsMenuViewModel(),
                                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                                             m_pVirtualKeyboardView,
-                                                                                                            app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());
+                                                                                                            app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
+                                                                                                            m_messageBus);
     }
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
