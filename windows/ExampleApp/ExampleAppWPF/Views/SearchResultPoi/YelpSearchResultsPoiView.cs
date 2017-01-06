@@ -303,7 +303,7 @@ namespace ExampleAppWPF
         
         public void HandleWebLinkButtonClicked(object sender, MouseEventArgs e)
         {
-            if (!string.IsNullOrEmpty(m_url))
+            if (!string.IsNullOrEmpty(m_url) && !m_isInKioskMode)
             {
                 Process.Start(m_url);
             }
