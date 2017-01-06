@@ -19,6 +19,7 @@
 #include "TimeHelpers.h"
 #include "BidirectionalBus.h"
 #include "WorldPinVisibility.h"
+#include "FlattenButtonModel.h"
 
 namespace ExampleApp
 {
@@ -42,7 +43,8 @@ namespace ExampleApp
                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                           ExampleAppMessaging::TMessageBus& messageBus)
+                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel)
                 : m_appModeModel(appModeModel)
                 , m_cameraController(cameraController)
                 , m_userIdleService(userIdleService)
@@ -51,6 +53,7 @@ namespace ExampleApp
                 , m_appCamera(m_cameraSplinePlaybackController, touchController)
                 , m_cameraHandle(0)
                 , m_messageBus(messageBus)
+                , m_flattenButtonModel(flattenButtonModel)
                 {
                     std::for_each(cameraPositionSplinePoints.begin(), cameraPositionSplinePoints.end(),
                                   [this](const Eegeo::Space::LatLongAltitude& p) { m_cameraPositionSpline.AddPoint(p.ToECEF()); });
@@ -73,6 +76,7 @@ namespace ExampleApp
                 {
                     m_startTimeMs = m_userIdleService.GetUserIdleTimeMs();
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
+                    m_flattenButtonModel.Unflatten();
                     m_cameraSplinePlaybackController.Play();
                     m_cameraController.TransitionToCameraWithHandle(m_cameraHandle);
                 }

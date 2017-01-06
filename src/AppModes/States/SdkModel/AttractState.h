@@ -14,6 +14,7 @@
 #include "IUserIdleService.h"
 #include "CatmullRomSpline.h"
 #include "BidirectionalBus.h"
+#include "FlattenButton.h"
 
 namespace ExampleApp
 {
@@ -36,6 +37,7 @@ namespace ExampleApp
                     AppCamera::SdkModel::AppCameraSplinePlaybackWrapper m_appCamera;
                     int m_cameraHandle;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
+                    FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
 
                 public:
                     AttractState(AppModes::SdkModel::IAppModeModel& appModeModel,
@@ -47,7 +49,8 @@ namespace ExampleApp
                                  const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                  const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                 ExampleAppMessaging::TMessageBus& messageBus);
+                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                 FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel);
                     ~AttractState();
 
                     void Enter(int previousState);
