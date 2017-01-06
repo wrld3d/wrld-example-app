@@ -124,8 +124,8 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
     {
         m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
         (
-         "Indoor Atlas Unavailable",
-         "Recently lost connection to Indoor Atlas.",
+         "IndoorAtlas unavailable",
+         "Recently lost connection to IndoorAtlas.",
          *m_failAlertHandler
          );
     }
