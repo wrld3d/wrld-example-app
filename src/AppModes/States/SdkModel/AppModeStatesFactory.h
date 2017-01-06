@@ -17,6 +17,7 @@
 #include "ScreenProperties.h"
 #include "GlobalAppModeTransitionRules.h"
 #include "BidirectionalBus.h"
+#include "FlattenButton.h"
 
 #include "VisualMap.h"
 
@@ -56,6 +57,8 @@ namespace ExampleApp
                     const Eegeo::Rendering::ScreenProperties& m_screenProperties;
 
                     ExampleAppMessaging::TMessageBus& m_messageBus;
+
+                    FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
                     
                 public:
                     
@@ -79,7 +82,8 @@ namespace ExampleApp
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                         ExampleAppMessaging::TMessageBus& messageBus);
+                                         ExampleAppMessaging::TMessageBus& messageBus,
+                                         FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel);
                     
                     ~AppModeStatesFactory()
                     {

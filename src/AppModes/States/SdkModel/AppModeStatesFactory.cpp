@@ -13,6 +13,7 @@
 #include "LatLongAltitude.h"
 #include "ScreenProperties.h"
 #include "BidirectionalBus.h"
+#include "IFlattenButtonModel.h"
 
 namespace ExampleApp
 {
@@ -42,7 +43,8 @@ namespace ExampleApp
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                           ExampleAppMessaging::TMessageBus& messageBus)
+                                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel)
                 : m_appCameraController(appCameraController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
@@ -64,6 +66,7 @@ namespace ExampleApp
                 , m_cameraTargetSplinePoints(cameraTargetSplinePoints)
                 , m_screenProperties(screenProperties)
                 , m_messageBus(messageBus)
+                , m_flattenButtonModel(flattenButtonModel)
                 {
                     
                 }
@@ -109,7 +112,8 @@ namespace ExampleApp
                                                                                    m_cameraPositionSplinePoints,
                                                                                    m_cameraTargetSplinePoints,
                                                                                    m_screenProperties,
-                                                                                   m_messageBus));
+                                                                                   m_messageBus,
+                                                                                   m_flattenButtonModel));
                     }
 
                     return states;

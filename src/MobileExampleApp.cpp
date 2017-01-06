@@ -866,7 +866,8 @@ namespace ExampleApp
                                                                               m_applicationConfiguration.GetAttractModeTargetSplinePoints(),
                                                                               m_applicationConfiguration.GetAttractModePositionSplinePoints(),
                                                                               m_screenProperties,
-                                                                              m_messageBus);
+                                                                              m_messageBus,
+                                                                              m_pFlattenButtonModule->GetFlattenButtonModel());
 
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules), AppModes::SdkModel::WorldMode, m_pGlobalAppModeTransitionRules);
     }
