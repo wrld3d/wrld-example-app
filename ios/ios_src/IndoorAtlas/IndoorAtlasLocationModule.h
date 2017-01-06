@@ -5,6 +5,7 @@
 #include "IndoorAtlasLocationController.h"
 #include "IndoorAtlasLocationManager.h"
 #include "IndoorAtlasLocationService.h"
+#include "iOSAlertBoxFactory.h"
 #include "ICallback.h"
 #include "AppModeModel.h"
 #include "InteriorsExplorer.h"
@@ -25,7 +26,8 @@ namespace ExampleApp
                                       const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                       const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                       Eegeo::Location::ILocationService& defaultLocationService,
-                                      Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository);
+                                      Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                      Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory);
             ~IndoorAtlasLocationModule();
             
             IndoorAtlasLocationService& GetLocationService() { return *m_pLocationService; }

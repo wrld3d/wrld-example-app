@@ -2,10 +2,8 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
@@ -30,10 +28,6 @@ namespace ExampleAppWPF
         private Visibility m_ratingCountVisibility;
         private string m_url;
         private FrameworkElement m_reviewsIcon;
-        private ImageSource m_placeholderImage;
-        private ScrollViewer m_contentContainer;
-        private Image m_headerFade;
-        private Image m_footerFade;
         private Grid m_previewImageSpinner;
         private Grid m_poiImageContainer;
         private Grid m_imageGradient;
@@ -41,14 +35,8 @@ namespace ExampleAppWPF
         private Grid m_detailsContainer;
         private double m_detailsContainerHeight;
 
-        private Storyboard m_scrollFadeInAnim;
-        private Storyboard m_scrollFadeOutAnim;
-
         private ControlClickHandler m_yelpReviewImageClickHandler;
         private Image m_yelpButton;
-
-        private RepeatButton m_scrollDownButton;
-        private RepeatButton m_scrollUpButton;
 
         public string PhoneText
         {
@@ -212,16 +200,6 @@ namespace ExampleAppWPF
 
             m_reviewsIcon = (FrameworkElement)GetTemplateChild("ReviewsIcon");
 
-            m_contentContainer = (ScrollViewer)GetTemplateChild("ContentContainer");
-
-            m_contentContainer.ManipulationBoundaryFeedback += OnBoundaryFeedback;
-
-            m_contentContainer.ScrollChanged += OnSearchResultsScrolled;
-
-            m_headerFade = (Image)GetTemplateChild("HeaderFade");
-
-            m_footerFade = (Image)GetTemplateChild("FooterFade");
-
             m_previewImageSpinner = (Grid)GetTemplateChild("PreviewImageSpinner");
 
             m_poiImageContainer = (Grid)GetTemplateChild("PoiImageContainer");
@@ -238,15 +216,6 @@ namespace ExampleAppWPF
 
             m_qrCodeStyleText = (string)Application.Current.Resources["YelpPOIViewQRCodeText"];
 
-            m_scrollUpButton = (RepeatButton)GetTemplateChild("YelpPOIViewScrollUpButton");
-            m_scrollUpButton.Click += HandleScrollUpButtonClicked;
-
-            m_scrollDownButton = (RepeatButton)GetTemplateChild("YelpPOIViewScrollDownButton");
-            m_scrollDownButton.Click += HandleScrollDownButtonClicked;
-
-            m_scrollFadeInAnim = ((Storyboard)Template.Resources["ScrollFadeIn"]).Clone();
-            m_scrollFadeOutAnim = ((Storyboard)Template.Resources["ScrollFadeOut"]).Clone();
-
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
@@ -254,65 +223,9 @@ namespace ExampleAppWPF
 
             base.OnApplyTemplate();
         }
-        private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
-        {
-            bool canScroll = m_contentContainer.ExtentHeight > m_contentContainer.ActualHeight;
-            if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
-            {
-                if(canScroll && m_headerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_headerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollUpButton);
-                }
-
-                if(m_footerFade.Opacity >= 1)
-                {
-                    m_scrollFadeOutAnim.Begin(m_footerFade);
-                    m_scrollFadeOutAnim.Begin(m_scrollDownButton);
-                }
-            }
-            else if(m_contentContainer.VerticalOffset == 0)
-            {
-                if (m_headerFade.Opacity >= 1)
-                {
-                    m_scrollFadeOutAnim.Begin(m_headerFade);
-                    m_scrollFadeOutAnim.Begin(m_scrollUpButton);
-                }
-
-                if(canScroll && m_footerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_footerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollDownButton);
-                }
-            }
-            else if(canScroll)
-            {
-                if (m_headerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_headerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollUpButton);
-                }
-
-                if (m_footerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_footerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollDownButton);
-                }
-            }
-        }
-
-        private void OnBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
-        {
-            e.Handled = true;
-        }
 
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
-            m_headerFade.Opacity = 0;
-            m_scrollUpButton.Opacity = 0;
-            m_footerFade.Opacity = 0;
-            m_scrollDownButton.Opacity = 0;
-
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
             YelpResultModel yelpResultModel = YelpResultModel.FromResultModel(model);
@@ -370,6 +283,8 @@ namespace ExampleAppWPF
             m_poiImage.Visibility = Visibility.Hidden;
 
             ShowAll();
+
+            base.DisplayCustomPoiInfo(modelObject);
         }
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
@@ -385,20 +300,10 @@ namespace ExampleAppWPF
         
         public void HandleWebLinkButtonClicked(object sender, MouseEventArgs e)
         {
-            if (!string.IsNullOrEmpty(m_url))
+            if (!string.IsNullOrEmpty(m_url) && !m_isInKioskMode)
             {
                 Process.Start(m_url);
             }
-        }
-
-        public void HandleScrollUpButtonClicked(object sender, RoutedEventArgs e)
-        {
-            m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset - 10);
-        }
-
-        public void HandleScrollDownButtonClicked(object sender, RoutedEventArgs e)
-        {
-            m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset + 10);
         }
     }
 }
