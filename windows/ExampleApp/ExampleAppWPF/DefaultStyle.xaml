@@ -38,7 +38,7 @@
     <Thickness x:Key="EegeoPOIViewContainerMargin" Left="0" Top="20" Right="0" Bottom="90"/>
     <System:Double x:Key="EegeoPOIViewContainerInnerWidth">440</System:Double>
     <Thickness x:Key="EegeoPOIViewContainerInnerMargin" Left="20" Top="17" Right="20" Bottom="20"/>
-    <System:Double x:Key="EegeoPOIViewContainerRow0Height">46</System:Double>
+    <GridLength x:Key="EegeoPOIViewContainerRow0Height">46</GridLength>
     <GridLength x:Key="EegeoPOIViewContainerRow2Height">48</GridLength>
 
     <Thickness x:Key="EegeoPOIViewTitleMargin" Left="0" Top="0" Right="0" Bottom="10"/>

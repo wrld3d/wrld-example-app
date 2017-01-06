@@ -388,7 +388,7 @@
                                     <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="0" VerticalAlignment="Bottom" Visibility="{DynamicResource TogglePinnedButtonDividerVisibility}"/>
                                 </Grid>
                             </Grid>
-                            <RepeatButton Grid.Row="1" Name="YelpPOIViewScrollUpButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Top" Margin="{DynamicResource POIViewScrollUpButtonMargin}">
+                            <RepeatButton Grid.Row="1" Name="POIViewScrollUpButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Top" Margin="{DynamicResource POIViewScrollUpButtonMargin}">
                                 <RepeatButton.Style>
                                     <Style TargetType="{x:Type RepeatButton}">
                                         <Style.Setters>
@@ -396,7 +396,7 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type RepeatButton}">
                                                         <Grid>
-                                                            <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="YelpPOIViewScrollDownButton" RenderTransformOrigin="0.5, 0.5">
+                                                            <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="POIViewScrollUpButton" RenderTransformOrigin="0.5, 0.5">
                                                                 <Image.RenderTransform>
                                                                     <RotateTransform Angle="180"/>
                                                                 </Image.RenderTransform>
@@ -404,7 +404,7 @@
                                                         </Grid>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsPressed" Value="True">
-                                                                <Setter TargetName="YelpPOIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
+                                                                <Setter TargetName="POIViewScrollUpButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
                                                             </Trigger>
 
                                                             <MultiTrigger>
@@ -413,7 +413,7 @@
                                                                     <Condition Property="IsMouseOver" Value="True"/>
                                                                 </MultiTrigger.Conditions>
                                                                 <MultiTrigger.Setters>
-                                                                    <Setter TargetName="YelpPOIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
+                                                                    <Setter TargetName="POIViewScrollUpButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
                                                                 </MultiTrigger.Setters>
                                                             </MultiTrigger>
 
@@ -428,7 +428,7 @@
                                     </Style>
                                 </RepeatButton.Style>
                             </RepeatButton>
-                            <RepeatButton Grid.Row="1" Name="YelpPOIViewScrollDownButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Bottom" Margin="0, 0, 0, 0">
+                            <RepeatButton Grid.Row="1" Name="POIViewScrollDownButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Bottom" Margin="0, 0, 0, 0">
                                 <RepeatButton.Style>
                                     <Style TargetType="{x:Type RepeatButton}">
                                         <Style.Setters>
@@ -436,11 +436,11 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type RepeatButton}">
                                                         <Grid>
-                                                            <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="YelpPOIViewScrollDownButton"/>
+                                                            <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="POIViewScrollDownButton"/>
                                                         </Grid>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsPressed" Value="True">
-                                                                <Setter TargetName="YelpPOIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
+                                                                <Setter TargetName="POIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
                                                             </Trigger>
 
                                                             <MultiTrigger>
@@ -449,7 +449,7 @@
                                                                     <Condition Property="IsMouseOver" Value="True"/>
                                                                 </MultiTrigger.Conditions>
                                                                 <MultiTrigger.Setters>
-                                                                    <Setter TargetName="YelpPOIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
+                                                                    <Setter TargetName="POIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
                                                                 </MultiTrigger.Setters>
                                                             </MultiTrigger>
 
