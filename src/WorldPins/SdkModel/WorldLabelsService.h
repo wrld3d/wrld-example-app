@@ -3,6 +3,7 @@
 #pragma once
 
 #include <map>
+#include <string>
 #include "Types.h"
 #include "WorldPins.h"
 #include "IWorldPinsService.h"
