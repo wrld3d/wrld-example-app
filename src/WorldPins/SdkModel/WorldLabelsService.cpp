@@ -7,6 +7,8 @@
 #include "IInteriorMarkerPickingService.h"
 #include "ILabelPicker.h"
 #include "ILabelAnchorFilter.h"
+#include <cstdlib>
+#include <sstream>
 
 namespace ExampleApp
 {
@@ -51,7 +53,9 @@ namespace ExampleApp
                                                           int visibilityMask)
             {
                 Eegeo::Pins::TPinId pinId = m_lastLabelId++;
-                std::string labelModelId = std::to_string(pinId);
+                std::stringstream ss;
+                ss << pinId;
+                std::string labelModelId = ss.str();
                 Eegeo::v3 offset = Eegeo::v3::Zero();
                 Eegeo::Labels::LabelModelCreationParams labelParams(labelModelId,
                                                                     m_labelAnchorCategory,
@@ -59,7 +63,8 @@ namespace ExampleApp
                                                                     worldPinFocusData.title,
                                                                     pinIconKey,
                                                                     location.ToECEF(),
-                                                                    offset);
+                                                                    offset,
+																	pinId);
                 labelParams.fitToSurface = true;
                 labelParams.interiorId = worldPinInteriorData.building;
                 labelParams.interiorFloorIndex = worldPinInteriorData.floor;
@@ -110,7 +115,7 @@ namespace ExampleApp
             
             bool WorldLabelsService::LabelHiddenPredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const
             {
-                WorldPinItemModel::WorldPinItemModelId pinId = std::stoi(anchoredLabel.GetId());
+                WorldPinItemModel::WorldPinItemModelId pinId = atoi(anchoredLabel.GetId().c_str());
                 if(m_worldPinItemModelMap.find(pinId) == m_worldPinItemModelMap.end())
                 {
                     return false;
@@ -210,7 +215,7 @@ namespace ExampleApp
                 }
                 
                 const Eegeo::Labels::IAnchoredLabel* pLabel = result.GetLabelModel();
-                WorldPinItemModel::WorldPinItemModelId pinId = std::stoi(pLabel->GetId());
+                WorldPinItemModel::WorldPinItemModelId pinId = atoi(pLabel->GetId().c_str());
                 SelectPin(pinId);
                 
                 return false;
