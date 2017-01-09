@@ -24,13 +24,14 @@ namespace ExampleApp
                 , m_platformHash(platformHash)
                 , m_platformArchitecture(platformArchitecture)
                 , m_aboutText(aboutText)
+                , m_indoorPositioningType("")
             {
-
+                
             }
 
             AboutPageViewModel::~AboutPageViewModel()
             {
-
+                
             }
 
             bool AboutPageViewModel::TryAcquireReactorControl()
@@ -52,6 +53,7 @@ namespace ExampleApp
                         << "\n\nPlatform version: " + m_platformVersion
                         << "\nPlatform hash: " + m_platformHash
                         << "\nPlatform runtime arch: " + m_platformArchitecture
+                        << m_indoorPositioningType
                         << "\n\n";
                 
                 return content.str();
@@ -104,6 +106,11 @@ namespace ExampleApp
             void AboutPageViewModel::RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback)
             {
                 m_closedCallbacks.RemoveCallback(closedCallback);
+            }
+            
+            void AboutPageViewModel::SetIndoorPositioningType(const std::string& indoorPositioningType)
+            {
+                m_indoorPositioningType = indoorPositioningType;
             }
         }
     }

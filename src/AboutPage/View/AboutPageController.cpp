@@ -33,6 +33,11 @@ namespace ExampleApp
                     m_viewModel.Close();
                 }
             }
+            
+            void AboutPageController::OnAboutPageIndoorPositionTypeMessageChanged(const AboutPage::AboutPageIndoorPositionTypeMessage& message)
+            {
+                m_viewModel.SetIndoorPositioningType(message.GetIndoorPositioningType());
+            }
 
             void AboutPageController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
@@ -57,16 +62,19 @@ namespace ExampleApp
                 , m_viewOpened(this, &AboutPageController::OnOpen)
                 , m_viewCloseTapped(this, &AboutPageController::OnCloseTapped)
                 , m_messageBus(messageBus)
+                , m_aboutPageIndoorPositionTypeMessage(this, &AboutPageController::OnAboutPageIndoorPositionTypeMessageChanged)
                 , m_appModeChangedHandler(this, &AboutPageController::OnAppModeChangedMessage)
             {
                 m_view.InsertCloseTappedCallback(m_viewCloseTapped);
                 m_viewModel.InsertClosedCallback(m_viewClosed);
                 m_viewModel.InsertOpenedCallback(m_viewOpened);
+                m_messageBus.SubscribeUi(m_aboutPageIndoorPositionTypeMessage);
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
             }
 
             AboutPageController::~AboutPageController()
             {
+                m_messageBus.UnsubscribeUi(m_aboutPageIndoorPositionTypeMessage);
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_viewModel.RemoveOpenedCallback(m_viewOpened);
                 m_viewModel.RemoveClosedCallback(m_viewClosed);

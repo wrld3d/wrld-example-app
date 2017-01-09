@@ -196,7 +196,9 @@ AppHost::AppHost(
                                                                                                                                *m_pCurrentLocationService,
                                                                                                                                *m_piOSLocationService,
                                                                                                                                m_pIndoorAtlasLocationModule->GetLocationService(),
-                                                                                                                               m_pSenionLabLocationModule->GetLocationService());
+                                                                                                                               m_pSenionLabLocationModule->GetLocationService(),
+                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                               m_messageBus);
     
     CreateApplicationViewModules(screenProperties,applicationConfiguration);
 
