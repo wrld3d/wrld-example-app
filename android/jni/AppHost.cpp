@@ -527,8 +527,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
                                  m_nativeState,
                                  app.AboutPageModule().GetAboutPageViewModel(),
-                                 *m_pAndroidFlurryMetricsService
-                             );
+                                 *m_pAndroidFlurryMetricsService,
+								 m_messageBus);
 
 
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(

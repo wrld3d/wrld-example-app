@@ -27,6 +27,7 @@ namespace ExampleApp
                 const std::string m_platformArchitecture;
                 const std::string m_aboutText;
                 std::string m_appName;
+                std::string m_indoorPositioningType;
 
             public:
                 AboutPageViewModel(
@@ -62,6 +63,8 @@ namespace ExampleApp
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
 
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+                
+                void SetIndoorPositioningType(const std::string& indoorPositioningType);
             };
         }
     }
