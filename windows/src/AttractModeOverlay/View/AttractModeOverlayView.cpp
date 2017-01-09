@@ -18,16 +18,12 @@ namespace ExampleApp
         namespace View
         {
             AttractModeOverlayView::AttractModeOverlayView(WindowsNativeState& nativeState,
-                                                           ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                           ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                                            ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* pVirtualKeyboard,
                                                            ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
                                                            ExampleAppMessaging::TMessageBus& messageBus)
                 : m_messageBus(messageBus)
                 , m_appModeChangedCallback(this, &AttractModeOverlayView::OnAppModeChanged)
                 , m_nativeState(nativeState)
-                , m_searchMenuViewModel(searchMenuViewModel)
-                , m_settingsMenuViewModel(settingsMenuViewModel)
                 , m_myPinCreationDetailsViewModel(myPinCreationDetailsViewModel)
                 , m_pVirtualKeyboard(pVirtualKeyboard)
             {
@@ -53,8 +49,6 @@ namespace ExampleApp
                 if (message.GetAppMode() == AppModes::SdkModel::AppMode::AttractMode)
                 {
                     m_myPinCreationDetailsViewModel.Close();
-                    m_searchMenuViewModel.RemoveFromScreen();
-                    m_settingsMenuViewModel.RemoveFromScreen();
                     if (m_pVirtualKeyboard != nullptr)
                     {
                         m_pVirtualKeyboard->HideVirtualKeyboard();
@@ -63,8 +57,6 @@ namespace ExampleApp
                 }
                 else
                 {
-                    m_searchMenuViewModel.AddToScreen();
-                    m_settingsMenuViewModel.AddToScreen();
                     mOnAttractModeStop();
                 }
             }

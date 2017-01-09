@@ -4,6 +4,7 @@
 
 #include "AppModeChangedMessage.h"
 #include "IModalBackgroundView.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -19,23 +20,14 @@ namespace ExampleApp
             : Menu::View::MenuController(menuModel, menuViewModel, menuView, messageBus)
             , m_messageBus(messageBus)
             , m_modalBackgroundView(modalBackgroundView)
-            , m_appModeChangedCallback(this, &SettingsMenuController::OnAppModeChanged)
             , m_onModalBackgroundTappedCallback(this, & SettingsMenuController::OnModalBackgroundTapped)
             {
                 m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
-                
-                m_messageBus.SubscribeUi(m_appModeChangedCallback);
             }
             
             SettingsMenuController::~SettingsMenuController()
             {
-                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
-                
                 m_modalBackgroundView.RemoveTappedCallback(m_onModalBackgroundTappedCallback);
-            }
-            
-            void SettingsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
-            {
             }
             
             bool SettingsMenuController::TryDrag()

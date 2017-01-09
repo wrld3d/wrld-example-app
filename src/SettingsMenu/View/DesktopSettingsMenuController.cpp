@@ -20,20 +20,16 @@ namespace ExampleApp
             : Menu::View::MenuController(menuModel, menuViewModel, menuView, messageBus)
             , m_messageBus(messageBus)
             , m_modalBackgroundView(modalBackgroundView)
-            , m_appModeChangedCallback(this, &DesktopSettingsMenuController::OnAppModeChanged)
             , m_onModalBackgroundTappedCallback(this, & DesktopSettingsMenuController::OnModalBackgroundTapped)
             , m_appModeAllowsOpen(true)
             , m_poiClosedHandler(this, &DesktopSettingsMenuController::OnSearchResultPoiViewClosedMessage)
             , m_poiOpenedHandler(this, &DesktopSettingsMenuController::OnSearchResultPoiViewOpenedMessage)
-            , m_currentAppMode(AppModes::SdkModel::AppMode::WorldMode)
             , m_onViewOpenedCallback(this, &DesktopSettingsMenuController::OnSearchMenuOpened)
             , m_onViewClosedCallback(this, &DesktopSettingsMenuController::OnSearchMenuClosed)
             , m_searchMenuView(searchMenuView)
             {
                 m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
                 
-                m_messageBus.SubscribeUi(m_appModeChangedCallback);
-
                 m_messageBus.SubscribeNative(m_poiClosedHandler);
                 m_messageBus.SubscribeNative(m_poiOpenedHandler);
 
@@ -46,8 +42,6 @@ namespace ExampleApp
             
             DesktopSettingsMenuController::~DesktopSettingsMenuController()
             {
-                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
-
                 m_messageBus.UnsubscribeNative(m_poiOpenedHandler);
                 m_messageBus.UnsubscribeNative(m_poiClosedHandler);
                 
@@ -55,16 +49,6 @@ namespace ExampleApp
 
                 m_searchMenuView.RemoveOnViewOpened(m_onViewOpenedCallback);
                 m_searchMenuView.RemoveOnViewClosed(m_onViewClosedCallback);
-            }
-            
-            void DesktopSettingsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
-            {
-                m_currentAppMode = message.GetAppMode();
-
-                if (!m_viewModel.IsFullyClosed())
-                {
-                    m_viewModel.Close();
-                }
             }
             
             bool DesktopSettingsMenuController::TryDrag()

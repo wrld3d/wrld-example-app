@@ -40,7 +40,6 @@ namespace ExampleApp
             , m_onSearchCallback(this, &SearchMenuController::OnSearch)
             , m_onSearchClearedCallback(this, &SearchMenuController::OnSearchCleared)
             , m_onSearchItemSelectedCallback(this, &SearchMenuController::OnSearchItemSelected)
-            , m_appModeChangedCallback(this, &SearchMenuController::OnAppModeChanged)
             , m_onModalBackgroundTappedCallback(this, &SearchMenuController::OnModalBackgroundTapped)
             {
                 m_searchMenuView.InsertSearchPeformedCallback(m_onSearchCallback);
@@ -56,7 +55,6 @@ namespace ExampleApp
                 
                 m_messageBus.SubscribeUi(m_performedQueryHandler);
                 m_messageBus.SubscribeUi(m_receivedQueryResponseHandler);
-                m_messageBus.SubscribeUi(m_appModeChangedCallback);
 
                 const size_t numSections = m_viewModel.SectionsCount();
                 std::vector<Menu::View::IMenuSectionViewModel*> sections;
@@ -73,7 +71,6 @@ namespace ExampleApp
             
             SearchMenuController::~SearchMenuController()
             {
-                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
                 m_messageBus.UnsubscribeUi(m_receivedQueryResponseHandler);
                 m_messageBus.UnsubscribeUi(m_performedQueryHandler);
                 
@@ -147,11 +144,6 @@ namespace ExampleApp
             void SearchMenuController::OnSearch(const std::string& searchQuery)
             {
                 m_messageBus.Publish(SearchMenuPerformedSearchMessage(searchQuery, false, false));
-            }
-            
-            void SearchMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
-            {
-                
             }
             
             bool SearchMenuController::TryDrag()

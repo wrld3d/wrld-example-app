@@ -24,10 +24,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 
-                Eegeo::Helpers::TCallback1<SettingsMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback0<SettingsMenuController> m_onModalBackgroundTappedCallback;
-                
-                void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 
                 bool TryDrag();
                 
