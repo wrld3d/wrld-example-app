@@ -62,7 +62,7 @@
 
                         <Storyboard x:Key="SlideInNewItems">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,-42,0,0" />
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="{DynamicResource SearchMenuListItemStoryboardMargin}" />
                                 <SplineThicknessKeyFrame KeyTime="{StaticResource shutterAnimEndKeyTime}" Value="0,0,0,0" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
@@ -71,7 +71,7 @@
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,0,0,0" />
                                 <SplineThicknessKeyFrame KeyTime="{StaticResource shutterAnimEndKeyTime}" Value="0,0,0,0" />
-                                <SplineThicknessKeyFrame KeyTime="{StaticResource itemCollapseEndKeyTime}" Value="0,-43,0,0" />
+                                <SplineThicknessKeyFrame KeyTime="{StaticResource itemCollapseEndKeyTime}" Value="{DynamicResource SearchMenuListItemStoryboardMargin}" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
@@ -175,7 +175,7 @@
                                                                     <Condition Property="IsPressed" Value="False" />
                                                                 </MultiTrigger.Conditions>
                                                                 <MultiTrigger.Setters>
-                                                                    <Setter TargetName="SearchButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                                                                    <Setter TargetName="SearchButtonGrid" Property="Background" Value="{DynamicResource MenuButtonOverColour}"/>
                                                                 </MultiTrigger.Setters>
                                                             </MultiTrigger>
                                                         </ControlTemplate.Triggers>
@@ -345,16 +345,43 @@
                                                                                 </Storyboard>
                                                                             </BeginStoryboard>
                                                                         </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="TouchDown">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseDownColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="MouseLeftButtonUp">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource SearchMenuListItemOverColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
                                                                         <EventTrigger RoutedEvent="MouseEnter">
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
-                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseOverColour}"/>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource SearchMenuListItemOverColour}"/>
                                                                                     </ObjectAnimationUsingKeyFrames>
                                                                                 </Storyboard>
                                                                             </BeginStoryboard>
                                                                         </EventTrigger>
                                                                         <EventTrigger RoutedEvent="MouseLeave">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemDefaultColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="TouchUp">
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
@@ -375,8 +402,8 @@
                                                                     </StackPanel.Resources>
                                                                     <Image Source="{Binding Path=Icon}" Width="{DynamicResource SearchResultPanelIconSize}" Height="{DynamicResource SearchResultPanelIconSize}" VerticalAlignment="Center" Margin="{DynamicResource SearchResultPanelIconMargin}" RenderOptions.BitmapScalingMode="NearestNeighbor"/>
                                                                     <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Width="{DynamicResource SearchResultPanelStackPanelWidth}">
-                                                                        <TextBlock Text="{Binding Path=Name}" FontSize="{DynamicResource SearchResultPanelTitleFontSize}" Foreground="Black" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="{DynamicResource SearchResultPanelTitleMargin}" TextTrimming="CharacterEllipsis"/>
-                                                                        <TextBlock Text="{Binding Path=Details}" Visibility="{Binding Path=DetailVisibility}" FontSize="{DynamicResource SearchResultPanelSubTitleFontSize}" Foreground="{StaticResource DarkGrey}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="{DynamicResource SearchResultPanelSubTitleMargin}" TextTrimming="CharacterEllipsis"/>
+                                                                        <TextBlock Text="{Binding Path=Name}" FontSize="{DynamicResource SearchResultPanelTitleFontSize}" Foreground="{StaticResource SubMenuItemTitleColour}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="{DynamicResource SearchResultPanelTitleMargin}" TextTrimming="CharacterEllipsis"/>
+                                                                        <TextBlock Text="{Binding Path=Details}" Visibility="{Binding Path=DetailVisibility}" FontSize="{DynamicResource SearchResultPanelSubTitleFontSize}" Foreground="{StaticResource SubMenuItemSubtitleColour}" MaxWidth="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=Width}" Margin="{DynamicResource SearchResultPanelSubTitleMargin}" TextTrimming="CharacterEllipsis"/>
                                                                     </StackPanel>
                                                                 </StackPanel>
                                                             </Grid>
@@ -397,7 +424,6 @@
                                             </ListBox>
                                         </ScrollViewer>
 
-                                    
                                         <Grid Name="SearchResultsButtonAndFadeContainer" Visibility="Collapsed">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
@@ -470,9 +496,22 @@
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
 
                                                 <DataTemplate DataType="{x:Type local:MenuListItem}">
-                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="{DynamicResource MenuListItemHeight}" Background="{StaticResource Gold}" Width="{DynamicResource MenuListItemWidthSearch}">
+                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="{DynamicResource MenuListItemHeight}" Background="{StaticResource Gold}" Width="{DynamicResource MenuListItemWidthSearch}" IsManipulationEnabled="True">
                                                         <Grid.Triggers>
                                                             <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_Down_Colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemTitle" Storyboard.TargetProperty="Foreground">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                            <EventTrigger RoutedEvent="TouchDown">
                                                                 <BeginStoryboard>
                                                                     <Storyboard>
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
@@ -489,7 +528,7 @@
                                                                 <BeginStoryboard>
                                                                     <Storyboard>
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource MenuListItemOverColour}"/>
                                                                         </ObjectAnimationUsingKeyFrames>
 
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemTitle" Storyboard.TargetProperty="Foreground">
@@ -502,12 +541,25 @@
                                                                 <BeginStoryboard>
                                                                     <Storyboard>
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_Over_Colour}"/>
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource MenuListItemOverColour}"/>
                                                                         </ObjectAnimationUsingKeyFrames>
                                                                     </Storyboard>
                                                                 </BeginStoryboard>
                                                             </EventTrigger>
                                                             <EventTrigger RoutedEvent="MouseLeave">
+                                                                <BeginStoryboard>
+                                                                    <Storyboard>
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource PrimaryBG_colour}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+
+                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemTitle" Storyboard.TargetProperty="Foreground">
+                                                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource LightGrey}"/>
+                                                                        </ObjectAnimationUsingKeyFrames>
+                                                                    </Storyboard>
+                                                                </BeginStoryboard>
+                                                            </EventTrigger>
+                                                            <EventTrigger RoutedEvent="TouchUp">
                                                                 <BeginStoryboard>
                                                                     <Storyboard>
                                                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MenuItemGrid" Storyboard.TargetProperty="Background">
@@ -613,9 +665,18 @@
                                                                     <ColumnDefinition Width="*"/>
                                                                     <ColumnDefinition Width="Auto"/>
                                                                 </Grid.ColumnDefinitions>
-                                                                <StackPanel Name="SubMenuItemPanel" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="{DynamicResource SubMenuListItemWidthSearch}">
+                                                                <StackPanel Name="SubMenuItemPanel" Orientation="Horizontal" HorizontalAlignment="Stretch"  Grid.Column="0" Background="{StaticResource SubMenuItemDefaultColour}" Width="{DynamicResource SubMenuListItemWidthSearch}" IsManipulationEnabled="True">
                                                                     <StackPanel.Triggers>
                                                                         <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseDownColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="TouchDown">
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
@@ -628,7 +689,7 @@
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
-                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseOverColour}"/>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource SubMenuListItemOverColour}"/>
                                                                                     </ObjectAnimationUsingKeyFrames>
                                                                                 </Storyboard>
                                                                             </BeginStoryboard>
@@ -637,12 +698,21 @@
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
-                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemMouseOverColour}"/>
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource SubMenuListItemOverColour}"/>
                                                                                     </ObjectAnimationUsingKeyFrames>
                                                                                 </Storyboard>
                                                                             </BeginStoryboard>
                                                                         </EventTrigger>
                                                                         <EventTrigger RoutedEvent="MouseLeave">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
+                                                                                        <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource SubMenuItemDefaultColour}"/>
+                                                                                    </ObjectAnimationUsingKeyFrames>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="TouchUp">
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SubMenuItemPanel" Storyboard.TargetProperty="Background">
