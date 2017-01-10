@@ -14,6 +14,7 @@ namespace ExampleAppWPF.VirtualKeyboard
     using System.Windows.Input;
 
     public delegate void CustomKeyEvent(string key);
+    public delegate void ControlKeyEvent(int key);
 
     [TemplateVisualState(Name = VisualStateQuertyName, GroupName = VisualStateGroupKeyboardLayoutName)]
     [TemplateVisualState(Name = VisualStateNumericName, GroupName = VisualStateGroupKeyboardLayoutName)]
@@ -34,6 +35,7 @@ namespace ExampleAppWPF.VirtualKeyboard
         #region Template Parts
 
         public event CustomKeyEvent CustomKeyUp;
+        public event ControlKeyEvent ControlKeyUp;
 
         private static List<VirtualKeyboardButton> KeyboardButtons = new List<VirtualKeyboardButton>();
 
@@ -214,6 +216,14 @@ namespace ExampleAppWPF.VirtualKeyboard
             }
         }
 
+        private void OnControlKeyEvent(KeysEx controlInputValue)
+        {
+            if (ControlKeyUp != null)
+            {
+                ControlKeyUp((int)controlInputValue);
+            }
+        }
+
         private void DisabledKeys_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var disabledKeyArray = (from String disabledKey in e.NewItems
@@ -278,6 +288,7 @@ namespace ExampleAppWPF.VirtualKeyboard
                 case VirtualKeyboardButton.KeyType.Control:
                     VirtualKeyboardControlButton controlButton = (VirtualKeyboardControlButton)key;
                     VirtualKeyboardService.Instance.SendKey((KeysEx)controlButton.GetKeyControlInputValue());
+                    OnControlKeyEvent((KeysEx)controlButton.GetKeyControlInputValue());
                     break;
 
                 case VirtualKeyboardButton.KeyType.Special:
