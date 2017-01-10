@@ -1049,6 +1049,9 @@
   <ItemGroup>
     <Resource Include="Assets\shift_key.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\shift_key_down.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r /d
