@@ -83,7 +83,7 @@
     <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowWorkingGroupPOIViewReviewsFontSize">26</System:Double>
-    <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <!-- Swallow Person POI View -->
     <ImageSource x:Key="SwallowPersonPOIViewIconImage">/Assets/icon1_person_POI.png</ImageSource>
@@ -97,25 +97,25 @@
 
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsPhoneMargin" Left="5" Top="15" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowPersonPOIViewLowerDetailsPhoneFontSize">26</System:Double>
-    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsPhoneTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsPhoneTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
     
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressMargin" Left="5" Top="15" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowPersonPOIViewLowerDetailsAddressFontSize">26</System:Double>
-    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
     
     <Thickness x:Key="SwallowPOIViewDetailsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
 
     <Thickness x:Key="SwallowPersonPOIViewTagsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowPersonPOIViewTagsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowPersonPOIViewTagsFontSize">26</System:Double>
-    <Thickness x:Key="SwallowPersonPOIViewTagsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewTagsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <Thickness x:Key="SwallowPOIViewReviewsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
     <Thickness x:Key="SwallowPersonPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowPersonPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowPersonPOIViewReviewsFontSize">26</System:Double>
-    <Thickness x:Key="SwallowPersonPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <!-- Swallow Facility POI View -->
     <Thickness x:Key="SwallowFacilityPOIViewTitleTextMargin" Left="25" Top="10" Right="0" Bottom="0"/>
@@ -126,7 +126,7 @@
     <Thickness x:Key="SwallowFacilityPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowFacilityPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowFacilityPOIViewReviewsFontSize">26</System:Double>
-    <Thickness x:Key="SwallowFacilityPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowFacilityPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <!-- Swallow Meeting Room POI View --> 
     <Thickness x:Key="SwallowMeetingRoomPOIViewTitleTextMargin" Left="15" Top="6" Right="0" Bottom="-10"/>
@@ -166,7 +166,7 @@
     <Thickness x:Key="SwallowDepartmentPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowDepartmentPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowDepartmentPOIViewReviewsFontSize">26</System:Double>
-    <Thickness x:Key="SwallowDepartmentPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowDepartmentPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
     
     <!-- Eegeo POI View -->
     <System:Double x:Key="EegeoPOIViewContainerWidth">540</System:Double>
