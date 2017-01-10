@@ -8,6 +8,8 @@
     </ResourceDictionary.MergedDictionaries>
 
     <SolidColorBrush x:Key="NumKeyBG_Colour" Color="#08408a" />
+    <SolidColorBrush x:Key="KeyForeground_Colour" Color="#ffffff" />
+    <SolidColorBrush x:Key="KeyForeground_Disabled_Colour" Color="#88aad7" />
 
     <Style x:Key="KeyboardButtonStyleBase" TargetType="{x:Type Button}">
         <Setter Property="Margin" Value="5" />
@@ -314,31 +316,28 @@
 
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardStackedButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.AutoLabel="False"
-                                                              pk:VirtualKeyboardInputButton.KeyInputValue="!"
-                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue=",">
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue=","
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="!">
                                         <StackPanel>
-                                            <TextBlock>
+                                            <TextBlock Text="!">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="!" />
-                                                        <Setter Property="Margin" Value="0" />
-                                                        <Setter Property="Padding" Value="0" />
+                                                        <Setter Property="Foreground" Value="{StaticResource KeyForeground_Disabled_Colour}" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsShiftPressed}" Value="True">
-                                                                <Setter Property="Text" Value="," />
+                                                                <Setter Property="Foreground" Value="{StaticResource KeyForeground_Colour}" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
 
-                                            <TextBlock>
+                                            <TextBlock Text=",">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="," />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsShiftPressed}" Value="True">
-                                                                <Setter Property="Text" Value="!" />
+                                                                <Setter Property="Foreground" Value="{StaticResource KeyForeground_Disabled_Colour}" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -349,29 +348,28 @@
 
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardStackedButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.AutoLabel="False"
-                                                              pk:VirtualKeyboardInputButton.KeyInputValue="?"
-                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue=".">
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="."
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="?">
                                         <StackPanel>
-                                            <TextBlock>
+                                            <TextBlock Text="?">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="?" />
+                                                        <Setter Property="Foreground" Value="{StaticResource KeyForeground_Disabled_Colour}" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsShiftPressed}" Value="True">
-                                                                <Setter Property="Text" Value="." />
+                                                                <Setter Property="Foreground" Value="{StaticResource KeyForeground_Colour}" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
 
-                                            <TextBlock>
+                                            <TextBlock Text=".">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="." />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsShiftPressed}" Value="True">
-                                                                <Setter Property="Text" Value="?" />
+                                                                <Setter Property="Foreground" Value="{StaticResource KeyForeground_Disabled_Colour}" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
