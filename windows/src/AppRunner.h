@@ -25,6 +25,7 @@ public:
     void StopUpdatingNativeBeforeTeardown();
     void DestroyApplicationUi();
 
+    void HandleMousePreviewEvent(const Eegeo::Windows::Input::MouseInputEvent& event);
     void HandleMouseEvent(const Eegeo::Windows::Input::MouseInputEvent& message);
     void HandleKeyboardDownEvent(char keyCode);
     void HandleKeyboardUpEvent(char keyCode);

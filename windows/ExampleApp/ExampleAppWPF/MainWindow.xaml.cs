@@ -141,6 +141,7 @@ namespace ExampleAppWPF
             KeyDown += OnKeyDown;
 
             MouseDown += MainWindow_MouseDown;
+            PreviewMouseDown += (o, e) => m_mapImage.HandlePreviewMouseDown((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers);
             MouseUp += MainWindow_MouseUp;
 
             TouchDown += OnTouchDown;
