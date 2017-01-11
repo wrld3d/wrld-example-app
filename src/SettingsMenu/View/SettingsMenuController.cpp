@@ -18,7 +18,6 @@ namespace ExampleApp
                                                            Modality::View::IModalBackgroundView& modalBackgroundView,
                                                            ExampleAppMessaging::TMessageBus& messageBus)
             : Menu::View::MenuController(menuModel, menuViewModel, menuView, messageBus)
-            , m_messageBus(messageBus)
             , m_modalBackgroundView(modalBackgroundView)
             , m_onModalBackgroundTappedCallback(this, & SettingsMenuController::OnModalBackgroundTapped)
             {

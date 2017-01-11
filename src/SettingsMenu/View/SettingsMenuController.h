@@ -21,7 +21,6 @@ namespace ExampleApp
             class SettingsMenuController : public Menu::View::MenuController
             {
             private:
-                ExampleAppMessaging::TMessageBus& m_messageBus;
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 
                 Eegeo::Helpers::TCallback0<SettingsMenuController> m_onModalBackgroundTappedCallback;
