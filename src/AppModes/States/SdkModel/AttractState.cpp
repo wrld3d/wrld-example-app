@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
 #include <algorithm>
 
@@ -20,6 +20,7 @@
 #include "BidirectionalBus.h"
 #include "WorldPinVisibility.h"
 #include "FlattenButtonModel.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -44,7 +45,8 @@ namespace ExampleApp
                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel)
+                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
+                                           Eegeo::Location::NavigationService& navigationService)
                 : m_appModeModel(appModeModel)
                 , m_cameraController(cameraController)
                 , m_userIdleService(userIdleService)
@@ -54,6 +56,7 @@ namespace ExampleApp
                 , m_cameraHandle(0)
                 , m_messageBus(messageBus)
                 , m_flattenButtonModel(flattenButtonModel)
+                , m_navigationService(navigationService)
                 {
                     std::for_each(cameraPositionSplinePoints.begin(), cameraPositionSplinePoints.end(),
                                   [this](const Eegeo::Space::LatLongAltitude& p) { m_cameraPositionSpline.AddPoint(p.ToECEF()); });
@@ -96,6 +99,7 @@ namespace ExampleApp
                     m_cameraSplinePlaybackController.Stop();
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
+                    m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
                 }
             }
         }
