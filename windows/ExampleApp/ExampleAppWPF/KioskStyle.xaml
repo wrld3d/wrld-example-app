@@ -5,6 +5,10 @@
     xmlns:System="clr-namespace:System;assembly=mscorlib" 
     mc:Ignorable="d">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <!-- POI View -->
     <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOffImage">/Assets/button_remove_pin_off.png</ImageSource>
     <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOnImage">/Assets/button_remove_pin_on.png</ImageSource>
@@ -79,7 +83,7 @@
     <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowWorkingGroupPOIViewReviewsFontSize">26</System:Double>
-    <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <!-- Swallow Person POI View -->
     <ImageSource x:Key="SwallowPersonPOIViewIconImage">/Assets/icon1_person_POI.png</ImageSource>
@@ -93,25 +97,25 @@
 
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsPhoneMargin" Left="5" Top="15" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowPersonPOIViewLowerDetailsPhoneFontSize">26</System:Double>
-    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsPhoneTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsPhoneTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
     
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressMargin" Left="5" Top="15" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowPersonPOIViewLowerDetailsAddressFontSize">26</System:Double>
-    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
     
     <Thickness x:Key="SwallowPOIViewDetailsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
 
     <Thickness x:Key="SwallowPersonPOIViewTagsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowPersonPOIViewTagsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowPersonPOIViewTagsFontSize">26</System:Double>
-    <Thickness x:Key="SwallowPersonPOIViewTagsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewTagsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <Thickness x:Key="SwallowPOIViewReviewsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
     <Thickness x:Key="SwallowPersonPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowPersonPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowPersonPOIViewReviewsFontSize">26</System:Double>
-    <Thickness x:Key="SwallowPersonPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowPersonPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <!-- Swallow Facility POI View -->
     <Thickness x:Key="SwallowFacilityPOIViewTitleTextMargin" Left="25" Top="10" Right="0" Bottom="0"/>
@@ -122,7 +126,7 @@
     <Thickness x:Key="SwallowFacilityPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowFacilityPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowFacilityPOIViewReviewsFontSize">26</System:Double>
-    <Thickness x:Key="SwallowFacilityPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowFacilityPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <!-- Swallow Meeting Room POI View --> 
     <Thickness x:Key="SwallowMeetingRoomPOIViewTitleTextMargin" Left="15" Top="6" Right="0" Bottom="-10"/>
@@ -162,7 +166,7 @@
     <Thickness x:Key="SwallowDepartmentPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowDepartmentPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowDepartmentPOIViewReviewsFontSize">26</System:Double>
-    <Thickness x:Key="SwallowDepartmentPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="SwallowDepartmentPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
     
     <!-- Eegeo POI View -->
     <System:Double x:Key="EegeoPOIViewContainerWidth">540</System:Double>
@@ -197,12 +201,12 @@
     
     <Thickness x:Key="EegeoPOIViewDetailsPhoneMargin" Left="5" Top="0" Right="0" Bottom="15"/>
     <System:Double x:Key="EegeoPOIViewDetailsPhoneFontSize">26</System:Double>
-    <Thickness x:Key="EegeoPOIViewDetailsPhoneTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewDetailsPhoneTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
     
     <Thickness x:Key="EegeoPOIViewDetailsAddressMargin" Left="5" Top="0" Right="0" Bottom="15"/>
     <Thickness x:Key="EegeoPOIViewDetailsAddressIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="EegeoPOIViewDetailsAddressFontSize">26</System:Double>
-    <Thickness x:Key="EegeoPOIViewDetailsAddressTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewDetailsAddressTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
     
     <Visibility x:Key="EegeoPOIViewDetailsWebLinksVisibility">Collapsed</Visibility>
     
@@ -210,20 +214,20 @@
     <Thickness x:Key="EegeoPOIViewDetailsTagsMargin" Left="5" Top="0" Right="0" Bottom="15"/>
     <Thickness x:Key="EegeoPOIViewDetailsTagsIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="EegeoPOIViewDetailsTagsFontSize">26</System:Double>
-    <Thickness x:Key="EegeoPOIViewDetailsTagsTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewDetailsTagsTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
     
     <Thickness x:Key="EegeoPOIViewDetailsReviewDividerMargin" Left="0" Top="0" Right="0" Bottom="15"/>
     <Thickness x:Key="EegeoPOIViewDetailsReviewMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="EegeoPOIViewDetailsReviewIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="EegeoPOIViewDetailsReviewFontSize">26</System:Double>
-    <Thickness x:Key="EegeoPOIViewDetailsReviewTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewDetailsReviewTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <Visibility x:Key="EegeoPOIViewQRCodeVisibility">Visible</Visibility>
     <Thickness x:Key="EegeoPOIViewQRCodeDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
     <Thickness x:Key="EegeoPOIViewQRCodeMargin" Left="5" Top="0" Right="0" Bottom="30"/>
     <System:Double x:Key="EegeoPOIViewQRCodeFontSize">26</System:Double>
     <System:String x:Key="EegeoPOIViewQRCodeText">Scan the QR Code with your device to find out more.</System:String>
-    <Thickness x:Key="EegeoPOIViewQRCodeTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewQRCodeTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
     <ImageSource x:Key="EegeoPOIViewQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
     <System:Double x:Key="EegeoPOIViewQRCodeImageSize">176</System:Double>
     <Thickness x:Key="EegeoPOIViewQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="0"/>
@@ -281,27 +285,27 @@
     <System:Double x:Key="YelpPOIViewLowerDetailsContainerHeight">280</System:Double>
     <Thickness x:Key="YelpPOIViewLowerDetailsPhoneMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="YelpPOIViewLowerDetailsPhoneFontSize">26</System:Double>
-    <Thickness x:Key="YelpPOIViewLowerDetailsPhoneTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewLowerDetailsPhoneTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="YelpPOIViewLowerDetailsAddressMargin" Left="5" Top="15" Right="0" Bottom="0"/>
     <System:Double x:Key="YelpPOIViewLowerDetailsAddressFontSize">26</System:Double>
-    <Thickness x:Key="YelpPOIViewLowerDetailsAddressTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewLowerDetailsAddressTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
     <Thickness x:Key="YelpPOIViewDetailsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
 
     <Thickness x:Key="YelpPOIViewTagsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="YelpPOIViewTagsFontSize">26</System:Double>
-    <Thickness x:Key="YelpPOIViewTagsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewTagsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <Thickness x:Key="YelpPOIViewReviewsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
     <Thickness x:Key="YelpPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="YelpPOIViewReviewsFontSize">26</System:Double>
-    <Thickness x:Key="YelpPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <Visibility x:Key="YelpPOIViewQRCodeVisibility">Visible</Visibility>
     <Thickness x:Key="YelpPOIViewQRCodeDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
     <Thickness x:Key="YelpPOIViewQRCodeMargin" Left="5" Top="0" Right="0" Bottom="30"/>
     <System:Double x:Key="YelpPOIViewQRCodeFontSize">26</System:Double>
     <System:String x:Key="YelpPOIViewQRCodeText">Scan the QR Code with your device to read the {0} review on Yelp.</System:String>
-    <Thickness x:Key="YelpPOIViewQRCodeTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewQRCodeTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
     <ImageSource x:Key="YelpPOIViewQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
     <System:Double x:Key="YelpPOIViewQRCodeImageSize">176</System:Double>
     <Thickness x:Key="YelpPOIViewQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="0"/>
@@ -317,8 +321,10 @@
     <System:Double x:Key="MenuIconSize">80</System:Double>
     <GridLength x:Key="MenuIconSizeGridLength">80</GridLength>
     <System:Double x:Key="MenuWidth">515</System:Double>
+    <SolidColorBrush x:Key="MenuButtonOverColour" Color="{Binding Color, Source={StaticResource PrimaryBG_colour}}"/>
 
     <!-- Menu List Item -->
+    <SolidColorBrush x:Key="MenuListItemOverColour" Color="{Binding Color, Source={StaticResource PrimaryBG_colour}}"/>
     <System:Double x:Key="MenuListItemInnerWidthSettings">465</System:Double>
     <System:Double x:Key="MenuListItemInnerWidthSearch">453</System:Double>
     <System:Double x:Key="MenuListItemHeight">54</System:Double>
@@ -337,6 +343,7 @@
     <Thickness x:Key="MenuListMarginSearch" Left="50" Top="0" Right="12" Bottom="0"/>
 
     <!-- SubMenu List Item -->
+    <SolidColorBrush x:Key="SubMenuListItemOverColour" Color="{Binding Color, Source={StaticResource SubMenuItemDefaultColour}}"/>
     <System:Double x:Key="SubMenuListItemWidthSettings">515</System:Double>
     <System:Double x:Key="SubMenuListItemWidthSearch">515</System:Double>
     <System:Double x:Key="SubMenuListItemHeight">51</System:Double>
@@ -368,15 +375,17 @@
     <Thickness x:Key="SettingsTitleTextMargin" Left="43" Top="0" Right="0" Bottom="0"/>
 
     <!-- Search Menu List Item -->
-    <System:Double x:Key="SearchMenuListItemHeight">43</System:Double>
+    <SolidColorBrush x:Key="SearchMenuListItemOverColour" Color="{Binding Color, Source={StaticResource SubMenuItemDefaultColour}}"/>
+    <Thickness x:Key="SearchMenuListItemStoryboardMargin" Left="0" Top="-64" Right="0" Bottom="0"/>
+    <System:Double x:Key="SearchMenuListItemHeight">64</System:Double>
     <System:Double x:Key="SearchResultPanelWidth">453</System:Double>
     <Thickness x:Key="SearchResultPanelMargin" Left="50" Top="0" Right="0" Bottom="0"/>
-    <System:Double x:Key="SearchResultPanelIconSize">36</System:Double>
+    <System:Double x:Key="SearchResultPanelIconSize">64</System:Double>
     <Thickness x:Key="SearchResultPanelIconMargin" Left="3" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="SearchResultPanelStackPanelWidth">349</System:Double>
-    <System:Double x:Key="SearchResultPanelTitleFontSize">13</System:Double>
-    <Thickness x:Key="SearchResultPanelTitleMargin" Left="5" Top="1" Right="0" Bottom="0"/>
-    <System:Double x:Key="SearchResultPanelSubTitleFontSize">11</System:Double>
+    <System:Double x:Key="SearchResultPanelTitleFontSize">23</System:Double>
+    <Thickness x:Key="SearchResultPanelTitleMargin" Left="5" Top="-6" Right="0" Bottom="0"/>
+    <System:Double x:Key="SearchResultPanelSubTitleFontSize">17</System:Double>
     <Thickness x:Key="SearchResultPanelSubTitleMargin" Left="5" Top="0" Right="0" Bottom="0"/>
 
     <!-- Search Menu -->
