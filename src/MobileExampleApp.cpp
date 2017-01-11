@@ -918,6 +918,7 @@ namespace ExampleApp
                                                                       m_applicationConfiguration.IsAttractModeEnabled(),
                                                                       m_applicationConfiguration.GetAttractModeTargetSplinePoints(),
                                                                       m_applicationConfiguration.GetAttractModePositionSplinePoints(),
+                                                                      m_applicationConfiguration.GetAttractModePlaybackSpeed(),
                                                                       m_screenProperties,
                                                                       m_messageBus,
                                                                       m_pFlattenButtonModule->GetFlattenButtonModel(),

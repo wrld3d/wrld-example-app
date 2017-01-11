@@ -11,6 +11,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace
+            {
+                static const double DefaultAttractModePlaybackSpeed = 0.03;
+            }
+
             ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig,
                                                                                    IApplicationConfigurationBuilder& builder)
             : m_defaultConfig(defaultConfig)
@@ -192,6 +197,10 @@ namespace ExampleApp
                 {
                     m_builder.SetAttractModePositionSplinePoints(ParseLatLongAltitudeArray(document["AttractModePositionSpline"]));
                 }
+
+                m_builder.SetAttractModePlaybackSpeed(document.HasMember("AttractModePlaybackSpeed")
+                    ? document["AttractModePlaybackSpeed"].GetDouble()
+                    : DefaultAttractModePlaybackSpeed);
 
                 if(document.HasMember("FixedIndoorLocation"))
                 {

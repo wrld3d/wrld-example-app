@@ -63,6 +63,7 @@ namespace ExampleApp
                                  Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                  const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                  const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
+                                 const float playbackSpeed,
                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,

@@ -48,7 +48,8 @@ namespace ExampleApp
                                                            const double fixedHeadingDegrees,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
-                                                           const long long attractModeTimeoutMs)
+                                                           const long long attractModeTimeoutMs,
+                                                           const double attractModePlaybackSpeed)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_embeddedThemeTexturePath(embeddedThemeTexturePath)
@@ -92,6 +93,7 @@ namespace ExampleApp
         , m_attractModeTargetSplinePoints(attractModeTargetSplinePoints)
         , m_attractModePositionSplinePoints(attractModePositionSplinePoints)
         , m_attractModeTimeoutMs(attractModeTimeoutMs)
+        , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
         {
             
         }
@@ -303,6 +305,11 @@ namespace ExampleApp
         const long long ApplicationConfiguration::GetAttractModeTimeoutMs() const
         {
             return m_attractModeTimeoutMs;
+        }
+
+        const double ApplicationConfiguration::GetAttractModePlaybackSpeed() const
+        {
+            return m_attractModePlaybackSpeed;
         }
 
         const bool ApplicationConfiguration::IsAttractModeEnabled() const

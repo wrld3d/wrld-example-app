@@ -52,6 +52,8 @@ namespace ExampleApp
                     const bool useLabels = false;
                     const bool useJapaneseFont = false;
 
+                    const double attractModePlaybackSpeed = 0.03;
+
                     return ApplicationConfiguration ("Eegeo Example App", 
                         emptyEegeoApiKey,
                         Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
@@ -94,7 +96,8 @@ namespace ExampleApp
                         180.0,
                         std::vector<Eegeo::Space::LatLongAltitude>(),
                         std::vector<Eegeo::Space::LatLongAltitude>(),
-                        0);
+                        0,
+                        attractModePlaybackSpeed);
                 }
             }
             

@@ -41,6 +41,7 @@ namespace ExampleApp
                                                            const bool attractModeEnabled,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
+                                                           const double attractModePlaybackSpeed,
                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
@@ -63,6 +64,7 @@ namespace ExampleApp
                 , m_attractModeEnabled(attractModeEnabled)
                 , m_cameraPositionSplinePoints(cameraPositionSplinePoints)
                 , m_cameraTargetSplinePoints(cameraTargetSplinePoints)
+                , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
                 , m_screenProperties(screenProperties)
                 , m_messageBus(messageBus)
                 , m_flattenButtonModel(flattenButtonModel)
@@ -110,6 +112,7 @@ namespace ExampleApp
                                                                                    m_resourceCeilingProvider,
                                                                                    m_cameraPositionSplinePoints,
                                                                                    m_cameraTargetSplinePoints,
+                                                                                   m_attractModePlaybackSpeed,
                                                                                    m_screenProperties,
                                                                                    m_messageBus,
                                                                                    m_flattenButtonModel,

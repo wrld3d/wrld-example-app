@@ -68,6 +68,7 @@ namespace ExampleApp
                 std::vector<Eegeo::Space::LatLongAltitude> m_attractModePositionSplinePoints;
 
                 long long m_attractModeTimeoutMs;
+                double m_attractModePlaybackSpeed;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -148,6 +149,7 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetAttractModeTargetSplinePoints(std::vector<Eegeo::Space::LatLongAltitude> points);
                 IApplicationConfigurationBuilder& SetAttractModePositionSplinePoints(std::vector<Eegeo::Space::LatLongAltitude> points);
                 IApplicationConfigurationBuilder& SetAttractModeTimeoutMs(const long long timeoutMs);
+                IApplicationConfigurationBuilder& SetAttractModePlaybackSpeed(const double playbackSpeed);
                 
                 std::string Decrypt(const std::string& message) const;
 

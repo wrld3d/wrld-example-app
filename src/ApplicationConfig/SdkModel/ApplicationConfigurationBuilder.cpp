@@ -294,6 +294,12 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetAttractModePlaybackSpeed(const double playbackSpeed)
+            {
+                m_attractModePlaybackSpeed = playbackSpeed;
+                return *this;
+            }
+
             std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
             {
                 return m_cipher.Decrypt(value);
@@ -359,7 +365,8 @@ namespace ExampleApp
                                                 m_fixedHeadingDegrees,
                                                 m_attractModeTargetSplinePoints,
                                                 m_attractModePositionSplinePoints,
-                                                m_attractModeTimeoutMs);
+                                                m_attractModeTimeoutMs,
+                                                m_attractModePlaybackSpeed);
             }
         }
     }

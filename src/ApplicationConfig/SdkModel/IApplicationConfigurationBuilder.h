@@ -97,6 +97,7 @@ namespace ExampleApp
                 virtual IApplicationConfigurationBuilder& SetAttractModeTargetSplinePoints(std::vector<Eegeo::Space::LatLongAltitude> points) = 0;
                 virtual IApplicationConfigurationBuilder& SetAttractModePositionSplinePoints(std::vector<Eegeo::Space::LatLongAltitude> points) = 0;
                 virtual IApplicationConfigurationBuilder& SetAttractModeTimeoutMs(const long long timeoutMs) = 0;
+                virtual IApplicationConfigurationBuilder& SetAttractModePlaybackSpeed(const double playbackSpeed) = 0;
             };
         }
     }
