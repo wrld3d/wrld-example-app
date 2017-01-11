@@ -1,6 +1,8 @@
 set(headers ${headers} ../src/AboutPage
 )
 set(currsources
+  ../src/AboutPage/AboutPageIndoorPositionTypeMessage.cpp
+  ../src/AboutPage/AboutPageIndoorPositionTypeMessage.h
   ../src/AboutPage/CMakeLists.txt
 )
 set(sources ${sources} ${currsources})

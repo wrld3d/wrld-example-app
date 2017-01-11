@@ -39,7 +39,6 @@ namespace ExampleApp
                         m_interiorsExplorerModel.ResumePreviousMapState();
                     }
                     
-                    m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(true);
                     m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
                     m_interiorSelectionModel.ClearSelection();
                 }
@@ -59,7 +58,7 @@ namespace ExampleApp
                 
                 void InteriorExplorerExitingState::Exit(int nextState)
                 {
-                    m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(false);
+                    
                 }
             }
             

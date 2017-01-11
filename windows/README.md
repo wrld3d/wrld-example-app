@@ -12,11 +12,11 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 - [Microsoft Visual Studio 2015](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)
 - [CMake](https://cmake.org/) (>= 3.1.1)
-- [Git for Windows](https://git-for-windows.github.io/)
+- [Git for Windows (MinGW shell)](https://git-for-windows.github.io/)
 
 ## Setup
 
-1.  Open a Git Bash terminal for the following commands.
+1.  Open a Git Bash (MinGW) terminal for the following commands.
 2.  In the root of the repo, run the command `./update.platform.sh -p windows` to download the latest eeGeo Windows SDK.
 	*	We recommend you run this step frequently to keep your SDK version up to date.
 3.  In the `windows` directory, run `mkdir build` to create a build directory.

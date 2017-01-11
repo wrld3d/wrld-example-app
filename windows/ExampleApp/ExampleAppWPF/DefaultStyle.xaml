@@ -4,7 +4,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:System="clr-namespace:System;assembly=mscorlib" 
     mc:Ignorable="d">
-    
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <!-- POI View -->
     <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOffImage">/Assets/button_remove_pin_off.png</ImageSource>
     <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOnImage">/Assets/button_remove_pin_on.png</ImageSource>
@@ -186,8 +190,10 @@
     <System:Double x:Key="MenuIconSize">36</System:Double>
     <GridLength x:Key="MenuIconSizeGridLength">36</GridLength>
     <System:Double x:Key="MenuWidth">250</System:Double>
+    <SolidColorBrush x:Key="MenuButtonOverColour" Color="{Binding Color, Source={StaticResource PrimaryBG_Over_Colour}}"/>
 
     <!-- Menu List Item -->
+    <SolidColorBrush x:Key="MenuListItemOverColour" Color="{Binding Color, Source={StaticResource PrimaryBG_Over_Colour}}"/>
     <System:Double x:Key="MenuListItemInnerWidthSettings">238</System:Double>
     <System:Double x:Key="MenuListItemInnerWidthSearch">225</System:Double>
     <System:Double x:Key="MenuListItemHeight">41</System:Double>
@@ -206,6 +212,7 @@
     <Thickness x:Key="MenuListMarginSearch" Left="13" Top="0" Right="0" Bottom="0"/>
     
     <!-- SubMenu List Item -->
+    <SolidColorBrush x:Key="SubMenuListItemOverColour" Color="{Binding Color, Source={StaticResource SubMenuItemMouseOverColour}}"/>
     <System:Double x:Key="SubMenuListItemWidthSettings">250</System:Double>
     <System:Double x:Key="SubMenuListItemWidthSearch">225</System:Double>
     <System:Double x:Key="SubMenuListItemHeight">39</System:Double>
@@ -237,6 +244,8 @@
     <Thickness x:Key="SettingsTitleTextMargin" Left="10" Top="0" Right="0" Bottom="0"/>
     
     <!-- Search Menu List Item -->
+    <SolidColorBrush x:Key="SearchMenuListItemOverColour" Color="{Binding Color, Source={StaticResource SubMenuItemMouseOverColour}}"/>
+    <Thickness x:Key="SearchMenuListItemStoryboardMargin" Left="0" Top="-43" Right="0" Bottom="0"/>
     <System:Double x:Key="SearchMenuListItemHeight">43</System:Double>
     <System:Double x:Key="SearchResultPanelWidth">225</System:Double>
     <Thickness x:Key="SearchResultPanelMargin" Left="20" Top="0" Right="0" Bottom="0"/>

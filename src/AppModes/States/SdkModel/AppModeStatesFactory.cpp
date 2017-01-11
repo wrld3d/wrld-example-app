@@ -80,7 +80,8 @@ namespace ExampleApp
                     const int toursCameraHandle = globalAppModeTransitionRules.GetToursCameraHandle();
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::WorldState)(m_appCameraController,
-                                                                             worldCameraHandle));
+                                                                             worldCameraHandle,
+                                                                             m_cameraFrustumStreamingVolume));
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
                                                                                         m_interiorSelectionModel,
