@@ -84,7 +84,8 @@ namespace ExampleApp
                     const int interiorCameraHandle = globalAppModeTransitionRules.GetInteriorsCameraHandle();
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::WorldState)(m_appCameraController,
-                                                                             worldCameraHandle));
+                                                                             worldCameraHandle,
+                                                                             m_cameraFrustumStreamingVolume));
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
                                                                                         m_interiorSelectionModel,

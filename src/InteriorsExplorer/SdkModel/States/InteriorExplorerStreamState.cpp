@@ -61,7 +61,7 @@ namespace ExampleApp
                 
                 void InteriorExplorerStreamState::Exit(int nextState)
                 {
-                    m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(false);
+                    
                 }
                 
             }
