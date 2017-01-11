@@ -88,7 +88,8 @@ set (CMAKE_SHARED_MODULE_LOADER_C_FLAG "-Wl,-bundle_loader,")
 set (CMAKE_SHARED_MODULE_LOADER_CXX_FLAG "-Wl,-bundle_loader,")
 set (CMAKE_FIND_LIBRARY_SUFFIXES ".dylib" ".so" ".a")
 
-string(REPLACE "-headerpad_max_install_names" " " REMOVE_FLAG_R ${CMAKE_CXX_FLAGS})
+set(REMOVE_FLAG_R "")
+string(REPLACE "-headerpad_max_install_names" "" "${REMOVE_FLAG_R}" "${CMAKE_CXX_FLAGS}")
 set(CMAKE_CXX_FLAGS ${REMOVE_FLAG_R})
 
 # hack: if a new cmake (which uses CMAKE_INSTALL_NAME_TOOL) runs on an old build tree
