@@ -53,7 +53,6 @@ namespace ExampleApp
                     const std::vector<Eegeo::Space::LatLongAltitude>& m_cameraPositionSplinePoints;
                     const std::vector<Eegeo::Space::LatLongAltitude>& m_cameraTargetSplinePoints;
                     const bool m_attractModeEnabled;
-                    const long long m_attractModeTimeoutMs;
                     const Eegeo::Rendering::ScreenProperties& m_screenProperties;
 
                     ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -79,7 +78,6 @@ namespace ExampleApp
                                          Eegeo::Input::IUserIdleService& userIdleService,
                                          Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                          const bool attractModeEnabled,
-                                         const long long attractModeTimeout,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,

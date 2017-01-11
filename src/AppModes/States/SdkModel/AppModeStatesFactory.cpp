@@ -39,7 +39,6 @@ namespace ExampleApp
                                                            Eegeo::Input::IUserIdleService& userIdleService,
                                                            Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                                            const bool attractModeEnabled,
-                                                           const long long attractModeTimeout,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
@@ -62,7 +61,6 @@ namespace ExampleApp
                 , m_userIdleService(userIdleService)
                 , m_resourceCeilingProvider(resourceCeilingProvider)
                 , m_attractModeEnabled(attractModeEnabled)
-                , m_attractModeTimeoutMs(attractModeTimeout)
                 , m_cameraPositionSplinePoints(cameraPositionSplinePoints)
                 , m_cameraTargetSplinePoints(cameraTargetSplinePoints)
                 , m_screenProperties(screenProperties)
@@ -110,7 +108,6 @@ namespace ExampleApp
                                                                                    m_worldCameraController.GetTouchController(),
                                                                                    m_userIdleService,
                                                                                    m_resourceCeilingProvider,
-                                                                                   m_attractModeTimeoutMs,
                                                                                    m_cameraPositionSplinePoints,
                                                                                    m_cameraTargetSplinePoints,
                                                                                    m_screenProperties,
