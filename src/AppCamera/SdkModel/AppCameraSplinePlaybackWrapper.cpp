@@ -38,7 +38,6 @@ namespace ExampleApp
             Eegeo::dv3 AppCameraSplinePlaybackWrapper::ComputeNonFlattenedCameraPosition() const
             {
                 return GetCameraState().LocationEcef();
-                //return Eegeo::dv3(6007.4875420670542, 4993439.8499200866, 3968674.5000672070);
             }
             
             Eegeo::ITouchController& AppCameraSplinePlaybackWrapper::GetTouchController() const
@@ -48,13 +47,10 @@ namespace ExampleApp
             
             float AppCameraSplinePlaybackWrapper::GetHeadingDegrees() const
             {
-                // FIXME
-                //Eegeo::Space::EcefTangentBasis cameraInterestBasis;
-                //float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_splinePlaybackController.GetCameraState(),
-                //                                                                               m_splinePlaybackController.GetCameraState().ViewMatrix().GetRow(3));
-                
-                //return Eegeo::Math::Rad2Deg(headingRadians);
-                return 0.0f;
+                const Eegeo::m44 view = m_splinePlaybackController.GetCameraState().ViewMatrix();
+                const Eegeo::v3 forward = Eegeo::v3(view.GetRow(0).z, view.GetRow(1).z, view.GetRow(2).z).Norm();
+                const float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_splinePlaybackController.GetRenderCamera().GetEcefLocation(), forward);
+                return Eegeo::Math::Rad2Deg(headingRadians);
             }
         }
     }
