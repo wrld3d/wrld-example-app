@@ -18,12 +18,10 @@ namespace ExampleApp
                 class AttractModeViewingState : public Helpers::IStateMachineState
                 {
                 private:
-                    AppModes::States::SdkModel::AttractState& m_attractState;
                     Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& m_cameraSplinePlaybackController;
                     
                 public:
-                    AttractModeViewingState(AppModes::States::SdkModel::AttractState& attractState,
-                                            Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController);
+                    AttractModeViewingState(Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController);
 
                     void Enter(int previousState);
                     void Update(float dt);

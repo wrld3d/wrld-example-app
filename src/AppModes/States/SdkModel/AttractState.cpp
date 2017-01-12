@@ -51,7 +51,7 @@ namespace ExampleApp
                 , m_flattenButtonModel(flattenButtonModel)
                 , m_navigationService(navigationService)
                 , m_enteringState(*this, cameraController, m_cameraHandle)
-                , m_viewingState(*this, m_cameraSplinePlaybackController)
+                , m_viewingState(m_cameraSplinePlaybackController)
                 , m_subStates{ /*[States::EnterState] =*/ &m_enteringState,
                                /*[States::ViewState]  =*/ &m_viewingState }
                 , m_subStateMachine(m_subStates)
