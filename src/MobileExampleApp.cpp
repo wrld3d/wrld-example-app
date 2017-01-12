@@ -862,7 +862,6 @@ namespace ExampleApp
                                                                               m_userIdleService,
                                                                               mapModule.GetResourceCeilingProvider(),
                                                                               m_applicationConfiguration.IsAttractModeEnabled(),
-                                                                              m_applicationConfiguration.GetAttractModeTimeoutMs(),
                                                                               m_applicationConfiguration.GetAttractModeTargetSplinePoints(),
                                                                               m_applicationConfiguration.GetAttractModePositionSplinePoints(),
                                                                               m_screenProperties,
