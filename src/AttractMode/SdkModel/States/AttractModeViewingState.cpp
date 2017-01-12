@@ -16,7 +16,6 @@ namespace ExampleApp
             namespace States
             {
                 AttractModeViewingState::AttractModeViewingState(AppModes::States::SdkModel::AttractState& attractState,
-                                                                 Eegeo::Input::IUserIdleService& userIdleService,
                                                                  Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController)
                 : m_attractState(attractState)
                 , m_cameraSplinePlaybackController(cameraSplinePlaybackController)
