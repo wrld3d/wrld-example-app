@@ -42,19 +42,20 @@ namespace ExampleApp
                                            ExampleAppMessaging::TMessageBus& messageBus,
                                            FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
                                            Eegeo::Location::NavigationService& navigationService)
-                : m_cameraController(cameraController)
+                : m_appModeModel(appModeModel)
+                , m_cameraController(cameraController)
                 , m_cameraSplinePlaybackController(resourceCeilingProvider)
                 , m_appCamera(m_cameraSplinePlaybackController, touchController)
                 , m_cameraHandle(m_cameraController.CreateCameraHandleFromController(m_appCamera))
                 , m_messageBus(messageBus)
                 , m_flattenButtonModel(flattenButtonModel)
                 , m_navigationService(navigationService)
-                , m_enteringState(m_subStateMachine, cameraController, m_cameraHandle)
-                , m_viewingState(appModeModel,
+                , m_enteringState(*this, cameraController, m_cameraHandle)
+                , m_viewingState(*this,
                                  userIdleService,
                                  m_cameraSplinePlaybackController)
-                , m_subStates({ /*[AttractModeSubStates::Enter] =*/ &m_enteringState,
-                                /*[AttractModeSubStates::View]  =*/ &m_viewingState })
+                , m_subStates{ /*[States::EnterState] =*/ &m_enteringState,
+                               /*[States::ViewState]  =*/ &m_viewingState }
                 , m_subStateMachine(m_subStates)
                 {
                     std::for_each(cameraPositionSplinePoints.begin(), cameraPositionSplinePoints.end(),
@@ -81,7 +82,7 @@ namespace ExampleApp
 
                     InitialiseSplinePlaybackCameraState();
 
-                    m_subStateMachine.StartStateMachine(AttractModeSubStates::Enter);
+                    m_subStateMachine.StartStateMachine(States::EnterState);
                 }
 
                 void AttractState::Update(float dt)
@@ -96,6 +97,23 @@ namespace ExampleApp
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
                     m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
+                }
+
+                void AttractState::NotifySubStateComplete()
+                {
+                    switch (m_subStateMachine.GetCurrentStateIndex())
+                    {
+                    case States::EnterState:
+                        m_subStateMachine.ChangeToState(States::ViewState);
+                        break;
+
+                    case States::ViewState:
+                        m_appModeModel.SetAppMode(AppModes::SdkModel::WorldMode);
+                        break;
+
+                    default:
+                        Eegeo_ASSERT("Completion of invalid attract mode sub-state.");
+                    }
                 }
 
                 void AttractState::InitialiseSplinePlaybackCameraState()
