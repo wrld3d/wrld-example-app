@@ -19,8 +19,6 @@ namespace ExampleApp
             {
             public:
                 AttractModeOverlayView(WindowsNativeState& nativeState,
-                                       ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
-                                       ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                        ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* pVirtualKeyboard,
                                        ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& myPinCreationDetailsViewModel,
                                        ExampleAppMessaging::TMessageBus& messageBus);
@@ -35,8 +33,6 @@ namespace ExampleApp
 
                 WindowsNativeState& m_nativeState;
 
-                ExampleApp::Menu::View::IMenuViewModel& m_searchMenuViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
                 ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& m_myPinCreationDetailsViewModel;
 
                 ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* m_pVirtualKeyboard;

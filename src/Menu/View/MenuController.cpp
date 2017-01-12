@@ -266,6 +266,25 @@ namespace ExampleApp
                 }
             }
 
+            void MenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
+            {
+                const bool appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::AppMode::AttractMode;
+                if (!appModeAllowsOpen)
+                {
+                    if (!m_viewModel.IsFullyOffScreen())
+                    {
+                        m_viewModel.RemoveFromScreen();
+                    }
+                }
+                else
+                {
+                    if (!m_viewModel.IsFullyOnScreen())
+                    {
+                        m_viewModel.AddToScreen();
+                    }
+                }
+            }
+
             MenuController::MenuController(
                 IMenuModel& model,
                 IMenuViewModel& viewModel,
@@ -287,6 +306,7 @@ namespace ExampleApp
                 , m_onScreenStateChanged(this, &MenuController::OnScreenControlStateChanged)
                 , m_onOpenableStateChanged(this, &MenuController::OnOpenableStateChanged)
                 , m_onMenuSectionExpandedStateChanged(this, &MenuController::OnMenuSectionExpandeStateChanged)
+                , m_onAppModeChanged(this, &MenuController::OnAppModeChanged)
                 , m_tryDragFunc(this, &MenuController::TryDrag)
                 , m_messageBus(messageBus)
                 , m_dragInProgress(false)
@@ -303,6 +323,8 @@ namespace ExampleApp
                 m_view.InsertOnViewClosed(m_onViewClosedCallback);
                 m_view.InsertOnViewOpened(m_onViewOpenedCallback);
                 m_view.SetTryDragFunc(m_tryDragFunc);
+
+                m_messageBus.SubscribeUi(m_onAppModeChanged);
 
                 if(m_viewModel.IsFullyOnScreen())
                 {
@@ -332,6 +354,8 @@ namespace ExampleApp
                     model.RemoveItemAddedCallback(m_onItemAddedCallback);
                     model.RemoveItemRemovedCallback(m_onItemRemovedCallback);
                 }
+
+                m_messageBus.UnsubscribeUi(m_onAppModeChanged);
                 
                 m_view.ClearTryDragFunc();
                 m_view.RemoveOnViewOpened(m_onViewOpenedCallback);

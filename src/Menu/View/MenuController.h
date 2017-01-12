@@ -11,6 +11,7 @@
 #include "IUpdateableViewController.h"
 #include "ICallback.h"
 #include "BidirectionalBus.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<MenuController, ScreenControl::View::IScreenControlViewModel&, float> m_onScreenStateChanged;
                 Eegeo::Helpers::TCallback2<MenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenableStateChanged;
                 Eegeo::Helpers::TCallback2<MenuController, IMenuSectionViewModel&, bool> m_onMenuSectionExpandedStateChanged;
+                Eegeo::Helpers::TCallback1<MenuController, const AppModes::AppModeChangedMessage&> m_onAppModeChanged;
 
                 Eegeo::Helpers::TFunc0<MenuController, bool> m_tryDragFunc;
                 
@@ -77,6 +79,8 @@ namespace ExampleApp
                 virtual void OnItemRemoved(MenuItemModel& item);
 
                 virtual void OnItemSelected(int& sectionIndex, int& itemIndex);
+
+                virtual void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
 
             public:
                 MenuController(
