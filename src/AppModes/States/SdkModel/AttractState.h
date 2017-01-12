@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
 #pragma once
 
@@ -15,6 +15,7 @@
 #include "CatmullRomSpline.h"
 #include "BidirectionalBus.h"
 #include "FlattenButton.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -37,7 +38,8 @@ namespace ExampleApp
                     AppCamera::SdkModel::AppCameraSplinePlaybackWrapper m_appCamera;
                     int m_cameraHandle;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
-                    FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
+                    FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel; 
+                    Eegeo::Location::NavigationService& m_navigationService;
 
                 public:
                     AttractState(AppModes::SdkModel::IAppModeModel& appModeModel,
@@ -50,7 +52,8 @@ namespace ExampleApp
                                  const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                 FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel);
+                                 FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
+                                 Eegeo::Location::NavigationService& navigationService);
                     ~AttractState();
 
                     void Enter(int previousState);

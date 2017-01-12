@@ -14,6 +14,7 @@
 #include "ScreenProperties.h"
 #include "BidirectionalBus.h"
 #include "IFlattenButtonModel.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -44,7 +45,8 @@ namespace ExampleApp
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel)
+                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
+                                                           Eegeo::Location::NavigationService& navigationService)
                 : m_appCameraController(appCameraController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
@@ -67,6 +69,7 @@ namespace ExampleApp
                 , m_screenProperties(screenProperties)
                 , m_messageBus(messageBus)
                 , m_flattenButtonModel(flattenButtonModel)
+                , m_navigationService(navigationService)
                 {
                     
                 }
@@ -114,7 +117,8 @@ namespace ExampleApp
                                                                                    m_cameraTargetSplinePoints,
                                                                                    m_screenProperties,
                                                                                    m_messageBus,
-                                                                                   m_flattenButtonModel));
+                                                                                   m_flattenButtonModel,
+                                                                                   m_navigationService));
                     }
 
                     return states;
