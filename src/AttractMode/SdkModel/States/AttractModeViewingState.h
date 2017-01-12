@@ -19,13 +19,10 @@ namespace ExampleApp
                 {
                 private:
                     AppModes::States::SdkModel::AttractState& m_attractState;
-                    long long m_idleTimeAtStartMs;
-                    Eegeo::Input::IUserIdleService& m_userIdleService;
                     Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& m_cameraSplinePlaybackController;
                     
                 public:
                     AttractModeViewingState(AppModes::States::SdkModel::AttractState& attractState,
-                                            Eegeo::Input::IUserIdleService& userIdleService,
                                             Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController);
 
                     void Enter(int previousState);

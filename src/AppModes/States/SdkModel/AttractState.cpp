@@ -51,12 +51,12 @@ namespace ExampleApp
                 , m_flattenButtonModel(flattenButtonModel)
                 , m_navigationService(navigationService)
                 , m_enteringState(*this, cameraController, m_cameraHandle)
-                , m_viewingState(*this,
-                                 userIdleService,
-                                 m_cameraSplinePlaybackController)
+                , m_viewingState(*this, m_cameraSplinePlaybackController)
                 , m_subStates{ /*[States::EnterState] =*/ &m_enteringState,
                                /*[States::ViewState]  =*/ &m_viewingState }
                 , m_subStateMachine(m_subStates)
+                , m_idleTimeAtStartMs(0)
+                , m_userIdleService(userIdleService)
                 {
                     std::for_each(cameraPositionSplinePoints.begin(), cameraPositionSplinePoints.end(),
                                   [this](const Eegeo::Space::LatLongAltitude& p) { m_cameraPositionSpline.AddPoint(p.ToECEF()); });
@@ -81,12 +81,16 @@ namespace ExampleApp
                     m_flattenButtonModel.Unflatten();
 
                     InitialiseSplinePlaybackCameraState();
-
                     m_subStateMachine.StartStateMachine(States::EnterState);
+                    m_idleTimeAtStartMs = m_userIdleService.GetUserIdleTimeMs();
                 }
 
                 void AttractState::Update(float dt)
                 {
+                    if (m_userIdleService.GetUserIdleTimeMs() < m_idleTimeAtStartMs)
+                    {
+                        m_appModeModel.SetAppMode(AppModes::SdkModel::WorldMode);
+                    }
                     m_subStateMachine.Update(dt);
                 }
 
@@ -108,9 +112,6 @@ namespace ExampleApp
                         break;
 
                     case States::ViewState:
-                        m_appModeModel.SetAppMode(AppModes::SdkModel::WorldMode);
-                        break;
-
                     default:
                         Eegeo_ASSERT("Completion of invalid attract mode sub-state.");
                     }
