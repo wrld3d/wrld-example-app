@@ -74,7 +74,8 @@
         { "Latitude": 51.5122, "Longitude": -0.0913037, "Altitude": 9.98657 },
         { "Latitude": 51.5123, "Longitude": -0.0896122, "Altitude": 11.1778 },
         { "Latitude": 51.5142, "Longitude": -0.0858973, "Altitude": 14.0482 },
-        { "Latitude": 51.5195, "Longitude": -0.0866817, "Altitude": 13.6796 }
+        { "Latitude": 51.5195, "Longitude": -0.0866817, "Altitude": 13.6796 },
+        { "Latitude": 51.5202, "Longitude": -0.086306,  "Altitude": 14.9857 }
     ],
     "AttractModeTargetSpline": [
         { "Latitude": 51.5226, "Longitude": -0.0860427, "Altitude": 286.154 },
@@ -88,9 +89,10 @@
         { "Latitude": 51.516,  "Longitude": -0.0918273, "Altitude": 431.668 },
         { "Latitude": 51.5169, "Longitude": -0.0945064, "Altitude": 624.286 },
         { "Latitude": 51.5182, "Longitude": -0.100278,  "Altitude": 1102.62 },
-        { "Latitude": 51.5223, "Longitude": -0.0904093, "Altitude": 421.092 }
+        { "Latitude": 51.5223, "Longitude": -0.0904093, "Altitude": 421.092 },
+        { "Latitude": 51.5226, "Longitude": -0.0860427, "Altitude": 286.154 }
     ],
-    "AttractModePlaybackSpeed": 0.015,
+    "AttractModePlaybackSpeed": 0.007,
 
     "FixedIndoorLocation": {
         "Latitude": 51.520275,
