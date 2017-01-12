@@ -253,8 +253,8 @@ namespace ExampleApp
                                                                 : empty,
                                                               ParseLatLongAltitude));
 
-                const long long attractModeTimeoutMillis = ParseIntOrDefault(document, AttractModeTimeoutMillis, 0);
-                const float attractModePlaybackSpeed = ParseDoubleOrDefault(document, AttractModePlaybackSpeed, m_defaultConfig.GetAttractModePlaybackSpeed());
+                const long long attractModeTimeoutMillis = ParseIntOrDefault(document, AttractModeTimeoutMillis, static_cast<int>(m_defaultConfig.AttractModeTimeoutMs()));
+                const float attractModePlaybackSpeed = ParseDoubleOrDefault(document, AttractModePlaybackSpeed, m_defaultConfig.AttractModePlaybackSpeed());
 
                 return ApplicationConfiguration(
                     name,

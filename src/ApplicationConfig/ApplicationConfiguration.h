@@ -160,10 +160,10 @@ namespace ExampleApp
             bool IsFixedIndoorLocationEnabled() const;
             const SdkModel::ApplicationFixedIndoorLocation& FixedIndoorLocation() const;
 
-            const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModeTargetSplinePoints() const;
-            const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModePositionSplinePoints() const;
-            const long long GetAttractModeTimeoutMs() const;
-            const float GetAttractModePlaybackSpeed() const;
+            const std::vector<Eegeo::Space::LatLongAltitude>& AttractModeTargetSplinePoints() const;
+            const std::vector<Eegeo::Space::LatLongAltitude>& AttractModePositionSplinePoints() const;
+            const long long AttractModeTimeoutMs() const;
+            const float AttractModePlaybackSpeed() const;
             const bool IsAttractModeEnabled() const;
         };
     }
