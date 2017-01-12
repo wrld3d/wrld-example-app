@@ -47,17 +47,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border Name="border" CornerRadius="0" Background="{DynamicResource PrimaryBG_colour}">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <Image Name="arrow" Source="/Assets/shift_key.png" Width="36" Height="36" />
                     </Border>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
-                            <Setter Property="Foreground" Value="{StaticResource PrimaryIcon_Down_colour}" />
+                            <Setter Property="Source" TargetName="arrow" Value="/Assets/shift_key_down.png" />
                         </Trigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent},Path=IsShiftHeld}" Value="True">
                             <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
-                            <Setter Property="Foreground" Value="{StaticResource PrimaryIcon_Down_colour}" />
+                            <Setter Property="Source" TargetName="arrow" Value="/Assets/shift_key_down.png" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -381,16 +381,12 @@
 
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                     <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardShiftButtonStyle}"
-                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey">
-                                        <TextBlock Text="↑" />
-                                    </pk:VirtualKeyboardSpecialButton>
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey" />
                                     <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}"
                                                                      Width="858"
                                                                      pk:VirtualKeyboardControlButton.KeyControlInputValue="0x20" />
                                     <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardShiftButtonStyle}"
-                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey">
-                                        <TextBlock Text="↑" />
-                                    </pk:VirtualKeyboardSpecialButton>
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey" />
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
