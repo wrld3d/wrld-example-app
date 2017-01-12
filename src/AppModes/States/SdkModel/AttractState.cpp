@@ -63,7 +63,10 @@ namespace ExampleApp
                     std::for_each(cameraTargetSplinePoints.begin(), cameraTargetSplinePoints.end(),
                                   [this](const Eegeo::Space::LatLongAltitude& p) { m_cameraTargetSpline.AddPoint(p.ToECEF()); });
 
+                    m_cameraPositionSpline.SetTimeParameterizationMethod(Eegeo::Geometry::TimeParameterizationMethod::Uniform);
+                    m_cameraTargetSpline.SetTimeParameterizationMethod(Eegeo::Geometry::TimeParameterizationMethod::Uniform);
                     m_cameraSplinePlaybackController.SetSplines(&m_cameraPositionSpline, &m_cameraTargetSpline);
+
                     m_cameraSplinePlaybackController.SetPlaybackSpeed(playbackSpeed);
                     m_cameraSplinePlaybackController.SetLooped(true);
                     m_cameraSplinePlaybackController.UpdateScreenProperties(screenProperties);
