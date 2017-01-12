@@ -29,15 +29,16 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                enum AttractModeSubStates
-                {
-                    Enter = 0,
-                    View
-                };
-
                 class AttractState : public Helpers::IStateMachineState
                 {
                 private:
+                    enum States
+                    {
+                        EnterState = 0,
+                        ViewState
+                    };
+
+                    AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     AppCamera::SdkModel::IAppCameraController& m_cameraController;
                     Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController m_cameraSplinePlaybackController;
                     AppCamera::SdkModel::AppCameraSplinePlaybackWrapper m_appCamera;
@@ -72,6 +73,8 @@ namespace ExampleApp
                     void Enter(int previousState);
                     void Update(float dt);
                     void Exit(int nextState);
+
+                    void NotifySubStateComplete();
                 };
             }
         }

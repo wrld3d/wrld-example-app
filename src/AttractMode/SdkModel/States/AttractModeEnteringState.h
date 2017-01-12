@@ -2,9 +2,9 @@
 
 #pragma once
 
+#include "AppModes.h"
 #include "IAppCameraController.h"
 #include "IStateMachineState.h"
-#include "StateMachine.h"
 
 namespace ExampleApp
 {
@@ -17,12 +17,12 @@ namespace ExampleApp
                 class AttractModeEnteringState : public Helpers::IStateMachineState
                 {
                 private:
-                    Helpers::StateMachine& m_stateMachine;
+                    AppModes::States::SdkModel::AttractState& m_attractState;
                     AppCamera::SdkModel::IAppCameraController& m_cameraController;
                     const int m_attractModeCameraHandle;
                     
                 public:
-                    AttractModeEnteringState(Helpers::StateMachine& stateMachine,
+                    AttractModeEnteringState(AppModes::States::SdkModel::AttractState& attractState,
                                              AppCamera::SdkModel::IAppCameraController& cameraController,
                                              const int attractModeCameraHandle);
 

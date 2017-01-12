@@ -1,8 +1,8 @@
 // Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
+#include "AttractState.h"
 #include "AttractModeViewingState.h"
 #include "CameraSplinePlaybackController.h"
-#include "IAppModeModel.h"
 #include "IUserIdleService.h"
 #include "StateMachine.h"
 #include "TimeHelpers.h"
@@ -15,11 +15,11 @@ namespace ExampleApp
         {
             namespace States
             {
-                AttractModeViewingState::AttractModeViewingState(AppModes::SdkModel::IAppModeModel& appModeModel,
+                AttractModeViewingState::AttractModeViewingState(AppModes::States::SdkModel::AttractState& attractState,
                                                                  Eegeo::Input::IUserIdleService& userIdleService,
                                                                  Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController)
-                : m_idleTimeAtStartMs(0)
-                , m_appModeModel(appModeModel)
+                : m_attractState(attractState)
+                , m_idleTimeAtStartMs(0)
                 , m_userIdleService(userIdleService)
                 , m_cameraSplinePlaybackController(cameraSplinePlaybackController)
                 {
@@ -35,7 +35,7 @@ namespace ExampleApp
                 {
                     if (m_userIdleService.GetUserIdleTimeMs() < m_idleTimeAtStartMs)
                     {
-                        m_appModeModel.SetAppMode(AppModes::SdkModel::WorldMode);
+                        m_attractState.NotifySubStateComplete();
                     }
                     m_cameraSplinePlaybackController.Update(dt);
                 }

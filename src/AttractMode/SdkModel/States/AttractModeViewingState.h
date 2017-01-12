@@ -2,8 +2,8 @@
 
 #pragma once
 
+#include "AppModes.h"
 #include "CameraSplinePlaybackController.h"
-#include "IAppModeModel.h"
 #include "IUserIdleService.h"
 #include "StateMachine.h"
 
@@ -18,13 +18,13 @@ namespace ExampleApp
                 class AttractModeViewingState : public Helpers::IStateMachineState
                 {
                 private:
+                    AppModes::States::SdkModel::AttractState& m_attractState;
                     long long m_idleTimeAtStartMs;
-                    AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     Eegeo::Input::IUserIdleService& m_userIdleService;
                     Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& m_cameraSplinePlaybackController;
                     
                 public:
-                    AttractModeViewingState(AppModes::SdkModel::IAppModeModel& appModeModel,
+                    AttractModeViewingState(AppModes::States::SdkModel::AttractState& attractState,
                                             Eegeo::Input::IUserIdleService& userIdleService,
                                             Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController);
 

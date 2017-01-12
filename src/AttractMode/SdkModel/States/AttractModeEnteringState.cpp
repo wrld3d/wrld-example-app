@@ -3,7 +3,6 @@
 #include "AttractState.h"
 #include "AttractModeEnteringState.h"
 #include "IAppCameraController.h"
-#include "StateMachine.h"
 
 namespace ExampleApp
 {
@@ -19,10 +18,10 @@ namespace ExampleApp
                     const float TransitionDuration = 6.0f;
                 }
 
-                AttractModeEnteringState::AttractModeEnteringState(Helpers::StateMachine& stateMachine,
+                AttractModeEnteringState::AttractModeEnteringState(AppModes::States::SdkModel::AttractState& attractState,
                                                                    AppCamera::SdkModel::IAppCameraController& cameraController,
                                                                    const int attractModeCameraHandle)
-                : m_stateMachine(stateMachine)
+                : m_attractState(attractState)
                 , m_cameraController(cameraController)
                 , m_attractModeCameraHandle(attractModeCameraHandle)
                 {
@@ -37,7 +36,7 @@ namespace ExampleApp
                 {
                     if(!m_cameraController.IsTransitionInFlight())
                     {
-                        m_stateMachine.ChangeToState(AppModes::States::SdkModel::AttractModeSubStates::View);
+                        m_attractState.NotifySubStateComplete();
                     }
                 }
                 
