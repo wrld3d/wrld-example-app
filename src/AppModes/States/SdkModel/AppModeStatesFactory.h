@@ -51,9 +51,10 @@ namespace ExampleApp
 
                     Eegeo::Input::IUserIdleService& m_userIdleService;
                     Eegeo::Streaming::ResourceCeilingProvider& m_resourceCeilingProvider;
+                    const bool m_attractModeEnabled;
                     const std::vector<Eegeo::Space::LatLongAltitude>& m_cameraPositionSplinePoints;
                     const std::vector<Eegeo::Space::LatLongAltitude>& m_cameraTargetSplinePoints;
-                    const bool m_attractModeEnabled;
+                    const float m_attractModePlaybackSpeed;
                     const Eegeo::Rendering::ScreenProperties& m_screenProperties;
 
                     ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -81,6 +82,7 @@ namespace ExampleApp
                                          const bool attractModeEnabled,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
+                                         const float attractModePlaybackSpeed,
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,

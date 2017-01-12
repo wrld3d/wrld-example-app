@@ -30,11 +30,6 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                namespace
-                {
-                    const float PlaybackSpeed = 0.03f;
-                }
-
                 AttractState::AttractState(AppModes::SdkModel::IAppModeModel& appModeModel,
                                            AppCamera::SdkModel::IAppCameraController& cameraController,
                                            Eegeo::ITouchController& touchController,
@@ -42,6 +37,7 @@ namespace ExampleApp
                                            Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
+                                           const float playbackSpeed,
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                            ExampleAppMessaging::TMessageBus& messageBus,
                                            FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
@@ -68,7 +64,7 @@ namespace ExampleApp
                                   [this](const Eegeo::Space::LatLongAltitude& p) { m_cameraTargetSpline.AddPoint(p.ToECEF()); });
 
                     m_cameraSplinePlaybackController.SetSplines(&m_cameraPositionSpline, &m_cameraTargetSpline);
-                    m_cameraSplinePlaybackController.SetPlaybackSpeed(PlaybackSpeed);
+                    m_cameraSplinePlaybackController.SetPlaybackSpeed(playbackSpeed);
                     m_cameraSplinePlaybackController.SetLooped(true);
                     m_cameraSplinePlaybackController.UpdateScreenProperties(screenProperties);
                 }
