@@ -50,6 +50,8 @@ namespace ExampleApp
                     AttractMode::SdkModel::States::AttractModeViewingState m_viewingState;
                     const std::vector<Helpers::IStateMachineState*> m_subStates;
                     Helpers::StateMachine m_subStateMachine;
+                    long long m_idleTimeAtStartMs;
+                    Eegeo::Input::IUserIdleService& m_userIdleService;
 
                     Eegeo::Geometry::CatmullRomSpline m_cameraTargetSpline;
                     Eegeo::Geometry::CatmullRomSpline m_cameraPositionSpline;

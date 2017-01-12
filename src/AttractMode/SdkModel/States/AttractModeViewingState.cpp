@@ -15,28 +15,18 @@ namespace ExampleApp
         {
             namespace States
             {
-                AttractModeViewingState::AttractModeViewingState(AppModes::States::SdkModel::AttractState& attractState,
-                                                                 Eegeo::Input::IUserIdleService& userIdleService,
-                                                                 Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController)
-                : m_attractState(attractState)
-                , m_idleTimeAtStartMs(0)
-                , m_userIdleService(userIdleService)
-                , m_cameraSplinePlaybackController(cameraSplinePlaybackController)
+                AttractModeViewingState::AttractModeViewingState(Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController)
+                : m_cameraSplinePlaybackController(cameraSplinePlaybackController)
                 {
                 }
                 
                 void AttractModeViewingState::Enter(int previousState)
                 {
-                    m_idleTimeAtStartMs = m_userIdleService.GetUserIdleTimeMs();
                     m_cameraSplinePlaybackController.Play();
                 }
                 
                 void AttractModeViewingState::Update(float dt)
                 {
-                    if (m_userIdleService.GetUserIdleTimeMs() < m_idleTimeAtStartMs)
-                    {
-                        m_attractState.NotifySubStateComplete();
-                    }
                     m_cameraSplinePlaybackController.Update(dt);
                 }
                 
