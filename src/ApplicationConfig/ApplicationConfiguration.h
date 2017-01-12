@@ -55,6 +55,7 @@ namespace ExampleApp
             std::vector<Eegeo::Space::LatLongAltitude> m_attractModePositionSplinePoints;
 
             long long m_attractModeTimeoutMs;
+            float m_attractModePlaybackSpeed;
 
         public:
             
@@ -92,7 +93,8 @@ namespace ExampleApp
                 const SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation,
                 const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
                 const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
-                const long long attractModeTimeoutMs
+                const long long attractModeTimeoutMs,
+                const float attractModePlaybackSpeed
             );
             
             std::string Name() const;
@@ -161,6 +163,7 @@ namespace ExampleApp
             const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModeTargetSplinePoints() const;
             const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModePositionSplinePoints() const;
             const long long GetAttractModeTimeoutMs() const;
+            const float GetAttractModePlaybackSpeed() const;
             const bool IsAttractModeEnabled() const;
         };
     }

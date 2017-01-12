@@ -59,6 +59,7 @@ namespace ExampleApp
                 const std::string AttractModeTargetSpline = "attract_mode_target_spline";
                 const std::string AttractModePositionSpline = "attract_mode_position_spline";
                 const std::string AttractModeTimeoutMillis = "attract_mode_timeout_millis";
+                const std::string AttractModePlaybackSpeed = "attract_mode_playback_speed";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -253,6 +254,7 @@ namespace ExampleApp
                                                               ParseLatLongAltitude));
 
                 const long long attractModeTimeoutMillis = ParseIntOrDefault(document, AttractModeTimeoutMillis, 0);
+                const float attractModePlaybackSpeed = ParseDoubleOrDefault(document, AttractModePlaybackSpeed, m_defaultConfig.GetAttractModePlaybackSpeed());
 
                 return ApplicationConfiguration(
                     name,
@@ -288,7 +290,8 @@ namespace ExampleApp
                     fixedIndoorLocation,
                     attractModeTargetSplinePoints,
                     attractModePositionSplinePoints,
-                    attractModeTimeoutMillis
+                    attractModeTimeoutMillis,
+                    attractModePlaybackSpeed
                 );
             }
             
