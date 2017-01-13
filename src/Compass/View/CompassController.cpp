@@ -40,7 +40,10 @@ namespace ExampleApp
 
             void CompassController::OnCompassHeadingChangedMessage(const CompassHeadingUpdateMessage& message)
             {
-                m_view.SetHeadingRadians(message.GetHeadingRadians());
+                if (!m_viewModel.IsFullyOffScreen())
+                {
+                    m_view.SetHeadingRadians(message.GetHeadingRadians());
+                }
             }
 
             void CompassController::OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState)
