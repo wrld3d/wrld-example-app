@@ -13,10 +13,10 @@
     "YelpConsumerSecret":"nrn5RH9CuKB3xvYPauru5YfgYaw",
     "YelpOAuthToken":"IG63d3ZdRXA0Ubz6fDiF2u6xa2HJI7BU",
     "YelpOAuthTokenSecret":"hHIaImXUlORnIavm2nXV3NOufpA",
-    "TwitterAuthCode": "".
+    "TwitterAuthCode": "",
     "GeoNamesUserName":"eegeo_bloomberg_ios",
-    "CoverageTreeManifestURL":"https://cdn1.eegeo.com/coverage-trees/vswallow-production/v808/manifest.bin.gz",
-    "ThemeManifestURL":"https://cdn-resources.eegeo.com/mobile-themes-new/v736/ssl.manifest.bin.gz",
+    "CoverageTreeManifestURL":"https://cdn1.eegeo.com/coverage-trees/vswallow-production/v1100/manifest.bin.gz",
+    "ThemeManifestURL":"https://cdn-resources.eegeo.com/mobile-themes-new/v804/ssl.manifest.bin.gz",
     "EmbeddedThemeTexturePath": "EmbeddedTheme",
     "SqliteDbUrl":"https://cdn1.eegeo.com/swallow-pois/pois_v95.db.gz",
     "EegeoSearchServiceUrl":"http://londWayFApp01.dundee.kimbleoperations.com/search/v1/",
