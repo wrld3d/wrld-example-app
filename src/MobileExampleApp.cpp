@@ -913,6 +913,7 @@ namespace ExampleApp
                                                                       interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                       nativeUIFactories,
                                                                       m_pVisualMapModule->GetVisualMapService(),
+                                                                      m_pWorld->GetLocationService(),
                                                                       m_userIdleService,
                                                                       mapModule.GetResourceCeilingProvider(),
                                                                       m_applicationConfiguration.IsAttractModeEnabled(),

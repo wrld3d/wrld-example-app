@@ -18,6 +18,8 @@
 #include "BidirectionalBus.h"
 #include "FlattenButton.h"
 #include "NavigationService.h"
+#include "CameraTransitions.h"
+#include "ILocationService.h"
 
 #include "VisualMap.h"
 
@@ -48,6 +50,7 @@ namespace ExampleApp
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
                     VisualMap::SdkModel::IVisualMapService& m_visualMapService;
 
+                    Eegeo::Location::ILocationService& m_locationService;
                     Eegeo::Input::IUserIdleService& m_userIdleService;
                     Eegeo::Streaming::ResourceCeilingProvider& m_resourceCeilingProvider;
                     const bool m_attractModeEnabled;
@@ -76,6 +79,7 @@ namespace ExampleApp
                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                          VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                         Eegeo::Location::ILocationService& locationService,
                                          Eegeo::Input::IUserIdleService& userIdleService,
                                          Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                          const bool attractModeEnabled,

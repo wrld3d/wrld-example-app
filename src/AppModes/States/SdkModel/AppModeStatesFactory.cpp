@@ -14,6 +14,8 @@
 #include "BidirectionalBus.h"
 #include "IFlattenButtonModel.h"
 #include "NavigationService.h"
+#include "CameraTransitionService.h"
+#include "ILocationService.h"
 
 namespace ExampleApp
 {
@@ -36,6 +38,7 @@ namespace ExampleApp
                                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                                           Eegeo::Location::ILocationService& locationService,
                                                            Eegeo::Input::IUserIdleService& userIdleService,
                                                            Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                                            const bool attractModeEnabled,
@@ -59,6 +62,7 @@ namespace ExampleApp
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_nativeUIFactories(nativeUIFactories)
                 , m_visualMapService(visualMapService)
+                , m_locationService(locationService)
                 , m_userIdleService(userIdleService)
                 , m_resourceCeilingProvider(resourceCeilingProvider)
                 , m_attractModeEnabled(attractModeEnabled)
@@ -107,7 +111,10 @@ namespace ExampleApp
                     {
                         states.push_back(Eegeo_NEW(States::SdkModel::AttractState)(m_appModeModel,
                                                                                    m_appCameraController,
+                                                                                   m_worldCameraController,
+                                                                                   worldCameraHandle,
                                                                                    m_worldCameraController.GetTouchController(),
+                                                                                   m_locationService,
                                                                                    m_userIdleService,
                                                                                    m_resourceCeilingProvider,
                                                                                    m_cameraPositionSplinePoints,

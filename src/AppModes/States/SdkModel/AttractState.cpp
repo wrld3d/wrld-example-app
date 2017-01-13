@@ -21,6 +21,8 @@
 #include "WorldPinVisibility.h"
 #include "FlattenButtonModel.h"
 #include "NavigationService.h"
+#include "CameraTransitionService.h"
+#include "ILocationService.h"
 
 namespace ExampleApp
 {
@@ -32,7 +34,10 @@ namespace ExampleApp
             {
                 AttractState::AttractState(AppModes::SdkModel::IAppModeModel& appModeModel,
                                            AppCamera::SdkModel::IAppCameraController& cameraController,
+                                           AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
+                                           const int worldCameraHandle,
                                            Eegeo::ITouchController& touchController,
+                                           Eegeo::Location::ILocationService& locationService,
                                            Eegeo::Input::IUserIdleService& userIdleService,
                                            Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
@@ -52,8 +57,10 @@ namespace ExampleApp
                 , m_navigationService(navigationService)
                 , m_enteringState(*this, cameraController, m_cameraHandle)
                 , m_viewingState(m_cameraSplinePlaybackController)
+                , m_exitingState(*this, cameraController, locationService, worldCameraHandle, worldCameraController)
                 , m_subStates{ /*[States::EnterState] =*/ &m_enteringState,
-                               /*[States::ViewState]  =*/ &m_viewingState }
+                               /*[States::ViewState]  =*/ &m_viewingState,
+                               /*[States::ExitState]  =*/ &m_exitingState }
                 , m_subStateMachine(m_subStates)
                 , m_idleTimeAtStartMs(0)
                 , m_userIdleService(userIdleService)
@@ -90,11 +97,11 @@ namespace ExampleApp
 
                 void AttractState::Update(float dt)
                 {
-                    if (m_userIdleService.GetUserIdleTimeMs() < m_idleTimeAtStartMs)
-                    {
-                        m_appModeModel.SetAppMode(AppModes::SdkModel::WorldMode);
-                    }
                     m_subStateMachine.Update(dt);
+                    if (IsUserActive() && m_subStateMachine.GetCurrentStateIndex() != States::ExitState)
+                    {
+                        m_subStateMachine.ChangeToState(States::ExitState);
+                    }
                 }
 
                 void AttractState::Exit(int nextState)
@@ -114,10 +121,19 @@ namespace ExampleApp
                         m_subStateMachine.ChangeToState(States::ViewState);
                         break;
 
+                    case States::ExitState:
+                        m_appModeModel.SetAppMode(AppModes::SdkModel::WorldMode);
+                        break;
+
                     case States::ViewState:
                     default:
                         Eegeo_ASSERT("Completion of invalid attract mode sub-state.");
                     }
+                }
+
+                bool AttractState::IsUserActive()
+                {
+                    return m_userIdleService.GetUserIdleTimeMs() < m_idleTimeAtStartMs;
                 }
 
                 void AttractState::InitialiseSplinePlaybackCameraState()
