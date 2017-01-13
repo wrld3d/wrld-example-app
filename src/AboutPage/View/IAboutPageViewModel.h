@@ -34,6 +34,8 @@ namespace ExampleApp
                 virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
 
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
+                
+                virtual void SetIndoorPositioningType(const std::string& indoorPositioningType) = 0;
             };
         }
     }
