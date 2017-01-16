@@ -28,7 +28,8 @@ namespace ExampleApp
                 int m_previousCameraIndex;
                 bool m_isTransitionInFlight;
                 float m_transitionTimer;
-                const float m_transitionDuration;
+                float m_transitionDuration;
+                double m_jumpThresholdDistanceBetweenCameras;
                 
                 Eegeo::dv3 m_currentPosition;
                 Eegeo::m33 m_currentOrientation;
@@ -51,6 +52,7 @@ namespace ExampleApp
                 void RemoveCameraHandle(int cameraHandle);
                 
                 void TransitionToCameraWithHandle(int cameraHandle);
+                void TransitionToCameraWithHandle(int cameraHandle, const double jumpThresholdDistanceBetweenCameras, const float transitionDuration);
                 
                 const bool IsTransitionInFlight() const;
                 

@@ -42,11 +42,11 @@ if [ -z "${xcodeTarget}" ]; then
 fi
 
 (cd $projectPath && cmake -G Xcode $cmakeRootDir)
-
-if [ $? -ne 0 ]; then
+resultcode=$?
+if [ $resultcode -ne 0 ]; then
     echo "FAILED TO GENERATE PROJECT"
     
-    exit $?
+    exit $resultcode
 fi
 
 (cd $projectPath && xcodebuild -target $xcodeTarget -arch "i386" -sdk "iphonesimulator")

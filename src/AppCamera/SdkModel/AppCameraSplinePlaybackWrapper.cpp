@@ -47,7 +47,10 @@ namespace ExampleApp
             
             float AppCameraSplinePlaybackWrapper::GetHeadingDegrees() const
             {
-                return 0.0f;
+                const Eegeo::m44 view = m_splinePlaybackController.GetCameraState().ViewMatrix();
+                const Eegeo::v3 forward = Eegeo::v3(view.GetRow(0).z, view.GetRow(1).z, view.GetRow(2).z).Norm();
+                const float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(m_splinePlaybackController.GetRenderCamera().GetEcefLocation(), forward);
+                return Eegeo::Math::Rad2Deg(headingRadians);
             }
         }
     }

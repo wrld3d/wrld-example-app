@@ -257,6 +257,11 @@ namespace ExampleApp
             m_appRunner->HandleTouchEvent(MakeTouchScreenInputEvent(ScaledScreenCoord(x), ScaledScreenCoord(y), z, id, Eegeo::Windows::Input::TouchScreenInputAction::TouchScreenMove));
         }
 
+        void MapImage::HandlePreviewMouseDown(float x, float y, System::Windows::Input::ModifierKeys modifierKeys)
+        {
+            m_appRunner->HandleMousePreviewEvent(MakeMouseInputEvent(Eegeo::Windows::Input::MousePrimaryDown, ScaledScreenCoord(x), ScaledScreenCoord(y), 0, modifierKeys));
+        }
+
         void MapImage::SetAllInputEventsToPointerUp(int x, int y)
         {
             m_appRunner->SetAllInputEventsToPointerUp(ScaledScreenCoord(x), ScaledScreenCoord(y));

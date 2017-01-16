@@ -184,7 +184,8 @@ AppHost::AppHost(
                                                                                                  interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                  mapModule.GetEnvironmentFlatteningService(),
                                                                                                  *m_piOSLocationService,
-                                                                                                 mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository());
+                                                                                                 mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                 m_iOSAlertBoxFactory);
     
     m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
                                                                                            interiorsPresentationModule.GetInteriorInteractionModel(),
@@ -199,7 +200,8 @@ AppHost::AppHost(
                                                                                                                                *m_piOSLocationService,
                                                                                                                                m_pIndoorAtlasLocationModule->GetLocationService(),
                                                                                                                                m_pSenionLabLocationModule->GetLocationService(),
-                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository());
+                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                               m_messageBus);
     
     CreateApplicationViewModules(screenProperties);
 
@@ -371,7 +373,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                            screenProperties,
                            m_messageBus);
 
-    m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), m_iOSFlurryMetricsService);
+    m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), m_iOSFlurryMetricsService, m_messageBus);
     
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
                                                                                    m_piOSPlatformAbstractionModule->GetiOSHttpCache(),

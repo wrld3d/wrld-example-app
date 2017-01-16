@@ -94,6 +94,8 @@
 #include "WindowsApplicationConfigurationVersionProvider.h"
 #include "IUserIdleService.h"
 #include "CurrentLocationService.h"
+#include "AttractModeOverlayView.h"
+#include "WindowsProcessHelper.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -145,8 +147,9 @@ AppHost::AppHost(
     , m_shouldStartFullscreen(false)
     , m_maxDeviceTouchCount(maxDeviceTouchCount)
 	, m_pTagSearchViewModule(NULL)
-    , m_userIdleService(m_inputHandler.GetUserIdleService())
+    , m_pUserIdleService(NULL)
     , m_pVirtualKeyboardView(NULL)
+    , m_pAttractModeOverlayView(NULL)
 {
     ASSERT_NATIVE_THREAD
          
@@ -184,8 +187,14 @@ AppHost::AppHost(
 
     bool enableTouchControls =  hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
 
+    if (enableTouchControls && applicationConfiguration.ShouldStartFullscreen())
+    {
+        Eegeo::Helpers::ProcessHelpers::SetEdgeTouchGesturesEnabled(false);
+    }
+
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig, enableTouchControls, m_maxDeviceTouchCount);
+    m_pUserIdleService = m_pInputProcessor;
 
 	m_pWindowsPersistentSettingsModel = Eegeo_NEW(ExampleApp::PersistentSettings::WindowsPersistentSettingsModel)(m_nativeState);
 
@@ -221,21 +230,17 @@ AppHost::AppHost(
         *m_pWindowsFlurryMetricsService,        
         *this,
         *m_pMenuReaction,
-        m_userIdleService);
+        *m_pUserIdleService);
 
-    Eegeo::Space::LatLong latlong(0.0, 0.0);
-    Eegeo::Resources::Interiors::InteriorId interiorId;
-    int floorIndex;
-    double headingDegrees;
-    const bool useFixedIndoorLocation = applicationConfiguration.FixedIndoorLocation(latlong, interiorId, floorIndex, headingDegrees);
-    if (useFixedIndoorLocation)
+    if (applicationConfiguration.IsFixedIndoorLocationEnabled())
     {
+        const ExampleApp::ApplicationConfig::SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation = applicationConfiguration.FixedIndoorLocation();
         const Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
         m_pFixedIndoorLocationService = Eegeo_NEW(Eegeo::FixedLocation::FixedIndoorLocationService)(
-            latlong,
-            interiorId,
-            floorIndex,
-            headingDegrees,
+            fixedIndoorLocation.GetLocation(),
+            fixedIndoorLocation.GetInteriorId(),
+            fixedIndoorLocation.GetBuildingFloorIndex(),
+            fixedIndoorLocation.GetOrientationDegrees(),
             mapModule.GetEnvironmentFlatteningService(),
             mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel());
         m_pCurrentLocationService->SetLocationService(*m_pFixedIndoorLocationService);
@@ -342,6 +347,13 @@ void AppHost::SetViewportOffset(float x, float y)
     ASSERT_NATIVE_THREAD
 
         m_inputHandler.SetViewportOffset(x, y);
+}
+
+void AppHost::HandleMousePreviewInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event)
+{
+    ASSERT_NATIVE_THREAD
+
+    m_pInputProcessor->HandleMousePreviewInput(event);
 }
 
 void AppHost::HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event)
@@ -577,7 +589,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
         m_nativeState,
         app.AboutPageModule().GetAboutPageViewModel(),
-        *m_pWindowsFlurryMetricsService
+        *m_pWindowsFlurryMetricsService,
+        m_messageBus
         );
 
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
@@ -612,9 +625,17 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
-    if (m_pApp->GetApplicationConfiguration().IsKioskTouchInputEnabled())
+    if (IsInKioskMode())
     {
         m_pVirtualKeyboardView = Eegeo_NEW(ExampleApp::VirtualKeyboard::View::VirtualKeyboardView)(m_nativeState, m_messageBus);
+    }
+
+    if (m_pApp->GetApplicationConfiguration().IsAttractModeEnabled())
+    {
+        m_pAttractModeOverlayView = Eegeo_NEW(ExampleApp::AttractModeOverlay::View::AttractModeOverlayView)(m_nativeState,
+                                                                                                            m_pVirtualKeyboardView,
+                                                                                                            app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
+                                                                                                            m_messageBus);
     }
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -638,6 +659,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         if (m_createdUIModules)
         {
+            Eegeo_DELETE m_pAttractModeOverlayView;
+
             Eegeo_DELETE m_pVirtualKeyboardView;
 
             Eegeo_DELETE m_pMyPinDetailsViewModule;

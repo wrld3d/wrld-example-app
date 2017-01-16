@@ -7,6 +7,7 @@
 #include "ApplicationConfig.h"
 #include "LatLongAltitude.h"
 #include "ApplicationInteriorTrackingInfo.h"
+#include "ApplicationFixedIndoorLocation.h"
 #include "document.h"
 
 namespace ExampleApp
@@ -45,10 +46,7 @@ namespace ExampleApp
             bool m_useLabels;
             bool m_useJapaneseFont;
 
-            Eegeo::Space::LatLong m_fixedLatlong;
-            Eegeo::Resources::Interiors::InteriorId m_fixedInteriorId;
-            int m_fixedFloorIndex;
-            double m_fixedHeadingDegrees;
+            SdkModel::ApplicationFixedIndoorLocation m_fixedIndoorLocation;
             
             std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
             std::string m_rawConfig;
@@ -57,6 +55,7 @@ namespace ExampleApp
             std::vector<Eegeo::Space::LatLongAltitude> m_attractModePositionSplinePoints;
 
             long long m_attractModeTimeoutMs;
+            float m_attractModePlaybackSpeed;
 
         public:
             
@@ -91,13 +90,11 @@ namespace ExampleApp
                 bool useJapaneseFont,
                 const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
                 const std::string& rawConfig,
-                const Eegeo::Space::LatLong fixedLatlong,
-                const std::string& fixedInteriorId,
-                const int fixedFloorIndex,
-                const double fixedHeadingDegrees,
+                const SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation,
                 const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
                 const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
-                const long long attractModeTimeoutMs
+                const long long attractModeTimeoutMs,
+                const float attractModePlaybackSpeed
             );
             
             std::string Name() const;
@@ -160,11 +157,13 @@ namespace ExampleApp
             
             std::string RawConfig() const;
 
-            bool FixedIndoorLocation(Eegeo::Space::LatLong& latlong, Eegeo::Resources::Interiors::InteriorId& interiorId, int& floorIndex, double& headingDegrees) const;
+            bool IsFixedIndoorLocationEnabled() const;
+            const SdkModel::ApplicationFixedIndoorLocation& FixedIndoorLocation() const;
 
-            const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModeTargetSplinePoints() const;
-            const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModePositionSplinePoints() const;
-            const long long GetAttractModeTimeoutMs() const;
+            const std::vector<Eegeo::Space::LatLongAltitude>& AttractModeTargetSplinePoints() const;
+            const std::vector<Eegeo::Space::LatLongAltitude>& AttractModePositionSplinePoints() const;
+            const long long AttractModeTimeoutMs() const;
+            const float AttractModePlaybackSpeed() const;
             const bool IsAttractModeEnabled() const;
         };
     }

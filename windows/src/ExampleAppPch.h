@@ -1192,7 +1192,6 @@
 #endif
 
 #include "WorldStates/BaseState.h"
-#include "WorldStates/CityThemesLoadEmbeddedThemeState.h"
 #include "WorldStates/CityThemesLoadManifestState.h"
 #include "WorldStates/DownloadBootstrapResourcesState.h"
 #include "WorldStates/IChangeStateCallback.h"

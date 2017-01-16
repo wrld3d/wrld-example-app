@@ -37,7 +37,10 @@ namespace ExampleApp
                 {
                     case MyPinCreation::Inactive:
                     {
-                        m_viewModel.AddToScreen();
+                        if (m_appModeAllowsOpen)
+                        {
+                            m_viewModel.AddToScreen();
+                        }
                     }break;
                     case MyPinCreation::Ring:
                     {
@@ -78,13 +81,16 @@ namespace ExampleApp
 
             void FlattenButtonController::OnVirtualKeyboardStateChangedMessage(const VirtualKeyboard::VirtualKeyboardStateChangedMessage& message)
             {
-                if (message.IsVirtualKeyboardVisible())
+                if (m_appModeAllowsOpen)
                 {
-                    m_viewModel.RemoveFromScreen();
-                }
-                else
-                {
-                    m_viewModel.AddToScreen();
+                    if (message.IsVirtualKeyboardVisible())
+                    {
+                        m_viewModel.RemoveFromScreen();
+                    }
+                    else
+                    {
+                        m_viewModel.AddToScreen();
+                    }
                 }
             }
 

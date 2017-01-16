@@ -12,6 +12,15 @@ namespace ExampleApp
         {
             class AppModeModel;
             class IAppModeModel;
+
+        }
+
+        namespace States
+        {
+            namespace SdkModel
+            {
+                class AttractState;
+            }
         }
     }
 }

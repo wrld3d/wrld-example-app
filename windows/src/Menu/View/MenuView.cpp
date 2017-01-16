@@ -3,6 +3,8 @@
 #include "MenuView.h"
 #include "WindowsAppThreadAssertionMacros.h"
 #include "ReflectionHelpers.h"
+#include "IMenuSectionViewModel.h"
+#include "IMenuModel.h"
 
 using namespace ExampleApp::Helpers::ReflectionHelpers;
 
@@ -100,7 +102,7 @@ namespace ExampleApp
                     
                     groupNamesArray[static_cast<int>(groupIndex)] = ConvertUTF8ToManagedString(section.Name().c_str());
                     groupSizesArray[static_cast<int>(groupIndex)] = static_cast<System::Int32>(section.Size());
-                    groupIsExpandableArray[static_cast<int>(groupIndex)] = static_cast<System::Boolean>(section.IsExpandable());
+                    groupIsExpandableArray[static_cast<int>(groupIndex)] = static_cast<System::Boolean>(section.IsExpandable()) && section.GetModel().GetItemCount() > 0;
                 }
 
                 PopulateData(System::IntPtr(this),

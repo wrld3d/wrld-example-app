@@ -26,14 +26,19 @@ namespace ExampleApp
                 , m_onPinCreationSelected(this, &DesktopSearchResultPoiController::OnPinCreationSelected)
                 , m_interiorChangedCallback(this, &DesktopSearchResultPoiController::OnInteriorSelectionChanged)
                 , m_interiorSelectionModel(interiorSelectionModel)
+                , m_appModeChangedHandler(this, &DesktopSearchResultPoiController::OnAppModeChangedMessage)
             {
                 m_pinCreationInitiationView.InsertSelectedCallback(m_onPinCreationSelected);
                 
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorChangedCallback);
+
+                GetMessageBus().SubscribeUi(m_appModeChangedHandler);
             }
 
             DesktopSearchResultPoiController::~DesktopSearchResultPoiController()
             {
+                GetMessageBus().UnsubscribeUi(m_appModeChangedHandler);
+
                 m_pinCreationInitiationView.RemoveSelectedCallback(m_onPinCreationSelected);
 
                 m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorChangedCallback);
@@ -68,6 +73,22 @@ namespace ExampleApp
                 std::string imageUrl = "";
                 Search::SdkModel::TryParseImageDetails(searchResultModel, imageUrl);
                 GetMessageBus().Publish(SearchResultPoiViewOpenedMessage(imageUrl));
+            }
+
+            void DesktopSearchResultPoiController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
+            {
+                const bool appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode &&
+                                               message.GetAppMode() != AppModes::SdkModel::AttractMode;
+
+                if (!appModeAllowsOpen)
+                {
+                    ISearchResultPoiViewModel& viewModel = GetViewModel();
+
+                    if (viewModel.IsOpen())
+                    {
+                        viewModel.Close();
+                    }
+                }
             }
         }
     }

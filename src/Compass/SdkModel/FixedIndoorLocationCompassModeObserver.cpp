@@ -5,6 +5,7 @@
 #include "CoordinateConversion.h"
 #include "FixedIndoorLocationCompassModeObserver.h"
 #include "InteriorsCameraController.h"
+#include "ApplicationFixedIndoorLocation.h"
 
 namespace ExampleApp
 {
@@ -17,17 +18,14 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& messageBus,
                 CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
                 Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                const Eegeo::Space::LatLong latlong,
-                const Eegeo::Resources::Interiors::InteriorId& interiorId,
-                const int floorIndex,
-                const double fixedHeadingRadians)
+                const ApplicationConfig::SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation)
                 : CompassModeObserver(model, messageBus)
                 , m_cameraTransitionService(cameraTransitionService)
                 , m_interiorsCameraController(interiorsCameraController)
-                , m_location(Eegeo::Space::ConvertLatLongAltitudeToEcef(latlong.GetLatitude(), latlong.GetLongitude(), 0.0))
-                , m_interiorId(interiorId)
-                , m_floorIndex(floorIndex)
-                , m_fixedHeadingRadians(fixedHeadingRadians)
+                , m_location(Eegeo::Space::ConvertLatLongAltitudeToEcef(fixedIndoorLocation.GetLocation().GetLatitude(), fixedIndoorLocation.GetLocation().GetLongitude(), 0.0))
+                , m_interiorId(fixedIndoorLocation.GetInteriorId())
+                , m_floorIndex(fixedIndoorLocation.GetBuildingFloorIndex())
+                , m_fixedHeadingRadians(Eegeo::Math::Deg2Rad(fixedIndoorLocation.GetOrientationDegrees()))
             {
             }
 

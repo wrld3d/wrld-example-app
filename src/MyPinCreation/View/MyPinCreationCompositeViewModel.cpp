@@ -29,13 +29,17 @@ namespace ExampleApp
                 , m_interiorControlViewModel(interiorControlViewModel)
                 , m_searchMenuViewModel(searchMenuViewModel)
                 , m_settingsMenuViewModel(settingsMenuViewModel)
+                , m_showUiComponents(true)
+                , m_appModeChangedCallback(this, &MyPinCreationCompositeViewModel::OnAppModeChanged)
             {
+                m_messageBus.SubscribeUi(m_appModeChangedCallback);
                 m_messageBus.SubscribeUi(m_stateChangeHandler);
                 m_settingsMenuViewModel.InsertOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
             }
 
             MyPinCreationCompositeViewModel::~MyPinCreationCompositeViewModel()
             {
+                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
                 m_messageBus.UnsubscribeUi(m_stateChangeHandler);
                 m_settingsMenuViewModel.RemoveOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
             }
@@ -46,13 +50,16 @@ namespace ExampleApp
                 {
                 case Inactive:
                 {
-                    m_initiationViewModel.AddToScreen();
-                    m_interiorControlViewModel.AddToScreen();
-                    m_searchMenuViewModel.AddToScreen();
-                    m_settingsMenuViewModel.AddToScreen();
+                    if (m_showUiComponents)
+                    {
+                        m_initiationViewModel.AddToScreen();
+                        m_interiorControlViewModel.AddToScreen();
+                        m_searchMenuViewModel.AddToScreen();
+                        m_settingsMenuViewModel.AddToScreen();
 
-                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
-                    m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
+                        m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
+                        m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
+                    }
 
                     m_confirmationViewModel.RemoveFromScreen();
                     break;
@@ -99,6 +106,11 @@ namespace ExampleApp
                         m_initiationViewModel.AddToScreen();
                     }
                 }
+            }
+
+            void MyPinCreationCompositeViewModel::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
+            {
+                m_showUiComponents = message.GetAppMode() != AppModes::SdkModel::AttractMode;
             }
         }
     }

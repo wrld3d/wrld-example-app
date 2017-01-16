@@ -48,10 +48,7 @@ namespace ExampleApp
                               Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                               Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                               CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
-                              const Eegeo::Space::LatLong fixedLatlong,
-                              const Eegeo::Resources::Interiors::InteriorId& fixedInteriorId,
-                              const int fixedFloorIndex,
-                              const double fixedHeadingRadians);
+                              const ApplicationConfig::SdkModel::ApplicationFixedIndoorLocation* fixedIndoorLocation);
 
                 ~CompassModule();
 

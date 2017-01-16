@@ -28,6 +28,7 @@ namespace ExampleApp
                 virtual void RemoveCameraHandle(int cameraHandle) = 0;
                 
                 virtual void TransitionToCameraWithHandle(int cameraHandle) = 0;
+                virtual void TransitionToCameraWithHandle(int cameraHandle, const double jumpThresholdDistanceBetweenCameras, const float transitionDuration) = 0;
                 
                 virtual const bool IsTransitionInFlight() const = 0;
                 

@@ -32,14 +32,10 @@ namespace ExampleApp
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 bool m_appModeAllowsOpen;
                 bool m_isControlOpen[Control::Num];
-                AppModes::SdkModel::AppMode m_currentAppMode;
                 
-                Eegeo::Helpers::TCallback1<DesktopSettingsMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback0<DesktopSettingsMenuController> m_onModalBackgroundTappedCallback;
 
                 Menu::View::IMenuView& m_searchMenuView;
-                
-                void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 
                 bool TryDrag();
                 

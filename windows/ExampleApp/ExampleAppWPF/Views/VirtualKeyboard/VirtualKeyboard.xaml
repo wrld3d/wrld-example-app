@@ -7,17 +7,23 @@
         <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="KeyboardButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Margin" Value="3" />
+    <SolidColorBrush x:Key="NumKeyBG_Colour" Color="#08408a" />
+    <SolidColorBrush x:Key="KeyForeground_Colour" Color="#ffffff" />
+    <SolidColorBrush x:Key="KeyForeground_Disabled_Colour" Color="#88aad7" />
+
+    <Style x:Key="KeyboardButtonStyleBase" TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="5" />
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="MinWidth" Value="80" />
-        <Setter Property="MinHeight" Value="50" />
+        <Setter Property="MinWidth" Value="114" />
+        <Setter Property="MinHeight" Value="80" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="FontSize" Value="14.667" />
+        <Setter Property="FontSize" Value="32" />
+    </Style>
 
+    <Style x:Key="KeyboardButtonStyle" BasedOn="{StaticResource KeyboardButtonStyleBase}" TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -28,7 +34,31 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryIcon_Down_colour}" />
                         </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="KeyboardShiftButtonStyle" BasedOn="{StaticResource KeyboardButtonStyleBase}" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="border" CornerRadius="0" Background="{DynamicResource PrimaryBG_colour}">
+                        <Image Name="arrow" Source="/Assets/shift_key.png" Width="36" Height="36" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
+                            <Setter Property="Source" TargetName="arrow" Value="/Assets/shift_key_down.png" />
+                        </Trigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent},Path=IsShiftHeld}" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
+                            <Setter Property="Source" TargetName="arrow" Value="/Assets/shift_key_down.png" />
+                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -36,18 +66,18 @@
     </Style>
 
     <Style x:Key="KeyboardNumButtonStyle" BasedOn="{StaticResource KeyboardButtonStyle}" TargetType="{x:Type Button}">
-        <Setter Property="MinWidth" Value="80" />
-        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="MinHeight" Value="60" />
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Name="border" CornerRadius="0" Background="#003b92">
+                    <Border Name="border" CornerRadius="0" Background="{StaticResource NumKeyBG_Colour}">
                         <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#ffcdfc0d" />
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryIcon_Down_colour}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -55,10 +85,14 @@
         </Setter>
     </Style>
 
+    <Style x:Key="KeyboardStackedButtonStyle" BasedOn="{StaticResource KeyboardButtonStyle}" TargetType="{x:Type Button}">
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+
     <Style x:Key="KeyTextBlockStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="FontSize" Value="14.667" />
+        <Setter Property="FontSize" Value="32" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
@@ -161,7 +195,7 @@
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="?"/>
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
-                                                              pk:VirtualKeyboardInputButton.KeyInputValue="!">
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="'">
                                     </pk:VirtualKeyboardInputButton>
 
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardNumButtonStyle}"
@@ -238,8 +272,9 @@
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="l"
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue="L"/>
-                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}" Width="120"
-                                                              pk:VirtualKeyboardControlButton.KeyControlInputValue="0xd">
+                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}"
+                                                                     Width="176"
+                                                                     pk:VirtualKeyboardControlButton.KeyControlInputValue="0xd">
                                         <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Done" />
                                     </pk:VirtualKeyboardControlButton>
                                 </StackPanel>
@@ -254,7 +289,7 @@
                                                                      Style="{StaticResource KeyboardButtonStyle}"
                                                                      pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="AlphaSwitch"
                                                                      Visibility="Collapsed">
-                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="ABC" />
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="123" />
                                     </pk:VirtualKeyboardSpecialButton>
 
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
@@ -279,31 +314,30 @@
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="m"
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue="M"/>
 
-                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardStackedButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.AutoLabel="False"
-                                                              pk:VirtualKeyboardInputButton.KeyInputValue="!"
-                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue=",">
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue=","
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="!">
                                         <StackPanel>
-                                            <TextBlock>
+                                            <TextBlock Text="!">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="!" />
+                                                        <Setter Property="Foreground" Value="{StaticResource KeyForeground_Disabled_Colour}" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsShiftPressed}" Value="True">
-                                                                <Setter Property="Text" Value="," />
+                                                                <Setter Property="Foreground" Value="{StaticResource KeyForeground_Colour}" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
 
-                                            <TextBlock>
+                                            <TextBlock Text=",">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="," />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsShiftPressed}" Value="True">
-                                                                <Setter Property="Text" Value="!" />
+                                                                <Setter Property="Foreground" Value="{StaticResource KeyForeground_Disabled_Colour}" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -312,31 +346,30 @@
                                         </StackPanel>
                                     </pk:VirtualKeyboardInputButton>
 
-                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
+                                    <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardStackedButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.AutoLabel="False"
-                                                              pk:VirtualKeyboardInputButton.KeyInputValue="?"
-                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue=".">
+                                                              pk:VirtualKeyboardInputButton.KeyInputValue="."
+                                                              pk:VirtualKeyboardInputButton.KeyShiftInputValue="?">
                                         <StackPanel>
-                                            <TextBlock>
+                                            <TextBlock Text="?">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="?" />
+                                                        <Setter Property="Foreground" Value="{StaticResource KeyForeground_Disabled_Colour}" />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsShiftPressed}" Value="True">
-                                                                <Setter Property="Text" Value="." />
+                                                                <Setter Property="Foreground" Value="{StaticResource KeyForeground_Colour}" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
                                                 </TextBlock.Style>
                                             </TextBlock>
 
-                                            <TextBlock>
+                                            <TextBlock Text=".">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
-                                                        <Setter Property="Text" Value="." />
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsShiftPressed}" Value="True">
-                                                                <Setter Property="Text" Value="?" />
+                                                                <Setter Property="Foreground" Value="{StaticResource KeyForeground_Disabled_Colour}" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -347,16 +380,13 @@
                                 </StackPanel>
 
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardButtonStyle}"
-                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey">
-                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="⬆" />
-                                    </pk:VirtualKeyboardSpecialButton>
-                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}" Width="620"
-                                                              pk:VirtualKeyboardControlButton.KeyControlInputValue="0x20" />
-                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardButtonStyle}"
-                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey">
-                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="⬆" />
-                                    </pk:VirtualKeyboardSpecialButton>
+                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardShiftButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey" />
+                                    <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}"
+                                                                     Width="858"
+                                                                     pk:VirtualKeyboardControlButton.KeyControlInputValue="0x20" />
+                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardShiftButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey" />
                                 </StackPanel>
                             </StackPanel>
                         </Grid>

@@ -9,6 +9,7 @@
 #include "ICallback.h"
 #include "CameraTransitionService.h"
 #include "VectorMath.h"
+#include "ApplicationFixedIndoorLocation.h"
 
 namespace ExampleApp
 {
@@ -35,10 +36,7 @@ namespace ExampleApp
                     ExampleAppMessaging::TMessageBus& messageBus,
                     CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
                     Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                    const Eegeo::Space::LatLong latlong,
-                    const Eegeo::Resources::Interiors::InteriorId& InteriorId,
-                    const int floorIndex,
-                    const double fixedHeadingRadians);
+                    const ApplicationConfig::SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation);
             };
         }
     }

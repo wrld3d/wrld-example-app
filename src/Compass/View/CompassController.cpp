@@ -40,7 +40,10 @@ namespace ExampleApp
 
             void CompassController::OnCompassHeadingChangedMessage(const CompassHeadingUpdateMessage& message)
             {
-                m_view.SetHeadingRadians(message.GetHeadingRadians());
+                if (!m_viewModel.IsFullyOffScreen())
+                {
+                    m_view.SetHeadingRadians(message.GetHeadingRadians());
+                }
             }
 
             void CompassController::OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState)
@@ -54,7 +57,10 @@ namespace ExampleApp
                 {
                     case MyPinCreation::Inactive:
                     {
-                        m_viewModel.AddToScreen();
+                        if (m_appModeAllowsOpen)
+                        {
+                            m_viewModel.AddToScreen();
+                        }
                     }break;
                     case MyPinCreation::Ring:
                     {
@@ -87,13 +93,16 @@ namespace ExampleApp
 
             void CompassController::OnVirtualKeyboardStateChangedMessage(const VirtualKeyboard::VirtualKeyboardStateChangedMessage& message)
             {
-                if (message.IsVirtualKeyboardVisible())
+                if (m_appModeAllowsOpen)
                 {
-                    m_viewModel.RemoveFromScreen();
-                }
-                else
-                {
-                    m_viewModel.AddToScreen();
+                    if (message.IsVirtualKeyboardVisible())
+                    {
+                        m_viewModel.RemoveFromScreen();
+                    }
+                    else
+                    {
+                        m_viewModel.AddToScreen();
+                    }
                 }
             }
             

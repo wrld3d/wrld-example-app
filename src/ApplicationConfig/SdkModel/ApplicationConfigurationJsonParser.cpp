@@ -59,13 +59,7 @@ namespace ExampleApp
                 const std::string AttractModeTargetSpline = "attract_mode_target_spline";
                 const std::string AttractModePositionSpline = "attract_mode_position_spline";
                 const std::string AttractModeTimeoutMillis = "attract_mode_timeout_millis";
-
-                struct FixedIndoorLocationData {
-                    const Eegeo::Space::LatLong location;
-                    const std::string interiorId;
-                    const int buildingFloorIndex;
-                    const double orientationDegrees;
-                };
+                const std::string AttractModePlaybackSpeed = "attract_mode_playback_speed";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -174,10 +168,10 @@ namespace ExampleApp
                     return xs;
                 }
 
-                FixedIndoorLocationData ParseFixedIndoorLocation(const rapidjson::Value& fixedIndoorLocation)
+                SdkModel::ApplicationFixedIndoorLocation ParseFixedIndoorLocation(const rapidjson::Value& fixedIndoorLocation)
                 {
                     const rapidjson::Value empty(rapidjson::kObjectType);
-                    return FixedIndoorLocationData {
+                    return SdkModel::ApplicationFixedIndoorLocation(
                         ParseLatLong(fixedIndoorLocation.HasMember(LocationDegrees.c_str()) ? fixedIndoorLocation[LocationDegrees.c_str()] : empty),
                         fixedIndoorLocation.HasMember(InteriorId.c_str()) && fixedIndoorLocation[InteriorId.c_str()].IsString()
                             ? fixedIndoorLocation[InteriorId.c_str()].GetString()
@@ -187,7 +181,7 @@ namespace ExampleApp
                             : 0,
                         fixedIndoorLocation.HasMember(OrientationDegrees.c_str()) && fixedIndoorLocation[OrientationDegrees.c_str()].IsDouble()
                             ? fixedIndoorLocation[OrientationDegrees.c_str()].GetDouble()
-                            : 180.0 };
+                            : 180.0);
                 }
             }
 
@@ -246,7 +240,7 @@ namespace ExampleApp
                 }
 
                 const rapidjson::Value empty(rapidjson::kObjectType);
-                const FixedIndoorLocationData fixedIndoorLocation = ParseFixedIndoorLocation(document.HasMember(FixedIndoorLocation.c_str()) ? document[FixedIndoorLocation.c_str()] : empty);
+                const SdkModel::ApplicationFixedIndoorLocation fixedIndoorLocation(ParseFixedIndoorLocation(document.HasMember(FixedIndoorLocation.c_str()) ? document[FixedIndoorLocation.c_str()] : empty));
 
                 const std::vector<Eegeo::Space::LatLongAltitude> attractModeTargetSplinePoints(
                     ParseArray<Eegeo::Space::LatLongAltitude>(document.HasMember(AttractModeTargetSpline.c_str())
@@ -259,7 +253,8 @@ namespace ExampleApp
                                                                 : empty,
                                                               ParseLatLongAltitude));
 
-                const long long attractModeTimeoutMillis = ParseIntOrDefault(document, AttractModeTimeoutMillis, 0);
+                const long long attractModeTimeoutMillis = ParseIntOrDefault(document, AttractModeTimeoutMillis, static_cast<int>(m_defaultConfig.AttractModeTimeoutMs()));
+                const float attractModePlaybackSpeed = ParseDoubleOrDefault(document, AttractModePlaybackSpeed, m_defaultConfig.AttractModePlaybackSpeed());
 
                 return ApplicationConfiguration(
                     name,
@@ -292,13 +287,11 @@ namespace ExampleApp
                     useJapaneseFont,
                     interiorTrackingInfoList,
                     serialized,
-                    fixedIndoorLocation.location,
-                    fixedIndoorLocation.interiorId,
-                    fixedIndoorLocation.buildingFloorIndex,
-                    fixedIndoorLocation.orientationDegrees,
+                    fixedIndoorLocation,
                     attractModeTargetSplinePoints,
                     attractModePositionSplinePoints,
-                    attractModeTimeoutMillis
+                    attractModeTimeoutMillis,
+                    attractModePlaybackSpeed
                 );
             }
             

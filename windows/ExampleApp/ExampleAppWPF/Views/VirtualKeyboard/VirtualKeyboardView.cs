@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace ExampleAppWPF
@@ -24,6 +25,13 @@ namespace ExampleAppWPF
             };
 
             Visibility = Visibility.Hidden;
+            ControlKeyUp += (key) =>
+            {
+                if (key == 0xd)
+                {
+                    HideVirtualKeyboard();
+                }
+            };
             CustomKeyUp += (key) =>
             {
                 if (key == "HideKeyboard")
@@ -87,6 +95,7 @@ namespace ExampleAppWPF
                 child.PreviewMouseDown += (o, e) => ShowVirtualKeyboard();
                 child.GotFocus += (o, e) => ShowVirtualKeyboard();
                 child.LostFocus += (o, e) => HideVirtualKeyboard();
+                InputMethod.SetIsInputMethodEnabled(child, false);
             }
         }
 
