@@ -584,6 +584,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         *m_pWindowsFlurryMetricsService,
         m_pMyPinCreationViewModule->GetMyPinCreationInitiationView(),
         app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
+        app.MyPinDetailsModule().GetMyPinDetailsViewModel(),
         app.GetApplicationConfiguration().IsInKioskMode()
         );
 

@@ -33,6 +33,7 @@ namespace ExampleApp
                     Metrics::IMetricsService& metricsService,
                     MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
                     Eegeo::Resources::Interiors::InteriorSelectionModel& interiorsSelectionModel,
+                    MyPinDetails::View::IMyPinDetailsViewModel& pinDetailsViewModel,
 					bool isInKioskMode
                 );
 
