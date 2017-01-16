@@ -14,10 +14,11 @@ namespace ExampleApp
                 WindowsNativeState& nativeState,
                 MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& viewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService
+                Metrics::IMetricsService& metricsService,
+                bool isInKioskMode
             )
             {
-                m_pView = Eegeo_NEW(MyPinCreationDetailsView)(nativeState);
+                m_pView = Eegeo_NEW(MyPinCreationDetailsView)(nativeState, messageBus, isInKioskMode);
 
                 m_pController = Eegeo_NEW(MyPinCreationDetailsController)(*m_pView,
                                 viewModel,

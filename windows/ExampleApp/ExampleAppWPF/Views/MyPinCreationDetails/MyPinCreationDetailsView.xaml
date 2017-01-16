@@ -14,42 +14,118 @@
                         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
                     </ControlTemplate.Resources>
 
-                    <Grid Height="520" Width="370" Background="{StaticResource White}">
-                    <DockPanel Width="350" Height="500" Margin="0,10,0,-40" HorizontalAlignment="Center" VerticalAlignment="Top">
-                        <StackPanel x:Name="MainPanel" Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal" Margin="0" Width="305" HorizontalAlignment="Left">
-                                <Image Source="/Assets/CreatPIN_dialogue_Icon.png" Width="36" Height="36" Margin="5,5,0,5"/>
-                                <Grid Margin="10,0,0,0">
-                                    <TextBox x:Name="TitleBox" Foreground="{StaticResource Gold}" FontWeight="Bold" BorderThickness="0" FontSize="21.333" TextWrapping="NoWrap"  MaxWidth="240" MaxHeight="43" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="{StaticResource PrimaryUILightFont}"/>
-                                    <TextBlock IsHitTestVisible="False" Text="Name your Report..."  Margin="5,0" Foreground="{StaticResource LightGrey}" FontSize="21.333" TextWrapping="Wrap" MaxWidth="240" MaxHeight="43" VerticalAlignment="Center" FontFamily="{StaticResource PrimaryUILightFont}" 
-                                               Visibility="{Binding ElementName=TitleBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Grid Height="{DynamicResource PinCreationDetailsHeight}" Width="{DynamicResource PinCreationDetailsWidth}" Background="{StaticResource White}">
+                        <DockPanel Width="{DynamicResource PinCreationDetailsDockPanelWidth}" Height="{DynamicResource PinCreationDetailsDockPanelHeight}" Margin="{DynamicResource PinCreationDetailsDockPanelMargin}" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <StackPanel x:Name="MainPanel" Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="0" Width="{DynamicResource PinCreationDetailsTitleContainerWidth}" HorizontalAlignment="Left">
+                                    <Image Source="{DynamicResource PinCreationDetailsTitleIconImage}" Width="{DynamicResource PinCreationDetailsTitleIconSize}" Height="{DynamicResource PinCreationDetailsTitleIconSize}" Margin="{DynamicResource PinCreationDetailsTitleIconMargin}"/>
+                                    <Grid Margin="{DynamicResource PinCreationDetailsTitleTextContainerMargin}">
+                                        <TextBox x:Name="TitleBox" Foreground="{DynamicResource PinCreationDetailsTitleBoxColour}" FontWeight="Bold" BorderThickness="0" FontSize="{DynamicResource PinCreationDetailsTitleFontSize}" TextWrapping="NoWrap"  MaxWidth="{DynamicResource PinCreationDetailsTitleTextMaxWidth}" MaxHeight="{DynamicResource PinCreationDetailsTitleTextMaxHeight}" VerticalAlignment="Center" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" FontFamily="{StaticResource PrimaryUILightFont}" MaxLength="15"/>
+                                        <TextBlock IsHitTestVisible="False" Text="Name your Report..."  Margin="{DynamicResource PinCreationDetailsTitleTextMargin}" Foreground="{StaticResource InputBoxEmptyTextColour}" FontSize="{DynamicResource PinCreationDetailsTitleFontSize}" TextWrapping="Wrap" MaxWidth="{DynamicResource PinCreationDetailsTitleTextMaxWidth}" MaxHeight="{DynamicResource PinCreationDetailsTitleTextMaxHeight}" VerticalAlignment="Center" FontFamily="{StaticResource PrimaryUILightFont}" 
+                                                   Visibility="{Binding ElementName=TitleBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" TextTrimming="CharacterEllipsis"/>
+                                    </Grid>
+                                </StackPanel>
+                                <Border Visibility="{DynamicResource PinCreationDetailsTitleDividerVisibility}"
+                                        BorderBrush="{x:Null}"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Bottom"
+                                        Height="2"
+                                        Margin="5,17,5,0"
+                                        Background="{StaticResource Gold}"/>
+                                <Button x:Name="CloseButton" Content="Button" Height="{DynamicResource PinCreationDetailsCloseButtonSize}" Width="{DynamicResource PinCreationDetailsCloseButtonSize}" Style="{StaticResource Close_CreatePIN}" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="{DynamicResource PinCreationDetailsCloseButtonMargin}" Visibility="{DynamicResource PinCreationDetailsCloseButtonNormalVisibility}"/>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="{DynamicResource PinCreationDetailsShareMargin}" Visibility="{DynamicResource PinCreationDetailsShareVisibility}">
+                                    <CheckBox x:Name="ToShare" Margin="{DynamicResource PinCreationDetailsShareCheckboxMargin}"/>
+                                    <TextBlock Foreground="{StaticResource Gold}" FontWeight="Bold"><Run Text="Share "/><Hyperlink  x:Name="TermsLink" NavigateUri="http://www.eegeo.com/tos/"><Run Text="(Terms &amp; Conditions)"/></Hyperlink></TextBlock>
+                                </StackPanel>
+                                <Grid Margin="{DynamicResource PinCreationDetailsDescriptionMargin}" >
+                                    <Border BorderBrush="{StaticResource Gold}" BorderThickness="{DynamicResource PinCreationDetailsDescriptionTextBoxContainerBorderThickness}">
+                                        <TextBox x:Name="DescBox" Height="{DynamicResource PinCreationDetailsDescriptionHeight}" Margin="{DynamicResource PinCreationDetailsDescriptionTextBoxMargin}" AcceptsReturn="True" Text="" Foreground="{StaticResource Gold}" FontWeight="Bold" DockPanel.Dock="Top" Width="{DynamicResource PinCreationDetailsDescriptionWidth}" FontSize="{DynamicResource PinCreationDetailsDescriptionFontSize}" BorderThickness="{DynamicResource PinCreationDetailsDescriptionTextBoxBorderThickness}" TextWrapping="Wrap"/>
+                                    </Border>
+                                    <TextBlock IsHitTestVisible="False" Text="Tell us about your report..."  Margin="{DynamicResource PinCreationDetailsDescriptionTextMargin}" Foreground="{StaticResource InputBoxEmptyTextColour}" FontSize="{DynamicResource PinCreationDetailsDescriptionFontSize}" 
+                                                Visibility="{Binding ElementName=DescBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                 </Grid>
+                                <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Margin="{DynamicResource PinCreationDetailsImageContainerMargin}" Height="{DynamicResource PinCreationDetailsImageContainerHeight}" Visibility="{DynamicResource PinCreationDetailsImageVisibility}">
+                                        <Image x:Name="SelectedImage" Source="/Assets/image_blank.png" Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
+                                </ScrollViewer>
+                                <Button x:Name="AddImageButton" Content="Add Image" Width="240" Style="{StaticResource AddGalleryImageButton}" Visibility="{DynamicResource PinCreationDetailsImageVisibility}"/>
+                                <StackPanel Orientation="Horizontal" Height="{DynamicResource PinCreationDetailsConfirmButtonContainerHeight}" Margin="{DynamicResource PinCreationDetailsConfirmButtonContainerMargin}" DockPanel.Dock="Bottom" VerticalAlignment="Bottom" Visibility="{DynamicResource PinCreationDetailsConfirmButtonNormalVisibility}">
+                                    <Button x:Name="ConfirmButton" Content="Create Report" Width="{DynamicResource PinCreationDetailsConfirmButtonWidth}" Style="{StaticResource ConfirmPINbutton}"/>
+                                </StackPanel>
                             </StackPanel>
-                            <Button x:Name="CloseButton" Content="Button" Height="36" Width="36" Style="{StaticResource Close_CreatePIN}" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="0,-50,5,0"/>
-                            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,0,0">
-                                <CheckBox x:Name="ToShare" Margin="5,2,10,0"/>
-                                <TextBlock Foreground="{StaticResource Gold}" FontWeight="Bold"><Run Text="Share "/><Hyperlink  x:Name="TermsLink" NavigateUri="http://www.eegeo.com/tos/"><Run Text="(Terms &amp; Conditions)"/></Hyperlink></TextBlock>
-                            </StackPanel>
-                            <Grid Margin="5,15,5,0" >
-                                <TextBox x:Name="DescBox" Height="70" AcceptsReturn="True" Text="" Foreground="{StaticResource Gold}" FontWeight="Bold" DockPanel.Dock="Top" Width="340" FontSize="13.333"/>
-                                <TextBlock IsHitTestVisible="False" Text="Tell us about your report..."  Margin="0,2" Foreground="{StaticResource LightGrey}" FontSize="13.333" 
-                                           Visibility="{Binding ElementName=DescBox, Path=Text.IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </DockPanel>
+                        <Grid Background="{StaticResource Gold}" Margin="0, 366, 0, 0" Visibility="{DynamicResource PinCreationDetailsBottomButtonsVisibility}">
+                            <Grid Margin="20, 0, 20, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="248"/>
+                                    <ColumnDefinition Width="4"/>
+                                    <ColumnDefinition Width="248"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Name="CloseKioskButton"
+                                        Width="248"
+                                        Height="72"
+                                        Grid.Column="0">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Style.Setters>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Grid>
+                                                                <Image Name="CloseButtonImage"
+                                                                       Source="{DynamicResource PinCreationDetailsCloseKioskButtonOffImage}"/>
+                                                            </Grid>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter TargetName="CloseButtonImage"
+                                                                            Property="Source"
+                                                                            Value="{DynamicResource PinCreationDetailsCloseKioskButtonOnImage}"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style.Setters>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button Name="ConfirmKioskButton"
+                                        Width="248"
+                                        Height="72"
+                                        Grid.Column="2">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Style.Setters>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                            <Grid>
+                                                                <Image Name="ConfirmButtonImage"
+                                                                       Source="{DynamicResource PinCreationDetailsConfirmKioskButtonOffImage}"/>
+                                                            </Grid>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsPressed" Value="True">
+                                                                    <Setter TargetName="ConfirmButtonImage"
+                                                                            Property="Source"
+                                                                            Value="{DynamicResource PinCreationDetailsConfirmKioskButtonOnImage}"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style.Setters>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </Grid>
-                            <ScrollViewer HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto" Margin="5,20,5,0" Height="200">
-                                    <Image x:Name="SelectedImage" Source="/Assets/image_blank.png" Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
-                            </ScrollViewer>
-                            <Button x:Name="AddImageButton" Content="Add Image" Width="240" Style="{StaticResource AddGalleryImageButton}"/>
-                            <StackPanel Orientation="Horizontal" Height="50" Margin="0,30,0,0" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
-                                <Button x:Name="ConfirmButton" Content="Create Report" Width="350" Style="{StaticResource ConfirmPINbutton}"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </DockPanel>
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Width" Value="370"/>
-        <Setter Property="Height" Value="520"/>
+        <Setter Property="Width" Value="{DynamicResource PinCreationDetailsWidth}"/>
+        <Setter Property="Height" Value="{DynamicResource PinCreationDetailsHeight}"/>
+        <Setter Property="VerticalAlignment" Value="{DynamicResource PinCreationDetailsVerticalAlignment}"/>
+        <Setter Property="Margin" Value="{DynamicResource PinCreationDetailsMargin}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
     </Style>
 </ResourceDictionary>

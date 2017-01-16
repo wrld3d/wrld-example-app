@@ -9,6 +9,22 @@
         <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!-- Dialog Box -->
+    <System:Double x:Key="DialogBoxWidth">400</System:Double>
+    <System:Double x:Key="DialogBoxHeight">200</System:Double>
+    <System:Double x:Key="DialogBoxInnerWidth">325</System:Double>
+    <System:Double x:Key="DialogBoxInnerHeight">150</System:Double>
+    <System:Double x:Key="DialogBoxTitleContainerHeight">20</System:Double>
+    <System:Double x:Key="DialogBoxTitleWidth">325</System:Double>
+    <System:Double x:Key="DialogBoxTitleFontSize">17</System:Double>
+    <System:Double x:Key="DialogBoxMessageContainerHeight">80</System:Double>
+    <System:Double x:Key="DialogBoxMessageWidth">325</System:Double>
+    <System:Double x:Key="DialogBoxMessageHeight">75</System:Double>
+    <System:Double x:Key="DialogBoxMessageFontSize">14</System:Double>
+    <System:Double x:Key="DialogBoxButtonContainerHeight">50</System:Double>
+    <System:Double x:Key="DialogBoxButtonWidth">150</System:Double>
+    <System:Double x:Key="DialogBoxButtonGap">25</System:Double>
+    
     <!-- POI View -->
     <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOffImage">/Assets/button_remove_pin_off.png</ImageSource>
     <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOnImage">/Assets/button_remove_pin_on.png</ImageSource>
@@ -466,6 +482,130 @@
     <System:Double x:Key="CompassSize">70</System:Double>
     <System:Double x:Key="CompassInnerSize">46.67</System:Double>
     <Thickness x:Key="CompassMargin" Left="-35" Top="-35" Right="0" Bottom="0"/>
+
+    <!-- Pin Tutorial -->
+    <System:Double x:Key="PinTutorialWidth">540</System:Double>
+    <System:Double x:Key="PinTutorialHeight">357</System:Double>
+    <Thickness x:Key="PinTutorialContainerMargin" Left="20" Top="20" Right="20" Bottom="20"/>
+    <GridLength x:Key="PinTutorialContainerRow0Height">76</GridLength>
+    <Thickness x:Key="PinTutorialTitleMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <GridLength x:Key="PinTutorialTitleColumn0">442</GridLength>
+    <GridLength x:Key="PinTutorialTitleColumn1">54</GridLength>
+    <System:Double x:Key="PinTutorialTitleMaxWidth">350</System:Double>
+    <System:Double x:Key="PinTutorialTitleFontSize">30</System:Double>
+    <Thickness x:Key="PinTutorialTitleTextMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <ImageSource x:Key="PinTutorialCloseButtonOffImage">/Assets/exit_blue_x_button.png</ImageSource>
+    <ImageSource x:Key="PinTutorialCloseButtonOnImage">/Assets/button_close_on.png</ImageSource>
+    <System:Double x:Key="PinTutorialCloseButtonSize">36</System:Double>
+    <SolidColorBrush x:Key="PinTutorialCloseButtonOffColour" Color="#1256B0"/>
+    <SolidColorBrush x:Key="PinTutorialCloseButtonOnColour" Color="#FFCDFC0D"/>
+    <SolidColorBrush x:Key="PinTutorialCloseButtonOverColour" Color="#002B63"/>
+    <Visibility x:Key="PinTutorialTitleDividerVisibility">Visible</Visibility>
+    <System:Double x:Key="PinTutorialMessageWidth">500</System:Double>
+    <System:Double x:Key="PinTutorialMessageHeight">120</System:Double>
+    <System:Double x:Key="PinTutorialMessageFontSize">19.5</System:Double>
+    <System:Double x:Key="PinTutorialButtonWidth">500</System:Double>
+    <System:Double x:Key="PinTutorialButtonHeight">60</System:Double>
+    <System:Double x:Key="PinTutorialButtonIconSize">50</System:Double>
+    <System:Double x:Key="PinTutorialButtonFontSize">28</System:Double>
+
+    <!-- Pin Details -->
+    <System:Double x:Key="PinDetailsWidth">370</System:Double>
+    <System:Double x:Key="PinDetailsHeight">520</System:Double>
+    <System:Double x:Key="PinDetailsStackPanelWidth">350</System:Double>
+    <System:Double x:Key="PinDetailsStackPanelHeight">500</System:Double>
+    <Thickness x:Key="PinDetailsStackPanelMargin" Left="0" Top="10" Right="0" Bottom="-40"/>
+    <System:Double x:Key="PinDetailsTitleContainerWidth">305</System:Double>
+    <System:Double x:Key="PinDetailsTitleContainerHeight">NaN</System:Double>
+    <GridLength x:Key="PinDetailsTitleColumn0">309</GridLength>
+    <GridLength x:Key="PinDetailsTitleColumn1">43</GridLength>
+    <System:Double x:Key="PinDetailsTitleIconSize">36</System:Double>
+    <Thickness x:Key="PinDetailsTitleIconMargin" Left="5" Top="5" Right="0" Bottom="5"/>
+    <ImageSource x:Key="PinDetailsTitleIconImage">/Assets/CreatPIN_dialogue_Icon.png</ImageSource>
+    <Thickness x:Key="PinDetailsTitleTextContainerMargin" Left="10" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="PinDetailsTitleFontSize">21.333</System:Double>
+    <Thickness x:Key="PinDetailsTitleTextMargin" Left="5" Top="0" Right="5" Bottom="0"/>
+    <System:Double x:Key="PinDetailsTitleTextMaxWidth">240</System:Double>
+    <System:Double x:Key="PinDetailsTitleTextMaxHeight">43</System:Double>
+    <SolidColorBrush x:Key="PinDetailsTitleBoxColour" Color="{Binding Color, Source={StaticResource Gold}}"/>
+    <Visibility x:Key="PinDetailsCloseButtonNormalVisibility">Visible</Visibility>
+    <System:Double x:Key="PinDetailsCloseButtonSize">36</System:Double>
+    <Thickness x:Key="PinDetailsCloseButtonMargin" Left="0" Top="0" Right="7" Bottom="0"/>
+    <ImageSource x:Key="PinDetailsCloseButtonOffImage">/Assets/button_close_off.png</ImageSource>
+    <ImageSource x:Key="PinDetailsCloseButtonOnImage">/Assets/button_close_on.png</ImageSource>
+    <SolidColorBrush x:Key="PinDetailsCloseButtonOffColour" Color="#1256B0"/>
+    <SolidColorBrush x:Key="PinDetailsCloseButtonOnColour" Color="#FFCDFC0D"/>
+    <SolidColorBrush x:Key="PinDetailsCloseButtonOverColour" Color="#002B63"/>
+    <Thickness x:Key="PinDetailsTitleDividerMargin" Left="5" Top="0" Right="5" Bottom="0"/>
+    <Visibility x:Key="PinDetailsTitleDividerVisibility">Collapsed</Visibility>
+    <System:Double x:Key="PinDetailsViewHeight">390</System:Double>
+    <Visibility x:Key="PinDetailsDescriptionTitleNormalVisibility">Visible</Visibility>
+    <Thickness x:Key="PinDetailsDescriptionMargin" Left="5" Top="10" Right="5" Bottom="0"/>
+    <System:Double x:Key="PinDetailsDescriptionFontSize">11</System:Double>
+    <SolidColorBrush x:Key="PinDetailsDescriptionTextColour" Color="{Binding Color, Source={StaticResource Gold}}"/>
+    <Visibility x:Key="PinDetailsDescriptionImageVisibility">Visible</Visibility>
+    <System:Double x:Key="PinDetailsRemovePinContainerHeight">50</System:Double>
+    <Thickness x:Key="PinDetailsRemovePinContainerMargin" Left="0" Top="10" Right="0" Bottom="0"/>
+    <System:Double x:Key="PinDetailsRemovePinWidth">350</System:Double>
+    <System:Double x:Key="PinDetailsRemovePinIconSize">50</System:Double>
+    <System:Double x:Key="PinDetailsRemovePinFontSize">28</System:Double>
+    
+    <!-- Pin Creation Details -->
+    <System:Double x:Key="PinCreationDetailsWidth">370</System:Double>
+    <System:Double x:Key="PinCreationDetailsHeight">520</System:Double>
+    <VerticalAlignment x:Key="PinCreationDetailsVerticalAlignment">Center</VerticalAlignment>
+    <Thickness x:Key="PinCreationDetailsMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsDockPanelWidth">350</System:Double>
+    <System:Double x:Key="PinCreationDetailsDockPanelHeight">500</System:Double>
+    <Thickness x:Key="PinCreationDetailsDockPanelMargin" Left="0" Top="10" Right="0" Bottom="-40"/>
+    <System:Double x:Key="PinCreationDetailsTitleContainerWidth">305</System:Double>
+    <System:Double x:Key="PinCreationDetailsTitleIconSize">36</System:Double>
+    <Thickness x:Key="PinCreationDetailsTitleIconMargin" Left="5" Top="5" Right="0" Bottom="5"/>
+    <ImageSource x:Key="PinCreationDetailsTitleIconImage">/Assets/CreatPIN_dialogue_Icon.png</ImageSource>
+    <Thickness x:Key="PinCreationDetailsTitleTextContainerMargin" Left="10" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsTitleFontSize">21.333</System:Double>
+    <Thickness x:Key="PinCreationDetailsTitleTextMargin" Left="5" Top="0" Right="5" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsTitleTextMaxWidth">240</System:Double>
+    <System:Double x:Key="PinCreationDetailsTitleTextMaxHeight">43</System:Double>
+    <SolidColorBrush x:Key="PinCreationDetailsTitleBoxColour" Color="{Binding Color, Source={StaticResource Gold}}"/>
+    <Visibility x:Key="PinCreationDetailsCloseButtonNormalVisibility">Visible</Visibility>
+    <System:Double x:Key="PinCreationDetailsCloseButtonSize">36</System:Double>
+    <Thickness x:Key="PinCreationDetailsCloseButtonMargin" Left="0" Top="-50" Right="5" Bottom="0"/>
+    <Visibility x:Key="PinCreationDetailsTitleDividerVisibility">Collapsed</Visibility>
+    <Visibility x:Key="PinCreationDetailsShareVisibility">Visible</Visibility>
+    <Thickness x:Key="PinCreationDetailsShareMargin" Left="0" Top="15" Right="0" Bottom="0"/>
+    <Thickness x:Key="PinCreationDetailsShareCheckboxMargin" Left="5" Top="2" Right="10" Bottom="0"/>
+    <Thickness x:Key="PinCreationDetailsDescriptionMargin" Left="5" Top="15" Right="5" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsDescriptionHeight">70</System:Double>
+    <System:Double x:Key="PinCreationDetailsDescriptionWidth">340</System:Double>
+    <System:Double x:Key="PinCreationDetailsDescriptionFontSize">13.333</System:Double>
+    <Thickness x:Key="PinCreationDetailsDescriptionTextMargin" Left="0" Top="2" Right="0" Bottom="2"/>
+    <Thickness x:Key="PinCreationDetailsDescriptionTextBoxMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="PinCreationDetailsDescriptionTextBoxContainerBorderThickness" Left="0" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="PinCreationDetailsDescriptionTextBoxBorderThickness" Left="1" Top="1" Right="1" Bottom="1"/>
+    <Thickness x:Key="PinCreationDetailsImageContainerMargin" Left="5" Top="20" Right="5" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsImageContainerHeight">200</System:Double>
+    <Visibility x:Key="PinCreationDetailsImageVisibility">Visible</Visibility>
+    <Visibility x:Key="PinCreationDetailsConfirmButtonNormalVisibility">Visible</Visibility>
+    <System:Double x:Key="PinCreationDetailsConfirmButtonContainerHeight">50</System:Double>
+    <Thickness x:Key="PinCreationDetailsConfirmButtonContainerMargin" Left="0" Top="30" Right="0" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsConfirmButtonWidth">350</System:Double>
+    <Visibility x:Key="PinCreationDetailsBottomButtonsVisibility">Collapsed</Visibility>
+    <ImageSource x:Key="PinCreationDetailsCloseKioskButtonOffImage">Assets/button_pin_creation_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationDetailsCloseKioskButtonOnImage">Assets/button_pin_creation_close_on@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationDetailsConfirmKioskButtonOffImage">Assets/button_pin_creation_confirm_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationDetailsConfirmKioskButtonOnImage">Assets/button_pin_creation_confirm_ok_on@kiosk.png</ImageSource>
+    
+    <!-- Pin Creation Confirmation-->
+    <Visibility x:Key="PinCreationConfirmationNormal">Visible</Visibility>
+    <Visibility x:Key="PinCreationConfirmationKiosk">Collapsed</Visibility>
+    <System:Double x:Key="PinCreationConfirmationWidth">400</System:Double>
+    <System:Double x:Key="PinCreationConfirmationHeight">60</System:Double>
+    <System:Double x:Key="PinCreationConfirmationBottomMargin">0</System:Double>
+    <ImageSource x:Key="PinCreationConfirmationCloseButtonOffImage">Assets/button_pin_confirm_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationConfirmationCloseButtonOnImage">Assets/button_pin_confirm_close_on@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationConfirmationOkButtonOffImage">Assets/button_pin_confirm_ok_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationConfirmationOkButtonOnImage">Assets/button_pin_confirm_ok_on@kiosk.png</ImageSource>
     
     <!-- Pin Creation Button -->
     <ImageSource x:Key="PinCreationButtonOffImage">Assets/button_create_poi_off.png</ImageSource>
@@ -473,6 +613,9 @@
     <ImageSource x:Key="PinCreationButtonOverImage">Assets/button_create_poi_over.png</ImageSource>
     <System:Double x:Key="PinCreationButtonSize">60</System:Double>
     <System:Double x:Key="PinCreationButtonMarginToCentre">32</System:Double>
+    
+    <!-- Text Button -->
+    <System:Double x:Key="TextButtonFontSize">16</System:Double>
 
     <!-- Interior Control -->
     <System:Double x:Key="ExitButtonSize">36</System:Double>

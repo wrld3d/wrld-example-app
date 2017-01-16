@@ -6,7 +6,7 @@
 #include "ICallback.h"
 #include "WindowsNativeState.h"
 #include "CallbackCollection.h"
-
+#include "BidirectionalBus.h"
 #include "ReflectionHelpers.h"
 
 namespace ExampleApp
@@ -18,7 +18,7 @@ namespace ExampleApp
             class MyPinCreationConfirmationView: public IMyPinCreationConfirmationView
             {
             public:
-                MyPinCreationConfirmationView(WindowsNativeState& nativeState);
+                MyPinCreationConfirmationView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus, bool isInKioskMode);
                 ~MyPinCreationConfirmationView();
 
                 void OnDismissed();
@@ -34,12 +34,18 @@ namespace ExampleApp
                 void SetFullyOffScreen();
 
             private:
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
+                Eegeo::Helpers::TCallback1<MyPinCreationConfirmationView, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
+
                 Helpers::ReflectionHelpers::Method<void> mDestroy;
                 Helpers::ReflectionHelpers::Method<float> mAnimateToIntermediateOnScreenState;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToActive;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToInactive;
+                Helpers::ReflectionHelpers::Method<void> mResetTutorialViewCount;
 
                 WindowsNativeState& m_nativeState;
+
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 gcroot<System::Type^> m_uiViewClass;
                 gcroot<System::Object^> m_uiView;
