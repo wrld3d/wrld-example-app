@@ -12,7 +12,7 @@ namespace ExampleApp
         {
             const std::string IndoorAtlas = "\nIndoor positioning type: Indoor Atlas";
             const std::string Senion = "\nIndoor positioning type: Senion";
-            const std::string DefaultIndoorPositioning = "";
+            const std::string DefaultIndoorPositioning = "\nIndoor positioning type: GPS";
             
             InteriorsLocationServiceProvider::InteriorsLocationServiceProvider(InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
