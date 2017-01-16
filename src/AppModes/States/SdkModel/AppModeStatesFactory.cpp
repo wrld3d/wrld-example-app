@@ -48,7 +48,6 @@ namespace ExampleApp
                                                            const double attractModePlaybackSpeed,
                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
                                                            Eegeo::Location::NavigationService& navigationService,
                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
                 : m_appCameraController(appCameraController)
@@ -73,7 +72,6 @@ namespace ExampleApp
                 , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
                 , m_screenProperties(screenProperties)
                 , m_messageBus(messageBus)
-                , m_flattenButtonModel(flattenButtonModel)
                 , m_navigationService(navigationService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 {
@@ -125,9 +123,9 @@ namespace ExampleApp
                                                                                    m_attractModePlaybackSpeed,
                                                                                    m_screenProperties,
                                                                                    m_messageBus,
-                                                                                   m_flattenButtonModel,
                                                                                    m_navigationService,
-                                                                                   m_searchQueryPerformer));
+                                                                                   m_searchQueryPerformer,
+                                                                                   m_visualMapService));
                     }
 
                     return states;

@@ -14,7 +14,6 @@
 #include "IUserIdleService.h"
 #include "CatmullRomSpline.h"
 #include "BidirectionalBus.h"
-#include "FlattenButton.h"
 #include "NavigationService.h"
 #include "AttractModeEnteringState.h"
 #include "AttractModeViewingState.h"
@@ -22,6 +21,7 @@
 #include "CameraTransitionService.h"
 #include "ILocationService.h"
 #include "Search.h"
+#include "VisualMap.h"
 
 #include <vector>
 
@@ -49,7 +49,6 @@ namespace ExampleApp
                     AppCamera::SdkModel::AppCameraSplinePlaybackWrapper m_appCamera;
                     int m_cameraHandle;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
-                    FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel; 
                     Eegeo::Location::NavigationService& m_navigationService;
                     AttractMode::SdkModel::States::AttractModeEnteringState m_enteringState;
                     AttractMode::SdkModel::States::AttractModeViewingState m_viewingState;
@@ -59,6 +58,7 @@ namespace ExampleApp
                     long long m_idleTimeAtStartMs;
                     Eegeo::Input::IUserIdleService& m_userIdleService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
+                    VisualMap::SdkModel::IVisualMapService& m_visualMapService;
 
                     Eegeo::Geometry::CatmullRomSpline m_cameraTargetSpline;
                     Eegeo::Geometry::CatmullRomSpline m_cameraPositionSpline;
@@ -80,9 +80,9 @@ namespace ExampleApp
                                  const float playbackSpeed,
                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                 FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
                                  Eegeo::Location::NavigationService& navigationService,
-                                 Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer);
+                                 Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                 VisualMap::SdkModel::IVisualMapService& visualMapService);
                     ~AttractState();
 
                     void Enter(int previousState);

@@ -922,7 +922,6 @@ namespace ExampleApp
                                                                       m_applicationConfiguration.GetAttractModePlaybackSpeed(),
                                                                       m_screenProperties,
                                                                       m_messageBus,
-                                                                      m_pFlattenButtonModule->GetFlattenButtonModel(),
                                                                       *m_pNavigationService,
                                                                       m_pSearchModule->GetSearchQueryPerformer());
 
