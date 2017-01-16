@@ -869,11 +869,15 @@
         "label_text_style_name": "road_default",
         "label_icon_style_name": "icon_default",
         "label_horizontal_alignment": "left",
+        "label_vertical_alignment": "middle",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "constraint_radius_scale": 1.0,
         "pickable": true,
         "fade_duration": 0.25,
         "screen_margin": 50.0,
         "screen_margin_hiding": "if_icon_outside_margin",
-        "priority": 5
+        "priority": 0
     }
     ],
 	"LabelStyleBindings": [{

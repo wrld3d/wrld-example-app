@@ -44,7 +44,6 @@
 #include "FlattenButtonModule.h"
 #include "FlattenButtonViewModule.h"
 #include "SearchResultPoiViewModule.h"
-#include "WorldPinOnMapViewModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
 #include "SettingsMenuViewModule.h"
@@ -130,7 +129,6 @@ AppHost::AppHost(
     , m_pMyPinCreationDetailsViewModule(NULL)
     , m_pMyPinDetailsViewModule(NULL)
     , m_pSearchResultPoiViewModule(NULL)
-    , m_pWorldPinOnMapViewModule(NULL)
     , m_pCompassViewModule(NULL)
     , m_pApp(NULL)
     , m_pWindowsPersistentSettingsModel(NULL)
@@ -184,7 +182,6 @@ AppHost::AppHost(
     Eegeo::Windows::WindowsPlatformConfigBuilder windowsPlatformConfigBuilder(nativeState.GetDeviceModel());
 
     const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(windowsPlatformConfigBuilder, applicationConfiguration);
-
     bool enableTouchControls =  hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
 
     if (enableTouchControls && applicationConfiguration.ShouldStartFullscreen())
@@ -499,13 +496,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         );
 
     // 3d map view layer.
-    m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(
-        m_nativeState,
-        app.WorldPinsModule().GetWorldPinInFocusViewModel(),
-        app.WorldPinsModule().GetScreenControlViewModel(),
-        app.ModalityModule().GetModalityModel(),
-        app.PinDiameter()
-        );
 
     // HUD behind modal background layer.
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
@@ -676,8 +666,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
             Eegeo_DELETE m_pOptionsViewModule;
 
             Eegeo_DELETE m_pAboutPageViewModule;
-
-            Eegeo_DELETE m_pWorldPinOnMapViewModule;
 
             Eegeo_DELETE m_pSearchResultPoiViewModule;
 
