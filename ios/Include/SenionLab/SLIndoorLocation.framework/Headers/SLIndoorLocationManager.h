@@ -10,19 +10,19 @@
 #import "SLIndoorLocationManagerDelegate.h"
 #import "SLLocationState.h"
 #import "SLGeofencing.h"
-#import "SLGeoMessenger.h"
+#import "SLGeomessenger.h"
 #import "SLPath.h"
 
 /**
  SLIndoorLocationManager specifies the positioning interactions. Initiation, starting the positioning,
  ending the positioning, changing the user position and step length, all is specified there.
  */
-@interface SLIndoorLocationManager: NSObject
+@interface SLIndoorLocationManager: NSObject <SLIndoorLocationManagerDelegate>
 
 /// @name Initializer
 
 /**
- Init location manager using Map Key and Customer ID.
+ Init location using Map Key and Customer ID.
  
  @param mapKey Map Key (obtained from SenionLab).
  @param customerId Customer ID (obtained from SenionLab).
@@ -46,7 +46,7 @@
 - (void)startUpdatingLocation;
 
 /**
- Stops location updates (both real and mockup locations). To start positioning again, use [SLIndoorLocationManager startUpdatingLocation].
+ Stops location updates (both real and mockup locations). To start positioning again, use SLIndoorLocationManager::startUpdatingLocation.
  */
 - (void)stopUpdatingLocation;
 
@@ -68,7 +68,7 @@
 
 
 /**
- Stop mockup location updates. This function is also invoked if [SLIndoorLocationManager stopUpdatingLocation] is called.
+ Stop mockup location updates. This function is also invoked if SLIndoorLocationManager::stopUpdatingLocation is called.
  */
 - (void)stopUpdatingMockupLocation;
 
@@ -104,16 +104,6 @@
  */
 - (NSString *)getMapVersionId;
 
-/**
- @return The current location availability status.
- */
-- (SLLocationAvailability)getLocationAvailability;
-
-/**
- @return YES if location availability status is SLLocationAvailabilityAvailable.
- */
-- (BOOL)isLocationAvailable;
-
 /// @name Heading calibration
 
 /**
@@ -126,21 +116,21 @@
 /// @name Geofencing/Geomessenger
 
 /**
- @return The Geofencing manager, used to create alerts when the user enters specific areas.
+ @return The geofencing manager, used to create alerts when the user enters specific areas.
  */
 - (id<SLGeofencing>)getGeofencingManager;
 
 /**
- @return the GeoMessenger manager, used to recieve notifications when the user enters specific areas defined on our servers.
+ @return the geomessenger manager, used to recieve notifications when the user enters specific areas defined on our servers.
  */
-- (id<SLGeoMessenger>)getGeoMessengerManager;
+- (id<SLGeomessenger>)getGeomessengerManager;
 
 /// @name Shortest path
 
 /**
  Get shortest path between two locations.
  
- @note Note that this function is mainly for demonstrating a possible user navigation feature. Please contact SenionLab if you plan to use this feature in your app.
+ @warning Note that this function is mainly for demonstrating a possible user navigation feature. Please contact SenionLab if you plan to use this feature in your app.
  
  @param startLocation The start location.
  @param endLocation The end location.

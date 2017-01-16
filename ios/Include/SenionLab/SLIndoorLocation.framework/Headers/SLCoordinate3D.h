@@ -31,6 +31,12 @@
  */
 - (instancetype)initWithSLCoordinate3D:(SLCoordinate3D *)coordinate;
 
+- (NSDictionary *)writeObjectToDictionary;
+
++ (SLCoordinate3D *)readObjectFromDictionary:(NSDictionary *)dict;
+
+- (BOOL)isEqualToSLCoordinate3D:(SLCoordinate3D *)p withAccuracy:(double)tol;
+
 /// @name Properties
 
 /**

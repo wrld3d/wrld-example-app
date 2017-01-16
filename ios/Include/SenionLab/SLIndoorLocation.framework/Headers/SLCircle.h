@@ -13,7 +13,7 @@
  Class used to define a geofencing area in form of a circle.
  The coordinates that needs to be supplied is marked in the figure below.
  
- ![Image Alt](../img/circle.jpg)
+ ![Image Alt](../../../doc_template/images/circle.jpg)
  */
 @interface SLCircle : NSObject <SLGeometry>
 

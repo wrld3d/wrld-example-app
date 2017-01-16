@@ -27,10 +27,8 @@
     #import "SLPoint2D.h"
     #import "SLPoint3D.h"
 
-    #import "SLGeoMessenger.h"
-    #import "SLGeoMessengerDelegate.h"
-    #import "SLGeoMessengerZone.h"
-    #import "SLGeoMessengerMessage.h"
+    #import "SLGeomessenger.h"
+    #import "SLGeomessengerDelegate.h"
 
     #import "SLGeofencing.h"
     #import "SLGeofencingDelegate.h"

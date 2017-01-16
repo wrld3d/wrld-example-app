@@ -14,7 +14,7 @@
  Class used to define a geofencing area in form of a parallelogram.
  The coordinates that needs to be supplied is marked in the figure below.
  
- ![Image Alt](../img/parallelogram.jpg)
+ ![Image Alt](../../../doc_template/images/parallelogram.jpg)
  */
 @interface SLParallelogram : NSObject <SLGeometry>
 

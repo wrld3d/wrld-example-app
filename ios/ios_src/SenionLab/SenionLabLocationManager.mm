@@ -53,6 +53,17 @@
     [self.locationManager startUpdatingLocation];
 }
 
+-(void) didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius andStatus:(SLLocationStatus)locationStatus
+{
+    m_pSenionLabLocationService->SetIsAuthorized(true);
+    
+    Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude);
+    m_pSenionLabLocationService->SetLocation(latLong);
+    
+    int floorIndex = [self getFloorIndexFromSenionFloorIndex:std::to_string(location.floorNr)];
+    m_pSenionLabLocationService->SetFloorIndex(floorIndex);
+}
+
 -(void) didUpdateHeading:(double)heading withStatus:(BOOL)status
 {
     m_pSenionLabLocationService->SetIsAuthorized(true);
@@ -98,22 +109,6 @@
     }
     
     return -1;
-}
-
-- (void)didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)uncertaintyRadius
-{
-    m_pSenionLabLocationService->SetIsAuthorized(true);
-
-    Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude);
-    m_pSenionLabLocationService->SetLocation(latLong);
-
-    int floorIndex = [self getFloorIndexFromSenionFloorIndex:std::to_string(location.floorNr)];
-    m_pSenionLabLocationService->SetFloorIndex(floorIndex);
-}
-
-- (void)didUpdateLocationAvailability: (SLLocationAvailability)locationAvailability
-{
-    
 }
 
 @end

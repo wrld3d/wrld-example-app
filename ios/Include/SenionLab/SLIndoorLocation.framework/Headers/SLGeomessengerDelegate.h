@@ -1,5 +1,5 @@
 //
-//  SLGeoMessengerDelegate.h
+//  SLGeomessengerDelegate.h
 //  SLIndoorLocation
 //
 //  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
@@ -7,53 +7,42 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol SLGeoMessenger;
-@class SLGeoMessengerZone;
+@protocol SLGeomessenger;
 
 /**
- The methods declared by the UIScrollViewDelegate protocol allows the adopting delegate to respond to messages from the SLGeoMessenger protocol. The protocol contains methods responding to events occuring during the startup of the SLGeoMessenger service and methods for continious GeoMessenger zone events.
- 
- ### Note
- 
- Errors from [SLGeoMessengerDelegate geoMessenger:didFailWithError:] are declared in SLGeoMessengerErrorType. If you get SLGeoMessengerErrorTypeLocationManagerNotLoaded you must restart SLGeoMessenger your self. The other error types will trigger a timer and will try again later.
+ To receive notifications for geomessenger, this protocol must be implemented.
  */
-@protocol SLGeoMessengerDelegate <NSObject>
+@protocol SLGeomessengerDelegate <NSObject>
 
-/// @name Startup events.
+/// @name Methods
 
 /**
- @abstract Called when the SLGeoMessenger have loaded and started.
+ Called when a geomessenger area is entered.
  
- @param geoMessenger The SLGeoMessenger manager object that generated the update event.
+ @param geomessenger The geomessenger object handling the area entered.
+ @param title Title of the area entered.
+ @param message Message of the area entered.
  */
-- (void)geoMessengerDidStart:(id<SLGeoMessenger>)geoMessenger;
+- (void)geomessenger:(id<SLGeomessenger>)geomessenger didEnterGeomessageWithTitle:(NSString *)title andMessage:(NSString *)message;
 
 /**
- @abstract Called if any error occur during the startup of SLGeoMessenger. The possible error is defined in SLGeoMessengerErrorType.
+ Called when a geomessenger area is left.
  
- @discussion If you get SLGeoMessengerErrorTypeLocationManagerNotLoaded you must restart SLGeoMessenger your self. The other error types will trigger a timer and will try again later.
- 
- @param geoMessenger The SLGeoMessenger manager object that generated the update event.
- @param error the NSError occured, defined in SLGeoMessengerErrorType
+ @param geomessenger The geomessenger object handling the area left.
+ @param title Title of the area left.
+ @param message Message of the area left.
  */
-- (void)geoMessenger:(id<SLGeoMessenger>)geoMessenger didFailWithError:(NSError *)error;
+- (void)geomessenger:(id<SLGeomessenger>)geomessenger didLeaveGeomessageWithTitle:(NSString *)title andMessage:(NSString *)message;
 
-/// @name GeoMessenger events
 
+@optional
 /**
- @abstract Called when a SLGeoMessengerZone is entered.
+ Optional
  
- @param geoMessenger The SLGeoMessenger manager object that generated the update event.
- @param zone The SLGeoMessengerZone entered.
- */
-- (void)geoMessenger:(id<SLGeoMessenger>)geoMessenger didEnterZone:(SLGeoMessengerZone *)zone;
-
-/**
- @abstract Called when a SLGeoMessengerZone is left.
+ Called if anything goes wrong with loading of the geomessenger areas.
  
- @param geoMessenger The SLGeoMessenger manager object that generated the update event.
- @param zone The SLGeoMessengerZone left.
+ @param geomessenger The geomessenger object which failed loading.
  */
-- (void)geoMessenger:(id<SLGeoMessenger>)geoMessenger didLeaveZone:(SLGeoMessengerZone *)zone;
+- (void)geomessengerDidFailLoadingGeomessages:(id<SLGeomessenger>)geomessenger;
 
 @end
