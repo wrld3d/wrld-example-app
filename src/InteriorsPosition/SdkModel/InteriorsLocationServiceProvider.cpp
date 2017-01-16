@@ -13,6 +13,7 @@ namespace ExampleApp
             const std::string IndoorAtlas = "\nIndoor positioning type: Indoor Atlas";
             const std::string Senion = "\nIndoor positioning type: Senion";
             const std::string DefaultIndoorPositioning = "\nIndoor positioning type: GPS";
+            const std::string NoIndoorPositioning = "";
             
             InteriorsLocationServiceProvider::InteriorsLocationServiceProvider(InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
@@ -76,10 +77,10 @@ namespace ExampleApp
                         m_currentLocationService.SetLocationService(m_senionLabLocationService);
                         m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(Senion));
                     }
-                    else
-                    {
-                        m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(DefaultIndoorPositioning));
-                    }
+                }
+                else
+                {
+                    m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(DefaultIndoorPositioning));
                 }
             }
             
@@ -87,7 +88,7 @@ namespace ExampleApp
             {
                 Eegeo_TTY("using default location service");
                 m_currentLocationService.SetLocationService(m_defaultLocationService);
-                m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(DefaultIndoorPositioning));
+                m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(NoIndoorPositioning));
             }
         }
     }
