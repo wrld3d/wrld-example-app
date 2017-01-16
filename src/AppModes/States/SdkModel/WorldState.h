@@ -11,6 +11,7 @@
 #include "InteriorsExplorer.h"
 #include "AttractModeTimer.h"
 #include "IUserIdleService.h"
+#include "CameraFrustumStreamingVolume.h"
 
 namespace ExampleApp
 {
@@ -26,11 +27,16 @@ namespace ExampleApp
                     
                     AppCamera::SdkModel::IAppCameraController& m_cameraController;
                     int m_worldCameraHandle;
+                    Eegeo::Streaming::CameraFrustumStreamingVolume& m_cameraFrustumStreamingVolume;
+                    Eegeo::Helpers::TCallback0<WorldState> m_transitionInFlightCallback;
+                    
+                    void OnTransitionInFlight();
                     
                 public:
                     
                     WorldState(AppCamera::SdkModel::IAppCameraController& cameraController,
-                               int worldCameraHandle);
+                               int worldCameraHandle,
+                               Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume);
                     
                     ~WorldState();
                     

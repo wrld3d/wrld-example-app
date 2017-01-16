@@ -14,19 +14,30 @@ namespace ExampleAppWPF.VirtualKeyboard
     using System.Windows.Input;
 
     public delegate void CustomKeyEvent(string key);
+    public delegate void ControlKeyEvent(int key);
 
     [TemplateVisualState(Name = VisualStateQuertyName, GroupName = VisualStateGroupKeyboardLayoutName)]
     [TemplateVisualState(Name = VisualStateNumericName, GroupName = VisualStateGroupKeyboardLayoutName)]
 
     public class QuertyKeyboard : ControlBase
     {
+        private enum ShiftState
+        {
+            ShiftUp,
+            ShiftDown,
+            ShiftHeld
+        }
+
+        private const int LongPressTime = 1000;
+        private int m_touchDownTime = 0;
+        private ShiftState m_shiftState = ShiftState.ShiftUp;
+
         #region Template Parts
 
         public event CustomKeyEvent CustomKeyUp;
+        public event ControlKeyEvent ControlKeyUp;
 
         private static List<VirtualKeyboardButton> KeyboardButtons = new List<VirtualKeyboardButton>();
-
-        private bool isShiftPressed = false;
 
         #endregion Template Parts
 
@@ -42,18 +53,23 @@ namespace ExampleAppWPF.VirtualKeyboard
 
         #endregion Visual states
 
+        public static readonly DependencyProperty IsShiftHeldProperty =
+            DependencyProperty.Register(
+                "IsShiftHeld", typeof(bool), typeof(QuertyKeyboard),
+                new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty IsShiftPressedProperty =
             DependencyProperty.Register(
                 "IsShiftPressed", typeof(bool), typeof(QuertyKeyboard),
                 new FrameworkPropertyMetadata(false));
 
+        public bool IsShiftHeld
+        {
+            get { return m_shiftState == ShiftState.ShiftHeld; }
+        }
+
         public bool IsShiftPressed
         {
-            get { return isShiftPressed; }
-            set {
-                isShiftPressed = value;
-                SetValue(IsShiftPressedProperty, value);
-            }
+            get { return m_shiftState != ShiftState.ShiftUp; }
         }
 
         #region KeyboardLayout
@@ -200,6 +216,14 @@ namespace ExampleAppWPF.VirtualKeyboard
             }
         }
 
+        private void OnControlKeyEvent(KeysEx controlInputValue)
+        {
+            if (ControlKeyUp != null)
+            {
+                ControlKeyUp((int)controlInputValue);
+            }
+        }
+
         private void DisabledKeys_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             var disabledKeyArray = (from String disabledKey in e.NewItems
@@ -243,7 +267,7 @@ namespace ExampleAppWPF.VirtualKeyboard
             }
         }
 
-        private void OnExecuteVirtualKeyStroke(string partName, VirtualKeyboardButton key)
+        private void OnExecuteVirtualKeyStroke(string partName, VirtualKeyboardButton key, bool isLongPress)
         {
             if (!OnCanExecuteStringStroke(partName)) { return; }
 
@@ -258,17 +282,18 @@ namespace ExampleAppWPF.VirtualKeyboard
                         ? keyShiftInput[0]
                         : keyInput[0]);
 
-                    SetShift(false);
+                    TryClearShift();
                     break;
 
                 case VirtualKeyboardButton.KeyType.Control:
                     VirtualKeyboardControlButton controlButton = (VirtualKeyboardControlButton)key;
                     VirtualKeyboardService.Instance.SendKey((KeysEx)controlButton.GetKeyControlInputValue());
+                    OnControlKeyEvent((KeysEx)controlButton.GetKeyControlInputValue());
                     break;
 
                 case VirtualKeyboardButton.KeyType.Special:
                     VirtualKeyboardSpecialButton specialButton = (VirtualKeyboardSpecialButton)key;
-                    HandleCustomKey(specialButton.GetKeySpecialInputValue());
+                    HandleCustomKey(specialButton.GetKeySpecialInputValue(), isLongPress);
                     break;
 
                 default:
@@ -276,7 +301,7 @@ namespace ExampleAppWPF.VirtualKeyboard
             }
         }
 
-        private void HandleCustomKey(string specialValue)
+        private void HandleCustomKey(string specialValue, bool isLongPress)
         {
             switch (specialValue)
             {
@@ -289,7 +314,7 @@ namespace ExampleAppWPF.VirtualKeyboard
                     break;
 
                 case "ShiftKey":
-                    OnShiftPressed();
+                    OnShiftPressed(isLongPress);
                     break;
 
                 default:
@@ -298,9 +323,20 @@ namespace ExampleAppWPF.VirtualKeyboard
             }
         }
 
-        private void SetShift(bool isPressed)
+        private void TryClearShift()
         {
-            IsShiftPressed = isPressed;
+            if (m_shiftState != ShiftState.ShiftHeld)
+            {
+                UpdateKeyboardShift(ShiftState.ShiftUp);
+            }
+        }
+
+        private void UpdateKeyboardShift(ShiftState shiftState)
+        {
+            m_shiftState = shiftState;
+            SetValue(IsShiftHeldProperty, IsShiftHeld);
+            SetValue(IsShiftPressedProperty, IsShiftPressed);
+
             UpdateButtonLabels();
         }
 
@@ -314,9 +350,11 @@ namespace ExampleAppWPF.VirtualKeyboard
             KeyboardLayout = KeyboardLayout.NumericState;
         }
 
-        private void OnShiftPressed()
+        private void OnShiftPressed(bool isLongPress)
         {
-            SetShift(!IsShiftPressed);
+            UpdateKeyboardShift(isLongPress
+                ? ShiftState.ShiftHeld
+                : IsShiftPressed ? ShiftState.ShiftUp : ShiftState.ShiftDown);
         }
 
         private void UpdateButtonLabels()
@@ -355,21 +393,8 @@ namespace ExampleAppWPF.VirtualKeyboard
 
             foreach (var key in KeyboardButtons)
             {
-                //element.TouchUp += new EventHandler<TouchEventArgs>(Button_TouchUp);
-                var touchUpEventListener = new WeakEventListener<QuertyKeyboard, object, TouchEventArgs>(this);
-                touchUpEventListener.OnEventAction = (instance, source, eventArgs) =>
-                    instance.Button_TouchUp(source, eventArgs);
-                touchUpEventListener.OnDetachAction = (weakEventListenerParameter) =>
-                    key.TouchUp -= weakEventListenerParameter.OnEvent;
-                key.TouchUp += touchUpEventListener.OnEvent;
-
-                //element.Click += new RoutedEventHandler(Button_Click);
-                var clickEventListener = new WeakEventListener<QuertyKeyboard, object, RoutedEventArgs>(this);
-                clickEventListener.OnEventAction = (instance, source, eventArgs) =>
-                    instance.Button_Click(source, eventArgs);
-                clickEventListener.OnDetachAction = (weakEventListenerParameter) =>
-                    key.Click -= weakEventListenerParameter.OnEvent;
-                key.Click += clickEventListener.OnEvent;
+                key.PreviewMouseDown += new MouseButtonEventHandler(Button_MouseDown);
+                key.PreviewMouseUp += new MouseButtonEventHandler(Button_MouseUp);
 
                 UpdateButtonLabels();
             }
@@ -384,18 +409,20 @@ namespace ExampleAppWPF.VirtualKeyboard
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_MouseDown(object sender, MouseEventArgs e)
         {
-            var key = sender as VirtualKeyboardButton;
-            OnExecuteVirtualKeyStroke(key.Name, key);
+            m_touchDownTime = e.Timestamp;
         }
 
-        private void Button_TouchUp(object sender, TouchEventArgs e)
+        private void Button_MouseUp(object sender, MouseEventArgs e)
         {
-            // I dont even think this needs to be here at all...
-            //var button = sender as Button;
-            //var keyStroke = button.CommandParameter as String;
-            //OnExecuteVirtualKeyStroke ( keyStroke );
+            var key = sender as VirtualKeyboardButton;
+            OnExecuteVirtualKeyStroke(key.Name, key, IsLongPress(e.Timestamp));
+        }
+
+        private bool IsLongPress(int touchUpTime)
+        {
+            return touchUpTime - m_touchDownTime > LongPressTime;
         }
 
         public void ReleaseKeys()

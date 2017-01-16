@@ -958,6 +958,7 @@
     <Resource Include="Assets\shift_key.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\shift_key_down.png" />
     <Resource Include="..\..\Resources\button_pin_confirm_close_off%40kiosk.png">
       <Link>Assets\button_pin_confirm_close_off%40kiosk.png</Link>
     </Resource>

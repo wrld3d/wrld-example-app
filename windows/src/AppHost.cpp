@@ -147,7 +147,7 @@ AppHost::AppHost(
     , m_shouldStartFullscreen(false)
     , m_maxDeviceTouchCount(maxDeviceTouchCount)
 	, m_pTagSearchViewModule(NULL)
-    , m_userIdleService(m_inputHandler.GetUserIdleService())
+    , m_pUserIdleService(NULL)
     , m_pVirtualKeyboardView(NULL)
     , m_pAttractModeOverlayView(NULL)
 {
@@ -194,6 +194,7 @@ AppHost::AppHost(
 
     const Eegeo::Windows::Input::WindowsInputProcessorConfig& windowsInputProcessorConfig = Eegeo::Windows::Input::WindowsInputProcessor::DefaultConfig();
     m_pInputProcessor = Eegeo_NEW(Eegeo::Windows::Input::WindowsInputProcessor)(&m_inputHandler, m_nativeState.GetWindow(), screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), windowsInputProcessorConfig, enableTouchControls, m_maxDeviceTouchCount);
+    m_pUserIdleService = m_pInputProcessor;
 
 	m_pWindowsPersistentSettingsModel = Eegeo_NEW(ExampleApp::PersistentSettings::WindowsPersistentSettingsModel)(m_nativeState);
 
@@ -229,7 +230,7 @@ AppHost::AppHost(
         *m_pWindowsFlurryMetricsService,        
         *this,
         *m_pMenuReaction,
-        m_userIdleService);
+        *m_pUserIdleService);
 
     if (applicationConfiguration.IsFixedIndoorLocationEnabled())
     {
@@ -346,6 +347,13 @@ void AppHost::SetViewportOffset(float x, float y)
     ASSERT_NATIVE_THREAD
 
         m_inputHandler.SetViewportOffset(x, y);
+}
+
+void AppHost::HandleMousePreviewInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event)
+{
+    ASSERT_NATIVE_THREAD
+
+    m_pInputProcessor->HandleMousePreviewInput(event);
 }
 
 void AppHost::HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event)
@@ -627,11 +635,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     if (m_pApp->GetApplicationConfiguration().IsAttractModeEnabled())
     {
         m_pAttractModeOverlayView = Eegeo_NEW(ExampleApp::AttractModeOverlay::View::AttractModeOverlayView)(m_nativeState,
-                                                                                                            m_pApp->GetAppModeModel(),
-                                                                                                            app.SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                                                                            app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                                             m_pVirtualKeyboardView,
-                                                                                                            app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel());
+                                                                                                            app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
+                                                                                                            m_messageBus);
     }
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();

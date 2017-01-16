@@ -449,7 +449,7 @@ namespace ExampleApp
                                                                                             m_pToursModule->GetCameraController(),
                                                                                             m_userIdleService,
                                                                                             m_applicationConfiguration.IsAttractModeEnabled(),
-                                                                                            m_applicationConfiguration.GetAttractModeTimeoutMs(),
+                                                                                            m_applicationConfiguration.AttractModeTimeoutMs(),
                                                                                             m_pMyPinCreationModule->GetMyPinCreationModel(),
                                                                                             m_pVisualMapModule->GetVisualMapService());
         InitialiseAppState(nativeUIFactories);
@@ -862,11 +862,13 @@ namespace ExampleApp
                                                                               m_userIdleService,
                                                                               mapModule.GetResourceCeilingProvider(),
                                                                               m_applicationConfiguration.IsAttractModeEnabled(),
-                                                                              m_applicationConfiguration.GetAttractModeTimeoutMs(),
-                                                                              m_applicationConfiguration.GetAttractModeTargetSplinePoints(),
-                                                                              m_applicationConfiguration.GetAttractModePositionSplinePoints(),
+                                                                              m_applicationConfiguration.AttractModeTargetSplinePoints(),
+                                                                              m_applicationConfiguration.AttractModePositionSplinePoints(),
+                                                                              m_applicationConfiguration.AttractModePlaybackSpeed(),
                                                                               m_screenProperties,
-                                                                              m_messageBus);
+                                                                              m_messageBus,
+                                                                              m_pFlattenButtonModule->GetFlattenButtonModel(),
+                                                                              *m_pNavigationService);
 
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules), AppModes::SdkModel::WorldMode, m_pGlobalAppModeTransitionRules);
     }

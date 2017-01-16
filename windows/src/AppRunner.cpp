@@ -123,6 +123,16 @@ bool AppRunner::ActivateSurface()
     return displayBound;
 }
 
+void AppRunner::HandleMousePreviewEvent(const Eegeo::Windows::Input::MouseInputEvent& event)
+{
+    ASSERT_NATIVE_THREAD
+
+    if (m_pAppHost != NULL)
+    {
+        m_pAppHost->HandleMousePreviewInputEvent(event);
+    }
+}
+
 void AppRunner::HandleMouseEvent(const Eegeo::Windows::Input::MouseInputEvent& event)
 {
     ASSERT_NATIVE_THREAD
@@ -132,7 +142,6 @@ void AppRunner::HandleMouseEvent(const Eegeo::Windows::Input::MouseInputEvent& e
         m_pAppHost->HandleMouseInputEvent(event);
     }
 }
-
 
 void AppRunner::HandleKeyboardDownEvent(char keyCode)
 {

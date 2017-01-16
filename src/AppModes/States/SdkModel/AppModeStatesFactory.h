@@ -17,6 +17,8 @@
 #include "ScreenProperties.h"
 #include "GlobalAppModeTransitionRules.h"
 #include "BidirectionalBus.h"
+#include "FlattenButton.h"
+#include "NavigationService.h"
 
 #include "VisualMap.h"
 
@@ -49,13 +51,16 @@ namespace ExampleApp
 
                     Eegeo::Input::IUserIdleService& m_userIdleService;
                     Eegeo::Streaming::ResourceCeilingProvider& m_resourceCeilingProvider;
+                    const bool m_attractModeEnabled;
                     const std::vector<Eegeo::Space::LatLongAltitude>& m_cameraPositionSplinePoints;
                     const std::vector<Eegeo::Space::LatLongAltitude>& m_cameraTargetSplinePoints;
-                    const bool m_attractModeEnabled;
-                    const long long m_attractModeTimeoutMs;
+                    const float m_attractModePlaybackSpeed;
                     const Eegeo::Rendering::ScreenProperties& m_screenProperties;
 
                     ExampleAppMessaging::TMessageBus& m_messageBus;
+
+                    FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
+                    Eegeo::Location::NavigationService& m_navigationService;
                     
                 public:
                     
@@ -75,11 +80,13 @@ namespace ExampleApp
                                          Eegeo::Input::IUserIdleService& userIdleService,
                                          Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                          const bool attractModeEnabled,
-                                         const long long attractModeTimeout,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
+                                         const float attractModePlaybackSpeed,
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                         ExampleAppMessaging::TMessageBus& messageBus);
+                                         ExampleAppMessaging::TMessageBus& messageBus,
+                                         FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
+                                         Eegeo::Location::NavigationService& navigationService);
                     
                     ~AppModeStatesFactory()
                     {

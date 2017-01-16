@@ -40,7 +40,8 @@ namespace ExampleApp
             const SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation,
             const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
             const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
-            const long long attractModeTimeoutMs
+            const long long attractModeTimeoutMs,
+            const float attractModePlaybackSpeed
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -76,6 +77,7 @@ namespace ExampleApp
         , m_attractModeTargetSplinePoints(attractModeTargetSplinePoints)
         , m_attractModePositionSplinePoints(attractModePositionSplinePoints)
         , m_attractModeTimeoutMs(attractModeTimeoutMs)
+        , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
         {
         }
         
@@ -239,19 +241,24 @@ namespace ExampleApp
             return m_fixedIndoorLocation;
         }
 
-        const std::vector<Eegeo::Space::LatLongAltitude>& ApplicationConfiguration::GetAttractModeTargetSplinePoints() const
+        const std::vector<Eegeo::Space::LatLongAltitude>& ApplicationConfiguration::AttractModeTargetSplinePoints() const
         {
             return m_attractModeTargetSplinePoints;
         }
 
-        const std::vector<Eegeo::Space::LatLongAltitude>& ApplicationConfiguration::GetAttractModePositionSplinePoints() const
+        const std::vector<Eegeo::Space::LatLongAltitude>& ApplicationConfiguration::AttractModePositionSplinePoints() const
         {
             return m_attractModePositionSplinePoints;
         }
 
-        const long long ApplicationConfiguration::GetAttractModeTimeoutMs() const
+        const long long ApplicationConfiguration::AttractModeTimeoutMs() const
         {
             return m_attractModeTimeoutMs;
+        }
+
+        const float ApplicationConfiguration::AttractModePlaybackSpeed() const
+        {
+            return m_attractModePlaybackSpeed;
         }
 
         const bool ApplicationConfiguration::IsAttractModeEnabled() const

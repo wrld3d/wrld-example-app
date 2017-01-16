@@ -99,6 +99,7 @@ public:
     void HandleNoConnectivityWarning();
     void HandleInvalidConnectivityError();
 
+    void HandleMousePreviewInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event);
     void HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event);
     void HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event);
     void HandleTouchScreenInputEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event);
@@ -187,7 +188,7 @@ private:
 
     int m_maxDeviceTouchCount;
 
-    Eegeo::Input::IUserIdleService& m_userIdleService;
+    Eegeo::Input::IUserIdleService* m_pUserIdleService;
 
     ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* m_pVirtualKeyboardView;
     ExampleApp::AttractModeOverlay::View::AttractModeOverlayView* m_pAttractModeOverlayView;

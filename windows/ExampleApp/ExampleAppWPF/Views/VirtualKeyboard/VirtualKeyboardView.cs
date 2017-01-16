@@ -25,6 +25,13 @@ namespace ExampleAppWPF
             };
 
             Visibility = Visibility.Hidden;
+            ControlKeyUp += (key) =>
+            {
+                if (key == 0xd)
+                {
+                    HideVirtualKeyboard();
+                }
+            };
             CustomKeyUp += (key) =>
             {
                 if (key == "HideKeyboard")

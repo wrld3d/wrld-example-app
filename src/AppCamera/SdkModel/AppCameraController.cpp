@@ -20,14 +20,15 @@ namespace ExampleApp
             namespace
             {
                 static int nextHandleId = -1;
-                
-                const double JumpThresholdDistanceBetweenCameras = 4000.0f;
+                static const double JumpThresholdDistanceBetweenCameras = 4000.0;
+                static const float TransitionDuration = 0.75f;
             }
             
             AppCameraController::AppCameraController()
             : m_currentCameraIndex(0)
             , m_previousCameraIndex(0)
-            , m_transitionDuration(0.75f)
+            , m_transitionDuration(TransitionDuration)
+            , m_jumpThresholdDistanceBetweenCameras(JumpThresholdDistanceBetweenCameras)
             , m_transitionTimer(0.0f)
             , m_isTransitionInFlight(false)
             , m_currentNonFlattenedCameraPosition(0.0, 0.0, 0.0)
@@ -55,6 +56,11 @@ namespace ExampleApp
             
             void AppCameraController::TransitionToCameraWithHandle(int cameraHandle)
             {
+                TransitionToCameraWithHandle(cameraHandle, JumpThresholdDistanceBetweenCameras, TransitionDuration);
+            }
+
+            void AppCameraController::TransitionToCameraWithHandle(int cameraHandle, const double jumpThresholdDistanceBetweenCameras, const float transitionDuration)
+            {
                 if(m_currentCameraIndex == cameraHandle)
                 {
                     return;
@@ -62,6 +68,8 @@ namespace ExampleApp
                 
                 Eegeo_ASSERT(cameraHandle < static_cast<int>(m_cameras.size()), "Invalid camera Id");
                 
+                m_transitionDuration = transitionDuration;
+                m_jumpThresholdDistanceBetweenCameras = jumpThresholdDistanceBetweenCameras;
                 m_transitionTimer = 0.0f;
                 m_isTransitionInFlight = true;
                 
@@ -191,7 +199,7 @@ namespace ExampleApp
             const bool AppCameraController::ShouldSkipTransition(IAppCamera &previousCamera, IAppCamera &nextCamera)
             {
                 double distanceBetweenCameras =  (previousCamera.GetRenderCamera().GetEcefLocation() - nextCamera.GetRenderCamera().GetEcefLocation()).Length();
-                if(distanceBetweenCameras >= JumpThresholdDistanceBetweenCameras)
+                if(distanceBetweenCameras >= m_jumpThresholdDistanceBetweenCameras)
                 {
                     return true;
                 }

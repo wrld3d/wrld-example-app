@@ -13,6 +13,8 @@
 #include "LatLongAltitude.h"
 #include "ScreenProperties.h"
 #include "BidirectionalBus.h"
+#include "IFlattenButtonModel.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -38,11 +40,13 @@ namespace ExampleApp
                                                            Eegeo::Input::IUserIdleService& userIdleService,
                                                            Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                                            const bool attractModeEnabled,
-                                                           const long long attractModeTimeout,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
+                                                           const float attractModePlaybackSpeed,
                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                           ExampleAppMessaging::TMessageBus& messageBus)
+                                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
+                                                           Eegeo::Location::NavigationService& navigationService)
                 : m_appCameraController(appCameraController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
@@ -59,11 +63,13 @@ namespace ExampleApp
                 , m_userIdleService(userIdleService)
                 , m_resourceCeilingProvider(resourceCeilingProvider)
                 , m_attractModeEnabled(attractModeEnabled)
-                , m_attractModeTimeoutMs(attractModeTimeout)
                 , m_cameraPositionSplinePoints(cameraPositionSplinePoints)
                 , m_cameraTargetSplinePoints(cameraTargetSplinePoints)
+                , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
                 , m_screenProperties(screenProperties)
                 , m_messageBus(messageBus)
+                , m_flattenButtonModel(flattenButtonModel)
+                , m_navigationService(navigationService)
                 {
                     
                 }
@@ -77,7 +83,8 @@ namespace ExampleApp
                     const int toursCameraHandle = globalAppModeTransitionRules.GetToursCameraHandle();
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::WorldState)(m_appCameraController,
-                                                                             worldCameraHandle));
+                                                                             worldCameraHandle,
+                                                                             m_cameraFrustumStreamingVolume));
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
                                                                                         m_interiorSelectionModel,
@@ -105,11 +112,13 @@ namespace ExampleApp
                                                                                    m_worldCameraController.GetTouchController(),
                                                                                    m_userIdleService,
                                                                                    m_resourceCeilingProvider,
-                                                                                   m_attractModeTimeoutMs,
                                                                                    m_cameraPositionSplinePoints,
                                                                                    m_cameraTargetSplinePoints,
+                                                                                   m_attractModePlaybackSpeed,
                                                                                    m_screenProperties,
-                                                                                   m_messageBus));
+                                                                                   m_messageBus,
+                                                                                   m_flattenButtonModel,
+                                                                                   m_navigationService));
                     }
 
                     return states;
