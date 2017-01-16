@@ -9,7 +9,6 @@
 #import "SLGeometry.h"
 
 /**
- @protocol SLGeofencingDelegate
  To receive notifications for geofencing, this protocol must be implemented.
  */
 @protocol SLGeofencingDelegate <NSObject>

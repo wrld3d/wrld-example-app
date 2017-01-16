@@ -22,12 +22,6 @@
  */
 - (instancetype)initWithLatitude:(double)latitude andLongitude:(double)longitude;
 
-- (NSDictionary *)writeObjectToDictionary;
-
-+ (SLCoordinate2D *)readObjectFromDictionary:(NSDictionary *)dict;
-
-- (BOOL)isEqualToSLCoordinate2D:(SLCoordinate2D *)p withAccuracy:(double)tol;
-
 /// @name Properties
 
 /**

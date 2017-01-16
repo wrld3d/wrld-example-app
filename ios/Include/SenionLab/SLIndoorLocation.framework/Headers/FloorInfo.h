@@ -14,7 +14,7 @@
 /**
  The floor info object from BuildingInfo. This class keeps information about a floor in the building the user is currently in and how the global properties of the floor relate to the bitmap such as the long/lat location, orientation and scale. Please refer to BuildingInfo for the data structure.
  
- ## Note
+ ### Note
  The map information in this class is used only for showing the user location on a bitmap image of the building. This class is not used by SLIndoorLocationManager and the navigation filter.
  */
 @interface FloorInfo : NSObject
