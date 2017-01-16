@@ -63,7 +63,6 @@ namespace ExampleApp
                     Eegeo::Geometry::CatmullRomSpline m_cameraTargetSpline;
                     Eegeo::Geometry::CatmullRomSpline m_cameraPositionSpline;
 
-                    void ClearSearch();
                     bool IsUserActive();
                     void InitialiseSplinePlaybackCameraState();
 

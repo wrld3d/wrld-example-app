@@ -97,7 +97,7 @@ namespace ExampleApp
                     m_subStateMachine.StartStateMachine(States::EnterState);
                     m_idleTimeAtStartMs = m_userIdleService.GetUserIdleTimeMs();
 
-                    ClearSearch();
+                    m_searchQueryPerformer.RemoveSearchQueryResults();
                 }
 
                 void AttractState::Update(float dt)
@@ -134,11 +134,6 @@ namespace ExampleApp
                     default:
                         Eegeo_ASSERT("Completion of invalid attract mode sub-state.");
                     }
-                }
-
-                void AttractState::ClearSearch()
-                {
-                    m_searchQueryPerformer.RemoveSearchQueryResults();
                 }
 
                 bool AttractState::IsUserActive()

@@ -321,6 +321,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     		m_searchMenuResultsSeparator.setVisibility(View.VISIBLE);
     	}
     }
+
+    public void removeSearchQueryResults()
+    {
+        setSearchResultCount(0);
+    }
     
     public void fadeInButtonAnimation(final long delay)
     {
