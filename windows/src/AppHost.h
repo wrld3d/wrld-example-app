@@ -33,7 +33,6 @@
 #include "ModalBackgroundViewIncludes.h"
 #include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
-#include "WorldPinOnMapViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
 #include "MyPinCreationViewIncludes.h"
@@ -151,7 +150,6 @@ private:
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
 	ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
-    ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
     ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
     ExampleApp::MyPinCreation::View::IMyPinCreationViewModule* m_pMyPinCreationViewModule;
