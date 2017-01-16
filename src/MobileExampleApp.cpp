@@ -43,9 +43,7 @@
 #include "IPoiRingController.h"
 #include "MyPinCreationDetailsModule.h"
 #include "MyPinsModule.h"
-#include "IWorldPinsInFocusController.h"
-#include "IWorldPinsScaleController.h"
-#include "IWorldPinsFloorHeightController.h"
+#include "IWorldPinsVisibilityController.h"
 #include "MyPinDetailsModule.h"
 #include "QuadTreeCube.h"
 #include "LodRefinementConfig.h"
@@ -569,7 +567,7 @@ namespace ExampleApp
         
         InitialisePinsModules(mapModule, world, interiorsAffectedByFlattening, m_screenProperties.GetOversampleScale());
         
-        m_pReportPinsVisibilityMaskingModule = Eegeo_NEW(ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule)(m_pWorldPinsModule->GetWorldPinsScaleController(),
+        m_pReportPinsVisibilityMaskingModule = Eegeo_NEW(ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule)(m_pWorldPinsModule->GetWorldPinsVisibilityController(),
                                                                                                                                    mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                                                                                    m_messageBus);
         
@@ -834,7 +832,6 @@ namespace ExampleApp
                                                                                                      interiorsPresentationModule.GetInteriorTransitionModel(),
                                                                                                      interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
-                                                                                                     m_pWorldPinsModule->GetWorldPinsScaleController(),
                                                                                                      *m_pWorldPinsIconMapping,
                                                                                                      mapModule.GetEnvironmentFlatteningService(),
                                                                                                      m_pVisualMapModule->GetVisualMapService(),
@@ -1082,7 +1079,6 @@ namespace ExampleApp
         reactors.push_back(&SettingsMenuModule().GetSettingsMenuViewModel());
         reactors.push_back(&SearchMenuModule().GetSearchMenuViewModel());
         reactors.push_back(&FlattenButtonModule().GetScreenControlViewModel());
-        reactors.push_back(&WorldPinsModule().GetScreenControlViewModel());
         reactors.push_back(&CompassModule().GetScreenControlViewModel());
         reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
         reactors.push_back(&WatermarkModule().GetScreenControlViewModel());
@@ -1124,27 +1120,16 @@ namespace ExampleApp
         
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
-        m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::SdkModel::WorldPinsModule)(
-                                                                                         m_pPinsModule->GetRepository(),
-                                                                                         m_pPinsModule->GetController(),
-                                                                                         mapModule.GetEnvironmentFlatteningService(),
-                                                                                         m_identityProvider,
-                                                                                         m_messageBus,
+        m_pWorldPinsModule = Eegeo_NEW(ExampleApp::WorldPins::SdkModel::WorldPinsModule)(m_messageBus,
                                                                                          interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                          interiorsPresentationModule.GetInteriorTransitionModel(),
                                                                                          m_sdkDomainEventBus,
-                                                                                         interiorsAffectedByFlattening,
-                                                                                         m_menuReaction,
-                                                                                         screenOversampleScale,
-                                                                                         *m_pWorldPinsIconMapping,
                                                                                          interiorsPresentationModule.GetInteriorMarkerPickingService(),
                                                                                          mapModule.GetMapLayersModule().GetLabelModelService(),
                                                                                          mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
                                                                                          mapModule.GetLabelsModule().GetLabelLayerFilterModel(),
                                                                                          mapModule.GetLabelsModule().GetLabelPicker(),
-                                                                                         m_useIndoorEntryMarkerLabels,
-                                                                                         m_applicationConfiguration.IsInKioskMode(),
-                                                                                         m_applicationConfiguration.UseLabels());
+                                                                                         m_applicationConfiguration.IsInKioskMode());
     }
     
     void MobileExampleApp::OnPause()
@@ -1203,9 +1188,7 @@ namespace ExampleApp
         
         if(!eegeoWorld.Initialising() || (m_pLoadingScreen == NULL && eegeoWorld.Initialising()))
         {
-            WorldPinsModule().GetWorldPinsService().Update(dt);
-            WorldPinsModule().GetWorldPinsScaleController().Update(dt, renderCamera);
-            WorldPinsModule().GetWorldPinsFloorHeightController().Update(dt);
+            m_pWorldPinsModule->Update(dt);
             
             CompassModule().GetCompassUpdateController().Update(dt);
             m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
@@ -1248,13 +1231,7 @@ namespace ExampleApp
         Eegeo::Camera::CameraState cameraState = m_pAppCameraModule->GetController().GetCameraState();
         
         Eegeo::dv3 ecefInterestPoint(cameraState.InterestPointEcef());
-        
-        if(!eegeoWorld.Initialising())
-        {
-            WorldPinsModule().GetWorldPinsInFocusController().Update(dt, ecefInterestPoint, renderCamera);
-            
-        }
-        
+
         Eegeo::EegeoDrawParameters drawParameters(cameraState.LocationEcef(),
                                                   cameraState.InterestPointEcef(),
                                                   cameraState.ViewMatrix(),

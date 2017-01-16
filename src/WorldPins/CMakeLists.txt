@@ -17,4 +17,3 @@ set(currsources
 set(sources ${sources} ${currsources})
 source_group(\\src\\WorldPins FILES ${currsources})
 include(../src/WorldPins/SdkModel/CMakeLists.txt)
-include(../src/WorldPins/View/CMakeLists.txt)

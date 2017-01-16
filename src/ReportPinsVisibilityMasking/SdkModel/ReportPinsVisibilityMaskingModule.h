@@ -21,7 +21,7 @@ namespace ExampleApp
                 MenuSectionExpandedChangedObserver* m_pMenuSectionExpandedChangedObserver;
                 ReportPinsVisibilityMaskingController* m_pReportPinsVisibilityMaskingController;
             public:
-                ReportPinsVisibilityMaskingModule(WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
+                ReportPinsVisibilityMaskingModule(WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController,
                                                   Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                   ExampleAppMessaging::TMessageBus& messageBus);
                 

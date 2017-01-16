@@ -34,13 +34,8 @@ namespace ExampleApp
 
                 virtual void RemovePin(WorldPinItemModel* pinItemModel) = 0;
 
-                virtual void UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale) = 0;
-                
                 virtual void UpdatePinCategory(const WorldPinItemModel& pinItemModel, const std::string& iconKey) = 0;
 
-                virtual void GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
-                        Eegeo::dv3& ecefLocation,
-                        Eegeo::v2& screenLocation) const = 0;
 
                 virtual bool HandleTouchTap(const Eegeo::v2& screenTapPoint) = 0;
 

@@ -132,6 +132,7 @@ namespace ExampleApp
         Eegeo::Pins::PinsModule* m_pPinsModule;
         ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping* m_pWorldPinsIconMapping;
         ExampleApp::WorldPins::SdkModel::IWorldPinsModule* m_pWorldPinsModule;
+        ExampleApp::WorldPins::SdkModel::IWorldPinsFocusModule* m_pWorldPinsFocusModule;
         SearchResultOnMap::SdkModel::ISearchResultOnMapModule* m_pSearchResultOnMapModule;
         ExampleApp::Reaction::View::IReactionModelModule* m_pReactionModelModule;
         ExampleApp::Reaction::View::IReactionControllerModule* m_pReactionControllerModule;
@@ -316,7 +317,12 @@ namespace ExampleApp
         {
             return *m_pWorldPinsModule;
         }
-
+        
+        const ExampleApp::WorldPins::SdkModel::IWorldPinsFocusModule* WorldPinsFocusModule() const
+        {
+            return m_pWorldPinsFocusModule;
+        }
+        
         const SearchResultOnMap::SdkModel::ISearchResultOnMapModule& SearchResultOnMapModule() const
         {
             return *m_pSearchResultOnMapModule;

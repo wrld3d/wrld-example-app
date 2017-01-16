@@ -22,7 +22,7 @@ namespace ExampleApp
             private:
                 bool m_reportPinsExpanded;
                 MenuSectionExpandedChangedObserver& m_menuSectionExpandedChangedObserver;
-                WorldPins::SdkModel::IWorldPinsScaleController& m_worldPinsScaleController;
+                WorldPins::SdkModel::IWorldPinsVisibilityController& m_worldPinsVisibilityController;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Helpers::TCallback1<ReportPinsVisibilityMaskingController, bool> m_myReportsSectionExpandedChangedHandler;
                 Eegeo::Helpers::TCallback0<ReportPinsVisibilityMaskingController> m_visibilityMaskChangedHandler;
@@ -30,7 +30,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<ReportPinsVisibilityMaskingController> m_interiorModelChangedHandler;
                 
             public:
-                ReportPinsVisibilityMaskingController(WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
+                ReportPinsVisibilityMaskingController(WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController,
                                                       Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                       MenuSectionExpandedChangedObserver& menuSectionExpandedChangedObserver);
                 
