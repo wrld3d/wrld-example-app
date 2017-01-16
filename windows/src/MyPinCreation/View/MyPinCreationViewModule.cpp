@@ -18,13 +18,14 @@ namespace ExampleApp
                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
                 MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                Metrics::IMetricsService& metricsService
+                Metrics::IMetricsService& metricsService,
+                bool isInKioskMode
             )
             {
                 m_pInitiationView = Eegeo_NEW(MyPinCreationInitiationView)(nativeState);
                 m_pInitiationController = Eegeo_NEW(MyPinCreationInitiationController)(initiationViewModel, *m_pInitiationView, confirmationViewModel, messageBus, metricsService);
 
-                m_pConfirmationView = Eegeo_NEW(MyPinCreationConfirmationView)(nativeState);
+                m_pConfirmationView = Eegeo_NEW(MyPinCreationConfirmationView)(nativeState, messageBus, isInKioskMode);
                 m_pConfirmationController = Eegeo_NEW(MyPinCreationConfirmationController)(confirmationViewModel, *m_pConfirmationView, detailsViewModel, messageBus, metricsService);
             }
 

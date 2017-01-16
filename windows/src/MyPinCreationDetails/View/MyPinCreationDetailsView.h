@@ -8,7 +8,7 @@
 #include "MyPinCreationDetails.h"
 #include "MyPinCreationDetailsViewIncludes.h"
 #include "CallbackCollection.h"
-
+#include "BidirectionalBus.h"
 #include <vcclr.h>
 #include "ReflectionHelpers.h"
 
@@ -21,7 +21,7 @@ namespace ExampleApp
             class MyPinCreationDetailsView: public IMyPinCreationDetailsView
             {
             public:
-                MyPinCreationDetailsView(WindowsNativeState& nativeState);
+                MyPinCreationDetailsView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus, bool isInKioskMode);
                 ~MyPinCreationDetailsView();
 
                 void Open();
@@ -44,6 +44,9 @@ namespace ExampleApp
                 size_t GetImageSize() const;
 
             private:
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
+                Eegeo::Helpers::TCallback1<MyPinCreationDetailsView, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
+
                 gcroot<System::Type^> m_uiViewClass;
                 gcroot<System::Object^> m_uiView;
 
@@ -56,8 +59,11 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<void> mGetShouldShare;
                 Helpers::ReflectionHelpers::Method<void> mGetImageBuffer;
                 Helpers::ReflectionHelpers::Method<void> mGetImageBufferSize;
+                Helpers::ReflectionHelpers::Method<void> mResetTutorialViewCount;
 
                 WindowsNativeState& m_nativeState;
+
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 Eegeo::Helpers::CallbackCollection0 m_confirmedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;

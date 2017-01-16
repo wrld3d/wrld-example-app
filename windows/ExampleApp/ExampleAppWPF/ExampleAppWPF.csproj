@@ -115,6 +115,12 @@
     <Compile Include="Views\Menu\MenuListAdapter.cs" />
     <Compile Include="Views\Menu\MenuListItem.cs" />
     <Compile Include="Views\Menu\StoryboardRunner.cs" />
+    <Compile Include="Views\MyPinCreationConfirmation\MyPinCreationConfirmationTutorialDialogBox.xaml.cs">
+      <DependentUpon>MyPinCreationConfirmationTutorialDialogBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyPinCreationDetails\MyPinCreationDetailsTutorialDialogBox.xaml.cs">
+      <DependentUpon>MyPinCreationDetailsTutorialDialogBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
@@ -233,7 +239,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MyPinCreationConfirmation\MyPinCreationConfirmationTutorialDialogBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MyPinCreationConfirmation\MyPinCreationConfirmationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyPinCreationDetails\MyPinCreationDetailsTutorialDialogBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -942,6 +956,39 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\shift_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_pin_confirm_close_off%40kiosk.png">
+      <Link>Assets\button_pin_confirm_close_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_confirm_close_on%40kiosk.png">
+      <Link>Assets\button_pin_confirm_close_on%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_confirm_ok_off%40kiosk.png">
+      <Link>Assets\button_pin_confirm_ok_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_confirm_ok_on%40kiosk.png">
+      <Link>Assets\button_pin_confirm_ok_on%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\CreatPIN_dialogue_Icon%40kiosk.png">
+      <Link>Assets\CreatPIN_dialogue_Icon%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_pin_creation_close_off%40kiosk.png">
+      <Link>Assets\button_pin_creation_close_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_creation_close_on%40kiosk.png">
+      <Link>Assets\button_pin_creation_close_on%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_creation_confirm_off%40kiosk.png">
+      <Link>Assets\button_pin_creation_confirm_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_creation_confirm_on%40kiosk.png">
+      <Link>Assets\button_pin_creation_confirm_on%40kiosk.png</Link>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

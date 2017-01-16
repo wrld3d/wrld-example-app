@@ -10,6 +10,7 @@
 #include "MyPinCreationViewIncludes.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
+#include "PersistentSettings.h"
 
 namespace ExampleApp
 {
@@ -33,7 +34,8 @@ namespace ExampleApp
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
                     MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
+                    Metrics::IMetricsService& metricsService,
+                    bool isInKioskMode
                 );
 
                 ~MyPinCreationViewModule();
