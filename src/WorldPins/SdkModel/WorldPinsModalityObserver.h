@@ -6,7 +6,7 @@
 #include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "ModalityChangedMessage.h"
-#include "IWorldPinsScaleController.h"
+#include "WorldPins.h"
 
 namespace ExampleApp
 {
@@ -16,14 +16,14 @@ namespace ExampleApp
         {
             class WorldPinsModalityObserver : private Eegeo::NonCopyable
             {
-                IWorldPinsScaleController& m_worldPinsScaleController;
+                IWorldPinsVisibilityController& m_worldPinsVisibilityController;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<WorldPinsModalityObserver, const Modality::ModalityChangedMessage&> m_handlerBinding;
 
                 void OnModalityChangedMessage(const Modality::ModalityChangedMessage& message);
 
             public:
-                WorldPinsModalityObserver(IWorldPinsScaleController& worldPinsScaleController,
+                WorldPinsModalityObserver(IWorldPinsVisibilityController& worldPinsVisibilityController,
                                           ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~WorldPinsModalityObserver();

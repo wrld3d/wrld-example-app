@@ -9,7 +9,6 @@
 #include "Rendering.h"
 #include "Camera.h"
 #include "BidirectionalBus.h"
-#include "WorldPinInFocusObserver.h"
 #include "IIdentity.h"
 #include "IScreenControlViewModel.h"
 #include "WorldPinsModalityObserver.h"
@@ -29,51 +28,31 @@ namespace ExampleApp
                 IWorldPinsFactory* m_pWorldPinsFactory;
                 IWorldPinsService* m_pWorldPinsService;
                 IWorldPinsRepository* m_pWorldPinsRepository;
-                IWorldPinsScaleController* m_pWorldPinsScaleController;
-                IWorldPinsFloorHeightController* m_pWorldPinsFloorHeightController;
-                View::WorldPinInFocusViewModel* m_pWorldPinsInFocusViewModel;
-                IWorldPinsInFocusController* m_pWorldPinsInFocusController;
-                View::WorldPinInFocusObserver* m_pWorldPinInFocusObserver;
+                IWorldPinsVisibilityController* m_pWorldPinsVisibilityController;
                 WorldPinsModalityObserver* m_pWorldPinsModalityObserver;
                 
                 Eegeo::Labels::LabelAnchorCategory* m_pWorldPinLabelCategory;
 
             public:
-                WorldPinsModule(Eegeo::Pins::PinRepository& pinRepository,
-                                Eegeo::Pins::PinController& pinController,
-                                const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                ExampleAppMessaging::TMessageBus& messageBus,
+                WorldPinsModule(ExampleAppMessaging::TMessageBus& messageBus,
                                 const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
-                                const bool interiorsAffectedByFlattening,
-                                const Menu::View::IMenuReactionModel& menuReaction,
-                                const float screenOversampleScale,
-                                const IWorldPinIconMapping& worldPinIconMapping,
                                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
                                 Eegeo::Labels::ILabelModelService& labelModelService,
                                 Eegeo::Labels::ILabelAnchorFilterModel& labelAnchorFilterModel,
                                 Eegeo::Labels::ILabelFilterModel& labelFilterModel,
-                                Eegeo::Labels::ILabelPicker& labelPicker,
-                                const bool useIndoorEntryMarkerLabels,
-                                const bool useLabels);
+                                Eegeo::Labels::ILabelPicker& labelPicker);
 
                 ~WorldPinsModule();
+                
+                void Update(float dt);
 
                 IWorldPinsService& GetWorldPinsService() const;
 
                 IWorldPinsFactory& GetWorldPinsFactory() const;
 
-                IWorldPinsScaleController& GetWorldPinsScaleController() const;
-                
-                IWorldPinsFloorHeightController& GetWorldPinsFloorHeightController() const;
-
-                View::IWorldPinInFocusViewModel& GetWorldPinInFocusViewModel() const;
-
-                IWorldPinsInFocusController& GetWorldPinsInFocusController() const;
-
-                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
+                IWorldPinsVisibilityController& GetWorldPinsVisibilityController() const;
             };
         }
     }

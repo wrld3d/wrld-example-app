@@ -1,18 +1,14 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "WorldPinsService.h"
-#include "IWorldPinSelectionHandler.h"
-#include "IWorldPinsRepository.h"
-#include "IWorldPinsFactory.h"
-#include "PinRepository.h"
-#include "PinController.h"
+#include "ILabelModelService.h"
 #include "LatLongAltitude.h"
-#include "Pin.h"
-#include "Bounds.h"
-#include "EarthConstants.h"
-#include "Logger.h"
-#include "WorldPinIconMapping.h"
+#include "IWorldPinsRepository.h"
 #include "IInteriorMarkerPickingService.h"
+#include "ILabelPicker.h"
+#include "ILabelAnchorFilter.h"
+#include <cstdlib>
+#include <sstream>
 
 namespace ExampleApp
 {
@@ -20,52 +16,60 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WorldPinsService::WorldPinsService(IWorldPinsRepository& worldPinsRepository,
-                                               IWorldPinsFactory& worldPinsFactory,
-                                               Eegeo::Pins::PinRepository& pinRepository,
-                                               Eegeo::Pins::PinController& pinController,
-                                               const Eegeo::Rendering::EnvironmentFlatteningService& flatteningService,
-                                               const IWorldPinIconMapping& worldPinIconMapping,
-                                               Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
-                                               const bool useIndoorEntryMarkerLabels)
-                : m_worldPinsRepository(worldPinsRepository)
-                , m_worldPinsFactory(worldPinsFactory)
-                , m_pinRepository(pinRepository)
-                , m_pinController(pinController)
-                , m_environmentFlatteningService(flatteningService)
-                , m_worldPinIconMapping(worldPinIconMapping)
-                , m_interiorMarkerPickingService(interiorMarkerPickingService)
-                , m_useIndoorEntryMarkerLabels(useIndoorEntryMarkerLabels)
-                , m_pinAlreadySelected(false)
+            WorldPinsService::WorldPinsService(Eegeo::Labels::ILabelModelService& labelModelService,
+                                               Eegeo::Labels::ILabelAnchorFilterModel& labelAnchorFilterModel,
+                                               const Eegeo::Labels::LabelAnchorCategory& labelAnchorCategory,
+                                               Eegeo::Labels::ILabelPicker& labelPicker,
+                                               const Eegeo::Labels::LabelLayer::IdType& labelLayerId,
+                                               IWorldPinsRepository& worldPinsRepository,
+                                               Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService)
+            : m_labelModelService(labelModelService)
+            , m_labelAnchorFilterModel(labelAnchorFilterModel)
+            , m_labelAnchorCategory(labelAnchorCategory)
+            , m_labelPicker(labelPicker)
+            , m_labelLayerId(labelLayerId)
+            , m_worldPinsRepository(worldPinsRepository)
+            , m_interiorMarkerPickingService(interiorMarkerPickingService)
+            , m_lastLabelId(0)
+            , m_pinAlreadySelected(false)
+            , m_labelHiddenFilter(this, &WorldPinsService::LabelHiddenPredicate)
             {
+                m_labelAnchorFilterModel.SetFilter(m_labelLayerId, &m_labelHiddenFilter);
             }
-
+            
             WorldPinsService::~WorldPinsService()
             {
-                while(m_worldPinsRepository.GetItemCount() != 0)
-                {
-                    WorldPinItemModel* item = m_worldPinsRepository.GetItemAtIndex(0);
-                    RemovePin(item);
-                }
+                m_labelAnchorFilterModel.SetFilter(m_labelLayerId, NULL);
             }
-
+            
             WorldPinItemModel* WorldPinsService::AddPin(IWorldPinSelectionHandler* pSelectionHandler,
-                                                        IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
-                                                        const WorldPinFocusData& worldPinFocusData,
-                                                        bool interior,
-                                                        const WorldPinInteriorData& worldPinInteriorData,
-                                                        const Eegeo::Space::LatLong& location,
-                                                        const std::string& pinIconKey,
-                                                        float heightAboveTerrainMetres,
-                                                        int visibilityMask)
+                                                          IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
+                                                          const WorldPinFocusData& worldPinFocusData,
+                                                          bool interior,
+                                                          const WorldPinInteriorData& worldPinInteriorData,
+                                                          const Eegeo::Space::LatLong& location,
+                                                          const std::string& pinIconKey,
+                                                          float heightAboveTerrainMetres,
+                                                          int visibilityMask)
             {
-                const int iconIndex = m_worldPinIconMapping.IconIndexForKey(pinIconKey);
-                Eegeo::Pins::Pin* pPin = m_worldPinsFactory.CreatePin(location, iconIndex, heightAboveTerrainMetres);
-
-                m_pinRepository.AddPin(*pPin);
-
-                Eegeo::Pins::TPinId pinId = pPin->GetId();
-
+                Eegeo::Pins::TPinId pinId = m_lastLabelId++;
+                std::stringstream ss;
+                ss << pinId;
+                std::string labelModelId = ss.str();
+                Eegeo::v3 offset = Eegeo::v3::Zero();
+                Eegeo::Labels::LabelModelCreationParams labelParams(labelModelId,
+                                                                    m_labelAnchorCategory,
+                                                                    "world_pin",
+                                                                    worldPinFocusData.title,
+                                                                    pinIconKey,
+                                                                    location.ToECEF(),
+                                                                    offset,
+                                                                    pinId);
+                labelParams.fitToSurface = true;
+                labelParams.interiorId = worldPinInteriorData.building;
+                labelParams.interiorFloorIndex = worldPinInteriorData.floor;
+                m_labelModelService.CreateAndAdd(labelParams);
+                
                 TPinToSelectionHandlerMapIt pinToSelectionHandlerMapIt = m_pinsToSelectionHandlers.find(pinId);
                 Eegeo_ASSERT(pinToSelectionHandlerMapIt == m_pinsToSelectionHandlers.end(), "Attempting to add same pin ID %d twice.\n", pinId);
                 m_pinsToSelectionHandlers[pinId] = pSelectionHandler;
@@ -74,6 +78,8 @@ namespace ExampleApp
                 Eegeo_ASSERT(pinToVisiblityHandlerMapIt == m_pinsToVisbilityChangedHandlers.end(), "Attempting to add same pin ID %d twice.\n", pinId);
                 m_pinsToVisbilityChangedHandlers[pinId] = pVisibilityStateChangedHandler;
 
+                m_worldPinsToLabels[pinId] = labelModelId;
+                
                 WorldPinItemModel* model = Eegeo_NEW(WorldPinItemModel)(pinId,
                                                                         pSelectionHandler,
                                                                         pVisibilityStateChangedHandler,
@@ -81,83 +87,46 @@ namespace ExampleApp
                                                                         interior,
                                                                         worldPinInteriorData,
                                                                         visibilityMask);
+            
                 m_worldPinsRepository.AddItem(model);
-
-                UpdatePinScale(*model, model->TransitionStateValue());
-
+                m_worldPinItemModelMap[pinId] = model;
+                
                 return model;
             }
-
+            
             void WorldPinsService::RemovePin(WorldPinItemModel* pinItemModel)
             {
-                Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel->Id());
-
+                const std::string& labelId = m_worldPinsToLabels[pinItemModel->Id()];
+                m_labelModelService.RemoveAndDestroy(labelId);
+                
                 //EXAMPLE_LOG("Pin removed\n");
-                m_pinRepository.RemovePin(*pPin);
-                ErasePin(pinItemModel->Id());
-
+                Erase(pinItemModel->Id());
+                
                 m_worldPinsRepository.RemoveItem(pinItemModel);
                 Eegeo_DELETE pinItemModel;
             }
-
-            void WorldPinsService::UpdatePinScale(const WorldPinItemModel& pinItemModel, float scale)
+            
+            bool WorldPinsService::LabelHiddenPredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const
             {
-                Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
-                Eegeo_ASSERT(pPin != NULL);
-
-                float scaleWithTerrainHeight = pPin->HasTerrainHeight() ? scale : 0.f;
-                m_pinController.SetScaleForPin(*pPin, scaleWithTerrainHeight);
-            }
-
-            bool WorldPinsService::HandleTouchTap(const Eegeo::v2& screenTapPoint)
-            {
-				return TrySelectPinAtPoint(screenTapPoint);
-            }
-
-			bool WorldPinsService::HandleTouchDoubleTap(const Eegeo::v2& screenTapPoint)
-			{
-				return TrySelectPinAtPoint(screenTapPoint);
-			}
-
-			bool WorldPinsService::TrySelectPinAtPoint(const Eegeo::v2& screenPoint)
-			{
-                if (m_useIndoorEntryMarkerLabels)
+                WorldPinItemModel::WorldPinItemModelId pinId = atoi(anchoredLabel.GetId().c_str());
+                if(m_worldPinItemModelMap.find(pinId) == m_worldPinItemModelMap.end())
                 {
-                    if (m_interiorMarkerPickingService.TryEnterInterior(screenPoint))
-                    {
-                        return true;
-                    }
+                    return false;
                 }
                 
+                WorldPinItemModel* pWorldPin = m_worldPinItemModelMap.at(pinId);
+                return !pWorldPin->IsVisible();
                 
-				std::vector<Eegeo::Pins::Pin*> intersectingPinsClosestToCameraFirst;
-
-				if (m_pinController.TryGetPinsIntersectingScreenPoint(screenPoint, intersectingPinsClosestToCameraFirst))
-				{
-					Eegeo_ASSERT(intersectingPinsClosestToCameraFirst.size() > 0);
-					Eegeo::Pins::Pin* pSelectedPin = intersectingPinsClosestToCameraFirst[0];
-					Eegeo_ASSERT(pSelectedPin != NULL);
-					SelectPin(pSelectedPin->GetId());
-					return true;
-				}
-
-				return false;
-			}
-
-            void WorldPinsService::GetPinEcefAndScreenLocations(const WorldPinItemModel& pinItemModel,
-                    Eegeo::dv3& ecefLocation,
-                    Eegeo::v2& screenLocation) const
+            }
+            
+            bool WorldPinsService::HandleTouchTap(const Eegeo::v2& screenTapPoint)
             {
-                Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
-                Eegeo_ASSERT(pPin != NULL);
-
-                ecefLocation = m_environmentFlatteningService.GetScaledPointAboveGroundEcef(pPin->GetEcefPosition(),
-                                                                                            pPin->GetHeightAboveTerrain(),
-                                                                                            m_environmentFlatteningService.GetCurrentScale());
-                
-                Eegeo::Geometry::Bounds2D outScreenBounds = Eegeo::Geometry::Bounds2D::Empty();
-                m_pinController.GetScreenBoundsForPin(*pPin, outScreenBounds);
-                screenLocation = outScreenBounds.center();
+                return TrySelectPinAtPoint(screenTapPoint);
+            }
+            
+            bool WorldPinsService::HandleTouchDoubleTap(const Eegeo::v2& screenTapPoint)
+            {
+                return TrySelectPinAtPoint(screenTapPoint);
             }
             
             void WorldPinsService::SelectPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId)
@@ -176,10 +145,12 @@ namespace ExampleApp
             
             void WorldPinsService::Update(float dt)
             {
+                m_labelAnchorFilterModel.SetFilter(m_labelLayerId, &m_labelHiddenFilter);
+                
                 m_pinAlreadySelected = false;
             }
-
-            void WorldPinsService::ErasePin(const WorldPinItemModel::WorldPinItemModelId& id)
+            
+            void WorldPinsService::Erase(const WorldPinItemModel::WorldPinItemModelId &id)
             {
                 TPinToSelectionHandlerMapIt pinToSelectionHandlerMapIt = m_pinsToSelectionHandlers.find(id);
                 Eegeo_ASSERT(pinToSelectionHandlerMapIt != m_pinsToSelectionHandlers.end(), "Attempting to remove pin with unknown ID %d.\n", id);
@@ -192,8 +163,15 @@ namespace ExampleApp
                 IWorldPinVisibilityStateChangedHandler* pVisibilityHandler = pinToVisiblityHandlerMapIt->second;
                 m_pinsToVisbilityChangedHandlers.erase(pinToVisiblityHandlerMapIt);
                 Eegeo_DELETE pVisibilityHandler;
-            }
+                
+                auto pinToLabelIt = m_worldPinsToLabels.find(id);
+                m_worldPinsToLabels.erase(pinToLabelIt);
+                
+                auto worldPinItemModelIt = m_worldPinItemModelMap.find(id);
+                m_worldPinItemModelMap.erase(worldPinItemModelIt);
 
+            }
+            
             IWorldPinSelectionHandler* WorldPinsService::GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId)
             {
                 if (m_pinsToSelectionHandlers.find(worldPinItemModelId) != m_pinsToSelectionHandlers.end())
@@ -204,6 +182,29 @@ namespace ExampleApp
                 {
                     return NULL;
                 }
+            }
+            
+            bool WorldPinsService::TrySelectPinAtPoint(const Eegeo::v2& screenPoint)
+            {
+                if (m_interiorMarkerPickingService.TryEnterInterior(screenPoint))
+                {
+                    return true;
+                }
+                
+                const auto& query = Eegeo::Labels::LabelPickQuery::Make(screenPoint, m_labelLayerId);
+                const auto& result = m_labelPicker.Pick(query);
+                
+                if (!result())
+                {
+                    return false;
+                }
+                
+                const Eegeo::Labels::IAnchoredLabel* pLabel = result.GetLabelModel();
+                WorldPinItemModel::WorldPinItemModelId pinId = atoi(pLabel->GetId().c_str());
+                SelectPin(pinId);
+                
+                return false;
+
             }
         }
     }

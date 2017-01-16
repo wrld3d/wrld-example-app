@@ -4,12 +4,10 @@ set(currsources
   ../src/WorldPins/SdkModel/CMakeLists.txt
   ../src/WorldPins/SdkModel/IWorldPinSelectionHandler.h
   ../src/WorldPins/SdkModel/IWorldPinsFactory.h
-  ../src/WorldPins/SdkModel/IWorldPinsFloorHeightController.h
-  ../src/WorldPins/SdkModel/IWorldPinsInFocusController.h
   ../src/WorldPins/SdkModel/IWorldPinsInFocusModel.h
   ../src/WorldPins/SdkModel/IWorldPinsModule.h
   ../src/WorldPins/SdkModel/IWorldPinsRepository.h
-  ../src/WorldPins/SdkModel/IWorldPinsScaleController.h
+  ../src/WorldPins/SdkModel/IWorldPinsVisibilityController.h
   ../src/WorldPins/SdkModel/IWorldPinsService.h
   ../src/WorldPins/SdkModel/IWorldPinVisibilityStateChangedHandler.h
   ../src/WorldPins/SdkModel/WorldPinFocusData.h
@@ -18,10 +16,6 @@ set(currsources
   ../src/WorldPins/SdkModel/WorldPinItemModel.h
   ../src/WorldPins/SdkModel/WorldPinsFactory.cpp
   ../src/WorldPins/SdkModel/WorldPinsFactory.h
-  ../src/WorldPins/SdkModel/WorldPinsFloorHeightController.cpp
-  ../src/WorldPins/SdkModel/WorldPinsFloorHeightController.h
-  ../src/WorldPins/SdkModel/WorldPinsInFocusController.cpp
-  ../src/WorldPins/SdkModel/WorldPinsInFocusController.h
   ../src/WorldPins/SdkModel/WorldPinsInFocusModel.cpp
   ../src/WorldPins/SdkModel/WorldPinsInFocusModel.h
   ../src/WorldPins/SdkModel/WorldPinsModalityObserver.cpp
@@ -29,8 +23,8 @@ set(currsources
   ../src/WorldPins/SdkModel/WorldPinsModule.cpp
   ../src/WorldPins/SdkModel/WorldPinsModule.h
   ../src/WorldPins/SdkModel/WorldPinsRepository.h
-  ../src/WorldPins/SdkModel/WorldPinsScaleController.cpp
-  ../src/WorldPins/SdkModel/WorldPinsScaleController.h
+  ../src/WorldPins/SdkModel/WorldPinsVisibilityController.cpp
+  ../src/WorldPins/SdkModel/WorldPinsVisibilityController.h
   ../src/WorldPins/SdkModel/WorldPinsService.cpp
   ../src/WorldPins/SdkModel/WorldPinsService.h
   ../src/WorldPins/SdkModel/WorldPinVisibility.h
@@ -40,8 +34,9 @@ set(currsources
   ../src/WorldPins/SdkModel/IWorldPinIconMappingFactory.h
   ../src/WorldPins/SdkModel/WorldPinIconMappingFactory.h
   ../src/WorldPins/SdkModel/WorldPinIconMappingFactory.cpp
-  ../src/WorldPins/SdkModel/WorldLabelsService.h
-  ../src/WorldPins/SdkModel/WorldLabelsService.cpp
+  ../src/WorldPins/SdkModel/IWorldPinsFocusModule.h
+  ../src/WorldPins/SdkModel/WorldPinsFocusModule.h
+  ../src/WorldPins/SdkModel/WorldPinsFocusModule.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\WorldPins\\SdkModel FILES ${currsources})

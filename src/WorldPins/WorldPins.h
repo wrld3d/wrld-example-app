@@ -15,22 +15,13 @@ namespace ExampleApp
             class IWorldPinsRepository;
             class IWorldPinSelectionHandler;
             class IWorldPinVisibilityStateChangedHandler;
-            class IWorldPinsScaleController;
-            class IWorldPinsFloorHeightController;
+            class IWorldPinsVisibilityController;
             class IWorldPinsInFocusModel;
-            class IWorldPinsInFocusController;
             class IWorldPinIconMappingFactory;
             class IWorldPinIconMapping;
+            
+            class IWorldPinsFocusModule;
         }
-
-        namespace View
-        {
-            class IWorldPinInFocusViewModel;
-            class WorldPinInFocusViewModel;
-            class IWorldPinOnMapView;
-            class WorldPinOnMapController;
-        }
-
         class WorldPinsVisibilityMessage;
         class WorldPinsSelectedFocussedMessage;
     }

@@ -5,19 +5,17 @@
 #import <UIKit/UIKit.h>
 #include <string>
 #include "AppRunner.h"
-#include "WorldPinOnMapViewIncludes.h"
 #include "ColorHelpers.h"
-#include "WorldPinOnMapView.h"
 #include "IWorldPinsInFocusModel.h"
 
 @class TourHovercardView;
 @class ImageStore;
 
-@interface TourHovercardView : UIView <UIGestureRecognizerDelegate, WorldPinOnMapView>
+@interface TourHovercardView : UIView <UIGestureRecognizerDelegate>
 {
 }
 
-- (id) initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore  :(ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*)interop;
+- (id) initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
