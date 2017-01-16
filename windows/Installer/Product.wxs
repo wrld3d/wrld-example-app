@@ -1352,6 +1352,33 @@
   	  <Component Id="_198a8cc7.359e.4e96.ac4d.e7136ff3d89d" Directory="RESOURCEFOLDER" Guid="{013aa306-f8a2-47e1-9b86-57c9047e5a8d}">
 		<File Id="_98b1b10a.9548.4678.a0a1.da0413f087fe" KeyPath="yes" Source="payload\Resources\Yelp\stars_5_0@kiosk.png" />
 	  </Component>
+	  <Component Id="_29c778c9.fef4.4bbc.aa73.b06105e64a41" Directory="RESOURCEFOLDER" Guid="{c34bfec0-0fd1-4cbc-bcab-803d060d4378}">
+        <File Id="_ce732772.3f52.4d27.b554.30be5e71b700" KeyPath="yes" Source="payload\Resources\button_pin_confirm_close_off@kiosk.png" />
+	  </Component>
+	  <Component Id="_2eced6e7.c95b.4b81.8ccf.1ba8b68081d5" Directory="RESOURCEFOLDER" Guid="{2ffdecca-ec5e-4726-9fca-2cd386edcb17}">
+        <File Id="_11735c03.d8e4.4296.8af9.ed221e309b4c" KeyPath="yes" Source="payload\Resources\button_pin_confirm_close_on@kiosk.png" />
+	  </Component>
+	  <Component Id="_9267589b.33b9.4ace.bc79.d9057bd1fb12" Directory="RESOURCEFOLDER" Guid="{898f1d81-d302-49e4-82b7-7484d78ef9ef}">
+        <File Id="_f71a7592.a11b.497a.b1ef.d2976cad7ce2" KeyPath="yes" Source="payload\Resources\button_pin_confirm_ok_off@kiosk.png" />
+	  </Component>
+	  <Component Id="_6d9da3e4.0609.42d1.ada3.c0c46cdd947a" Directory="RESOURCEFOLDER" Guid="{781bf72f-7c4d-4487-951c-d2038d6e4ead}">
+        <File Id="_5a098bc8.e48d.4eea.b30d.ac978e59f888" KeyPath="yes" Source="payload\Resources\button_pin_confirm_ok_on@kiosk.png" />
+	  </Component>
+	  <Component Id="_0ba1d573.bb00.4326.a934.3548e3981dda" Directory="RESOURCEFOLDER" Guid="{e798ed55-0139-4c4e-8657-3cd46801be37}">
+        <File Id="_a6db2077.bbcc.4cb9.a69f.0337843121af" KeyPath="yes" Source="payload\Resources\button_pin_creation_close_off@kiosk.png" />
+	  </Component>
+	  <Component Id="_6653700e.d738.4b92.91a0.0a452fa06301" Directory="RESOURCEFOLDER" Guid="{5ef1cbe0-016f-438e-8811-c614a3714f0a}">
+        <File Id="_a6783ee6.205a.49b7.abb9.ec11dd9bb026" KeyPath="yes" Source="payload\Resources\button_pin_creation_close_on@kiosk.png" />
+	  </Component>
+	  <Component Id="_9a932ea1.1a0f.4c8c.91c4.13c42c5518d8" Directory="RESOURCEFOLDER" Guid="{a806020c-fc5a-4c4c-b8bd-cefa6df0c89d}">
+        <File Id="_56f732bb.92f7.44fb.87b7.786c3c8e2035" KeyPath="yes" Source="payload\Resources\button_pin_creation_confirm_off@kiosk.png" />
+	  </Component>
+	  <Component Id="_f0752902.6a29.498c.8528.2b678041eb0e" Directory="RESOURCEFOLDER" Guid="{d1903265-ccdf-46aa-9cc9-e25aebd47719}">
+        <File Id="_1bf22a96.df0f.48e7.bb69.2d6524225455" KeyPath="yes" Source="payload\Resources\button_pin_creation_confirm_on@kiosk.png" />
+	  </Component>
+	  <Component Id="_c5adbdb5.3b07.4dd1.bbcb.303c003b215d" Directory="RESOURCEFOLDER" Guid="{b104cf36-17ee-4762-bfa2-4e6d44cfafb7}">
+        <File Id="_3989fc07.d657.48d0.b839.bc52e1a5b0e2" KeyPath="yes" Source="payload\Resources\CreatPIN_dialogue_Icon@kiosk.png" />
+	  </Component>
     </ComponentGroup>
 
     <!-- Start menu definitions-->

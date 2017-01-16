@@ -194,7 +194,7 @@ namespace ExampleAppWPF
         {
             Dismiss();
 
-            m_tutorialDialogBox = new MyPinCreationDetailsTutorialDialogBox("Pin Created", "Your pin has been created.");
+            m_tutorialDialogBox = new MyPinCreationDetailsTutorialDialogBox("Thank You", "Your report has been submitted.");
             m_tutorialDialogBox.Owner = m_currentWindow;
             m_tutorialDialogBox.Show();
 

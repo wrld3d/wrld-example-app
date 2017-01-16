@@ -113,7 +113,7 @@ namespace ExampleAppWPF
         
         private void ShowTutorialDialog()
         {
-            m_tutorialDialogBox = new MyPinCreationConfirmationTutorialDialogBox("Create Pin", "Please use this feature to create a pin.", "Create Pin");
+            m_tutorialDialogBox = new MyPinCreationConfirmationTutorialDialogBox("Create a Report", "Please use this feature to report any damaged or missing furniture or equipment in the building.\n\nSuggestions for improvements to the building are also very welcome.", "Report Issue");
             m_tutorialDialogBox.Owner = m_currentWindow;
             m_tutorialDialogBox.Show();
 
