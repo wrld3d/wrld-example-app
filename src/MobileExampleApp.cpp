@@ -923,7 +923,8 @@ namespace ExampleApp
                                                                       m_screenProperties,
                                                                       m_messageBus,
                                                                       m_pFlattenButtonModule->GetFlattenButtonModel(),
-                                                                      *m_pNavigationService);
+                                                                      *m_pNavigationService,
+                                                                      m_pSearchModule->GetSearchQueryPerformer());
 
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules), AppModes::SdkModel::WorldMode, m_pGlobalAppModeTransitionRules);
     }

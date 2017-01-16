@@ -8,6 +8,8 @@
 #include "LatLongAltitude.h"
 #include "RenderCamera.h"
 #include "SearchResultModel.h"
+#include "BidirectionalBus.h"
+#include "SearchQueryResultsRemovedMessage.h"
 
 namespace
 {
@@ -27,13 +29,15 @@ namespace ExampleApp
         {
             SearchQueryPerformer::SearchQueryPerformer(ISearchService& searchService,
                                                        ISearchResultRepository& searchResultRepository,
-                                                       Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController)
+                                                       Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                                                       ExampleAppMessaging::TMessageBus& messageBus)
                 : m_searchService(searchService)
                 , m_searchResultsRepository(searchResultRepository)
                 , m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchQueryPerformer, const SearchQuery&, const std::vector<SearchResultModel>&>))(this, &SearchQueryPerformer::HandleSearchResultsResponseReceived))
                 , m_previousQuery("", false, false, Eegeo::Space::LatLongAltitude(0.0, 0.0, 0.0), 0.f)
                 , m_hasQuery(false)
                 , m_cameraController(cameraController)
+                , m_messageBus(messageBus)
             {
                 m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
             }
@@ -92,6 +96,7 @@ namespace ExampleApp
                 RemoveExistingSearchResults();
 
                 m_queryResultsClearedCallbacks.ExecuteCallbacks();
+                m_messageBus.Publish(SearchQueryResultsRemovedMessage());
             }
 
             void SearchQueryPerformer::InsertOnSearchResultsClearedCallback(Eegeo::Helpers::ICallback0& callback)

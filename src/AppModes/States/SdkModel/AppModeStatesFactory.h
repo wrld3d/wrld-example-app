@@ -20,6 +20,7 @@
 #include "NavigationService.h"
 #include "CameraTransitions.h"
 #include "ILocationService.h"
+#include "Search.h"
 
 #include "VisualMap.h"
 
@@ -63,6 +64,7 @@ namespace ExampleApp
 
                     FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
                     Eegeo::Location::NavigationService& m_navigationService;
+                    Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     
                 public:
                     
@@ -89,7 +91,8 @@ namespace ExampleApp
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
-                                         Eegeo::Location::NavigationService& navigationService);
+                                         Eegeo::Location::NavigationService& navigationService,
+                                         Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer);
                     
                     ~AppModeStatesFactory()
                     {

@@ -30,7 +30,8 @@ namespace ExampleApp
 
                 m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(exteriorSearchService,
                                                                           *m_pSearchResultRepository,
-                                                                          cameraController);
+                                                                          cameraController,
+                                                                          messageBus);
 
                 m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(exteriorSearchService,
                                           *m_pSearchQueryPerformer,
