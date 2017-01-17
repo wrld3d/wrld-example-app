@@ -18,6 +18,9 @@
 #include "NavigationService.h"
 #include "AttractModeEnteringState.h"
 #include "AttractModeViewingState.h"
+#include "AttractModeExitingState.h"
+#include "CameraTransitionService.h"
+#include "ILocationService.h"
 
 #include <vector>
 
@@ -35,7 +38,8 @@ namespace ExampleApp
                     enum States
                     {
                         EnterState = 0,
-                        ViewState
+                        ViewState,
+                        ExitState
                     };
 
                     AppModes::SdkModel::IAppModeModel& m_appModeModel;
@@ -48,6 +52,7 @@ namespace ExampleApp
                     Eegeo::Location::NavigationService& m_navigationService;
                     AttractMode::SdkModel::States::AttractModeEnteringState m_enteringState;
                     AttractMode::SdkModel::States::AttractModeViewingState m_viewingState;
+                    AttractMode::SdkModel::States::AttractModeExitingState m_exitingState;
                     const std::vector<Helpers::IStateMachineState*> m_subStates;
                     Helpers::StateMachine m_subStateMachine;
                     long long m_idleTimeAtStartMs;
@@ -56,12 +61,16 @@ namespace ExampleApp
                     Eegeo::Geometry::CatmullRomSpline m_cameraTargetSpline;
                     Eegeo::Geometry::CatmullRomSpline m_cameraPositionSpline;
 
+                    bool IsUserActive();
                     void InitialiseSplinePlaybackCameraState();
 
                 public:
                     AttractState(AppModes::SdkModel::IAppModeModel& appModeModel,
                                  AppCamera::SdkModel::IAppCameraController& cameraController,
+                                 AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
+                                 const int worldCameraHandle,
                                  Eegeo::ITouchController& touchController,
+                                 Eegeo::Location::ILocationService& locationService,
                                  Eegeo::Input::IUserIdleService& userIdleService,
                                  Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                  const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
