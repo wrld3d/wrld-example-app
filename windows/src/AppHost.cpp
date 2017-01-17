@@ -534,7 +534,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
 		app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
 		m_messageBus,
-		*m_pWindowsFlurryMetricsService
+		*m_pWindowsFlurryMetricsService,
+		app.GetApplicationConfiguration().IsInKioskMode()
 		);
 
     // Modal background layer.
@@ -612,7 +613,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
         m_messageBus,
-        *m_pWindowsFlurryMetricsService
+        *m_pWindowsFlurryMetricsService,
+		app.GetApplicationConfiguration().IsInKioskMode()
         );
 
     m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::View::MyPinDetailsViewModule)(

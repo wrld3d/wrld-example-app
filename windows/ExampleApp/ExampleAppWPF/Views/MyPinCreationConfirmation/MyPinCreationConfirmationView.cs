@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace ExampleAppWPF
 {
@@ -19,17 +20,27 @@ namespace ExampleAppWPF
 
         private Button m_acceptButton;
         private Button m_closeButton;
+        private Button m_acceptKioskButton;
+        private Button m_closeKioskButton;
 
         private MainWindow m_currentWindow;
+
+        private MyPinCreationConfirmationTutorialDialogBox m_tutorialDialogBox;
+        private Button m_tutorialAcceptButton;
+        private Button m_tutorialCancelButton;
+        private int m_tutorialViewCount = 0;
+
+        private bool m_isInKioskMode;
 
         static MyPinCreationConfirmationView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MyPinCreationConfirmationView), new FrameworkPropertyMetadata(typeof(MyPinCreationConfirmationView)));
         }
 
-        public MyPinCreationConfirmationView(IntPtr nativeCallerPointer)
+        public MyPinCreationConfirmationView(IntPtr nativeCallerPointer, bool isInKioskMode)
         {
             m_nativeCallerPointer = nativeCallerPointer;
+            m_isInKioskMode = isInKioskMode;
             m_active = false;
 
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
@@ -37,7 +48,6 @@ namespace ExampleAppWPF
 
             m_currentWindow.SizeChanged += UpdatePositionOnWindowResize;
 
-            m_yPosActive = 0.0f;
             m_yPosInactive = Height;
 
             Visibility = Visibility.Hidden;
@@ -45,7 +55,6 @@ namespace ExampleAppWPF
 
         private void UpdatePositionOnWindowResize(object sender, SizeChangedEventArgs e)
         {
-            m_yPosActive = 0.0f;
             m_yPosInactive = Height;
 
             if(m_active)
@@ -61,6 +70,9 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
+            m_yPosActive = -((double)Application.Current.Resources["PinCreationConfirmationBottomMargin"]);
+            m_yPosInactive = Height;
+
             m_acceptButton = GetTemplateChild("Ok") as Button;
             System.Diagnostics.Debug.Assert(m_acceptButton != null, "Ok Image not found in generic.xaml template");
 
@@ -70,6 +82,16 @@ namespace ExampleAppWPF
             m_acceptButton.Click += OnAcceptClicked;
 
             m_closeButton.Click += OnCloseClicked;
+
+            m_acceptKioskButton = GetTemplateChild("OkKiosk") as Button;
+            System.Diagnostics.Debug.Assert(m_acceptButton != null, "Ok Kiosk Image not found in generic.xaml template");
+
+            m_closeKioskButton = GetTemplateChild("CloseKiosk") as Button;
+            System.Diagnostics.Debug.Assert(m_closeButton != null, "Close Kiosk Image not found in generic.xaml template");
+
+            m_acceptKioskButton.Click += OnAcceptClicked;
+
+            m_closeKioskButton.Click += OnCloseClicked;
         }
 
         private void OnAcceptClicked(object sender, RoutedEventArgs e)
@@ -85,18 +107,84 @@ namespace ExampleAppWPF
         public void Destroy()
         {
             m_currentWindow.MainGrid.Children.Remove(this);
+
+            RemoveTutorialDialog();
+        }
+        
+        private void ShowTutorialDialog()
+        {
+            m_tutorialDialogBox = new MyPinCreationConfirmationTutorialDialogBox("Create a Report", "Please use this feature to report any damaged or missing furniture or equipment in the building.\n\nSuggestions for improvements to the building are also very welcome.", "Report Issue");
+            m_tutorialDialogBox.Owner = m_currentWindow;
+            m_tutorialDialogBox.Show();
+
+            m_tutorialAcceptButton = (Button)m_tutorialDialogBox.FindName("AcceptButton");
+            m_tutorialAcceptButton.Click += AcceptTutorialDialog;
+
+            m_tutorialCancelButton = (Button)m_tutorialDialogBox.FindName("CancelButton");
+            m_tutorialCancelButton.Click += CancelTutorialDialog;
+        }
+
+        private void CancelTutorialDialog(object sender, EventArgs e)
+        {
+            ExampleApp.MyPinCreationViewCLIMethods.ConfirmationCancelButtonPressed(m_nativeCallerPointer);
+
+            RemoveTutorialDialog();
+        }
+
+        private void AcceptTutorialDialog(object sender, EventArgs e)
+        {
+            AnimateToActive();
+
+            RemoveTutorialDialog();
+        }
+
+        private void RemoveTutorialDialog()
+        {
+            if(m_tutorialAcceptButton != null)
+            {
+                m_tutorialAcceptButton.Click -= AcceptTutorialDialog;
+                m_tutorialAcceptButton = null;
+            }
+
+            if(m_tutorialCancelButton != null)
+            {
+                m_tutorialCancelButton.Click -= CancelTutorialDialog;
+                m_tutorialCancelButton = null;
+            }
+
+            if(m_tutorialDialogBox != null)
+            {
+                m_tutorialDialogBox.Close();
+                m_tutorialDialogBox = null;
+            }
+        }
+
+        public void ResetTutorialViewCount()
+        {
+            m_tutorialViewCount = 0;
         }
 
         public void AnimateToInactive()
         {
             AnimateViewToY(m_yPosInactive);
             m_active = false;
+
+            RemoveTutorialDialog();
         }
 
         public void AnimateToActive()
         {
-            AnimateViewToY(m_yPosActive);
-            Visibility = Visibility.Visible;
+            if(m_isInKioskMode && !m_active && m_tutorialViewCount == 0)
+            {
+                ++m_tutorialViewCount;
+                ShowTutorialDialog();
+            }
+            else
+            {
+                AnimateViewToY(m_yPosActive);
+                Visibility = Visibility.Visible;
+            }
+
             m_active = true;
         }
 

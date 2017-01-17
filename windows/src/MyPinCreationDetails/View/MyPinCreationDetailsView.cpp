@@ -15,12 +15,14 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationDetailsView::MyPinCreationDetailsView(WindowsNativeState& nativeState)
+            MyPinCreationDetailsView::MyPinCreationDetailsView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus, bool isInKioskMode)
                 : m_nativeState(nativeState)
+                , m_messageBus(messageBus)
+                , m_appModeChangedCallback(this, &MyPinCreationDetailsView::OnAppModeChanged)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.MyPinCreationDetailsView");
-                System::Reflection::ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(System::IntPtr::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew System::IntPtr(this)));
+                System::Reflection::ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(System::IntPtr::typeid, System::Boolean::typeid));
+                m_uiView = ctor->Invoke(CreateObjects(gcnew System::IntPtr(this), gcnew System::Boolean(isInKioskMode)));
 
                 mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
                 mShow.SetupMethod(m_uiViewClass, m_uiView, "Show");
@@ -31,10 +33,15 @@ namespace ExampleApp
                 mGetShouldShare.SetupMethod(m_uiViewClass, m_uiView, "GetShouldShare");
                 mGetImageBuffer.SetupMethod(m_uiViewClass, m_uiView, "GetImageBuffer");
                 mGetImageBufferSize.SetupMethod(m_uiViewClass, m_uiView, "GetImageBufferSize");
+                mResetTutorialViewCount.SetupMethod(m_uiViewClass, m_uiView, "ResetTutorialViewCount");
+
+                m_messageBus.SubscribeUi(m_appModeChangedCallback);
             }
 
             MyPinCreationDetailsView::~MyPinCreationDetailsView()
             {
+                m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
+
                 mDestroy();
             }
 
@@ -124,6 +131,14 @@ namespace ExampleApp
             {
 
             }
+
+			void MyPinCreationDetailsView::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
+			{
+				if (message.GetAppMode() == AppModes::SdkModel::AppMode::AttractMode)
+				{
+					mResetTutorialViewCount();
+				}
+			}
         }
     }
 }
