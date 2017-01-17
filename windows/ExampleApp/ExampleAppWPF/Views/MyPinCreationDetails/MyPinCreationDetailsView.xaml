@@ -56,13 +56,13 @@
                         <Grid Background="{StaticResource Gold}" Margin="0, 366, 0, 0" Visibility="{DynamicResource PinCreationDetailsBottomButtonsVisibility}">
                             <Grid Margin="20, 0, 20, 0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="248"/>
-                                    <ColumnDefinition Width="4"/>
-                                    <ColumnDefinition Width="248"/>
+                                    <ColumnDefinition Width="{DynamicResource PinCreationDetailsBottomButtonColumn0Width}"/>
+                                    <ColumnDefinition Width="{DynamicResource PinCreationDetailsBottomButtonColumn1Width}"/>
+                                    <ColumnDefinition Width="{DynamicResource PinCreationDetailsBottomButtonColumn2Width}"/>
                                 </Grid.ColumnDefinitions>
                                 <Button Name="CloseKioskButton"
-                                        Width="248"
-                                        Height="72"
+                                        Width="{DynamicResource PinCreationDetailsBottomButtonWidth}"
+                                        Height="{DynamicResource PinCreationDetailsBottomButtonHeight}"
                                         Grid.Column="0">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
@@ -89,8 +89,8 @@
                                     </Button.Style>
                                 </Button>
                                 <Button Name="ConfirmKioskButton"
-                                        Width="248"
-                                        Height="72"
+                                        Width="{DynamicResource PinCreationDetailsBottomButtonWidth}"
+                                        Height="{DynamicResource PinCreationDetailsBottomButtonHeight}"
                                         Grid.Column="2">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
