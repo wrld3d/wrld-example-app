@@ -17,6 +17,7 @@
 #include "NavigationService.h"
 #include "CameraTransitionService.h"
 #include "ILocationService.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -49,7 +50,8 @@ namespace ExampleApp
                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
-                                                           Eegeo::Location::NavigationService& navigationService)
+                                                           Eegeo::Location::NavigationService& navigationService,
+                                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
                 : m_appCameraController(appCameraController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
@@ -74,6 +76,7 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_flattenButtonModel(flattenButtonModel)
                 , m_navigationService(navigationService)
+                , m_searchQueryPerformer(searchQueryPerformer)
                 {
                     
                 }
@@ -125,7 +128,8 @@ namespace ExampleApp
                                                                                    m_screenProperties,
                                                                                    m_messageBus,
                                                                                    m_flattenButtonModel,
-                                                                                   m_navigationService));
+                                                                                   m_navigationService,
+                                                                                   m_searchQueryPerformer));
                     }
 
                     return states;

@@ -23,6 +23,7 @@
 #include "NavigationService.h"
 #include "CameraTransitionService.h"
 #include "ILocationService.h"
+#include "ISearchQueryPerformer.h"
 
 namespace ExampleApp
 {
@@ -46,7 +47,8 @@ namespace ExampleApp
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                            ExampleAppMessaging::TMessageBus& messageBus,
                                            FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
-                                           Eegeo::Location::NavigationService& navigationService)
+                                           Eegeo::Location::NavigationService& navigationService,
+                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
                 : m_appModeModel(appModeModel)
                 , m_cameraController(cameraController)
                 , m_cameraSplinePlaybackController(resourceCeilingProvider)
@@ -64,6 +66,7 @@ namespace ExampleApp
                 , m_subStateMachine(m_subStates)
                 , m_idleTimeAtStartMs(0)
                 , m_userIdleService(userIdleService)
+                , m_searchQueryPerformer(searchQueryPerformer)
                 {
                     std::for_each(cameraPositionSplinePoints.begin(), cameraPositionSplinePoints.end(),
                                   [this](const Eegeo::Space::LatLongAltitude& p) { m_cameraPositionSpline.AddPoint(p.ToECEF()); });
@@ -93,6 +96,8 @@ namespace ExampleApp
                     InitialiseSplinePlaybackCameraState();
                     m_subStateMachine.StartStateMachine(States::EnterState);
                     m_idleTimeAtStartMs = m_userIdleService.GetUserIdleTimeMs();
+
+                    ClearSearch();
                 }
 
                 void AttractState::Update(float dt)
@@ -129,6 +134,11 @@ namespace ExampleApp
                     default:
                         Eegeo_ASSERT("Completion of invalid attract mode sub-state.");
                     }
+                }
+
+                void AttractState::ClearSearch()
+                {
+                    m_searchQueryPerformer.RemoveSearchQueryResults();
                 }
 
                 bool AttractState::IsUserActive()

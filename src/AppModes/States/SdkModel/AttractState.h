@@ -21,6 +21,7 @@
 #include "AttractModeExitingState.h"
 #include "CameraTransitionService.h"
 #include "ILocationService.h"
+#include "Search.h"
 
 #include <vector>
 
@@ -57,10 +58,12 @@ namespace ExampleApp
                     Helpers::StateMachine m_subStateMachine;
                     long long m_idleTimeAtStartMs;
                     Eegeo::Input::IUserIdleService& m_userIdleService;
+                    Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
 
                     Eegeo::Geometry::CatmullRomSpline m_cameraTargetSpline;
                     Eegeo::Geometry::CatmullRomSpline m_cameraPositionSpline;
 
+                    void ClearSearch();
                     bool IsUserActive();
                     void InitialiseSplinePlaybackCameraState();
 
@@ -79,7 +82,8 @@ namespace ExampleApp
                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
-                                 Eegeo::Location::NavigationService& navigationService);
+                                 Eegeo::Location::NavigationService& navigationService,
+                                 Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer);
                     ~AttractState();
 
                     void Enter(int previousState);

@@ -36,7 +36,8 @@ namespace ExampleApp
 
                 m_pSearchQueryPerformer = Eegeo_NEW(Search::SdkModel::SearchQueryPerformer)(exteriorSearchService,
                                                                                             *m_pSearchResultRepository,
-                                                                                            cameraController);
+                                                                                            cameraController,
+                                                                                            messageBus);
                 
                 m_pTagSearchModule = TagSearch::SdkModel::TagSearchModule::Create(*m_pSearchQueryPerformer, messageBus, metricsService);
 
