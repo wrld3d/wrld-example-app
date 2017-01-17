@@ -63,6 +63,11 @@ namespace ExampleApp
                     [m_pView setSearchResultCount:searchResultCount];
                 }
                 
+                void RemoveSearchQueryResults()
+                {
+                    [m_pView removeSearchQueryResults];
+                }
+
                 void CollapseAll()
                 {
                     [m_pView collapseAll];
