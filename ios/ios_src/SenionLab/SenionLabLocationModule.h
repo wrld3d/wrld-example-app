@@ -5,6 +5,7 @@
 #include "SenionLabLocationController.h"
 #include "SenionLabLocationManager.h"
 #include "SenionLabLocationService.h"
+#include "iOSAlertBoxFactory.h"
 #include "ICallback.h"
 #include "AppModeModel.h"
 #include "InteriorsExplorer.h"
@@ -26,6 +27,7 @@ namespace ExampleApp
                                     const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                     Eegeo::Location::ILocationService& defaultLocationService,
+                                    Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory,
 									ExampleAppMessaging::TMessageBus& messageBus);
             ~SenionLabLocationModule();
             
