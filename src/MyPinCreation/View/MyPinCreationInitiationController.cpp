@@ -75,6 +75,7 @@ namespace ExampleApp
                 else
                 {
                     m_viewModel.RemoveFromScreen();
+                    m_confirmationViewModel.TryReleaseReactorControl();
                 }
 
                 const bool transitionClosesPinCreationDialogue =
