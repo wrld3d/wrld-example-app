@@ -18,6 +18,7 @@
     <SolidColorBrush x:Key="SubMenuItemMouseDownColour" Color="#EDFCB0"/>
     <SolidColorBrush x:Key="SubMenuItemTitleColour" Color="#383838"/>
     <SolidColorBrush x:Key="SubMenuItemSubtitleColour" Color="#606060"/>
+    <SolidColorBrush x:Key="AttractSubtitleColour" Color="#404040"/>
 
     <SolidColorBrush x:Key="Gold" Color="#1256B0 "/>
     <SolidColorBrush x:Key="Olive" Color="#94a847 "/>
