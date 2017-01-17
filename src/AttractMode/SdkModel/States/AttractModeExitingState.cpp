@@ -20,7 +20,6 @@ namespace ExampleApp
             {
                 namespace
                 {
-                    static const float DistanceFromInterest = 500.0f;
                     const double JumpDistanceThreshold = 25000.0;
                     const float TransitionDuration = 3.0f;
                 }
