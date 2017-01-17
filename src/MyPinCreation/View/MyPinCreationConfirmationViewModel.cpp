@@ -87,6 +87,14 @@ namespace ExampleApp
             {
                 m_openable.ReleaseReactorControl();
             }
+
+            void MyPinCreationConfirmationViewModel::TryReleaseReactorControl()
+            {
+                if (m_openable.HasReactorControl())
+                {
+                    m_openable.ReleaseReactorControl();
+                }
+            }
         }
     }
 }
