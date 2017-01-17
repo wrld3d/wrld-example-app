@@ -26,6 +26,7 @@ namespace ExampleApp
                 mSetSearchEnded.SetupMethod(m_uiViewClass, m_uiView, "SetSearchEnded");
                 mSetEditText.SetupMethod(m_uiViewClass, m_uiView, "SetEditText");
                 mSetSearchResultCount.SetupMethod(m_uiViewClass, m_uiView, "SetSearchResultCount");
+                mRemoveSearchQueryResults.SetupMethod(m_uiViewClass, m_uiView, "RemoveSearchQueryResults");
             }
 
             void SearchMenuView::SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection)
@@ -73,6 +74,11 @@ namespace ExampleApp
             void SearchMenuView::SetSearchResultCount(int searchResultCount)
             {
                 mSetSearchResultCount(searchResultCount);
+            }
+
+            void SearchMenuView::RemoveSearchQueryResults()
+            {
+                mRemoveSearchQueryResults();
             }
 
             void SearchMenuView::CollapseAll()

@@ -232,6 +232,12 @@ namespace ExampleAppWPF
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
         }
 
+        public void RemoveSearchQueryResults()
+        {
+            SetSearchResultCount(0);
+            SetEditText("", false);
+        }
+
         private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
         {
             if (m_resultsOptionsView.VerticalOffset == m_resultsOptionsView.ScrollableHeight)

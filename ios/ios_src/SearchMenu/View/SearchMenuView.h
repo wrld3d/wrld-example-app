@@ -28,6 +28,8 @@
 
 - (void) setSearchResultCount:(NSInteger)searchResultCount;
 
+- (void) removeSearchQueryResults;
+
 - (void) collapseAll;
 
 - (void) setSearchSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)searchSection;

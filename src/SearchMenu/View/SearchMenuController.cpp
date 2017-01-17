@@ -147,8 +147,7 @@ namespace ExampleApp
 
             void SearchMenuController::OnSearchQueryResultsRemovedMessage(const Search::SearchQueryResultsRemovedMessage& message)
             {
-                m_searchMenuView.SetSearchResultCount(0);
-                m_searchMenuView.SetEditText(std::string(), false);
+                m_searchMenuView.RemoveSearchQueryResults();
             }
             
             void SearchMenuController::OnSearchItemSelected(int& index)

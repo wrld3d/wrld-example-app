@@ -26,6 +26,8 @@ namespace ExampleApp
                 virtual void SetEditText(const std::string& searchText, bool isTag) = 0;
                 
                 virtual void SetSearchResultCount(int searchResultCount) = 0;
+
+                virtual void RemoveSearchQueryResults() = 0;
                 
                 virtual void CollapseAll() = 0;
                 
