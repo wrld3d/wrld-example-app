@@ -464,6 +464,11 @@
     <ImageSource x:Key="PinCreationDetailsCloseKioskButtonOnImage">Assets/button_pin_creation_close_on@kiosk.png</ImageSource>
     <ImageSource x:Key="PinCreationDetailsConfirmKioskButtonOffImage">Assets/button_pin_creation_confirm_off@kiosk.png</ImageSource>
     <ImageSource x:Key="PinCreationDetailsConfirmKioskButtonOnImage">Assets/button_pin_creation_confirm_ok_on@kiosk.png</ImageSource>
+    <GridLength x:Key="PinCreationDetailsBottomButtonColumn0Width">248</GridLength>
+    <GridLength x:Key="PinCreationDetailsBottomButtonColumn1Width">4</GridLength>
+    <GridLength x:Key="PinCreationDetailsBottomButtonColumn2Width">248</GridLength>
+    <System:Double x:Key="PinCreationDetailsBottomButtonWidth">248</System:Double>
+    <System:Double x:Key="PinCreationDetailsBottomButtonHeight">72</System:Double>
     
     <!-- Pin Creation Confirmation-->
     <Visibility x:Key="PinCreationConfirmationNormal">Visible</Visibility>
