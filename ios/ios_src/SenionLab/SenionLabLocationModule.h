@@ -27,7 +27,8 @@ namespace ExampleApp
                                     const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                     Eegeo::Location::ILocationService& defaultLocationService,
                                     Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
-                                    Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory);
+                                    Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory,
+                                    ExampleAppMessaging::TMessageBus& messageBus);
             ~SenionLabLocationModule();
             
             SenionLabLocationService& GetLocationService() { return *m_pLocationService; }

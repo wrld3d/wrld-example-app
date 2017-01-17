@@ -5,6 +5,7 @@
 #include "LatLongAltitude.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "AppHost.h"
+#include "AboutPageViewModel.h"
 
 template <typename T>
 class FailureHandler
@@ -30,6 +31,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory *m_piOSAlertBoxFactory;
     FailureHandlerType *m_failureHandlerWrapper;
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<SenionLabLocationManager>> *m_failAlertHandler;
+    ExampleApp::ExampleAppMessaging::TMessageBus* m_messageBus;
 }
 @property (nonatomic, strong) SLIndoorLocationManager *locationManager;
 @end
@@ -38,6 +40,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 -(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService
  iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
+ messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus
 {
     m_lastLocationStatus = SLLocationStatus::SLLocationStatusUnconfirmed;
     if(self = [super init])
@@ -46,6 +49,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
         m_piOSAlertBoxFactory = iOSAlertBoxFactory;
         m_failureHandlerWrapper = new FailureHandlerType(self);
         m_failAlertHandler = new Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<SenionLabLocationManager>>(m_failureHandlerWrapper, &FailureHandlerType::HandleFailure);
+        m_messageBus = messageBus;
     }
     
     return self;
@@ -110,6 +114,8 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
              );
         }
     }
+    
+    m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, location.floorNr, location.latitude, location.longitude));
 }
 
 -(void) didUpdateHeading:(double)heading withStatus:(BOOL)status

@@ -195,7 +195,8 @@ AppHost::AppHost(
                                                                                            mapModule.GetEnvironmentFlatteningService(),                                                                                                                                                                                                                                                                
                                                                                            *m_piOSLocationService,
                                                                                            mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
-                                                                                           m_iOSAlertBoxFactory);
+                                                                                           m_iOSAlertBoxFactory,
+                                                                                           m_messageBus);
     
     m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),
