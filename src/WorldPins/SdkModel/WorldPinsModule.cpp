@@ -8,10 +8,6 @@
 #include "WorldPinsVisibilityController.h"
 #include "WorldPinIconMappingFactory.h"
 #include "WorldPinIconMapping.h"
-#include "ILabelModelService.h"
-#include "LabelAnchorCategory.h"
-#include "LabelLayer.h"
-#include "ILabelFilterModel.h"
 
 namespace ExampleApp
 {
@@ -24,27 +20,14 @@ namespace ExampleApp
                                              const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                              Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
-                                             Eegeo::Labels::ILabelModelService& labelModelService,
-                                             Eegeo::Labels::ILabelAnchorFilterModel& labelAnchorFilterModel,
-                                             Eegeo::Labels::ILabelFilterModel& labelFilterModel,
-                                             Eegeo::Labels::ILabelPicker& labelPicker,
+                                             Eegeo::Markers::IMarkerService& markerService,
                                              bool isInKioskMode)
             {
                 m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
 
                 m_pWorldPinsRepository = Eegeo_NEW(WorldPinsRepository);
                 
-                Eegeo::Labels::LabelLayer::IdType labelLayerId = labelModelService.RegisterLayer("pins");
-                labelFilterModel.SetLayerShownInExterior(labelLayerId, true);
-                labelFilterModel.SetLayerShownInInterior(labelLayerId, true);
-                m_pWorldPinLabelCategory = Eegeo::Labels::LabelAnchorCategory::Create("eea_pin_label", labelLayerId, 0, 14, Eegeo::Labels::LabelPlacement::Point, true);
-                m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(labelModelService,
-                                                                  labelAnchorFilterModel,
-                                                                  *m_pWorldPinLabelCategory,
-                                                                  labelPicker,
-                                                                  labelLayerId,
-                                                                  *m_pWorldPinsRepository,
-                                                                  interiorMarkerPickingService);
+                m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository, interiorMarkerPickingService, markerService, sdkDomainEventBus);
                 
                 m_pWorldPinsVisibilityController = Eegeo_NEW(WorldPinsVisibilityController)(*m_pWorldPinsRepository,
                                                                                             messageBus,
@@ -67,7 +50,6 @@ namespace ExampleApp
             
             void WorldPinsModule::Update(float dt)
             {
-                m_pWorldPinsService->Update(dt);
                 m_pWorldPinsVisibilityController->Update(dt);
             }
 

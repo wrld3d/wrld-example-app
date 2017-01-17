@@ -145,6 +145,7 @@
 #include "GlobalAppModeTransitionRules.h"
 #include "ILabelOptionsModel.h"
 #include "MapLayersModule.h"
+#include "MarkersModule.h"
 #include "CameraSplinePlaybackController.h"
 #include "document.h"
 
@@ -1125,10 +1126,7 @@ namespace ExampleApp
                                                                                          interiorsPresentationModule.GetInteriorTransitionModel(),
                                                                                          m_sdkDomainEventBus,
                                                                                          interiorsPresentationModule.GetInteriorMarkerPickingService(),
-                                                                                         mapModule.GetMapLayersModule().GetLabelModelService(),
-                                                                                         mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
-                                                                                         mapModule.GetLabelsModule().GetLabelLayerFilterModel(),
-                                                                                         mapModule.GetLabelsModule().GetLabelPicker(),
+                                                                                         mapModule.GetMarkersModule().GetMarkerService(),
                                                                                          m_applicationConfiguration.IsInKioskMode());
     }
     

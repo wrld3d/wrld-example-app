@@ -13,6 +13,8 @@ set(currsources
   ../src/WorldPins/WorldPinsSelectedFocussedMessage.h
   ../src/WorldPins/WorldPinsVisibilityMessage.cpp
   ../src/WorldPins/WorldPinsVisibilityMessage.h
+  ../src/WorldPins/WorldPinHiddenStateChangedMessage.cpp
+  ../src/WorldPins/WorldPinHiddenStateChangedMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\WorldPins FILES ${currsources})
