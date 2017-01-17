@@ -46,6 +46,7 @@ namespace ExampleAppWPF
         private MyPinCreationDetailsTutorialDialogBox m_tutorialDialogBox;
         private Button m_tutorialCancelButton;
         private int m_tutorialViewCount = 0;
+        private double m_tutorialTopMargin = 0;
 
         private bool m_isInKioskMode;
 
@@ -111,6 +112,12 @@ namespace ExampleAppWPF
             m_closeKioskButton.Click += OnCloseClick;
             m_submitKioskButton = CheckAndGetProperty("ConfirmKioskButton") as Button;
             m_submitKioskButton.Click += OnSubmitClick;
+
+            Thickness detailsViewMargin = (Thickness)Application.Current.Resources["PinCreationDetailsMargin"];
+            if (detailsViewMargin != null)
+            {
+                m_tutorialTopMargin = detailsViewMargin.Top;
+            }
         }
 
         private void OnDescriptionViewBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
@@ -198,6 +205,9 @@ namespace ExampleAppWPF
 
             m_tutorialDialogBox = new MyPinCreationDetailsTutorialDialogBox("Pin Created", "Your pin has been created.");
             m_tutorialDialogBox.Owner = m_currentWindow;
+            Point pos = m_currentWindow.PointToScreen(new Point((m_currentWindow.ActualWidth - m_tutorialDialogBox.Width) / 2, m_tutorialTopMargin));
+            m_tutorialDialogBox.Left = pos.X;
+            m_tutorialDialogBox.Top = pos.Y;
             m_tutorialDialogBox.Show();
 
             m_tutorialCancelButton = (Button)m_tutorialDialogBox.FindName("CancelButton");

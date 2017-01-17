@@ -352,14 +352,14 @@
     <Thickness x:Key="CompassMargin" Left="-64" Top="-64" Right="0" Bottom="0"/>
 
     <!-- Pin Tutorial -->
-    <System:Double x:Key="PinTutorialWidth">540</System:Double>
-    <System:Double x:Key="PinTutorialHeight">357</System:Double>
+    <System:Double x:Key="PinTutorialWidth">858</System:Double>
+    <System:Double x:Key="PinTutorialHeight">407</System:Double>
     <Thickness x:Key="PinTutorialContainerMargin" Left="20" Top="20" Right="20" Bottom="20"/>
     <GridLength x:Key="PinTutorialContainerRow0Height">94</GridLength>
     <Thickness x:Key="PinTutorialTitleMargin" Left="0" Top="0" Right="0" Bottom="0"/>
-    <GridLength x:Key="PinTutorialTitleColumn0">446</GridLength>
+    <GridLength x:Key="PinTutorialTitleColumn0">764</GridLength>
     <GridLength x:Key="PinTutorialTitleColumn1">54</GridLength>
-    <System:Double x:Key="PinTutorialTitleMaxWidth">350</System:Double>
+    <System:Double x:Key="PinTutorialTitleMaxWidth">668</System:Double>
     <System:Double x:Key="PinTutorialTitleFontSize">40</System:Double>
     <Thickness x:Key="PinTutorialTitleTextMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <ImageSource x:Key="PinTutorialCloseButtonOffImage">/Assets/button_close_off@kiosk.png</ImageSource>
@@ -369,23 +369,23 @@
     <SolidColorBrush x:Key="PinTutorialCloseButtonOnColour" Color="White"/>
     <SolidColorBrush x:Key="PinTutorialCloseButtonOverColour" Color="White"/>
     <Visibility x:Key="PinTutorialTitleDividerVisibility">Visible</Visibility>
-    <System:Double x:Key="PinTutorialMessageWidth">500</System:Double>
-    <System:Double x:Key="PinTutorialMessageHeight">120</System:Double>
+    <System:Double x:Key="PinTutorialMessageWidth">818</System:Double>
+    <System:Double x:Key="PinTutorialMessageHeight">200</System:Double>
     <System:Double x:Key="PinTutorialMessageFontSize">25</System:Double>
-    <System:Double x:Key="PinTutorialButtonWidth">500</System:Double>
+    <System:Double x:Key="PinTutorialButtonWidth">818</System:Double>
     <System:Double x:Key="PinTutorialButtonHeight">60</System:Double>
     <System:Double x:Key="PinTutorialButtonIconSize">48</System:Double>
     <System:Double x:Key="PinTutorialButtonFontSize">36</System:Double>
 
     <!-- Pin Details -->
-    <System:Double x:Key="PinDetailsWidth">540</System:Double>
+    <System:Double x:Key="PinDetailsWidth">858</System:Double>
     <System:Double x:Key="PinDetailsHeight">478</System:Double>
-    <System:Double x:Key="PinDetailsStackPanelWidth">500</System:Double>
+    <System:Double x:Key="PinDetailsStackPanelWidth">818</System:Double>
     <System:Double x:Key="PinDetailsStackPanelHeight">438</System:Double>
     <Thickness x:Key="PinDetailsStackPanelMargin" Left="0" Top="10" Right="0" Bottom="-40"/>
-    <System:Double x:Key="PinDetailsTitleContainerWidth">455</System:Double>
+    <System:Double x:Key="PinDetailsTitleContainerWidth">773</System:Double>
     <System:Double x:Key="PinDetailsTitleContainerHeight">91</System:Double>
-    <GridLength x:Key="PinDetailsTitleColumn0">441</GridLength>
+    <GridLength x:Key="PinDetailsTitleColumn0">759</GridLength>
     <GridLength x:Key="PinDetailsTitleColumn1">61</GridLength>
     <System:Double x:Key="PinDetailsTitleIconSize">48</System:Double>
     <Thickness x:Key="PinDetailsTitleIconMargin" Left="0" Top="9" Right="0" Bottom="20"/>
@@ -393,7 +393,7 @@
     <Thickness x:Key="PinDetailsTitleTextContainerMargin" Left="13" Top="-15" Right="0" Bottom="0"/>
     <System:Double x:Key="PinDetailsTitleFontSize">40</System:Double>
     <Thickness x:Key="PinDetailsTitleTextMargin" Left="5" Top="0" Right="5" Bottom="0"/>
-    <System:Double x:Key="PinDetailsTitleTextMaxWidth">380</System:Double>
+    <System:Double x:Key="PinDetailsTitleTextMaxWidth">698</System:Double>
     <System:Double x:Key="PinDetailsTitleTextMaxHeight">60</System:Double>
     <SolidColorBrush x:Key="PinDetailsTitleBoxColour" Color="{Binding Color, Source={StaticResource VeryDarkGrey}}"/>
     <Visibility x:Key="PinDetailsCloseButtonNormalVisibility">Visible</Visibility>
@@ -414,26 +414,26 @@
     <Visibility x:Key="PinDetailsDescriptionImageVisibility">Collapsed</Visibility>
     <System:Double x:Key="PinDetailsRemovePinContainerHeight">60</System:Double>
     <Thickness x:Key="PinDetailsRemovePinContainerMargin" Left="0" Top="20" Right="0" Bottom="-10"/>
-    <System:Double x:Key="PinDetailsRemovePinWidth">500</System:Double>
+    <System:Double x:Key="PinDetailsRemovePinWidth">818</System:Double>
     <System:Double x:Key="PinDetailsRemovePinIconSize">48</System:Double>
     <System:Double x:Key="PinDetailsRemovePinFontSize">36</System:Double>
 
     <!-- Pin Creation Details -->
-    <System:Double x:Key="PinCreationDetailsWidth">540</System:Double>
+    <System:Double x:Key="PinCreationDetailsWidth">858</System:Double>
     <System:Double x:Key="PinCreationDetailsHeight">478</System:Double>
     <VerticalAlignment x:Key="PinCreationDetailsVerticalAlignment">Top</VerticalAlignment>
     <Thickness x:Key="PinCreationDetailsMargin" Left="0" Top="50" Right="0" Bottom="0"/>
-    <System:Double x:Key="PinCreationDetailsDockPanelWidth">500</System:Double>
+    <System:Double x:Key="PinCreationDetailsDockPanelWidth">818</System:Double>
     <System:Double x:Key="PinCreationDetailsDockPanelHeight">346</System:Double>
     <Thickness x:Key="PinCreationDetailsDockPanelMargin" Left="0" Top="10" Right="0" Bottom="-40"/>
-    <System:Double x:Key="PinCreationDetailsTitleContainerWidth">460</System:Double>
+    <System:Double x:Key="PinCreationDetailsTitleContainerWidth">778</System:Double>
     <System:Double x:Key="PinCreationDetailsTitleIconSize">48</System:Double>
     <Thickness x:Key="PinCreationDetailsTitleIconMargin" Left="5" Top="13" Right="0" Bottom="5"/>
     <ImageSource x:Key="PinCreationDetailsTitleIconImage">/Assets/CreatPIN_dialogue_Icon@kiosk.png</ImageSource>
     <Thickness x:Key="PinCreationDetailsTitleTextContainerMargin" Left="13" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="PinCreationDetailsTitleFontSize">40</System:Double>
     <Thickness x:Key="PinCreationDetailsTitleTextMargin" Left="5" Top="0" Right="5" Bottom="0"/>
-    <System:Double x:Key="PinCreationDetailsTitleTextMaxWidth">460</System:Double>
+    <System:Double x:Key="PinCreationDetailsTitleTextMaxWidth">778</System:Double>
     <System:Double x:Key="PinCreationDetailsTitleTextMaxHeight">60</System:Double>
     <SolidColorBrush x:Key="PinCreationDetailsTitleBoxColour" Color="{Binding Color, Source={StaticResource VeryDarkGrey}}"/>
     <Visibility x:Key="PinCreationDetailsCloseButtonNormalVisibility">Collapsed</Visibility>
@@ -445,7 +445,7 @@
     <Thickness x:Key="PinCreationDetailsShareCheckboxMargin" Left="5" Top="2" Right="10" Bottom="0"/>
     <Thickness x:Key="PinCreationDetailsDescriptionMargin" Left="5" Top="26" Right="5" Bottom="0"/>
     <System:Double x:Key="PinCreationDetailsDescriptionHeight">180</System:Double>
-    <System:Double x:Key="PinCreationDetailsDescriptionWidth">460</System:Double>
+    <System:Double x:Key="PinCreationDetailsDescriptionWidth">778</System:Double>
     <System:Double x:Key="PinCreationDetailsDescriptionFontSize">25</System:Double>
     <Thickness x:Key="PinCreationDetailsDescriptionTextMargin" Left="20" Top="20" Right="20" Bottom="20"/>
     <Thickness x:Key="PinCreationDetailsDescriptionTextBoxMargin" Left="20" Top="20" Right="20" Bottom="20"/>
@@ -463,6 +463,11 @@
     <ImageSource x:Key="PinCreationDetailsCloseKioskButtonOnImage">Assets/button_pin_creation_close_on@kiosk.png</ImageSource>
     <ImageSource x:Key="PinCreationDetailsConfirmKioskButtonOffImage">Assets/button_pin_creation_confirm_off@kiosk.png</ImageSource>
     <ImageSource x:Key="PinCreationDetailsConfirmKioskButtonOnImage">Assets/button_pin_creation_confirm_on@kiosk.png</ImageSource>
+    <GridLength x:Key="PinCreationDetailsBottomButtonColumn0Width">407</GridLength>
+    <GridLength x:Key="PinCreationDetailsBottomButtonColumn1Width">4</GridLength>
+    <GridLength x:Key="PinCreationDetailsBottomButtonColumn2Width">407</GridLength>
+    <System:Double x:Key="PinCreationDetailsBottomButtonWidth">407</System:Double>
+    <System:Double x:Key="PinCreationDetailsBottomButtonHeight">72</System:Double>
 
     <!-- Pin Creation Confirmation-->
     <Visibility x:Key="PinCreationConfirmationNormal">Collapsed</Visibility>
