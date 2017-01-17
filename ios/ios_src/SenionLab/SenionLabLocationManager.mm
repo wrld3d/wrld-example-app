@@ -3,12 +3,14 @@
 #import <SLIndoorLocation/SLCoordinate3D.h>
 #import <SLIndoorLocation/SLIndoorLocationManager.h>
 #include "LatLongAltitude.h"
+#include "AboutPageViewModel.h"
 
 @interface SenionLabLocationManager()<SLIndoorLocationManagerDelegate>
 {
     std::map<int, std::string> m_floorMap;
     int m_floorIndex;
     ExampleApp::SenionLab::SenionLabLocationService* m_pSenionLabLocationService;
+    ExampleApp::ExampleAppMessaging::TMessageBus* m_messageBus;
 }
 @property (nonatomic, strong) SLIndoorLocationManager *locationManager;
 @end
@@ -16,10 +18,12 @@
 @implementation SenionLabLocationManager
 
 -(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService
+ messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus
 {
     if(self = [super init])
     {
         m_pSenionLabLocationService = senionLabLocationService;
+        m_messageBus = messageBus;
     }
     
     return self;
@@ -62,6 +66,8 @@
     
     int floorIndex = [self getFloorIndexFromSenionFloorIndex:std::to_string(location.floorNr)];
     m_pSenionLabLocationService->SetFloorIndex(floorIndex);
+    
+    m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, location.floorNr, location.latitude, location.longitude));
 }
 
 -(void) didUpdateHeading:(double)heading withStatus:(BOOL)status

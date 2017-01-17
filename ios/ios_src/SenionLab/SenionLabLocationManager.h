@@ -6,10 +6,12 @@
 #include "SenionLabLocationService.h"
 #include <map>
 #include <string>
+#include "BidirectionalBus.h"
 
 @interface SenionLabLocationManager : NSObject
 
--(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService;
+-(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService
+          messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus;
 -(void) StartUpdatingLocation: (NSString*) apiKey
                     apiSecret: (NSString*) apiSecret
                      floorMap: (std::map<int, std::string>) floorMap;

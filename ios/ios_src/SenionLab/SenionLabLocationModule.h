@@ -25,7 +25,8 @@ namespace ExampleApp
                                     const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                     const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                                    Eegeo::Location::ILocationService& defaultLocationService);
+                                    Eegeo::Location::ILocationService& defaultLocationService,
+									ExampleAppMessaging::TMessageBus& messageBus);
             ~SenionLabLocationModule();
             
             SenionLabLocationService& GetLocationService() { return *m_pLocationService; }
