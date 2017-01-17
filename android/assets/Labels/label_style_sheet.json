@@ -450,6 +450,15 @@
         "masked_halo_color_rgba": "1040A0",
         "halo_width": 3.0,
         "halo_hardness": 1.0
+    },
+    {
+        "name": "marker_default",
+        "label_resource_font_binding": "markers",
+        "size_px": 9.5,
+        "glyph_color_rgba": "FFFFFFFF",
+        "halo_color_rgba": "3A3A3AFF",
+        "halo_width": 2.0,
+        "halo_hardness": 1.0
     }
     ],
     "LabelIconStyles":[
@@ -462,6 +471,12 @@
     {
         "name": "indoor_map_marker",
         "size_px": 40,
+        "color": "FFFFFFFF",
+        "masked_color": "F0F0F080"
+    },
+    {
+        "name": "marker_default",
+        "size_px": 28,
         "color": "FFFFFFFF",
         "masked_color": "F0F0F080"
     }
@@ -864,15 +879,21 @@
         "stencil_mode": "always",
         "priority": 5
     },
+
     {
-        "name": "eea_pin_label",
-        "label_text_style_name": "road_default",
-        "label_icon_style_name": "icon_default",
+        "name": "marker_default",
+        "label_text_style_name": "marker_default",
+        "label_icon_style_name": "marker_default",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
         "label_horizontal_alignment": "left",
+        "label_vertical_alignment": "middle",
+        "constraint_radius_scale": 1.0,
         "pickable": true,
         "fade_duration": 0.25,
-        "screen_margin": 50.0,
+        "screen_margin": 36.0,
         "screen_margin_hiding": "if_icon_outside_margin",
+        "stencil_mode": "always",
         "priority": 0
     }
     ],
@@ -1267,11 +1288,7 @@
     {
         "label_anchor_category": "indoor_map",
         "label_style_name": "indoor_map_marker"
-   },
-   {
-                           "label_anchor_category": "eea_pin_label",
-                           "label_style_name": "eea_pin_label"
-   }
+    }
                            
     ]
 }

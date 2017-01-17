@@ -130,6 +130,7 @@
 #include "GlobalAppModeTransitionRules.h"
 #include "ILabelOptionsModel.h"
 #include "MapLayersModule.h"
+#include "MarkersModule.h"
 
 namespace ExampleApp
 {
@@ -1027,10 +1028,7 @@ namespace ExampleApp
                                                                                          interiorsPresentationModule.GetInteriorTransitionModel(),
                                                                                          m_sdkDomainEventBus,
                                                                                          interiorsPresentationModule.GetInteriorMarkerPickingService(),
-                                                                                         mapModule.GetMapLayersModule().GetLabelModelService(),
-                                                                                         mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
-                                                                                         mapModule.GetLabelsModule().GetLabelLayerFilterModel(),
-                                                                                         mapModule.GetLabelsModule().GetLabelPicker());
+                                                                                         mapModule.GetMarkersModule().GetMarkerService());
     }
 
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)

@@ -4,8 +4,6 @@
 
 #include "IWorldPinsModule.h"
 #include "WorldPins.h"
-#include "Pins.h"
-#include "PinController.h"
 #include "Rendering.h"
 #include "Camera.h"
 #include "BidirectionalBus.h"
@@ -14,8 +12,7 @@
 #include "WorldPinsModalityObserver.h"
 #include "Interiors.h"
 #include "SdkModelDomainEventBus.h"
-#include "IMenuReactionModel.h"
-#include "Labels.h"
+#include "Markers.h"
 
 namespace ExampleApp
 {
@@ -30,8 +27,6 @@ namespace ExampleApp
                 IWorldPinsRepository* m_pWorldPinsRepository;
                 IWorldPinsVisibilityController* m_pWorldPinsVisibilityController;
                 WorldPinsModalityObserver* m_pWorldPinsModalityObserver;
-                
-                Eegeo::Labels::LabelAnchorCategory* m_pWorldPinLabelCategory;
 
             public:
                 WorldPinsModule(ExampleAppMessaging::TMessageBus& messageBus,
@@ -39,10 +34,8 @@ namespace ExampleApp
                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
-                                Eegeo::Labels::ILabelModelService& labelModelService,
-                                Eegeo::Labels::ILabelAnchorFilterModel& labelAnchorFilterModel,
-                                Eegeo::Labels::ILabelFilterModel& labelFilterModel,
-                                Eegeo::Labels::ILabelPicker& labelPicker);
+                                Eegeo::Markers::IMarkerService& markerService
+                                );
 
                 ~WorldPinsModule();
                 

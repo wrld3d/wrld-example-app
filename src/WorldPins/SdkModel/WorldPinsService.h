@@ -14,6 +14,8 @@
 #include "Interiors.h"
 #include "LabelLayer.h"
 #include "ILabelAnchorFilter.h"
+#include "Markers.h"
+#include "SdkModelDomainEventBus.h"
 
 namespace ExampleApp
 {
@@ -24,23 +26,13 @@ namespace ExampleApp
             class WorldPinsService : public IWorldPinsService, private Eegeo::NonCopyable
             {
             public:
+
                 
-                typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*> TPinToSelectionHandlerMap;
-                typedef TPinToSelectionHandlerMap::iterator TPinToSelectionHandlerMapIt;
-                
-                typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinVisibilityStateChangedHandler*> TPinToVisiblityHandlerMap;
-                typedef TPinToVisiblityHandlerMap::iterator TPinToVisiblityHandlerMapIt;
-                
-                typedef std::map<WorldPinItemModel::WorldPinItemModelId, Eegeo::Labels::LabelModel::IdType> TWorldPinToLabelMap;
-                typedef std::map<WorldPinItemModel::WorldPinItemModelId, WorldPinItemModel*> TWorldPinItemModelMap;
-                
-                WorldPinsService(Eegeo::Labels::ILabelModelService& labelModelService,
-                                 Eegeo::Labels::ILabelAnchorFilterModel& labelAnchorFilterModel,
-                                 const Eegeo::Labels::LabelAnchorCategory& labelAnchorCategory,
-                                 Eegeo::Labels::ILabelPicker& labelPicker,
-                                 const Eegeo::Labels::LabelLayer::IdType& labelLayerId,
+                WorldPinsService(
                                  IWorldPinsRepository& worldPinsRepository,
-                                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService);
+                                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
+                                 Eegeo::Markers::IMarkerService& markerService,
+                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus);
                 ~WorldPinsService();
                 
                 WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
@@ -59,37 +51,34 @@ namespace ExampleApp
                 
                 bool HandleTouchDoubleTap(const Eegeo::v2& screenTapPoint);
                 
-                void SelectPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
-                
-                void Update(float dt) ;
-                
                 
             private:
                 
                 IWorldPinSelectionHandler* GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
                 
-                void Erase(const WorldPinItemModel::WorldPinItemModelId& id);
-                
                 bool TrySelectPinAtPoint(const Eegeo::v2& screenPoint);
                 
-                bool LabelHiddenPredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const;
+                void SelectPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
                 
-                Eegeo::Labels::ILabelModelService& m_labelModelService;
-                Eegeo::Labels::ILabelAnchorFilterModel& m_labelAnchorFilterModel;
-                const Eegeo::Labels::LabelAnchorCategory& m_labelAnchorCategory;
-                Eegeo::Labels::ILabelPicker& m_labelPicker;
+                void OnWorldPinHiddenStateChanged(const WorldPinHiddenStateChangedMessage& message);
+                
+                Eegeo::Markers::IMarker::IdType GetMarkerIdForWorldPinItemModelId(SdkModel::WorldPinItemModel::WorldPinItemModelId worldPinId) const;
+                
+                WorldPinItemModel::WorldPinItemModelId GetWorldPinItemModelIdForMarkerId(Eegeo::Markers::IMarker::IdType markerId) const;
+                
                 IWorldPinsRepository& m_worldPinsRepository;
                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& m_interiorMarkerPickingService;
-                Eegeo::Pins::TPinId m_lastLabelId;
-                const Eegeo::Labels::LabelLayer::IdType m_labelLayerId;
-                Eegeo::Labels::TLabelAnchorFilter<WorldPinsService> m_labelHiddenFilter;
+                
+                Eegeo::Markers::IMarkerService& m_markerService;
+                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
+                
+                Eegeo::Helpers::TCallback1<WorldPinsService, const WorldPinHiddenStateChangedMessage&> m_worldPinHiddenStateChangedMessageBinding;
+
+                typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*> TPinToSelectionHandlerMap;
+                typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinVisibilityStateChangedHandler*> TPinToVisiblityHandlerMap;
                 
                 TPinToSelectionHandlerMap m_pinsToSelectionHandlers;
                 TPinToVisiblityHandlerMap m_pinsToVisbilityChangedHandlers;
-                TWorldPinToLabelMap m_worldPinsToLabels;
-                TWorldPinItemModelMap m_worldPinItemModelMap;
-                
-                bool m_pinAlreadySelected;
             };
 
         }
