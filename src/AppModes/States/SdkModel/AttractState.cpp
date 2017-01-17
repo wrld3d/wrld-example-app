@@ -19,11 +19,11 @@
 #include "TimeHelpers.h"
 #include "BidirectionalBus.h"
 #include "WorldPinVisibility.h"
-#include "FlattenButtonModel.h"
 #include "NavigationService.h"
 #include "CameraTransitionService.h"
 #include "ILocationService.h"
 #include "ISearchQueryPerformer.h"
+#include "IVisualMapService.h"
 
 namespace ExampleApp
 {
@@ -46,16 +46,15 @@ namespace ExampleApp
                                            const float playbackSpeed,
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
                                            Eegeo::Location::NavigationService& navigationService,
-                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
+                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                           VisualMap::SdkModel::IVisualMapService& visualMapService)
                 : m_appModeModel(appModeModel)
                 , m_cameraController(cameraController)
                 , m_cameraSplinePlaybackController(resourceCeilingProvider)
                 , m_appCamera(m_cameraSplinePlaybackController, touchController)
                 , m_cameraHandle(m_cameraController.CreateCameraHandleFromController(m_appCamera))
                 , m_messageBus(messageBus)
-                , m_flattenButtonModel(flattenButtonModel)
                 , m_navigationService(navigationService)
                 , m_enteringState(*this, cameraController, m_cameraHandle)
                 , m_viewingState(m_cameraSplinePlaybackController)
@@ -67,6 +66,7 @@ namespace ExampleApp
                 , m_idleTimeAtStartMs(0)
                 , m_userIdleService(userIdleService)
                 , m_searchQueryPerformer(searchQueryPerformer)
+                , m_visualMapService(visualMapService)
                 {
                     std::for_each(cameraPositionSplinePoints.begin(), cameraPositionSplinePoints.end(),
                                   [this](const Eegeo::Space::LatLongAltitude& p) { m_cameraPositionSpline.AddPoint(p.ToECEF()); });
@@ -89,9 +89,9 @@ namespace ExampleApp
 
                 void AttractState::Enter(int previousState)
                 {
+                    m_visualMapService.SetVisualMapState("Summer", "DayDefault", false);
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
-                    m_flattenButtonModel.Unflatten();
 
                     InitialiseSplinePlaybackCameraState();
                     m_subStateMachine.StartStateMachine(States::EnterState);
@@ -115,6 +115,9 @@ namespace ExampleApp
 
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
+
+                    m_visualMapService.RestorePreviousMapState();
+
                     m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
                 }
 

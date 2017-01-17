@@ -63,7 +63,6 @@ namespace ExampleApp
 
                     ExampleAppMessaging::TMessageBus& m_messageBus;
 
-                    FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
                     Eegeo::Location::NavigationService& m_navigationService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     
@@ -91,7 +90,6 @@ namespace ExampleApp
                                          const float attractModePlaybackSpeed,
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                         FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
                                          Eegeo::Location::NavigationService& navigationService,
                                          Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer);
                     
