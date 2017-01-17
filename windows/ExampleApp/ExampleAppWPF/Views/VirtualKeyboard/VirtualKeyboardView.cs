@@ -39,6 +39,8 @@ namespace ExampleAppWPF
                     HideVirtualKeyboard();
                 }
             };
+
+            TouchEnter += (o, e) => { m_currentWindow.PopAllTouchEvents(); };
         }
 
         public void ShowVirtualKeyboard()
@@ -53,6 +55,12 @@ namespace ExampleAppWPF
         public void Destroy()
         {
             m_currentWindow.MainGrid.Children.Remove(this);
+        }
+
+        protected override void OnTouchMove(TouchEventArgs e)
+        {
+            // Consume touch events to disable panning through the keyboard.
+            e.Handled = true;
         }
 
         private void OnLoadedAddVirtualKeyboardFocusHandlers<T>(UIElementCollection elements) where T : Control
