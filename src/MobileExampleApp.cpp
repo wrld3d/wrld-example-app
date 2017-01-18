@@ -311,6 +311,7 @@ namespace ExampleApp
     , m_usingLegacyInteriorLabels(!platformConfig.OptionsConfig.EnableLabels || platformConfig.MapLayersConfig.Interiors.UseLegacyLabels)
     , m_pToursModule(NULL)
     , m_pGlobeCameraWrapper(NULL)
+    , m_pCameraSplinePlaybackController(NULL)
     , m_pTwitterFeedModule(NULL)
     , m_pTwitterFeedTourModule(NULL)
     , m_pVisualMapModule(NULL)
@@ -379,6 +380,8 @@ namespace ExampleApp
         m_pRayCaster = Eegeo_NEW(Eegeo::Collision::EnvironmentRayCaster)(mapModule.GetAggregateCollisionBvhProvider(),mapModule.GetEnvironmentFlatteningService());
         
         m_pGlobeCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppGlobeCameraWrapper)(*m_pGlobeCameraController);
+
+        m_pCameraSplinePlaybackController = Eegeo_NEW(Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController)(mapModule.GetResourceCeilingProvider());
         
         m_pCameraTouchController = &m_pGlobeCameraController->GetTouchController();
         
@@ -513,6 +516,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pCameraTransitionController;
         Eegeo_DELETE m_pDoubleTapIndoorInteractionController;
         Eegeo_DELETE m_pNavigationService;
+        Eegeo_DELETE m_pCameraSplinePlaybackController;
         Eegeo_DELETE m_pGlobeCameraWrapper;
         Eegeo_DELETE m_pGlobeCameraController;
         Eegeo_DELETE m_pLoadingScreen;
@@ -901,6 +905,7 @@ namespace ExampleApp
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
         
         AppModes::States::SdkModel::AppModeStatesFactory appModeStatesFactory(m_pAppCameraModule->GetController(),
+                                                                      *m_pCameraSplinePlaybackController,
                                                                       *m_pGlobeCameraWrapper,
                                                                       *m_pInteriorCameraWrapper,
                                                                       *m_pStreamingVolume,
@@ -915,7 +920,6 @@ namespace ExampleApp
                                                                       m_pVisualMapModule->GetVisualMapService(),
                                                                       m_pWorld->GetLocationService(),
                                                                       m_userIdleService,
-                                                                      mapModule.GetResourceCeilingProvider(),
                                                                       m_applicationConfiguration.IsAttractModeEnabled(),
                                                                       m_applicationConfiguration.GetAttractModeTargetSplinePoints(),
                                                                       m_applicationConfiguration.GetAttractModePositionSplinePoints(),
@@ -1337,6 +1341,8 @@ namespace ExampleApp
         m_pPinsModule->UpdateScreenProperties(m_screenProperties);
         
         m_pGlobeCameraController->UpdateScreenProperties(m_screenProperties);
+
+        m_pCameraSplinePlaybackController->UpdateScreenProperties(m_screenProperties);
         
         m_pInteriorsExplorerModule->GetInteriorsGpsCameraController().UpdateScreenProperties(m_screenProperties);
     }
