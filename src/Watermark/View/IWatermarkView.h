@@ -22,6 +22,7 @@ namespace ExampleApp
                 virtual void InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void SetWatermarkAlignmentState(bool alignAlongBottom, bool alignBelowFloorDisplay) = 0;
+                virtual void Close() = 0;
             };
         }
     }

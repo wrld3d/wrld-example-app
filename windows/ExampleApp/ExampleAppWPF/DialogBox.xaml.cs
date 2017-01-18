@@ -49,7 +49,7 @@ namespace ExampleAppWPF
 
         void OnCancelButtonClick(object sender, RoutedEventArgs e)
         {
-            if (m_modal)
+            if (!m_modal)
             {
                 ButtonClicked?.Invoke(sender, e, false);
                 Close();
