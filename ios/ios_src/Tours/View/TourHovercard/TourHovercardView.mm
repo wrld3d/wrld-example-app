@@ -5,7 +5,6 @@
 #include "MathFunc.h"
 #include "UIColors.h"
 #include "ImageHelpers.h"
-#include "WorldPinOnMapViewInterop.h"
 #include "App.h"
 #include "Document.h"
 #include "ImageStore.h"
@@ -13,7 +12,6 @@
 
 @implementation TourHovercardView
 {
-    ExampleApp::WorldPins::View::WorldPinOnMapViewInterop* m_pInterop;
     UITapGestureRecognizer* m_tapGestureRecogniser;
     float m_stateChangeAnimationTimeSeconds;
     float m_pinOffset;
@@ -32,7 +30,7 @@
     ExampleApp::Helpers::ColorHelpers::Color m_baseColor;
     ExampleApp::Helpers::ColorHelpers::Color m_textColor;
 }
-- (id)initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore :(ExampleApp::WorldPins::View::WorldPinOnMapViewInterop*)interop
+- (id)initWithParams:(float)pinDiameter :(float)pixelScale :(ImageStore*)pImageStore
 {
     self = [super init];
     
@@ -48,8 +46,6 @@
         m_tapGestureRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapped:)];
         [m_tapGestureRecogniser setDelegate:self];
         [self addGestureRecognizer: m_tapGestureRecogniser];
-        
-        m_pInterop = interop;
         
         // shadow
         self.pMainControlShadowContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -274,7 +270,7 @@
 
 - (void) onTapped:(UITapGestureRecognizer *)recognizer
 {
-    m_pInterop->OnSelected();
+   // m_pInterop->OnSelected();
 }
 
 @end

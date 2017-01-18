@@ -83,8 +83,8 @@ AppLocationDelegate* m_pAppLocationDelegate;
 
     if (currentLocation != nil)
     {
-        double latDegrees = currentLocation.coordinate.latitude;
-        double lonDegrees = currentLocation.coordinate.longitude;
+        double latDegrees = 56.459965;//currentLocation.coordinate.latitude;
+        double lonDegrees = -2.978129;//currentLocation.coordinate.longitude;
         double altitudeMeters = currentLocation.altitude;
         double accuracyMeters = currentLocation.horizontalAccuracy;
         m_piOSLocationService->UpdateLocation(latDegrees, lonDegrees, altitudeMeters);
@@ -106,7 +106,7 @@ AppLocationDelegate* m_pAppLocationDelegate;
     }
     else
     {
-        if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
+        /*if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
         {
             heading -= 90.f;
         }
@@ -121,7 +121,7 @@ AppLocationDelegate* m_pAppLocationDelegate;
         else
         {
             heading += 0.f;
-        }
+        }*/
         
         heading = fmodf((heading + 360.f), 360.f);
         m_piOSLocationService->UpdateHeading(heading);

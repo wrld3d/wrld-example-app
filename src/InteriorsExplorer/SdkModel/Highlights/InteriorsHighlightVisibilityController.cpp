@@ -133,10 +133,11 @@ namespace ExampleApp
 
                 void InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt()
                 {
-                    if (!ShowHighlightsForCurrentResults())
-                    {
-                        ActivateLabels(true);
-                    }
+                    ShowHighlightsForCurrentResults();
+                    
+                    bool hasResults = m_searchResultRepository.GetItemCount() > 0;
+                    ActivateLabels(!hasResults);
+                    
                 }
 
                 void InteriorsHighlightVisibilityController::OnSearchResultCleared()
@@ -179,13 +180,10 @@ namespace ExampleApp
 
                         if (m_currentHighlightRenderables.size() > 0)
                         {
-                            bool showingHighlights = ShowHighlightsForCurrentResults();
-                            ActivateLabels(!showingHighlights);
+                            ShowHighlightsForCurrentResults();
                         }
-                        else
-                        {
-                            ActivateLabels(true);
-                        }
+                        bool hasResults = m_searchResultRepository.GetItemCount() > 0;
+                        ActivateLabels(!hasResults);
                     }
                     else
                     {
@@ -227,10 +225,9 @@ namespace ExampleApp
                 {
                     DeactivateHighlightRenderables();
                     
-                    if (ShowHighlightsForResults(results))
-                    {
-                        ActivateLabels(false);
-                    }
+                    ShowHighlightsForResults(results);
+                    
+                    ActivateLabels(false);
                 }
 
                 bool InteriorsHighlightVisibilityController::ShowHighlightsForCurrentResults()
