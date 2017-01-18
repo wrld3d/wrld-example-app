@@ -94,6 +94,7 @@
 #include "IRestrictedBuildingService.h"
 #include "IUserIdleService.h"
 #include "GlobalAppModeTransitionRules.h"
+#include "CameraSplinePlaybackController.h"
 
 namespace ExampleApp
 {

@@ -151,6 +151,7 @@
 #include "RestrictedBuildingService.h"
 #include "InteriorsStreamingModule.h"
 #include "GlobalAppModeTransitionRules.h"
+#include "CameraSplinePlaybackController.h"
 
 namespace ExampleApp
 {
