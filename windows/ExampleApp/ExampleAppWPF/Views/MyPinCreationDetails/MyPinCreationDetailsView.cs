@@ -24,8 +24,6 @@ namespace ExampleAppWPF
         protected Button m_selectFromGalleryButton = null;
         protected Button m_submitButton = null;
         protected Button m_closeButton = null;
-        protected Button m_submitKioskButton = null;
-        protected Button m_closeKioskButton = null;
         protected Image m_poiImage = null;
         protected TextBox m_title = null;
         protected TextBox m_description = null;
@@ -69,10 +67,8 @@ namespace ExampleAppWPF
         void Destroy()
         {
             m_closeButton.Click -= OnCloseClick;
-            m_closeKioskButton.Click -= OnCloseClick;
             m_selectFromGalleryButton.Click -= OnSelectFromGalleryClick;
             m_submitButton.Click -= OnSubmitClick;
-            m_submitKioskButton.Click -= OnSubmitClick;
             m_tosLink.Click -= OnHyperlinkClick;
             m_description.ManipulationBoundaryFeedback -= OnDescriptionViewBoundaryFeedback;
 
@@ -93,25 +89,20 @@ namespace ExampleAppWPF
             m_title = CheckAndGetProperty("TitleBox") as TextBox;
             m_description = CheckAndGetProperty("DescBox") as TextBox;
             m_shouldShareButton = CheckAndGetProperty("ToShare") as CheckBox;
-            m_submitButton = CheckAndGetProperty("ConfirmButton") as Button;
+            m_submitButton = CheckAndGetProperty(m_isInKioskMode ? "ConfirmKioskButton" : "ConfirmButton") as Button;
             m_selectFromGalleryButton = CheckAndGetProperty("AddImageButton") as Button;
             m_poiImage = CheckAndGetProperty("SelectedImage") as Image;
             m_tosLink = CheckAndGetProperty("TermsLink") as System.Windows.Documents.Hyperlink;
 
             m_prevSource = m_poiImage.Source;
 
-            m_closeButton = CheckAndGetProperty("CloseButton") as Button;
+            m_closeButton = CheckAndGetProperty(m_isInKioskMode ? "CloseKioskButton" : "CloseButton") as Button;
             m_closeButton.Click += OnCloseClick;
             m_selectFromGalleryButton.Click += OnSelectFromGalleryClick;
             m_submitButton.Click += OnSubmitClick;
             m_tosLink.Click += OnHyperlinkClick;
 
             m_description.ManipulationBoundaryFeedback += OnDescriptionViewBoundaryFeedback;
-
-            m_closeKioskButton = CheckAndGetProperty("CloseKioskButton") as Button;
-            m_closeKioskButton.Click += OnCloseClick;
-            m_submitKioskButton = CheckAndGetProperty("ConfirmKioskButton") as Button;
-            m_submitKioskButton.Click += OnSubmitClick;
 
             Thickness detailsViewMargin = (Thickness)Application.Current.Resources["PinCreationDetailsMargin"];
             if (detailsViewMargin != null)

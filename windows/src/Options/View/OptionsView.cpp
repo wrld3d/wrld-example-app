@@ -13,12 +13,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            OptionsView::OptionsView(WindowsNativeState& nativeState)
+            OptionsView::OptionsView(WindowsNativeState& nativeState, bool isInKioskMode)
                 : m_nativeState(nativeState)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.OptionsView");
-                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
+                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid, System::Boolean::typeid));
+                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this), gcnew System::Boolean(isInKioskMode)));
 
                 mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
                 mIsCacheEnabledSelected.SetupMethod(m_uiViewClass, m_uiView, "IsCacheEnabledSelected");
