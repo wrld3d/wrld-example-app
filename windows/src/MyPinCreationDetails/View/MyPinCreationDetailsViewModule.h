@@ -29,7 +29,8 @@ namespace ExampleApp
                     WindowsNativeState& nativeState,
                     MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& viewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService
+                    Metrics::IMetricsService& metricsService,
+                    bool isInKioskMode
                 );
 
                 ~MyPinCreationDetailsViewModule();

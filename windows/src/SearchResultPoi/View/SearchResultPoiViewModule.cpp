@@ -19,12 +19,13 @@ namespace ExampleApp
                 Metrics::IMetricsService& metricsService,
                 MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
                 Eegeo::Resources::Interiors::InteriorSelectionModel& interiorsSelectionModel,
+                MyPinDetails::View::IMyPinDetailsViewModel& pinDetailsViewModel,
 				bool isInKioskMode
             )
             {
                 ASSERT_UI_THREAD
                 m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState, isInKioskMode);
-                m_pController = Eegeo_NEW(DesktopSearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus, metricsService, pinCreationInitiationView, interiorsSelectionModel);
+                m_pController = Eegeo_NEW(DesktopSearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus, metricsService, pinCreationInitiationView, interiorsSelectionModel, pinDetailsViewModel);
             }
 
             SearchResultPoiViewModule::~SearchResultPoiViewModule()

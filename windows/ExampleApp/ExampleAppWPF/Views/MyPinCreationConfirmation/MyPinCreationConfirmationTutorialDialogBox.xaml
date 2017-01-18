@@ -1,0 +1,219 @@
+﻿<Window x:Class="ExampleAppWPF.MyPinCreationConfirmationTutorialDialogBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ExampleAppWPF"
+        mc:Ignorable="d"
+        Title="MyPinCreationConfirmationTutorialDialogBox"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterOwner"
+        Topmost="True"
+        Width="{DynamicResource PinTutorialWidth}"
+        Height="{DynamicResource PinTutorialHeight}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Colours.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="PinTutorial_CloseButton" TargetType="{x:Type Button}">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle2">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image1">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Rectangle x:Name="rectangle1" Fill="{DynamicResource PinTutorialCloseButtonOffColour}" Margin="0"/>
+                                <Rectangle x:Name="rectangle" Fill="{DynamicResource PinTutorialCloseButtonOverColour}" Margin="0" Visibility="Hidden"/>
+                                <Rectangle x:Name="rectangle2" Fill="{DynamicResource PinTutorialCloseButtonOnColour}" Margin="0" Visibility="Hidden"/>
+                                <Image x:Name="image" Source="{DynamicResource PinTutorialCloseButtonOffImage}"/>
+                                <Image x:Name="image1" Source="{DynamicResource PinTutorialCloseButtonOnImage}" Visibility="Hidden"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="CreatePinButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid Margin="0">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal"/>
+                                        <VisualState x:Name="MouseOver">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="BackGround_Over">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Pressed">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="BackGround_Pressed">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="BackGround">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="CreatePIN">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="CreatePIN_Down">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="RemovePin">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="RemovePin_Down">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Disabled"/>
+                                    </VisualStateGroup>
+                                    <VisualStateGroup x:Name="CheckStates">
+                                        <VisualState x:Name="Checked">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SaveLocationGrid">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Unchecked">
+                                            <Storyboard>
+                                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SaveLocationGrid">
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                                </ObjectAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Indeterminate"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <Rectangle x:Name="BackGround" Fill="{StaticResource Gold}" HorizontalAlignment="Stretch" Margin="0" Width="Auto"/>
+                                <Rectangle x:Name="BackGround_Over" Fill="{StaticResource PrimaryBG_Over_Colour}" HorizontalAlignment="Stretch" Margin="0" Width="Auto" Visibility="Hidden"/>
+                                <Rectangle x:Name="BackGround_Pressed" Fill="{StaticResource PrimaryBG_Down_Colour}" HorizontalAlignment="Stretch" Margin="0" Width="Auto" Visibility="Hidden"/>
+                                <Grid x:Name="SaveLocationGrid" HorizontalAlignment="Center">
+                                    <Image x:Name="RemovePin" Source="/Assets/button_add_pin_off.png" Stretch="Fill" Width="{DynamicResource PinTutorialButtonIconSize}" Height="{DynamicResource PinTutorialButtonIconSize}" HorizontalAlignment="Left"/>
+                                    <Image x:Name="RemovePin_Down" Source="/Assets/button_add_pin_on.png" Stretch="Fill" Width="{DynamicResource PinTutorialButtonIconSize}" Height="{DynamicResource PinTutorialButtonIconSize}" HorizontalAlignment="Left" Visibility="Collapsed"/>
+                                    <TextBlock x:Name="CreatePIN" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="{DynamicResource PinTutorialButtonFontSize}"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="60,0,0,0"/>
+                                    <TextBlock x:Name="CreatePIN_Down" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="{DynamicResource PinTutorialButtonFontSize}"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="60,0,0,0" Visibility="Hidden"/>
+                                </Grid>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsKeyboardFocused" Value="true"/>
+                                <Trigger Property="ToggleButton.IsChecked" Value="true"/>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Foreground" Value="#ADADAD"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Width="{DynamicResource PinTutorialWidth}" Height="{DynamicResource PinTutorialHeight}">
+        <Grid Margin="{DynamicResource PinTutorialContainerMargin}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{DynamicResource PinTutorialContainerRow0Height}"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Margin="{DynamicResource PinTutorialTitleMargin}" Grid.Row="0" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="{DynamicResource PinTutorialTitleColumn0}"/>
+                    <ColumnDefinition Width="{DynamicResource PinTutorialTitleColumn1}"/>
+                </Grid.ColumnDefinitions>
+                <Grid Name="TitlesGrid" Grid.Column="0" HorizontalAlignment="Left">
+                    <TextBlock Name="Title"
+                                Text="{Binding TitleText}"
+                                Margin="{DynamicResource PinTutorialTitleTextMargin}"
+                                MaxWidth="{DynamicResource PinTutorialTitleMaxWidth}"
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource Gold}"
+                                FontSize="{DynamicResource PinTutorialTitleFontSize}"
+                                FontFamily="{DynamicResource PrimaryUIFont}"
+                                TextTrimming="CharacterEllipsis"/>
+                </Grid>
+                <Button Style="{StaticResource PinTutorial_CloseButton}"
+                        Name="CancelButton"
+                        Click="OnCancelButtonClick"
+                        IsCancel="True"
+                        HorizontalAlignment="Right"
+                        Grid.Column="1"
+                        Width="{DynamicResource POIViewCloseButtonSize}"
+                        Height="{DynamicResource POIViewCloseButtonSize}" />
+                <Border Visibility="{DynamicResource PinTutorialTitleDividerVisibility}"
+                        BorderBrush="{x:Null}"
+                        HorizontalAlignment="Stretch"
+                        Height="1"
+                        Margin="0,0,0,-20"
+                        Background="{StaticResource Gold}"
+                        Grid.ColumnSpan="2"
+                        VerticalAlignment="Bottom"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <TextBlock Text="{Binding MessageText}"
+                           Width="{DynamicResource PinTutorialMessageWidth}"
+                           Height="{DynamicResource PinTutorialMessageHeight}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Top"
+                           TextAlignment="Justify"
+                           TextWrapping="Wrap"
+                           TextTrimming="CharacterEllipsis"
+                           Foreground="{StaticResource VeryDarkGrey}"
+                           FontSize="{DynamicResource PinTutorialMessageFontSize}"/>
+                <Button Name="AcceptButton"
+                        Width="{DynamicResource PinTutorialButtonWidth}"
+                        Height="{DynamicResource PinTutorialButtonHeight}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Style="{StaticResource CreatePinButtonStyle}"
+                        Content="{Binding AcceptButtonText}"
+                        Click="OnAcceptButtonClick"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
