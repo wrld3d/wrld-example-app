@@ -29,7 +29,8 @@ namespace ExampleApp
                     WindowsNativeState& nativeState,
                     IOptionsViewModel& optionsViewModel,
                     Eegeo::Helpers::IHttpCache& httpCache,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    bool isInKioskMode
                 );
 
                 ~OptionsViewModule();

@@ -54,6 +54,7 @@
         <GradientStop Color="#DDDDDD" Offset="0.5"/>
         <GradientStop Color="#CDCDCD" Offset="1"/>
     </LinearGradientBrush>
+    <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070"/>
     <Style x:Key="TextButton" TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>

@@ -20,8 +20,6 @@ namespace ExampleAppWPF
 
         private Button m_acceptButton;
         private Button m_closeButton;
-        private Button m_acceptKioskButton;
-        private Button m_closeKioskButton;
 
         private MainWindow m_currentWindow;
 
@@ -73,25 +71,15 @@ namespace ExampleAppWPF
             m_yPosActive = -((double)Application.Current.Resources["PinCreationConfirmationBottomMargin"]);
             m_yPosInactive = Height;
 
-            m_acceptButton = GetTemplateChild("Ok") as Button;
+            m_acceptButton = GetTemplateChild(m_isInKioskMode ? "OkKiosk" : "Ok") as Button;
             System.Diagnostics.Debug.Assert(m_acceptButton != null, "Ok Image not found in generic.xaml template");
 
-            m_closeButton = GetTemplateChild("Close") as Button;
+            m_closeButton = GetTemplateChild(m_isInKioskMode ? "CloseKiosk" : "Close") as Button;
             System.Diagnostics.Debug.Assert(m_closeButton != null, "Close Image not found in generic.xaml template");
 
             m_acceptButton.Click += OnAcceptClicked;
 
             m_closeButton.Click += OnCloseClicked;
-
-            m_acceptKioskButton = GetTemplateChild("OkKiosk") as Button;
-            System.Diagnostics.Debug.Assert(m_acceptButton != null, "Ok Kiosk Image not found in generic.xaml template");
-
-            m_closeKioskButton = GetTemplateChild("CloseKiosk") as Button;
-            System.Diagnostics.Debug.Assert(m_closeButton != null, "Close Kiosk Image not found in generic.xaml template");
-
-            m_acceptKioskButton.Click += OnAcceptClicked;
-
-            m_closeKioskButton.Click += OnCloseClicked;
         }
 
         private void OnAcceptClicked(object sender, RoutedEventArgs e)

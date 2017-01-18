@@ -607,7 +607,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         app.OptionsModule().GetOptionsViewModel(),
         m_pWindowsPlatformAbstractionModule->GetHttpCache(),
-        m_messageBus);
+        m_messageBus,
+        app.GetApplicationConfiguration().IsInKioskMode());
 
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
         m_nativeState,
