@@ -4,12 +4,17 @@
 
 #import <Foundation/Foundation.h>
 #include "SenionLabLocationService.h"
+#include "iOSAlertBoxFactory.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
 #include <map>
 #include <string>
+#include "BidirectionalBus.h"
 
 @interface SenionLabLocationManager : NSObject
 
--(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService;
+-(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService
+ iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
+          messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus;
 -(void) StartUpdatingLocation: (NSString*) apiKey
                     apiSecret: (NSString*) apiSecret
                      floorMap: (std::map<int, std::string>) floorMap;

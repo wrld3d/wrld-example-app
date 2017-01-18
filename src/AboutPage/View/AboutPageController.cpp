@@ -37,6 +37,16 @@ namespace ExampleApp
             {
                 m_viewModel.SetIndoorPositioningType(message.GetIndoorPositioningType());
             }
+            
+            void AboutPageController::OnAboutPageSenionDataTypeMessageChanged(const AboutPage::AboutPageSenionDataTypeMessage& message)
+            {
+                m_viewModel.SetSenionDataType(message.GetEegeoFloorNumber(), message.GetSenionFloorNumber(), message.GetSenionLatitude(), message.GetSenionLongitude());
+            }
+            
+            void AboutPageController::OnAboutPageSenionSettingsMessageChanged(const AboutPage::AboutPageSenionSettingsTypeMessage& message)
+            {
+                m_viewModel.SetSenionSettingsType(message.GetSenionApiKey(), message.GetSenionApiSecret(), message.GetSenionFloorMap(), message.GetSenionInteriorId());
+            }
 
             AboutPageController::AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel,
                                                      Metrics::IMetricsService& metricsService,
@@ -49,15 +59,21 @@ namespace ExampleApp
                 , m_viewCloseTapped(this, &AboutPageController::OnCloseTapped)
                 , m_messageBus(messageBus)
                 , m_aboutPageIndoorPositionTypeMessage(this, &AboutPageController::OnAboutPageIndoorPositionTypeMessageChanged)
+                , m_aboutPageSenionDataTypeMessage(this, &AboutPageController::OnAboutPageSenionDataTypeMessageChanged)
+                , m_aboutPageSenionSettingsMessage(this, &AboutPageController::OnAboutPageSenionSettingsMessageChanged)
             {
                 m_view.InsertCloseTappedCallback(m_viewCloseTapped);
                 m_viewModel.InsertClosedCallback(m_viewClosed);
                 m_viewModel.InsertOpenedCallback(m_viewOpened);
                 m_messageBus.SubscribeUi(m_aboutPageIndoorPositionTypeMessage);
+                m_messageBus.SubscribeUi(m_aboutPageSenionDataTypeMessage);
+                m_messageBus.SubscribeUi(m_aboutPageSenionSettingsMessage);
             }
 
             AboutPageController::~AboutPageController()
             {
+                m_messageBus.UnsubscribeUi(m_aboutPageSenionSettingsMessage);
+                m_messageBus.UnsubscribeUi(m_aboutPageSenionDataTypeMessage);
                 m_messageBus.UnsubscribeUi(m_aboutPageIndoorPositionTypeMessage);
                 m_viewModel.RemoveOpenedCallback(m_viewOpened);
                 m_viewModel.RemoveClosedCallback(m_viewClosed);

@@ -28,8 +28,6 @@
 #include "ModalBackgroundView.h"
 #include "FlattenButtonView.h"
 #include "FlattenButtonViewModule.h"
-#include "WorldPinOnMapViewModule.h"
-#include "WorldPinOnMapViewContainer.h"
 #include "SearchResultPoiViewModule.h"
 #include "SearchResultPoiView.h"
 #include "SearchResultSectionModule.h"
@@ -194,7 +192,9 @@ AppHost::AppHost(
                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                            mapModule.GetEnvironmentFlatteningService(),                                                                                                                                                                                                                                                                
                                                                                            *m_piOSLocationService,
-                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository());
+                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                           m_iOSAlertBoxFactory,
+                                                                                           m_messageBus);
     
     m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),
@@ -370,13 +370,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                      screenProperties,
                                      m_messageBus,
                                      m_iOSFlurryMetricsService);
-
-    m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(app.WorldPinsModule().GetWorldPinInFocusViewModel(),
-                                 app.WorldPinsModule().GetScreenControlViewModel(),
-                                 app.ModalityModule().GetModalityModel(),
-                                 app.PinDiameter(),
-                                 screenProperties.GetPixelScale(),
-                                 m_pImageStore);
     
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
                            screenProperties,
@@ -444,7 +437,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                  *m_pURLRequestHandler);
     
     // 3d map view layer.
-    [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
     
     // Initial Experience background
     [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroBackgroundView()];
@@ -498,7 +490,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 void AppHost::DestroyApplicationViewModules()
 {
     // 3d map view layer.
-    [&m_pWorldPinOnMapViewModule->GetWorldPinOnMapView() removeFromSuperview];
     
     [&m_pInitialExperienceIntroViewModule->GetIntroBackgroundView() removeFromSuperview];
 
@@ -558,8 +549,6 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pAboutPageViewModule;
 
     Eegeo_DELETE m_pCompassViewModule;
-
-    Eegeo_DELETE m_pWorldPinOnMapViewModule;
     
     Eegeo_DELETE m_pTourWebViewModule;
     

@@ -29,7 +29,6 @@ namespace ExampleApp
                                                              Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                              Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& markerRepository,
                                                              WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                             WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
                                                              const WorldPins::SdkModel::IWorldPinIconMapping& worldPinIconMapping,
                                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
@@ -42,7 +41,7 @@ namespace ExampleApp
                                                              const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                                              const bool interiorsAffectedByFlattening,
                                                              const bool useIndoorEntryMarkerLabels,
-                                            
+                                                             
                                                              InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                                              PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                                              Eegeo::Location::NavigationService& navigationService,
@@ -59,14 +58,14 @@ namespace ExampleApp
                 m_pGlobeCameraTouchController = interiorCameraControllerFactory.CreateTouchController();
                 
                 m_pGpsGlobeCameraController = interiorGpsCameraControllerFactory.CreateInteriorGpsGlobeCameraController(*m_pGlobeCameraTouchController);
-
+                
                 m_pInteriorsCameraController = interiorCameraControllerFactory.CreateInteriorsCameraController(*m_pGlobeCameraTouchController, m_pGpsGlobeCameraController->GetGlobeCameraController());
                 
                 m_pInteriorsGpsCameraController = interiorGpsCameraControllerFactory.CreateInteriorsGpsCameraController(*m_pInteriorsCameraController,
                                                                                                                         *m_pGlobeCameraTouchController,
                                                                                                                         *m_pGpsGlobeCameraController);
                 
-
+                
                 m_pInteriorSelectionController = Eegeo_NEW(InteriorSelectionController)(interiorSelectionModel,
                                                                                         markerRepository,
                                                                                         *m_pInteriorsCameraController);
@@ -90,7 +89,7 @@ namespace ExampleApp
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity(), messageBus);
                 
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsGpsCameraController->GetTouchController());
-
+                
                 m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController, worldPinIconMapping);
                 
                 m_pInteriorPermissionObserver = Eegeo_NEW(InteriorPermissionObserver)(interiorSelectionModel, alertBoxFactory);
@@ -157,7 +156,7 @@ namespace ExampleApp
             {
                 return *m_pUserInteractionModel;
             }
-
+            
             InteriorsUINotificationService & InteriorsExplorerModule::GetInteriorsUINotificationService() const
             {
                 return *m_pUINotificationService;

@@ -9,6 +9,8 @@
 #include "ApplicationConfiguration.h"
 #include "InteriorMetaDataRepository.h"
 #include "ApplicationInteriorTrackingInfo.h"
+#include "BidirectionalBus.h"
+#include "AboutPageSenionSettingsTypeMessage.h"
 
 namespace ExampleApp
 {
@@ -20,11 +22,14 @@ namespace ExampleApp
             SenionLabLocationController(SenionLabLocationManager& locationManager,
                                         ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                         const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                        Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository);
+                                        Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                        ExampleAppMessaging::TMessageBus& messageBus);
             ~SenionLabLocationController();
             
         private:
             SenionLabLocationManager& m_locationManager;
+            
+            ExampleApp::ExampleAppMessaging::TMessageBus& m_messageBus;
             
             ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
             const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
