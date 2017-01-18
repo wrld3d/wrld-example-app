@@ -22,6 +22,7 @@
 #include "ILocationService.h"
 #include "Search.h"
 #include "VisualMap.h"
+#include "AttractModeStates.h"
 
 #include <vector>
 
@@ -36,13 +37,6 @@ namespace ExampleApp
                 class AttractState : public Helpers::IStateMachineState
                 {
                 private:
-                    enum States
-                    {
-                        EnterState = 0,
-                        ViewState,
-                        ExitState
-                    };
-
                     AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     AppCamera::SdkModel::IAppCameraController& m_cameraController;
                     Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController m_cameraSplinePlaybackController;
@@ -63,6 +57,7 @@ namespace ExampleApp
                     Eegeo::Geometry::CatmullRomSpline m_cameraTargetSpline;
                     Eegeo::Geometry::CatmullRomSpline m_cameraPositionSpline;
 
+                    void ChangeToState(const AttractMode::SdkModel::States::State newState);
                     bool IsUserActive();
                     void InitialiseSplinePlaybackCameraState();
 

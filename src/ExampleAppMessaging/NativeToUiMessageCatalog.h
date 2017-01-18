@@ -44,6 +44,7 @@
 #include "TagSearchRemovedMessage.h"
 #include "VirtualKeyboardStateChangedMessage.h"
 #include "AboutPageIndoorPositionTypeMessage.h"
+#include "AttractModeStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -90,6 +91,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
             , public Eegeo::Messaging::CatalogBinding<VirtualKeyboard::VirtualKeyboardStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageIndoorPositionTypeMessage>
+            , public Eegeo::Messaging::CatalogBinding<AttractMode::AttractModeStateChangedMessage>
             , private Eegeo::NonCopyable
         {
 
