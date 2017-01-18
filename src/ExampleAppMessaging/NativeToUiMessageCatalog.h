@@ -8,6 +8,7 @@
 #include "SearchResultRemovedMessage.h"
 #include "SearchQueryPerformedMessage.h"
 #include "SearchQueryRemovedMessage.h"
+#include "SearchQueryResultsRemovedMessage.h"
 #include "FlattenButtonModelStateChangedMessage.h"
 #include "SearchQueryResponseReceivedMessage.h"
 #include "CompassModeChangedMessage.h"
@@ -43,6 +44,8 @@
 #include "TagSearchRemovedMessage.h"
 #include "VirtualKeyboardStateChangedMessage.h"
 #include "AboutPageIndoorPositionTypeMessage.h"
+#include "AboutPageSenionDataTypeMessage.h"
+#include "AboutPageSenionSettingsTypeMessage.h"
 
 namespace ExampleApp
 {
@@ -55,6 +58,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryPerformedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRemovedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResultsRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonModelStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResponseReceivedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassModeChangedMessage>
@@ -88,6 +92,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
             , public Eegeo::Messaging::CatalogBinding<VirtualKeyboard::VirtualKeyboardStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageIndoorPositionTypeMessage>
+            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionDataTypeMessage>
+            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionSettingsTypeMessage>
             , private Eegeo::NonCopyable
         {
 

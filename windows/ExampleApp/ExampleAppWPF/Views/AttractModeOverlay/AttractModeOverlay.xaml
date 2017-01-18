@@ -18,17 +18,29 @@
                             BorderBrush="{DynamicResource PrimaryBG_colour}"
                             BorderThickness="0 15 0 15"
                             Margin="0 0 0 100">
-                        <StackPanel VerticalAlignment="Center">
-                            <TextBlock HorizontalAlignment="Center"
+                        <Grid VerticalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="85px" />
+                                <RowDefinition Height="68px" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontFamily="Open Sans"
                                        FontWeight="Light"
-                                       FontSize="100px"
+                                       FontSize="90px"
+                                       Margin="0 10 0 0"
                                        Foreground="{DynamicResource PrimaryBG_colour}"
                                        Text="Touch to Start" />
-                            <TextBlock HorizontalAlignment="Center"
-                                       FontSize="40px"
-                                       Foreground="Black"
+                            <TextBlock Grid.Row="1"
+                                       Margin="0 0 0 2"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontFamily="Open Sans"
+                                       FontSize="35px"
+                                       Foreground="{DynamicResource AttractSubtitleColour}"
                                        Text="Touch the display to find People, Groups, Departments, and Meeting Rooms." />
-                        </StackPanel>
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

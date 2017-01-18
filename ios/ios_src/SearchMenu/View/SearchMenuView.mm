@@ -758,6 +758,12 @@
     [self.pInputDelegate setHasResults: searchResultCount>0];
 }
 
+- (void) removeSearchQueryResults
+{
+    [self setSearchResultCount:0];
+    self.pSearchEditBox.text = @"";
+}
+
 - (void) onMenuStateUpdated
 {
     if(m_titleContainersRequireRefresh)

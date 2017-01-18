@@ -14,6 +14,9 @@
 #include "BidirectionalBus.h"
 #include "IFlattenButtonModel.h"
 #include "NavigationService.h"
+#include "CameraTransitionService.h"
+#include "ILocationService.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -36,6 +39,7 @@ namespace ExampleApp
                                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                                           Eegeo::Location::ILocationService& locationService,
                                                            Eegeo::Input::IUserIdleService& userIdleService,
                                                            Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                                            const bool attractModeEnabled,
@@ -44,8 +48,8 @@ namespace ExampleApp
                                                            const double attractModePlaybackSpeed,
                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
-                                                           Eegeo::Location::NavigationService& navigationService)
+                                                           Eegeo::Location::NavigationService& navigationService,
+                                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
                 : m_appCameraController(appCameraController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
@@ -59,6 +63,7 @@ namespace ExampleApp
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_nativeUIFactories(nativeUIFactories)
                 , m_visualMapService(visualMapService)
+                , m_locationService(locationService)
                 , m_userIdleService(userIdleService)
                 , m_resourceCeilingProvider(resourceCeilingProvider)
                 , m_attractModeEnabled(attractModeEnabled)
@@ -67,8 +72,8 @@ namespace ExampleApp
                 , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
                 , m_screenProperties(screenProperties)
                 , m_messageBus(messageBus)
-                , m_flattenButtonModel(flattenButtonModel)
                 , m_navigationService(navigationService)
+                , m_searchQueryPerformer(searchQueryPerformer)
                 {
                     
                 }
@@ -107,7 +112,10 @@ namespace ExampleApp
                     {
                         states.push_back(Eegeo_NEW(States::SdkModel::AttractState)(m_appModeModel,
                                                                                    m_appCameraController,
+                                                                                   m_worldCameraController,
+                                                                                   worldCameraHandle,
                                                                                    m_worldCameraController.GetTouchController(),
+                                                                                   m_locationService,
                                                                                    m_userIdleService,
                                                                                    m_resourceCeilingProvider,
                                                                                    m_cameraPositionSplinePoints,
@@ -115,8 +123,9 @@ namespace ExampleApp
                                                                                    m_attractModePlaybackSpeed,
                                                                                    m_screenProperties,
                                                                                    m_messageBus,
-                                                                                   m_flattenButtonModel,
-                                                                                   m_navigationService));
+                                                                                   m_navigationService,
+                                                                                   m_searchQueryPerformer,
+                                                                                   m_visualMapService));
                     }
 
                     return states;

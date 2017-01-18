@@ -236,6 +236,12 @@ namespace ExampleAppWPF
             m_scrollSpeed = (double) Application.Current.Resources["ScrollViewButtonScrollSpeed"];
         }
 
+        public void RemoveSearchQueryResults()
+        {
+            SetSearchResultCount(0);
+            SetEditText("", false);
+        }
+
         private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
         {
             if (m_resultsOptionsView.VerticalOffset == m_resultsOptionsView.ScrollableHeight)

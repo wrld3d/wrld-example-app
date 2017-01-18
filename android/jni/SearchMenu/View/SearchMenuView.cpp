@@ -104,6 +104,18 @@ namespace ExampleApp
 				env->CallVoidMethod(m_uiView, setSearchResultCountMethod, searchResultCount);
 			}
 
+			void SearchMenuView::RemoveSearchQueryResults()
+            {
+				ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID setSearchResultCountMethod = env->GetMethodID(m_uiViewClass, "removeSearchQueryResults", "()V");
+
+				env->CallVoidMethod(m_uiView, setSearchResultCountMethod);
+            }
+
 			void SearchMenuView::CollapseAll()
 			{
 				for(Menu::View::TSections::iterator it = m_currentSections.begin(); it != m_currentSections.end(); ++it)

@@ -10,6 +10,7 @@
 #include "SearchResultModel.h"
 #include "SearchResultViewClearedMessage.h"
 #include "SwallowSearchConstants.h"
+#include "SearchQueryResultsRemovedMessage.h"
 
 namespace ExampleApp
 {
@@ -37,6 +38,7 @@ namespace ExampleApp
             , m_onOpenStateChangedCallback(this, &SearchMenuController::OnOpenStateChanged)
             , m_performedQueryHandler(this, &SearchMenuController::OnSearchQueryPerformedMessage)
             , m_receivedQueryResponseHandler(this, &SearchMenuController::OnSearchQueryResponseReceivedMessage)
+            , m_receivedQueryResultsRemovedHandler(this, &SearchMenuController::OnSearchQueryResultsRemovedMessage)
             , m_onSearchCallback(this, &SearchMenuController::OnSearch)
             , m_onSearchClearedCallback(this, &SearchMenuController::OnSearchCleared)
             , m_onSearchItemSelectedCallback(this, &SearchMenuController::OnSearchItemSelected)
@@ -55,6 +57,7 @@ namespace ExampleApp
                 
                 m_messageBus.SubscribeUi(m_performedQueryHandler);
                 m_messageBus.SubscribeUi(m_receivedQueryResponseHandler);
+                m_messageBus.SubscribeUi(m_receivedQueryResultsRemovedHandler);
 
                 const size_t numSections = m_viewModel.SectionsCount();
                 std::vector<Menu::View::IMenuSectionViewModel*> sections;
@@ -71,6 +74,7 @@ namespace ExampleApp
             
             SearchMenuController::~SearchMenuController()
             {
+                m_messageBus.UnsubscribeUi(m_receivedQueryResultsRemovedHandler);
                 m_messageBus.UnsubscribeUi(m_receivedQueryResponseHandler);
                 m_messageBus.UnsubscribeUi(m_performedQueryHandler);
                 
@@ -139,6 +143,11 @@ namespace ExampleApp
                 }
                 
                 m_searchMenuView.SetSearchResultCount(resultCount);
+            }
+
+            void SearchMenuController::OnSearchQueryResultsRemovedMessage(const Search::SearchQueryResultsRemovedMessage& message)
+            {
+                m_searchMenuView.RemoveSearchQueryResults();
             }
             
             void SearchMenuController::OnSearch(const std::string& searchQuery)

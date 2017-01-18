@@ -8,6 +8,7 @@
 #include "AboutPageOpenableControl.h"
 #include "Reaction.h"
 #include "AboutPage.h"
+#include <sstream>
 
 namespace ExampleApp
 {
@@ -27,6 +28,15 @@ namespace ExampleApp
                 const std::string m_platformArchitecture;
                 const std::string m_aboutText;
                 std::string m_indoorPositioningType;
+                int32_t m_eegeoFloorNumber;
+                int m_senionFloorNumber;
+                double m_senionLatitude;
+                double m_senionLongitude;
+                std::string m_senionApiKey;
+                std::string m_senionApiSecret;
+                std::map<int, std::string> m_senionFloorMap;
+                std::stringstream m_senionFloorMapString;
+                std::string m_senionInteriorId;
 
             public:
                 AboutPageViewModel(
@@ -61,6 +71,10 @@ namespace ExampleApp
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
                 
                 void SetIndoorPositioningType(const std::string& indoorPositioningType);
+                
+                void SetSenionDataType(const int32_t& eegeoFloorNumber, const int& senionFloorNumber, const double& latitude, const double& longitude);
+                
+                void SetSenionSettingsType(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::string>& floorMap, const std::string& interiorId);
             };
         }
     }
