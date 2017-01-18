@@ -45,6 +45,7 @@ namespace ExampleApp
 				Helpers::ReflectionHelpers::Method<System::Object^, bool> DisplayPoiInfo[SearchVendors::Num];
                 Helpers::ReflectionHelpers::Method<void> DismissPoiInfo[SearchVendors::Num];
                 Helpers::ReflectionHelpers::Method<System::String^, bool, array<unsigned char, 1>^> UpdateImageData[SearchVendors::Num];
+                Helpers::ReflectionHelpers::Method<void> Destroy[SearchVendors::Num];
 
                 int m_currentVendor;
                 
