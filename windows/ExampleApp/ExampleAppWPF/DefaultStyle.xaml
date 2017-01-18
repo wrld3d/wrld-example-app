@@ -539,6 +539,7 @@
     <System:Double x:Key="TextButtonFontSize">16</System:Double>
 
     <!-- Interior Control -->
+    <Thickness x:Key="InteriorFloorLableMargin" Left="0" Top="20" Right="0" Bottom="0"/>
     <System:Double x:Key="ExitButtonSize">36</System:Double>
     <Thickness x:Key="ExitButtonMargin" Left="0" Top="0" Right="13" Bottom="15"/>
     <ImageSource x:Key="ExitButtonOffImage">Assets/button_exit_interior_off.png</ImageSource>
@@ -561,6 +562,8 @@
     <System:Int32 x:Key="SliderTickbarLabelFontSize">16</System:Int32>
     <Thickness x:Key="SliderTrackLineMargin" Left="1" Top="25" Right="0" Bottom="25"/>
     <System:Double x:Key="SliderTrackMinWidth">50</System:Double>
+
+    <System:Double x:Key="ScrollViewButtonScrollSpeed">10</System:Double>
 
     <SolidColorBrush x:Key="PrimaryBG_colour" Color="#FF1256B0"/>
     <SolidColorBrush x:Key="PrimaryBG_Over_Colour" Color="#002B63"/>

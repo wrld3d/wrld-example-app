@@ -538,12 +538,13 @@
     <System:Double x:Key="TextButtonFontSize">36</System:Double>
     
     <!-- Elevator Control -->
+    <Thickness x:Key="InteriorFloorLableMargin" Left="0" Top="50" Right="0" Bottom="0"/>
     <System:Double x:Key="ExitButtonSize">80</System:Double>
     <Thickness x:Key="ExitButtonMargin" Left="0" Top="0" Right="39" Bottom="15"/>
     <ImageSource x:Key="ExitButtonOffImage">Assets/button_exit_interior_off@kiosk.png</ImageSource>
     <ImageSource x:Key="ExitButtonOnImage">Assets/button_exit_interior_on@kiosk.png</ImageSource>
     <Thickness x:Key="ElevatorSliderMargin" Left="0" Top="0" Right="39" Bottom="13"/>
-    <System:Double x:Key="ElevatorSliderMinHeight">396</System:Double>
+    <System:Double x:Key="ElevatorSliderMinHeight">496</System:Double>
 
     <!-- Simple Slider Control -->
     <System:Double x:Key="SliderThumbSize">102</System:Double>
@@ -560,6 +561,8 @@
     <System:Int32 x:Key="SliderTickbarLabelFontSize">22</System:Int32>
     <Thickness x:Key="SliderTrackLineMargin" Left="0" Top="50" Right="0" Bottom="50"/>
     <System:Double x:Key="SliderTrackMinWidth">102</System:Double>
+
+    <System:Double x:Key="ScrollViewButtonScrollSpeed">40</System:Double>
 
     <SolidColorBrush x:Key="PrimaryBG_colour" Color="#FF1256B0"/>
     <SolidColorBrush x:Key="PrimaryBG_Over_Colour" Color="#002B63"/>
