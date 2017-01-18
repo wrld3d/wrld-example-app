@@ -45,7 +45,6 @@
 #include "FlattenButtonModule.h"
 #include "FlattenButtonViewModule.h"
 #include "SearchResultPoiViewModule.h"
-#include "WorldPinOnMapViewModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
 #include "SettingsMenuViewModule.h"
@@ -137,7 +136,6 @@ AppHost::AppHost(
     ,m_pMyPinCreationDetailsViewModule(NULL)
     ,m_pMyPinDetailsViewModule(NULL)
     ,m_pSearchResultPoiViewModule(NULL)
-    ,m_pWorldPinOnMapViewModule(NULL)
     ,m_pCompassViewModule(NULL)
     ,m_pApp(NULL)
     ,m_androidPersistentSettingsModel(nativeState)
@@ -484,13 +482,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     );
 
     // 3d map view layer.
-    m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(
-                                     m_nativeState,
-                                     app.WorldPinsModule().GetWorldPinInFocusViewModel(),
-                                     app.WorldPinsModule().GetScreenControlViewModel(),
-                                     app.ModalityModule().GetModalityModel(),
-                                     app.PinDiameter()
-                                 );
 
     // HUD behind modal background layer.
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
@@ -651,8 +642,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pMyPinCreationViewModule;
 
         Eegeo_DELETE m_pAboutPageViewModule;
-
-        Eegeo_DELETE m_pWorldPinOnMapViewModule;
 
         Eegeo_DELETE m_pSearchResultPoiViewModule;
 
