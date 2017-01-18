@@ -4,6 +4,7 @@
 
 #include "AppModes.h"
 #include "CameraTransitions.h"
+#include "CatmullRomSpline.h"
 #include "IAppCameraController.h"
 #include "IStateMachineState.h"
 
@@ -23,13 +24,15 @@ namespace ExampleApp
                     Eegeo::Location::ILocationService& m_locationService;
                     const int m_worldCameraHandle;
                     AppCamera::SdkModel::AppGlobeCameraWrapper& m_worldCameraController;
+                    Eegeo::Geometry::CatmullRomSpline& m_cameraPositionPoints;
 
                 public:
                     AttractModeExitingState(AppModes::States::SdkModel::AttractState& attractState,
                                             AppCamera::SdkModel::IAppCameraController& cameraController,
                                             Eegeo::Location::ILocationService& locationService,
                                             const int worldCameraHandle,
-                                            AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController);
+                                            AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
+                                            Eegeo::Geometry::CatmullRomSpline& cameraPositionPoints);
 
                     void Enter(int previousState);
                     void Update(float dt);

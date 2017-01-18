@@ -59,7 +59,7 @@ namespace ExampleApp
                 , m_navigationService(navigationService)
                 , m_enteringState(*this, cameraController, m_cameraHandle)
                 , m_viewingState(m_cameraSplinePlaybackController)
-                , m_exitingState(*this, cameraController, locationService, worldCameraHandle, worldCameraController)
+                , m_exitingState(*this, cameraController, locationService, worldCameraHandle, worldCameraController, m_cameraPositionSpline)
                 , m_subStates{ &m_enteringState,
                                &m_viewingState,
                                &m_exitingState }
