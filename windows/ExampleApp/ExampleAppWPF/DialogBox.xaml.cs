@@ -21,8 +21,14 @@ namespace ExampleAppWPF
 
     public partial class DialogBox : Window
     {
-        public DialogBox(string title, string message, string acceptButton, string cancelButton)
+        public delegate void ButtonClickHandler(object sender, RoutedEventArgs e, bool result);
+        public event ButtonClickHandler ButtonClicked;
+        public bool m_modal;
+
+        public DialogBox(string title, string message, string acceptButton, string cancelButton, bool modal=true)
         {
+            m_modal = modal;
+
             InitializeComponent();
 
             DataContext = new DialogViewModel(title, message, acceptButton, cancelButton);
@@ -30,7 +36,24 @@ namespace ExampleAppWPF
 
         void OnAcceptButtonClick(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
+            if (m_modal)
+            {
+                DialogResult = true;
+            }
+            else
+            {
+                ButtonClicked?.Invoke(sender, e, true);
+                Close();
+            }
+        }
+
+        void OnCancelButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (m_modal)
+            {
+                ButtonClicked?.Invoke(sender, e, false);
+                Close();
+            }
         }
     }
 }
