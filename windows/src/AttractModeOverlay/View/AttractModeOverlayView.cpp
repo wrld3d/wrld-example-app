@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
 
 #include "AttractModeOverlayView.h"
+#include "AttractModeStates.h"
 #include "IAppModeModel.h"
 #include "IMyPinCreationDetailsViewModel.h"
 #include "ReflectionHelpers.h"
@@ -23,6 +24,7 @@ namespace ExampleApp
                                                            ExampleAppMessaging::TMessageBus& messageBus)
                 : m_messageBus(messageBus)
                 , m_appModeChangedCallback(this, &AttractModeOverlayView::OnAppModeChanged)
+                , m_attractModeStateChangedCallback(this, &AttractModeOverlayView::OnAttractModeStateChanged)
                 , m_nativeState(nativeState)
                 , m_myPinCreationDetailsViewModel(myPinCreationDetailsViewModel)
                 , m_pVirtualKeyboard(pVirtualKeyboard)
@@ -33,13 +35,16 @@ namespace ExampleApp
 
                 mOnAttractModeStart.SetupMethod(m_uiViewClass, m_uiView, "OnAttractModeStart");
                 mOnAttractModeStop.SetupMethod(m_uiViewClass, m_uiView, "OnAttractModeStop");
+                mOnAttractModeExiting.SetupMethod(m_uiViewClass, m_uiView, "OnAttractModeExiting");
                 mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
 
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
+                m_messageBus.SubscribeUi(m_attractModeStateChangedCallback);
             }
 
             AttractModeOverlayView::~AttractModeOverlayView()
             {
+                m_messageBus.UnsubscribeUi(m_attractModeStateChangedCallback);
                 m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
                 mDestroy();
             }
@@ -58,6 +63,14 @@ namespace ExampleApp
                 else
                 {
                     mOnAttractModeStop();
+                }
+            }
+
+            void AttractModeOverlayView::OnAttractModeStateChanged(const AttractMode::AttractModeStateChangedMessage& message)
+            {
+                if (message.State() == AttractMode::SdkModel::States::State::ExitState)
+                {
+                    mOnAttractModeExiting();
                 }
             }
         }

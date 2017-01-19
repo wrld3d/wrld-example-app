@@ -23,6 +23,7 @@
 #include "ILocationService.h"
 #include "ISearchQueryPerformer.h"
 #include "IVisualMapService.h"
+#include "AttractModeStates.h"
 
 namespace ExampleApp
 {
@@ -58,9 +59,9 @@ namespace ExampleApp
                 , m_enteringState(*this, cameraController, m_cameraHandle)
                 , m_viewingState(m_cameraSplinePlaybackController)
                 , m_exitingState(*this, cameraController, locationService, worldCameraHandle, worldCameraController)
-                , m_subStates{ /*[States::EnterState] =*/ &m_enteringState,
-                               /*[States::ViewState]  =*/ &m_viewingState,
-                               /*[States::ExitState]  =*/ &m_exitingState }
+                , m_subStates{ &m_enteringState,
+                               &m_viewingState,
+                               &m_exitingState }
                 , m_subStateMachine(m_subStates)
                 , m_idleTimeAtStartMs(0)
                 , m_userIdleService(userIdleService)
@@ -92,9 +93,11 @@ namespace ExampleApp
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
 
+                    const AttractMode::SdkModel::States::State initialState = AttractMode::SdkModel::States::State::EnterState;
                     InitialiseSplinePlaybackCameraState();
-                    m_subStateMachine.StartStateMachine(States::EnterState);
+                    m_subStateMachine.StartStateMachine(initialState);
                     m_idleTimeAtStartMs = m_userIdleService.GetUserIdleTimeMs();
+                    m_messageBus.Publish(AttractMode::AttractModeStateChangedMessage(initialState));
 
                     m_searchQueryPerformer.RemoveSearchQueryResults();
                 }
@@ -102,9 +105,9 @@ namespace ExampleApp
                 void AttractState::Update(float dt)
                 {
                     m_subStateMachine.Update(dt);
-                    if (IsUserActive() && m_subStateMachine.GetCurrentStateIndex() != States::ExitState)
+                    if (IsUserActive() && m_subStateMachine.GetCurrentStateIndex() != AttractMode::SdkModel::States::State::ExitState)
                     {
-                        m_subStateMachine.ChangeToState(States::ExitState);
+                        ChangeToState(AttractMode::SdkModel::States::State::ExitState);
                     }
                 }
 
@@ -124,18 +127,25 @@ namespace ExampleApp
                 {
                     switch (m_subStateMachine.GetCurrentStateIndex())
                     {
-                    case States::EnterState:
-                        m_subStateMachine.ChangeToState(States::ViewState);
+                    case AttractMode::SdkModel::States::State::EnterState:
+                        ChangeToState(AttractMode::SdkModel::States::State::ViewState);
                         break;
 
-                    case States::ExitState:
+                    case AttractMode::SdkModel::States::State::ExitState:
                         m_appModeModel.SetAppMode(AppModes::SdkModel::WorldMode);
                         break;
 
-                    case States::ViewState:
+                    case AttractMode::SdkModel::States::State::ViewState:
                     default:
                         Eegeo_ASSERT("Completion of invalid attract mode sub-state.");
                     }
+
+                }
+
+                void AttractState::ChangeToState(const AttractMode::SdkModel::States::State newState)
+                {
+                    m_subStateMachine.ChangeToState(newState);
+                    m_messageBus.Publish(AttractMode::AttractModeStateChangedMessage(newState));
                 }
 
                 bool AttractState::IsUserActive()

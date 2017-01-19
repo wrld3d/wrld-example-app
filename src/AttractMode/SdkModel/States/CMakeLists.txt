@@ -8,6 +8,7 @@ set(currsources
   ../src/AttractMode/SdkModel/States/AttractModeViewingState.h
   ../src/AttractMode/SdkModel/States/AttractModeExitingState.cpp
   ../src/AttractMode/SdkModel/States/AttractModeExitingState.h
+  ../src/AttractMode/SdkModel/States/AttractModeStates.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\AttractMode\\SdkModel\\States FILES ${currsources})
