@@ -30,7 +30,11 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<float> mAnimateToIntermediateOnScreenState;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToActive;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToInactive;
+                Helpers::ReflectionHelpers::Method<void> mDismiss;
 				Helpers::ReflectionHelpers::Method<System::String^, System::String^, System::String^, System::String^, bool> mUpdateWatermarkData;
+
+                void Close();
+
             public:
                 WatermarkView(WindowsNativeState& nativeState, const WatermarkData& watermarkData);
                 ~WatermarkView();
