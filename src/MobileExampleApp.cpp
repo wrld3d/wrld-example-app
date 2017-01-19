@@ -85,8 +85,6 @@
 #include "UserInteractionModule.h"
 #include "UserInteractionModel.h"
 #include "EnvironmentFlatteningService.h"
-#include "TwitterFeedModule.h"
-#include "ITwitterFeedService.h"
 #include "SceneModelsModule.h"
 #include "VisualMapModule.h"
 #include "ConnectivityChangedObserver.h"
@@ -292,7 +290,6 @@ namespace ExampleApp
     , m_useIndoorEntryMarkerLabels(!(platformConfig.MapLayersConfig.Interiors.UseLegacyLabels || platformConfig.MapLayersConfig.Interiors.UseLegacyEntryMarkers))
     , m_pGlobeCameraWrapper(NULL)
     , m_pCameraSplinePlaybackController(NULL)
-    , m_pTwitterFeedModule(NULL)
     , m_pVisualMapModule(NULL)
     , m_pSurveyModule(NULL)
     , m_pConnectivityChangedObserver(NULL)
@@ -812,9 +809,6 @@ namespace ExampleApp
                                                                                          m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                                          m_messageBus);
 
-        m_pTwitterFeedModule = Eegeo_NEW(Social::TwitterFeed::TwitterFeedModule)(m_applicationConfiguration.TwitterAuthCode(),
-                                                                                 World().GetPlatformAbstractionModule().GetWebLoadRequestFactory());
-
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables(GetOpenableControls());
 
@@ -870,8 +864,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pModalityIgnoredReactionModel;
 
         Eegeo_DELETE m_pReactorIgnoredReactionModel;
-
-        Eegeo_DELETE m_pTwitterFeedModule;
 
         Eegeo_DELETE m_pWorldAreaLoaderModule;
 

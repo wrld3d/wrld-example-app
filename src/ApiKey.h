@@ -22,7 +22,4 @@ namespace ExampleApp
  
     //! Optional: You may wish to obtain an API key for Flurry from https://developer.yahoo.com/analytics/ for metrics.
     //! Set it as the value of 'FlurryApiKey' in the app config file:
-
-    //! Optional: You may wish to obtain a Twitter bearer token. Check https://dev.twitter.com/oauth/application-only for instructions.
-    //! Set it as the value of 'TwitterAuthCode ' in the app config file:
 }
