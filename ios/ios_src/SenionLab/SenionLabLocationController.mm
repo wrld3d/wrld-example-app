@@ -13,12 +13,14 @@ namespace ExampleApp
         SenionLabLocationController::SenionLabLocationController(SenionLabLocationManager& locationManager,
                                                                  ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                  const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                 const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
+                                                                 const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                                        						 ExampleAppMessaging::TMessageBus& messageBus)
         : m_locationManager(locationManager)
         , m_appModeModel(appModeModel)
         , m_interiorSelectionModel(interiorSelectionModel)
         , m_applicationConfiguration(applicationConfiguration)
         , m_appModeChangedCallback(this, &SenionLabLocationController::OnAppModeChanged)
+        , m_messageBus(messageBus)
         {
             m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
         }
@@ -52,6 +54,7 @@ namespace ExampleApp
                         [&m_locationManager StartUpdatingLocation: apiKey
                                                         apiSecret: apiSecret
                                                          floorMap: floorMap];
+                        m_messageBus.Publish(ExampleApp::AboutPage::AboutPageSenionSettingsTypeMessage(std::string([apiKey UTF8String]), std::string([apiSecret UTF8String]), floorMap, it->second.GetInteriorId().Value()));
                     }
                 }
             }

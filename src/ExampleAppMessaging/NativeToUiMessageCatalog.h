@@ -45,6 +45,8 @@
 #include "VirtualKeyboardStateChangedMessage.h"
 #include "AboutPageIndoorPositionTypeMessage.h"
 #include "AttractModeStateChangedMessage.h"
+#include "AboutPageSenionDataTypeMessage.h"
+#include "AboutPageSenionSettingsTypeMessage.h"
 
 namespace ExampleApp
 {
@@ -92,6 +94,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<VirtualKeyboard::VirtualKeyboardStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageIndoorPositionTypeMessage>
             , public Eegeo::Messaging::CatalogBinding<AttractMode::AttractModeStateChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionDataTypeMessage>
+            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionSettingsTypeMessage>
             , private Eegeo::NonCopyable
         {
 

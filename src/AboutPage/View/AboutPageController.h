@@ -8,6 +8,8 @@
 #include "IAboutPageViewModel.h"
 #include "IAboutPageView.h"
 #include "IMetricsService.h"
+#include "AboutPageSenionDataTypeMessage.h"
+#include "AboutPageSenionSettingsTypeMessage.h"
 #include "BidirectionalBus.h"
 #include "AppModeChangedMessage.h"
 
@@ -33,6 +35,10 @@ namespace ExampleApp
                 Metrics::IMetricsService& m_metricsService;
                 
                 Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageIndoorPositionTypeMessage&> m_aboutPageIndoorPositionTypeMessage;
+                
+                Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageSenionDataTypeMessage&> m_aboutPageSenionDataTypeMessage;
+                
+                Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageSenionSettingsTypeMessage&> m_aboutPageSenionSettingsMessage;
 
                 void OnOpen();
 
@@ -41,6 +47,10 @@ namespace ExampleApp
                 void OnCloseTapped();
                 
                 void OnAboutPageIndoorPositionTypeMessageChanged(const AboutPage::AboutPageIndoorPositionTypeMessage& aboutPageIndoorPositionTypeMessage);
+                
+                void OnAboutPageSenionDataTypeMessageChanged(const AboutPage::AboutPageSenionDataTypeMessage& aboutPageSenionDataTypeMessage);
+                
+                void OnAboutPageSenionSettingsMessageChanged(const AboutPage::AboutPageSenionSettingsTypeMessage& aboutPageSenionSettingsMessage);
 
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
             public:

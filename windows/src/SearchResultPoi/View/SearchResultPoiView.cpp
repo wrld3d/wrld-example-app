@@ -56,11 +56,16 @@ namespace ExampleApp
                     DisplayPoiInfo[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "DisplayPoiInfo");
                     DismissPoiInfo[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "DismissPoiInfo");
                     UpdateImageData[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "UpdateImageData");
+                    Destroy[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "Destroy");
                 }
             }
 
             SearchResultPoiView::~SearchResultPoiView()
             {
+				for (int i = 0; i < SearchVendors::Num; ++i)
+				{
+					Destroy[i]();
+				}
             }
 
             void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel& model, bool isPinned)

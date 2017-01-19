@@ -40,6 +40,8 @@ namespace ExampleAppWPF
         private bool m_hasResults;
         private bool m_hasTagSearch;
 
+        private double m_scrollSpeed;
+
         private ControlClickHandler m_menuListClickHandler;
         private ControlClickHandler m_resultsListClickHandler;
 
@@ -230,6 +232,8 @@ namespace ExampleAppWPF
 
             m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
+
+            m_scrollSpeed = (double) Application.Current.Resources["ScrollViewButtonScrollSpeed"];
         }
 
         public void RemoveSearchQueryResults()
@@ -244,18 +248,20 @@ namespace ExampleAppWPF
             if (m_resultsOptionsView.VerticalOffset == m_resultsOptionsView.ScrollableHeight)
             {
                 m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
+                m_searchResultsFade.Visibility = Visibility.Hidden;
                 m_searchResultsScrollButton.Visibility = Visibility.Hidden;
             }
             else
             {
                 m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Visible;
+                m_searchResultsFade.Visibility = Visibility.Visible;
                 m_searchResultsScrollButton.Visibility = Visibility.Visible;
             }
         }
 
         private void OnResultsScrollButtonMouseDown(object sender, RoutedEventArgs e)
         {
-            m_resultsOptionsView.ScrollToVerticalOffset(m_resultsOptionsView.VerticalOffset+10);
+            m_resultsOptionsView.ScrollToVerticalOffset(m_resultsOptionsView.VerticalOffset + m_scrollSpeed);
         }
 
         private void OnResultsListBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
@@ -526,12 +532,14 @@ namespace ExampleAppWPF
             {
                 m_resultsCount.Text = count.ToString();
                 m_resultsCountContainer.Visibility = Visibility.Visible;
+                m_searchResultsFade.Visibility = Visibility.Visible;
                 m_searchResultsScrollButton.Visibility = Visibility.Visible;
                 m_resultsOptionsView.ScrollToTop();
             }
             else
             {
                 m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
+                m_searchResultsFade.Visibility = Visibility.Hidden;
                 m_searchResultsScrollButton.Visibility = Visibility.Hidden;
                 m_resultsCountContainer.Visibility = Visibility.Hidden;
                 m_resultsSpinner.Visibility = Visibility.Hidden;

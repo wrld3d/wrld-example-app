@@ -5,6 +5,7 @@
 #include "InteriorInteractionModel.h"
 #include <map>
 #include <string>
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -15,7 +16,9 @@ namespace ExampleApp
                                                          const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                          const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                          const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                                                         Eegeo::Location::ILocationService& defaultLocationService)
+                                                         Eegeo::Location::ILocationService& defaultLocationService,
+                                                         Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory,
+                                                         ExampleAppMessaging::TMessageBus& messageBus)
         : m_pLocationController(NULL)
         , m_pLocationManager(NULL)
         , m_pLocationService(NULL)
@@ -23,12 +26,13 @@ namespace ExampleApp
             m_pLocationService = Eegeo_NEW(SenionLabLocationService)(defaultLocationService,
                                                                      environmentFlatteningService,
                                                                      interiorInteractionModel);
-            m_pLocationManager = [[SenionLabLocationManager alloc] Init: m_pLocationService];
+            m_pLocationManager = [[SenionLabLocationManager alloc] Init: m_pLocationService iOSAlertBoxFactory: &iOSAlertBoxFactory messageBus: &messageBus];
             
             m_pLocationController = Eegeo_NEW(SenionLabLocationController)(*m_pLocationManager,
                                                                            appModeModel,
                                                                            interiorSelectionModel,
-                                                                           applicationConfiguration);
+                                                                           applicationConfiguration,
+                                                                           messageBus);
         }
         
         SenionLabLocationModule::~SenionLabLocationModule()

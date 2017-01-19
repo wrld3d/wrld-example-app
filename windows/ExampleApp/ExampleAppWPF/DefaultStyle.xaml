@@ -8,6 +8,53 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    
+    <!-- Options Panel -->
+    <System:Double x:Key="OptionsPanelWidth">450</System:Double>
+    <GridLength x:Key="OptionsPanelRow0Height">20</GridLength>
+    <GridLength x:Key="OptionsPanelRow1Height">Auto</GridLength>
+    <SolidColorBrush x:Key="OptionsPanelUpperTitleColour" Color="{Binding Color, Source={StaticResource Gold}}"/>
+    <Visibility x:Key="OptionsPanelUpperTitleVisibility">Collapsed</Visibility>
+    <Thickness x:Key="OptionsPanelUpperTitleMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <GridLength x:Key="OptionsPanelUpperTitleColumn0">404</GridLength>
+    <GridLength x:Key="OptionsPanelUpperTitleColumn1">36</GridLength>
+    <System:Double x:Key="OptionsPanelUpperTitleMaxWidth">350</System:Double>
+    <System:Double x:Key="OptionsPanelUpperTitleFontSize">28</System:Double>
+    <Thickness x:Key="OptionsPanelUpperTitleTextMargin" Left="4" Top="-4" Right="0" Bottom="0"/>
+    <Visibility x:Key="OptionsPanelUpperTitleDividerVisibility">Collapsed</Visibility>
+    <Visibility x:Key="OptionsPanelUpperLowerTitleVisibility">Visible</Visibility>
+    <System:Double x:Key="OptionsPanelLowerTitleHeight">40</System:Double>
+    <Thickness x:Key="OptionsPanelLowerTitleMargin" Left="10" Top="5" Right="5" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelLowerTitleFontSize">18</System:Double>
+    <System:Double x:Key="OptionsPanelButtonPanelHeight">195</System:Double>
+    <Thickness x:Key="OptionsPanelButtonPanelMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <Visibility x:Key="OptionsPanelCacheMapPanelVisibility">Visible</Visibility>
+    <Thickness x:Key="OptionsPanelCacheMapPanelMargin" Left="0" Top="8" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelCacheMapPanelHeight">30</System:Double>
+    <Thickness x:Key="OptionsPanelCacheMapButtonMargin" Left="10" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelCacheMapTextFontSize">14</System:Double>
+    <Thickness x:Key="OptionsPanelCacheMapTextMargin" Left="6" Top="0" Right="0" Bottom="0"/>
+    <Visibility x:Key="OptionsPanelClearCachePanelVisibility">Visible</Visibility>
+    <Thickness x:Key="OptionsPanelClearCachePanelMargin" Left="0" Top="8" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelClearCachePanelHeight">30</System:Double>
+    <Thickness x:Key="OptionsPanelClearCacheButtonMargin" Left="10" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelClearCacheButtonSize">20</System:Double>
+    <ImageSource x:Key="OptionsPanelClearCacheButtonOffImage">/Assets/buttonsmall_close_off.png</ImageSource>
+    <ImageSource x:Key="OptionsPanelClearCacheButtonOnImage">/Assets/buttonsmall_close_on.png</ImageSource>
+    <System:Double x:Key="OptionsPanelClearCacheTextFontSize">14</System:Double>
+    <Thickness x:Key="OptionsPanelClearCacheTextMargin" Left="6" Top="0" Right="0" Bottom="2"/>
+    <Visibility x:Key="OptionsPanelPlayTutorialsPanelVisibility">Collapsed</Visibility>
+    <Thickness x:Key="OptionsPanelPlayTutorialsPanelMargin" Left="0" Top="8" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelPlayTutorialsPanelHeight">30</System:Double>
+    <Thickness x:Key="OptionsPanelPlayTutorialsToggleMargin" Left="10" Top="0" Right="0" Bottom="0"/>
+    <Visibility x:Key="OptionsPanelLowerCloseButtonVisibility">Visible</Visibility>
+    <System:Double x:Key="OptionsPanelCloseButtonSize">60</System:Double>
+    <ImageSource x:Key="OptionsPanelCloseButtonOffImage">/Assets/exit_blue_x_button.png</ImageSource>
+    <ImageSource x:Key="OptionsPanelCloseButtonOnImage">/Assets/button_close_on.png</ImageSource>
+    <SolidColorBrush x:Key="OptionsPanelCloseButtonOffColour" Color="#1256B0"/>
+    <SolidColorBrush x:Key="OptionsPanelCloseButtonOnColour" Color="#FFCDFC0D"/>
+    <SolidColorBrush x:Key="OptionsPanelCloseButtonOverColour" Color="#002B63"/>
+    <Visibility x:Key="OptionsPanelAdminButtonVisibility">Collapsed</Visibility>
 
     <!-- Dialog Box -->
     <System:Double x:Key="DialogBoxWidth">400</System:Double>
@@ -623,6 +670,7 @@
     <System:Double x:Key="TextButtonFontSize">16</System:Double>
 
     <!-- Interior Control -->
+    <Thickness x:Key="InteriorFloorLableMargin" Left="0" Top="20" Right="0" Bottom="0"/>
     <System:Double x:Key="ExitButtonSize">36</System:Double>
     <Thickness x:Key="ExitButtonMargin" Left="0" Top="0" Right="13" Bottom="15"/>
     <ImageSource x:Key="ExitButtonOffImage">Assets/button_exit_interior_off.png</ImageSource>
@@ -645,6 +693,8 @@
     <System:Int32 x:Key="SliderTickbarLabelFontSize">16</System:Int32>
     <Thickness x:Key="SliderTrackLineMargin" Left="1" Top="25" Right="0" Bottom="25"/>
     <System:Double x:Key="SliderTrackMinWidth">50</System:Double>
+
+    <System:Double x:Key="ScrollViewButtonScrollSpeed">10</System:Double>
 
     <SolidColorBrush x:Key="PrimaryBG_colour" Color="#FF1256B0"/>
     <SolidColorBrush x:Key="PrimaryBG_Over_Colour" Color="#002B63"/>

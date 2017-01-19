@@ -432,6 +432,22 @@
 
                                             <Grid Width="{DynamicResource SearchResultsButtonAndFadeContainerWidth}" Height="{DynamicResource SearchResultsButtonAndFadeContainerHeight}" Grid.Row="1" Margin="{DynamicResource SearchResultsButtonAndFadeContainerMargin}" HorizontalAlignment="Left">
                                                 <Image IsHitTestVisible="False" Grid.Row="1" Grid.Column="0" Name="SearchResultsFade" Source="{DynamicResource SearchResultsButtonAndFadeContainerImage}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Visible" Stretch="Fill">
+                                                    <Image.Style>
+                                                        <Style TargetType="{x:Type Image}">
+                                                            <Style.Triggers>
+                                                                <Trigger Property="Visibility" Value="Visible">
+                                                                    <Trigger.EnterActions>
+                                                                        <BeginStoryboard>
+                                                                            <Storyboard>
+                                                                                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                                    From="0.0" To="1.0" Duration="0:0:1"/>
+                                                                            </Storyboard>
+                                                                        </BeginStoryboard>
+                                                                    </Trigger.EnterActions>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Image.Style>
                                                 </Image>
                                             </Grid>
 
