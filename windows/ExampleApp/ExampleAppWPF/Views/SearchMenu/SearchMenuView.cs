@@ -239,7 +239,8 @@ namespace ExampleAppWPF
         public void RemoveSearchQueryResults()
         {
             SetSearchResultCount(0);
-            SetEditText("", false);
+            m_editText.Text = String.Empty;
+            m_hasTagSearch = false;
         }
 
         private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
@@ -520,7 +521,6 @@ namespace ExampleAppWPF
                 m_editText.Text = encodedText;
             }
             m_hasTagSearch = isTag;
-            
         }
         
         public void SetSearchResultCount(int count)
