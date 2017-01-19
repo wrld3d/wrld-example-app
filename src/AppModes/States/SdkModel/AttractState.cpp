@@ -35,12 +35,12 @@ namespace ExampleApp
             {
                 AttractState::AttractState(AppModes::SdkModel::IAppModeModel& appModeModel,
                                            AppCamera::SdkModel::IAppCameraController& cameraController,
+                                           Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController,
                                            AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
                                            const int worldCameraHandle,
                                            Eegeo::ITouchController& touchController,
                                            Eegeo::Location::ILocationService& locationService,
                                            Eegeo::Input::IUserIdleService& userIdleService,
-                                           Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                            const float playbackSpeed,
@@ -51,7 +51,7 @@ namespace ExampleApp
                                            VisualMap::SdkModel::IVisualMapService& visualMapService)
                 : m_appModeModel(appModeModel)
                 , m_cameraController(cameraController)
-                , m_cameraSplinePlaybackController(resourceCeilingProvider)
+                , m_cameraSplinePlaybackController(cameraSplinePlaybackController)
                 , m_appCamera(m_cameraSplinePlaybackController, touchController)
                 , m_cameraHandle(m_cameraController.CreateCameraHandleFromController(m_appCamera))
                 , m_messageBus(messageBus)

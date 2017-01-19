@@ -26,6 +26,7 @@ namespace ExampleApp
             namespace SdkModel
             {
                 AppModeStatesFactory::AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
+                                                           Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController,
                                                            AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
                                                            AppCamera::SdkModel::AppInteriorCameraWrapper& interiorCameraController,
                                                            Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
@@ -39,7 +40,6 @@ namespace ExampleApp
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                            Eegeo::Location::ILocationService& locationService,
                                                            Eegeo::Input::IUserIdleService& userIdleService,
-                                                           Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                                            const bool attractModeEnabled,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
@@ -49,6 +49,7 @@ namespace ExampleApp
                                                            Eegeo::Location::NavigationService& navigationService,
                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
                 : m_appCameraController(appCameraController)
+                , m_cameraSplinePlaybackController(cameraSplinePlaybackController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
@@ -62,7 +63,6 @@ namespace ExampleApp
                 , m_visualMapService(visualMapService)
                 , m_locationService(locationService)
                 , m_userIdleService(userIdleService)
-                , m_resourceCeilingProvider(resourceCeilingProvider)
                 , m_attractModeEnabled(attractModeEnabled)
                 , m_cameraPositionSplinePoints(cameraPositionSplinePoints)
                 , m_cameraTargetSplinePoints(cameraTargetSplinePoints)
@@ -102,12 +102,12 @@ namespace ExampleApp
                     {
                         states.push_back(Eegeo_NEW(States::SdkModel::AttractState)(m_appModeModel,
                                                                                    m_appCameraController,
+                                                                                   m_cameraSplinePlaybackController,
                                                                                    m_worldCameraController,
                                                                                    worldCameraHandle,
                                                                                    m_worldCameraController.GetTouchController(),
                                                                                    m_locationService,
                                                                                    m_userIdleService,
-                                                                                   m_resourceCeilingProvider,
                                                                                    m_cameraPositionSplinePoints,
                                                                                    m_cameraTargetSplinePoints,
                                                                                    m_attractModePlaybackSpeed,

@@ -38,7 +38,7 @@ namespace ExampleApp
                 private:
                     AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     AppCamera::SdkModel::IAppCameraController& m_cameraController;
-                    Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController m_cameraSplinePlaybackController;
+                    Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& m_cameraSplinePlaybackController;
                     AppCamera::SdkModel::AppCameraSplinePlaybackWrapper m_appCamera;
                     int m_cameraHandle;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -63,12 +63,12 @@ namespace ExampleApp
                 public:
                     AttractState(AppModes::SdkModel::IAppModeModel& appModeModel,
                                  AppCamera::SdkModel::IAppCameraController& cameraController,
+                                 Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController,
                                  AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
                                  const int worldCameraHandle,
                                  Eegeo::ITouchController& touchController,
                                  Eegeo::Location::ILocationService& locationService,
                                  Eegeo::Input::IUserIdleService& userIdleService,
-                                 Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                  const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                  const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                  const float playbackSpeed,

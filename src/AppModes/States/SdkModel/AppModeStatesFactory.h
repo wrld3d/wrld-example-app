@@ -38,6 +38,7 @@ namespace ExampleApp
                 {
                 private:
                     AppCamera::SdkModel::IAppCameraController& m_appCameraController;
+                    Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& m_cameraSplinePlaybackController;
                     AppCamera::SdkModel::AppGlobeCameraWrapper& m_worldCameraController;
                     AppCamera::SdkModel::AppInteriorCameraWrapper& m_interiorCameraController;
                     Eegeo::Streaming::CameraFrustumStreamingVolume& m_cameraFrustumStreamingVolume;
@@ -52,7 +53,6 @@ namespace ExampleApp
 
                     Eegeo::Location::ILocationService& m_locationService;
                     Eegeo::Input::IUserIdleService& m_userIdleService;
-                    Eegeo::Streaming::ResourceCeilingProvider& m_resourceCeilingProvider;
                     const bool m_attractModeEnabled;
                     const std::vector<Eegeo::Space::LatLongAltitude>& m_cameraPositionSplinePoints;
                     const std::vector<Eegeo::Space::LatLongAltitude>& m_cameraTargetSplinePoints;
@@ -67,6 +67,7 @@ namespace ExampleApp
                 public:
                     
                     AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
+                                         Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController,
                                          AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
                                          AppCamera::SdkModel::AppInteriorCameraWrapper& interiorCameraController,
                                          Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
@@ -80,7 +81,6 @@ namespace ExampleApp
                                          VisualMap::SdkModel::IVisualMapService& visualMapService,
                                          Eegeo::Location::ILocationService& locationService,
                                          Eegeo::Input::IUserIdleService& userIdleService,
-                                         Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                          const bool attractModeEnabled,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                          const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,

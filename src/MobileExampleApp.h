@@ -89,6 +89,7 @@
 #include "YelpCategoryMapperUpdater.h"
 #include "IUserIdleService.h"
 #include "GlobalAppModeTransitionRules.h"
+#include "CameraSplinePlaybackController.h"
 
 namespace ExampleApp
 {
@@ -97,6 +98,7 @@ namespace ExampleApp
     private:
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGlobeCameraController;
         AppCamera::SdkModel::AppGlobeCameraWrapper* m_pGlobeCameraWrapper;
+        Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController* m_pCameraSplinePlaybackController;
         AppCamera::SdkModel::AppInteriorCameraWrapper* m_pInteriorCameraWrapper;
         Eegeo::ITouchController* m_pCameraTouchController;
         Eegeo::ITouchController* m_pCurrentTouchController;
