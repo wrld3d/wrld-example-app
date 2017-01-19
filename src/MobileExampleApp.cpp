@@ -68,11 +68,6 @@
 #include "PinsModule.h"
 #include "MapModeModule.h"
 #include "AppModeModel.h"
-#include "ToursModule.h"
-#include "IToursCameraController.h"
-#include "IToursCameraTransitionController.h"
-#include "ToursCameraState.h"
-#include "ExampleTourStateMachineFactory.h"
 #include "ICompassViewModel.h"
 #include "CombinedSearchServiceModule.h"
 #include "GeoNamesSearchServiceModule.h"
@@ -92,7 +87,6 @@
 #include "EnvironmentFlatteningService.h"
 #include "TwitterFeedModule.h"
 #include "ITwitterFeedService.h"
-#include "TwitterFeedTourModule.h"
 #include "SceneModelsModule.h"
 #include "VisualMapModule.h"
 #include "ConnectivityChangedObserver.h"
@@ -295,15 +289,11 @@ namespace ExampleApp
     , m_interiorsEnabled(platformConfig.OptionsConfig.EnableInteriors)
     , m_usingLegacyInteriorLabels(!platformConfig.OptionsConfig.EnableLabels || platformConfig.MapLayersConfig.Interiors.UseLegacyLabels)
     , m_useIndoorEntryMarkerLabels(!(platformConfig.MapLayersConfig.Interiors.UseLegacyLabels || platformConfig.MapLayersConfig.Interiors.UseLegacyEntryMarkers))
-    , m_pToursModule(NULL)
     , m_pGlobeCameraWrapper(NULL)
     , m_pTwitterFeedModule(NULL)
-    , m_pTwitterFeedTourModule(NULL)
     , m_pVisualMapModule(NULL)
     , m_pSurveyModule(NULL)
     , m_pConnectivityChangedObserver(NULL)
-    , m_toursPinDiameter(48.f)
-    , m_enableTours(false)
     , m_menuReaction(menuReaction)
     , m_pModalityIgnoredReactionModel(NULL)
     , m_pReactorIgnoredReactionModel(NULL)
@@ -440,13 +430,11 @@ namespace ExampleApp
         }
 
         m_pGlobalAppModeTransitionRules = Eegeo_NEW(AppModes::GlobalAppModeTransitionRules)(m_pAppCameraModule->GetController(),
-                                                                                            m_pToursModule->GetTourService(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                                             interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                             GetAppModeModel(),
                                                                                             *m_pGlobeCameraWrapper,
                                                                                             *m_pInteriorCameraWrapper,
-                                                                                            m_pToursModule->GetCameraController(),
                                                                                             m_userIdleService,
                                                                                             m_applicationConfiguration.IsAttractModeEnabled(),
                                                                                             m_applicationConfiguration.AttractModeTimeoutMs(),
@@ -819,8 +807,6 @@ namespace ExampleApp
                                                                                          m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                                          m_messageBus);
 
-        InitialiseToursModules(mapModule, world, interiorsAffectedByFlattening);
-
         m_pTwitterFeedModule = Eegeo_NEW(Social::TwitterFeed::TwitterFeedModule)(m_applicationConfiguration.TwitterAuthCode(),
                                                                                  World().GetPlatformAbstractionModule().GetWebLoadRequestFactory());
 
@@ -853,7 +839,6 @@ namespace ExampleApp
                                                                               m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                               m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(),
                                                                               *m_pAppModeModel,
-                                                                              m_pToursModule->GetTourService(),
                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                               interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                               nativeUIFactories,
@@ -881,10 +866,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pReactorIgnoredReactionModel;
 
         Eegeo_DELETE m_pTwitterFeedModule;
-
-        Eegeo_DELETE m_pToursModule;
-
-        Eegeo_DELETE m_pTwitterFeedTourModule;
 
         Eegeo_DELETE m_pWorldAreaLoaderModule;
 
@@ -984,10 +965,6 @@ namespace ExampleApp
         reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
         reactors.push_back(&WatermarkModule().GetScreenControlViewModel());
         reactors.push_back(&InteriorsExplorerModule().GetScreenControlViewModel());
-        if(m_enableTours)
-        {
-            reactors.push_back(&ToursModule().GetToursExplorerViewModel());
-        }
         return reactors;
     }
 
@@ -1031,96 +1008,6 @@ namespace ExampleApp
                                                                                          mapModule.GetMarkersModule().GetMarkerService());
     }
 
-    void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)
-    {
-        m_pToursModule = Eegeo_NEW(ExampleApp::Tours::ToursModule)(m_identityProvider,
-                                                                   m_metricsService,
-                                                                   m_messageBus,
-                                                                   WorldPinsModule().GetWorldPinsService(),
-                                                                   SearchModule().GetSearchRefreshService(),
-                                                                   SearchMenuModule().GetSearchMenuViewModel(),
-                                                                   SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                                   WatermarkModule().GetScreenControlViewModel(),
-                                                                   world.GetMapModule().GetResourceCeilingProvider(),
-                                                                   m_screenProperties,
-                                                                   *m_pGlobeCameraController,
-                                                                   world.GetTerrainModelModule().GetTerrainHeightProvider(),
-                                                                   m_sdkDomainEventBus,
-                                                                   *m_pAppModeModel);
-
-    }
-
-    void MobileExampleApp::AddTours()
-    {
-
-        // Example tour.
-        std::vector<Tours::SdkModel::TourStateModel> tourStates;
-        tourStates.push_back(Tours::SdkModel::TourStateModel("Example place 1",
-                                                             "Some example text",
-                                                             "Tours/page",
-                                                             "tours"));
-
-        tourStates.push_back(Tours::SdkModel::TourStateModel("Example place 2",
-                                                             "More example text",
-                                                             "Tours/page",
-                                                             "tours"));
-
-        tourStates.push_back(Tours::SdkModel::TourStateModel("Example place 3",
-                                                             "Some more example text",
-                                                             "Tours/page",
-                                                             "tours"));
-        const std::string tourPinIconKey = "tour_entry";
-        ExampleApp::Tours::SdkModel::TourModel tourModel("Example",
-                                                         "Take the tour",
-                                                         tourPinIconKey,
-                                                         Eegeo::Space::LatLong::FromDegrees(37.784783, -122.402659),
-                                                         true,
-                                                         false,
-                                                         ExampleApp::WorldPins::SdkModel::WorldPinInteriorData(),
-                                                         false,
-                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
-                                                         Helpers::ColorHelpers::Color::FromRGB(255, 255, 255),
-                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
-                                                         Helpers::ColorHelpers::Color::FromRGB(30, 123, 195),
-                                                         tourStates);
-
-
-        Eegeo::Modules::Map::MapModule& mapModule = m_pWorld->GetMapModule();
-        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-
-        Tours::SdkModel::TourInstances::Example::ExampleTourStateMachineFactory factory(ToursModule().GetCameraTransitionController(),
-                                                                                        m_pWorldPinsModule->GetWorldPinsService(),
-                                                                                        m_interiorsEnabled,
-                                                                                        m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
-                                                                                        interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                        m_messageBus);
-
-        ToursModule().GetTourService().AddTour(tourModel, *factory.CreateTourStateMachine(tourModel));
-
-        m_pTwitterFeedTourModule = Eegeo_NEW(Tours::SdkModel::TourInstances::TwitterFeed::TwitterFeedTourModule)(ToursModule().GetCameraTransitionController(),
-                                                                                                                 ToursModule().GetTourService(),
-                                                                                                                 WorldPinsModule().GetWorldPinsService(),
-                                                                                                                 m_pInteriorsExplorerModule->GetInteriorVisibilityUpdater(),
-                                                                                                                 interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                                                 interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                                 ToursModule().GetTourRepository(),
-                                                                                                                 TwitterFeedModule().GetTwitterFeedService(),
-                                                                                                                 m_messageBus);
-
-        const std::map<std::string, Tours::SdkModel::TourInstances::TwitterFeed::TweetStateData>& tweetStateDataMap = TwitterFeedTourModule().GetTweetStateDataMap();
-
-        std::vector<std::string> twitterAccountNames;
-
-        for(std::map<std::string, Tours::SdkModel::TourInstances::TwitterFeed::TweetStateData>::const_iterator it = tweetStateDataMap.begin(); it != tweetStateDataMap.end(); ++it)
-        {
-            twitterAccountNames.push_back((*it).first);
-        }
-
-        TwitterFeedModule().GetTwitterFeedService().LoadTimeLines(twitterAccountNames);
-
-    }
-
     void MobileExampleApp::OnPause()
     {
         Eegeo::EegeoWorld& eegeoWorld = World();
@@ -1147,14 +1034,6 @@ namespace ExampleApp
         m_pAppCameraModule->GetController().Update(dt);
 
         m_pAppModeModel->Update(dt);
-
-        if(ToursEnabled())
-        {
-            if(IsTourCameraActive())
-            {
-                ToursModule().GetCameraTransitionController().Update(dt);
-            }
-        }
 
         m_pInteriorsExplorerModule->Update(dt);
 
@@ -1211,13 +1090,6 @@ namespace ExampleApp
                     m_setMetricsLocation = true;
                 }
             }
-        }
-
-
-
-        if(ToursEnabled())
-        {
-            ToursModule().GetTourService().UpdateCurrentTour(dt);
         }
 
         UpdateLoadingScreen(dt);
@@ -1302,11 +1174,6 @@ namespace ExampleApp
             // ... doing it a little later ensures the view will get the notifications when items are added.
             MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
 
-            if(ToursEnabled())
-            {
-                AddTours();
-            }
-
             AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig(),
                                m_yelpCategoryMapperUpdater);
 
@@ -1315,12 +1182,6 @@ namespace ExampleApp
                 m_pAppModeModel->SetAppMode(AppModes::SdkModel::AttractMode);
             }
         }
-    }
-
-    const bool MobileExampleApp::IsTourCameraActive() const
-    {
-        return ToursEnabled() ? ToursModule().GetTourService().IsTourActive() ||
-        !ToursModule().GetCameraTransitionController().IsTransitionComplete() : false;
     }
 
     bool MobileExampleApp::IsRunning() const

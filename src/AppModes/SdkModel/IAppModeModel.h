@@ -22,7 +22,6 @@ namespace ExampleApp
             {
                 WorldMode = 0,
                 InteriorMode,
-                TourMode,
                 AttractMode
             };
 

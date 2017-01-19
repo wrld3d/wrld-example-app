@@ -74,12 +74,10 @@
 #include "InteriorsEntitiesPins.h"
 #include "MapMode.h"
 #include "AppModes.h"
-#include "IToursModule.h"
 #include "IAppCameraModule.h"
 #include "CameraTransitionService.h"
 #include "UserInteraction.h"
 #include "TwitterFeed.h"
-#include "TwitterFeedTour.h"
 #include "VisualMap.h"
 #include "Surveys.h"
 #include "IMenuReactionModel.h"
@@ -110,8 +108,6 @@ namespace ExampleApp
         bool m_initialisedApplicationViewState;
         bool m_setMetricsLocation;
         float m_pinDiameter;
-        
-        const bool m_enableTours;
 
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
         CameraTransitions::SdkModel::CameraTransitionService* m_pCameraTransitionService;
@@ -173,10 +169,6 @@ namespace ExampleApp
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
         
-        Tours::IToursModule* m_pToursModule;
-        float m_toursPinDiameter;
-        Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule* m_pTwitterFeedTourModule;
-        
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
         ExampleApp::DoubleTapIndoorInteraction::SdkModel::IDoubleTapIndoorInteractionController* m_pDoubleTapIndoorInteractionController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
@@ -215,14 +207,6 @@ namespace ExampleApp
         void InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories);
         
         bool CanAcceptTouch() const;
-        
-        void AddTours();
-        
-        void InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule,
-                                    Eegeo::EegeoWorld& world,
-                                    const bool interiorsAffectedByFlattening);
-        
-        const bool IsTourCameraActive() const;
 
     public:
         MobileExampleApp(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
@@ -257,11 +241,6 @@ namespace ExampleApp
         float PinDiameter() const
         {
             return m_pinDiameter;
-        }
-
-        float ToursPinDiameter() const
-        {
-            return m_toursPinDiameter;
         }
         
         CameraTransitions::SdkModel::ICameraTransitionController& CameraTransitionController() const
@@ -412,25 +391,6 @@ namespace ExampleApp
         const ExampleApp::Social::TwitterFeed::ITwitterFeedModule& TwitterFeedModule() const
         {
             return *m_pTwitterFeedModule;
-        }
-        
-        const ExampleApp::Tours::IToursModule& ToursModule() const
-        {
-            return *m_pToursModule;
-        }
-        
-        const ExampleApp::Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule& TwitterFeedTourModule() const
-        {
-            return *m_pTwitterFeedTourModule;
-        }
-        
-        // A flag for opting in/out of tours
-        const bool ToursEnabled() const
-        {
-#ifdef EEGEO_DROID
-            Eegeo_ASSERT(!m_enableTours, "Tours are not currently supported for android");
-#endif
-            return m_enableTours;
         }
         
         // Exposed to allow view model creation in iOS code.

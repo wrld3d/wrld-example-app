@@ -4,7 +4,6 @@
 
 #include "WorldState.h"
 #include "IAppCameraController.h"
-#include "TourService.h"
 #include "IAppModeModel.h"
 #include "InteriorSelectionModel.h"
 #include "CameraHelpers.h"

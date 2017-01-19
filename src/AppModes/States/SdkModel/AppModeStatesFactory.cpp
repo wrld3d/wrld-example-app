@@ -4,10 +4,8 @@
 #include "IAppCameraController.h"
 #include "WorldState.h"
 #include "InteriorExplorerState.h"
-#include "TourState.h"
 #include "AppGlobeCameraWrapper.h"
 #include "AppInteriorCameraWrapper.h"
-#include "IToursCameraController.h"
 #include "AttractState.h"
 #include "IUserIdleService.h"
 #include "LatLongAltitude.h"
@@ -32,7 +30,6 @@ namespace ExampleApp
                                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                            InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                                            AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                           Tours::SdkModel::ITourService& tourService,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Eegeo::UI::NativeUIFactories& nativeUIFactories,
@@ -55,11 +52,9 @@ namespace ExampleApp
                 , m_interiorsExplorerModel(interiorsExplorerModel)
                 , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_appModeModel(appModeModel)
-                , m_tourService(tourService)
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_nativeUIFactories(nativeUIFactories)
-                , m_visualMapService(visualMapService)
                 , m_userIdleService(userIdleService)
                 , m_resourceCeilingProvider(resourceCeilingProvider)
                 , m_attractModeEnabled(attractModeEnabled)
@@ -80,7 +75,6 @@ namespace ExampleApp
                     
                     const int worldCameraHandle = globalAppModeTransitionRules.GetWorldCameraHandle();
                     const int interiorCameraHandle = globalAppModeTransitionRules.GetInteriorsCameraHandle();
-                    const int toursCameraHandle = globalAppModeTransitionRules.GetToursCameraHandle();
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::WorldState)(m_appCameraController,
                                                                              worldCameraHandle,
@@ -97,13 +91,6 @@ namespace ExampleApp
                                                                                         m_appModeModel,
                                                                                         m_interiorCameraController.GetInteriorCameraController(),
                                                                                         m_nativeUIFactories));
-                    
-                    states.push_back(Eegeo_NEW(States::SdkModel::TourState)(m_appCameraController,
-                                                                            toursCameraHandle,
-                                                                            m_tourService,
-                                                                            m_interiorSelectionModel,
-                                                                            m_appModeModel,
-                                                                            m_visualMapService));
 
                     if (m_attractModeEnabled)
                     {

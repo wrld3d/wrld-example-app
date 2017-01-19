@@ -811,34 +811,6 @@ set(resources ${resources}
         Resources/sub_menu_arrow_on@3x.png
         Resources/search_tags.json
         Resources/EmbeddedTheme
-        Resources/Tours
-        Resources/Tours/browser_back.png
-        Resources/Tours/browser_forward.png
-        Resources/Tours/page.png
-        Resources/Tours/placeholder.png
-        Resources/Tours/play_icon.png
-        Resources/Tours/play_icon@2x.png
-        Resources/Tours/play_icon@3x.png
-        Resources/Tours/States
-        Resources/Tours/States/Twitter
-        Resources/Tours/States/Twitter/browser_back.png
-        Resources/Tours/States/Twitter/browser_forward.png
-        Resources/Tours/States/Twitter/favoriteIcon.png
-        Resources/Tours/States/Twitter/NotLoaded
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded.png
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded@2x.png
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded@3x.png
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded.png
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded@2x.png
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded@3x.png
-        Resources/Tours/States/Twitter/play_icon.png
-        Resources/Tours/States/Twitter/play_icon@2x.png
-        Resources/Tours/States/Twitter/play_icon@3x.png
-        Resources/Tours/States/Twitter/replyIcon.png
-        Resources/Tours/States/Twitter/retweetIcon.png
-        Resources/Tours/States/Twitter/tweet_bird.png
-        Resources/Tours/States/Twitter/tweet_bird@2x.png
-        Resources/Tours/States/Twitter/tweet_bird@3x.png
         Resources/weatherstates.json
         Resources/Yelp
         Resources/yelp_map.json

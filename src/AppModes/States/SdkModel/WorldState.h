@@ -5,7 +5,6 @@
 #include "IStateMachineState.h"
 #include "AppCamera.h"
 #include "AppModes.h"
-#include "Tours.h"
 #include "ICallback.h"
 #include "Interiors.h"
 #include "InteriorsExplorer.h"

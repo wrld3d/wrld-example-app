@@ -36,9 +36,6 @@
 #include "iOSConnectivityService.h"
 #include "OptionsViewIncludes.h"
 #include "WatermarkViewIncludes.h"
-#include "TourWebViewIncludes.h"
-#include "TourExplorerViewIncludes.h"
-#include "TourFullScreenImageViewIncludes.h"
 #include "InitialExperienceIntroViewIncludes.h"
 #include "NetIncludes.h"
 #include "Search.h"
@@ -139,9 +136,6 @@ private:
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
-    ExampleApp::Tours::View::TourWeb::ITourWebViewModule* m_pTourWebViewModule;
-    ExampleApp::Tours::View::TourExplorer::ITourExplorerViewModule* m_pTourExplorerViewModule;
-    ExampleApp::Tours::View::TourFullScreenImage::ITourFullScreenImageViewModule* m_pTourFullScreenImageViewModule;
     ExampleApp::InitialExperience::View::IInitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;
