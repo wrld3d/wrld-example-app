@@ -204,7 +204,9 @@
                                                 <RowDefinition Height="*"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-                                            <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=TitleText}"  MaxWidth="{DynamicResource EegeoPOIViewTitleMaxWidth}" VerticalAlignment="Center" FontSize="{DynamicResource EegeoPOIViewTitleFontSize}" Margin="{DynamicResource EegeoPOIViewTitleTextMargin}"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
+                                            <Canvas Grid.Row="0">
+                                                <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=TitleText}"  MaxWidth="{DynamicResource EegeoPOIViewTitleMaxWidth}" VerticalAlignment="Center" FontSize="{DynamicResource EegeoPOIViewTitleFontSize}" Margin="{DynamicResource EegeoPOIViewTitleTextMargin}"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
+                                            </Canvas>
                                             <TextBlock Name="SubTitle" Grid.Row="1" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=SubTitleText}"  MaxWidth="{DynamicResource EegeoPOIViewTitleMaxWidth}" VerticalAlignment="Center" FontSize="{DynamicResource EegeoPOIViewSubTitleFontSize}" Margin="{DynamicResource EegeoPOIViewSubTitleTextMargin}"  Foreground="{DynamicResource PrimaryBG_Over_Colour}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
                                         </Grid>
                                     </StackPanel>
