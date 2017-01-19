@@ -3,12 +3,35 @@
 #import <SLIndoorLocation/SLCoordinate3D.h>
 #import <SLIndoorLocation/SLIndoorLocationManager.h>
 #include "LatLongAltitude.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "AppHost.h"
+#include "AboutPageViewModel.h"
+
+template <typename T>
+class FailureHandler
+{
+public:
+    FailureHandler(T* pContext) : m_pContext(pContext) {}
+    void HandleFailure()
+    {
+        [m_pContext handleFailure];
+    }
+private:
+    T* m_pContext;
+};
+
+typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 @interface SenionLabLocationManager()<SLIndoorLocationManagerDelegate>
 {
     std::map<int, std::string> m_floorMap;
     int m_floorIndex;
     ExampleApp::SenionLab::SenionLabLocationService* m_pSenionLabLocationService;
+    SLLocationStatus m_lastLocationStatus;
+    Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory *m_piOSAlertBoxFactory;
+    FailureHandlerType *m_failureHandlerWrapper;
+    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<SenionLabLocationManager>> *m_failAlertHandler;
+    ExampleApp::ExampleAppMessaging::TMessageBus* m_messageBus;
 }
 @property (nonatomic, strong) SLIndoorLocationManager *locationManager;
 @end
@@ -16,10 +39,17 @@
 @implementation SenionLabLocationManager
 
 -(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService
+ iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
+ messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus
 {
+    m_lastLocationStatus = SLLocationStatus::SLLocationStatusUnconfirmed;
     if(self = [super init])
     {
         m_pSenionLabLocationService = senionLabLocationService;
+        m_piOSAlertBoxFactory = iOSAlertBoxFactory;
+        m_failureHandlerWrapper = new FailureHandlerType(self);
+        m_failAlertHandler = new Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<SenionLabLocationManager>>(m_failureHandlerWrapper, &FailureHandlerType::HandleFailure);
+        m_messageBus = messageBus;
     }
     
     return self;
@@ -62,6 +92,30 @@
     
     int floorIndex = [self getFloorIndexFromSenionFloorIndex:std::to_string(location.floorNr)];
     m_pSenionLabLocationService->SetFloorIndex(floorIndex);
+    if(locationStatus != m_lastLocationStatus)
+    {
+        m_lastLocationStatus = locationStatus;
+        if(locationStatus == SLLocationStatusUnconfirmed)
+        {
+            m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
+            (
+             "Senion unavailable",
+             "Recently lost connection to Senion.",
+             *m_failAlertHandler
+             );
+        }
+        if(locationStatus == SLLocationStatusConfirmed)
+        {
+            m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
+            (
+             "Senion available",
+             "Recently connected to Senion indoor positioning.",
+             *m_failAlertHandler
+             );
+        }
+    }
+    
+    m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, location.floorNr, location.latitude, location.longitude));
 }
 
 -(void) didUpdateHeading:(double)heading withStatus:(BOOL)status
@@ -109,6 +163,11 @@
     }
     
     return -1;
+}
+
+- (void)handleFailure
+{
+    
 }
 
 @end

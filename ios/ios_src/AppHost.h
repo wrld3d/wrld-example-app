@@ -26,7 +26,6 @@
 #include "ModalBackgroundViewIncludes.h"
 #include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
-#include "WorldPinOnMapViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
 #include "MyPinCreationInitiationViewIncludes.h"
@@ -37,9 +36,6 @@
 #include "iOSConnectivityService.h"
 #include "OptionsViewIncludes.h"
 #include "WatermarkViewIncludes.h"
-#include "TourWebViewIncludes.h"
-#include "TourExplorerViewIncludes.h"
-#include "TourFullScreenImageViewIncludes.h"
 #include "InitialExperienceIntroViewIncludes.h"
 #include "NetIncludes.h"
 #include "Search.h"
@@ -129,7 +125,6 @@ private:
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
-    ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
     ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
@@ -141,9 +136,6 @@ private:
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
-    ExampleApp::Tours::View::TourWeb::ITourWebViewModule* m_pTourWebViewModule;
-    ExampleApp::Tours::View::TourExplorer::ITourExplorerViewModule* m_pTourExplorerViewModule;
-    ExampleApp::Tours::View::TourFullScreenImage::ITourFullScreenImageViewModule* m_pTourFullScreenImageViewModule;
     ExampleApp::InitialExperience::View::IInitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;

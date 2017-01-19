@@ -15,7 +15,6 @@
 #include "EegeoUI.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "MyPinCreation.h"
-#include "Tours.h"
 
 namespace ExampleApp
 {

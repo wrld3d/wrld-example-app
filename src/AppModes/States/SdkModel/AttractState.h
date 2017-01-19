@@ -6,7 +6,6 @@
 #include "AppCamera.h"
 #include "AppModes.h"
 #include "IAppModeModel.h"
-#include "Tours.h"
 #include "ICallback.h"
 #include "Interiors.h"
 #include "InteriorsExplorer.h"

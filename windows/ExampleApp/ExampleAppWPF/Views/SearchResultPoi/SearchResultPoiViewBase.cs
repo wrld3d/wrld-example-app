@@ -43,6 +43,8 @@ namespace ExampleAppWPF
 
         private static bool m_isAnyPOIOpen = false;
 
+        private double m_scrollSpeed;
+
         public bool IsPinned
         {
             get
@@ -78,6 +80,31 @@ namespace ExampleAppWPF
             m_isOpen = false;
 
             Panel.SetZIndex(this, 100);
+        }
+
+        public void Destroy()
+        {
+            m_mainContainer.MouseDown -= OnContainerMouseDown;
+
+            m_closeButton.Click -= HandleCloseButtonClicked;
+
+            TouchMove -= OnTouchMove;
+
+            if (m_contentContainer != null)
+            {
+                m_contentContainer.ManipulationBoundaryFeedback -= OnBoundaryFeedback;
+                m_contentContainer.ScrollChanged -= OnSearchResultsScrolled;
+            }
+
+            if (m_scrollUpButton != null)
+            {
+                m_scrollUpButton.Click -= HandleScrollUpButtonClicked;
+            }
+
+            if (m_scrollDownButton != null)
+            {
+                m_scrollDownButton.Click -= HandleScrollDownButtonClicked;
+            }
         }
 
         private void OnWindowResized(object sender, SizeChangedEventArgs e)
@@ -145,6 +172,8 @@ namespace ExampleAppWPF
             {
                 m_scrollFadeOutAnim = fadeOutAnim.Clone();
             }
+
+            m_scrollSpeed = (double)Application.Current.Resources["ScrollViewButtonScrollSpeed"];
         }
 
         protected virtual void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
@@ -305,22 +334,6 @@ namespace ExampleAppWPF
 
         public virtual void DismissPoiInfo()
         {
-            if (m_contentContainer != null)
-            {
-                m_contentContainer.ManipulationBoundaryFeedback -= OnBoundaryFeedback;
-                m_contentContainer.ScrollChanged -= OnSearchResultsScrolled;
-            }
-
-            if (m_scrollUpButton != null)
-            {
-                m_scrollUpButton.Click -= HandleScrollUpButtonClicked;
-            }
-
-            if (m_scrollDownButton != null)
-            {
-                m_scrollDownButton.Click -= HandleScrollDownButtonClicked;
-            }
-
             HideAll();
         }
 
@@ -361,7 +374,7 @@ namespace ExampleAppWPF
         {
             if (m_contentContainer != null)
             {
-                m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset - 10);
+                m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset - m_scrollSpeed);
             }
         }
 
@@ -369,7 +382,7 @@ namespace ExampleAppWPF
         {
             if (m_contentContainer != null)
             {
-                m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset + 10);
+                m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset + m_scrollSpeed);
             }
         }
 

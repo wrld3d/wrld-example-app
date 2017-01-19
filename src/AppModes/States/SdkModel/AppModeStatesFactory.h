@@ -9,7 +9,6 @@
 #include "InteriorsExplorer.h"
 #include "AppCamera.h"
 #include "AppModes.h"
-#include "Tours.h"
 #include "EegeoUI.h"
 #include "MyPinCreation.h"
 #include "IUserIdleService.h"
@@ -46,7 +45,6 @@ namespace ExampleApp
                     AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                     InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& m_interiorExplorerUserInteractionModel;
-                    Tours::SdkModel::ITourService& m_tourService;
                     Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                     Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
@@ -76,7 +74,6 @@ namespace ExampleApp
                                          InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                          InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
-                                         Tours::SdkModel::ITourService& tourService,
                                          Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                          Eegeo::UI::NativeUIFactories& nativeUIFactories,

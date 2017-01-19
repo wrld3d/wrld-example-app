@@ -993,7 +993,7 @@ const int DeletePinAlertViewTag = 2;
         case PhoneAlertViewTag:
             if (buttonIndex == 1)
             {
-                NSString * phoneUrlString = [NSString stringWithFormat:@"tel://%@", self.pPhoneContent.text];
+                NSString * phoneUrlString = [NSString stringWithFormat:@"tel:%@", [self.pPhoneContent.text stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
                 NSURL *url = [NSURL URLWithString:phoneUrlString];
                 if (![[UIApplication sharedApplication] openURL:url])
                 {

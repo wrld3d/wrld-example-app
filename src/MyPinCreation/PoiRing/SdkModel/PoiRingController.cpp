@@ -189,7 +189,7 @@ namespace ExampleApp
                     m_iconSize = Eegeo::Max(iconScale * transitionScale, 0.0f);
                     m_poiRingView.AddIconSprite(renderCamera, scaledPoint, m_iconSize);
 
-                    m_iconPosition = scaledPoint + (Eegeo::dv3)renderCamera.GetModelMatrix().GetRow(1) * m_iconSize * 0.5f;
+                    m_iconPosition = scaledPoint + (Eegeo::dv3)renderCamera.GetModelMatrix().GetRow(1) * m_iconSize;
                 }
 
                 float PoiRingController::CalculateTransitionScale(float dt)
