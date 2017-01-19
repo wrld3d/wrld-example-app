@@ -145,11 +145,6 @@ namespace ExampleApp
                 {
                     m_currentVendor = SearchVendors::eeGeo;
                 }
-                else if (vendor == Search::ExampleTourVendorName)
-                {
-                    Eegeo_ASSERT(false, "Unable to creaate view instance for %s. Tour views are not yet implemented on Windows - please refer to iOS example.\n", vendor.c_str());
-                    m_currentVendor = -1;
-                }
                 else
                 {
                     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
