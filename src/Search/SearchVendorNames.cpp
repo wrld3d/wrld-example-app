@@ -11,7 +11,6 @@ namespace ExampleApp
         const std::string EegeoVendorName = "eeGeo";
         
         const std::string InteriorVendorName = "Interior";
-        const std::string WorldTwitterVendorName = "Twitter";
         const std::string MyPinVendorName = "MyPin";
     }
 }

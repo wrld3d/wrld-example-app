@@ -40,7 +40,6 @@ namespace ExampleApp
             std::string m_eegeoSearchServiceUrl;
             std::string m_myPinsWebServiceUrl;
             std::string m_myPinsWebServiceAuthToken;
-            std::string m_twitterAuthCode;
             bool m_isKioskTouchInputEnabled;
             bool m_isInKioskMode;
             bool m_useLabels;
@@ -83,7 +82,6 @@ namespace ExampleApp
                 const std::string& eegeoSearchServiceUrl,
                 const std::string& myPinsWebServiceUrl,
                 const std::string& myPinsWebServiceAuthToken,
-                const std::string& twitterAuthCode,
                 const bool isKioskTouchInputEnabled,
                 const bool isInKioskMode,
                 bool useLabels,
@@ -142,8 +140,6 @@ namespace ExampleApp
             std::string MyPinsWebServiceUrl() const;
 
             std::string MyPinsWebServiceAuthToken() const;
-
-            std::string TwitterAuthCode() const;
 
             bool IsKioskTouchInputEnabled() const;
 

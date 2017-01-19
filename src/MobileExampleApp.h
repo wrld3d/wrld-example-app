@@ -77,7 +77,6 @@
 #include "IAppCameraModule.h"
 #include "CameraTransitionService.h"
 #include "UserInteraction.h"
-#include "TwitterFeed.h"
 #include "VisualMap.h"
 #include "Surveys.h"
 #include "IMenuReactionModel.h"
@@ -156,7 +155,6 @@ namespace ExampleApp
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
-        Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
         DeepLink::SdkModel::DeepLinkModule* m_pDeepLinkModule;
@@ -386,11 +384,6 @@ namespace ExampleApp
         const InteriorsExplorer::SdkModel::IInteriorsExplorerModule& InteriorsExplorerModule() const
         {
             return *m_pInteriorsExplorerModule;
-        }
-        
-        const ExampleApp::Social::TwitterFeed::ITwitterFeedModule& TwitterFeedModule() const
-        {
-            return *m_pTwitterFeedModule;
         }
         
         // Exposed to allow view model creation in iOS code.

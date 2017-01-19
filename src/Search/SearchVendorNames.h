@@ -13,7 +13,6 @@ namespace ExampleApp
         extern const std::string EegeoVendorName;
         
         extern const std::string InteriorVendorName;
-        extern const std::string WorldTwitterVendorName;
         extern const std::string MyPinVendorName;
     }
 }
