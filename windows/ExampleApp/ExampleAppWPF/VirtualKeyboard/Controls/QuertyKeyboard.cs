@@ -10,14 +10,10 @@ namespace ExampleAppWPF.VirtualKeyboard
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Input;
 
     public delegate void CustomKeyEvent(string key);
     public delegate void ControlKeyEvent(int key);
-
-    [TemplateVisualState(Name = VisualStateQuertyName, GroupName = VisualStateGroupKeyboardLayoutName)]
-    [TemplateVisualState(Name = VisualStateNumericName, GroupName = VisualStateGroupKeyboardLayoutName)]
 
     public class QuertyKeyboard : ControlBase
     {
@@ -32,26 +28,10 @@ namespace ExampleAppWPF.VirtualKeyboard
         private int m_touchDownTime = 0;
         private ShiftState m_shiftState = ShiftState.ShiftUp;
 
-        #region Template Parts
-
         public event CustomKeyEvent CustomKeyUp;
         public event ControlKeyEvent ControlKeyUp;
 
         private static List<VirtualKeyboardButton> KeyboardButtons = new List<VirtualKeyboardButton>();
-
-        #endregion Template Parts
-
-        #region Visual states
-
-        private const String VisualStateGroupKeyboardLayoutName = "KeyboardLayoutStates";
-        private const String VisualStateQuertyName = "QuertyState";
-        private const String VisualStateNumericName = "NumericState";
-
-        private VisualStateGroup KeyboardLayoutVisualStateGroup;
-        private VisualState QuertyVisualState;
-        private VisualState NumericVisualState;
-
-        #endregion Visual states
 
         public static readonly DependencyProperty IsShiftHeldProperty =
             DependencyProperty.Register(
@@ -78,17 +58,19 @@ namespace ExampleAppWPF.VirtualKeyboard
         /// KeyboardLayout Dependency Property
         /// </summary>
         public static readonly DependencyProperty KeyboardLayoutProperty =
-            DependencyProperty.Register("KeyboardLayout", typeof(KeyboardLayout), typeof(QuertyKeyboard),
-                new FrameworkPropertyMetadata((KeyboardLayout.QuertyState),
-                    new PropertyChangedCallback(OnKeyboardLayoutChanged)));
+            DependencyProperty.Register(
+                "KeyboardLayout",
+                typeof(string),
+                typeof(QuertyKeyboard),
+                new FrameworkPropertyMetadata("QuertyState", new PropertyChangedCallback(OnKeyboardLayoutChanged)));
 
         /// <summary>
         /// Gets or sets the KeyboardLayout property.  This dependency property
         /// indicates the current layout of the on-screen Stringboard.
         /// </summary>
-        public KeyboardLayout KeyboardLayout
+        public string KeyboardLayout
         {
-            get { return (KeyboardLayout)GetValue(KeyboardLayoutProperty); }
+            get { return (string)GetValue(KeyboardLayoutProperty); }
             set { SetValue(KeyboardLayoutProperty, value); }
         }
 
@@ -105,7 +87,7 @@ namespace ExampleAppWPF.VirtualKeyboard
         /// </summary>
         protected virtual void OnKeyboardLayoutChanged(DependencyPropertyChangedEventArgs e)
         {
-            VisualStateManager.GoToState(this, e.NewValue.ToString(), true);
+            VisualStateManager.GoToState(this, (string) e.NewValue, true);
         }
 
         #endregion KeyboardLayout
@@ -157,22 +139,6 @@ namespace ExampleAppWPF.VirtualKeyboard
 
         #endregion DisabledKeys
 
-        public int MaxLength
-        {
-            get { return maxLength; }
-            set { maxLength = value; }
-        }
-
-        int maxLength = int.MaxValue;
-
-        public KeyboardKeyStrokeHandler KeyStrokeHandler
-        {
-            get { return keyStrokeHandler; }
-            set { keyStrokeHandler = value; }
-        }
-
-        KeyboardKeyStrokeHandler keyStrokeHandler = KeyboardKeyStrokeHandler.VirtualKeyboardBased;
-
         static QuertyKeyboard()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(QuertyKeyboard), new FrameworkPropertyMetadata(typeof(QuertyKeyboard)));
@@ -208,9 +174,13 @@ namespace ExampleAppWPF.VirtualKeyboard
             VirtualKeyboardService.Instance.ReleaseStickyKeys();
         }
 
-        private void OnCustomKeyEvent(string key)
+        private void OnCustomKeyEvent(string key, bool isLongPress)
         {
-            if (CustomKeyUp != null)
+            if (key == "ShiftKey")
+            {
+                OnShiftPressed(isLongPress);
+            }
+            else if (CustomKeyUp != null)
             {
                 CustomKeyUp(key);
             }
@@ -293,32 +263,10 @@ namespace ExampleAppWPF.VirtualKeyboard
 
                 case VirtualKeyboardButton.KeyType.Special:
                     VirtualKeyboardSpecialButton specialButton = (VirtualKeyboardSpecialButton)key;
-                    HandleCustomKey(specialButton.GetKeySpecialInputValue(), isLongPress);
+                    OnCustomKeyEvent(specialButton.GetKeySpecialInputValue(), isLongPress);
                     break;
 
                 default:
-                    break;
-            }
-        }
-
-        private void HandleCustomKey(string specialValue, bool isLongPress)
-        {
-            switch (specialValue)
-            {
-                case "AlphaSwitch":
-                    OnAlphaSwitchPressed();
-                    break;
-
-                case "NumericSwitch":
-                    OnNumericSwitchPressed();
-                    break;
-
-                case "ShiftKey":
-                    OnShiftPressed(isLongPress);
-                    break;
-
-                default:
-                    OnCustomKeyEvent(specialValue);
                     break;
             }
         }
@@ -338,16 +286,6 @@ namespace ExampleAppWPF.VirtualKeyboard
             SetValue(IsShiftPressedProperty, IsShiftPressed);
 
             UpdateButtonLabels();
-        }
-
-        private void OnAlphaSwitchPressed()
-        {
-            KeyboardLayout = KeyboardLayout.QuertyState;
-        }
-
-        private void OnNumericSwitchPressed()
-        {
-            KeyboardLayout = KeyboardLayout.NumericState;
         }
 
         private void OnShiftPressed(bool isLongPress)
@@ -384,10 +322,6 @@ namespace ExampleAppWPF.VirtualKeyboard
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            KeyboardLayoutVisualStateGroup = GetTemplateChild(VisualStateGroupKeyboardLayoutName) as VisualStateGroup;
-            QuertyVisualState = GetTemplateChild(VisualStateQuertyName) as VisualState;
-            NumericVisualState = GetTemplateChild(VisualStateNumericName) as VisualState;
 
             UpdateKeyboardButtons();
 
@@ -429,17 +363,5 @@ namespace ExampleAppWPF.VirtualKeyboard
         {
             VirtualKeyboardService.Instance.ReleaseStickyKeys();
         }
-    }
-
-    public enum KeyboardLayout
-    {
-        QuertyState,
-        NumericState,
-    }
-
-    public enum KeyboardKeyStrokeHandler
-    {
-        VirtualKeyboardBased,
-        StringBased
     }
 }

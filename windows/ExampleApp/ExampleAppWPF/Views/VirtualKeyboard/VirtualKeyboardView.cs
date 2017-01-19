@@ -38,9 +38,11 @@ namespace ExampleAppWPF
                 {
                     HideVirtualKeyboard();
                 }
+                else
+                {
+                    KeyboardLayout = key;
+                }
             };
-
-            TouchEnter += (o, e) => { m_currentWindow.PopAllTouchEvents(); };
         }
 
         public void ShowVirtualKeyboard()
