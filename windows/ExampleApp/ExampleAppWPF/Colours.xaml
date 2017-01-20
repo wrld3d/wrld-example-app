@@ -13,6 +13,7 @@
     <SolidColorBrush x:Key="InputBoxEmptyTextColour" Color="#808080"/>
     <SolidColorBrush x:Key="ExpanderHeaderColour" Color="#FFE2E2E2"/>
     <SolidColorBrush x:Key="POIdetailsColour" Color="#606060"/>
+    <SolidColorBrush x:Key="DarkButtonBG_colour" Color="#08408a"/>
 
     <SolidColorBrush x:Key="SubMenuItemDefaultColour" Color="#F2F2F2"/>
     <SolidColorBrush x:Key="SubMenuItemMouseOverColour" Color="#CCE4FF"/>

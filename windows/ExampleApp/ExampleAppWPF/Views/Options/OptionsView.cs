@@ -1,6 +1,7 @@
 ﻿using ExampleApp;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -75,6 +76,7 @@ namespace ExampleAppWPF
         private Button m_clearCacheButton = null;
         protected FrameworkElement m_mainContainer;
         private Button m_adminLoginButton;
+        private AdminLoginView m_adminLoginView;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -88,6 +90,12 @@ namespace ExampleAppWPF
 
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
+
+            m_currentWindow.ContentRendered += (sender, ev) =>
+            {
+                m_adminLoginView = ViewHelpers.FindChildrenOfType<AdminLoginView>(m_currentWindow.MainGrid.Children).SingleOrDefault();
+                m_adminLoginView.IsVisibleChanged += (o, e) => OnAdminLoginViewVisibileChanged();
+            };
         }
 
         public override void OnApplyTemplate()
@@ -135,6 +143,16 @@ namespace ExampleAppWPF
         
         private void OnAdminLoginButtonClick(object sender, RoutedEventArgs e)
         {
+            Visibility = Visibility.Collapsed;
+            m_adminLoginView.Show();
+        }
+
+        private void OnAdminLoginViewVisibileChanged()
+        {
+            if (!m_adminLoginView.IsVisible)
+            {
+                Visibility = Visibility.Visible;
+            }
         }
 
         public void Destroy()
@@ -153,6 +171,7 @@ namespace ExampleAppWPF
 
         public void CloseOptions()
         {
+            m_adminLoginView.Dismiss();
             Visibility = Visibility.Hidden;
             m_currentWindow.EnableInput();
         }

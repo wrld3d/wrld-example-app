@@ -784,4 +784,7 @@
         </Setter>
     </Style>
 
+    <!-- Admin Login -->
+    <System:Double x:Key="AdminLoginWidth">450</System:Double>
+
 </ResourceDictionary>
