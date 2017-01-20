@@ -366,6 +366,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="..\..\Resources\Fonts\OpenSans\OpenSans-Light.ttf">
+      <Link>Assets\OpenSans-Light.ttf</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Fonts\OpenSans\OpenSans-Regular.ttf">
+      <Link>Assets\OpenSans-Regular.ttf</Link>
+    </Resource>
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
