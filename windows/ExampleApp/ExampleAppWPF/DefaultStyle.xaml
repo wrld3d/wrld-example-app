@@ -144,7 +144,7 @@
     <Thickness x:Key="EegeoPOIViewContainerMargin" Left="0" Top="20" Right="0" Bottom="90"/>
     <System:Double x:Key="EegeoPOIViewContainerInnerWidth">440</System:Double>
     <Thickness x:Key="EegeoPOIViewContainerInnerMargin" Left="20" Top="17" Right="20" Bottom="20"/>
-    <GridLength x:Key="EegeoPOIViewContainerRow0Height">46</GridLength>
+    <GridLength x:Key="EegeoPOIViewContainerRow0Height">64</GridLength>
     <GridLength x:Key="EegeoPOIViewContainerRow2Height">48</GridLength>
 
     <Thickness x:Key="EegeoPOIViewTitleMargin" Left="0" Top="0" Right="0" Bottom="10"/>
@@ -154,7 +154,7 @@
     <System:Double x:Key="EegeoPOIViewTitleFontSize">28</System:Double>
     <System:Double x:Key="EegeoPOIViewSubTitleFontSize">13</System:Double>
     <Thickness x:Key="EegeoPOIViewTitleTextMargin" Left="4" Top="-4" Right="0" Bottom="0"/>
-    <Thickness x:Key="EegeoPOIViewSubTitleTextMargin" Left="4" Top="4" Right="0" Bottom="-4"/>
+    <Thickness x:Key="EegeoPOIViewSubTitleTextMargin" Left="4" Top="4" Right="0" Bottom="0"/>
     <Visibility x:Key="EegeoPOIViewDetailsTitleDividerVisibility">Visible</Visibility>
 
     <Thickness x:Key="EegeoPOIViewContentContainerMargin" Left="0" Top="0" Right="0" Bottom="20"/>

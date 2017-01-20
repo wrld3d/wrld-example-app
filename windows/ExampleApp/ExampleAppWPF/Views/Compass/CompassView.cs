@@ -26,13 +26,11 @@ namespace ExampleAppWPF
         private double m_compassPointOffsetX;
         private double m_compassPointOffsetY;
         private double m_currentHeading;
-        private bool m_orientationDirty = true;
         private TranslateTransform m_translateTransform = new TranslateTransform();
         private RotateTransform m_rotateTransform = new RotateTransform();
 
         private double m_yPosActive;
         private double m_yPosInactive;
-        private TranslateTransform m_positionTransform = new TranslateTransform();
 
         bool m_isActive = false;
 
@@ -72,8 +70,6 @@ namespace ExampleAppWPF
             m_compassNewUnlocked.RenderTransform = new TranslateTransform((m_compassNew.Width - m_compassNewUnlocked.Width) / 2, (m_compassNew.Width - m_compassNewUnlocked.Height) / 2);
 
             var canvas = (Canvas)GetTemplateChild("ImageCanvas");
-
-            RenderTransform = m_positionTransform;
         }
 
         private void CompassView_Click(object sender, RoutedEventArgs e)
@@ -99,7 +95,7 @@ namespace ExampleAppWPF
             m_yPosActive = screenHeight * 0.5 - (viewHeight * 0.5) - margin;
             m_yPosInactive = screenHeight * 0.5 + viewHeight * 0.5;
 
-            UpdatePositionTransform(currentPosition.X, m_isActive ? m_yPosActive : m_yPosInactive);
+            RenderTransform = new TranslateTransform(currentPosition.X, m_isActive ? m_yPosActive : m_yPosInactive);
         }
         
         public void Destroy()
@@ -130,8 +126,9 @@ namespace ExampleAppWPF
             animation.Duration = new Duration(TimeSpan.FromMilliseconds(StateChangeAnimationTimeMilliseconds));
             animation.EasingFunction = new SineEase();
 
-            UpdatePositionTransform(currentPosition.X, currentPosition.Y);
-            m_positionTransform.BeginAnimation(TranslateTransform.YProperty, animation);
+            var positionTransform = new TranslateTransform(currentPosition.X, currentPosition.Y);
+            RenderTransform = positionTransform;
+            positionTransform.BeginAnimation(TranslateTransform.YProperty, animation);
         }
 
         public void AnimateToIntermediateOnScreenState(float onScreenState)
@@ -142,14 +139,12 @@ namespace ExampleAppWPF
 
             if (viewY != newY)
             {
-                UpdatePositionTransform(currentPosition.X, newY);
-                InvalidatePositionTransform();
+                RenderTransform = new TranslateTransform(currentPosition.X, newY);
             }
         }
 
         public void UpdateHeading(float headingAngleRadians)
         {
-            m_orientationDirty = m_currentHeading != headingAngleRadians;
             m_currentHeading = headingAngleRadians;
         }
 
@@ -192,22 +187,10 @@ namespace ExampleAppWPF
             m_currentRenderArgsRenderingTime = renderArgs.RenderingTime;
 
             UpdateOrientationTransform((float)m_currentHeading);
-            InvalidateTransforms();
+            InvalidateOrientationTransform();
         }
 
-        private void InvalidateTransforms()
-        {
-            InvalidatePositionTransform();
-            InvalidOrientationTransform();
-        }
-
-        private void InvalidatePositionTransform()
-        {
-            m_positionTransform.InvalidateProperty(TranslateTransform.XProperty);
-            m_positionTransform.InvalidateProperty(TranslateTransform.YProperty);
-        }
-
-        private void InvalidOrientationTransform()
+        private void InvalidateOrientationTransform()
         {
             m_translateTransform.InvalidateProperty(TranslateTransform.XProperty);
             m_translateTransform.InvalidateProperty(TranslateTransform.YProperty);
@@ -215,12 +198,6 @@ namespace ExampleAppWPF
             m_rotateTransform.InvalidateProperty(RotateTransform.AngleProperty);
             m_rotateTransform.InvalidateProperty(RotateTransform.CenterXProperty);
             m_rotateTransform.InvalidateProperty(RotateTransform.CenterYProperty);
-        }
-
-        private void UpdatePositionTransform(double x, double y)
-        {
-            m_positionTransform.X = x;
-            m_positionTransform.Y = y;
         }
 
         private void UpdateOrientationTransform(float headingAngleRadians)

@@ -47,18 +47,16 @@ namespace ExampleApp
                 {
                     if (!m_interiorSelectionModel.IsInteriorSelected())
                     {
-                        if (m_parentState.GetLastEntryAttemptSuccessful())
-                        {
-                            m_interiorsExplorerModel.ResumePreviousMapState();
-                        }
-                        
                         m_parentState.ReturnToWorldMode();
                     }
                 }
                 
                 void InteriorExplorerExitingState::Exit(int nextState)
                 {
-                    
+                    if (m_parentState.GetLastEntryAttemptSuccessful())
+                    {
+                        m_interiorsExplorerModel.ResumePreviousMapState();
+                    }
                 }
             }
             

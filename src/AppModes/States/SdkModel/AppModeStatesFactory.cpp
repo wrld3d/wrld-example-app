@@ -4,10 +4,8 @@
 #include "IAppCameraController.h"
 #include "WorldState.h"
 #include "InteriorExplorerState.h"
-#include "TourState.h"
 #include "AppGlobeCameraWrapper.h"
 #include "AppInteriorCameraWrapper.h"
-#include "IToursCameraController.h"
 #include "AttractState.h"
 #include "IUserIdleService.h"
 #include "LatLongAltitude.h"
@@ -15,6 +13,9 @@
 #include "BidirectionalBus.h"
 #include "IFlattenButtonModel.h"
 #include "NavigationService.h"
+#include "CameraTransitionService.h"
+#include "ILocationService.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -25,6 +26,7 @@ namespace ExampleApp
             namespace SdkModel
             {
                 AppModeStatesFactory::AppModeStatesFactory(AppCamera::SdkModel::IAppCameraController& appCameraController,
+                                                           Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController,
                                                            AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
                                                            AppCamera::SdkModel::AppInteriorCameraWrapper& interiorCameraController,
                                                            Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
@@ -32,22 +34,22 @@ namespace ExampleApp
                                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                            InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
                                                            AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                           Tours::SdkModel::ITourService& tourService,
                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                            Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                            VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                                           Eegeo::Location::ILocationService& locationService,
                                                            Eegeo::Input::IUserIdleService& userIdleService,
-                                                           Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                                            const bool attractModeEnabled,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                                            const float attractModePlaybackSpeed,
                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
-                                                           Eegeo::Location::NavigationService& navigationService)
+                                                           Eegeo::Location::NavigationService& navigationService,
+                                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
                 : m_appCameraController(appCameraController)
+                , m_cameraSplinePlaybackController(cameraSplinePlaybackController)
                 , m_worldCameraController(worldCameraController)
                 , m_interiorCameraController(interiorCameraController)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
@@ -55,21 +57,20 @@ namespace ExampleApp
                 , m_interiorsExplorerModel(interiorsExplorerModel)
                 , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_appModeModel(appModeModel)
-                , m_tourService(tourService)
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_nativeUIFactories(nativeUIFactories)
                 , m_visualMapService(visualMapService)
+                , m_locationService(locationService)
                 , m_userIdleService(userIdleService)
-                , m_resourceCeilingProvider(resourceCeilingProvider)
                 , m_attractModeEnabled(attractModeEnabled)
                 , m_cameraPositionSplinePoints(cameraPositionSplinePoints)
                 , m_cameraTargetSplinePoints(cameraTargetSplinePoints)
                 , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
                 , m_screenProperties(screenProperties)
                 , m_messageBus(messageBus)
-                , m_flattenButtonModel(flattenButtonModel)
                 , m_navigationService(navigationService)
+                , m_searchQueryPerformer(searchQueryPerformer)
                 {
                     
                 }
@@ -80,7 +81,6 @@ namespace ExampleApp
                     
                     const int worldCameraHandle = globalAppModeTransitionRules.GetWorldCameraHandle();
                     const int interiorCameraHandle = globalAppModeTransitionRules.GetInteriorsCameraHandle();
-                    const int toursCameraHandle = globalAppModeTransitionRules.GetToursCameraHandle();
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::WorldState)(m_appCameraController,
                                                                              worldCameraHandle,
@@ -97,28 +97,25 @@ namespace ExampleApp
                                                                                         m_appModeModel,
                                                                                         m_interiorCameraController.GetInteriorCameraController(),
                                                                                         m_nativeUIFactories));
-                    
-                    states.push_back(Eegeo_NEW(States::SdkModel::TourState)(m_appCameraController,
-                                                                            toursCameraHandle,
-                                                                            m_tourService,
-                                                                            m_interiorSelectionModel,
-                                                                            m_appModeModel,
-                                                                            m_visualMapService));
 
                     if (m_attractModeEnabled)
                     {
                         states.push_back(Eegeo_NEW(States::SdkModel::AttractState)(m_appModeModel,
                                                                                    m_appCameraController,
+                                                                                   m_cameraSplinePlaybackController,
+                                                                                   m_worldCameraController,
+                                                                                   worldCameraHandle,
                                                                                    m_worldCameraController.GetTouchController(),
+                                                                                   m_locationService,
                                                                                    m_userIdleService,
-                                                                                   m_resourceCeilingProvider,
                                                                                    m_cameraPositionSplinePoints,
                                                                                    m_cameraTargetSplinePoints,
                                                                                    m_attractModePlaybackSpeed,
                                                                                    m_screenProperties,
                                                                                    m_messageBus,
-                                                                                   m_flattenButtonModel,
-                                                                                   m_navigationService));
+                                                                                   m_navigationService,
+                                                                                   m_searchQueryPerformer,
+                                                                                   m_visualMapService));
                     }
 
                     return states;

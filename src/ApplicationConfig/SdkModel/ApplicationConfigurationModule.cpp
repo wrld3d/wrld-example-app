@@ -34,7 +34,6 @@ namespace ExampleApp
                     const std::string eegeoSearchServiceUrl = "https://poi.eegeo.com/v1.1";
                     const std::string emptyMyPinsWebServiceUrl;
                     const std::string emptyMyPinsWebServiceAuthToken;
-                    const std::string emptyTwitterAuthCode;
                     
                     const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfo;
                     
@@ -76,7 +75,6 @@ namespace ExampleApp
                         eegeoSearchServiceUrl,
                         emptyMyPinsWebServiceUrl,
                         emptyMyPinsWebServiceAuthToken,
-                        emptyTwitterAuthCode,
                         isKioskTouchInputEnabled,
                         isInKioskMode,
                         useLabels,

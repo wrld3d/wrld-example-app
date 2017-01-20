@@ -236,6 +236,13 @@ namespace ExampleAppWPF
             m_scrollSpeed = (double) Application.Current.Resources["ScrollViewButtonScrollSpeed"];
         }
 
+        public void RemoveSearchQueryResults()
+        {
+            SetSearchResultCount(0);
+            m_editText.Text = String.Empty;
+            m_hasTagSearch = false;
+        }
+
         private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
         {
             if (m_resultsOptionsView.VerticalOffset == m_resultsOptionsView.ScrollableHeight)
@@ -514,7 +521,6 @@ namespace ExampleAppWPF
                 m_editText.Text = encodedText;
             }
             m_hasTagSearch = isTag;
-            
         }
         
         public void SetSearchResultCount(int count)

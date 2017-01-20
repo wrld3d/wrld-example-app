@@ -1,7 +1,8 @@
-// Copyright eeGeo Ltd (2012-2016), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
 #pragma once
 
+#include "AttractModeStateChangedMessage.h"
 #include "BidirectionalBus.h"
 #include "IMenuViewModel.h"
 #include "IMyPinCreationDetailsViewModel.h"
@@ -26,10 +27,12 @@ namespace ExampleApp
 
             private:
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
+                void OnAttractModeStateChanged(const AttractMode::AttractModeStateChangedMessage& message);
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 Eegeo::Helpers::TCallback1<AttractModeOverlayView, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
+                Eegeo::Helpers::TCallback1<AttractModeOverlayView, const AttractMode::AttractModeStateChangedMessage&> m_attractModeStateChangedCallback;
 
                 WindowsNativeState& m_nativeState;
 
@@ -37,9 +40,10 @@ namespace ExampleApp
 
                 ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* m_pVirtualKeyboard;
 
-                Helpers::ReflectionHelpers::Method<void> mDestroy;
                 Helpers::ReflectionHelpers::Method<void> mOnAttractModeStart;
                 Helpers::ReflectionHelpers::Method<void> mOnAttractModeStop;
+                Helpers::ReflectionHelpers::Method<void> mOnAttractModeExiting;
+                Helpers::ReflectionHelpers::Method<void> mDestroy;
 
                 gcroot<System::Type^> m_uiViewClass;
                 gcroot<System::Object^> m_uiView;

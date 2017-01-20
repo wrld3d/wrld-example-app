@@ -63,8 +63,7 @@ namespace ExampleApp
             
             void MyPinCreationInitiationController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
-                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::TourMode &&
-                                      message.GetAppMode() != AppModes::SdkModel::AttractMode;
+                m_appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::AttractMode;
                 
                 if(m_appModeAllowsOpen)
                 {
@@ -73,6 +72,7 @@ namespace ExampleApp
                 else
                 {
                     m_viewModel.RemoveFromScreen();
+                    m_confirmationViewModel.TryReleaseReactorControl();
                 }
             }
 

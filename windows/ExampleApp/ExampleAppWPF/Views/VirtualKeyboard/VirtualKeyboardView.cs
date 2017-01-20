@@ -38,6 +38,10 @@ namespace ExampleAppWPF
                 {
                     HideVirtualKeyboard();
                 }
+                else
+                {
+                    KeyboardLayout = key;
+                }
             };
         }
 
@@ -53,6 +57,18 @@ namespace ExampleAppWPF
         public void Destroy()
         {
             m_currentWindow.MainGrid.Children.Remove(this);
+        }
+
+        protected override void OnTouchDown(TouchEventArgs e)
+        {
+            // Consume touch events to disable double-tap zooming through the keyboard.
+            e.Handled = true;
+        }
+
+        protected override void OnTouchMove(TouchEventArgs e)
+        {
+            // Consume touch events to disable panning through the keyboard.
+            e.Handled = true;
         }
 
         private void OnLoadedAddVirtualKeyboardFocusHandlers<T>(UIElementCollection elements) where T : Control

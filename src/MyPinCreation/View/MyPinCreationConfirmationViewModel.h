@@ -54,6 +54,8 @@ namespace ExampleApp
 
                 void Close();
 
+                void TryReleaseReactorControl();
+
             private:
                 MyPinCreationScreenControl m_screenControl;
                 MyPinCreationConfirmationOpenableControl m_openable;

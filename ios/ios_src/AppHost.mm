@@ -60,9 +60,6 @@
 #include "OptionsView.h"
 #include "WatermarkViewModule.h"
 #include "WatermarkView.h"
-#include "TourWebViewModule.h"
-#include "TourExplorerViewModule.h"
-#include "TourExplorerView.h"
 #include "NetworkCapabilities.h"
 #include "InitialExperienceIntroViewModule.h"
 #include "InitialExperienceIntroView.h"
@@ -73,10 +70,6 @@
 #include "IInteriorsExplorerModule.h"
 #include "InteriorsPresentationModule.h"
 #include "InteriorsExplorerView.h"
-#include "TourHovercardView.h"
-#include "TourFullScreenImageViewModule.h"
-#include "TourFullScreenImageViewModel.h"
-#include "TourFullScreenImageView.h"
 #include "ImageStore.h"
 #include "SearchVendorNames.h"
 #include "UserInteractionEnabledChangedMessage.h"
@@ -114,9 +107,6 @@ AppHost::AppHost(
     ,m_requestedApplicationInitialiseViewState(false)
     ,m_iOSFlurryMetricsService(metricsService)
     ,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
-    ,m_pTourWebViewModule(NULL)
-    ,m_pTourFullScreenImageViewModule(NULL)
-    ,m_pTourExplorerViewModule(NULL)
     ,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
     ,m_pLinkOutObserver(NULL)
     ,m_pURLRequestHandler(NULL)
@@ -406,23 +396,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                 app.MyPinDetailsModule().GetMyPinDetailsViewModel(),
                                 screenProperties);
     
-    
-    if(app.ToursEnabled())
-    {
-        m_pTourWebViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourWeb::TourWebViewModule)(screenProperties);
-        
-        m_pTourExplorerViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourExplorer::TourExplorerViewModule)
-                                                                                           (m_messageBus,
-                                                                                            app.ToursModule().GetToursExplorerViewModel(),
-                                                                                            *m_pURLRequestHandler,
-                                                                                            app.ToursModule().GetToursExplorerCompositeViewController(),
-                                                                                            screenProperties,
-                                                                                            m_pImageStore);
-    
-        m_pTourFullScreenImageViewModule = Eegeo_NEW(ExampleApp::Tours::View::TourFullScreenImage::TourFullScreenImageViewModule)(app.ToursModule().GetTourFullScreenImageViewModel(),
-                                                                                                                                  screenProperties);
-    }
-    
     m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(m_messageBus);
     
     
@@ -447,11 +420,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
     [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
-    if(m_pApp->ToursEnabled())
-    {
-        [m_pView addSubview: &m_pTourFullScreenImageViewModule->GetTourFullScreenImageView()];
-        [m_pView addSubview: &m_pTourExplorerViewModule->GetTourExplorerView()];
-    }
     [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetView()];
 
     // Modal background layer.
@@ -467,10 +435,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pOptionsViewModule->GetOptionsView()];
     [m_pView addSubview: &m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView()];
     [m_pView addSubview: &m_pMyPinDetailsViewModule->GetMyPinDetailsView()];
-    if(m_pApp->ToursEnabled())
-    {
-        [m_pView addSubview: &m_pTourWebViewModule->GetTourWebView()];
-    }
     
     // Interior tutorial layer
     [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetTutorialView()];
@@ -499,11 +463,6 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
-    if(m_pApp->ToursEnabled())
-    {
-        [&m_pTourFullScreenImageViewModule->GetTourFullScreenImageView() removeFromSuperview];
-        [&m_pTourExplorerViewModule->GetTourExplorerView() removeFromSuperview];
-    }
     [&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
 
     // Modal background layer.
@@ -519,10 +478,6 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
     [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
-    if(m_pApp->ToursEnabled())
-    {
-        [&m_pTourWebViewModule->GetTourWebView() removeFromSuperview];
-    }
     
     
     // Initial experience layer
@@ -533,10 +488,6 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pInteriorsExplorerViewModule;
     
     Eegeo_DELETE m_pViewControllerUpdaterModule;
-    
-    Eegeo_DELETE m_pTourFullScreenImageViewModule;
-    
-    Eegeo_DELETE m_pTourExplorerViewModule;
     
     Eegeo_DELETE m_pMyPinDetailsViewModule;
 
@@ -549,9 +500,7 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pAboutPageViewModule;
 
     Eegeo_DELETE m_pCompassViewModule;
-    
-    Eegeo_DELETE m_pTourWebViewModule;
-    
+
     Eegeo_DELETE m_pSearchResultPoiViewModule;
 
     Eegeo_DELETE m_pModalBackgroundViewModule;

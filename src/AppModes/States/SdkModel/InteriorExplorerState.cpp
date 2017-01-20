@@ -19,7 +19,6 @@
 #include "MyPinCreationModel.h"
 #include "MyPinCreationStage.h"
 #include "InteriorExplorerUserInteractionModel.h"
-#include "ITourService.h"
 
 namespace ExampleApp
 {

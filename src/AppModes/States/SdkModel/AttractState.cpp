@@ -4,7 +4,6 @@
 
 #include "WorldState.h"
 #include "IAppCameraController.h"
-#include "TourService.h"
 #include "IAppModeModel.h"
 #include "InteriorSelectionModel.h"
 #include "CameraHelpers.h"
@@ -19,8 +18,12 @@
 #include "TimeHelpers.h"
 #include "BidirectionalBus.h"
 #include "WorldPinVisibility.h"
-#include "FlattenButtonModel.h"
 #include "NavigationService.h"
+#include "CameraTransitionService.h"
+#include "ILocationService.h"
+#include "ISearchQueryPerformer.h"
+#include "IVisualMapService.h"
+#include "AttractModeStates.h"
 
 namespace ExampleApp
 {
@@ -32,31 +35,38 @@ namespace ExampleApp
             {
                 AttractState::AttractState(AppModes::SdkModel::IAppModeModel& appModeModel,
                                            AppCamera::SdkModel::IAppCameraController& cameraController,
+                                           Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController,
+                                           AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
+                                           const int worldCameraHandle,
                                            Eegeo::ITouchController& touchController,
+                                           Eegeo::Location::ILocationService& locationService,
                                            Eegeo::Input::IUserIdleService& userIdleService,
-                                           Eegeo::Streaming::ResourceCeilingProvider& resourceCeilingProvider,
                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraPositionSplinePoints,
                                            const std::vector<Eegeo::Space::LatLongAltitude>& cameraTargetSplinePoints,
                                            const float playbackSpeed,
                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                            ExampleAppMessaging::TMessageBus& messageBus,
-                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
-                                           Eegeo::Location::NavigationService& navigationService)
+                                           Eegeo::Location::NavigationService& navigationService,
+                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                           VisualMap::SdkModel::IVisualMapService& visualMapService)
                 : m_appModeModel(appModeModel)
                 , m_cameraController(cameraController)
-                , m_cameraSplinePlaybackController(resourceCeilingProvider)
+                , m_cameraSplinePlaybackController(cameraSplinePlaybackController)
                 , m_appCamera(m_cameraSplinePlaybackController, touchController)
                 , m_cameraHandle(m_cameraController.CreateCameraHandleFromController(m_appCamera))
                 , m_messageBus(messageBus)
-                , m_flattenButtonModel(flattenButtonModel)
                 , m_navigationService(navigationService)
                 , m_enteringState(*this, cameraController, m_cameraHandle)
                 , m_viewingState(m_cameraSplinePlaybackController)
-                , m_subStates{ /*[States::EnterState] =*/ &m_enteringState,
-                               /*[States::ViewState]  =*/ &m_viewingState }
+                , m_exitingState(*this, cameraController, locationService, worldCameraHandle, worldCameraController, m_cameraPositionSpline)
+                , m_subStates{ &m_enteringState,
+                               &m_viewingState,
+                               &m_exitingState }
                 , m_subStateMachine(m_subStates)
                 , m_idleTimeAtStartMs(0)
                 , m_userIdleService(userIdleService)
+                , m_searchQueryPerformer(searchQueryPerformer)
+                , m_visualMapService(visualMapService)
                 {
                     std::for_each(cameraPositionSplinePoints.begin(), cameraPositionSplinePoints.end(),
                                   [this](const Eegeo::Space::LatLongAltitude& p) { m_cameraPositionSpline.AddPoint(p.ToECEF()); });
@@ -79,22 +89,26 @@ namespace ExampleApp
 
                 void AttractState::Enter(int previousState)
                 {
+                    m_visualMapService.SetVisualMapState("Summer", "DayDefault", false);
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
-                    m_flattenButtonModel.Unflatten();
 
+                    const AttractMode::SdkModel::States::State initialState = AttractMode::SdkModel::States::State::EnterState;
                     InitialiseSplinePlaybackCameraState();
-                    m_subStateMachine.StartStateMachine(States::EnterState);
+                    m_subStateMachine.StartStateMachine(initialState);
                     m_idleTimeAtStartMs = m_userIdleService.GetUserIdleTimeMs();
+                    m_messageBus.Publish(AttractMode::AttractModeStateChangedMessage(initialState));
+
+                    m_searchQueryPerformer.RemoveSearchQueryResults();
                 }
 
                 void AttractState::Update(float dt)
                 {
-                    if (m_userIdleService.GetUserIdleTimeMs() < m_idleTimeAtStartMs)
-                    {
-                        m_appModeModel.SetAppMode(AppModes::SdkModel::WorldMode);
-                    }
                     m_subStateMachine.Update(dt);
+                    if (IsUserActive() && m_subStateMachine.GetCurrentStateIndex() != AttractMode::SdkModel::States::State::ExitState)
+                    {
+                        ChangeToState(AttractMode::SdkModel::States::State::ExitState);
+                    }
                 }
 
                 void AttractState::Exit(int nextState)
@@ -103,6 +117,9 @@ namespace ExampleApp
 
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
+
+                    m_visualMapService.RestorePreviousMapState();
+
                     m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
                 }
 
@@ -110,14 +127,30 @@ namespace ExampleApp
                 {
                     switch (m_subStateMachine.GetCurrentStateIndex())
                     {
-                    case States::EnterState:
-                        m_subStateMachine.ChangeToState(States::ViewState);
+                    case AttractMode::SdkModel::States::State::EnterState:
+                        ChangeToState(AttractMode::SdkModel::States::State::ViewState);
                         break;
 
-                    case States::ViewState:
+                    case AttractMode::SdkModel::States::State::ExitState:
+                        m_appModeModel.SetAppMode(AppModes::SdkModel::WorldMode);
+                        break;
+
+                    case AttractMode::SdkModel::States::State::ViewState:
                     default:
                         Eegeo_ASSERT("Completion of invalid attract mode sub-state.");
                     }
+
+                }
+
+                void AttractState::ChangeToState(const AttractMode::SdkModel::States::State newState)
+                {
+                    m_subStateMachine.ChangeToState(newState);
+                    m_messageBus.Publish(AttractMode::AttractModeStateChangedMessage(newState));
+                }
+
+                bool AttractState::IsUserActive()
+                {
+                    return m_userIdleService.GetUserIdleTimeMs() < m_idleTimeAtStartMs;
                 }
 
                 void AttractState::InitialiseSplinePlaybackCameraState()

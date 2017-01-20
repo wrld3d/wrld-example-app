@@ -113,20 +113,24 @@
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="NumericButtonRow" Storyboard.TargetProperty="(UIElement.Visibility)">
                                             <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
-                                            <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
                                         </ObjectAnimationUsingKeyFrames>
 
-                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="AlphaSwitchButton" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                            <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="AlphaSwitchButtonL" Storyboard.TargetProperty="(UIElement.Visibility)">
                                             <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="NumericSwitchButton" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="NumericSwitchButtonL" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="AlphaSwitchButtonR" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="NumericSwitchButtonR" Storyboard.TargetProperty="(UIElement.Visibility)">
                                             <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
 
-                                <VisualState x:Name="QuertyState">
+                                <VisualState x:Name="AlphaState">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="AlphaButtonRow" Storyboard.TargetProperty="(UIElement.Visibility)">
                                             <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
@@ -136,11 +140,16 @@
                                             <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
                                         </ObjectAnimationUsingKeyFrames>
 
-                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="NumericSwitchButton" Storyboard.TargetProperty="(UIElement.Visibility)">
-                                            <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="NumericSwitchButtonL" Storyboard.TargetProperty="(UIElement.Visibility)">
                                             <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="AlphaSwitchButton" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="AlphaSwitchButtonL" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="NumericSwitchButtonR" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                            <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="AlphaSwitchButtonR" Storyboard.TargetProperty="(UIElement.Visibility)">
                                             <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Collapsed}"/>
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
@@ -273,24 +282,15 @@
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="l"
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue="L"/>
                                     <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}"
-                                                                     Width="176"
+                                                                     Width="238"
                                                                      pk:VirtualKeyboardControlButton.KeyControlInputValue="0xd">
                                         <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Done" />
                                     </pk:VirtualKeyboardControlButton>
                                 </StackPanel>
 
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <pk:VirtualKeyboardSpecialButton x:Name="NumericSwitchButton"
-                                                                     Style="{StaticResource KeyboardButtonStyle}"
-                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="NumericSwitch">
-                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Sym" />
-                                    </pk:VirtualKeyboardSpecialButton>
-                                    <pk:VirtualKeyboardSpecialButton x:Name="AlphaSwitchButton"
-                                                                     Style="{StaticResource KeyboardButtonStyle}"
-                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="AlphaSwitch"
-                                                                     Visibility="Collapsed">
-                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="123" />
-                                    </pk:VirtualKeyboardSpecialButton>
+                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardShiftButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey" />
 
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="z"
@@ -377,16 +377,39 @@
                                             </TextBlock>
                                         </StackPanel>
                                     </pk:VirtualKeyboardInputButton>
+
+                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardShiftButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey" />
                                 </StackPanel>
 
                                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardShiftButtonStyle}"
-                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey" />
+                                    <pk:VirtualKeyboardSpecialButton x:Name="NumericSwitchButtonL"
+                                                                     Style="{StaticResource KeyboardButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="NumericState">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Sym" />
+                                    </pk:VirtualKeyboardSpecialButton>
+                                    <pk:VirtualKeyboardSpecialButton x:Name="AlphaSwitchButtonL"
+                                                                     Style="{StaticResource KeyboardButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="AlphaState"
+                                                                     Visibility="Collapsed">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="123" />
+                                    </pk:VirtualKeyboardSpecialButton>
+
                                     <pk:VirtualKeyboardControlButton Style="{StaticResource KeyboardButtonStyle}"
-                                                                     Width="858"
+                                                                     Width="1106"
                                                                      pk:VirtualKeyboardControlButton.KeyControlInputValue="0x20" />
-                                    <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardShiftButtonStyle}"
-                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey" />
+
+                                    <pk:VirtualKeyboardSpecialButton x:Name="NumericSwitchButtonR"
+                                                                     Style="{StaticResource KeyboardButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="NumericState">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="Sym" />
+                                    </pk:VirtualKeyboardSpecialButton>
+                                    <pk:VirtualKeyboardSpecialButton x:Name="AlphaSwitchButtonR"
+                                                                     Style="{StaticResource KeyboardButtonStyle}"
+                                                                     pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="AlphaState"
+                                                                     Visibility="Collapsed">
+                                        <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="123" />
+                                    </pk:VirtualKeyboardSpecialButton>
                                 </StackPanel>
                             </StackPanel>
                         </Grid>

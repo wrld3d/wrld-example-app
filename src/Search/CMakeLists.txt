@@ -11,11 +11,12 @@ set(currsources
   ../src/Search/SearchQueryResponseReceivedMessage.h
   ../src/Search/SearchVendorNames.cpp
   ../src/Search/SearchVendorNames.h
+  ../src/Search/SearchQueryResultsRemovedMessage.cpp
+  ../src/Search/SearchQueryResultsRemovedMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Search FILES ${currsources})
 include(../src/Search/Combined/CMakeLists.txt)
-include(../src/Search/Example/CMakeLists.txt)
 include(../src/Search/EegeoPois/CMakeLists.txt)
 include(../src/Search/GeoNames/CMakeLists.txt)
 include(../src/Search/SdkModel/CMakeLists.txt)

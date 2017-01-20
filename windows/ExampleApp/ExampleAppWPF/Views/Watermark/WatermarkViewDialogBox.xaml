@@ -106,7 +106,7 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="{DynamicResource WatermarkDialogBoxButtonContainerHeight}">
                 <Button Width="{DynamicResource WatermarkDialogBoxButtonWidth}" Style="{StaticResource TextButton}" Content="{Binding AcceptButtonText}" Click="OnAcceptButtonClick" />
                 <Grid Width="{DynamicResource WatermarkDialogBoxButtonGap}" />
-                <Button Width="{DynamicResource WatermarkDialogBoxButtonWidth}" Style="{StaticResource TextButton}" Content="{Binding CancelButtonText}" IsCancel="True" />
+                <Button Width="{DynamicResource WatermarkDialogBoxButtonWidth}" Style="{StaticResource TextButton}" Content="{Binding CancelButtonText}" Click="OnCancelButtonClick" IsCancel="True" />
             </StackPanel>
         </StackPanel>
         <Grid Margin="{DynamicResource WatermarkDialogBoxContainerMargin}" Visibility="{DynamicResource WatermarkDialogBoxContainerKioskVisibility}">
@@ -132,6 +132,7 @@
                 </Grid>
                 <Button Style="{StaticResource WatermarkDialogBox_CloseButton}"
                         Name="CancelButton"
+                        Click="OnCancelButtonClick"
                         IsCancel="True"
                         HorizontalAlignment="Right"
                         Grid.Column="1"

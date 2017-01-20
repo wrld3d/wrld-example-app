@@ -23,8 +23,14 @@ namespace ExampleAppWPF
 
     public partial class WatermarkViewDialogBox : Window
     {
-        public WatermarkViewDialogBox(string title, string message, string acceptButton, string cancelButton, ImageSource watermarkLogo)
+        public delegate void ButtonClickHandler(object sender, RoutedEventArgs e, bool result);
+        public event ButtonClickHandler ButtonClicked;
+        public bool m_modal;
+
+        public WatermarkViewDialogBox(string title, string message, string acceptButton, string cancelButton, ImageSource watermarkLogo, bool modal = true)
         {
+            m_modal = modal;
+
             InitializeComponent();
 
             DataContext = new WatermarkViewDialogViewModel(title, message, acceptButton, cancelButton, watermarkLogo);
@@ -32,7 +38,24 @@ namespace ExampleAppWPF
 
         void OnAcceptButtonClick(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
+            if (m_modal)
+            {
+                DialogResult = true;
+            }
+            else
+            {
+                ButtonClicked?.Invoke(sender, e, true);
+                Close();
+            }
+        }
+
+        void OnCancelButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (!m_modal)
+            {
+                ButtonClicked?.Invoke(sender, e, false);
+                Close();
+            }
         }
     }
 }

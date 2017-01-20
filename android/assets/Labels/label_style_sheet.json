@@ -877,7 +877,7 @@
         "constraint_radius_scale": 1.0,
         "pickable": true,
         "stencil_mode": "always",
-        "priority": 5
+        "priority": 1
     },
 
     {
