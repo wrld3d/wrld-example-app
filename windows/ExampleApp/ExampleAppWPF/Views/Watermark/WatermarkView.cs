@@ -63,7 +63,8 @@ namespace ExampleAppWPF
 
         private void OnClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            DialogBox dialogBox = new DialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later");
+            ImageSource watermarkViewImageSource = GetImageAssetSource(m_imageAssetUrl);
+            WatermarkViewDialogBox dialogBox = new WatermarkViewDialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later", watermarkViewImageSource);
             dialogBox.Owner = m_currentWindow;
 
             m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
@@ -165,7 +166,12 @@ namespace ExampleAppWPF
 
         private void TransitionToNewImage()
         {
-            string imageAssetPlusExtension = m_imageAssetUrl + ".png";
+            m_imageView.Source = GetImageAssetSource(m_imageAssetUrl);
+        }
+
+        private ImageSource GetImageAssetSource(string imageAssetUrl)
+        {
+            string imageAssetPlusExtension = imageAssetUrl + ".png";
             var src = StartupResourceLoader.GetBitmap(imageAssetPlusExtension);
 
             if (src == null)
@@ -174,7 +180,7 @@ namespace ExampleAppWPF
                 src = StartupResourceLoader.GetBitmap(imageAssetPlusExtension);
             }
 
-            m_imageView.Source = src;
+            return src;
         }
     }
 }
