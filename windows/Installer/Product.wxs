@@ -55,6 +55,13 @@
               <Directory Id="THEMEFOLDER" Name="EmbeddedTheme"/>
               <Directory Id="YELPFOLDER" Name="Yelp"/>
               <Directory Id="LABELSFOLDER" Name="Labels"/>
+              <Directory Id="FONTSFOLDER" Name="Fonts">
+                <Component Id="FONTSFOLDER" Guid="{AE5AE360-A8A3-4993-B6EF-F8465B3935EC}">
+                  <RemoveFile Id='PurgeFontsFolder' On='uninstall' Name='*.*'/>
+                  <RemoveFolder Id="FONTSFOLDER" On='uninstall'/>
+                </Component>
+                <Directory Id="OPENSANSFOLDER" Name="OpenSans"/>
+              </Directory>
             </Directory>
           </Directory>
         </Directory>
@@ -1378,6 +1385,15 @@
 	  </Component>
 	  <Component Id="_c5adbdb5.3b07.4dd1.bbcb.303c003b215d" Directory="RESOURCEFOLDER" Guid="{b104cf36-17ee-4762-bfa2-4e6d44cfafb7}">
         <File Id="_3989fc07.d657.48d0.b839.bc52e1a5b0e2" KeyPath="yes" Source="payload\Resources\CreatPIN_dialogue_Icon@kiosk.png" />
+	  </Component>
+	  <Component Id="_3fb8bb82.30db.4c94.8135.02167779eecc" Directory="OPENSANSFOLDER" Guid="{1b33d7df-74c1-486d-bc0d-2469ccbbbd85}">
+        <File Id="_f2a974fb.4275.43f4.9d4a.f2f77ecf696b" KeyPath="yes" Source="payload\Resources\Fonts\OpenSans\LICENSE.txt" />
+	  </Component>
+	  <Component Id="_a4c93901.9605.4047.a34d.d1ba769ffde9" Directory="OPENSANSFOLDER" Guid="{b1711d06-9c09-4442-9bb7-c7a2bce05f0a}">
+        <File Id="_7732df5a.a910.4fd1.a608.de5c3339ab0e" KeyPath="yes" Source="payload\Resources\Fonts\OpenSans\OpenSans-Light.ttf" />
+	  </Component>
+	  <Component Id="_94ab38c9.3f52.4082.913d.0b36b478b4e4" Directory="OPENSANSFOLDER" Guid="{aaf1703b-2b03-4aa1-b00c-fbab96894af9}">
+        <File Id="_920966c8.759d.4cf7.af44.813290b61d66" KeyPath="yes" Source="payload\Resources\Fonts\OpenSans\OpenSans-Regular.ttf" />
 	  </Component>
     </ComponentGroup>
 
