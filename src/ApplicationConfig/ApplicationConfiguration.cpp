@@ -49,7 +49,8 @@ namespace ExampleApp
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
                                                            const long long attractModeTimeoutMs,
-                                                           const double attractModePlaybackSpeed)
+                                                           const double attractModePlaybackSpeed,
+                                                           const std::string& adminPassword)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_embeddedThemeTexturePath(embeddedThemeTexturePath)
@@ -94,6 +95,7 @@ namespace ExampleApp
         , m_attractModePositionSplinePoints(attractModePositionSplinePoints)
         , m_attractModeTimeoutMs(attractModeTimeoutMs)
         , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
+        , m_adminPassword(adminPassword)
         {
             
         }
@@ -315,6 +317,11 @@ namespace ExampleApp
         const bool ApplicationConfiguration::IsAttractModeEnabled() const
         {
             return m_attractModeTimeoutMs > 0;
+        }
+
+        const std::string& ApplicationConfiguration::GetAdminPassword() const
+        {
+            return m_adminPassword;
         }
     }
 }

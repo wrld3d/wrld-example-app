@@ -54,6 +54,7 @@ namespace ExampleApp
             , m_fixedLatlong(0.0, 0.0)
             , m_fixedFloorIndex(0)
             , m_fixedHeadingDegrees(0.0)
+            , m_adminPassword("")
             {
                 
             }
@@ -300,6 +301,12 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetAdminPassword(const std::string& adminPassword) 
+            {
+                m_adminPassword = adminPassword;
+                return *this;
+            }
+
             std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
             {
                 return m_cipher.Decrypt(value);
@@ -366,7 +373,8 @@ namespace ExampleApp
                                                 m_attractModeTargetSplinePoints,
                                                 m_attractModePositionSplinePoints,
                                                 m_attractModeTimeoutMs,
-                                                m_attractModePlaybackSpeed);
+                                                m_attractModePlaybackSpeed,
+                                                m_adminPassword);
             }
         }
     }

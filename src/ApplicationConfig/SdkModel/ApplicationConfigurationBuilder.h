@@ -69,6 +69,8 @@ namespace ExampleApp
 
                 long long m_attractModeTimeoutMs;
                 double m_attractModePlaybackSpeed;
+
+                std::string m_adminPassword;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -150,6 +152,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetAttractModePositionSplinePoints(std::vector<Eegeo::Space::LatLongAltitude> points);
                 IApplicationConfigurationBuilder& SetAttractModeTimeoutMs(const long long timeoutMs);
                 IApplicationConfigurationBuilder& SetAttractModePlaybackSpeed(const double playbackSpeed);
+
+                IApplicationConfigurationBuilder& SetAdminPassword(const std::string& adminPassword);
                 
                 std::string Decrypt(const std::string& message) const;
 

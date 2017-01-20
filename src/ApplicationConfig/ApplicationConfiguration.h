@@ -69,6 +69,8 @@ namespace ExampleApp
             long long m_attractModeTimeoutMs;
             double m_attractModePlaybackSpeed;
 
+            std::string m_adminPassword;
+
         public:
             
             ApplicationConfiguration(const std::string& name,
@@ -114,7 +116,8 @@ namespace ExampleApp
                                      const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
                                      const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
                                      const long long attractModeTimeoutMs,
-                                     const double attractModePlaybackSpeed);
+                                     const double attractModePlaybackSpeed,
+                                     const std::string& adminPassword);
             
             std::string Name() const;
 
@@ -194,6 +197,8 @@ namespace ExampleApp
             const long long GetAttractModeTimeoutMs() const;
             const double GetAttractModePlaybackSpeed() const;
             const bool IsAttractModeEnabled() const;
+
+            const std::string& GetAdminPassword() const;
         };
     }
 }

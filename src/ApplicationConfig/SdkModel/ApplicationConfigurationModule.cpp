@@ -54,6 +54,8 @@ namespace ExampleApp
 
                     const double attractModePlaybackSpeed = 0.03;
 
+                    const std::string emptyAdminPassword;
+
                     return ApplicationConfiguration ("Eegeo Example App", 
                         emptyEegeoApiKey,
                         Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
@@ -97,7 +99,8 @@ namespace ExampleApp
                         std::vector<Eegeo::Space::LatLongAltitude>(),
                         std::vector<Eegeo::Space::LatLongAltitude>(),
                         0,
-                        attractModePlaybackSpeed);
+                        attractModePlaybackSpeed,
+                        emptyAdminPassword);
                 }
             }
             
