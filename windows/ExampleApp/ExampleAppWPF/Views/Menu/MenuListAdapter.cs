@@ -32,6 +32,8 @@ namespace ExampleAppWPF
 
         private ObservableCollection<MenuListItem> m_children;
 
+        private bool m_isInKioskMode;
+
         public ObservableCollection<MenuListItem> Children
         {
             get
@@ -42,7 +44,7 @@ namespace ExampleAppWPF
 
 
         public MenuListAdapter(bool shouldAlignIconRight, ListBox list,
-            Storyboard slideInAnimation, Storyboard slideOutAnimation, Storyboard itemShutterOpenAnimation, Storyboard itemShutterCloseAnimation, string controlToAnimate)
+            Storyboard slideInAnimation, Storyboard slideOutAnimation, Storyboard itemShutterOpenAnimation, Storyboard itemShutterCloseAnimation, string controlToAnimate, bool isInKioskMode)
         {   
             m_animatedSizesMap = new Dictionary<string, int>();
 
@@ -62,6 +64,8 @@ namespace ExampleAppWPF
             m_slideOutStoryboardRunner = new StoryboardRunner(slideOutAnimation);
 
             ControlToAnimate = controlToAnimate;
+
+            m_isInKioskMode = isInKioskMode;
         }
 
         public bool IsAnimating()
@@ -553,7 +557,7 @@ namespace ExampleAppWPF
             }
             else
             {
-                return new SubMenuListItem(json, totalItemCount - index);
+                return new SubMenuListItem(json, totalItemCount - index, m_isInKioskMode);
             }
         }
 

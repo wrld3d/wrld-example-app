@@ -36,7 +36,8 @@ namespace ExampleApp
                                      Modality::View::IModalBackgroundView& modalBackgroundView,
                                      Modality::View::IModalityController& modalityController,
                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                     Reaction::View::IReactionModel& reactionModel);
+                                     Reaction::View::IReactionModel& reactionModel,
+                                     bool isInKioskMode);
                 
                 ~SearchMenuViewModule();
                 

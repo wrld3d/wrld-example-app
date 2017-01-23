@@ -51,8 +51,8 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(GeoNamesSearchResultsPoiView), new FrameworkPropertyMetadata(typeof(GeoNamesSearchResultsPoiView)));
         }
 
-        public GeoNamesSearchResultsPoiView(IntPtr nativeCallerPointer)
-            : base(nativeCallerPointer)
+        public GeoNamesSearchResultsPoiView(IntPtr nativeCallerPointer, bool isInKioskMode)
+            : base(nativeCallerPointer, isInKioskMode)
         {
 
         }
@@ -69,7 +69,7 @@ namespace ExampleAppWPF
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
-            m_tagIcon.Source = SearchResultPoiViewIconProvider.GetIconForTag(m_model.IconKey);
+            m_tagIcon.Source = IconProvider.GetIconForTag(m_model.IconKey, m_isInKioskMode);
 
             m_closing = false;
 

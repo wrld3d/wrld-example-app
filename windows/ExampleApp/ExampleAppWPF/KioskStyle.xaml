@@ -482,7 +482,7 @@
     <System:Double x:Key="SearchMenuListItemHeight">64</System:Double>
     <System:Double x:Key="SearchResultPanelWidth">453</System:Double>
     <Thickness x:Key="SearchResultPanelMargin" Left="50" Top="0" Right="0" Bottom="0"/>
-    <System:Double x:Key="SearchResultPanelIconSize">64</System:Double>
+    <System:Double x:Key="SearchResultPanelIconSize">54</System:Double>
     <Thickness x:Key="SearchResultPanelIconMargin" Left="3" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="SearchResultPanelStackPanelWidth">349</System:Double>
     <System:Double x:Key="SearchResultPanelTitleFontSize">23</System:Double>

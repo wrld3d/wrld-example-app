@@ -45,6 +45,8 @@ namespace ExampleAppWPF
 
         private double m_scrollSpeed;
 
+        protected bool m_isInKioskMode;
+
         public bool IsPinned
         {
             get
@@ -66,9 +68,10 @@ namespace ExampleAppWPF
             return m_isAnyPOIOpen;
         }
 
-        public SearchResultPoiViewBase(IntPtr nativeCallerPointer)
+        public SearchResultPoiViewBase(IntPtr nativeCallerPointer, bool isInKioskMode)
         {
             m_nativeCallerPointer = nativeCallerPointer;
+            m_isInKioskMode = isInKioskMode;
 
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
