@@ -46,6 +46,8 @@ namespace ExampleAppWPF
             MapImage.DeferToAlreadyRunningInstance();
 
             InitializeComponent();
+            Style = (Style)FindResource(typeof(Window));
+
             StartupResourceLoader.Init();
 
             m_mapImage = new MapImage();

@@ -9,6 +9,45 @@
         <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <!-- Watermark View -->
+    <System:Double x:Key="WatermarkDialogBoxWidth">540</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxHeight">525</System:Double>
+    <Thickness x:Key="WatermarkDialogBoxBorderThickness" Left="0" Top="0" Right="0" Bottom="0"/>
+    <Visibility x:Key="WatermarkDialogBoxContainerNormalVisibility">Collapsed</Visibility>
+    <Visibility x:Key="WatermarkDialogBoxContainerKioskVisibility">Visible</Visibility>
+    <Thickness x:Key="WatermarkDialogBoxContainerMargin" Left="20" Top="20" Right="20" Bottom="40"/>
+    <System:Double x:Key="WatermarkDialogBoxContainerWidth">325</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxContainerHeight">150</System:Double>
+    <GridLength x:Key="WatermarkDialogBoxContainerRow0Height">94</GridLength>
+    <Thickness x:Key="WatermarkDialogBoxTitleContainerMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <GridLength x:Key="WatermarkDialogBoxTitleColumn0">446</GridLength>
+    <GridLength x:Key="WatermarkDialogBoxTitleColumn1">54</GridLength>
+    <System:Double x:Key="WatermarkDialogBoxTitleContainerHeight">20</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxTitleWidth">325</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxTitleFontSize">40</System:Double>
+    <Thickness x:Key="WatermarkDialogBoxTitleTextMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="WatermarkDialogBoxTitleMaxWidth">350</System:Double>
+    <Visibility x:Key="WatermarkDialogBoxTitleDividerVisibility">Visible</Visibility>
+    <System:Double x:Key="WatermarkDialogBoxLogoHeight">60</System:Double>
+    <Thickness x:Key="WatermarkDialogBoxLogoMargin" Left="0" Top="22" Right="0" Bottom="12"/>
+    <System:Double x:Key="WatermarkDialogBoxMessageContainerHeight">536</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxMessageWidth">500</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxMessageHeight">70</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxMessageFontSize">25</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxButtonContainerHeight">50</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxButtonWidth">150</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxButtonGap">25</System:Double>
+    <ImageSource x:Key="WatermarkDialogBoxCloseButtonOffImage">/Assets/button_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="WatermarkDialogBoxCloseButtonOnImage">/Assets/button_close_on@kiosk.png</ImageSource>
+    <System:Double x:Key="WatermarkDialogBoxCloseButtonSize">54</System:Double>
+    <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOffColour" Color="White"/>
+    <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOnColour" Color="White"/>
+    <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOverColour" Color="White"/>
+    <ImageSource x:Key="WatermarkDialogBoxQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
+    <System:Double x:Key="WatermarkDialogBoxQRCodeImageSize">176</System:Double>
+    <Visibility x:Key="WatermarkDialogBoxQRCodeVisibility">Visible</Visibility>
+    <Thickness x:Key="WatermarkDialogBoxQRCodeImageMargin" Left="0" Top="30" Right="0" Bottom="0"/>
+
     <!-- Options Panel -->
     <System:Double x:Key="OptionsPanelWidth">540</System:Double>
     <GridLength x:Key="OptionsPanelRow0Height">94</GridLength>

@@ -39,7 +39,7 @@
             "FloorMapping":
             [
                 {
-                    "BuildingFloorIndex": 0,
+                    "BuildingFloorIndex": 2,
                     "TrackedFloorIndex": "0"
                 },
                 {
@@ -59,7 +59,7 @@
             "FloorMapping":
             [
                 {
-                    "BuildingFloorIndex": 6,
+                    "BuildingFloorIndex": 7,
                     "TrackedFloorIndex": "0"
                 }
             ]

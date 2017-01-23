@@ -37,9 +37,13 @@
     <SolidColorBrush x:Key="Highlight" Color="#FF8DD8F8"/>
 
     <!-- Fonts -->
-    <FontFamily x:Key="PrimaryUIFont">Segoe UI</FontFamily>
-    <FontFamily x:Key="PrimaryUILightFont">Segoe UI Light</FontFamily>
-    
+    <FontFamily x:Key="PrimaryUIFont">pack://application:,,,/Assets/#Open Sans</FontFamily>
+    <FontFamily x:Key="PrimaryUILightFont">pack://application:,,,/Assets/#Open Sans Light</FontFamily>
+
+    <Style TargetType="{x:Type Window}">
+        <Setter Property="FontFamily" Value="pack://application:,,,/Assets/#Open Sans"/>
+    </Style>
+
     <!-- Buttons -->
     <Style x:Key="ButtonFocusVisual">
         <Setter Property="Control.Template">
