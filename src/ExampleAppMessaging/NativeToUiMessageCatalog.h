@@ -36,7 +36,6 @@
 #include "URLRequestedMessage.h"
 #include "DeeplinkURLRequestedMessage.h"
 #include "ConnectivityChangedViewMessage.h"
-#include "StartSearchSurveyMessage.h"
 #include "StartUxSurveyMessage.h"
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "TagSearchAddedMessage.h"
@@ -86,7 +85,6 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<URLRequest::URLRequestedMessage>
             , public Eegeo::Messaging::CatalogBinding<URLRequest::DeeplinkURLRequestedMessage>
             , public Eegeo::Messaging::CatalogBinding<Net::ConnectivityChangedViewMessage>
-            , public Eegeo::Messaging::CatalogBinding<Surveys::StartSearchSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<Surveys::StartUxSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
             , public Eegeo::Messaging::CatalogBinding<VirtualKeyboard::VirtualKeyboardStateChangedMessage>
