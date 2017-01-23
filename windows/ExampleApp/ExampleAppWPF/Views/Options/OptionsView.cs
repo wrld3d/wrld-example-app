@@ -93,7 +93,7 @@ namespace ExampleAppWPF
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
 
-            InitialiseAdminLoginView();
+            InitialiseAdminLoginView(adminPassword);
         }
 
         public override void OnApplyTemplate()
@@ -196,10 +196,9 @@ namespace ExampleAppWPF
             m_cacheClearSubView.DisplayWarning(() => OptionsViewCLIMethods.ClearCacheSelected(m_nativeCallerPointer));
         }
 
-        private void InitialiseAdminLoginView()
+        private void InitialiseAdminLoginView(string adminPassword)
         {
-            m_adminLoginView = new AdminLoginView();
-            m_adminLoginView.Initialise(m_adminPassword);
+            m_adminLoginView = new AdminLoginView(adminPassword);
             m_adminLoginView.Visibility = Visibility.Collapsed;
             m_adminLoginView.OnHide += OnAdminLoginHide;
             m_currentWindow.MainGrid.Children.Add(m_adminLoginView);

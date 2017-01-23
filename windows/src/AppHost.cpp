@@ -98,7 +98,6 @@
 #include "CurrentLocationService.h"
 #include "AttractModeOverlayView.h"
 #include "WindowsProcessHelper.h"
-#include "AdminLoginView.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -151,7 +150,6 @@ AppHost::AppHost(
 	, m_pTagSearchViewModule(NULL)
 	, m_pUserIdleService(NULL)
 	, m_pVirtualKeyboardView(NULL)
-    , m_pAdminLoginView(NULL)
     , m_pAttractModeOverlayView(NULL)
 {
     ASSERT_NATIVE_THREAD
@@ -643,7 +641,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     if (IsInKioskMode())
     {
         m_pVirtualKeyboardView = Eegeo_NEW(ExampleApp::VirtualKeyboard::View::VirtualKeyboardView)(m_nativeState, m_messageBus);
-        //m_pAdminLoginView = Eegeo_NEW(ExampleApp::AdminLogin::View::AdminLoginView)(m_nativeState, app.GetApplicationConfiguration().GetAdminPassword());
     }
 
     if (m_pApp->GetApplicationConfiguration().IsAttractModeEnabled())
