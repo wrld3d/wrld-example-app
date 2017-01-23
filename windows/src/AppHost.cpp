@@ -610,6 +610,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.OptionsModule().GetOptionsViewModel(),
         m_pWindowsPlatformAbstractionModule->GetHttpCache(),
         m_messageBus,
+        app.GetApplicationConfiguration().GetAdminPassword(),
         app.GetApplicationConfiguration().IsInKioskMode());
 
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
@@ -642,7 +643,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     if (IsInKioskMode())
     {
         m_pVirtualKeyboardView = Eegeo_NEW(ExampleApp::VirtualKeyboard::View::VirtualKeyboardView)(m_nativeState, m_messageBus);
-        m_pAdminLoginView = Eegeo_NEW(ExampleApp::AdminLogin::View::AdminLoginView)(m_nativeState, app.GetApplicationConfiguration().GetAdminPassword());
+        //m_pAdminLoginView = Eegeo_NEW(ExampleApp::AdminLogin::View::AdminLoginView)(m_nativeState, app.GetApplicationConfiguration().GetAdminPassword());
     }
 
     if (m_pApp->GetApplicationConfiguration().IsAttractModeEnabled())

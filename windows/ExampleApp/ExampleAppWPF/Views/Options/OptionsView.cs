@@ -68,6 +68,7 @@ namespace ExampleAppWPF
 
         protected IntPtr m_nativeCallerPointer;
         
+        private string m_adminPassword;
         private bool m_isInKioskMode;
 
         private Button m_closeButton;
@@ -82,20 +83,17 @@ namespace ExampleAppWPF
 
         private OptionsCacheClearSubView m_cacheClearSubView;
 
-        public OptionsView(IntPtr nativeCallerPointer, bool isInKioskMode)
+        public OptionsView(IntPtr nativeCallerPointer, string adminPassword, bool isInKioskMode)
         {
             m_nativeCallerPointer = nativeCallerPointer;
+            m_adminPassword = adminPassword;
             m_isInKioskMode = isInKioskMode;
             Visibility = Visibility.Hidden;
 
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
 
-            m_currentWindow.ContentRendered += (sender, ev) =>
-            {
-                m_adminLoginView = ViewHelpers.FindChildrenOfType<AdminLoginView>(m_currentWindow.MainGrid.Children).SingleOrDefault();
-                m_adminLoginView.IsVisibleChanged += (o, e) => OnAdminLoginViewVisibileChanged();
-            };
+            InitialiseAdminLoginView();
         }
 
         public override void OnApplyTemplate()
@@ -147,16 +145,14 @@ namespace ExampleAppWPF
             m_adminLoginView.Show();
         }
 
-        private void OnAdminLoginViewVisibileChanged()
+        private void OnAdminLoginHide()
         {
-            if (!m_adminLoginView.IsVisible)
-            {
-                Visibility = Visibility.Visible;
-            }
+            Visibility = Visibility.Visible;
         }
 
         public void Destroy()
         {
+            m_currentWindow.MainGrid.Children.Remove(m_adminLoginView);
             m_currentWindow.MainGrid.Children.Remove(this);
         }
 
@@ -198,6 +194,15 @@ namespace ExampleAppWPF
         {
             m_cacheClearSubView = new OptionsCacheClearSubView();
             m_cacheClearSubView.DisplayWarning(() => OptionsViewCLIMethods.ClearCacheSelected(m_nativeCallerPointer));
+        }
+
+        private void InitialiseAdminLoginView()
+        {
+            m_adminLoginView = new AdminLoginView();
+            m_adminLoginView.Initialise(m_adminPassword);
+            m_adminLoginView.Visibility = Visibility.Collapsed;
+            m_adminLoginView.OnHide += OnAdminLoginHide;
+            m_currentWindow.MainGrid.Children.Add(m_adminLoginView);
         }
     }
 }

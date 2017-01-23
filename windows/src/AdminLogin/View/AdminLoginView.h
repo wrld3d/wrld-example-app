@@ -15,15 +15,17 @@ namespace ExampleApp
             class AdminLoginView
             {
             public:
-                AdminLoginView(WindowsNativeState& nativeState, const std::string& adminPassword);
+                AdminLoginView(System::Type^ uiViewClass, System::Object^ uiView, System::String^ password);
+                AdminLoginView(const std::string& adminPassword);
                 ~AdminLoginView();
 
                 void HandleOkClicked(const std::string password);
 
             private:
-                WindowsNativeState& m_nativeState;
+                void InitManagedCalls();
 
                 std::string m_adminPassword;
+                bool m_ownManagedState;
 
                 Helpers::ReflectionHelpers::Method<bool> mOnPasswordAccepted;
                 Helpers::ReflectionHelpers::Method<void> mDismiss;
