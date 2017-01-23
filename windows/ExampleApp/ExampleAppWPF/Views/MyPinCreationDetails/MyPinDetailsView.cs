@@ -26,6 +26,7 @@ namespace ExampleAppWPF
         private Button m_closeButton = null;
         private Button m_removeButton = null;
         private ScrollViewer m_PinDetailsView;
+        private DialogBox m_removePinDialog;
 
         private float m_imageWidth;
 
@@ -95,10 +96,13 @@ namespace ExampleAppWPF
 
         private void OnDeleteClicked(object sender, RoutedEventArgs e)
         {
-            if (ShowRemovePinDialog() == true)
+            ShowRemovePinDialog((removePinOk)  =>
             {
-                ExampleApp.MyPinDetailsViewCLI.RemovePinButtonClicked(m_nativeCallerPointer);
-            }
+                if (removePinOk)
+                {
+                    ExampleApp.MyPinDetailsViewCLI.RemovePinButtonClicked(m_nativeCallerPointer);
+                }
+            });
         }
 
         private void OnCloseClicked(object sender, RoutedEventArgs e)
@@ -142,26 +146,23 @@ namespace ExampleAppWPF
         public void Dismiss()
         {
             Visibility = Visibility.Hidden;
+            m_removePinDialog.Close();
             m_currentWindow.EnableInput();
         }
 
-        private bool ShowRemovePinDialog()
+        private void ShowRemovePinDialog(Action<bool> cont)
         {
-            DialogBox dialogBox = new DialogBox("Remove Report", "Are you sure you want to remove this report?", "Yes", "No");
-            dialogBox.Owner = m_currentWindow;
+            m_removePinDialog = new DialogBox("Remove Report", "Are you sure you want to remove this report?", "Yes", "No", false);
+            m_removePinDialog.Owner = m_currentWindow;
+            m_removePinDialog.Closed += (o, e) => m_currentWindow.SetOpacity(1.0f);
+            m_removePinDialog.ButtonClicked += (sender, ev, okClicked) =>
+            {
+                m_removePinDialog.Close();
+                cont(okClicked);
+            };
 
             m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
-
-            bool? result = dialogBox.ShowDialog();
-
-            m_currentWindow.SetOpacity(1.0f);
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            return (bool)result;
+            m_removePinDialog.Show();
         }
     }
 }
