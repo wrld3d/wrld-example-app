@@ -28,7 +28,7 @@ namespace ExampleAppWPF
         private ControlClickHandler m_imageClickHandler = null;
         private bool m_isActive = false;
 
-        private DialogBox m_dialogBox = null;
+        private WatermarkViewDialogBox m_dialogBox = null;
 
         static WatermarkView()
         {
@@ -65,7 +65,8 @@ namespace ExampleAppWPF
 
         private void OnClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            m_dialogBox = new DialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later", false);
+            ImageSource watermarkViewImageSource = GetImageAssetSource(m_imageAssetUrl);
+            m_dialogBox = new WatermarkViewDialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later", watermarkViewImageSource, false);
             m_dialogBox.Owner = m_currentWindow;
 
             m_dialogBox.ButtonClicked += (o, clickEventArgs, acceptClicked) =>
@@ -187,7 +188,12 @@ namespace ExampleAppWPF
 
         private void TransitionToNewImage()
         {
-            string imageAssetPlusExtension = m_imageAssetUrl + ".png";
+            m_imageView.Source = GetImageAssetSource(m_imageAssetUrl);
+        }
+
+        private ImageSource GetImageAssetSource(string imageAssetUrl)
+        {
+            string imageAssetPlusExtension = imageAssetUrl + ".png";
             var src = StartupResourceLoader.GetBitmap(imageAssetPlusExtension);
 
             if (src == null)
@@ -196,7 +202,7 @@ namespace ExampleAppWPF
                 src = StartupResourceLoader.GetBitmap(imageAssetPlusExtension);
             }
 
-            m_imageView.Source = src;
+            return src;
         }
     }
 }

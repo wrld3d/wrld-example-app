@@ -143,6 +143,9 @@
     <Compile Include="Views\Menu\MenuView.cs" />
     <Compile Include="Views\SettingsMenu\SettingsMenuView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuView.cs" />
+    <Compile Include="Views\Watermark\WatermarkViewDialogBox.xaml.cs">
+      <DependentUpon>WatermarkViewDialogBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VirtualKeyboard\Controls\QuertyKeyboard.cs" />
     <Compile Include="VirtualKeyboard\Controls\QuertyKeyboardButton.cs" />
     <Compile Include="VirtualKeyboard\Controls\VirtualKeyboardButton.cs" />
@@ -298,6 +301,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Watermark\WatermarkViewDialogBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Views\MyPinCreationInitiation\MyPinCreationButtonView.cs" />
@@ -319,6 +326,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="..\..\Resources\Fonts\OpenSans\OpenSans-Light.ttf">
+      <Link>Assets\OpenSans-Light.ttf</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Fonts\OpenSans\OpenSans-Regular.ttf">
+      <Link>Assets\OpenSans-Regular.ttf</Link>
+    </Resource>
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

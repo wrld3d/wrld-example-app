@@ -45,6 +45,8 @@ namespace ExampleAppWPF
         {
             InitializeComponent();
 
+            Style = (Style)FindResource(typeof(Window));
+
             StartupResourceLoader.Init();
 
 
