@@ -157,8 +157,8 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(eeGeoSearchResultsPoiView), new FrameworkPropertyMetadata(typeof(eeGeoSearchResultsPoiView)));
         }
 
-        public eeGeoSearchResultsPoiView(IntPtr nativeCallerPointer)
-            : base(nativeCallerPointer)
+        public eeGeoSearchResultsPoiView(IntPtr nativeCallerPointer, bool isInKioskMode)
+            : base(nativeCallerPointer, isInKioskMode)
         {
         }
 
@@ -522,7 +522,7 @@ namespace ExampleAppWPF
                 m_descriptionContainer.Visibility = Visibility.Collapsed;
             }
 
-            TagIcon = SearchResultPoiViewIconProvider.GetIconForTag(model.IconKey);
+            TagIcon = IconProvider.GetIconForTag(model.IconKey, m_isInKioskMode);
 
             ShowAll();
 

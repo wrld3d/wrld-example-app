@@ -10,8 +10,6 @@ namespace ExampleAppWPF
 {
     public class YelpSearchResultsPoiView : SearchResultPoiViewBase
     {
-        private bool m_isInKioskMode;
-
         private TextBlock m_titleView = null;
         private Image m_poiImage = null;
         
@@ -183,9 +181,8 @@ namespace ExampleAppWPF
         }
 
         public YelpSearchResultsPoiView(IntPtr nativeCallerPointer, bool isInKioskMode)
-            : base(nativeCallerPointer)
+            : base(nativeCallerPointer, isInKioskMode)
         {
-            m_isInKioskMode = isInKioskMode;
         }
 
         public override void OnApplyTemplate()
@@ -240,7 +237,7 @@ namespace ExampleAppWPF
             HumanReadableTagsText = string.Join(", ", model.HumanReadableTags);
             ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);
             QRCodeText = string.Format(m_qrCodeStyleText, TitleText);
-            TagIcon = SearchResultPoiViewIconProvider.GetIconForTag(model.IconKey);
+            TagIcon = IconProvider.GetIconForTag(model.IconKey, m_isInKioskMode);
             PoiViewRatingCountText = yelpResultModel.ReviewCount > 0 ? yelpResultModel.ReviewCount.ToString() : string.Empty;
             RatingsImage.Source = null;
 

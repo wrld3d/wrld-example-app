@@ -99,6 +99,7 @@
     <Compile Include="DialogBox.xaml.cs">
       <DependentUpon>DialogBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IconProvider.cs" />
     <Compile Include="Layout.cs" />
     <Compile Include="PersistentSettings\PersistentSettings.cs" />
     <Compile Include="TickBarVerticalWithLabels.cs" />
@@ -125,12 +126,10 @@
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
-    <Compile Include="Views\SearchMenu\SearchMenuResultIconProvider.cs" />
     <Compile Include="Views\SearchResultPoi\eeGeoSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\EegeoResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
-    <Compile Include="Views\SearchResultPoi\SearchResultPoiViewIconProvider.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
     <Compile Include="Views\SearchResultPoi\YelpSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchMenu\SubMenuListItem.cs" />
