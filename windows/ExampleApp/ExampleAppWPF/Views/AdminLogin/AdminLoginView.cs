@@ -57,7 +57,10 @@ namespace ExampleAppWPF
         public void Dismiss()
         {
             Visibility = Visibility.Collapsed;
-            m_passwordBox.Password = String.Empty;
+            if (m_passwordBox != null)
+            {
+                m_passwordBox.Password = String.Empty;
+            }
             OnHide?.Invoke();
         }
 
