@@ -5,7 +5,6 @@
 #include <string>
 
 #include "IPersistentSettingsModel.h"
-#include "StartSearchSurveyMessage.h"
 #include "StartUxSurveyMessage.h"
 
 namespace
@@ -162,13 +161,7 @@ namespace ExampleApp
                     return;
                 }
                 
-                if(SearchRequirementsMet())
-                {
-                    m_persistentSettingsModel.SetValue(SurveyOfferedKeyName, true);
-                    
-                    m_messageBus.Publish(StartSearchSurveyMessage());
-                }
-                else if(WeatherRequirementsMet() || PinCreationRequirementsMet())
+                if(WeatherRequirementsMet() || PinCreationRequirementsMet())
                 {
                     m_persistentSettingsModel.SetValue(SurveyOfferedKeyName, true);
                     
