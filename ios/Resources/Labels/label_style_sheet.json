@@ -894,6 +894,7 @@
         "screen_margin": 36.0,
         "screen_margin_hiding": "if_icon_outside_margin",
         "stencil_mode": "always",
+        "initially_faded_out":true,
         "priority": 0
     }
     ],
