@@ -4,6 +4,8 @@
 #include "AppLocationDelegate.h"
 #include "MathFunc.h"
 #include "AppDelegate.h"
+#include "App.h"
+#include "DeviceHelpers.h"
 
 using namespace Eegeo::iOS;
 
@@ -28,8 +30,12 @@ using namespace Eegeo::iOS;
         [self setNeedsStatusBarAppearanceUpdate];
     }
 
+    App::Initialise();
+    GameDeviceType device = static_cast<GameDeviceType>(App::GetDevice());
+    NSInteger preferredFramerate = ExampleApp::Helpers::DeviceHelpers::GetPreferredFramerate(device);
+    [self setPreferredFramesPerSecond:preferredFramerate];
+    
     m_previousTimestamp = CFAbsoluteTimeGetCurrent();
-    self.preferredFramesPerSecond = 60;
     m_pAppRunner = NULL;
 }
 
