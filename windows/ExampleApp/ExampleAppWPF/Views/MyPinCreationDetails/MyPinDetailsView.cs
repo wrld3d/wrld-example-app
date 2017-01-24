@@ -152,17 +152,14 @@ namespace ExampleAppWPF
         {
             DialogBox removePinDialog = new DialogBox("Remove Report", "Are you sure you want to remove this report?", "Yes", "No", false);
             removePinDialog.Owner = m_currentWindow;
-            DependencyPropertyChangedEventHandler hideDialog = (o, e) => removePinDialog.Close();
-            IsVisibleChanged += hideDialog;
-            removePinDialog.ButtonClicked += (sender, ev, okClicked) =>
+            m_currentWindow.DisableInput();
+            m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
+            removePinDialog.ShowWithParentControl(this, (sender, ev, okClicked) =>
             {
-                IsVisibleChanged -= hideDialog;
+                m_currentWindow.EnableInput();
                 m_currentWindow.SetOpacity(1.0f);
                 dialogResultCont(okClicked);
-            };
- 
-            m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
-            removePinDialog.Show();
+            });
         }
     }
 }
