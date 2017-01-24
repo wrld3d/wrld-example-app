@@ -24,7 +24,7 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SettingsMenuView), new FrameworkPropertyMetadata(typeof(SettingsMenuView)));
         }
 
-        public SettingsMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
+        public SettingsMenuView(IntPtr nativeCallerPointer, bool isInKioskMode) : base(nativeCallerPointer, isInKioskMode)
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.SizeChanged += PerformLayout;
@@ -85,7 +85,7 @@ namespace ExampleAppWPF
             m_closeBackgroundRect = ((Storyboard)Template.Resources[closeBackgroundRectString]).Clone();
             XamlHelpers.UpdateThicknessAnimationMarginValue(m_closeBackgroundRect, settingsAnimString + closeBackgroundRectString);
 
-            m_adapter = new MenuListAdapter(false, m_list,slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SettingsMenuItemPanel");
+            m_adapter = new MenuListAdapter(false, m_list,slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SettingsMenuItemPanel", m_isInKioskMode);
 
             PerformLayout(null, null);
         }

@@ -18,12 +18,13 @@ namespace ExampleApp
                 IOptionsViewModel& optionsViewModel,
                 Eegeo::Helpers::IHttpCache& httpCache,
                 ExampleAppMessaging::TMessageBus& messageBus,
+                const std::string& adminPassword,
                 bool isInKioskMode
             )
             {
                 ASSERT_UI_THREAD
 
-                m_pView = Eegeo_NEW(OptionsView)(nativeState, isInKioskMode);
+                m_pView = Eegeo_NEW(OptionsView)(nativeState, adminPassword, isInKioskMode);
                 m_pController = Eegeo_NEW(OptionsController)(*m_pView, optionsViewModel, messageBus);
                 m_pClearCacheMessageHandler = Eegeo_NEW(SdkModel::ClearCacheMessageHandler)(httpCache, messageBus);
             }

@@ -27,7 +27,8 @@ namespace ExampleApp
 
             public:
                 SettingsMenuView(WindowsNativeState& nativeState,
-                                  const std::string& viewClassName);
+                                  const std::string& viewClassName,
+                                  bool isInKioskMode);
 
                  bool IsTableAnimating() const;
 

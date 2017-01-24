@@ -20,10 +20,11 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& menuViewModel,
                 Modality::View::IModalBackgroundView& modealBackgroundView,
                 Menu::View::IMenuView& searchMenuView,
-                ExampleAppMessaging::TMessageBus& messageBus
+                ExampleAppMessaging::TMessageBus& messageBus,
+                bool isInKioskMode
             )
             {
-                m_pView = Eegeo_NEW(SettingsMenuView)(nativeState, viewName);
+                m_pView = Eegeo_NEW(SettingsMenuView)(nativeState, viewName, isInKioskMode);
 
                 m_pController = Eegeo_NEW(DesktopSettingsMenuController)(
                                     *m_pView,

@@ -51,6 +51,8 @@ namespace ExampleApp
                     const std::vector<Eegeo::Space::LatLongAltitude> attractModePositionSplinePoints;
                     const long long attractModeTimeoutDisabled = 0;
                     const float attractModePlaybackSpeed = 0.007f;
+
+                    const std::string emptyOptionsAdminPassword;
                     
                     return ApplicationConfiguration ("Eegeo Example App",
                         emptyEegeoApiKey,
@@ -85,7 +87,8 @@ namespace ExampleApp
                         attractModeTargetSplinePoints,
                         attractModePositionSplinePoints,
                         attractModeTimeoutDisabled,
-                        attractModePlaybackSpeed);
+                        attractModePlaybackSpeed,
+                        emptyOptionsAdminPassword);
                 }
             }
             

@@ -1,6 +1,7 @@
 ﻿using ExampleApp;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -67,6 +68,7 @@ namespace ExampleAppWPF
 
         protected IntPtr m_nativeCallerPointer;
         
+        private string m_adminPassword;
         private bool m_isInKioskMode;
 
         private Button m_closeButton;
@@ -75,19 +77,23 @@ namespace ExampleAppWPF
         private Button m_clearCacheButton = null;
         protected FrameworkElement m_mainContainer;
         private Button m_adminLoginButton;
+        private AdminLoginView m_adminLoginView;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private OptionsCacheClearSubView m_cacheClearSubView;
 
-        public OptionsView(IntPtr nativeCallerPointer, bool isInKioskMode)
+        public OptionsView(IntPtr nativeCallerPointer, string adminPassword, bool isInKioskMode)
         {
             m_nativeCallerPointer = nativeCallerPointer;
+            m_adminPassword = adminPassword;
             m_isInKioskMode = isInKioskMode;
             Visibility = Visibility.Hidden;
 
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
+
+            InitialiseAdminLoginView(adminPassword);
         }
 
         public override void OnApplyTemplate()
@@ -135,10 +141,18 @@ namespace ExampleAppWPF
         
         private void OnAdminLoginButtonClick(object sender, RoutedEventArgs e)
         {
+            Visibility = Visibility.Collapsed;
+            m_adminLoginView.Show();
+        }
+
+        private void OnAdminLoginHide()
+        {
+            Visibility = Visibility.Visible;
         }
 
         public void Destroy()
         {
+            m_currentWindow.MainGrid.Children.Remove(m_adminLoginView);
             m_currentWindow.MainGrid.Children.Remove(this);
         }
 
@@ -153,6 +167,7 @@ namespace ExampleAppWPF
 
         public void CloseOptions()
         {
+            m_adminLoginView.Dismiss();
             Visibility = Visibility.Hidden;
             m_currentWindow.EnableInput();
         }
@@ -179,6 +194,14 @@ namespace ExampleAppWPF
         {
             m_cacheClearSubView = new OptionsCacheClearSubView();
             m_cacheClearSubView.DisplayWarning(() => OptionsViewCLIMethods.ClearCacheSelected(m_nativeCallerPointer));
+        }
+
+        private void InitialiseAdminLoginView(string adminPassword)
+        {
+            m_adminLoginView = new AdminLoginView(adminPassword);
+            m_adminLoginView.Visibility = Visibility.Collapsed;
+            m_adminLoginView.OnHide += OnAdminLoginHide;
+            m_currentWindow.MainGrid.Children.Add(m_adminLoginView);
         }
     }
 }

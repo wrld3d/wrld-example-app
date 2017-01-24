@@ -1,4 +1,3 @@
-using ExampleAppWPF.Views.SearchMenu;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Windows.Media;
@@ -24,7 +23,7 @@ namespace ExampleAppWPF
             get { return m_details; }
         }
 
-        public SubMenuListItem(string json, int zIndex)
+        public SubMenuListItem(string json, int zIndex, bool isInKioskMode)
             : base(json, false, zIndex)
         {
             JObject parsed = JObject.Parse(json);
@@ -33,7 +32,7 @@ namespace ExampleAppWPF
             if (parsed.TryGetValue("icon", out iconField))
             {
                 var iconName = iconField.Value<string>();
-                m_icon = SearchMenuResultIconProvider.GetIconForTag(iconName);
+                m_icon = IconProvider.GetIconForTag(iconName, isInKioskMode);
             }
 
             JToken detailsField;

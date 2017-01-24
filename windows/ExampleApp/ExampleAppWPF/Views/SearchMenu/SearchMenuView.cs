@@ -1,5 +1,4 @@
 ﻿using ExampleApp;
-using ExampleAppWPF.Views.SearchMenu;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -60,7 +59,7 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
         }
 
-        public SearchMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
+        public SearchMenuView(IntPtr nativeCallerPointer, bool isInKioskMode) : base(nativeCallerPointer, isInKioskMode)
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.MainGrid.Children.Add(this);
@@ -230,8 +229,8 @@ namespace ExampleAppWPF
             m_searchArrowClosed = ((Storyboard)Template.Resources[closeSearchArrowString]).Clone();
             XamlHelpers.UpdateThicknessAnimationMarginValue(m_searchArrowClosed, searchAnimString + closeSearchArrowString);
 
-            m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel");
-            m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel");
+            m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel", m_isInKioskMode);
+            m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel", m_isInKioskMode);
 
             m_scrollSpeed = (double) Application.Current.Resources["ScrollViewButtonScrollSpeed"];
         }
@@ -432,7 +431,7 @@ namespace ExampleAppWPF
 
                 JToken iconStringToken;
                 var iconTagName = jObject.TryGetValue("icon", out iconStringToken) ? iconStringToken.Value<string>() : "";
-                item.Icon = SearchMenuResultIconProvider.GetIconForTag(iconTagName);
+                item.Icon = IconProvider.GetIconForTag(iconTagName, m_isInKioskMode);
                 itemsSource.Add(item);
 
                 groups.Add(str);

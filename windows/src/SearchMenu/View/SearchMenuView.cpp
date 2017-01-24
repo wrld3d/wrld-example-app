@@ -15,8 +15,9 @@ namespace ExampleApp
         namespace View
         {
             SearchMenuView::SearchMenuView(WindowsNativeState& nativeState,
-                const std::string& viewClassName)
-                : Menu::View::MenuView(nativeState, viewClassName)
+                const std::string& viewClassName,
+                bool isInKioskMode)
+                : Menu::View::MenuView(nativeState, viewClassName, isInKioskMode)
                 , m_currentSections(0)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.SearchMenuView");
