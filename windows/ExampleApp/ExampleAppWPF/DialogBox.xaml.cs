@@ -36,6 +36,24 @@ namespace ExampleAppWPF
             DataContext = new DialogViewModel(title, message, acceptButton, cancelButton);
         }
 
+        public void ShowWithParentControl(Control parent, ButtonClickHandler cont)
+        {
+            DependencyPropertyChangedEventHandler close = (o, e) => Close();
+            parent.IsVisibleChanged += (o,e) =>
+            {
+                if (!parent.IsVisible)
+                {
+                    close(o, e);
+                }
+            };
+            ButtonClicked += (sender, ev, okClicked) =>
+            {
+                IsVisibleChanged -= close;
+                cont(sender, ev, okClicked);
+            };
+            Show();
+        }
+
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
