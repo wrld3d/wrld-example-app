@@ -614,7 +614,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.OptionsModule().GetOptionsViewModel(),
         m_pWindowsPlatformAbstractionModule->GetHttpCache(),
         m_messageBus,
-        app.GetApplicationConfiguration().GetAdminPassword(),
+        app.GetApplicationConfiguration().OptionsAdminPassword(),
         app.GetApplicationConfiguration().IsInKioskMode());
 
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(

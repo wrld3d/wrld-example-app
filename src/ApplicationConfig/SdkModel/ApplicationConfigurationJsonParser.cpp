@@ -207,7 +207,7 @@ namespace ExampleApp
                     ParseFixedIndoorLocation(document["FixedIndoorLocation"]);
                 }
 
-                m_builder.SetAdminPassword(document.HasMember("AdminPassword") ? document["AdminPassword"].GetString() : "");
+                m_builder.SetAdminPassword(document.HasMember("OptionsAdminPassword") ? document["OptionsAdminPassword"].GetString() : "");
                 
                 return m_builder.Build();
             }

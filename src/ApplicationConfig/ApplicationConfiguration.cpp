@@ -319,7 +319,7 @@ namespace ExampleApp
             return m_attractModeTimeoutMs > 0;
         }
 
-        const std::string& ApplicationConfiguration::GetAdminPassword() const
+        const std::string& ApplicationConfiguration::OptionsAdminPassword() const
         {
             return m_adminPassword;
         }

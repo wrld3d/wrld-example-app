@@ -198,7 +198,7 @@ namespace ExampleApp
             const double GetAttractModePlaybackSpeed() const;
             const bool IsAttractModeEnabled() const;
 
-            const std::string& GetAdminPassword() const;
+            const std::string& OptionsAdminPassword() const;
         };
     }
 }
