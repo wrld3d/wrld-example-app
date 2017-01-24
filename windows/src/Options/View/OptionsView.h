@@ -36,7 +36,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_clearCacheCallbacks;
 
             public:
-                OptionsView(WindowsNativeState& nativeState, bool isInKioskMode);
+                OptionsView(WindowsNativeState& nativeState, const std::string& adminPassword, bool isInKioskMode);
 
                 ~OptionsView();
 

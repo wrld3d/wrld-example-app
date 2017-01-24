@@ -95,6 +95,7 @@
 #include "CurrentLocationService.h"
 #include "AttractModeOverlayView.h"
 #include "WindowsProcessHelper.h"
+#include "AdminLoginView.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -147,6 +148,7 @@ AppHost::AppHost(
 	, m_pTagSearchViewModule(NULL)
     , m_pUserIdleService(NULL)
     , m_pVirtualKeyboardView(NULL)
+    , m_pAdminLoginView(NULL)
     , m_pAttractModeOverlayView(NULL)
 {
     ASSERT_NATIVE_THREAD
@@ -596,6 +598,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.OptionsModule().GetOptionsViewModel(),
         m_pWindowsPlatformAbstractionModule->GetWindowsHttpCache(),
         m_messageBus,
+        app.GetApplicationConfiguration().OptionsAdminPassword(),
         app.GetApplicationConfiguration().IsInKioskMode());
 
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(

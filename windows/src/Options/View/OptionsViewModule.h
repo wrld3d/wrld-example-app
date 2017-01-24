@@ -30,6 +30,7 @@ namespace ExampleApp
                     IOptionsViewModel& optionsViewModel,
                     Eegeo::Helpers::IHttpCache& httpCache,
                     ExampleAppMessaging::TMessageBus& messageBus,
+                    const std::string& adminPassword,
                     bool isInKioskMode
                 );
 

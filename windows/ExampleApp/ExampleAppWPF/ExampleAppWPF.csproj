@@ -104,6 +104,7 @@
     <Compile Include="PersistentSettings\PersistentSettings.cs" />
     <Compile Include="TickBarVerticalWithLabels.cs" />
     <Compile Include="ViewHelpers.cs" />
+    <Compile Include="Views\AdminLogin\AdminLoginView.cs" />
     <Compile Include="Views\AttractModeOverlay\AttractModeOverlayView.cs" />
     <Compile Include="Views\ButtonBase.cs" />
     <Compile Include="Views\ControlBase.cs" />
@@ -209,6 +210,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutPage\AboutPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AdminLogin\AdminLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

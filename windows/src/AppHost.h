@@ -63,6 +63,7 @@
 #include "CurrentLocationService.h"
 #include "VirtualKeyboardView.h"
 #include "AttractModeOverlayView.h"
+#include "AdminLoginView.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -189,5 +190,6 @@ private:
     Eegeo::Input::IUserIdleService* m_pUserIdleService;
 
     ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* m_pVirtualKeyboardView;
+    ExampleApp::AdminLogin::View::AdminLoginView* m_pAdminLoginView;
     ExampleApp::AttractModeOverlay::View::AttractModeOverlayView* m_pAttractModeOverlayView;
 };
