@@ -21,7 +21,6 @@
 	"mypins_web_service_auth_token": "",
 	"is_kiosk_touch_input_enabled":false,
 	"is_in_kiosk_mode":false,
-	"use_labels": true,
     "use_japanese_font": false,
     "start_app_in_fullscreen":false,
     "outdoor_search_menu_items": [{

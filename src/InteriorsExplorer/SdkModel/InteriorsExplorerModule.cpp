@@ -40,9 +40,6 @@ namespace ExampleApp
                                                              Metrics::IMetricsService& metricsService,
                                                              const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                                              const bool interiorsAffectedByFlattening,
-                                                             const bool useIndoorEntryMarkerLabels,
-                                                             
-                                                             InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                                              PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                                              Eegeo::Location::NavigationService& navigationService,
                                                              Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
@@ -71,12 +68,8 @@ namespace ExampleApp
                                                                                         *m_pInteriorsCameraController);
                 
                 m_pWorldPinController = Eegeo_NEW(InteriorWorldPinController)(interiorSelectionModel,
-                                                                              markerRepository,
-                                                                              worldPinsService,
-                                                                              *m_pInteriorsCameraController,
                                                                               messageBus,
-                                                                              initialExperienceModel,
-                                                                              useIndoorEntryMarkerLabels);
+                                                                              initialExperienceModel);
                 
                 m_pModel = Eegeo_NEW(InteriorsExplorerModel)(interiorInteractionModel,
                                                              interiorSelectionModel,
@@ -90,15 +83,12 @@ namespace ExampleApp
                 
                 m_pFloorDraggedObserver = Eegeo_NEW(InteriorsExplorerFloorDraggedObserver)(*m_pModel, m_pInteriorsGpsCameraController->GetTouchController());
                 
-                m_pUINotificationService = Eegeo_NEW(InteriorsUINotificationService)(messageBus, interiorsEntitiesPinsController, worldPinIconMapping);
-                
                 m_pInteriorPermissionObserver = Eegeo_NEW(InteriorPermissionObserver)(interiorSelectionModel, alertBoxFactory);
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
             {
                 Eegeo_DELETE m_pInteriorPermissionObserver;
-                Eegeo_DELETE m_pUINotificationService;
                 Eegeo_DELETE m_pFloorDraggedObserver;
                 Eegeo_DELETE m_pViewModel;
                 Eegeo_DELETE m_pModel;
@@ -139,7 +129,6 @@ namespace ExampleApp
             void InteriorsExplorerModule::Update(float dt) const
             {
                 m_pVisibilityUpdater->Update(dt);
-                m_pWorldPinController->Update(dt);
             }
             
             InteriorsExplorerModel& InteriorsExplorerModule::GetInteriorsExplorerModel() const
@@ -155,11 +144,6 @@ namespace ExampleApp
             InteriorExplorerUserInteractionModel& InteriorsExplorerModule::GetInteriorsExplorerUserInteractionModel() const
             {
                 return *m_pUserInteractionModel;
-            }
-            
-            InteriorsUINotificationService & InteriorsExplorerModule::GetInteriorsUINotificationService() const
-            {
-                return *m_pUINotificationService;
             }
         }
     }

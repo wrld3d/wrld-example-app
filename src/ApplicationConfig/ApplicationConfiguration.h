@@ -42,7 +42,6 @@ namespace ExampleApp
             std::string m_myPinsWebServiceAuthToken;
             bool m_isKioskTouchInputEnabled;
             bool m_isInKioskMode;
-            bool m_useLabels;
             bool m_useJapaneseFont;
 
             SdkModel::ApplicationFixedIndoorLocation m_fixedIndoorLocation;
@@ -86,7 +85,6 @@ namespace ExampleApp
                 const std::string& myPinsWebServiceAuthToken,
                 const bool isKioskTouchInputEnabled,
                 const bool isInKioskMode,
-                bool useLabels,
                 bool useJapaneseFont,
                 const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
                 const std::string& rawConfig,
@@ -147,8 +145,6 @@ namespace ExampleApp
             bool IsKioskTouchInputEnabled() const;
 
             bool IsInKioskMode() const;
-            
-            bool UseLabels() const;
             
             bool UseJapaneseFont() const;
             

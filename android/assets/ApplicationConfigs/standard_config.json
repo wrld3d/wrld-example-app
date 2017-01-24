@@ -19,7 +19,6 @@
     "eegeo_search_service_url": "",
     "mypins_web_service_url": "",
     "mypins_web_service_auth_token": "",
-    "use_labels": true,
     "use_japanese_font": false,
     "outdoor_search_menu_items": [{
                                   "name": "Around Me",

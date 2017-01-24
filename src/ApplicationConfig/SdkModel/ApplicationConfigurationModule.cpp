@@ -41,7 +41,6 @@ namespace ExampleApp
                     const bool shouldStartFullscreen = false;
                     const bool isKioskTouchInputEnabled = false;
                     const bool isInKioskMode = false;
-                    const bool useLabels = true;
                     const bool useJapaneseFont = false;
                     std::string outdoorSearchMenuItems;
 
@@ -79,7 +78,6 @@ namespace ExampleApp
                         emptyMyPinsWebServiceAuthToken,
                         isKioskTouchInputEnabled,
                         isInKioskMode,
-                        useLabels,
                         useJapaneseFont,
                         interiorTrackingInfo,
                         outdoorSearchMenuItems,
@@ -112,27 +110,16 @@ namespace ExampleApp
                 platformConfig.CityThemesConfig.StreamedManifestUrl = appConfig.ThemeManifestURL();
                 platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = appConfig.EmbeddedThemeTexturePath();
 
-                if (appConfig.UseLabels())
-                {
-                    platformConfig.OptionsConfig.EnableLabels = true;
-                    platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseJapaneseFont() ? "IPAexGothic_sdf.fnt" : "opensans_semibold_sdf.fnt";
-                    platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = false;
-                    platformConfig.MapLayersConfig.Interiors.UseLegacyEntryMarkers = false;
-                    platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "Interiors/label_category_mapping.json";
-                    platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "Labels/label_style_sheet.json";
-                    platformConfig.MapLayersConfig.LabelsModuleConfig.CategoryIconMapPath = "Labels/label_category_icon_map.json";
-                    platformConfig.MapLayersConfig.IconsModuleConfig.IconsEnabled = true;
-                    platformConfig.MapLayersConfig.IconsModuleConfig.IconSetManifestPath = "SearchResultOnMap/pin_sheet.json";
-                }
-                else
-                {
-                    platformConfig.OptionsConfig.EnableLabels = false;
-                    platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseJapaneseFont() ? "IPAexGothic32_A8_icons.fnt" : "FrankBold50_A8_icons.fnt";
-                    platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = true;
-                    platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "";
-                    platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "";
-                    
-                }
+                platformConfig.OptionsConfig.EnableLabels = true;
+                platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseJapaneseFont() ? "IPAexGothic_sdf.fnt" : "opensans_semibold_sdf.fnt";
+                platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = false;
+                platformConfig.MapLayersConfig.Interiors.UseLegacyEntryMarkers = false;
+                platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "Interiors/label_category_mapping.json";
+                platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "Labels/label_style_sheet.json";
+                platformConfig.MapLayersConfig.LabelsModuleConfig.CategoryIconMapPath = "Labels/label_category_icon_map.json";
+                platformConfig.MapLayersConfig.IconsModuleConfig.IconsEnabled = true;
+                platformConfig.MapLayersConfig.IconsModuleConfig.IconSetManifestPath = "SearchResultOnMap/pin_sheet.json";
+
                 return platformConfig;
             }
             

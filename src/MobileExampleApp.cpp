@@ -63,8 +63,6 @@
 #include "InteriorsPresentationModule.h"
 #include "InteriorsModelModule.h"
 #include "InteriorsExplorerModule.h"
-#include "InteriorsEntitiesPinsModule.h"
-#include "InteriorsEntitiesPinsController.h"
 #include "PinsModule.h"
 #include "MapModeModule.h"
 #include "AppModeModel.h"
@@ -278,16 +276,12 @@ namespace ExampleApp
     , m_pOptionsModule(NULL)
     , m_pWatermarkModule(NULL)
     , m_pInteriorsExplorerModule(NULL)
-    , m_pInteriorsEntitiesPinsModule(NULL)
     , m_screenProperties(screenProperties)
     , m_networkCapabilities(networkCapabilities)
     , m_setMetricsLocation(false)
     , m_pSearchServiceModule(NULL)
     , m_metricsService(metricsService)
     , m_applicationConfiguration(applicationConfiguration)
-    , m_interiorsEnabled(platformConfig.OptionsConfig.EnableInteriors)
-    , m_usingLegacyInteriorLabels(!platformConfig.OptionsConfig.EnableLabels || platformConfig.MapLayersConfig.Interiors.UseLegacyLabels)
-    , m_useIndoorEntryMarkerLabels(!(platformConfig.MapLayersConfig.Interiors.UseLegacyLabels || platformConfig.MapLayersConfig.Interiors.UseLegacyEntryMarkers))
     , m_pGlobeCameraWrapper(NULL)
     , m_pCameraSplinePlaybackController(NULL)
     , m_pVisualMapModule(NULL)
@@ -393,8 +387,7 @@ namespace ExampleApp
                                                                                                                      mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
                                                                                                                      mapModule.GetInteriorsStreamingModule().GetLabelLayerId(),
                                                                                                                      m_messageBus,
-                                                                                                                     *m_pHighlightColorMapper,
-                                                                                                                     m_usingLegacyInteriorLabels);
+                                                                                                                     *m_pHighlightColorMapper);
 
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
@@ -717,17 +710,6 @@ namespace ExampleApp
 
         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
 
-        if (m_interiorsEnabled)
-        {
-            m_pInteriorsEntitiesPinsModule = Eegeo_NEW(InteriorsEntitiesPins::SdkModel::InteriorsEntitiesPinsModule(m_pWorld->GetPlatformAbstractionModule(),
-                                                                                                                    m_pWorld->GetRenderingModule(),
-                                                                                                                    m_pWorld->GetMapModule(),
-                                                                                                                    *m_pWorldPinsIconMapping,
-                                                                                                                    m_screenProperties,
-                                                                                                                    m_usingLegacyInteriorLabels));
-        }
-
-
 
         m_pInteriorsExplorerModule = Eegeo_NEW(InteriorsExplorer::SdkModel::InteriorsExplorerModule)(interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                      interiorsPresentationModule.GetInteriorSelectionModel(),
@@ -745,8 +727,6 @@ namespace ExampleApp
                                                                                                      m_metricsService,
                                                                                                      initialExperienceModel,
                                                                                                      interiorsAffectedByFlattening,
-                                                                                                     m_useIndoorEntryMarkerLabels,
-                                                                                                     m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController(),
                                                                                                      m_persistentSettings,
                                                                                                      *m_pNavigationService,
                                                                                                      mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
@@ -1063,14 +1043,6 @@ namespace ExampleApp
             CompassModule().GetCompassUpdateController().Update(dt);
             m_pGpsMarkerModule->GetGpsMarkerController().Update(dt, renderCamera);
 
-            if (m_interiorsEnabled)
-            {
-                Eegeo_ASSERT(m_pInteriorsEntitiesPinsModule != NULL);
-
-                m_pInteriorsEntitiesPinsModule->GetPinsModule().Update(dt, renderCamera);
-                m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController().Update(dt);
-            }
-
             InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
             if(!initialExperienceModel.HasCompletedInitialExperience() && IsLoadingScreenComplete())
             {
@@ -1308,8 +1280,6 @@ namespace ExampleApp
         {
             return;
         }
-
-        m_pInteriorsEntitiesPinsModule->GetInteriorsEntitiesPinsController().Event_TouchTap(data);
 
         m_pCurrentTouchController->Event_TouchTap(data);
     }
