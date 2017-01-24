@@ -22,8 +22,8 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SwallowFacilitySearchResultsPoiView), new FrameworkPropertyMetadata(typeof(SwallowFacilitySearchResultsPoiView)));
         }
 
-        public SwallowFacilitySearchResultsPoiView(IntPtr nativeCallerPointer)
-            : base(nativeCallerPointer)
+        public SwallowFacilitySearchResultsPoiView(IntPtr nativeCallerPointer, bool isInKioskMode)
+            : base(nativeCallerPointer, isInKioskMode)
         {
 
         }
@@ -42,7 +42,7 @@ namespace ExampleAppWPF
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
-            m_categoryIcon.Source = SearchResultPoiViewIconProvider.GetIconForTag(m_model.IconKey);
+            m_categoryIcon.Source = IconProvider.GetIconForTag(m_model.IconKey, m_isInKioskMode);
 
             m_swallowFacilityModel = SwallowFacilityResultModel.FromJson(m_model.JsonData);
 

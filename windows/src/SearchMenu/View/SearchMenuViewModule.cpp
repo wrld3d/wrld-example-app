@@ -21,9 +21,10 @@ namespace ExampleApp
                                                        Modality::View::IModalBackgroundView& modalBackgroundView,
                                                        Modality::View::IModalityController& modalityController,
                                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                                       Reaction::View::IReactionModel& reactionModel)
+                                                       Reaction::View::IReactionModel& reactionModel,
+                                                       bool isInKioskMode)
             {
-                m_pView = Eegeo_NEW(SearchMenuView)(nativeState, viewName);
+                m_pView = Eegeo_NEW(SearchMenuView)(nativeState, viewName, isInKioskMode);
 
                 m_pController = Eegeo_NEW(DesktopSearchMenuController)(searchMenuModel,
                                                                 searchMenuViewModel,

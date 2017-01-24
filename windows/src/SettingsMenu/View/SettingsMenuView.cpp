@@ -10,8 +10,9 @@ namespace ExampleApp
         namespace View
         {
             SettingsMenuView::SettingsMenuView(WindowsNativeState& nativeState,
-                                                 const std::string& viewClassName)
-                :Menu::View::MenuView(nativeState, viewClassName)
+                                                 const std::string& viewClassName,
+                                                 bool isInKioskMode)
+                :Menu::View::MenuView(nativeState, viewClassName, isInKioskMode)
             {
 
             }

@@ -19,14 +19,15 @@ namespace ExampleApp
         {
 
             MenuView::MenuView(WindowsNativeState& nativeState,
-                               const std::string& viewClassName)
+                               const std::string& viewClassName,
+                               bool isInKioskMode)
                 : m_nativeState(nativeState)
                 , m_pTryDragFunc(NULL)
             {
                 System::String^ className = gcnew System::String(viewClassName.c_str());
                 m_uiViewClass = GetTypeFromEntryAssembly(className);
-                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
+                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid, System::Boolean::typeid));
+                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this), gcnew System::Boolean(isInKioskMode)));
 
                 Destroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
                 NormalisedAnimationProgress.SetupMethod(m_uiViewClass, m_uiView, "NormalisedAnimationProgress");

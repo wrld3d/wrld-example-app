@@ -192,7 +192,10 @@ AppHost::AppHost(
 
     const std::string& deviceModel = nativeState.GetDeviceModel();
     Eegeo::Windows::WindowsPlatformConfigBuilder windowsPlatformConfigBuilder(deviceModel);
-    const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(windowsPlatformConfigBuilder, applicationConfiguration);
+    Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(windowsPlatformConfigBuilder, applicationConfiguration);
+	platformConfiguration.GraphicsConfig.ImageResolutionScale = applicationConfiguration.IsInKioskMode() ? (2.0f * screenProperties.GetOversampleScale()) : 1.0f;
+	platformConfiguration.GraphicsConfig.ImageResolutionSuffix = applicationConfiguration.IsInKioskMode() ? "@2x" : "";
+	platformConfiguration.MapLayersConfig.LabelsModuleConfig.CustomTextScale = applicationConfiguration.IsInKioskMode() ? 2.0f : 1.0f;
 
     bool enableTouchControls =  hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
 
@@ -555,7 +558,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_pModalBackgroundViewModule->GetView(),
         app.ModalityModule().GetModalityController(),
         m_messageBus,
-        app.ReactionModelModule().GetReactionModel()
+        app.ReactionModelModule().GetReactionModel(),
+        app.GetApplicationConfiguration().IsInKioskMode()
         );
 
 	m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
@@ -571,7 +575,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.SettingsMenuModule().GetSettingsMenuViewModel(),
         m_pModalBackgroundViewModule->GetView(),
         m_pSearchMenuViewModule->GetMenuView(),
-        m_messageBus
+        m_messageBus,
+        app.GetApplicationConfiguration().IsInKioskMode()
         );
     
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(

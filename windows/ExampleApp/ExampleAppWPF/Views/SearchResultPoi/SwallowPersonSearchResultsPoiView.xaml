@@ -84,7 +84,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center">
-                                        <Image Name="CategoryIcon" Source="{DynamicResource SwallowPersonPOIViewIconImage}" Height="{DynamicResource SwallowPOIViewTitleIconSize}"/>
+                                        <Image Name="CategoryIcon" Stretch="Uniform" Height="{DynamicResource SwallowPOIViewTitleIconSize}"/>
                                         <TextBlock Name="Title" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SwallowPersonSearchResultsPoiView}}, Path=TitleText}"  
                                                    MaxWidth="{DynamicResource SwallowPOIViewTitleMaxWidth}" VerticalAlignment="Center" FontSize="{DynamicResource SwallowPOIViewTitleFontSize}" Margin="{DynamicResource SwallowPersonPOIViewTitleTextMargin}" 
                                                    Foreground="{DynamicResource PrimaryBG_Over_Colour}" 

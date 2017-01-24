@@ -31,7 +31,8 @@ namespace ExampleApp
 
             public:
                 SearchMenuView(WindowsNativeState& nativeState,
-                    const std::string& viewClassName);
+                    const std::string& viewClassName,
+                    bool isInKioskMode);
 
                 void SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection);
 
