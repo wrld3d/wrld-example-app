@@ -2,9 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 
-using ExampleApp;
-using ExampleApp.AdminLogin.View;
-
 namespace ExampleAppWPF
 {
     class AdminLoginView : ControlBase
@@ -14,10 +11,7 @@ namespace ExampleAppWPF
 
         private const int MaxPasswordLength = 4;
 
-        private IntPtr m_nativeCallerPointer = IntPtr.Zero;
-        private MainWindow m_currentWindow;
-        private ManagedAdminLoginView m_adminLoginView;
-
+        private string m_adminPassword;
         private PasswordBox m_passwordBox;
         private Border m_passwordBorder;
 
@@ -28,25 +22,12 @@ namespace ExampleAppWPF
                 new FrameworkPropertyMetadata(typeof(AdminLoginView)));
         }
 
-        public AdminLoginView()
+        public AdminLoginView(string adminPassword)
         {
+            m_adminPassword = adminPassword;
         }
 
-        public AdminLoginView(IntPtr nativeCallerPointer)
-        {
-            m_nativeCallerPointer = nativeCallerPointer;
-            Visibility = Visibility.Collapsed;
-            m_currentWindow = (MainWindow)Application.Current.MainWindow;
-            m_currentWindow.MainGrid.Children.Add(this);
-        }
-
-        public void Initialise(string adminPassword)
-        {
-            m_adminLoginView = new ManagedAdminLoginView();
-            m_adminLoginView.InitNative(GetType(), this, adminPassword);
-        }
-
-        void AddButtonClickHandlers(PasswordBox passwordBox)
+        void AddButtonClickHandlers()
         {
             foreach (var button in ViewHelpers.FindChildrenOfType<Button>(this))
             {
@@ -55,7 +36,7 @@ namespace ExampleAppWPF
                     string digit = button.Content?.ToString();
                     if (IsPasswordButtonLabel(digit))
                     {
-                        button.Click += (o, e) => OnKeyClicked(passwordBox, digit);
+                        button.Click += (o, e) => OnKeyClicked(digit);
                     }
                 };
             }
@@ -67,15 +48,10 @@ namespace ExampleAppWPF
             m_passwordBorder = (Border)GetTemplateChild("PasswordBorder");
             m_passwordBox = (PasswordBox)GetTemplateChild("PasswordBox");
             m_passwordBox.MaxLength = MaxPasswordLength;
-            ((Button)GetTemplateChild("Ok")).Click += (o, e) => OnOkClicked(m_passwordBox);
-            ((Button)GetTemplateChild("Del")).Click += (o, e) => OnDelClicked(m_passwordBox);
+            ((Button)GetTemplateChild("Ok")).Click += (o, e) => OnOkClicked();
+            ((Button)GetTemplateChild("Del")).Click += (o, e) => OnDelClicked();
             ((Button)GetTemplateChild("Close")).Click += (o, e) => OnCloseClicked();
-            AddButtonClickHandlers(m_passwordBox);
-        }
-
-        public void Destroy()
-        {
-            m_currentWindow.MainGrid.Children.Remove(this);
+            AddButtonClickHandlers();
         }
 
         public void Dismiss()
@@ -91,9 +67,9 @@ namespace ExampleAppWPF
             Visibility = Visibility.Visible;
         }
 
-        public void OnPasswordAccepted(bool isAccepted)
+        private void OnOkClicked()
         {
-            if (isAccepted)
+            if (m_adminPassword == m_passwordBox.Password)
             {
                 Application.Current.Shutdown();
             }
@@ -103,22 +79,10 @@ namespace ExampleAppWPF
             }
         }
 
-        private void OnOkClicked(PasswordBox passwordBox)
+        private void OnDelClicked()
         {
-            if (m_nativeCallerPointer.Equals(IntPtr.Zero))
-            {
-                m_adminLoginView.HandleOkClicked(passwordBox.Password);
-            }
-            else
-            {
-                AdminLoginCLI.HandleOkClicked(m_nativeCallerPointer, passwordBox.Password);
-            }
-        }
-
-        private void OnDelClicked(PasswordBox passwordBox)
-        {
-            int length = passwordBox.Password.Length - 1;
-            passwordBox.Password = length > 0 ? passwordBox.Password.Substring(0, length) : String.Empty;
+            int length = m_passwordBox.Password.Length - 1;
+            m_passwordBox.Password = length > 0 ? m_passwordBox.Password.Substring(0, length) : String.Empty;
             ClearErrorIndicator();
         }
 
@@ -127,12 +91,12 @@ namespace ExampleAppWPF
             Dismiss();
         }
 
-        private void OnKeyClicked(PasswordBox passwordBox, string digit)
+        private void OnKeyClicked(string digit)
         {
-            if (passwordBox.Password.Length < MaxPasswordLength)
+            if (m_passwordBox.Password.Length < MaxPasswordLength)
             {
                 ClearErrorIndicator();
-                passwordBox.Password += digit;
+                m_passwordBox.Password += digit;
             }
         }
 

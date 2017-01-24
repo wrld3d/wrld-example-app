@@ -6,7 +6,6 @@
         <ResourceDictionary Source="../../Colours.xaml" />
         <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
         <ResourceDictionary Source="../../CheckBoxStyle.xaml" />
-        <ResourceDictionary Source="../AdminLogin/AdminLogin.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="OptionsPanel_CloseButton" TargetType="{x:Type Button}">
