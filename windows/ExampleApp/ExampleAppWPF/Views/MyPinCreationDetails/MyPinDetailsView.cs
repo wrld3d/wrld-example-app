@@ -26,7 +26,6 @@ namespace ExampleAppWPF
         private Button m_closeButton = null;
         private Button m_removeButton = null;
         private ScrollViewer m_PinDetailsView;
-        private DialogBox m_removePinDialog;
 
         private float m_imageWidth;
 
@@ -146,23 +145,24 @@ namespace ExampleAppWPF
         public void Dismiss()
         {
             Visibility = Visibility.Hidden;
-            m_removePinDialog.Close();
             m_currentWindow.EnableInput();
         }
 
-        private void ShowRemovePinDialog(Action<bool> cont)
+        private void ShowRemovePinDialog(Action<bool> dialogResultCont)
         {
-            m_removePinDialog = new DialogBox("Remove Report", "Are you sure you want to remove this report?", "Yes", "No", false);
-            m_removePinDialog.Owner = m_currentWindow;
-            m_removePinDialog.Closed += (o, e) => m_currentWindow.SetOpacity(1.0f);
-            m_removePinDialog.ButtonClicked += (sender, ev, okClicked) =>
+            DialogBox removePinDialog = new DialogBox("Remove Report", "Are you sure you want to remove this report?", "Yes", "No", false);
+            removePinDialog.Owner = m_currentWindow;
+            DependencyPropertyChangedEventHandler hideDialog = (o, e) => removePinDialog.Close();
+            IsVisibleChanged += hideDialog;
+            removePinDialog.ButtonClicked += (sender, ev, okClicked) =>
             {
-                m_removePinDialog.Close();
-                cont(okClicked);
+                IsVisibleChanged -= hideDialog;
+                m_currentWindow.SetOpacity(1.0f);
+                dialogResultCont(okClicked);
             };
  
             m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
-            m_removePinDialog.Show();
+            removePinDialog.Show();
         }
     }
 }
