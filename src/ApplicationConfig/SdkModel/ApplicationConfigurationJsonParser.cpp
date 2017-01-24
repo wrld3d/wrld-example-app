@@ -59,6 +59,7 @@ namespace ExampleApp
                 const std::string AttractModePositionSpline = "attract_mode_position_spline";
                 const std::string AttractModeTimeoutMillis = "attract_mode_timeout_millis";
                 const std::string AttractModePlaybackSpeed = "attract_mode_playback_speed";
+                const std::string OptionsAdminPassword = "options_admin_password";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -254,6 +255,8 @@ namespace ExampleApp
                 const long long attractModeTimeoutMillis = ParseIntOrDefault(document, AttractModeTimeoutMillis, static_cast<int>(m_defaultConfig.AttractModeTimeoutMs()));
                 const float attractModePlaybackSpeed = ParseDoubleOrDefault(document, AttractModePlaybackSpeed, m_defaultConfig.AttractModePlaybackSpeed());
 
+                const std::string optionsAdminPassword(ParseStringOrDefault(document, OptionsAdminPassword, m_defaultConfig.OptionsAdminPassword()));
+
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -288,7 +291,8 @@ namespace ExampleApp
                     attractModeTargetSplinePoints,
                     attractModePositionSplinePoints,
                     attractModeTimeoutMillis,
-                    attractModePlaybackSpeed
+                    attractModePlaybackSpeed,
+                    optionsAdminPassword
                 );
             }
             
