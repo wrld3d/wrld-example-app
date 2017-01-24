@@ -3,6 +3,8 @@ set(headers ${headers} ios_src/Helpers
 )
 set(currsources
   ios_src/Helpers/CMakeLists.txt
+  ios_src/Helpers/DeviceHelpers.h
+  ios_src/Helpers/DeviceHelpers.mm
   ios_src/Helpers/IconResources.h
   ios_src/Helpers/IconResources.mm
   ios_src/Helpers/ImageHelpers.h
