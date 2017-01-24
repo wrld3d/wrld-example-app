@@ -111,7 +111,10 @@ namespace ExampleApp
                 platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = appConfig.EmbeddedThemeTexturePath();
 
                 platformConfig.OptionsConfig.EnableLabels = true;
-                platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = appConfig.UseJapaneseFont() ? "IPAexGothic_sdf.fnt" : "opensans_semibold_sdf.fnt";
+                const std::string& defaultFontFilename = "opensans_semibold_sdf.fnt";
+                const std::string& environmentFontFilename = appConfig.UseJapaneseFont() ? "IPAexGothic_sdf.fnt" : defaultFontFilename;
+                
+                platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = environmentFontFilename;
                 platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = false;
                 platformConfig.MapLayersConfig.Interiors.UseLegacyEntryMarkers = false;
                 platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "Interiors/label_category_mapping.json";
@@ -120,6 +123,8 @@ namespace ExampleApp
                 platformConfig.MapLayersConfig.IconsModuleConfig.IconsEnabled = true;
                 platformConfig.MapLayersConfig.IconsModuleConfig.IconSetManifestPath = "SearchResultOnMap/pin_sheet.json";
 
+                platformConfig.MapLayersConfig.Interiors.LabelFontTextureFilename = environmentFontFilename;
+                platformConfig.MapLayersConfig.DebugRenderingModuleConfig.DebugFontFilename = defaultFontFilename;
                 return platformConfig;
             }
             
