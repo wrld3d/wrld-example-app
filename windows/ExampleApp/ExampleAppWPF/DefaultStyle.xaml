@@ -188,8 +188,6 @@
     <Thickness x:Key="SwallowWorkingGroupPOIViewReviewsTextMargin" Left="25" Top="-4" Right="0" Bottom="0"/>
 
     <!-- Swallow Person POI View -->
-    <ImageSource x:Key="SwallowPersonPOIViewIconImage">/Assets/icon1_person_POI.png</ImageSource>
-
     <Thickness x:Key="SwallowPersonPOIViewTitleTextMargin" Left="4" Top="1" Right="0" Bottom="0"/>
 
     <Thickness x:Key="SwallowPersonPOIViewContentContainerMargin" Left="0" Top="0" Right="0" Bottom="0"/>

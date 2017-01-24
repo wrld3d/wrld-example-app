@@ -82,8 +82,8 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SwallowMeetingRoomSearchResultsPoiView), new FrameworkPropertyMetadata(typeof(SwallowMeetingRoomSearchResultsPoiView)));
         }
 
-        public SwallowMeetingRoomSearchResultsPoiView(IntPtr nativeCallerPointer)
-            : base(nativeCallerPointer)
+        public SwallowMeetingRoomSearchResultsPoiView(IntPtr nativeCallerPointer, bool isInKioskMode)
+            : base(nativeCallerPointer, isInKioskMode)
         {
             OnAvailableSelected = (object sender, RoutedEventArgs e) => { HandleAvailabilityChanged(AvailalabilityType.Available); };
             OnAvailableSoonSelected = (object sender, RoutedEventArgs e) => { HandleAvailabilityChanged(AvailalabilityType.AvailableSoon); };
@@ -108,7 +108,7 @@ namespace ExampleAppWPF
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
-            m_categoryIcon.Source = SearchResultPoiViewIconProvider.GetIconForTag(m_model.IconKey);
+            m_categoryIcon.Source = IconProvider.GetIconForTag(m_model.IconKey, m_isInKioskMode);
 
             m_swallowMeetingRoomModel = SwallowMeetingRoomResultModel.FromJson(m_model.JsonData);
             Availability = AvailableStringToEnum(m_swallowMeetingRoomModel.Availability);

@@ -6,6 +6,7 @@ namespace ExampleAppWPF
 {
     public class SwallowPersonSearchResultsPoiView : SearchResultPoiViewBase
     {
+        private Image m_categoryIcon = null;
         private Image m_portraitImage = null;
         
         private ExampleApp.SearchResultModelCLI m_model;
@@ -22,14 +23,15 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SwallowPersonSearchResultsPoiView), new FrameworkPropertyMetadata(typeof(SwallowPersonSearchResultsPoiView)));
         }
 
-        public SwallowPersonSearchResultsPoiView(IntPtr nativeCallerPointer)
-            : base(nativeCallerPointer)
+        public SwallowPersonSearchResultsPoiView(IntPtr nativeCallerPointer, bool isInKioskMode)
+            : base(nativeCallerPointer, isInKioskMode)
         {
 
         }
 
         public override void OnApplyTemplate()
         {
+            m_categoryIcon = (Image)GetTemplateChild("CategoryIcon");
             m_portraitImage = (Image)GetTemplateChild("PortraitImage");
             m_mainContainer = (FrameworkElement)GetTemplateChild("PersonPoiContainer");
 
@@ -39,6 +41,7 @@ namespace ExampleAppWPF
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             m_model = modelObject as ExampleApp.SearchResultModelCLI;
+            m_categoryIcon.Source = IconProvider.GetIconForTag(m_model.IconKey, m_isInKioskMode);
 
             m_swallowPersonModel = SwallowPersonResultModel.FromJson(m_model.JsonData);
             
