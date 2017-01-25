@@ -21,14 +21,14 @@ namespace ExampleApp
     {
         namespace View
         {
-            WorldPinOnMapView::WorldPinOnMapView(WindowsNativeState& nativeState, float pinDiameter)
+            WorldPinOnMapView::WorldPinOnMapView(WindowsNativeState& nativeState, float pinDiameter, bool isInKioskMode)
                 : m_nativeState(nativeState)
                 , m_pinOffset(pinDiameter * Helpers::ImageHelpers::GetPixelScale())
                 , m_largePinFocus(false)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.WorldPinOnMapView");
-                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid, float::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this), m_pinOffset));
+                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid, float::typeid, System::Boolean::typeid));
+                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this), m_pinOffset, gcnew System::Boolean(isInKioskMode)));
 
                mShow.SetupMethod(m_uiViewClass, m_uiView, "Show");
                mDismiss.SetupMethod(m_uiViewClass, m_uiView, "Dismiss");

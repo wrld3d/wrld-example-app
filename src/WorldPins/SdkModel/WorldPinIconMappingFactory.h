@@ -19,7 +19,8 @@ namespace ExampleApp
             public:
                 WorldPinIconMappingFactory(Eegeo::Helpers::IFileIO& fileIO, 
                     const std::string& sheetManifestFile,
-                    Eegeo::Helpers::ITextureFileLoader& textureFileLoader);
+                    Eegeo::Helpers::ITextureFileLoader& textureFileLoader,
+                    bool isInKioskMode);
                 virtual ~WorldPinIconMappingFactory() { }
                 
                 virtual IWorldPinIconMapping* Create() const;
@@ -28,7 +29,7 @@ namespace ExampleApp
                 Eegeo::Helpers::IFileIO& m_fileIO;
                 const std::string m_sheetManifestFile;
                 Eegeo::Helpers::ITextureFileLoader& m_textureFileLoader;
-                
+                bool m_isInKioskMode;
             };
         }
     }

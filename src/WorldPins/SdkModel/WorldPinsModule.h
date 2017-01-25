@@ -47,7 +47,8 @@ namespace ExampleApp
                                 const bool interiorsAffectedByFlattening,
                                 const Menu::View::IMenuReactionModel& menuReaction,
                                 const float screenOversampleScale,
-                                const IWorldPinIconMapping& worldPinIconMapping);
+                                const IWorldPinIconMapping& worldPinIconMapping,
+                                bool isInKioskMode);
 
                 ~WorldPinsModule();
 

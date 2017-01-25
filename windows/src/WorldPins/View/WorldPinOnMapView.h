@@ -19,7 +19,7 @@ namespace ExampleApp
             class WorldPinOnMapView: public IWorldPinOnMapView
             {
             public:
-                WorldPinOnMapView(WindowsNativeState& nativeState, float pinDiameter);
+                WorldPinOnMapView(WindowsNativeState& nativeState, float pinDiameter, bool isInKioskMode);
                 ~WorldPinOnMapView();
 
                 void Open(const WorldPins::SdkModel::IWorldPinsInFocusModel& worldPinsInFocusModel,

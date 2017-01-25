@@ -116,10 +116,12 @@ namespace ExampleApp
             
             WorldPinIconMappingFactory::WorldPinIconMappingFactory(Eegeo::Helpers::IFileIO& fileIO, 
                 const std::string& sheetManifestFile, 
-                Eegeo::Helpers::ITextureFileLoader& textureFileLoader)
+                Eegeo::Helpers::ITextureFileLoader& textureFileLoader,
+                bool isInKioskMode)
             : m_fileIO(fileIO)
             , m_textureFileLoader(textureFileLoader)
             , m_sheetManifestFile(sheetManifestFile)
+            , m_isInKioskMode(isInKioskMode)
             {
             }
             
@@ -159,8 +161,17 @@ namespace ExampleApp
 
                 std::string filepath = "SearchResultOnMap/";
                 filepath.append(filename);
+
+				if (m_isInKioskMode)
+				{
+					filepath.append("@2x.png");
+				}
+				else
+				{
+					filepath = Helpers::ImageHelpers::GetImageNameForDevice(filepath, ".png");
+				}
                 
-                if (!m_textureFileLoader.LoadTexture(texturePage, Helpers::ImageHelpers::GetImageNameForDevice(filepath, ".png")))
+                if (!m_textureFileLoader.LoadTexture(texturePage, filepath))
                 {
                     Eegeo_ASSERT(false, "Failed to load texture for pins: %s", filepath.c_str());
                 }

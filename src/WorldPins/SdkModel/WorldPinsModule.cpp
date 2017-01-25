@@ -29,7 +29,8 @@ namespace ExampleApp
                                              const bool interiorsAffectedByFlattening,
                                              const Menu::View::IMenuReactionModel& menuReaction,
                                              const float screenOversampleScale,
-                                             const IWorldPinIconMapping& worldPinIconMapping)
+                                             const IWorldPinIconMapping& worldPinIconMapping,
+                                             bool isInKioskMode)
             {
                 m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
 
@@ -47,7 +48,8 @@ namespace ExampleApp
                                               messageBus,
                                               interiorInteractionModel,
                                               interiorTransitionModel,
-                                              sdkDomainEventBus);
+                                              sdkDomainEventBus,
+                                              isInKioskMode);
                 
                 m_pWorldPinsFloorHeightController = Eegeo_NEW(WorldPinsFloorHeightController)(*m_pWorldPinsRepository,
                                                                                               pinRepository,

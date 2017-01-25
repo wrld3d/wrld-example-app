@@ -1083,7 +1083,8 @@ namespace ExampleApp
         ExampleApp::WorldPins::SdkModel::WorldPinIconMappingFactory worldPinIconMappingFactory(
                                                                                                m_platformAbstractions.GetFileIO(),
                                                                                                "SearchResultOnMap/pin_sheet.json",
-                                                                                               m_platformAbstractions.GetTextureFileLoader());
+                                                                                               m_platformAbstractions.GetTextureFileLoader(),
+                                                                                               m_applicationConfiguration.IsInKioskMode());
         
         m_pWorldPinsIconMapping = worldPinIconMappingFactory.Create();
         
@@ -1103,7 +1104,8 @@ namespace ExampleApp
                                                                                          interiorsAffectedByFlattening,
                                                                                          m_menuReaction,
                                                                                          screenOversampleScale,
-                                                                                         *m_pWorldPinsIconMapping);
+                                                                                         *m_pWorldPinsIconMapping,
+                                                                                         m_applicationConfiguration.IsInKioskMode());
     }
     
     void MobileExampleApp::InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule, Eegeo::EegeoWorld& world, const bool interiorsAffectedByFlattening)

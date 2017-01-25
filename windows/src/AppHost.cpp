@@ -514,7 +514,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.WorldPinsModule().GetWorldPinInFocusViewModel(),
         app.WorldPinsModule().GetScreenControlViewModel(),
         app.ModalityModule().GetModalityModel(),
-        app.PinDiameter()
+        app.PinDiameter(),
+        app.GetApplicationConfiguration().IsInKioskMode()
         );
 
     // HUD behind modal background layer.

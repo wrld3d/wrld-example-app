@@ -20,6 +20,8 @@ namespace ExampleAppWPF
         private MainWindow m_currentWindow;
         private StackPanel m_reviewImageAndNumber;
 
+        private bool m_isInKioskMode;
+
         private const int MaxSubtitleLength = 22;
 
         private ControlClickHandler m_clickHandler;
@@ -29,12 +31,13 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WorldPinOnMapView), new FrameworkPropertyMetadata(typeof(WorldPinOnMapView)));
         }
 
-        public WorldPinOnMapView(IntPtr nativeCallerPointer, float offset)
+        public WorldPinOnMapView(IntPtr nativeCallerPointer, float offset, bool isInKioskMode)
         {
             Width = Double.NaN;
             Height = Double.NaN;
 
             m_nativeCallerPointer = nativeCallerPointer;
+            m_isInKioskMode = isInKioskMode;
             
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
@@ -124,7 +127,7 @@ namespace ExampleAppWPF
             m_mainPanel.RenderTransform =
                 new TranslateTransform(
                    x - (0.5 * RenderSize.Width),
-                   y - (0.5 * RenderSize.Height) - (m_mainPanel.ActualHeight * 0.5));
+                   y - ((m_isInKioskMode ? 0.55 : 0.5) * RenderSize.Height) - (m_mainPanel.ActualHeight * 0.5));
         }
 
         public void UpdateScreenVisibility(float onScreenState)

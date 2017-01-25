@@ -25,14 +25,16 @@ namespace ExampleApp
                                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                                const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                                               ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus)
+                                                               ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
+                                                               bool isInKioskMode)
                 : m_worldPinsRepository(worldPinsRepository)
                 , m_worldPinsService(worldPinsService)
                 , m_messageBus(messageBus)
                 , m_visibilityMessageHandlerBinding(this, &WorldPinsScaleController::OnWorldPinsVisibilityMessage)
+                , m_scaleWhenVisible(isInKioskMode ? 2.0f : 1.0f)
                 , m_modality(0.f)
                 , m_visibilityScale(0.f)
-                , m_targetVisibilityScale(1.f)
+                , m_targetVisibilityScale(m_scaleWhenVisible)
                 , m_visibilityAnimationDuration(0.2f)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_interiorTransitionModel(interiorTransitionModel)
@@ -176,7 +178,7 @@ namespace ExampleApp
 
             void WorldPinsScaleController::Show()
             {
-                m_targetVisibilityScale = 1.0f;
+                m_targetVisibilityScale = m_scaleWhenVisible;
             }
 
             void WorldPinsScaleController::Hide()

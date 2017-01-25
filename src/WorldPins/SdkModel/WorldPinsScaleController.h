@@ -29,6 +29,7 @@ namespace ExampleApp
                 float m_modality;
                 float m_visibilityScale;
                 float m_targetVisibilityScale;
+                float m_scaleWhenVisible;
                 bool m_hideOutdoorPinsIndoors;
                 const float m_visibilityAnimationDuration;
                 
@@ -49,7 +50,8 @@ namespace ExampleApp
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                          const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
-                                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus);
+                                         ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
+                                         bool isInKioskMode);
 
                 ~WorldPinsScaleController();
 
