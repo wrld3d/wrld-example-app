@@ -28,8 +28,8 @@ namespace ExampleApp
                 IWorldPinsService& m_worldPinsService;
                 float m_modality;
                 float m_visibilityScale;
-                float m_targetVisibilityScale;
                 float m_scaleWhenVisible;
+                float m_targetVisibilityScale;
                 bool m_hideOutdoorPinsIndoors;
                 const float m_visibilityAnimationDuration;
                 
