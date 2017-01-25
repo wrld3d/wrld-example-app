@@ -95,10 +95,13 @@ namespace ExampleAppWPF
 
         private void OnDeleteClicked(object sender, RoutedEventArgs e)
         {
-            if (ShowRemovePinDialog() == true)
+            ShowRemovePinDialog((removePinOk)  =>
             {
-                ExampleApp.MyPinDetailsViewCLI.RemovePinButtonClicked(m_nativeCallerPointer);
-            }
+                if (removePinOk)
+                {
+                    ExampleApp.MyPinDetailsViewCLI.RemovePinButtonClicked(m_nativeCallerPointer);
+                }
+            });
         }
 
         private void OnCloseClicked(object sender, RoutedEventArgs e)
@@ -145,23 +148,18 @@ namespace ExampleAppWPF
             m_currentWindow.EnableInput();
         }
 
-        private bool ShowRemovePinDialog()
+        private void ShowRemovePinDialog(Action<bool> dialogResultCont)
         {
-            DialogBox dialogBox = new DialogBox("Remove Report", "Are you sure you want to remove this report?", "Yes", "No");
-            dialogBox.Owner = m_currentWindow;
-
+            DialogBox removePinDialog = new DialogBox("Remove Report", "Are you sure you want to remove this report?", "Yes", "No", false);
+            removePinDialog.Owner = m_currentWindow;
+            m_currentWindow.DisableInput();
             m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
-
-            bool? result = dialogBox.ShowDialog();
-
-            m_currentWindow.SetOpacity(1.0f);
-
-            if (result == null)
+            removePinDialog.ShowWithParentControl(this, (sender, ev, okClicked) =>
             {
-                return false;
-            }
-
-            return (bool)result;
+                m_currentWindow.EnableInput();
+                m_currentWindow.SetOpacity(1.0f);
+                dialogResultCont(okClicked);
+            });
         }
     }
 }

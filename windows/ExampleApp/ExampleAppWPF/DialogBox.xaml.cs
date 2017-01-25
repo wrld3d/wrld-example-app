@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ExampleAppWPF
@@ -21,7 +23,7 @@ namespace ExampleAppWPF
 
     public partial class DialogBox : Window
     {
-        public delegate void ButtonClickHandler(object sender, RoutedEventArgs e, bool result);
+        public delegate void ButtonClickHandler(object sender, EventArgs e, bool result);
         public event ButtonClickHandler ButtonClicked;
         public bool m_modal;
 
@@ -32,6 +34,30 @@ namespace ExampleAppWPF
             InitializeComponent();
 
             DataContext = new DialogViewModel(title, message, acceptButton, cancelButton);
+        }
+
+        public void ShowWithParentControl(Control parent, ButtonClickHandler cont)
+        {
+            DependencyPropertyChangedEventHandler close = (o, e) => Close();
+            parent.IsVisibleChanged += (o,e) =>
+            {
+                if (!parent.IsVisible)
+                {
+                    close(o, e);
+                }
+            };
+            ButtonClicked += (sender, ev, okClicked) =>
+            {
+                IsVisibleChanged -= close;
+                cont(sender, ev, okClicked);
+            };
+            Show();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            ButtonClicked?.Invoke(this, e, false);
         }
 
         void OnAcceptButtonClick(object sender, RoutedEventArgs e)
