@@ -740,6 +740,8 @@ namespace ExampleApp
                                                                                                      m_pSearchMenuModule->GetSearchMenuViewModel(),
                                                                                                      m_pSearchModule->GetSearchRefreshService(),
                                                                                                      m_pInteriorsExplorerModule->GetScreenControlViewModel(),
+                                                                                                     mapModule.GetLabelsModule().GetDebugLabelLayerFilterModel(),
+                                                                                                     mapModule.GetInteriorsStreamingModule().GetInteriorMarkerLabelLayerId(),
                                                                                                      m_messageBus,
                                                                                                      m_pReactionControllerModule->GetReactionControllerModel());
 

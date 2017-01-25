@@ -48,6 +48,8 @@ namespace ExampleApp
                     ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
                     ScreenControl::View::IScreenControlViewModel& interiorControlViewModel,
+                    Eegeo::Labels::ILabelFilterModel& labelFilterModel,
+                    const Eegeo::Labels::LabelLayer::IdType& interiorMarkerLabelLayer,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Reaction::View::IReactionControllerModel& reactionControllerModel)
             {
@@ -56,7 +58,7 @@ namespace ExampleApp
 
                 m_pMyPinCreationModelObserver = Eegeo_NEW(MyPinCreationModelObserver)(*m_pMyPinCreationModel, messageBus);
 
-                m_pMyPinCreationViewStateChangedHandler = Eegeo_NEW(MyPinCreationViewStateChangedHandler)(*m_pMyPinCreationModel, searchRefreshService, messageBus);
+                m_pMyPinCreationViewStateChangedHandler = Eegeo_NEW(MyPinCreationViewStateChangedHandler)(*m_pMyPinCreationModel, searchRefreshService, labelFilterModel, interiorMarkerLabelLayer, messageBus);
 
                 m_pMyPinCreationViewSavePinHandler = Eegeo_NEW(MyPinCreationViewSavePinHandler)(*m_pMyPinCreationModel, messageBus);
 
