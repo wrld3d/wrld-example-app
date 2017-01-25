@@ -135,7 +135,7 @@ namespace ExampleApp
             
             void UserCreatedPinBoundObject::SubmitPinToWebService(const MyPinModel& pinModel)
             {
-                m_webService.SubmitUserCreatedPin(pinModel, m_imagePath);
+                m_webService.SubmitUserCreatedPin(pinModel);
             }
         }
     }

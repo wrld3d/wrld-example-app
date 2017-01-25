@@ -19,6 +19,7 @@
 	"eegeo_search_service_url": "https://poi.eegeo.com/v1.1",
 	"mypins_web_service_url": "",
 	"mypins_web_service_auth_token": "",
+  "mypins_poi_set_id": "",
 	"is_kiosk_touch_input_enabled":false,
 	"is_in_kiosk_mode":false,
     "use_japanese_font": false,

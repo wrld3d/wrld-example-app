@@ -628,8 +628,9 @@ namespace ExampleApp
                                                                                 *m_pCameraTransitionService,
                                                                                 m_pSearchModule->GetMyPinsSearchResultRefreshService(),
                                                                                 m_metricsService,
-                                                                                "",
-                                                                                "",
+                                                                                m_applicationConfiguration.MyPinsWebServiceUrl(),
+                                                                                m_applicationConfiguration.MyPinsWebServiceAuthToken(),
+                                                                                m_applicationConfiguration.MyPinsPoiSetId(),
                                                                                 m_menuReaction,
                                                                                 *m_pModalityIgnoredReactionModel);
 
