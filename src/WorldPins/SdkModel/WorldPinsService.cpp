@@ -75,7 +75,8 @@ namespace ExampleApp
                     .SetLocation(location.GetLatitudeInDegrees(), location.GetLongitudeInDegrees())
                     .SetLabelText(worldPinFocusData.title)
                     .SetLabelIcon(pinIconKey)
-                    .SetInterior(worldPinInteriorData.building.Value(), worldPinInteriorData.floor)
+                    // temp workaround to specify interior floor by zero-based index rather than 'floor number' id (MPLY-8062)
+                    .SetInteriorWithFloorIndex(worldPinInteriorData.building.Value(), worldPinInteriorData.floor)
                     .Build();
                 
                 
