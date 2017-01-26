@@ -9,6 +9,8 @@
         <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <System:Boolean x:Key="IsInKioskMode">true</System:Boolean>
+
     <!-- Watermark View -->
     <System:Double x:Key="WatermarkDialogBoxWidth">540</System:Double>
     <System:Double x:Key="WatermarkDialogBoxHeight">525</System:Double>
@@ -819,5 +821,13 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Interiors tutorial dialogs -->
+    <System:Double x:Key="InteriorsTutorialDialogWidth">320</System:Double>
+    <System:Double x:Key="InteriorsSearchTutorialDialogWidth">330</System:Double>
+
+    <System:Int64 x:Key="InteriorsSearchTutorialDialogNumber">1</System:Int64>
+    <System:Int64 x:Key="InteriorsCompassTutorialDialogNumber">2</System:Int64>
+    <System:Int64 x:Key="InteriorsElevatorTutorialDialogNumber">3</System:Int64>
 
 </ResourceDictionary>
