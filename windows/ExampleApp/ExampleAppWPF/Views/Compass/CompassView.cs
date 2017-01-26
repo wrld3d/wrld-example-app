@@ -72,6 +72,11 @@ namespace ExampleAppWPF
             var canvas = (Canvas)GetTemplateChild("ImageCanvas");
         }
 
+        public FrameworkElement GetCompassElement()
+        {
+            return m_compassNewLocate;
+        }
+
         private void CompassView_Click(object sender, RoutedEventArgs e)
         {
             CompassViewCLIMethods.HandleClick(m_nativeCallerPointer);
