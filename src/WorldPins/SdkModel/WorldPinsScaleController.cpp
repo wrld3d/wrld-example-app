@@ -178,7 +178,7 @@ namespace ExampleApp
 
             void WorldPinsScaleController::Show()
             {
-                m_targetVisibilityScale = 2.0f;
+                m_targetVisibilityScale = m_scaleWhenVisible;
             }
 
             void WorldPinsScaleController::Hide()
