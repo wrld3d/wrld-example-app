@@ -28,11 +28,13 @@ namespace ExampleAppWPF
         {
             if (enableHooks)
             {
+                m_rootWindow.SizeChanged += OnControlLayoutUpdated;
                 m_element.SizeChanged += OnControlSizeChanged;
                 m_element.LayoutUpdated += OnControlLayoutUpdated;
             }
             else
             {
+                m_rootWindow.SizeChanged -= OnControlLayoutUpdated;
                 m_element.SizeChanged -= OnControlSizeChanged;
                 m_element.LayoutUpdated -= OnControlLayoutUpdated;
             }

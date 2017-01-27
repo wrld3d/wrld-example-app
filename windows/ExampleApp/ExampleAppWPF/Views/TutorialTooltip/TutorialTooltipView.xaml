@@ -19,26 +19,25 @@
                                 BorderThickness="1"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Padding="20 15 20 15">
+                                Padding="20 10 20 15">
                             <StackPanel x:Name="Container" Orientation="Horizontal">
                                 <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
-                                           FontSize="48"
+                                           FontSize="{DynamicResource InteriorsTutorialDialogNumberFontSize}"
                                            Foreground="{DynamicResource PrimaryBG_colour}"
                                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LeftColumnValue}" />
 
                                 <Border Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EnableSeparatingLine, Converter={StaticResource BoolToVis}}"
                                         Width="1"
-                                        Margin="15 0 15 0"
+                                        Margin="15 5 15 0"
                                         BorderThickness="0 0 1 0"
                                         BorderBrush="{DynamicResource PrimaryBG_colour}" />
 
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Margin="0 -10 0 0"
-                                               FontSize="32"
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
+                                    <TextBlock FontSize="{DynamicResource InteriorsTutorialDialogTitleFontSize}"
                                                Foreground="{DynamicResource PrimaryBG_colour}"
                                                TextWrapping="WrapWithOverflow"
                                                Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
-                                    <TextBlock FontSize="20"
+                                    <TextBlock FontSize="{DynamicResource InteriorsTutorialDialogDescriptionFontSize}"
                                                Foreground="#3f3f3f"
                                                TextWrapping="Wrap"
                                                Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Description}" />
