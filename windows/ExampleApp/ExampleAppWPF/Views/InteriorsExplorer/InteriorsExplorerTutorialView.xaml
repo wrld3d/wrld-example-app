@@ -5,25 +5,117 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
+		<ResourceDictionary Source="../TutorialTooltip/TutorialTooltipView.xaml" />
 		<ResourceDictionary Source="InteriorsExplorerTutorialDialogView.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="InteriorsExplorerTutorialView" TargetType="{x:Type local:InteriorsExplorerTutorialView}">
+       <Style.Resources>
+           <Storyboard x:Key="ShowAnimation">
+                <DoubleAnimation Storyboard.TargetName="SearchMenuDialog"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1"
+                                 Duration="0:0:0.25" />
+
+                <DoubleAnimation Storyboard.TargetName="LocateMeDialog"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="0"
+                                 Duration="0" />
+                <DoubleAnimation Storyboard.TargetName="LocateMeDialog"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1"
+                                 BeginTime="0:0:0.15"
+                                 Duration="0:0:0.25" />
+
+                <DoubleAnimation Storyboard.TargetName="ElevatorDialog"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="0"
+                                 Duration="0" />
+
+                <DoubleAnimation Storyboard.TargetName="ElevatorDialog"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1"
+                                 BeginTime="0:0:0.30"
+                                 Duration="0:0:0.25" />
+
+           </Storyboard>
+
+           <Storyboard x:Key="HideAnimation">
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=SearchMenuDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="0"
+                                 Duration="0:0:0.25" />
+
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=LocateMeDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="1"
+                                 Duration="0" />
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=LocateMeDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="0"
+                                 BeginTime="0:0:0.15"
+                                 Duration="0:0:0.25" />
+
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=ElevatorDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="1"
+                                 Duration="0" />
+
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=ElevatorDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="0"
+                                 BeginTime="0:0:0.30"
+                                 Duration="0:0:0.25" />
+
+                <ObjectAnimationUsingKeyFrames BeginTime="0:0:1"
+                                               Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Hidden</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+            </Storyboard>
+        </Style.Resources>
+
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid
-                        Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}"
-                        Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualHeight}">
-                        <Grid.Background>
-                            <SolidColorBrush Color="Black" Opacity="0" />
-                        </Grid.Background>
-                        <Grid>
-							<local:InteriorsExplorerTutorialDialogView x:Name="ExitDialog" Style="{StaticResource InteriorsExplorerTutorialDialogView}"/>
-							<local:InteriorsExplorerTutorialDialogView x:Name="ChangeFloorDialog" Style="{StaticResource InteriorsExplorerTutorialDialogView}"/>
-						</Grid>
+                    <Grid>
+                        <local:TutorialTooltipView x:Name="SearchMenuDialog"
+                                                   Style="{StaticResource TutorialTooltipViewStyle}"
+                                                   LeftColumnValue="1"
+                                                   Title="Search Menu"
+                                                   Description="Find People, Groups&#x0a;Depts, Meeting Rooms"
+                                                   FixedWidth="330"
+                                                   ArrowAngleDegrees="170" />
+
+                        <local:TutorialTooltipView x:Name="LocateMeDialog"
+                                                   Style="{StaticResource TutorialTooltipViewStyle}"
+                                                   LeftColumnValue="2"
+                                                   Title="Locate Me"
+                                                   Description="Show current location"
+                                                   FixedWidth="320"
+                                                   FixedHeight="88"
+                                                   ArrowAngleDegrees="255" />
+
+                        <local:TutorialTooltipView x:Name="ElevatorDialog"
+                                                   Style="{StaticResource TutorialTooltipViewStyle}"
+                                                   LeftColumnValue="3"
+                                                   Title="Elevator"
+                                                   Description="Slide elevator to move&#x0a;between floors"
+                                                   FixedWidth="320"
+                                                   ArrowAngleDegrees="8" />
                     </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsVisible" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowAnimation}" />
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

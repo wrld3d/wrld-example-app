@@ -1,5 +1,6 @@
 ﻿using ExampleApp;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -31,6 +32,8 @@ namespace ExampleAppWPF
         private int FloorCount { get { return m_floorShortNames.Length; } }
         private bool FloorSelectionEnabled { get { return FloorCount > 1; } }
 
+        private bool m_showTutorialView = false;
+
         static InteriorsExplorerView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(InteriorsExplorerView), new FrameworkPropertyMetadata(typeof(InteriorsExplorerView)));            
@@ -41,6 +44,16 @@ namespace ExampleAppWPF
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.MainGrid.Children.Add(this);
             m_nativeCallerPointer = nativeCallerPointer;
+
+            mainWindow.ContentRendered += (o, e) =>
+            {
+                SearchMenuView searchMenuView = ViewHelpers.FindChildrenOfType<SearchMenuView>(mainWindow.MainGrid.Children).Single();
+                CompassView compassView = ViewHelpers.FindChildrenOfType<CompassView>(mainWindow.MainGrid.Children).Single();
+                m_tutorialView.SetTooltipControls(mainWindow,
+                                                  searchMenuView.GetSearchButton(),
+                                                  compassView.GetCompassElement(),
+                                                  m_sliderThumb);
+            };
         }
 
         public override void OnApplyTemplate()
@@ -182,13 +195,6 @@ namespace ExampleAppWPF
 
 				double sliderHeight = m_sliderTickBar.ActualHeight - m_sliderTickBar.ReservedSpace;
 				double sliderFloorSpacing = sliderHeight * m_sliderTickBar.TickFrequency / Math.Max(FloorCount - 1, 1);
-				m_tutorialView.RepositionDialogs((float)(dismissButtonPosition.X - m_panelOffscreenOffsetX),
-													(float)dismissButtonPosition.Y + 5,
-													0,
-													(float)(sliderPosition.Y + sliderHeight - (sliderFloorSpacing * floorIndex) + 3),
-													0,
-													GetCanShowChangeFloorTutorialDialog(),
-													m_container.Margin);
 			}
         }
 
@@ -258,13 +264,17 @@ namespace ExampleAppWPF
             detailsPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
 
             m_detailsPanel.BeginAnimation(OpacityProperty, detailsPanelAnimation);
-
-            m_tutorialView.AnimateTo(t, delayMilliseconds + m_stateChangeAnimationTimeMilliseconds, t <= 0);
         }
 
         private void Storyboard_Completed(object sender, EventArgs e)
         {
-            Visibility = (m_detailsPanel.Opacity == 0.0) ? Visibility.Hidden : Visibility.Visible;
+            Visibility = m_detailsPanel.Opacity == 0.0 ? Visibility.Hidden : Visibility.Visible;
+
+            if (m_detailsPanel.Opacity != 0.0 && m_showTutorialView)
+            {
+                m_tutorialView.Show();
+            }
+            m_showTutorialView = false;
         }
 
         public void SetTouchEnabled(bool enabled)
@@ -289,11 +299,13 @@ namespace ExampleAppWPF
 
         public void AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog)
         {
-            m_tutorialView.Show(showExitDialog, showChangeFloorDialog);
+            m_showTutorialView = true;
+            //m_tutorialView.Show(showExitDialog, showChangeFloorDialog);
         }
 
         public void RemoveTutorialDialogs()
         {
+            m_showTutorialView = false;
             m_tutorialView.Hide();
         }
 
