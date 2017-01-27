@@ -418,7 +418,7 @@ namespace ExampleApp
 
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
 
-        if(m_applicationConfiguration.TryStartAtGpsLocation())
+        if (m_applicationConfiguration.TryStartAtGpsLocation() && !m_applicationConfiguration.IsAttractModeEnabled())
         {
             m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
         }
