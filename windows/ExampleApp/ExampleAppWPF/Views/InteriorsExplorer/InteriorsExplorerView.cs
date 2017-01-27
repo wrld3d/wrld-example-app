@@ -80,7 +80,7 @@ namespace ExampleAppWPF
             m_dismissButton.RenderTransform = new TranslateTransform(m_panelOffscreenOffsetX, dismissButtonPosition.Y);
 
             m_tutorialView = (InteriorsExplorerTutorialView) GetTemplateChild("InteriorsExplorerTutorialView");
-			m_tutorialView.hide();
+			m_tutorialView.Hide();
 
             SetTouchEnabled(false);
             Hide();
@@ -182,7 +182,7 @@ namespace ExampleAppWPF
 
 				double sliderHeight = m_sliderTickBar.ActualHeight - m_sliderTickBar.ReservedSpace;
 				double sliderFloorSpacing = sliderHeight * m_sliderTickBar.TickFrequency / Math.Max(FloorCount - 1, 1);
-				m_tutorialView.repositionDialogs((float)(dismissButtonPosition.X - m_panelOffscreenOffsetX),
+				m_tutorialView.RepositionDialogs((float)(dismissButtonPosition.X - m_panelOffscreenOffsetX),
 													(float)dismissButtonPosition.Y + 5,
 													0,
 													(float)(sliderPosition.Y + sliderHeight - (sliderFloorSpacing * floorIndex) + 3),
@@ -259,7 +259,7 @@ namespace ExampleAppWPF
 
             m_detailsPanel.BeginAnimation(OpacityProperty, detailsPanelAnimation);
 
-            m_tutorialView.animateTo(t, delayMilliseconds + m_stateChangeAnimationTimeMilliseconds, t <= 0);
+            m_tutorialView.AnimateTo(t, delayMilliseconds + m_stateChangeAnimationTimeMilliseconds, t <= 0);
         }
 
         private void Storyboard_Completed(object sender, EventArgs e)
@@ -289,12 +289,12 @@ namespace ExampleAppWPF
 
         public void AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog)
         {
-            m_tutorialView.show(showExitDialog, showChangeFloorDialog);
+            m_tutorialView.Show(showExitDialog, showChangeFloorDialog);
         }
 
         public void RemoveTutorialDialogs()
         {
-            m_tutorialView.hide();
+            m_tutorialView.Hide();
         }
 
 		public bool GetCanShowChangeFloorTutorialDialog()

@@ -26,21 +26,21 @@ namespace ExampleAppWPF
 
             m_exitDialog = (InteriorsExplorerTutorialDialogView) GetTemplateChild("ExitDialog");
 			m_exitDialog.ApplyTemplate();
-			m_exitDialog.setDialogText(Properties.Resources.InteriorsExplorerTutorialView_ExitDialogTitle.Replace("\\n", "\n"),
+			m_exitDialog.SetDialogText(Properties.Resources.InteriorsExplorerTutorialView_ExitDialogTitle.Replace("\\n", "\n"),
 										Properties.Resources.InteriorsExplorerTutorialView_ExitDialogDescription.Replace("\\n", "\n"));
 
 			m_changeFloorDialog = (InteriorsExplorerTutorialDialogView) GetTemplateChild("ChangeFloorDialog");
 			m_changeFloorDialog.ApplyTemplate();
-			m_changeFloorDialog.setDialogText(Properties.Resources.InteriorsExplorerTutorialView_ChangeFloorDialogTitle.Replace("\\n", "\n"),
+			m_changeFloorDialog.SetDialogText(Properties.Resources.InteriorsExplorerTutorialView_ChangeFloorDialogTitle.Replace("\\n", "\n"),
 												Properties.Resources.InteriorsExplorerTutorialView_ChangeFloorDialogDescription.Replace("\\n", "\n"));
 		}
 
         public void OnMouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
-            hide();
+            Hide();
         }
 
-        public void repositionDialogs(float newPositionX,
+        public void RepositionDialogs(float newPositionX,
                                         float dismissButtonPositionY,
                                         float dismissButtonHeight,
                                         float floorChangeButtonPositionY,
@@ -52,7 +52,7 @@ namespace ExampleAppWPF
 
             double changeDialogY = Application.Current.MainWindow.Height - floorChangeButtonPositionY;
 
-            double exitDialogHeight = m_exitDialog.getHeight();
+            double exitDialogHeight = m_exitDialog.GetHeight();
 
             int offset = 0;
 
@@ -66,18 +66,19 @@ namespace ExampleAppWPF
                 changeDialogY -= offset;
             }
 
-            m_exitDialog.repositionDialog(Application.Current.MainWindow.Width - newPositionX, exitDialogY, rootContainerMargin, offset);
+            m_exitDialog.RepositionDialog(Application.Current.MainWindow.Width - newPositionX, exitDialogY, rootContainerMargin, offset);
 
-			m_changeFloorDialog.repositionDialog(Application.Current.MainWindow.Width - newPositionX, changeDialogY, rootContainerMargin, -offset);
+			m_changeFloorDialog.RepositionDialog(Application.Current.MainWindow.Width - newPositionX, changeDialogY, rootContainerMargin, -offset);
             m_changeFloorDialog.Visibility = showChangeFloorDialog ? Visibility.Visible : Visibility.Hidden;
         }
-        public void animateTo(double t, double delayMilliseconds, bool animateDialogsAtSameTime)
+
+        public void AnimateTo(double t, double delayMilliseconds, bool animateDialogsAtSameTime)
         {
-			m_exitDialog.animateTo(t, delayMilliseconds + (animateDialogsAtSameTime ? 0 : InteriorsExplorerTutorialDialogView.AnimationTimeMilliseconds * 0.8f));
-			m_changeFloorDialog.animateTo(t, delayMilliseconds);
+			m_exitDialog.AnimateTo(t, delayMilliseconds + (animateDialogsAtSameTime ? 0 : InteriorsExplorerTutorialDialogView.AnimationTimeMilliseconds * 0.8f));
+			m_changeFloorDialog.AnimateTo(t, delayMilliseconds);
         }
 
-		public void show(bool showExitDialog, bool showChangeFloorDialog)
+		public void Show(bool showExitDialog, bool showChangeFloorDialog)
 		{
 			Visibility = Visibility.Visible;
 
@@ -85,7 +86,7 @@ namespace ExampleAppWPF
 			m_changeFloorDialog.Opacity = showChangeFloorDialog ? 1 : 0;
 		}
 
-		public void hide()
+		public void Hide()
 		{
 			Visibility = Visibility.Hidden;
 		}

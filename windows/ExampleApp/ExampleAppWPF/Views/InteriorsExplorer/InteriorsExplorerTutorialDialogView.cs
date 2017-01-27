@@ -36,12 +36,12 @@ namespace ExampleAppWPF
 			m_description = (TextBlock) GetTemplateChild("DialogDescription");
         }
 
-        public void repositionDialog(double xPosition,
+        public void RepositionDialog(double xPosition,
                                         double yPosition,
                                         Thickness rootContainerMargin,
                                         int arrowOffset)
         {
-			resizeDialog();
+			ResizeDialog();
 			
 			Thickness containerMargin = m_container.Margin;
 			containerMargin.Right = xPosition;
@@ -66,7 +66,7 @@ namespace ExampleAppWPF
 			containerMargin.Bottom -= rootContainerMargin.Bottom;
 			m_container.Margin = containerMargin;
         }
-        public void animateTo(double t, double delayMilliseconds)
+        public void AnimateTo(double t, double delayMilliseconds)
         {
             DoubleAnimation animation = new DoubleAnimation();
             animation.From = m_container.Opacity;
@@ -76,18 +76,18 @@ namespace ExampleAppWPF
             m_container.BeginAnimation(OpacityProperty, animation);
         }
 
-		public void setDialogText(string title, string description)
+		public void SetDialogText(string title, string description)
 		{
 			m_title.Text = title;
 			m_description.Text = description;
 		}
 
-        public double getHeight()
+        public double GetHeight()
         {
             return m_container.Height;
         }
 
-		private void resizeDialog()
+		private void ResizeDialog()
 		{
 			Thickness titleMargin = m_title.Margin;
 			Thickness descriptionMargin = m_description.Margin;
