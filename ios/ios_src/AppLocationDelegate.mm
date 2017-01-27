@@ -83,8 +83,8 @@ AppLocationDelegate* m_pAppLocationDelegate;
 
     if (currentLocation != nil)
     {
-        double latDegrees = 56.459965;//currentLocation.coordinate.latitude;
-        double lonDegrees = -2.978129;//currentLocation.coordinate.longitude;
+        double latDegrees = currentLocation.coordinate.latitude;
+        double lonDegrees = currentLocation.coordinate.longitude;
         double altitudeMeters = currentLocation.altitude;
         double accuracyMeters = currentLocation.horizontalAccuracy;
         m_piOSLocationService->UpdateLocation(latDegrees, lonDegrees, altitudeMeters);
