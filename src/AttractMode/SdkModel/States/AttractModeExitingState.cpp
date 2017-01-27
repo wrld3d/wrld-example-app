@@ -74,10 +74,16 @@ namespace ExampleApp
                         headingDegrees = m_cameraController.GetHeadingDegrees();
                     }
                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController = m_worldCameraController.GetGlobeCameraController();
+
+                    double altitude;
+                    if (m_locationService.GetAltitude(altitude) == false)
+                    {
+                        altitude = globeCameraController.GetDistanceToInterest();
+                    }
                     globeCameraController.SetView(gpsLatLong.GetLatitudeInDegrees(),
                                                   gpsLatLong.GetLongitudeInDegrees(),
                                                   headingDegrees,
-                                                  globeCameraController.GetDistanceToInterest());
+                                                  altitude);
 
                     const Eegeo::dv3 currentLocation = m_cameraController.GetCameraState().LocationEcef();
                     const float distanceToTarget = (currentLocation - targetLocation.ToECEF()).Length();
