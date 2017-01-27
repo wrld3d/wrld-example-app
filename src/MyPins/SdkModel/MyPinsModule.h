@@ -40,6 +40,7 @@ namespace ExampleApp
                              Metrics::IMetricsService& metricsService,
                              const std::string& myPinsWebServiceUrl,
                              const std::string& myPinsWebServiceAuthToken,
+                             const std::string& myPinsPoiSetId,
                              const Menu::View::IMenuReactionModel& menuReaction,
                              Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction);
 

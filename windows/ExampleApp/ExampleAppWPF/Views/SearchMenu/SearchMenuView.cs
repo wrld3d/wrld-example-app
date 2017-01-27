@@ -81,6 +81,11 @@ namespace ExampleAppWPF
             MouseLeave += (o, e) => { mainWindow.EnableInput(); };
         }
 
+        public Button GetSearchButton()
+        {
+            return m_menuIcon;
+        }
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             PerformLayout(sender, null);

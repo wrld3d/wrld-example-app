@@ -16,7 +16,7 @@ namespace ExampleAppWPF
             return new Uri(uriString, UriKind.Absolute);
         }
 
-        public static IEnumerable<T> FindChildrenOfType<T>(UIElementCollection elements) where T : Control
+        public static IEnumerable<T> FindChildrenOfType<T>(UIElementCollection elements) where T : FrameworkElement
         {
             foreach (FrameworkElement element in elements)
             {
@@ -32,7 +32,7 @@ namespace ExampleAppWPF
             }
         }
 
-        public static IEnumerable<T> FindChildrenOfType<T>(DependencyObject obj) where T : Control
+        public static IEnumerable<T> FindChildrenOfType<T>(DependencyObject obj) where T : FrameworkElement
         {
             if (obj == null)
             {

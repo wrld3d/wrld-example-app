@@ -37,18 +37,15 @@ namespace ExampleApp
                     Eegeo::Labels::ILabelAnchorFilterModel& labelHiddenFilterModel,
                     const Eegeo::Labels::LabelLayer::IdType interiorLabelLayer,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    IHighlightColorMapper& highlightColorMapper,
-                    const bool usingLegacyInteriorLabels)
+                    IHighlightColorMapper& highlightColorMapper)
                     : m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorsCellResourceObserver(interiorsCellResourceObserver)
-                    , m_legacyInteriorsLabelController(legacyLabelController)
                     , m_interiorLabelLayer(interiorLabelLayer)
                     , m_labelHiddenFilterModel(labelHiddenFilterModel)
                     , m_searchService(searchService)
                     , m_searchQueryPerformer(searchQueryPerformer)
                     , m_searchResultRepository(searchResultRepository)
                     , m_highlightColorMapper(highlightColorMapper)
-                    , m_usingLegacyInteriorLabels(usingLegacyInteriorLabels)
                     , m_searchResultsHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultsLoaded)
                     , m_searchResultsClearedHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultCleared)
                     , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorChanged)
@@ -60,10 +57,8 @@ namespace ExampleApp
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
-                    if (m_usingLegacyInteriorLabels)
-                    {
-                        m_legacyInteriorsLabelController.RegisterLabelsBuiltCallback(m_interiorLabelsBuiltHandler);
-                    }
+                    
+                    
                     m_interiorsCellResourceObserver.RegisterAddedToSceneGraphCallback(m_interiorCellAddedHandler);
 
                     m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, &m_hideLabelAlwaysFilter);
@@ -72,10 +67,7 @@ namespace ExampleApp
                 InteriorsHighlightVisibilityController::~InteriorsHighlightVisibilityController()
                 {
                     m_interiorsCellResourceObserver.UnregisterAddedToSceneGraphCallback(m_interiorCellAddedHandler);
-                    if (m_usingLegacyInteriorLabels)
-                    {
-                        m_legacyInteriorsLabelController.UnregisterLabelsBuiltCallback(m_interiorLabelsBuiltHandler);
-                    }
+
                     m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
@@ -102,35 +94,9 @@ namespace ExampleApp
 
                 void InteriorsHighlightVisibilityController::ActivateLabels(bool active)
                 {
-                    if (m_usingLegacyInteriorLabels)
-                    {
-                        ActivateLabelsLegacy(active);
-                    }
-                    else
-                    {
-                        m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, active ? NULL : &m_hideLabelAlwaysFilter);
-                    }
+                    m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, active ? NULL : &m_hideLabelAlwaysFilter);
                 }
 
-                
-                void InteriorsHighlightVisibilityController::ActivateLabelsLegacy(bool active)
-                {
-                    Eegeo_ASSERT(m_usingLegacyInteriorLabels);
-                    
-                    namespace IE = Eegeo::Resources::Interiors::Entities;
-
-                    const IE::TFloorIndexToModelsMap& floorIndexToModels = m_legacyInteriorsLabelController.GetFloorIndexToModels();
-
-                    for (IE::TFloorIndexToModelsMap::const_iterator it = floorIndexToModels.begin(); it != floorIndexToModels.end(); ++it)
-                    {
-                        const IE::TModelVector& modelVector = (*it).second;
-
-                        for (IE::TModelVector::const_iterator modelIt = modelVector.begin(); modelIt != modelVector.end(); ++modelIt)
-                        {
-                            modelIt->second->SetEnabled(active);
-                        }
-                    }
-                }
 
                 void InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt()
                 {

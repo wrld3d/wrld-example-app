@@ -38,6 +38,7 @@ namespace ExampleApp
                                        Metrics::IMetricsService& metricsService,
                                        const std::string& myPinsWebServiceUrl,
                                        const std::string& myPinsWebServiceAuthToken,
+                                       const std::string& myPinsPoiSetId,
                                        const Menu::View::IMenuReactionModel& menuReaction,
                                        Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction)
                 : m_pMyPinsRepository(NULL)
@@ -54,8 +55,8 @@ namespace ExampleApp
                 
                 m_pMyPinsWebService = Eegeo_NEW(MyPinsWebService)(myPinsWebServiceUrl,
                                                                   myPinsWebServiceAuthToken,
-                                                                  platformAbstractions.GetWebLoadRequestFactory(),
-                                                                  platformAbstractions.GetFileIO());
+                                                                  myPinsPoiSetId,
+                                                                  platformAbstractions.GetWebLoadRequestFactory());
                 
                 m_pMyPinBoundObjectRepository = Eegeo_NEW(MyPinBoundObjectRepository);
                 

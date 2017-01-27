@@ -19,6 +19,7 @@
 #include "MyPinCreationViewSavePinHandler.h"
 #include "BidirectionalBus.h"
 #include "IReactionControllerModel.h"
+#include "Labels.h"
 
 namespace ExampleApp
 {
@@ -36,6 +37,8 @@ namespace ExampleApp
                                     ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                     ScreenControl::View::IScreenControlViewModel& interiorControlViewModel,
+                                    Eegeo::Labels::ILabelFilterModel& labelFilterModel,
+                                    const Eegeo::Labels::LabelLayer::IdType& interiorMarkerLabelLayer,
                                     ExampleAppMessaging::TMessageBus& messageBus,
                                     Reaction::View::IReactionControllerModel& reactionControllerModel);
 

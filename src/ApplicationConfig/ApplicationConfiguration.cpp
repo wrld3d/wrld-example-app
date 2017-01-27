@@ -30,9 +30,9 @@ namespace ExampleApp
             const std::string& eegeoSearchServiceUrl,
             const std::string& myPinsWebServiceUrl,
             const std::string& myPinsWebServiceAuthToken,
+            const std::string& myPinsPoiSetId,
             const bool isKioskTouchInputEnabled,
             const bool isInKioskMode,
-            const bool useLabels,
             const bool useJapaneseFont,
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
             const std::string& rawConfig,
@@ -66,9 +66,9 @@ namespace ExampleApp
         , m_eegeoSearchServiceUrl(eegeoSearchServiceUrl)
         , m_myPinsWebServiceUrl(myPinsWebServiceUrl)
         , m_myPinsWebServiceAuthToken(myPinsWebServiceAuthToken)
+        , m_myPinsPoiSetId(myPinsPoiSetId)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
         , m_isInKioskMode(isInKioskMode)
-        , m_useLabels(useLabels)
         , m_useJapaneseFont(useJapaneseFont)
         , m_interiorTrackingInfo(interiorTrackingInfo)
         , m_rawConfig(rawConfig)
@@ -191,6 +191,11 @@ namespace ExampleApp
             return m_myPinsWebServiceAuthToken;
         }
 
+        std::string ApplicationConfiguration::MyPinsPoiSetId() const
+        {
+            return m_myPinsPoiSetId;
+        }
+
         bool ApplicationConfiguration::IsKioskTouchInputEnabled() const
         {
             return m_isKioskTouchInputEnabled;
@@ -204,11 +209,6 @@ namespace ExampleApp
         bool ApplicationConfiguration::ShouldStartFullscreen() const
         {
             return m_shouldStartFullscreen;
-        }
-        
-        bool ApplicationConfiguration::UseLabels() const
-        {
-            return m_useLabels;
         }
         
         bool ApplicationConfiguration::UseJapaneseFont() const
