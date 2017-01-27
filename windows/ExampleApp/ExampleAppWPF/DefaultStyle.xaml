@@ -13,8 +13,8 @@
     <System:Boolean x:Key="NotIsInKioskMode">true</System:Boolean>
     
     <!-- Interiors tutorial dialogs -->
-    <System:Double x:Key="InteriorsTutorialDialogWidth">265</System:Double>
-    <System:Double x:Key="InteriorsSearchTutorialDialogWidth">265</System:Double>
+    <System:Double x:Key="InteriorsTutorialDialogWidth">270</System:Double>
+    <System:Double x:Key="InteriorsSearchTutorialDialogWidth">270</System:Double>
 
     <System:Double x:Key="InteriorsTutorialDialogArrowSize">17</System:Double>
 
@@ -22,7 +22,7 @@
     <System:Double x:Key="InteriorsExitTutorialDialogArrowAngle">16</System:Double>
 
     <System:Double x:Key="InteriorsTutorialDialogTitleFontSize">22</System:Double>
-    <System:Double x:Key="InteriorsTutorialDialogDescriptionFontSize">18</System:Double>
+    <System:Double x:Key="InteriorsTutorialDialogDescriptionFontSize">16</System:Double>
     <System:Double x:Key="InteriorsTutorialDialogNumberFontSize">34</System:Double>
 
     <System:String x:Key="InteriorsExitTutorialDialogNumber">1</System:String>
