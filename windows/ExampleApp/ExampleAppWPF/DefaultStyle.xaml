@@ -8,6 +8,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <System:Boolean x:Key="IsInKioskMode">false</System:Boolean>
     
     <!-- Watermark Dialog Box -->
     <System:Double x:Key="WatermarkDialogBoxWidth">400</System:Double>
@@ -694,5 +696,11 @@
 
     <!-- Admin Login -->
     <System:Double x:Key="AdminLoginWidth">450</System:Double>
+
+    <!-- Interiors tutorial dialogs -->
+    <System:Double x:Key="InteriorsTutorialDialogWidth">265</System:Double>
+
+    <System:Int64 x:Key="InteriorsExitTutorialDialogNumber">1</System:Int64>
+    <System:Int64 x:Key="InteriorsElevatorTutorialDialogNumber">2</System:Int64>
 
 </ResourceDictionary>
