@@ -10,7 +10,24 @@
     </ResourceDictionary.MergedDictionaries>
 
     <System:Boolean x:Key="IsInKioskMode">false</System:Boolean>
+    <System:Boolean x:Key="NotIsInKioskMode">true</System:Boolean>
     
+    <!-- Interiors tutorial dialogs -->
+    <System:Double x:Key="InteriorsTutorialDialogWidth">265</System:Double>
+    <System:Double x:Key="InteriorsSearchTutorialDialogWidth">265</System:Double>
+
+    <System:Double x:Key="InteriorsTutorialDialogArrowSize">17</System:Double>
+
+    <System:Double x:Key="InteriorsElevatorTutorialDialogArrowAngle">14</System:Double>
+    <System:Double x:Key="InteriorsExitTutorialDialogArrowAngle">16</System:Double>
+
+    <System:Double x:Key="InteriorsTutorialDialogTitleFontSize">22</System:Double>
+    <System:Double x:Key="InteriorsTutorialDialogDescriptionFontSize">18</System:Double>
+    <System:Double x:Key="InteriorsTutorialDialogNumberFontSize">34</System:Double>
+
+    <System:String x:Key="InteriorsExitTutorialDialogNumber">1</System:String>
+    <System:String x:Key="InteriorsElevatorTutorialDialogNumber">2</System:String>
+
     <!-- Watermark Dialog Box -->
     <System:Double x:Key="WatermarkDialogBoxWidth">400</System:Double>
     <System:Double x:Key="WatermarkDialogBoxHeight">200</System:Double>
@@ -716,7 +733,7 @@
     <ImageSource x:Key="ExitButtonOnImage">Assets/button_exit_interior_on.png</ImageSource>
     <Thickness x:Key="ElevatorSliderMargin" Left="0" Top="0" Right="13" Bottom="13"/>
     <System:Double x:Key="ElevatorSliderMinHeight">300</System:Double>
-    
+
     <!-- Simple Slider Control -->
     <System:Double x:Key="SliderThumbSize">50</System:Double>
     <System:Double x:Key="SliderThumbHalfSize">25</System:Double>
@@ -825,11 +842,5 @@
 
     <!-- Admin Login -->
     <System:Double x:Key="AdminLoginWidth">450</System:Double>
-
-    <!-- Interiors tutorial dialogs -->
-    <System:Double x:Key="InteriorsTutorialDialogWidth">265</System:Double>
-
-    <System:Int64 x:Key="InteriorsExitTutorialDialogNumber">1</System:Int64>
-    <System:Int64 x:Key="InteriorsElevatorTutorialDialogNumber">2</System:Int64>
 
 </ResourceDictionary>

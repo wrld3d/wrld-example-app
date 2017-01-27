@@ -52,7 +52,8 @@ namespace ExampleAppWPF
                 m_tutorialView.SetTooltipControls(mainWindow,
                                                   searchMenuView.GetSearchButton(),
                                                   compassView.GetCompassElement(),
-                                                  m_sliderThumb);
+                                                  m_sliderThumb,
+                                                  m_dismissButton);
             };
         }
 
@@ -300,7 +301,6 @@ namespace ExampleAppWPF
         public void AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog)
         {
             m_showTutorialView = true;
-            //m_tutorialView.Show(showExitDialog, showChangeFloorDialog);
         }
 
         public void RemoveTutorialDialogs()

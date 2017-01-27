@@ -16,12 +16,16 @@ namespace ExampleAppWPF
             Bottom
         };
 
+        private const double DefaultArrowAngle = 0.0;
+        private const double DefaultPointHeight = 20.0;
+        private const double DefaultArrowSize = 26.0;
+
         private Edge m_arrowEdge;
         private Path m_arrow;
         private Border m_boxBorder;
-
-        public const double PointHeight = 20.0;
-        public const double ArrowSize = 26.0;
+        private double m_arrowAngle = DefaultArrowAngle;
+        private double m_arrowPointHeight = DefaultPointHeight;
+        private double m_arrowSize = DefaultArrowSize;
 
         public static readonly DependencyProperty FixedWidthProperty =
             DependencyProperty.Register(
@@ -44,12 +48,26 @@ namespace ExampleAppWPF
                 typeof(TutorialTooltipView),
                 new UIPropertyMetadata(false));
 
+        public static readonly DependencyProperty ArrowPointHeightProperty =
+            DependencyProperty.Register(
+                "ArrowPointHeight",
+                typeof(double),
+                typeof(TutorialTooltipView),
+                new UIPropertyMetadata(DefaultPointHeight));
+
+        public static readonly DependencyProperty ArrowSizeProperty =
+            DependencyProperty.Register(
+                "ArrowSize",
+                typeof(double),
+                typeof(TutorialTooltipView),
+                new UIPropertyMetadata(DefaultArrowSize));
+
         public static readonly DependencyProperty ArrowAngleDegreesProperty =
             DependencyProperty.Register(
                 "ArrowAngleDegrees",
                 typeof(double),
                 typeof(TutorialTooltipView),
-                new UIPropertyMetadata(0.0));
+                new UIPropertyMetadata(DefaultArrowAngle));
 
         public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register(
@@ -92,6 +110,28 @@ namespace ExampleAppWPF
             }
         }
 
+        public double ArrowSize
+        {
+            get { return m_arrowSize;  }
+            set
+            {
+                m_arrowSize = value;
+                UpdateArrowGeometry(m_arrowAngle);
+                SetValue(ArrowSizeProperty, m_arrowSize);
+            }
+        }
+
+        public double ArrowPointHeight
+        {
+            get { return m_arrowPointHeight; }
+            set
+            {
+                m_arrowPointHeight = value;
+                UpdateArrowGeometry(m_arrowAngle);
+                SetValue(ArrowPointHeightProperty, m_arrowPointHeight);
+            }
+        }
+
         public bool ShowSeparatingLine
         {
             get { return (bool)GetValue(ShowSeparatingLineProperty); }
@@ -100,11 +140,12 @@ namespace ExampleAppWPF
 
         public double ArrowAngleDegrees
         {
-            get { return (double)GetValue(ArrowAngleDegreesProperty); }
+            get { return Rad2Deg(m_arrowAngle); }
             set
             {
-                UpdateArrowGeometry(Deg2Rad(value));
-                SetValue(ArrowAngleDegreesProperty, value);
+                m_arrowAngle = Deg2Rad(value);
+                UpdateArrowGeometry(m_arrowAngle);
+                SetValue(ArrowAngleDegreesProperty, m_arrowAngle);
             }
         }
 
@@ -142,10 +183,14 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_boxBorder = (Border)GetTemplateChild("BoxBorder");
+
             m_arrow = (Path)GetTemplateChild("Arrow");
+            m_arrowPointHeight = (double)GetValue(ArrowPointHeightProperty);
+            m_arrowSize = (double)GetValue(ArrowSizeProperty);
+            m_arrowAngle = Deg2Rad((double)GetValue(ArrowAngleDegreesProperty));
             m_boxBorder.SizeChanged += (o, e) =>
             {
-                UpdateArrowGeometry(Deg2Rad((double)GetValue(ArrowAngleDegreesProperty)));
+                UpdateArrowGeometry(m_arrowAngle);
             };
 
             double? fixedWidth = (double?)GetValue(FixedWidthProperty);
@@ -156,21 +201,16 @@ namespace ExampleAppWPF
 
         public double GetTooltipWidth()
         {
-            double pointHeight = m_arrowEdge == Edge.Right || m_arrowEdge == Edge.Left ? PointHeight : 0.0;
+            double pointHeight = m_arrowEdge == Edge.Right || m_arrowEdge == Edge.Left ? ArrowPointHeight : 0.0;
             return m_boxBorder.ActualWidth + pointHeight;
         }
 
         public double GetTooltipHeight()
         {
-            double pointHeight = m_arrowEdge == Edge.Top || m_arrowEdge == Edge.Bottom ? PointHeight : 0.0;
+            double pointHeight = m_arrowEdge == Edge.Top || m_arrowEdge == Edge.Bottom ? ArrowPointHeight : 0.0;
             return m_boxBorder.ActualHeight + pointHeight;
         }
 
-
-        public double GetPointHeight()
-        {
-            return PointHeight;
-        }
 
         private void UpdateArrowGeometry(double angleRads)
         {
@@ -190,7 +230,7 @@ namespace ExampleAppWPF
                         m_arrowEdge = Edge.Bottom;
                         Point intersection = new Point(halfHeight / -Math.Tan(edgeRotation) + halfWidth, height);
                         return MakeArrow(new Point(intersection.X, intersection.Y - 1.0),
-                                         new Point(intersection.X + ArrowSize / 2.0, intersection.Y + PointHeight),
+                                         new Point(intersection.X + ArrowSize / 2.0, intersection.Y + ArrowPointHeight),
                                          new Point(intersection.X + ArrowSize, intersection.Y - 1.0));
                     }
 
@@ -199,7 +239,7 @@ namespace ExampleAppWPF
                         m_arrowEdge = Edge.Left;
                         Point intersection = new Point(0.0, halfWidth * Math.Tan(edgeRotation) + halfHeight);
                         return MakeArrow(new Point(intersection.X + 1.0, intersection.Y),
-                                         new Point(intersection.X - PointHeight, intersection.Y + ArrowSize / 2.0),
+                                         new Point(intersection.X - ArrowPointHeight, intersection.Y + ArrowSize / 2.0),
                                          new Point(intersection.X + 1.0, intersection.Y + ArrowSize));
                     }
 
@@ -208,7 +248,7 @@ namespace ExampleAppWPF
                         m_arrowEdge = Edge.Top;
                         Point intersection = new Point(halfHeight / Math.Tan(edgeRotation) + halfWidth, 0.0);
                         return MakeArrow(new Point(intersection.X, intersection.Y + 1.0),
-                                         new Point(intersection.X + ArrowSize / 2.0, intersection.Y - PointHeight),
+                                         new Point(intersection.X + ArrowSize / 2.0, intersection.Y - ArrowPointHeight),
                                          new Point(intersection.X + ArrowSize, intersection.Y + 1.0));
                     }
 
@@ -217,7 +257,7 @@ namespace ExampleAppWPF
                         m_arrowEdge = Edge.Right;
                         Point intersection = new Point(width, halfWidth * -Math.Tan(edgeRotation) + halfHeight);
                         return MakeArrow(new Point(intersection.X - 1.0, intersection.Y),
-                                         new Point(intersection.X + PointHeight, intersection.Y + ArrowSize / 2.0),
+                                         new Point(intersection.X + ArrowPointHeight, intersection.Y + ArrowSize / 2.0),
                                          new Point(intersection.X - 1.0, intersection.Y + ArrowSize));
                     }
 
@@ -263,6 +303,11 @@ namespace ExampleAppWPF
         private static double Deg2Rad(double angle)
         {
             return angle * Math.PI / 180.0;
+        }
+
+        private static double Rad2Deg(double rads)
+        {
+            return rads * 180.0 / Math.PI;
         }
     }
 }

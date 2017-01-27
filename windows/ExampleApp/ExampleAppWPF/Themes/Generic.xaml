@@ -29,6 +29,7 @@
         <ResourceDictionary Source="../Views/SearchResultPoi/SwallowPersonSearchResultsPoiView.xaml" />
         <ResourceDictionary Source="../Views/SearchResultPoi/SwallowWorkingGroupSearchResultsPoiView.xaml" />
         <ResourceDictionary Source="../Views/SearchResultPoi/YelpSearchResultsPoiView.xaml" />
+        <ResourceDictionary Source="../Views/InteriorsExplorer/InteriorsExplorerTutorialView.xaml" />
         <ResourceDictionary Source="../Views/InteriorsExplorer/InteriorsExplorerView.xaml" />
         <ResourceDictionary Source="../Views/VirtualKeyboard/VirtualKeyboard.xaml" />
         <ResourceDictionary Source="../Views/AttractModeOverlay/AttractModeOverlay.xaml" />

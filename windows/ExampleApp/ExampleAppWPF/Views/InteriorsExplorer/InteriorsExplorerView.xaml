@@ -84,7 +84,8 @@
                             </Grid>
                         </StackPanel>
 
-                        <local:InteriorsExplorerTutorialView x:Name="InteriorsExplorerTutorialView" Style="{StaticResource InteriorsExplorerTutorialView}"/>
+                        <local:InteriorsExplorerTutorialView x:Name="InteriorsExplorerTutorialView"
+                                                             Style="{StaticResource InteriorsExplorerTutorialView}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
