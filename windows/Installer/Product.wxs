@@ -455,18 +455,9 @@
       <Component Id="cmpHvARa1sta67TysnvztmoVpdP75I" Directory="RESOURCEFOLDER" Guid="{8414714E-DF97-43DD-809B-49B548945F42}">
         <File Id="filDetLL3fFZxG5p8OvNGVh9KFJIso" KeyPath="yes" Source="payload\Resources\poi_marker.png" />
       </Component>
-      <Component Id="cmpebdgMnhA7oOv8f7D1ohSOsMlY7U" Directory="RESOURCEFOLDER" Guid="{3F35010E-BED3-4468-B981-4FEBED85A1BC}">
-        <File Id="filU_Jv7z1PmgvYzreZARwLUFK7M1Y" KeyPath="yes" Source="payload\Resources\poi_marker@0.75x.png" />
-      </Component>
-      <Component Id="cmpbFMNCTUMfs3V7gxhmkIMMW7U_wg" Directory="RESOURCEFOLDER" Guid="{BB4D9E5B-3AEE-4AD9-A11A-C58662FFAD5F}">
-        <File Id="filKdmewx9lxu3F2amhkD3qGXLzay0" KeyPath="yes" Source="payload\Resources\poi_marker@1.5x.png" />
-      </Component>
-      <Component Id="cmpilHhrhof.17Ou8caGXVhzjksMhc" Directory="RESOURCEFOLDER" Guid="{E7A6D9D9-0378-48E6-A65D-E2E96CCFFC57}">
-        <File Id="filOj97Dddy40kqWtfxkJI0zFbHzfw" KeyPath="yes" Source="payload\Resources\poi_marker@2x.png" />
-      </Component>
-      <Component Id="cmpUQQQbtdrjxYgTjaTmhkr_PgvsnQ" Directory="RESOURCEFOLDER" Guid="{38F924F4-AE30-49A4-8F97-AF22594BC41F}">
-        <File Id="fil46IcDAUBzHfucUC_Uk._OcQNVW4" KeyPath="yes" Source="payload\Resources\poi_marker@3x.png" />
-      </Component>
+	  <Component Id="_328802ae.4af7.4c7e.92e7.43cad9ea4074" Directory="RESOURCEFOLDER" Guid="{7b870011-31bc-43d6-bdc5-3be3d1cadba1}">
+        <File Id="_3f4bdd31.1871.4b0c.a353.16190f136ffe" KeyPath="yes" Source="payload\Resources\poi_marker@kiosk.png" />
+	  </Component>
       <Component Id="cmpq8dsedIEHTQSdxPyD2bqCbBtSaQ" Directory="RESOURCEFOLDER" Guid="{E1FCB8B1-3BEB-4E07-8C76-BC703149C1D8}">
         <File Id="filedgd4P8nFF_dCyaopRQ5uC70Fqo" KeyPath="yes" Source="payload\Resources\poi_placeholder.png" />
       </Component>
