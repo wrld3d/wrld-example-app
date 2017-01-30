@@ -19,27 +19,24 @@ namespace ExampleApp
             {
             public:
                 MyPinsWebService(
-                                 const std::string& webServiceBaseUrl,
-                                 const std::string& webServiceAuthToken,
-                                 Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory,
-                                 Eegeo::Helpers::IFileIO& fileIO);
-                
-                void SubmitSearchResultPin(
-                                           const MyPinModel& pinModel,
-                                           const Search::SdkModel::SearchResultModel& searchResult);
+                                 const std::string& myPinsWebServiceBaseUrl,
+                                 const std::string& myPinsWebServiceAuthToken,
+                                 const std::string& myPinsPoiSetId,
+                                 Eegeo::Web::IWebLoadRequestFactory& webLoadRequestFactory);
                 
                 void SubmitUserCreatedPin(
-                                          const MyPinModel& pinModel,
-                                          const std::string& imagePath);
+                                          const MyPinModel& pinModel);
                 
             private:
                 
                 void WebRequestCompleteCallback(Eegeo::Web::IWebResponse& webResponse);
+                const std::string CreatePinPostData(const MyPinModel& pinModel);
+                const std::string CreatePoiServiceUrl();
                 
                 const std::string m_url;
-                const std::string m_authHeader;
+                const std::string m_myPinsWebServiceAuthToken;
+                const std::string m_myPinsPoiSetId;
                 Eegeo::Web::IWebLoadRequestFactory& m_webLoadRequestFactory;
-                Eegeo::Helpers::IFileIO& m_fileIO;
                 Eegeo::Web::TWebLoadRequestCompletionCallback<MyPinsWebService> m_webRequestCompleteCallback;
             };
         }

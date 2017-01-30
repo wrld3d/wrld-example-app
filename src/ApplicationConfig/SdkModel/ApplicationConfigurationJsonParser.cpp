@@ -35,10 +35,10 @@ namespace ExampleApp
                 const std::string EegeoSearchServiceUrl = "eegeo_search_service_url";
                 const std::string MyPinsWebServiceUrl = "mypins_web_service_url";
                 const std::string MyPinsWebServiceAuthToken = "mypins_web_service_auth_token";
+                const std::string MyPinsPoiSetId = "mypins_poi_set_id";
                 const std::string IsKioskTouchInputEnabled = "is_kiosk_touch_input_enabled";
                 const std::string IsInKioskMode = "is_in_kiosk_mode";
                 const std::string StartAppInFullscreen = "start_app_in_fullscreen";
-                const std::string UseLabels = "use_labels";
                 const std::string UseJapaneseFont = "use_japanese_font";
                 const std::string IndoorTrackedBuildings = "indoor_tracked_buildings";
                 const std::string InteriorId = "interior_id";
@@ -59,6 +59,7 @@ namespace ExampleApp
                 const std::string AttractModePositionSpline = "attract_mode_position_spline";
                 const std::string AttractModeTimeoutMillis = "attract_mode_timeout_millis";
                 const std::string AttractModePlaybackSpeed = "attract_mode_playback_speed";
+                const std::string OptionsAdminPassword = "options_admin_password";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -224,10 +225,10 @@ namespace ExampleApp
                 const std::string& eegeoSearchServiceUrl = ParseStringOrDefault(document, EegeoSearchServiceUrl, m_defaultConfig.EegeoSearchServiceUrl());
                 const std::string& myPinsWebServiceUrl = ParseStringOrDefault(document, MyPinsWebServiceUrl, m_defaultConfig.MyPinsWebServiceUrl());
                 const std::string& myPinsWebServiceAuthToken = ParseStringOrDefault(document, MyPinsWebServiceAuthToken, m_defaultConfig.MyPinsWebServiceAuthToken());
+                const std::string& myPinsPoiSetId = ParseStringOrDefault(document, MyPinsPoiSetId, m_defaultConfig.MyPinsPoiSetId());
                 bool isKioskTouchInputEnabled = ParseBoolOrDefault(document, IsKioskTouchInputEnabled, m_defaultConfig.IsKioskTouchInputEnabled());
                 bool isInKioskMode = ParseBoolOrDefault(document, IsInKioskMode, m_defaultConfig.IsInKioskMode());
                 bool startFullscreen = ParseBoolOrDefault(document, StartAppInFullscreen, m_defaultConfig.ShouldStartFullscreen());
-                bool useLabels = ParseBoolOrDefault(document, UseLabels, m_defaultConfig.UseLabels());
                 bool useJapaneseFont = ParseBoolOrDefault(document, UseJapaneseFont, m_defaultConfig.UseJapaneseFont());
 
                 std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfoList;
@@ -254,6 +255,8 @@ namespace ExampleApp
                 const long long attractModeTimeoutMillis = ParseIntOrDefault(document, AttractModeTimeoutMillis, static_cast<int>(m_defaultConfig.AttractModeTimeoutMs()));
                 const float attractModePlaybackSpeed = ParseDoubleOrDefault(document, AttractModePlaybackSpeed, m_defaultConfig.AttractModePlaybackSpeed());
 
+                const std::string optionsAdminPassword(ParseStringOrDefault(document, OptionsAdminPassword, m_defaultConfig.OptionsAdminPassword()));
+
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -278,9 +281,9 @@ namespace ExampleApp
                     eegeoSearchServiceUrl,
                     myPinsWebServiceUrl,
                     myPinsWebServiceAuthToken,
+                    myPinsPoiSetId,
                     isKioskTouchInputEnabled,
                     isInKioskMode,
-                    useLabels,
                     useJapaneseFont,
                     interiorTrackingInfoList,
                     serialized,
@@ -288,7 +291,8 @@ namespace ExampleApp
                     attractModeTargetSplinePoints,
                     attractModePositionSplinePoints,
                     attractModeTimeoutMillis,
-                    attractModePlaybackSpeed
+                    attractModePlaybackSpeed,
+                    optionsAdminPassword
                 );
             }
             

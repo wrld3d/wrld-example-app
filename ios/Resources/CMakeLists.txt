@@ -231,8 +231,6 @@ set(resources ${resources}
         Resources/detail_icon_web_link@1.5x.png
         Resources/detail_icon_web_link@2x.png
         Resources/detail_icon_web_link@3x.png
-        Resources/DejaVuSansBold.fnt
-        Resources/DejaVuSansBold_0.png
         Resources/eegeo_logo.png
         Resources/eegeo_logo@2x.png
         Resources/eegeo_logo@3x.png
@@ -253,8 +251,6 @@ set(resources ${resources}
         Resources/floor_selection_top.png
         Resources/floor_selection_top@2x.png
         Resources/floor_selection_top@3x.png
-        Resources/FrankBold50_A8_icons.fnt
-        Resources/FrankBold50_A8_icons_0.png
         Resources/Geosphere_01.pod
         Resources/gps_marker.png
         Resources/gps_marker@2x.png
@@ -650,14 +646,6 @@ set(resources ${resources}
         Resources/image_blank@2x.png
         Resources/image_blank@3x.png
         Resources/Interiors
-        Resources/IPAexGothic32_A8_icons_0.png
-        Resources/IPAexGothic32_A8_icons_1.png
-        Resources/IPAexGothic32_A8_icons_2.png
-        Resources/IPAexGothic32_A8_icons_3.png
-        Resources/IPAexGothic32_A8_icons_4.png
-        Resources/IPAexGothic32_A8_icons_5.png
-        Resources/IPAexGothic32_A8_icons_6.png
-        Resources/IPAexGothic32_A8_icons.fnt
         Resources/menu_background1.png
         Resources/menu_background1@2x.png
         Resources/menu_background1@3x.png

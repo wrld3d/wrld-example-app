@@ -20,7 +20,7 @@ namespace ExampleAppWPF
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.ContentRendered += (o, e) =>
             {
-                OnLoadedAddVirtualKeyboardFocusHandlers<TextBox>(m_currentWindow.MainGrid.Children);
+                OnLoadedAddVirtualKeyboardFocusHandlers();
                 m_currentWindow.MainGrid.Children.Add(this);
             };
 
@@ -71,42 +71,9 @@ namespace ExampleAppWPF
             e.Handled = true;
         }
 
-        private void OnLoadedAddVirtualKeyboardFocusHandlers<T>(UIElementCollection elements) where T : Control
+        private void OnLoadedAddVirtualKeyboardFocusHandlers()
         {
-            foreach (FrameworkElement element in elements)
-            {
-                AddVirtualKeyboardFocusHandlers<T>(element);
-            }
-        }
-
-        private IEnumerable<T> FindChildrenOfType<T>(DependencyObject obj) where T : Control
-        {
-            if (obj == null)
-            {
-                yield break;
-            }
-
-            var numChildren = VisualTreeHelper.GetChildrenCount(obj);
-            for (int i = 0; i < numChildren; ++i)
-            {
-                var child = VisualTreeHelper.GetChild(obj, i);
-                if (child != null && child is T)
-                {
-                    yield return (T)child;
-                }
-                else
-                {
-                    foreach (var recChild in FindChildrenOfType<T>(child))
-                    {
-                        yield return recChild;
-                    }
-                }
-            }
-        }
-
-        private void AddVirtualKeyboardFocusHandlers<T>(DependencyObject obj) where T : Control
-        {
-            foreach (var child in FindChildrenOfType<T>(obj))
+            foreach (var child in ViewHelpers.FindChildrenOfType<TextBox>(m_currentWindow.MainGrid.Children))
             {
                 child.PreviewMouseDown += (o, e) => ShowVirtualKeyboard();
                 child.GotFocus += (o, e) => ShowVirtualKeyboard();

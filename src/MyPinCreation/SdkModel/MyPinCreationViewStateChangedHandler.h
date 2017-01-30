@@ -7,6 +7,8 @@
 #include "ICallback.h"
 #include "Search.h"
 #include "MyPinCreationViewStateChangedMessage.h"
+#include "Labels.h"
+#include "LabelLayer.h"
 
 namespace ExampleApp
 {
@@ -20,6 +22,8 @@ namespace ExampleApp
 
                 MyPinCreationViewStateChangedHandler(IMyPinCreationModel& myPinCreationModel,
                                                      Search::SdkModel::ISearchRefreshService& searchRefreshService,
+                                                     Eegeo::Labels::ILabelFilterModel& labelFilterModel,
+                                                     const Eegeo::Labels::LabelLayer::IdType& interiorMarkerLabelLayer,
                                                      ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~MyPinCreationViewStateChangedHandler();
@@ -27,6 +31,8 @@ namespace ExampleApp
             private:
                 IMyPinCreationModel& m_myPinCreationModel;
                 Search::SdkModel::ISearchRefreshService& m_searchRefreshService;
+                Eegeo::Labels::ILabelFilterModel& m_labelFilterModel;
+                Eegeo::Labels::LabelLayer::IdType m_interiorMarkerLabelLayer;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 Eegeo::Helpers::TCallback1<MyPinCreationViewStateChangedHandler, const MyPinCreationViewStateChangedMessage&> m_handler;

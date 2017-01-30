@@ -104,6 +104,7 @@
     <Compile Include="PersistentSettings\PersistentSettings.cs" />
     <Compile Include="TickBarVerticalWithLabels.cs" />
     <Compile Include="ViewHelpers.cs" />
+    <Compile Include="Views\AdminLogin\AdminLoginView.cs" />
     <Compile Include="Views\AttractModeOverlay\AttractModeOverlayView.cs" />
     <Compile Include="Views\ButtonBase.cs" />
     <Compile Include="Views\ControlBase.cs" />
@@ -137,6 +138,8 @@
     <Compile Include="Views\MyPinCreationDetails\MyPinCreationDetailsView.cs" />
     <Compile Include="Views\MyPinCreationDetails\MyPinDetailsView.cs" />
     <Compile Include="Views\ToggleButtonBase.cs" />
+    <Compile Include="Views\TutorialTooltip\TutorialTooltipPositionTransform.cs" />
+    <Compile Include="Views\TutorialTooltip\TutorialTooltipView.cs" />
     <Compile Include="Views\VirtualKeyboard\VirtualKeyboardView.cs" />
     <Compile Include="Views\Watermark\WatermarkView.cs" />
     <Compile Include="Views\Menu\MenuView.cs" />
@@ -209,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutPage\AboutPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AdminLogin\AdminLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -289,6 +296,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SearchMenu\SearchMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TutorialTooltip\TutorialTooltipView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -998,6 +1009,7 @@
       <Link>Assets\button_pin_creation_confirm_on%40kiosk.png</Link>
     </Resource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r

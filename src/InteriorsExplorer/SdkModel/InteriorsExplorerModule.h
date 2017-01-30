@@ -15,8 +15,6 @@
 #include "IIdentity.h"
 #include "VisualMap.h"
 #include "InitialExperience.h"
-#include "InteriorsUINotificationService.h"
-#include "IInteriorsEntitiesPinsController.h"
 #include "PersistentSettings.h"
 #include "NavigationService.h"
 #include "InteriorMetaDataRepository.h"
@@ -48,8 +46,6 @@ namespace ExampleApp
                                         Metrics::IMetricsService& metricsService,
                                         const InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel,
                                         const bool interiorsAffectedByFlattening,
-                                        const bool useIndoorEntryMarkerLabels,
-                                        InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsController& interiorsEntitiesPinsController,
                                         PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                         Eegeo::Location::NavigationService& navigationService,
                                         Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
@@ -75,8 +71,6 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController& GetTouchController() const;
                 
                 InteriorExplorerUserInteractionModel& GetInteriorsExplorerUserInteractionModel() const;
-
-                InteriorsUINotificationService& GetInteriorsUINotificationService() const;
                 
             private:
                 InteriorsExplorerModel* m_pModel;
@@ -93,7 +87,6 @@ namespace ExampleApp
                 Eegeo::Camera::GlobeCamera::GlobeCameraTouchController* m_pGlobeCameraTouchController;
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGpsGlobeCameraController;
 
-                InteriorsUINotificationService* m_pUINotificationService;
             };
         }
     }

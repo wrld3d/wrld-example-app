@@ -53,7 +53,7 @@ namespace ExampleAppWPF
 
         public void OnAttractModeStop()
         {
-            m_hideAnimation.Stop();
+            m_hideAnimation?.Stop();
             Visibility = Visibility.Collapsed;
         }
 

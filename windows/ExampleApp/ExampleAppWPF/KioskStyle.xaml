@@ -9,6 +9,28 @@
         <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <System:Boolean x:Key="IsInKioskMode">true</System:Boolean>
+    <System:Boolean x:Key="NotIsInKioskMode">false</System:Boolean>
+
+    <!-- Interiors tutorial dialogs -->
+    <System:Double x:Key="InteriorsTutorialDialogWidth">320</System:Double>
+    <System:Double x:Key="InteriorsSearchTutorialDialogWidth">330</System:Double>
+
+    <System:Double x:Key="InteriorsTutorialDialogArrowSize">26</System:Double>
+
+    <System:Double x:Key="InteriorsSearchTutorialDialogArrowAngle">170</System:Double>
+    <System:Double x:Key="InteriorsLocateMeTutorialDialogArrowAngle">255</System:Double>
+    <System:Double x:Key="InteriorsElevatorTutorialDialogArrowAngle">8</System:Double>
+    <System:Double x:Key="InteriorsExitTutorialDialogArrowAngle">8</System:Double>
+
+    <System:Double x:Key="InteriorsTutorialDialogTitleFontSize">32</System:Double>
+    <System:Double x:Key="InteriorsTutorialDialogDescriptionFontSize">20</System:Double>
+    <System:Double x:Key="InteriorsTutorialDialogNumberFontSize">48</System:Double>
+
+    <System:String x:Key="InteriorsSearchTutorialDialogNumber">1</System:String>
+    <System:String x:Key="InteriorsCompassTutorialDialogNumber">2</System:String>
+    <System:String x:Key="InteriorsElevatorTutorialDialogNumber">3</System:String>
+
     <!-- Watermark View -->
     <System:Double x:Key="WatermarkDialogBoxWidth">540</System:Double>
     <System:Double x:Key="WatermarkDialogBoxHeight">525</System:Double>

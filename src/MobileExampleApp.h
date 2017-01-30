@@ -71,7 +71,6 @@
 #include "IWatermarkModule.h"
 #include "ApplicationConfiguration.h"
 #include "InteriorsExplorer.h"
-#include "InteriorsEntitiesPins.h"
 #include "MapMode.h"
 #include "AppModes.h"
 #include "IAppCameraModule.h"
@@ -155,7 +154,6 @@ namespace ExampleApp
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
         Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
-        InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
@@ -176,10 +174,6 @@ namespace ExampleApp
         Menu::View::IMenuReactionModel& m_menuReaction;
         Menu::View::IMenuIgnoredReactionModel* m_pModalityIgnoredReactionModel;
         Menu::View::IMenuIgnoredReactionModel* m_pReactorIgnoredReactionModel;
-        
-        const bool m_interiorsEnabled;
-        const bool m_usingLegacyInteriorLabels;
-        const bool m_useIndoorEntryMarkerLabels;
 
         Eegeo::Input::IUserIdleService& m_userIdleService;
         AppModes::GlobalAppModeTransitionRules* m_pGlobalAppModeTransitionRules;

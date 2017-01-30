@@ -7,7 +7,6 @@
         <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <SolidColorBrush x:Key="NumKeyBG_Colour" Color="#08408a" />
     <SolidColorBrush x:Key="KeyForeground_Colour" Color="#ffffff" />
     <SolidColorBrush x:Key="KeyForeground_Disabled_Colour" Color="#88aad7" />
 
@@ -71,7 +70,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Name="border" CornerRadius="0" Background="{StaticResource NumKeyBG_Colour}">
+                    <Border Name="border" CornerRadius="0" Background="{StaticResource DarkButtonBG_colour}">
                         <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
