@@ -381,7 +381,7 @@
                                                                                 </Storyboard>
                                                                             </BeginStoryboard>
                                                                         </EventTrigger>
-                                                                        <EventTrigger RoutedEvent="TouchUp">
+                                                                        <EventTrigger RoutedEvent="TouchLeave">
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">

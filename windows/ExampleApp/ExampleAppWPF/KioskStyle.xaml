@@ -339,8 +339,8 @@
     <SolidColorBrush x:Key="SubMenuListItemOverColour" Color="{Binding Color, Source={StaticResource SubMenuItemDefaultColour}}"/>
     <System:Double x:Key="SubMenuListItemWidthSettings">515</System:Double>
     <System:Double x:Key="SubMenuListItemWidthSearch">515</System:Double>
-    <System:Double x:Key="SubMenuListItemHeight">51</System:Double>
-    <System:Double x:Key="SubMenuListItemIconSize">47</System:Double>
+    <System:Double x:Key="SubMenuListItemHeight">54</System:Double>
+    <System:Double x:Key="SubMenuListItemIconSize">54</System:Double>
     <System:Double x:Key="SubMenuListItemFontSize">18</System:Double>
     <System:Double x:Key="SubMenuListItemSubTitleFontSize">11</System:Double>
     <Thickness x:Key="SubMenuListItemMarginSearch" Left="0" Top="0" Right="0" Bottom="0"/>

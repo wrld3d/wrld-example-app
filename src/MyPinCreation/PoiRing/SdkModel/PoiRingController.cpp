@@ -81,7 +81,8 @@ namespace ExampleApp
                                                      const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                      const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                      Eegeo::Rendering::ScreenProperties& screenProperties,
-                                                     const bool interiorsAffectedByFlattening)
+                                                     const bool interiorsAffectedByFlattening,
+                                                     const bool isInKioskMode)
                     : m_myPinCreationModel(myPinCreationModel)
                     , m_poiRingView(poiRingView)
                     , m_scaleInterpolationParam(0.f)
@@ -90,6 +91,7 @@ namespace ExampleApp
                     , m_terrainHeightProvider(terrainHeightProvider)
                     , m_iconPosition(Eegeo::dv3::Zero())
                     , m_iconSize(0.0f)
+                    , m_iconAssetSize(isInKioskMode ? 150.0f : 75.0f)
                     , m_ringRadius(0.0f)
                     , m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorTransitionModel(interiorTransitionModel)
@@ -183,8 +185,7 @@ namespace ExampleApp
 
                     m_poiRingView.SetInnerSphereScale(altitudeBasedScale * interiorInnerRingScale);
 
-                    const float assetSize = 75.f;
-                    const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSizeWithVerticalFoV(renderCamera, scaledPoint) / (m_screenProperties.GetScreenHeight()* 0.5f)*m_screenProperties.GetPixelScale() * assetSize;
+                    const float iconScale = Eegeo::Helpers::TransformHelpers::ComputeModelScaleForConstantScreenSizeWithVerticalFoV(renderCamera, scaledPoint) / (m_screenProperties.GetScreenHeight()* 0.5f)*m_screenProperties.GetPixelScale() * m_iconAssetSize;
                     
                     m_iconSize = Eegeo::Max(iconScale * transitionScale, 0.0f);
                     m_poiRingView.AddIconSprite(renderCamera, scaledPoint, m_iconSize);
