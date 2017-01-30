@@ -24,6 +24,7 @@ namespace ExampleApp
             : m_model(model)
             , m_view(view)
             , m_viewModel(viewModel)
+            , m_replayTutorials(false)
             , m_messageBus(messageBus)
             , m_appMode(AppModes::SdkModel::WorldMode)
             , m_dismissedCallback(this, &InteriorsExplorerController::OnDismiss)
@@ -97,8 +98,8 @@ namespace ExampleApp
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
                     
 					const int maxTutorialViews = 2;
-					bool showExitTutorial = m_model.GetInteriorExitTutorialViewedCount() < maxTutorialViews;
-					bool showChangeFloorTutorial = m_model.GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews && m_view.GetCanShowChangeFloorTutorialDialog();
+					bool showExitTutorial = m_replayTutorials || m_model.GetInteriorExitTutorialViewedCount() < maxTutorialViews;
+					bool showChangeFloorTutorial = (m_replayTutorials || m_model.GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews) && m_view.GetCanShowChangeFloorTutorialDialog();
 
 					if(showExitTutorial || showChangeFloorTutorial)
 					{
@@ -136,6 +137,11 @@ namespace ExampleApp
             void InteriorsExplorerController::OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage & message)
             {
                 m_view.PlaySliderAnim();
+            }
+
+            void InteriorsExplorerController::ReplayTutorials(const bool enableTutorials)
+            {
+                m_replayTutorials = enableTutorials;
             }
         }
     }

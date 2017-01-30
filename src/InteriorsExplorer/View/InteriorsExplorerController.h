@@ -29,6 +29,8 @@ namespace ExampleApp
                                             ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~InteriorsExplorerController();
+
+                void ReplayTutorials(const bool enableTutorials);
                 
             private:
                 
@@ -44,6 +46,7 @@ namespace ExampleApp
                 SdkModel::InteriorsExplorerModel& m_model;
                 IInteriorsExplorerView& m_view;
                 InteriorsExplorerViewModel& m_viewModel;
+                bool m_replayTutorials;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerController> m_dismissedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, int> m_selectFloorCallback;

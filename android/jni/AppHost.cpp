@@ -522,12 +522,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 								 m_messageBus);
 
 
-    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
-    		m_nativeState,
-    		app.OptionsModule().GetOptionsViewModel(),
-    		m_pAndroidPlatformAbstractionModule->GetAndroidHttpCache(),
-    		m_messageBus);
-
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
                                             m_nativeState,
                                             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
@@ -553,6 +547,13 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
             m_messageBus,
             m_nativeState);
 
+    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
+            m_nativeState,
+            app.OptionsModule().GetOptionsViewModel(),
+            m_pAndroidPlatformAbstractionModule->GetAndroidHttpCache(),
+            m_messageBus,
+            m_pInteriorsExplorerViewModule->GetController());
+
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -577,6 +578,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         Eegeo_DELETE m_pViewControllerUpdaterModule;
 
+        Eegeo_DELETE m_pOptionsViewModule;
+
         Eegeo_DELETE m_pInteriorsExplorerViewModule;
 
         Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
@@ -584,8 +587,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pFlattenButtonViewModule;
 
         Eegeo_DELETE m_pMyPinCreationViewModule;
-
-        Eegeo_DELETE m_pOptionsViewModule;
 
         Eegeo_DELETE m_pAboutPageViewModule;
 

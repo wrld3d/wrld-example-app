@@ -88,6 +88,11 @@ namespace ExampleApp
                 m_clearCacheCallbacks.ExecuteCallbacks();
             }
 
+            void OptionsView::HandleReplayTutorialsToggled(bool enableTutorials)
+            {
+                m_replayTutorialsCallbacks.ExecuteCallbacks(enableTutorials);
+            }
+
             void OptionsView::InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_closeCallbacks.AddCallback(callback);
@@ -126,6 +131,16 @@ namespace ExampleApp
             void OptionsView::RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_clearCacheCallbacks.RemoveCallback(callback);
+            }
+
+            void OptionsView::InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                m_replayTutorialsCallbacks.AddCallback(callback);
+            }
+
+            void OptionsView::RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                m_replayTutorialsCallbacks.RemoveCallback(callback);
             }
         }
     }

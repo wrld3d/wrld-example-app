@@ -22,6 +22,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_wifiOnlyCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_cacheEnabledCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_clearCacheCallbacks;
+                Eegeo::Helpers::CallbackCollection1<bool> m_replayTutorialsToggledCallbacks;
 
             public:
                 OptionsViewInterop(OptionsView* pView);
@@ -59,6 +60,9 @@ namespace ExampleApp
                 
                 void InsertClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback);
+                void RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback);
             };
         }
     }

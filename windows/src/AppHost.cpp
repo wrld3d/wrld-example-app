@@ -591,14 +591,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
-    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
-        m_nativeState,
-        app.OptionsModule().GetOptionsViewModel(),
-        m_pWindowsPlatformAbstractionModule->GetWindowsHttpCache(),
-        m_messageBus,
-        app.GetApplicationConfiguration().OptionsAdminPassword(),
-        app.GetApplicationConfiguration().IsInKioskMode());
-
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
         m_nativeState,
         app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
@@ -623,6 +615,15 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.InteriorsExplorerModule().GetInteriorsExplorerModel(),
 		app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
 		m_messageBus);
+
+    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
+        m_nativeState,
+        app.OptionsModule().GetOptionsViewModel(),
+        m_pWindowsPlatformAbstractionModule->GetWindowsHttpCache(),
+        m_messageBus,
+        m_pInteriorsExplorerViewModule->GetController(),
+        app.GetApplicationConfiguration().OptionsAdminPassword(),
+        app.GetApplicationConfiguration().IsInKioskMode());
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
@@ -674,8 +675,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
             Eegeo_DELETE m_pMyPinCreationViewModule;
 
-            Eegeo_DELETE m_pOptionsViewModule;
-
             Eegeo_DELETE m_pAboutPageViewModule;
 
             Eegeo_DELETE m_pSearchResultPoiViewModule;
@@ -693,6 +692,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
             Eegeo_DELETE m_pCompassViewModule;
 
             Eegeo_DELETE m_pInitialExperienceIntroViewModule;
+
+            Eegeo_DELETE m_pOptionsViewModule;
 
 			Eegeo_DELETE m_pInteriorsExplorerViewModule;
 

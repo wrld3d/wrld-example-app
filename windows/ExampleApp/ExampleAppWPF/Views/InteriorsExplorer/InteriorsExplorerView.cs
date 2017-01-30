@@ -11,6 +11,14 @@ namespace ExampleAppWPF
 {
     public class InteriorsExplorerView : ControlBase
     {
+        private enum TutorialDialogMask
+        {
+            Empty       = 0,
+            Exit        = 1 << 0,
+            ChangeFloor = 1 << 1,
+            All         = ~0
+        };
+
         private IntPtr m_nativeCallerPointer;
 		private Grid m_container;
         private Slider m_floorSlider;
@@ -32,7 +40,7 @@ namespace ExampleAppWPF
         private int FloorCount { get { return m_floorShortNames.Length; } }
         private bool FloorSelectionEnabled { get { return FloorCount > 1; } }
 
-        private bool m_showTutorialView = false;
+        private TutorialDialogMask m_tutorialDialogsToShow = TutorialDialogMask.Empty;
 
         static InteriorsExplorerView()
         {
@@ -224,6 +232,7 @@ namespace ExampleAppWPF
 
         public void SetFullyOffScreen()
         {
+            RemoveTutorialDialogs();
             AnimateTo(0.0f);
         }
         private void AnimateTo(float t)
@@ -271,11 +280,12 @@ namespace ExampleAppWPF
         {
             Visibility = m_detailsPanel.Opacity == 0.0 ? Visibility.Hidden : Visibility.Visible;
 
-            if (m_detailsPanel.Opacity != 0.0 && m_showTutorialView)
+            if (m_detailsPanel.Opacity != 0.0 && m_tutorialDialogsToShow != TutorialDialogMask.Empty)
             {
-                m_tutorialView.Show();
+                m_tutorialView.Show(Convert.ToBoolean(m_tutorialDialogsToShow & TutorialDialogMask.Exit),
+                                    Convert.ToBoolean(m_tutorialDialogsToShow & TutorialDialogMask.ChangeFloor));
             }
-            m_showTutorialView = false;
+            m_tutorialDialogsToShow = TutorialDialogMask.Empty;
         }
 
         public void SetTouchEnabled(bool enabled)
@@ -293,6 +303,7 @@ namespace ExampleAppWPF
         {
             Visibility = Visibility.Visible;
         }
+
         public void Hide()
         {
             Visibility = Visibility.Hidden;
@@ -300,12 +311,13 @@ namespace ExampleAppWPF
 
         public void AddTutorialDialogs(bool showExitDialog, bool showChangeFloorDialog)
         {
-            m_showTutorialView = true;
+            m_tutorialDialogsToShow = (showExitDialog ? TutorialDialogMask.Exit : TutorialDialogMask.Empty)
+                                  | (showChangeFloorDialog ? TutorialDialogMask.ChangeFloor : TutorialDialogMask.Empty);
         }
 
         public void RemoveTutorialDialogs()
         {
-            m_showTutorialView = false;
+            m_tutorialDialogsToShow = TutorialDialogMask.Empty;
             m_tutorialView.Hide();
         }
 

@@ -107,6 +107,16 @@ namespace ExampleApp
             {
                 m_clearCacheCallbacks.RemoveCallback(callback);
             }
+
+            void OptionsViewInterop::InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                m_replayTutorialsToggledCallbacks.AddCallback(callback);
+            }
+
+            void OptionsViewInterop::RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                m_replayTutorialsToggledCallbacks.RemoveCallback(callback);
+            }
         }
     }
 }
