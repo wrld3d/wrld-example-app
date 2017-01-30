@@ -55,6 +55,8 @@ namespace ExampleAppWPF
 
         private WindowInteractionTouchHandler m_touchHandler;
 
+        private TouchDevice m_searchResultsListCurrentTouchDevice;
+
         static SearchMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
@@ -174,6 +176,10 @@ namespace ExampleAppWPF
             m_list.PreviewMouseWheel += OnMenuScrollWheel;
 
             m_resultsList = (ListBox)GetTemplateChild("SearchResultsList");
+            m_resultsList.TouchDown += new EventHandler<TouchEventArgs>(OnSearchResultsListTouchDown);
+            m_resultsList.TouchUp += new EventHandler<TouchEventArgs>(OnSearchResultsListTouchUp);
+            m_resultsList.TouchLeave += new EventHandler<TouchEventArgs>(OnSearchResultsListTouchLeave);
+            m_resultsList.LostTouchCapture += new EventHandler<TouchEventArgs>(OnSearchResultsListLostTouchCapture);
             m_resultsListClickHandler = new ControlClickHandler(OnResultsListItemsSelected, m_resultsList);
             m_resultsList.PreviewMouseWheel += OnResultsMenuScrollWheel;
 
@@ -355,6 +361,48 @@ namespace ExampleAppWPF
             if (m_hasTagSearch)
             {
                 m_editText.Text = string.Empty;
+            }
+        }
+
+        private void OnSearchResultsListTouchDown(object sender, TouchEventArgs touchEventArgs)
+        {
+            ReleaseSearchResultsListCurrentTouchDevice();
+            CaptureSearchResultsListTouchDevice(touchEventArgs);
+        }
+
+        private void OnSearchResultsListTouchUp(object sender, TouchEventArgs touchEventArgs)
+        {
+            ReleaseSearchResultsListCurrentTouchDevice();
+        }
+
+        private void OnSearchResultsListTouchLeave(object sender, TouchEventArgs touchEventArgs)
+        {
+            ReleaseSearchResultsListCurrentTouchDevice();
+        }
+
+        private void OnSearchResultsListLostTouchCapture(object sender, TouchEventArgs touchEventArgs)
+        {
+            if (m_searchResultsListCurrentTouchDevice != null)
+            {
+                CaptureSearchResultsListTouchDevice(touchEventArgs);
+            }
+        }
+
+        private void ReleaseSearchResultsListCurrentTouchDevice()
+        {
+            if (m_searchResultsListCurrentTouchDevice != null)
+            {
+                TouchDevice currentTouchDevice = m_searchResultsListCurrentTouchDevice;
+                m_searchResultsListCurrentTouchDevice = null;
+                m_resultsList.ReleaseTouchCapture(currentTouchDevice);
+            }
+        }
+
+        private void CaptureSearchResultsListTouchDevice(TouchEventArgs touchEventArgs)
+        {
+            if (m_resultsList.CaptureTouch(touchEventArgs.TouchDevice))
+            {
+                m_searchResultsListCurrentTouchDevice = touchEventArgs.TouchDevice;
             }
         }
 

@@ -828,7 +828,8 @@ namespace ExampleApp
                                                                                                   m_pWorld->GetMapModule(),
                                                                                                   *m_pAppModeModel,
                                                                                                   m_screenProperties,
-                                                                                                  interiorsAffectedByFlattening);
+                                                                                                  interiorsAffectedByFlattening,
+                                                                                                  m_applicationConfiguration.IsInKioskMode());
         
         m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsModule)(m_identityProvider,
                                                                                                                       m_pReactionControllerModule->GetReactionControllerModel());
@@ -895,7 +896,12 @@ namespace ExampleApp
         m_pSearchMenuModule->AddMenuSection("Meeting Rooms", m_pSwallowSearchMenuModule->GetMeetingRoomsMenuModel(), false);
         m_pSearchMenuModule->AddMenuSection("Facilities & Amenities",        m_pSwallowSearchMenuModule->GetFacilitiesMenuModel(), false);
         m_pSearchMenuModule->AddMenuSection("Buildings",          m_pSwallowSearchMenuModule->GetOfficesMenuModel(), false);
-        m_pSearchMenuModule->AddMenuSection("My Location Reports", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+
+        if(!m_applicationConfiguration.IsInKioskMode())
+        {
+            m_pSearchMenuModule->AddMenuSection("My Location Reports", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+        }
+
         m_pSearchMenuModule->AddMenuSection("Discover", m_pTagSearchModule->GetTagSearchMenuModel(), true);
         
     }

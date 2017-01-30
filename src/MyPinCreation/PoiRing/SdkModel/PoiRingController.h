@@ -30,7 +30,8 @@ namespace ExampleApp
                                       const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                       const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                       Eegeo::Rendering::ScreenProperties& screenProperties,
-                                      const bool interiorsAffectedByFlattening);
+                                      const bool interiorsAffectedByFlattening,
+                                      const bool isInKioskMode);
 
                     void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& cameraEcefInterestPoint);
 
@@ -51,6 +52,7 @@ namespace ExampleApp
                     float m_easeDurationInSeconds;
                     Eegeo::dv3 m_iconPosition;
                     float m_iconSize;
+                    float m_iconAssetSize;
                     float m_ringRadius;
                     const bool m_interiorsAffectedByFlattening;
 
