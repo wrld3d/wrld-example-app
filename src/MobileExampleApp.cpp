@@ -772,7 +772,8 @@ namespace ExampleApp
                                                                                                   m_pWorld->GetMapModule(),
                                                                                                   *m_pAppModeModel,
                                                                                                   m_screenProperties,
-                                                                                                  interiorsAffectedByFlattening);
+                                                                                                  interiorsAffectedByFlattening,
+                                                                                                  m_applicationConfiguration.IsInKioskMode());
 
         m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsModule)(m_identityProvider,
                                                                                                                       m_pReactionControllerModule->GetReactionControllerModel());
@@ -822,7 +823,11 @@ namespace ExampleApp
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
         m_pSearchMenuModule->AddMenuSection("Find", m_pTagSearchModule->GetTagSearchMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
-        m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+
+        if(!m_applicationConfiguration.IsInKioskMode())
+        {
+            m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+        }
     }
 
     void MobileExampleApp::InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories)

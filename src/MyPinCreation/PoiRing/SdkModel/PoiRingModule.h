@@ -32,7 +32,8 @@ namespace ExampleApp
                                   Eegeo::Modules::Map::MapModule& mapModule,
                                   ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                   Eegeo::Rendering::ScreenProperties& screenProperties,
-                                  const bool interiorsAffectedByFlattening);
+                                  const bool interiorsAffectedByFlattening,
+                                  const bool isInKioskMode);
 
                     ~PoiRingModule();
 
