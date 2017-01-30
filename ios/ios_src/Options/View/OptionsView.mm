@@ -239,6 +239,12 @@
     [self.pCacheEnabledCheckbox setVisualSelectionState:isCacheEnabledSelected];
 }
 
+- (void) setReplayTutorialsSelected:(bool)isReplayTutorialsSelected
+{
+    // To be implemented in the future.
+    // Currently only implented in windows.
+}
+
 - (bool)isStreamOverWifiOnlySelected
 {
     return [self.pWifiOnlyCheckbox isSelected];

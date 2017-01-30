@@ -92,6 +92,17 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, setCacheEnabledSelected, isCacheEnabledSelected);
             }
 
+            void OptionsView::SetReplayTutorialsSelected(bool isReplayTutorialsSelected)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID setReplayTutorialsSelected = env->GetMethodID(m_uiViewClass, "setReplayTutorialsSelected", "(Z)V");
+                env->CallVoidMethod(m_uiView, setReplayTutorialsSelected, isReplayTutorialsSelected);
+            }
+
             void OptionsView::Open()
             {
                 ASSERT_UI_THREAD

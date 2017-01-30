@@ -32,6 +32,11 @@ namespace ExampleApp
             {
                 [m_pView setCacheEnabledSelected:isCacheEnabledSelected];
             }
+            
+            void OptionsViewInterop::SetReplayTutorialsSelected(bool isReplayTutorialsSelected)
+            {
+                [m_pView setReplayTutorialsSelected:isReplayTutorialsSelected];
+            }
 
             void OptionsViewInterop::Open()
             {

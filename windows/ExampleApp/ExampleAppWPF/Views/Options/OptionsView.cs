@@ -173,6 +173,11 @@ namespace ExampleAppWPF
             m_currentWindow.EnableInput();
         }
 
+        public void SetReplayTutorialsSelected(bool replayTutorialsSelected)
+        {
+            PlayTutorialsAgainEnabled = replayTutorialsSelected;
+        }
+
         public void ConcludeCacheClearCeremony()
         {
             m_cacheClearSubView.ConcludeCeremony();

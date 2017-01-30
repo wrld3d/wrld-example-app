@@ -32,6 +32,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewCacheEnabledSelectionChanged;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheSelected;
                 Eegeo::Helpers::TCallback1<OptionsController, bool> m_replayTutorialsToggled;
+                Eegeo::Helpers::TCallback1<OptionsController, bool> m_onReplayTutorialsModelChanged;
 
                 void OnViewModelOpened();
 
@@ -48,6 +49,8 @@ namespace ExampleApp
                 void OnViewClearCacheSelected();
 
                 void OnReplayTutorialsToggled(bool& replayTutorials);
+
+                void OnReplayTutorialsModelChanged(bool& replayTutorials);
 
             public:
                 OptionsController(IOptionsView& view,

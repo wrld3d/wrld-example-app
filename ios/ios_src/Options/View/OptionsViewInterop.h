@@ -34,6 +34,8 @@ namespace ExampleApp
                 void SetStreamOverWifiOnlySelected(bool isStreamOverWifiOnlySelected);
                 
                 void SetCacheEnabledSelected(bool isCacheEnabledSelected);
+                
+                void SetReplayTutorialsSelected(bool isReplayTutorialsSelected);
 
                 void Open();
 

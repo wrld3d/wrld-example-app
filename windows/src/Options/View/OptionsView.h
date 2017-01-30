@@ -30,6 +30,7 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<void> mCloseOptions;
                 Helpers::ReflectionHelpers::Method<void> mConcludeCacheClearCeremony;
                 Helpers::ReflectionHelpers::Method<bool> mSetCacheEnabledSelected;
+                Helpers::ReflectionHelpers::Method<bool> mSetReplayTutorialsSelected;
                 
                 Eegeo::Helpers::CallbackCollection0 m_closeCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_wifiOnlyCallbacks;
@@ -49,6 +50,8 @@ namespace ExampleApp
                 void SetStreamOverWifiOnlySelected(bool isStreamOverWifiOnlySelected);
 
                 void SetCacheEnabledSelected(bool isCacheEnabledSelected);
+
+                void SetReplayTutorialsSelected(bool isReplayTutorialsSelected);
 
                 void Open();
 

@@ -59,6 +59,11 @@ namespace ExampleApp
             {
                 m_interiorsExplorerController.ReplayTutorials(enableTutorials);
             }
+
+            void OptionsController::OnReplayTutorialsModelChanged(bool& enableTutorials)
+            {
+                m_view.SetReplayTutorialsSelected(enableTutorials);
+            }
             
             OptionsController::OptionsController(IOptionsView& view,
                                                  IOptionsViewModel& viewModel,
@@ -76,6 +81,7 @@ namespace ExampleApp
             , m_viewCacheEnabledSelectionChanged(this, &OptionsController::OnViewCacheEnabledSelectionChanged)
             , m_viewClearCacheSelected(this, &OptionsController::OnViewClearCacheSelected)
             , m_replayTutorialsToggled(this, &OptionsController::OnReplayTutorialsToggled)
+            , m_onReplayTutorialsModelChanged(this, &OptionsController::OnReplayTutorialsModelChanged)
             {
                 m_view.InsertCloseSelectedCallback(m_viewCloseSelected);
                 m_view.InsertStreamOverWifiOnlySelectionChangedCallback(m_viewStreamOverWifiOnlySelectionChanged);
@@ -89,10 +95,14 @@ namespace ExampleApp
 
                 m_view.SetStreamOverWifiOnlySelected(m_viewModel.StreamOverWifiOnly());
                 m_view.SetCacheEnabledSelected(m_viewModel.CachingEnabled());
+
+                m_interiorsExplorerController.InsertReplayTutorialsChangedCallback(m_onReplayTutorialsModelChanged);
             }
             
             OptionsController::~OptionsController()
             {
+                m_interiorsExplorerController.RemoveReplayTutorialsChangedCallback(m_onReplayTutorialsModelChanged);
+
                 m_viewModel.RemoveCacheClearCeremonyCompletedCallback(m_viewModelCacheClearCeremonyCompleted);
                 m_viewModel.RemoveOpenedCallback(m_viewModelOpened);
                 m_viewModel.RemoveClosedCallback(m_viewModelClosed);
