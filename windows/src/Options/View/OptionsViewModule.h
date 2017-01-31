@@ -10,6 +10,7 @@
 #include "BidirectionalBus.h"
 #include "ClearCacheMessageHandler.h"
 #include "IHttpCache.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,7 @@ namespace ExampleApp
                     IOptionsViewModel& optionsViewModel,
                     Eegeo::Helpers::IHttpCache& httpCache,
                     ExampleAppMessaging::TMessageBus& messageBus,
+                    InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController,
                     const std::string& adminPassword,
                     bool isInKioskMode
                 );

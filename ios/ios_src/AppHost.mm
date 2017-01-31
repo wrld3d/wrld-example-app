@@ -375,11 +375,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                            m_messageBus);
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), m_iOSFlurryMetricsService, m_messageBus);
-    
-    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
-                                                                                   m_piOSPlatformAbstractionModule->GetiOSHttpCache(),
-                                                                                   m_messageBus,
-                                                                                   app.World().GetWorkPool());
 
     m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule)(m_messageBus,
                                            app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
@@ -430,6 +425,12 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                  m_messageBus,
                                                                                                                  screenProperties,
                                                                                                                  app.GetIdentityProvider());
+
+    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
+                                                                                   m_piOSPlatformAbstractionModule->GetiOSHttpCache(),
+                                                                                   m_messageBus,
+                                                                                   app.World().GetWorkPool(),
+                                                                                   m_pInteriorsExplorerViewModule->GetController());
     
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
@@ -525,6 +526,8 @@ void AppHost::DestroyApplicationViewModules()
     // Initial experience layer
     [&m_pInitialExperienceIntroViewModule->GetIntroView() removeFromSuperview];
     
+    Eegeo_DELETE m_pOptionsViewModule;
+
     Eegeo_DELETE m_pInteriorsExplorerViewModule;
     
     Eegeo_DELETE m_pViewControllerUpdaterModule;
@@ -538,8 +541,6 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
 
     Eegeo_DELETE m_pMyPinCreationConfirmationViewModule;
-    
-    Eegeo_DELETE m_pOptionsViewModule;
     
     Eegeo_DELETE m_pAboutPageViewModule;
 

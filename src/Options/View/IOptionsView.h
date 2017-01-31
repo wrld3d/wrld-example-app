@@ -37,6 +37,9 @@ namespace ExampleApp
                 
                 virtual void InsertClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback) = 0;
+                virtual void RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback) = 0;
             };
         }
     }

@@ -208,6 +208,20 @@ namespace ExampleApp
 
                 m_clearCacheCallbacks.RemoveCallback(callback);
             }
+
+            void OptionsView::InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_replayTutorialsToggledCallbacks.AddCallback(callback);
+            }
+
+            void OptionsView::RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback) 
+            {
+                ASSERT_UI_THREAD
+
+                m_replayTutorialsToggledCallbacks.RemoveCallback(callback);
+            }
         }
     }
 }

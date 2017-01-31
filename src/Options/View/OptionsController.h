@@ -22,6 +22,7 @@ namespace ExampleApp
                 IOptionsView& m_view;
                 IOptionsViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                InteriorsExplorer::View::InteriorsExplorerController& m_interiorsExplorerController;
 
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelOpened;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelClosed;
@@ -31,6 +32,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewCacheEnabledSelectionChanged;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheSelected;
                 Eegeo::Helpers::TCallback1<OptionsController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
+                Eegeo::Helpers::TCallback1<OptionsController, bool> m_replayTutorialsToggled;
 
                 void OnViewModelOpened();
 
@@ -47,10 +49,13 @@ namespace ExampleApp
                 void OnViewClearCacheSelected();
 
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
+
+                void OnReplayTutorialsToggled(bool& replayTutorials);
             public:
                 OptionsController(IOptionsView& view,
                                   IOptionsViewModel& viewModel,
-                                  ExampleAppMessaging::TMessageBus& messageBus);
+                                  ExampleAppMessaging::TMessageBus& messageBus,
+                                  InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController);
 
                 ~OptionsController();
             };
