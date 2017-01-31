@@ -26,6 +26,7 @@ namespace ExampleApp
                 mCloseOptions.SetupMethod(m_uiViewClass, m_uiView, "CloseOptions");
                 mConcludeCacheClearCeremony.SetupMethod(m_uiViewClass, m_uiView, "ConcludeCacheClearCeremony");
                 mSetCacheEnabledSelected.SetupMethod(m_uiViewClass, m_uiView, "SetCacheEnabledSelected");
+                mSetReplayTutorialsSelected.SetupMethod(m_uiViewClass, m_uiView, "SetReplayTutorialsSelected");
             }
 
             OptionsView::~OptionsView()
@@ -51,6 +52,11 @@ namespace ExampleApp
             void OptionsView::SetCacheEnabledSelected(bool isCacheEnabledSelected)
             {
                 mSetCacheEnabledSelected(isCacheEnabledSelected);
+            }
+
+            void OptionsView::SetReplayTutorialsSelected(bool isReplayTutorialsSelected)
+            {
+                mSetReplayTutorialsSelected(isReplayTutorialsSelected);
             }
 
             void OptionsView::Open()

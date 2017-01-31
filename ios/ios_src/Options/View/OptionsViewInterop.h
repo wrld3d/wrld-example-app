@@ -35,6 +35,8 @@ namespace ExampleApp
                 
                 void SetCacheEnabledSelected(bool isCacheEnabledSelected);
 
+                void SetReplayTutorialsSelected(bool isReplayTutorialsSelected);
+
                 void Open();
 
                 void Close();

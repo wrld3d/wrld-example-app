@@ -94,9 +94,9 @@ namespace ExampleApp
                 {
                     m_view.UpdateFloors(message.GetFloorShortNames(), message.GetSelectedFloorIndex());
                     m_view.SetTouchEnabled(true);
-                    
+
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
-                    
+
 					const int maxTutorialViews = 2;
 					bool showExitTutorial = m_replayTutorials || m_model.GetInteriorExitTutorialViewedCount() < maxTutorialViews;
 					bool showChangeFloorTutorial = (m_replayTutorials || m_model.GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews) && m_view.GetCanShowChangeFloorTutorialDialog();
@@ -115,7 +115,8 @@ namespace ExampleApp
 							m_model.RecordHasViewedInteriorChangeFloorTutorial();
 						}
 					}
-                    
+                    ReplayTutorials(false);
+
                     m_viewModel.AddToScreen();
                 }
                 else
@@ -142,6 +143,17 @@ namespace ExampleApp
             void InteriorsExplorerController::ReplayTutorials(const bool enableTutorials)
             {
                 m_replayTutorials = enableTutorials;
+                m_replayTutorialsCallbacks.ExecuteCallbacks(m_replayTutorials);
+            }
+
+            void InteriorsExplorerController::InsertReplayTutorialsChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                m_replayTutorialsCallbacks.AddCallback(callback);
+            }
+
+            void InteriorsExplorerController::RemoveReplayTutorialsChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                m_replayTutorialsCallbacks.RemoveCallback(callback);
             }
         }
     }

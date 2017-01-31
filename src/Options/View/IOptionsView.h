@@ -21,6 +21,7 @@ namespace ExampleApp
                 
                 virtual void SetStreamOverWifiOnlySelected(bool isStreamOverWifiOnlySelected) = 0;
                 virtual void SetCacheEnabledSelected(bool isCacheEnabledSelected) = 0;
+                virtual void SetReplayTutorialsSelected(bool isReplayTutorialsSelected) = 0;
                 
                 virtual void Open() = 0;
                 virtual void Close() = 0;

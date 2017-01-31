@@ -89,6 +89,12 @@ public class OptionsView
     	m_dataCachingButton.setChecked(cacheEnabledSelected);
     }
 
+    public void setReplayTutorialsSelected(boolean replayTutorialsSelected)
+    {
+        // To be implemented in the future.
+        // Currently only available in windows.
+    }
+
     private void configureStreamOverWifiOption()
     {
         View.OnClickListener streamOverWifiClickListener = new View.OnClickListener() {

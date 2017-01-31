@@ -9,6 +9,7 @@
 #include "IOptionsView.h"
 #include "BidirectionalBus.h"
 #include "AppModeChangedMessage.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheSelected;
                 Eegeo::Helpers::TCallback1<OptionsController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
                 Eegeo::Helpers::TCallback1<OptionsController, bool> m_replayTutorialsToggled;
+                Eegeo::Helpers::TCallback1<OptionsController, bool> m_onReplayTutorialsModelChanged;
 
                 void OnViewModelOpened();
 
@@ -51,6 +53,8 @@ namespace ExampleApp
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
 
                 void OnReplayTutorialsToggled(bool& replayTutorials);
+
+                void OnReplayTutorialsModelChanged(bool& replayTutorials);
             public:
                 OptionsController(IOptionsView& view,
                                   IOptionsViewModel& viewModel,

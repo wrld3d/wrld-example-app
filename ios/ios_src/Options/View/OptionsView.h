@@ -33,6 +33,8 @@
 
 - (void) setCacheEnabledSelected:(bool)isCacheEnabledSelected;
 
+- (void) setReplayTutorialsSelected:(bool)isReplayTutorialsSelected;
+
 - (bool) isStreamOverWifiOnlySelected;
 
 - (bool) isCacheEnabledSelected;
