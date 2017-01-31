@@ -574,25 +574,23 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
     {
     	m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
 
-        Eegeo_DELETE m_pMyPinDetailsViewModule;
-
         Eegeo_DELETE m_pViewControllerUpdaterModule;
 
         Eegeo_DELETE m_pOptionsViewModule;
 
         Eegeo_DELETE m_pInteriorsExplorerViewModule;
 
+        Eegeo_DELETE m_pInitialExperienceIntroViewModule;
+
+        Eegeo_DELETE m_pMyPinDetailsViewModule;
+
         Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
-
-        Eegeo_DELETE m_pFlattenButtonViewModule;
-
-        Eegeo_DELETE m_pMyPinCreationViewModule;
 
         Eegeo_DELETE m_pAboutPageViewModule;
 
         Eegeo_DELETE m_pSearchResultPoiViewModule;
 
-        Eegeo_DELETE m_pModalBackgroundViewModule;
+        Eegeo_DELETE m_pSearchResultSectionViewModule;
 
         Eegeo_DELETE m_pSettingsMenuViewModule;
 
@@ -600,9 +598,13 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         Eegeo_DELETE m_pSearchMenuViewModule;
 
+        Eegeo_DELETE m_pModalBackgroundViewModule;
+
         Eegeo_DELETE m_pCompassViewModule;
 
-        Eegeo_DELETE m_pInitialExperienceIntroViewModule;
+        Eegeo_DELETE m_pMyPinCreationViewModule;
+
+        Eegeo_DELETE m_pFlattenButtonViewModule;
 
         Eegeo_DELETE m_pWatermarkViewModule;
     }
