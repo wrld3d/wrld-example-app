@@ -95,11 +95,29 @@
 #include "CurrentLocationService.h"
 #include "AttractModeOverlayView.h"
 #include "WindowsProcessHelper.h"
+#include "ImagePathHelpers.h"
 #include "GpsMarkerTutorialViewModule.h"
 #include "GpsMarkerModule.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
+
+namespace
+{
+    void SetFixedImageScaleAndSuffix(Eegeo::Config::PlatformConfig& platformConfiguration, Eegeo::Rendering::ScreenProperties& screenProperties, bool isInKioskMode)
+    {
+        const float FixedKioskScaling = 2.0f;
+        const const char *const FixedKioskDensitySuffix = "@2x";
+
+        const float FixedDesktopScaling = 1.5f;
+        const const char *const FixedDesktopDensitySuffix = "@1.5x";
+
+        const float fixedScaling = isInKioskMode ? FixedKioskScaling : FixedDesktopScaling;
+        platformConfiguration.GraphicsConfig.ImageResolutionScale = fixedScaling * screenProperties.GetOversampleScale();
+        platformConfiguration.GraphicsConfig.ImageResolutionSuffix = isInKioskMode ? FixedKioskDensitySuffix : FixedDesktopDensitySuffix;
+        platformConfiguration.MapLayersConfig.LabelsModuleConfig.CustomTextScale = fixedScaling;
+    }
+}
 
 AppHost::AppHost(
     WindowsNativeState& nativeState,
@@ -184,11 +202,8 @@ AppHost::AppHost(
     Eegeo::EffectHandler::Initialise();
 
     Eegeo::Windows::WindowsPlatformConfigBuilder windowsPlatformConfigBuilder(nativeState.GetDeviceModel());
-
     Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(windowsPlatformConfigBuilder, applicationConfiguration);
-	platformConfiguration.GraphicsConfig.ImageResolutionScale = applicationConfiguration.IsInKioskMode() ? (2.0f * screenProperties.GetOversampleScale()) : 1.0f;
-	platformConfiguration.GraphicsConfig.ImageResolutionSuffix = applicationConfiguration.IsInKioskMode() ? "@2x" : "";
-	platformConfiguration.MapLayersConfig.LabelsModuleConfig.CustomTextScale = applicationConfiguration.IsInKioskMode() ? 2.0f : 1.0f;
+    SetFixedImageScaleAndSuffix(platformConfiguration, screenProperties, applicationConfiguration.IsInKioskMode());
 
     bool enableTouchControls =  hasNativeTouchInput ? applicationConfiguration.IsKioskTouchInputEnabled() : false;
 
@@ -613,14 +628,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus
         );
 
-    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
-        m_nativeState,
-        app.OptionsModule().GetOptionsViewModel(),
-        m_pWindowsPlatformAbstractionModule->GetWindowsHttpCache(),
-        m_messageBus,
-        app.GetApplicationConfiguration().OptionsAdminPassword(),
-        app.GetApplicationConfiguration().IsInKioskMode());
-
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
         m_nativeState,
         app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
@@ -645,6 +652,15 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.InteriorsExplorerModule().GetInteriorsExplorerModel(),
 		app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
 		m_messageBus);
+
+    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
+        m_nativeState,
+        app.OptionsModule().GetOptionsViewModel(),
+        m_pWindowsPlatformAbstractionModule->GetWindowsHttpCache(),
+        m_messageBus,
+        m_pInteriorsExplorerViewModule->GetController(),
+        app.GetApplicationConfiguration().OptionsAdminPassword(),
+        app.GetApplicationConfiguration().IsInKioskMode());
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
@@ -696,8 +712,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
             Eegeo_DELETE m_pMyPinCreationViewModule;
 
-            Eegeo_DELETE m_pOptionsViewModule;
-
             Eegeo_DELETE m_pAboutPageViewModule;
 
             Eegeo_DELETE m_pSearchResultPoiViewModule;
@@ -715,6 +729,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
             Eegeo_DELETE m_pCompassViewModule;
 
             Eegeo_DELETE m_pInitialExperienceIntroViewModule;
+
+            Eegeo_DELETE m_pOptionsViewModule;
 
 			Eegeo_DELETE m_pInteriorsExplorerViewModule;
 

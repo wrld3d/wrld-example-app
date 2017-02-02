@@ -29,4 +29,10 @@ namespace ExampleApp
         Options::View::OptionsView* pView = reinterpret_cast<Options::View::OptionsView*>(nativeObjectPtr.ToPointer());
         pView->HandleClearCacheSelected();
     }
+
+    void OptionsViewCLIMethods::ReplayTutorials(System::IntPtr nativeObjectPtr, System::Boolean enableTutorials)
+    {
+        Options::View::OptionsView* pView = reinterpret_cast<Options::View::OptionsView*>(nativeObjectPtr.ToPointer());
+        pView->HandleReplayTutorialsToggled(enableTutorials);
+    }
 }

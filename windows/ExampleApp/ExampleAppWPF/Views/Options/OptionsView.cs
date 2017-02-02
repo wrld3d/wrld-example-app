@@ -61,6 +61,7 @@ namespace ExampleAppWPF
                 if(value != m_playTutorialsAgainEnabled)
                 {
                     m_playTutorialsAgainEnabled = value;
+                    ReplayTutorials(m_playTutorialsAgainEnabled);
                     OnPropertyChanged("PlayTutorialsAgainEnabled");
                 }
             }
@@ -172,6 +173,11 @@ namespace ExampleAppWPF
             m_currentWindow.EnableInput();
         }
 
+        public void SetReplayTutorialsSelected(bool replayTutorialsSelected)
+        {
+            PlayTutorialsAgainEnabled = replayTutorialsSelected;
+        }
+
         public void ConcludeCacheClearCeremony()
         {
             m_cacheClearSubView.ConcludeCeremony();
@@ -202,6 +208,11 @@ namespace ExampleAppWPF
             m_adminLoginView.Visibility = Visibility.Collapsed;
             m_adminLoginView.OnHide += OnAdminLoginHide;
             m_currentWindow.MainGrid.Children.Add(m_adminLoginView);
+        }
+
+        private void ReplayTutorials(bool replayTutorials)
+        {
+            OptionsViewCLIMethods.ReplayTutorials(m_nativeCallerPointer, replayTutorials);
         }
     }
 }

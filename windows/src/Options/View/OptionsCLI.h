@@ -15,5 +15,7 @@ namespace ExampleApp
         static void CachingEnabledToggled(System::IntPtr nativeObjectPtr);
         
         static void ClearCacheSelected(System::IntPtr nativeObjectPtr);
+
+        static void ReplayTutorials(System::IntPtr nativeObjectPtr, System::Boolean enableTutorials);
     };
 }

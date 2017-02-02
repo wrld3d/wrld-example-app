@@ -11,32 +11,41 @@
     <Style x:Key="InteriorsExplorerTutorialView" TargetType="{x:Type local:InteriorsExplorerTutorialView}">
        <Style.Resources>
            <Storyboard x:Key="ShowAnimation">
-                <DoubleAnimation Storyboard.TargetName="SearchMenuDialog"
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=SearchMenuDialog}"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1"
                                  Duration="0:0:0.25" />
 
-                <DoubleAnimation Storyboard.TargetName="LocateMeDialog"
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=LocateMeDialog}"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="0"
                                  Duration="0" />
-                <DoubleAnimation Storyboard.TargetName="LocateMeDialog"
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=LocateMeDialog}"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1"
                                  BeginTime="0:0:0.15"
                                  Duration="0:0:0.25" />
 
-                <DoubleAnimation Storyboard.TargetName="ElevatorDialog"
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=ElevatorDialog}"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="0"
                                  Duration="0" />
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=ElevatorDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1"
+                                 BeginTime="0:0:0.30"
+                                 Duration="0:0:0.25"
+                                 />
 
-                <DoubleAnimation Storyboard.TargetName="ElevatorDialog"
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=ExitDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="0"
+                                 Duration="0" />
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=ExitDialog}"
                                  Storyboard.TargetProperty="Opacity"
                                  From="0" To="1"
                                  BeginTime="0:0:0.30"
                                  Duration="0:0:0.25" />
-
            </Storyboard>
 
            <Storyboard x:Key="HideAnimation">
@@ -47,18 +56,9 @@
 
                 <DoubleAnimation Storyboard.Target="{Binding ElementName=LocateMeDialog}"
                                  Storyboard.TargetProperty="Opacity"
-                                 From="1" To="1"
-                                 Duration="0" />
-                <DoubleAnimation Storyboard.Target="{Binding ElementName=LocateMeDialog}"
-                                 Storyboard.TargetProperty="Opacity"
                                  From="1" To="0"
                                  BeginTime="0:0:0.15"
                                  Duration="0:0:0.25" />
-
-                <DoubleAnimation Storyboard.Target="{Binding ElementName=ElevatorDialog}"
-                                 Storyboard.TargetProperty="Opacity"
-                                 From="1" To="1"
-                                 Duration="0" />
 
                 <DoubleAnimation Storyboard.Target="{Binding ElementName=ElevatorDialog}"
                                  Storyboard.TargetProperty="Opacity"
@@ -66,14 +66,11 @@
                                  BeginTime="0:0:0.30"
                                  Duration="0:0:0.25" />
 
-                <ObjectAnimationUsingKeyFrames BeginTime="0:0:1"
-                                               Storyboard.TargetProperty="Visibility">
-                <DiscreteObjectKeyFrame KeyTime="0">
-                    <DiscreteObjectKeyFrame.Value>
-                        <Visibility>Hidden</Visibility>
-                    </DiscreteObjectKeyFrame.Value>
-                </DiscreteObjectKeyFrame>
-                </ObjectAnimationUsingKeyFrames>
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=ExitDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="0"
+                                 BeginTime="0:0:0.0"
+                                 Duration="0:0:0.35" />
             </Storyboard>
         </Style.Resources>
 
@@ -121,14 +118,6 @@
                                                    ArrowSize="{DynamicResource InteriorsTutorialDialogArrowSize}"
                                                    IsEnabled="{DynamicResource NotIsInKioskMode}" />
                     </Grid>
-
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsVisible" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowAnimation}" />
-                            </Trigger.EnterActions>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

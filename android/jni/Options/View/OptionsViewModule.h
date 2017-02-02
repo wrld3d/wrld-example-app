@@ -10,6 +10,7 @@
 #include "BidirectionalBus.h"
 #include "ClearCacheMessageHandler.h"
 #include "Helpers.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -29,7 +30,8 @@ namespace ExampleApp
                     AndroidNativeState& nativeState,
                     IOptionsViewModel& optionsViewModel,
                     Eegeo::Helpers::IHttpCache& httpCache,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController
                 );
 
                 ~OptionsViewModule();
