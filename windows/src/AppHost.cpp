@@ -98,6 +98,8 @@
 #include "CurrentLocationService.h"
 #include "AttractModeOverlayView.h"
 #include "WindowsProcessHelper.h"
+#include "GpsMarkerTutorialViewModule.h"
+#include "GpsMarkerModule.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -128,6 +130,7 @@ AppHost::AppHost(
     , m_pSearchResultSectionViewModule(NULL)
     , m_pModalBackgroundViewModule(NULL)
     , m_pFlattenButtonViewModule(NULL)
+    , m_pGpsMarkerTutorialViewModule(NULL)
     , m_pMyPinCreationViewModule(NULL)
     , m_pMyPinCreationDetailsViewModule(NULL)
     , m_pMyPinDetailsViewModule(NULL)
@@ -151,6 +154,7 @@ AppHost::AppHost(
 	, m_pUserIdleService(NULL)
 	, m_pVirtualKeyboardView(NULL)
     , m_pAttractModeOverlayView(NULL)
+    , m_screenProperties(screenProperties)
 {
     ASSERT_NATIVE_THREAD
          
@@ -342,6 +346,7 @@ void AppHost::OnPause()
 
 void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
 {
+	m_screenProperties = screenProperties;
     m_pApp->NotifyScreenPropertiesChanged(screenProperties);
 }
 
@@ -479,6 +484,15 @@ void AppHost::UpdateUiViewsFromUiThread(float dt)
     if (m_createdUIModules)
     {
         m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
+
+        if(m_pApp->GetApplicationConfiguration().IsInKioskMode())
+        {
+            const Eegeo::Camera::RenderCamera& renderCamera = m_pApp->GetAppModeModel().GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode
+                                                              ? m_pApp->InteriorsExplorerModule().GetInteriorsCameraController().GetRenderCamera()
+                                                              : m_pApp->GetCameraController().GetRenderCamera();
+            m_pGpsMarkerTutorialViewModule->GetController().UpdateScreenLocation(renderCamera,
+                                                                                 m_screenProperties.GetOversampleScale());
+        }
     }
     else
     {
@@ -588,6 +602,14 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         *m_pMenuReaction,
         app.SearchResultPoiModule().GetSearchResultPoiViewModel()
         );
+
+    if(app.GetApplicationConfiguration().IsInKioskMode())
+    {
+        m_pGpsMarkerTutorialViewModule = Eegeo_NEW(ExampleApp::GpsMarkerTutorial::View::GpsMarkerTutorialViewModule)(m_nativeState,
+            m_messageBus,
+			app.GpsMarkerModule().GetGpsMarkerModel(),
+			app.World().GetMapModule().GetEnvironmentFlatteningService());
+    }
 
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
@@ -718,6 +740,11 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 			Eegeo_DELETE m_pInteriorsExplorerViewModule;
 
             Eegeo_DELETE m_pWatermarkViewModule;
+
+            if(m_pApp->GetApplicationConfiguration().IsInKioskMode())
+            {
+                Eegeo_DELETE m_pGpsMarkerTutorialViewModule;
+            }
         }
     m_createdUIModules = false;
 }

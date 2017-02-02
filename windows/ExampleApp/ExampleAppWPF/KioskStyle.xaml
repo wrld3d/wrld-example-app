@@ -12,6 +12,12 @@
     <System:Boolean x:Key="IsInKioskMode">true</System:Boolean>
     <System:Boolean x:Key="NotIsInKioskMode">false</System:Boolean>
 
+    <!-- Gps Marker Tutorial -->
+    <System:Double x:Key="GpsMarkerTutorialWidth">350</System:Double>
+    <System:Double x:Key="GpsMarkerTutorialHeight">102</System:Double>
+    <System:Double x:Key="GpsMarkerTutorialTitleFontSize">32</System:Double>
+    <System:Double x:Key="GpsMarkerTutorialDescriptionFontSize">20</System:Double>
+
     <!-- Interiors tutorial dialogs -->
     <System:Double x:Key="InteriorsTutorialDialogWidth">320</System:Double>
     <System:Double x:Key="InteriorsSearchTutorialDialogWidth">330</System:Double>
