@@ -100,15 +100,11 @@ namespace ExampleApp
 
                 bool hasChangedInteriorFloors = m_interiorInteractionModel.HasInteriorModel() &&
                 m_previousQueryFloorIndex != m_interiorInteractionModel.GetSelectedFloorIndex();
-                if (hasChangedInteriorFloors)
+                if (hasChangedInteriorFloors || m_interiorHasChanged)
                 {
                     if (m_interiorHasChanged)
                     {
                         m_interiorHasChanged = false;
-
-                        m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
-
-                        return false;
                     }
                     
                     return true;
@@ -183,18 +179,14 @@ namespace ExampleApp
                     
                     if (previousQuery.IsTag())
                     {
-                        if(TagStillPresent(previousQuery))
-                        {
-                            m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch());
-                            m_secondsSincePreviousRefresh = 0.f;
-
-                            m_interiorHasChanged = true;
-                        }
-                        else
+                        if(!TagStillPresent(previousQuery))
                         {
                             m_searchQueryPerformer.RemoveSearchQueryResults();
+                            return;
                         }
                     }
+                    
+                    m_interiorHasChanged = true;
                 }
             }
             
