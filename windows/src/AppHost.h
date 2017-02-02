@@ -62,6 +62,7 @@
 #include "CurrentLocationService.h"
 #include "VirtualKeyboardView.h"
 #include "AttractModeOverlayView.h"
+#include "GpsMarkerTutorialViewIncludes.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -161,6 +162,7 @@ private:
     ExampleApp::Metrics::WindowsFlurryMetricsService* m_pWindowsFlurryMetricsService;
 	ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReaction;
+    ExampleApp::GpsMarkerTutorial::View::GpsMarkerTutorialViewModule* m_pGpsMarkerTutorialViewModule;
 
     ExampleApp::MobileExampleApp* m_pApp;
 
@@ -189,4 +191,6 @@ private:
 
     ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* m_pVirtualKeyboardView;
     ExampleApp::AttractModeOverlay::View::AttractModeOverlayView* m_pAttractModeOverlayView;
+
+    Eegeo::Rendering::ScreenProperties m_screenProperties;
 };

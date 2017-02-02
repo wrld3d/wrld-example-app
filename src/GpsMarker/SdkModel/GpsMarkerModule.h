@@ -34,6 +34,8 @@ namespace ExampleApp
                 ~GpsMarkerModule();
                 
                 IGpsMarkerController& GetGpsMarkerController();
+
+                GpsMarkerModel& GetGpsMarkerModel() const;
                 
             private:
                 

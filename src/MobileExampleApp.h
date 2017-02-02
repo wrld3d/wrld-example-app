@@ -408,6 +408,11 @@ namespace ExampleApp
         {
             return *m_pInteriorsExplorerModule;
         }
+
+        const GpsMarker::SdkModel::IGpsMarkerModule& GpsMarkerModule() const
+        {
+            return *m_pGpsMarkerModule;
+        }
         
         const ExampleApp::Social::TwitterFeed::ITwitterFeedModule& TwitterFeedModule() const
         {

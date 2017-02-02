@@ -149,7 +149,7 @@ namespace ExampleApp
                 CreateModelViewProjectionMatrix(modelViewProjectionSphere,
                                                 scaledPoint,
                                                 225,
-                                                cameraRelativeModelOrigin + markerUp * 4.5f * m_viewTransitionParam,
+                                                cameraRelativeModelOrigin + markerUp * m_model.GetSphereHeightAboveMarker() * m_viewTransitionParam,
                                                 markerScale * m_viewTransitionParam,
                                                 renderCamera,
                                                 true);
@@ -157,7 +157,7 @@ namespace ExampleApp
                 CreateModelViewProjectionMatrix(modelViewProjectionArrow,
                                                 scaledPoint,
                                                 m_model.GetSmoothedHeadingDegrees(),
-                                                cameraRelativeModelOrigin + markerUp * 4.5f * m_viewTransitionParam,
+                                                cameraRelativeModelOrigin + markerUp * m_model.GetSphereHeightAboveMarker() * m_viewTransitionParam,
                                                 markerScale * m_viewTransitionParam,
                                                 renderCamera,
                                                 true);
@@ -178,7 +178,7 @@ namespace ExampleApp
                 CreateModelViewProjectionMatrix(modelViewProjectionAnchorCylinder,
                                                 scaledPoint,
                                                 0,
-                                                cameraRelativeModelOrigin + markerUp * 0.8f,
+                                                cameraRelativeModelOrigin + markerUp * m_model.GetAnchorCyclinerHeightAboveMarker(),
                                                 Eegeo::v3(scaleAnchor, scaleAnchorCylinder, scaleAnchor) * m_viewTransitionParam,
                                                 renderCamera,
                                                 false);
