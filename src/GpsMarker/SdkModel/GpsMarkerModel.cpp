@@ -11,6 +11,12 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace
+            {
+                const float SphereHeightAboveMarker = 4.5f;
+                const float AnchorCyclinerHeightAboveMarker = 0.8f;
+            }
+
             GpsMarkerModel::GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
                                            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
             : m_locationService(locationService)
@@ -110,6 +116,16 @@ namespace ExampleApp
                 int floorIndex = 0;
                 m_locationService.GetFloorIndex(floorIndex);
                 return floorIndex;
+            }
+
+            const float GpsMarkerModel::GetSphereHeightAboveMarker() const
+            {
+                return SphereHeightAboveMarker;
+            }
+
+            const float GpsMarkerModel::GetAnchorCyclinerHeightAboveMarker() const
+            {
+                return AnchorCyclinerHeightAboveMarker;
             }
         }
     }

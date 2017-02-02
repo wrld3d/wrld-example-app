@@ -31,6 +31,9 @@ namespace ExampleApp
                 const double GetSmoothedHeadingDegrees() const;
                 
                 int GetCurrentFloorIndex() const;
+
+                const float GetSphereHeightAboveMarker() const;
+                const float GetAnchorCyclinerHeightAboveMarker() const;
                 
             private:
                 

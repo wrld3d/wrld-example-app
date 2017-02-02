@@ -110,6 +110,7 @@
     <Compile Include="Views\ControlBase.cs" />
     <Compile Include="Views\ControlClickHandler.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
+    <Compile Include="Views\GpsMarkerTutorial\GpsMarkerTutorialView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerTutorialDialogView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerTutorialView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />
@@ -230,6 +231,10 @@
     <Page Include="Views\FlattenButton\FlattenButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GpsMarkerTutorial\GpsMarkerTutorialView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\InteriorsExplorer\InteriorsExplorerTutorialDialogView.xaml">
       <Generator>MSBuild:Compile</Generator>

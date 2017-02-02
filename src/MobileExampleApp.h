@@ -381,6 +381,11 @@ namespace ExampleApp
         {
             return *m_pInteriorsExplorerModule;
         }
+
+        const GpsMarker::SdkModel::IGpsMarkerModule& GpsMarkerModule() const
+        {
+            return *m_pGpsMarkerModule;
+        }
         
         // Exposed to allow view model creation in iOS code.
         // Remove this.

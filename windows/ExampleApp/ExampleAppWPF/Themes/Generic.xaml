@@ -28,6 +28,7 @@
         <ResourceDictionary Source="../Views/VirtualKeyboard/VirtualKeyboard.xaml" />
         <ResourceDictionary Source="../Views/AttractModeOverlay/AttractModeOverlay.xaml" />
         <ResourceDictionary Source="../Views/AdminLogin/AdminLogin.xaml" />
+        <ResourceDictionary Source="../Views/GpsMarkerTutorial/GpsMarkerTutorialView.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
