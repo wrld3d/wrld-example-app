@@ -841,11 +841,6 @@ namespace ExampleApp
                                                                                                   m_messageBus,
                                                                                                   m_menuReaction);
         
-        Eegeo::Space::LatLong latlong(0.0, 0.0);
-        Eegeo::Resources::Interiors::InteriorId interiorId;
-        int floorIndex = 0;
-        double headingDegrees;
-        const bool useFixedIndoorLocation = m_applicationConfiguration.FixedIndoorLocation(latlong, interiorId, floorIndex, headingDegrees);
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
                                                                                    interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                    world.GetLocationService(),
@@ -857,11 +852,7 @@ namespace ExampleApp
                                                                                    *m_pAppModeModel,
                                                                                    m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
                                                                                    m_pInteriorsExplorerModule->GetInteriorsCameraController(),
-                                                                                   *m_pCameraTransitionService,
-                                                                                   latlong,
-                                                                                   useFixedIndoorLocation ? interiorId : Eegeo::Resources::Interiors::InteriorId::NullId(),
-                                                                                   floorIndex,
-                                                                                   Eegeo::Math::Deg2Rad(headingDegrees));
+                                                                                   *m_pCameraTransitionService);
         
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsCameraController());

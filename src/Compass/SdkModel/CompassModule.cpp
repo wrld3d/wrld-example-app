@@ -4,7 +4,6 @@
 #include "CompassViewModel.h"
 #include "CompassModel.h"
 #include "CompassUpdateController.h"
-#include "FixedIndoorLocationCompassModeObserver.h"
 #include "CompassModeObserver.h"
 #include "CameraTransitionService.h"
 
@@ -26,11 +25,7 @@ namespace ExampleApp
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                          Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                         CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
-                                         const Eegeo::Space::LatLong fixedLatlong,
-                                         const Eegeo::Resources::Interiors::InteriorId& fixedInteriorId,
-                                         const int fixedFloorIndex,
-                                         const double fixedHeadingRadians)
+                                         CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService)
             {
                 m_pModel = Eegeo_NEW(CompassModel)(navigationService,
                                                    interiorInteractionModel,
@@ -39,13 +34,13 @@ namespace ExampleApp
                                                    metricsService,
                                                    interiorExplorerModel,
                                                    appModeModel,
-                                                   alertBoxFactory);
+                                                   alertBoxFactory,
+                                                   cameraTransitionService,
+                                                   interiorsCameraController);
                 
                 m_pViewModel = Eegeo_NEW(View::CompassViewModel)(identityProvider.GetNextIdentity(), false);
                 m_pCompassUpdateController = Eegeo_NEW(CompassUpdateController)(*m_pModel, navigationService, messageBus);
-                m_pCompassModeObserver = fixedInteriorId.IsValid()
-                    ? Eegeo_NEW(FixedIndoorLocationCompassModeObserver)(*m_pModel, messageBus, cameraTransitionService, interiorsCameraController, fixedLatlong, fixedInteriorId, fixedFloorIndex, fixedHeadingRadians)
-                    : Eegeo_NEW(CompassModeObserver)(*m_pModel, messageBus);
+                m_pCompassModeObserver = Eegeo_NEW(CompassModeObserver)(*m_pModel, messageBus);
                 m_pCompassViewCycledObserver = Eegeo_NEW(CompassViewCycledObserver)(*m_pModel, messageBus);
             }
 
