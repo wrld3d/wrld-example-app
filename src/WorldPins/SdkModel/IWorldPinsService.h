@@ -30,7 +30,8 @@ namespace ExampleApp
                                                   const Eegeo::Space::LatLong& location,
                                                   const std::string& pinIconKey,
                                                   float heightAboveTerrainMetres,
-                                                  int visibilityMask) = 0;
+                                                  int visibilityMask,
+                                                  std::string id = "") = 0;
 
                 virtual void RemovePin(WorldPinItemModel* pinItemModel) = 0;
 
