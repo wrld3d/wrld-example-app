@@ -779,8 +779,7 @@ namespace ExampleApp
                                                                                    *m_pAppModeModel,
                                                                                    m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
                                                                                    m_pInteriorsExplorerModule->GetInteriorsCameraController(),
-                                                                                   *m_pCameraTransitionService,
-                                                                                   m_applicationConfiguration.IsFixedIndoorLocationEnabled() ? &m_applicationConfiguration.FixedIndoorLocation() : nullptr);
+                                                                                   *m_pCameraTransitionService);
 
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsCameraController());

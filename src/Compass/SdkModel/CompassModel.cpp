@@ -13,6 +13,7 @@
 #include "IAlertBoxFactory.h"
 #include "InteriorsExplorerModel.h"
 #include "InteriorNavigationHelpers.h"
+#include "InteriorsCameraController.h"
 
 namespace ExampleApp
 {
@@ -27,7 +28,9 @@ namespace ExampleApp
                                        Metrics::IMetricsService& metricsService,
                                        InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                                        AppModes::SdkModel::IAppModeModel& appModeModel,
-                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                       CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
+                                       Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController)
                 :m_navigationService(navigationService)
                 ,m_interiorInteractionModel(interiorInteractionModel)
                 ,m_locationService(locationService)
@@ -40,6 +43,8 @@ namespace ExampleApp
                 , m_failAlertHandler(this, &CompassModel::OnFailedToGetLocation)
                 , m_interiorFloorChangedCallback(this, &CompassModel::OnInteriorFloorChanged)
                 , m_exitInteriorTriggered(false)
+                , m_cameraTransitionService(cameraTransitionService)
+                , m_interiorsCameraController(interiorsCameraController)
             {
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeOff] = GpsMode::GpsDisabled;
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeFollow] = GpsMode::GpsFollow;
@@ -166,6 +171,23 @@ namespace ExampleApp
                 m_gpsMode = gpsMode;
                 m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[m_gpsMode]);
                 m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
+                
+                if(m_locationService.IsIndoors())
+                {
+                    if (gpsMode == GpsMode::GpsFollow || gpsMode == GpsMode::GpsCompassMode)
+                    {
+                        Eegeo::Space::LatLong latLong(0, 0);
+                        int floorIndex = 0;
+                        if(m_locationService.GetLocation(latLong) && m_locationService.GetFloorIndex(floorIndex))
+                        {
+                            m_cameraTransitionService.StartTransitionTo(latLong.ToECEF(),
+                                                                        m_interiorsCameraController.GetDistanceToInterest(),
+                                                                        GetHeadingRadians(),
+                                                                        m_locationService.GetInteriorId(),
+                                                                        floorIndex);
+                        }
+                    }
+                }
                 
                 m_gpsModeChangedCallbacks.ExecuteCallbacks();
             }
