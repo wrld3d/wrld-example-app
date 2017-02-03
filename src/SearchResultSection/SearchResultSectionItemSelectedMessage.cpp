@@ -11,13 +11,15 @@ namespace ExampleApp
                                                                                        const bool isInterior,
                                                                                        const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                                                        const int floorIndex,
-                                                                                       int itemIndex)
+                                                                                       int itemIndex,
+                                                                                       const std::string modelIdentifier)
         : m_searchResultModelIdentifier(searchResultModelIdentifier)
         , m_searchResultModelLocationEcef(searchResultModelLocationEcef)
         , m_isInterior(isInterior)
         , m_interiorId(interiorId)
         , m_floorIndex(floorIndex)
         , m_itemIndex(itemIndex)
+        , m_modelIdentifier(modelIdentifier)
         {
             
         }
@@ -50,6 +52,11 @@ namespace ExampleApp
         int SearchResultSectionItemSelectedMessage::ItemIndex() const
         {
             return m_itemIndex;
+        }
+        
+        const std::string& SearchResultSectionItemSelectedMessage::ModelIdentifier() const
+        {
+            return m_modelIdentifier;
         }
     }
 }

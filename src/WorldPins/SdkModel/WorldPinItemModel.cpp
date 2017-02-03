@@ -23,7 +23,8 @@ namespace ExampleApp
                                                  bool interior,
                                                  const WorldPinInteriorData& worldPinInteriorData,
                                                  int visibilityMask,
-                                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
+                                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                                                 std::string identifier)
                 : m_id(id)
                 , m_pSelectionHandler(pSelectionHandler)
                 , m_pVisibilityStateChangedHandler(pVisibilityStateChangedHandler)
@@ -41,6 +42,7 @@ namespace ExampleApp
                 , m_worldPinInteriorData(worldPinInteriorData)
                 , m_visibilityMask(visibilityMask)
                 , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
+                , m_identifier(identifier)
             {
                 Eegeo_ASSERT(m_pSelectionHandler != NULL, "WorldPinItemModel must be provided with a non-null selection handler.")
             }
@@ -176,6 +178,11 @@ namespace ExampleApp
             void WorldPinItemModel::SetVisibilityMask(int visibilityMask)
             {
                 m_visibilityMask = visibilityMask;
+            }
+            
+            std::string WorldPinItemModel::GetIdentifier()
+            {
+                return m_identifier;
             }
         }
     }

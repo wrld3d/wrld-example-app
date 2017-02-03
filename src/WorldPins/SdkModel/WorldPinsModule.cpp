@@ -27,7 +27,7 @@ namespace ExampleApp
 
                 m_pWorldPinsRepository = Eegeo_NEW(WorldPinsRepository);
                 
-                m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository, interiorMarkerPickingService, markerService, sdkDomainEventBus);
+                m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository, interiorMarkerPickingService, markerService, sdkDomainEventBus, messageBus);
                 
                 m_pWorldPinsVisibilityController = Eegeo_NEW(WorldPinsVisibilityController)(*m_pWorldPinsRepository,
                                                                                             messageBus,

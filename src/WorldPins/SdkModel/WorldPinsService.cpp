@@ -22,18 +22,24 @@ namespace ExampleApp
                                                IWorldPinsRepository& worldPinsRepository,
                                                Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
                                                Eegeo::Markers::IMarkerService& markerService,
-                                               ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
+                                               ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                                               ExampleAppMessaging::TMessageBus& messageBus)
             : m_worldPinsRepository(worldPinsRepository)
             , m_interiorMarkerPickingService(interiorMarkerPickingService)
             , m_markerService(markerService)
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_worldPinHiddenStateChangedMessageBinding(this, &WorldPinsService::OnWorldPinHiddenStateChanged)
+            , m_onSearchResultSelected(this, &WorldPinsService::OnMenuItemSelected)
+            , m_messageBus(messageBus)
+            , m_lastHighPriorityMarkerId(Eegeo::Markers::IMarker::InvalidId)
             {
                 m_sdkModelDomainEventBus.Subscribe(m_worldPinHiddenStateChangedMessageBinding);
+                m_messageBus.SubscribeNative(m_onSearchResultSelected);
             }
             
             WorldPinsService::~WorldPinsService()
             {
+                m_messageBus.UnsubscribeNative(m_onSearchResultSelected);
                 m_sdkModelDomainEventBus.Unsubscribe(m_worldPinHiddenStateChangedMessageBinding);
             }
             
@@ -69,7 +75,8 @@ namespace ExampleApp
                                                           const std::string& pinIconKey,
                                                           float heightAboveTerrainMetres,
                                                           int visibilityMask,
-                                                          const std::string& tag)
+                                                          const std::string& tag,
+                                                          std::string identifier)
             {
                 bool isMeetingRoom = tag == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME;
 
@@ -79,8 +86,8 @@ namespace ExampleApp
                     .SetLabelIcon(pinIconKey)
                     // temp workaround to specify interior floor by zero-based index rather than 'floor number' id (MPLY-8062)
                     .SetInteriorWithFloorIndex(worldPinInteriorData.building.Value(), worldPinInteriorData.floor)
+                    .SetSubPriority(1)
                     .Build();
-                
                 
                 const Eegeo::Markers::IMarker::IdType markerId = m_markerService.Create(markerCreateParams);
                 const WorldPinItemModel::WorldPinItemModelId pinId = markerId;
@@ -98,7 +105,8 @@ namespace ExampleApp
                                                                         interior,
                                                                         worldPinInteriorData,
                                                                         visibilityMask,
-                                                                        m_sdkModelDomainEventBus);
+                                                                        m_sdkModelDomainEventBus,
+                                                                        identifier);
             
                 m_worldPinsRepository.AddItem(model);
 
@@ -146,9 +154,9 @@ namespace ExampleApp
                 if(selectionHandler != NULL)
                 {
                     selectionHandler->SelectPin();
+                    ResetLastMarkerSubPriority();
                 }
             }
-            
             
             IWorldPinSelectionHandler* WorldPinsService::GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId)
             {
@@ -178,6 +186,29 @@ namespace ExampleApp
                 }
                 
                 return false;
+            }
+            
+            void WorldPinsService::OnMenuItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
+            {
+                for(int i = 0; i < m_worldPinsRepository.GetItemCount(); i++)
+                {
+                    if(m_worldPinsRepository.GetItemAtIndex(i)->GetIdentifier() == message.ModelIdentifier() && !m_worldPinsRepository.GetItemAtIndex(i)->GetIdentifier().empty())
+                    {
+                        ResetLastMarkerSubPriority();
+                        
+                        m_lastHighPriorityMarkerId = GetMarkerIdForWorldPinItemModelId(m_worldPinsRepository.GetItemAtIndex(i)->Id());
+                        m_markerService.Get(m_lastHighPriorityMarkerId).SetSubPriority(0);
+                        return;
+                    }
+                }
+            }
+            
+            void WorldPinsService::ResetLastMarkerSubPriority()
+            {
+                if(m_lastHighPriorityMarkerId != Eegeo::Markers::IMarker::InvalidId && m_markerService.Exists(m_lastHighPriorityMarkerId))
+                {
+                    m_markerService.Get(m_lastHighPriorityMarkerId).SetSubPriority(1);
+                }
             }
         }
     }

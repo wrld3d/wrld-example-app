@@ -424,7 +424,8 @@ namespace ExampleApp
                                                                                                              pinIconKey,
                                                                                                              searchResultModel.GetHeightAboveTerrainMetres(),
                                                                                                              WorldPins::SdkModel::WorldPinVisibility::Search,
-                                                                                                             searchResultModel.GetPrimaryTag());
+                                                                                                             searchResultModel.GetPrimaryTag(),
+                                                                                                             searchResultModel.GetIdentifier());
                 
                 m_searchResultsToPinModel.insert(std::make_pair(searchResultModel, pinItemModel));
                 

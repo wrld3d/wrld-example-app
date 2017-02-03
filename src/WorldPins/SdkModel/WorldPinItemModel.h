@@ -48,6 +48,7 @@ namespace ExampleApp
                 WorldPinInteriorData m_worldPinInteriorData;
                 int m_visibilityMask;
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
+                std::string m_identifier;
 
             public:
                 WorldPinItemModel(const WorldPinItemModelId& id,
@@ -57,7 +58,8 @@ namespace ExampleApp
                                   bool interior,
                                   const WorldPinInteriorData& worldPinInteriorData,
                                   int visibilityMask,
-                                  ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus);
+                                  ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                                  std::string identifier);
 
                 ~WorldPinItemModel();
 
@@ -94,6 +96,8 @@ namespace ExampleApp
                 int VisibilityMask() const;
                 
                 void SetVisibilityMask(int visibilityMask);
+                
+                std::string GetIdentifier();
                 
             private:
                 void SetTransitionState(TransitionState transitionState);

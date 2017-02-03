@@ -22,6 +22,8 @@ namespace ExampleApp
             int m_floorIndex;
 
             int m_itemIndex;
+            
+            std::string m_modelIdentifier;
 
         public:
             SearchResultSectionItemSelectedMessage(const std::string& searchResultModelIdentifier,
@@ -29,7 +31,8 @@ namespace ExampleApp
                                                    const bool isInterior,
                                                    const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                    const int floorIndex,
-                                                   int itemIndex);
+                                                   int itemIndex,
+                                                   const std::string modelIdentifier);
 
             std::string Identifier() const;
 
@@ -42,6 +45,8 @@ namespace ExampleApp
             const int FloorIndex() const;
 
             int ItemIndex() const;
+            
+            const std::string& ModelIdentifier() const;
         };
     }
 }

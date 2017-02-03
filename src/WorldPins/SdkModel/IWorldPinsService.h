@@ -31,7 +31,8 @@ namespace ExampleApp
                                                   const std::string& pinIconKey,
                                                   float heightAboveTerrainMetres,
                                                   int visibilityMask,
-                                                  const std::string& tag) = 0;
+                                                  const std::string& tag,
+                                                  std::string id = "") = 0;
 
                 virtual void RemovePin(WorldPinItemModel* pinItemModel) = 0;
 
