@@ -434,6 +434,8 @@ namespace
      }
      ];
     
+    m_floorSelection = 0.f;
+    
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
                           delay:isOnScreenAnim ? 1.0f : 0.0f
                         options:UIViewAnimationOptionBeginFromCurrentState
