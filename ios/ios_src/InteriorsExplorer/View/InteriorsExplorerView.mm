@@ -37,11 +37,10 @@ namespace
     return [UIColor colorWithRed:(205.0f/255.0f) green:(252.0f/255.0f) blue:(13.0f/255.0f) alpha:1.0f];;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale : (ExampleApp::ExampleAppMessaging::TMessageBus&) messageBus :(InteriorsExplorerTutorialView&)tutorialView
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(InteriorsExplorerTutorialView&)tutorialView
 {
     if (self = [super init])
     {
-        m_messageBus = &messageBus;
         const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
         
         m_pixelScale = 1.f;
@@ -167,20 +166,9 @@ namespace
         [self hideFloorLabels];
         [self setHidden:YES];
         [self setArrowState:NO :NO];
-        
-        m_appModeChangedCallback.SetupCallback(self, @selector(onAppModeChanged:));
-        m_messageBus->SubscribeUi(m_appModeChangedCallback);
     }
     
     return self;
-}
-
-- (void) onAppModeChanged:(const ExampleApp::AppModes::AppModeChangedMessage&)appMode
-{
-    if(appMode.GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode)
-    {
-        m_floorSelection = 0.0;
-    }
 }
 
 - (void)layoutSubviews
@@ -197,7 +185,6 @@ namespace
 - (void)dealloc
 {
     delete m_pInterop;
-    m_messageBus->UnsubscribeUi(m_appModeChangedCallback);
     
     [self removeFromSuperview];
     [super dealloc];
@@ -277,6 +264,7 @@ namespace
 
 - (void) updateFloors: (const std::vector<std::string>&) floorShortNames withCurrentFloor: (int) currentlySelectedFloorIndex;
 {
+    m_floorSelection = 0.0;
     m_tableViewFloorNames = floorShortNames;
     std::reverse(m_tableViewFloorNames.begin(), m_tableViewFloorNames.end());
     
