@@ -24,7 +24,7 @@ namespace ExampleApp
                 
                 m_pTutorialView = [[InteriorsExplorerTutorialView alloc] initWithParams: screenWidth : screenHeight : pixelScale];
                 
-                m_pView = [[InteriorsExplorerView alloc] initWithParams: screenWidth : screenHeight : pixelScale : messageBus : *m_pTutorialView ];
+                m_pView = [[InteriorsExplorerView alloc] initWithParams: screenWidth : screenHeight : pixelScale : *m_pTutorialView ];
                 
                 m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
                                                                        *[m_pView getInterop],
