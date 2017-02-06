@@ -5,8 +5,35 @@
 #import <UIKit/UIKit.h>
 #include "InteriorsExplorerViewIncludes.h"
 #include "InteriorsExplorerTutorialView.h"
+#include "ICallback.h"
+#include "BidirectionalBus.h"
 #include <string>
 #include <vector>
+
+template <typename Context, typename T0>
+class TObjCCallback1 : public Eegeo::Helpers::ICallback1<T0> {
+public:
+    typedef void (*TCallbackTarget)(id, SEL, T0);
+    
+    TObjCCallback1() {}
+    
+    void SetupCallback(Context *context, SEL selector)
+    {
+        m_context = context;
+        m_selector = selector;
+        m_callback = (TCallbackTarget)[m_context methodForSelector:selector];
+    }
+    
+    void operator()(T0& arg0) const
+    {
+        m_callback(m_context, m_selector, arg0);
+    }
+    
+private:
+    Context *m_context;
+    SEL m_selector;
+    TCallbackTarget m_callback;
+};
 
 @class InteriorsExplorerView;
 
@@ -41,9 +68,13 @@
     CGRect m_scrollRect;
     
     std::vector<std::string> m_tableViewFloorNames;
+    
+    TObjCCallback1<InteriorsExplorerView, const ExampleApp::AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
+    
+    ExampleApp::ExampleAppMessaging::TMessageBus* m_messageBus;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(InteriorsExplorerTutorialView&)tutorialView;
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ExampleApp::ExampleAppMessaging::TMessageBus&) messageBus :(InteriorsExplorerTutorialView&)tutorialView;
 
 - (ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop*) getInterop;
 
@@ -74,6 +105,8 @@
 - (void) playSliderShakeAnim;
 
 - (bool) GetCanShowChangeFloorTutorialDialog;
+
+- (void) onAppModeChanged:(const ExampleApp::AppModes::AppModeChangedMessage&)appMode;
 
 // NOTE: Replace these once integrated with search ux colour scheme.
 - (UIColor*) textColorNormal;
