@@ -201,7 +201,8 @@ namespace ExampleApp
                                                                                                              searchResultModel.GetLocation(),
                                                                                                              pinIconKey,
                                                                                                              searchResultModel.GetHeightAboveTerrainMetres(),
-                                                                                                             WorldPins::SdkModel::WorldPinVisibility::Search);
+                                                                                                             WorldPins::SdkModel::WorldPinVisibility::Search,
+                                                                                                             searchResultModel.GetIdentifier());
                 
                 m_searchResultsToPinModel.insert(std::make_pair(searchResultModel, pinItemModel));
             }

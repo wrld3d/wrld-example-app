@@ -16,6 +16,8 @@
 #include "ILabelAnchorFilter.h"
 #include "Markers.h"
 #include "SdkModelDomainEventBus.h"
+#include "SearchResultSectionItemSelectedMessage.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -32,7 +34,8 @@ namespace ExampleApp
                                  IWorldPinsRepository& worldPinsRepository,
                                  Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
                                  Eegeo::Markers::IMarkerService& markerService,
-                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus);
+                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                                 ExampleAppMessaging::TMessageBus& messageBus);
                 ~WorldPinsService();
                 
                 WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
@@ -43,7 +46,8 @@ namespace ExampleApp
                                           const Eegeo::Space::LatLong& location,
                                           const std::string& pinIconKey,
                                           float heightAboveTerrainMetres,
-                                          int visibilityMask);
+                                          int visibilityMask,
+                                          std::string identifier = "");
                 
                 void RemovePin(WorldPinItemModel* pinItemModel);
                 
@@ -66,6 +70,10 @@ namespace ExampleApp
                 
                 WorldPinItemModel::WorldPinItemModelId GetWorldPinItemModelIdForMarkerId(Eegeo::Markers::IMarker::IdType markerId) const;
                 
+                void OnMenuItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message);
+                
+                void ResetLastMarkerSubPriority();
+                
                 IWorldPinsRepository& m_worldPinsRepository;
                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& m_interiorMarkerPickingService;
                 
@@ -73,12 +81,18 @@ namespace ExampleApp
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
                 
                 Eegeo::Helpers::TCallback1<WorldPinsService, const WorldPinHiddenStateChangedMessage&> m_worldPinHiddenStateChangedMessageBinding;
+                Eegeo::Helpers::TCallback1<WorldPinsService, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_onSearchResultSelected;
 
                 typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*> TPinToSelectionHandlerMap;
                 typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinVisibilityStateChangedHandler*> TPinToVisiblityHandlerMap;
                 
+                
                 TPinToSelectionHandlerMap m_pinsToSelectionHandlers;
                 TPinToVisiblityHandlerMap m_pinsToVisbilityChangedHandlers;
+                
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                
+                Eegeo::Markers::IMarker::IdType m_lastHighPriorityMarkerId;
             };
 
         }

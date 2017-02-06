@@ -133,6 +133,10 @@ namespace ExampleApp
             void InteriorsExplorerController::OnAppModeChanged(const AppModes::AppModeChangedMessage& message)
             {
                 m_appMode = message.GetAppMode();
+                if (m_appMode == AppModes::SdkModel::AppMode::AttractMode)
+                {
+                    ReplayTutorials(true);
+                }
             }
 
             void InteriorsExplorerController::OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage & message)
