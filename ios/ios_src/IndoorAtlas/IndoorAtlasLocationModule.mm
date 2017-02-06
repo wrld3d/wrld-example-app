@@ -28,7 +28,6 @@ namespace ExampleApp
             
             m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(*m_pLocationManager,
                                                                              appModeModel,
-                                                                             interiorInteractionModel,
                                                                              interiorSelectionModel,
                                                                              interiorMetaDataRepository);
         }

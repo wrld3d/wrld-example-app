@@ -15,9 +15,7 @@
   iOSAlertBoxFactory: (Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory;
 -(void) StartUpdatingLocation: (NSString*) apiKey
                     apiSecret: (NSString*) apiSecret
-                     floorMap: (std::map<int, std::string>) floorMap
-                   floorIndex: (int) floorIndex;
+                     floorMap: (std::map<int, std::string>) floorMap;
 -(void) StopUpdatingLocation;
--(void) SetFloorIndex: (int) floorIndex;
 
 @end

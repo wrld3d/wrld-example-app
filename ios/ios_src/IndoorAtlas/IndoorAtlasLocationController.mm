@@ -11,25 +11,20 @@ namespace ExampleApp
     {
         IndoorAtlasLocationController::IndoorAtlasLocationController(IndoorAtlasLocationManager& locationManager,
                                                                      ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                      const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                      Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
         : m_locationManager(locationManager)
         , m_appModeModel(appModeModel)
-        , m_interiorInteractionModel(interiorInteractionModel)
         , m_interiorSelectionModel(interiorSelectionModel)
         , m_appModeChangedCallback(this, &IndoorAtlasLocationController::OnAppModeChanged)
-        , m_floorSelectedCallback(this, &IndoorAtlasLocationController::OnFloorSelected)
         , m_interiorMetaDataRepository(interiorMetaDataRepository)
         {
             m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
-            m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_floorSelectedCallback);
         }
         
         IndoorAtlasLocationController::~IndoorAtlasLocationController()
         {
             m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
-            m_interiorInteractionModel.UnregisterModelChangedCallback(m_floorSelectedCallback);
 
         }
         
@@ -47,8 +42,6 @@ namespace ExampleApp
                 return;
             }
             
-            int currentFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
-         
             [&m_locationManager StopUpdatingLocation];
          
             if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
@@ -68,17 +61,10 @@ namespace ExampleApp
          
                         [&m_locationManager StartUpdatingLocation: apiKey
                                                         apiSecret: apiSecret
-                                                         floorMap: floorMap
-                                                       floorIndex: currentFloorIndex];
+                                                         floorMap: floorMap];
                     }
                 }
             }
-        }
-        
-        void IndoorAtlasLocationController::OnFloorSelected()
-        {
-            int currentFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
-            [&m_locationManager SetFloorIndex:currentFloorIndex];
         }
     }
 }

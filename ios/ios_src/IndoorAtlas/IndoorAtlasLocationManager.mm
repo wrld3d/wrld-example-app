@@ -23,7 +23,6 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
 @interface IndoorAtlasLocationManager()<IALocationManagerDelegate>
 {
     std::map<int, std::string> m_floorMap;
-    int m_floorIndex;
     ExampleApp::IndoorAtlas::IndoorAtlasLocationService* m_pIndoorAtlasLocationService;
     Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory *m_piOSAlertBoxFactory;
     FailureHandlerType *m_failureHandlerWrapper;
@@ -51,22 +50,12 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
 -(void) StartUpdatingLocation: (NSString*) apiKey
                     apiSecret: (NSString*) apiSecret
                      floorMap: (std::map<int, std::string>) floorMap
-                   floorIndex: (int) floorIndex
 {
     self.locationManager = [IALocationManager sharedInstance];
     [self.locationManager setApiKey:apiKey andSecret:apiSecret];
     self.locationManager.delegate = self;
     
     m_floorMap = floorMap;
-    m_floorIndex = floorIndex;
-    
-    NSString* floorPlanId = [self getFloorPlanIdFromFloorIndex:floorIndex];
-    
-    if(floorPlanId)
-    {
-        IALocation *location = [IALocation locationWithFloorPlanId:floorPlanId];
-        self.locationManager.location = location;
-    }
     
     [self.locationManager startUpdatingLocation];
 }
@@ -74,20 +63,6 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
 -(void) StopUpdatingLocation
 {
     [self.locationManager stopUpdatingLocation];
-}
-
--(void) SetFloorIndex: (int) floorIndex
-{
-    m_floorIndex = floorIndex;
-    
-    NSString* floorPlanId = [self getFloorPlanIdFromFloorIndex:floorIndex];
-    
-    if(floorPlanId)
-    {
-        IALocation *location = [IALocation locationWithFloorPlanId:floorPlanId];
-        self.locationManager.location = location;
-        m_pIndoorAtlasLocationService->SetFloorIndex(m_floorIndex);
-    }
 }
 
 -(void) dealloc
@@ -106,16 +81,25 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
     m_pIndoorAtlasLocationService->SetLocation(latLong);
 }
 
--(NSString*) getFloorPlanIdFromFloorIndex: (int) floorIndex
+-(void) indoorLocationManager: (IALocationManager*) manager didEnterRegion: (IARegion*) region
 {
-    std::map<int, std::string>::iterator it = m_floorMap.find(floorIndex);
+    NSString* floorPlanId = region.identifier;
     
-    if(it != m_floorMap.end())
+    int floorIndex = [self getFloorIndexFromFloorPlanId: std::string([floorPlanId UTF8String])];
+    m_pIndoorAtlasLocationService->SetFloorIndex(floorIndex);
+}
+
+-(int) getFloorIndexFromFloorPlanId: (std::string) floorPlanId
+{
+    for(std::map<int, std::string>::iterator it = m_floorMap.begin(); it != m_floorMap.end(); ++it)
     {
-        return [NSString stringWithCString:it->second.c_str() encoding:[NSString defaultCStringEncoding]];
+        if(it->second == floorPlanId)
+        {
+            return it->first;
+        }
     }
     
-    return nil;
+    return 0;
 }
 
 - (void)indoorLocationManager:(nonnull IALocationManager *)manager statusChanged:(nonnull IAStatus *)status
