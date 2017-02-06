@@ -298,7 +298,7 @@ const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.
     const float footerHeight = 64.f;
     const float footerWidth = m_controlContainerWidth;
 
-    self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, footerHeight);
+    self.pFooterContainer.frame = CGRectMake(0, footerY - footerHeight/2, footerWidth, footerHeight);
     self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
 
     const int numberOfButtons = 4;
