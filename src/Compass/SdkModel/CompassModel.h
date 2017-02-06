@@ -15,6 +15,7 @@
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "InteriorsExplorer.h"
 #include "InteriorInteractionModel.h"
+#include "CameraTransitionService.h"
 
 namespace ExampleApp
 {
@@ -47,16 +48,21 @@ namespace ExampleApp
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<CompassModel> m_failAlertHandler;
                 
+                CameraTransitions::SdkModel::CameraTransitionService& m_cameraTransitionService;
+                Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
+                
             public:
 
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
-                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                    Eegeo::Location::ILocationService& locationService,
-                    ExampleApp::AppCamera::SdkModel::IAppCameraController& Cameracontroller,
-                    Metrics::IMetricsService& metricsService,
-                    InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
-                    AppModes::SdkModel::IAppModeModel& appModeModel,
-                    Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
+                             Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                             Eegeo::Location::ILocationService& locationService,
+                             ExampleApp::AppCamera::SdkModel::IAppCameraController& Cameracontroller,
+                             Metrics::IMetricsService& metricsService,
+                             InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
+                             AppModes::SdkModel::IAppModeModel& appModeModel,
+                             Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                             CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
+                             Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController);
 
                 ~CompassModel();
 

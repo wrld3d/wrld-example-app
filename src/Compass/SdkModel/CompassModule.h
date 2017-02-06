@@ -9,7 +9,6 @@
 #include "IIdentity.h"
 #include "Location.h"
 #include "CompassModeObserver.h"
-#include "FixedIndoorLocationCompassModeObserver.h"
 #include "CompassViewCycledObserver.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
@@ -47,11 +46,7 @@ namespace ExampleApp
                               AppModes::SdkModel::IAppModeModel& appModeModel,
                               Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                               Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                              CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
-                              const Eegeo::Space::LatLong fixedLatlong,
-                              const Eegeo::Resources::Interiors::InteriorId& fixedInteriorId,
-                              const int fixedFloorIndex,
-                              const double fixedHeadingRadians);
+                              CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService);
 
                 ~CompassModule();
 
