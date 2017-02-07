@@ -88,6 +88,7 @@
 #include "IUserIdleService.h"
 #include "GlobalAppModeTransitionRules.h"
 #include "CameraSplinePlaybackController.h"
+#include "SurveyTimer.h"
 
 namespace ExampleApp
 {
@@ -157,6 +158,7 @@ namespace ExampleApp
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
+        Surveys::SdkModel::SurveyTimer* m_pSurveyTimer;
         DeepLink::SdkModel::DeepLinkModule* m_pDeepLinkModule;
         InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
         InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper* m_pHighlightColorMapper;

@@ -60,6 +60,8 @@ namespace ExampleApp
                 const std::string AttractModeTimeoutMillis = "attract_mode_timeout_millis";
                 const std::string AttractModePlaybackSpeed = "attract_mode_playback_speed";
                 const std::string OptionsAdminPassword = "options_admin_password";
+                const std::string SurveyTimeRequirementSec = "survey_time_requirement_sec";
+                const std::string TimerSurveyUrl = "timer_survey_url";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -256,6 +258,10 @@ namespace ExampleApp
                 const float attractModePlaybackSpeed = ParseDoubleOrDefault(document, AttractModePlaybackSpeed, m_defaultConfig.AttractModePlaybackSpeed());
 
                 const std::string optionsAdminPassword(ParseStringOrDefault(document, OptionsAdminPassword, m_defaultConfig.OptionsAdminPassword()));
+                
+                const long long surveyTimeRequirementSec = ParseIntOrDefault(document, SurveyTimeRequirementSec, static_cast<int>(m_defaultConfig.SurveyRequirementTimeSec()));
+                
+                const std::string timerSurveyUrl = ParseStringOrDefault(document, TimerSurveyUrl, m_defaultConfig.TimerSurveyUrl());
 
                 return ApplicationConfiguration(
                     name,
@@ -292,7 +298,9 @@ namespace ExampleApp
                     attractModePositionSplinePoints,
                     attractModeTimeoutMillis,
                     attractModePlaybackSpeed,
-                    optionsAdminPassword
+                    optionsAdminPassword,
+                    surveyTimeRequirementSec,
+                    timerSurveyUrl
                 );
             }
             

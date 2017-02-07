@@ -6,6 +6,7 @@
 
 #include "IPersistentSettingsModel.h"
 #include "StartUxSurveyMessage.h"
+#include "TimeHelpers.h"
 
 namespace
 {
@@ -20,7 +21,8 @@ namespace
         SearchPerformed = 0x04,
         SearchResultSelected = 0x08,
         WeatherSelected = 0x10,
-        PinCreated = 0x20
+        PinCreated = 0x20,
+        TimeSpent = 0x40
     };
 }
 
@@ -39,16 +41,20 @@ namespace ExampleApp
             , m_onSearchResultSelected(this, &SurveyObserver::OnSearchResultSelected)
             , m_onWeatherSelected(this, &SurveyObserver::OnWeatherSelected)
             , m_onPinCreated(this, &SurveyObserver::OnPinCreated)
+            , m_onSurveyTimeRequirementMet(this, &SurveyObserver::OnTimeSpentInApp)
             {
                 m_messageBus.SubscribeNative(m_onSearchPerformedMessage);
                 m_messageBus.SubscribeNative(m_onTagSearchPerformedMessage);
                 m_messageBus.SubscribeNative(m_onSearchResultSelected);
                 m_messageBus.SubscribeNative(m_onWeatherSelected);
                 m_messageBus.SubscribeNative(m_onPinCreated);
+                m_messageBus.SubscribeNative(m_onSurveyTimeRequirementMet);
+                
             }
             
             SurveyObserver::~SurveyObserver()
             {
+                m_messageBus.UnsubscribeNative(m_onSurveyTimeRequirementMet);
                 m_messageBus.UnsubscribeNative(m_onSearchPerformedMessage);
                 m_messageBus.UnsubscribeNative(m_onTagSearchPerformedMessage);
                 m_messageBus.UnsubscribeNative(m_onSearchResultSelected);
@@ -124,6 +130,16 @@ namespace ExampleApp
                 SetSurveyConditionsFlag(PinCreated);
             }
             
+            void SurveyObserver::OnTimeSpentInApp(const SurveyTimeRequirementMetMessage& message)
+            {
+                if(SurveyOffered())
+                {
+                    return;
+                }
+                
+                SetSurveyConditionsFlag(TimeSpent);
+            }
+            
             bool SurveyObserver::SurveyOffered()
             {
                 bool surveyOffered = false;
@@ -161,7 +177,7 @@ namespace ExampleApp
                     return;
                 }
                 
-                if(WeatherRequirementsMet() || PinCreationRequirementsMet())
+                if(TimeRequirementMet())
                 {
                     m_persistentSettingsModel.SetValue(SurveyOfferedKeyName, true);
                     
@@ -189,6 +205,11 @@ namespace ExampleApp
             bool SurveyObserver::PinCreationRequirementsMet() const
             {
                 return (GetSurveyConditions() & PinCreated) != 0;
+            }
+            
+            bool SurveyObserver::TimeRequirementMet() const
+            {
+                return (GetSurveyConditions() & TimeSpent) != 0;
             }
         }
     }

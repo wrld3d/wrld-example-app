@@ -7,8 +7,6 @@
 
 namespace
 {
-    const std::string uxSurveyUrl = "https://drive.google.com/open?id=1kbrNv-kg9SKxGqUBm8rXtAgwWfF1M6Rs7PJUFQhGAGw";
-    
     const std::string uxSurveyMetricName = "UxSurveyOffered";
     
     const std::string surveyAcceptedKeyName = "SurveyAccepted";
@@ -24,7 +22,8 @@ namespace ExampleApp
         {
             SurveyViewInterop::SurveyViewInterop(ExampleAppMessaging::TMessageBus& messageBus,
                                                  Metrics::IMetricsService& metricsService,
-                                                 URLRequest::View::URLRequestHandler& urlRequestHandler)
+                                                 URLRequest::View::URLRequestHandler& urlRequestHandler,
+                                                 const std::string& timerSurveyUrl)
             : m_pSurveyAlertViewHandler(NULL)
             , m_messageBus(messageBus)
             , m_metricsService(metricsService)
@@ -32,6 +31,7 @@ namespace ExampleApp
             , m_startUxSurveyCallback(this, &SurveyViewInterop::StartUxSurveyCallback)
             , m_onSurveyAccepted(this, &SurveyViewInterop::OnSurveyAccepted)
             , m_onSurveyRejected(this, &SurveyViewInterop::OnSurveyRejected)
+            , m_timerSurveyUrl(timerSurveyUrl)
             {
                 m_pSurveyAlertViewHandler = [[[[SurveyAlertViewHandler alloc] initWithCallbacks:m_onSurveyAccepted :m_onSurveyRejected] autorelease] retain];
                 
@@ -47,7 +47,9 @@ namespace ExampleApp
             
             void SurveyViewInterop::StartUxSurveyCallback(const StartUxSurveyMessage& message)
             {
-                m_currentSurveyUrl = uxSurveyUrl;
+                if(m_timerSurveyUrl == "")
+                    return;
+                m_currentSurveyUrl = m_timerSurveyUrl;
                 m_currentSurveyMetricName = uxSurveyMetricName;
                 
                 [m_pSurveyAlertViewHandler showAlert];

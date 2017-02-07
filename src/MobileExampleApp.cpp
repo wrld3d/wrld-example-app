@@ -576,6 +576,8 @@ namespace ExampleApp
 
         m_pSurveyModule = Eegeo_NEW(Surveys::SdkModel::SurveyModule)(m_messageBus,
                                                                      m_persistentSettings);
+        
+        m_pSurveyTimer = Eegeo_NEW(Surveys::SdkModel::SurveyTimer)(m_messageBus, m_applicationConfiguration.SurveyRequirementTimeSec());
 
         m_pSurveyModule->GetSurveyObserver().OnStartup();
 
@@ -1070,6 +1072,8 @@ namespace ExampleApp
         }
 
         UpdateLoadingScreen(dt);
+        
+        m_pSurveyTimer->Update();
     }
 
     void MobileExampleApp::Draw (float dt)

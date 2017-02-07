@@ -33,6 +33,7 @@
 #include "MenuDragStateChangedMessage.h"
 #include "MenuSectionExpandedChangedMessage.h"
 #include "WorldPinsSelectedFocussedMessage.h"
+#include "SurveyTimeRequirementMetMessage.h"
 
 namespace ExampleApp
 {
@@ -68,6 +69,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuDragStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuSectionExpandedChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsSelectedFocussedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Surveys::SurveyTimeRequirementMetMessage>
             , private Eegeo::NonCopyable
         {
 

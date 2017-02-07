@@ -54,6 +54,10 @@ namespace ExampleApp
 
                     const std::string emptyOptionsAdminPassword;
                     
+                    const long long surveyTimeRequirementSec = 90;
+                    
+                    const std::string timerSurveyUrl = "";
+                    
                     return ApplicationConfiguration ("Eegeo Example App",
                         emptyEegeoApiKey,
                         productVersion,
@@ -88,7 +92,9 @@ namespace ExampleApp
                         attractModePositionSplinePoints,
                         attractModeTimeoutDisabled,
                         attractModePlaybackSpeed,
-                        emptyOptionsAdminPassword);
+                        emptyOptionsAdminPassword,
+                        surveyTimeRequirementSec,
+                        timerSurveyUrl);
                 }
             }
             

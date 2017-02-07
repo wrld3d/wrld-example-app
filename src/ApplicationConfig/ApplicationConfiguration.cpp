@@ -41,7 +41,9 @@ namespace ExampleApp
             const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
             const long long attractModeTimeoutMs,
             const float attractModePlaybackSpeed,
-            const std::string& optionsAdminPassword
+            const std::string& optionsAdminPassword,
+            const long long& surveyRequirementTimeSec,
+            const std::string& timerSurveyUrl
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -78,6 +80,8 @@ namespace ExampleApp
         , m_attractModeTimeoutMs(attractModeTimeoutMs)
         , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
         , m_optionsAdminPassword(optionsAdminPassword)
+        , m_surveyRequirementTimeSec(surveyRequirementTimeSec)
+        , m_timerSurveyUrl(timerSurveyUrl)
         {
         }
         
@@ -266,6 +270,16 @@ namespace ExampleApp
         std::string ApplicationConfiguration::OptionsAdminPassword() const
         {
             return m_optionsAdminPassword;
+        }
+        
+        const long long ApplicationConfiguration::SurveyRequirementTimeSec() const
+        {
+            return m_surveyRequirementTimeSec;
+        }
+        
+        const std::string ApplicationConfiguration::TimerSurveyUrl() const
+        {
+            return m_timerSurveyUrl;
         }
     }
 }

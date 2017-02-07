@@ -408,7 +408,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 
     m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_messageBus,
                                                                                  m_iOSFlurryMetricsService,
-                                                                                 *m_pURLRequestHandler);
+                                                                                 *m_pURLRequestHandler,
+                                                                                 m_pApp->GetApplicationConfiguration().TimerSurveyUrl());
     
     // 3d map view layer.
     

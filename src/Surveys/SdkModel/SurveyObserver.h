@@ -12,6 +12,7 @@
 #include "SearchMenuPerformedSearchMessage.h"
 #include "SearchResultSectionItemSelectedMessage.h"
 #include "WeatherSelectedMessage.h"
+#include "SurveyTimeRequirementMetMessage.h"
 
 namespace ExampleApp
 {
@@ -30,12 +31,14 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SurveyObserver, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_onSearchResultSelected;
                 Eegeo::Helpers::TCallback1<SurveyObserver, const WeatherMenu::WeatherSelectedMessage&> m_onWeatherSelected;
                 Eegeo::Helpers::TCallback1<SurveyObserver, const MyPinCreation::MyPinCreationViewSavePinMessage&> m_onPinCreated;
+                Eegeo::Helpers::TCallback1<SurveyObserver, const SurveyTimeRequirementMetMessage&> m_onSurveyTimeRequirementMet;
                 
                 void OnSearchPerformedMessage(const SearchMenu::SearchMenuPerformedSearchMessage& message);
                 void OnTagSearchPerformedMessage(const TagSearch::TagSearchSelectedMessage& message);
                 void OnSearchResultSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message);
                 void OnWeatherSelected(const WeatherMenu::WeatherSelectedMessage& message);
                 void OnPinCreated(const MyPinCreation::MyPinCreationViewSavePinMessage& message);
+                void OnTimeSpentInApp(const SurveyTimeRequirementMetMessage& message);
                 
                 bool SurveyOffered();
                 
@@ -49,6 +52,7 @@ namespace ExampleApp
                 bool SearchRequirementsMet() const;
                 bool WeatherRequirementsMet() const;
                 bool PinCreationRequirementsMet() const;
+                bool TimeRequirementMet() const;
                 
             public:
                 SurveyObserver(ExampleAppMessaging::TMessageBus& messageBus,

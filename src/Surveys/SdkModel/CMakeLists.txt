@@ -7,6 +7,8 @@ set(currsources
   ../src/Surveys/SdkModel/SurveyModule.h
   ../src/Surveys/SdkModel/SurveyObserver.cpp
   ../src/Surveys/SdkModel/SurveyObserver.h
+  ../src/Surveys/SdkModel/SurveyTimer.cpp
+  ../src/Surveys/SdkModel/SurveyTimer.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Surveys\\SdkModel FILES ${currsources})

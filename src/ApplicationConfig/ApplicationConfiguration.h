@@ -57,6 +57,9 @@ namespace ExampleApp
             float m_attractModePlaybackSpeed;
 
             std::string m_optionsAdminPassword;
+            
+            long long m_surveyRequirementTimeSec;
+            std::string m_timerSurveyUrl;
 
         public:
             
@@ -95,7 +98,9 @@ namespace ExampleApp
                 const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
                 const long long attractModeTimeoutMs,
                 const float attractModePlaybackSpeed,
-                const std::string& optionsAdminPassword
+                const std::string& optionsAdminPassword,
+                const long long& surveyRequirementTimeSec,
+                const std::string& timerSurveyUrl
             );
             
             std::string Name() const;
@@ -166,6 +171,9 @@ namespace ExampleApp
             const bool IsAttractModeEnabled() const;
 
             std::string OptionsAdminPassword() const;
+            
+            const long long SurveyRequirementTimeSec() const;
+            const std::string TimerSurveyUrl() const;
         };
     }
 }

@@ -38,10 +38,13 @@ namespace ExampleApp
                 void OnSurveyAccepted();
                 void OnSurveyRejected();
                 
+                std::string m_timerSurveyUrl;
+                
             public:
                 SurveyViewInterop(ExampleAppMessaging::TMessageBus& messageBus,
                                   Metrics::IMetricsService& metricsService,
-                                  URLRequest::View::URLRequestHandler& urlRequestHandler);
+                                  URLRequest::View::URLRequestHandler& urlRequestHandler,
+                                  const std::string& timerSurveyUrl);
                 
                 ~SurveyViewInterop();
                 
