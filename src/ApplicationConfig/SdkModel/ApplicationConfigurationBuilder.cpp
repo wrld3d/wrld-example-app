@@ -46,6 +46,7 @@ namespace ExampleApp
             , m_webProxyPort(0)
             , m_webProxyIgnorePattern("")
             , m_isKioskTouchInputEnabled(false)
+            , m_isInKioskMode(false)
             , m_shouldStartFullscreen(false)
             , m_embeddedThemeTexturePath("")
             , m_twitterAuthCode("")
