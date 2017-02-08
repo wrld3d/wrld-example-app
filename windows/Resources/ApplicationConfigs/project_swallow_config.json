@@ -100,5 +100,7 @@
         "InteriorId": "",
         "FloorIndex": 2,
         "OrientationDegrees": 180.0
-    }
+    },
+
+    "OptionsAdminPanel": "1234"
 }
