@@ -66,6 +66,7 @@ namespace ExampleApp
                                  Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController& cameraSplinePlaybackController,
                                  AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
                                  const int worldCameraHandle,
+                                 Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                  Eegeo::ITouchController& touchController,
                                  Eegeo::Location::ILocationService& locationService,
                                  Eegeo::Input::IUserIdleService& userIdleService,
