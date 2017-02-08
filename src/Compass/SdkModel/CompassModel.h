@@ -37,6 +37,7 @@ namespace ExampleApp
                 std::map<Eegeo::Location::NavigationService::GpsMode, GpsMode::Values> m_compassGpsModeToNavigationGpsMode;
                 std::map<GpsMode::Values, Eegeo::Location::NavigationService::GpsMode> m_navigationGpsModeToCompassGpsMode;
                 std::map<GpsMode::Values, const char*> m_gpsModeToString;
+                const bool m_setHeading;
                 
                 Metrics::IMetricsService& m_metricsService;
 
@@ -50,7 +51,7 @@ namespace ExampleApp
                 
                 CameraTransitions::SdkModel::CameraTransitionService& m_cameraTransitionService;
                 Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
-                
+
             public:
 
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
@@ -62,7 +63,8 @@ namespace ExampleApp
                              AppModes::SdkModel::IAppModeModel& appModeModel,
                              Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                              CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
-                             Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController);
+                             Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
+                             bool setHeading);
 
                 ~CompassModel();
 
@@ -98,6 +100,8 @@ namespace ExampleApp
                 void OnFailedToGetLocation();
                 
                 bool NeedsToExitInterior(GpsMode::Values gpsMode);
+
+                float GetIndoorsHeadingRadians() const;
             };
         }
     }

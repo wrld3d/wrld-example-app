@@ -111,7 +111,7 @@ namespace ExampleApp
                     if(m_interiorSelectionModel.GetSelectedInteriorId() == interiorId)
                     {
                         Eegeo_ASSERT(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId(), "Invalid state. Have selected null Interior while in Interior mode");
-                        EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex);
+                        EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, newHeadingRadians);
                         StartQueuedTransition();
                         return;
                     }
@@ -135,7 +135,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex);
+                    EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, newHeadingRadians);
                 }
                 
                 StartQueuedTransition();
@@ -228,8 +228,10 @@ namespace ExampleApp
             void CameraTransitionController::EnqueueTransitionToInteriorStage(const Eegeo::dv3& newInterestPoint,
                                                                               float newDistanceToInterest,
                                                                               const Eegeo::Resources::Interiors::InteriorId &interiorId,
-                                                                              int targetFloorIndex)
+                                                                              int targetFloorIndex,
+                                                                              float newHeadingRadians)
             {
+                const bool TransitionToNewHeading = true;
                 ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorStage)(m_interiorInteractionModel,
                                                                                       m_interiorSelectionModel,
                                                                                       m_interiorTransitionModel,
@@ -237,7 +239,9 @@ namespace ExampleApp
                                                                                       newInterestPoint,
                                                                                       newDistanceToInterest,
                                                                                       interiorId,
-                                                                                      targetFloorIndex);
+                                                                                      targetFloorIndex,
+                                                                                      TransitionToNewHeading,
+                                                                                      newHeadingRadians);
                 m_transitionStages.push(pStage);
             }
             
