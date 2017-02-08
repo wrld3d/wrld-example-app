@@ -52,12 +52,14 @@ namespace ExampleApp
                                                                  Eegeo::Location::ILocationService& locationService,
                                                                  const int worldCameraHandle,
                                                                  AppCamera::SdkModel::AppGlobeCameraWrapper& worldCameraController,
+                                                                 Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                                                  Eegeo::Geometry::CatmullRomSpline& cameraPositionPoints)
                 : m_attractState(attractState)
                 , m_cameraController(cameraController)
                 , m_locationService(locationService)
                 , m_worldCameraHandle(worldCameraHandle)
                 , m_worldCameraController(worldCameraController)
+                , m_interiorsCameraController(interiorsCameraController)
                 , m_cameraPositionPoints(cameraPositionPoints)
                 {
                 }
@@ -96,6 +98,7 @@ namespace ExampleApp
                 {
                     if (!m_cameraController.IsTransitionInFlight())
                     {
+                        m_interiorsCameraController.SetHeading(m_cameraController.GetHeadingDegrees());
                         m_attractState.NotifySubStateComplete();
                     }
                 }
