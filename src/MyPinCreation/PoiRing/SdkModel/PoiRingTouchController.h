@@ -2,8 +2,9 @@
 
 #pragma once
 
-#include "MyPinCreation.h"
 #include "IPoiRingTouchController.h"
+#include "Types.h"
+#include "MyPinCreation.h"
 #include "AppInterface.h"
 #include "IRayPicker.h"
 #include "Camera.h"
@@ -20,7 +21,7 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                class PoiRingTouchController : public IPoiRingTouchController
+                class PoiRingTouchController : public IPoiRingTouchController, private Eegeo::NonCopyable
                 {
                 public:
                     PoiRingTouchController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
@@ -45,7 +46,6 @@ namespace ExampleApp
                     bool TouchMoveRaycast(const AppInterface::TouchData &data,
                                           const Eegeo::Camera::RenderCamera &renderCamera,
                                           const Eegeo::dv3 &rayOrigin);
-                    
                     
                     
                     MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
