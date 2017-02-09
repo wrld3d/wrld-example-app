@@ -15,9 +15,10 @@
 -(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService
  iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
           messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus;
--(void) StartUpdatingLocation: (NSString*) apiKey
+-(void) StartUpdatingLocation: (NSArray<NSString*>*) mapKey
                     apiSecret: (NSString*) apiSecret
-                     floorMap: (std::map<int, std::string>) floorMap;
+                     floorMap: (std::map<std::string, std::map<int, std::string>>) floorMap
+                interiorIdMap: (std::map<std::string, Eegeo::Resources::Interiors::InteriorId>) interiorIdMap;
 -(void) StopUpdatingLocation;
 
 @end

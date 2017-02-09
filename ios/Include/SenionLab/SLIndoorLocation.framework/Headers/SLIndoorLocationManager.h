@@ -2,7 +2,7 @@
 //  SLIndoorLocationManager.h
 //  SLIndoorLocation
 //
-//  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
+//  Copyright (c) 2010-2017, Senion AB. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -10,33 +10,83 @@
 #import "SLIndoorLocationManagerDelegate.h"
 #import "SLLocationState.h"
 #import "SLGeofencing.h"
-#import "SLGeomessenger.h"
+#import "SLGeoMessenger.h"
 #import "SLPath.h"
 
 /**
  SLIndoorLocationManager specifies the positioning interactions. Initiation, starting the positioning,
  ending the positioning, changing the user position and step length, all is specified there.
  */
-@interface SLIndoorLocationManager: NSObject <SLIndoorLocationManagerDelegate>
+@interface SLIndoorLocationManager: NSObject
 
 /// @name Initializer
 
 /**
- Init location using Map Key and Customer ID.
+ Create the default SLIndoorLocationManager for one specific Map Key. 
  
- @param mapKey Map Key (obtained from SenionLab).
- @param customerId Customer ID (obtained from SenionLab).
+ @param mapKey Map Key (obtained from Senion).
+ @param customerId Customer ID (obtained from Senion).
+ */
++ (instancetype)defaultIndoorLocationMangerWithMapKey:(NSString *)mapKey customerId:(NSString *)customerId;
+
+/**
+ Create the default SLIndoorLocationManager for multiple Map Keys. This location manager selects the current building (Map Key) automatically based on the beacons in range.
+ 
+ @param mapKeys Array of Map Keys (obtained from Senion).
+ @param customerId Customer ID (obtained from Senion).
+ */
++ (instancetype)defaultIndoorLocationMangerWithMapKeys:(NSArray<NSString *> *)mapKeys customerId:(NSString *)customerId;
+
+/**
+ Create the automatic wakeup SLIndoorLocationManager for one specific Map Key. This location manager will launch the app (if suspended) when entering the building if iOS wakeup is enabled on the installed beacons.
+ 
+ To use this method 10 available monitored regions are required in CLLocationManager. Also, you need to enable both background and forground location updates. TODO: Link to page about background (currently front page)
+ 
+ @param mapKey Map Key (obtained from Senion).
+ @param customerId Customer ID (obtained from Senion).
+ */
++ (instancetype)automaticWakeupIndoorLocationMangerWithMapKey:(NSString *)mapKey customerId:(NSString *)customerId;
+
+/**
+ Create the automatic wakeup SLIndoorLocationManager for multiple Map Keys. This location manager will launch the app (if suspended) when entering one of the buildings. Also, this location manager selects the current building (Map Key) automatically based on the beacons in range.
+
+ To use this method 10 available monitored regions are required in CLLocationManager. Also, you need to enable both background and forground location updates. TODO: Link to page about background (currently front page)
+ 
+ @param mapKeys Array of Map Keys (obtained from Senion).
+ @param customerId Customer ID (obtained from Senion).
+ */
++ (instancetype)automaticWakeupIndoorLocationMangerWithMapKeys:(NSArray<NSString *> *)mapKeys customerId:(NSString *)customerId;
+
+/**
+ Create the mockup SLIndoorLocationManager for testing off site.
+ 
+ @param locationState A SLLocationState.
+ @param timeInterval A time interval in seconds between location updates.
+ */
++ (instancetype)mockupIndoorLocationManagerWithLocationState:(SLLocationState *)locationState timeInterval:(NSTimeInterval)timeInterval;
+
+/**
+ Create the mockup SLIndoorLocationManager for testing off site.
+ 
+ @param locationStates An array of SLLocationState.
+ @param timeInterval A time interval in seconds between location updates.
+ */
++ (instancetype)mockupIndoorLocationManagerWithLocationStates:(NSArray<SLLocationState *> *)locationStates timeInterval:(NSTimeInterval)timeInterval;
+
+/**
+ Init location manager using Map Key and Customer ID.
+ 
+ @param mapKey Map Key (obtained from Senion).
+ @param customerId Customer ID (obtained from Senion).
  */
 - (instancetype)initWithMapKey:(NSString *)mapKey andCustomerId:(NSString *)customerId;
 
 /// @name Delegate
 
 /**
- Set delegate class that will receive updates from SLIndoorLocationManager.
- 
- @param delegate The delegate object.
+ The delegate object to receive update events from SLIndoorLocationManager.
  */
-- (void)setDelegate:(id<SLIndoorLocationManagerDelegate>)delegate;
+@property (nonatomic, weak) id<SLIndoorLocationManagerDelegate> delegate;
 
 /// @name Start/Stop location updates
 
@@ -46,41 +96,11 @@
 - (void)startUpdatingLocation;
 
 /**
- Stops location updates (both real and mockup locations). To start positioning again, use SLIndoorLocationManager::startUpdatingLocation.
+ Stops location updates. To start positioning again, use [SLIndoorLocationManager startUpdatingLocation].
  */
 - (void)stopUpdatingLocation;
 
-/**
- This function can be called to simulate a position for testing purposes when testing off site. Observe that this function can only be used if [SLIndoorLocationManager startUpdatingLocation] has not been called.
- 
- @param locationStateArray An array of SLLocationState.
- @param timeInterval A time interval in seconds between location updates.
- */
-- (void)startMockupLocationWithLocationStateArray:(NSArray *)locationStateArray andTimeInterval:(double)timeInterval;
-
-/**
- This function can be called to simulate a position for testing purposes when testing off site. Observe that this function can only be used if [SLIndoorLocationManager startUpdatingLocation] has not been called.
- 
- @param locationState A SLLocationState.
- @param timeInterval A time interval in seconds between location updates.
- */
-- (void)startMockupLocationWithLocationState:(SLLocationState *)locationState andTimeInterval:(double) timeInterval;
-
-
-/**
- Stop mockup location updates. This function is also invoked if SLIndoorLocationManager::stopUpdatingLocation is called.
- */
-- (void)stopUpdatingMockupLocation;
-
 /// @name Getter/Setter
-
-/**
- Step length in [m] is specified using this function. Since different users have different 
- steplengths, this should be possible to set.
- 
- @param stepLength Step length in meters.
- */
-- (void)setStepLength:(double)stepLength;
 
 /**
  Check if bluetooth is powered on.
@@ -88,11 +108,6 @@
  @return YES if BLE is enabled.
  */
 - (BOOL)isBleEnabled;
-
-/**
- @return Current steplength in meters.
- */
-- (double)stepLength;
 
 /**
  @return The map ID of the loaded map.
@@ -103,6 +118,16 @@
  @return The map version ID of the loaded map.
  */
 - (NSString *)getMapVersionId;
+
+/**
+ @return The current location availability status.
+ */
+- (SLLocationAvailability)getLocationAvailability;
+
+/**
+ @return YES if location availability status is SLLocationAvailabilityAvailable.
+ */
+- (BOOL)isLocationAvailable;
 
 /// @name Heading calibration
 
@@ -116,21 +141,21 @@
 /// @name Geofencing/Geomessenger
 
 /**
- @return The geofencing manager, used to create alerts when the user enters specific areas.
+ @return The Geofencing manager, used to create alerts when the user enters specific areas.
  */
 - (id<SLGeofencing>)getGeofencingManager;
 
 /**
- @return the geomessenger manager, used to recieve notifications when the user enters specific areas defined on our servers.
+ @return the GeoMessenger manager, used to recieve notifications when the user enters specific areas defined on our servers.
  */
-- (id<SLGeomessenger>)getGeomessengerManager;
+- (id<SLGeoMessenger>)getGeoMessengerManager;
 
 /// @name Shortest path
 
 /**
  Get shortest path between two locations.
  
- @warning Note that this function is mainly for demonstrating a possible user navigation feature. Please contact SenionLab if you plan to use this feature in your app.
+ @note Note that this function is mainly for demonstrating a possible user navigation feature. Please contact Senion if you plan to use this feature in your app.
  
  @param startLocation The start location.
  @param endLocation The end location.

@@ -32,6 +32,7 @@ namespace ExampleApp
             void SetIsAuthorized(bool isAuthorized);
             void SetLocation(Eegeo::Space::LatLong& latLong);
             void SetFloorIndex(int floorIndex);
+            void SetInteriorId(const Eegeo::Resources::Interiors::InteriorId& interiorId);
             
         private:
             Eegeo::Location::ILocationService& m_defaultLocationService;
@@ -41,6 +42,7 @@ namespace ExampleApp
             bool m_isAuthorized;
             Eegeo::Space::LatLong m_latLong;
             int m_floorIndex;
+            Eegeo::Resources::Interiors::InteriorId m_interiorId;
         };
     }
 }

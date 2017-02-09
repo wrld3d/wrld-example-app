@@ -31,8 +31,7 @@ namespace ExampleApp
             m_pLocationController = Eegeo_NEW(SenionLabLocationController)(*m_pLocationManager,
                                                                            appModeModel,
                                                                            interiorSelectionModel,
-                                                                           applicationConfiguration,
-                                                                           messageBus);
+                                                                           applicationConfiguration);
         }
         
         SenionLabLocationModule::~SenionLabLocationModule()

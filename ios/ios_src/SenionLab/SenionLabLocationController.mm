@@ -13,14 +13,12 @@ namespace ExampleApp
         SenionLabLocationController::SenionLabLocationController(SenionLabLocationManager& locationManager,
                                                                  ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                  const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                 const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                                        						 ExampleAppMessaging::TMessageBus& messageBus)
+                                                                 const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
         : m_locationManager(locationManager)
         , m_appModeModel(appModeModel)
         , m_interiorSelectionModel(interiorSelectionModel)
         , m_applicationConfiguration(applicationConfiguration)
         , m_appModeChangedCallback(this, &SenionLabLocationController::OnAppModeChanged)
-        , m_messageBus(messageBus)
         {
             m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
         }
@@ -39,23 +37,38 @@ namespace ExampleApp
             if(m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
             {
                 const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap = m_applicationConfiguration.InteriorTrackingInfo();
-                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = trackingInfoMap.find(interiorId.Value());
+                std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it;
          
-                if(it != trackingInfoMap.end())
+                NSMutableArray<NSString*>* mutableMapKeyArray = [NSMutableArray array];
+                NSString* apiSecret = nil;
+                std::map<std::string, std::map<int, std::string>> floorMap;
+                std::map<std::string, Eegeo::Resources::Interiors::InteriorId> interiorIdMap;
+                        
+                for(it = trackingInfoMap.begin(); it != trackingInfoMap.end(); ++it)
                 {
-                    const ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo& trackingInfo = it->second;
-         
-                    if(trackingInfo.GetType() == "Senion")
+                    if(it->second.GetType() == "Senion")
                     {
-                        NSString* apiKey = [NSString stringWithCString:trackingInfo.GetConfig().GetApiKey().c_str() encoding:[NSString defaultCStringEncoding]];
-                        NSString* apiSecret = [NSString stringWithCString:trackingInfo.GetConfig().GetApiSecret().c_str() encoding:[NSString defaultCStringEncoding]];
-                        std::map<int, std::string> floorMap = trackingInfo.GetFloorIndexMap();
-         
-                        [&m_locationManager StartUpdatingLocation: apiKey
-                                                        apiSecret: apiSecret
-                                                         floorMap: floorMap];
-                        m_messageBus.Publish(ExampleApp::AboutPage::AboutPageSenionSettingsTypeMessage(std::string([apiKey UTF8String]), std::string([apiSecret UTF8String]), floorMap, it->second.GetInteriorId().Value()));
+                        if(apiSecret == nil)
+                        {
+                            apiSecret = [NSString stringWithCString:it->second.GetConfig().GetApiSecret().c_str() encoding:[NSString defaultCStringEncoding]];
+                        }
+                                
+                        std::string mapKey = it->second.GetConfig().GetApiKey();
+                                
+                        [mutableMapKeyArray addObject:[NSString stringWithCString:mapKey.c_str() encoding:[NSString defaultCStringEncoding]]];
+                                
+                        floorMap.insert(std::pair<std::string, std::map<int, std::string>>(mapKey, it->second.GetFloorIndexMap()));
+                                
+                        interiorIdMap.insert(std::pair<std::string, Eegeo::Resources::Interiors::InteriorId>(mapKey, it->second.GetInteriorId()));
                     }
+                }
+                        
+                if(mutableMapKeyArray.count > 0)
+                {
+                    [&m_locationManager StartUpdatingLocation: mutableMapKeyArray
+                                                    apiSecret: apiSecret
+                                                     floorMap: floorMap
+                                                interiorIdMap: interiorIdMap];
                 }
             }
         }
