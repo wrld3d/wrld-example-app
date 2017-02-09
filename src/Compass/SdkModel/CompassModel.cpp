@@ -186,7 +186,9 @@ namespace ExampleApp
                                                                         m_interiorsCameraController.GetDistanceToInterest(),
                                                                         GetIndoorsHeadingRadians(),
                                                                         m_locationService.GetInteriorId(),
-                                                                        floorIndex);
+                                                                        floorIndex,
+                                                                        true,
+                                                                        false);
                         }
                     }
                 }

@@ -62,7 +62,8 @@ namespace ExampleApp
                                        float newHeadingRadians,
                                        const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                        int targetFloorIndex,
-                                       bool jumpIfFar=true);
+                                       bool jumpIfFar=true,
+                                       bool setGpsModeOff=true);
                 
                 void StopCurrentTransition();
                 void Update(float dt);
