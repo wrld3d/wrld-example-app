@@ -56,6 +56,7 @@
 #include "IMenuReactionModel.h"
 #include "TagSearchViewIncludes.h"
 #include "AlwaysActiveUserIdleService.h"
+#include "ISurveyViewModule.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -134,6 +135,7 @@ private:
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule; // TODO: Interface.
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
+    ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Metrics::AndroidFlurryMetricsService* m_pAndroidFlurryMetricsService;

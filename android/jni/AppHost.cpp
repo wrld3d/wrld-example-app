@@ -1,94 +1,71 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "AppHost.h"
-#include "AndroidSharedGlContext.h"
-#include "LatLongAltitude.h"
-#include "EegeoWorld.h"
-#include "RenderContext.h"
-#include "GlobalLighting.h"
-#include "GlobalFogging.h"
-#include "AppInterface.h"
-#include "JpegLoader.h"
-#include "EffectHandler.h"
-#include "SearchServiceCredentials.h"
-#include "AndroidThreadHelper.h"
-#include "GlobeCameraController.h"
-#include "RenderCamera.h"
-#include "CameraHelpers.h"
-#include "LoadingScreen.h"
-#include "PlatformConfig.h"
-#include "AndroidPlatformConfigBuilder.h"
-#include "AndroidUrlEncoder.h"
-#include "AndroidFileIO.h"
-#include "AndroidLocationService.h"
-#include "EegeoWorld.h"
-#include "EnvironmentFlatteningService.h"
-#include "TtyHandler.h"
-#include "MenuViewModule.h"
-#include "SettingsMenuModule.h"
-#include "ModalityModule.h"
-#include "ModalBackgroundViewModule.h"
-#include "ModalBackgroundNativeViewModule.h"
-#include "MenuModel.h"
-#include "MenuViewModel.h"
-#include "SearchMenuModule.h"
-#include "MenuOptionsModel.h"
-#include "SearchModule.h"
-#include "SearchResultOnMapModule.h"
-#include "WorldPinsModule.h"
-#include "RegularTexturePageLayout.h"
-#include "PinsModule.h"
-#include "SearchResultRepository.h"
-#include "LatLongAltitude.h"
-#include "SearchResultPoiModule.h"
-#include "AndroidPlatformAbstractionModule.h"
-#include "FlattenButtonModule.h"
-#include "FlattenButtonViewModule.h"
-#include "SearchResultPoiViewModule.h"
-#include "PlaceJumpsModule.h"
-#include "IPlaceJumpController.h"
-#include "SettingsMenuViewModule.h"
-#include "SearchMenuViewModule.h"
-#include "CompassViewModule.h"
-#include "CompassModule.h"
-#include "AboutPageViewModule.h"
-#include "AndroidInitialExperienceModule.h"
-#include "ViewControllerUpdaterModule.h"
-#include "ViewControllerUpdaterModel.h"
-#include "TagSearchModule.h"
-#include "TagSearchViewModule.h"
-#include "ScreenProperties.h"
-#include "MyPinCreationViewModule.h"
-#include "IMyPinCreationModule.h"
-#include "IMyPinCreationDetailsModule.h"
-#include "MyPinCreationDetailsViewModule.h"
-#include "MyPinDetailsViewModule.h"
-#include "IMyPinDetailsModule.h"
-#include "InitialExperienceIntroViewModule.h"
-#include "Logger.h"
-#include "AndroidAppThreadAssertionMacros.h"
-#include "SearchResultRepositoryObserver.h"
-#include "IMyPinsModule.h"
-#include "ApiKey.h"
-#include "OptionsViewModule.h"
-#include "OptionsView.h"
-#include "WatermarkViewModule.h"
-#include "WatermarkView.h"
-#include "NetworkCapabilities.h"
-#include "ApplicationConfigurationModule.h"
-#include "IApplicationConfigurationService.h"
-#include "SearchVendorNames.h"
-#include "UserInteractionEnabledChangedMessage.h"
-#include "AndroidApplicationConfigurationVersionProvider.h"
-#include "InteriorsExplorerModule.h"
-#include "InteriorsExplorerViewModule.h"
-#include "SearchResultSectionModule.h"
-#include "SearchResultSectionViewModule.h"
-#include "ConnectivityChangedViewMessage.h"
-#include "WebConnectivityValidator.h"
-#include "AndroidMenuReactionModel.h"
-#include "ApplicationConfigurationModule.h"
-#include "AndroidImageNameHelper.h"
+#include <AboutPageViewModule.h>
+#include <AndroidApplicationConfigurationVersionProvider.h>
+#include <AndroidAppThreadAssertionMacros.h>
+#include <AndroidImageNameHelper.h>
+#include <AndroidInitialExperienceModule.h>
+#include <AndroidMenuReactionModel.h>
+#include <AndroidPlatformAbstractionModule.h>
+#include <AndroidPlatformConfigBuilder.h>
+#include <ApiKey.h>
+#include <AppHost.h>
+#include <AppInterface.h>
+#include <ApplicationConfiguration.h>
+#include <ApplicationConfigurationModule.h>
+#include <AssertHandler.h>
+#include <CompassViewModule.h>
+#include <ConnectivityChangedViewMessage.h>
+#include <EegeoWorld.h>
+#include <EffectHandler.h>
+#include <EGL/egl.h>
+#include <FlattenButtonViewModule.h>
+#include <IAboutPageModule.h>
+#include <ICompassModule.h>
+#include <IFlattenButtonModule.h>
+#include <IInteriorsExplorerModule.h>
+#include <IModalityModule.h>
+#include <IMyPinCreationDetailsModule.h>
+#include <IMyPinCreationModule.h>
+#include <IMyPinDetailsModule.h>
+#include <InitialExperienceIntroViewModule.h>
+#include <InteriorsExplorerViewModule.h>
+#include <IOptionsModule.h>
+#include <ISearchMenuModule.h>
+#include <ISearchResultPoiModule.h>
+#include <ISearchResultSectionModule.h>
+#include <ISettingsMenuModule.h>
+#include <ITagSearchModule.h>
+#include <IViewControllerUpdaterModel.h>
+#include <IWatermarkModule.h>
+#include <jni.h>
+#include <JpegLoader.h>
+#include <MenuController.h>
+#include <MobileExampleApp.h>
+#include <ModalBackgroundNativeViewModule.h>
+#include <ModalBackgroundViewModule.h>
+#include <MyPinCreationDetailsViewModule.h>
+#include <MyPinCreationViewModule.h>
+#include <MyPinDetailsViewModule.h>
+#include <NetworkCapabilities.h>
+#include <OptionsViewModule.h>
+#include <PlatformConfig.h>
+#include <ScreenProperties.h>
+#include <SearchMenuViewModule.h>
+#include <SearchResultPoiViewModule.h>
+#include <SearchResultSectionViewModule.h>
+#include <SettingsMenuViewModule.h>
+#include <TagSearchViewModule.h>
+#include <TtyHandler.h>
+#include <UserInteractionEnabledChangedMessage.h>
+#include <ViewControllerUpdaterModule.h>
+#include <WatermarkViewModule.h>
+#include <WebConnectivityValidator.h>
+#include <cstdlib>
+#include <cstring>
+#include <set>
+#include <utility>
+#include <SurveyViewModule.h>
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -554,6 +531,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
             m_messageBus,
             m_pInteriorsExplorerViewModule->GetController());
 
+    m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_nativeState, m_messageBus, m_pApp->GetApplicationConfiguration().TimerSurveyUrl());
+
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
@@ -575,6 +554,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
     	m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
 
         Eegeo_DELETE m_pViewControllerUpdaterModule;
+
+        Eegeo_DELETE m_pSurveyViewModule;
 
         Eegeo_DELETE m_pOptionsViewModule;
 
