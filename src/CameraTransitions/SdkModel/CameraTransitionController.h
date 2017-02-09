@@ -90,7 +90,8 @@ namespace ExampleApp
                 void EnqueueTransitionToInteriorStage(const Eegeo::dv3& newInterestPoint,
                                                       float newDistanceToInterest,
                                                       const Eegeo::Resources::Interiors::InteriorId& interiorId,
-                                                      int targetFloorIndex);
+                                                      int targetFloorIndex,
+                                                      float newHeadingRadians);
                 
                 void EnqueueTransitionToInteriorPointStage(const Eegeo::dv3& newInterestPoint,
                                                            float newDistanceFromInterest,

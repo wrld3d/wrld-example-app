@@ -25,7 +25,8 @@ namespace ExampleApp
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                          Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                         CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService)
+                                         CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
+                                         bool setHeading)
             {
                 m_pModel = Eegeo_NEW(CompassModel)(navigationService,
                                                    interiorInteractionModel,
@@ -36,7 +37,8 @@ namespace ExampleApp
                                                    appModeModel,
                                                    alertBoxFactory,
                                                    cameraTransitionService,
-                                                   interiorsCameraController);
+                                                   interiorsCameraController,
+                                                   setHeading);
                 
                 m_pViewModel = Eegeo_NEW(View::CompassViewModel)(identityProvider.GetNextIdentity(), false);
                 m_pCompassUpdateController = Eegeo_NEW(CompassUpdateController)(*m_pModel, navigationService, messageBus);

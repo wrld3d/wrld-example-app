@@ -32,12 +32,13 @@ namespace ExampleApp
                                        AppModes::SdkModel::IAppModeModel& appModeModel,
                                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                        CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
-                                       Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController)
-                :m_navigationService(navigationService)
-                ,m_interiorInteractionModel(interiorInteractionModel)
-                ,m_locationService(locationService)
-                ,m_cameraController(cameraController)
-                ,m_metricsService(metricsService)
+                                       Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
+                                       bool setHeading)
+                : m_navigationService(navigationService)
+                , m_interiorInteractionModel(interiorInteractionModel)
+                , m_locationService(locationService)
+                , m_cameraController(cameraController)
+                , m_metricsService(metricsService)
                 , m_interiorExplorerModel(interiorExplorerModel)
                 , m_appModeModel(appModeModel)
                 , m_appModeChangedCallback(this, &CompassModel::OnAppModeChanged)
@@ -47,6 +48,7 @@ namespace ExampleApp
                 , m_exitInteriorTriggered(false)
                 , m_cameraTransitionService(cameraTransitionService)
                 , m_interiorsCameraController(interiorsCameraController)
+                , m_setHeading(setHeading)
             {
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeOff] = GpsMode::GpsDisabled;
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeFollow] = GpsMode::GpsFollow;
@@ -184,7 +186,7 @@ namespace ExampleApp
                         {
                             m_cameraTransitionService.StartTransitionTo(latLong.ToECEF(),
                                                                         m_interiorsCameraController.GetDistanceToInterest(),
-                                                                        GetHeadingRadians(),
+                                                                        GetIndoorsHeadingRadians(),
                                                                         m_locationService.GetInteriorId(),
                                                                         floorIndex);
                         }
@@ -261,6 +263,14 @@ namespace ExampleApp
             void CompassModel::OnFailedToGetLocation()
             {
                 Eegeo_TTY("Failed to get comapass loation");
+            }
+
+            float CompassModel::GetIndoorsHeadingRadians() const
+            {
+                double heading;
+                return m_setHeading && m_locationService.GetHeadingDegrees(heading)
+                    ? Eegeo::Math::Deg2Rad(heading)
+                    : GetHeadingRadians();
             }
         }
     }

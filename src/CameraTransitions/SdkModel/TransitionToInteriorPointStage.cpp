@@ -82,15 +82,15 @@ namespace ExampleApp
                 }
                 else
                 {
-                    m_transitionTime += dt/m_transitionDuration;
+                    m_transitionTime += dt / m_transitionDuration;
                     float t = Eegeo::Math::Clamp01(m_transitionTime);
                     float smoothT = Eegeo::Math::SmoothStep(t);
                     Eegeo::dv3 lerpInterestPoint = Eegeo::dv3::Lerp(m_startInterestPoint, m_newInterestPoint, smoothT);
                     m_cameraController.SetInterestLocation(lerpInterestPoint);
-                    
+
                     float lerpDistance = Eegeo::Math::Lerp(m_startDistanceToInterest, m_targetDistanceToInterest, smoothT);
                     m_cameraController.SetDistanceToInterest(lerpDistance);
-                    
+
                     if(m_initialisedNextInterior)
                     {
                         float t2 = m_cameraInterestAltitudeStartTime >= 1.0f ? 1.0f : Eegeo::Math::Clamp01((m_transitionTime - m_cameraInterestAltitudeStartTime)/(1.0f-m_cameraInterestAltitudeStartTime));

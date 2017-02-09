@@ -46,7 +46,8 @@ namespace ExampleApp
                               AppModes::SdkModel::IAppModeModel& appModeModel,
                               Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                               Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                              CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService);
+                              CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
+                              bool setHeading);
 
                 ~CompassModule();
 

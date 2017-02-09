@@ -115,6 +115,7 @@ namespace ExampleApp
                                                                                    m_cameraSplinePlaybackController,
                                                                                    m_worldCameraController,
                                                                                    worldCameraHandle,
+                                                                                   m_interiorCameraController.GetInteriorCameraController(),
                                                                                    m_worldCameraController.GetTouchController(),
                                                                                    m_locationService,
                                                                                    m_userIdleService,
