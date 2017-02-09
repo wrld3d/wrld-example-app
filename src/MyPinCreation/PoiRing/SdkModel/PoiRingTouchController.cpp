@@ -25,6 +25,29 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
+
+                namespace
+                {
+                    bool SphereIntersectsWithRay(const Eegeo::dv3& sphereCentre, double sphereRadius, const Eegeo::dv3& rayOrigin, const Eegeo::dv3& rayDirection, double &out_intersectionParam)
+                    {
+                        out_intersectionParam = 0.0;
+                        Eegeo::dv3 m = rayOrigin - sphereCentre;
+                        double b = Eegeo::dv3::Dot(m, rayDirection);
+                        double c = Eegeo::dv3::Dot(m, m) - sphereRadius*sphereRadius;
+                        if (c > 0.0 && b > 0.0)
+                            return false;
+                        float discr = b*b - c;
+                        if (discr < 0.0)
+                            return false;
+                        double t = -b - std::sqrt(discr);
+                        t = std::max(t, 0.0);
+
+                        out_intersectionParam = t;
+
+                        return true;
+                    }
+                }
+
                 PoiRingTouchController::PoiRingTouchController(MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
                                                                Eegeo::Collision::IRayPicker& rayPicker,
                                                                const IPoiRingController& poiRingController,
@@ -76,12 +99,12 @@ namespace ExampleApp
                     Eegeo::Camera::CameraHelpers::GetScreenPickRay(renderCamera, screenPixelX, screenPixelY, rayDirection);
 
                     Eegeo::dv3 rayIntersectionPoint;
-                    double intersectionParam;
+                    double environemntIntersectionParam;
                     float terrainHeight;
                     float heightAboveTerrain;
-                    bool rayPick = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, intersectionParam, terrainHeight, heightAboveTerrain);
+                    const bool intersectsEnvironment = PerformRayPick(rayOrigin, rayDirection, rayIntersectionPoint, environemntIntersectionParam, terrainHeight, heightAboveTerrain);
 
-                    if (rayPick)
+                    if (intersectsEnvironment)
                     {
                         Eegeo::dv3 iconPosition;
                         float iconSize;
@@ -94,7 +117,14 @@ namespace ExampleApp
                         m_initialCameraAltitiude =  renderCamera.GetAltitude();
                         
                         bool hitIcon = Eegeo::Geometry::IntersectionTests::TestRaySphere(rayOrigin, rayDirection, iconPosition, iconSize/2.0f);
-                        if ((rayIntersectionPoint - spherePosition).Length() < sphereRadius || hitIcon)
+
+                        double sphereIntersectionParam = 0.0;                        
+                        const bool hitSphere = SphereIntersectsWithRay(spherePosition, sphereRadius, rayOrigin, rayDirection, sphereIntersectionParam);
+
+                        const double epsilon = 1e-4*sphereRadius;
+                        const bool hitSphereBeforeEnvironment = hitSphere && ((sphereIntersectionParam - environemntIntersectionParam) < epsilon);
+
+                        if (hitSphereBeforeEnvironment || hitIcon)
                         {
                             m_dragOffset = rayIntersectionPoint - spherePosition;
                             m_isDragging = true;
