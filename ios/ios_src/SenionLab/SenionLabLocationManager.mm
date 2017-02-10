@@ -64,6 +64,9 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     self.locationManager.delegate = self;
     
     m_floorMap = floorMap;
+    
+    Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0, 0);
+    m_pSenionLabLocationService->SetLocation(latLong);
 }
 
 -(void) StopUpdatingLocation
@@ -81,6 +84,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 -(void) didFinishLoadingManager
 {
     [self.locationManager startUpdatingLocation];
+    m_pSenionLabLocationService->SetIsAuthorized(true);
 }
 
 -(void) didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius andStatus:(SLLocationStatus)locationStatus
