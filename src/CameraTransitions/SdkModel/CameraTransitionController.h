@@ -37,6 +37,7 @@ namespace ExampleApp
                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                            const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                            InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                           Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                            ExampleAppMessaging::TMessageBus& messageBus);
 
                 void StartTransitionTo(const Eegeo::dv3& newInterestPoint,
@@ -113,6 +114,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
+                Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
                
                 Eegeo::Resources::Interiors::InteriorId m_defaultInteriorId;
                 bool m_isTransitioning;

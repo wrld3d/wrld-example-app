@@ -17,6 +17,7 @@
 #include "ExitCurrentInteriorStage.h"
 #include "TransitionToInteriorStage.h"
 #include "IAppCameraController.h"
+#include "InteriorsModelRepository.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,7 @@ namespace ExampleApp
                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                    const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                    InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                                                   Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                                                    ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
             : m_cameraController(cameraController)
             , m_interiorsCameraController(interiorsCameraController)
@@ -45,6 +47,7 @@ namespace ExampleApp
             , m_interiorTransitionModel(interiorTransitionModel)
             , m_appCameraController(appCameraController)
             , m_interiorsExplorerModel(interiorsExplorerModel)
+            , m_interiorsModelRepository(interiorsModelRepository)
             , m_isTransitioning(false)
             , m_defaultInteriorId(Eegeo::Resources::Interiors::InteriorId::NullId())
             {
@@ -119,7 +122,7 @@ namespace ExampleApp
                         StartQueuedTransition();
                         return;
                     }
-                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId() && interestDifferenceSquared < exitInteriorDistanceSquared)
+                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId() && interestDifferenceSquared < exitInteriorDistanceSquared && m_interiorsModelRepository.HasInterior(interiorId.Value()))
                     {
                         EnqueueTransitionToInteriorPointStage(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar);
                         StartQueuedTransition();
