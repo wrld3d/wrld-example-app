@@ -318,15 +318,15 @@ enum CompassViewState
         
         if (m_compassViewState == Follow)
         {
-            self.pOuterShape.image = m_pCompassUnlockedImage;
+            self.pOuterShape.image = m_pCompassLockedImage;
         }
         else if (m_compassViewState == Disabled)
         {
-            self.pOuterShape.image = m_pCompassLockedImage;
+            self.pOuterShape.image = m_pCompassDefaultImage;
         }
         else if (m_compassViewState == Compass)
         {
-            self.pOuterShape.image = m_pCompassLockedImage;
+            self.pOuterShape.image = m_pCompassUnlockedImage;
         }
     }
 }
