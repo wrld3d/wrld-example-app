@@ -411,6 +411,7 @@ namespace ExampleApp
                                                                                                                        interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                        interiorsPresentationModule.GetInteriorTransitionModel(),
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
+                                                                                                                       interiorsModelModule.GetInteriorsModelRepository(),
                                                                                                                        m_messageBus);
         m_pCameraTransitionService->SetTransitionController(*m_pCameraTransitionController);
 
