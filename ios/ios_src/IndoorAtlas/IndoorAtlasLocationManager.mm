@@ -44,6 +44,9 @@
         self.locationManager.location = location;
     }
     
+    Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0, 0);
+    m_pIndoorAtlasLocationService->SetLocation(latLong);
+    
     [self.locationManager startUpdatingLocation];
 }
 

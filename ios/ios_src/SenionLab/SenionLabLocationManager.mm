@@ -70,6 +70,10 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     m_floorMap = floorMap;
     m_interiorIdMap = interiorIdMap;
     m_customerId = apiSecret;
+    
+    Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0, 0);
+    m_pSenionLabLocationService->SetLocation(latLong);
+    m_pSenionLabLocationService->SetInteriorId(Eegeo::Resources::Interiors::InteriorId::NullId());
 }
 
 -(void) StopUpdatingLocation
@@ -87,6 +91,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 -(void) didFinishLoadingManager
 {
     [self.locationManager startUpdatingLocation];
+    m_pSenionLabLocationService->SetIsAuthorized(true);
 }
 
 //for the current Senion beta SDK (4.11.0) this needs to be here but isn't called
