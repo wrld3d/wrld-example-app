@@ -75,10 +75,11 @@ namespace ExampleApp
                                    float newHeadingRadians,
                                    const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                    int targetFloorIndex,
-                                   bool jumpIfFar)
+                                                            bool jumpIfFar,
+                                                            bool setGpsModeOff)
             {
                 FailIfNoValidControllerSet();
-                m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar);
+                m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar, setGpsModeOff);
             }
             
             void CameraTransitionService::StartTransitionTo(float distanceFromInterest,

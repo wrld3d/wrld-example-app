@@ -98,14 +98,18 @@ namespace ExampleApp
                                                                float newHeadingRadians,
                                                                const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                                int targetFloorIndex,
-                                                               bool jumpIfFar)
+                                                               bool jumpIfFar,
+                                                               bool setGpsModeOff)
             {
                 if(IsTransitioning())
                 {
                     StopCurrentTransition();
                 }
                 
-                m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
+                if(setGpsModeOff)
+                {
+                    m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
+                }
                 
                 if(m_appModeModel.GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode)
                 {
