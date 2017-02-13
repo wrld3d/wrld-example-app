@@ -65,7 +65,8 @@ namespace ExampleApp
                                        const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                        int targetFloorIndex,
                                        bool jumpIfFar=true,
-                                       bool setGpsModeOff=true);
+                                       bool setGpsModeOff=true,
+                                       bool setInteriorHeading=false);
                 
                 void StopCurrentTransition();
                 void Update(float dt);
@@ -93,7 +94,8 @@ namespace ExampleApp
                                                       float newDistanceToInterest,
                                                       const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                       int targetFloorIndex,
-                                                      float newHeadingRadians);
+                                                      float newHeadingRadians,
+                                                      bool setInteriorHeading=false);
                 
                 void EnqueueTransitionToInteriorPointStage(const Eegeo::dv3& newInterestPoint,
                                                            float newDistanceFromInterest,

@@ -190,7 +190,8 @@ namespace ExampleApp
                                                                         m_locationService.GetInteriorId(),
                                                                         floorIndex,
                                                                         true,
-                                                                        false);
+                                                                        false,
+                                                                        m_setHeading);
                         }
                     }
                 }
