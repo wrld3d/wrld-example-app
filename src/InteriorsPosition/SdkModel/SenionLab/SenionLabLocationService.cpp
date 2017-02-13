@@ -22,6 +22,7 @@ namespace ExampleApp
                 , m_isAuthorized(false)
                 , m_latLong(Eegeo::Space::LatLong::FromDegrees(0, 0))
                 , m_floorIndex(-1)
+                , m_interiorId(Eegeo::Resources::Interiors::InteriorId::NullId())
                 {
                 }
                 
@@ -37,7 +38,7 @@ namespace ExampleApp
                 
                 Eegeo::Resources::Interiors::InteriorId SenionLabLocationService::GetInteriorId()
                 {
-                    return m_interiorInteractionModel.GetInteriorModel()->GetId();
+                    return m_interiorId.IsValid() ? m_interiorId : m_interiorInteractionModel.GetInteriorModel()->GetId();
                 }
                 
                 bool SenionLabLocationService::GetLocation(Eegeo::Space::LatLong& latLong)
@@ -94,6 +95,11 @@ namespace ExampleApp
                 void SenionLabLocationService::SetFloorIndex(int floorIndex)
                 {
                     m_floorIndex = floorIndex;
+                }
+                
+                void SenionLabLocationService::SetInteriorId(const Eegeo::Resources::Interiors::InteriorId& interiorId)
+                {
+                    m_interiorId = interiorId;
                 }
             }
         }

@@ -12,8 +12,8 @@
 
 @interface SenionLabLocationManager : NSObject
 
--(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService
- iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
+-(instancetype) Init: (ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService*) senionLabLocationService
+  iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
           messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus;
 -(void) StartUpdatingLocation: (NSArray<NSString*>*) mapKey
                     apiSecret: (NSString*) apiSecret
