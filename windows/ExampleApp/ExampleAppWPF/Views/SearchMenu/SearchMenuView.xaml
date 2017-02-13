@@ -314,7 +314,7 @@
                                 <StackPanel  Orientation="Vertical" >
                                     <Grid>
                                         <ScrollViewer Width="{DynamicResource MenuWidth}" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" CanContentScroll="True">
-                                            <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
+                                            <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False" IsManipulationEnabled="True">
                                                 <ListBox.Resources>
                                                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
                                                     <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
@@ -381,7 +381,7 @@
                                                                                 </Storyboard>
                                                                             </BeginStoryboard>
                                                                         </EventTrigger>
-                                                                        <EventTrigger RoutedEvent="TouchLeave">
+                                                                        <EventTrigger RoutedEvent="TouchUp">
                                                                             <BeginStoryboard>
                                                                                 <Storyboard>
                                                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SearchResultPanel" Storyboard.TargetProperty="Background">
