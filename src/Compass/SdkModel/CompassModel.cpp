@@ -176,7 +176,7 @@ namespace ExampleApp
                 
                 if(m_locationService.IsIndoors())
                 {
-                    if (gpsMode == GpsMode::GpsFollow || gpsMode == GpsMode::GpsCompassMode)
+                    if (gpsMode == GpsMode::GpsFollow)
                     {
                         Eegeo::Space::LatLong latLong(0, 0);
                         int floorIndex = 0;
