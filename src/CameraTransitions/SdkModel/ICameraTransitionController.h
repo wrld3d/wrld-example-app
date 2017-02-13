@@ -44,7 +44,8 @@ namespace ExampleApp
                                                const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                int targetFloorIndex,
                                                bool jumpIfFar=true,
-                                               bool setGpsModeOff=true) = 0;
+                                               bool setGpsModeOff=true,
+                                               bool setInteriorHeading=false) = 0;
                 
                 virtual void StopCurrentTransition() = 0;
                 virtual void Update(float dt) = 0;

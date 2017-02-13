@@ -76,7 +76,8 @@ namespace ExampleApp
                                    const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                    int targetFloorIndex,
                                                             bool jumpIfFar,
-                                                            bool setGpsModeOff)
+                                                            bool setGpsModeOff,
+                                                            bool setInteriorHeading)
             {
                 FailIfNoValidControllerSet();
                 m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar, setGpsModeOff);
