@@ -35,7 +35,8 @@ namespace ExampleApp
                                                                  const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                                  int targetFloorIndex,
                                                                  bool transitionToNewHeading,
-                                                                 float newHeadingRadians)
+                                                                 float newHeadingRadians,
+                                                                 bool setDisntaceToInterest)
             : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_interiorTransitionModel(interiorTransitionModel)
@@ -49,6 +50,7 @@ namespace ExampleApp
             , m_targetDistanceToInterest(newDistanceToInterest)
             , m_transitionDuration(0.5f)
             , m_transitionTime(0.0f)
+            , m_setDistanceToInterest(setDisntaceToInterest)
             {
                 Eegeo_ASSERT(m_interiorId != Eegeo::Resources::Interiors::InteriorId::NullId(), "Invalid Interior Id. Cannot transition to null interior");
             }
@@ -88,8 +90,11 @@ namespace ExampleApp
                     Eegeo::dv3 lerpInterestPoint = Eegeo::dv3::Lerp(m_startInterestPoint, m_newInterestPoint, smoothT);
                     m_cameraController.SetInterestLocation(lerpInterestPoint);
                     
-                    float lerpDistance = Eegeo::Math::Lerp(m_startDistanceToInterest, m_targetDistanceToInterest, smoothT);
-                    m_cameraController.SetDistanceToInterest(lerpDistance);
+                    if(m_setDistanceToInterest)
+                    {
+                        float lerpDistance = Eegeo::Math::Lerp(m_startDistanceToInterest, m_targetDistanceToInterest, smoothT);
+                        m_cameraController.SetDistanceToInterest(lerpDistance);
+                    }
 
                     if (m_transitionToNewHeading)
                     {
@@ -107,7 +112,11 @@ namespace ExampleApp
             void TransitionToInteriorStage::End()
             {
                 m_cameraController.SetInterestLocation(m_newInterestPoint);
-                m_cameraController.SetDistanceToInterest(m_targetDistanceToInterest);
+                
+                if(m_setDistanceToInterest)
+                {
+                    m_cameraController.SetDistanceToInterest(m_targetDistanceToInterest);
+                }
             }
             
             const bool TransitionToInteriorStage::StageIsComplete() const

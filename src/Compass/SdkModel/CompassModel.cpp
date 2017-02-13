@@ -189,7 +189,8 @@ namespace ExampleApp
                                                                         floorIndex,
                                                                         true,
                                                                         false,
-                                                                        m_setHeading);
+                                                                        m_setHeading,
+                                                                        false);
                         }
                     }
                 }

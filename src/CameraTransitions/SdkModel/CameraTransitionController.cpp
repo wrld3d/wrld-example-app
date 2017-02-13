@@ -100,7 +100,8 @@ namespace ExampleApp
                                                                int targetFloorIndex,
                                                                bool jumpIfFar,
                                                                bool setGpsModeOff,
-                                                               bool setInteriorHeading)
+                                                               bool setInteriorHeading,
+                                                               bool setDistanceToInterest)
             {
                 if(IsTransitioning())
                 {
@@ -119,7 +120,7 @@ namespace ExampleApp
                     if(m_interiorSelectionModel.GetSelectedInteriorId() == interiorId)
                     {
                         Eegeo_ASSERT(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId(), "Invalid state. Have selected null Interior while in Interior mode");
-                        EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, newHeadingRadians, setInteriorHeading);
+                        EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, newHeadingRadians, setInteriorHeading, setDistanceToInterest);
                         StartQueuedTransition();
                         return;
                     }
@@ -238,7 +239,8 @@ namespace ExampleApp
                                                                               const Eegeo::Resources::Interiors::InteriorId &interiorId,
                                                                               int targetFloorIndex,
                                                                               float newHeadingRadians,
-                                                                              bool setInteriorHeading)
+                                                                              bool setInteriorHeading,
+                                                                              bool setDisntaceToInterest)
             {
                 ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorStage)(m_interiorInteractionModel,
                                                                                       m_interiorSelectionModel,
@@ -249,7 +251,8 @@ namespace ExampleApp
                                                                                       interiorId,
                                                                                       targetFloorIndex,
                                                                                       setInteriorHeading,
-                                                                                      newHeadingRadians);
+                                                                                      newHeadingRadians,
+                                                                                      setDisntaceToInterest);
                 m_transitionStages.push(pStage);
             }
             
