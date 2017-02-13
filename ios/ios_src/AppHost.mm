@@ -185,13 +185,13 @@ AppHost::AppHost(
                                                                                            mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                                            m_iOSAlertBoxFactory,
                                                                                            m_messageBus);
-    
+    std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()},
+                                                                                       {"IndoorAtlas", m_pIndoorAtlasLocationModule->GetLocationService()}};
     m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                                *m_pCurrentLocationService,
                                                                                                                                *m_piOSLocationService,
-                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService(),
-                                                                                                                               m_pSenionLabLocationModule->GetLocationService(),
+                                                                                                                               interiorLocationServices,
                                                                                                                                mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                                                                                m_messageBus);
     

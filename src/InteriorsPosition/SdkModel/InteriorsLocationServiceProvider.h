@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <map>
+
 #include "ILocationService.h"
 #include "CurrentLocationService.h"
 #include "InteriorsExplorerModel.h"
@@ -23,8 +25,7 @@ namespace ExampleApp
                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                  Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                  Eegeo::Location::ILocationService& defaultLocationService,
-                                                 Eegeo::Location::ILocationService* indoorAtlasLocationService,
-                                                 Eegeo::Location::ILocationService& senionLabLocationService,
+                                                 std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices,
                                                  Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                  ExampleAppMessaging::TMessageBus& messageBus);
                 
@@ -35,9 +36,8 @@ namespace ExampleApp
             private:
                 Eegeo::Helpers::CurrentLocationService::CurrentLocationService& m_currentLocationService;
                 Eegeo::Location::ILocationService& m_defaultLocationService;
-                Eegeo::Location::ILocationService* m_indoorAtlasLocationService;
-                Eegeo::Location::ILocationService& m_senionLabLocationService;
-                
+                std::map<std::string, Eegeo::Location::ILocationService&> m_interiorLocationServices;
+
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "SenionLabLocationManager.h"
+#include "ISenionLabLocationManager.h"
 #include "ICallback.h"
 #include "AppModeModel.h"
 #include "InteriorsExplorer.h"

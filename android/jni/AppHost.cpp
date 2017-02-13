@@ -213,12 +213,12 @@ AppHost::AppHost(
                                                                                                                         m_messageBus,
                                                                                                                         m_nativeState);
 
+    const std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()}};
     m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                                *m_pCurrentLocationService,
                                                                                                                                *m_pAndroidLocationService,
-                                                                                                                               nullptr, // FIXME
-                                                                                                                               m_pSenionLabLocationModule->GetLocationService(),
+                                                                                                                               interiorLocationServices,
                                                                                                                                mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                                                                                m_messageBus);
 
