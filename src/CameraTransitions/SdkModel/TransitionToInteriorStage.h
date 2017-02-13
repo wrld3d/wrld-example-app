@@ -30,7 +30,8 @@ namespace ExampleApp
                                           const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                           int targetFloorIndex,
                                           bool transitionToNewHeading=false,
-                                          float newHeadingRadians=0.0f);
+                                          float newHeadingRadians=0.0f,
+                                          bool setDisntaceToInterest=true);
                 
                 void Start();
                 void Update(float dt);
@@ -51,6 +52,7 @@ namespace ExampleApp
                 float m_startHeadingDegrees;
                 float m_transitionTime;
                 float m_transitionDuration;
+                bool m_setDistanceToInterest;
                 
                 Eegeo::Resources::Interiors::InteriorId m_interiorId;
                 const float m_targetDistanceToInterest;
