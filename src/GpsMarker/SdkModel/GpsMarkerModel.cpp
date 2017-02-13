@@ -65,6 +65,7 @@ namespace ExampleApp
                 
                 if(m_currentLocationEcef.SquareDistanceTo(newLocationEcef) < jumpThreshold * jumpThreshold)
                 {
+                    m_currentLocationEcef = m_currentLocationEcef.Norm() * newLocationEcef.Length();
                     m_currentLocationEcef = Eegeo::Helpers::MathsHelpers::ExpMoveTowards(m_currentLocationEcef, newLocationEcef, halfLife, dt, 0.01f);
                 }
                 else
