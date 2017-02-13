@@ -52,7 +52,8 @@ namespace ExampleApp
                                        int targetFloorIndex,
                                        bool jumpIfFar=true,
                                        bool setGpsModeOff=true,
-                                       bool setInteriorHeading=false);
+                                       bool setInteriorHeading=false,
+                                       bool setDistanceToInterest=true);
                 
                 void StopCurrentTransition();
                 void Update(float dt);
