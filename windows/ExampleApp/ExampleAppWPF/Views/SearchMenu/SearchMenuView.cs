@@ -346,6 +346,8 @@ namespace ExampleAppWPF
             {
                 SearchMenuViewCLIMethods.HandleSearchItemSelected(m_nativeCallerPointer, m_resultsList.SelectedIndex);
             }
+
+            m_resultsList.Items.Refresh();
         }
 
         private void OnSearchBoxUnSelected(object sender, RoutedEventArgs e)
@@ -366,23 +368,35 @@ namespace ExampleAppWPF
 
         private void OnSearchResultsListTouchDown(object sender, TouchEventArgs touchEventArgs)
         {
-            ReleaseSearchResultsListCurrentTouchDevice();
-            CaptureSearchResultsListTouchDevice(touchEventArgs);
+            if(m_searchResultsListCurrentTouchDevice == null)
+            {
+                CaptureSearchResultsListTouchDevice(touchEventArgs);
+            }
+            else
+            {
+                touchEventArgs.Handled = true;
+            }
         }
 
         private void OnSearchResultsListTouchUp(object sender, TouchEventArgs touchEventArgs)
         {
-            ReleaseSearchResultsListCurrentTouchDevice();
+            if (m_searchResultsListCurrentTouchDevice != null && m_searchResultsListCurrentTouchDevice.Id == touchEventArgs.TouchDevice.Id)
+            {
+                ReleaseSearchResultsListCurrentTouchDevice();
+            }
         }
 
         private void OnSearchResultsListTouchLeave(object sender, TouchEventArgs touchEventArgs)
         {
-            ReleaseSearchResultsListCurrentTouchDevice();
+            if (m_searchResultsListCurrentTouchDevice != null && m_searchResultsListCurrentTouchDevice.Id == touchEventArgs.TouchDevice.Id)
+            {
+                ReleaseSearchResultsListCurrentTouchDevice();
+            }
         }
 
         private void OnSearchResultsListLostTouchCapture(object sender, TouchEventArgs touchEventArgs)
         {
-            if (m_searchResultsListCurrentTouchDevice != null)
+            if (m_searchResultsListCurrentTouchDevice != null && m_searchResultsListCurrentTouchDevice.Id == touchEventArgs.TouchDevice.Id)
             {
                 CaptureSearchResultsListTouchDevice(touchEventArgs);
             }
@@ -395,6 +409,11 @@ namespace ExampleAppWPF
                 TouchDevice currentTouchDevice = m_searchResultsListCurrentTouchDevice;
                 m_searchResultsListCurrentTouchDevice = null;
                 m_resultsList.ReleaseTouchCapture(currentTouchDevice);
+
+                if(m_resultsList.SelectedIndex < 0)
+                {
+                    m_resultsList.Items.Refresh();
+                }
             }
         }
 
