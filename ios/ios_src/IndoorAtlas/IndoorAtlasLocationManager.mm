@@ -57,6 +57,9 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
     
     m_floorMap = floorMap;
     
+    Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0, 0);
+    m_pIndoorAtlasLocationService->SetLocation(latLong);
+    
     [self.locationManager startUpdatingLocation];
 }
 

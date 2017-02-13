@@ -38,8 +38,16 @@ namespace ExampleApp
         
         bool SenionLabLocationService::GetLocation(Eegeo::Space::LatLong& latLong)
         {
-            latLong.SetLatitude(m_latLong.GetLatitude());
-            latLong.SetLongitude(m_latLong.GetLongitude());
+            if(std::abs(m_latLong.GetLatitude()) > 0 || std::abs(m_latLong.GetLongitude()) > 0)
+            {
+                latLong.SetLatitude(m_latLong.GetLatitude());
+                latLong.SetLongitude(m_latLong.GetLongitude());
+            }
+            else
+            {
+                m_defaultLocationService.GetLocation(latLong);
+            }
+            
             return true;
         }
         
