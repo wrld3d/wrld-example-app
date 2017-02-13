@@ -80,7 +80,7 @@ namespace ExampleApp
                                                             bool setInteriorHeading)
             {
                 FailIfNoValidControllerSet();
-                m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar, setGpsModeOff);
+                m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar, setGpsModeOff, setInteriorHeading);
             }
             
             void CameraTransitionService::StartTransitionTo(float distanceFromInterest,

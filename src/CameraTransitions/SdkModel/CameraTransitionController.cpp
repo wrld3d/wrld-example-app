@@ -143,7 +143,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, newHeadingRadians);
+                    EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, newHeadingRadians, setInteriorHeading);
                 }
                 
                 StartQueuedTransition();
