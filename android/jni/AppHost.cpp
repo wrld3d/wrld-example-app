@@ -1,71 +1,72 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include <AboutPageViewModule.h>
-#include <AndroidApplicationConfigurationVersionProvider.h>
-#include <AndroidAppThreadAssertionMacros.h>
-#include <AndroidImageNameHelper.h>
-#include <AndroidInitialExperienceModule.h>
-#include <AndroidMenuReactionModel.h>
-#include <AndroidPlatformAbstractionModule.h>
-#include <AndroidPlatformConfigBuilder.h>
-#include <ApiKey.h>
-#include <AppHost.h>
-#include <AppInterface.h>
-#include <ApplicationConfiguration.h>
-#include <ApplicationConfigurationModule.h>
-#include <AssertHandler.h>
-#include <CompassViewModule.h>
-#include <ConnectivityChangedViewMessage.h>
-#include <EegeoWorld.h>
-#include <EffectHandler.h>
-#include <EGL/egl.h>
-#include <FlattenButtonViewModule.h>
-#include <IAboutPageModule.h>
-#include <ICompassModule.h>
-#include <IFlattenButtonModule.h>
-#include <IInteriorsExplorerModule.h>
-#include <IModalityModule.h>
-#include <IMyPinCreationDetailsModule.h>
-#include <IMyPinCreationModule.h>
-#include <IMyPinDetailsModule.h>
-#include <InitialExperienceIntroViewModule.h>
-#include <InteriorsExplorerViewModule.h>
-#include <IOptionsModule.h>
-#include <ISearchMenuModule.h>
-#include <ISearchResultPoiModule.h>
-#include <ISearchResultSectionModule.h>
-#include <ISettingsMenuModule.h>
-#include <ITagSearchModule.h>
-#include <IViewControllerUpdaterModel.h>
-#include <IWatermarkModule.h>
-#include <jni.h>
-#include <JpegLoader.h>
-#include <MenuController.h>
-#include <MobileExampleApp.h>
-#include <ModalBackgroundNativeViewModule.h>
-#include <ModalBackgroundViewModule.h>
-#include <MyPinCreationDetailsViewModule.h>
-#include <MyPinCreationViewModule.h>
-#include <MyPinDetailsViewModule.h>
-#include <NetworkCapabilities.h>
-#include <OptionsViewModule.h>
-#include <PlatformConfig.h>
-#include <ScreenProperties.h>
-#include <SearchMenuViewModule.h>
-#include <SearchResultPoiViewModule.h>
-#include <SearchResultSectionViewModule.h>
-#include <SettingsMenuViewModule.h>
-#include <TagSearchViewModule.h>
-#include <TtyHandler.h>
-#include <UserInteractionEnabledChangedMessage.h>
-#include <ViewControllerUpdaterModule.h>
-#include <WatermarkViewModule.h>
-#include <WebConnectivityValidator.h>
-#include <cstdlib>
-#include <cstring>
 #include <set>
-#include <utility>
-#include <SurveyViewModule.h>
+
+#include "AboutPageViewModule.h"
+#include "AndroidApplicationConfigurationVersionProvider.h"
+#include "AndroidAppThreadAssertionMacros.h"
+#include "AndroidImageNameHelper.h"
+#include "AndroidInitialExperienceModule.h"
+#include "AndroidMenuReactionModel.h"
+#include "AndroidPlatformAbstractionModule.h"
+#include "AndroidPlatformConfigBuilder.h"
+#include "ApiKey.h"
+#include "AppHost.h"
+#include "AppInterface.h"
+#include "ApplicationConfiguration.h"
+#include "ApplicationConfigurationModule.h"
+#include "AssertHandler.h"
+#include "CompassViewModule.h"
+#include "ConnectivityChangedViewMessage.h"
+#include "CurrentLocationService.h"
+#include "EegeoWorld.h"
+#include "EffectHandler.h"
+#include "EGL/egl.h"
+#include "FlattenButtonViewModule.h"
+#include "IAboutPageModule.h"
+#include "ICompassModule.h"
+#include "IFlattenButtonModule.h"
+#include "IInteriorsExplorerModule.h"
+#include "IModalityModule.h"
+#include "IMyPinCreationDetailsModule.h"
+#include "IMyPinCreationModule.h"
+#include "IMyPinDetailsModule.h"
+#include "InitialExperienceIntroViewModule.h"
+#include "InteriorsExplorerViewModule.h"
+#include "InteriorMetaDataModule.h"
+#include "IOptionsModule.h"
+#include "ISearchMenuModule.h"
+#include "ISearchResultPoiModule.h"
+#include "ISearchResultSectionModule.h"
+#include "ISettingsMenuModule.h"
+#include "ITagSearchModule.h"
+#include "IViewControllerUpdaterModel.h"
+#include "IWatermarkModule.h"
+#include "jni.h"
+#include "JpegLoader.h"
+#include "MenuController.h"
+#include "MobileExampleApp.h"
+#include "ModalBackgroundNativeViewModule.h"
+#include "ModalBackgroundViewModule.h"
+#include "MyPinCreationDetailsViewModule.h"
+#include "MyPinCreationViewModule.h"
+#include "MyPinDetailsViewModule.h"
+#include "NetworkCapabilities.h"
+#include "OptionsViewModule.h"
+#include "PlatformConfig.h"
+#include "ScreenProperties.h"
+#include "SearchMenuViewModule.h"
+#include "SearchResultPoiViewModule.h"
+#include "SearchResultSectionViewModule.h"
+#include "SettingsMenuViewModule.h"
+#include "TagSearchViewModule.h"
+#include "TtyHandler.h"
+#include "UserInteractionEnabledChangedMessage.h"
+#include "ViewControllerUpdaterModule.h"
+#include "WatermarkViewModule.h"
+#include "WebConnectivityValidator.h"
+#include "SurveyViewModule.h"
+#include "SenionLabBroadcastReceiver.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -94,6 +95,7 @@ AppHost::AppHost(
     :m_isPaused(false)
     ,m_pJpegLoader(NULL)
     ,m_pAndroidLocationService(NULL)
+    ,m_pCurrentLocationService(NULL)
     ,m_pAndroidConnectivityService(NULL)
     ,m_nativeState(nativeState)
     ,m_androidInputBoxFactory(&nativeState)
@@ -123,6 +125,9 @@ AppHost::AppHost(
     ,m_pTagSearchViewModule(NULL)
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
+    ,m_pSenionLabLocationModule(NULL)
+    ,m_pSenionLabBroadcastReceiver(NULL)
+    ,m_pInteriorsLocationServiceProvider(NULL)
 {
     ASSERT_NATIVE_THREAD
 
@@ -132,6 +137,7 @@ AppHost::AppHost(
     Eegeo::AssertHandler::BreakOnAssert = true;
 
     m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
+    m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_pAndroidLocationService);
     m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
@@ -182,7 +188,7 @@ AppHost::AppHost(
     			 applicationConfiguration,
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
-                 *m_pAndroidLocationService,
+                 *m_pCurrentLocationService,
                  m_androidNativeUIFactories,
                  platformConfiguration,
                  *m_pJpegLoader,
@@ -195,6 +201,26 @@ AppHost::AppHost(
                  *this,
                  *m_pMenuReactionModel,
                  m_userIdleService);
+
+    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
+    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+    m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
+                                                                                                                        interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                        mapModule.GetEnvironmentFlatteningService(),
+                                                                                                                        *m_pAndroidLocationService,
+                                                                                                                        mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                        m_messageBus,
+                                                                                                                        m_nativeState);
+
+    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                               *m_pCurrentLocationService,
+                                                                                                                               *m_pAndroidLocationService,
+                                                                                                                               nullptr, // FIXME
+                                                                                                                               m_pSenionLabLocationModule->GetLocationService(),
+                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                               m_messageBus);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -240,6 +266,9 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pAndroidConnectivityService;
     m_pAndroidConnectivityService = NULL;
 
+    Eegeo_DELETE m_pCurrentLocationService;
+    m_pCurrentLocationService = NULL;
+
     Eegeo_DELETE m_pAndroidLocationService;
     m_pAndroidLocationService = NULL;
 }
@@ -258,7 +287,7 @@ void AppHost::OnPause()
 
     m_isPaused = true;
     m_pApp->OnPause();
-    m_pAndroidLocationService->StopListening();
+    m_pCurrentLocationService->StopListening();
 }
 
 void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
@@ -534,6 +563,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_nativeState, m_messageBus, m_pApp->GetApplicationConfiguration().TimerSurveyUrl());
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
+
+    m_pSenionLabBroadcastReceiver = Eegeo_NEW(ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver)(
+            m_pSenionLabLocationModule->GetLocationManager(),
+            m_messageBus,
+            m_nativeState);
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 

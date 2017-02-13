@@ -23,7 +23,7 @@ namespace ExampleApp
                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                  Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                  Eegeo::Location::ILocationService& defaultLocationService,
-                                                 Eegeo::Location::ILocationService& indoorAtlasLocationService,
+                                                 Eegeo::Location::ILocationService* indoorAtlasLocationService,
                                                  Eegeo::Location::ILocationService& senionLabLocationService,
                                                  Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                  ExampleAppMessaging::TMessageBus& messageBus);
@@ -35,7 +35,7 @@ namespace ExampleApp
             private:
                 Eegeo::Helpers::CurrentLocationService::CurrentLocationService& m_currentLocationService;
                 Eegeo::Location::ILocationService& m_defaultLocationService;
-                Eegeo::Location::ILocationService& m_indoorAtlasLocationService;
+                Eegeo::Location::ILocationService* m_indoorAtlasLocationService;
                 Eegeo::Location::ILocationService& m_senionLabLocationService;
                 
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;

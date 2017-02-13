@@ -5,6 +5,8 @@ set(currsources
   ../src/InteriorsPosition/InteriorsPosition.h
   ../src/InteriorsPosition/IPSConfigurationParser.cpp
   ../src/InteriorsPosition/IPSConfigurationParser.h
+  ../src/InteriorsPosition/InteriorsLocationAuthorizationChangedMessage.h
+  ../src/InteriorsPosition/InteriorsLocationChangedMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\InteriorsPosition FILES ${currsources})

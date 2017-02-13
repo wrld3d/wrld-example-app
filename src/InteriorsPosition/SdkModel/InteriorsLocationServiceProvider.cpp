@@ -19,7 +19,7 @@ namespace ExampleApp
                                                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                                                Eegeo::Location::ILocationService& defaultLocationService,
-                                                                               Eegeo::Location::ILocationService& indoorAtlasLocationService,
+                                                                               Eegeo::Location::ILocationService* indoorAtlasLocationService,
                                                                                Eegeo::Location::ILocationService& senionLabLocationService,
                                                                                Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                                                ExampleAppMessaging::TMessageBus& messageBus)
@@ -60,28 +60,9 @@ namespace ExampleApp
                 
                 const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap = interiorTrackingInfoList;
                 const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = trackingInfoMap.find(interiorId.Value());
-                
-                if(it != trackingInfoMap.end())
-                {
-                    const ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo& trackingInfo = it->second;
-                
-                    if(trackingInfo.GetType() == "IndoorAtlas")
-                    {
-                        Eegeo_TTY("using IndoorAtlas location service");
-                        m_currentLocationService.SetLocationService(m_indoorAtlasLocationService);
-                        m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(IndoorAtlas));
-                    }
-                    else if(trackingInfo.GetType() == "Senion")
-                    {
-                        Eegeo_TTY("using SenionLab location service");
-                        m_currentLocationService.SetLocationService(m_senionLabLocationService);
-                        m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(Senion));
-                    }
-                }
-                else
-                {
-                    m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(DefaultIndoorPositioning));
-                }
+
+                m_currentLocationService.SetLocationService(m_senionLabLocationService);
+                m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(Senion));
             }
             
             void InteriorsLocationServiceProvider::OnInteriorExplorerExit()

@@ -57,6 +57,10 @@
 #include "TagSearchViewIncludes.h"
 #include "AlwaysActiveUserIdleService.h"
 #include "ISurveyViewModule.h"
+#include "CurrentLocationService.h"
+#include "SenionLabLocationModule.h"
+#include "InteriorsLocationServiceProvider.h"
+#include "SenionLabBroadcastReceiver.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -103,6 +107,7 @@ private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
     Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
+    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
     Eegeo::Android::AndroidConnectivityService* m_pAndroidConnectivityService;
 
     AndroidNativeState& m_nativeState;
@@ -158,6 +163,10 @@ private:
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 
     Eegeo::Input::AlwaysActiveUserIdleService m_userIdleService;
+
+    ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
+    ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider* m_pInteriorsLocationServiceProvider;
+    ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver* m_pSenionLabBroadcastReceiver;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();

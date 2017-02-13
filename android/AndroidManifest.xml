@@ -15,8 +15,13 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-feature android:name="android.hardware.camera"
         android:required="true"/>
+    <uses-feature android:name="android.hardware.bluetooth_le"
+        android:required="false"/>
 
     <application android:icon="@mipmap/icon" android:label="eeGeo Example" android:theme="@android:style/Theme.NoTitleBar">
        
@@ -49,8 +54,11 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
-         <meta-data android:name="com.google.android.gms.version"
+        <meta-data android:name="com.google.android.gms.version"
             android:value="7571000" />
+        <service
+            android:name="com.senionlab.slutilities.service.SLIndoorLocationService"
+            android:exported="false"/>
        	
     </application>
 
