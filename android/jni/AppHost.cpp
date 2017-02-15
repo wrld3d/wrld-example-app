@@ -118,6 +118,7 @@ AppHost::AppHost(
     :m_isPaused(false)
     ,m_pJpegLoader(NULL)
     ,m_pAndroidLocationService(NULL)
+    ,m_pCurrentLocationService(NULL)
     ,m_pAndroidConnectivityService(NULL)
     ,m_nativeState(nativeState)
     ,m_androidInputBoxFactory(&nativeState)
@@ -148,6 +149,9 @@ AppHost::AppHost(
     ,m_pTagSearchViewModule(NULL)
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
+    ,m_pSenionLabLocationModule(NULL)
+    ,m_pSenionLabBroadcastReceiver(NULL)
+    ,m_pInteriorsLocationServiceProvider(NULL)
 {
     ASSERT_NATIVE_THREAD
 
@@ -157,6 +161,7 @@ AppHost::AppHost(
     Eegeo::AssertHandler::BreakOnAssert = true;
 
     m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
+    m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_pAndroidLocationService);
     m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
@@ -203,7 +208,7 @@ AppHost::AppHost(
     			 applicationConfiguration,
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
-                 *m_pAndroidLocationService,
+                 *m_pCurrentLocationService,
                  m_androidNativeUIFactories,
                  platformConfiguration,
                  *m_pJpegLoader,
@@ -216,6 +221,26 @@ AppHost::AppHost(
                  *this,
                  *m_pMenuReactionModel,
                  m_userIdleService);
+
+    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
+    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+    m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
+                                                                                                                        interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                        mapModule.GetEnvironmentFlatteningService(),
+                                                                                                                        *m_pAndroidLocationService,
+                                                                                                                        mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                        m_messageBus,
+                                                                                                                        m_nativeState);
+
+    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                               *m_pCurrentLocationService,
+                                                                                                                               *m_pAndroidLocationService,
+                                                                                                                               nullptr, // FIXME
+                                                                                                                               m_pSenionLabLocationModule->GetLocationService(),
+                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                               m_messageBus);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -261,6 +286,9 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pAndroidConnectivityService;
     m_pAndroidConnectivityService = NULL;
 
+    Eegeo_DELETE m_pCurrentLocationService;
+    m_pCurrentLocationService = NULL;
+
     Eegeo_DELETE m_pAndroidLocationService;
     m_pAndroidLocationService = NULL;
 }
@@ -279,7 +307,7 @@ void AppHost::OnPause()
 
     m_isPaused = true;
     m_pApp->OnPause();
-    m_pAndroidLocationService->StopListening();
+    m_pCurrentLocationService->StopListening();
 }
 
 void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
@@ -561,6 +589,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
             m_pInteriorsExplorerViewModule->GetController());
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
+
+    m_pSenionLabBroadcastReceiver = Eegeo_NEW(ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver)(
+            m_pSenionLabLocationModule->GetLocationManager(),
+            m_messageBus,
+            m_nativeState);
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 

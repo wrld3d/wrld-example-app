@@ -38,6 +38,8 @@
 #include "SearchResultMeetingAvailabilityChanged.h"
 #include "MenuSectionExpandedChangedMessage.h"
 #include "WorldPinsSelectedFocussedMessage.h"
+#include "InteriorsLocationAuthorizationChangedMessage.h"
+#include "InteriorsLocationChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -78,6 +80,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<SearchResultOnMap::SearchResultMeetingAvailabilityChanged>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuSectionExpandedChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsSelectedFocussedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationAuthorizationChangedMessage>
             , private Eegeo::NonCopyable
         {
 

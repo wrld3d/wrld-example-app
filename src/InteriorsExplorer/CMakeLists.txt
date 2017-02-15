@@ -8,6 +8,8 @@ set(currsources
   ../src/InteriorsExplorer/InteriorsExplorerSelectFloorMessage.h
   ../src/InteriorsExplorer/InteriorsExplorerStateChangedMessage.h
   ../src/InteriorsExplorer/InteriorsExplorerUINotifyMessage.h
+  ../src/InteriorsPosition/InteriorsLocationAuthorizationChangedMessage.h
+  ../src/InteriorsPosition/InteriorsLocationChangedMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\InteriorsExplorer FILES ${currsources})
