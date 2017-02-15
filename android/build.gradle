@@ -30,31 +30,35 @@ android {
 		versionCode 1
 		versionName "1.0"
 		externalNativeBuild {
-			cmake {}
+			cmake {
+                cppFlags "-g"
+            }
 		}
 		ndk {
-			abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+			abiFilters 'armeabi-v7a'
 		}
 	}
+
 	buildTypes {
 		release {
 			minifyEnabled false
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}
+
+		debug {
+            jniDebuggable true
+            debuggable true
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
 	}
+
 	externalNativeBuild {
 		cmake {
 			path "CMakeLists.txt"
 		}
 	}
-	splits {
-		abi {
-			enable true
-			reset()
-			include 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-			universalApk true
-		}
-	}
+
 	sourceSets {
 		main {
 			manifest.srcFile 'AndroidManifest.xml'
@@ -66,17 +70,9 @@ android {
 	}
 
 	productFlavors {
-		armeabi {
-			dimension "abi"
-			ndk { abiFilter "armeabi" }
-		}
 		armv7a {
 			dimension "abi"
 			ndk { abiFilter "armeabi-v7a" }
-		}
-		arm64v8a {
-			dimension "abi"
-			ndk { abiFilter "arm64-v8a" }
 		}
 	}
 }
