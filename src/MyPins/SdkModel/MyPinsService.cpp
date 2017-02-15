@@ -70,7 +70,7 @@ namespace ExampleApp
 
             void MyPinsService::AddPinToMap(MyPinModel* pMyPinModel, int aditionalMask)
             {
-                const int priorityOrder = m_myPinsRepository.GetItemCount();
+                const int priorityOrder = static_cast<int>(m_myPinsRepository.GetItemCount());
                 
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(),
                                                                          pMyPinModel->GetDescription(),
