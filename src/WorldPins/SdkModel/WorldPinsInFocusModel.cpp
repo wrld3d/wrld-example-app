@@ -10,6 +10,8 @@ namespace ExampleApp
         {
             WorldPinsInFocusModel::WorldPinsInFocusModel()
                 : m_worldPinItemModelId(-1)
+                , m_reviewCount(0)
+                , m_priorityOrder(0)
             {
 
             }
@@ -20,7 +22,8 @@ namespace ExampleApp
                     const std::string& vendor,
                     const std::string& json,
                     const std::string& ratingsImage,
-                    const int reviewCount)
+                    const int reviewCount,
+                    const int priorityOrder)
 
                 : m_worldPinItemModelId(worldPinItemModelId)
                 , m_title(title)
@@ -29,6 +32,7 @@ namespace ExampleApp
                 , m_json(json)
                 , m_ratingsImage(ratingsImage)
                 , m_reviewCount(reviewCount)
+                , m_priorityOrder(priorityOrder)
             {
 
             }
@@ -71,6 +75,11 @@ namespace ExampleApp
             const int WorldPinsInFocusModel::GetPinId() const
             {
                 return m_worldPinItemModelId;
+            }
+            
+            const int WorldPinsInFocusModel::GetPriorityOrder() const
+            {
+                return m_priorityOrder;
             }
             
             void WorldPinsInFocusModel::Refresh(const std::string& title, const std::string& subtitle, const std::string& ratingsImage, const int reviewCount)

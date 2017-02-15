@@ -23,6 +23,7 @@ namespace ExampleApp
                 virtual const std::string& GetRatingsImage() const = 0;
                 virtual const int GetReviewCount() const = 0;
                 virtual const int GetPinId() const = 0;
+                virtual const int GetPriorityOrder() const = 0;
                 
                 virtual void Refresh(const std::string& title, const std::string& subtitle, const std::string& ratingsImage, const int reviewCount) = 0;
             };

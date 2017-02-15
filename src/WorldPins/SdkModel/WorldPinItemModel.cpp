@@ -34,7 +34,8 @@ namespace ExampleApp
                                worldPinFocusData.vendor,
                                worldPinFocusData.json,
                                worldPinFocusData.ratingsImage,
-                               worldPinFocusData.reviewCount)
+                               worldPinFocusData.reviewCount,
+                               worldPinFocusData.priorityOrder)
                 , m_transitionState(StableHidden)
                 , m_transitionStateValue(0.f)
                 , m_focusable(true)
@@ -180,7 +181,7 @@ namespace ExampleApp
                 m_visibilityMask = visibilityMask;
             }
             
-            std::string WorldPinItemModel::GetIdentifier()
+            std::string WorldPinItemModel::GetIdentifier() const
             {
                 return m_identifier;
             }
