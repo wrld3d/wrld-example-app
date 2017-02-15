@@ -97,7 +97,7 @@ namespace ExampleApp
                 
                 void SetVisibilityMask(int visibilityMask);
                 
-                std::string GetIdentifier();
+                std::string GetIdentifier() const;
                 
             private:
                 void SetTransitionState(TransitionState transitionState);

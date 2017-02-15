@@ -17,13 +17,15 @@ namespace ExampleApp
                                   const std::string& vendor,
                                   const std::string& json,
                                   const std::string& ratingsImg,
-                                  const int reviewCount)
+                                  const int reviewCount,
+                                  const int priorityOrder)
                 : title(title)
                 , subtitle(subtitle)
                 , vendor(vendor)
                 , json(json)
                 , ratingsImage(ratingsImg)
                 , reviewCount(reviewCount)
+                , priorityOrder(priorityOrder)
                 {
 
                 }
@@ -35,6 +37,7 @@ namespace ExampleApp
                 , vendor(vendor)
                 , json("")
                 , reviewCount(0)
+                , priorityOrder(0)
                 {
                     
                 }
@@ -45,6 +48,7 @@ namespace ExampleApp
                 std::string json;
                 std::string ratingsImage;
                 int reviewCount;
+                int priorityOrder;
             };
         }
     }

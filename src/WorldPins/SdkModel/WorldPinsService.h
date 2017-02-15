@@ -72,7 +72,9 @@ namespace ExampleApp
                 
                 void OnMenuItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message);
                 
-                void ResetLastMarkerSubPriority();
+                void ClearSelectedSearchResult();
+                
+                WorldPinItemModel* FindWorldPinItemModelOrNull(const std::string& searchResultId) const;
                 
                 IWorldPinsRepository& m_worldPinsRepository;
                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& m_interiorMarkerPickingService;
@@ -92,7 +94,7 @@ namespace ExampleApp
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
-                Eegeo::Markers::IMarker::IdType m_lastHighPriorityMarkerId;
+                std::string m_selectedSearchResultId;
             };
 
         }

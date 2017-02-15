@@ -31,7 +31,6 @@ namespace ExampleApp
             , m_worldPinHiddenStateChangedMessageBinding(this, &WorldPinsService::OnWorldPinHiddenStateChanged)
             , m_onSearchResultSelected(this, &WorldPinsService::OnMenuItemSelected)
             , m_messageBus(messageBus)
-            , m_lastHighPriorityMarkerId(Eegeo::Markers::IMarker::InvalidId)
             {
                 m_sdkModelDomainEventBus.Subscribe(m_worldPinHiddenStateChangedMessageBinding);
                 m_messageBus.SubscribeNative(m_onSearchResultSelected);
@@ -84,7 +83,7 @@ namespace ExampleApp
                     .SetLabelIcon(pinIconKey)
                     // temp workaround to specify interior floor by zero-based index rather than 'floor number' id (MPLY-8062)
                     .SetInteriorWithFloorIndex(worldPinInteriorData.building.Value(), worldPinInteriorData.floor)
-                    .SetSubPriority(1)
+                    .SetSubPriority(worldPinFocusData.priorityOrder)
                     .Build();
                 
                 const Eegeo::Markers::IMarker::IdType markerId = m_markerService.Create(markerCreateParams);
@@ -147,7 +146,7 @@ namespace ExampleApp
                 if(selectionHandler != NULL)
                 {
                     selectionHandler->SelectPin();
-                    ResetLastMarkerSubPriority();
+                    ClearSelectedSearchResult();
                 }
             }
             
@@ -181,27 +180,63 @@ namespace ExampleApp
                 return false;
             }
             
+            WorldPinItemModel* WorldPinsService::FindWorldPinItemModelOrNull(const std::string& searchResultId) const
+            {
+                if (searchResultId.empty())
+                {
+                    return nullptr;
+                }
+            
+                for (int i = 0; i < m_worldPinsRepository.GetItemCount(); i++)
+                {
+                    WorldPinItemModel* pWorldPinItemModel = m_worldPinsRepository.GetItemAtIndex(i);
+                    if (pWorldPinItemModel->GetIdentifier() == searchResultId)
+                    {
+                        return pWorldPinItemModel;
+                    }
+                }
+                
+                return nullptr;
+            }
+            
             void WorldPinsService::OnMenuItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
             {
-                for(int i = 0; i < m_worldPinsRepository.GetItemCount(); i++)
+                ClearSelectedSearchResult();
+                
+                Eegeo_ASSERT(m_selectedSearchResultId.empty());
+            
+                m_selectedSearchResultId = message.ModelIdentifier();
+                
+                const WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(m_selectedSearchResultId);
+                if (pWorldPinItemModel != nullptr)
                 {
-                    if(m_worldPinsRepository.GetItemAtIndex(i)->GetIdentifier() == message.ModelIdentifier() && !m_worldPinsRepository.GetItemAtIndex(i)->GetIdentifier().empty())
-                    {
-                        ResetLastMarkerSubPriority();
-                        
-                        m_lastHighPriorityMarkerId = GetMarkerIdForWorldPinItemModelId(m_worldPinsRepository.GetItemAtIndex(i)->Id());
-                        m_markerService.Get(m_lastHighPriorityMarkerId).SetSubPriority(0);
-                        return;
-                    }
+                    const auto& lastHighPriorityMarkerId = GetMarkerIdForWorldPinItemModelId(pWorldPinItemModel->Id());
+                    Eegeo::Markers::IMarker& marker = m_markerService.Get(lastHighPriorityMarkerId);
+                    
+                    const int highPriorityDrawOrder = 0;
+                    marker.SetSubPriority(highPriorityDrawOrder);
                 }
             }
             
-            void WorldPinsService::ResetLastMarkerSubPriority()
+            void WorldPinsService::ClearSelectedSearchResult()
             {
-                if(m_lastHighPriorityMarkerId != Eegeo::Markers::IMarker::InvalidId && m_markerService.Exists(m_lastHighPriorityMarkerId))
+                if (m_selectedSearchResultId.empty())
                 {
-                    m_markerService.Get(m_lastHighPriorityMarkerId).SetSubPriority(1);
+                    return;
                 }
+                
+                const WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(m_selectedSearchResultId);
+                if (pWorldPinItemModel != nullptr)
+                {
+                    const auto& lastHighPriorityMarkerId = GetMarkerIdForWorldPinItemModelId(pWorldPinItemModel->Id());
+                    
+                    const int priorityOrder = pWorldPinItemModel->GetInFocusModel().GetPriorityOrder();
+                    
+                    Eegeo::Markers::IMarker& marker = m_markerService.Get(lastHighPriorityMarkerId);
+                    marker.SetSubPriority(priorityOrder);
+                }
+                
+                m_selectedSearchResultId.clear();
             }
         }
     }
