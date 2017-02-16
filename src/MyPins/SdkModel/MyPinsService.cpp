@@ -70,12 +70,15 @@ namespace ExampleApp
 
             void MyPinsService::AddPinToMap(MyPinModel* pMyPinModel, int aditionalMask)
             {
+                const int priorityOrder = static_cast<int>(m_myPinsRepository.GetItemCount());
+                
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(pMyPinModel->GetTitle(),
                                                                          pMyPinModel->GetDescription(),
                                                                          pMyPinModel->GetVendor(),
                                                                          "",
                                                                          pMyPinModel->GetRatingsImage(),
-                                                                         pMyPinModel->GetReviewsCount());
+                                                                         pMyPinModel->GetReviewsCount(),
+                                                                         priorityOrder);
                 
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(pMyPinModel->GetBuildingId(), pMyPinModel->GetFloor());
                 

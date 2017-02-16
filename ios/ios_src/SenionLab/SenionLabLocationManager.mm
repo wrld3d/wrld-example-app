@@ -26,7 +26,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 {
     std::map<int, std::string> m_floorMap;
     int m_floorIndex;
-    ExampleApp::SenionLab::SenionLabLocationService* m_pSenionLabLocationService;
+    ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService* m_pSenionLabLocationService;
     SLLocationStatus m_lastLocationStatus;
     Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory *m_piOSAlertBoxFactory;
     FailureHandlerType *m_failureHandlerWrapper;
@@ -38,9 +38,9 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 @implementation SenionLabLocationManager
 
--(instancetype) Init: (ExampleApp::SenionLab::SenionLabLocationService*) senionLabLocationService
- iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
- messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus
+-(instancetype) Init: (ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService*) senionLabLocationService
+  iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
+          messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus
 {
     m_lastLocationStatus = SLLocationStatus::SLLocationStatusUnconfirmed;
     if(self = [super init])

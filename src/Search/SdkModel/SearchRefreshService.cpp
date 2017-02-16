@@ -50,16 +50,19 @@ namespace ExampleApp
                 , m_interiorHasChanged(false)
                 , m_tagSearchRepository(tagSearchRepository)
                 , m_interiorMenuObserver(interiorMenuObserver)
-                , m_interiorTagsUpdatedCallback(this, &SearchRefreshService::HandleInteriorChanged)
+                , m_interiorTagsUpdatedCallback(this, &SearchRefreshService::HandleInteriorTagsChanged)
+                , m_interiorModelChangedCallback(this, &SearchRefreshService::HandleInteriorModelChanged)
             {
                 m_searchService.InsertOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
                 m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
                 m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
                 m_interiorMenuObserver.RegisterInteriorTagsUpdatedCallback(m_interiorTagsUpdatedCallback);
+                m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorModelChangedCallback);
             }
 
             SearchRefreshService::~SearchRefreshService()
             {
+                m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorModelChangedCallback);
                 m_interiorMenuObserver.UnregisterInteriorTagsUpdatedCallback(m_interiorTagsUpdatedCallback);
                 m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchQueryResultsClearedCallback);
                 m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultResponseReceivedCallback);
@@ -170,8 +173,16 @@ namespace ExampleApp
                 m_previousQueryInterestDistance = (viewpointEcef - interestPointEcef).Length();
                 m_previousInterestEcefLocation = interestPointEcef;
             }
+            
+            void SearchRefreshService::HandleInteriorModelChanged()
+            {
+                if (!m_searchResultsCleared && m_searchResultsExist)
+                {
+                    m_interiorHasChanged = true;
+                }
+            }
 
-            void SearchRefreshService::HandleInteriorChanged()
+            void SearchRefreshService::HandleInteriorTagsChanged()
             {
                 if (!m_searchResultsCleared && m_searchResultsExist)
                 {
@@ -182,11 +193,8 @@ namespace ExampleApp
                         if(!TagStillPresent(previousQuery))
                         {
                             m_searchQueryPerformer.RemoveSearchQueryResults();
-                            return;
                         }
                     }
-                    
-                    m_interiorHasChanged = true;
                 }
             }
             
