@@ -229,13 +229,15 @@ include_directories(
     ../src/AttractMode
     ../src/AttractMode/SdkModel
     ../src/AttractMode/SdkModel/States
+    ../src/Avatar
+    ../src/Avatar/AvatarModule
+    ../src/Avatar/SdkModel
     ../src/CameraTransitions
     ../src/CameraTransitions/SdkModel
+    ../src/CategorySearch
     ../src/Compass
     ../src/Compass/SdkModel
     ../src/Compass/View
-    ../src/DeepLink
-    ../src/DeepLink/SdkModel
     ../src/DoubleTapIndoorInteraction
     ../src/DoubleTapIndoorInteraction/SdkModel
     ../src/ExampleAppMessaging
@@ -246,11 +248,15 @@ include_directories(
     ../src/GpsMarker
     ../src/GpsMarker/SdkModel
     ../src/Helpers
+    ../src/IndoorLocation
+    ../src/IndoorLocation/SdkModel
     ../src/InitialExperience
     ../src/InitialExperience/Preload
     ../src/InitialExperience/Preload/SdkModel
     ../src/InitialExperience/SdkModel
     ../src/InitialExperience/View
+    ../src/InteriorsEntitiesPins
+    ../src/InteriorsEntitiesPins/SdkModel
     ../src/InteriorsExplorer
     ../src/InteriorsExplorer/SdkModel
     ../src/InteriorsExplorer/SdkModel/Highlights
@@ -292,6 +298,10 @@ include_directories(
     ../src/PlaceJumps/View
     ../src/Reaction
     ../src/Reaction/View
+    ../src/RenderingTransformMesh
+    ../src/RenderingTransformMesh/SdkModel
+    ../src/ReportPinsVisibilityMasking
+    ../src/ReportPinsVisibilityMasking/SdkModel
     ../src/Repository
     ../src/ScreenControl
     ../src/ScreenControl/View
@@ -300,10 +310,17 @@ include_directories(
     ../src/Search/Combined/SdkModel
     ../src/Search/EegeoPois
     ../src/Search/EegeoPois/SdkModel
+    ../src/Search/Example
+    ../src/Search/Example/SdkModel
     ../src/Search/GeoNames
     ../src/Search/GeoNames/SdkModel
     ../src/Search/SdkModel
     ../src/Search/SdkModel/MyPins
+    ../src/Search/Swallow
+    ../src/Search/Swallow/SdkModel
+    ../src/Search/Swallow/SdkModel/SearchParser
+    ../src/Search/Swallow/SearchConstants
+    ../src/Search/Swallow/View
     ../src/Search/Yelp
     ../src/Search/Yelp/SdkModel
     ../src/Search/Yelp/SearchConstants
@@ -322,11 +339,25 @@ include_directories(
     ../src/SettingsMenu
     ../src/SettingsMenu/SdkModel
     ../src/SettingsMenu/View
-    ../src/Surveys
-    ../src/Surveys/SdkModel
+    ../src/Social
+    ../src/Social/TwitterFeed
+    ../src/SwallowPoiDb
+    ../src/SwallowPoiDb/Constants
+    ../src/SwallowPoiDb/Parsers
     ../src/TagSearch
     ../src/TagSearch/SdkModel
     ../src/TagSearch/View
+    ../src/Tours
+    ../src/Tours/SdkModel
+    ../src/Tours/SdkModel/Camera
+    ../src/Tours/SdkModel/States
+    ../src/Tours/SdkModel/TourInstances
+    ../src/Tours/SdkModel/TourInstances/Example
+    ../src/Tours/SdkModel/TourInstances/TwitterFeed
+    ../src/Tours/TourFullScreenImage
+    ../src/Tours/View
+    ../src/Tours/View/TourExplorer
+    ../src/Tours/View/TourFullScreenImage
     ../src/URLRequest
     ../src/UserInteraction
     ../src/UserInteraction/SdkModel
@@ -338,13 +369,12 @@ include_directories(
     ../src/Watermark
     ../src/Watermark/SdkModel
     ../src/Watermark/View
-    ../src/WeatherMenu
-    ../src/WeatherMenu/SdkModel
-    ../src/WeatherMenu/View
+    ../src/WifiInfo
     ../src/WorldAreaLoader
     ../src/WorldAreaLoader/SdkModel
     ../src/WorldPins
     ../src/WorldPins/SdkModel
+    ../src/WorldPins/View
 
     jni
     jni/AboutPage
@@ -396,12 +426,12 @@ include_directories(
     jni/SearchResultSection/View
     jni/SettingsMenu
     jni/SettingsMenu/View
-    jni/Surveys
-    jni/Surveys/View
     jni/TagSearch
     jni/TagSearch/View
     jni/Watermark
     jni/Watermark/View
+    jni/WorldPins
+    jni/WorldPins/View
 
     ../libs
     ../libs/OAuth
@@ -441,7 +471,7 @@ file(GLOB_RECURSE jni_SOURCES ${CMAKE_CURRENT_LIST_DIR}/jni/*.cpp)
 file(GLOB_RECURSE src_SOURCES ${CMAKE_CURRENT_LIST_DIR}/../src/*.cpp)
 file(GLOB_RECURSE external_SOURCES ${CMAKE_CURRENT_LIST_DIR}/../libs/*.cpp)
 
-set(CMAKE_CPP_FLAGS  "${CMAKE_CPP_FLAGS} -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder")
+set(CMAKE_CPP_FLAGS  "${CMAKE_CPP_FLAGS} -Wall -Wno-expansion-to-defined -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder")
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fexceptions -std=c++11")
 set(CMAKE_SHARED_LINKER_FLAGS  "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--stub-group-size=2085000")
 
