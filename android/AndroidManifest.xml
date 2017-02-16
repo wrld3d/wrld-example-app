@@ -22,6 +22,16 @@
         android:required="true"/>
     <uses-feature android:name="android.hardware.bluetooth_le"
         android:required="false"/>
+    <uses-feature android:name="android.hardware.sensor.accelerometer"
+		android:required="false" />
+	<uses-feature android:name="android.hardware.sensor.compass"
+		android:required="false" />
+	<uses-feature android:name="android.hardware.sensor.gyroscope"
+		android:required="false" />
+	<uses-feature android:name="android.hardware.wifi"
+		android:required="true" />
+
+    
 
     <application android:icon="@mipmap/icon" android:label="eeGeo Example" android:theme="@android:style/Theme.NoTitleBar">
        
@@ -59,6 +69,9 @@
         <service
             android:name="com.senionlab.slutilities.service.SLIndoorLocationService"
             android:exported="false"/>
+        <service android:name="com.indooratlas.android.sdk.IALocationService"
+			android:label="IALocationService"
+			android:exported="false"/>
        	
     </application>
 

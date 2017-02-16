@@ -126,6 +126,7 @@ AppHost::AppHost(
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
     ,m_pSenionLabLocationModule(NULL)
+    ,m_pIndoorAtlasLocationModule(NULL)
     ,m_pSenionLabBroadcastReceiver(NULL)
     ,m_pInteriorsLocationServiceProvider(NULL)
 {
@@ -213,7 +214,17 @@ AppHost::AppHost(
                                                                                                                         m_messageBus,
                                                                                                                         m_nativeState);
 
-    const std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()}};
+    m_pIndoorAtlasLocationModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationModule)(m_pApp->GetAppModeModel(),
+                                                                                                                              interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                                              interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                              mapModule.GetEnvironmentFlatteningService(),
+                                                                                                                              *m_pAndroidLocationService,
+                                                                                                                              mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+																															  m_messageBus,
+                                                                                                                              m_nativeState);
+
+    const std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()},
+                                                                                             {"IndoorAtlas", m_pIndoorAtlasLocationModule->GetLocationService()}};
     m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                                *m_pCurrentLocationService,
@@ -262,6 +273,15 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pJpegLoader;
     m_pJpegLoader = NULL;
+
+    Eegeo_DELETE m_pSenionLabLocationModule;
+    m_pSenionLabLocationModule = NULL;
+
+    Eegeo_DELETE m_pIndoorAtlasLocationModule;
+    m_pIndoorAtlasLocationModule = NULL;
+
+    Eegeo_DELETE m_pInteriorsLocationServiceProvider;
+    m_pInteriorsLocationServiceProvider = NULL;
 
     Eegeo_DELETE m_pAndroidConnectivityService;
     m_pAndroidConnectivityService = NULL;
@@ -586,6 +606,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
     if(m_createdUIModules)
     {
     	m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
+
+    	Eegeo_DELETE m_pSenionLabBroadcastReceiver;
 
         Eegeo_DELETE m_pViewControllerUpdaterModule;
 

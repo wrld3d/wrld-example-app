@@ -8,3 +8,4 @@ set(currsources
 set(sources ${sources} ${currsources})
 source_group(\\src\\InteriorsPosition\\SdkModel FILES ${currsources})
 include(../src/InteriorsPosition/SdkModel/SenionLab/CMakeLists.txt)
+include(../src/InteriorsPosition/SdkModel/IndoorAtlas/CMakeLists.txt)

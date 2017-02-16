@@ -59,6 +59,7 @@
 #include "ISurveyViewModule.h"
 #include "CurrentLocationService.h"
 #include "SenionLabLocationModule.h"
+#include "IndoorAtlasLocationModule.h"
 #include "InteriorsLocationServiceProvider.h"
 #include "SenionLabBroadcastReceiver.h"
 
@@ -165,6 +166,7 @@ private:
     Eegeo::Input::AlwaysActiveUserIdleService m_userIdleService;
 
     ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
+    ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationModule* m_pIndoorAtlasLocationModule;
     ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider* m_pInteriorsLocationServiceProvider;
     ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver* m_pSenionLabBroadcastReceiver;
 
