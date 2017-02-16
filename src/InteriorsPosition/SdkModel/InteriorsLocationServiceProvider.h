@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <map>
+
 #include "ILocationService.h"
 #include "CurrentLocationService.h"
 #include "InteriorsExplorerModel.h"
@@ -17,13 +19,12 @@ namespace ExampleApp
             class InteriorsLocationServiceProvider
             {
             public:
-                InteriorsLocationServiceProvider(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                InteriorsLocationServiceProvider(std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> trackingInfoMap,
                                                  InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                  Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                  Eegeo::Location::ILocationService& defaultLocationService,
-                                                 Eegeo::Location::ILocationService* indoorAtlasLocationService,
-                                                 Eegeo::Location::ILocationService& senionLabLocationService,
+                                                 std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices,
                                                  ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~InteriorsLocationServiceProvider();
@@ -31,12 +32,11 @@ namespace ExampleApp
                 const Eegeo::Helpers::CurrentLocationService::CurrentLocationService& GetCurrentLocationService() { return m_currentLocationService; }
                 
             private:
-                const ExampleApp::ApplicationConfig::ApplicationConfiguration& m_applicationConfiguration;
+                std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> m_trackingInfoMap;
                 Eegeo::Helpers::CurrentLocationService::CurrentLocationService& m_currentLocationService;
                 Eegeo::Location::ILocationService& m_defaultLocationService;
-                Eegeo::Location::ILocationService* m_indoorAtlasLocationService;
-                Eegeo::Location::ILocationService& m_senionLabLocationService;
-                
+                std::map<std::string, Eegeo::Location::ILocationService&> m_interiorLocationServices;
+
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 

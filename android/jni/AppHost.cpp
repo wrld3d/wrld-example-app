@@ -170,7 +170,7 @@ AppHost::AppHost(
     customApplicationAssetDirectories.insert("SearchResultOnMap");
     customApplicationAssetDirectories.insert("ApplicationConfigs");
 
-    const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration = LoadApplicationConfiguration(nativeState, customApplicationAssetDirectories);
+    const ExampleApp::ApplicationConfig::ApplicationConfiguration applicationConfiguration = LoadApplicationConfiguration(nativeState, customApplicationAssetDirectories);
 	
     m_pAndroidPlatformAbstractionModule = Eegeo_NEW(Eegeo::Android::AndroidPlatformAbstractionModule)(
             nativeState,
@@ -224,22 +224,23 @@ AppHost::AppHost(
 
     Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
     Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+
     m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
                                                                                                                         interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                         interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                         mapModule.GetEnvironmentFlatteningService(),
                                                                                                                         *m_pAndroidLocationService,
-                                                                                                                        mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                        applicationConfiguration.InteriorTrackingInfo(),
                                                                                                                         m_messageBus,
                                                                                                                         m_nativeState);
 
-    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+    const std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()}};
+    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration.InteriorTrackingInfo(),
+                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                                *m_pCurrentLocationService,
                                                                                                                                *m_pAndroidLocationService,
-                                                                                                                               nullptr, // FIXME
-                                                                                                                               m_pSenionLabLocationModule->GetLocationService(),
-                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                               interiorLocationServices,
                                                                                                                                m_messageBus);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(

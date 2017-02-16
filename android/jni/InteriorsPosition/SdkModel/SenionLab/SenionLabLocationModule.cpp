@@ -1,7 +1,10 @@
 // Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
+#include <utility>
+
 #include "AndroidAppThreadAssertionMacros.h"
 #include "AndroidNativeState.h"
+#include "ApplicationConfiguration.h"
 #include "BidirectionalBus.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorSelectionModel.h"
@@ -20,7 +23,7 @@ namespace ExampleApp
                                                                  const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                  const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                  Eegeo::Location::ILocationService& defaultLocationService,
-                                                                 Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                                                 const std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap,
                                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                                  AndroidNativeState& nativeState)
                 : m_locationService(defaultLocationService,
@@ -30,8 +33,7 @@ namespace ExampleApp
                 , m_locationController(m_locationManager,
                                        appModeModel,
                                        interiorSelectionModel,
-                                       interiorMetaDataRepository,
-                                       messageBus)
+                                       trackingInfoMap)
                 {
                     ASSERT_NATIVE_THREAD
                 }

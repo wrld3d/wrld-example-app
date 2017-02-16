@@ -1,5 +1,7 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
 
+#include <map>
+
 #include "InteriorsLocationServiceProvider.h"
 #include "InteriorSelectionModel.h"
 
@@ -9,24 +11,21 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            const std::string IndoorAtlas = "\nIndoor positioning type: Indoor Atlas";
-            const std::string Senion = "\nIndoor positioning type: Senion";
-            const std::string DefaultIndoorPositioning = "\nIndoor positioning type: GPS";
+            const std::string IndoorPositionTypeMessageHeader = "\nIndoor positioning type: ";
+            const std::string DefaultIndoorPositioning = "GPS";
             const std::string NoIndoorPositioning = "";
             
-            InteriorsLocationServiceProvider::InteriorsLocationServiceProvider(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+            InteriorsLocationServiceProvider::InteriorsLocationServiceProvider(std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> trackingInfoMap,
                                                                                InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                                                Eegeo::Location::ILocationService& defaultLocationService,
-                                                                               Eegeo::Location::ILocationService* indoorAtlasLocationService,
-                                                                               Eegeo::Location::ILocationService& senionLabLocationService,
+                                                                               std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices,
                                                                                ExampleAppMessaging::TMessageBus& messageBus)
-            :  m_applicationConfiguration(applicationConfiguration)
+            : m_trackingInfoMap(trackingInfoMap)
             , m_currentLocationService(currentLocationService)
             , m_defaultLocationService(defaultLocationService)
-            , m_indoorAtlasLocationService(indoorAtlasLocationService)
-            , m_senionLabLocationService(senionLabLocationService)
+            , m_interiorLocationServices(interiorLocationServices)
             , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_interiorSelectionModel(interiorSelectionModel)
             , m_messageBus(messageBus)
@@ -46,12 +45,32 @@ namespace ExampleApp
             void InteriorsLocationServiceProvider::OnInteriorExplorerEntered()
             {
                 Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-                
-                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap = m_applicationConfiguration.InteriorTrackingInfo();
-                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = trackingInfoMap.find(interiorId.Value());
 
-                m_currentLocationService.SetLocationService(m_senionLabLocationService);
-                m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(Senion));
+                std::stringstream indoorPositionTypeMessage;
+                indoorPositionTypeMessage << IndoorPositionTypeMessageHeader;
+                
+                const std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it = m_trackingInfoMap.find(interiorId.Value());
+
+                if (it != m_trackingInfoMap.end())
+                {
+                    const ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo &m_trackingInfo = it->second;
+                    std::map<std::string, Eegeo::Location::ILocationService&>::const_iterator interiorLocationService = m_interiorLocationServices.find(m_trackingInfo.GetType());
+                    if (interiorLocationService != m_interiorLocationServices.end())
+                    {
+                        std::stringstream interiorLocationServiceUseMessage;
+                        interiorLocationServiceUseMessage << "using " << m_trackingInfo.GetType() << "location service";
+                        Eegeo_TTY(interiorLocationServiceUseMessage.str().c_str());
+
+                        indoorPositionTypeMessage << m_trackingInfo.GetType();
+                        m_currentLocationService.SetLocationService(interiorLocationService->second);
+                        m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(indoorPositionTypeMessage.str()));
+                    }
+                }
+                else
+                {
+                    indoorPositionTypeMessage << DefaultIndoorPositioning;
+                    m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(indoorPositionTypeMessage.str()));
+                }
             }
             
             void InteriorsLocationServiceProvider::OnInteriorExplorerExit()

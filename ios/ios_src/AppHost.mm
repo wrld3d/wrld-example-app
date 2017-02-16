@@ -192,13 +192,15 @@ AppHost::AppHost(
                                                                                            m_iOSAlertBoxFactory,
                                                                                            m_messageBus);
     
-    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration,
+
+   std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()},
+                                                                                      {"IndoorAtlas", m_pIndoorAtlasLocationModule->GetLocationService()}};
+    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration.InteriorTrackingInfo(),
                                                                                                                                m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                                interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                                *m_pCurrentLocationService,
                                                                                                                                *m_piOSLocationService,
-                                                                                                                               m_pIndoorAtlasLocationModule->GetLocationService(),
-                                                                                                                               m_pSenionLabLocationModule->GetLocationService(),
+                                                                                                                               interiorLocationServices,
                                                                                                                                m_messageBus);
     
     CreateApplicationViewModules(screenProperties,applicationConfiguration);

@@ -4,6 +4,10 @@
 
 #include <map>
 #include <string>
+#include <vector>
+
+#include "ApplicationInteriorTrackingInfo.h"
+#include "InteriorId.h"
 
 namespace ExampleApp
 {
@@ -16,9 +20,11 @@ namespace ExampleApp
                 class ISenionLabLocationManager
                 {
                 public:
-                    virtual void StartUpdatingLocation(const std::string& apiKey,
-                                                       const std::string& apiSecret,
-                                                       const std::map<int, std::string>& floorMap) = 0;
+                    virtual void StartUpdatingLocation(const std::string& apiSecret,
+                                                       const Eegeo::Resources::Interiors::InteriorId currentInterior,
+                                                       const std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& senionInfoMap,
+                                                       const std::map<std::string, std::map<int, std::string> >& floorMaps,
+                                                       const std::map<std::string, Eegeo::Resources::Interiors::InteriorId>& interiorIds) = 0;
                     virtual void StopUpdatingLocation() = 0;
                 };
             }

@@ -1,10 +1,13 @@
 // Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
 #include <jni.h>
+#include <map>
 #include <sstream>
+#include <vector>
 
 #include "AndroidAppThreadAssertionMacros.h"
 #include "AndroidNativeState.h"
+#include "ApplicationConfiguration.h"
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
 #include "SenionLabLocationService.h"
@@ -63,13 +66,13 @@ namespace ExampleApp
                     env->DeleteGlobalRef(m_locationManagerClass);
                 }
 
-                void SenionLabLocationManager::StartUpdatingLocation(const std::string& apiKey,
-                                                                     const std::string& apiSecret,
-                                                                     const std::map<int, std::string>& floorMap)
+                void SenionLabLocationManager::StartUpdatingLocation(const std::string& apiSecret,
+                                                                     const Eegeo::Resources::Interiors::InteriorId currentInterior,
+                                                                     const std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& senionInfoMap,
+                                                                     const std::map<std::string, std::map<int, std::string> >& floorMaps,
+                                                                     const std::map<std::string, Eegeo::Resources::Interiors::InteriorId>& interiorIds)
                 {
                     ASSERT_NATIVE_THREAD
-
-                    m_floorMap = floorMap;
 
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
@@ -78,7 +81,15 @@ namespace ExampleApp
                                                                        "startUpdatingLocation",
                                                                        "(Ljava/lang/String;Ljava/lang/String;)V");
 
-                    jstring apiKeyJString = env->NewStringUTF(apiKey.c_str());
+                    std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator interiorEntry = senionInfoMap.find(currentInterior.Value());
+                    if (interiorEntry == senionInfoMap.cend())
+                    {
+                        return;
+                    }
+                    const auto& interiorInfo = interiorEntry->second;
+
+                    m_floorMap = interiorInfo.GetFloorIndexMap();
+                    jstring apiKeyJString = env->NewStringUTF(interiorInfo.GetConfig().GetApiKey().c_str());
                     jstring apiSecretJString = env->NewStringUTF(apiSecret.c_str());
                     env->CallVoidMethod(m_locationManagerInstance,
                                         startUpdatingLocation,
