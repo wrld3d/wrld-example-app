@@ -1,4 +1,4 @@
-set(headers ${headers} ../src/InteriorsPosition/SdkModel/SenionLab
+set(headers ${headers} ../src/InteriorsPosition/SdkModel/IndoorAtlas
 )
 set(currsources
   ../src/InteriorsPosition/SdkModel/IndoorAtlas/CMakeLists.txt

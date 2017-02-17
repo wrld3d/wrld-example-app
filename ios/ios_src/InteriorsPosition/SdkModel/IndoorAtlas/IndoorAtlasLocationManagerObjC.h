@@ -9,13 +9,13 @@
 #include <map>
 #include <string>
 
-@interface IndoorAtlasLocationManager : NSObject
+@interface IndoorAtlasLocationManagerObjC : NSObject
 
--(instancetype) Init: (ExampleApp::IndoorAtlas::IndoorAtlasLocationService*) indoorAtlasLocationService
+-(instancetype) init: (ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationService*) indoorAtlasLocationService
   iOSAlertBoxFactory: (Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory;
--(void) StartUpdatingLocation: (NSString*) apiKey
+-(void) startUpdatingLocation: (NSString*) apiKey
                     apiSecret: (NSString*) apiSecret
                      floorMap: (std::map<int, std::string>) floorMap;
--(void) StopUpdatingLocation;
+-(void) stopUpdatingLocation;
 
 @end

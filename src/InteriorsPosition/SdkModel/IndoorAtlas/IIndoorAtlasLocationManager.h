@@ -16,6 +16,8 @@ namespace ExampleApp
                 class IIndoorAtlasLocationManager
                 {
                 public:
+                    virtual ~IIndoorAtlasLocationManager() { }
+                    
                     virtual void StartUpdatingLocation(const std::string& apiKey,
                                                        const std::string& apiSecret,
                                                        const std::map<int, std::string>& floorMap) = 0;

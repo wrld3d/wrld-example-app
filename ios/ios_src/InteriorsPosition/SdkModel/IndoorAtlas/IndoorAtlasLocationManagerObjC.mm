@@ -1,5 +1,5 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
-#import "IndoorAtlasLocationManager.h"
+#import "IndoorAtlasLocationManagerObjC.h"
 #import <IndoorAtlas/IALocationManager.h>
 #include "LatLongAltitude.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
@@ -18,22 +18,22 @@ private:
     T* m_pContext;
 };
 
-typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
+typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
 
-@interface IndoorAtlasLocationManager()<IALocationManagerDelegate>
+@interface IndoorAtlasLocationManagerObjC()<IALocationManagerDelegate>
 {
     std::map<int, std::string> m_floorMap;
-    ExampleApp::IndoorAtlas::IndoorAtlasLocationService* m_pIndoorAtlasLocationService;
+    ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationService* m_pIndoorAtlasLocationService;
     Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory *m_piOSAlertBoxFactory;
     FailureHandlerType *m_failureHandlerWrapper;
-    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<IndoorAtlasLocationManager> > *m_failAlertHandler;
+    Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<IndoorAtlasLocationManagerObjC> > *m_failAlertHandler;
 }
 @property (nonatomic, strong) IALocationManager *locationManager;
 @end
 
-@implementation IndoorAtlasLocationManager
+@implementation IndoorAtlasLocationManagerObjC
 
--(instancetype) Init: (ExampleApp::IndoorAtlas::IndoorAtlasLocationService*) indoorAtlasLocationService
+-(instancetype) init: (ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationService*) indoorAtlasLocationService
   iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
 {
     if(self = [super init])
@@ -41,13 +41,13 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
         m_pIndoorAtlasLocationService = indoorAtlasLocationService;
         m_piOSAlertBoxFactory = iOSAlertBoxFactory;
         m_failureHandlerWrapper = new FailureHandlerType(self);
-        m_failAlertHandler = new Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<IndoorAtlasLocationManager> >(m_failureHandlerWrapper, &FailureHandlerType::HandleFailure);
+        m_failAlertHandler = new Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<IndoorAtlasLocationManagerObjC> >(m_failureHandlerWrapper, &FailureHandlerType::HandleFailure);
     }
     
     return self;
 }
 
--(void) StartUpdatingLocation: (NSString*) apiKey
+-(void) startUpdatingLocation: (NSString*) apiKey
                     apiSecret: (NSString*) apiSecret
                      floorMap: (std::map<int, std::string>) floorMap
 {
@@ -57,19 +57,22 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
     
     m_floorMap = floorMap;
     
+    m_pIndoorAtlasLocationService->SetIsAuthorized(true);
     Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0, 0);
     m_pIndoorAtlasLocationService->SetLocation(latLong);
     
     [self.locationManager startUpdatingLocation];
 }
 
--(void) StopUpdatingLocation
+-(void) stopUpdatingLocation
 {
     [self.locationManager stopUpdatingLocation];
 }
 
 -(void) dealloc
 {
+    m_pIndoorAtlasLocationService->SetIsAuthorized(false);
+    
     [self.locationManager stopUpdatingLocation];
     self.locationManager.delegate = nil;
     delete m_failAlertHandler;
@@ -79,6 +82,8 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
 
 -(void) indoorLocationManager: (IALocationManager*) manager didUpdateLocations: (NSArray*) locations
 {
+    m_pIndoorAtlasLocationService->SetIsAuthorized(true);
+    
     CLLocation *l = [(IALocation*)locations.lastObject location];
     Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(l.coordinate.latitude, l.coordinate.longitude);
     m_pIndoorAtlasLocationService->SetLocation(latLong);
@@ -86,6 +91,8 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
 
 -(void) indoorLocationManager: (IALocationManager*) manager didEnterRegion: (IARegion*) region
 {
+    m_pIndoorAtlasLocationService->SetIsAuthorized(true);
+    
     NSString* floorPlanId = region.identifier;
     
     int floorIndex = [self getFloorIndexFromFloorPlanId: std::string([floorPlanId UTF8String])];
