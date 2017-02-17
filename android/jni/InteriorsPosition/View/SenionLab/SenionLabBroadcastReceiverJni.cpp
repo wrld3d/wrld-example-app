@@ -3,8 +3,8 @@
 #include <jni.h>
 
 #include "AndroidAppThreadAssertionMacros.h"
-#include "SenionLabBroadCastReceiver.h"
-#include "SenionLabBroadCastReceiverJni.h"
+#include "SenionLabBroadcastReceiver.h"
+#include "SenionLabBroadcastReceiverJni.h"
 
 extern "C"
 {
