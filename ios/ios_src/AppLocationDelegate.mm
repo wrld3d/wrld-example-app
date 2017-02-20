@@ -105,24 +105,7 @@ AppLocationDelegate* m_pAppLocationDelegate;
         m_piOSLocationService->FailedToGetHeading();
     }
     else
-    {
-        if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeLeft)
-        {
-            heading -= 90.f;
-        }
-        else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationLandscapeRight)
-        {
-            heading += 90.f;
-        }
-        else if (m_pUIViewController.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
-        {
-            heading += 180.f;
-        }
-        else
-        {
-            heading += 0.f;
-        }
-        
+    {        
         heading = fmodf((heading + 360.f), 360.f);
         m_piOSLocationService->UpdateHeading(heading);
     }
