@@ -31,7 +31,7 @@ namespace ExampleApp
                                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                        CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
                                        Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                       bool setHeading)
+                                       bool isInKioskMode)
                 : m_navigationService(navigationService)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_locationService(locationService)
@@ -46,7 +46,7 @@ namespace ExampleApp
                 , m_exitInteriorTriggered(false)
                 , m_cameraTransitionService(cameraTransitionService)
                 , m_interiorsCameraController(interiorsCameraController)
-                , m_setHeading(setHeading)
+                , m_isInKioskMode(isInKioskMode)
             {
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeOff] = GpsMode::GpsDisabled;
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeFollow] = GpsMode::GpsFollow;
@@ -189,7 +189,7 @@ namespace ExampleApp
                                                                         floorIndex,
                                                                         true,
                                                                         false,
-                                                                        m_setHeading,
+                                                                        m_isInKioskMode,
                                                                         false);
                         }
                     }
@@ -250,7 +250,7 @@ namespace ExampleApp
             void CompassModel::OnAppModeChanged()
             {
                 const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
-                if (appMode != AppModes::SdkModel::WorldMode)
+                if (appMode != AppModes::SdkModel::WorldMode && !m_isInKioskMode)
                 {
                     DisableGpsMode();
                     return;
@@ -264,13 +264,13 @@ namespace ExampleApp
             
             void CompassModel::OnFailedToGetLocation()
             {
-                Eegeo_TTY("Failed to get comapass loation");
+                Eegeo_TTY("Failed to get compass location");
             }
 
             float CompassModel::GetIndoorsHeadingRadians() const
             {
                 double heading;
-                return m_setHeading && m_locationService.GetHeadingDegrees(heading)
+                return m_isInKioskMode && m_locationService.GetHeadingDegrees(heading)
                     ? Eegeo::Math::Deg2Rad(heading)
                     : GetHeadingRadians();
             }

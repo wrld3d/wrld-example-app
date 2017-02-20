@@ -14,10 +14,12 @@ namespace ExampleApp
             CompassViewModule::CompassViewModule(
                 WindowsNativeState& nativeState,
                 ICompassViewModel& viewModel,
-                ExampleAppMessaging::TMessageBus& messageBus
+                ExampleAppMessaging::TMessageBus& messageBus,
+                bool isInKioskMode
             )
             {
-                m_pView = Eegeo_NEW(CompassView)(nativeState);
+                m_pView = Eegeo_NEW(CompassView)(nativeState,
+                                    isInKioskMode);
                 m_pController = Eegeo_NEW(CompassController)(
                                     *m_pView,
                                     viewModel,

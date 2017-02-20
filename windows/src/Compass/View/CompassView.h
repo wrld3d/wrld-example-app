@@ -36,7 +36,8 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<void> mAnimateToInactive;
 
             public:
-                CompassView(WindowsNativeState& nativeState);
+                CompassView(WindowsNativeState& nativeState,
+                    bool isInKioskMode);
                 ~CompassView();
 
                 void OnCycle();

@@ -34,6 +34,8 @@ namespace ExampleAppWPF
 
         bool m_isActive = false;
 
+        private bool m_isInKioskMode = false;
+
         private WindowInteractionTouchHandler m_touchHandler;
 
         static CompassView()
@@ -41,9 +43,10 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CompassView), new FrameworkPropertyMetadata(typeof(CompassView)));
         }
 
-        public CompassView(IntPtr nativeCallerPointer)
+        public CompassView(IntPtr nativeCallerPointer, bool isInKioskMode)
         {
             m_nativeCallerPointer = nativeCallerPointer;
+            m_isInKioskMode = isInKioskMode;
             
             Click += CompassView_Click;
             Loaded += PerformLayout;
@@ -52,7 +55,7 @@ namespace ExampleAppWPF
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
-            ShowGpsDisabledView();
+            
             m_touchHandler = new WindowInteractionTouchHandler(this, false, true, true);
         }
 
@@ -70,6 +73,8 @@ namespace ExampleAppWPF
             m_compassNewUnlocked.RenderTransform = new TranslateTransform((m_compassNew.Width - m_compassNewUnlocked.Width) / 2, (m_compassNew.Width - m_compassNewUnlocked.Height) / 2);
 
             var canvas = (Canvas)GetTemplateChild("ImageCanvas");
+
+            ShowGpsDisabledView();
         }
 
         public FrameworkElement GetCompassElement()
@@ -155,6 +160,11 @@ namespace ExampleAppWPF
 
         public void ShowGpsDisabledView()
         {
+            if (m_isInKioskMode)
+            {
+                EnableKioskCompassLocateButton(true);
+            }
+
             m_compassNewLocate.Visibility = Visibility.Visible;
             m_compassNewLocked.Visibility = Visibility.Hidden;
             m_compassNewUnlocked.Visibility = Visibility.Hidden;
@@ -162,16 +172,36 @@ namespace ExampleAppWPF
 
         public void ShowGpsFollowView()
         {
-            m_compassNewLocate.Visibility = Visibility.Hidden;
-            m_compassNewLocked.Visibility = Visibility.Visible;
-            m_compassNewUnlocked.Visibility = Visibility.Hidden;
+            if (m_isInKioskMode)
+            {
+                EnableKioskCompassLocateButton(false);
+            }
+            else
+            {
+                m_compassNewLocate.Visibility = Visibility.Hidden;
+                m_compassNewLocked.Visibility = Visibility.Visible;
+                m_compassNewUnlocked.Visibility = Visibility.Hidden;
+            }
         }
 
         public void ShowGpsCompassModeView()
         {
-            m_compassNewLocate.Visibility = Visibility.Hidden;
-            m_compassNewLocked.Visibility = Visibility.Hidden;
-            m_compassNewUnlocked.Visibility = Visibility.Visible;
+            if(m_isInKioskMode)
+            {
+                EnableKioskCompassLocateButton(false);
+            }
+            else
+            {
+                m_compassNewLocate.Visibility = Visibility.Hidden;
+                m_compassNewLocked.Visibility = Visibility.Hidden;
+                m_compassNewUnlocked.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void EnableKioskCompassLocateButton(bool enable)
+        {
+            Opacity = enable ? 1.0f : 0.5f;
+            IsEnabled = enable;
         }
 
         public void NotifyGpsUnauthorized()

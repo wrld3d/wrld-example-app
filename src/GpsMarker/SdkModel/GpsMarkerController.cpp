@@ -122,7 +122,7 @@ namespace ExampleApp
                 m_anchorView.SetTransitionValue(m_viewTransitionParam);
                 m_anchorView.Update(dt);
                 
-                if(currentLocationEcef.LengthSq() == 0)
+                if(!Eegeo::dv3::IsFinite(currentLocationEcef) || currentLocationEcef.LengthSq() == 0)
                 {
                     return;
                 }

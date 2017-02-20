@@ -37,7 +37,7 @@ namespace ExampleApp
                 std::map<Eegeo::Location::NavigationService::GpsMode, GpsMode::Values> m_compassGpsModeToNavigationGpsMode;
                 std::map<GpsMode::Values, Eegeo::Location::NavigationService::GpsMode> m_navigationGpsModeToCompassGpsMode;
                 std::map<GpsMode::Values, const char*> m_gpsModeToString;
-                const bool m_setHeading;
+                const bool m_isInKioskMode;
                 
                 Metrics::IMetricsService& m_metricsService;
 
@@ -64,7 +64,7 @@ namespace ExampleApp
                              Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                              CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
                              Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                             bool setHeading);
+                             bool isInKioskMode);
 
                 ~CompassModel();
 

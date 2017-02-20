@@ -47,7 +47,7 @@ namespace ExampleApp
                               Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                               Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                               CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
-                              bool setHeading);
+                              bool isInkioskMode);
 
                 ~CompassModule();
 
