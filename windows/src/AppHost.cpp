@@ -543,7 +543,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(
         m_nativeState,
         app.CompassModule().GetCompassViewModel(),
-        m_messageBus
+        m_messageBus,
+        app.GetApplicationConfiguration().IsInKioskMode()
         );
 
 	m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
