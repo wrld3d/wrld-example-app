@@ -40,7 +40,7 @@
 /**
  Create the automatic wakeup SLIndoorLocationManager for one specific Map Key. This location manager will launch the app (if suspended) when entering the building if iOS wakeup is enabled on the installed beacons.
  
- To use this method 10 available monitored regions are required in CLLocationManager. Also, you need to enable both background and forground location updates. TODO: Link to page about background (currently front page)
+ To use this method 10 available monitored regions are required in CLLocationManager. Also, you need to enable both background and foreground location updates. Please review the "Background app launch" section on the page [iOS Authorization](ios-authorization.html) before using this method.
  
  @param mapKey Map Key (obtained from Senion).
  @param customerId Customer ID (obtained from Senion).
@@ -50,7 +50,7 @@
 /**
  Create the automatic wakeup SLIndoorLocationManager for multiple Map Keys. This location manager will launch the app (if suspended) when entering one of the buildings. Also, this location manager selects the current building (Map Key) automatically based on the beacons in range.
 
- To use this method 10 available monitored regions are required in CLLocationManager. Also, you need to enable both background and forground location updates. TODO: Link to page about background (currently front page)
+ To use this method 10 available monitored regions are required in CLLocationManager. Also, you need to enable both background and foreground location updates. Please review the "Background app launch" section on the page [iOS Authorization](ios-authorization.html) before using this method.
  
  @param mapKeys Array of Map Keys (obtained from Senion).
  @param customerId Customer ID (obtained from Senion).
@@ -74,12 +74,14 @@
 + (instancetype)mockupIndoorLocationManagerWithLocationStates:(NSArray<SLLocationState *> *)locationStates timeInterval:(NSTimeInterval)timeInterval;
 
 /**
+ @warning The use of this method have been deprecated and will be removed in a future release of the SDK. Please use ``defaultIndoorLocationMangerWithMapKey:customerId:`` instead.
+
  Init location manager using Map Key and Customer ID.
  
  @param mapKey Map Key (obtained from Senion).
  @param customerId Customer ID (obtained from Senion).
  */
-- (instancetype)initWithMapKey:(NSString *)mapKey andCustomerId:(NSString *)customerId;
+- (instancetype)initWithMapKey:(NSString *)mapKey andCustomerId:(NSString *)customerId __attribute__((deprecated("'initWithMapKey:andCustomerId:' has been deprecated, please use 'defaultIndoorLocationMangerWithMapKey:customerId:' instead")));
 
 /// @name Delegate
 
@@ -153,7 +155,7 @@
 /// @name Shortest path
 
 /**
- Get shortest path between two locations.
+ Get shortest path between two locations in the same building. This method does not work for multiple buildings and will only give you the shortest path for the building the user is currently inside.
  
  @note Note that this function is mainly for demonstrating a possible user navigation feature. Please contact Senion if you plan to use this feature in your app.
  
