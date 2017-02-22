@@ -100,9 +100,22 @@
 #include "WindowsProcessHelper.h"
 #include "GpsMarkerTutorialViewModule.h"
 #include "GpsMarkerModule.h"
+#include "IWebProxySettings.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
+
+namespace
+{
+    void SetWebProxySettings(Eegeo::Web::IWebProxySettings& webProxySettings, const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
+    {
+        if (applicationConfiguration.WebProxyEnabled())
+        {
+            webProxySettings.EnableProxy(applicationConfiguration.WebProxyIpAddress(), applicationConfiguration.WebProxyPort());
+            webProxySettings.AddProxyIgnorePattern(applicationConfiguration.WebProxyIgnorePattern());
+        }
+    }
+}
 
 AppHost::AppHost(
     WindowsNativeState& nativeState,
@@ -191,6 +204,7 @@ AppHost::AppHost(
         resourceBuildShareContext,
         shareSurface,
         applicationConfiguration.EegeoApiKey());
+    SetWebProxySettings(m_pWindowsPlatformAbstractionModule->GetProxySettings(), applicationConfiguration);
 
     Eegeo::EffectHandler::Initialise();
 
