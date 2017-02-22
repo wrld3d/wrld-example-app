@@ -2,7 +2,7 @@
 //  BuildingInfo.h
 //  SLIndoorLocation
 //
-//  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
+//  Copyright (c) 2010-2017, Senion AB. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,38 +14,13 @@
 @class FloorInfo;
 
 /**
- This class keeps information about the building the user is currently in and how the global
- properties of the building relate to the bitmap such as the long/lat location, orientation and scale.
+ This class keeps information about the building the user is currently in and how the global properties of the building relate to the bitmap such as the long/lat location, orientation and scale.
  
- ## Note
+ An example of how a JSON file should look like is available [here](../buildinginfo-json-example.html)
+ 
+ ### Note
  
  The map information in this class is used only for showing the user location on a bitmap image of the building. This class is not used by SLIndoorLocationManager and the navigation filter.
- 
- ## JSON file structure
- 
-    {
-        "mapInfo":{
-            "name":"Building name",
-            "dataDate":"2016-01-04_08-15-33.401_CET",
-            "venueId":"ab3b8b71-cbc5-4d08-b43a-88053232557c",
-            "mapId":"c0910068-b3c4-4338-a664-02f52ed90b7c",
-            "mapVersionId":"6f8b55b9-0f82-4c33-9a37-9443321c6f31",
-            "versionName":"20160104"
-        },
-        "floors":[
-            {
-                "floorName":"Floor 1",
-                "floorNr":0,
-                "bitmapFilename":"image_0.png",
-                "bitmapLocation":{"latitude":58.40934413324034,"longitude":15.622574970081972},
-                "bitmapOffset":{"x":0.0,"y":0.0},
-                "bitmapOrientation":-281.4722357389894,
-                "pixelsPerMeter":60.73715860755747,
-                "xMaxPixels":1313,
-                "yMaxPixels":1248
-            }
-        ]
-    }
  
  */
 @interface BuildingInfo : NSObject
@@ -55,7 +30,7 @@
 /**
  Init with JSON file.
  
- Store the building properties in a JSON file according to the section "JSON file structure" above. The JSON file is downloaded from SenionLab Developer Portal.
+ Store the building properties in a JSON file according to the section "JSON file structure" above. The JSON file is downloaded from Senion Developer Portal.
  
  @param bitmapJsonFilename The json file name.
  */
@@ -64,7 +39,7 @@
 /**
  Init with JSON NSData.
  
- The data must confirm to the "JSON file structure" above. A JSON file can be downloaded from SenionLab Developer Portal.
+ The data must confirm to the "JSON file structure" above. A JSON file can be downloaded from Senion Developer Portal.
  
  @param bitmapJsonData The json data.
  */
@@ -130,21 +105,21 @@
 /**
  The name of the building.
  */
-@property(readonly, nonatomic, strong) NSMutableString *name;
+@property (readonly, nonatomic, strong) NSMutableString *name;
 
 /**
  The date when the building info file was created.
  */
-@property(readonly, nonatomic, strong) NSMutableString *dataDate;
+@property (readonly, nonatomic, strong) NSMutableString *dataDate;
 
 /**
  The dictionary containing the floorInfo of all floors. The key is a NSNumber with the floorNr of that floor.
  */
-@property (nonatomic, strong) NSDictionary *floorInfoList;
+@property (readonly, nonatomic, strong) NSDictionary *floorInfoList;
 
 /**
  The list containing the floorNr of all floors. This list should be ordered and the first floorNr is the lowest floor in the building.
  */
-@property (nonatomic, strong) NSMutableArray *floorNrArray;
+@property (readonly, nonatomic, strong) NSMutableArray *floorNrArray;
  
 @end

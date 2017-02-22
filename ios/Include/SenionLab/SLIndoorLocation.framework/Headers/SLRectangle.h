@@ -2,7 +2,7 @@
 //  SLRectangle.h
 //  SLIndoorLocation
 //
-//  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
+//  Copyright (c) 2010-2017, Senion AB. All rights reserved.
 //
 
 #import "SLParallelogram.h"
@@ -11,7 +11,7 @@
  Class used to define a geofencing area in form of a rectangle.
  The coordinates that needs to be supplied is marked in the figure below.
  
- ![Image Alt](../../../doc_template/images/rectangle.jpg)
+ ![Image Alt](../img/rectangle.jpg)
  */
 @interface SLRectangle : SLParallelogram
 

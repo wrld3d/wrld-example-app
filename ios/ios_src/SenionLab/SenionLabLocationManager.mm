@@ -2,6 +2,7 @@
 #import "SenionLabLocationManager.h"
 #import <SLIndoorLocation/SLCoordinate3D.h>
 #import <SLIndoorLocation/SLIndoorLocationManager.h>
+#import <SLIndoorLocation/SLSenionLocationSource.h>
 #include "LatLongAltitude.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "AppHost.h"
@@ -27,7 +28,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     std::map<int, std::string> m_floorMap;
     int m_floorIndex;
     ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService* m_pSenionLabLocationService;
-    SLLocationStatus m_lastLocationStatus;
+    SLLocationAvailability m_lastLocationAvailability;
     Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory *m_piOSAlertBoxFactory;
     FailureHandlerType *m_failureHandlerWrapper;
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<SenionLabLocationManager>> *m_failAlertHandler;
@@ -42,7 +43,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
   iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
           messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus
 {
-    m_lastLocationStatus = SLLocationStatus::SLLocationStatusUnconfirmed;
+    m_lastLocationAvailability = SLLocationAvailabilityNotAvailable;
     if(self = [super init])
     {
         m_pSenionLabLocationService = senionLabLocationService;
@@ -60,7 +61,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
                      floorMap: (std::map<int, std::string>) floorMap
 {
     [SLIndoorLocationManager setIbeaconAuthorizationMethod:SLRequestWhenInUseAuthorization];
-    self.locationManager = [[SLIndoorLocationManager alloc] initWithMapKey:apiKey andCustomerId:apiSecret];
+    self.locationManager = [SLIndoorLocationManager defaultIndoorLocationMangerWithMapKey:apiKey customerId:apiSecret];
     self.locationManager.delegate = self;
     
     m_floorMap = floorMap;
@@ -87,19 +88,32 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     m_pSenionLabLocationService->SetIsAuthorized(true);
 }
 
--(void) didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius andStatus:(SLLocationStatus)locationStatus
+-(void) didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius
 {
-    m_pSenionLabLocationService->SetIsAuthorized(true);
-    
-    Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude);
-    m_pSenionLabLocationService->SetLocation(latLong);
-    
-    int floorIndex = [self getFloorIndexFromSenionFloorIndex:std::to_string(location.floorNr)];
-    m_pSenionLabLocationService->SetFloorIndex(floorIndex);
-    if(locationStatus != m_lastLocationStatus)
+}
+
+-(void) didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius locationSource:(SLLocationSource *)locationSource
+{
+    if(locationSource != nil && [locationSource isKindOfClass:[SLSenionLocationSource class]])
     {
-        m_lastLocationStatus = locationStatus;
-        if(locationStatus == SLLocationStatusUnconfirmed)
+        m_pSenionLabLocationService->SetIsAuthorized(true);
+        
+        Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude);
+        m_pSenionLabLocationService->SetLocation(latLong);
+        
+        int floorIndex = [self getFloorIndexFromSenionFloorIndex:std::to_string(location.floorNr)];
+        m_pSenionLabLocationService->SetFloorIndex(floorIndex);
+        
+        m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, location.floorNr, location.latitude, location.longitude));
+    }
+}
+
+-(void) didUpdateLocationAvailability:(SLLocationAvailability)locationAvailability
+{
+    if(locationAvailability != m_lastLocationAvailability)
+    {
+        m_lastLocationAvailability = locationAvailability;
+        if(locationAvailability == SLLocationAvailabilityNotAvailable)
         {
             m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
             (
@@ -108,7 +122,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
              *m_failAlertHandler
              );
         }
-        if(locationStatus == SLLocationStatusConfirmed)
+        if(locationAvailability == SLLocationAvailabilityAvailable)
         {
             m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
             (
@@ -118,8 +132,6 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
              );
         }
     }
-    
-    m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, location.floorNr, location.latitude, location.longitude));
 }
 
 -(void) didUpdateHeading:(double)heading withStatus:(BOOL)status

@@ -2,7 +2,7 @@
 //  SLPixelPoint3D.h
 //  SLIndoorLocation
 //
-//  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
+//  Copyright (c) 2010-2017, Senion AB. All rights reserved.
 //
 
 #import "SLPixelPoint2D.h"

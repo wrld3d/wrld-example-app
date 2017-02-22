@@ -2,7 +2,7 @@
 //  SLLocationState.h
 //  SLIndoorLocation
 //
-//  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
+//  Copyright (c) 2010-2017, Senion AB. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -11,36 +11,50 @@
 @class SLCoordinate3D;
 
 /**
- THis class represent a location with it's coordinate, uncertaintyRadius and status.
+ This class represent a location with it's coordinate and uncertaintyRadius.
+ 
+ @note The use of [SLLocationStatus](../Enums/SLLocationStatus.html) in this class have been deprecated and will be removed in a future release of the SDK.
  */
 @interface SLLocationState : NSObject
 
 /// @name Initializers
 
 /**
- Initialize a SLLocationState
+Initialize a SLLocationState.
+
+@param location The location.
+@param locationUncertaintyRadius The uncertainty radius for the location.
+*/
+- (instancetype)initWithLocation:(SLCoordinate3D *)location andLocationUncertainty:(double)locationUncertaintyRadius;
+
+/**
+ @warning The use of this initializer have been deprecated and will be removed in a future release of the SDK.
  
- @param location the location
- @param locationUncertaintyRadius the uncertainty radius for the location
- @param locationStatus the status of the location
+ Initialize a SLLocationState.
+ 
+ @param location The location.
+ @param locationUncertaintyRadius The uncertainty radius for the location.
+ @param locationStatus The status of the location.
  */
-- (instancetype)initWithLocation:(SLCoordinate3D *)location andLocationUncertainty:(double)locationUncertaintyRadius andLocationStatus:(SLLocationStatus)locationStatus;
+- (instancetype)initWithLocation:(SLCoordinate3D *)location andLocationUncertainty:(double)locationUncertaintyRadius andLocationStatus:(SLLocationStatus)locationStatus __attribute__((deprecated));
 
 /// @name Properties
 
 /**
- Current location
+ Current location.
  */
 @property (nonatomic, strong) SLCoordinate3D* location;
 
 /**
- Current uncertainty in [m]
+ Current uncertainty in [m].
  */
 @property (nonatomic) double locationUncertaintyRadius;
 
 /**
+ NOTE! The use of this property have been deprecated and will be removed in a future release of the SDK.
+ 
  Current location status.
  */
-@property (nonatomic) SLLocationStatus locationStatus;
+@property (nonatomic) SLLocationStatus locationStatus __attribute__((deprecated));
 
 @end

@@ -2,7 +2,7 @@
 //  SLIndoorLocation.h
 //  SLIndoorLocation
 //
-//  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
+//  Copyright (c) 2010-2017, Senion AB. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,6 +14,8 @@
     #import "SLIndoorLocationManager.h"
     #import "SLIndoorLocationManagerDelegate.h"
     #import "SLIndoorLocationEnums.h"
+    #import "SLLocationSource.h"
+    #import "SLSenionLocationSource.h"
     #import "SLCacheHandler.h"
 
     #import "BuildingInfo.h"
@@ -27,8 +29,10 @@
     #import "SLPoint2D.h"
     #import "SLPoint3D.h"
 
-    #import "SLGeomessenger.h"
-    #import "SLGeomessengerDelegate.h"
+    #import "SLGeoMessenger.h"
+    #import "SLGeoMessengerDelegate.h"
+    #import "SLGeoMessengerZone.h"
+    #import "SLGeoMessengerMessage.h"
 
     #import "SLGeofencing.h"
     #import "SLGeofencingDelegate.h"

@@ -2,7 +2,7 @@
 //  SLCoordinate3D.h
 //  SLIndoorLocation
 //
-//  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
+//  Copyright (c) 2010-2017, Senion AB. All rights reserved.
 //
 
 #import "SLCoordinate2D.h"
@@ -30,12 +30,6 @@
  @param coordinate A coordinate
  */
 - (instancetype)initWithSLCoordinate3D:(SLCoordinate3D *)coordinate;
-
-- (NSDictionary *)writeObjectToDictionary;
-
-+ (SLCoordinate3D *)readObjectFromDictionary:(NSDictionary *)dict;
-
-- (BOOL)isEqualToSLCoordinate3D:(SLCoordinate3D *)p withAccuracy:(double)tol;
 
 /// @name Properties
 

@@ -2,14 +2,13 @@
 //  SLGeofencingListener.h
 //  SLIndoorLocation
 //
-//  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
+//  Copyright (c) 2010-2017, Senion AB. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "SLGeometry.h"
 
 /**
- @protocol SLGeofencingDelegate
  To receive notifications for geofencing, this protocol must be implemented.
  */
 @protocol SLGeofencingDelegate <NSObject>
