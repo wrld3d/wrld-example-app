@@ -240,6 +240,15 @@ namespace ExampleApp
                 repository.AddItem(t);
             }
         }
+        
+        void SetWebProxySettings(Eegeo::Web::IWebProxySettings& webProxySettings, const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
+        {
+            if (applicationConfiguration.WebProxyEnabled())
+            {
+                webProxySettings.EnableProxy(applicationConfiguration.WebProxyIpAddress(), applicationConfiguration.WebProxyPort());
+                webProxySettings.AddProxyIgnorePattern(applicationConfiguration.WebProxyIgnorePattern());
+            }
+        }
     }
     
     MobileExampleApp::MobileExampleApp(
@@ -332,6 +341,8 @@ namespace ExampleApp
     , m_pGlobalAppModeTransitionRules(NULL)
     {
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
+        
+        SetWebProxySettings(m_platformAbstractions.GetProxySettings(), applicationConfiguration);
         
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(applicationConfiguration.EegeoApiKey(),
                                                 m_platformAbstractions,
