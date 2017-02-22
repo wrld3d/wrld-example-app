@@ -1143,6 +1143,11 @@ if $(ConfigurationName) == Debug (
   xcopy "$(ProjectDir)..\..\libs\eegeo\VS2012\x64\$(ConfigurationName)\msvcr110.dll" "$(TargetDir)" /d /r /y
 )</PostBuildEvent>
   </PropertyGroup>
+
+  <Target Name="distclean" DependsOnTargets="Clean">
+      <RemoveDir Directories="$(OutputPath)" />
+  </Target>
+
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
