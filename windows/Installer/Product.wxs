@@ -1199,18 +1199,6 @@
 	  <Component Id="_996a0a57.7a0a.4f0f.a553.54afb9bdfcf5" Directory="RESOURCEFOLDER" Guid="{666df356-6767-45a2-ae91-ba28dc5dbfd4}">
 		<File Id="_81c82444.b5dd.4a8e.8b53.7e1fb9e6e2f7" KeyPath="yes" Source="payload\Resources\swallow_search_tags.json" />
 	  </Component>
-	  <Component Id="_7e26f435.c836.4a18.92d0.d7487ccd520c" Directory="APPCONFIGFOLDER" Guid="{f4121083-80e9-4fd1-8101-97191f900198}">
-		<File Id="_7509840b.926f.4815.bd2e.df374765b445" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\.gitignore" />
-	  </Component>
-	  <Component Id="_f7c07595.6459.40cb.a5b3.75dfe1ccf104" Directory="APPCONFIGFOLDER" Guid="{df5f3d3c-4a31-48b9-883d-e6532720f554}">
-		<File Id="_abfd9d0a.fca3.482f.bcca.7ff5d6896bad" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\project_swallow_config.json" />
-	  </Component>
-	  <Component Id="_046cc681.0452.42bc.9576.37a8028a53ef" Directory="APPCONFIGFOLDER" Guid="{8887119a-3fb7-498c-ace2-a9444d5d073e}">
-		<File Id="_68ae64e2.0cd5.4adc.831b.17017f97d7cf" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\project_swallow_production_config.json" />
-	  </Component>
-	  <Component Id="_7fe0b8f1.b0c9.4ad2.b28d.6a9bb6d3b4c7" Directory="APPCONFIGFOLDER" Guid="{57a95988-df94-42ec-b812-e62a72b03a23}">
-		<File Id="_158190e8.eb27.4f8b.938e.654e6ec9b2b4" KeyPath="yes" Source="payload\Resources\ApplicationConfigs\standard_config.json" />
-	  </Component>
 	  <Component Id="_9d916d55.ff00.41e0.97eb.5ab1894e3d8e" Directory="THEMEFOLDER" Guid="{901e81c9-a966-42a0-862c-f8a09025f1a1}">
 		<File Id="_7e129572.00eb.43e0.88de.af6cf2e4957d" KeyPath="yes" Source="payload\Resources\EmbeddedTheme\SanFrancisco_SanFran_roadDiffuse_repeat.dds" />
 	  </Component>
