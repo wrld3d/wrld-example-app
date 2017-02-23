@@ -32,6 +32,7 @@ namespace ExampleApp
             ~SenionLabLocationModule();
             
             InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService& GetLocationService() { return m_locationService; }
+            InteriorsPosition::SdkModel::SenionLab::SenionLabLocationController& GetLocationController() { return m_locationController; }
             
         private:
             InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService m_locationService;

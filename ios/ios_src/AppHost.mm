@@ -176,13 +176,6 @@ AppHost::AppHost(
     
     Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
     Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-    m_pIndoorAtlasLocationModule = Eegeo_NEW(ExampleApp::IndoorAtlas::IndoorAtlasLocationModule)(m_pApp->GetAppModeModel(),
-                                                                                                 interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                                 interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                 mapModule.GetEnvironmentFlatteningService(),
-                                                                                                 applicationConfiguration,
-                                                                                                 *m_piOSLocationService);
-    
     m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
                                                                                            interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
@@ -191,17 +184,9 @@ AppHost::AppHost(
                                                                                            *m_piOSLocationService,
                                                                                            m_iOSAlertBoxFactory,
                                                                                            m_messageBus);
-    
-
-   std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()},
-                                                                                      {"IndoorAtlas", m_pIndoorAtlasLocationModule->GetLocationService()}};
-    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration.InteriorTrackingInfo(),
-                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
-                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                                               *m_pCurrentLocationService,
-                                                                                                                               *m_piOSLocationService,
-                                                                                                                               interiorLocationServices,
-                                                                                                                               m_messageBus);
+    m_pSenionLabLocationModule->GetLocationController().SetShouldObserveAppModeChange(false);
+    m_pSenionLabLocationModule->GetLocationController().StartUpdatingLocation();
+    m_pCurrentLocationService->SetLocationService(m_pSenionLabLocationModule->GetLocationService());
     
     CreateApplicationViewModules(screenProperties,applicationConfiguration);
 
@@ -241,12 +226,7 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pInitialExperienceModule;
     m_pInitialExperienceModule = NULL;
     
-    Eegeo_DELETE m_pInteriorsLocationServiceProvider;
-    m_pInteriorsLocationServiceProvider = NULL;
-    
-    Eegeo_DELETE m_pIndoorAtlasLocationModule;
-    m_pIndoorAtlasLocationModule = NULL;
-    
+    m_pSenionLabLocationModule->GetLocationController().StopUpdatingLocation();
     Eegeo_DELETE m_pSenionLabLocationModule;
     m_pSenionLabLocationModule = NULL;
     

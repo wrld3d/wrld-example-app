@@ -94,7 +94,6 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     m_pSenionLabLocationService->SetIsAuthorized(true);
 }
 
-//for the current Senion beta SDK (4.11.0) this needs to be here but isn't called
 -(void) didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius
 {
 }
@@ -142,6 +141,9 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
              "Recently lost connection to Senion.",
              *m_failAlertHandler
              );
+            
+            m_pSenionLabLocationService->SetIsConnected(false);
+            m_messageBus->Publish(ExampleApp::AboutPage::AboutPageIndoorPositionTypeMessage("\nIndoor positioning type: GPS"));
         }
         if(locationAvailability == SLLocationAvailabilityAvailable)
         {
@@ -151,6 +153,9 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
              "Recently connected to Senion indoor positioning.",
              *m_failAlertHandler
              );
+            
+            m_pSenionLabLocationService->SetIsConnected(true);
+            m_messageBus->Publish(ExampleApp::AboutPage::AboutPageIndoorPositionTypeMessage("\nIndoor positioning type: Senion"));
         }
     }
 }

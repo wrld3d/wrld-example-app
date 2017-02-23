@@ -39,6 +39,7 @@ namespace ExampleApp
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_trackingInfoMap(FilterSenionInteriorInfo(trackingInfoMap))
                 , m_appModeChangedCallback(this, &SenionLabLocationController::OnAppModeChanged)
+                , m_observeAppModeChange(true)
                 {
                     for (const auto& idAndEntry : m_trackingInfoMap)
                     {
@@ -56,22 +57,50 @@ namespace ExampleApp
                     m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
                 }
                 
-                void SenionLabLocationController::OnAppModeChanged()
+                void SenionLabLocationController::StartUpdatingLocation()
                 {
                     Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-
-                    m_locationManager.StopUpdatingLocation();
-                 
-                    if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                    
+                    if (!m_trackingInfoMap.empty())
                     {
-                        if (!m_trackingInfoMap.empty())
+                        const std::string& apiSecret(m_trackingInfoMap.begin()->second.GetConfig().GetApiSecret());
+                        m_locationManager.StartUpdatingLocation(apiSecret,
+                                                                interiorId,
+                                                                m_trackingInfoMap,
+                                                                m_floorMaps,
+                                                                m_interiorIds);
+                    }
+                }
+                
+                void SenionLabLocationController::StopUpdatingLocation()
+                {
+                    m_locationManager.StopUpdatingLocation();
+                }
+                
+                void SenionLabLocationController::SetShouldObserveAppModeChange(bool observeAppModeChange)
+                {
+                    m_observeAppModeChange = observeAppModeChange;
+                }
+                
+                void SenionLabLocationController::OnAppModeChanged()
+                {
+                    if(m_observeAppModeChange)
+                    {
+                        Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
+
+                        m_locationManager.StopUpdatingLocation();
+                 
+                        if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
                         {
-                            const std::string& apiSecret(m_trackingInfoMap.begin()->second.GetConfig().GetApiSecret());
-                            m_locationManager.StartUpdatingLocation(apiSecret,
-                                                                    interiorId,
-                                                                    m_trackingInfoMap,
-                                                                    m_floorMaps,
-                                                                    m_interiorIds);
+                            if (!m_trackingInfoMap.empty())
+                            {
+                                const std::string& apiSecret(m_trackingInfoMap.begin()->second.GetConfig().GetApiSecret());
+                                m_locationManager.StartUpdatingLocation(apiSecret,
+                                                                        interiorId,
+                                                                        m_trackingInfoMap,
+                                                                        m_floorMaps,
+                                                                        m_interiorIds);
+                            }
                         }
                     }
                 }
