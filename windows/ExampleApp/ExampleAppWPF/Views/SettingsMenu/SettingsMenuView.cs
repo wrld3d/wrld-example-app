@@ -19,6 +19,8 @@ namespace ExampleAppWPF
         private MenuListAdapter m_adapter;
         private ControlClickHandler m_menutItemHandler;
 
+        private WindowInteractionTouchHandler m_touchHandler;
+
         static SettingsMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SettingsMenuView), new FrameworkPropertyMetadata(typeof(SettingsMenuView)));
@@ -30,7 +32,7 @@ namespace ExampleAppWPF
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
             Loaded += SettingsMenuView_Loaded;
-            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
+            m_touchHandler = new WindowInteractionTouchHandler(this, false, true, true);
         }
 
         private void SettingsMenuView_Loaded(object sender, RoutedEventArgs e)
