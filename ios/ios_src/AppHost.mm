@@ -188,6 +188,11 @@ AppHost::AppHost(
     m_pSenionLabLocationModule->GetLocationController().StartUpdatingLocation();
     m_pCurrentLocationService->SetLocationService(m_pSenionLabLocationModule->GetLocationService());
     
+    m_pInteriorsLocationServiceController = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceController)(*m_pCurrentLocationService,
+                                                                                                                                   interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                                                   m_pApp->CameraTransitionController(),
+                                                                                                                                   m_pApp->CompassModule().GetCompassModel());
+    
     CreateApplicationViewModules(screenProperties,applicationConfiguration);
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
@@ -225,6 +230,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pInitialExperienceModule;
     m_pInitialExperienceModule = NULL;
+    
+    Eegeo_DELETE m_pInteriorsLocationServiceController;
+    m_pInteriorsLocationServiceController = NULL;
     
     m_pSenionLabLocationModule->GetLocationController().StopUpdatingLocation();
     Eegeo_DELETE m_pSenionLabLocationModule;
@@ -281,6 +289,8 @@ void AppHost::Update(float dt)
 
     m_pApp->Update(dt);
     m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
+    
+    m_pInteriorsLocationServiceController->Update();
 
     m_messageBus.FlushToUi();
     m_messageBus.FlushToNative();

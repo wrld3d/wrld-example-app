@@ -59,7 +59,7 @@
 #include "AlwaysActiveUserIdleService.h"
 #include "CurrentLocationService.h"
 #include "SenionLabLocationModule.h"
-#include "InteriorsLocationServiceProvider.h"
+#include "InteriorsLocationServiceModule.h"
 #include "SenionLabBroadcastReceiver.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
@@ -163,7 +163,7 @@ private:
     Eegeo::Input::AlwaysActiveUserIdleService m_userIdleService;
 
     ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
-    ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider* m_pInteriorsLocationServiceProvider;
+    ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule* m_pInteriorsLocationServiceModule;
     ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver* m_pSenionLabBroadcastReceiver;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();

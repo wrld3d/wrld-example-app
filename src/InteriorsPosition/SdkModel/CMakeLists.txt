@@ -2,6 +2,10 @@ set(headers ${headers} ../src/InteriorsPosition/SdkModel
 )
 set(currsources
   ../src/InteriorsPosition/SdkModel/CMakeLists.txt
+  ../src/InteriorsPosition/SdkModel/InteriorsLocationServiceController.cpp
+  ../src/InteriorsPosition/SdkModel/InteriorsLocationServiceController.h
+  ../src/InteriorsPosition/SdkModel/InteriorsLocationServiceModule.cpp
+  ../src/InteriorsPosition/SdkModel/InteriorsLocationServiceModule.h
   ../src/InteriorsPosition/SdkModel/InteriorsLocationServiceProvider.cpp
   ../src/InteriorsPosition/SdkModel/InteriorsLocationServiceProvider.h
 )

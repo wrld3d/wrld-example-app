@@ -31,8 +31,6 @@ namespace ExampleApp
                                        InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                                        AppModes::SdkModel::IAppModeModel& appModeModel,
                                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                                       CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
-                                       Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                                        bool isInKioskMode)
                 : m_navigationService(navigationService)
                 , m_interiorInteractionModel(interiorInteractionModel)
@@ -46,8 +44,6 @@ namespace ExampleApp
                 , m_failAlertHandler(this, &CompassModel::OnFailedToGetLocation)
                 , m_interiorFloorChangedCallback(this, &CompassModel::OnInteriorFloorChanged)
                 , m_exitInteriorTriggered(false)
-                , m_cameraTransitionService(cameraTransitionService)
-                , m_interiorsCameraController(interiorsCameraController)
                 , m_isInKioskMode(isInKioskMode)
             {
                 m_compassGpsModeToNavigationGpsMode[Eegeo::Location::NavigationService::GpsModeOff] = GpsMode::GpsDisabled;
@@ -175,27 +171,6 @@ namespace ExampleApp
                 m_gpsMode = gpsMode;
                 m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[m_gpsMode]);
                 m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
-                
-                if(m_locationService.IsIndoors())
-                {
-                    if (gpsMode == GpsMode::GpsFollow)
-                    {
-                        Eegeo::Space::LatLong latLong(0, 0);
-                        int floorIndex = 0;
-                        if(m_locationService.GetLocation(latLong) && m_locationService.GetFloorIndex(floorIndex))
-                        {
-                            m_cameraTransitionService.StartTransitionTo(latLong.ToECEF(),
-                                                                        m_interiorsCameraController.GetDistanceToInterest(),
-                                                                        GetIndoorsHeadingRadians(),
-                                                                        m_locationService.GetInteriorId(),
-                                                                        floorIndex,
-                                                                        true,
-                                                                        false,
-                                                                        m_isInKioskMode,
-                                                                        false);
-                        }
-                    }
-                }
                 
                 m_gpsModeChangedCallbacks.ExecuteCallbacks();
             }

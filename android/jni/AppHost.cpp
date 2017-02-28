@@ -89,6 +89,7 @@
 #include "WebConnectivityValidator.h"
 #include "AndroidMenuReactionModel.h"
 #include "ApplicationConfigurationModule.h"
+#include "InteriorMetaDataModule.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -151,7 +152,7 @@ AppHost::AppHost(
 	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
     ,m_pSenionLabLocationModule(NULL)
     ,m_pSenionLabBroadcastReceiver(NULL)
-    ,m_pInteriorsLocationServiceProvider(NULL)
+    ,m_pInteriorsLocationServiceModule(NULL)
 {
     ASSERT_NATIVE_THREAD
 
@@ -235,13 +236,17 @@ AppHost::AppHost(
                                                                                                                         m_nativeState);
 
     const std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()}};
-    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(applicationConfiguration.InteriorTrackingInfo(),
-                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
-                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                                               *m_pCurrentLocationService,
-                                                                                                                               *m_pAndroidLocationService,
-                                                                                                                               interiorLocationServices,
-                                                                                                                               m_messageBus);
+    m_pInteriorsLocationServiceModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule)(applicationConfiguration.InteriorTrackingInfo(),
+                                                                                                                           m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+    		                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
+    		                                                                                                               *m_pCurrentLocationService,
+    		                                                                                                               *m_pAndroidLocationService,
+    		                                                                                                               interiorLocationServices,
+                                                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                           interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                                           m_pApp->CameraTransitionController(),
+                                                                                                                           m_pApp->CompassModule().GetCompassModel(),
+                                                                                                                           m_messageBus);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -283,6 +288,9 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pJpegLoader;
     m_pJpegLoader = NULL;
+
+    Eegeo_DELETE m_pInteriorsLocationServiceModule;
+    m_pInteriorsLocationServiceModule = NULL;
 
     Eegeo_DELETE m_pAndroidConnectivityService;
     m_pAndroidConnectivityService = NULL;
@@ -351,6 +359,8 @@ void AppHost::Update(float dt)
     m_pApp->Update(dt);
 
     m_pModalBackgroundNativeViewModule->Update(dt);
+
+    m_pInteriorsLocationServiceModule->GetController().Update();
 
     if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
     {

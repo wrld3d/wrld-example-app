@@ -59,7 +59,7 @@
 #include "IndoorAtlasLocationModule.h"
 #include "SenionLabLocationModule.h"
 #include "CurrentLocationService.h"
-#include "InteriorsLocationServiceProvider.h"
+#include "InteriorsLocationServiceController.h"
 #include "AlwaysActiveUserIdleService.h"
 
 @class ViewController;
@@ -113,6 +113,7 @@ private:
     
     ExampleApp::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
     Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
+    ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceController* m_pInteriorsLocationServiceController;
     
     ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
     ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
