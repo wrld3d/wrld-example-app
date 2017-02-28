@@ -45,8 +45,6 @@ namespace ExampleApp
                               InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                               AppModes::SdkModel::IAppModeModel& appModeModel,
                               Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                              Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                              CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
                               bool isInkioskMode);
 
                 ~CompassModule();

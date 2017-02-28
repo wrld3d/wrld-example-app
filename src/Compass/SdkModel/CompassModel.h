@@ -48,9 +48,6 @@ namespace ExampleApp
                 
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<CompassModel> m_failAlertHandler;
-                
-                CameraTransitions::SdkModel::CameraTransitionService& m_cameraTransitionService;
-                Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
 
             public:
 
@@ -62,8 +59,6 @@ namespace ExampleApp
                              InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                              AppModes::SdkModel::IAppModeModel& appModeModel,
                              Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                             CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
-                             Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
                              bool isInKioskMode);
 
                 ~CompassModel();

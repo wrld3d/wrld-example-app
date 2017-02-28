@@ -23,8 +23,6 @@ namespace ExampleApp
                                          InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                                         Eegeo::Resources::Interiors::InteriorsCameraController& interiorsCameraController,
-                                         CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
                                          bool isInKioskMode)
             {
                 m_pModel = Eegeo_NEW(CompassModel)(navigationService,
@@ -35,8 +33,6 @@ namespace ExampleApp
                                                    interiorExplorerModel,
                                                    appModeModel,
                                                    alertBoxFactory,
-                                                   cameraTransitionService,
-                                                   interiorsCameraController,
                                                    isInKioskMode);
                 
                 m_pViewModel = Eegeo_NEW(View::CompassViewModel)(identityProvider.GetNextIdentity(), false);

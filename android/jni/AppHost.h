@@ -60,7 +60,7 @@
 #include "CurrentLocationService.h"
 #include "SenionLabLocationModule.h"
 #include "IndoorAtlasLocationModule.h"
-#include "InteriorsLocationServiceProvider.h"
+#include "InteriorsLocationServiceModule.h"
 #include "SenionLabBroadcastReceiver.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
@@ -167,7 +167,7 @@ private:
 
     ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
     ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationModule* m_pIndoorAtlasLocationModule;
-    ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider* m_pInteriorsLocationServiceProvider;
+    ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule* m_pInteriorsLocationServiceModule;
     ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver* m_pSenionLabBroadcastReceiver;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();

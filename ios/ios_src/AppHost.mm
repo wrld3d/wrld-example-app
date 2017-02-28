@@ -187,13 +187,16 @@ AppHost::AppHost(
                                                                                            m_messageBus);
     std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()},
                                                                                        {"IndoorAtlas", m_pIndoorAtlasLocationModule->GetLocationService()}};
-    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(                                                                                                                               m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
-                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                                               *m_pCurrentLocationService,
-                                                                                                                               *m_piOSLocationService,
-                                                                                                                               interiorLocationServices,
-                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
-                                                                                                                               m_messageBus);
+    m_pInteriorsLocationServiceModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+                                                                                                                           interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                           *m_pCurrentLocationService,
+                                                                                                                           *m_piOSLocationService,
+                                                                                                                           interiorLocationServices,
+                                                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                           interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                                           m_pApp->CameraTransitionController(),
+                                                                                                                           m_pApp->CompassModule().GetCompassModel(),
+                                                                                                                           m_messageBus);
     
     CreateApplicationViewModules(screenProperties);
 
@@ -237,8 +240,8 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pInitialExperienceModule;
     m_pInitialExperienceModule = NULL;
     
-    Eegeo_DELETE m_pInteriorsLocationServiceProvider;
-    m_pInteriorsLocationServiceProvider = NULL;
+    Eegeo_DELETE m_pInteriorsLocationServiceModule;
+    m_pInteriorsLocationServiceModule = NULL;
     
     Eegeo_DELETE m_pIndoorAtlasLocationModule;
     m_pIndoorAtlasLocationModule = NULL;
@@ -297,6 +300,8 @@ void AppHost::Update(float dt)
 
     m_pApp->Update(dt);
     m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
+    
+    m_pInteriorsLocationServiceModule->GetController().Update();
 
     m_messageBus.FlushToUi();
     m_messageBus.FlushToNative();
