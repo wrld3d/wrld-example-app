@@ -155,7 +155,7 @@ namespace ExampleApp
                 }
                 
                 const SearchQuery& previousQuery = m_searchQueryPerformer.GetPreviousSearchQuery();
-                if (shouldRefresh && TagStillPresent(previousQuery))
+                if (shouldRefresh && (!previousQuery.IsTag() || TagStillPresent(previousQuery)))
                 {
                     const Eegeo::Space::LatLongAltitude& currentLocation = Eegeo::Space::LatLongAltitude::FromECEF(interestPointEcef);
                     m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
