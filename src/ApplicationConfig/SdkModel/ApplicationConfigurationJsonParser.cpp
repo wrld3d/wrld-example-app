@@ -62,6 +62,7 @@ namespace ExampleApp
                 const std::string OptionsAdminPassword = "options_admin_password";
                 const std::string SurveyTimeRequirementSec = "survey_time_requirement_sec";
                 const std::string TimerSurveyUrl = "timer_survey_url";
+                const std::string HockeyAppId = "hockey_app_id";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -262,6 +263,8 @@ namespace ExampleApp
                 const long long surveyTimeRequirementSec = ParseIntOrDefault(document, SurveyTimeRequirementSec, static_cast<int>(m_defaultConfig.SurveyRequirementTimeSec()));
                 
                 const std::string timerSurveyUrl = ParseStringOrDefault(document, TimerSurveyUrl, m_defaultConfig.TimerSurveyUrl());
+                
+                const std::string hockeyAppId = ParseStringOrDefault(document, HockeyAppId, m_defaultConfig.HockeyAppId());
 
                 return ApplicationConfiguration(
                     name,
@@ -300,7 +303,8 @@ namespace ExampleApp
                     attractModePlaybackSpeed,
                     optionsAdminPassword,
                     surveyTimeRequirementSec,
-                    timerSurveyUrl
+                    timerSurveyUrl,
+                    hockeyAppId
                 );
             }
             

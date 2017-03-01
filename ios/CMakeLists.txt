@@ -68,10 +68,11 @@ set(ios_frameworks
   -framework CoreMotion
   -framework CoreBluetooth
   -framework IndoorAtlas
-  -framework SLIndoorLocation")
+  -framework SLIndoorLocation
+  -framework HockeySDK")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
-set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab")
+set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab ${CMAKE_CURRENT_SOURCE_DIR}/Include/HockeySDK-iOS/HockeySDK.embeddedframework")
 set(libs "${eegeo_sdk_libs} -lturbojpeg -lz -lcurl -luv -lFlurry_6.0.0")
 set(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 

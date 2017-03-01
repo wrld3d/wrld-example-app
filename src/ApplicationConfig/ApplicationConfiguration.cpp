@@ -43,7 +43,8 @@ namespace ExampleApp
             const float attractModePlaybackSpeed,
             const std::string& optionsAdminPassword,
             const long long& surveyRequirementTimeSec,
-            const std::string& timerSurveyUrl
+            const std::string& timerSurveyUrl,
+            const std::string& hockeyAppId
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -82,6 +83,7 @@ namespace ExampleApp
         , m_optionsAdminPassword(optionsAdminPassword)
         , m_surveyRequirementTimeSec(surveyRequirementTimeSec)
         , m_timerSurveyUrl(timerSurveyUrl)
+        , m_hockeyAppId(hockeyAppId)
         {
         }
         
@@ -280,6 +282,11 @@ namespace ExampleApp
         const std::string ApplicationConfiguration::TimerSurveyUrl() const
         {
             return m_timerSurveyUrl;
+        }
+        
+        const std::string ApplicationConfiguration::HockeyAppId() const
+        {
+            return m_hockeyAppId;
         }
     }
 }
