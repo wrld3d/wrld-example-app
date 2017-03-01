@@ -332,6 +332,7 @@ namespace ExampleAppWPF
                 DisplayPoiImage(false);
             }
         }
+
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
@@ -547,6 +548,11 @@ namespace ExampleAppWPF
             }
 
             m_previewImageSpinner.Visibility = Visibility.Collapsed;
+        }
+
+        protected override void OnHideAnimationCompleted(object s, EventArgs e)
+        {
+            m_webBrowser.NavigateToString("about:blank");
         }
     }
 }
