@@ -56,7 +56,7 @@
 #include "IndoorAtlasLocationModule.h"
 #include "SenionLabLocationModule.h"
 #include "CurrentLocationService.h"
-#include "InteriorsLocationServiceProvider.h"
+#include "InteriorsLocationServiceModule.h"
 #include "AppUrlDelegate.h"
 #include "AlwaysActiveUserIdleService.h"
 
@@ -116,7 +116,7 @@ private:
     ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationModule* m_pIndoorAtlasLocationModule;
     ExampleApp::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
     Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
-    ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider* m_pInteriorsLocationServiceProvider;
+    ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule* m_pInteriorsLocationServiceModule;
     
     ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
     ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;

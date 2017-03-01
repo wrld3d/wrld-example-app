@@ -72,15 +72,7 @@ namespace ExampleAppWPF
             m_searchInFlight = false;
             m_hasResults = false;
             m_hasTagSearch = false;
-            m_touchHandler = new WindowInteractionTouchHandler(this, true, false, true);
-
-            MouseEnter += (o, e) =>
-            {
-                mainWindow.PopAllMouseEvents();
-                mainWindow.DisableInput();
-            };
-
-            MouseLeave += (o, e) => { mainWindow.EnableInput(); };
+            m_touchHandler = new WindowInteractionTouchHandler(this, false, true, true);
         }
 
         public Button GetSearchButton()

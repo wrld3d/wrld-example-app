@@ -128,7 +128,7 @@ AppHost::AppHost(
     ,m_pSenionLabLocationModule(NULL)
     ,m_pIndoorAtlasLocationModule(NULL)
     ,m_pSenionLabBroadcastReceiver(NULL)
-    ,m_pInteriorsLocationServiceProvider(NULL)
+    ,m_pInteriorsLocationServiceModule(NULL)
 {
     ASSERT_NATIVE_THREAD
 
@@ -225,13 +225,16 @@ AppHost::AppHost(
 
     const std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()},
                                                                                              {"IndoorAtlas", m_pIndoorAtlasLocationModule->GetLocationService()}};
-    m_pInteriorsLocationServiceProvider = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceProvider)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
-                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                                               *m_pCurrentLocationService,
-                                                                                                                               *m_pAndroidLocationService,
-                                                                                                                               interiorLocationServices,
-                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
-                                                                                                                               m_messageBus);
+    m_pInteriorsLocationServiceModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+                                                                                                                           interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                           *m_pCurrentLocationService,
+                                                                                                                           *m_pAndroidLocationService,
+                                                                                                                           interiorLocationServices,
+                                                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+																														   interiorsPresentationModule.GetInteriorInteractionModel(),
+																														   m_pApp->CameraTransitionController(),
+																														   m_pApp->CompassModule().GetCompassModel(),
+                                                                                                                           m_messageBus);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -244,6 +247,14 @@ AppHost::AppHost(
 AppHost::~AppHost()
 {
     ASSERT_NATIVE_THREAD
+
+	Eegeo_DELETE m_pInteriorsLocationServiceModule;
+	m_pInteriorsLocationServiceModule = NULL;
+
+	m_pCurrentLocationService->SetLocationService(*m_pAndroidLocationService);
+
+	Eegeo_DELETE m_pSenionLabLocationModule;
+	m_pSenionLabLocationModule = NULL;
 
     m_inputHandler.RemoveDelegateInputHandler(m_pAppInputDelegate);
 
@@ -274,14 +285,8 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pJpegLoader;
     m_pJpegLoader = NULL;
 
-    Eegeo_DELETE m_pSenionLabLocationModule;
-    m_pSenionLabLocationModule = NULL;
-
     Eegeo_DELETE m_pIndoorAtlasLocationModule;
     m_pIndoorAtlasLocationModule = NULL;
-
-    Eegeo_DELETE m_pInteriorsLocationServiceProvider;
-    m_pInteriorsLocationServiceProvider = NULL;
 
     Eegeo_DELETE m_pAndroidConnectivityService;
     m_pAndroidConnectivityService = NULL;
@@ -350,6 +355,8 @@ void AppHost::Update(float dt)
     m_pApp->Update(dt);
 
     m_pModalBackgroundNativeViewModule->Update(dt);
+
+    m_pInteriorsLocationServiceModule->GetController().Update();
 
     if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
     {
