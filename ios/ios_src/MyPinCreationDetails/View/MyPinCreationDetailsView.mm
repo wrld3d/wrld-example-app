@@ -31,6 +31,7 @@ const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.
         m_controlContainerHeight = 0.f;
         m_controlContainerWidth = 0.f;
         m_yCursor = 0.f;
+        m_scrollBoxPadding = 5.f;
 
         m_pImageDataBytes = NULL;
         m_imageSize = 0;
@@ -250,8 +251,7 @@ const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.
     [self.pTermsLabel setUserInteractionEnabled:YES];
     [self.pTermsLabel addGestureRecognizer:urlTappedGesture];
 
-    const float scrollBoxPadding = 5.f;
-    const float scrollViewY = shareBarY + checkboxSize + scrollBoxPadding;
+    const float scrollViewY = shareBarY + checkboxSize + m_scrollBoxPadding;
     self.pBodyScrollView.frame = CGRectMake(0, scrollViewY, m_controlContainerWidth, bodyContainerHeight);
 
     const float poiDescriptionBoxX = 12.f;
@@ -298,7 +298,7 @@ const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.
     const float footerHeight = 64.f;
     const float footerWidth = m_controlContainerWidth;
 
-    self.pFooterContainer.frame = CGRectMake(0, footerY - footerHeight/2, footerWidth, footerHeight);
+    self.pFooterContainer.frame = CGRectMake(0, footerY - footerHeight/2 + m_scrollBoxPadding, footerWidth, footerHeight);
     self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
 
     const int numberOfButtons = 4;
