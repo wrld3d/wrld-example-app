@@ -6,9 +6,12 @@
 #include "ICameraTransitionController.h"
 #include "ApplicationConfigurationJsonParser.h"
 #include "ICoverageTreeManifestLoader.h"
+#include "CoverageTreeManifestNotifier.h"
 #include "ApiTokenService.h"
 #include "CityThemeLoader.h"
+#include "ICityThemesService.h"
 #include "NavigationService.h"
+#include "CityThemeData.h"
 
 namespace ExampleApp
 {
@@ -21,7 +24,9 @@ namespace ExampleApp
                                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                          ApplicationConfig::ApplicationConfiguration& defaultConfig,
                                                          Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
+                                                         Eegeo::Streaming::CoverageTrees::CoverageTreeManifestNotifier& manifestNotifier,
                                                          Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
+                                                         Eegeo::Resources::CityThemes::ICityThemesService& cityThemeService,
                                                          Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
                                                          AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
                                                          Eegeo::Location::NavigationService& navigationService,
@@ -33,14 +38,28 @@ namespace ExampleApp
             ,m_alertBoxFactory(alertBoxFactory)
             ,m_defaultConfig(defaultConfig)
             ,m_manifestLoader(manifestLoader)
+            ,m_manifestNotifier(manifestNotifier)
             ,m_cityThemeLoader(cityThemeLoader)
+            ,m_cityThemeService(cityThemeService)
             ,m_interiorMenuObserver(interiorMenuObserver)
             ,m_aboutPageViewModule(aboutPageViewModule)
             ,m_navigationService(navigationService)
             ,m_apiTokenService(apiTokenService)
+            ,m_previouslyLoadedCoverageTreeUrl("")
+            ,m_previouslyLoadedThemeManifestUrl("")
+            ,m_newManifestCallback(this, &DeepLinkConfigHandler::HandleNewCoverageTreeManifestLoaded)
+            ,m_newThemeDataCallback(this, &DeepLinkConfigHandler::HandleNewThemeManifestLoaded)
             {
+                m_manifestNotifier.AddManifestLoadedObserver(m_newManifestCallback);
+                m_cityThemeService.SubscribeSharedThemeDataChanged(m_newThemeDataCallback);
             }
 
+            DeepLinkConfigHandler::~DeepLinkConfigHandler()
+            {
+                m_cityThemeService.UnsubscribeSharedThemeDataChanged(m_newThemeDataCallback);
+                m_manifestNotifier.RemoveManifestLoadedObserver(m_newManifestCallback);
+            }
+            
             void DeepLinkConfigHandler::HandleDeepLink(const AppInterface::UrlData& data)
             {
                 const std::string url = GenerateConfigUrl(data);
@@ -51,6 +70,16 @@ namespace ExampleApp
             std::string DeepLinkConfigHandler::GenerateConfigUrl(const AppInterface::UrlData& data) const
             {
                 return CONFIG_FILES_HOME + data.path + "/manifest";
+            }
+            
+            void DeepLinkConfigHandler::HandleNewCoverageTreeManifestLoaded(const Eegeo::Streaming::CoverageTrees::CoverageTreeManifest& manifest)
+            {
+                m_previouslyLoadedCoverageTreeUrl = manifest.ManifestUrl;
+            }
+            
+            void DeepLinkConfigHandler::HandleNewThemeManifestLoaded()
+            {
+                m_previouslyLoadedThemeManifestUrl = m_cityThemeService.GetSharedThemeData().ManifestUrl;
             }
 
             void DeepLinkConfigHandler::HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse)
@@ -65,12 +94,18 @@ namespace ExampleApp
                     {
                         ApplicationConfig::ApplicationConfiguration applicationConfig = parser.ParseConfiguration(resultString);
                         m_apiTokenService.ApiKeyChanged(applicationConfig.EegeoApiKey());
-                        m_manifestLoader.LoadCoverageTreeManifest(applicationConfig.CoverageTreeManifestURL());
-
+                        if(applicationConfig.CoverageTreeManifestURL() != m_previouslyLoadedCoverageTreeUrl)
+                        {
+                            m_manifestLoader.LoadCoverageTreeManifest(applicationConfig.CoverageTreeManifestURL());
+                        }
+                        
                         const std::string themeNameContains = "Summer";
                         const std::string themeStateName = "DayDefault";
-                        m_cityThemeLoader.LoadThemes(applicationConfig.ThemeManifestURL(), themeNameContains, themeStateName);
-
+                        if(applicationConfig.ThemeManifestURL() != m_previouslyLoadedThemeManifestUrl)
+                        {
+                            m_cityThemeLoader.LoadThemes(applicationConfig.ThemeManifestURL(), themeNameContains, themeStateName);
+                        }
+                        
                         const float newHeading = Eegeo::Math::Deg2Rad(applicationConfig.OrientationDegrees());
                         m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), newHeading);
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
