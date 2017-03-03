@@ -176,15 +176,12 @@ AppHost::AppHost(
     
     Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
     Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-    m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
-                                                                                           interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                           interiorsPresentationModule.GetInteriorSelectionModel(),
+    m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                            mapModule.GetEnvironmentFlatteningService(),
                                                                                            applicationConfiguration,
                                                                                            *m_piOSLocationService,
                                                                                            m_iOSAlertBoxFactory,
                                                                                            m_messageBus);
-    m_pSenionLabLocationModule->GetLocationController().SetShouldObserveAppModeChange(false);
     m_pSenionLabLocationModule->GetLocationController().StartUpdatingLocation();
     m_pCurrentLocationService->SetLocationService(m_pSenionLabLocationModule->GetLocationService());
     

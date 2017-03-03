@@ -11,9 +11,7 @@ namespace ExampleApp
 {
     namespace SenionLab
     {
-        SenionLabLocationModule::SenionLabLocationModule(ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                         Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                         const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+        SenionLabLocationModule::SenionLabLocationModule(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                          const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                          const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                                          Eegeo::Location::ILocationService& defaultLocationService,
@@ -22,8 +20,6 @@ namespace ExampleApp
         : m_locationService(defaultLocationService, environmentFlatteningService, interiorInteractionModel)
         , m_locationManager(m_locationService, iOSAlertBoxFactory, messageBus)
         , m_locationController(m_locationManager,
-                               appModeModel,
-                               interiorSelectionModel,
                                applicationConfiguration.InteriorTrackingInfo())
         {
         }

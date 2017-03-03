@@ -29,11 +29,15 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_onDidUpdateLocationCallback(this, &SenionLabLocationManager::OnDidUpdateLocation)
                 , m_onSetIsAuthorized(this, &SenionLabLocationManager::OnSetIsAuthorized)
+                , m_onSetInteriorIdFromMapKey(this, &SenionLabLocationManager::OnSetInteriorIdFromMapKey)
+                , m_onSetIsConnected(this, &SenionLabLocationManager::OnSetIsConnected)
                 {
                     ASSERT_NATIVE_THREAD
 
                     m_messageBus.SubscribeNative(m_onDidUpdateLocationCallback);
                     m_messageBus.SubscribeNative(m_onSetIsAuthorized);
+                    m_messageBus.SubscribeNative(m_onSetInteriorIdFromMapKey);
+                    m_messageBus.SubscribeNative(m_onSetIsConnected);
 
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
@@ -56,6 +60,8 @@ namespace ExampleApp
                 {
                     ASSERT_NATIVE_THREAD
 
+                    m_messageBus.UnsubscribeNative(m_onSetIsConnected);
+                    m_messageBus.UnsubscribeNative(m_onSetInteriorIdFromMapKey);
                     m_messageBus.UnsubscribeNative(m_onSetIsAuthorized);
                     m_messageBus.UnsubscribeNative(m_onDidUpdateLocationCallback);
 
@@ -67,35 +73,44 @@ namespace ExampleApp
                 }
 
                 void SenionLabLocationManager::StartUpdatingLocation(const std::string& apiSecret,
-                                                                     const Eegeo::Resources::Interiors::InteriorId currentInterior,
                                                                      const std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& senionInfoMap,
                                                                      const std::map<std::string, std::map<int, std::string> >& floorMaps,
                                                                      const std::map<std::string, Eegeo::Resources::Interiors::InteriorId>& interiorIds)
                 {
                     ASSERT_NATIVE_THREAD
 
+                    m_floorMaps = floorMaps;
+                    m_interiorIds = interiorIds;
+                    m_mapKey = "";
+                    m_customerId = apiSecret;
+
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
 
                     jmethodID startUpdatingLocation = env->GetMethodID(m_locationManagerClass,
                                                                        "startUpdatingLocation",
-                                                                       "(Ljava/lang/String;Ljava/lang/String;)V");
+                                                                       "([Ljava/lang/String;Ljava/lang/String;)V");
 
-                    std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator interiorEntry = senionInfoMap.find(currentInterior.Value());
-                    if (interiorEntry == senionInfoMap.cend())
+                    std::vector<std::string> mapKeyVector;
+
+                    for(auto &it : senionInfoMap)
                     {
-                        return;
+                    	mapKeyVector.push_back(it.second.GetConfig().GetApiKey().c_str());
                     }
-                    const auto& interiorInfo = interiorEntry->second;
 
-                    m_floorMap = interiorInfo.GetFloorIndexMap();
-                    jstring apiKeyJString = env->NewStringUTF(interiorInfo.GetConfig().GetApiKey().c_str());
+                    jobjectArray mapKeyJObjectArray = env->NewObjectArray(mapKeyVector.size(), env->FindClass("java/lang/String"), env->NewStringUTF(""));
+
+                    for(int i = 0; i < mapKeyVector.size(); ++i)
+                    {
+                    	env->SetObjectArrayElement(mapKeyJObjectArray, i, env->NewStringUTF(mapKeyVector[i].c_str()));
+                    }
+
                     jstring apiSecretJString = env->NewStringUTF(apiSecret.c_str());
                     env->CallVoidMethod(m_locationManagerInstance,
                                         startUpdatingLocation,
-                                        apiKeyJString,
+                                        mapKeyJObjectArray,
                                         apiSecretJString);
-                    env->DeleteLocalRef(apiKeyJString);
+                    env->DeleteLocalRef(mapKeyJObjectArray);
                     env->DeleteLocalRef(apiSecretJString);
                 }
 
@@ -122,7 +137,10 @@ namespace ExampleApp
                 {
                     Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(message.Latitude(), message.Longitude()));
                     m_senionLabLocationService.SetLocation(location);
-                    m_senionLabLocationService.SetFloorIndex(FloorNumberToFloorIndex(message.FloorNumber()));
+                    int floorIndex = FloorNumberToFloorIndex(m_mapKey, message.FloorNumber());
+                    m_senionLabLocationService.SetFloorIndex(floorIndex);
+
+                    m_messageBus.Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, message.FloorNumber(), message.Latitude(), message.Longitude()));
                 }
 
                 void SenionLabLocationManager::OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message)
@@ -130,19 +148,55 @@ namespace ExampleApp
                     m_senionLabLocationService.SetIsAuthorized(message.IsAuthorized());
                 }
 
-                int SenionLabLocationManager::FloorNumberToFloorIndex(const int floorIndex)
+                void SenionLabLocationManager::OnSetInteriorIdFromMapKey(const InteriorsLocationMapKeyChangedMessage& message)
                 {
-                    std::stringstream floorNameStream;
-                    floorNameStream << floorIndex;
-                    std::string floorName(floorNameStream.str());
+                    m_mapKey = message.MapKey();
+                    std::map<std::string, Eegeo::Resources::Interiors::InteriorId>::iterator it = m_interiorIds.find(m_mapKey);
 
-                    for (auto &kv : m_floorMap)
+                    if(it != m_interiorIds.end())
                     {
-                        if (kv.second == floorName)
+                        m_senionLabLocationService.SetInteriorId(it->second);
+
+                        std::map<std::string, std::map<int, std::string>>::iterator floor_it = m_floorMaps.find(m_mapKey);
+                        if(floor_it != m_floorMaps.end())
                         {
-                            return kv.first;
+                            m_messageBus.Publish(ExampleApp::AboutPage::AboutPageSenionSettingsTypeMessage(m_mapKey, m_customerId, floor_it->second, it->second.Value()));
                         }
                     }
+                }
+
+                void SenionLabLocationManager::OnSetIsConnected(const InteriorsLocationConnectionChangedMessage& message)
+                {
+                	m_senionLabLocationService.SetIsConnected(message.IsConnected());
+
+                	if(message.IsConnected())
+                	{
+                		m_messageBus.Publish(ExampleApp::AboutPage::AboutPageIndoorPositionTypeMessage("\nIndoor positioning type: Senion"));
+                	}
+                	else
+                	{
+                		m_messageBus.Publish(ExampleApp::AboutPage::AboutPageIndoorPositionTypeMessage("\nIndoor positioning type: GPS"));
+                	}
+                }
+
+                int SenionLabLocationManager::FloorNumberToFloorIndex(const std::string& mapKey, const int floorIndex)
+                {
+                	std::map<std::string, std::map<int, std::string>>::iterator it = m_floorMaps.find(mapKey);
+
+                	if(it != m_floorMaps.end())
+                	{
+                		std::stringstream floorNameStream;
+                		floorNameStream << floorIndex;
+                		std::string floorName(floorNameStream.str());
+
+						for (auto &kv : it->second)
+						{
+							if (kv.second == floorName)
+							{
+								return kv.first;
+							}
+						}
+                	}
 
                     return floorIndex;
                 }

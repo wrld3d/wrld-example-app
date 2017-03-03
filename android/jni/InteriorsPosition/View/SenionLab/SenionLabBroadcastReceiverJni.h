@@ -17,4 +17,14 @@ extern "C"
             JNIEnv *jenv, jclass clazz,
             jlong nativeObjectPtr,
             jboolean isAuthorized);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroadcastReceiverJniMethods_SetInteriorIdFromMapKey(
+            JNIEnv *jenv, jclass clazz,
+            jlong nativeObjectPtr,
+            jstring mapKey);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroadcastReceiverJniMethods_SetIsConnected(
+            JNIEnv *jenv, jclass clazz,
+            jlong nativeObjectPtr,
+            jboolean isConnected);
 }

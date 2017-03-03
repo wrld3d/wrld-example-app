@@ -21,9 +21,7 @@ namespace ExampleApp
         class SenionLabLocationModule
         {
         public:
-            SenionLabLocationModule(ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                    const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+            SenionLabLocationModule(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                     const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                     Eegeo::Location::ILocationService& defaultLocationService,

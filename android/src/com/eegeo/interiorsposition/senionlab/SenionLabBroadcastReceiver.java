@@ -2,9 +2,12 @@ package com.eegeo.interiorsposition.senionlab;
 
 import com.senionlab.slutilities.geofencing.interfaces.SLGeometry;
 import com.senionlab.slutilities.service.SLBroadcastReceiver;
+import com.senionlab.slutilities.type.LocationAvailability;
+import com.senionlab.slutilities.type.LocationSource;
+import com.senionlab.slutilities.type.SenionLocationSource;
+
 import com.senionlab.slutilities.type.SLCoordinate3D;
 import com.senionlab.slutilities.type.SLHeadingStatus;
-import com.senionlab.slutilities.type.SLLocationStatus;
 import com.senionlab.slutilities.type.SLMotionType;
 
 class SenionLabBroadcastReceiver extends SLBroadcastReceiver
@@ -27,7 +30,7 @@ class SenionLabBroadcastReceiver extends SLBroadcastReceiver
     }
 
     @Override
-    public void didUpdateLocation(SLCoordinate3D location, double v, SLLocationStatus locationStatus)
+    public void didUpdateLocation(SLCoordinate3D location, double v, LocationSource locationSource)
     {
         synchronized (m_updateLock)
         {
@@ -35,7 +38,21 @@ class SenionLabBroadcastReceiver extends SLBroadcastReceiver
                                                                    location.getLatitude(),
                                                                    location.getLongitude(),
                                                                    location.getFloorNr().intValue());
+            
+            if(locationSource instanceof SenionLocationSource)
+            {
+            	SenionLocationSource senionLocationSource = ((SenionLocationSource) locationSource);
+            	SenionLabBroadcastReceiverJniMethods.SetInteriorIdFromMapKey(m_nativeCallerPointer, senionLocationSource.getMapKey());
+            }
         }
+    }
+    
+    @Override
+    public void didUpdateLocationAvailability(LocationAvailability locationAvailability)
+    {
+    	boolean available = locationAvailability == LocationAvailability.AVAILABLE;
+    	SenionLabBroadcastReceiverJniMethods.SetIsConnected(m_nativeCallerPointer, available);
+    	m_locationManager.updateAvailability(available);
     }
 
     @Override

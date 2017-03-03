@@ -12,6 +12,8 @@
 #include "ICallback.h"
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
+#include "InteriorsLocationMapKeyChangedMessage.h"
+#include "InteriorsLocationConnectionChangedMessage.h"
 #include "ISenionLabLocationManager.h"
 #include "SenionLabLocationService.h"
 
@@ -32,7 +34,6 @@ namespace ExampleApp
                     ~SenionLabLocationManager();
 
                     void StartUpdatingLocation(const std::string& apiSecret,
-                                               const Eegeo::Resources::Interiors::InteriorId currentInterior,
                                                const std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& senionInfoMap,
                                                const std::map<std::string, std::map<int, std::string> >& floorMaps,
                                                const std::map<std::string, Eegeo::Resources::Interiors::InteriorId>& interiorIds);
@@ -42,18 +43,25 @@ namespace ExampleApp
 
                     void OnDidUpdateLocation(const InteriorsLocationChangedMessage& message);
                     void OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message);
+                    void OnSetInteriorIdFromMapKey(const InteriorsLocationMapKeyChangedMessage& message);
+                    void OnSetIsConnected(const InteriorsLocationConnectionChangedMessage& message);
 
                 private:
-                    int FloorNumberToFloorIndex(const int floorIndex);
+                    int FloorNumberToFloorIndex(const std::string& mapKey, const int floorIndex);
 
                     AndroidNativeState& m_nativeState;
                     SenionLabLocationService& m_senionLabLocationService;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     Eegeo::Helpers::TCallback1<SenionLabLocationManager, const InteriorsLocationChangedMessage&> m_onDidUpdateLocationCallback;
                     Eegeo::Helpers::TCallback1<SenionLabLocationManager, const InteriorsLocationAuthorizationChangedMessage&> m_onSetIsAuthorized;
+                    Eegeo::Helpers::TCallback1<SenionLabLocationManager, const InteriorsLocationMapKeyChangedMessage&> m_onSetInteriorIdFromMapKey;
+                    Eegeo::Helpers::TCallback1<SenionLabLocationManager, const InteriorsLocationConnectionChangedMessage&> m_onSetIsConnected;
                     jclass m_locationManagerClass;
                     jobject m_locationManagerInstance;
-                    std::map<int, std::string> m_floorMap;
+                    std::map<std::string, std::map<int, std::string>> m_floorMaps;
+                    std::map<std::string, Eegeo::Resources::Interiors::InteriorId> m_interiorIds;
+                    std::string m_mapKey;
+                    std::string m_customerId;
                 };
             }
         }

@@ -18,9 +18,7 @@ namespace ExampleApp
         {
             namespace SenionLab
             {
-                SenionLabLocationModule::SenionLabLocationModule(ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                 const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                SenionLabLocationModule::SenionLabLocationModule(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                  const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                  Eegeo::Location::ILocationService& defaultLocationService,
                                                                  const std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap,
@@ -31,8 +29,6 @@ namespace ExampleApp
                                     interiorInteractionModel)
                 , m_locationManager(m_locationService, messageBus, nativeState)
                 , m_locationController(m_locationManager,
-                                       appModeModel,
-                                       interiorSelectionModel,
                                        trackingInfoMap)
                 {
                     ASSERT_NATIVE_THREAD

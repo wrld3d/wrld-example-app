@@ -29,6 +29,8 @@ namespace ExampleApp
 
                     void DidUpdateLocation(const double latitude, const double longitude, const int floorNumber);
                     void SetIsAuthorized(const bool isAuthorized);
+                    void SetInteriorIdFromMapKey(const std::string mapKey);
+                    void SetIsConnected(const bool isConnected);
 
                 private:
                     AndroidNativeState& m_nativeState;

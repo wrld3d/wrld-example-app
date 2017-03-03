@@ -6,6 +6,8 @@
 #include "AndroidNativeState.h"
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
+#include "InteriorsLocationMapKeyChangedMessage.h"
+#include "InteriorsLocationConnectionChangedMessage.h"
 #include "SenionLabLocationService.h"
 #include "SenionLabBroadcastReceiver.h"
 #include "SenionLabLocationManager.h"
@@ -68,6 +70,18 @@ namespace ExampleApp
                 {
                     ASSERT_UI_THREAD
                     m_messageBus.Publish(InteriorsLocationAuthorizationChangedMessage(isAuthorized));
+                }
+
+                void SenionLabBroadcastReceiver::SetInteriorIdFromMapKey(const std::string mapKey)
+                {
+                	ASSERT_UI_THREAD
+					m_messageBus.Publish(InteriorsLocationMapKeyChangedMessage(mapKey));
+                }
+
+                void SenionLabBroadcastReceiver::SetIsConnected(const bool isConnected)
+                {
+                	ASSERT_UI_THREAD
+					m_messageBus.Publish(InteriorsLocationConnectionChangedMessage(isConnected));
                 }
             }
         }

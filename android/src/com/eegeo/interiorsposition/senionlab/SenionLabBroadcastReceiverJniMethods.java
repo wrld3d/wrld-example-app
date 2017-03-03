@@ -10,4 +10,8 @@ public class SenionLabBroadcastReceiverJniMethods
                                                 int floorNumber);
 
     public static native void SetIsAuthorized(long nativeCallerPointer, boolean isAuthorized);
+    
+    public static native void SetInteriorIdFromMapKey(long nativeCallerPointer, String mapKey);
+    
+    public static native void SetIsConnected(long nativeCallerPointer, boolean isConnected);
 }

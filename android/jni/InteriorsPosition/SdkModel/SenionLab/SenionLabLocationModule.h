@@ -22,9 +22,7 @@ namespace ExampleApp
                 class SenionLabLocationModule : protected Eegeo::NonCopyable
                 {
                 public:
-                    SenionLabLocationModule(ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                            const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                    SenionLabLocationModule(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                             const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                             Eegeo::Location::ILocationService& defaultLocationService,
                                             const std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& trackingInfoMap,
@@ -34,6 +32,7 @@ namespace ExampleApp
                     
                     SenionLabLocationService& GetLocationService() { return m_locationService; }
                     SenionLabLocationManager& GetLocationManager() { return m_locationManager; }
+                    SenionLabLocationController& GetLocationController() { return m_locationController; }
 
                 private:
                     SenionLabLocationService m_locationService;

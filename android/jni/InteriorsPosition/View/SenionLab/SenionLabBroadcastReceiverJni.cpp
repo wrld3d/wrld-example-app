@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
 #include <jni.h>
+#include <string>
 
 #include "AndroidAppThreadAssertionMacros.h"
 #include "SenionLabBroadcastReceiver.h"
@@ -28,5 +29,27 @@ JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroad
 {
     using ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver;
     reinterpret_cast<SenionLabBroadcastReceiver *>(nativeObjectPtr)->SetIsAuthorized(isAuthorized);
+}
+
+JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroadcastReceiverJniMethods_SetInteriorIdFromMapKey(
+		JNIEnv *jenv, jclass obj,
+		jlong nativeObjectPtr,
+		jstring mapKey)
+{
+	const char* chars = jenv->GetStringUTFChars(mapKey, 0);
+	std::string mapKeyString = chars;
+	jenv->ReleaseStringUTFChars(mapKey, chars);
+
+	using ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver;
+	reinterpret_cast<SenionLabBroadcastReceiver *>(nativeObjectPtr)->SetInteriorIdFromMapKey(mapKeyString);
+}
+
+JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroadcastReceiverJniMethods_SetIsConnected(
+        JNIEnv *jenv, jclass obj,
+        jlong nativeObjectPtr,
+        jboolean isConnected)
+{
+    using ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver;
+    reinterpret_cast<SenionLabBroadcastReceiver *>(nativeObjectPtr)->SetIsConnected(isConnected);
 }
 }
