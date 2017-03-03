@@ -1,6 +1,8 @@
 package com.eegeo.interiorsposition.senionlab;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.senionlab.slutilities.service.SLBroadcastReceiver;
@@ -13,6 +15,8 @@ public class SenionLabLocationManager implements SLConsumer
     private final MainActivity m_activity;
     private final SLServiceManager m_serviceManager;
     private boolean m_consumerIsBound = false;
+    
+    private static AlertDialog m_connectionDialog = null;
 
     public SenionLabLocationManager(MainActivity activity, long nativeCallerPointer)
     {
@@ -30,6 +34,12 @@ public class SenionLabLocationManager implements SLConsumer
     {
         unbindService();
         m_serviceManager.stop();
+        
+        if(m_connectionDialog != null)
+		{
+    		m_connectionDialog.dismiss();
+    		m_connectionDialog = null;
+		}
     }
 
     public void registerReceiver(SLBroadcastReceiver receiver)
@@ -52,6 +62,18 @@ public class SenionLabLocationManager implements SLConsumer
     public void didBindToService()
     {
     }
+    
+    public void updateAvailability(boolean available)
+    {
+    	if(available)
+    	{
+    		showConnectionDialog("Senion available", "Recently connected to Senion.");
+    	}
+    	else
+    	{
+    		showConnectionDialog("Senion unavailable", "Recently lost connection to Senion.");
+    	}
+    }
 
     private void bindService() throws SLIndoorLocationException
     {
@@ -69,5 +91,27 @@ public class SenionLabLocationManager implements SLConsumer
             m_serviceManager.unbindService(this);
             m_consumerIsBound = false;
         }
+    }
+    
+    private void showConnectionDialog(String Title, String message)
+    {
+    	AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
+        builder.setTitle(Title);
+        builder.setMessage(message);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+            	m_connectionDialog.dismiss();
+            	m_connectionDialog = null;
+            }
+        });
+        
+        if(m_connectionDialog != null)
+        {
+        	m_connectionDialog.dismiss();
+        }
+        m_connectionDialog = builder.show();
     }
 }
