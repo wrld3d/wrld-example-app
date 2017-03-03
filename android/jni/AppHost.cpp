@@ -248,21 +248,30 @@ AppHost::~AppHost()
 {
     ASSERT_NATIVE_THREAD
 
-	Eegeo_DELETE m_pInteriorsLocationServiceModule;
-	m_pInteriorsLocationServiceModule = NULL;
-
-	m_pCurrentLocationService->SetLocationService(*m_pAndroidLocationService);
-
-	Eegeo_DELETE m_pSenionLabLocationModule;
-	m_pSenionLabLocationModule = NULL;
-
     m_inputHandler.RemoveDelegateInputHandler(m_pAppInputDelegate);
 
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
 
+    Eegeo_DELETE m_pModalBackgroundNativeViewModule;
+    m_pModalBackgroundNativeViewModule = NULL;
+
+    m_pCurrentLocationService->SetLocationService(*m_pAndroidLocationService);
+
+	Eegeo_DELETE m_pInteriorsLocationServiceModule;
+	m_pInteriorsLocationServiceModule = NULL;
+
+    Eegeo_DELETE m_pIndoorAtlasLocationModule;
+    m_pIndoorAtlasLocationModule = NULL;
+
+	Eegeo_DELETE m_pSenionLabLocationModule;
+	m_pSenionLabLocationModule = NULL;
+
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
+
+    Eegeo_DELETE m_pMenuReactionModel;
+    m_pMenuReactionModel = NULL;
 
     Eegeo_DELETE m_pAndroidFlurryMetricsService;
     m_pAndroidFlurryMetricsService = NULL;
@@ -284,9 +293,6 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pJpegLoader;
     m_pJpegLoader = NULL;
-
-    Eegeo_DELETE m_pIndoorAtlasLocationModule;
-    m_pIndoorAtlasLocationModule = NULL;
 
     Eegeo_DELETE m_pAndroidConnectivityService;
     m_pAndroidConnectivityService = NULL;

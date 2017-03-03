@@ -248,6 +248,7 @@ namespace ExampleAppWPF
 
             var db = new DoubleAnimation((screenWidth / 2) + (m_mainContainer.ActualWidth / 2), TimeSpan.FromMilliseconds(m_animationTimeMilliseconds));
             db.From = (screenWidth / 2) - (m_mainContainer.ActualWidth / 2);
+            db.Completed += OnHideAnimationCompleted;
 
             var easingFunction = new CubicEase();
             easingFunction.EasingMode = EasingMode.EaseInOut;
@@ -440,6 +441,10 @@ namespace ExampleAppWPF
             image.Freeze();
 
             return image;
+        }
+
+        protected virtual void OnHideAnimationCompleted(object s, EventArgs e)
+        {
         }
     }
 }
