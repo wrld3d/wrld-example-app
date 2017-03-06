@@ -30,10 +30,18 @@ public class SenionLabLocationManager implements SLConsumer
         bindService();
 	}
 
-    public void stopUpdatingLocation() throws SLIndoorLocationException
+    public void stopUpdatingLocation()
     {
         unbindService();
-        m_serviceManager.stop();
+        
+        try
+        {
+        	m_serviceManager.stop();
+        }
+        catch(SLIndoorLocationException slIndoorLocationException)
+    	{
+    		slIndoorLocationException.printStackTrace();
+    	}
         
         if(m_connectionDialog != null)
 		{
@@ -75,20 +83,36 @@ public class SenionLabLocationManager implements SLConsumer
     	}
     }
 
-    private void bindService() throws SLIndoorLocationException
+    private void bindService()
     {
         if (!m_consumerIsBound)
         {
-            m_serviceManager.bindService(this);
+        	try
+        	{
+        		m_serviceManager.bindService(this);
+        	}
+        	catch(SLIndoorLocationException slIndoorLocationException)
+        	{
+        		slIndoorLocationException.printStackTrace();
+        	}
+        	
             m_consumerIsBound = true;
         }
     }
 
-    private void unbindService() throws SLIndoorLocationException
+    private void unbindService()
     {
         if (m_consumerIsBound)
         {
-            m_serviceManager.unbindService(this);
+        	try
+        	{
+        		m_serviceManager.unbindService(this);
+        	}
+        	catch(SLIndoorLocationException slIndoorLocationException)
+        	{
+        		slIndoorLocationException.printStackTrace();
+        	}
+        	
             m_consumerIsBound = false;
         }
     }

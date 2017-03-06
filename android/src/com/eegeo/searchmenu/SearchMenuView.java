@@ -265,7 +265,12 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	{
     		m_searchCount = 0;
     		m_searchCountText.setText("");
-    		m_searchMenuAnimationHandler.hideSearchResultsView();
+    		
+    		if(m_searchMenuAnimationHandler != null)
+    		{
+    			m_searchMenuAnimationHandler.hideSearchResultsView();
+    		}
+    		
     		m_closeButtonView.setVisibility(View.INVISIBLE);
     		m_anchorArrow.setVisibility(View.GONE);
     		m_searchMenuResultsSeparator.setVisibility(View.GONE);

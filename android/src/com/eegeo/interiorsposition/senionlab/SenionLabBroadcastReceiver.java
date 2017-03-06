@@ -18,10 +18,14 @@ class SenionLabBroadcastReceiver extends SLBroadcastReceiver
     {
         m_nativeCallerPointer = nativeCallerPointer;
         m_locationManager = locationManager;
-        m_locationManager.registerReceiver(this);
+    }
+    
+    public void registerReceiver()
+    {
+    	m_locationManager.registerReceiver(this);
     }
 
-    public void destroy()
+    public void unregisterReceiver()
     {
         m_locationManager.unregisterReceiver(this);
     }
