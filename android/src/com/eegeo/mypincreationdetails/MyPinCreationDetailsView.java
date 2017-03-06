@@ -3,6 +3,7 @@
 package com.eegeo.mypincreationdetails;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -280,7 +281,10 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
             try
             {
                 Bitmap bitmap = decodeImage();
-                m_poiImage.setImageBitmap(bitmap);
+                if (bitmap != null)
+                {
+                    m_poiImage.setImageBitmap(bitmap);
+                }
             }
             catch (IOException e)
             {
@@ -315,9 +319,14 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 
         is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
         bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
+        is.close();
+        if (bitmap == null)
+        {
+            return null;
+        }
+
         int finalWidth = bitmap.getWidth();
         int finalHeight = bitmap.getHeight();
-        is.close();
 
         float rotation = getOrientationRotation();
         Matrix mtx = new Matrix();
@@ -501,5 +510,4 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
                 .setPositiveButton(context.getResources().getString(R.string.ok_text), dialogClickListener)
                 .setNegativeButton(context.getResources().getString(R.string.cancel_text), dialogClickListener).show();
     }
-
 }
