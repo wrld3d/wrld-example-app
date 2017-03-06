@@ -321,6 +321,7 @@ namespace ExampleAppWPF
         {
             m_webBrowser.Visibility = Visibility.Collapsed;
             m_webBrowserSelected = false;
+            StopWebBrowser();
 
             if (eegeoResultModel.ImageUrl != null)
             {
@@ -551,6 +552,11 @@ namespace ExampleAppWPF
         }
 
         protected override void OnHideAnimationCompleted(object s, EventArgs e)
+        {
+            StopWebBrowser();
+        }
+
+        private void StopWebBrowser()
         {
             m_webBrowser.NavigateToString("about:blank");
         }
