@@ -34,14 +34,12 @@ namespace ExampleApp
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                     Search::SdkModel::ISearchResultRepository& searchResultRepository,
                     Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& legacyLabelController,
-                    Eegeo::Labels::ILabelAnchorFilterModel& labelHiddenFilterModel,
                     const Eegeo::Labels::LabelLayer::IdType interiorLabelLayer,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     IHighlightColorMapper& highlightColorMapper)
                     : m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorsCellResourceObserver(interiorsCellResourceObserver)
                     , m_interiorLabelLayer(interiorLabelLayer)
-                    , m_labelHiddenFilterModel(labelHiddenFilterModel)
                     , m_searchService(searchService)
                     , m_searchQueryPerformer(searchQueryPerformer)
                     , m_searchResultRepository(searchResultRepository)
@@ -52,7 +50,6 @@ namespace ExampleApp
                     , m_interiorCellAddedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorAddedToSceneGraph)
                     , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
                     , m_interiorLabelsBuiltHandler(this, &InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt)
-                    , m_hideLabelAlwaysFilter(this, &InteriorsHighlightVisibilityController::HideLabelAlwaysPredicate)
                 {
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
@@ -60,8 +57,6 @@ namespace ExampleApp
                     
                     
                     m_interiorsCellResourceObserver.RegisterAddedToSceneGraphCallback(m_interiorCellAddedHandler);
-
-                    m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, &m_hideLabelAlwaysFilter);
                 }
 
                 InteriorsHighlightVisibilityController::~InteriorsHighlightVisibilityController()
@@ -92,25 +87,14 @@ namespace ExampleApp
                     }
                 }
 
-                void InteriorsHighlightVisibilityController::ActivateLabels(bool active)
-                {
-                    m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, active ? NULL : &m_hideLabelAlwaysFilter);
-                }
-
-
                 void InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt()
                 {
                     ShowHighlightsForCurrentResults();
-                    
-                    bool hasResults = m_searchResultRepository.GetItemCount() > 0;
-                    ActivateLabels(!hasResults);
-                    
                 }
 
                 void InteriorsHighlightVisibilityController::OnSearchResultCleared()
                 {
                     DeactivateHighlightRenderables();
-                    ActivateLabels(true);
                 }
 
                 void InteriorsHighlightVisibilityController::OnInteriorChanged()
@@ -149,8 +133,6 @@ namespace ExampleApp
                         {
                             ShowHighlightsForCurrentResults();
                         }
-                        bool hasResults = m_searchResultRepository.GetItemCount() > 0;
-                        ActivateLabels(!hasResults);
                     }
                     else
                     {
@@ -193,8 +175,6 @@ namespace ExampleApp
                     DeactivateHighlightRenderables();
                     
                     ShowHighlightsForResults(results);
-                    
-                    ActivateLabels(false);
                 }
 
                 bool InteriorsHighlightVisibilityController::ShowHighlightsForCurrentResults()
