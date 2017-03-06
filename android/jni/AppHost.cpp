@@ -303,6 +303,9 @@ void AppHost::OnResume()
 {
     ASSERT_NATIVE_THREAD
 
+	m_pSenionLabLocationModule->GetLocationController().StartUpdatingLocation();
+    m_pSenionLabBroadcastReceiver->RegisterReceiver();
+
     m_pApp->OnResume();
     m_isPaused = false;
 }
@@ -314,6 +317,9 @@ void AppHost::OnPause()
     m_isPaused = true;
     m_pApp->OnPause();
     m_pCurrentLocationService->StopListening();
+
+    m_pSenionLabBroadcastReceiver->UnregisterReceiver();
+    m_pSenionLabLocationModule->GetLocationController().StopUpdatingLocation();
 }
 
 void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
@@ -602,6 +608,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
             m_pSenionLabLocationModule->GetLocationManager(),
             m_messageBus,
             m_nativeState);
+    m_pSenionLabBroadcastReceiver->RegisterReceiver();
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
@@ -620,6 +627,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
     if(m_createdUIModules)
     {
     	m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
+
+    	Eegeo_DELETE m_pSenionLabBroadcastReceiver;
 
         Eegeo_DELETE m_pMyPinDetailsViewModule;
 
