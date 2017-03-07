@@ -2,6 +2,12 @@
 
 package com.eegeo.mobileexampleapp;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
@@ -19,6 +25,10 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.Constants;
+import net.hockeyapp.android.CrashManagerListener;
+import net.hockeyapp.android.NativeCrashManager;
 
 
 public class BackgroundThreadActivity extends MainActivity
@@ -28,6 +38,7 @@ public class BackgroundThreadActivity extends MainActivity
     private long m_nativeAppWindowPtr;
     private ThreadedUpdateRunner m_threadedRunner;
     private Thread m_updater;
+    private String m_hockeyAppId;
     /* The url used if the app is opened by a deep link.
      *  As the app in singleTask this is set in onNewIntent and must be
      *  set to null before for the app pauses.
@@ -49,6 +60,11 @@ public class BackgroundThreadActivity extends MainActivity
             finish();
             return;
         }
+        
+        m_hockeyAppId = readHockeyAppId();
+        Constants.loadFromContext(this);
+        NativeJniCalls.setUpBreakpad(Constants.FILES_PATH);
+        NativeCrashManager.handleDumpFiles(this, m_hockeyAppId);
         
         PackageInfo pInfo = null;
         try 
@@ -111,6 +127,7 @@ public class BackgroundThreadActivity extends MainActivity
     protected void onResume()
     {
         super.onResume();
+        registerCrashLogging();
 
         runOnNativeThread(new Runnable()
         {
@@ -274,6 +291,37 @@ public class BackgroundThreadActivity extends MainActivity
         {
         	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         }
+    }
+    
+    private String readHockeyAppId()
+    {    
+        try
+        {  
+            String applicationConfigurationPath = NativeJniCalls.getAppConfigurationPath();
+            InputStream is = getAssets().open(applicationConfigurationPath);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            String jsonStr = new String(buffer, "UTF-8");
+            JSONObject json = new JSONObject(jsonStr);
+            return json.get("hockey_app_id").toString();
+        } catch (IOException e) {
+            // Master Ball
+        } catch (JSONException e) {
+            // Master Ball
+        }
+        
+        return "";
+    }
+    
+    private void registerCrashLogging()
+    {    
+    	CrashManager.register(this, m_hockeyAppId, new CrashManagerListener() {
+    		public boolean shouldAutoUploadCrashes() {
+    			return true;
+    		}
+    	});
     }
 
     private class ThreadedUpdateRunner implements Runnable
