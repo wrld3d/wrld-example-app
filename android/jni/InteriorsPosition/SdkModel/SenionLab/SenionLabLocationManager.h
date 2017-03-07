@@ -40,8 +40,14 @@ namespace ExampleApp
                     void OnDidUpdateLocation(const InteriorsLocationChangedMessage& message);
                     void OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message);
 
+                    void OnResume();
+                    void OnPause();
+
                 private:
                     int FloorNumberToFloorIndex(const int floorIndex);
+
+                    void StartLocationUpdates();
+                    void StopLocationUpdates();
 
                     AndroidNativeState& m_nativeState;
                     SenionLabLocationService& m_senionLabLocationService;
@@ -51,6 +57,10 @@ namespace ExampleApp
                     jclass m_locationManagerClass;
                     jobject m_locationManagerInstance;
                     std::map<int, std::string> m_floorMap;
+
+                    std::string m_apiKey;
+                    std::string m_apiSecret;
+                    bool m_isActive;
                 };
             }
         }
