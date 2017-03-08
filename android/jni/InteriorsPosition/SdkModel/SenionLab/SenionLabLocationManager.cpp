@@ -75,6 +75,7 @@ namespace ExampleApp
                     m_apiSecret = apiSecret;
                     m_isActive = true;
 
+                    AskUserToEnableBluetoothIfDisabled();
                     StartLocationUpdates();
                 }
 
@@ -131,6 +132,20 @@ namespace ExampleApp
                 	{
                 		StopLocationUpdates();
                 	}
+                }
+
+                void SenionLabLocationManager::AskUserToEnableBluetoothIfDisabled()
+                {
+                    ASSERT_NATIVE_THREAD
+
+                    AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                    JNIEnv* env = attached.envForThread;
+
+                    jmethodID askUserToEnableBluetoothIfDisabled = env->GetMethodID(m_locationManagerClass,
+                                                                                    "askUserToEnableBluetoothIfDisabled",
+                                                                                    "()V");
+
+                    env->CallVoidMethod(m_locationManagerInstance, askUserToEnableBluetoothIfDisabled);
                 }
 
                 void SenionLabLocationManager::StartLocationUpdates()
