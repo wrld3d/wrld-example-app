@@ -88,7 +88,8 @@ namespace ExampleAppWPF
 
             for (var i = 0; i < tickCount; ++i)
             {
-                var formattedText = new FormattedText(labels[i], cultureInfo, FlowDirection.RightToLeft, typeface, fontPointSize, Fill);
+                var formattedText = new FormattedText(labels[i], cultureInfo, FlowDirection.LeftToRight, typeface, fontPointSize, Fill);
+                formattedText.TextAlignment = TextAlignment.Right;
                 var y = verticalOffset + height - (i * tickSpacing);
                 dc.DrawText(formattedText, new Point(TickLabelsOffset, y));
             }
