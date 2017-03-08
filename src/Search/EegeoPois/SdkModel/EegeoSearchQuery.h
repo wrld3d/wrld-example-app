@@ -10,6 +10,7 @@
 #include "SearchQuery.h"
 #include "WebLoadRequestCompletionCallback.h"
 #include "UrlHelpers.h"
+#include "InteriorId.h"
 
 #include <string>
 
@@ -34,6 +35,8 @@ namespace ExampleApp
                                      const Search::SdkModel::SearchQuery& query,
                                      const std::string& serviceUrl,
                                      const Eegeo::Web::ApiTokenModel& apiTokenModel,
+                                     const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                     int interiorFloorIndex,
                                      Eegeo::Helpers::ICallback0& completionCallback);
                     
                     ~EegeoSearchQuery();

@@ -37,26 +37,30 @@ namespace ExampleApp
                 IEegeoSearchQuery* EegeoSearchQueryFactory::CreateEegeoSearchForQuery(const Search::SdkModel::SearchQuery& query,
                                                                                                   Eegeo::Helpers::ICallback0& completionCallback)
                 {
+                    const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel = m_interiorInteractionModel.GetInteriorModel();
                     if (m_interiorInteractionModel.HasInteriorModel() && query.IsTag() && query.ShouldTryInteriorSearch())
                     {
-                        
-                        const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel = *m_interiorInteractionModel.GetInteriorModel();
                         return Eegeo_NEW(EegeoInteriorSearchQuery)(m_webRequestFactory,
                                                                    m_urlEncoder,
                                                                    query,
                                                                    m_serviceUrl,
                                                                    m_apiTokenModel,
-                                                                   interiorsModel.GetId(),
+                                                                   interiorsModel->GetId(),
                                                                    m_interiorInteractionModel.GetSelectedFloorIndex(),
                                                                    completionCallback);
                     }
                     else
                     {
+                        const Eegeo::Resources::Interiors::InteriorId interiorId(interiorsModel != nullptr
+                            ? interiorsModel->GetId()
+                            : Eegeo::Resources::Interiors::InteriorId::NullId());
                         return Eegeo_NEW(EegeoSearchQuery)(m_webRequestFactory,
                                                            m_urlEncoder,
                                                            query,
                                                            m_serviceUrl,
                                                            m_apiTokenModel,
+                                                           interiorId,
+                                                           m_interiorInteractionModel.GetSelectedFloorIndex(),
                                                            completionCallback);
                     }
                 }
