@@ -46,8 +46,15 @@ namespace ExampleApp
                     void OnSetInteriorIdFromMapKey(const InteriorsLocationMapKeyChangedMessage& message);
                     void OnSetIsConnected(const InteriorsLocationConnectionChangedMessage& message);
 
+                    void OnResume();
+                    void OnPause();
+
                 private:
                     int FloorNumberToFloorIndex(const std::string& mapKey, const int floorIndex);
+
+                    void AskUserToEnableBluetoothIfDisabled();
+                    void StartLocationUpdates();
+                    void StopLocationUpdates();
 
                     AndroidNativeState& m_nativeState;
                     SenionLabLocationService& m_senionLabLocationService;
@@ -62,6 +69,8 @@ namespace ExampleApp
                     std::map<std::string, Eegeo::Resources::Interiors::InteriorId> m_interiorIds;
                     std::string m_mapKey;
                     std::string m_customerId;
+                    std::vector<std::string> m_mapKeyVector;
+                    bool m_isActive;
                 };
             }
         }

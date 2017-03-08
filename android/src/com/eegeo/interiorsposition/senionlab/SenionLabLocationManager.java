@@ -2,9 +2,11 @@ package com.eegeo.interiorsposition.senionlab;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 
 import java.util.ArrayList;
+import android.content.Intent;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.senionlab.slutilities.service.SLBroadcastReceiver;
@@ -26,7 +28,18 @@ public class SenionLabLocationManager implements SLConsumer
         m_serviceManager = SLServiceManager.getInstance(m_activity);
     }
 
-	public void startUpdatingLocation(final String[] mapKeyArray, final String apiSecret) throws SLIndoorLocationException
+    public void askUserToEnableBluetoothIfDisabled()
+    {
+    	BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		
+		if(bluetoothAdapter != null && !bluetoothAdapter.isEnabled())
+		{
+			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			m_activity.startActivity(enableBtIntent);
+		}
+    }
+    
+    public void startUpdatingLocation(final String[] mapKeyArray, final String apiSecret) throws SLIndoorLocationException
     {
 		ArrayList<String> mapKeyList = new ArrayList<String>();
 		

@@ -303,7 +303,7 @@ void AppHost::OnResume()
 {
     ASSERT_NATIVE_THREAD
 
-	m_pSenionLabLocationModule->GetLocationController().StartUpdatingLocation();
+	m_pSenionLabLocationModule->GetLocationManager().OnResume();
     m_pSenionLabBroadcastReceiver->RegisterReceiver();
 
     m_pApp->OnResume();
@@ -318,8 +318,12 @@ void AppHost::OnPause()
     m_pApp->OnPause();
     m_pCurrentLocationService->StopListening();
 
-    m_pSenionLabBroadcastReceiver->UnregisterReceiver();
-    m_pSenionLabLocationModule->GetLocationController().StopUpdatingLocation();
+    if(m_pSenionLabBroadcastReceiver != NULL)
+    {
+        m_pSenionLabBroadcastReceiver->UnregisterReceiver();
+    }
+
+    m_pSenionLabLocationModule->GetLocationManager().OnPause();
 }
 
 void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
