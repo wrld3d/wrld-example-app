@@ -46,6 +46,7 @@ namespace ExampleApp
                 private:
                     int FloorNumberToFloorIndex(const int floorIndex);
 
+                    void AskUserToEnableBluetoothIfDisabled();
                     void StartLocationUpdates();
                     void StopLocationUpdates();
 
