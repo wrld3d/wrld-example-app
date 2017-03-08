@@ -127,7 +127,10 @@ public class BackgroundThreadActivity extends MainActivity
     protected void onResume()
     {
         super.onResume();
-        registerCrashLogging();
+    	if(hasValidHockeyAppId())
+    	{
+    		registerCrashLogging();
+    	}
 
         runOnNativeThread(new Runnable()
         {
@@ -315,6 +318,10 @@ public class BackgroundThreadActivity extends MainActivity
         return "";
     }
     
+    private boolean hasValidHockeyAppId()
+    {
+    	return m_hockeyAppId.length() == 32;
+    }
     private void registerCrashLogging()
     {    
     	CrashManager.register(this, m_hockeyAppId, new CrashManagerListener() {
