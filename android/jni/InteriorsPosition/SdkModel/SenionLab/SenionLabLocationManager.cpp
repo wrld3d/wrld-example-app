@@ -26,6 +26,9 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_onDidUpdateLocationCallback(this, &SenionLabLocationManager::OnDidUpdateLocation)
                 , m_onSetIsAuthorized(this, &SenionLabLocationManager::OnSetIsAuthorized)
+                , m_apiKey("")
+                , m_apiSecret("")
+                , m_isActive(false)
                 {
                     ASSERT_NATIVE_THREAD
 
@@ -67,39 +70,18 @@ namespace ExampleApp
                                                                      const std::string& apiSecret,
                                                                      const std::map<int, std::string>& floorMap)
                 {
-                    ASSERT_NATIVE_THREAD
-
                     m_floorMap = floorMap;
+                    m_apiKey = apiKey;
+                    m_apiSecret = apiSecret;
+                    m_isActive = true;
 
-                    AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                    JNIEnv* env = attached.envForThread;
-
-                    jmethodID startUpdatingLocation = env->GetMethodID(m_locationManagerClass,
-                                                                       "startUpdatingLocation",
-                                                                       "(Ljava/lang/String;Ljava/lang/String;)V");
-
-                    jstring apiKeyJString = env->NewStringUTF(apiKey.c_str());
-                    jstring apiSecretJString = env->NewStringUTF(apiSecret.c_str());
-                    env->CallVoidMethod(m_locationManagerInstance,
-                                        startUpdatingLocation,
-                                        apiKeyJString,
-                                        apiSecretJString);
-                    env->DeleteLocalRef(apiKeyJString);
-                    env->DeleteLocalRef(apiSecretJString);
+                    AskUserToEnableBluetoothIfDisabled();
+                    StartLocationUpdates();
                 }
 
                 void SenionLabLocationManager::StopUpdatingLocation()
                 {
-                    ASSERT_NATIVE_THREAD
-
-                    AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                    JNIEnv* env = attached.envForThread;
-
-                    jmethodID stopUpdatingLocation = env->GetMethodID(m_locationManagerClass,
-                                                                      "stopUpdatingLocation",
-                                                                      "()V");
-
-                    env->CallVoidMethod(m_locationManagerInstance, stopUpdatingLocation);
+                    StopLocationUpdates();
                 }
 
                 jobject SenionLabLocationManager::ManagedInstance() const
@@ -134,6 +116,71 @@ namespace ExampleApp
                     }
 
                     return floorIndex;
+                }
+
+                void SenionLabLocationManager::OnResume()
+                {
+                	if(m_isActive)
+                	{
+                		StartLocationUpdates();
+                	}
+                }
+
+                void SenionLabLocationManager::OnPause()
+                {
+                	if(m_isActive)
+                	{
+                		StopLocationUpdates();
+                	}
+                }
+
+                void SenionLabLocationManager::AskUserToEnableBluetoothIfDisabled()
+                {
+                    ASSERT_NATIVE_THREAD
+
+                    AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                    JNIEnv* env = attached.envForThread;
+
+                    jmethodID askUserToEnableBluetoothIfDisabled = env->GetMethodID(m_locationManagerClass,
+                                                                                    "askUserToEnableBluetoothIfDisabled",
+                                                                                    "()V");
+
+                    env->CallVoidMethod(m_locationManagerInstance, askUserToEnableBluetoothIfDisabled);
+                }
+
+                void SenionLabLocationManager::StartLocationUpdates()
+                {
+                	ASSERT_NATIVE_THREAD
+
+					AndroidSafeNativeThreadAttachment attached(m_nativeState);
+					JNIEnv* env = attached.envForThread;
+
+					jmethodID startUpdatingLocation = env->GetMethodID(m_locationManagerClass,
+																	   "startUpdatingLocation",
+																	   "(Ljava/lang/String;Ljava/lang/String;)V");
+
+					jstring apiKeyJString = env->NewStringUTF(m_apiKey.c_str());
+					jstring apiSecretJString = env->NewStringUTF(m_apiSecret.c_str());
+					env->CallVoidMethod(m_locationManagerInstance,
+										startUpdatingLocation,
+										apiKeyJString,
+										apiSecretJString);
+					env->DeleteLocalRef(apiKeyJString);
+					env->DeleteLocalRef(apiSecretJString);
+                }
+
+                void SenionLabLocationManager::StopLocationUpdates()
+                {
+                	ASSERT_NATIVE_THREAD
+
+					AndroidSafeNativeThreadAttachment attached(m_nativeState);
+					JNIEnv* env = attached.envForThread;
+
+					jmethodID stopUpdatingLocation = env->GetMethodID(m_locationManagerClass,
+																	  "stopUpdatingLocation",
+																	  "()V");
+
+					env->CallVoidMethod(m_locationManagerInstance, stopUpdatingLocation);
                 }
             }
         }

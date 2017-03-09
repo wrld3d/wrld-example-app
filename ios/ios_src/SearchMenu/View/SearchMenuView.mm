@@ -993,7 +993,7 @@
 -(BOOL) pointInside:(CGPoint)point
           withEvent:(UIEvent*)event
 {
-    return point.y < [self getUpperMargin] + m_dragTabHeight + m_totalTableHeight;
+    return point.y < [self getUpperMargin] + m_dragTabHeight + m_totalTableHeight + self.pSearchResultsTableContainerView.frame.size.height + 2.0f*m_tableSpacing;
 }
 
 @end

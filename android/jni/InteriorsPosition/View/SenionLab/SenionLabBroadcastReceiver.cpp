@@ -50,12 +50,27 @@ namespace ExampleApp
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
 
-                    jmethodID destroyMethod = env->GetMethodID(m_broadcastReceiverClass, "destroy", "()V");
-                    env->CallVoidMethod(m_broadcastReceiverInstance, destroyMethod);
-
                     env->DeleteGlobalRef(m_broadcastReceiverInstance);
                     env->DeleteGlobalRef(m_broadcastReceiverClass);
                 }
+
+                void SenionLabBroadcastReceiver::RegisterReceiver()
+                {
+                	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                	JNIEnv* env = attached.envForThread;
+
+                	jmethodID registerMethod = env->GetMethodID(m_broadcastReceiverClass, "registerReceiver", "()V");
+                	env->CallVoidMethod(m_broadcastReceiverInstance, registerMethod);
+                }
+
+                void SenionLabBroadcastReceiver::UnregisterReceiver()
+				{
+                	AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                	JNIEnv* env = attached.envForThread;
+
+                	jmethodID unregisterMethod = env->GetMethodID(m_broadcastReceiverClass, "unregisterReceiver", "()V");
+                	env->CallVoidMethod(m_broadcastReceiverInstance, unregisterMethod);
+				}
 
                 void SenionLabBroadcastReceiver::DidUpdateLocation(const double latitude, const double longitude, const int floorNumber)
                 {

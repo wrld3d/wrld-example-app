@@ -24,6 +24,7 @@
     float m_controlContainerWidth;
     float m_controlContainerHeight;
     float m_yCursor;
+    float m_scrollBoxPadding;
 
     float m_scrollContentBottomMargin;
 

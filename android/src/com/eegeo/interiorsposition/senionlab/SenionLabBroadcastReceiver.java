@@ -2,9 +2,9 @@ package com.eegeo.interiorsposition.senionlab;
 
 import com.senionlab.slutilities.geofencing.interfaces.SLGeometry;
 import com.senionlab.slutilities.service.SLBroadcastReceiver;
+import com.senionlab.slutilities.type.LocationAvailability;
 import com.senionlab.slutilities.type.SLCoordinate3D;
 import com.senionlab.slutilities.type.SLHeadingStatus;
-import com.senionlab.slutilities.type.SLLocationStatus;
 import com.senionlab.slutilities.type.SLMotionType;
 
 class SenionLabBroadcastReceiver extends SLBroadcastReceiver
@@ -18,16 +18,20 @@ class SenionLabBroadcastReceiver extends SLBroadcastReceiver
     {
         m_nativeCallerPointer = nativeCallerPointer;
         m_locationManager = locationManager;
-        m_locationManager.registerReceiver(this);
+    }
+    
+    public void registerReceiver()
+    {
+    	m_locationManager.registerReceiver(this);
     }
 
-    public void destroy()
+    public void unregisterReceiver()
     {
         m_locationManager.unregisterReceiver(this);
     }
 
     @Override
-    public void didUpdateLocation(SLCoordinate3D location, double v, SLLocationStatus locationStatus)
+    public void didUpdateLocation(SLCoordinate3D location, double v)
     {
         synchronized (m_updateLock)
         {
@@ -36,6 +40,13 @@ class SenionLabBroadcastReceiver extends SLBroadcastReceiver
                                                                    location.getLongitude(),
                                                                    location.getFloorNr().intValue());
         }
+    }
+    
+    @Override
+    public void didUpdateLocationAvailability(LocationAvailability locationAvailability)
+    {
+    	boolean available = locationAvailability == LocationAvailability.AVAILABLE;
+    	m_locationManager.updateAvailability(available);
     }
 
     @Override

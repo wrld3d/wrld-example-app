@@ -11,6 +11,11 @@
 #include "Logger.h"
 #include "AndroidAppThreadAssertions.h"
 #include "AndroidImagePathHelpers.h"
+#include "ApiKey.h"
+#include "Types.h"
+
+#include "client/linux/handler/exception_handler.h"
+#include "client/linux/handler/minidump_descriptor.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -30,6 +35,7 @@ namespace
         jintArray pointerIdentity,
         jintArray pointerIndex,
         TouchInputEvent& event);
+    google_breakpad::ExceptionHandler* g_exceptionHandler;
 }
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* pvt)
@@ -97,6 +103,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_de
 {
     EXAMPLE_LOG("stopNativeCode()\n");
 
+    Eegeo_DELETE g_exceptionHandler;
     Eegeo_DELETE g_pAppRunner;
     g_pAppRunner = NULL;
 
@@ -208,6 +215,11 @@ JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_EegeoSurfaceView_
     g_pAppRunner->HandleTouchEvent(event);
 }
 
+JNIEXPORT jstring JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_getAppConfigurationPath(JNIEnv* jenv, jobject obj)
+{
+	return jenv->NewStringUTF(ExampleApp::ApplicationConfigurationPath.c_str());
+}
+
 namespace
 {
     void FillEventFromJniData(
@@ -237,4 +249,21 @@ namespace
         jenv->ReleaseIntArrayElements(pointerIdentity, identityBuffer, 0);
         jenv->ReleaseIntArrayElements(pointerIndex, indexBuffer, 0);
     }
+}
+
+bool DumpCallback(const google_breakpad::MinidumpDescriptor& descriptor,
+                  void* context,
+                  bool succeeded)
+{
+  return succeeded;
+}
+
+extern "C"
+{
+  void Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_setUpBreakpad(JNIEnv* env, jobject obj, jstring filepath)
+  {
+    const char *path = env->GetStringUTFChars(filepath, 0);
+    google_breakpad::MinidumpDescriptor descriptor(path);
+    g_exceptionHandler = new google_breakpad::ExceptionHandler(descriptor, NULL, DumpCallback, NULL, true, -1);
+  }
 }
