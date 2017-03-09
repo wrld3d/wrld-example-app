@@ -32,12 +32,6 @@ namespace ExampleApp
                     /*[InteriorMode] =*/ false,
                     /*[AttractMode]  =*/ true,
                 };
-            const bool StoreMapState[] =
-                {
-                    /*[WorldMode]    =*/ false,
-                    /*[InteriorMode] =*/ false,
-                    /*[AttractMode]  =*/ false,
-                };
             const bool DisablePinCreation[] =
                 {
                     /*[WorldMode]    =*/ false,
@@ -55,8 +49,7 @@ namespace ExampleApp
                                                                    Eegeo::Input::IUserIdleService& userIdleService,
                                                                    const bool attractModeEnabled,
                                                                    const long long attractModeTimeout,
-                                                                   MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                                                   VisualMap::SdkModel::IVisualMapService& visualMapService)
+                                                                   MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
         : m_cameraController(cameraController)
         , m_appModeModel(appModeModel)
         , m_worldCameraController(worldCameraController)
@@ -66,7 +59,6 @@ namespace ExampleApp
         , m_interiorSelectionModelChangedCallback(this, &GlobalAppModeTransitionRules::OnInteriorSelectionModelChanged)
         , m_attractModeTimer(userIdleService, attractModeEnabled ? attractModeTimeout : std::numeric_limits<long long>::max())
         , m_myPinCreationModel(myPinCreationModel)
-        , m_visualMapService(visualMapService)
         , m_worldCameraHandle(m_cameraController.CreateCameraHandleFromController(m_worldCameraController))
         , m_interiorCameraHandle(m_cameraController.CreateCameraHandleFromController(m_interiorCameraController))
         , m_currentState(appModeModel.GetAppMode())
@@ -85,10 +77,6 @@ namespace ExampleApp
             if (HandleInteriorSelection[m_currentState])
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionModelChangedCallback);
-            }
-            if (StoreMapState[m_currentState])
-            {
-                m_visualMapService.StoreCurrentMapState();
             }
             if (DisablePinCreation[m_currentState])
             {
@@ -121,10 +109,6 @@ namespace ExampleApp
             }
 
             SetupCameraForNextMode(m_currentState, static_cast<SdkModel::AppMode>(nextState));
-            if (StoreMapState[m_currentState])
-            {
-                m_visualMapService.RestorePreviousMapState();
-            }
         }
 
         void GlobalAppModeTransitionRules::OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId)
