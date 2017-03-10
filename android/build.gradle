@@ -12,6 +12,8 @@ android {
         versionCode 1
         versionName "1.0"
 		
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
         externalNativeBuild {
             cmake {
                 cppFlags "-Wall", "-Wno-unknown-pragmas", "-Wno-sign-compare", "-Wno-format-security",
@@ -34,6 +36,10 @@ android {
             assets.srcDirs = ['assets']
             jniLibs.srcDirs = ['libs', 'libs/indooratlas']
         }
+
+        androidTest {
+            java.srcDirs = ['tests']
+        }
     }
 
     buildTypes {
@@ -54,6 +60,7 @@ android {
             debuggable true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -68,7 +75,13 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-   // compile 'com.android.support:appcompat-v7:25.2.0'
-   // compile 'com.android.support:support-core-utils:25.2.0'
+    // compile 'com.android.support:appcompat-v7:25.2.0'
+    // compile 'com.android.support:support-core-utils:25.2.0'
     compile 'com.android.support:multidex:1.0.1'
+
+    androidTestCompile 'tools.fastlane:screengrab:0.3.0'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
 }

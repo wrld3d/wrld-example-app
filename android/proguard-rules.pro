@@ -9,7 +9,7 @@
 -keep public class java.lang.management.* { public *; }
 -dontwarn java.lang.management.**
 
--keep class sun.misc.Unsafe
+-keep class sun.misc.Unsafe { *; }
 -dontwarn sun.misc.Unsafe
 
 -keep class org.apache.http.** { *; }
@@ -30,3 +30,27 @@
 -dontwarn android.net.http.*
 
 -keep class com.eegeo.** { *; }
+
+-keep public interface org.easymock.** { *; }
+-dontwarn org.easymock.**
+-keep class org.jmock.core.Constraint { *; }
+-dontwarn org.jmock.core.Constraint 
+-keep class junit.framework.TestCase { *; }
+-dontwarn junit.framework.TestCase
+-keep class junit.runner.BaseTestRunner { *; }
+-dontwarn junit.runner.BaseTestRunner 
+
+-dontwarn android.test.**
+-dontwarn android.support.test.**
+
+-keep class org.hamcrest.** { *; }
+-dontwarn org.hamcrest.**
+
+-keep class org.junit.** { *; }
+-dontwarn org.junit.**
+
+-keep class junit.** { *; }
+-dontwarn junit.**
+
+-keep class javax.lang.model.element.** { *; }
+-dontwarn javax.lang.model.element.**
