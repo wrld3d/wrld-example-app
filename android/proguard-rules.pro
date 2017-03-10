@@ -1,17 +1,32 @@
-# Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in C:\Users\judith.underwood\AppData\Local\Android\Sdk/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the proguardFiles
-# directive in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+-dontobfuscate
+-verbose
 
-# Add any project specific keep options here:
+-keep class com.eegeo.entrypointinfrastructure.INativeMessageRunner
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-keep public class com.google.android.gms.* { public *; }
+-dontwarn com.google.android.gms.**
+
+-keep public class java.lang.management.* { public *; }
+-dontwarn java.lang.management.**
+
+-keep class sun.misc.Unsafe
+-dontwarn sun.misc.Unsafe
+
+-keep class org.apache.http.** { *; }
+-keep class org.apache.james.mime4j.** { *; }
+-dontwarn org.apache.http.**
+-dontwarn org.apache.james.mime4j.**
+
+-keep class com.flurry.sdk.i
+-dontwarn com.flurry.sdk.i
+
+-keep class org.codehaus.mojo.**
+-dontwarn org.codehaus.mojo.**
+
+-keep class javax.xml.bind.*
+-dontwarn javax.xml.bind.*
+
+-keep class android.net.http.*
+-dontwarn android.net.http.*
+
+-keep class com.eegeo.** { *; }
