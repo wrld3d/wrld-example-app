@@ -9,6 +9,7 @@
 #include "ApplyScreenControl.h"
 #include "MyPinCreationStateChangedMessage.h"
 #include "AppModeChangedMessage.h"
+#include "VirtualKeyboard.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<CompassController, const MyPinCreation::MyPinCreationStateChangedMessage&> m_myPinCreationStateChangedMessageHandler;
                 Eegeo::Helpers::TCallback0<CompassController> m_viewCycledCallback;
                 Eegeo::Helpers::TCallback1<CompassController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
+                Eegeo::Helpers::TCallback1<CompassController, const VirtualKeyboard::VirtualKeyboardStateChangedMessage&> m_virtualKeyboardStateChangedMessageHandler;
 
                 void OnViewCycled();
 
@@ -44,6 +46,8 @@ namespace ExampleApp
                 void OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message);
                 
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
+
+                void OnVirtualKeyboardStateChangedMessage(const VirtualKeyboard::VirtualKeyboardStateChangedMessage& message);
                 
                 bool m_appModeAllowsOpen;
                 

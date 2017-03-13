@@ -6,6 +6,7 @@
 #include "AboutPage.h"
 #include "IAboutPageViewModule.h"
 #include "IMetricsService.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,7 @@ namespace ExampleApp
                 AboutPageController* m_pController;
 
             public:
-                AboutPageViewModule(IAboutPageViewModel& aboutPageViewModel, Metrics::IMetricsService& metricsService);
+                AboutPageViewModule(IAboutPageViewModel& aboutPageViewModel, Metrics::IMetricsService& metricsService, ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~AboutPageViewModule();
 

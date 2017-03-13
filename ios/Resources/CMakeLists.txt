@@ -231,8 +231,6 @@ set(resources ${resources}
         Resources/detail_icon_web_link@1.5x.png
         Resources/detail_icon_web_link@2x.png
         Resources/detail_icon_web_link@3x.png
-        Resources/DejaVuSansBold.fnt
-        Resources/DejaVuSansBold_0.png
         Resources/eegeo_logo.png
         Resources/eegeo_logo@2x.png
         Resources/eegeo_logo@3x.png
@@ -253,8 +251,6 @@ set(resources ${resources}
         Resources/floor_selection_top.png
         Resources/floor_selection_top@2x.png
         Resources/floor_selection_top@3x.png
-        Resources/FrankBold50_A8_icons.fnt
-        Resources/FrankBold50_A8_icons_0.png
         Resources/Geosphere_01.pod
         Resources/gps_marker.png
         Resources/gps_marker@2x.png
@@ -650,14 +646,6 @@ set(resources ${resources}
         Resources/image_blank@2x.png
         Resources/image_blank@3x.png
         Resources/Interiors
-        Resources/IPAexGothic32_A8_icons_0.png
-        Resources/IPAexGothic32_A8_icons_1.png
-        Resources/IPAexGothic32_A8_icons_2.png
-        Resources/IPAexGothic32_A8_icons_3.png
-        Resources/IPAexGothic32_A8_icons_4.png
-        Resources/IPAexGothic32_A8_icons_5.png
-        Resources/IPAexGothic32_A8_icons_6.png
-        Resources/IPAexGothic32_A8_icons.fnt
         Resources/menu_background1.png
         Resources/menu_background1@2x.png
         Resources/menu_background1@3x.png
@@ -811,34 +799,6 @@ set(resources ${resources}
         Resources/sub_menu_arrow_on@3x.png
         Resources/search_tags.json
         Resources/EmbeddedTheme
-        Resources/Tours
-        Resources/Tours/browser_back.png
-        Resources/Tours/browser_forward.png
-        Resources/Tours/page.png
-        Resources/Tours/placeholder.png
-        Resources/Tours/play_icon.png
-        Resources/Tours/play_icon@2x.png
-        Resources/Tours/play_icon@3x.png
-        Resources/Tours/States
-        Resources/Tours/States/Twitter
-        Resources/Tours/States/Twitter/browser_back.png
-        Resources/Tours/States/Twitter/browser_forward.png
-        Resources/Tours/States/Twitter/favoriteIcon.png
-        Resources/Tours/States/Twitter/NotLoaded
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded.png
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded@2x.png
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded@3x.png
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded.png
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded@2x.png
-        Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded@3x.png
-        Resources/Tours/States/Twitter/play_icon.png
-        Resources/Tours/States/Twitter/play_icon@2x.png
-        Resources/Tours/States/Twitter/play_icon@3x.png
-        Resources/Tours/States/Twitter/replyIcon.png
-        Resources/Tours/States/Twitter/retweetIcon.png
-        Resources/Tours/States/Twitter/tweet_bird.png
-        Resources/Tours/States/Twitter/tweet_bird@2x.png
-        Resources/Tours/States/Twitter/tweet_bird@3x.png
         Resources/weatherstates.json
         Resources/Yelp
         Resources/yelp_map.json

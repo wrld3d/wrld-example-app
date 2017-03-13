@@ -2,18 +2,14 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 
 namespace ExampleAppWPF
 {
     public class YelpSearchResultsPoiView : SearchResultPoiViewBase
     {
-        private bool m_isInKioskMode;
-
         private TextBlock m_titleView = null;
         private Image m_poiImage = null;
         
@@ -30,10 +26,6 @@ namespace ExampleAppWPF
         private Visibility m_ratingCountVisibility;
         private string m_url;
         private FrameworkElement m_reviewsIcon;
-        private ImageSource m_placeholderImage;
-        private ScrollViewer m_contentContainer;
-        private Image m_headerFade;
-        private Image m_footerFade;
         private Grid m_previewImageSpinner;
         private Grid m_poiImageContainer;
         private Grid m_imageGradient;
@@ -41,14 +33,8 @@ namespace ExampleAppWPF
         private Grid m_detailsContainer;
         private double m_detailsContainerHeight;
 
-        private Storyboard m_scrollFadeInAnim;
-        private Storyboard m_scrollFadeOutAnim;
-
         private ControlClickHandler m_yelpReviewImageClickHandler;
         private Image m_yelpButton;
-
-        private RepeatButton m_scrollDownButton;
-        private RepeatButton m_scrollUpButton;
 
         public string PhoneText
         {
@@ -195,9 +181,8 @@ namespace ExampleAppWPF
         }
 
         public YelpSearchResultsPoiView(IntPtr nativeCallerPointer, bool isInKioskMode)
-            : base(nativeCallerPointer)
+            : base(nativeCallerPointer, isInKioskMode)
         {
-            m_isInKioskMode = isInKioskMode;
         }
 
         public override void OnApplyTemplate()
@@ -211,16 +196,6 @@ namespace ExampleAppWPF
             m_mainContainer = (FrameworkElement)GetTemplateChild("SearchresultsPoiViewContainer");
 
             m_reviewsIcon = (FrameworkElement)GetTemplateChild("ReviewsIcon");
-
-            m_contentContainer = (ScrollViewer)GetTemplateChild("ContentContainer");
-
-            m_contentContainer.ManipulationBoundaryFeedback += OnBoundaryFeedback;
-
-            m_contentContainer.ScrollChanged += OnSearchResultsScrolled;
-
-            m_headerFade = (Image)GetTemplateChild("HeaderFade");
-
-            m_footerFade = (Image)GetTemplateChild("FooterFade");
 
             m_previewImageSpinner = (Grid)GetTemplateChild("PreviewImageSpinner");
 
@@ -238,71 +213,12 @@ namespace ExampleAppWPF
 
             m_qrCodeStyleText = (string)Application.Current.Resources["YelpPOIViewQRCodeText"];
 
-            m_scrollUpButton = (RepeatButton)GetTemplateChild("YelpPOIViewScrollUpButton");
-            m_scrollUpButton.Click += HandleScrollUpButtonClicked;
-
-            m_scrollDownButton = (RepeatButton)GetTemplateChild("YelpPOIViewScrollDownButton");
-            m_scrollDownButton.Click += HandleScrollDownButtonClicked;
-
-            m_scrollFadeInAnim = ((Storyboard)Template.Resources["ScrollFadeIn"]).Clone();
-            m_scrollFadeOutAnim = ((Storyboard)Template.Resources["ScrollFadeOut"]).Clone();
-
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
 
             m_yelpReviewImageClickHandler = new ControlClickHandler(m_yelpButton, HandleWebLinkButtonClicked);
 
             base.OnApplyTemplate();
-        }
-        private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
-        {
-            if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
-            {
-                if(m_headerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_headerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollUpButton);
-                }
-
-                if(m_footerFade.Opacity >= 1)
-                {
-                    m_scrollFadeOutAnim.Begin(m_footerFade);
-                    m_scrollFadeOutAnim.Begin(m_scrollDownButton);
-                }
-            }
-            else if(m_contentContainer.VerticalOffset == 0)
-            {
-                if (m_headerFade.Opacity >= 1)
-                {
-                    m_scrollFadeOutAnim.Begin(m_headerFade);
-                    m_scrollFadeOutAnim.Begin(m_scrollUpButton);
-                }
-
-                if(m_footerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_footerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollDownButton);
-                }
-            }
-            else
-            {
-                if (m_headerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_headerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollUpButton);
-                }
-
-                if (m_footerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_footerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollDownButton);
-                }
-            }
-        }
-
-        private void OnBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
-        {
-            e.Handled = true;
         }
 
         protected override void DisplayCustomPoiInfo(Object modelObject)
@@ -321,7 +237,7 @@ namespace ExampleAppWPF
             HumanReadableTagsText = string.Join(", ", model.HumanReadableTags);
             ReviewText = string.Join(Environment.NewLine, yelpResultModel.Reviews);
             QRCodeText = string.Format(m_qrCodeStyleText, TitleText);
-            TagIcon = SearchResultPoiViewIconProvider.GetIconForTag(model.IconKey);
+            TagIcon = IconProvider.GetIconForTag(model.IconKey, m_isInKioskMode);
             PoiViewRatingCountText = yelpResultModel.ReviewCount > 0 ? yelpResultModel.ReviewCount.ToString() : string.Empty;
             RatingsImage.Source = null;
 
@@ -364,6 +280,8 @@ namespace ExampleAppWPF
             m_poiImage.Visibility = Visibility.Hidden;
 
             ShowAll();
+
+            base.DisplayCustomPoiInfo(modelObject);
         }
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
@@ -379,20 +297,10 @@ namespace ExampleAppWPF
         
         public void HandleWebLinkButtonClicked(object sender, MouseEventArgs e)
         {
-            if (!string.IsNullOrEmpty(m_url))
+            if (!string.IsNullOrEmpty(m_url) && !m_isInKioskMode)
             {
                 Process.Start(m_url);
             }
-        }
-
-        public void HandleScrollUpButtonClicked(object sender, RoutedEventArgs e)
-        {
-            m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset - 10);
-        }
-
-        public void HandleScrollDownButtonClicked(object sender, RoutedEventArgs e)
-        {
-            m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset + 10);
         }
     }
 }

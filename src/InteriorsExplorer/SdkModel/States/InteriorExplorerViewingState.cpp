@@ -17,12 +17,10 @@ namespace ExampleApp
             {
                 InteriorExplorerViewingState::InteriorExplorerViewingState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
                                                                            InteriorsExplorerModel& interiorExplorerModel,
-                                                                           InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel,
-                                                                           Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume)
+                                                                           InteriorExplorerUserInteractionModel& interiorExplorerUserInteractionModel)
                 : m_parentState(parentState)
                 , m_interiorExplorerModel(interiorExplorerModel)
                 , m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
-                , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
                 , m_exitCallback(this, &InteriorExplorerViewingState::OnInteriorExplorerExit)
                 , m_exiting(false)
                 {
@@ -34,7 +32,6 @@ namespace ExampleApp
                 
                 void InteriorExplorerViewingState::Enter(int previousState)
                 {
-                    m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(true);
                     m_interiorExplorerModel.ShowInteriorExplorer();
                     m_interiorExplorerModel.InsertInteriorExplorerExitedCallback(m_exitCallback);
                     m_exiting = false;
@@ -51,7 +48,6 @@ namespace ExampleApp
                 
                 void InteriorExplorerViewingState::Exit(int nextState)
                 {
-                    m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(false);
                     m_interiorExplorerModel.RemoveInteriorExplorerExitedCallback(m_exitCallback);
                     m_interiorExplorerModel.HideInteriorExplorer();
                 }

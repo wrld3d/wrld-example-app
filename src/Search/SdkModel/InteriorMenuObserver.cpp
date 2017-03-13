@@ -106,19 +106,20 @@ namespace ExampleApp
                                 
                                 const char* skipYelpSearchKey = "skip_yelp_search";
                                 const char* yelpMappingKey = "yelp_mapping";
+                                bool skipYelpSearch = false;
                                 if(item.HasMember(skipYelpSearchKey) && item[skipYelpSearchKey].IsBool())
                                 {
-                                    bool skipYelpSearch = item[skipYelpSearchKey].GetBool();
+                                    skipYelpSearch = item[skipYelpSearchKey].GetBool();
                                     if(skipYelpSearch)
                                     {
-                                        Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { "unused_string", false };
+                                        Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { "unused_string", true };
                                         m_yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
                                     }
                                 }
-                                else if(item.HasMember(yelpMappingKey) && item[yelpMappingKey].IsString())
+                                if(item.HasMember(yelpMappingKey) && item[yelpMappingKey].IsString() && skipYelpSearch == false)
                                 {
                                     const std::string& yelpMapping = item[yelpMappingKey].GetString();
-                                    Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { yelpMapping, true };
+                                    Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { yelpMapping, false };
                                     m_yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
                                 }
                                 
@@ -159,9 +160,11 @@ namespace ExampleApp
                 if (document.HasMember(itemKey) && document[itemKey].IsArray())
                 {
                     const auto& tagSearchModelsMember = document[itemKey];
-                    
-                    ClearTagSearchRepository();
-                    ClearDefaultOutdoorTags();
+                    if(tagSearchModelsMember.Size() > 0)
+                    {
+                        ClearTagSearchRepository();
+                        ClearDefaultOutdoorTags();
+                    }
                     
                     const bool visibleInSearchMenu = true;
                     const bool interior = true;
@@ -198,19 +201,20 @@ namespace ExampleApp
                         
                         const char* skipYelpSearchKey = "skip_yelp_search";
                         const char* yelpMappingKey = "yelp_mapping";
+                        bool skipYelpSearch = false;
                         if(item.HasMember(skipYelpSearchKey) && item[skipYelpSearchKey].IsBool())
                         {
-                            bool skipYelpSearch = item[skipYelpSearchKey].GetBool();
+                            skipYelpSearch = item[skipYelpSearchKey].GetBool();
                             if(skipYelpSearch)
                             {
-                                Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { "unused_string", false };
+                                Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { "unused_string", true };
                                 m_yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
                             }
                         }
-                        else if(item.HasMember(yelpMappingKey) && item[yelpMappingKey].IsString())
+                        if(item.HasMember(yelpMappingKey) && item[yelpMappingKey].IsString() && skipYelpSearch == false)
                         {
                             const std::string& yelpMapping = item[yelpMappingKey].GetString();
-                            Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { yelpMapping, true };
+                            Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { yelpMapping, false };
                             m_yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
                         }
                       

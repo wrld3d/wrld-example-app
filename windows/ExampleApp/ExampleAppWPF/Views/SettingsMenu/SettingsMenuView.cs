@@ -19,18 +19,20 @@ namespace ExampleAppWPF
         private MenuListAdapter m_adapter;
         private ControlClickHandler m_menutItemHandler;
 
+        private WindowInteractionTouchHandler m_touchHandler;
+
         static SettingsMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SettingsMenuView), new FrameworkPropertyMetadata(typeof(SettingsMenuView)));
         }
 
-        public SettingsMenuView(IntPtr nativeCallerPointer) : base(nativeCallerPointer)
+        public SettingsMenuView(IntPtr nativeCallerPointer, bool isInKioskMode) : base(nativeCallerPointer, isInKioskMode)
         {
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.SizeChanged += PerformLayout;
             mainWindow.MainGrid.Children.Add(this);
             Loaded += SettingsMenuView_Loaded;
-            TouchEnter += (o, e) => { mainWindow.PopAllTouchEvents(); };
+            m_touchHandler = new WindowInteractionTouchHandler(this, false, true, true);
         }
 
         private void SettingsMenuView_Loaded(object sender, RoutedEventArgs e)
@@ -85,7 +87,7 @@ namespace ExampleAppWPF
             m_closeBackgroundRect = ((Storyboard)Template.Resources[closeBackgroundRectString]).Clone();
             XamlHelpers.UpdateThicknessAnimationMarginValue(m_closeBackgroundRect, settingsAnimString + closeBackgroundRectString);
 
-            m_adapter = new MenuListAdapter(false, m_list,slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SettingsMenuItemPanel");
+            m_adapter = new MenuListAdapter(false, m_list,slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SettingsMenuItemPanel", m_isInKioskMode);
 
             PerformLayout(null, null);
         }

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
 namespace ExampleAppWPF
@@ -38,13 +34,10 @@ namespace ExampleAppWPF
         private Image m_emailIcon;
         private Image m_linkedInIcon;
         private Image m_slackIcon;
-        private Image m_headerFade;
-        private Image m_footerFade;
         private WrapPanel m_socialLinkIconsContainer;
         private Border m_detailsDivider;
         private Border m_tagsDivider;
         private Border m_poiImageDivider;
-        private ScrollViewer m_contentContainer;
         private Grid m_previewImageSpinner;
         private WebBrowser m_webBrowser;
         private bool m_webBrowserSelected;
@@ -53,16 +46,13 @@ namespace ExampleAppWPF
         private TextBlock m_subTitle;
         private Grid m_titlesGrid;
         private StackPanel m_qrCodeContainer;
-
-        private Storyboard m_scrollFadeInAnim;
-        private Storyboard m_scrollFadeOutAnim;
-        
-        private RepeatButton m_scrollDownButton;
-        private RepeatButton m_scrollUpButton;
+        private ImageSource m_placeholderImage;
 
         private double m_imageContainerHeight;
         private double m_defaultWebViewHeight;
         private double m_maxWebViewHeight;
+
+        private Visibility m_detailsDividerVisibility;
 
         public string PhoneText
         {
@@ -167,8 +157,8 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(eeGeoSearchResultsPoiView), new FrameworkPropertyMetadata(typeof(eeGeoSearchResultsPoiView)));
         }
 
-        public eeGeoSearchResultsPoiView(IntPtr nativeCallerPointer)
-            : base(nativeCallerPointer)
+        public eeGeoSearchResultsPoiView(IntPtr nativeCallerPointer, bool isInKioskMode)
+            : base(nativeCallerPointer, isInKioskMode)
         {
         }
 
@@ -177,6 +167,7 @@ namespace ExampleAppWPF
             m_titleView = (TextBlock)GetTemplateChild("Title");
             
             m_poiImage = (Image)GetTemplateChild("PoiImage");
+            m_placeholderImage = m_poiImage.Source;
 
             var yelpButton = (Image)GetTemplateChild("WebVendorLinkStyle");
 
@@ -216,14 +207,6 @@ namespace ExampleAppWPF
 
             m_poiImageDivider = (Border)GetTemplateChild("PoiImageDivider");
 
-            m_contentContainer = (ScrollViewer)GetTemplateChild("ContentContainer");
-
-            m_contentContainer.ScrollChanged += OnSearchResultsScrolled;
-
-            m_headerFade = (Image)GetTemplateChild("HeaderFade");
-
-            m_footerFade = (Image)GetTemplateChild("FooterFade");
-
             m_previewImageSpinner = (Grid)GetTemplateChild("PreviewImageSpinner");
 
             m_webBrowser = (WebBrowser)GetTemplateChild("WebBrowser");
@@ -234,21 +217,14 @@ namespace ExampleAppWPF
             m_titlesGrid = (Grid)GetTemplateChild("TitlesGrid");
 
             m_qrCodeContainer = (StackPanel)GetTemplateChild("QRCodeContainer");
-            
-            m_scrollUpButton = (RepeatButton)GetTemplateChild("EegeoPOIViewScrollUpButton");
-            m_scrollUpButton.Click += HandleScrollUpButtonClicked;
-
-            m_scrollDownButton = (RepeatButton)GetTemplateChild("EegeoPOIViewScrollDownButton");
-            m_scrollDownButton.Click += HandleScrollDownButtonClicked;
-
-            m_scrollFadeInAnim = ((Storyboard)Template.Resources["ScrollFadeIn"]).Clone();
-            m_scrollFadeOutAnim = ((Storyboard)Template.Resources["ScrollFadeOut"]).Clone();
 
             m_imageContainerHeight = (double)Application.Current.Resources["EegeoPOIViewImageContainerHeight"];
 
             m_defaultWebViewHeight = (double)Application.Current.Resources["EegeoPOIViewDetailsWebViewDefaultHeight"];
 
             m_maxWebViewHeight = (double)Application.Current.Resources["EegeoPOIViewDetailsWebViewMaxHeight"];
+
+            m_detailsDividerVisibility = (Visibility)Application.Current.Resources["EegeoPOIViewDetailsWebLinksVisibility"];
 
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
@@ -264,6 +240,7 @@ namespace ExampleAppWPF
             string script = "document.body.style.overflow ='hidden'";
             WebBrowser wb = (WebBrowser)sender;
             wb.InvokeScript("execScript", new Object[] { script, "JavaScript" });
+            wb.Visibility = Visibility.Visible;
         }
 
         // Validating urls here although the url's should be validated in the poi tool before reaching this.
@@ -305,7 +282,7 @@ namespace ExampleAppWPF
             }
         }
 
-        private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
+        protected override void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
         {
             double newBrowserHeight = m_webBrowserOriginalHeight - m_contentContainer.VerticalOffset;
 
@@ -330,70 +307,35 @@ namespace ExampleAppWPF
 
             m_contentContainerLastScrollY = newBrowserHeight;
 
-            if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
-            {
-                if (m_headerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_headerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollUpButton);
-                }
+            base.OnSearchResultsScrolled(sender, e);
+        }
 
-                if (m_footerFade.Opacity >= 1)
-                {
-                    m_scrollFadeOutAnim.Begin(m_footerFade);
-                    m_scrollFadeOutAnim.Begin(m_scrollDownButton);
-                }
-            }
-            else if (m_contentContainer.VerticalOffset == 0)
-            {
-                if (m_headerFade.Opacity >= 1)
-                {
-                    m_scrollFadeOutAnim.Begin(m_headerFade);
-                    m_scrollFadeOutAnim.Begin(m_scrollUpButton);
-                }
-
-                if (m_footerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_footerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollDownButton);
-                }
-            }
-            else
-            {
-                if (m_headerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_headerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollUpButton);
-                }
-
-                if (m_footerFade.Opacity <= 0)
-                {
-                    m_scrollFadeInAnim.Begin(m_footerFade);
-                    m_scrollFadeInAnim.Begin(m_scrollDownButton);
-                }
-            }
+        private void DisplayPoiImage(bool display)
+        {
+            m_poiImageContainer.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
+            m_poiImage.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
+            m_poiImageDivider.Visibility = display ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void HandleNoWebView(EegeoResultModel eegeoResultModel)
         {
             m_webBrowser.Visibility = Visibility.Collapsed;
             m_webBrowserSelected = false;
-            m_poiImageContainer.Visibility = Visibility.Collapsed;
-            m_webBrowserSelected = false;
-            m_poiImageContainer.Visibility = Visibility.Collapsed;
+            StopWebBrowser();
 
             if (eegeoResultModel.ImageUrl != null)
             {
-                m_poiImageContainer.Visibility = Visibility.Visible;
-                m_poiImage.Visibility = Visibility.Visible;
-                m_poiImageDivider.Visibility = Visibility.Collapsed;
+                m_poiImage.Source = m_placeholderImage;
+                DisplayPoiImage(true);
+            }
+            else
+            {
+                DisplayPoiImage(false);
             }
         }
+
         protected override void DisplayCustomPoiInfo(Object modelObject)
         {
-            m_headerFade.Opacity = 0;
-            m_scrollUpButton.Opacity = 0;
-
             ExampleApp.SearchResultModelCLI model = modelObject as ExampleApp.SearchResultModelCLI;
 
             EegeoResultModel eegeoResultModel = EegeoResultModel.FromResultModel(model);
@@ -404,17 +346,17 @@ namespace ExampleAppWPF
             bool webViewUrlIsValid = false;
             m_poiImageContainer.Visibility = Visibility.Visible;
             m_poiImage.Visibility = Visibility.Collapsed;
-            m_webBrowser.Visibility = Visibility.Visible;
             m_poiImageDivider.Visibility = Visibility.Visible;
 
             m_contentContainer.ScrollToTop();
 
             if (eegeoResultModel.WebViewUrl != null)
             {
+                m_webBrowser.Visibility = Visibility.Hidden;
                 m_webBrowserSelected = true;
                 Uri hyperlink;
                 webViewUrlIsValid = Uri.TryCreate(eegeoResultModel.WebViewUrl, UriKind.Absolute, out hyperlink)
-                && (hyperlink.Scheme == Uri.UriSchemeHttp || hyperlink.Scheme == Uri.UriSchemeHttps);
+                    && (hyperlink.Scheme == Uri.UriSchemeHttp || hyperlink.Scheme == Uri.UriSchemeHttps);
 
                 if (webViewUrlIsValid)
                 {
@@ -532,7 +474,7 @@ namespace ExampleAppWPF
                 eegeoResultModel.Phone == null &&
                 eegeoResultModel.WebUrl == null;
 
-            if (shouldCollapseDivider)
+            if (shouldCollapseDivider || m_detailsDividerVisibility == Visibility.Collapsed)
             {
                 m_detailsDivider.Visibility = Visibility.Collapsed;
             }
@@ -582,31 +524,41 @@ namespace ExampleAppWPF
                 m_descriptionContainer.Visibility = Visibility.Collapsed;
             }
 
-            TagIcon = SearchResultPoiViewIconProvider.GetIconForTag(model.IconKey);
+            TagIcon = IconProvider.GetIconForTag(model.IconKey, m_isInKioskMode);
 
             ShowAll();
+
+            base.DisplayCustomPoiInfo(modelObject);
         }
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
             if (hasImage && !m_webBrowserSelected)
             {
-                m_poiImage.Source = LoadImageFromByteArray(imgData);
-                m_poiImage.Visibility = Visibility.Visible;
-                m_poiImageContainer.Visibility = Visibility.Visible;
-                m_poiImageDivider.Visibility = Visibility.Visible;
+                var imageSource = LoadImageFromByteArray(imgData);
+
+                if (imageSource == null)
+                {
+                    DisplayPoiImage(false);
+                }
+                else
+                {
+                    m_poiImage.Source = imageSource;
+                    DisplayPoiImage(true);
+                }
             }
+
             m_previewImageSpinner.Visibility = Visibility.Collapsed;
         }
 
-        public void HandleScrollUpButtonClicked(object sender, RoutedEventArgs e)
+        protected override void OnHideAnimationCompleted(object s, EventArgs e)
         {
-            m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset - 10);
+            StopWebBrowser();
         }
 
-        public void HandleScrollDownButtonClicked(object sender, RoutedEventArgs e)
+        private void StopWebBrowser()
         {
-            m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset + 10);
+            m_webBrowser.NavigateToString("about:blank");
         }
     }
 }

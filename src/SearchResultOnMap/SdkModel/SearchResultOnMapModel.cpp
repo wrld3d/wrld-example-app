@@ -184,14 +184,19 @@ namespace ExampleApp
                 
                 Search::Yelp::SdkModel::Helpers::TryParseReviewDetails(searchResultModel, ratingsImage, reviewCount);
                 
+                const int priorityOrder = static_cast<int>(m_activeSearchResults.size());
+                
                 WorldPins::SdkModel::WorldPinFocusData worldPinFocusData(searchResultModel.GetTitle(),
                                                                          searchResultModel.GetSubtitle(),
                                                                          searchResultModel.GetVendor(),
                                                                          searchResultModel.GetJsonData(),
                                                                          ratingsImage,
-                                                                         reviewCount);
+                                                                         reviewCount,
+                                                                         priorityOrder);
                 
                 WorldPins::SdkModel::WorldPinInteriorData worldPinInteriorData(searchResultModel.GetBuildingId(), searchResultModel.GetFloor());
+                
+                
                 
                 ExampleApp::WorldPins::SdkModel::WorldPinItemModel *pinItemModel = m_worldPinsService.AddPin(pSearchResultOnMapItemModel,
                                                                                                              NULL,
@@ -201,7 +206,8 @@ namespace ExampleApp
                                                                                                              searchResultModel.GetLocation(),
                                                                                                              pinIconKey,
                                                                                                              searchResultModel.GetHeightAboveTerrainMetres(),
-                                                                                                             WorldPins::SdkModel::WorldPinVisibility::Search);
+                                                                                                             WorldPins::SdkModel::WorldPinVisibility::Search,
+                                                                                                             searchResultModel.GetIdentifier());
                 
                 m_searchResultsToPinModel.insert(std::make_pair(searchResultModel, pinItemModel));
             }

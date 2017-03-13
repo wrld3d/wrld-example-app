@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <limits>
+
 #include "ICameraTransitionStage.h"
 #include "Interiors.h"
 #include "InteriorsExplorer.h"
@@ -26,7 +28,10 @@ namespace ExampleApp
                                           const Eegeo::dv3& newInterestPoint,
                                           float newDistanceToInterest,
                                           const Eegeo::Resources::Interiors::InteriorId& interiorId,
-                                          int targetFloorIndex);
+                                          int targetFloorIndex,
+                                          bool transitionToNewHeading=false,
+                                          float newHeadingRadians=0.0f,
+                                          bool setDisntaceToInterest=true);
                 
                 void Start();
                 void Update(float dt);
@@ -44,11 +49,15 @@ namespace ExampleApp
                 Eegeo::dv3 m_newInterestPoint;
                 Eegeo::dv3 m_startInterestPoint;
                 float m_startDistanceToInterest;
+                float m_startHeadingDegrees;
                 float m_transitionTime;
                 float m_transitionDuration;
+                bool m_setDistanceToInterest;
                 
                 Eegeo::Resources::Interiors::InteriorId m_interiorId;
                 const float m_targetDistanceToInterest;
+                const bool m_transitionToNewHeading;
+                float m_targetHeadingDegrees;
                 int m_targetFloorIndex;
                 const bool m_alreadySelectedInterior;
             };

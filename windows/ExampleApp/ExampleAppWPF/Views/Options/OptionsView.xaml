@@ -8,46 +8,249 @@
         <ResourceDictionary Source="../../CheckBoxStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="OptionsPanel_CloseButton" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle2">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="rectangle1" Fill="{DynamicResource OptionsPanelCloseButtonOffColour}" Margin="0"/>
+                        <Rectangle x:Name="rectangle" Fill="{DynamicResource OptionsPanelCloseButtonOverColour}" Margin="0" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle2" Fill="{DynamicResource OptionsPanelCloseButtonOnColour}" Margin="0" Visibility="Hidden"/>
+                        <Image x:Name="image" Source="{DynamicResource OptionsPanelCloseButtonOffImage}"/>
+                        <Image x:Name="image1" Source="{DynamicResource OptionsPanelCloseButtonOnImage}" Visibility="Hidden"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Options_ToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid Width="500" HorizontalAlignment="Left" VerticalAlignment="Top" Height="48">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="rectangle">
+                                            <EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="48,0,0,0">
+                                                <EasingThicknessKeyFrame.EasingFunction>
+                                                    <CircleEase EasingMode="EaseOut"/>
+                                                </EasingThicknessKeyFrame.EasingFunction>
+                                            </EasingThicknessKeyFrame>
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle1">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="rectangle2">
+                                            <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                                        </ThicknessAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="rectangle2">
+                                            <EasingThicknessKeyFrame KeyTime="0" Value="0"/>
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle1">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="rectangle">
+                                            <EasingThicknessKeyFrame KeyTime="0:0:0.2" Value="0">
+                                                <EasingThicknessKeyFrame.EasingFunction>
+                                                    <CircleEase EasingMode="EaseOut"/>
+                                                </EasingThicknessKeyFrame.EasingFunction>
+                                            </EasingThicknessKeyFrame>
+                                        </ThicknessAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Indeterminate"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Width="128" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <Rectangle x:Name="rectangle2" Fill="{DynamicResource White}" Margin="0" Stroke="{DynamicResource PrimaryBG_colour}" HorizontalAlignment="Left" Width="92" Height="48" RadiusX="24" RadiusY="24" StrokeThickness="4"/>
+                            <Rectangle x:Name="rectangle1" Fill="{DynamicResource PrimaryBG_colour}" Margin="0" Stroke="{DynamicResource PrimaryBG_colour}" HorizontalAlignment="Left" Width="92" Height="48" RadiusX="24" RadiusY="24" StrokeThickness="4" Opacity="0"/>
+                            <Rectangle x:Name="rectangle" Fill="{DynamicResource White}" HorizontalAlignment="Left" Margin="0" RadiusY="24" RadiusX="24" Stroke="{DynamicResource PrimaryBG_colour}" StrokeThickness="6" Width="48" Height="48"/>
+                        </Grid>
+                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="117,0,0,0" TextWrapping="Wrap" Width="299" FontFamily="{DynamicResource PrimaryUIFont}" FontSize="22" VerticalAlignment="Center" Text="{TemplateBinding Content}" Foreground="{StaticResource VeryDarkGrey}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="true"/>
+                        <Trigger Property="IsChecked" Value="true"/>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="#ADADAD"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Options_AdminButton" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+        <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <StackPanel Orientation="Horizontal">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver"/>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="canvas">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid>
+                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Margin="0">
+                                <!-- Layer 1/<Group>/<Rectangle> -->
+                                <Path Fill="#ff1155af" Data="F1 M 54.000,54.000 L 0.000,54.000 L 0.000,0.000 L 54.000,0.000 L 54.000,54.000 Z"/>
+                                <Canvas>
+                                    <!-- Layer 1/<Group>/<Group>/<Ellipse> -->
+                                    <Path Fill="#ffffffff" Data="F1 M 17.400,15.600 C 17.400,10.298 21.698,6.000 27.000,6.000 C 32.302,6.000 36.600,10.298 36.600,15.600 C 36.600,20.902 32.302,25.200 27.000,25.200 C 21.698,25.200 17.400,20.902 17.400,15.600 Z"/>
+                                    <!-- Layer 1/<Group>/<Group>/<Path> -->
+                                    <Path Fill="#ffffffff" Data="F1 M 39.000,48.000 L 39.000,34.800 C 39.000,34.720 39.000,34.640 38.987,34.560 C 38.747,31.160 33.467,27.600 27.000,27.600 C 20.507,27.600 15.227,30.853 15.013,34.560 C 15.000,34.640 15.000,34.720 15.000,34.800 L 15.000,48.000 L 39.000,48.000 Z"/>
+                                </Canvas>
+                            </Canvas>
+                            <Canvas x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Margin="0" Visibility="Hidden">
+                                <!-- Layer 1/<Group>/<Rectangle> -->
+                                <Path Fill="{DynamicResource PrimaryBG_Down_Colour}" Data="F1 M 54.000,54.000 L 0.000,54.000 L 0.000,0.000 L 54.000,0.000 L 54.000,54.000 Z"/>
+                                <Canvas>
+                                    <!-- Layer 1/<Group>/<Group>/<Ellipse> -->
+                                    <Path Fill="{DynamicResource PrimaryIcon_Down_colour}" Data="F1 M 17.400,15.600 C 17.400,10.298 21.698,6.000 27.000,6.000 C 32.302,6.000 36.600,10.298 36.600,15.600 C 36.600,20.902 32.302,25.200 27.000,25.200 C 21.698,25.200 17.400,20.902 17.400,15.600 Z"/>
+                                    <!-- Layer 1/<Group>/<Group>/<Path> -->
+                                    <Path Fill="{DynamicResource PrimaryIcon_Down_colour}" Data="F1 M 39.000,48.000 L 39.000,34.800 C 39.000,34.720 39.000,34.640 38.987,34.560 C 38.747,31.160 33.467,27.600 27.000,27.600 C 20.507,27.600 15.227,30.853 15.013,34.560 C 15.000,34.640 15.000,34.720 15.000,34.800 L 15.000,48.000 L 39.000,48.000 Z"/>
+                                </Canvas>
+                            </Canvas>
+                        </Grid>
+                        <TextBlock Text="{TemplateBinding Content}"
+                                   Margin="74, 0, 0, 0"
+                                   FontSize="19.5"
+                                   Foreground="{StaticResource VeryDarkGrey}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="true"/>
+                        <Trigger Property="ToggleButton.IsChecked" Value="true"/>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="#ADADAD"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type local:OptionsView}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:OptionsView}">
-                    <Grid Name="MainContainer" Width="450" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Grid Name="MainContainer" Width="{DynamicResource OptionsPanelWidth}" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource White}">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="20"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource OptionsPanelRow0Height}"/>
+                            <RowDefinition Height="{DynamicResource OptionsPanelRow1Height}"/>
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Background="{StaticResource Gold}"/>
-                        <Grid Grid.Row="1" Background="{StaticResource White}" >
-                            <StackPanel >
-                                <Border Height="40" Margin="10,5,5,0" BorderBrush="{x:Null}">
-                                    <TextBlock Name="OptionsViewTitle" VerticalAlignment="Center" Text="Options" FontSize="18" Foreground="{StaticResource Gold}"/>
+                        <Grid Grid.Row="0" Background="{DynamicResource OptionsPanelUpperTitleColour}">
+                            <Grid Visibility="{DynamicResource OptionsPanelUpperTitleVisibility}" Margin="{DynamicResource OptionsPanelUpperTitleMargin}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{DynamicResource OptionsPanelUpperTitleColumn0}"/>
+                                    <ColumnDefinition Width="{DynamicResource OptionsPanelUpperTitleColumn1}"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Center" >
+                                    <TextBlock Name="Title" Text="Options"  MaxWidth="{DynamicResource OptionsPanelUpperTitleMaxWidth}" VerticalAlignment="Center" FontSize="{DynamicResource OptionsPanelUpperTitleFontSize}" Margin="{DynamicResource OptionsPanelUpperTitleTextMargin}"  Foreground="{DynamicResource Gold}" FontFamily="{DynamicResource PrimaryUIFont}" TextTrimming="CharacterEllipsis"/>
+                                </StackPanel>
+                                <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="Auto" Grid.Column="1">
+                                    <Button Style="{StaticResource OptionsPanel_CloseButton}" Name="OptionsViewCloseButtonKiosk" HorizontalAlignment="Right" Width="{DynamicResource OptionsPanelCloseButtonSize}" Height="{DynamicResource OptionsPanelCloseButtonSize}" />
                                 </Border>
-                                <Border Height="195" BorderBrush="{x:Null}">
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1" Background="{StaticResource White}" >
+                            <StackPanel Margin="{DynamicResource OptionsPanelButtonPanelMargin}">
+                                <Border BorderBrush="{x:Null}" Visibility="{DynamicResource OptionsPanelUpperTitleDividerVisibility}" HorizontalAlignment="Stretch" Height="2" Margin="0,0,0,-5" Background="{StaticResource Gold}" Grid.ColumnSpan="2" VerticalAlignment="Bottom" />
+                                <Border Height="{DynamicResource OptionsPanelLowerTitleHeight}" Margin="{DynamicResource OptionsPanelLowerTitleMargin}" BorderBrush="{x:Null}" Visibility="{DynamicResource OptionsPanelUpperLowerTitleVisibility}">
+                                    <TextBlock Name="OptionsViewTitle" VerticalAlignment="Center" Text="Options" FontSize="{DynamicResource OptionsPanelLowerTitleFontSize}" Foreground="{StaticResource Gold}"/>
+                                </Border>
+                                <Border Height="{DynamicResource OptionsPanelButtonPanelHeight}" BorderBrush="{x:Null}">
                                     <ScrollViewer PanningMode="Both" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="True">
                                         <StackPanel>
 
-                                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0" Height="30">
-                                                <ToggleButton Name="OptionsViewCacheEnabledTogglebutton" Margin="10,0,0,0" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsView}}, Path=CacheEnabled}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" />
-                                                <TextBlock Name="OptionsViewCacheEnabledLabel" Text="Enable data caching on device" FontSize="14" Foreground="{StaticResource DarkGrey}" Margin="6,0,0,0" VerticalAlignment="Center" />
+                                            <StackPanel Orientation="Horizontal" Visibility="{DynamicResource OptionsPanelCacheMapPanelVisibility}" Margin="{DynamicResource OptionsPanelCacheMapPanelMargin}" Height="{DynamicResource OptionsPanelCacheMapPanelHeight}">
+                                                <ToggleButton Name="OptionsViewCacheEnabledTogglebutton" Margin="{DynamicResource OptionsPanelCacheMapButtonMargin}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsView}}, Path=CacheEnabled}" Style="{StaticResource CheckBoxStyle}" VerticalAlignment="Center" />
+                                                <TextBlock Name="OptionsViewCacheEnabledLabel" Text="Enable data caching on device" FontSize="{DynamicResource OptionsPanelCacheMapTextFontSize}" Foreground="{StaticResource DarkGrey}" Margin="{DynamicResource OptionsPanelCacheMapTextMargin}" VerticalAlignment="Center" />
                                             </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0" Height="30">
-                                                <Button Name="OptionsViewClearCacheButton" Margin="10,0,0,0" Width="20" Height="20" VerticalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal" Visibility="{DynamicResource OptionsPanelClearCachePanelVisibility}" Margin="{DynamicResource OptionsPanelClearCachePanelMargin}" Height="{DynamicResource OptionsPanelClearCachePanelHeight}">
+                                                <Button Name="OptionsViewClearCacheButton" Margin="{DynamicResource OptionsPanelClearCacheButtonMargin}" Width="{DynamicResource OptionsPanelClearCacheButtonSize}" Height="{DynamicResource OptionsPanelClearCacheButtonSize}" VerticalAlignment="Center">
                                                     <Button.Style>
                                                         <Style TargetType="Button" BasedOn="{StaticResource TransparentButtonStyle}">
                                                             <Style.Triggers>
                                                                 <Trigger Property="IsPressed" Value="True">
                                                                     <Setter Property="Content">
                                                                         <Setter.Value>
-                                                                            <Image Source="/Assets/buttonsmall_close_on.png" />
+                                                                            <Image Source="{DynamicResource OptionsPanelClearCacheButtonOnImage}" />
                                                                         </Setter.Value>
                                                                     </Setter>
                                                                 </Trigger>
                                                                 <Trigger Property="IsPressed" Value="False">
                                                                     <Setter Property="Content">
                                                                         <Setter.Value>
-                                                                            <Image Source="/Assets/buttonsmall_close_off.png" />
+                                                                            <Image Source="{DynamicResource OptionsPanelClearCacheButtonOffImage}" />
                                                                         </Setter.Value>
                                                                     </Setter>
                                                                 </Trigger>
@@ -56,13 +259,33 @@
                                                     </Button.Style>
                                                 </Button>
 
-                                                <TextBlock Name="OptionsViewClearCacheLabel" Text="Clear cached map data" FontSize="14" Foreground="{StaticResource DarkGrey}" Margin="6,0,0,2" VerticalAlignment="Center" />
+                                                <TextBlock Name="OptionsViewClearCacheLabel" Text="Clear cached map data" FontSize="{DynamicResource OptionsPanelClearCacheTextFontSize}" Foreground="{StaticResource DarkGrey}" Margin="{DynamicResource OptionsPanelClearCacheTextMargin}" VerticalAlignment="Center" />
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" Visibility="{DynamicResource OptionsPanelPlayTutorialsPanelVisibility}" Margin="{DynamicResource OptionsPanelPlayTutorialsPanelMargin}" Height="{DynamicResource OptionsPanelPlayTutorialsPanelHeight}">
+                                                <ToggleButton x:Name="OptionsViewPlayTutorialsToggle"
+                                                              Content="Play Tutorial Again"
+                                                              Width="500"
+                                                              Height="{DynamicResource OptionsPanelPlayTutorialsPanelHeight}"
+                                                              Margin="{DynamicResource OptionsPanelPlayTutorialsToggleMargin}"
+                                                              VerticalAlignment="Center"
+                                                              HorizontalAlignment="Left"
+                                                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsView}}, Path=PlayTutorialsAgainEnabled}"
+                                                              Style="{StaticResource Options_ToggleButton}"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </ScrollViewer>
                                 </Border>
-                                <Border BorderBrush="{x:Null}" Background="{StaticResource Gold}">
-                                    <Button Name="OptionsViewCloseButton" Style="{StaticResource CancelPINbutton}" Width="60" Height="60" HorizontalAlignment="Right"/>
+                                <Button x:Name="OptionsViewAdminButton"
+                                        Content="Admin Login"
+                                        Height="54"
+                                        Margin="0, 0, 0, 20"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Visibility="{DynamicResource OptionsPanelAdminButtonVisibility}"
+                                        Style="{StaticResource Options_AdminButton}"/>
+                                <Border BorderBrush="{x:Null}" Background="{StaticResource Gold}" Visibility="{DynamicResource OptionsPanelLowerCloseButtonVisibility}">
+                                    <Button Name="OptionsViewCloseButton" Style="{StaticResource CancelPINbutton}" Width="{DynamicResource OptionsPanelCloseButtonSize}" Height="{DynamicResource OptionsPanelCloseButtonSize}" HorizontalAlignment="Right"/>
                                 </Border>
                             </StackPanel>
                         </Grid>

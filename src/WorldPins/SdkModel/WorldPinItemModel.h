@@ -5,12 +5,16 @@
 #include <string>
 
 #include "WorldPins.h"
-#include "Pins.h"
+#include "Types.h"
+//#include "Pins.h"
 #include "IWorldPinSelectionHandler.h"
 #include "IWorldPinVisibilityStateChangedHandler.h"
 #include "WorldPinsInFocusModel.h"
 #include "WorldPinFocusData.h"
 #include "WorldPinInteriorData.h"
+#include "IMarker.h"
+#include "SdkModelDomainEventBus.h"
+
 
 namespace ExampleApp
 {
@@ -19,7 +23,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             
-            class WorldPinItemModel
+            class WorldPinItemModel : private Eegeo::NonCopyable
             {
                 enum TransitionState
                 {
@@ -30,7 +34,7 @@ namespace ExampleApp
                 };
                 
             public:
-                typedef Eegeo::Pins::TPinId WorldPinItemModelId;
+                typedef int WorldPinItemModelId;
 
             private:
                 WorldPinItemModelId m_id;
@@ -39,12 +43,12 @@ namespace ExampleApp
                 WorldPinsInFocusModel m_focusModel;
                 TransitionState m_transitionState;
                 float m_transitionStateValue;
-                float m_floorHeight;
-                bool m_hasFloorHeight;
                 bool m_focusable;
                 bool m_interior;
                 WorldPinInteriorData m_worldPinInteriorData;
                 int m_visibilityMask;
+                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
+                std::string m_identifier;
 
             public:
                 WorldPinItemModel(const WorldPinItemModelId& id,
@@ -53,7 +57,9 @@ namespace ExampleApp
                                   const WorldPinFocusData& worldPinFocusData,
                                   bool interior,
                                   const WorldPinInteriorData& worldPinInteriorData,
-                                  int visibilityMask);
+                                  int visibilityMask,
+                                  ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                                  std::string identifier);
 
                 ~WorldPinItemModel();
 
@@ -68,10 +74,6 @@ namespace ExampleApp
                 bool IsTransitioning() const;
 
                 float TransitionStateValue() const;
-                
-                bool NeedsFloorHeight() const;
-                
-                void SetFloorHeight(float floorHeight);
 
                 void Hide();
 
@@ -94,6 +96,11 @@ namespace ExampleApp
                 int VisibilityMask() const;
                 
                 void SetVisibilityMask(int visibilityMask);
+                
+                std::string GetIdentifier() const;
+                
+            private:
+                void SetTransitionState(TransitionState transitionState);
             };
 
             inline bool operator==(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)

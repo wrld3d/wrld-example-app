@@ -15,6 +15,7 @@
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "InteriorsExplorer.h"
 #include "InteriorInteractionModel.h"
+#include "CameraTransitionService.h"
 
 namespace ExampleApp
 {
@@ -36,6 +37,7 @@ namespace ExampleApp
                 std::map<Eegeo::Location::NavigationService::GpsMode, GpsMode::Values> m_compassGpsModeToNavigationGpsMode;
                 std::map<GpsMode::Values, Eegeo::Location::NavigationService::GpsMode> m_navigationGpsModeToCompassGpsMode;
                 std::map<GpsMode::Values, const char*> m_gpsModeToString;
+                const bool m_isInKioskMode;
                 
                 Metrics::IMetricsService& m_metricsService;
 
@@ -46,7 +48,7 @@ namespace ExampleApp
                 
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<CompassModel> m_failAlertHandler;
-                
+
             public:
 
                 CompassModel(Eegeo::Location::NavigationService& navigationService,
@@ -56,7 +58,8 @@ namespace ExampleApp
                              Metrics::IMetricsService& metricsService,
                              InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                              AppModes::SdkModel::IAppModeModel& appModeModel,
-                             Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
+                             Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                             bool isInKioskMode);
 
                 ~CompassModel();
 
@@ -92,6 +95,8 @@ namespace ExampleApp
                 void OnFailedToGetLocation();
                 
                 bool NeedsToExitInterior(GpsMode::Values gpsMode);
+
+                float GetIndoorsHeadingRadians() const;
             };
         }
     }

@@ -8,6 +8,7 @@
 #include "ICallback.h"
 #include "CallbackCollection.h"
 #include "ReflectionHelpers.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -29,14 +30,16 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<void> mCloseOptions;
                 Helpers::ReflectionHelpers::Method<void> mConcludeCacheClearCeremony;
                 Helpers::ReflectionHelpers::Method<bool> mSetCacheEnabledSelected;
+                Helpers::ReflectionHelpers::Method<bool> mSetReplayTutorialsSelected;
                 
                 Eegeo::Helpers::CallbackCollection0 m_closeCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_wifiOnlyCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_cacheEnabledCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_clearCacheCallbacks;
+                Eegeo::Helpers::CallbackCollection1<bool> m_replayTutorialsCallbacks;
 
             public:
-                OptionsView(WindowsNativeState& nativeState);
+                OptionsView(WindowsNativeState& nativeState, const std::string& adminPassword, bool isInKioskMode);
 
                 ~OptionsView();
 
@@ -47,6 +50,8 @@ namespace ExampleApp
                 void SetStreamOverWifiOnlySelected(bool isStreamOverWifiOnlySelected);
 
                 void SetCacheEnabledSelected(bool isCacheEnabledSelected);
+
+                void SetReplayTutorialsSelected(bool isReplayTutorialsSelected);
 
                 void Open();
 
@@ -62,6 +67,8 @@ namespace ExampleApp
 
                 void HandleClearCacheSelected();
 
+                void HandleReplayTutorialsToggled(bool enableTutorials);
+
                 void InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 
@@ -73,6 +80,9 @@ namespace ExampleApp
 
                 void InsertClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback);
+                void RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback);
             };
         }
     }

@@ -1,6 +1,7 @@
 LOCAL_PATH := $(call my-dir)
 
 PREBUILT_LIBS := ./libs/eegeo/prebuilt/android-$(TARGET_ARCH_ABI)
+PREBUILT_EEA_LIBS := ./libs/prebuilt/android-$(TARGET_ARCH_ABI)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := eegeo-sdk-lib
@@ -53,13 +54,29 @@ LOCAL_EXPORT_C_INCLUDES := ./libs/eegeo/jpeg-turbo
 include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := breakpad-lib
+LOCAL_SRC_FILES := ../$(PREBUILT_EEA_LIBS)/libbreakpad_client.a
+LOCAL_EXPORT_C_INCLUDES := ./libs/breakpad
+include $(PREBUILT_STATIC_LIBRARY)
+
+include $(CLEAR_VARS)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := cpa-lib
+LOCAL_SRC_FILES := ../libs/indooratlas/$(TARGET_ARCH_ABI)/libcpaJNI.so
+include $(PREBUILT_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+ifneq ($(os_name), Darwin)
+	LOCAL_SHORT_COMMANDS := true
+endif
 
 LOCAL_MODULE := eegeo-mobile-example-app
 LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz -lm
 LOCAL_LDLIBS += -Wl,--stub-group-size=2085000
-LOCAL_STATIC_LIBRARIES := recce-common-lib eegeo-sdk-lib png-lib curl-lib uv-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib
+LOCAL_STATIC_LIBRARIES := recce-common-lib eegeo-sdk-lib png-lib curl-lib uv-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib breakpad-lib
 
-cflags := -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder
+cflags := -Wall -Wno-unknown-pragmas -Wno-sign-compare -Wno-format-security -Wno-reorder -D__STDC_FORMAT_MACROS
 
 #LOCAL_CFLAGS += -Werror
 

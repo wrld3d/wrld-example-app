@@ -11,6 +11,12 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace
+            {
+                const float SphereHeightAboveMarker = 4.5f;
+                const float AnchorCyclinerHeightAboveMarker = 0.8f;
+            }
+
             GpsMarkerModel::GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
                                            Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
             : m_locationService(locationService)
@@ -59,6 +65,7 @@ namespace ExampleApp
                 
                 if(m_currentLocationEcef.SquareDistanceTo(newLocationEcef) < jumpThreshold * jumpThreshold)
                 {
+                    m_currentLocationEcef = m_currentLocationEcef.Norm() * newLocationEcef.Length();
                     m_currentLocationEcef = Eegeo::Helpers::MathsHelpers::ExpMoveTowards(m_currentLocationEcef, newLocationEcef, halfLife, dt, 0.01f);
                 }
                 else
@@ -95,7 +102,10 @@ namespace ExampleApp
                     }
                 }
                 
-                Eegeo::Helpers::MathsHelpers::AlphaBetaFilter(headingRadians, m_currentHeadingRadians, m_currentHeadingVelocity, m_currentHeadingRadians, m_currentHeadingVelocity, dt);
+                if(dt != 0)
+                {
+                    Eegeo::Helpers::MathsHelpers::AlphaBetaFilter(headingRadians, m_currentHeadingRadians, m_currentHeadingVelocity, m_currentHeadingRadians, m_currentHeadingVelocity, dt);
+                }
             }
             
             const double GpsMarkerModel::GetSmoothedHeadingDegrees() const
@@ -110,6 +120,16 @@ namespace ExampleApp
                 int floorIndex = 0;
                 m_locationService.GetFloorIndex(floorIndex);
                 return floorIndex;
+            }
+
+            const float GpsMarkerModel::GetSphereHeightAboveMarker() const
+            {
+                return SphereHeightAboveMarker;
+            }
+
+            const float GpsMarkerModel::GetAnchorCyclinerHeightAboveMarker() const
+            {
+                return AnchorCyclinerHeightAboveMarker;
             }
         }
     }

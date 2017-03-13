@@ -28,6 +28,8 @@ namespace ExampleAppWPF
         private ControlClickHandler m_imageClickHandler = null;
         private bool m_isActive = false;
 
+        private WatermarkViewDialogBox m_dialogBox = null;
+
         static WatermarkView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WatermarkView), new FrameworkPropertyMetadata(typeof(WatermarkView)));
@@ -63,21 +65,42 @@ namespace ExampleAppWPF
 
         private void OnClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            DialogBox dialogBox = new DialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later");
-            dialogBox.Owner = m_currentWindow;
+            ImageSource watermarkViewImageSource = GetImageAssetSource(m_imageAssetUrl);
+            m_dialogBox = new WatermarkViewDialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later", watermarkViewImageSource, false);
+            m_dialogBox.Owner = m_currentWindow;
 
-            m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
-
-            bool? result = dialogBox.ShowDialog();
-
-            m_currentWindow.SetOpacity(1.0f);
-
-            WatermarkCLI.OnSelected(m_nativeCallerPointer);
-
-            if (result != null && result == true)
+            m_dialogBox.ButtonClicked += (o, clickEventArgs, acceptClicked) =>
             {
-                Process.Start(new ProcessStartInfo(m_webUrl));
-            }
+                EnableMainWindow();
+
+                WatermarkCLI.OnSelected(m_nativeCallerPointer);
+
+                if (acceptClicked)
+                {
+                    Process.Start(new ProcessStartInfo(m_webUrl));
+                }
+            };
+
+            DisableMainWindow();
+            m_dialogBox.Show();
+        }
+
+        public void Dismiss()
+        {
+            m_dialogBox?.Close();
+            EnableMainWindow();
+        }
+
+        private void EnableMainWindow()
+        {
+            m_currentWindow.SetOpacity(1.0f);
+            m_currentWindow.EnableInput();
+        }
+
+        private void DisableMainWindow()
+        {
+            m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
+            m_currentWindow.DisableInput();
         }
 
         private void OnLayoutChanged(object sender, RoutedEventArgs e)
@@ -165,7 +188,12 @@ namespace ExampleAppWPF
 
         private void TransitionToNewImage()
         {
-            string imageAssetPlusExtension = m_imageAssetUrl + ".png";
+            m_imageView.Source = GetImageAssetSource(m_imageAssetUrl);
+        }
+
+        private ImageSource GetImageAssetSource(string imageAssetUrl)
+        {
+            string imageAssetPlusExtension = imageAssetUrl + ".png";
             var src = StartupResourceLoader.GetBitmap(imageAssetPlusExtension);
 
             if (src == null)
@@ -174,7 +202,7 @@ namespace ExampleAppWPF
                 src = StartupResourceLoader.GetBitmap(imageAssetPlusExtension);
             }
 
-            m_imageView.Source = src;
+            return src;
         }
     }
 }

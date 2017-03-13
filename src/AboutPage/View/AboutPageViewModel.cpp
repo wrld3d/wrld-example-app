@@ -3,6 +3,7 @@
 #include "AboutPageViewModel.h"
 
 #include <sstream>
+#include <iomanip>
 
 namespace ExampleApp
 {
@@ -26,13 +27,14 @@ namespace ExampleApp
                 , m_platformArchitecture(platformArchitecture)
                 , m_aboutText(aboutText)
                 , m_appName(appName)
+                , m_indoorPositioningType("")
             {
-
+                
             }
 
             AboutPageViewModel::~AboutPageViewModel()
             {
-
+                
             }
 
             bool AboutPageViewModel::TryAcquireReactorControl()
@@ -55,7 +57,21 @@ namespace ExampleApp
                         << "\nPlatform hash: " + m_platformHash
                         << "\nPlatform runtime arch: " + m_platformArchitecture
                         << "\nApplication Name: " + m_appName
-                        << "\n\n";
+                        << m_indoorPositioningType
+                        << "\n";
+                
+                if(m_indoorPositioningType == "\nIndoor positioning type: Senion")
+                {
+                    content << "\n eeGeo Floor number: " << m_eegeoFloorNumber
+                            << "\n Senion Floor number: " << m_senionFloorNumber
+                            << "\n Latitude: " << std::setprecision(10) << m_senionLatitude
+                            << "\n Longitude: " << m_senionLongitude
+                            << "\n SenionApiKey: " << m_senionApiKey
+                            << "\n SenionApiSecret: " << m_senionApiSecret
+                            << "\n SenionFloorMap: " << m_senionFloorMapString.str()
+                            << "\n SenionInteriorId: " << m_senionInteriorId
+                            << "\n";
+                }
                 
                 return content.str();
             }
@@ -112,6 +128,34 @@ namespace ExampleApp
             void AboutPageViewModel::RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback)
             {
                 m_closedCallbacks.RemoveCallback(closedCallback);
+            }
+            
+            void AboutPageViewModel::SetIndoorPositioningType(const std::string& indoorPositioningType)
+            {
+                m_indoorPositioningType = indoorPositioningType;
+            }
+            
+            void AboutPageViewModel::SetSenionDataType(const int32_t& eegeoFloorNumber, const int& senionFloorNumber, const double& latitude, const double& longitude)
+            {
+                m_eegeoFloorNumber = eegeoFloorNumber;
+                m_senionFloorNumber = senionFloorNumber;
+                m_senionLatitude = latitude;
+                m_senionLongitude = longitude;
+            }
+            
+            void AboutPageViewModel::SetSenionSettingsType(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::string>& floorMap, const std::string& interiorId)
+            {
+                m_senionApiKey = apiKey;
+                m_senionApiSecret = apiSecret;
+                m_senionFloorMap = floorMap;
+                m_senionInteriorId = interiorId;
+                
+                std::map<int, std::string> map = floorMap;
+                
+                for(std::map<int, std::string>::iterator it = map.begin(); it != map.end(); ++it)
+                {
+                    m_senionFloorMapString << it->second << "\n";
+                }
             }
         }
     }

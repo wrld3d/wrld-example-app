@@ -20,6 +20,8 @@ namespace ExampleAppWPF
         protected Button m_menuIcon;
         protected bool m_loggingEnabled = false;
 
+        protected bool m_isInKioskMode;
+
         protected IntPtr m_nativeCallerPointer;
 
         protected double m_animationTimeMilliseconds = 200;
@@ -66,9 +68,10 @@ namespace ExampleAppWPF
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MenuView), new FrameworkPropertyMetadata(typeof(MenuView)));
         }
 
-        public MenuView(IntPtr nativeCallerPointer)
+        public MenuView(IntPtr nativeCallerPointer, bool isInKioskMode)
         {
             m_nativeCallerPointer = nativeCallerPointer;
+            m_isInKioskMode = isInKioskMode;
 
             m_mainWindow = (MainWindow)Application.Current.MainWindow;
 

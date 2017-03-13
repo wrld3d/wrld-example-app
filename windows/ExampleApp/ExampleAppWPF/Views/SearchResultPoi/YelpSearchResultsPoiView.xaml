@@ -176,10 +176,10 @@
                 <ControlTemplate TargetType="{x:Type local:YelpSearchResultsPoiView}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="ScrollFadeIn">
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.0" To="1.0" Duration="0:0:1"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1.0" Duration="0:0:1"/>
                         </Storyboard>
                         <Storyboard x:Key="ScrollFadeOut">
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0.0" Duration="0:0:1"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.0" Duration="0:0:1"/>
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid Name="SearchresultsPoiViewContainer" Width="{DynamicResource YelpPOIViewContainerWidth}" Height="Auto" Background="White" Margin="{DynamicResource YelpPOIViewContainerMargin}">
@@ -365,9 +365,15 @@
                                             <Grid Width="Auto" Height="Auto" Margin="{DynamicResource YelpPOIViewQRCodeMargin}" Visibility="{DynamicResource YelpPOIViewQRCodeVisibility}">
                                                 <Grid Width="{DynamicResource POIViewLowerDetailsIconSize}" Height="{DynamicResource POIViewLowerDetailsIconSize}" HorizontalAlignment="Left" VerticalAlignment="Top">
                                                     <Viewbox Stretch="Uniform">
-                                                        <Canvas Name="QRIcon" Width="16" Height="16">
-                                                            <!-- Layer 3/<Compound Path> -->
-                                                            <Path Fill="#ff5f5f5f" Data="F1 M 12.439,3.558 C 11.854,2.973 11.854,2.023 12.439,1.437 C 13.025,0.851 13.975,0.851 14.561,1.437 C 15.146,2.023 15.146,2.973 14.561,3.558 C 13.975,4.144 13.025,4.144 12.439,3.558 Z M 15.994,7.102 L 16.000,1.552 C 16.000,0.700 15.310,0.010 14.458,0.010 L 8.892,0.000 C 8.259,-0.000 7.465,0.315 7.017,0.763 L 0.463,7.317 C -0.140,7.920 -0.161,8.966 0.441,9.569 L 6.450,15.577 C 6.751,15.878 7.157,15.996 7.553,15.996 C 7.948,15.996 8.355,15.812 8.656,15.511 L 15.211,8.956 C 15.658,8.508 15.994,7.735 15.994,7.102 Z"/>
+                                                        <Canvas x:Name="QRIcon" Width="24" Height="24" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                            <Path Opacity="0.0" Fill="#ffffffff" Data=" M 24.000,24.000 L 0.000,24.000 L 0.000,0.000 L 24.000,0.000 L 24.000,24.000 Z"/>
+                                                            <Path Fill="#ff5f5f5f" Data="F1 M 18.000,20.000 L 6.000,20.000 L 6.000,2.000 L 18.000,2.000 L 18.000,20.000 Z M 12.000,23.000 C 11.448,23.000 11.000,22.552 11.000,22.000 C 11.000,21.448 11.448,21.000 12.000,21.000 C 12.552,21.000 13.000,21.448 13.000,22.000 C 13.000,22.552 12.552,23.000 12.000,23.000 Z M 18.133,0.000 L 5.867,0.000 C 4.836,0.000 4.000,0.895 4.000,2.000 L 4.000,22.000 C 4.000,23.105 4.836,24.000 5.867,24.000 L 18.133,24.000 C 19.164,24.000 20.000,23.105 20.000,22.000 L 20.000,2.000 C 20.000,0.895 19.164,0.000 18.133,0.000 Z"/>
+                                                            <Canvas x:Name="CamFrame">
+                                                                <Path Fill="#ff5f5f5f" Data="F1 M 7.000,5.000 L 7.000,6.000 L 7.000,8.000 L 8.000,8.000 L 8.000,6.000 L 10.000,6.000 L 10.000,5.000 L 8.000,5.000 L 7.000,5.000 Z"/>
+                                                                <Path Fill="#ff5f5f5f" Data="F1 M 16.000,5.000 L 14.000,5.000 L 14.000,6.000 L 16.000,6.000 L 16.000,8.000 L 17.000,8.000 L 17.000,6.000 L 17.000,5.000 L 16.000,5.000 Z"/>
+                                                                <Path Fill="#ff5f5f5f" Data="F1 M 16.000,12.500 L 14.000,12.500 L 14.000,13.500 L 16.000,13.500 L 17.000,13.500 L 17.000,12.500 L 17.000,10.500 L 16.000,10.500 L 16.000,12.500 Z"/>
+                                                                <Path Fill="#ff5f5f5f" Data="F1 M 8.000,10.500 L 7.000,10.500 L 7.000,12.500 L 7.000,13.500 L 8.000,13.500 L 10.000,13.500 L 10.000,12.500 L 8.000,12.500 L 8.000,10.500 Z"/>
+                                                            </Canvas>
                                                         </Canvas>
                                                     </Viewbox>
                                                 </Grid>
@@ -388,7 +394,7 @@
                                     <Border BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Stretch" Height="1" Background="{StaticResource Gold}" Margin="0" VerticalAlignment="Bottom" Visibility="{DynamicResource TogglePinnedButtonDividerVisibility}"/>
                                 </Grid>
                             </Grid>
-                            <RepeatButton Grid.Row="1" Name="YelpPOIViewScrollUpButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Top" Margin="{DynamicResource POIViewScrollUpButtonMargin}">
+                            <RepeatButton Grid.Row="1" Name="POIViewScrollUpButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Top" Margin="{DynamicResource POIViewScrollUpButtonMargin}">
                                 <RepeatButton.Style>
                                     <Style TargetType="{x:Type RepeatButton}">
                                         <Style.Setters>
@@ -396,7 +402,7 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type RepeatButton}">
                                                         <Grid>
-                                                            <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="YelpPOIViewScrollDownButton" RenderTransformOrigin="0.5, 0.5">
+                                                            <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="POIViewScrollUpButton" RenderTransformOrigin="0.5, 0.5">
                                                                 <Image.RenderTransform>
                                                                     <RotateTransform Angle="180"/>
                                                                 </Image.RenderTransform>
@@ -404,7 +410,7 @@
                                                         </Grid>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsPressed" Value="True">
-                                                                <Setter TargetName="YelpPOIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
+                                                                <Setter TargetName="POIViewScrollUpButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
                                                             </Trigger>
 
                                                             <MultiTrigger>
@@ -413,7 +419,7 @@
                                                                     <Condition Property="IsMouseOver" Value="True"/>
                                                                 </MultiTrigger.Conditions>
                                                                 <MultiTrigger.Setters>
-                                                                    <Setter TargetName="YelpPOIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
+                                                                    <Setter TargetName="POIViewScrollUpButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
                                                                 </MultiTrigger.Setters>
                                                             </MultiTrigger>
 
@@ -428,7 +434,7 @@
                                     </Style>
                                 </RepeatButton.Style>
                             </RepeatButton>
-                            <RepeatButton Grid.Row="1" Name="YelpPOIViewScrollDownButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Bottom" Margin="0, 0, 0, 0">
+                            <RepeatButton Grid.Row="1" Name="POIViewScrollDownButton" Width="{DynamicResource POIViewScrollButtonSize}" Height="{DynamicResource POIViewScrollButtonSize}" Visibility="{DynamicResource POIViewScrollButtonVisibility}" VerticalAlignment="Bottom" Margin="0, 0, 0, 0">
                                 <RepeatButton.Style>
                                     <Style TargetType="{x:Type RepeatButton}">
                                         <Style.Setters>
@@ -436,11 +442,11 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type RepeatButton}">
                                                         <Grid>
-                                                            <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="YelpPOIViewScrollDownButton"/>
+                                                            <Image Source="{DynamicResource SearchResultsScrollButtonOffImage}" Name="POIViewScrollDownButton"/>
                                                         </Grid>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsPressed" Value="True">
-                                                                <Setter TargetName="YelpPOIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
+                                                                <Setter TargetName="POIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonDownImage}"/>
                                                             </Trigger>
 
                                                             <MultiTrigger>
@@ -449,7 +455,7 @@
                                                                     <Condition Property="IsMouseOver" Value="True"/>
                                                                 </MultiTrigger.Conditions>
                                                                 <MultiTrigger.Setters>
-                                                                    <Setter TargetName="YelpPOIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
+                                                                    <Setter TargetName="POIViewScrollDownButton" Property="Source" Value="{DynamicResource SearchResultsScrollButtonOffImage}"/>
                                                                 </MultiTrigger.Setters>
                                                             </MultiTrigger>
 

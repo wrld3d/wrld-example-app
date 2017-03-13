@@ -6,6 +6,7 @@
 #include "OptionsController.h"
 #include "WindowsAppThreadAssertionMacros.h"
 #include "IHttpCache.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -17,13 +18,16 @@ namespace ExampleApp
                 WindowsNativeState& nativeState,
                 IOptionsViewModel& optionsViewModel,
                 Eegeo::Helpers::IHttpCache& httpCache,
-                ExampleAppMessaging::TMessageBus& messageBus
+                ExampleAppMessaging::TMessageBus& messageBus,
+                InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController,
+                const std::string& adminPassword,
+                bool isInKioskMode
             )
             {
                 ASSERT_UI_THREAD
 
-                m_pView = Eegeo_NEW(OptionsView)(nativeState);
-                m_pController = Eegeo_NEW(OptionsController)(*m_pView, optionsViewModel, messageBus);
+                m_pView = Eegeo_NEW(OptionsView)(nativeState, adminPassword, isInKioskMode);
+                m_pController = Eegeo_NEW(OptionsController)(*m_pView, optionsViewModel, messageBus, interiorsExplorerController);
                 m_pClearCacheMessageHandler = Eegeo_NEW(SdkModel::ClearCacheMessageHandler)(httpCache, messageBus);
             }
 

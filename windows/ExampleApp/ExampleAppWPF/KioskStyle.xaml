@@ -5,6 +5,140 @@
     xmlns:System="clr-namespace:System;assembly=mscorlib" 
     mc:Ignorable="d">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <System:Boolean x:Key="IsInKioskMode">true</System:Boolean>
+    <System:Boolean x:Key="NotIsInKioskMode">false</System:Boolean>
+
+    <!-- Gps Marker Tutorial -->
+    <System:Double x:Key="GpsMarkerTutorialWidth">350</System:Double>
+    <System:Double x:Key="GpsMarkerTutorialHeight">102</System:Double>
+    <System:Double x:Key="GpsMarkerTutorialTitleFontSize">32</System:Double>
+    <System:Double x:Key="GpsMarkerTutorialDescriptionFontSize">20</System:Double>
+
+    <!-- Interiors tutorial dialogs -->
+    <System:Double x:Key="InteriorsTutorialDialogWidth">320</System:Double>
+    <System:Double x:Key="InteriorsSearchTutorialDialogWidth">330</System:Double>
+
+    <System:Double x:Key="InteriorsTutorialDialogArrowSize">26</System:Double>
+
+    <System:Double x:Key="InteriorsSearchTutorialDialogArrowAngle">170</System:Double>
+    <System:Double x:Key="InteriorsLocateMeTutorialDialogArrowAngle">255</System:Double>
+    <System:Double x:Key="InteriorsElevatorTutorialDialogArrowAngle">8</System:Double>
+    <System:Double x:Key="InteriorsExitTutorialDialogArrowAngle">8</System:Double>
+
+    <System:Double x:Key="InteriorsTutorialDialogTitleFontSize">32</System:Double>
+    <System:Double x:Key="InteriorsTutorialDialogDescriptionFontSize">20</System:Double>
+    <System:Double x:Key="InteriorsTutorialDialogNumberFontSize">48</System:Double>
+
+    <System:String x:Key="InteriorsSearchTutorialDialogNumber">1</System:String>
+    <System:String x:Key="InteriorsCompassTutorialDialogNumber">2</System:String>
+    <System:String x:Key="InteriorsElevatorTutorialDialogNumber">3</System:String>
+
+    <!-- Watermark View -->
+    <System:Double x:Key="WatermarkDialogBoxWidth">540</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxHeight">525</System:Double>
+    <Thickness x:Key="WatermarkDialogBoxBorderThickness" Left="0" Top="0" Right="0" Bottom="0"/>
+    <Visibility x:Key="WatermarkDialogBoxContainerNormalVisibility">Collapsed</Visibility>
+    <Visibility x:Key="WatermarkDialogBoxContainerKioskVisibility">Visible</Visibility>
+    <Thickness x:Key="WatermarkDialogBoxContainerMargin" Left="20" Top="20" Right="20" Bottom="40"/>
+    <System:Double x:Key="WatermarkDialogBoxContainerWidth">325</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxContainerHeight">150</System:Double>
+    <GridLength x:Key="WatermarkDialogBoxContainerRow0Height">94</GridLength>
+    <Thickness x:Key="WatermarkDialogBoxTitleContainerMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <GridLength x:Key="WatermarkDialogBoxTitleColumn0">446</GridLength>
+    <GridLength x:Key="WatermarkDialogBoxTitleColumn1">54</GridLength>
+    <System:Double x:Key="WatermarkDialogBoxTitleContainerHeight">20</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxTitleWidth">325</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxTitleFontSize">40</System:Double>
+    <Thickness x:Key="WatermarkDialogBoxTitleTextMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="WatermarkDialogBoxTitleMaxWidth">350</System:Double>
+    <Visibility x:Key="WatermarkDialogBoxTitleDividerVisibility">Visible</Visibility>
+    <System:Double x:Key="WatermarkDialogBoxLogoHeight">60</System:Double>
+    <Thickness x:Key="WatermarkDialogBoxLogoMargin" Left="0" Top="22" Right="0" Bottom="12"/>
+    <System:Double x:Key="WatermarkDialogBoxMessageContainerHeight">536</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxMessageWidth">500</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxMessageHeight">70</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxMessageFontSize">25</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxButtonContainerHeight">50</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxButtonWidth">150</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxButtonGap">25</System:Double>
+    <ImageSource x:Key="WatermarkDialogBoxCloseButtonOffImage">/Assets/button_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="WatermarkDialogBoxCloseButtonOnImage">/Assets/button_close_on@kiosk.png</ImageSource>
+    <System:Double x:Key="WatermarkDialogBoxCloseButtonSize">54</System:Double>
+    <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOffColour" Color="White"/>
+    <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOnColour" Color="White"/>
+    <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOverColour" Color="White"/>
+    <ImageSource x:Key="WatermarkDialogBoxQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
+    <System:Double x:Key="WatermarkDialogBoxQRCodeImageSize">176</System:Double>
+    <Visibility x:Key="WatermarkDialogBoxQRCodeVisibility">Visible</Visibility>
+    <Thickness x:Key="WatermarkDialogBoxQRCodeImageMargin" Left="0" Top="30" Right="0" Bottom="0"/>
+
+    <!-- Options Panel -->
+    <System:Double x:Key="OptionsPanelWidth">540</System:Double>
+    <GridLength x:Key="OptionsPanelRow0Height">94</GridLength>
+    <GridLength x:Key="OptionsPanelRow1Height">Auto</GridLength>
+    <SolidColorBrush x:Key="OptionsPanelUpperTitleColour" Color="White"/>
+    <Visibility x:Key="OptionsPanelUpperTitleVisibility">Visible</Visibility>
+    <Thickness x:Key="OptionsPanelUpperTitleMargin" Left="20" Top="20" Right="0" Bottom="10"/>
+    <GridLength x:Key="OptionsPanelUpperTitleColumn0">444</GridLength>
+    <GridLength x:Key="OptionsPanelUpperTitleColumn1">54</GridLength>
+    <System:Double x:Key="OptionsPanelUpperTitleMaxWidth">350</System:Double>
+    <System:Double x:Key="OptionsPanelUpperTitleFontSize">30</System:Double>
+    <Thickness x:Key="OptionsPanelUpperTitleTextMargin" Left="0" Top="10" Right="0" Bottom="0"/>
+    <Visibility x:Key="OptionsPanelUpperTitleDividerVisibility">Visible</Visibility>
+    <Visibility x:Key="OptionsPanelUpperLowerTitleVisibility">Collapsed</Visibility>
+    <System:Double x:Key="OptionsPanelLowerTitleHeight">40</System:Double>
+    <Thickness x:Key="OptionsPanelLowerTitleMargin" Left="10" Top="5" Right="5" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelLowerTitleFontSize">18</System:Double>
+    <System:Double x:Key="OptionsPanelButtonPanelHeight">332</System:Double>
+    <Thickness x:Key="OptionsPanelButtonPanelMargin" Left="20" Top="0" Right="20" Bottom="0"/>
+    <Visibility x:Key="OptionsPanelCacheMapPanelVisibility">Collapsed</Visibility>
+    <Thickness x:Key="OptionsPanelCacheMapPanelMargin" Left="0" Top="8" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelCacheMapPanelHeight">30</System:Double>
+    <Thickness x:Key="OptionsPanelCacheMapButtonMargin" Left="10" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelCacheMapTextFontSize">14</System:Double>
+    <Thickness x:Key="OptionsPanelCacheMapTextMargin" Left="6" Top="0" Right="0" Bottom="0"/>
+    <Visibility x:Key="OptionsPanelClearCachePanelVisibility">Collapsed</Visibility>
+    <Thickness x:Key="OptionsPanelClearCachePanelMargin" Left="0" Top="8" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelClearCachePanelHeight">30</System:Double>
+    <Thickness x:Key="OptionsPanelClearCacheButtonMargin" Left="10" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelClearCacheButtonSize">20</System:Double>
+    <ImageSource x:Key="OptionsPanelClearCacheButtonOffImage">/Assets/buttonsmall_close_off.png</ImageSource>
+    <ImageSource x:Key="OptionsPanelClearCacheButtonOnImage">/Assets/buttonsmall_close_on.png</ImageSource>
+    <System:Double x:Key="OptionsPanelClearCacheTextFontSize">14</System:Double>
+    <Thickness x:Key="OptionsPanelClearCacheTextMargin" Left="6" Top="0" Right="0" Bottom="2"/>
+    <Visibility x:Key="OptionsPanelPlayTutorialsPanelVisibility">Visible</Visibility>
+    <Thickness x:Key="OptionsPanelPlayTutorialsPanelMargin" Left="0" Top="30" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelPlayTutorialsPanelHeight">48</System:Double>
+    <Thickness x:Key="OptionsPanelPlayTutorialsToggleMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <Visibility x:Key="OptionsPanelLowerCloseButtonVisibility">Collapsed</Visibility>
+    <System:Double x:Key="OptionsPanelCloseButtonSize">54</System:Double>
+    <ImageSource x:Key="OptionsPanelCloseButtonOffImage">/Assets/button_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="OptionsPanelCloseButtonOnImage">/Assets/button_close_on@kiosk.png</ImageSource>
+    <SolidColorBrush x:Key="OptionsPanelCloseButtonOffColour" Color="White"/>
+    <SolidColorBrush x:Key="OptionsPanelCloseButtonOnColour" Color="White"/>
+    <SolidColorBrush x:Key="OptionsPanelCloseButtonOverColour" Color="White"/>
+    <Visibility x:Key="OptionsPanelAdminButtonVisibility">Visible</Visibility>
+
+    <!-- Dialog Box -->
+    <System:Double x:Key="DialogBoxWidth">500</System:Double>
+    <System:Double x:Key="DialogBoxHeight">250</System:Double>
+    <System:Double x:Key="DialogBoxInnerWidth">405</System:Double>
+    <System:Double x:Key="DialogBoxInnerHeight">185</System:Double>
+    <System:Double x:Key="DialogBoxTitleContainerHeight">35</System:Double>
+    <System:Double x:Key="DialogBoxTitleWidth">405</System:Double>
+    <System:Double x:Key="DialogBoxTitleFontSize">30</System:Double>
+    <System:Double x:Key="DialogBoxMessageContainerHeight">90</System:Double>
+    <System:Double x:Key="DialogBoxMessageWidth">405</System:Double>
+    <System:Double x:Key="DialogBoxMessageHeight">80</System:Double>
+    <System:Double x:Key="DialogBoxMessageFontSize">19.5</System:Double>
+    <System:Double x:Key="DialogBoxButtonContainerHeight">60</System:Double>
+    <System:Double x:Key="DialogBoxButtonWidth">185</System:Double>
+    <System:Double x:Key="DialogBoxButtonGap">30</System:Double>
+    
     <!-- POI View -->
     <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOffImage">/Assets/button_remove_pin_off.png</ImageSource>
     <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOnImage">/Assets/button_remove_pin_on.png</ImageSource>
@@ -41,13 +175,13 @@
     <GridLength x:Key="EegeoPOIViewContainerRow0Height">76</GridLength>
     <GridLength x:Key="EegeoPOIViewContainerRow2Height">0</GridLength>
 
-    <Thickness x:Key="EegeoPOIViewTitleMargin" Left="0" Top="0" Right="0" Bottom="10"/>
+    <Thickness x:Key="EegeoPOIViewTitleMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <GridLength x:Key="EegeoPOIViewTitleColumn0">442</GridLength>
     <GridLength x:Key="EegeoPOIViewTitleColumn1">54</GridLength>
     <System:Double x:Key="EegeoPOIViewTitleMaxWidth">350</System:Double>
     <System:Double x:Key="EegeoPOIViewTitleFontSize">30</System:Double>
     <System:Double x:Key="EegeoPOIViewSubTitleFontSize">15</System:Double>
-    <Thickness x:Key="EegeoPOIViewTitleTextMargin" Left="15" Top="6" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewTitleTextMargin" Left="15" Top="6" Right="0" Bottom="-10"/>
     <Thickness x:Key="EegeoPOIViewSubTitleTextMargin" Left="15" Top="4" Right="0" Bottom="-4"/>
     <Visibility x:Key="EegeoPOIViewDetailsTitleDividerVisibility">Collapsed</Visibility>
 
@@ -66,12 +200,12 @@
     
     <Thickness x:Key="EegeoPOIViewDetailsPhoneMargin" Left="5" Top="0" Right="0" Bottom="15"/>
     <System:Double x:Key="EegeoPOIViewDetailsPhoneFontSize">26</System:Double>
-    <Thickness x:Key="EegeoPOIViewDetailsPhoneTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewDetailsPhoneTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
     
     <Thickness x:Key="EegeoPOIViewDetailsAddressMargin" Left="5" Top="0" Right="0" Bottom="15"/>
     <Thickness x:Key="EegeoPOIViewDetailsAddressIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="EegeoPOIViewDetailsAddressFontSize">26</System:Double>
-    <Thickness x:Key="EegeoPOIViewDetailsAddressTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewDetailsAddressTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
     
     <Visibility x:Key="EegeoPOIViewDetailsWebLinksVisibility">Collapsed</Visibility>
     
@@ -79,20 +213,20 @@
     <Thickness x:Key="EegeoPOIViewDetailsTagsMargin" Left="5" Top="0" Right="0" Bottom="15"/>
     <Thickness x:Key="EegeoPOIViewDetailsTagsIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="EegeoPOIViewDetailsTagsFontSize">26</System:Double>
-    <Thickness x:Key="EegeoPOIViewDetailsTagsTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewDetailsTagsTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
     
     <Thickness x:Key="EegeoPOIViewDetailsReviewDividerMargin" Left="0" Top="0" Right="0" Bottom="15"/>
     <Thickness x:Key="EegeoPOIViewDetailsReviewMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="EegeoPOIViewDetailsReviewIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="EegeoPOIViewDetailsReviewFontSize">26</System:Double>
-    <Thickness x:Key="EegeoPOIViewDetailsReviewTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewDetailsReviewTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <Visibility x:Key="EegeoPOIViewQRCodeVisibility">Visible</Visibility>
     <Thickness x:Key="EegeoPOIViewQRCodeDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
     <Thickness x:Key="EegeoPOIViewQRCodeMargin" Left="5" Top="0" Right="0" Bottom="30"/>
     <System:Double x:Key="EegeoPOIViewQRCodeFontSize">26</System:Double>
     <System:String x:Key="EegeoPOIViewQRCodeText">Scan the QR Code with your device to find out more.</System:String>
-    <Thickness x:Key="EegeoPOIViewQRCodeTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="EegeoPOIViewQRCodeTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
     <ImageSource x:Key="EegeoPOIViewQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
     <System:Double x:Key="EegeoPOIViewQRCodeImageSize">176</System:Double>
     <Thickness x:Key="EegeoPOIViewQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="0"/>
@@ -150,27 +284,27 @@
     <System:Double x:Key="YelpPOIViewLowerDetailsContainerHeight">280</System:Double>
     <Thickness x:Key="YelpPOIViewLowerDetailsPhoneMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="YelpPOIViewLowerDetailsPhoneFontSize">26</System:Double>
-    <Thickness x:Key="YelpPOIViewLowerDetailsPhoneTextMargin" Left="35" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewLowerDetailsPhoneTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="YelpPOIViewLowerDetailsAddressMargin" Left="5" Top="15" Right="0" Bottom="0"/>
     <System:Double x:Key="YelpPOIViewLowerDetailsAddressFontSize">26</System:Double>
-    <Thickness x:Key="YelpPOIViewLowerDetailsAddressTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewLowerDetailsAddressTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
     <Thickness x:Key="YelpPOIViewDetailsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
 
     <Thickness x:Key="YelpPOIViewTagsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="YelpPOIViewTagsFontSize">26</System:Double>
-    <Thickness x:Key="YelpPOIViewTagsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewTagsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <Thickness x:Key="YelpPOIViewReviewsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
     <Thickness x:Key="YelpPOIViewReviewsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="YelpPOIViewReviewsFontSize">26</System:Double>
-    <Thickness x:Key="YelpPOIViewReviewsTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
     <Visibility x:Key="YelpPOIViewQRCodeVisibility">Visible</Visibility>
     <Thickness x:Key="YelpPOIViewQRCodeDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
     <Thickness x:Key="YelpPOIViewQRCodeMargin" Left="5" Top="0" Right="0" Bottom="30"/>
     <System:Double x:Key="YelpPOIViewQRCodeFontSize">26</System:Double>
     <System:String x:Key="YelpPOIViewQRCodeText">Scan the QR Code with your device to read the {0} review on Yelp.</System:String>
-    <Thickness x:Key="YelpPOIViewQRCodeTextMargin" Left="35" Top="-4" Right="0" Bottom="0"/>
+    <Thickness x:Key="YelpPOIViewQRCodeTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
     <ImageSource x:Key="YelpPOIViewQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
     <System:Double x:Key="YelpPOIViewQRCodeImageSize">176</System:Double>
     <Thickness x:Key="YelpPOIViewQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="0"/>
@@ -186,8 +320,10 @@
     <System:Double x:Key="MenuIconSize">80</System:Double>
     <GridLength x:Key="MenuIconSizeGridLength">80</GridLength>
     <System:Double x:Key="MenuWidth">515</System:Double>
+    <SolidColorBrush x:Key="MenuButtonOverColour" Color="{Binding Color, Source={StaticResource PrimaryBG_colour}}"/>
 
     <!-- Menu List Item -->
+    <SolidColorBrush x:Key="MenuListItemOverColour" Color="{Binding Color, Source={StaticResource PrimaryBG_colour}}"/>
     <System:Double x:Key="MenuListItemInnerWidthSettings">465</System:Double>
     <System:Double x:Key="MenuListItemInnerWidthSearch">453</System:Double>
     <System:Double x:Key="MenuListItemHeight">54</System:Double>
@@ -206,10 +342,11 @@
     <Thickness x:Key="MenuListMarginSearch" Left="50" Top="0" Right="12" Bottom="0"/>
 
     <!-- SubMenu List Item -->
+    <SolidColorBrush x:Key="SubMenuListItemOverColour" Color="{Binding Color, Source={StaticResource SubMenuItemDefaultColour}}"/>
     <System:Double x:Key="SubMenuListItemWidthSettings">515</System:Double>
     <System:Double x:Key="SubMenuListItemWidthSearch">515</System:Double>
-    <System:Double x:Key="SubMenuListItemHeight">51</System:Double>
-    <System:Double x:Key="SubMenuListItemIconSize">47</System:Double>
+    <System:Double x:Key="SubMenuListItemHeight">54</System:Double>
+    <System:Double x:Key="SubMenuListItemIconSize">54</System:Double>
     <System:Double x:Key="SubMenuListItemFontSize">18</System:Double>
     <System:Double x:Key="SubMenuListItemSubTitleFontSize">11</System:Double>
     <Thickness x:Key="SubMenuListItemMarginSearch" Left="0" Top="0" Right="0" Bottom="0"/>
@@ -237,15 +374,17 @@
     <Thickness x:Key="SettingsTitleTextMargin" Left="43" Top="0" Right="0" Bottom="0"/>
 
     <!-- Search Menu List Item -->
-    <System:Double x:Key="SearchMenuListItemHeight">43</System:Double>
+    <SolidColorBrush x:Key="SearchMenuListItemOverColour" Color="{Binding Color, Source={StaticResource SubMenuItemDefaultColour}}"/>
+    <Thickness x:Key="SearchMenuListItemStoryboardMargin" Left="0" Top="-64" Right="0" Bottom="0"/>
+    <System:Double x:Key="SearchMenuListItemHeight">64</System:Double>
     <System:Double x:Key="SearchResultPanelWidth">453</System:Double>
     <Thickness x:Key="SearchResultPanelMargin" Left="50" Top="0" Right="0" Bottom="0"/>
-    <System:Double x:Key="SearchResultPanelIconSize">36</System:Double>
+    <System:Double x:Key="SearchResultPanelIconSize">54</System:Double>
     <Thickness x:Key="SearchResultPanelIconMargin" Left="3" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="SearchResultPanelStackPanelWidth">349</System:Double>
-    <System:Double x:Key="SearchResultPanelTitleFontSize">13</System:Double>
-    <Thickness x:Key="SearchResultPanelTitleMargin" Left="5" Top="1" Right="0" Bottom="0"/>
-    <System:Double x:Key="SearchResultPanelSubTitleFontSize">11</System:Double>
+    <System:Double x:Key="SearchResultPanelTitleFontSize">23</System:Double>
+    <Thickness x:Key="SearchResultPanelTitleMargin" Left="5" Top="-6" Right="0" Bottom="0"/>
+    <System:Double x:Key="SearchResultPanelSubTitleFontSize">17</System:Double>
     <Thickness x:Key="SearchResultPanelSubTitleMargin" Left="5" Top="0" Right="0" Bottom="0"/>
 
     <!-- Search Menu -->
@@ -326,6 +465,135 @@
     <System:Double x:Key="CompassInnerSize">84</System:Double>
     <Thickness x:Key="CompassMargin" Left="-64" Top="-64" Right="0" Bottom="0"/>
 
+    <!-- Pin Tutorial -->
+    <System:Double x:Key="PinTutorialWidth">858</System:Double>
+    <System:Double x:Key="PinTutorialHeight">407</System:Double>
+    <Thickness x:Key="PinTutorialContainerMargin" Left="20" Top="20" Right="20" Bottom="20"/>
+    <GridLength x:Key="PinTutorialContainerRow0Height">94</GridLength>
+    <Thickness x:Key="PinTutorialTitleMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <GridLength x:Key="PinTutorialTitleColumn0">764</GridLength>
+    <GridLength x:Key="PinTutorialTitleColumn1">54</GridLength>
+    <System:Double x:Key="PinTutorialTitleMaxWidth">668</System:Double>
+    <System:Double x:Key="PinTutorialTitleFontSize">40</System:Double>
+    <Thickness x:Key="PinTutorialTitleTextMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <ImageSource x:Key="PinTutorialCloseButtonOffImage">/Assets/button_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinTutorialCloseButtonOnImage">/Assets/button_close_on@kiosk.png</ImageSource>
+    <System:Double x:Key="PinTutorialCloseButtonSize">54</System:Double>
+    <SolidColorBrush x:Key="PinTutorialCloseButtonOffColour" Color="White"/>
+    <SolidColorBrush x:Key="PinTutorialCloseButtonOnColour" Color="White"/>
+    <SolidColorBrush x:Key="PinTutorialCloseButtonOverColour" Color="White"/>
+    <Visibility x:Key="PinTutorialTitleDividerVisibility">Visible</Visibility>
+    <System:Double x:Key="PinTutorialMessageWidth">818</System:Double>
+    <System:Double x:Key="PinTutorialMessageHeight">200</System:Double>
+    <System:Double x:Key="PinTutorialMessageFontSize">25</System:Double>
+    <System:Double x:Key="PinTutorialButtonWidth">818</System:Double>
+    <System:Double x:Key="PinTutorialButtonHeight">60</System:Double>
+    <System:Double x:Key="PinTutorialButtonIconSize">48</System:Double>
+    <System:Double x:Key="PinTutorialButtonFontSize">36</System:Double>
+
+    <!-- Pin Details -->
+    <System:Double x:Key="PinDetailsWidth">858</System:Double>
+    <System:Double x:Key="PinDetailsHeight">478</System:Double>
+    <System:Double x:Key="PinDetailsStackPanelWidth">818</System:Double>
+    <System:Double x:Key="PinDetailsStackPanelHeight">438</System:Double>
+    <Thickness x:Key="PinDetailsStackPanelMargin" Left="0" Top="10" Right="0" Bottom="-40"/>
+    <System:Double x:Key="PinDetailsTitleContainerWidth">773</System:Double>
+    <System:Double x:Key="PinDetailsTitleContainerHeight">91</System:Double>
+    <GridLength x:Key="PinDetailsTitleColumn0">759</GridLength>
+    <GridLength x:Key="PinDetailsTitleColumn1">61</GridLength>
+    <System:Double x:Key="PinDetailsTitleIconSize">48</System:Double>
+    <Thickness x:Key="PinDetailsTitleIconMargin" Left="0" Top="9" Right="0" Bottom="20"/>
+    <ImageSource x:Key="PinDetailsTitleIconImage">/Assets/CreatPIN_dialogue_Icon@kiosk.png</ImageSource>
+    <Thickness x:Key="PinDetailsTitleTextContainerMargin" Left="13" Top="-15" Right="0" Bottom="0"/>
+    <System:Double x:Key="PinDetailsTitleFontSize">40</System:Double>
+    <Thickness x:Key="PinDetailsTitleTextMargin" Left="5" Top="0" Right="5" Bottom="0"/>
+    <System:Double x:Key="PinDetailsTitleTextMaxWidth">698</System:Double>
+    <System:Double x:Key="PinDetailsTitleTextMaxHeight">60</System:Double>
+    <SolidColorBrush x:Key="PinDetailsTitleBoxColour" Color="{Binding Color, Source={StaticResource VeryDarkGrey}}"/>
+    <Visibility x:Key="PinDetailsCloseButtonNormalVisibility">Visible</Visibility>
+    <System:Double x:Key="PinDetailsCloseButtonSize">54</System:Double>
+    <Thickness x:Key="PinDetailsCloseButtonMargin" Left="0" Top="-4" Right="0" Bottom="0"/>
+    <ImageSource x:Key="PinDetailsCloseButtonOffImage">/Assets/button_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinDetailsCloseButtonOnImage">/Assets/button_close_on@kiosk.png</ImageSource>
+    <SolidColorBrush x:Key="PinDetailsCloseButtonOffColour" Color="White"/>
+    <SolidColorBrush x:Key="PinDetailsCloseButtonOnColour" Color="White"/>
+    <SolidColorBrush x:Key="PinDetailsCloseButtonOverColour" Color="White"/>
+    <Thickness x:Key="PinDetailsTitleDividerMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <Visibility x:Key="PinDetailsTitleDividerVisibility">Visible</Visibility>
+    <System:Double x:Key="PinDetailsViewHeight">277</System:Double>
+    <Visibility x:Key="PinDetailsDescriptionTitleNormalVisibility">Collapsed</Visibility>
+    <Thickness x:Key="PinDetailsDescriptionMargin" Left="5" Top="21" Right="5" Bottom="0"/>
+    <System:Double x:Key="PinDetailsDescriptionFontSize">25</System:Double>
+    <SolidColorBrush x:Key="PinDetailsDescriptionTextColour" Color="{Binding Color, Source={StaticResource VeryDarkGrey}}"/>
+    <Visibility x:Key="PinDetailsDescriptionImageVisibility">Collapsed</Visibility>
+    <System:Double x:Key="PinDetailsRemovePinContainerHeight">60</System:Double>
+    <Thickness x:Key="PinDetailsRemovePinContainerMargin" Left="0" Top="20" Right="0" Bottom="-10"/>
+    <System:Double x:Key="PinDetailsRemovePinWidth">818</System:Double>
+    <System:Double x:Key="PinDetailsRemovePinIconSize">48</System:Double>
+    <System:Double x:Key="PinDetailsRemovePinFontSize">36</System:Double>
+
+    <!-- Pin Creation Details -->
+    <System:Double x:Key="PinCreationDetailsWidth">858</System:Double>
+    <System:Double x:Key="PinCreationDetailsHeight">478</System:Double>
+    <VerticalAlignment x:Key="PinCreationDetailsVerticalAlignment">Top</VerticalAlignment>
+    <Thickness x:Key="PinCreationDetailsMargin" Left="0" Top="50" Right="0" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsDockPanelWidth">818</System:Double>
+    <System:Double x:Key="PinCreationDetailsDockPanelHeight">346</System:Double>
+    <Thickness x:Key="PinCreationDetailsDockPanelMargin" Left="0" Top="10" Right="0" Bottom="-40"/>
+    <System:Double x:Key="PinCreationDetailsTitleContainerWidth">778</System:Double>
+    <System:Double x:Key="PinCreationDetailsTitleIconSize">48</System:Double>
+    <Thickness x:Key="PinCreationDetailsTitleIconMargin" Left="5" Top="13" Right="0" Bottom="5"/>
+    <ImageSource x:Key="PinCreationDetailsTitleIconImage">/Assets/CreatPIN_dialogue_Icon@kiosk.png</ImageSource>
+    <Thickness x:Key="PinCreationDetailsTitleTextContainerMargin" Left="13" Top="2" Right="0" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsTitleFontSize">40</System:Double>
+    <Thickness x:Key="PinCreationDetailsTitleTextMargin" Left="5" Top="0" Right="5" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsTitleTextMaxWidth">778</System:Double>
+    <System:Double x:Key="PinCreationDetailsTitleTextMaxHeight">60</System:Double>
+    <SolidColorBrush x:Key="PinCreationDetailsTitleBoxColour" Color="{Binding Color, Source={StaticResource VeryDarkGrey}}"/>
+    <Visibility x:Key="PinCreationDetailsCloseButtonNormalVisibility">Collapsed</Visibility>
+    <System:Double x:Key="PinCreationDetailsCloseButtonSize">36</System:Double>
+    <Thickness x:Key="PinCreationDetailsCloseButtonMargin" Left="0" Top="-50" Right="5" Bottom="0"/>
+    <Visibility x:Key="PinCreationDetailsTitleDividerVisibility">Visible</Visibility>
+    <Visibility x:Key="PinCreationDetailsShareVisibility">Collapsed</Visibility>
+    <Thickness x:Key="PinCreationDetailsShareMargin" Left="0" Top="15" Right="0" Bottom="0"/>
+    <Thickness x:Key="PinCreationDetailsShareCheckboxMargin" Left="5" Top="2" Right="10" Bottom="0"/>
+    <Thickness x:Key="PinCreationDetailsDescriptionMargin" Left="5" Top="26" Right="5" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsDescriptionHeight">180</System:Double>
+    <System:Double x:Key="PinCreationDetailsDescriptionWidth">778</System:Double>
+    <System:Double x:Key="PinCreationDetailsDescriptionFontSize">25</System:Double>
+    <Thickness x:Key="PinCreationDetailsDescriptionTextMargin" Left="20" Top="20" Right="20" Bottom="20"/>
+    <Thickness x:Key="PinCreationDetailsDescriptionTextBoxMargin" Left="20" Top="20" Right="20" Bottom="20"/>
+    <Thickness x:Key="PinCreationDetailsDescriptionTextBoxContainerBorderThickness" Left="1" Top="1" Right="1" Bottom="1"/>
+    <Thickness x:Key="PinCreationDetailsDescriptionTextBoxBorderThickness" Left="0" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="PinCreationDetailsImageContainerMargin" Left="5" Top="20" Right="5" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsImageContainerHeight">200</System:Double>
+    <Visibility x:Key="PinCreationDetailsImageVisibility">Collapsed</Visibility>
+    <Visibility x:Key="PinCreationDetailsConfirmButtonNormalVisibility">Visible</Visibility>
+    <System:Double x:Key="PinCreationDetailsConfirmButtonContainerHeight">50</System:Double>
+    <Thickness x:Key="PinCreationDetailsConfirmButtonContainerMargin" Left="0" Top="30" Right="0" Bottom="0"/>
+    <System:Double x:Key="PinCreationDetailsConfirmButtonWidth">350</System:Double>
+    <Visibility x:Key="PinCreationDetailsBottomButtonsVisibility">Visible</Visibility>
+    <ImageSource x:Key="PinCreationDetailsCloseKioskButtonOffImage">Assets/button_pin_creation_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationDetailsCloseKioskButtonOnImage">Assets/button_pin_creation_close_on@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationDetailsConfirmKioskButtonOffImage">Assets/button_pin_creation_confirm_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationDetailsConfirmKioskButtonOnImage">Assets/button_pin_creation_confirm_on@kiosk.png</ImageSource>
+    <GridLength x:Key="PinCreationDetailsBottomButtonColumn0Width">407</GridLength>
+    <GridLength x:Key="PinCreationDetailsBottomButtonColumn1Width">4</GridLength>
+    <GridLength x:Key="PinCreationDetailsBottomButtonColumn2Width">407</GridLength>
+    <System:Double x:Key="PinCreationDetailsBottomButtonWidth">407</System:Double>
+    <System:Double x:Key="PinCreationDetailsBottomButtonHeight">72</System:Double>
+
+    <!-- Pin Creation Confirmation-->
+    <Visibility x:Key="PinCreationConfirmationNormal">Collapsed</Visibility>
+    <Visibility x:Key="PinCreationConfirmationKiosk">Visible</Visibility>
+    <System:Double x:Key="PinCreationConfirmationWidth">556</System:Double>
+    <System:Double x:Key="PinCreationConfirmationHeight">146</System:Double>
+    <System:Double x:Key="PinCreationConfirmationBottomMargin">50</System:Double>
+    <ImageSource x:Key="PinCreationConfirmationCloseButtonOffImage">Assets/button_pin_confirm_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationConfirmationCloseButtonOnImage">Assets/button_pin_confirm_close_on@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationConfirmationOkButtonOffImage">Assets/button_pin_confirm_ok_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="PinCreationConfirmationOkButtonOnImage">Assets/button_pin_confirm_ok_on@kiosk.png</ImageSource>
+
     <!-- Pin Creation Button -->
     <ImageSource x:Key="PinCreationButtonOffImage">Assets/button_create_poi_off@kiosk.png</ImageSource>
     <ImageSource x:Key="PinCreationButtonOnImage">Assets/button_create_poi_on@kiosk.png</ImageSource>
@@ -333,13 +601,17 @@
     <System:Double x:Key="PinCreationButtonSize">102</System:Double>
     <System:Double x:Key="PinCreationButtonMarginToCentre">52</System:Double>
 
+    <!-- Text Button -->
+    <System:Double x:Key="TextButtonFontSize">36</System:Double>
+    
     <!-- Elevator Control -->
+    <Thickness x:Key="InteriorFloorLableMargin" Left="0" Top="50" Right="0" Bottom="0"/>
     <System:Double x:Key="ExitButtonSize">80</System:Double>
     <Thickness x:Key="ExitButtonMargin" Left="0" Top="0" Right="39" Bottom="15"/>
     <ImageSource x:Key="ExitButtonOffImage">Assets/button_exit_interior_off@kiosk.png</ImageSource>
     <ImageSource x:Key="ExitButtonOnImage">Assets/button_exit_interior_on@kiosk.png</ImageSource>
     <Thickness x:Key="ElevatorSliderMargin" Left="0" Top="0" Right="39" Bottom="13"/>
-    <System:Double x:Key="ElevatorSliderMinHeight">396</System:Double>
+    <System:Double x:Key="ElevatorSliderMinHeight">496</System:Double>
 
     <!-- Simple Slider Control -->
     <System:Double x:Key="SliderThumbSize">102</System:Double>
@@ -356,6 +628,8 @@
     <System:Int32 x:Key="SliderTickbarLabelFontSize">22</System:Int32>
     <Thickness x:Key="SliderTrackLineMargin" Left="0" Top="50" Right="0" Bottom="50"/>
     <System:Double x:Key="SliderTrackMinWidth">102</System:Double>
+
+    <System:Double x:Key="ScrollViewButtonScrollSpeed">40</System:Double>
 
     <SolidColorBrush x:Key="PrimaryBG_colour" Color="#FF1256B0"/>
     <SolidColorBrush x:Key="PrimaryBG_Over_Colour" Color="#002B63"/>

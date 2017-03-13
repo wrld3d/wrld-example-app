@@ -2,6 +2,7 @@
 
 #include "WorldPinItemModel.h"
 #include "Types.h"
+#include "WorldPinHiddenStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,9 @@ namespace ExampleApp
                                                  const WorldPinFocusData& worldPinFocusData,
                                                  bool interior,
                                                  const WorldPinInteriorData& worldPinInteriorData,
-                                                 int visibilityMask)
+                                                 int visibilityMask,
+                                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
+                                                 std::string identifier)
                 : m_id(id)
                 , m_pSelectionHandler(pSelectionHandler)
                 , m_pVisibilityStateChangedHandler(pVisibilityStateChangedHandler)
@@ -31,15 +34,16 @@ namespace ExampleApp
                                worldPinFocusData.vendor,
                                worldPinFocusData.json,
                                worldPinFocusData.ratingsImage,
-                               worldPinFocusData.reviewCount)
+                               worldPinFocusData.reviewCount,
+                               worldPinFocusData.priorityOrder)
                 , m_transitionState(StableHidden)
                 , m_transitionStateValue(0.f)
                 , m_focusable(true)
                 , m_interior(interior)
                 , m_worldPinInteriorData(worldPinInteriorData)
-                , m_floorHeight(0.0f)
-                , m_hasFloorHeight(false)
                 , m_visibilityMask(visibilityMask)
+                , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
+                , m_identifier(identifier)
             {
                 Eegeo_ASSERT(m_pSelectionHandler != NULL, "WorldPinItemModel must be provided with a non-null selection handler.")
             }
@@ -87,7 +91,7 @@ namespace ExampleApp
             {
                 if(m_transitionState != StableHidden)
                 {
-                    m_transitionState = TransitionToHidden;
+                    SetTransitionState(TransitionToHidden);
                 }
             }
 
@@ -95,25 +99,13 @@ namespace ExampleApp
             {
                 if(m_transitionState != StableVisible && m_transitionState != TransitionToVisible)
                 {
-                    m_transitionState = TransitionToVisible;
-                    m_hasFloorHeight = false;
+                    SetTransitionState(TransitionToVisible);
                 }
             }
 
             float WorldPinItemModel::TransitionStateValue() const
             {
                 return m_transitionStateValue;
-            }
-            
-            bool WorldPinItemModel::NeedsFloorHeight() const
-            {
-                return m_interior && (!m_hasFloorHeight);
-            }
-            
-            void WorldPinItemModel::SetFloorHeight(float floorHeight)
-            {
-                m_floorHeight = floorHeight;
-                m_hasFloorHeight = true;
             }
             
             void WorldPinItemModel::Refresh(const std::string& title, const std::string& description, const std::string& ratingsImage, const int reviewCount)
@@ -135,7 +127,7 @@ namespace ExampleApp
                         }
                         
                         m_transitionStateValue = 0.f;
-                        m_transitionState = StableHidden;
+                        SetTransitionState(StableHidden);
                     }
                 }
                 else if(m_transitionState == TransitionToVisible)
@@ -150,8 +142,17 @@ namespace ExampleApp
                         }
                         
                         m_transitionStateValue = 1.f;
-                        m_transitionState = StableVisible;
+                        SetTransitionState(StableVisible);
                     }
+                }
+            }
+            
+            void WorldPinItemModel::SetTransitionState(TransitionState transitionState)
+            {
+                if (m_transitionState != transitionState)
+                {
+                    m_transitionState = transitionState;
+                    m_sdkModelDomainEventBus.Publish(WorldPinHiddenStateChangedMessage(*this));
                 }
             }
 
@@ -178,6 +179,11 @@ namespace ExampleApp
             void WorldPinItemModel::SetVisibilityMask(int visibilityMask)
             {
                 m_visibilityMask = visibilityMask;
+            }
+            
+            std::string WorldPinItemModel::GetIdentifier() const
+            {
+                return m_identifier;
             }
         }
     }

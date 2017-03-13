@@ -7,7 +7,6 @@
 #include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "Metrics.h"
-#include "StartSearchSurveyMessage.h"
 #include "StartUxSurveyMessage.h"
 #include "SurveyViewIncludes.h"
 #include "URLRequestHandler.h"
@@ -29,22 +28,23 @@ namespace ExampleApp
                 std::string m_currentSurveyUrl;
                 std::string m_currentSurveyMetricName;
                 
-                Eegeo::Helpers::TCallback1<SurveyViewInterop, const StartSearchSurveyMessage&> m_startSearchSurveyCallback;
                 Eegeo::Helpers::TCallback1<SurveyViewInterop, const StartUxSurveyMessage&> m_startUxSurveyCallback;
                 
                 Eegeo::Helpers::TCallback0<SurveyViewInterop> m_onSurveyAccepted;
                 Eegeo::Helpers::TCallback0<SurveyViewInterop> m_onSurveyRejected;
                 
-                void StartSearchSurveyCallback(const StartSearchSurveyMessage& message);
                 void StartUxSurveyCallback(const StartUxSurveyMessage& message);
                 
                 void OnSurveyAccepted();
                 void OnSurveyRejected();
                 
+                std::string m_timerSurveyUrl;
+                
             public:
                 SurveyViewInterop(ExampleAppMessaging::TMessageBus& messageBus,
                                   Metrics::IMetricsService& metricsService,
-                                  URLRequest::View::URLRequestHandler& urlRequestHandler);
+                                  URLRequest::View::URLRequestHandler& urlRequestHandler,
+                                  const std::string& timerSurveyUrl);
                 
                 ~SurveyViewInterop();
                 

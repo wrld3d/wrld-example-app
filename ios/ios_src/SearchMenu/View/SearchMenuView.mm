@@ -87,6 +87,8 @@
     float m_anchorArrowWidth;
     float m_anchorArrowClosedHeight;
     float m_anchorArrowOpenHeight;
+    
+    float m_totalTableHeight;
 }
 
 @property (nonatomic, retain) UILabel* pSearchCountLabel;
@@ -131,6 +133,12 @@
     return m_pSearchMenuInterop;
 }
 
+-(float) getUpperMargin
+{
+    const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
+    return (isPhone ? 20.0f : 50.0f) * m_pixelScale;
+}
+
 - (void) initializeViews
 {
     m_pSearchMenuInterop = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewInterop)(self);
@@ -151,7 +159,7 @@
     
     const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
-    const float upperMargin = (isPhone ? 20.0f : 50.0f) * m_pixelScale;
+    const float upperMargin = [self getUpperMargin];
     const float lowerMargin = (isPhone ? 0.0f : 50.0f) * m_pixelScale;
     const float searchCountLabelWidth = (isPhone ? 28.f : 32.0f) * m_pixelScale;
     const float dragTabOffsetX = searchCountLabelWidth;
@@ -748,6 +756,12 @@
     [self.pInputDelegate setHasResults: searchResultCount>0];
 }
 
+- (void) removeSearchQueryResults
+{
+    [self setSearchResultCount:0];
+    self.pSearchEditBox.text = @"";
+}
+
 - (void) onMenuStateUpdated
 {
     if(m_titleContainersRequireRefresh)
@@ -846,6 +860,7 @@
         
         totalTableHeight += tableHeight;
     }
+    m_totalTableHeight = totalTableHeight;
     
     const float searchResultsTableContentHeight = [self.pSearchResultsTableView refreshHeight:[m_pSearchResultsDataProvider getRealTableHeight]];
     
@@ -973,6 +988,12 @@
         _pSearchMenuScrollButtonContainer.hidden = false;
         _pSearchMenuFadeImage.hidden = false;
     }
+}
+
+-(BOOL) pointInside:(CGPoint)point
+          withEvent:(UIEvent*)event
+{
+    return point.y < [self getUpperMargin] + m_dragTabHeight + m_totalTableHeight + self.pSearchResultsTableContainerView.frame.size.height + 2.0f*m_tableSpacing;
 }
 
 @end

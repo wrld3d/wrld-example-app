@@ -17,6 +17,7 @@
 #include "Interiors.h"
 #include "AppCamera.h"
 #include "InteriorsExplorer.h"
+#include "CameraTransitionService.h"
 
 namespace ExampleApp
 {
@@ -43,7 +44,8 @@ namespace ExampleApp
                               Metrics::IMetricsService& metricsService,
                               InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                               AppModes::SdkModel::IAppModeModel& appModeModel,
-                              Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
+                              Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                              bool isInkioskMode);
 
                 ~CompassModule();
 

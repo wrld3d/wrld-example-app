@@ -7,10 +7,6 @@
 
 namespace
 {
-    const std::string searchSurveyUrl = "https://drive.google.com/open?id=1sb5ApuFVfVe0DGvKCZf3F0MtavJXLfAHI1f_IR11VsI";
-    const std::string uxSurveyUrl = "https://drive.google.com/open?id=1kbrNv-kg9SKxGqUBm8rXtAgwWfF1M6Rs7PJUFQhGAGw";
-    
-    const std::string searchSurveyMetricName = "SearchSurveyOffered";
     const std::string uxSurveyMetricName = "UxSurveyOffered";
     
     const std::string surveyAcceptedKeyName = "SurveyAccepted";
@@ -26,41 +22,34 @@ namespace ExampleApp
         {
             SurveyViewInterop::SurveyViewInterop(ExampleAppMessaging::TMessageBus& messageBus,
                                                  Metrics::IMetricsService& metricsService,
-                                                 URLRequest::View::URLRequestHandler& urlRequestHandler)
+                                                 URLRequest::View::URLRequestHandler& urlRequestHandler,
+                                                 const std::string& timerSurveyUrl)
             : m_pSurveyAlertViewHandler(NULL)
             , m_messageBus(messageBus)
             , m_metricsService(metricsService)
             , m_urlRequestHandler(urlRequestHandler)
-            , m_startSearchSurveyCallback(this, &SurveyViewInterop::StartSearchSurveyCallback)
             , m_startUxSurveyCallback(this, &SurveyViewInterop::StartUxSurveyCallback)
             , m_onSurveyAccepted(this, &SurveyViewInterop::OnSurveyAccepted)
             , m_onSurveyRejected(this, &SurveyViewInterop::OnSurveyRejected)
+            , m_timerSurveyUrl(timerSurveyUrl)
             {
                 m_pSurveyAlertViewHandler = [[[[SurveyAlertViewHandler alloc] initWithCallbacks:m_onSurveyAccepted :m_onSurveyRejected] autorelease] retain];
                 
-                m_messageBus.SubscribeUi(m_startSearchSurveyCallback);
                 m_messageBus.SubscribeUi(m_startUxSurveyCallback);
             }
             
             SurveyViewInterop::~SurveyViewInterop()
             {
                 m_messageBus.UnsubscribeUi(m_startUxSurveyCallback);
-                m_messageBus.UnsubscribeUi(m_startSearchSurveyCallback);
                 
                 [m_pSurveyAlertViewHandler release];
             }
             
-            void SurveyViewInterop::StartSearchSurveyCallback(const StartSearchSurveyMessage& message)
-            {
-                m_currentSurveyUrl = searchSurveyUrl;
-                m_currentSurveyMetricName = searchSurveyMetricName;
-                
-                [m_pSurveyAlertViewHandler showAlert];
-            }
-            
             void SurveyViewInterop::StartUxSurveyCallback(const StartUxSurveyMessage& message)
             {
-                m_currentSurveyUrl = uxSurveyUrl;
+                if(m_timerSurveyUrl == "")
+                    return;
+                m_currentSurveyUrl = m_timerSurveyUrl;
                 m_currentSurveyMetricName = uxSurveyMetricName;
                 
                 [m_pSurveyAlertViewHandler showAlert];

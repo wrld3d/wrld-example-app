@@ -21,6 +21,7 @@ namespace ExampleApp
                 
                 virtual void SetStreamOverWifiOnlySelected(bool isStreamOverWifiOnlySelected) = 0;
                 virtual void SetCacheEnabledSelected(bool isCacheEnabledSelected) = 0;
+                virtual void SetReplayTutorialsSelected(bool isReplayTutorialsSelected) = 0;
                 
                 virtual void Open() = 0;
                 virtual void Close() = 0;
@@ -37,6 +38,9 @@ namespace ExampleApp
                 
                 virtual void InsertClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback) = 0;
+                virtual void RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback) = 0;
             };
         }
     }

@@ -99,14 +99,18 @@
     <Compile Include="DialogBox.xaml.cs">
       <DependentUpon>DialogBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IconProvider.cs" />
     <Compile Include="Layout.cs" />
     <Compile Include="PersistentSettings\PersistentSettings.cs" />
     <Compile Include="TickBarVerticalWithLabels.cs" />
     <Compile Include="ViewHelpers.cs" />
+    <Compile Include="Views\AdminLogin\AdminLoginView.cs" />
+    <Compile Include="Views\AttractModeOverlay\AttractModeOverlayView.cs" />
     <Compile Include="Views\ButtonBase.cs" />
     <Compile Include="Views\ControlBase.cs" />
     <Compile Include="Views\ControlClickHandler.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
+    <Compile Include="Views\GpsMarkerTutorial\GpsMarkerTutorialView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerTutorialDialogView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerTutorialView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />
@@ -114,16 +118,20 @@
     <Compile Include="Views\Menu\MenuListAdapter.cs" />
     <Compile Include="Views\Menu\MenuListItem.cs" />
     <Compile Include="Views\Menu\StoryboardRunner.cs" />
+    <Compile Include="Views\MyPinCreationConfirmation\MyPinCreationConfirmationTutorialDialogBox.xaml.cs">
+      <DependentUpon>MyPinCreationConfirmationTutorialDialogBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyPinCreationDetails\MyPinCreationDetailsTutorialDialogBox.xaml.cs">
+      <DependentUpon>MyPinCreationDetailsTutorialDialogBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
-    <Compile Include="Views\SearchMenu\SearchMenuResultIconProvider.cs" />
     <Compile Include="Views\SearchResultPoi\eeGeoSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\GeonamesSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\EegeoResultModel.cs" />
     <Compile Include="Views\SearchResultPoi\ResultModels\YelpResultModel.cs" />
-    <Compile Include="Views\SearchResultPoi\SearchResultPoiViewIconProvider.cs" />
     <Compile Include="Views\SearchResultPoi\SearchResultPoiViewBase.cs" />
     <Compile Include="Views\SearchResultPoi\YelpSearchResultsPoiView.cs" />
     <Compile Include="Views\SearchMenu\SubMenuListItem.cs" />
@@ -131,11 +139,26 @@
     <Compile Include="Views\MyPinCreationDetails\MyPinCreationDetailsView.cs" />
     <Compile Include="Views\MyPinCreationDetails\MyPinDetailsView.cs" />
     <Compile Include="Views\ToggleButtonBase.cs" />
+    <Compile Include="Views\TutorialTooltip\TutorialTooltipPositionTransform.cs" />
+    <Compile Include="Views\TutorialTooltip\TutorialTooltipView.cs" />
+    <Compile Include="Views\VirtualKeyboard\VirtualKeyboardView.cs" />
     <Compile Include="Views\Watermark\WatermarkView.cs" />
-    <Compile Include="Views\WorldPinOnMap\WorldPinOnMapView.cs" />
     <Compile Include="Views\Menu\MenuView.cs" />
     <Compile Include="Views\SettingsMenu\SettingsMenuView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuView.cs" />
+    <Compile Include="Views\Watermark\WatermarkViewDialogBox.xaml.cs">
+      <DependentUpon>WatermarkViewDialogBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VirtualKeyboard\Controls\QuertyKeyboard.cs" />
+    <Compile Include="VirtualKeyboard\Controls\QuertyKeyboardButton.cs" />
+    <Compile Include="VirtualKeyboard\Controls\VirtualKeyboardButton.cs" />
+    <Compile Include="VirtualKeyboard\Controls\VirtualKeyboardControlButton.cs" />
+    <Compile Include="VirtualKeyboard\Controls\VirtualKeyboardInputButton.cs" />
+    <Compile Include="VirtualKeyboard\Controls\VirtualKeyboardSpecialButton.cs" />
+    <Compile Include="VirtualKeyboard\Extensions\WeakEventHandling.cs" />
+    <Compile Include="VirtualKeyboard\Services\KeysEx.cs" />
+    <Compile Include="VirtualKeyboard\Services\NativeUser32.cs" />
+    <Compile Include="VirtualKeyboard\Services\VirtualKeyboardService.cs" />
     <Compile Include="WindowInteractionTouchHandler.cs" />
     <Compile Include="XamlHelpers.cs" />
     <Page Include="CheckBoxStyle.xaml">
@@ -193,6 +216,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AdminLogin\AdminLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AttractModeOverlay\AttractModeOverlay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Compass\CompassView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -200,6 +231,10 @@
     <Page Include="Views\FlattenButton\FlattenButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GpsMarkerTutorial\GpsMarkerTutorialView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\InteriorsExplorer\InteriorsExplorerTutorialDialogView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -217,7 +252,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MyPinCreationConfirmation\MyPinCreationConfirmationTutorialDialogBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MyPinCreationConfirmation\MyPinCreationConfirmationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyPinCreationDetails\MyPinCreationDetailsTutorialDialogBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,11 +304,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\TutorialTooltip\TutorialTooltipView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VirtualKeyboard\VirtualKeyboard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Watermark\WatermarkView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\WorldPinOnMap\WorldPinOnMapView.xaml">
+    <Page Include="Views\Watermark\WatermarkViewDialogBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -290,6 +341,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="..\..\Resources\Fonts\OpenSans\OpenSans-Light.ttf">
+      <Link>Assets\OpenSans-Light.ttf</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\Fonts\OpenSans\OpenSans-Regular.ttf">
+      <Link>Assets\OpenSans-Regular.ttf</Link>
+    </Resource>
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -920,6 +977,44 @@
       <Link>Assets\yelp_reviews%40kiosk.png</Link>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\shift_key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\shift_key_down.png" />
+    <Resource Include="..\..\Resources\button_pin_confirm_close_off%40kiosk.png">
+      <Link>Assets\button_pin_confirm_close_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_confirm_close_on%40kiosk.png">
+      <Link>Assets\button_pin_confirm_close_on%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_confirm_ok_off%40kiosk.png">
+      <Link>Assets\button_pin_confirm_ok_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_confirm_ok_on%40kiosk.png">
+      <Link>Assets\button_pin_confirm_ok_on%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\CreatPIN_dialogue_Icon%40kiosk.png">
+      <Link>Assets\CreatPIN_dialogue_Icon%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_pin_creation_close_off%40kiosk.png">
+      <Link>Assets\button_pin_creation_close_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_creation_close_on%40kiosk.png">
+      <Link>Assets\button_pin_creation_close_on%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_creation_confirm_off%40kiosk.png">
+      <Link>Assets\button_pin_creation_confirm_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_pin_creation_confirm_on%40kiosk.png">
+      <Link>Assets\button_pin_creation_confirm_on%40kiosk.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r

@@ -6,10 +6,21 @@ namespace ExampleApp
 {
     namespace AppModes
     {
+        class GlobalAppModeTransitionRules;
+
         namespace SdkModel
         {
             class AppModeModel;
             class IAppModeModel;
+
+        }
+
+        namespace States
+        {
+            namespace SdkModel
+            {
+                class AttractState;
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ namespace ExampleApp
                 
                 virtual ~IGpsMarkerModule() {}
                 virtual IGpsMarkerController& GetGpsMarkerController() = 0;
-                
+                virtual GpsMarkerModel& GetGpsMarkerModel() const = 0;
             };
         }
     }

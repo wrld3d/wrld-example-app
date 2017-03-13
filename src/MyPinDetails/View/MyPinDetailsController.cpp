@@ -23,16 +23,21 @@ namespace ExampleApp
                 , m_viewModelClosedCallback(this, &MyPinDetailsController::OnClosed)
                 , m_viewDismissedCallback(this, &MyPinDetailsController::OnDismissed)
                 , m_viewRemovePinCallback(this, &MyPinDetailsController::OnRemovePin)
+                , m_appModeChangedHandler(this, &MyPinDetailsController::OnAppModeChangedMessage)
             {
                 m_viewModel.InsertOpenedCallback(m_viewModelOpenedCallback);
                 m_viewModel.InsertClosedCallback(m_viewModelClosedCallback);
 
                 m_view.InsertDismissedCallback(m_viewDismissedCallback);
                 m_view.InsertRemovePinCallback(m_viewRemovePinCallback);
+
+                m_messageBus.SubscribeUi(m_appModeChangedHandler);
             }
 
             MyPinDetailsController::~MyPinDetailsController()
             {
+                m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
+
                 m_view.RemoveDismissedCallback(m_viewDismissedCallback);
                 m_view.RemoveRemovePinCallback(m_viewRemovePinCallback);
 
@@ -72,6 +77,19 @@ namespace ExampleApp
                     m_messageBus.Publish(message);
 
                     m_viewModel.Close();
+                }
+            }
+
+            void MyPinDetailsController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
+            {
+                const bool appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::AttractMode;
+
+                if (!appModeAllowsOpen)
+                {
+                    if (m_viewModel.IsOpen())
+                    {
+                        m_viewModel.Close();
+                    }
                 }
             }
         }

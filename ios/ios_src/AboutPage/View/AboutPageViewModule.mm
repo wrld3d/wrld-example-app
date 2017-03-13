@@ -12,10 +12,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            AboutPageViewModule::AboutPageViewModule(IAboutPageViewModel& aboutPageViewModel, Metrics::IMetricsService& metricsService)
+            AboutPageViewModule::AboutPageViewModule(IAboutPageViewModel& aboutPageViewModel, Metrics::IMetricsService& metricsService, ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pView = [[AboutPageView alloc] initView];
-                m_pController = Eegeo_NEW(AboutPageController)(*[m_pView getInterop], aboutPageViewModel, metricsService);
+                m_pController = Eegeo_NEW(AboutPageController)(*[m_pView getInterop], aboutPageViewModel, metricsService, messageBus);
             }
 
             AboutPageViewModule::~AboutPageViewModule()

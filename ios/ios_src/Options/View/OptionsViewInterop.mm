@@ -32,6 +32,11 @@ namespace ExampleApp
             {
                 [m_pView setCacheEnabledSelected:isCacheEnabledSelected];
             }
+            
+            void OptionsViewInterop::SetReplayTutorialsSelected(bool isReplayTutorialsSelected)
+            {
+                [m_pView setReplayTutorialsSelected:isReplayTutorialsSelected];
+            }
 
             void OptionsViewInterop::Open()
             {
@@ -106,6 +111,16 @@ namespace ExampleApp
             void OptionsViewInterop::RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_clearCacheCallbacks.RemoveCallback(callback);
+            }
+
+            void OptionsViewInterop::InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                m_replayTutorialsToggledCallbacks.AddCallback(callback);
+            }
+
+            void OptionsViewInterop::RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                m_replayTutorialsToggledCallbacks.RemoveCallback(callback);
             }
         }
     }

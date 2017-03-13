@@ -2,7 +2,7 @@
 //  FloorNr.h
 //  SLIndoorLocation
 //
-//  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
+//  Copyright (c) 2010-2017, Senion AB. All rights reserved.
 //
 
 #ifndef SLIndoorLocation_FloorNr_h

@@ -30,13 +30,20 @@ namespace ExampleApp
             const std::string& eegeoSearchServiceUrl,
             const std::string& myPinsWebServiceUrl,
             const std::string& myPinsWebServiceAuthToken,
-            const std::string& twitterAuthCode,
+            const std::string& myPinsPoiSetId,
             const bool isKioskTouchInputEnabled,
             const bool isInKioskMode,
-            const bool useLabels,
             const bool useJapaneseFont,
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
-            const std::string& rawConfig
+            const std::string& rawConfig,
+            const SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation,
+            const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
+            const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
+            const long long attractModeTimeoutMs,
+            const float attractModePlaybackSpeed,
+            const std::string& optionsAdminPassword,
+            const long long& surveyRequirementTimeSec,
+            const std::string& timerSurveyUrl
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -61,13 +68,20 @@ namespace ExampleApp
         , m_eegeoSearchServiceUrl(eegeoSearchServiceUrl)
         , m_myPinsWebServiceUrl(myPinsWebServiceUrl)
         , m_myPinsWebServiceAuthToken(myPinsWebServiceAuthToken)
-        , m_twitterAuthCode(twitterAuthCode)
+        , m_myPinsPoiSetId(myPinsPoiSetId)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
         , m_isInKioskMode(isInKioskMode)
-        , m_useLabels(useLabels)
         , m_useJapaneseFont(useJapaneseFont)
         , m_interiorTrackingInfo(interiorTrackingInfo)
         , m_rawConfig(rawConfig)
+        , m_fixedIndoorLocation(fixedIndoorLocation)
+        , m_attractModeTargetSplinePoints(attractModeTargetSplinePoints)
+        , m_attractModePositionSplinePoints(attractModePositionSplinePoints)
+        , m_attractModeTimeoutMs(attractModeTimeoutMs)
+        , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
+        , m_optionsAdminPassword(optionsAdminPassword)
+        , m_surveyRequirementTimeSec(surveyRequirementTimeSec)
+        , m_timerSurveyUrl(timerSurveyUrl)
         {
         }
         
@@ -181,9 +195,9 @@ namespace ExampleApp
             return m_myPinsWebServiceAuthToken;
         }
 
-        std::string ApplicationConfiguration::TwitterAuthCode() const
+        std::string ApplicationConfiguration::MyPinsPoiSetId() const
         {
-            return m_twitterAuthCode;
+            return m_myPinsPoiSetId;
         }
 
         bool ApplicationConfiguration::IsKioskTouchInputEnabled() const
@@ -201,11 +215,6 @@ namespace ExampleApp
             return m_shouldStartFullscreen;
         }
         
-        bool ApplicationConfiguration::UseLabels() const
-        {
-            return m_useLabels;
-        }
-        
         bool ApplicationConfiguration::UseJapaneseFont() const
         {
             return m_useJapaneseFont;
@@ -219,6 +228,58 @@ namespace ExampleApp
         std::string ApplicationConfiguration::RawConfig() const
         {
             return m_rawConfig;
+        }
+
+        bool ApplicationConfiguration::IsFixedIndoorLocationEnabled() const
+        {
+            return m_fixedIndoorLocation.GetInteriorId().IsValid();
+        }
+
+        const SdkModel::ApplicationFixedIndoorLocation& ApplicationConfiguration::FixedIndoorLocation() const
+        {
+            return m_fixedIndoorLocation;
+        }
+
+        const std::vector<Eegeo::Space::LatLongAltitude>& ApplicationConfiguration::AttractModeTargetSplinePoints() const
+        {
+            return m_attractModeTargetSplinePoints;
+        }
+
+        const std::vector<Eegeo::Space::LatLongAltitude>& ApplicationConfiguration::AttractModePositionSplinePoints() const
+        {
+            return m_attractModePositionSplinePoints;
+        }
+
+        const long long ApplicationConfiguration::AttractModeTimeoutMs() const
+        {
+            return m_attractModeTimeoutMs;
+        }
+
+        const float ApplicationConfiguration::AttractModePlaybackSpeed() const
+        {
+            return m_attractModePlaybackSpeed;
+        }
+
+        const bool ApplicationConfiguration::IsAttractModeEnabled() const
+        {
+            return m_attractModeTimeoutMs > 0 &&
+                   m_attractModeTargetSplinePoints.size() > 0 &&
+                   m_attractModePositionSplinePoints.size() >= 2;
+        }
+
+        std::string ApplicationConfiguration::OptionsAdminPassword() const
+        {
+            return m_optionsAdminPassword;
+        }
+        
+        const long long ApplicationConfiguration::SurveyRequirementTimeSec() const
+        {
+            return m_surveyRequirementTimeSec;
+        }
+        
+        const std::string ApplicationConfiguration::TimerSurveyUrl() const
+        {
+            return m_timerSurveyUrl;
         }
     }
 }

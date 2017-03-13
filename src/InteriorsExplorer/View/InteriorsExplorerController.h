@@ -29,6 +29,10 @@ namespace ExampleApp
                                             ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~InteriorsExplorerController();
+
+                void ReplayTutorials(const bool enableTutorials);
+                void InsertReplayTutorialsChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback);
+                void RemoveReplayTutorialsChangedCallback(Eegeo::Helpers::ICallback1<bool>& callback);
                 
             private:
                 
@@ -44,6 +48,8 @@ namespace ExampleApp
                 SdkModel::InteriorsExplorerModel& m_model;
                 IInteriorsExplorerView& m_view;
                 InteriorsExplorerViewModel& m_viewModel;
+                bool m_replayTutorials;
+                Eegeo::Helpers::CallbackCollection1<bool> m_replayTutorialsCallbacks;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerController> m_dismissedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, int> m_selectFloorCallback;
@@ -53,7 +59,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<InteriorsExplorerController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerUINotifyMessage&> m_interiorsUINotificationCallback;
-                
+
                 AppModes::SdkModel::AppMode m_appMode;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;

@@ -34,12 +34,7 @@ namespace ExampleApp
                 
                 void InteriorExplorerExitingState::Enter(int previousState)
                 {
-                    if (m_parentState.GetLastEntryAttemptSuccessful())
-                    {
-                        m_interiorsExplorerModel.ResumePreviousMapState();
-                    }
                     
-                    m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(true);
                     m_interiorVisibilityUpdater.SetInteriorShouldDisplay(false);
                     m_interiorSelectionModel.ClearSelection();
                 }
@@ -48,18 +43,14 @@ namespace ExampleApp
                 {
                     if (!m_interiorSelectionModel.IsInteriorSelected())
                     {
-                        if (m_parentState.GetLastEntryAttemptSuccessful())
-                        {
-                            m_interiorsExplorerModel.ResumePreviousMapState();
-                        }
-                        
                         m_parentState.ReturnToWorldMode();
+                        
                     }
                 }
                 
                 void InteriorExplorerExitingState::Exit(int nextState)
                 {
-                    m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(false);
+                    
                 }
             }
             

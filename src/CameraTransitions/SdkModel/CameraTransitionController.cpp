@@ -17,6 +17,7 @@
 #include "ExitCurrentInteriorStage.h"
 #include "TransitionToInteriorStage.h"
 #include "IAppCameraController.h"
+#include "InteriorsModelRepository.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,7 @@ namespace ExampleApp
                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                    const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                                                    InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                                                   Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                                                    ExampleApp::ExampleAppMessaging::TMessageBus& messageBus)
             : m_cameraController(cameraController)
             , m_interiorsCameraController(interiorsCameraController)
@@ -45,6 +47,7 @@ namespace ExampleApp
             , m_interiorTransitionModel(interiorTransitionModel)
             , m_appCameraController(appCameraController)
             , m_interiorsExplorerModel(interiorsExplorerModel)
+            , m_interiorsModelRepository(interiorsModelRepository)
             , m_isTransitioning(false)
             , m_defaultInteriorId(Eegeo::Resources::Interiors::InteriorId::NullId())
             {
@@ -89,20 +92,26 @@ namespace ExampleApp
                 
                 StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, interiorId, targetFloorIndex, jumpIfFar);
             }
-            
+
             void CameraTransitionController::StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                                                float distanceFromInterest,
                                                                float newHeadingRadians,
                                                                const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                                int targetFloorIndex,
-                                                               bool jumpIfFar)
+                                                               bool jumpIfFar,
+                                                               bool setGpsModeOff,
+                                                               bool setInteriorHeading,
+                                                               bool setDistanceToInterest)
             {
                 if(IsTransitioning())
                 {
                     StopCurrentTransition();
                 }
                 
-                m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
+                if(setGpsModeOff)
+                {
+                    m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
+                }
                 
                 if(m_appModeModel.GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode)
                 {
@@ -111,11 +120,11 @@ namespace ExampleApp
                     if(m_interiorSelectionModel.GetSelectedInteriorId() == interiorId)
                     {
                         Eegeo_ASSERT(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId(), "Invalid state. Have selected null Interior while in Interior mode");
-                        EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex);
+                        EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, newHeadingRadians, setInteriorHeading, setDistanceToInterest);
                         StartQueuedTransition();
                         return;
                     }
-                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId() && interestDifferenceSquared < exitInteriorDistanceSquared)
+                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId() && interestDifferenceSquared < exitInteriorDistanceSquared && m_interiorsModelRepository.HasInterior(interiorId.Value()))
                     {
                         EnqueueTransitionToInteriorPointStage(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar);
                         StartQueuedTransition();
@@ -135,7 +144,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex);
+                    EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, newHeadingRadians, setInteriorHeading);
                 }
                 
                 StartQueuedTransition();
@@ -228,7 +237,10 @@ namespace ExampleApp
             void CameraTransitionController::EnqueueTransitionToInteriorStage(const Eegeo::dv3& newInterestPoint,
                                                                               float newDistanceToInterest,
                                                                               const Eegeo::Resources::Interiors::InteriorId &interiorId,
-                                                                              int targetFloorIndex)
+                                                                              int targetFloorIndex,
+                                                                              float newHeadingRadians,
+                                                                              bool setInteriorHeading,
+                                                                              bool setDisntaceToInterest)
             {
                 ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorStage)(m_interiorInteractionModel,
                                                                                       m_interiorSelectionModel,
@@ -237,7 +249,10 @@ namespace ExampleApp
                                                                                       newInterestPoint,
                                                                                       newDistanceToInterest,
                                                                                       interiorId,
-                                                                                      targetFloorIndex);
+                                                                                      targetFloorIndex,
+                                                                                      setInteriorHeading,
+                                                                                      newHeadingRadians,
+                                                                                      setDisntaceToInterest);
                 m_transitionStages.push(pStage);
             }
             

@@ -3,6 +3,8 @@
 #include "MenuView.h"
 #include "WindowsAppThreadAssertionMacros.h"
 #include "ReflectionHelpers.h"
+#include "IMenuSectionViewModel.h"
+#include "IMenuModel.h"
 
 using namespace ExampleApp::Helpers::ReflectionHelpers;
 
@@ -17,14 +19,15 @@ namespace ExampleApp
         {
 
             MenuView::MenuView(WindowsNativeState& nativeState,
-                               const std::string& viewClassName)
+                               const std::string& viewClassName,
+                               bool isInKioskMode)
                 : m_nativeState(nativeState)
                 , m_pTryDragFunc(NULL)
             {
                 System::String^ className = gcnew System::String(viewClassName.c_str());
                 m_uiViewClass = GetTypeFromEntryAssembly(className);
-                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
+                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid, System::Boolean::typeid));
+                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this), gcnew System::Boolean(isInKioskMode)));
 
                 Destroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
                 NormalisedAnimationProgress.SetupMethod(m_uiViewClass, m_uiView, "NormalisedAnimationProgress");
@@ -100,7 +103,7 @@ namespace ExampleApp
                     
                     groupNamesArray[static_cast<int>(groupIndex)] = ConvertUTF8ToManagedString(section.Name().c_str());
                     groupSizesArray[static_cast<int>(groupIndex)] = static_cast<System::Int32>(section.Size());
-                    groupIsExpandableArray[static_cast<int>(groupIndex)] = static_cast<System::Boolean>(section.IsExpandable());
+                    groupIsExpandableArray[static_cast<int>(groupIndex)] = static_cast<System::Boolean>(section.IsExpandable()) && section.GetModel().GetItemCount() > 0;
                 }
 
                 PopulateData(System::IntPtr(this),

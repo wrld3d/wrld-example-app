@@ -41,14 +41,22 @@ namespace ExampleAppWPF
 
         private System.Windows.Documents.Hyperlink m_tosLink;
 
+        private MyPinCreationDetailsTutorialDialogBox m_tutorialDialogBox;
+        private Button m_tutorialCancelButton;
+        private int m_tutorialViewCount = 0;
+        private double m_tutorialTopMargin = 0;
+
+        private bool m_isInKioskMode;
+
         static MyPinCreationDetailsView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MyPinCreationDetailsView), new FrameworkPropertyMetadata(typeof(MyPinCreationDetailsView)));
         }
 
-        public MyPinCreationDetailsView(IntPtr nativeCallerPointer)
+        public MyPinCreationDetailsView(IntPtr nativeCallerPointer, Boolean isInKioskMode)
         {
             m_nativeCallerPointer = nativeCallerPointer;
+            m_isInKioskMode = isInKioskMode;
 
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
@@ -65,6 +73,8 @@ namespace ExampleAppWPF
             m_description.ManipulationBoundaryFeedback -= OnDescriptionViewBoundaryFeedback;
 
             m_currentWindow.MainGrid.Children.Remove(this);
+
+            RemoveTutorialDialog();
         }
 
         private DependencyObject CheckAndGetProperty(string name)
@@ -79,20 +89,26 @@ namespace ExampleAppWPF
             m_title = CheckAndGetProperty("TitleBox") as TextBox;
             m_description = CheckAndGetProperty("DescBox") as TextBox;
             m_shouldShareButton = CheckAndGetProperty("ToShare") as CheckBox;
-            m_submitButton = CheckAndGetProperty("ConfirmButton") as Button;
+            m_submitButton = CheckAndGetProperty(m_isInKioskMode ? "ConfirmKioskButton" : "ConfirmButton") as Button;
             m_selectFromGalleryButton = CheckAndGetProperty("AddImageButton") as Button;
             m_poiImage = CheckAndGetProperty("SelectedImage") as Image;
             m_tosLink = CheckAndGetProperty("TermsLink") as System.Windows.Documents.Hyperlink;
 
             m_prevSource = m_poiImage.Source;
 
-            m_closeButton = CheckAndGetProperty("CloseButton") as Button;
+            m_closeButton = CheckAndGetProperty(m_isInKioskMode ? "CloseKioskButton" : "CloseButton") as Button;
             m_closeButton.Click += OnCloseClick;
             m_selectFromGalleryButton.Click += OnSelectFromGalleryClick;
             m_submitButton.Click += OnSubmitClick;
             m_tosLink.Click += OnHyperlinkClick;
 
             m_description.ManipulationBoundaryFeedback += OnDescriptionViewBoundaryFeedback;
+
+            Thickness detailsViewMargin = (Thickness)Application.Current.Resources["PinCreationDetailsMargin"];
+            if (detailsViewMargin != null)
+            {
+                m_tutorialTopMargin = detailsViewMargin.Top;
+            }
         }
 
         private void OnDescriptionViewBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
@@ -138,7 +154,15 @@ namespace ExampleAppWPF
 
         private void OnSubmitClick(object sender, RoutedEventArgs e)
         {
-            ExampleApp.MyPinCreationDetailsViewCLI.SubmitButtonpressed(m_nativeCallerPointer);
+            if(m_isInKioskMode && m_tutorialViewCount == 0)
+            {
+                ++m_tutorialViewCount;
+                ShowTutorialDialog();
+            }
+            else
+            {
+                ExampleApp.MyPinCreationDetailsViewCLI.SubmitButtonpressed(m_nativeCallerPointer);
+            }
         }
 
         private void OnCloseClick(object sender, RoutedEventArgs e)
@@ -162,6 +186,50 @@ namespace ExampleAppWPF
         {
             Visibility = Visibility.Hidden;
             m_currentWindow.EnableInput();
+
+            RemoveTutorialDialog();
+        }
+
+        private void ShowTutorialDialog()
+        {
+            Dismiss();
+
+            m_tutorialDialogBox = new MyPinCreationDetailsTutorialDialogBox("Pin Created", "Your pin has been created.");
+            m_tutorialDialogBox.Owner = m_currentWindow;
+            Point pos = m_currentWindow.PointToScreen(new Point((m_currentWindow.ActualWidth - m_tutorialDialogBox.Width) / 2, m_tutorialTopMargin));
+            m_tutorialDialogBox.Left = pos.X;
+            m_tutorialDialogBox.Top = pos.Y;
+            m_tutorialDialogBox.Show();
+
+            m_tutorialCancelButton = (Button)m_tutorialDialogBox.FindName("CancelButton");
+            m_tutorialCancelButton.Click += CancelTutorialDialog;
+        }
+
+        private void CancelTutorialDialog(object sender, EventArgs e)
+        {
+            ExampleApp.MyPinCreationDetailsViewCLI.SubmitButtonpressed(m_nativeCallerPointer);
+
+            RemoveTutorialDialog();
+        }
+
+        private void RemoveTutorialDialog()
+        {
+            if (m_tutorialCancelButton != null)
+            {
+                m_tutorialCancelButton.Click -= CancelTutorialDialog;
+                m_tutorialCancelButton = null;
+            }
+
+            if (m_tutorialDialogBox != null)
+            {
+                m_tutorialDialogBox.Close();
+                m_tutorialDialogBox = null;
+            }
+        }
+
+        public void ResetTutorialViewCount()
+        {
+            m_tutorialViewCount = 0;
         }
 
         public string GetTitle()

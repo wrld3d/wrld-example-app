@@ -1,0 +1,215 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ExampleAppWPF">
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Colours.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style x:Key="AdminButtonBase" TargetType="{x:Type Button}">
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="MinWidth" Value="100" />
+        <Setter Property="MinHeight" Value="70" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="FontSize" Value="32" />
+    </Style>
+
+    <Style x:Key="AdminButton" BasedOn="{StaticResource AdminButtonBase}" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="border" CornerRadius="0" Background="{DynamicResource PrimaryBG_colour}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryIcon_Down_colour}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AdminControlButton" BasedOn="{StaticResource AdminButtonBase}" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="border" CornerRadius="0" Background="{DynamicResource DarkButtonBG_colour}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryIcon_Down_colour}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="CloseButton" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle2">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="rectangle1" Fill="{DynamicResource POIViewCloseButtonOffColour}" Margin="0"/>
+                        <Rectangle x:Name="rectangle" Fill="{DynamicResource POIViewCloseButtonOverColour}" Margin="0" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle2" Fill="{DynamicResource POIViewCloseButtonOnColour}" Margin="0" Visibility="Hidden"/>
+                        <Image x:Name="image" Source="{DynamicResource POIViewCloseButtonOffImage}"/>
+                        <Image x:Name="image1" Source="{DynamicResource POIViewCloseButtonOnImage}" Visibility="Hidden"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:AdminLoginView}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:AdminLoginView}">
+                    <Border BorderThickness="20 0 20 20"
+                            BorderBrush="White"
+                            Background="White"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="Error">
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).Color"
+                                                        Storyboard.TargetName="PasswordBorder"
+                                                        Duration="0"
+                                                        To="Red"/>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <Grid Name="SearchresultsPoiViewContainer"
+                              Width="{DynamicResource AdminLoginWidth}"
+                              Height="Auto"
+                              Background="White"
+                              Margin="{DynamicResource EegeoPOIViewContainerMargin}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+                                <TextBlock Foreground="{StaticResource Gold}"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
+                                           FontSize="{DynamicResource OptionsPanelUpperTitleFontSize}">
+                                    Admin Login
+                                </TextBlock>
+                                <Button Name="Close"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource CloseButton}"
+                                        HorizontalAlignment="Right"
+                                        Width="{DynamicResource POIViewCloseButtonSize}"
+                                        Height="{DynamicResource POIViewCloseButtonSize}" />
+                            </Grid>
+
+                            <Border Grid.Row="1"
+                                BorderBrush="{x:Null}"
+                                HorizontalAlignment="Stretch"
+                                Height="2"
+                                Width="430"
+                                Margin="0 20 0 35"
+                                Background="{StaticResource Gold}"
+                                VerticalAlignment="Bottom" />
+
+                            <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource AdminButton}">1</Button>
+                                    <Button Style="{StaticResource AdminButton}">2</Button>
+                                    <Button Style="{StaticResource AdminButton}">3</Button>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource AdminButton}">4</Button>
+                                    <Button Style="{StaticResource AdminButton}">5</Button>
+                                    <Button Style="{StaticResource AdminButton}">6</Button>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource AdminButton}">7</Button>
+                                    <Button Style="{StaticResource AdminButton}">8</Button>
+                                    <Button Style="{StaticResource AdminButton}">9</Button>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="Del" Style="{StaticResource AdminControlButton}">Del</Button>
+                                    <Button Style="{StaticResource AdminButton}">0</Button>
+                                    <Button x:Name="Ok" Style="{StaticResource AdminControlButton}">OK</Button>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <Border Grid.Row="3"
+                                    Name="PasswordBorder"
+                                    BorderBrush="{DynamicResource Gold}"
+                                    BorderThickness="50 15 50 15"
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Center"
+                                    Margin="5 15 5 25">
+                                <PasswordBox x:Name="PasswordBox"
+                                             Width="215"
+                                             Height="70"
+                                             HorizontalContentAlignment="Center"
+                                             FontSize="50"
+                                             Focusable="False" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

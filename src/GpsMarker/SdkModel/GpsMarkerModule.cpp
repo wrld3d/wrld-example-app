@@ -107,6 +107,11 @@ namespace ExampleApp
             {
                 return *m_pController;
             }
+
+            GpsMarkerModel& GpsMarkerModule::GetGpsMarkerModel() const
+            {
+                return *m_pModel;
+            }
         }
     }
 }

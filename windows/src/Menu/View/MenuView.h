@@ -49,7 +49,8 @@ namespace ExampleApp
 
             public:
                 MenuView(WindowsNativeState& nativeState,
-                         const std::string& viewClassName);
+                         const std::string& viewClassName,
+                         bool isInKioskMode);
 
                 virtual ~MenuView();
 

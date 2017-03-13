@@ -4,7 +4,8 @@
 #include "CompassViewModel.h"
 #include "CompassModel.h"
 #include "CompassUpdateController.h"
-
+#include "CompassModeObserver.h"
+#include "CameraTransitionService.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,8 @@ namespace ExampleApp
                                          Metrics::IMetricsService& metricsService,
                                          InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorExplorerModel,
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
-                                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+                                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                         bool isInKioskMode)
             {
                 m_pModel = Eegeo_NEW(CompassModel)(navigationService,
                                                    interiorInteractionModel,
@@ -30,7 +32,8 @@ namespace ExampleApp
                                                    metricsService,
                                                    interiorExplorerModel,
                                                    appModeModel,
-                                                   alertBoxFactory);
+                                                   alertBoxFactory,
+                                                   isInKioskMode);
                 
                 m_pViewModel = Eegeo_NEW(View::CompassViewModel)(identityProvider.GetNextIdentity(), false);
                 m_pCompassUpdateController = Eegeo_NEW(CompassUpdateController)(*m_pModel, navigationService, messageBus);

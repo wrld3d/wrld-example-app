@@ -70,6 +70,7 @@ namespace ExampleApp
                                                                            model.IsInterior(),
                                                                            model.GetBuildingId(),
                                                                            model.GetFloor(),
+                                                                           model.GetIdentifier(),
                                                                            m_searchMenuViewModel,
                                                                            m_searchResultPoiViewModel,
                                                                            GetOriginalIndexForSearchResult(unorderedResults, model),

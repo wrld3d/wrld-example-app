@@ -34,7 +34,7 @@ namespace ExampleApp
                 , m_webRequestCompleteCallback(this, &EegeoInteriorSearchQuery::OnWebResponseReceived)
                 {
                     Eegeo_ASSERT(query.IsTag(), "Only support tag indoor queries");
-                    const int maximumNumberOfResults = 99;
+                    const int maximumNumberOfResults = 60;
                     
                     std::string encodedQuery;
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
@@ -47,11 +47,11 @@ namespace ExampleApp
                     {
                         urlstream << "t=" << encodedQuery << "&";
                     }
-                    urlstream << "f=";
-                    urlstream << m_floorIdx;
-                    urlstream << "&i=";
-                    urlstream << m_interiorId.Value();
+                    urlstream << "f=" << m_floorIdx;
+                    urlstream << "&i=" << m_interiorId.Value();
                     urlstream << "&n=" << maximumNumberOfResults;
+                    urlstream << "&lat=" << std::setprecision(8) << query.Location().GetLatitudeInDegrees();
+                    urlstream << "&lon=" << std::setprecision(8) << query.Location().GetLongitudeInDegrees();
                     urlstream << "&apikey=" << m_apiTokenModel.GetApiKey();
                     
                     std::string url = urlstream.str();

@@ -27,16 +27,15 @@
 #include "SearchResultPoiPinToggledMessage.h"
 #include "SearchResultPoiViewOpenedMessage.h"
 #include "SearchResultPoiViewClosedMessage.h"
-#include "TourActiveStateChangedMessage.h"
-#include "ActiveTourQuitSelectedMessage.h"
-#include "TourChangeRequestMessage.h"
 #include "InteriorsExplorerSelectFloorMessage.h"
 #include "InteriorsExplorerFloorSelectionDraggedMessage.h"
 #include "InteriorsExplorerExitMessage.h"
 #include "MenuDragStateChangedMessage.h"
-#include "CurrentTourCardTappedMessage.h"
 #include "MenuSectionExpandedChangedMessage.h"
 #include "WorldPinsSelectedFocussedMessage.h"
+#include "SurveyTimeRequirementMetMessage.h"
+#include "InteriorsLocationAuthorizationChangedMessage.h"
+#include "InteriorsLocationChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -66,16 +65,15 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewOpenedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewClosedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Tours::TourActiveStateChangedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Tours::ActiveTourQuitSelectedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Tours::TourChangeRequestMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerSelectFloorMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerFloorSelectionDraggedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerExitMessage>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuDragStateChangedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Tours::CurrentTourCardTappedMessage>
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuSectionExpandedChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsSelectedFocussedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Surveys::SurveyTimeRequirementMetMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationAuthorizationChangedMessage>
             , private Eegeo::NonCopyable
         {
 

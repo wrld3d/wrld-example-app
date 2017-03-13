@@ -8,6 +8,7 @@
 #include "Modality.h"
 #include "SearchMenu.h"
 #include "IModalityController.h"
+#include "SearchQueryResultsRemovedMessage.h"
 
 namespace ExampleApp
 {
@@ -30,10 +31,10 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<SearchMenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenStateChangedCallback;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const Search::SearchQueryPerformedMessage&> m_performedQueryHandler;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const Search::SearchQueryResponseReceivedMessage&> m_receivedQueryResponseHandler;
+                Eegeo::Helpers::TCallback1<SearchMenuController, const Search::SearchQueryResultsRemovedMessage&> m_receivedQueryResultsRemovedHandler;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const std::string&> m_onSearchCallback;
                 Eegeo::Helpers::TCallback0<SearchMenuController> m_onSearchClearedCallback;
                 Eegeo::Helpers::TCallback1<SearchMenuController, int> m_onSearchItemSelectedCallback;
-                Eegeo::Helpers::TCallback1<SearchMenuController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback0<SearchMenuController> m_onModalBackgroundTappedCallback;
                 
                 void OnSearchItemAdded(Menu::View::MenuItemModel& item);
@@ -45,10 +46,10 @@ namespace ExampleApp
                 void OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message);
                 
                 void OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message);
+
+                void OnSearchQueryResultsRemovedMessage(const Search::SearchQueryResultsRemovedMessage& message);
                 
                 void OnSearch(const std::string& searchQuery);
-                
-                void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 
                 bool TryDrag();
                 

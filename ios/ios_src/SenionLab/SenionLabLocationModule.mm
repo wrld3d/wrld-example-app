@@ -5,6 +5,7 @@
 #include "InteriorInteractionModel.h"
 #include <map>
 #include <string>
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -14,33 +15,22 @@ namespace ExampleApp
                                                          Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                          const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                          const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                         const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                                                         Eegeo::Location::ILocationService& defaultLocationService)
-        : m_pLocationController(NULL)
-        , m_pLocationManager(NULL)
-        , m_pLocationService(NULL)
+                                                         Eegeo::Location::ILocationService& defaultLocationService,
+                                                         Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                                         Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory,
+                                                         ExampleAppMessaging::TMessageBus& messageBus)
+        : m_locationService(defaultLocationService, environmentFlatteningService, interiorInteractionModel)
+        , m_locationManager(m_locationService, iOSAlertBoxFactory, messageBus)
+        , m_locationController(m_locationManager,
+                               appModeModel,
+                               interiorSelectionModel,
+                               interiorMetaDataRepository,
+                               messageBus)
         {
-            m_pLocationService = Eegeo_NEW(SenionLabLocationService)(defaultLocationService,
-                                                                     environmentFlatteningService,
-                                                                     interiorInteractionModel);
-            m_pLocationManager = [[SenionLabLocationManager alloc] Init: m_pLocationService];
-            
-            m_pLocationController = Eegeo_NEW(SenionLabLocationController)(*m_pLocationManager,
-                                                                           appModeModel,
-                                                                           interiorSelectionModel,
-                                                                           applicationConfiguration);
         }
         
         SenionLabLocationModule::~SenionLabLocationModule()
         {
-            Eegeo_DELETE m_pLocationController;
-            m_pLocationController = NULL;
-            
-            [m_pLocationManager release];
-            m_pLocationManager = NULL;
-            
-            Eegeo_DELETE m_pLocationService;
-            m_pLocationService = NULL;
         }
     }
 }

@@ -4,6 +4,7 @@
 #include "IWebLoadRequestFactory.h"
 #include "IWebLoadRequest.h"
 #include "ApiTokenModel.h"
+#include "InteriorId.h"
 
 #include <sstream>
 #include <iomanip>
@@ -21,6 +22,8 @@ namespace ExampleApp
                                                    const Search::SdkModel::SearchQuery& query,
                                                    const std::string& serviceUrl,
                                                    const Eegeo::Web::ApiTokenModel& apiTokenModel,
+                                                   const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                   int interiorFloorIndex,
                                                    Eegeo::Helpers::ICallback0& completionCallback)
                 : m_apiTokenModel(apiTokenModel)
                 , m_completionCallback(completionCallback)
@@ -29,7 +32,7 @@ namespace ExampleApp
                 , m_webRequestCompleteCallback(this, &EegeoSearchQuery::OnWebResponseReceived)
                 {
                     float minimumScore = 0.25;
-                    const int maximumNumberOfResults = 99;
+                    const int maximumNumberOfResults = 60;
 
                     std::string encodedQuery;
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
@@ -50,6 +53,13 @@ namespace ExampleApp
                         urlstream << "/search?s=" << encodedQuery << "&";
                         minimumScore = 0.6;
                     }
+
+                    if (interiorId.IsValid())
+                    {
+                        urlstream << "indoor_id=" << interiorId.Value() << "&"
+                                  << "f=" << interiorFloorIndex << "&";
+                    }
+
                     urlstream << "r=" << std::setprecision(4) << (query.Radius() * 1.5f);
                     urlstream << "&lat=" << std::setprecision(8) << query.Location().GetLatitudeInDegrees();
                     urlstream << "&lon=" << std::setprecision(8) << query.Location().GetLongitudeInDegrees();

@@ -12,12 +12,14 @@ namespace ExampleApp
         {
             SurveyViewModule::SurveyViewModule(ExampleAppMessaging::TMessageBus& messageBus,
                                                Metrics::IMetricsService& metricsService,
-                                               URLRequest::View::URLRequestHandler& urlRequestHandler)
+                                               URLRequest::View::URLRequestHandler& urlRequestHandler,
+                                               const std::string& surveyUrl)
             : m_pInterop(NULL)
             {
                 m_pInterop = Eegeo_NEW(SurveyViewInterop)(messageBus,
                                                           metricsService,
-                                                          urlRequestHandler);
+                                                          urlRequestHandler,
+                                                          surveyUrl);
             }
             
             SurveyViewModule::~SurveyViewModule()

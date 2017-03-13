@@ -33,7 +33,6 @@ namespace ExampleApp
                     Eegeo_ASSERT(tagSearchModelsMember.IsArray());
 
                     out_models = std::vector<ExampleApp::TagSearch::View::TagSearchModel>();
-                    yelpCategoryMapperUpdater.ResetMapping();
                     for (rapidjson::Value::ConstValueIterator it = tagSearchModelsMember.Begin();
                          it != tagSearchModelsMember.End();
                          ++it)
@@ -59,19 +58,20 @@ namespace ExampleApp
                         
                         const char* skipYelpSearchKey = "skip_yelp_search";
                         const char* yelpMappingKey = "yelp_mapping";
+                        bool skipYelpSearch = false;
                         if(item.HasMember(skipYelpSearchKey) && item[skipYelpSearchKey].IsBool())
                         {
-                            bool skipYelpSearch = item[skipYelpSearchKey].GetBool();
+                            skipYelpSearch = item[skipYelpSearchKey].GetBool();
                             if(skipYelpSearch)
                             {
-                                Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { "unused_string", false };
+                                Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { "unused_string", true };
                                 yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
                             }
                         }
-                        else if(item.HasMember(yelpMappingKey) && item[yelpMappingKey].IsString())
+                        if(item.HasMember(yelpMappingKey) && item[yelpMappingKey].IsString() && skipYelpSearch == false)
                         {
                             const std::string& yelpMapping = item[yelpMappingKey].GetString();
-                            Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { yelpMapping, true };
+                            Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { yelpMapping, false };
                             yelpCategoryMapperUpdater.AddMapping(searchTag, yelpCategoryModel);
                         }
 

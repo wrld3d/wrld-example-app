@@ -18,6 +18,7 @@
 #include "InteriorsCellResource.h"
 #include "SearchResultSectionItemSelectedMessage.h"
 #include "InteriorsEntityIdHighlightController.h"
+#include "document.h"
 
 #include <algorithm>
 #include <iterator>

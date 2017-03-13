@@ -34,7 +34,8 @@ namespace ExampleApp
                     Menu::View::IMenuViewModel& menuViewModel,
                     Modality::View::IModalBackgroundView& modealBackgroundView,
                     Menu::View::IMenuView& searchMenuView,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    bool isInKioskMode
                 );
 
                 ~SettingsMenuViewModule();

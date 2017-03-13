@@ -1,5 +1,6 @@
 #include "HighlightColorMapper.h"
 #include "ISearchResultRepository.h"
+#include "document.h"
 
 namespace ExampleApp
 {

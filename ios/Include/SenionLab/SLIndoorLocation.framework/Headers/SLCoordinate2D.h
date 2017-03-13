@@ -2,7 +2,7 @@
 //  SLCoordinate2D.h
 //  SLIndoorLocation
 //
-//  Copyright (c) 2010-2016, SenionLab AB. All rights reserved.
+//  Copyright (c) 2010-2017, Senion AB. All rights reserved.
 //
 //
 
@@ -21,12 +21,6 @@
  @param longitude Longitude in degrees. Positive value is east of the meridian, negative west.
  */
 - (instancetype)initWithLatitude:(double)latitude andLongitude:(double)longitude;
-
-- (NSDictionary *)writeObjectToDictionary;
-
-+ (SLCoordinate2D *)readObjectFromDictionary:(NSDictionary *)dict;
-
-- (BOOL)isEqualToSLCoordinate2D:(SLCoordinate2D *)p withAccuracy:(double)tol;
 
 /// @name Properties
 

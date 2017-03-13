@@ -24,7 +24,8 @@ namespace ExampleApp
             public:
                 SurveyViewModule(ExampleAppMessaging::TMessageBus& messageBus,
                                  Metrics::IMetricsService& metricsService,
-                                 URLRequest::View::URLRequestHandler& urlRequestHandler);
+                                 URLRequest::View::URLRequestHandler& urlRequestHandler,
+                                 const std::string& surveyUrl);
                 
                 ~SurveyViewModule();
             };

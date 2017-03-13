@@ -35,25 +35,22 @@ namespace ExampleApp
                 {
                     m_uiViewClass[i] = GetTypeFromEntryAssembly(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(VendorViewClassNames[i]));
 
-					if(i == SearchVendors::Yelp)
-					{
-						ConstructorInfo^ ctor = m_uiViewClass[i]->GetConstructor(CreateTypes(IntPtr::typeid, System::Boolean::typeid));
-						m_uiView[i] = ctor->Invoke(CreateObjects(gcnew IntPtr(this), gcnew System::Boolean(isInKioskMode)));
-					}
-					else
-					{
-						ConstructorInfo^ ctor = m_uiViewClass[i]->GetConstructor(CreateTypes(IntPtr::typeid));
-						m_uiView[i] = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
-					}
+					ConstructorInfo^ ctor = m_uiViewClass[i]->GetConstructor(CreateTypes(IntPtr::typeid, System::Boolean::typeid));
+					m_uiView[i] = ctor->Invoke(CreateObjects(gcnew IntPtr(this), gcnew System::Boolean(isInKioskMode)));
 
                     DisplayPoiInfo[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "DisplayPoiInfo");
                     DismissPoiInfo[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "DismissPoiInfo");
                     UpdateImageData[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "UpdateImageData");
+                    Destroy[i].SetupMethod(m_uiViewClass[i], m_uiView[i], "Destroy");
                 }
             }
 
             SearchResultPoiView::~SearchResultPoiView()
             {
+				for (int i = 0; i < SearchVendors::Num; ++i)
+				{
+					Destroy[i]();
+				}
             }
 
             void SearchResultPoiView::Show(const Search::SdkModel::SearchResultModel& model, bool isPinned)
@@ -139,11 +136,6 @@ namespace ExampleApp
                 else if (vendor == Search::EegeoVendorName)
                 {
                     m_currentVendor = SearchVendors::eeGeo;
-                }
-                else if (vendor == Search::ExampleTourVendorName)
-                {
-                    Eegeo_ASSERT(false, "Unable to creaate view instance for %s. Tour views are not yet implemented on Windows - please refer to iOS example.\n", vendor.c_str());
-                    m_currentVendor = -1;
                 }
                 else
                 {

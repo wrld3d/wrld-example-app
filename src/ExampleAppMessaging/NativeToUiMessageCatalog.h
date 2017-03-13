@@ -8,6 +8,7 @@
 #include "SearchResultRemovedMessage.h"
 #include "SearchQueryPerformedMessage.h"
 #include "SearchQueryRemovedMessage.h"
+#include "SearchQueryResultsRemovedMessage.h"
 #include "FlattenButtonModelStateChangedMessage.h"
 #include "SearchQueryResponseReceivedMessage.h"
 #include "CompassModeChangedMessage.h"
@@ -30,19 +31,20 @@
 #include "WatermarkModelChangedMessage.h"
 #include "WatermarkAlignmentStateChangedMessage.h"
 #include "SetWatermarkVisibilityMessage.h"
-#include "TourOnMapSelectedMessage.h"
-#include "TourFullScreenImageCeremonyBeganMessage.h"
-#include "TourFullScreenImageCeremonyEndedMessage.h"
 #include "AppModeChangedMessage.h"
 #include "UserInteractionEnabledChangedMessage.h"
 #include "URLRequestedMessage.h"
 #include "DeeplinkURLRequestedMessage.h"
 #include "ConnectivityChangedViewMessage.h"
-#include "StartSearchSurveyMessage.h"
 #include "StartUxSurveyMessage.h"
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "TagSearchAddedMessage.h"
 #include "TagSearchRemovedMessage.h"
+#include "VirtualKeyboardStateChangedMessage.h"
+#include "AboutPageIndoorPositionTypeMessage.h"
+#include "AttractModeStateChangedMessage.h"
+#include "AboutPageSenionDataTypeMessage.h"
+#include "AboutPageSenionSettingsTypeMessage.h"
 
 namespace ExampleApp
 {
@@ -55,6 +57,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryPerformedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRemovedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResultsRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonModelStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResponseReceivedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassModeChangedMessage>
@@ -75,9 +78,6 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Watermark::SetWatermarkVisibilityMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkModelChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkAlignmentStateChangedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Tours::TourOnMapSelectedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Tours::TourFullScreenImageCeremonyBeganMessage>
-            , public Eegeo::Messaging::CatalogBinding<Tours::TourFullScreenImageCeremonyEndedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerFloorSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AppModes::AppModeChangedMessage>
@@ -85,9 +85,13 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<URLRequest::URLRequestedMessage>
             , public Eegeo::Messaging::CatalogBinding<URLRequest::DeeplinkURLRequestedMessage>
             , public Eegeo::Messaging::CatalogBinding<Net::ConnectivityChangedViewMessage>
-            , public Eegeo::Messaging::CatalogBinding<Surveys::StartSearchSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<Surveys::StartUxSurveyMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
+            , public Eegeo::Messaging::CatalogBinding<VirtualKeyboard::VirtualKeyboardStateChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageIndoorPositionTypeMessage>
+            , public Eegeo::Messaging::CatalogBinding<AttractMode::AttractModeStateChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionDataTypeMessage>
+            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionSettingsTypeMessage>
             , private Eegeo::NonCopyable
         {
 

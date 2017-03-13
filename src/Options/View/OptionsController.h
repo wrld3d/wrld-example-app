@@ -8,6 +8,7 @@
 #include "IOptionsViewModel.h"
 #include "IOptionsView.h"
 #include "BidirectionalBus.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -21,6 +22,7 @@ namespace ExampleApp
                 IOptionsView& m_view;
                 IOptionsViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                InteriorsExplorer::View::InteriorsExplorerController& m_interiorsExplorerController;
 
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelOpened;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelClosed;
@@ -29,6 +31,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewStreamOverWifiOnlySelectionChanged;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewCacheEnabledSelectionChanged;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheSelected;
+                Eegeo::Helpers::TCallback1<OptionsController, bool> m_replayTutorialsToggled;
+                Eegeo::Helpers::TCallback1<OptionsController, bool> m_onReplayTutorialsModelChanged;
 
                 void OnViewModelOpened();
 
@@ -43,10 +47,16 @@ namespace ExampleApp
                 void OnViewCacheEnabledSelectionChanged();
                 
                 void OnViewClearCacheSelected();
+
+                void OnReplayTutorialsToggled(bool& replayTutorials);
+
+                void OnReplayTutorialsModelChanged(bool& replayTutorials);
+
             public:
                 OptionsController(IOptionsView& view,
                                   IOptionsViewModel& viewModel,
-                                  ExampleAppMessaging::TMessageBus& messageBus);
+                                  ExampleAppMessaging::TMessageBus& messageBus,
+                                  InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController);
 
                 ~OptionsController();
             };

@@ -1,6 +1,7 @@
 ﻿using ExampleApp;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -19,6 +20,7 @@ namespace ExampleAppWPF
 
         private bool m_cacheEnabled;
         private bool m_explicitlySettingValue;
+        private bool m_playTutorialsAgainEnabled;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -48,30 +50,56 @@ namespace ExampleAppWPF
             }
         }
 
+        public bool PlayTutorialsAgainEnabled
+        {
+            get
+            {
+                return m_playTutorialsAgainEnabled;
+            }
+            set
+            {
+                if(value != m_playTutorialsAgainEnabled)
+                {
+                    m_playTutorialsAgainEnabled = value;
+                    ReplayTutorials(m_playTutorialsAgainEnabled);
+                    OnPropertyChanged("PlayTutorialsAgainEnabled");
+                }
+            }
+        }
+
         protected IntPtr m_nativeCallerPointer;
         
+        private string m_adminPassword;
+        private bool m_isInKioskMode;
+
         private Button m_closeButton;
         private ToggleButton m_streamOverWifiButton;
         private ToggleButton m_dataCachingButton;
         private Button m_clearCacheButton = null;
         protected FrameworkElement m_mainContainer;
+        private Button m_adminLoginButton;
+        private AdminLoginView m_adminLoginView;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         private OptionsCacheClearSubView m_cacheClearSubView;
 
-        public OptionsView(IntPtr nativeCallerPointer)
+        public OptionsView(IntPtr nativeCallerPointer, string adminPassword, bool isInKioskMode)
         {
             m_nativeCallerPointer = nativeCallerPointer;
+            m_adminPassword = adminPassword;
+            m_isInKioskMode = isInKioskMode;
             Visibility = Visibility.Hidden;
 
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
+
+            InitialiseAdminLoginView(adminPassword);
         }
 
         public override void OnApplyTemplate()
         {
-            m_closeButton = (Button)GetTemplateChild("OptionsViewCloseButton");
+            m_closeButton = (Button)GetTemplateChild(m_isInKioskMode ? "OptionsViewCloseButtonKiosk" : "OptionsViewCloseButton");
             m_closeButton.Click += OnCloseButtonClick;
 
             m_dataCachingButton = (ToggleButton)GetTemplateChild("OptionsViewCacheEnabledTogglebutton");
@@ -82,6 +110,9 @@ namespace ExampleAppWPF
             var clearCacheLabel = (TextBlock)GetTemplateChild("OptionsViewClearCacheLabel");
             clearCacheLabel.PreviewMouseLeftButtonDown += (s, e) => OnClearCacheButtonClick(s, e);
             m_clearCacheButton.Click += OnClearCacheButtonClick;
+            
+            m_adminLoginButton = (Button)GetTemplateChild("OptionsViewAdminButton");
+            m_adminLoginButton.Click += OnAdminLoginButtonClick;
 
             m_mainContainer = (FrameworkElement)GetTemplateChild("MainContainer");
 
@@ -109,8 +140,20 @@ namespace ExampleAppWPF
             OptionsViewCLIMethods.CachingEnabledToggled(m_nativeCallerPointer);
         }
         
+        private void OnAdminLoginButtonClick(object sender, RoutedEventArgs e)
+        {
+            Visibility = Visibility.Collapsed;
+            m_adminLoginView.Show();
+        }
+
+        private void OnAdminLoginHide()
+        {
+            Visibility = Visibility.Visible;
+        }
+
         public void Destroy()
         {
+            m_currentWindow.MainGrid.Children.Remove(m_adminLoginView);
             m_currentWindow.MainGrid.Children.Remove(this);
         }
 
@@ -125,8 +168,14 @@ namespace ExampleAppWPF
 
         public void CloseOptions()
         {
+            m_adminLoginView.Dismiss();
             Visibility = Visibility.Hidden;
             m_currentWindow.EnableInput();
+        }
+
+        public void SetReplayTutorialsSelected(bool replayTutorialsSelected)
+        {
+            PlayTutorialsAgainEnabled = replayTutorialsSelected;
         }
 
         public void ConcludeCacheClearCeremony()
@@ -151,6 +200,19 @@ namespace ExampleAppWPF
         {
             m_cacheClearSubView = new OptionsCacheClearSubView();
             m_cacheClearSubView.DisplayWarning(() => OptionsViewCLIMethods.ClearCacheSelected(m_nativeCallerPointer));
+        }
+
+        private void InitialiseAdminLoginView(string adminPassword)
+        {
+            m_adminLoginView = new AdminLoginView(adminPassword);
+            m_adminLoginView.Visibility = Visibility.Collapsed;
+            m_adminLoginView.OnHide += OnAdminLoginHide;
+            m_currentWindow.MainGrid.Children.Add(m_adminLoginView);
+        }
+
+        private void ReplayTutorials(bool replayTutorials)
+        {
+            OptionsViewCLIMethods.ReplayTutorials(m_nativeCallerPointer, replayTutorials);
         }
     }
 }

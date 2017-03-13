@@ -25,12 +25,14 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<void> mSetSearchEnded;
                 Helpers::ReflectionHelpers::Method<System::String^, bool> mSetEditText;
                 Helpers::ReflectionHelpers::Method<int> mSetSearchResultCount;
+                Helpers::ReflectionHelpers::Method<void> mRemoveSearchQueryResults;
 
                 std::vector<Menu::View::IMenuSectionViewModel*> m_currentSections;
 
             public:
                 SearchMenuView(WindowsNativeState& nativeState,
-                    const std::string& viewClassName);
+                    const std::string& viewClassName,
+                    bool isInKioskMode);
 
                 void SetSearchSection(Menu::View::IMenuSectionViewModel& searchSection);
 
@@ -41,6 +43,8 @@ namespace ExampleApp
                 void SetEditText(const std::string& searchText, bool isTag);
 
                 void SetSearchResultCount(int searchResultCount);
+
+                void RemoveSearchQueryResults();
 
                 void CollapseAll();
 

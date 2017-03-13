@@ -50,7 +50,8 @@ namespace ExampleApp
                                              Eegeo::Modules::Map::MapModule& mapModule,
                                              ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                              Eegeo::Rendering::ScreenProperties& screenProperties,
-                                             const bool interiorsAffectedByFlattening)
+                                             const bool interiorsAffectedByFlattening,
+                                             const bool isInKioskMode)
                     : m_renderableFilters(renderingModule.GetRenderableFilters())
                 {
                     m_pPoiRingRenderable = Eegeo_NEW(PoiRingRenderable)(renderingModule,
@@ -62,8 +63,18 @@ namespace ExampleApp
                     Eegeo::Rendering::Shaders::ShaderIdGenerator& shaderIdGenerator = renderingModule.GetShaderIdGenerator();
                     m_pSpriteShader = Eegeo::Rendering::Shaders::BatchedSpriteShader::Create(shaderIdGenerator.GetNextId());
 
+                    std::string iconTextureFilename;
+                    if(isInKioskMode)
+                    {
+                        iconTextureFilename = "poi_marker@kiosk.png";
+                    }
+                    else
+                    {
+                        iconTextureFilename = Helpers::ImageHelpers::GetImageNameForDevice("poi_marker", ".png");
+                    }
+					
                     platformAbstractions.GetTextureFileLoader().LoadTexture(m_poiRingIconTexture,
-                                                                            Helpers::ImageHelpers::GetImageNameForDevice("poi_marker", ".png"),
+                                                                            iconTextureFilename,
                                                                             false);
 
                     Eegeo::Rendering::Materials::MaterialIdGenerator& materialIdGenerator = renderingModule.GetMaterialIdGenerator();
@@ -100,7 +111,8 @@ namespace ExampleApp
                                            interiorsPresentationModule.GetInteriorInteractionModel(),
                                            interiorsPresentationModule.GetInteriorTransitionModel(),
                                            screenProperties,
-                                           interiorsAffectedByFlattening);
+                                           interiorsAffectedByFlattening,
+                                           isInKioskMode);
 
 
                     m_pTerrainRayPicker = Eegeo_NEW(Eegeo::Resources::Terrain::Collision::TerrainRayPicker)(terrainModelModule.GetTerrainHeightProvider(),

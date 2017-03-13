@@ -22,7 +22,7 @@ namespace ExampleApp
             {
                 WorldMode = 0,
                 InteriorMode,
-                TourMode
+                AttractMode
             };
 
             class IAppModeModel : protected Eegeo::NonCopyable
@@ -33,7 +33,7 @@ namespace ExampleApp
 
                 }
                 
-                virtual void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates) = 0;
+                virtual void InitialiseStateMachine(const std::vector<Helpers::IStateMachineState*>& appStates, const AppModes::SdkModel::AppMode initialState, GlobalAppModeTransitionRules* pGlobalAppTransitionRules) = 0;
 
 				virtual void DestroyStateMachine() = 0;
 

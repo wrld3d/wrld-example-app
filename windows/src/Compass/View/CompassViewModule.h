@@ -25,7 +25,8 @@ namespace ExampleApp
                 CompassViewModule(
                     WindowsNativeState& nativeState,
                     ICompassViewModel& viewModel,
-                    ExampleAppMessaging::TMessageBus& messageBus
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    bool isInKioskMode
                 );
 
                 ~CompassViewModule();

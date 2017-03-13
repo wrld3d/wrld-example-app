@@ -6,6 +6,7 @@
 #include "OptionsController.h"
 #include "OptionsViewInterop.h"
 #include "IHttpCache.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -16,10 +17,11 @@ namespace ExampleApp
             OptionsViewModule::OptionsViewModule(IOptionsViewModel& viewModel,
                                                  Eegeo::Helpers::IHttpCache& httpCache,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                                 Eegeo::Concurrency::Tasks::IWorkPool& workPool)
+                                                 Eegeo::Concurrency::Tasks::IWorkPool& workPool,
+                                                 InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController)
             {
                 m_pView = [[OptionsView alloc] initView];
-                m_pController = Eegeo_NEW(OptionsController)(*[m_pView getInterop], viewModel, messageBus);
+                m_pController = Eegeo_NEW(OptionsController)(*[m_pView getInterop], viewModel, messageBus, interiorsExplorerController);
                 m_pClearCacheMessageHandler = Eegeo_NEW(SdkModel::ClearCacheMessageHandler)(httpCache, messageBus, workPool);
             }
 

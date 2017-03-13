@@ -2,27 +2,121 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ExampleAppWPF">
 
-
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="../../Colours.xaml" />
-		<ResourceDictionary Source="InteriorsExplorerTutorialDialogView.xaml" />
+        <ResourceDictionary Source="../TutorialTooltip/TutorialTooltipView.xaml" />
+        <ResourceDictionary Source="InteriorsExplorerTutorialDialogView.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="InteriorsExplorerTutorialView" TargetType="{x:Type local:InteriorsExplorerTutorialView}">
+       <Style.Resources>
+           <Storyboard x:Key="ShowAnimation">
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=SearchMenuDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1"
+                                 Duration="0:0:0.25" />
+
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=LocateMeDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="0"
+                                 Duration="0" />
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=LocateMeDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1"
+                                 BeginTime="0:0:0.15"
+                                 Duration="0:0:0.25" />
+
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=ElevatorDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="0"
+                                 Duration="0" />
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=ElevatorDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1"
+                                 BeginTime="0:0:0.30"
+                                 Duration="0:0:0.25"
+                                 />
+
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=ExitDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="0"
+                                 Duration="0" />
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=ExitDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="0" To="1"
+                                 BeginTime="0:0:0.30"
+                                 Duration="0:0:0.25" />
+           </Storyboard>
+
+           <Storyboard x:Key="HideAnimation">
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=SearchMenuDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="0"
+                                 Duration="0:0:0.25" />
+
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=LocateMeDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="0"
+                                 BeginTime="0:0:0.15"
+                                 Duration="0:0:0.25" />
+
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=ElevatorDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="0"
+                                 BeginTime="0:0:0.30"
+                                 Duration="0:0:0.25" />
+
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=ExitDialog}"
+                                 Storyboard.TargetProperty="Opacity"
+                                 From="1" To="0"
+                                 BeginTime="0:0:0.0"
+                                 Duration="0:0:0.35" />
+            </Storyboard>
+        </Style.Resources>
+
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid
-                        Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}"
-                        Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualHeight}">
-                        <Grid.Background>
-                            <SolidColorBrush Color="Black" Opacity="0" />
-                        </Grid.Background>
-                        <Grid>
-							<local:InteriorsExplorerTutorialDialogView x:Name="ExitDialog" Style="{StaticResource InteriorsExplorerTutorialDialogView}"/>
-							<local:InteriorsExplorerTutorialDialogView x:Name="ChangeFloorDialog" Style="{StaticResource InteriorsExplorerTutorialDialogView}"/>
-						</Grid>
+                    <Grid>
+                        <local:TutorialTooltipView x:Name="SearchMenuDialog"
+                                                   Style="{StaticResource TutorialTooltipViewStyle}"
+                                                   LeftColumnValue="1"
+                                                   Title="Search Menu"
+                                                   Description="Find People, Groups&#x0a;Depts, Meeting Rooms"
+                                                   FixedWidth="{DynamicResource InteriorsSearchTutorialDialogWidth}"
+                                                   ArrowAngleDegrees="{DynamicResource InteriorsSearchTutorialDialogArrowAngle}"
+                                                   ArrowSize="{DynamicResource InteriorsTutorialDialogArrowSize}"
+                                                   IsEnabled="{DynamicResource IsInKioskMode}" />
+
+                        <local:TutorialTooltipView x:Name="LocateMeDialog"
+                                                   Style="{StaticResource TutorialTooltipViewStyle}"
+                                                   LeftColumnValue="2"
+                                                   Title="Locate Me"
+                                                   Description="Show current location"
+                                                   FixedWidth="{DynamicResource InteriorsTutorialDialogWidth}"
+                                                   ArrowAngleDegrees="{DynamicResource InteriorsLocateMeTutorialDialogArrowAngle}"
+                                                   ArrowSize="{DynamicResource InteriorsTutorialDialogArrowSize}"
+                                                   IsEnabled="{DynamicResource IsInKioskMode}" />
+
+                        <local:TutorialTooltipView x:Name="ElevatorDialog"
+                                                   Style="{StaticResource TutorialTooltipViewStyle}"
+                                                   LeftColumnValue="{DynamicResource InteriorsElevatorTutorialDialogNumber}"
+                                                   Title="Elevator"
+                                                   Description="Slide elevator to move&#x0a;between floors"
+                                                   FixedWidth="{DynamicResource InteriorsTutorialDialogWidth}"
+                                                   ArrowAngleDegrees="{DynamicResource InteriorsElevatorTutorialDialogArrowAngle}"
+                                                   ArrowSize="{DynamicResource InteriorsTutorialDialogArrowSize}" />
+
+                        <local:TutorialTooltipView x:Name="ExitDialog"
+                                                   Style="{StaticResource TutorialTooltipViewStyle}"
+                                                   LeftColumnValue="{DynamicResource InteriorsExitTutorialDialogNumber}"
+                                                   Title="Exit Indoors"
+                                                   Description="Press the exit button to&#x0a;go back outside"
+                                                   FixedWidth="{DynamicResource InteriorsTutorialDialogWidth}"
+                                                   ArrowAngleDegrees="{DynamicResource InteriorsExitTutorialDialogArrowAngle}"
+                                                   ArrowSize="{DynamicResource InteriorsTutorialDialogArrowSize}"
+                                                   IsEnabled="{DynamicResource NotIsInKioskMode}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

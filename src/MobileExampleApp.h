@@ -71,15 +71,11 @@
 #include "IWatermarkModule.h"
 #include "ApplicationConfiguration.h"
 #include "InteriorsExplorer.h"
-#include "InteriorsEntitiesPins.h"
 #include "MapMode.h"
 #include "AppModes.h"
-#include "IToursModule.h"
 #include "IAppCameraModule.h"
 #include "CameraTransitionService.h"
 #include "UserInteraction.h"
-#include "TwitterFeed.h"
-#include "TwitterFeedTour.h"
 #include "VisualMap.h"
 #include "Surveys.h"
 #include "IMenuReactionModel.h"
@@ -89,6 +85,10 @@
 #include "InteriorsEntityIdHighlightVisibilityController.h"
 #include "DeepLink.h"
 #include "YelpCategoryMapperUpdater.h"
+#include "IUserIdleService.h"
+#include "GlobalAppModeTransitionRules.h"
+#include "CameraSplinePlaybackController.h"
+#include "SurveyTimer.h"
 
 namespace ExampleApp
 {
@@ -97,6 +97,7 @@ namespace ExampleApp
     private:
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController* m_pGlobeCameraController;
         AppCamera::SdkModel::AppGlobeCameraWrapper* m_pGlobeCameraWrapper;
+        Eegeo::Camera::SplinePlayback::CameraSplinePlaybackController* m_pCameraSplinePlaybackController;
         AppCamera::SdkModel::AppInteriorCameraWrapper* m_pInteriorCameraWrapper;
         Eegeo::ITouchController* m_pCameraTouchController;
         Eegeo::ITouchController* m_pCurrentTouchController;
@@ -108,8 +109,6 @@ namespace ExampleApp
         bool m_initialisedApplicationViewState;
         bool m_setMetricsLocation;
         float m_pinDiameter;
-        
-        const bool m_enableTours;
 
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
         CameraTransitions::SdkModel::CameraTransitionService* m_pCameraTransitionService;
@@ -129,6 +128,7 @@ namespace ExampleApp
         Eegeo::Pins::PinsModule* m_pPinsModule;
         ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping* m_pWorldPinsIconMapping;
         ExampleApp::WorldPins::SdkModel::IWorldPinsModule* m_pWorldPinsModule;
+        ExampleApp::WorldPins::SdkModel::IWorldPinsFocusModule* m_pWorldPinsFocusModule;
         SearchResultOnMap::SdkModel::ISearchResultOnMapModule* m_pSearchResultOnMapModule;
         ExampleApp::Reaction::View::IReactionModelModule* m_pReactionModelModule;
         ExampleApp::Reaction::View::IReactionControllerModule* m_pReactionControllerModule;
@@ -155,11 +155,10 @@ namespace ExampleApp
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
         Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
-        InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
-        Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
+        Surveys::SdkModel::SurveyTimer* m_pSurveyTimer;
         DeepLink::SdkModel::DeepLinkModule* m_pDeepLinkModule;
         InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
         InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper* m_pHighlightColorMapper;
@@ -170,10 +169,6 @@ namespace ExampleApp
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
         
-        Tours::IToursModule* m_pToursModule;
-        float m_toursPinDiameter;
-        Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule* m_pTwitterFeedTourModule;
-        
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
         ExampleApp::DoubleTapIndoorInteraction::SdkModel::IDoubleTapIndoorInteractionController* m_pDoubleTapIndoorInteractionController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
@@ -181,10 +176,9 @@ namespace ExampleApp
         Menu::View::IMenuReactionModel& m_menuReaction;
         Menu::View::IMenuIgnoredReactionModel* m_pModalityIgnoredReactionModel;
         Menu::View::IMenuIgnoredReactionModel* m_pReactorIgnoredReactionModel;
-        
-        const bool m_interiorsEnabled;
-        const bool m_usingLegacyInteriorLabels;
-        const bool m_useIndoorEntryMarkerLabels;
+
+        Eegeo::Input::IUserIdleService& m_userIdleService;
+        AppModes::GlobalAppModeTransitionRules* m_pGlobalAppModeTransitionRules;
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening);
@@ -209,14 +203,6 @@ namespace ExampleApp
         void InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories);
         
         bool CanAcceptTouch() const;
-        
-        void AddTours();
-        
-        void InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule,
-                                    Eegeo::EegeoWorld& world,
-                                    const bool interiorsAffectedByFlattening);
-        
-        const bool IsTourCameraActive() const;
 
     public:
         MobileExampleApp(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
@@ -233,7 +219,8 @@ namespace ExampleApp
                          ExampleApp::Net::SdkModel::INetworkCapabilities& networkCapabilities,
                          ExampleApp::Metrics::IMetricsService& metricsService,                         
                          Eegeo::IEegeoErrorHandler& errorHandler,
-                         Menu::View::IMenuReactionModel& menuReaction);
+                         Menu::View::IMenuReactionModel& menuReaction,
+                         Eegeo::Input::IUserIdleService& userIdleService);
 
         ~MobileExampleApp();
 
@@ -250,11 +237,6 @@ namespace ExampleApp
         float PinDiameter() const
         {
             return m_pinDiameter;
-        }
-
-        float ToursPinDiameter() const
-        {
-            return m_toursPinDiameter;
         }
         
         CameraTransitions::SdkModel::ICameraTransitionController& CameraTransitionController() const
@@ -311,7 +293,12 @@ namespace ExampleApp
         {
             return *m_pWorldPinsModule;
         }
-
+        
+        const ExampleApp::WorldPins::SdkModel::IWorldPinsFocusModule* WorldPinsFocusModule() const
+        {
+            return m_pWorldPinsFocusModule;
+        }
+        
         const SearchResultOnMap::SdkModel::ISearchResultOnMapModule& SearchResultOnMapModule() const
         {
             return *m_pSearchResultOnMapModule;
@@ -396,29 +383,10 @@ namespace ExampleApp
         {
             return *m_pInteriorsExplorerModule;
         }
-        
-        const ExampleApp::Social::TwitterFeed::ITwitterFeedModule& TwitterFeedModule() const
+
+        const GpsMarker::SdkModel::IGpsMarkerModule& GpsMarkerModule() const
         {
-            return *m_pTwitterFeedModule;
-        }
-        
-        const ExampleApp::Tours::IToursModule& ToursModule() const
-        {
-            return *m_pToursModule;
-        }
-        
-        const ExampleApp::Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule& TwitterFeedTourModule() const
-        {
-            return *m_pTwitterFeedTourModule;
-        }
-        
-        // A flag for opting in/out of tours
-        const bool ToursEnabled() const
-        {
-#ifdef EEGEO_DROID
-            Eegeo_ASSERT(!m_enableTours, "Tours are not currently supported for android");
-#endif
-            return m_enableTours;
+            return *m_pGpsMarkerModule;
         }
         
         // Exposed to allow view model creation in iOS code.

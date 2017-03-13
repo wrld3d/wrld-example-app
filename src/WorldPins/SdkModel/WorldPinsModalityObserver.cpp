@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "WorldPinsModalityObserver.h"
+#include "IWorldPinsVisibilityController.h"
 
 namespace ExampleApp
 {
@@ -8,9 +9,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            WorldPinsModalityObserver::WorldPinsModalityObserver(WorldPins::SdkModel::IWorldPinsScaleController& worldPinsScaleController,
+            WorldPinsModalityObserver::WorldPinsModalityObserver(WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController,
                     ExampleAppMessaging::TMessageBus& messageBus)
-                : m_worldPinsScaleController(worldPinsScaleController)
+                : m_worldPinsVisibilityController(worldPinsVisibilityController)
                 , m_messageBus(messageBus)
                 , m_handlerBinding(this, &WorldPinsModalityObserver::OnModalityChangedMessage)
             {
@@ -24,7 +25,7 @@ namespace ExampleApp
 
             void WorldPinsModalityObserver::OnModalityChangedMessage(const Modality::ModalityChangedMessage &message)
             {
-                m_worldPinsScaleController.SetModality(message.Modality());
+                m_worldPinsVisibilityController.SetModality(message.Modality());
             }
         }
     }

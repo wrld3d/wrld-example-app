@@ -39,7 +39,7 @@
 
 - (void)showAlert
 {
-    NSString* alertTitle = @"Want to help us improve our app?";
+    NSString* alertTitle = @"Want to help us improve our map?";
     NSString* alertMessage = @"Just a few quick questions - honest!";
     NSString* acceptMessage = @"Yes";
     NSString* rejectMessage = @"No";

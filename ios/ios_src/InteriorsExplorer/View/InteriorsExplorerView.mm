@@ -264,6 +264,7 @@ namespace
 
 - (void) updateFloors: (const std::vector<std::string>&) floorShortNames withCurrentFloor: (int) currentlySelectedFloorIndex;
 {
+    m_floorSelection = 0.0;
     m_tableViewFloorNames = floorShortNames;
     std::reverse(m_tableViewFloorNames.begin(), m_tableViewFloorNames.end());
     

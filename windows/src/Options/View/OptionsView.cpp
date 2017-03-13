@@ -13,12 +13,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            OptionsView::OptionsView(WindowsNativeState& nativeState)
+            OptionsView::OptionsView(WindowsNativeState& nativeState, const std::string& adminPassword, bool isInKioskMode)
                 : m_nativeState(nativeState)
             {
                 m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.OptionsView");
-                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
-                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
+                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid, System::String::typeid, System::Boolean::typeid));
+                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this), gcnew System::String(adminPassword.c_str()), gcnew System::Boolean(isInKioskMode)));
 
                 mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
                 mIsCacheEnabledSelected.SetupMethod(m_uiViewClass, m_uiView, "IsCacheEnabledSelected");
@@ -26,6 +26,7 @@ namespace ExampleApp
                 mCloseOptions.SetupMethod(m_uiViewClass, m_uiView, "CloseOptions");
                 mConcludeCacheClearCeremony.SetupMethod(m_uiViewClass, m_uiView, "ConcludeCacheClearCeremony");
                 mSetCacheEnabledSelected.SetupMethod(m_uiViewClass, m_uiView, "SetCacheEnabledSelected");
+                mSetReplayTutorialsSelected.SetupMethod(m_uiViewClass, m_uiView, "SetReplayTutorialsSelected");
             }
 
             OptionsView::~OptionsView()
@@ -51,6 +52,11 @@ namespace ExampleApp
             void OptionsView::SetCacheEnabledSelected(bool isCacheEnabledSelected)
             {
                 mSetCacheEnabledSelected(isCacheEnabledSelected);
+            }
+
+            void OptionsView::SetReplayTutorialsSelected(bool isReplayTutorialsSelected)
+            {
+                mSetReplayTutorialsSelected(isReplayTutorialsSelected);
             }
 
             void OptionsView::Open()
@@ -86,6 +92,11 @@ namespace ExampleApp
             void OptionsView::HandleClearCacheSelected()
             {
                 m_clearCacheCallbacks.ExecuteCallbacks();
+            }
+
+            void OptionsView::HandleReplayTutorialsToggled(bool enableTutorials)
+            {
+                m_replayTutorialsCallbacks.ExecuteCallbacks(enableTutorials);
             }
 
             void OptionsView::InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback)
@@ -126,6 +137,16 @@ namespace ExampleApp
             void OptionsView::RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_clearCacheCallbacks.RemoveCallback(callback);
+            }
+
+            void OptionsView::InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                m_replayTutorialsCallbacks.AddCallback(callback);
+            }
+
+            void OptionsView::RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            {
+                m_replayTutorialsCallbacks.RemoveCallback(callback);
             }
         }
     }

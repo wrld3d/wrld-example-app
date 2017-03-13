@@ -13,6 +13,7 @@
 #include "WindowsInputProcessor.h"
 #include "WindowsLocationService.h"
 #include "IJpegLoader.h"
+#include "ILocationService.h"
 #include "WindowsUrlEncoder.h"
 #include "GlobeCameraInterestPointProvider.h"
 #include "TerrainHeightProvider.h"
@@ -33,7 +34,6 @@
 #include "ModalBackgroundViewIncludes.h"
 #include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
-#include "WorldPinOnMapViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
 #include "MyPinCreationViewIncludes.h"
@@ -58,6 +58,12 @@
 #include "ISurveyViewModule.h"
 #include "IMenuReactionModel.h"
 #include "TagSearchViewIncludes.h"
+#include "FixedIndoorLocationService.h"
+#include "IUserIdleService.h"
+#include "CurrentLocationService.h"
+#include "VirtualKeyboardView.h"
+#include "AttractModeOverlayView.h"
+#include "GpsMarkerTutorialViewIncludes.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -93,6 +99,7 @@ public:
     void HandleNoConnectivityWarning();
     void HandleInvalidConnectivityError();
 
+    void HandleMousePreviewInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event);
     void HandleMouseInputEvent(const Eegeo::Windows::Input::MouseInputEvent& event);
     void HandleKeyboardInputEvent(const Eegeo::Windows::Input::KeyboardInputEvent& event);
     void HandleTouchScreenInputEvent(const Eegeo::Windows::Input::TouchScreenInputEvent& event);
@@ -116,6 +123,8 @@ private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
     Eegeo::Windows::WindowsLocationService* m_pWindowsLocationService;
+    Eegeo::FixedLocation::FixedIndoorLocationService* m_pFixedIndoorLocationService;
+    Eegeo::Helpers::CurrentLocationService::CurrentLocationService * m_pCurrentLocationService;
 
     bool m_shouldStartFullscreen;
 
@@ -141,7 +150,6 @@ private:
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
 	ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
-    ExampleApp::WorldPins::View::IWorldPinOnMapViewModule* m_pWorldPinOnMapViewModule;
     ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
     ExampleApp::MyPinCreation::View::IMyPinCreationViewModule* m_pMyPinCreationViewModule;
@@ -155,6 +163,7 @@ private:
     ExampleApp::Metrics::WindowsFlurryMetricsService* m_pWindowsFlurryMetricsService;
 	ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReaction;
+    ExampleApp::GpsMarkerTutorial::View::GpsMarkerTutorialViewModule* m_pGpsMarkerTutorialViewModule;
 
     ExampleApp::MobileExampleApp* m_pApp;
 
@@ -178,4 +187,11 @@ private:
     void HandleStartupFailure();
 
     int m_maxDeviceTouchCount;
+
+    Eegeo::Input::IUserIdleService* m_pUserIdleService;
+
+    ExampleApp::VirtualKeyboard::View::VirtualKeyboardView* m_pVirtualKeyboardView;
+    ExampleApp::AttractModeOverlay::View::AttractModeOverlayView* m_pAttractModeOverlayView;
+
+    Eegeo::Rendering::ScreenProperties m_screenProperties;
 };

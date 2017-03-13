@@ -1,95 +1,72 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "AppHost.h"
-#include "AndroidSharedGlContext.h"
-#include "LatLongAltitude.h"
-#include "EegeoWorld.h"
-#include "RenderContext.h"
-#include "GlobalLighting.h"
-#include "GlobalFogging.h"
-#include "AppInterface.h"
-#include "JpegLoader.h"
-#include "EffectHandler.h"
-#include "SearchServiceCredentials.h"
-#include "AndroidThreadHelper.h"
-#include "GlobeCameraController.h"
-#include "RenderCamera.h"
-#include "CameraHelpers.h"
-#include "LoadingScreen.h"
-#include "PlatformConfig.h"
-#include "AndroidPlatformConfigBuilder.h"
-#include "AndroidUrlEncoder.h"
-#include "AndroidFileIO.h"
-#include "AndroidLocationService.h"
-#include "EegeoWorld.h"
-#include "EnvironmentFlatteningService.h"
-#include "TtyHandler.h"
-#include "MenuViewModule.h"
-#include "SettingsMenuModule.h"
-#include "ModalityModule.h"
-#include "ModalBackgroundViewModule.h"
-#include "ModalBackgroundNativeViewModule.h"
-#include "MenuModel.h"
-#include "MenuViewModel.h"
-#include "SearchMenuModule.h"
-#include "MenuOptionsModel.h"
-#include "SearchModule.h"
-#include "SearchResultOnMapModule.h"
-#include "WorldPinsModule.h"
-#include "RegularTexturePageLayout.h"
-#include "PinsModule.h"
-#include "SearchResultRepository.h"
-#include "LatLongAltitude.h"
-#include "SearchResultPoiModule.h"
-#include "AndroidPlatformAbstractionModule.h"
-#include "FlattenButtonModule.h"
-#include "FlattenButtonViewModule.h"
-#include "SearchResultPoiViewModule.h"
-#include "WorldPinOnMapViewModule.h"
-#include "PlaceJumpsModule.h"
-#include "IPlaceJumpController.h"
-#include "SettingsMenuViewModule.h"
-#include "SearchMenuViewModule.h"
-#include "CompassViewModule.h"
-#include "CompassModule.h"
+#include <set>
+
 #include "AboutPageViewModule.h"
+#include "AndroidApplicationConfigurationVersionProvider.h"
+#include "AndroidAppThreadAssertionMacros.h"
+#include "AndroidImageNameHelper.h"
 #include "AndroidInitialExperienceModule.h"
-#include "ViewControllerUpdaterModule.h"
-#include "ViewControllerUpdaterModel.h"
-#include "TagSearchModule.h"
-#include "TagSearchViewModule.h"
-#include "ScreenProperties.h"
-#include "MyPinCreationViewModule.h"
-#include "IMyPinCreationModule.h"
+#include "AndroidMenuReactionModel.h"
+#include "AndroidPlatformAbstractionModule.h"
+#include "AndroidPlatformConfigBuilder.h"
+#include "ApiKey.h"
+#include "AppHost.h"
+#include "AppInterface.h"
+#include "ApplicationConfiguration.h"
+#include "ApplicationConfigurationModule.h"
+#include "AssertHandler.h"
+#include "CompassViewModule.h"
+#include "ConnectivityChangedViewMessage.h"
+#include "CurrentLocationService.h"
+#include "EegeoWorld.h"
+#include "EffectHandler.h"
+#include "EGL/egl.h"
+#include "FlattenButtonViewModule.h"
+#include "IAboutPageModule.h"
+#include "ICompassModule.h"
+#include "IFlattenButtonModule.h"
+#include "IInteriorsExplorerModule.h"
+#include "IModalityModule.h"
 #include "IMyPinCreationDetailsModule.h"
-#include "MyPinCreationDetailsViewModule.h"
-#include "MyPinDetailsViewModule.h"
+#include "IMyPinCreationModule.h"
 #include "IMyPinDetailsModule.h"
 #include "InitialExperienceIntroViewModule.h"
-#include "Logger.h"
-#include "AndroidAppThreadAssertionMacros.h"
-#include "SearchResultRepositoryObserver.h"
-#include "IMyPinsModule.h"
-#include "ApiKey.h"
-#include "OptionsViewModule.h"
-#include "OptionsView.h"
-#include "WatermarkViewModule.h"
-#include "WatermarkView.h"
-#include "NetworkCapabilities.h"
-#include "ApplicationConfigurationModule.h"
-#include "IApplicationConfigurationService.h"
-#include "SearchVendorNames.h"
-#include "UserInteractionEnabledChangedMessage.h"
-#include "AndroidApplicationConfigurationVersionProvider.h"
-#include "InteriorsExplorerModule.h"
 #include "InteriorsExplorerViewModule.h"
-#include "SearchResultSectionModule.h"
+#include "InteriorMetaDataModule.h"
+#include "IOptionsModule.h"
+#include "ISearchMenuModule.h"
+#include "ISearchResultPoiModule.h"
+#include "ISearchResultSectionModule.h"
+#include "ISettingsMenuModule.h"
+#include "ITagSearchModule.h"
+#include "IViewControllerUpdaterModel.h"
+#include "IWatermarkModule.h"
+#include "jni.h"
+#include "JpegLoader.h"
+#include "MenuController.h"
+#include "MobileExampleApp.h"
+#include "ModalBackgroundNativeViewModule.h"
+#include "ModalBackgroundViewModule.h"
+#include "MyPinCreationDetailsViewModule.h"
+#include "MyPinCreationViewModule.h"
+#include "MyPinDetailsViewModule.h"
+#include "NetworkCapabilities.h"
+#include "OptionsViewModule.h"
+#include "PlatformConfig.h"
+#include "ScreenProperties.h"
+#include "SearchMenuViewModule.h"
+#include "SearchResultPoiViewModule.h"
 #include "SearchResultSectionViewModule.h"
-#include "ConnectivityChangedViewMessage.h"
+#include "SettingsMenuViewModule.h"
+#include "TagSearchViewModule.h"
+#include "TtyHandler.h"
+#include "UserInteractionEnabledChangedMessage.h"
+#include "ViewControllerUpdaterModule.h"
+#include "WatermarkViewModule.h"
 #include "WebConnectivityValidator.h"
-#include "AndroidMenuReactionModel.h"
-#include "ApplicationConfigurationModule.h"
-#include "AndroidImageNameHelper.h"
+#include "SurveyViewModule.h"
+#include "SenionLabBroadcastReceiver.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -118,6 +95,7 @@ AppHost::AppHost(
     :m_isPaused(false)
     ,m_pJpegLoader(NULL)
     ,m_pAndroidLocationService(NULL)
+    ,m_pCurrentLocationService(NULL)
     ,m_pAndroidConnectivityService(NULL)
     ,m_nativeState(nativeState)
     ,m_androidInputBoxFactory(&nativeState)
@@ -135,7 +113,6 @@ AppHost::AppHost(
     ,m_pMyPinCreationDetailsViewModule(NULL)
     ,m_pMyPinDetailsViewModule(NULL)
     ,m_pSearchResultPoiViewModule(NULL)
-    ,m_pWorldPinOnMapViewModule(NULL)
     ,m_pCompassViewModule(NULL)
     ,m_pApp(NULL)
     ,m_androidPersistentSettingsModel(nativeState)
@@ -148,6 +125,10 @@ AppHost::AppHost(
     ,m_pTagSearchViewModule(NULL)
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
 	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
+    ,m_pSenionLabLocationModule(NULL)
+    ,m_pIndoorAtlasLocationModule(NULL)
+    ,m_pSenionLabBroadcastReceiver(NULL)
+    ,m_pInteriorsLocationServiceModule(NULL)
 {
     ASSERT_NATIVE_THREAD
 
@@ -157,6 +138,7 @@ AppHost::AppHost(
     Eegeo::AssertHandler::BreakOnAssert = true;
 
     m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
+    m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_pAndroidLocationService);
     m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
@@ -207,7 +189,7 @@ AppHost::AppHost(
     			 applicationConfiguration,
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
-                 *m_pAndroidLocationService,
+                 *m_pCurrentLocationService,
                  m_androidNativeUIFactories,
                  platformConfiguration,
                  *m_pJpegLoader,
@@ -218,7 +200,41 @@ AppHost::AppHost(
                  *m_pNetworkCapabilities,
                  *m_pAndroidFlurryMetricsService,
                  *this,
-                 *m_pMenuReactionModel);
+                 *m_pMenuReactionModel,
+                 m_userIdleService);
+
+    Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
+    Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+    m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
+                                                                                                                        interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                                        interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                        mapModule.GetEnvironmentFlatteningService(),
+                                                                                                                        *m_pAndroidLocationService,
+                                                                                                                        mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                        m_messageBus,
+                                                                                                                        m_nativeState);
+
+    m_pIndoorAtlasLocationModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationModule)(m_pApp->GetAppModeModel(),
+                                                                                                                              interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                                              interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                              mapModule.GetEnvironmentFlatteningService(),
+                                                                                                                              *m_pAndroidLocationService,
+                                                                                                                              mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+																															  m_messageBus,
+                                                                                                                              m_nativeState);
+
+    const std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()},
+                                                                                             {"IndoorAtlas", m_pIndoorAtlasLocationModule->GetLocationService()}};
+    m_pInteriorsLocationServiceModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
+                                                                                                                           interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                           *m_pCurrentLocationService,
+                                                                                                                           *m_pAndroidLocationService,
+                                                                                                                           interiorLocationServices,
+                                                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+																														   interiorsPresentationModule.GetInteriorInteractionModel(),
+																														   m_pApp->CameraTransitionController(),
+																														   m_pApp->CompassModule().GetCompassModel(),
+                                                                                                                           m_messageBus);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
             m_pApp->World().GetRenderingModule(),
@@ -237,8 +253,25 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
 
+    Eegeo_DELETE m_pModalBackgroundNativeViewModule;
+    m_pModalBackgroundNativeViewModule = NULL;
+
+    m_pCurrentLocationService->SetLocationService(*m_pAndroidLocationService);
+
+	Eegeo_DELETE m_pInteriorsLocationServiceModule;
+	m_pInteriorsLocationServiceModule = NULL;
+
+    Eegeo_DELETE m_pIndoorAtlasLocationModule;
+    m_pIndoorAtlasLocationModule = NULL;
+
+	Eegeo_DELETE m_pSenionLabLocationModule;
+	m_pSenionLabLocationModule = NULL;
+
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
+
+    Eegeo_DELETE m_pMenuReactionModel;
+    m_pMenuReactionModel = NULL;
 
     Eegeo_DELETE m_pAndroidFlurryMetricsService;
     m_pAndroidFlurryMetricsService = NULL;
@@ -264,6 +297,9 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pAndroidConnectivityService;
     m_pAndroidConnectivityService = NULL;
 
+    Eegeo_DELETE m_pCurrentLocationService;
+    m_pCurrentLocationService = NULL;
+
     Eegeo_DELETE m_pAndroidLocationService;
     m_pAndroidLocationService = NULL;
 }
@@ -271,6 +307,9 @@ AppHost::~AppHost()
 void AppHost::OnResume()
 {
     ASSERT_NATIVE_THREAD
+
+	m_pSenionLabLocationModule->GetLocationManager().OnResume();
+    m_pSenionLabBroadcastReceiver->RegisterReceiver();
 
     m_pApp->OnResume();
     m_isPaused = false;
@@ -282,7 +321,10 @@ void AppHost::OnPause()
 
     m_isPaused = true;
     m_pApp->OnPause();
-    m_pAndroidLocationService->StopListening();
+    m_pCurrentLocationService->StopListening();
+
+    m_pSenionLabBroadcastReceiver->UnregisterReceiver();
+    m_pSenionLabLocationModule->GetLocationManager().OnPause();
 }
 
 void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
@@ -325,6 +367,8 @@ void AppHost::Update(float dt)
     m_pApp->Update(dt);
 
     m_pModalBackgroundNativeViewModule->Update(dt);
+
+    m_pInteriorsLocationServiceModule->GetController().Update();
 
     if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
     {
@@ -441,13 +485,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     );
 
     // 3d map view layer.
-    m_pWorldPinOnMapViewModule = Eegeo_NEW(ExampleApp::WorldPins::View::WorldPinOnMapViewModule)(
-                                     m_nativeState,
-                                     app.WorldPinsModule().GetWorldPinInFocusViewModel(),
-                                     app.WorldPinsModule().GetScreenControlViewModel(),
-                                     app.ModalityModule().GetModalityModel(),
-                                     app.PinDiameter()
-                                 );
 
     // HUD behind modal background layer.
     m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
@@ -526,15 +563,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
                                  m_nativeState,
                                  app.AboutPageModule().GetAboutPageViewModel(),
-                                 *m_pAndroidFlurryMetricsService
-                             );
+                                 *m_pAndroidFlurryMetricsService,
+								 m_messageBus);
 
-
-    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
-    		m_nativeState,
-    		app.OptionsModule().GetOptionsViewModel(),
-    		m_pAndroidPlatformAbstractionModule->GetAndroidHttpCache(),
-    		m_messageBus);
 
     m_pMyPinCreationDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsViewModule)(
                                             m_nativeState,
@@ -561,7 +592,22 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
             m_messageBus,
             m_nativeState);
 
+    m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
+            m_nativeState,
+            app.OptionsModule().GetOptionsViewModel(),
+            m_pAndroidPlatformAbstractionModule->GetAndroidHttpCache(),
+            m_messageBus,
+            m_pInteriorsExplorerViewModule->GetController());
+
+    m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_nativeState, m_messageBus, m_pApp->GetApplicationConfiguration().TimerSurveyUrl());
+
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
+
+    m_pSenionLabBroadcastReceiver = Eegeo_NEW(ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver)(
+            m_pSenionLabLocationModule->GetLocationManager(),
+            m_messageBus,
+            m_nativeState);
+    m_pSenionLabBroadcastReceiver->RegisterReceiver();
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
@@ -581,27 +627,27 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
     {
     	m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
 
-        Eegeo_DELETE m_pMyPinDetailsViewModule;
+    	Eegeo_DELETE m_pSenionLabBroadcastReceiver;
 
         Eegeo_DELETE m_pViewControllerUpdaterModule;
 
-        Eegeo_DELETE m_pInteriorsExplorerViewModule;
-
-        Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
-
-        Eegeo_DELETE m_pFlattenButtonViewModule;
-
-        Eegeo_DELETE m_pMyPinCreationViewModule;
+        Eegeo_DELETE m_pSurveyViewModule;
 
         Eegeo_DELETE m_pOptionsViewModule;
 
-        Eegeo_DELETE m_pAboutPageViewModule;
+        Eegeo_DELETE m_pInteriorsExplorerViewModule;
 
-        Eegeo_DELETE m_pWorldPinOnMapViewModule;
+        Eegeo_DELETE m_pInitialExperienceIntroViewModule;
+
+        Eegeo_DELETE m_pMyPinDetailsViewModule;
+
+        Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
+
+        Eegeo_DELETE m_pAboutPageViewModule;
 
         Eegeo_DELETE m_pSearchResultPoiViewModule;
 
-        Eegeo_DELETE m_pModalBackgroundViewModule;
+        Eegeo_DELETE m_pSearchResultSectionViewModule;
 
         Eegeo_DELETE m_pSettingsMenuViewModule;
 
@@ -609,9 +655,13 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         Eegeo_DELETE m_pSearchMenuViewModule;
 
+        Eegeo_DELETE m_pModalBackgroundViewModule;
+
         Eegeo_DELETE m_pCompassViewModule;
 
-        Eegeo_DELETE m_pInitialExperienceIntroViewModule;
+        Eegeo_DELETE m_pMyPinCreationViewModule;
+
+        Eegeo_DELETE m_pFlattenButtonViewModule;
 
         Eegeo_DELETE m_pWatermarkViewModule;
     }

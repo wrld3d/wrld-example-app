@@ -10,17 +10,23 @@
     <SolidColorBrush x:Key="InputBoxBG_colour" Color="#FFFFFFFF"/>
     <SolidColorBrush x:Key="InputTextColour" Color="#FF202020"/>
     <SolidColorBrush x:Key="InputBoxIconBG_colour" Color="#FF6D6D6D"/>
+    <SolidColorBrush x:Key="InputBoxEmptyTextColour" Color="#808080"/>
     <SolidColorBrush x:Key="ExpanderHeaderColour" Color="#FFE2E2E2"/>
     <SolidColorBrush x:Key="POIdetailsColour" Color="#606060"/>
+    <SolidColorBrush x:Key="DarkButtonBG_colour" Color="#08408a"/>
 
     <SolidColorBrush x:Key="SubMenuItemDefaultColour" Color="#F2F2F2"/>
     <SolidColorBrush x:Key="SubMenuItemMouseOverColour" Color="#CCE4FF"/>
     <SolidColorBrush x:Key="SubMenuItemMouseDownColour" Color="#EDFCB0"/>
+    <SolidColorBrush x:Key="SubMenuItemTitleColour" Color="#383838"/>
+    <SolidColorBrush x:Key="SubMenuItemSubtitleColour" Color="#606060"/>
+    <SolidColorBrush x:Key="AttractSubtitleColour" Color="#404040"/>
 
     <SolidColorBrush x:Key="Gold" Color="#1256B0 "/>
     <SolidColorBrush x:Key="Olive" Color="#94a847 "/>
     <SolidColorBrush x:Key="White" Color="#ffffff "/>
     <SolidColorBrush x:Key="Black" Color="#000000 "/>
+    <SolidColorBrush x:Key="VeryDarkGrey" Color="#383838"/>
     <SolidColorBrush x:Key="DarkGrey" Color="#777777 "/>
     <SolidColorBrush x:Key="Grey" Color="#aaaaaa "/>
     <SolidColorBrush x:Key="LightGrey" Color="#CECECE"/>
@@ -31,9 +37,13 @@
     <SolidColorBrush x:Key="Highlight" Color="#FF8DD8F8"/>
 
     <!-- Fonts -->
-    <FontFamily x:Key="PrimaryUIFont">Segoe UI</FontFamily>
-    <FontFamily x:Key="PrimaryUILightFont">Segoe UI Light</FontFamily>
-    
+    <FontFamily x:Key="PrimaryUIFont">pack://application:,,,/Assets/#Open Sans</FontFamily>
+    <FontFamily x:Key="PrimaryUILightFont">pack://application:,,,/Assets/#Open Sans Light</FontFamily>
+
+    <Style TargetType="{x:Type Window}">
+        <Setter Property="FontFamily" Value="pack://application:,,,/Assets/#Open Sans"/>
+    </Style>
+
     <!-- Buttons -->
     <Style x:Key="ButtonFocusVisual">
         <Setter Property="Control.Template">
@@ -50,6 +60,7 @@
         <GradientStop Color="#DDDDDD" Offset="0.5"/>
         <GradientStop Color="#CDCDCD" Offset="1"/>
     </LinearGradientBrush>
+    <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070"/>
     <Style x:Key="TextButton" TargetType="{x:Type Button}">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -108,8 +119,8 @@
                         <Rectangle x:Name="BackGround_Over" Fill="{StaticResource PrimaryBG_Over_Colour}" HorizontalAlignment="Stretch" Margin="0" Width="Auto" Visibility="Hidden"/>
                         <Rectangle x:Name="BackGround_Pressed" Fill="{StaticResource PrimaryBG_Down_Colour}" HorizontalAlignment="Stretch" Margin="0" Width="Auto" Visibility="Hidden"/>
                         <Grid x:Name="SaveLocationGrid" HorizontalAlignment="Center">
-                            <TextBlock x:Name="Text" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="16"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" FontFamily="{StaticResource PrimaryUILightFont}"/>
-                            <TextBlock x:Name="Text_Down" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="16"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" FontFamily="{StaticResource PrimaryUILightFont}" Visibility="Hidden"/>
+                            <TextBlock x:Name="Text" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="{DynamicResource TextButtonFontSize}"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" FontFamily="{StaticResource PrimaryUILightFont}"/>
+                            <TextBlock x:Name="Text_Down" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="{DynamicResource TextButtonFontSize}"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" FontFamily="{StaticResource PrimaryUILightFont}" Visibility="Hidden"/>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -445,10 +456,10 @@
                         <Rectangle x:Name="BackGround_Over" Fill="{StaticResource PrimaryBG_Over_Colour}" HorizontalAlignment="Stretch" Margin="0" Width="Auto" Visibility="Hidden"/>
                         <Rectangle x:Name="BackGround_Pressed" Fill="{StaticResource PrimaryBG_Down_Colour}" HorizontalAlignment="Stretch" Margin="0" Width="Auto" Visibility="Hidden"/>
                         <Grid x:Name="SaveLocationGrid" HorizontalAlignment="Center">
-                            <Image x:Name="RemovePin" Source="Assets/button_remove_pin_off.png" Stretch="Fill" Width="50" Height="Auto" HorizontalAlignment="Left"/>
-                            <Image x:Name="RemovePin_Down" Source="Assets/button_remove_pin_on.png" Stretch="Fill" Width="50" Height="Auto" HorizontalAlignment="Left" Visibility="Collapsed"/>
-                            <TextBlock x:Name="CreatePIN" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="28"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="60,0,0,0"/>
-                            <TextBlock x:Name="CreatePIN_Down" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="28"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="60,0,0,0" Visibility="Hidden"/>
+                            <Image x:Name="RemovePin" Source="Assets/button_remove_pin_off.png" Stretch="Fill" Width="{DynamicResource PinDetailsRemovePinIconSize}" Height="{DynamicResource PinDetailsRemovePinIconSize}" HorizontalAlignment="Left"/>
+                            <Image x:Name="RemovePin_Down" Source="Assets/button_remove_pin_on.png" Stretch="Fill" Width="{DynamicResource PinDetailsRemovePinIconSize}" Height="{DynamicResource PinDetailsRemovePinIconSize}" HorizontalAlignment="Left" Visibility="Collapsed"/>
+                            <TextBlock x:Name="CreatePIN" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="{DynamicResource PinDetailsRemovePinFontSize}"  Foreground="{StaticResource White}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="60,0,0,0"/>
+                            <TextBlock x:Name="CreatePIN_Down" VerticalAlignment="Center" Text="{TemplateBinding Content}" FontSize="{DynamicResource PinDetailsRemovePinFontSize}"  Foreground="{StaticResource PrimaryBG_Over_Colour}" TextTrimming="CharacterEllipsis" Width="Auto" FontFamily="{StaticResource PrimaryUILightFont}" HorizontalAlignment="Left" Margin="60,0,0,0" Visibility="Hidden"/>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
