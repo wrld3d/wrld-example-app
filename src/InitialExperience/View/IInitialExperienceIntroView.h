@@ -22,6 +22,9 @@ namespace ExampleApp
                 virtual void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
+                virtual void ShowExitIUX() = 0;
+                virtual void DismissExitIUX() = 0;
+
             };
         }
     }
