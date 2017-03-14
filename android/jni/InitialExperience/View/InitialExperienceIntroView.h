@@ -28,6 +28,9 @@ namespace ExampleApp
 				virtual void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
 				virtual void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback);
 
+				void ShowExitIUX();
+				void DismissExitIUX();
+
 			private:
 				AndroidNativeState& m_nativeState;
 				jclass m_uiViewClass;

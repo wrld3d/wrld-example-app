@@ -17,7 +17,7 @@ namespace ExampleApp
                 m_pBackgroundView = [[InitialExperienceIntroBackgroundView alloc] initView];
                 m_pView = [[InitialExperienceIntroView alloc] initView: m_pBackgroundView];
                 
-                m_pController = Eegeo_NEW(InitialExperienceIntroController)(*[m_pView getInterop], messageBus);
+                m_pController = Eegeo_NEW(InitialExperienceIntroController)(*[m_pView getInterop], messageBus, false);
             }
             
             InitialExperienceIntroViewModule::~InitialExperienceIntroViewModule()
