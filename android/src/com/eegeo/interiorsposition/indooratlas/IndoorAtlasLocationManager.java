@@ -106,6 +106,7 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
     
     private void showConnectionDialog(String Title, String message)
     {
+    	/*
     	AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
         builder.setTitle(Title);
         builder.setMessage(message);
@@ -124,5 +125,6 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
         	m_connectionDialog.dismiss();
         }
         m_connectionDialog = builder.show();
+        //*/
     }
 }
