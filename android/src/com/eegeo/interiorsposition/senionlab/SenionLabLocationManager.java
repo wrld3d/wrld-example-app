@@ -2,9 +2,12 @@ package com.eegeo.interiorsposition.senionlab;
 
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.util.Log;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.senionlab.slutilities.service.SLBroadcastReceiver;
@@ -19,11 +22,41 @@ public class SenionLabLocationManager implements SLConsumer
     private boolean m_consumerIsBound = false;
     
     private static AlertDialog m_connectionDialog = null;
+    private String m_apiKey;
+    private String m_apiSecret;
+    private boolean m_requestedConnection = false;
 
     public SenionLabLocationManager(MainActivity activity, long nativeCallerPointer)
     {
         m_activity = activity;
         m_serviceManager = SLServiceManager.getInstance(m_activity);
+        
+        getContext().registerReceiver(new BroadcastReceiver() 
+        {
+			
+			@Override
+			public void onReceive(Context context, Intent intent) 
+			{
+				if (intent.getAction().equals(BluetoothAdapter.ACTION_STATE_CHANGED))
+				{
+					final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
+					if (state == BluetoothAdapter.STATE_ON)
+					{
+						try 
+						{
+							if(m_requestedConnection) 
+							{
+								reallyStartUpdatingLocation();
+							}
+						} 
+						catch (SLIndoorLocationException e) 
+						{
+							Log.e("EEGEO", "failed to start Senion location service manager.");
+						}
+					}
+				}
+			}
+		}, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
     }
 
     public void askUserToEnableBluetoothIfDisabled()
@@ -39,12 +72,26 @@ public class SenionLabLocationManager implements SLConsumer
     
 	public void startUpdatingLocation(final String apiKey, final String apiSecret) throws SLIndoorLocationException
     {
-        m_serviceManager.start(apiKey, apiSecret);
-        bindService();
+		m_requestedConnection = true;
+		m_apiKey = apiKey;
+		m_apiSecret = apiSecret;
+		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (bluetoothAdapter != null && bluetoothAdapter.isEnabled())
+		{
+			reallyStartUpdatingLocation();
+		}
+	}
+	
+	// The commit attached to this change can be undone once Senion properly handle start and bind service while bluetooth is turned off.
+	public void reallyStartUpdatingLocation() throws SLIndoorLocationException
+	{
+		m_serviceManager.start(m_apiKey, m_apiSecret);
+		bindService();
 	}
 
     public void stopUpdatingLocation()
     {
+    	m_requestedConnection = false;
         unbindService();
         
         try
