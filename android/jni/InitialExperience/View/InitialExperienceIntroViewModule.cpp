@@ -13,7 +13,7 @@ namespace ExampleApp
 			InitialExperienceIntroViewModule::InitialExperienceIntroViewModule(AndroidNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
 			{
 				m_pView = Eegeo_NEW(InitialExperienceIntroView)(nativeState, messageBus);
-				m_pController = Eegeo_NEW(InitialExperienceIntroController)(*m_pView, messageBus);
+				m_pController = Eegeo_NEW(InitialExperienceIntroController)(*m_pView, messageBus, false);
 			}
 
 			InitialExperienceIntroViewModule::~InitialExperienceIntroViewModule()

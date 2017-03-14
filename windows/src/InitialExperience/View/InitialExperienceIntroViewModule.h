@@ -16,9 +16,10 @@ namespace ExampleApp
             class InitialExperienceIntroViewModule
             {
             public:
-                InitialExperienceIntroViewModule(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus);
+                InitialExperienceIntroViewModule(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus, bool isInKioskMode);
                 ~InitialExperienceIntroViewModule();
 
+                InitialExperienceIntroController& GetController() { return *m_pController; }
 
             private:
 

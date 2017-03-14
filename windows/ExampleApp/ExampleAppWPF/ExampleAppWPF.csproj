@@ -111,6 +111,7 @@
     <Compile Include="Views\ControlClickHandler.cs" />
     <Compile Include="Properties\VersionInfo.cs" />
     <Compile Include="Views\GpsMarkerTutorial\GpsMarkerTutorialView.cs" />
+    <Compile Include="Views\InitialExperience\InitialExperienceView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerTutorialDialogView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerTutorialView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />
@@ -233,6 +234,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GpsMarkerTutorial\GpsMarkerTutorialView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\InitialExperience\InitialExperienceView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -10,10 +10,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            InitialExperienceIntroViewModule::InitialExperienceIntroViewModule(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
+            InitialExperienceIntroViewModule::InitialExperienceIntroViewModule(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus, bool isInKioskMode)
             {
                 m_pView = Eegeo_NEW(InitialExperienceIntroView)(nativeState, messageBus);
-                m_pController = Eegeo_NEW(InitialExperienceIntroController)(*m_pView, messageBus);
+                m_pController = Eegeo_NEW(InitialExperienceIntroController)(*m_pView, messageBus, isInKioskMode);
             }
 
             InitialExperienceIntroViewModule::~InitialExperienceIntroViewModule()

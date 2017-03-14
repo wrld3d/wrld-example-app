@@ -597,7 +597,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
             app.OptionsModule().GetOptionsViewModel(),
             m_pAndroidPlatformAbstractionModule->GetAndroidHttpCache(),
             m_messageBus,
-            m_pInteriorsExplorerViewModule->GetController());
+            m_pInteriorsExplorerViewModule->GetController(),
+			m_pInitialExperienceIntroViewModule->GetController());
 
     m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_nativeState, m_messageBus, m_pApp->GetApplicationConfiguration().TimerSurveyUrl());
 

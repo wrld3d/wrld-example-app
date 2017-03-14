@@ -10,6 +10,8 @@
 #include "RenderCamera.h"
 #include "InteriorsCameraController.h"
 #include "IUserIdleService.h"
+#include "IVisualMapService.h"
+#include "InteriorsExplorerModel.h"
 
 #include <limits>
 
@@ -23,10 +25,15 @@ namespace ExampleApp
             {
                 WorldState::WorldState(AppCamera::SdkModel::IAppCameraController& cameraController,
                                        int worldCameraHandle,
-                                       Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume)
+                                       Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
+                                       VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                       InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel)
                 : m_cameraController(cameraController)
                 , m_worldCameraHandle(worldCameraHandle)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
+                , m_visualMapService(visualMapService)
+                , m_interiorsExplorerModel(interiorsExplorerModel)
+                , m_previousStateWasInterior(false)
                 , m_transitionInFlightCallback(this, &WorldState::OnTransitionInFlight)
                 {
                 }
@@ -39,6 +46,10 @@ namespace ExampleApp
                 {
                     m_cameraController.TransitionToCameraWithHandle(m_worldCameraHandle);
                     m_cameraController.InsertTransitioInFlightChangedCallback(m_transitionInFlightCallback);
+                    if(previousState == AppModes::SdkModel::InteriorMode && m_interiorsExplorerModel.GetLastEntryAttemptSuccessful())
+                    {
+                        m_previousStateWasInterior = true;
+                    }
                 }
                 
                 void WorldState::Update(float dt)
@@ -52,9 +63,18 @@ namespace ExampleApp
                 
                 void WorldState::OnTransitionInFlight()
                 {
-                    if(!m_cameraController.IsTransitionInFlight() && m_cameraFrustumStreamingVolume.GetForceMaximumRefinement())
+                    if(!m_cameraController.IsTransitionInFlight())
                     {
-                        m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(false);
+                        if(m_cameraFrustumStreamingVolume.GetForceMaximumRefinement())
+                        {
+                            m_cameraFrustumStreamingVolume.SetForceMaximumRefinement(false);
+                        }
+                        
+                        if(m_previousStateWasInterior)
+                        {
+                            m_previousStateWasInterior = false;
+                            m_visualMapService.RestorePreviousMapState();
+                        }
                     }
                 }
             }

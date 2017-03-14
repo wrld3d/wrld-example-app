@@ -3,6 +3,11 @@
 #include "InitialExperienceIntroView.h"
 #include "WindowsAppThreadAssertionMacros.h"
 
+using namespace ExampleApp::Helpers::ReflectionHelpers;
+
+using namespace System;
+using namespace System::Reflection;
+
 namespace ExampleApp
 {
     namespace InitialExperience
@@ -15,36 +20,20 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                /*AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
+                m_uiViewClass = GetTypeFromEntryAssembly("ExampleAppWPF.InitialExperienceView");
+                ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(CreateTypes(IntPtr::typeid));
+                m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
 
-                jstring strClassName = env->NewStringUTF("com/eegeo/initialexperience/intro/InitialExperienceIntroView");
-                jclass uiClass = m_nativeState.LoadClass(env, strClassName);
-                env->DeleteLocalRef(strClassName);
-
-                m_uiViewClass = static_cast<jclass>(env->NewGlobalRef(uiClass));
-                jmethodID uiViewCtor = env->GetMethodID(m_uiViewClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
-
-                jobject instance = env->NewObject(
-                                       m_uiViewClass,
-                                       uiViewCtor,
-                                       m_nativeState.activity,
-                                       (jlong)(this)
-                                   );
-
-                m_uiView = env->NewGlobalRef(instance);*/
+                mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
+                mShowExitIUX.SetupMethod(m_uiViewClass, m_uiView, "ShowExitIUX");
+                mDismissExitIUX.SetupMethod(m_uiViewClass, m_uiView, "DismissExitIUX");
             }
 
             InitialExperienceIntroView::~InitialExperienceIntroView()
             {
                 ASSERT_UI_THREAD
 
-                    /*AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                    JNIEnv* env = attached.envForThread;
-                    jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
-                    env->CallVoidMethod(m_uiView, removeHudMethod);
-                    env->DeleteGlobalRef(m_uiView);
-                    env->DeleteGlobalRef(m_uiViewClass);*/
+                mDestroy();
             }
 
             void InitialExperienceIntroView::Show()
@@ -89,6 +78,16 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
                 m_dismissedCallbacks.RemoveCallback(callback);
+            }
+
+            void InitialExperienceIntroView::ShowExitIUX()
+            {
+                mShowExitIUX();
+            }
+
+            void InitialExperienceIntroView::DismissExitIUX()
+            {
+                mDismissExitIUX();
             }
         }
     }

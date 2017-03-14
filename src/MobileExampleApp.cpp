@@ -432,8 +432,7 @@ namespace ExampleApp
                                                                                             m_userIdleService,
                                                                                             m_applicationConfiguration.IsAttractModeEnabled(),
                                                                                             m_applicationConfiguration.AttractModeTimeoutMs(),
-                                                                                            m_pMyPinCreationModule->GetMyPinCreationModel(),
-                                                                                            m_pVisualMapModule->GetVisualMapService());
+                                                                                            m_pMyPinCreationModule->GetMyPinCreationModel());
         InitialiseAppState(nativeUIFactories);
 
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);

@@ -18,10 +18,11 @@ namespace ExampleApp
                                                  Eegeo::Helpers::IHttpCache& httpCache,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                  Eegeo::Concurrency::Tasks::IWorkPool& workPool,
-                                                 InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController)
+                                                 InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController,
+                                                 InitialExperience::View::InitialExperienceIntroController& initialExperienceIntroController)
             {
                 m_pView = [[OptionsView alloc] initView];
-                m_pController = Eegeo_NEW(OptionsController)(*[m_pView getInterop], viewModel, messageBus, interiorsExplorerController);
+                m_pController = Eegeo_NEW(OptionsController)(*[m_pView getInterop], viewModel, messageBus, interiorsExplorerController, initialExperienceIntroController);
                 m_pClearCacheMessageHandler = Eegeo_NEW(SdkModel::ClearCacheMessageHandler)(httpCache, messageBus, workPool);
             }
 
