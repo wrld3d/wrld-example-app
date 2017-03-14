@@ -66,6 +66,22 @@
                 }
             ]
         },
+		{
+            "InteriorId": "swallow_lon_wallbrooksquare",
+            "Type": "Senion",
+            "Config":
+            [{
+                "ApiKey": "7E679588-CF0C-4CAC-845D-02D609657D0D",
+                "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
+            }],
+            "FloorMapping":
+            [
+                {
+                    "BuildingFloorIndex": 2,
+                    "TrackedFloorIndex": "0"
+                }
+            ]
+        },
         {
             "InteriorId": "westport_house",
             "Type": "Senion",
