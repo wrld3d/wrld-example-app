@@ -190,6 +190,8 @@ namespace ExampleApp
             
             bool UseJapaneseFont() const;
 
+            bool IsFixedIndoorLocationEnabled() const;
+
             bool FixedIndoorLocation(Eegeo::Space::LatLong& latlong, Eegeo::Resources::Interiors::InteriorId& interiorId, int& floorIndex, double& headingDegrees) const;
 
             const std::vector<Eegeo::Space::LatLongAltitude>& GetAttractModeTargetSplinePoints() const;

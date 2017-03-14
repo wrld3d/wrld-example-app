@@ -279,6 +279,11 @@ namespace ExampleApp
             return m_restrictedBuildingsInfo;
         }
 
+        bool ApplicationConfiguration::IsFixedIndoorLocationEnabled() const
+        {
+            return m_fixedInteriorId.IsValid();
+        }
+
         bool ApplicationConfiguration::FixedIndoorLocation(Eegeo::Space::LatLong& latlong, Eegeo::Resources::Interiors::InteriorId& interiorId, int& floorIndex, double& headingDegrees) const
         {
             if (!m_fixedInteriorId.IsValid())
