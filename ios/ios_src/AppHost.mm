@@ -419,8 +419,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                    m_piOSPlatformAbstractionModule->GetiOSHttpCache(),
                                                                                    m_messageBus,
                                                                                    app.World().GetWorkPool(),
-                                                                                   m_pInteriorsExplorerViewModule->GetController());
-    
+                                                                                   m_pInteriorsExplorerViewModule->GetController(),
+                                                                                   m_pInitialExperienceIntroViewModule->GetIntroViewController());
+
     // 3d map view layer.
     [m_pView addSubview: &m_pWorldPinOnMapViewModule->GetWorldPinOnMapView()];
     

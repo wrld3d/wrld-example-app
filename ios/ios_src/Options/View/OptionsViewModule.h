@@ -10,6 +10,7 @@
 #include "Helpers.h"
 #include "Tasks.h"
 #include "InteriorsExplorer.h"
+#include "InitialExperienceIntroController.h"
 
 namespace ExampleApp
 {
@@ -29,7 +30,8 @@ namespace ExampleApp
                                   Eegeo::Helpers::IHttpCache& httpCache,
                                   ExampleAppMessaging::TMessageBus& messageBus,
                                   Eegeo::Concurrency::Tasks::IWorkPool& workPool,
-                                  InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController);
+                                  InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController,
+                                  InitialExperience::View::InitialExperienceIntroController& initialExperienceIntroController);
 
                 ~OptionsViewModule();
 

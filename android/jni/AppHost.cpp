@@ -604,7 +604,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
             app.OptionsModule().GetOptionsViewModel(),
             m_pAndroidPlatformAbstractionModule->GetAndroidHttpCache(),
             m_messageBus,
-            m_pInteriorsExplorerViewModule->GetController());
+            m_pInteriorsExplorerViewModule->GetController(),
+			m_pInitialExperienceIntroViewModule->GetController());
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 

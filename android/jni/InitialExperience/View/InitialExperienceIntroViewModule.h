@@ -19,6 +19,7 @@ namespace ExampleApp
 				InitialExperienceIntroViewModule(AndroidNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus);
 				~InitialExperienceIntroViewModule();
 
+				InitialExperienceIntroController& GetController() { return *m_pController; }
 
 			private:
 

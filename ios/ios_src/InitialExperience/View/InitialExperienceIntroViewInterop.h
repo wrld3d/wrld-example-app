@@ -28,6 +28,9 @@ namespace ExampleApp
                 void InsertDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveDismissedCallback(Eegeo::Helpers::ICallback0& callback);
                 
+                void ShowExitIUX();
+                void DismissExitIUX();
+                
             private:
                 
                 InitialExperienceIntroView* m_pView;
