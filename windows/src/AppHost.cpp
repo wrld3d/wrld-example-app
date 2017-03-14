@@ -263,6 +263,11 @@ AppHost::AppHost(
             mapModule.GetEnvironmentFlatteningService(),
             mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel());
         m_pCurrentLocationService->SetLocationService(*m_pFixedIndoorLocationService);
+
+        m_pInteriorsLocationServiceController = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceController)(*m_pCurrentLocationService,
+                                                                                                                                       mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                                                                                       m_pApp->CameraTransitionController(),
+                                                                                                                                       m_pApp->CompassModule().GetCompassModel());
     }
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(
@@ -277,7 +282,13 @@ AppHost::~AppHost()
 {
     ASSERT_NATIVE_THREAD
 
-        m_inputHandler.RemoveDelegateInputHandler(m_pAppInputDelegate);
+    m_inputHandler.RemoveDelegateInputHandler(m_pAppInputDelegate);
+
+    if(m_pApp->GetApplicationConfiguration().IsFixedIndoorLocationEnabled())
+    {
+        Eegeo_DELETE m_pInteriorsLocationServiceController;
+        m_pInteriorsLocationServiceController = NULL;
+    }
 
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
@@ -417,6 +428,11 @@ void AppHost::Update(float dt)
     m_pApp->Update(dt);
 
     m_pModalBackgroundNativeViewModule->Update(dt);
+
+    if(m_pApp->GetApplicationConfiguration().IsFixedIndoorLocationEnabled())
+    {
+        m_pInteriorsLocationServiceController->Update();
+    }
 
     if (m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
     {
@@ -649,7 +665,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     // Initial UX layer
     m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(
         m_nativeState,
-        m_messageBus
+        m_messageBus,
+        app.GetApplicationConfiguration().IsInKioskMode()
         );
 
 	m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(
@@ -663,6 +680,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_pWindowsPlatformAbstractionModule->GetHttpCache(),
         m_messageBus,
         m_pInteriorsExplorerViewModule->GetController(),
+        m_pInitialExperienceIntroViewModule->GetController(),
         app.GetApplicationConfiguration().OptionsAdminPassword(),
         app.GetApplicationConfiguration().IsInKioskMode());
 

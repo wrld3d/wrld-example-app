@@ -35,6 +35,7 @@
         <ResourceDictionary Source="../Views/AttractModeOverlay/AttractModeOverlay.xaml" />
         <ResourceDictionary Source="../Views/AdminLogin/AdminLogin.xaml" />
         <ResourceDictionary Source="../Views/GpsMarkerTutorial/GpsMarkerTutorialView.xaml" />
+        <ResourceDictionary Source="../Views/InitialExperience/InitialExperienceView.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

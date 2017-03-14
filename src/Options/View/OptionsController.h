@@ -10,6 +10,7 @@
 #include "BidirectionalBus.h"
 #include "AppModeChangedMessage.h"
 #include "InteriorsExplorer.h"
+#include "InitialExperienceIntroController.h"
 
 namespace ExampleApp
 {
@@ -24,6 +25,8 @@ namespace ExampleApp
                 IOptionsViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 InteriorsExplorer::View::InteriorsExplorerController& m_interiorsExplorerController;
+                InitialExperience::View::InitialExperienceIntroController& m_initialExperienceIntroController;
+                int m_tutorialsReplayedCount;
 
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelOpened;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelClosed;
@@ -59,7 +62,8 @@ namespace ExampleApp
                 OptionsController(IOptionsView& view,
                                   IOptionsViewModel& viewModel,
                                   ExampleAppMessaging::TMessageBus& messageBus,
-                                  InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController);
+                                  InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController,
+                                  InitialExperience::View::InitialExperienceIntroController& initialExperienceIntroController);
 
                 ~OptionsController();
             };

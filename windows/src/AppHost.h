@@ -63,6 +63,7 @@
 #include "VirtualKeyboardView.h"
 #include "AttractModeOverlayView.h"
 #include "GpsMarkerTutorialViewIncludes.h"
+#include "InteriorsLocationServiceController.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -163,6 +164,7 @@ private:
 	ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReaction;
     ExampleApp::GpsMarkerTutorial::View::GpsMarkerTutorialViewModule* m_pGpsMarkerTutorialViewModule;
+    ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceController* m_pInteriorsLocationServiceController;
 
     ExampleApp::MobileExampleApp* m_pApp;
 
