@@ -58,21 +58,38 @@ namespace ExampleApp
             void OptionsController::OnReplayTutorialsToggled(bool& enableTutorials)
             {
                 m_interiorsExplorerController.ReplayTutorials(enableTutorials);
+                m_initialExperienceIntroController.ReplayExitIUX(enableTutorials);
             }
 
             void OptionsController::OnReplayTutorialsModelChanged(bool& enableTutorials)
             {
-                m_view.SetReplayTutorialsSelected(enableTutorials);
+                if(enableTutorials)
+                {
+                    m_tutorialsReplayedCount = 0;
+                    m_view.SetReplayTutorialsSelected(enableTutorials);
+                }
+                else
+                {
+                    ++m_tutorialsReplayedCount;
+                    const int tutorialCount = 2;
+                    if(m_tutorialsReplayedCount >= tutorialCount)
+                    {
+                        m_view.SetReplayTutorialsSelected(enableTutorials);
+                    }
+                }
             }
             
             OptionsController::OptionsController(IOptionsView& view,
                                                  IOptionsViewModel& viewModel,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                                 InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController)
+                                                 InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController,
+                                                 InitialExperience::View::InitialExperienceIntroController& initialExperienceIntroController)
             : m_view(view)
             , m_viewModel(viewModel)
             , m_messageBus(messageBus)
             , m_interiorsExplorerController(interiorsExplorerController)
+            , m_initialExperienceIntroController(initialExperienceIntroController)
+            , m_tutorialsReplayedCount(0)
             , m_viewModelClosed(this, &OptionsController::OnViewModelClosed)
             , m_viewModelOpened(this, &OptionsController::OnViewModelOpened)
             , m_viewModelCacheClearCeremonyCompleted(this, &OptionsController::OnViewModelCacheClearCeremonyCompleted)
@@ -97,10 +114,12 @@ namespace ExampleApp
                 m_view.SetCacheEnabledSelected(m_viewModel.CachingEnabled());
 
                 m_interiorsExplorerController.InsertReplayTutorialsChangedCallback(m_onReplayTutorialsModelChanged);
+                m_initialExperienceIntroController.InsertReplayExitIUXChangedCallback(m_onReplayTutorialsModelChanged);
             }
             
             OptionsController::~OptionsController()
             {
+                m_initialExperienceIntroController.RemoveReplayExitIUXChangedCallback(m_onReplayTutorialsModelChanged);
                 m_interiorsExplorerController.RemoveReplayTutorialsChangedCallback(m_onReplayTutorialsModelChanged);
 
                 m_viewModel.RemoveCacheClearCeremonyCompletedCallback(m_viewModelCacheClearCeremonyCompleted);

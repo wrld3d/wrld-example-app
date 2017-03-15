@@ -115,21 +115,25 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
         m_lastLocationAvailability = locationAvailability;
         if(locationAvailability == SLLocationAvailabilityNotAvailable)
         {
+            /*
             m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
             (
              "Senion unavailable",
              "Recently lost connection to Senion.",
              *m_failAlertHandler
              );
+            //*/
         }
         if(locationAvailability == SLLocationAvailabilityAvailable)
         {
+            /*
             m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
             (
              "Senion available",
              "Recently connected to Senion indoor positioning.",
              *m_failAlertHandler
              );
+            //*/
         }
     }
 }

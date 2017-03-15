@@ -20,6 +20,7 @@ namespace ExampleApp
                 Eegeo::Helpers::IHttpCache& httpCache,
                 ExampleAppMessaging::TMessageBus& messageBus,
                 InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController,
+                InitialExperience::View::InitialExperienceIntroController& initialExperienceIntroController,
                 const std::string& adminPassword,
                 bool isInKioskMode
             )
@@ -27,7 +28,7 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_pView = Eegeo_NEW(OptionsView)(nativeState, adminPassword, isInKioskMode);
-                m_pController = Eegeo_NEW(OptionsController)(*m_pView, optionsViewModel, messageBus, interiorsExplorerController);
+                m_pController = Eegeo_NEW(OptionsController)(*m_pView, optionsViewModel, messageBus, interiorsExplorerController, initialExperienceIntroController);
                 m_pClearCacheMessageHandler = Eegeo_NEW(SdkModel::ClearCacheMessageHandler)(httpCache, messageBus);
             }
 

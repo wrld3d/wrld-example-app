@@ -43,6 +43,14 @@ namespace ExampleApp
             {
                 m_dismissedCallbacks.RemoveCallback(callback);
             }
+            
+            void InitialExperienceIntroViewInterop::ShowExitIUX()
+            {
+            }
+            
+            void InitialExperienceIntroViewInterop::DismissExitIUX()
+            {
+            }
         }
     }
 }
