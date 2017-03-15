@@ -335,7 +335,7 @@ public class BackgroundThreadActivity extends MainActivity
     {
         private long m_endOfLastFrameNano;
         private boolean m_running;
-        private Handler m_nativeThreadHandler;
+        private volatile Handler m_nativeThreadHandler;
         private float m_frameThrottleDelaySeconds;
         private boolean m_destroyed;
         private boolean m_stoppedUpdatingPlatformBeforeTeardown;
@@ -394,7 +394,8 @@ public class BackgroundThreadActivity extends MainActivity
         public void run()
         {
             Looper.prepare();
-            m_nativeThreadHandler = new Handler();
+            Handler tmp = new Handler();
+            m_nativeThreadHandler = tmp;
 
             runOnNativeThread(new Runnable()
             {
