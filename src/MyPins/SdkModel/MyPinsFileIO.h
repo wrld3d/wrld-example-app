@@ -46,6 +46,8 @@ namespace ExampleApp
                 PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                 IMyPinBoundObjectFactory& m_myPinBoundObjectFactory;
                 IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
+
+                int m_maxPinId;
             };
         }
     }
