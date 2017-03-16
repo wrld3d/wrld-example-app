@@ -43,7 +43,6 @@ namespace ExampleApp
                 bool WriteJsonToDisk(const std::string& jsonString);
                 
                 Eegeo::Helpers::IFileIO& m_fileIO;
-                PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                 IMyPinBoundObjectFactory& m_myPinBoundObjectFactory;
                 IMyPinBoundObjectRepository& m_myPinBoundObjectRepository;
 
