@@ -166,7 +166,6 @@ namespace ExampleApp
                                        IMyPinBoundObjectFactory& myPinBoundObjectFactory,
                                        IMyPinBoundObjectRepository& myPinBoundObjectRepository)
                 : m_fileIO(fileIO)
-                , m_persistentSettings(persistentSettings)
                 , m_myPinBoundObjectFactory(myPinBoundObjectFactory)
                 , m_myPinBoundObjectRepository(myPinBoundObjectRepository)
             , m_maxPinId(0)
