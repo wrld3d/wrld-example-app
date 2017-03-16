@@ -28,11 +28,6 @@ namespace ExampleApp
             
             steps.push_back(pIntroScreenStep);
             
-            SdkModel::IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::iOSInitialExperiencePreLoadModel)(worldAreaLoaderModel,
-                    GetPersistentSettings());
-
-            steps.push_back(pWorldAreaLoaderStep);
-            
             return steps;
         }
     }

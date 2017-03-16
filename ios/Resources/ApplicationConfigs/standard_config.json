@@ -6,7 +6,7 @@
     "start_location_altitude": 2.7,
     "start_location_distance": 1781.0,
     "start_location_orientation_degrees": 0.0,
-    "try_start_at_gps_location": false,
+    "try_start_at_gps_location": true,
     "coveragetree_manifest_url": "",
     "theme_manifest_url": "",
     "google_analytics_referrer_token": "mea_ios",

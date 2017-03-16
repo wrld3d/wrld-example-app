@@ -63,6 +63,7 @@ namespace ExampleApp
             , m_navigationService(navigationService)
             , m_interiorExitTutorialViewedCount(0)
 			, m_interiorChangeFloorTutorialViewedCount(0)
+            , m_lastEntryAttemptSuccessful(false)
             {
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interactionModelStateChangedCallback);
                 
@@ -82,7 +83,6 @@ namespace ExampleApp
 
             void InteriorsExplorerModel::ChangeToInteriorMapState()
             {
-                m_visualMapService.StoreCurrentMapState();
                 const VisualMap::SdkModel::VisualMapState& currentState = m_visualMapService.GetCurrentVisualMapState();
                 m_visualMapService.SetVisualMapState(currentState.GetTheme(), "DayDefault", true);
             }
@@ -313,6 +313,17 @@ namespace ExampleApp
             {
                 m_interiorExplorerFloorSelectionDraggedCallbacks.RemoveCallback(callback);
             }
+            
+            void InteriorsExplorerModel::SetLastEntryAttemptSuccessful(bool successful)
+            {
+                m_lastEntryAttemptSuccessful = successful;
+            }
+            
+            bool InteriorsExplorerModel::GetLastEntryAttemptSuccessful() const
+            {
+                return m_lastEntryAttemptSuccessful;
+            }
+
         }
     }
 }

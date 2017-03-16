@@ -11,6 +11,7 @@
 #include "ClearCacheMessageHandler.h"
 #include "Helpers.h"
 #include "InteriorsExplorer.h"
+#include "InitialExperienceIntroController.h"
 
 namespace ExampleApp
 {
@@ -31,7 +32,8 @@ namespace ExampleApp
                     IOptionsViewModel& optionsViewModel,
                     Eegeo::Helpers::IHttpCache& httpCache,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController
+                    InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController,
+					InitialExperience::View::InitialExperienceIntroController& initialExperienceIntroController
                 );
 
                 ~OptionsViewModule();

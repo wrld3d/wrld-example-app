@@ -84,7 +84,9 @@ namespace ExampleApp
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::WorldState)(m_appCameraController,
                                                                              worldCameraHandle,
-                                                                             m_cameraFrustumStreamingVolume));
+                                                                             m_cameraFrustumStreamingVolume,
+                                                                             m_visualMapService,
+                                                                             m_interiorsExplorerModel));
                     
                     states.push_back(Eegeo_NEW(States::SdkModel::InteriorExplorerState)(m_appCameraController,
                                                                                         m_interiorSelectionModel,

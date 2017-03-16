@@ -34,14 +34,6 @@ namespace ExampleApp
                 IInitialExperienceStep* pIntroStep = Eegeo_NEW(InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
                 steps.push_back(pIntroStep);
 
-                IInitialExperienceStep* pWorldAreaLoaderStep = Eegeo_NEW(PreLoad::SdkModel::AndroidInitialExperiencePreLoadModel)(
-                            m_nativeState,
-                            worldAreaLoaderModel,
-                            GetPersistentSettings()
-                        );
-
-                steps.push_back(pWorldAreaLoaderStep);
-
                 return steps;
             }
         }

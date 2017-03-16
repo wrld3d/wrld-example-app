@@ -409,7 +409,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                    m_piOSPlatformAbstractionModule->GetiOSHttpCache(),
                                                                                    m_messageBus,
                                                                                    app.World().GetWorkPool(),
-                                                                                   m_pInteriorsExplorerViewModule->GetController());
+                                                                                   m_pInteriorsExplorerViewModule->GetController(),
+                                                                                   m_pInitialExperienceIntroViewModule->GetIntroViewController());
 
     m_pSurveyViewModule = Eegeo_NEW(ExampleApp::Surveys::View::SurveyViewModule)(m_messageBus,
                                                                                  m_iOSFlurryMetricsService,

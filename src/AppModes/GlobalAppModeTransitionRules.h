@@ -34,7 +34,6 @@ namespace ExampleApp
             Eegeo::Helpers::TCallback1<GlobalAppModeTransitionRules, const Eegeo::Resources::Interiors::InteriorId> m_interiorSelectionModelChangedCallback;
             const AttractModeTimer m_attractModeTimer;
             MyPinCreation::SdkModel::IMyPinCreationModel& m_myPinCreationModel;
-            VisualMap::SdkModel::IVisualMapService& m_visualMapService;
             const int m_worldCameraHandle;
             const int m_interiorCameraHandle;
             SdkModel::AppMode m_currentState;
@@ -54,8 +53,7 @@ namespace ExampleApp
                                          Eegeo::Input::IUserIdleService& userIdleService,
                                          const bool attractModeEnabled,
                                          const long long attractModeTimeout,
-                                         MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                         VisualMap::SdkModel::IVisualMapService& visualMapService);
+                                         MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel);
             ~GlobalAppModeTransitionRules();
 
             void Enter(int previousState);

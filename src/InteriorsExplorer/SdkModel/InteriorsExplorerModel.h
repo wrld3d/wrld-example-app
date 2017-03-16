@@ -57,6 +57,10 @@ namespace ExampleApp
                 void RemoveInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);
                 void InsertInteriorExplorerFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveInteriorExplorerFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback0& callback);
+                
+                void SetLastEntryAttemptSuccessful(bool successful);
+                bool GetLastEntryAttemptSuccessful() const;
+
 
             private:
                 
@@ -80,6 +84,7 @@ namespace ExampleApp
                 PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                 int m_interiorExitTutorialViewedCount;
 				int m_interiorChangeFloorTutorialViewedCount;
+                bool m_lastEntryAttemptSuccessful;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerModel> m_interactionModelStateChangedCallback;
                 

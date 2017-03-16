@@ -122,6 +122,7 @@
 #include "MapLayersModule.h"
 #include "MarkersModule.h"
 #include "CameraSplinePlaybackController.h"
+#include "InitialLocationModel.h"
 
 namespace ExampleApp
 {
@@ -284,6 +285,7 @@ namespace ExampleApp
     , m_applicationConfiguration(applicationConfiguration)
     , m_pGlobeCameraWrapper(NULL)
     , m_pCameraSplinePlaybackController(NULL)
+    , m_pInitialLocationModel(NULL)
     , m_pVisualMapModule(NULL)
     , m_pSurveyModule(NULL)
     , m_pConnectivityChangedObserver(NULL)
@@ -349,8 +351,13 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings touchSettings = m_pGlobeCameraController->GetGlobeCameraController().GetTouchSettings();
         touchSettings.TiltEnabled = true;
         m_pGlobeCameraController->GetGlobeCameraController().SetTouchSettings(touchSettings);
+        
+        m_pInitialLocationModel = Eegeo_NEW(ExampleApp::InitialLocation::SdkModel::InitialLocationModel)(m_persistentSettings, m_applicationConfiguration.InterestLocation());
 
-        Eegeo::Space::LatLongAltitude location = m_applicationConfiguration.InterestLocation();
+        const Eegeo::Space::LatLongAltitude& location = m_applicationConfiguration.TryStartAtGpsLocation()
+        ? m_pInitialLocationModel->GetInterestLocation()
+        : m_applicationConfiguration.InterestLocation();
+
         float cameraControllerOrientationDegrees = m_applicationConfiguration.OrientationDegrees();
         float cameraControllerDistanceFromInterestPointMeters = m_applicationConfiguration.DistanceToInterestMetres();
 
@@ -418,9 +425,12 @@ namespace ExampleApp
 
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
 
-        if (m_applicationConfiguration.TryStartAtGpsLocation() && !m_applicationConfiguration.IsAttractModeEnabled())
+        if (!m_pInitialLocationModel->HasPersistedInterestLocation())
         {
-            m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
+            if (m_applicationConfiguration.TryStartAtGpsLocation() && !m_applicationConfiguration.IsAttractModeEnabled())
+            {
+                m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
+            }
         }
 
         m_pGlobalAppModeTransitionRules = Eegeo_NEW(AppModes::GlobalAppModeTransitionRules)(m_pAppCameraModule->GetController(),
@@ -432,8 +442,7 @@ namespace ExampleApp
                                                                                             m_userIdleService,
                                                                                             m_applicationConfiguration.IsAttractModeEnabled(),
                                                                                             m_applicationConfiguration.AttractModeTimeoutMs(),
-                                                                                            m_pMyPinCreationModule->GetMyPinCreationModel(),
-                                                                                            m_pVisualMapModule->GetVisualMapService());
+                                                                                            m_pMyPinCreationModule->GetMyPinCreationModel());
         InitialiseAppState(nativeUIFactories);
 
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
@@ -476,6 +485,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pCameraTransitionController;
         Eegeo_DELETE m_pDoubleTapIndoorInteractionController;
         Eegeo_DELETE m_pNavigationService;
+        Eegeo_DELETE m_pInitialLocationModel;
         Eegeo_DELETE m_pCameraSplinePlaybackController;
         Eegeo_DELETE m_pGlobeCameraWrapper;
         Eegeo_DELETE m_pGlobeCameraController;
@@ -1000,6 +1010,9 @@ namespace ExampleApp
     {
         Eegeo::EegeoWorld& eegeoWorld = World();
         eegeoWorld.OnPause();
+        
+        const Eegeo::dv3& interestPoint = m_pGlobeCameraController->GetEcefInterestPoint();
+        m_pInitialLocationModel->SetInterestLocation(Eegeo::Space::LatLongAltitude::FromECEF(interestPoint));
     }
 
     void MobileExampleApp::OnResume()

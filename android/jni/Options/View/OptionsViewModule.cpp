@@ -19,13 +19,14 @@ namespace ExampleApp
                 IOptionsViewModel& optionsViewModel,
                 Eegeo::Helpers::IHttpCache& httpCache,
                 ExampleAppMessaging::TMessageBus& messageBus,
-                InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController
+                InteriorsExplorer::View::InteriorsExplorerController& interiorsExplorerController,
+				InitialExperience::View::InitialExperienceIntroController& initialExperienceIntroController
             )
             {
                 ASSERT_UI_THREAD
 
                 m_pView = Eegeo_NEW(OptionsView)(nativeState);
-                m_pController = Eegeo_NEW(OptionsController)(*m_pView, optionsViewModel, messageBus, interiorsExplorerController);
+                m_pController = Eegeo_NEW(OptionsController)(*m_pView, optionsViewModel, messageBus, interiorsExplorerController, initialExperienceIntroController);
                 m_pClearCacheMessageHandler = Eegeo_NEW(SdkModel::ClearCacheMessageHandler)(httpCache, messageBus);
             }
 

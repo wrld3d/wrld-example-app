@@ -116,12 +116,14 @@ typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
 {
     if(status.type == ia_status_type::kIAStatusServiceUnavailable)
     {
+        /*
         m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
         (
          "IndoorAtlas unavailable",
          "Recently lost connection to IndoorAtlas.",
          *m_failAlertHandler
          );
+        //*/
     }
 }
 

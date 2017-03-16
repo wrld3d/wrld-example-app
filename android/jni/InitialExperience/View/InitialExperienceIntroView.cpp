@@ -90,6 +90,14 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 				m_dismissedCallbacks.RemoveCallback(callback);
 			}
+
+			void InitialExperienceIntroView::ShowExitIUX()
+			{
+			}
+
+			void InitialExperienceIntroView::DismissExitIUX()
+			{
+			}
 		}
 	}
 }

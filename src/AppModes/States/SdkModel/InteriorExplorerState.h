@@ -39,6 +39,7 @@ namespace ExampleApp
                 {
                 private:
                     Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
+                    InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
                     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<InteriorExplorerState> m_failAlertHandler;
                     
@@ -48,8 +49,6 @@ namespace ExampleApp
                     AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     
                     InteriorsExplorer::SdkModel::InteriorExplorerUserInteractionModel& m_interiorExplorerUserInteractionModel;
-                    
-                    bool m_lastEntryAttemptSuccessful;
                     
                     void OnFailAlertBoxDismissed();
                     

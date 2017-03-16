@@ -19,6 +19,7 @@
 #include "MyPinCreationModel.h"
 #include "MyPinCreationStage.h"
 #include "InteriorExplorerUserInteractionModel.h"
+#include "InteriorsExplorerModel.h"
 
 namespace ExampleApp
 {
@@ -42,9 +43,9 @@ namespace ExampleApp
                 : m_interiorExplorerUserInteractionModel(interiorExplorerUserInteractionModel)
                 , m_appModeModel(appModeModel)
                 , m_interiorsCameraController(interiorsCameraController)
+                , m_interiorsExplorerModel(interiorsExplorerModel)
                 , m_nativeUIFactories(nativeUIFactories)
                 , m_failAlertHandler(this, &InteriorExplorerState::OnFailAlertBoxDismissed)
-                , m_lastEntryAttemptSuccessful(false)
                 {
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerSetupState)(*this,
@@ -135,12 +136,12 @@ namespace ExampleApp
                 
                 void InteriorExplorerState::SetLastEntryAttemptSuccessful(bool successful)
                 {
-                    m_lastEntryAttemptSuccessful = successful;
+                    m_interiorsExplorerModel.SetLastEntryAttemptSuccessful(successful);
                 }
                 
                 bool InteriorExplorerState::GetLastEntryAttemptSuccessful() const
                 {
-                    return m_lastEntryAttemptSuccessful;
+                    return m_interiorsExplorerModel.GetLastEntryAttemptSuccessful();
                 }
             }
         }
