@@ -8,11 +8,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            PlaceJumpModel::PlaceJumpModel(std::string& name,
+            PlaceJumpModel::PlaceJumpModel(const std::string& name,
                                            Eegeo::Space::LatLong location,
                                            float headingDegrees,
                                            float distance,
-                                           std::string& icon)
+                                           const std::string& icon)
                 : m_name(name)
                 , m_location(location)
                 , m_headingDegrees(headingDegrees)
