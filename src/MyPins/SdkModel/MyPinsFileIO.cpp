@@ -1,5 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+#include <algorithm>
 #include <sstream>
 #include <vector>
 #include "document.h"
@@ -123,11 +124,24 @@ namespace ExampleApp
                         return Legacy::PinIconKeyFromLegacyIconIndex(entry);
                     }
                 }
+
+                int FindMaxId(const rapidjson::Value& myPinsArray)
+                {
+                    int maxId = 0;
+                    for (rapidjson::SizeType i = 0; i < myPinsArray.Size(); ++i)
+                    {
+                        if (myPinsArray[i].HasMember("id"))
+                        {
+                            maxId = std::max<int>(maxId, myPinsArray[i]["id"].GetInt());
+                        }
+                    }
+
+                    return maxId;
+                }
             }
             
             const std::string MyPinsDataFilename = "pin_data.json";
             const std::string MyPinImagePrefix = "my_pin_image_";
-            const std::string MyPins_LastMyPinModelIdKey = "MyPins_LastMyPinModelIdKey";
             const std::string MyPinsJsonArrayName = "myPins";
             
             void CreateEmptyJsonFile(Eegeo::Helpers::IFileIO& fileIO)
@@ -152,19 +166,13 @@ namespace ExampleApp
                                        IMyPinBoundObjectFactory& myPinBoundObjectFactory,
                                        IMyPinBoundObjectRepository& myPinBoundObjectRepository)
             : m_fileIO(fileIO)
-            , m_persistentSettings(persistentSettings)
             , m_myPinBoundObjectFactory(myPinBoundObjectFactory)
             , m_myPinBoundObjectRepository(myPinBoundObjectRepository)
+            , m_maxPinId(0)
             {
                 if (!m_fileIO.Exists(MyPinsDataFilename))
                 {
                     CreateEmptyJsonFile(m_fileIO);
-                }
-                
-                int lastId = 0;
-                if (!m_persistentSettings.TryGetValue(MyPins_LastMyPinModelIdKey, lastId))
-                {
-                    m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, lastId);
                 }
             }
             
@@ -229,6 +237,7 @@ namespace ExampleApp
                     
                     rapidjson::Value pinModelJson;
                     MyPinModelToJson(pinModel, allocator, m_myPinBoundObjectRepository, pinModelJson);
+                    m_maxPinId = FindMaxId(myPinsArray);
                     
                     myPinsArray.PushBack(pinModelJson, allocator);
                     
@@ -237,10 +246,7 @@ namespace ExampleApp
                     jsonDoc.Accept(writer);
                     std::string jsonString = strbuf.GetString();
                     
-                    if (WriteJsonToDisk(jsonString))
-                    {
-                        m_persistentSettings.SetValue(MyPins_LastMyPinModelIdKey, pinModel.Identifier());
-                    }
+                    WriteJsonToDisk(jsonString);
                 }
                 else
                 {
@@ -306,6 +312,7 @@ namespace ExampleApp
                     
                     const rapidjson::Value& myPinsArray = jsonDoc[MyPinsJsonArrayName.c_str()];
                     size_t numEntries = myPinsArray.Size();
+                    m_maxPinId = FindMaxId(myPinsArray);
                     
                     for(int i = 0; i < numEntries; ++i)
                     {
@@ -419,10 +426,7 @@ namespace ExampleApp
             
             int MyPinsFileIO::GetLastIdWrittenToDisk() const
             {
-                int lastId = -1;
-                m_persistentSettings.TryGetValue(MyPins_LastMyPinModelIdKey, lastId);
-                
-                return lastId;
+                return m_maxPinId;
             }
         }
     }

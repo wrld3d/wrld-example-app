@@ -53,6 +53,7 @@ namespace ExampleApp
                 std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> > pinModelBindings;
                 
                 m_myPinsFileIO.LoadPinModelsFromDisk(pinModelBindings, *this);
+                m_lastIdUsed = m_myPinsFileIO.GetLastIdWrittenToDisk();
                 
                 for (std::vector<std::pair<MyPinModel*, IMyPinBoundObject*> >::iterator it = pinModelBindings.begin();
                      it != pinModelBindings.end();
