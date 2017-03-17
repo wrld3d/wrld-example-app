@@ -72,7 +72,7 @@ namespace
         self.pWelcomeText = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pWelcomeText.textColor = ExampleApp::Helpers::ColorPalette::White;
         self.pWelcomeText.text = @"Welcome";
-        self.pWelcomeText.font = [UIFont fontWithName:@"Open Sans" size:useSmallScreen ? 53.0f : 60.0f];
+        self.pWelcomeText.font = [UIFont systemFontOfSize:useSmallScreen ? 53.0f : 60.0f];
         self.pWelcomeText.textAlignment = NSTextAlignmentCenter;
         [self.pBannerBarContainer addSubview:self.pWelcomeText];
         

@@ -260,10 +260,6 @@ set(resources ${resources}
         Resources/floor_selection_top.png
         Resources/floor_selection_top@2x.png
         Resources/floor_selection_top@3x.png
-        Resources/Fonts
-        Resources/Fonts/Fonts.xib
-        Resources/Fonts/OpenSans
-        Resources/Fonts/OpenSans/OpenSans-Regular.ttf
         Resources/Geosphere_01.pod
         Resources/gps_marker.png
         Resources/gps_marker@2x.png
