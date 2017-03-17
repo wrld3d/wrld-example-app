@@ -39,9 +39,6 @@ namespace ExampleApp
             , m_dismissedMessageHandler(this, &InitialExperienceIntroStep::OnIntroDismissed)
             , m_currentlyShowingIntro(false)
             {
-                m_persistentSettings.SetValue(InitialExperienceModel_HasStartedIntro, false);
-                m_persistentSettings.SetValue(InitialExperienceModel_HasCompletedIntro, false);
-                
                 m_messageBus.SubscribeNative(m_dismissedMessageHandler);
 
                 if(HasCompleted())
