@@ -276,10 +276,6 @@ set(resources ${resources}
 		Resources/floor_selection_top.png
 		Resources/floor_selection_top@2x.png
 		Resources/floor_selection_top@3x.png
-		Resources/Fonts
-		Resources/Fonts/Fonts.xib
-		Resources/Fonts/OpenSans
-		Resources/Fonts/OpenSans/OpenSans-Regular.ttf
 		Resources/FrankBold50_A8_icons.fnt
 		Resources/FrankBold50_A8_icons_0.png
 		Resources/Geosphere_01.pod

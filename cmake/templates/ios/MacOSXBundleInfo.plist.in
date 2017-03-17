@@ -59,10 +59,6 @@
 	<string>iOS-MEA</string>
 	<key>UIRequiresFullScreen</key>
 	<true/>
-	<key>Fonts provided by application</key>
-	<array>
-		<string>@EEGEO_PLIST_WELCOME_FONT@</string>
-	</array>
 </dict>
 </plist>
 
