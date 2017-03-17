@@ -829,6 +829,7 @@ namespace ExampleApp
             Eegeo::Traffic::PlaneSimulation& planeSimulation = world.GetTrafficModule().GetTrafficSimulationController().GetPlaneSimulation();
 
             m_pAutomatedScreenshotController = Eegeo_NEW(Automation::AutomatedScreenshotController)(m_applicationConfiguration,
+                                                                                                    *m_pCameraTransitionController,
                                                                                                     m_pGlobeCameraController->GetGlobeCameraController(),
                                                                                                     planeSimulation,
                                                                                                     m_pPlaceJumpsModule->GetPlaceJumpController(),
@@ -841,7 +842,8 @@ namespace ExampleApp
                                                                                                     m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                                                     streamingModule.GetStreamingController(),
                                                                                                     m_screenshotService,
-                                                                                                    world);
+                                                                                                    world,
+                                                                                                    m_messageBus);
         }
     }
 

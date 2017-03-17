@@ -28,12 +28,16 @@ public class AutomatedScreenshot {
         Screengrab.setDefaultScreenshotStrategy(new UiAutomatorScreenshotStrategy());
     }
 
+    private void WaitForFastlane() throws InterruptedException {
+        Thread.sleep(5000);
+    }
+
     @Test
     public void run() throws InterruptedException {
         final BackgroundThreadActivity activity = activityRule.getActivity();
         synchronized (activity.screenshotsCompletedLock) {
             activity.screenshotsCompletedLock.wait();
         }
-        Thread.sleep(5000);
+        WaitForFastlane();
     }
 }

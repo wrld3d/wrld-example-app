@@ -8,6 +8,7 @@
 #include "EegeoWorld.h"
 #include "GlobeCameraController.h"
 #include "ICallback.h"
+#include "ICameraTransitionController.h"
 #include "IFlattenButtonModel.h"
 #include "InteriorsExplorerController.h"
 #include "InteriorsExplorerModel.h"
@@ -28,6 +29,7 @@ namespace ExampleApp
         {
         public:
             AutomatedScreenshotController(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                                          ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                           const Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
                                           Eegeo::Traffic::PlaneSimulation& planeSimulation,
                                           ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& placeJumpController,
@@ -40,7 +42,8 @@ namespace ExampleApp
                                           ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                           Eegeo::Streaming::StreamingController& streamingController,
                                           IScreenshotService& screenshotService,
-                                          Eegeo::EegeoWorld& eegeoWorld);
+                                          Eegeo::EegeoWorld& eegeoWorld,
+                                          ExampleAppMessaging::TMessageBus& messageBus);
 
             bool NextScene();
             void Update(const float dt);
@@ -48,13 +51,17 @@ namespace ExampleApp
             void InsertCompletedScreenshotsCallback(Eegeo::Helpers::ICallback0& callback);
             void RemoveCompletedScreenshotsCallback(Eegeo::Helpers::ICallback0& callback);
 
+            typedef std::function<bool()> WaitPredicate;
+            typedef std::function<WaitPredicate()> SceneSetupFunction;
+
         private:
-            const std::array<std::function<std::function<bool()>()>, 2> States() const;
-            const unsigned long NumStates() const;
+            const std::array<SceneSetupFunction, 3> States() const;
+            const unsigned long NumScenes() const;
             std::function<bool()> SetupState(const unsigned long state);
             bool Done() const;
 
             const ExampleApp::ApplicationConfig::ApplicationConfiguration& m_applicationConfiguration;
+            ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
             const Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
             Eegeo::Traffic::PlaneSimulation& m_planeSimulation;
             ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& m_placeJumpController;
@@ -72,6 +79,7 @@ namespace ExampleApp
             std::function<bool()> m_waitPredicate;
             int m_execState;
             unsigned long m_sceneIndex;
+            ExampleAppMessaging::TMessageBus& m_messageBus;
 
             Eegeo::Helpers::CallbackCollection0 m_completedScreenshotsCallbacks;
         };

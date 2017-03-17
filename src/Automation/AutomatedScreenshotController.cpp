@@ -7,6 +7,7 @@
 #include "EegeoWorld.h"
 #include "GlobeCameraController.h"
 #include "ICallback.h"
+#include "ICameraTransitionController.h"
 #include "IFlattenButtonModel.h"
 #include "InteriorsCameraController.h"
 #include "InteriorsExplorerModel.h"
@@ -16,8 +17,10 @@
 #include "ISearchQueryPerformer.h"
 #include "ISearchResultPoiViewModel.h"
 #include "IWeatherController.h"
+#include "OpenSearchMenuMessage.h"
 #include "PlaneSimulation.h"
 #include "StreamingController.h"
+#include "TimeHelpers.h"
 
 namespace ExampleApp
 {
@@ -36,12 +39,45 @@ namespace ExampleApp
                 ExecStateDone
             };
 
-            const std::function<bool()> NoWait([]() { return true; });
+            const AutomatedScreenshotController::WaitPredicate NoWait([]() { return true; });
+            const AutomatedScreenshotController::WaitPredicate WaitMs(const long long msToWait)
+            {
+                const long long currentMillis = Eegeo::Helpers::Time::MillisecondsSinceEpoch();
+                return [=]() {
+                    return Eegeo::Helpers::Time::MillisecondsSinceEpoch() - currentMillis > msToWait;
+                };
+            }
+
+            template <typename F>
+            const AutomatedScreenshotController::WaitPredicate Act(F f)
+            {
+                return [=]() {
+                    f();
+                    return true;
+                };
+            }
+
+            const AutomatedScreenshotController::WaitPredicate Then(AutomatedScreenshotController::WaitPredicate p1, AutomatedScreenshotController::WaitPredicate p2)
+            {
+                bool p1Done = false;
+                return [=]() mutable {
+                    if (p1Done)
+                    {
+                        p1Done = p1();
+                        return false;
+                    }
+                    else
+                    {
+                        return p2();
+                    }
+                };
+            }
         }
 
         AutomatedScreenshotController::AutomatedScreenshotController(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
+                                                                     ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                                      const Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
-                                                                     Eegeo::Traffic::PlaneSimulation& planeSimulation,
+                                                                     Eegeo::Traffic::PlaneSimulation &planeSimulation,
                                                                      ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& placeJumpController,
                                                                      ExampleApp::WeatherMenu::SdkModel::IWeatherController& weatherController,
                                                                      ExampleApp::Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
@@ -52,8 +88,10 @@ namespace ExampleApp
                                                                      ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                      Eegeo::Streaming::StreamingController& streamingController,
                                                                      IScreenshotService& screenshotService,
-                                                                     Eegeo::EegeoWorld& eegeoWorld)
+                                                                     Eegeo::EegeoWorld& eegeoWorld,
+                                                                     ExampleAppMessaging::TMessageBus& messageBus)
         : m_applicationConfiguration(applicationConfiguration)
+        , m_cameraTransitionController(cameraTransitionController)
         , m_globeCameraController(globeCameraController)
         , m_planeSimulation(planeSimulation)
         , m_placeJumpController(placeJumpController)
@@ -70,13 +108,14 @@ namespace ExampleApp
         , m_updateCyclesToWait(UpdateCyclesPerScreenshot)
         , m_execState(ExecStateStreamingInitialSceneAndManifest)
         , m_sceneIndex(0)
+        , m_messageBus(messageBus)
         {
             m_planeSimulation.SetEnabled(false);
         }
 
         bool AutomatedScreenshotController::NextScene()
         {
-            if (m_sceneIndex < NumStates())
+            if (m_sceneIndex < NumScenes())
             {
                 m_waitPredicate = SetupState(m_sceneIndex);
                 m_sceneIndex++;
@@ -88,13 +127,14 @@ namespace ExampleApp
             }
         }
 
-        const std::array<std::function<std::function<bool()>()>, 2> AutomatedScreenshotController::States() const
+        const std::array<AutomatedScreenshotController::SceneSetupFunction, 3> AutomatedScreenshotController::States() const
         {
             return {
                 [this]() {
-                    static const PlaceJumps::View::PlaceJumpModel GoldenGateBridge(
+                    const PlaceJumps::View::PlaceJumpModel GoldenGateBridge(
                             "SanFranGoldenGate",
-                            Eegeo::Space::LatLong::FromDegrees(37.81588, -122.47787), 336.0,
+                            Eegeo::Space::LatLong::FromDegrees(37.81588, -122.47787),
+                            336.0,
                             1800,
                             "");
 
@@ -107,7 +147,7 @@ namespace ExampleApp
                 },
 
                 [this]() {
-                    static const PlaceJumps::View::PlaceJumpModel NewYorkFinancialDistrict(
+                    const PlaceJumps::View::PlaceJumpModel NewYorkFinancialDistrict(
                             "NewYorkFinancialDistrict",
                             Eegeo::Space::LatLong::FromDegrees(40.708798, -74.010326),
                             0.000000f,
@@ -121,11 +161,35 @@ namespace ExampleApp
                     m_flattenButtonModel.Unflatten();
 
                     return NoWait;
+                },
+
+                [this]() {
+                    const long long MsToWaitForSearchResults = 3000;
+                    const long long MsToWaitForSidebarAnimation = 8000;
+                    const Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(55.948685, -3.201244));
+                    const PlaceJumps::View::PlaceJumpModel EdinburghCastle(
+                            "EdinburghCastle",
+                            location,
+                            0.000000f,
+                            800.0f,
+                            "");
+
+                    m_placeJumpController.JumpTo(EdinburghCastle);
+
+                    m_weatherController.SetTime("Day");
+                    m_weatherController.SetTheme("Summer");
+                    m_flattenButtonModel.Unflatten();
+
+                    m_searchQueryPerformer.PerformSearchQuery("coffee", false, false, Eegeo::Space::LatLongAltitude(location.GetLatitude(), location.GetLongitude(), 0.0f));
+
+                    return Then(WaitMs(MsToWaitForSearchResults),
+                           Then(Act([this]() { m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(true)); }),
+                                WaitMs(MsToWaitForSidebarAnimation)));
                 }
             };
         }
 
-        const unsigned long AutomatedScreenshotController::NumStates() const
+        const unsigned long AutomatedScreenshotController::NumScenes() const
         {
             return States().size();
         }
@@ -137,7 +201,7 @@ namespace ExampleApp
 
         bool AutomatedScreenshotController::Done() const
         {
-            return m_sceneIndex == NumStates();
+            return m_sceneIndex == NumScenes();
         }
 
         void AutomatedScreenshotController::Update(const float dt)
