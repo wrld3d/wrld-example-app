@@ -840,6 +840,8 @@
         "label_vertical_alignment": "bottom",
         "constraint_radius_scale": 1.0,
         "stencil_mode": "always",
+        "screen_margin": 24.0,
+        "screen_margin_hiding": "if_icon_outside_margin",
         "priority": 5
     },
     {
@@ -852,6 +854,8 @@
         "label_vertical_alignment": "bottom",
         "constraint_radius_scale": 1.0,
         "stencil_mode": "always",
+        "screen_margin": 24.0,
+        "screen_margin_hiding": "if_icon_outside_margin",
         "priority": 3
     },
     {
@@ -864,6 +868,8 @@
         "label_vertical_alignment": "bottom",
         "constraint_radius_scale": 1.0,
         "stencil_mode": "always",
+        "screen_margin": 24.0,
+        "screen_margin_hiding": "if_icon_outside_margin",
         "priority": 2
     },
     {
@@ -877,6 +883,8 @@
         "constraint_radius_scale": 1.0,
         "pickable": true,
         "stencil_mode": "always",
+        "screen_margin": 36.0,
+        "screen_margin_hiding": "if_icon_outside_margin",
         "priority": 1
     },
 
