@@ -3,6 +3,9 @@ set(resources ${resources}
         Resources/Alert_Tutorial_icon.png
         Resources/Alert_Tutorial_icon@2x.png
         Resources/Alert_Tutorial_icon@3x.png
+        Resources/Alert_Tutorial_icon_phone.png
+        Resources/Alert_Tutorial_icon_phone@2x.png
+        Resources/Alert_Tutorial_icon_phone@3x.png
 		Resources/Arrow.png
 		Resources/arrow1.png
 		Resources/arrow1@2x.png
@@ -10,9 +13,15 @@ set(resources ${resources}
 		Resources/arrow3_down.png
 		Resources/arrow3_down@2x.png
 		Resources/arrow3_down@3x.png
+		Resources/arrow3_down_blue.png
+		Resources/arrow3_down_blue@2x.png
+		Resources/arrow3_down_blue@3x.png
 		Resources/arrow3_left.png
 		Resources/arrow3_left@2x.png
 		Resources/arrow3_left@3x.png
+		Resources/arrow3_left_blue.png
+		Resources/arrow3_left_blue@2x.png
+		Resources/arrow3_left_blue@3x.png
 		Resources/arrow3_right.png
 		Resources/arrow3_right@2x.png
 		Resources/arrow3_right@3x.png
@@ -22,11 +31,11 @@ set(resources ${resources}
 		Resources/arrow3_up.png
 		Resources/arrow3_up@2x.png
 		Resources/arrow3_up@3x.png
+		Resources/arrow3_up_blue.png
+		Resources/arrow3_up_blue@2x.png
+		Resources/arrow3_up_blue@3x.png
 		Resources/Arrow@2x.png
 		Resources/Arrow@3x.png
-		Resources/banner_logo.png
-		Resources/banner_logo@2x.png
-		Resources/banner_logo@3x.png
                 Resources/button_add_pin_off.png
                 Resources/button_add_pin_off@0.75x.png
                 Resources/button_add_pin_off@1.5x.png
@@ -267,6 +276,10 @@ set(resources ${resources}
 		Resources/floor_selection_top.png
 		Resources/floor_selection_top@2x.png
 		Resources/floor_selection_top@3x.png
+		Resources/Fonts
+		Resources/Fonts/Fonts.xib
+		Resources/Fonts/OpenSans
+		Resources/Fonts/OpenSans/OpenSans-Regular.ttf
 		Resources/FrankBold50_A8_icons.fnt
 		Resources/FrankBold50_A8_icons_0.png
 		Resources/Geosphere_01.pod
