@@ -122,6 +122,9 @@
 #include "MapLayersModule.h"
 #include "MarkersModule.h"
 #include "CameraSplinePlaybackController.h"
+#include "AutomatedScreenshotController.h"
+#include "TrafficSimulationController.h"
+#include "IScreenshotService.h"
 
 namespace ExampleApp
 {
@@ -232,7 +235,8 @@ namespace ExampleApp
                                        ExampleApp::Metrics::IMetricsService& metricsService,
                                        Eegeo::IEegeoErrorHandler& errorHandler,
                                        Menu::View::IMenuReactionModel& menuReaction,
-                                       Eegeo::Input::IUserIdleService& userIdleService)
+                                       Eegeo::Input::IUserIdleService& userIdleService,
+                                       ExampleApp::Automation::IScreenshotService& screenshotService)
     : m_pGlobeCameraController(NULL)
     , m_pCameraTouchController(NULL)
     , m_pCurrentTouchController(NULL)
@@ -297,6 +301,8 @@ namespace ExampleApp
     , m_pDeepLinkModule(NULL)
     , m_userIdleService(userIdleService)
     , m_pGlobalAppModeTransitionRules(NULL)
+    , m_pAutomatedScreenshotController(NULL)
+    , m_screenshotService(screenshotService)
     {
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
@@ -812,6 +818,31 @@ namespace ExampleApp
         {
             m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         }
+
+#ifdef AUTOMATED_SCREENSHOTS
+        const bool instantiateAutomatedScreenshotController = true;
+#else
+        const bool instantiateAutomatedScreenshotController = false;
+#endif
+        if (instantiateAutomatedScreenshotController)
+        {
+            Eegeo::Traffic::PlaneSimulation& planeSimulation = world.GetTrafficModule().GetTrafficSimulationController().GetPlaneSimulation();
+
+            m_pAutomatedScreenshotController = Eegeo_NEW(Automation::AutomatedScreenshotController)(m_applicationConfiguration,
+                                                                                                    m_pGlobeCameraController->GetGlobeCameraController(),
+                                                                                                    planeSimulation,
+                                                                                                    m_pPlaceJumpsModule->GetPlaceJumpController(),
+                                                                                                    m_pWeatherMenuModule->GetWeatherController(),
+                                                                                                    m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                    m_pFlattenButtonModule->GetFlattenButtonModel(),
+                                                                                                    m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
+                                                                                                    m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
+                                                                                                    m_pInteriorsExplorerModule->GetInteriorsCameraController(),
+                                                                                                    m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
+                                                                                                    streamingModule.GetStreamingController(),
+                                                                                                    m_screenshotService,
+                                                                                                    world);
+        }
     }
 
     void MobileExampleApp::InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories)
@@ -1068,6 +1099,11 @@ namespace ExampleApp
                     m_metricsService.SetPosition(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees(), 0.f, 0.f);
                     m_setMetricsLocation = true;
                 }
+            }
+
+            if (nullptr != m_pAutomatedScreenshotController)
+            {
+                m_pAutomatedScreenshotController->Update(dt);
             }
         }
 
@@ -1417,5 +1453,10 @@ namespace ExampleApp
         const bool lockedCameraStepsCompleted = initialExperienceModel.LockedCameraStepsCompleted();
 
         return !worldIsInitialising && lockedCameraStepsCompleted && userInteractionEnabled;
+    }
+
+    Automation::AutomatedScreenshotController* MobileExampleApp::AutomatedScreenshotController() const
+    {
+        return m_pAutomatedScreenshotController;
     }
 }

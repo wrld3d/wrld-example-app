@@ -12,6 +12,7 @@ import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
 import com.eegeo.mobileexampleapp.R;
+import com.eegeo.automation.AutomatedScreenshotController;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,9 +34,11 @@ import net.hockeyapp.android.NativeCrashManager;
 
 public class BackgroundThreadActivity extends MainActivity
 {
+    final public Object screenshotsCompletedLock = new Object();
+
+    private long m_nativeAppWindowPtr;
     private EegeoSurfaceView m_surfaceView;
     private SurfaceHolder m_surfaceHolder;
-    private long m_nativeAppWindowPtr;
     private ThreadedUpdateRunner m_threadedRunner;
     private Thread m_updater;
     private String m_hockeyAppId;
@@ -65,7 +68,7 @@ public class BackgroundThreadActivity extends MainActivity
         Constants.loadFromContext(this);
         NativeJniCalls.setUpBreakpad(Constants.FILES_PATH);
         NativeCrashManager.handleDumpFiles(this, m_hockeyAppId);
-        
+
         PackageInfo pInfo = null;
         try 
         {
@@ -282,7 +285,16 @@ public class BackgroundThreadActivity extends MainActivity
             }
         });
     }
-    
+
+    @Override
+    public void onScreenshotsCompleted()
+    {
+        synchronized (screenshotsCompletedLock)
+        {
+            screenshotsCompletedLock.notifyAll();
+        }
+    }
+
     private void setDisplayOrientationBasedOnDeviceProperties()
     {
     	// Technique based on http://stackoverflow.com/a/9308284 using res/values configuration.

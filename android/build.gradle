@@ -64,6 +64,18 @@ android {
         }
     }
 
+    productFlavors {
+        normal {}
+
+        screenshot {
+            externalNativeBuild {
+                cmake {
+                   cppFlags "-DAUTOMATED_SCREENSHOTS=1"
+                }
+            }
+        }
+    }
+
     externalNativeBuild {
         cmake {
             // Set path to external eegeo-mobile top CMakeLists here and in sdk/CMakeLists.txt
@@ -79,7 +91,7 @@ dependencies {
     // compile 'com.android.support:support-core-utils:25.2.0'
     compile 'com.android.support:multidex:1.0.1'
 
-    androidTestCompile 'tools.fastlane:screengrab:0.3.0'
+    androidTestCompile 'tools.fastlane:screengrab:1.0.2'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'

@@ -89,6 +89,7 @@
 #include "GlobalAppModeTransitionRules.h"
 #include "CameraSplinePlaybackController.h"
 #include "SurveyTimer.h"
+#include "AutomatedScreenshotController.h"
 
 namespace ExampleApp
 {
@@ -180,6 +181,10 @@ namespace ExampleApp
         Eegeo::Input::IUserIdleService& m_userIdleService;
         AppModes::GlobalAppModeTransitionRules* m_pGlobalAppModeTransitionRules;
 
+        Automation::AutomatedScreenshotController* m_pAutomatedScreenshotController;
+
+        ExampleApp::Automation::IScreenshotService& m_screenshotService;
+
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening);
 
@@ -220,7 +225,8 @@ namespace ExampleApp
                          ExampleApp::Metrics::IMetricsService& metricsService,                         
                          Eegeo::IEegeoErrorHandler& errorHandler,
                          Menu::View::IMenuReactionModel& menuReaction,
-                         Eegeo::Input::IUserIdleService& userIdleService);
+                         Eegeo::Input::IUserIdleService& userIdleService,
+                         ExampleApp::Automation::IScreenshotService& screenshotService);
 
         ~MobileExampleApp();
 
@@ -460,5 +466,7 @@ namespace ExampleApp
         void Event_TiltEnd(const AppInterface::TiltData& data);
         void Event_Tilt(const AppInterface::TiltData& data);
         void Event_OpenUrl(const AppInterface::UrlData& data);
+
+        Automation::AutomatedScreenshotController* AutomatedScreenshotController() const;
     };
 }

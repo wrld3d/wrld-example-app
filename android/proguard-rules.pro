@@ -3,7 +3,10 @@
 
 -keep class com.eegeo.entrypointinfrastructure.INativeMessageRunner
 
--keep public class com.google.android.gms.* { public *; }
+-keep class com.eegeo.** { *; }
+-dontwarn com.eegeo.**
+
+-keep class com.google.android.gms.* { public *; }
 -dontwarn com.google.android.gms.**
 
 -keep public class java.lang.management.* { public *; }
@@ -28,8 +31,6 @@
 
 -keep class android.net.http.*
 -dontwarn android.net.http.*
-
--keep class com.eegeo.** { *; }
 
 -keep public interface org.easymock.** { *; }
 -dontwarn org.easymock.**

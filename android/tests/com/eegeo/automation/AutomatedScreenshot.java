@@ -1,8 +1,9 @@
+package com.eegeo.automation;
+
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.eegeo.mobileexampleapp.BackgroundThreadActivity;
-import com.eegeo.mobileexampleapp.R;
 
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -11,14 +12,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import tools.fastlane.screengrab.Screengrab;
+import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy;
 import tools.fastlane.screengrab.locale.LocaleTestRule;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-
 @RunWith(AndroidJUnit4.class)
-public class DoScreengrab {
+public class AutomatedScreenshot {
     @ClassRule
     public static final LocaleTestRule localeTestRule = new LocaleTestRule();
 
@@ -27,12 +25,15 @@ public class DoScreengrab {
 
     @BeforeClass
     public static void beforeAll() {
+        Screengrab.setDefaultScreenshotStrategy(new UiAutomatorScreenshotStrategy());
     }
 
     @Test
-    public void screengrab() throws InterruptedException {
-        Thread.sleep(8000);
-        onView(withId(R.id.search_menu_drag_button_view)).perform(click());
-        Screengrab.screenshot("after_button_click");
+    public void run() throws InterruptedException {
+        final BackgroundThreadActivity activity = activityRule.getActivity();
+        synchronized (activity.screenshotsCompletedLock) {
+            activity.screenshotsCompletedLock.wait();
+        }
+        Thread.sleep(5000);
     }
 }
