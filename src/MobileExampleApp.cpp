@@ -285,7 +285,6 @@ namespace ExampleApp
     , m_applicationConfiguration(applicationConfiguration)
     , m_pGlobeCameraWrapper(NULL)
     , m_pCameraSplinePlaybackController(NULL)
-    , m_pInitialLocationModel(NULL)
     , m_pVisualMapModule(NULL)
     , m_pSurveyModule(NULL)
     , m_pConnectivityChangedObserver(NULL)
