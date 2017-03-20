@@ -2,6 +2,8 @@
 <resources>
     <string name="eula_link"><a href='http://www.eegeo.com/tos'>EULA</a></string>
     <string name="privacy_link"><a href='http://www.eegeo.com/privacy'>Privacy Policy</a></string>
+    <string name="legal_link"><a href='http://www.eegeo.com/legal'>Legal</a></string>
+    <string name="team_link"><a href='http://www.eegeo.com/team'>Team</a></string>
     
     <string name="about_page_title">About this app...</string>
     

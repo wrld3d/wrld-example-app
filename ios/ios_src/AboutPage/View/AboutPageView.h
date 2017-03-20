@@ -41,5 +41,7 @@
 @property (nonatomic, retain) UILabel* pTextContent;
 @property (nonatomic, retain) UILabel* pPrivacyLink;
 @property (nonatomic, retain) UILabel* pEulaLink;
+@property (nonatomic, retain) UILabel* pLegalLink;
+@property (nonatomic, retain) UILabel* pTeamLink;
 
 @end

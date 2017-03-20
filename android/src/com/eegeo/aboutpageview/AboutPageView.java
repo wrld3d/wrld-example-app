@@ -21,6 +21,8 @@ public class AboutPageView implements View.OnClickListener
     private TextView m_aboutTextView = null;
     private TextView m_eulaLink = null;
     private TextView m_privacyLink = null;
+    private TextView m_legalLink = null;
+    private TextView m_teamLink = null;
 
     public AboutPageView(MainActivity activity, long nativeCallerPointer)
     {
@@ -34,6 +36,8 @@ public class AboutPageView implements View.OnClickListener
         m_aboutTextView = (TextView)m_view.findViewById(R.id.about_page_view_about_text);
         m_eulaLink = (TextView)m_view.findViewById(R.id.about_page_view_about_text_eula_link);
         m_privacyLink = (TextView)m_view.findViewById(R.id.about_page_view_privacy_link);
+        m_legalLink = (TextView)m_view.findViewById(R.id.about_page_view_legal_link);
+        m_teamLink = (TextView)m_view.findViewById(R.id.about_page_view_team_link);
         
         RelativeLayout.LayoutParams layoutParams = (LayoutParams) m_view.getLayoutParams();
         if (m_activity.getResources().getBoolean(R.bool.isPhone)) 
@@ -52,6 +56,8 @@ public class AboutPageView implements View.OnClickListener
         
         m_eulaLink.setMovementMethod(LinkMovementMethod.getInstance());
         m_privacyLink.setMovementMethod(LinkMovementMethod.getInstance());
+        m_legalLink.setMovementMethod(LinkMovementMethod.getInstance());
+        m_teamLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public void destroy()
