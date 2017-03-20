@@ -351,12 +351,8 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GlobeCameraTouchSettings touchSettings = m_pGlobeCameraController->GetGlobeCameraController().GetTouchSettings();
         touchSettings.TiltEnabled = true;
         m_pGlobeCameraController->GetGlobeCameraController().SetTouchSettings(touchSettings);
-        
-        m_pInitialLocationModel = Eegeo_NEW(ExampleApp::InitialLocation::SdkModel::InitialLocationModel)(m_persistentSettings, m_applicationConfiguration.InterestLocation());
 
-        const Eegeo::Space::LatLongAltitude& location = m_applicationConfiguration.TryStartAtGpsLocation()
-        ? m_pInitialLocationModel->GetInterestLocation()
-        : m_applicationConfiguration.InterestLocation();
+        const Eegeo::Space::LatLongAltitude& location = m_applicationConfiguration.InterestLocation();
 
         float cameraControllerOrientationDegrees = m_applicationConfiguration.OrientationDegrees();
         float cameraControllerDistanceFromInterestPointMeters = m_applicationConfiguration.DistanceToInterestMetres();
@@ -425,13 +421,10 @@ namespace ExampleApp
 
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
 
-        if (!m_pInitialLocationModel->HasPersistedInterestLocation())
-        {
-            if (m_applicationConfiguration.TryStartAtGpsLocation() && !m_applicationConfiguration.IsAttractModeEnabled())
-            {
-                m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
-            }
-        }
+		if (m_applicationConfiguration.TryStartAtGpsLocation() && !m_applicationConfiguration.IsAttractModeEnabled())
+		{
+			m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
+		}
 
         m_pGlobalAppModeTransitionRules = Eegeo_NEW(AppModes::GlobalAppModeTransitionRules)(m_pAppCameraModule->GetController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
@@ -485,7 +478,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pCameraTransitionController;
         Eegeo_DELETE m_pDoubleTapIndoorInteractionController;
         Eegeo_DELETE m_pNavigationService;
-        Eegeo_DELETE m_pInitialLocationModel;
         Eegeo_DELETE m_pCameraSplinePlaybackController;
         Eegeo_DELETE m_pGlobeCameraWrapper;
         Eegeo_DELETE m_pGlobeCameraController;
@@ -1010,9 +1002,6 @@ namespace ExampleApp
     {
         Eegeo::EegeoWorld& eegeoWorld = World();
         eegeoWorld.OnPause();
-        
-        const Eegeo::dv3& interestPoint = m_pGlobeCameraController->GetEcefInterestPoint();
-        m_pInitialLocationModel->SetInterestLocation(Eegeo::Space::LatLongAltitude::FromECEF(interestPoint));
     }
 
     void MobileExampleApp::OnResume()
