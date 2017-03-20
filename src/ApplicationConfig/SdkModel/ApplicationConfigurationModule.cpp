@@ -132,6 +132,8 @@ namespace ExampleApp
                     platformConfig.MapLayersConfig.Interiors.LabelCategoryMapPath = "Interiors/label_category_mapping.json";
                     platformConfig.MapLayersConfig.LabelsModuleConfig.StyleSheetPath = "Labels/label_style_sheet.json";
                     platformConfig.MapLayersConfig.LabelsModuleConfig.CategoryIconMapPath = "Labels/label_category_icon_map.json";
+                    platformConfig.MapLayersConfig.IconsModuleConfig.IconsEnabled = true;
+                    platformConfig.MapLayersConfig.IconsModuleConfig.IconSetManifestPath = "SearchResultOnMap/pin_sheet.json";
                 }
                 else
                 {
