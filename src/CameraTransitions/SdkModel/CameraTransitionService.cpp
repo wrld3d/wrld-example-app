@@ -60,6 +60,16 @@ namespace ExampleApp
                 m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, jumpIfFar);
             }
             
+            void CameraTransitionService::StartInteriorToInteriorTransition(const Eegeo::dv3& newInterestPoint,
+                                                   float distanceFromInterest,
+                                                   const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                   int targetFloorIndex,
+                                                   bool jumpIfFar)
+            {
+                FailIfNoValidControllerSet();
+                m_pTransitionController->StartInteriorToInteriorTransition(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, jumpIfFar);
+            }
+            
             void CameraTransitionService::StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                    float distanceFromInterest,
                                    const Eegeo::Resources::Interiors::InteriorId& interiorId,
@@ -71,17 +81,18 @@ namespace ExampleApp
             }
             
             void CameraTransitionService::StartTransitionTo(const Eegeo::dv3& newInterestPoint,
-                                   float distanceFromInterest,
-                                   float newHeadingRadians,
-                                   const Eegeo::Resources::Interiors::InteriorId& interiorId,
-                                   int targetFloorIndex,
+                                                            float distanceFromInterest,
+                                                            float newHeadingRadians,
+                                                            const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                            int targetFloorIndex,
                                                             bool jumpIfFar,
                                                             bool setGpsModeOff,
                                                             bool setInteriorHeading,
-                                                            bool setDistanceToInterest)
+                                                            bool setDistanceToInterest,
+                                                            bool allowInteriorToInterior)
             {
                 FailIfNoValidControllerSet();
-                m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar, setGpsModeOff, setInteriorHeading, setDistanceToInterest);
+                m_pTransitionController->StartTransitionTo(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar, setGpsModeOff, setInteriorHeading, setDistanceToInterest, allowInteriorToInterior);
             }
             
             void CameraTransitionService::StartTransitionTo(float distanceFromInterest,

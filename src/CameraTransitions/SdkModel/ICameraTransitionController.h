@@ -27,6 +27,12 @@ namespace ExampleApp
                                                int targetFloorIndex,
                                                bool jumpIfFar=true) = 0;
 
+                virtual void StartInteriorToInteriorTransition(const Eegeo::dv3& newInterestPoint,
+                                                               float distanceFromInterest,
+                                                               const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                               int targetFloorIndex,
+                                                               bool jumpIfFar=true) = 0;
+                                                       
                 virtual void StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                                float distanceFromInterest,
                                                float newHeadingRadians,
@@ -46,7 +52,8 @@ namespace ExampleApp
                                                bool jumpIfFar=true,
                                                bool setGpsModeOff=true,
                                                bool setInteriorHeading=false,
-                                               bool setDistanceToInterest=true) = 0;
+                                               bool setDistanceToInterest=true,
+                                               bool allowInteriorToInterior=false) = 0;
                 
                 virtual void StopCurrentTransition() = 0;
                 virtual void Update(float dt) = 0;

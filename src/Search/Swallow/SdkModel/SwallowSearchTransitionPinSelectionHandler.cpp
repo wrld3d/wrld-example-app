@@ -29,7 +29,7 @@ namespace ExampleApp
                 {
                     Eegeo::Camera::CameraState cameraState = m_appCameraController.GetCameraState();
                     float distanceToInterest = static_cast<float>((cameraState.LocationEcef()-cameraState.InterestPointEcef()).Length());
-                    m_transitionController.StartTransitionTo(m_transitionResult.GetTargetLatLong().ToECEF(), distanceToInterest,  m_transitionResult.GetTargetInteriorId(), m_transitionResult.GetTargetInteriorFloor());
+                    m_transitionController.StartInteriorToInteriorTransition(m_transitionResult.GetTargetLatLong().ToECEF(), distanceToInterest, m_transitionResult.GetTargetInteriorId(), m_transitionResult.GetTargetInteriorFloor());
                 }
             }
         }
