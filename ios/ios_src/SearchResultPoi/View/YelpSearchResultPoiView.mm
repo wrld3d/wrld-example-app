@@ -494,14 +494,26 @@ namespace
     
     const float reviewCountWidth = 40.0f;
     const float reviewCountHeight = 17.0f;
-    const float yelpButtonWidth = 115.0f;
+    const float yelpButtonWidth = 138.0f;
     const float yelpButtonHeight = 25.0f;
     const float reviewSpacing = 4.0f;
     
     const float fullRatingsWidth = (m_ratingsImageWidth + reviewSpacing + reviewCountWidth);
     const CGFloat barButtonCentredX = (cardContainerWidth * 0.5f - yelpButtonWidth * 0.5f);
-    const CGFloat reviewBarOffsetX = (cardContainerWidth * 0.5f - (yelpButtonWidth + fullRatingsWidth) * 0.5f);
-    const CGFloat yelpButtonOffsetX = reviewBarOffsetX + fullRatingsWidth;
+    CGFloat reviewBarOffsetX = (cardContainerWidth * 0.5f) - fullRatingsWidth;
+    
+    bool reviewBarIsOffScreen = reviewBarOffsetX < 0;
+    if(reviewBarIsOffScreen)
+    {
+        reviewBarOffsetX = 0.f;
+    }
+    float yelpButtonOffsetX = fullRatingsWidth;
+  
+    bool yelpButtonIsOffScreen = (yelpButtonOffsetX + yelpButtonWidth) > cardContainerWidth;
+    if(yelpButtonIsOffScreen)
+    {
+        yelpButtonOffsetX = yelpButtonOffsetX + (cardContainerWidth - (yelpButtonOffsetX + yelpButtonWidth));
+    }
     
     const CGFloat rateBarOriginX = hasImage ? barButtonCentredX : reviewBarOffsetX;
     const CGFloat yelpButtonX = (hasImage || !hasReviewBar) ? barButtonCentredX : yelpButtonOffsetX;
