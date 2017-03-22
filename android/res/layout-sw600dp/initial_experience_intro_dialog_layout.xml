@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+   	android:layout_width="wrap_content"
+   	android:background="@color/gold"
+   	android:padding="2dp">
+   	<LinearLayout
+   	    android:orientation="horizontal"
+   	    android:layout_width="wrap_content"
+   	    android:layout_height="wrap_content"
+   	    android:background="@color/white"
+   	    android:padding="13dp">
+   	    
+   	    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:src="@drawable/alert_tutorial_icon"/>
+   	    
+   	    <LinearLayout
+	        android:orientation="vertical"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:paddingLeft="7dp">
+	        
+	   	    <TextView
+	   	        android:id="@+id/initial_ux_dialog_title"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_vertical"
+		        android:singleLine="true"
+		        android:ellipsize="end"
+		        android:textColor="@color/gold"
+		        android:textSize="18sp"
+		        android:text="@string/placeholder"/>
+	   	    
+	   	    <TextView
+	            android:id="@+id/initial_ux_dialog_description"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:paddingTop="6dp"
+	            android:ellipsize="end"
+	            android:gravity="top|left"
+	            android:singleLine="false"
+	            android:text="@string/placeholder"
+	            android:textColor="@color/darkgrey"
+	            android:textSize="16sp" />
+	   	</LinearLayout>
+   	</LinearLayout>
+</RelativeLayout>
