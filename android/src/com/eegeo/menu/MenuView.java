@@ -105,7 +105,7 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     
     public void animateToClosedOnScreen()
     {
-    	if(m_animating || m_menuAnimationHandler.isClosedOnScreen())
+    	if(m_animating || m_menuAnimationHandler == null || m_menuAnimationHandler.isClosedOnScreen())
     	{
     		return;
     	}
