@@ -88,7 +88,6 @@ namespace
         [self.pTitleCardContainer addSubview: self.pTagIconContainer];
         
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
-        self.pTitleLabel.adjustsFontSizeToFitWidth = YES;
         [self.pTitleCardContainer addSubview: self.pTitleLabel];
         
         self.pTitleCardHeaderLine = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -453,6 +452,7 @@ namespace
     
     self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
     self.pTitleLabel.font = [UIFont systemFontOfSize:22.0f];
+    self.pTitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     
     self->m_pVendorBrandingImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"yelp_logo_100x50", true) retain];
     self.pVendorBrandingImageContainer = [[[UIImageView alloc] initWithImage:self->m_pVendorBrandingImage] autorelease];
