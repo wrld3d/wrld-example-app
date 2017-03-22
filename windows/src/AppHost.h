@@ -64,6 +64,7 @@
 #include "VirtualKeyboardView.h"
 #include "AttractModeOverlayView.h"
 #include "GpsMarkerTutorialViewIncludes.h"
+#include "NullScreenshotService.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -178,6 +179,7 @@ private:
     ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkDomainEventBus;
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
+    ExampleApp::Automation::NullScreenshotService m_screenshotService;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();

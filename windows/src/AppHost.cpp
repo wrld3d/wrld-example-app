@@ -250,7 +250,8 @@ AppHost::AppHost(
         *m_pWindowsFlurryMetricsService,        
         *this,
         *m_pMenuReaction,
-        *m_pUserIdleService);
+        *m_pUserIdleService,
+        m_screenshotService);
 
     if (applicationConfiguration.IsFixedIndoorLocationEnabled())
     {
