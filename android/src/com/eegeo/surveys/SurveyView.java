@@ -33,14 +33,19 @@ public class SurveyView {
 	
 	private DialogInterface.OnClickListener showSurvey(final String timerSurveyUrl)
     {
-        return new DialogInterface.OnClickListener()
-        {
+        return new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-            	Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(timerSurveyUrl));
-            	m_activity.startActivity(browserIntent);
-            	m_options = null;
+            public void onClick(DialogInterface dialog, int which) {
+                String prefixedUrl = "";
+                if (!timerSurveyUrl.isEmpty())
+                {
+                    if (!timerSurveyUrl.startsWith("https://") && !timerSurveyUrl.startsWith("http://")) {
+                        prefixedUrl = "http://" + timerSurveyUrl;
+                    }
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(prefixedUrl));
+                    m_activity.startActivity(browserIntent);
+                }
+                m_options = null;
             }
         };
     }
