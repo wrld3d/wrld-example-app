@@ -87,7 +87,7 @@ namespace
         self.pSearchMenuDialogIcon = [self createDialogIcon:self.pSearchMenuDialogContent];
         self.pSearchMenuDialogTitle = [self createDialogTitle:@"Search"];
         [self.pSearchMenuDialogContent addSubview:self.pSearchMenuDialogTitle];
-        self.pSearchMenuDialogDescription = [self createDialogDescription:@"Find people, groups,\ndepts, meeting rooms..."];
+        self.pSearchMenuDialogDescription = [self createDialogDescription:@"Find places fast or just\nstart exploring."];
         [self.pSearchMenuDialogContent addSubview:self.pSearchMenuDialogDescription];
         
         self.pCompassDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
@@ -127,9 +127,11 @@ namespace
         self.pPinCreationDialogArrowOutline = [self createDialogArrowOutline: self.pPinCreationDialogContent arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Left];
         self.pPinCreationDialogArrow = [self createDialogArrow: self.pPinCreationDialogContent arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Left];
         self.pPinCreationDialogIcon = [self createDialogIcon:self.pPinCreationDialogContent];
-        self.pPinCreationDialogTitle = [self createDialogTitle:@"Create Report"];
+        self.pPinCreationDialogTitle = [self createDialogTitle:@"Drop Pin"];
         [self.pPinCreationDialogContent addSubview:self.pPinCreationDialogTitle];
-        self.pPinCreationDialogDescription = [self createDialogDescription:@"Submit damage report\nor suggestions."];
+        self.pPinCreationDialogDescription = [self createDialogDescription:useSmallScreen
+                                              ? @"Drop a pin on map\nto bookmark a place."
+                                              : @"Drop a pin to bookmark\na place on the map."];
         [self.pPinCreationDialogContent addSubview:self.pPinCreationDialogDescription];
         
         m_awaitingInput = false;
