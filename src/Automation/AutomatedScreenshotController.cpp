@@ -1,5 +1,6 @@
 // Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
+#include <array>
 #include <functional>
 
 #include "ApplicationConfig.h"
@@ -90,19 +91,11 @@ namespace ExampleApp
                                                                      IScreenshotService& screenshotService,
                                                                      Eegeo::EegeoWorld& eegeoWorld,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
-        : m_applicationConfiguration(applicationConfiguration)
-        , m_cameraTransitionController(cameraTransitionController)
-        , m_globeCameraController(globeCameraController)
-        , m_planeSimulation(planeSimulation)
+        : m_planeSimulation(planeSimulation)
         , m_placeJumpController(placeJumpController)
         , m_weatherController(weatherController)
         , m_searchQueryPerformer(searchQueryPerformer)
         , m_flattenButtonModel(flattenButtonModel)
-        , m_searchResultPoiViewModel(searchResultPoiViewModel)
-        , m_interiorSelectionModel(interiorSelectionModel)
-        , m_interiorCameraController(interiorCameraController)
-        , m_interiorsExplorerModel(interiorsExplorerModel)
-        , m_streamingController(streamingController)
         , m_screenshotService(screenshotService)
         , m_eegeoWorld(eegeoWorld)
         , m_updateCyclesToWait(UpdateCyclesPerScreenshot)
@@ -129,7 +122,7 @@ namespace ExampleApp
 
         const std::array<AutomatedScreenshotController::SceneSetupFunction, 3> AutomatedScreenshotController::States() const
         {
-            return {
+            return {{
                 [this]() {
                     const PlaceJumps::View::PlaceJumpModel GoldenGateBridge(
                             "SanFranGoldenGate",
@@ -186,7 +179,7 @@ namespace ExampleApp
                            Then(Act([this]() { m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(true)); }),
                                 WaitMs(MsToWaitForSidebarAnimation)));
                 }
-            };
+            }};
         }
 
         const unsigned long AutomatedScreenshotController::NumScenes() const

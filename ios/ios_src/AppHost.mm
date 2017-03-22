@@ -165,7 +165,8 @@ AppHost::AppHost(
              m_iOSFlurryMetricsService,             
              *this,
              *m_pMenuReactionModel,
-             m_userIdleService);
+             m_userIdleService,
+             m_screenshotService);
     
     Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
     Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();

@@ -59,6 +59,7 @@
 #include "InteriorsLocationServiceModule.h"
 #include "AppUrlDelegate.h"
 #include "AlwaysActiveUserIdleService.h"
+#include "NullScreenshotService.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -157,6 +158,7 @@ private:
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 
     Eegeo::Input::AlwaysActiveUserIdleService m_userIdleService;
+    ExampleApp::Automation::NullScreenshotService m_screenshotService;
 
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();

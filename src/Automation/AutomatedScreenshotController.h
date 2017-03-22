@@ -60,19 +60,11 @@ namespace ExampleApp
             std::function<bool()> SetupState(const unsigned long state);
             bool Done() const;
 
-            const ExampleApp::ApplicationConfig::ApplicationConfiguration& m_applicationConfiguration;
-            ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
-            const Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
             Eegeo::Traffic::PlaneSimulation& m_planeSimulation;
             ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& m_placeJumpController;
             ExampleApp::WeatherMenu::SdkModel::IWeatherController& m_weatherController;
             ExampleApp::Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
             ExampleApp::FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
-            ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModel& m_searchResultPoiViewModel;
-            Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-            Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorCameraController;
-            ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
-            Eegeo::Streaming::StreamingController& m_streamingController;
             IScreenshotService& m_screenshotService;
             Eegeo::EegeoWorld& m_eegeoWorld;
             int m_updateCyclesToWait;
