@@ -92,6 +92,17 @@ namespace ExampleApp
                 
                 StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, interiorId, targetFloorIndex, jumpIfFar);
             }
+            
+            void CameraTransitionController::StartInteriorToInteriorTransition(const Eegeo::dv3& newInterestPoint,
+                                                   float distanceFromInterest,
+                                                   const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                   int targetFloorIndex,
+                                                   bool jumpIfFar)
+            {
+                float bearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController.GetHeadingDegrees());
+                
+                StartTransitionTo(newInterestPoint, distanceFromInterest, bearingRadians, interiorId, targetFloorIndex, jumpIfFar, true, true, false, true);
+            }
 
             void CameraTransitionController::StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                                                float distanceFromInterest,
@@ -101,7 +112,8 @@ namespace ExampleApp
                                                                bool jumpIfFar,
                                                                bool setGpsModeOff,
                                                                bool setInteriorHeading,
-                                                               bool setDistanceToInterest)
+                                                               bool setDistanceToInterest,
+                                                               bool allowInteriorToInterior)
             {
                 if(IsTransitioning())
                 {
@@ -115,8 +127,6 @@ namespace ExampleApp
                 
                 if(m_appModeModel.GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode)
                 {
-                    const double exitInteriorDistanceSquared = 100*100;
-                    double interestDifferenceSquared = (m_interiorsCameraController.GetInterestLocation() - newInterestPoint).LengthSq();
                     if(m_interiorSelectionModel.GetSelectedInteriorId() == interiorId)
                     {
                         Eegeo_ASSERT(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId(), "Invalid state. Have selected null Interior while in Interior mode");
@@ -124,7 +134,7 @@ namespace ExampleApp
                         StartQueuedTransition();
                         return;
                     }
-                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId() && interestDifferenceSquared < exitInteriorDistanceSquared && m_interiorsModelRepository.HasInterior(interiorId.Value()))
+                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId() && allowInteriorToInterior && m_interiorsModelRepository.HasInterior(interiorId.Value()))
                     {
                         EnqueueTransitionToInteriorPointStage(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar);
                         StartQueuedTransition();
