@@ -25,6 +25,11 @@ public:
         CFRelease(m_runLoopSource);
         CFRelease(m_port);
     }
+    
+    void RunBlocking()
+    {
+        CFRunLoopRun();
+    }
 
     void OnMessageReceived(SInt32 msgId, CFDataRef data)
     {
@@ -38,6 +43,7 @@ public:
 
         //case ScreenshotsCompleteMessageId:
         case 2: {
+            CFRunLoopStop(CFRunLoopGetCurrent());
         } break;
 
         default: {
@@ -91,6 +97,7 @@ extern "C" CFDataRef MessageCallback(CFMessagePortRef local, SInt32 msgId, CFDat
 - (void)testExample {
     // Use recording to get started writing UI tests.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
+    m_messageServer.RunBlocking();
 }
 
 @end

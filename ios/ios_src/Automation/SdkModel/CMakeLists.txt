@@ -5,6 +5,9 @@ set(currsources
   ios_src/Automation/SdkModel/CMakeLists.txt
   ios_src/Automation/SdkModel/SnapshotScreenshotService.h
   ios_src/Automation/SdkModel/SnapshotScreenshotService.cpp
+  ios_src/Automation/SdkModel/iOSScreenshotService.h
+  ios_src/Automation/SdkModel/iOSAutomatedScreenshotController.h
+  ios_src/Automation/SdkModel/iOSAutomatedScreenshotController.mm
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\Automation\\SdkModel FILES ${currsources})
