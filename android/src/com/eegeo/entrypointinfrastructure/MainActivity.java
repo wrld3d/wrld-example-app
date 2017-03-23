@@ -140,4 +140,6 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     public abstract void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer);
 
     public abstract void dispatchUiCreatedMessageToNativeThreadFromUiThread(final long nativeCallerPointer);
+
+    public abstract void onScreenshotsCompleted();
 }

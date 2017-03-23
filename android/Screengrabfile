@@ -1,0 +1,4 @@
+app_package_name 'com.eegeo.mobileexampleapp'
+app_apk_path 'build/outputs/apk/android-screenshot-debug.apk'
+tests_apk_path 'build/outputs/apk/android-screenshot-debug-androidTest.apk'
+clear_previous_screenshots true
