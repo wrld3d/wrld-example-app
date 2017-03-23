@@ -10,6 +10,7 @@
 #include "AndroidMenuReactionModel.h"
 #include "AndroidPlatformAbstractionModule.h"
 #include "AndroidPlatformConfigBuilder.h"
+#include "AndroidAutomatedScreenshotController.h"
 #include "ApiKey.h"
 #include "AppHost.h"
 #include "AppInterface.h"
@@ -67,6 +68,8 @@
 #include "WebConnectivityValidator.h"
 #include "SurveyViewModule.h"
 #include "SenionLabBroadcastReceiver.h"
+#include "AndroidAutomatedScreenshotController.h"
+#include "AutomatedScreenshotController.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -127,8 +130,10 @@ AppHost::AppHost(
 	,m_userInteractionEnabledChangedHandler(this, &AppHost::HandleUserInteractionEnabledChanged)
     ,m_pSenionLabLocationModule(NULL)
     ,m_pIndoorAtlasLocationModule(NULL)
-    ,m_pSenionLabBroadcastReceiver(NULL)
     ,m_pInteriorsLocationServiceModule(NULL)
+    ,m_pSenionLabBroadcastReceiver(NULL)
+    ,m_pAndroidAutomatedScreenshotController(NULL)
+    ,m_screenshotService(m_nativeState)
 {
     ASSERT_NATIVE_THREAD
 
@@ -201,7 +206,8 @@ AppHost::AppHost(
                  *m_pAndroidFlurryMetricsService,
                  *this,
                  *m_pMenuReactionModel,
-                 m_userIdleService);
+                 m_userIdleService,
+                 m_screenshotService);
 
     Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
     Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
@@ -240,6 +246,12 @@ AppHost::AppHost(
             m_pApp->World().GetRenderingModule(),
             m_messageBus);
 
+    ExampleApp::Automation::AutomatedScreenshotController* screenshotController = m_pApp->AutomatedScreenshotController();
+    if (NULL != screenshotController)
+    {
+        m_pAndroidAutomatedScreenshotController = Eegeo_NEW(ExampleApp::Automation::SdkModel::AndroidAutomatedScreenshotController)(nativeState, *screenshotController);
+    }
+
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
     m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
 }
@@ -252,6 +264,12 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
+
+    if (NULL != m_pAndroidAutomatedScreenshotController)
+    {
+        Eegeo_DELETE m_pAndroidAutomatedScreenshotController;
+        m_pAndroidAutomatedScreenshotController = NULL;
+    }
 
     Eegeo_DELETE m_pModalBackgroundNativeViewModule;
     m_pModalBackgroundNativeViewModule = NULL;
@@ -737,4 +755,3 @@ void AppHost::HandleOpenUrlEvent(const AppInterface::UrlData& data)
 {
 	m_pApp->Event_OpenUrl(data);
 }
-

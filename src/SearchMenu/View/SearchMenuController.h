@@ -36,7 +36,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<SearchMenuController> m_onSearchClearedCallback;
                 Eegeo::Helpers::TCallback1<SearchMenuController, int> m_onSearchItemSelectedCallback;
                 Eegeo::Helpers::TCallback0<SearchMenuController> m_onModalBackgroundTappedCallback;
-                
+                Eegeo::Helpers::TCallback1<SearchMenuController, const OpenSearchMenuMessage&> m_onOpenSearchMenuHandler;
+
                 void OnSearchItemAdded(Menu::View::MenuItemModel& item);
                 
                 void OnSearchItemRemoved(Menu::View::MenuItemModel& item);
@@ -60,7 +61,9 @@ namespace ExampleApp
                 void OnSearchItemSelected(int& index);
                 
                 void OnModalBackgroundTapped();
-                
+
+                void OnOpenSearchMenuMessage(const OpenSearchMenuMessage& message);
+
             protected:
                 
                 virtual void RefreshPresentation();

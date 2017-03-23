@@ -1,0 +1,115 @@
+apply plugin: 'com.android.application'
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+
+	dependencies {
+		classpath 'com.android.tools.build:gradle:2.3.0'
+	}
+}
+
+allprojects {
+	repositories {
+		jcenter()
+	}
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        applicationId "com.eegeo.mobileexampleapp"
+        minSdkVersion 19
+        targetSdkVersion 24
+        multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
+		
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-Wall", "-Wno-unknown-pragmas", "-Wno-sign-compare", "-Wno-format-security",
+                         "-Wno-reorder", "-Wno-expansion-to-defined", "-frtti", "-fexceptions", "-std=c++11",
+                         "-D__STDC_FORMAT_MACROS"
+                arguments "-DANDROID=1", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_MODE=arm"
+            }
+
+            ndk {
+                abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
+            }
+        }
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            res.srcDirs = ['res']
+            java.srcDirs = ['src']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs', 'libs/indooratlas']
+        }
+
+        androidTest {
+            java.srcDirs = ['tests']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            externalNativeBuild {
+                cmake {
+                    cppFlags "-g"
+                    arguments "-DDEBUG=1"
+                }
+            }
+
+            jniDebuggable true
+            debuggable true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        normal {}
+
+        screenshot {
+            externalNativeBuild {
+                cmake {
+                   cppFlags "-DAUTOMATED_SCREENSHOTS=1"
+                }
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            // Set path to external eegeo-mobile top CMakeLists here and in sdk/CMakeLists.txt
+            path "CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // compile 'com.android.support:appcompat-v7:25.2.0'
+    // compile 'com.android.support:support-core-utils:25.2.0'
+    compile 'com.android.support:multidex:1.0.1'
+
+    androidTestCompile 'tools.fastlane:screengrab:1.0.2'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
+}

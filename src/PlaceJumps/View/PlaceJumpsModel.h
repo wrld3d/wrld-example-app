@@ -18,7 +18,7 @@ namespace ExampleApp
             {
             public:
 
-                PlaceJumpModel(std::string& name, Eegeo::Space::LatLong location, float headingDegrees, float distance, std::string& icon);
+                PlaceJumpModel(const std::string& name, Eegeo::Space::LatLong location, float headingDegrees, float distance, const std::string& icon);
 
                 std::string GetName() const
                 {
