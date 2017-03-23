@@ -3,6 +3,10 @@ cmake_minimum_required(VERSION 3.1)
 set(CMAKE_TOOLCHAIN_FILE "../cmake/toolchain/ios/iOS.cmake")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/templates/ios)
 
+macro (unset_xcode_property TARGET XCODE_PROPERTY)
+  set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY})
+endmacro (set_xcode_property)
+
 if(NOT ${IOS}) 
 	message(FATAL_ERROR "Incorrect toolchain set: ${CMAKE_TOOLCHAIN_FILE}")
 endif(NOT ${IOS})
@@ -31,6 +35,9 @@ set(storyboards
     ExampleApp/en.lproj/MainStoryboard_iPad.storyboard
     ExampleApp/en.lproj/MainStoryboard_iPhone.storyboard)
 
+set(CMAKE_Swift_COMPILER_FORCED 1)
+enable_language(Swift)
+
 # plist settings
 set(EEGEO_PLIST_BUNDLE_EXECUTABLE "\${EXECUTABLE_NAME}")
 set(EEGEO_PLIST_BUNDLE_IDENTIFIER "com.eegeo.\${PRODUCT_NAME:rfc1034identifier}")
@@ -48,6 +55,7 @@ set(eegeo_sdk_libs "-lapps-on-maps-cpp11 -lapps-on-maps-cpp11-sim -lsdk-extensio
 
 set(ios_frameworks 
   "-framework CoreLocation
+  -framework CoreFoundation 
   -framework MobileCoreServices 
   -framework SystemConfiguration 
   -framework CFNetwork 
@@ -86,6 +94,21 @@ PROPERTIES
 RESOURCE "${allresources}"
 )
 
+find_package(XCTest REQUIRED)
+# CMake adds the xctest framework path to the compiler's include path which is forcibly injected into
+# OTHER_SWIFT_FLAGS.  This causes the header to be found twice by swift, resulting in the error 
+# "non-modular header inside framework module".  Clearing the framework include path solves the problem
+# and doesn't appear to have any adverse effect on the Obj-C side.
+set(XCTest_INCLUDE_DIRS "")
+
+xctest_add_bundle(FastlaneUITest ${TARGET_NAME}
+  fastlane_uitest/UITests.mm
+  fastlane_uitest/SnapshotHelper2-3.swift
+  fastlane_uitest/Info.plist)
+set_target_properties(FastlaneUITest
+  PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/fastlane_uitest/Info.plist)
+xctest_add_test(XCTest.FastlaneUITest FastlaneUITest)
+
 # project settings
 set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=Debug] "dwarf")
 set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=MinSizeRel] "dwarf-with-dsym")
@@ -111,6 +134,25 @@ set_xcode_property(${executable_name} FRAMEWORK_SEARCH_PATHS "${framework_search
 set_xcode_property(${executable_name} CLANG_CXX_LANGUAGE_STANDARD "c++11")
 set_xcode_property(${executable_name} CLANG_CXX_LIBRARY "libc++")
 
+set_xcode_property(${executable_name} LD_RUNPATH_SEARCH_PATHS "@executable_path/Frameworks")
+
+# CMakeDetermineCompilerId appears to currently hard-code the version at certain points in the pbxproj.
+set_xcode_property(${executable_name} SWIFT_VERSION "2.3")
+unset_xcode_property(${executable_name} OTHER_SWIFT_FLAGS)
+
+# Test Project Settings
+set_xcode_property(FastlaneUITest LD_RUNPATH_SEARCH_PATHS "$(inherited) @executable_path/Frameworks @loader_path/Frameworks")
+set_xcode_property(FastlaneUITest ONLY_ACTIVE_ARCH "YES")
+set_xcode_property(FastlaneUITest PRODUCT_BUNDLE_IDENTIFIER "com.eegeo.FastlaneUITest")
+unset_xcode_property(FastlaneUITest TEST_HOST)
+unset_xcode_property(FastlaneUITest BUNDLE_LOADER)
+set_xcode_property(FastlaneUITest USES_XCTRUNNER "YES")
+set_xcode_property(FastlaneUITest TEST_TARGET_NAME "${executable_name}")
+set_xcode_property(FastlaneUITest FRAMEWORK_SEARCH_PATHS "${framework_search_paths}")
+set_target_properties(FastlaneUITest PROPERTIES XCODE_PRODUCT_TYPE "com.apple.product-type.bundle.ui-testing")
+
 set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "YES")
-set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/build/Debug-iphoneos/ RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/build/Release-iphoneos/)
+set_target_properties(${PROJECT_NAME} PROPERTIES
+  RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/build/Debug-iphoneos/
+  RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/build/Release-iphoneos/)
 
