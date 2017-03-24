@@ -34,7 +34,7 @@ namespace ExampleApp
             {
                 std::string imageAssetName = "eegeo_logo";
                 std::string popupTitle = "Maps by eeGeo";
-                std::string popupBody = "The " + m_appName + " app is open source. It's built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps.";
+                std::string popupBody = "This app is open source. It's built using the eeGeo maps SDK, a cross platform API for building engaging, customizable apps.";
                 std::string webUrl = "http://eegeo.com/?utm_source=" + m_googleAnalyticsReferrerToken + "&utm_medium=referral&utm_campaign=eegeo";
                 
                 return Create(imageAssetName,
