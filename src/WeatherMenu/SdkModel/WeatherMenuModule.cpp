@@ -22,7 +22,16 @@ namespace ExampleApp
                                                  VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                  Metrics::IMetricsService& metricsService,
-                                                 const AppModes::SdkModel::IAppModeModel& appModeModel)
+                                                 const AppModes::SdkModel::IAppModeModel& appModeModel,
+                                                 Eegeo::Resources::CityThemes::ICityThemesService& cityThemeService,
+                                                 Eegeo::Resources::CityThemes::ICityThemeRepository& cityThemeRepository)
+            : m_messageBus(messageBus)
+            , m_metricsService(metricsService)
+            , m_appModeModel(appModeModel)
+            , m_cityThemeService(cityThemeService)
+            , m_cityThemeRepository(cityThemeRepository)
+            , m_themeManifestChangedCallback(this, &WeatherMenuModule::HandleThemeManifestChanged)
+            , m_weatherStates()
             {
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
@@ -38,31 +47,53 @@ namespace ExampleApp
                 std::string json((std::istreambuf_iterator<char>(stream)),
                                  (std::istreambuf_iterator<char>()));
 
-                std::vector<WeatherMenuStateModel> weatherStates;
-                if(!WeatherMenuDataParser::ParseWeatherStates(json, weatherStates))
+                if(!WeatherMenuDataParser::ParseWeatherStates(json, m_weatherStates))
                 {
                     Eegeo_ASSERT(false, "Failed to parse weatherstates.json definitions file.");
                 }
 
                 m_pWeatherController = Eegeo_NEW(WeatherController)(visualMapService);
 
-                for(std::vector<WeatherMenuStateModel>::iterator it = weatherStates.begin(); it != weatherStates.end(); it++)
-                {
-                    WeatherMenuStateModel& weatherState = *it;
-                    m_pMenuOptionsModel->AddItem(weatherState.GetName(),
-                                                 weatherState.GetName(), "", weatherState.GetIcon(),
-                                                 Eegeo_NEW(View::WeatherMenuStateOption)(weatherState, messageBus, metricsService, appModeModel));
-                }
-
                 m_pWeatherSelectedMessageHandler = Eegeo_NEW(WeatherSelectedMessageHandler)(*m_pWeatherController, messageBus);
+
+                RefreshMenuOptions();
+
+                m_cityThemeService.SubscribeSharedThemeDataChanged(m_themeManifestChangedCallback);
             }
 
             WeatherMenuModule::~WeatherMenuModule()
             {
+                m_cityThemeService.UnsubscribeSharedThemeDataChanged(m_themeManifestChangedCallback);
                 Eegeo_DELETE m_pWeatherSelectedMessageHandler;
                 Eegeo_DELETE m_pWeatherController;
                 Eegeo_DELETE m_pMenuOptionsModel;
                 Eegeo_DELETE m_pMenuModel;
+            }
+
+            void WeatherMenuModule::RefreshMenuOptions()
+            {
+                for(std::vector<WeatherMenuStateModel>::iterator it = m_weatherStates.begin(); it != m_weatherStates.end(); ++it)
+                {
+                    WeatherMenuStateModel& weatherState = *it;
+                    m_pMenuOptionsModel->RemoveItem(weatherState.GetName());
+                }
+
+                for(std::vector<WeatherMenuStateModel>::iterator it = m_weatherStates.begin(); it != m_weatherStates.end(); ++it)
+                {
+                    WeatherMenuStateModel& weatherState = *it;
+                    if (m_cityThemeRepository.HasThemeWithNameContaining(weatherState.GetSeasonState()))
+                    {
+                        m_pMenuOptionsModel->AddItem(
+                            weatherState.GetName(),
+                            weatherState.GetName(), "", weatherState.GetIcon(),
+                            Eegeo_NEW(View::WeatherMenuStateOption)(weatherState, m_messageBus, m_metricsService, m_appModeModel));
+                    }
+                }
+            }
+
+            void WeatherMenuModule::HandleThemeManifestChanged()
+            {
+                RefreshMenuOptions();
             }
         }
     }

@@ -597,7 +597,9 @@ namespace ExampleApp
                                                                                                m_pVisualMapModule->GetVisualMapService(),
                                                                                                m_messageBus,
                                                                                                m_metricsService,
-                                                                                               *m_pAppModeModel);
+                                                                                               *m_pAppModeModel,
+                                                                                               cityThemesModule.GetCityThemesService(),
+                                                                                               cityThemesModule.GetCityThemesRepository());
 
         m_pSettingsMenuModule = Eegeo_NEW(ExampleApp::SettingsMenu::SdkModel::SettingsMenuModule)(m_identityProvider,
                                                                                                   m_pReactionControllerModule->GetReactionControllerModel(),
