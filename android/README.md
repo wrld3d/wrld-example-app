@@ -6,25 +6,20 @@
 
 ![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
 
-* [Requirements](#requirements)
-* [Setup](#setup)
-    * [Setting up the Android SDK](#setting-up-the-android-sdk)
-    * [Setting up Eclipse](#setting-up-eclipse)
-    * [Setting up the project](#setting-up-the-project)
-* [Optional Steps](#optional-steps)
-    * [Build for debugging](#build-for-debugging)
-    * [Speeding up build times](#speeding-up-build-times)
-* [Troubleshooting](#troubleshooting)
-    * [Eclipse hangs adding native support](#eclipse-hangs-adding-native-support)
-    * [Eclipse hangs during first build](#eclipse-hangs-during-first-build)
 
 Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
 
+* [Requirements](#requirements)
+* [Android Studio Setup](#setup)
+* [Speeding up build times](#speeding-up-build-times)
+* [Troubleshooting](#troubleshooting)
+
+[Instructions for Eclipse development](#eclipse-project-setup-legacy) are included for transition support. The recommended development environment for Android is now Android Studio.  
+
+
 ## Requirements
 
-- [Eclipse IDE for Java Developers](https://eclipse.org/downloads/)   
-- [Android SDK Tools](http://developer.android.com/sdk/index.html#Other) (24.4.1 or higher)
-- [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (r11c or Higher)
+- [Android Studio](https://developer.android.com/studio/index.html).
 
 ## Setup
 
@@ -33,9 +28,71 @@ First, download the latest eeGeo Android SDK by running the following command in
 *   `./update.platform.sh -p android`
     *   We recommend you run this step frequently to keep your SDK version up to date.
 
-The following steps will guide you through installing and setting up the Android SDK, and Eclipse. If you already have these installed and setup, you can skip to [here](#setting-up-the-project).
+### Setting up the project
 
-### Setting up the Android SDK
+1. Open Android Studio and if prompted about a missing SDK, (minimally) install the `SDK` and `SDK Platform`.
+2. Select `Open an existing Android Studio project`
+3. Navigate to the [eegeo-example-app/android](https://github.com/eegeo/eegeo-example-app/tree/master/android) directory and hit `Ok`.
+4. When prompted to generate a gradle wrapper, select `Ok`.
+5. Once project configuration completes, Open the `Build Variants` pane using the button on the lower-left side, and from the `Build Variant` dropdown, ensure `normalDebug` is selected.
+
+## Speeding up build times
+
+By default, the project is compiled for three different architectures: **armeabi**, **armeabi-v7a**, and **arm64-v8a**.
+If you do not need all of these, or you wish to quickly test on a single architecture, you can remove some of them from [build.gradle](/android/build.gradle#L42).
+    -   For example: `abiFilters "armeabi"`
+
+## Troubleshooting
+
+If gradle project configuration fails, Android Studio may prompt with either of the following:
+
+1. NDK not configured: Select `Install NDK and sync project`, accept the license agreement and continue.
+2. Failed to find CMake: Select `Install CMake and sync project`.
+
+After this project configuration should succeed.
+
+Alternatively, if a `Gradle 'android' project refresh failed` prompt is not displayed, select `File > Settings`.
+
+1. Select the list item `Appearance & Behavior > System Settings > Android SDK`
+2. Click the `SDK Tools` and check the following:
+    * Android SDK Built-Tools,
+    * CMake,
+    * LLDB,
+    * Android SDK Platform-Tools,
+    * Android SDK Tools, and
+    * NDK.
+
+If an error persists, you may try deleting the directory `%APPDATA%/../Local/Android` on Windows or `~/Library/Android` on OSX.  This should force Android Studio to prompt for a re-install of the SDK and tools.
+
+## Eclipse Project Setup (legacy)
+
+These instructions for Eclipse development are included for transition support only. The recommended development environment for Android is now Android Studio.
+
+* [Eclipse Project Setup](#setting-up-the-android-sdk-for-use-with-eclipse) 
+    * [Setting up the Android SDK](#setup-for-use-with-eclipse)
+    * [Setting up Eclipse](#setting-up-eclipse)
+    * [Setting up the project](#setting-up-the-project)
+* [Eclipse optional Steps](#optional-steps)
+    * [Build for debugging](#build-for-debugging)
+    * [Speeding up build times in Eclipse](#speeding-up-build-times-in-eclipse)
+* [Eclipse troubleshooting](#eclipse-troubleshooting)
+    * [Eclipse hangs adding native support](#eclipse-hangs-adding-native-support)
+    * [Eclipse hangs during first build](#eclipse-hangs-during-first-build)
+    
+## Setting up the Android SDK for use with Eclipse 
+
+Ensure you have the latest eeGeo Android SDK by running the following command in the root of the repository:
+
+*   `./update.platform.sh -p android`
+    *   We recommend you run this step frequently to keep your SDK version up to date.
+    
+### Requirements for use with Eclipse
+
+- [Eclipse IDE for Java Developers](https://eclipse.org/downloads/)
+- [Android SDK Tools](http://developer.android.com/sdk/index.html#Other) (24.4.1 or higher)
+- [Android NDK](http://developer.android.com/tools/sdk/ndk/index.html) (r11c or Higher)
+
+### Setup for use with Eclipse
 
 1.  Open Android's SDK Manager, which was installed with the Android SDK Tools
 2.  Install the Android SDK Build-tools (23.0.2)
@@ -53,7 +110,7 @@ The following steps will guide you through installing and setting up the Android
 7.  Read and accept the license agreements, then click `Finish`.
 8.  Once the installation is complete, restart Eclipse.
 
-### Setting up the project
+### Setting up the Eclipse project
 
 1.  In Eclipse, go to `File > Switch Workspace > Other...`
 2.  Select an empty folder to use as a Workspace
@@ -83,7 +140,7 @@ If you wish to attach a debugger, you will need to build the app in debug mode. 
 
 See the [NDK documentation](http://developer.android.com/ndk/guides/ndk-build.html#dvr) for more details on the `NDK_DEBUG` option and how it interacts with the `android:debuggable` option in the Android manifest.
 
-### Speeding up build times
+### Speeding up build times in Eclipse
 
 1.  Compiling on multiple threads:
 
@@ -98,7 +155,7 @@ See the [NDK documentation](http://developer.android.com/ndk/guides/ndk-build.ht
     -   If you do not need all of these, or you wish to quickly test on a single architecture, you can remove some of them from [Application.mk](/android/jni/Application.mk#L4).
     -   For example: `APP_ABI := armeabi`
 
-## Troubleshooting
+## Eclipse Troubleshooting
 
 ### Eclipse hangs adding native support  
 
@@ -109,7 +166,7 @@ Some developers have experienced a deadlock when adding native support to the pr
     - .project file
     - .cproject file
     - .settings directory
-- Create the workspace again as described in [Setting up the project](#setting-up-the-project)
+- Create the workspace again as described in [Setting up the eclipse project](#setting-up-the-eclipse-project)
 - Delete the contents of [Android.mk](/android/jni/Android.mk#L4).
 - Add native support to the project
 - Revert the change to Android.mk
