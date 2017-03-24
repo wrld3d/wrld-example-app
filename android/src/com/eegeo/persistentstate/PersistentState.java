@@ -37,7 +37,7 @@ public class PersistentState
 
     public double getDouble(String key)
     {
-        return (Double) m_sharedPref.getAll().get(key);
+        return ((Float) m_sharedPref.getAll().get(key)).doubleValue();
     }
 
     public String getString(String key)

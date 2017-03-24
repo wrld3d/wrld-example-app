@@ -2,6 +2,8 @@
 <resources>
     <string name="eula_link"><a href='http://www.eegeo.com/tos'>EULA</a></string>
     <string name="privacy_link"><a href='http://www.eegeo.com/privacy'>Privacy Policy</a></string>
+    <string name="legal_link"><a href='http://www.eegeo.com/legal'>Legal</a></string>
+    <string name="team_link"><a href='http://www.eegeo.com/team'>Team</a></string>
     
     <string name="about_page_title">About this app...</string>
     
@@ -42,4 +44,14 @@
     <string name="required_location_permission_text">Please provide access to Location permission for this functionality to work.</string>
     <string name="ok_text">Ok</string>
     <string name="cancel_text">Cancel</string>
+    
+    <string name="initial_ux_welcome_title">Welcome</string>
+    <string name="initial_ux_search_dialog_title">Search</string>
+    <string name="initial_ux_search_dialog_description">Find places fast or just\nstart exploring.</string>
+    <string name="initial_ux_compass_dialog_title">Compass</string>
+    <string name="initial_ux_compass_dialog_description">Locate me.\nLock rotation to\ncompass.</string>
+    <string name="initial_ux_mapmode_dialog_title">Map Mode</string>
+    <string name="initial_ux_mapmode_dialog_description">Simple 2D View</string>
+    <string name="initial_ux_pincreation_dialog_title">Drop Pin</string>
+    <string name="initial_ux_pincreation_dialog_description">Drop a pin on map\nto bookmark a place.</string>
 </resources>

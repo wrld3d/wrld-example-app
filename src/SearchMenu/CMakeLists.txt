@@ -5,6 +5,8 @@ set(currsources
   ../src/SearchMenu/SearchMenu.h
   ../src/SearchMenu/SearchMenuPerformedSearchMessage.cpp
   ../src/SearchMenu/SearchMenuPerformedSearchMessage.h
+  ../src/SearchMenu/OpenSearchMenuMessage.cpp
+  ../src/SearchMenu/OpenSearchMenuMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\SearchMenu FILES ${currsources})

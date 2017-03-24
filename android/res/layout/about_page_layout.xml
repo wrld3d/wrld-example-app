@@ -10,29 +10,7 @@
 	    android:layout_height="fill_parent"
     	android:layout_centerInParent="true"
 	    android:orientation="vertical"
-	    android:paddingTop="10dp"
         android:background="@color/gold">
-    
-        <!-- Title bar -->
-        <RelativeLayout 
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-            
-            <TextView
-                android:id="@+id/about_page_view_title"
-                android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center_vertical"
-                android:text="@string/about_page_title"
-                android:textColor="@color/gold"
-                android:textSize="18dp" />
-            
-        </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="0dp"
@@ -60,9 +38,10 @@
 	                    android:layout_height="wrap_content"
 	                    android:padding="5dp"
 	                    android:textColor="@color/darkgrey"
-	                    android:textSize="12dp"
+	                    android:textSize="14dp"
 	                    android:paddingLeft="3dp"
-	                    android:text="Developed by eeGeo"
+	                    android:layout_marginTop="50dp"
+	                    android:text="Developed by"
 	                    android:gravity="center"
 	                    android:layout_marginBottom="5dp"/>
 	
@@ -81,7 +60,7 @@
 	                    android:layout_height="wrap_content"
 	                    android:paddingTop="5dp"
 	                    android:textColor="@color/darkgrey"
-	                    android:textSize="12dp"
+	                    android:textSize="14dp"
 	                    android:paddingLeft="3dp"
 	                    android:gravity="center"/>
 	                
@@ -93,7 +72,7 @@
 	                    android:text="@string/eula_link"
 	                    android:textColor="@color/blue"
 						android:linksClickable="true"
-	                    android:textSize="12dp"
+	                    android:textSize="14dp"
 	                    android:paddingLeft="3dp"
 	                    android:gravity="center"/>
 	                
@@ -102,8 +81,34 @@
 	                    android:layout_width="fill_parent"
 	                    android:layout_height="wrap_content"
 	                    android:paddingTop="5dp"
-	                    android:textSize="12dp"
+	                    android:textSize="14dp"
 	                    android:text="@string/privacy_link"
+	                    android:textColor="@color/blue"
+						android:linksClickable="true"
+	                    android:paddingLeft="3dp"
+	                    android:gravity="center"
+	                    android:layout_marginBottom="5dp"/>
+	                
+	                <TextView
+	                    android:id="@+id/about_page_view_legal_link"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:paddingTop="5dp"
+	                    android:textSize="14dp"
+	                    android:text="@string/legal_link"
+	                    android:textColor="@color/blue"
+						android:linksClickable="true"
+	                    android:paddingLeft="3dp"
+	                    android:gravity="center"
+	                    android:layout_marginBottom="5dp"/>
+	                
+	                <TextView
+	                    android:id="@+id/about_page_view_team_link"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:paddingTop="5dp"
+	                    android:textSize="14dp"
+	                    android:text="@string/team_link"
 	                    android:textColor="@color/blue"
 						android:linksClickable="true"
 	                    android:paddingLeft="3dp"
@@ -117,19 +122,19 @@
         
         <!--  Bottom bar with close button -->
         <RelativeLayout
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content">
- 
-         <ImageView
-             android:id="@+id/about_page_view_close_button"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentRight="true"
-             android:background="@drawable/menu_button_color_states"
-		   	 android:src="@drawable/button_pin_close_states" />
-         
+ 		   android:layout_width="fill_parent"
+		   android:layout_height="wrap_content">
+            
+            <ImageView
+			   android:id="@+id/about_page_view_close_button"
+			   android:layout_width="wrap_content"
+			   android:layout_height="wrap_content"
+			   android:layout_alignParentRight="true"
+		       android:background="@drawable/menu_button_color_states"
+	  	 	   android:src="@drawable/button_pin_close_states" />
+            
          </RelativeLayout>
 	        
 	</LinearLayout>
-	
+  
 </RelativeLayout>

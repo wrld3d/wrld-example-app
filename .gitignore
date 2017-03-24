@@ -25,4 +25,6 @@ obj
 ios/XcodeBuild/
 **/ApplicationConfigs/staging_config.json
 **/.vscode/
+.gradle
+**/.externalNativeBuild
 

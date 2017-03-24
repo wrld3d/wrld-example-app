@@ -45,6 +45,9 @@ namespace ExampleApp
             extern UIColor* CompassControlHighlightColor;
             
             extern UIColor* UiShadowColor;
+            
+            extern UIColor* White;
+            extern UIColor* Black;
         }
     }
 }

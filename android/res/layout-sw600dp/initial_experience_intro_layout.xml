@@ -1,0 +1,156 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/initial_ux_view_background"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false" >
+
+    <include layout="@layout/initial_experience_intro_welcome_layout" />
+
+    <!-- Search Menu dialog -->
+
+    <RelativeLayout
+        android:id="@+id/initial_ux_search_menu_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="22dp">
+
+        <include layout="@layout/initial_experience_intro_dialog_layout"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"/>
+        
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp">
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="14dp"
+                android:src="@drawable/arrow3_left_blue"
+                android:scaleType="fitXY"/>
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/arrow3_left"
+                android:scaleType="fitXY"/>
+        </RelativeLayout>
+        
+    </RelativeLayout>
+
+    <!-- Compass dialog -->
+
+    <LinearLayout
+        android:id="@+id/initial_ux_compass_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="99dp"
+        android:orientation="vertical">
+
+        <include layout="@layout/initial_experience_intro_dialog_layout"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-3dp">
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="12dp"
+                android:layout_marginTop="0.5dp"
+                android:src="@drawable/arrow3_down_blue"
+                android:scaleType="fitXY"/>
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginBottom="4dp"
+                android:src="@drawable/arrow3_down"
+                android:scaleType="fitXY"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- Mapmode dialog -->
+
+    <RelativeLayout
+        android:id="@+id/initial_ux_mapmode_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:paddingRight="418dp"
+        android:orientation="horizontal" >
+
+        <include layout="@layout/initial_experience_intro_dialog_layout"
+            android:id="@+id/initial_ux_mapmode_dialog_container"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-3dp"
+            android:layout_marginTop="-40dp"
+            android:layout_toRightOf="@id/initial_ux_mapmode_dialog_container"
+            android:layout_below="@id/initial_ux_mapmode_dialog_container">
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="0.5dp"
+                android:src="@drawable/arrow3_right_blue"
+                android:scaleType="fitXY"/>
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/arrow3_right"
+                android:scaleType="fitXY"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!-- Pin Creation dialog -->
+
+    <RelativeLayout
+        android:id="@+id/initial_ux_pin_creation_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="469dp"
+        android:orientation="horizontal" >
+        
+        <include layout="@layout/initial_experience_intro_dialog_layout"
+            android:id="@+id/initial_experience_intro_dialog_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="62dp">
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="14dp"
+                android:src="@drawable/arrow3_left_blue"
+                android:scaleType="fitXY"/>
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/arrow3_left"
+                android:scaleType="fitXY"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

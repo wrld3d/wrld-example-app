@@ -19,6 +19,7 @@
 #include "AndroidInputBoxFactory.h"
 #include "AndroidKeyboardInputFactory.h"
 #include "AndroidAlertBoxFactory.h"
+#include "AndroidAutomatedScreenshotController.h"
 #include "NativeUIFactories.h"
 #include "TerrainHeightRepository.h"
 #include "GlobalShadowing.h"
@@ -62,6 +63,8 @@
 #include "IndoorAtlasLocationModule.h"
 #include "InteriorsLocationServiceModule.h"
 #include "SenionLabBroadcastReceiver.h"
+#include "AndroidAutomatedScreenshotController.h"
+#include "AndroidScreenshotService.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -169,6 +172,9 @@ private:
     ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationModule* m_pIndoorAtlasLocationModule;
     ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule* m_pInteriorsLocationServiceModule;
     ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver* m_pSenionLabBroadcastReceiver;
+
+    ExampleApp::Automation::SdkModel::AndroidAutomatedScreenshotController* m_pAndroidAutomatedScreenshotController;
+    ExampleApp::Automation::SdkModel::AndroidScreenshotService m_screenshotService;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();

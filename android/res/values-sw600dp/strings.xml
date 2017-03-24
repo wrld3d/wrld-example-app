@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="initial_ux_compass_dialog_description">Locate me.\nLock rotation to compass.</string>
+    <string name="initial_ux_pincreation_dialog_description">Drop a pin to bookmark\na place on the map.</string>
+</resources>

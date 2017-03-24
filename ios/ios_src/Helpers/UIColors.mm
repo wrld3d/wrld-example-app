@@ -45,6 +45,9 @@ namespace ExampleApp
             UIColor* CompassControlHighlightColor = [[UIColor alloc] initWithRed:0.f/255.f green:43.f/255.f blue:99.f/255.f alpha:1.f];
             
             UIColor* UiShadowColor = [[UIColor alloc] initWithRed:204/255.f green:204/255.f blue:204/255.f alpha:1.f];
+            
+            UIColor* White = [[UIColor alloc] initWithRed:1.f green:1.f blue:1.f alpha:1.f];
+            UIColor* Black = [[UIColor alloc] initWithRed:0.f green:0.f blue:0.f alpha:1.f];
         }
     }
 }

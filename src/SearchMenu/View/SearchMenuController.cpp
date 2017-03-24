@@ -42,6 +42,7 @@ namespace ExampleApp
             , m_onSearchClearedCallback(this, &SearchMenuController::OnSearchCleared)
             , m_onSearchItemSelectedCallback(this, &SearchMenuController::OnSearchItemSelected)
             , m_onModalBackgroundTappedCallback(this, &SearchMenuController::OnModalBackgroundTapped)
+            , m_onOpenSearchMenuHandler(this, &SearchMenuController::OnOpenSearchMenuMessage)
             {
                 m_searchMenuView.InsertSearchPeformedCallback(m_onSearchCallback);
                 m_searchMenuView.InsertSearchClearedCallback(m_onSearchClearedCallback);
@@ -57,6 +58,7 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_performedQueryHandler);
                 m_messageBus.SubscribeUi(m_receivedQueryResponseHandler);
                 m_messageBus.SubscribeUi(m_receivedQueryResultsRemovedHandler);
+                m_messageBus.SubscribeUi(m_onOpenSearchMenuHandler);
 
                 const size_t numSections = m_viewModel.SectionsCount();
                 std::vector<Menu::View::IMenuSectionViewModel*> sections;
@@ -73,6 +75,7 @@ namespace ExampleApp
             
             SearchMenuController::~SearchMenuController()
             {
+                m_messageBus.UnsubscribeUi(m_onOpenSearchMenuHandler);
                 m_messageBus.UnsubscribeUi(m_receivedQueryResultsRemovedHandler);
                 m_messageBus.UnsubscribeUi(m_receivedQueryResponseHandler);
                 m_messageBus.UnsubscribeUi(m_performedQueryHandler);
@@ -186,6 +189,24 @@ namespace ExampleApp
             void SearchMenuController::UpdateOpenState()
             {
                 m_viewModel.UpdateOpenState(1.0f);
+            }
+
+            void SearchMenuController::OnOpenSearchMenuMessage(const OpenSearchMenuMessage& message)
+            {
+                if (message.OpenMenu())
+                {
+                    if (!IsFullyOpen())
+                    {
+                        m_viewModel.Open(false);
+                    }
+                }
+                else
+                {
+                    if (IsFullyOpen())
+                    {
+                        m_viewModel.Close();
+                    }
+                }
             }
         }
     }

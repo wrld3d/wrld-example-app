@@ -187,7 +187,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     @Override
     public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
     {
-    	updateClearButtonVisibility();
+        setClearButtonVisible(true);
         if (actionId == EditorInfo.IME_ACTION_DONE ||
         	actionId == KeyEvent.KEYCODE_ENTER)
         {
@@ -221,9 +221,13 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count)
     {
-    	updateClearButtonVisibility();
-    } 
-    
+        if(count != 0) {
+            setClearButtonVisible(true);
+        } else {
+            setClearButtonVisible(false);
+        }
+    }
+
     public void removeSearchKeyboard()
     {
         m_activity.dismissKeyboard(m_editText.getWindowToken());
@@ -251,12 +255,23 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     {
     	m_editText.setText(searchText);
     	m_isTag = isTag;
-    	updateClearButtonVisibility();
+        if(!searchText.isEmpty()) {
+            setClearButtonVisible(true);
+        } else {
+            setClearButtonVisible(false);
+        }
     }
     
-    private void updateClearButtonVisibility()
+    private void setClearButtonVisible(boolean visible)
     {
-    	m_closeButtonView.setVisibility(View.VISIBLE);
+        if(visible)
+        {
+            m_closeButtonView.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            m_closeButtonView.setVisibility(View.INVISIBLE);
+        }
     }
     
     public void setSearchResultCount(final int searchResultCount)
@@ -270,8 +285,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     		{
     			m_searchMenuAnimationHandler.hideSearchResultsView();
     		}
-    		
-    		m_closeButtonView.setVisibility(View.INVISIBLE);
+
     		m_anchorArrow.setVisibility(View.GONE);
     		m_searchMenuResultsSeparator.setVisibility(View.GONE);
     	}
