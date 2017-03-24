@@ -81,6 +81,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private boolean m_searchResultsScrollable;
     private SearchResultsScrollButtonTouchDownListener m_searchResultsScrollButtonTouchDownListener;
     private SearchResultsScrollListener m_searchResultsScrollListener;
+
+    private int m_menuScrollIndex = 0;
     	
     public SearchMenuView(MainActivity activity, long nativeCallerPointer)
     {
@@ -465,13 +467,16 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 		}
 		
     	updateSearchMenuHeight(m_resultsCount);
+
+        m_searchList.setSelection(m_menuScrollIndex);
 	}
 
 	@Override
 	public void onClosedOnScreenAnimationComplete()
 	{
-		super.onClosedOnScreenAnimationComplete();
-		
+        super.onClosedOnScreenAnimationComplete();
+
+        m_menuScrollIndex = m_searchList.getFirstVisiblePosition();
         m_list.setVisibility(View.GONE);
         m_searchList.setVisibility(View.GONE);
         if(m_isFindMenuChildItemClicked)
