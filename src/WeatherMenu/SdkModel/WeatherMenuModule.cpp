@@ -7,6 +7,8 @@
 #include "WeatherMenuDataParser.h"
 #include "WeatherMenuStateOption.h"
 #include "WeatherController.h"
+#include "ICityThemesService.h"
+#include "ICityThemeRepository.h"
 
 #include <vector>
 #include <string>
