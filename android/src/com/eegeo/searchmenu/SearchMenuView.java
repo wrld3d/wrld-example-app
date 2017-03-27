@@ -347,6 +347,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     public void removeSearchQueryResults()
     {
         setSearchResultCount(0);
+        m_editText.setText("");
     }
     
     public void setSearchSection(final int resultCount,
