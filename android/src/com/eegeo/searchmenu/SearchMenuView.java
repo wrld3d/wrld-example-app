@@ -2,9 +2,26 @@
 
 package com.eegeo.searchmenu;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.eegeo.animation.ReversibleValueAnimator;
+import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.menu.MenuExpandableListAdapter;
+import com.eegeo.menu.MenuExpandableListOnClickListener;
+import com.eegeo.menu.MenuExpandableListView;
+import com.eegeo.menu.MenuListAnimationHandler;
+import com.eegeo.menu.MenuView;
+import com.eegeo.mobileexampleapp.R;
+import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
+import com.eegeo.searchmenu.SearchResultsScrollListener;
+import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
+
 import android.text.Editable;
-import android.text.TextUtils.TruncateAt;
 import android.text.TextWatcher;
+import android.text.TextUtils.TruncateAt;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -23,20 +40,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eegeo.animation.ReversibleValueAnimator;
-import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.menu.MenuExpandableListAdapter;
-import com.eegeo.menu.MenuExpandableListOnClickListener;
-import com.eegeo.menu.MenuExpandableListView;
-import com.eegeo.menu.MenuListAnimationHandler;
-import com.eegeo.menu.MenuView;
-import com.eegeo.mobileexampleapp.R;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener, TextWatcher
 {
