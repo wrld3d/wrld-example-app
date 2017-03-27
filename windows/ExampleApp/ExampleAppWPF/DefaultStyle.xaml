@@ -15,8 +15,8 @@
     <!-- Initial Experience -->
     <System:Double x:Key="InitialExperienceMapModeDialogArrowAngle">4.5</System:Double>
     <System:Double x:Key="InitialExperienceMapModeDialogWidth">298</System:Double>
-    <System:Double x:Key="InitialExperienceCreateReportDialogArrowAngle">180</System:Double>
-    <System:Double x:Key="InitialExperienceCreateReportDialogWidth">320</System:Double>
+    <System:Double x:Key="InitialExperienceDropPinDialogArrowAngle">180</System:Double>
+    <System:Double x:Key="InitialExperienceDropPinDialogWidth">325</System:Double>
     <System:Double x:Key="InitialExperienceDialogArrowSize">26</System:Double>
 
     <!-- Gps Marker Tutorial -->
