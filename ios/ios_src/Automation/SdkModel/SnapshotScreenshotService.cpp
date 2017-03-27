@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
 #include <CoreFoundation/CFMessagePort.h>
+#include "SnapshotMessageConstants.h"
 #include "SnapshotScreenshotService.h"
 
 namespace ExampleApp
@@ -15,7 +16,7 @@ namespace ExampleApp
             }
             
             SnapshotScreenshotService::SnapshotScreenshotService()
-                : m_port(CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR("com.eegeo.mobileexampleapp.group.fastlane.port")))
+                : m_port(CFMessagePortCreateRemote(kCFAllocatorDefault, CFSTR(EEA_SNAPSHOT_PORTNAME)))
             {
             }
 

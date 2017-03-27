@@ -60,6 +60,7 @@
 #include "AppUrlDelegate.h"
 #include "AlwaysActiveUserIdleService.h"
 #include "iOSScreenshotService.h"
+#include "iOSAutomatedScreenshotController.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -159,6 +160,7 @@ private:
 
     Eegeo::Input::AlwaysActiveUserIdleService m_userIdleService;
     ExampleApp::Automation::SdkModel::iOSScreenshotService m_screenshotService;
+    ExampleApp::Automation::SdkModel::iOSAutomatedScreenshotController* m_piOSAutomatedScreenshotController;
 
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();

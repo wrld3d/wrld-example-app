@@ -5,7 +5,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/
 
 macro (unset_xcode_property TARGET XCODE_PROPERTY)
   set_property (TARGET ${TARGET} PROPERTY XCODE_ATTRIBUTE_${XCODE_PROPERTY})
-endmacro (set_xcode_property)
+endmacro (unset_xcode_property)
 
 if(NOT ${IOS}) 
 	message(FATAL_ERROR "Incorrect toolchain set: ${CMAKE_TOOLCHAIN_FILE}")
@@ -108,6 +108,11 @@ xctest_add_bundle(FastlaneUITest ${TARGET_NAME}
 set_target_properties(FastlaneUITest
   PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/fastlane_uitest/Info.plist)
 xctest_add_test(XCTest.FastlaneUITest FastlaneUITest)
+
+option(AUTOMATED_SCREENSHOTS "Build for screenshot automation." OFF)
+if(AUTOMATED_SCREENSHOTS)
+  add_definitions(-DAUTOMATED_SCREENSHOTS)
+endif(AUTOMATED_SCREENSHOTS)
 
 # project settings
 set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=Debug] "dwarf")

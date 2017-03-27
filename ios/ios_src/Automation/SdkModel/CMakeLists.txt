@@ -8,6 +8,7 @@ set(currsources
   ios_src/Automation/SdkModel/iOSScreenshotService.h
   ios_src/Automation/SdkModel/iOSAutomatedScreenshotController.h
   ios_src/Automation/SdkModel/iOSAutomatedScreenshotController.mm
+  ios_src/Automation/SdkModel/SnapshotMessageConstants.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\Automation\\SdkModel FILES ${currsources})

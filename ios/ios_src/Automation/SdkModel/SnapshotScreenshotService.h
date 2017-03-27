@@ -10,12 +10,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            enum SnapshotScreenshotServerMessageId
-            {
-                TakeScreenshotMessageId = 1,
-                ScreenshotsCompleteMessageId = 2
-            };
-
             class SnapshotScreenshotService : public ::ExampleApp::Automation::IScreenshotService
             {
             public:
