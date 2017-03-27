@@ -104,6 +104,8 @@ public class InteriorsExplorerTutorialView implements View.OnTouchListener
     
     public void hide()
     {
+        m_uiExitDialog.setAlpha(0.0f);
+        m_uiChangeFloorDialog.setAlpha(0.0f);
     	m_uiRoot.removeView(m_uiRootView);
     }
     
