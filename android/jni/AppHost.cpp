@@ -133,7 +133,8 @@ AppHost::AppHost(
     ,m_pInteriorsLocationServiceModule(NULL)
     ,m_pSenionLabBroadcastReceiver(NULL)
     ,m_pAndroidAutomatedScreenshotController(NULL)
-    ,m_screenshotService(m_nativeState)
+    ,m_surfaceScreenshotService(screenProperties)
+    ,m_screenshotService(m_nativeState, m_surfaceScreenshotService)
 {
     ASSERT_NATIVE_THREAD
 
@@ -406,6 +407,7 @@ void AppHost::Draw(float dt)
 
     m_pApp->Draw(dt);
     m_pInputProcessor->Update(dt);
+    m_surfaceScreenshotService.ExecuteScreenshot();
 }
 
 void AppHost::HandleApplicationUiCreatedOnNativeThread()

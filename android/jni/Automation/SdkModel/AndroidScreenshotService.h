@@ -2,8 +2,10 @@
 
 #pragma once
 
-#include "ScreengrabScreenshotService.h"
+#include "AlbumScreenshotService.h"
 #include "NullScreenshotService.h"
+#include "ScreengrabScreenshotService.h"
+#include "SurfaceScreenshotService.h"
 
 namespace ExampleApp
 {
@@ -12,17 +14,17 @@ namespace ExampleApp
         namespace SdkModel
         {
 #ifdef AUTOMATED_SCREENSHOTS
-            struct AndroidScreenshotService : public ScreengrabScreenshotService
+            struct AndroidScreenshotService : public AlbumScreenshotService
             {
-                AndroidScreenshotService(AndroidNativeState& nativeState)
-                    : ScreengrabScreenshotService(nativeState)
+                AndroidScreenshotService(AndroidNativeState& nativeState, SurfaceScreenshotService& surfaceScreenshotService)
+                    : AlbumScreenshotService(nativeState, surfaceScreenshotService)
                 {
                 }
             };
 #else
             struct AndroidScreenshotService : public NullScreenshotService
             {
-                AndroidScreenshotService(AndroidNativeState&)
+                AndroidScreenshotService(AndroidNativeState&, SurfaceScreenshotService&)
                 {
                 }
             };

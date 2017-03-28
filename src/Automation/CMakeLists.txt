@@ -7,6 +7,8 @@ set(currsources
   ../src/Automation/NullScreenshotService.cpp
   ../src/Automation/NullScreenshotService.h
   ../src/Automation/IScreenshotService.h
+  ../src/Automation/SurfaceScreenshotService.cpp
+  ../src/Automation/SurfaceScreenshotService.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Automation FILES ${currsources})

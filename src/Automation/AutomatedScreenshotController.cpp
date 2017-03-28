@@ -29,8 +29,8 @@ namespace ExampleApp
     {
         namespace
         {
-            const int UpdateCyclesToWaitForSplashScreenToDisappear = 50;
-            const int UpdateCyclesPerScreenshot = 15;
+            const int UpdateCyclesToWaitForSplashScreenToDisappear = 80;
+            const int UpdateCyclesPerScreenshot = 25;
 
             enum {
                 ExecStateStreamingInitialSceneAndManifest,
@@ -136,7 +136,7 @@ namespace ExampleApp
                     m_weatherController.SetTime("Day");
                     m_weatherController.SetTheme("Autumn");
 
-                    return NoWait;
+                    return WaitMs(10000);
                 },
 
                 [this]() {
