@@ -101,6 +101,9 @@
       <Component Id="cmp4smKBrWFLyUpPjMI8FO84DoS0hk" Directory="INSTALLFOLDER" Guid="{0F3FC098-3782-4834-8691-B4870F2F8207}">
         <File Id="filXVdm4akzS5hoZ0GMlE7xyk2c1FI" KeyPath="yes" Source="payload\pthreadVC2.dll" />
       </Component>
+      <Component Id="_1cffaa91.30dd.49d8.9153.73016fad062b" Directory="INSTALLFOLDER" Guid="{a04fdacc-66ea-49ba-8e97-0de38319d337}">
+        <File Id="_b715cba0.79c8.4c7e.9faa.422d9012ef12" KeyPath="yes" Source="payload\QRCoder.dll" />
+      </Component>
       <Component Id="cmphN00PgBkrAm1k5v.1a0EgRz2jyA" Directory="INSTALLFOLDER" Guid="{C36A240F-96A7-421F-9045-8B14EA11F8B2}">
         <File Id="filRoZUgGjBszOs2Xrl0QmwAHxXLWc" KeyPath="yes" Source="payload\SimpleOAuth.dll" />
       </Component>
@@ -1280,9 +1283,6 @@
       <Component Id="_2a2f9e77.80cb.4da0.b418.d864c7c9ab69" Directory="RESOURCEFOLDER" Guid="{f65b0ae7-9f25-4c1d-a974-45d1f80c8796}">
 		<File Id="_53b1f2fd.6712.44a6.b952.6653b20815ce" KeyPath="yes" Source="payload\Resources\poi_placeholder@kiosk.png" />
 	  </Component>
-  	  <Component Id="_0ac5c3cb.02a1.4af7.98e3.d64f1443c481" Directory="RESOURCEFOLDER" Guid="{07d68be5-66fd-49a9-b8a5-5fb2870a2eb4}">
-		<File Id="_7af5e3d6.195c.465a.af3b.5c4fb6aa8f88" KeyPath="yes" Source="payload\Resources\qrcode_preview.png" />
-	  </Component>
   	  <Component Id="_a10c4ac9.c156.465a.9cf3.ce8eb529b141" Directory="RESOURCEFOLDER" Guid="{9cb446f7-4870-4ed3-a12a-945969329f69}">
 		<File Id="_a91919af.ae37.407c.8e0a.658e161cd26e" KeyPath="yes" Source="payload\Resources\search_results_fade@kiosk.png" />
 	  </Component>
@@ -1301,37 +1301,37 @@
   	  <Component Id="_26c61d6b.420d.4a2c.9d2f.27afea051786" Directory="RESOURCEFOLDER" Guid="{8bf85e82-4cbb-4fe5-a1a3-938d0bd1edbd}">
 		<File Id="_71d45941.989f.4005.bb2c.995f3d36d556" KeyPath="yes" Source="payload\Resources\yelp_reviews@kiosk.png" />
 	  </Component>
-  	  <Component Id="_1f0b5e85.5f63.43bf.92d1.5b5180661a14" Directory="RESOURCEFOLDER" Guid="{4c8daa4a-8318-4b7c-b602-52ff6f39bd30}">
+  	  <Component Id="_1f0b5e85.5f63.43bf.92d1.5b5180661a14" Directory="LABELSFOLDER" Guid="{4c8daa4a-8318-4b7c-b602-52ff6f39bd30}">
 		<File Id="_9b7c6ce3.012d.4e94.9d9b.4bec4d23eb4b" KeyPath="yes" Source="payload\Resources\Labels\label_category_icon_map.json" />
 	  </Component>
-  	  <Component Id="_4f933355.67e9.4880.8d0e.98d15df6c4bd" Directory="RESOURCEFOLDER" Guid="{134992c7-8def-462f-8ea9-0ebed49e3755}">
+  	  <Component Id="_4f933355.67e9.4880.8d0e.98d15df6c4bd" Directory="YELPFOLDER" Guid="{134992c7-8def-462f-8ea9-0ebed49e3755}">
 		<File Id="_3b67701a.4b29.4eea.877d.94c2cac8c4d5" KeyPath="yes" Source="payload\Resources\Yelp\stars_0_0@kiosk.png" />
 	  </Component>
-  	  <Component Id="_b0d4b535.478f.418e.b8e5.200352171046" Directory="RESOURCEFOLDER" Guid="{fd82c235-252d-497a-9f50-97b5cd045f6f}">
+  	  <Component Id="_b0d4b535.478f.418e.b8e5.200352171046" Directory="YELPFOLDER" Guid="{fd82c235-252d-497a-9f50-97b5cd045f6f}">
 		<File Id="_43b0963d.a642.4d32.bc83.263c6575a970" KeyPath="yes" Source="payload\Resources\Yelp\stars_1_0@kiosk.png" />
 	  </Component>
-  	  <Component Id="_c4821dc2.31e9.45c6.ae80.2133cf187a83" Directory="RESOURCEFOLDER" Guid="{9c9a26d3-65c3-453c-8f36-dff66cb7c77f}">
+  	  <Component Id="_c4821dc2.31e9.45c6.ae80.2133cf187a83" Directory="YELPFOLDER" Guid="{9c9a26d3-65c3-453c-8f36-dff66cb7c77f}">
 		<File Id="_4cf11f95.1da7.4c78.8e2d.f4ca8e2baa6d" KeyPath="yes" Source="payload\Resources\Yelp\stars_1_5@kiosk.png" />
 	  </Component>
-  	  <Component Id="_0742807a.7f84.4a07.b8a8.ec41bd54bf17" Directory="RESOURCEFOLDER" Guid="{58860a32-7e8e-4f25-8345-87343753d0c3}">
+  	  <Component Id="_0742807a.7f84.4a07.b8a8.ec41bd54bf17" Directory="YELPFOLDER" Guid="{58860a32-7e8e-4f25-8345-87343753d0c3}">
 		<File Id="_268f633e.10d4.4e77.9cd8.47fb7e5b7249" KeyPath="yes" Source="payload\Resources\Yelp\stars_2_0@kiosk.png" />
 	  </Component>
-  	  <Component Id="_c217936e.df16.423c.916a.cd8aced750e1" Directory="RESOURCEFOLDER" Guid="{df1aa35a-2777-486d-b094-e39474a42412}">
+  	  <Component Id="_c217936e.df16.423c.916a.cd8aced750e1" Directory="YELPFOLDER" Guid="{df1aa35a-2777-486d-b094-e39474a42412}">
 		<File Id="_2d5e6609.28b2.4d57.ae44.baa50ddd43b1" KeyPath="yes" Source="payload\Resources\Yelp\stars_2_5@kiosk.png" />
 	  </Component>
-  	  <Component Id="_d00c24e5.6c70.4306.b75c.b4f692b94c11" Directory="RESOURCEFOLDER" Guid="{ba179b8b-59f2-4720-8b22-b8f42e758beb}">
+  	  <Component Id="_d00c24e5.6c70.4306.b75c.b4f692b94c11" Directory="YELPFOLDER" Guid="{ba179b8b-59f2-4720-8b22-b8f42e758beb}">
 		<File Id="_ec281fbd.fb57.4fea.80ea.03b8ed09209c" KeyPath="yes" Source="payload\Resources\Yelp\stars_3_0@kiosk.png" />
 	  </Component>
-  	  <Component Id="_ff2c4acb.e913.40e2.aec3.0aaf6308a0d2" Directory="RESOURCEFOLDER" Guid="{f2eb93fb-b005-4d2d-ba08-43ef1c1f8488}">
+  	  <Component Id="_ff2c4acb.e913.40e2.aec3.0aaf6308a0d2" Directory="YELPFOLDER" Guid="{f2eb93fb-b005-4d2d-ba08-43ef1c1f8488}">
 		<File Id="_1411e0e7.3a78.458b.bf86.3a0a5a0ca1b3" KeyPath="yes" Source="payload\Resources\Yelp\stars_3_5@kiosk.png" />
 	  </Component>
-  	  <Component Id="_525312bc.d681.47da.992d.df7275f53b36" Directory="RESOURCEFOLDER" Guid="{6a33c11b-dc58-4484-9f1e-e1c2cdb113f8}">
+  	  <Component Id="_525312bc.d681.47da.992d.df7275f53b36" Directory="YELPFOLDER" Guid="{6a33c11b-dc58-4484-9f1e-e1c2cdb113f8}">
 		<File Id="_ee07f333.60ab.428d.b5f9.7eab3b23b28b" KeyPath="yes" Source="payload\Resources\Yelp\stars_4_0@kiosk.png" />
 	  </Component>
-  	  <Component Id="_bfa443cb.20c7.4725.972a.aa0569b5c97a" Directory="RESOURCEFOLDER" Guid="{942d5adc-73fe-45b1-96a8-1281ec6064c9}">
+  	  <Component Id="_bfa443cb.20c7.4725.972a.aa0569b5c97a" Directory="YELPFOLDER" Guid="{942d5adc-73fe-45b1-96a8-1281ec6064c9}">
 		<File Id="_90903e5c.14c7.4ac6.abcf.9a055233d385" KeyPath="yes" Source="payload\Resources\Yelp\stars_4_5@kiosk.png" />
 	  </Component>
-  	  <Component Id="_198a8cc7.359e.4e96.ac4d.e7136ff3d89d" Directory="RESOURCEFOLDER" Guid="{013aa306-f8a2-47e1-9b86-57c9047e5a8d}">
+  	  <Component Id="_198a8cc7.359e.4e96.ac4d.e7136ff3d89d" Directory="YELPFOLDER" Guid="{013aa306-f8a2-47e1-9b86-57c9047e5a8d}">
 		<File Id="_98b1b10a.9548.4678.a0a1.da0413f087fe" KeyPath="yes" Source="payload\Resources\Yelp\stars_5_0@kiosk.png" />
 	  </Component>
 	  <Component Id="_29c778c9.fef4.4bbc.aa73.b06105e64a41" Directory="RESOURCEFOLDER" Guid="{c34bfec0-0fd1-4cbc-bcab-803d060d4378}">
