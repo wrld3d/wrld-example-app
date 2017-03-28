@@ -20,6 +20,7 @@
     BOOL m_currentSearchIsTag;
     BOOL m_hasResults;
     BOOL m_searchInProgress;
+    BOOL m_editingText;
     
     float m_scrollSpeed;
 }
@@ -57,6 +58,7 @@
     m_returnPressed = false;
     m_currentSearchIsTag = false;
     m_searchInProgress = false;
+    m_editingText = false;
     
     m_scrollSpeed = 25.0f;
     
@@ -94,6 +96,7 @@
 {
     [m_pResultsSpinner startAnimating];
     m_searchInProgress = true;
+    m_editingText = false;
 }
 
 - (void) setSearchEnded
@@ -126,6 +129,15 @@
     
     m_pTextField.text = @"";
     
+    [self updateClearButtonVisibility:m_pTextField];
+}
+
+- (void) interopClearSearch
+{
+    if(!m_editingText)
+    {
+        m_pTextField.text = @"";
+    }
     [self updateClearButtonVisibility:m_pTextField];
 }
 
@@ -189,7 +201,10 @@
     
     if (!m_returnPressed || [textField.text isEqualToString:@""])
     {
-        textField.text = @"";
+        if(!m_editingText)
+        {
+            textField.text = @"";
+        }
         [self updateClearButtonVisibility:textField];
         return;
     }
@@ -258,6 +273,7 @@
 - (void) textFieldDidChange :(UITextField *)textField
 {
     [self updateClearButtonVisibility:textField];
+    m_editingText = true;
 }
 
 @end

@@ -759,7 +759,7 @@
 - (void) removeSearchQueryResults
 {
     [self setSearchResultCount:0];
-    self.pSearchEditBox.text = @"";
+    [self.pInputDelegate interopClearSearch];
 }
 
 - (void) onMenuStateUpdated
