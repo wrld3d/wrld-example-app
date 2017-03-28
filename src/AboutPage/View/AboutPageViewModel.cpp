@@ -143,7 +143,8 @@ namespace ExampleApp
                 m_senionInteriorId = interiorId;
                 
                 std::map<int, std::string> map = floorMap;
-                
+
+                m_senionFloorMapString.str(std::string());
                 for(std::map<int, std::string>::iterator it = map.begin(); it != map.end(); ++it)
                 {
                     m_senionFloorMapString << it->second << "\n";
