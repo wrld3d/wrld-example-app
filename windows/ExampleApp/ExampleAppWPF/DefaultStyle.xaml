@@ -15,8 +15,8 @@
     <!-- Initial Experience -->
     <System:Double x:Key="InitialExperienceMapModeDialogArrowAngle">4.5</System:Double>
     <System:Double x:Key="InitialExperienceMapModeDialogWidth">298</System:Double>
-    <System:Double x:Key="InitialExperienceCreateReportDialogArrowAngle">180</System:Double>
-    <System:Double x:Key="InitialExperienceCreateReportDialogWidth">320</System:Double>
+    <System:Double x:Key="InitialExperienceDropPinDialogArrowAngle">180</System:Double>
+    <System:Double x:Key="InitialExperienceDropPinDialogWidth">325</System:Double>
     <System:Double x:Key="InitialExperienceDialogArrowSize">26</System:Double>
 
     <!-- Gps Marker Tutorial -->
@@ -75,7 +75,6 @@
     <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOffColour" Color="#1256B0"/>
     <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOnColour" Color="#FFCDFC0D"/>
     <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOverColour" Color="#002B63"/>
-    <ImageSource x:Key="WatermarkDialogBoxQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
     <System:Double x:Key="WatermarkDialogBoxQRCodeImageSize">176</System:Double>
     <Visibility x:Key="WatermarkDialogBoxQRCodeVisibility">Visible</Visibility>
     <Thickness x:Key="WatermarkDialogBoxQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="20"/>
@@ -231,7 +230,6 @@
     <System:Double x:Key="EegeoPOIViewQRCodeFontSize">18</System:Double>
     <System:String x:Key="EegeoPOIViewQRCodeText">Scan the QR Code with your device to find out more.</System:String>
     <Thickness x:Key="EegeoPOIViewQRCodeTextMargin" Left="25" Top="-4" Right="0" Bottom="0"/>
-    <ImageSource x:Key="EegeoPOIViewQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
     <System:Double x:Key="EegeoPOIViewQRCodeImageSize">134</System:Double>
     <Thickness x:Key="EegeoPOIViewQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="20"/>
 
@@ -309,7 +307,6 @@
     <System:Double x:Key="YelpPOIViewQRCodeFontSize">18</System:Double>
     <System:String x:Key="YelpPOIViewQRCodeText">Scan the QR Code with your device to read the {0} review on Yelp.</System:String>
     <Thickness x:Key="YelpPOIViewQRCodeTextMargin" Left="25" Top="-4" Right="0" Bottom="0"/>
-    <ImageSource x:Key="YelpPOIViewQRCodeImage">/Assets/qrcode_preview.png</ImageSource>
     <System:Double x:Key="YelpPOIViewQRCodeImageSize">134</System:Double>
     <Thickness x:Key="YelpPOIViewQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="20"/>
 

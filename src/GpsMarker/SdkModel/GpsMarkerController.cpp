@@ -99,7 +99,7 @@ namespace ExampleApp
                 Eegeo::dv3 currentLocationEcef = m_model.GetCurrentLocationEcef();
                 
                 bool isVisible = false;
-                if(currentLocationEcef.LengthSq() != 0 && m_visibilityCount == 1)
+                if(currentLocationEcef.LengthSq() != 0 && m_visibilityCount == 1 && m_model.IsAuthorized())
                 {
                     if(m_model.IsLocationIndoors())
                     {

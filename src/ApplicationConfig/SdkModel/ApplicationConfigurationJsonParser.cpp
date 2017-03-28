@@ -310,7 +310,17 @@ namespace ExampleApp
                 const bool hasParseError(document.Parse<0>(serialized.c_str()).HasParseError());
                 return !hasParseError;
             }
-            
+
+            bool ApplicationConfigurationJsonParser::HasKey(const std::string& serialized, const std::string& key)
+            {
+                rapidjson::Document document;
+                const bool hasParseError(document.Parse<0>(serialized.c_str()).HasParseError());
+                if (!hasParseError) {
+                    return document.HasMember(key.c_str());
+                }
+                return false;
+            }
+
             void ApplicationConfigurationJsonParser::ParseIndoorTrackingInfo(std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
                                                                              const rapidjson::Value& indoorTrackedBuildingsArray)
             {

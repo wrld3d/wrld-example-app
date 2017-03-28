@@ -1,8 +1,13 @@
-﻿using System;
+﻿using QRCoder;
+using System;
+using System.Drawing;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 
 namespace ExampleAppWPF
@@ -55,6 +60,35 @@ namespace ExampleAppWPF
                     }
                 }
             }
+        }
+
+        [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool DeleteObject([In] IntPtr hObject);
+
+        public static BitmapSource GetQRCodeBitmapSourceFromURL(string url, int maxSize)
+        {
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+
+            int qrCodeBorderSize = 8;
+            int moduleCount = (qrCodeData.ModuleMatrix.Count - qrCodeBorderSize);
+            int pixelsPerModule = System.Math.Max((int) System.Math.Floor(maxSize / (float)moduleCount), 1);
+            Bitmap bitmap = qrCode.GetGraphic(pixelsPerModule, "0x012b65", "0xffffff", false);
+
+            IntPtr bitmapHandle = bitmap.GetHbitmap();
+            BitmapSource bitmapSource;
+            try
+            {
+                bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bitmapHandle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            }
+            finally
+            {
+                DeleteObject(bitmapHandle);
+            }
+
+            return bitmapSource;
         }
     }
 }
