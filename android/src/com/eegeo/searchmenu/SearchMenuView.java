@@ -91,6 +91,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private boolean m_initializeOnSearchMenuOpenComplete = false;
     private boolean m_fontScaleInitialized = false;
 
+    private boolean m_editingText = false;
+
     public SearchMenuView(MainActivity activity, long nativeCallerPointer)
     {
         super(activity, nativeCallerPointer);
@@ -234,9 +236,13 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count)
     {
-        if(count != 0) {
+        if(count != 0)
+        {
             setClearButtonVisible(true);
-        } else {
+            m_editingText = true;
+        }
+        else
+        {
             setClearButtonVisible(false);
         }
 
@@ -278,6 +284,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     {
     	m_closeButtonView.setVisibility(View.INVISIBLE);
     	m_progressSpinner.setVisibility(View.VISIBLE);
+
+        m_editingText = false;
     }
 
     public void setSearchEnded()
@@ -344,6 +352,10 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     public void removeSearchQueryResults()
     {
         setSearchResultCount(0);
+        if(!m_editingText)
+        {
+            m_editText.setText("");
+        }
     }
     
     public void fadeInButtonAnimation(final long delay)
@@ -384,12 +396,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
                                    HashMap<String, List<String>> groupToChildrenMap)
     {   
     	m_expandableListAdapter.setData(groups, groupToChildrenMap);
-    }
-
-    public void removeSearchQueryResults()
-    {
-        setSearchResultCount(0);
-        m_editText.setText("");
     }
 
     public void setSearchSection(final int resultCount,
