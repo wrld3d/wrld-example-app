@@ -30,6 +30,8 @@ namespace ExampleAppWPF
 
         private WatermarkViewDialogBox m_dialogBox = null;
 
+        private int m_qrCodeMaxSize;
+
         static WatermarkView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WatermarkView), new FrameworkPropertyMetadata(typeof(WatermarkView)));
@@ -58,6 +60,9 @@ namespace ExampleAppWPF
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            m_qrCodeMaxSize = (int) ((double) Application.Current.Resources["WatermarkDialogBoxQRCodeImageSize"]);
+
             m_imageView = (Image)GetTemplateChild("WatermarkImage");
             
             m_imageClickHandler = new ControlClickHandler(m_imageView, OnClick);
@@ -66,7 +71,7 @@ namespace ExampleAppWPF
         private void OnClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             ImageSource watermarkViewImageSource = GetImageAssetSource(m_imageAssetUrl);
-            m_dialogBox = new WatermarkViewDialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later", watermarkViewImageSource, false);
+            m_dialogBox = new WatermarkViewDialogBox(m_popupTitle, m_popupBody, "Find Out More", "Later", watermarkViewImageSource, m_webUrl, m_qrCodeMaxSize, false);
             m_dialogBox.Owner = m_currentWindow;
 
             m_dialogBox.ButtonClicked += (o, clickEventArgs, res) =>

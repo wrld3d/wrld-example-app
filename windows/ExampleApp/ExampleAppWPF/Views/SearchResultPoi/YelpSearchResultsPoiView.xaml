@@ -379,7 +379,7 @@
                                                 </Grid>
                                                 <TextBlock Name="QRCodeText" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=QRCodeText}" FontSize="{DynamicResource YelpPOIViewQRCodeFontSize}" Margin="{DynamicResource YelpPOIViewQRCodeTextMargin}" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}" TextWrapping="Wrap"/>
                                             </Grid>
-                                            <Image Source="{DynamicResource YelpPOIViewQRCodeImage}" Width="{DynamicResource YelpPOIViewQRCodeImageSize}" Height="{DynamicResource YelpPOIViewQRCodeImageSize}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="{DynamicResource YelpPOIViewQRCodeVisibility}" Margin="{DynamicResource YelpPOIViewQRCodeImageMargin}"/>
+                                            <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:YelpSearchResultsPoiView}}, Path=QRCodeImage}" Width="{DynamicResource YelpPOIViewQRCodeImageSize}" Height="{DynamicResource YelpPOIViewQRCodeImageSize}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="{DynamicResource YelpPOIViewQRCodeVisibility}" Margin="{DynamicResource YelpPOIViewQRCodeImageMargin}"/>
 
                                             <!-- Bottom Spacer -->
                                             <Grid Height="{DynamicResource YelpPOIViewBottomSpacerHeight}"/>
