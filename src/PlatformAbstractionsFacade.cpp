@@ -89,4 +89,9 @@ namespace ExampleApp
     {
         return m_sceneBuilderModuleFactory;
     }
+
+    Eegeo::Rendering::AsyncTexturing::ITextureFactory& PlatformAbstractionsFacade::GetTextureFactory() const
+    {
+        return m_wrappedPlatformAbstractions.GetTextureFactory();
+    }
 }
