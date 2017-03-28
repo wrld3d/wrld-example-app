@@ -83,6 +83,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private SearchResultsScrollListener m_searchResultsScrollListener;
 
     private int m_menuScrollIndex = 0;
+    private boolean m_editingText = false;
     	
     public SearchMenuView(MainActivity activity, long nativeCallerPointer)
     {
@@ -223,9 +224,13 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count)
     {
-        if(count != 0) {
+        if(count != 0)
+        {
             setClearButtonVisible(true);
-        } else {
+            m_editingText = true;
+        }
+        else
+		{
             setClearButtonVisible(false);
         }
     }
@@ -239,6 +244,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     {
     	m_closeButtonView.setVisibility(View.INVISIBLE);
     	m_progressSpinner.setVisibility(View.VISIBLE);
+
+        m_editingText = false;
     }
 
     public void setSearchEnded()
@@ -347,7 +354,10 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     public void removeSearchQueryResults()
     {
         setSearchResultCount(0);
-        m_editText.setText("");
+        if(!m_editingText)
+        {
+            m_editText.setText("");
+        }
     }
     
     public void setSearchSection(final int resultCount,
