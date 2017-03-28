@@ -22,7 +22,7 @@
 
     <EditText
         android:id="@+id/search_menu_view_edit_text_view"
-        android:layout_width="295dp"
+        android:layout_width="wrap_content"
         android:layout_height="42dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="32dp"
@@ -31,8 +31,11 @@
         android:hint="Enter search term"
         android:inputType="text"
         android:paddingLeft="8dp"
+        android:paddingRight="8dp"
     	android:imeOptions="actionDone"
-        android:textSize="18dp" >
+        android:textSize="18dp"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/search_menu_clear_button">
 
         <requestFocus android:layout_width="wrap_content" />
 
@@ -42,7 +45,7 @@
         android:id="@+id/search_menu_spinner"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_alignRight="@+id/search_menu_view_edit_text_view"
+        android:layout_alignRight="@+id/search_menu_edit_text_background"
         android:layout_centerVertical="true"
         android:layout_marginRight="5dp"
         android:background="@android:color/transparent" />
@@ -52,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/search_menu_view_edit_text_view"
+        android:layout_alignRight="@+id/search_menu_edit_text_background"
         android:layout_marginRight="10dp"
         android:background="@drawable/buttonsmall_close_states"
         android:clickable="true" />

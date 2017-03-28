@@ -756,6 +756,14 @@ namespace ExampleApp
                                                                                                      m_pTagSearchModule->GetTagSearchRepository(),
                                                                                                      m_pWorld->GetNativeUIFactories().AlertBoxFactory());
 
+        m_pWatermarkModule = Eegeo_NEW(ExampleApp::Watermark::SdkModel::WatermarkModule)(m_identityProvider,
+                                                                                         m_applicationConfiguration.Name(),
+                                                                                         m_applicationConfiguration.GoogleAnalyticsReferrerToken(),
+                                                                                         world.GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
+                                                                                         world.GetMapModule().GetInteriorsModelModule().GetInteriorsModelRepository(),
+                                                                                         m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
+                                                                                         m_messageBus);
+
         m_pMyPinCreationModule = Eegeo_NEW(ExampleApp::MyPinCreation::SdkModel::MyPinCreationModule)(m_pMyPinsModule->GetMyPinsService(),
                                                                                                      m_identityProvider,
                                                                                                      m_pSettingsMenuModule->GetSettingsMenuViewModel(),
@@ -766,7 +774,8 @@ namespace ExampleApp
                                                                                                      mapModule.GetLabelsModule().GetDebugLabelLayerFilterModel(),
                                                                                                      mapModule.GetInteriorsStreamingModule().GetInteriorMarkerLabelLayerId(),
                                                                                                      m_messageBus,
-                                                                                                     m_pReactionControllerModule->GetReactionControllerModel());
+                                                                                                     m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                                                     m_pWatermarkModule->GetWatermarkViewModel());
 
         m_pPoiRingModule = Eegeo_NEW(ExampleApp::MyPinCreation::PoiRing::SdkModel::PoiRingModule)(m_pMyPinCreationModule->GetMyPinCreationModel(),
                                                                                                   m_platformAbstractions,
@@ -805,13 +814,7 @@ namespace ExampleApp
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsCameraController());
 
-        m_pWatermarkModule = Eegeo_NEW(ExampleApp::Watermark::SdkModel::WatermarkModule)(m_identityProvider,
-                                                                                         m_applicationConfiguration.Name(),
-                                                                                         m_applicationConfiguration.GoogleAnalyticsReferrerToken(),
-                                                                                         world.GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
-                                                                                         world.GetMapModule().GetInteriorsModelModule().GetInteriorsModelRepository(),
-                                                                                         m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
-                                                                                         m_messageBus);
+
 
         std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables(GetOpenableControls());
