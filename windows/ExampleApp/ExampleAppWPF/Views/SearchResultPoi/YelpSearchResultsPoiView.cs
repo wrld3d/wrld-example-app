@@ -20,6 +20,7 @@ namespace ExampleAppWPF
         private string m_reviewText;
         private string m_qrCodeStyleText;
         private string m_qrCodeText;
+        private ImageSource m_qrCodeImage;
         private string m_humanReadableTagsText;
         private ImageSource m_tagIcon;
         private Image m_ratingsImage;
@@ -32,6 +33,8 @@ namespace ExampleAppWPF
         private Grid m_poiImageAndGradientContainer;
         private Grid m_detailsContainer;
         private double m_detailsContainerHeight;
+
+        private int m_qrCodeMaxSize;
 
         private ControlClickHandler m_yelpReviewImageClickHandler;
         private Image m_yelpButton;
@@ -110,6 +113,18 @@ namespace ExampleAppWPF
                 OnPropertyChanged("QRCodeText");
             }
         }
+        public ImageSource QRCodeImage
+        {
+            get
+            {
+                return m_qrCodeImage;
+            }
+            set
+            {
+                m_qrCodeImage = value;
+                OnPropertyChanged("QRCodeImage");
+            }
+        }
         public string HumanReadableTagsText
         {
             get
@@ -172,6 +187,8 @@ namespace ExampleAppWPF
             {
                 m_url = value;
                 OnPropertyChanged("Url");
+
+                QRCodeImage = ViewHelpers.GetQRCodeBitmapSourceFromURL(m_url, m_qrCodeMaxSize);
             }
         }
 
@@ -217,6 +234,8 @@ namespace ExampleAppWPF
             var screenWidth = mainGrid.ActualWidth;
 
             m_yelpReviewImageClickHandler = new ControlClickHandler(m_yelpButton, HandleWebLinkButtonClicked);
+
+            m_qrCodeMaxSize = (int)((double)Application.Current.Resources["YelpPOIViewQRCodeImageSize"]);
 
             base.OnApplyTemplate();
         }
