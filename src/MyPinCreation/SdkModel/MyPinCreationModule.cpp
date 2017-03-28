@@ -51,7 +51,8 @@ namespace ExampleApp
                     Eegeo::Labels::ILabelFilterModel& labelFilterModel,
                     const Eegeo::Labels::LabelLayer::IdType& interiorMarkerLabelLayer,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
+                    Reaction::View::IReactionControllerModel& reactionControllerModel,
+                    ExampleApp::Watermark::View::IWatermarkViewModel& watermarkViewModel)
             {
 
                 m_pMyPinCreationModel = Eegeo_NEW(MyPinCreationModel)(myPinsService);
@@ -75,7 +76,8 @@ namespace ExampleApp
                                                      *m_pMyPinCreationConfirmationViewModel,
                                                      searchMenuViewModel,
                                                      settingsMenuViewModel,
-                                                     interiorControlViewModel);
+                                                     interiorControlViewModel,
+                                                     watermarkViewModel);
             }
 
             MyPinCreationModule::~MyPinCreationModule()

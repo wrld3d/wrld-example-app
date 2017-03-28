@@ -166,7 +166,7 @@
                                Foreground="{StaticResource VeryDarkGrey}"
                                FontSize="{DynamicResource WatermarkDialogBoxMessageFontSize}"
                                VerticalAlignment="Top"/>
-                    <Image Source="{DynamicResource WatermarkDialogBoxQRCodeImage}"
+                    <Image Source="{Binding WatermarkQRCodeImageSource}"
                            Width="{DynamicResource WatermarkDialogBoxQRCodeImageSize}"
                            Height="{DynamicResource WatermarkDialogBoxQRCodeImageSize}"
                            HorizontalAlignment="Center"

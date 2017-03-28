@@ -30,9 +30,9 @@ namespace ExampleAppWPF
         private PositionedDialog m_positionedMapModeDialog;
         private TutorialTooltipPositionTracker m_mapModePositionTracker;
 
-        private readonly string CreateReportDialogName = "CreateReportDialog";
-        private PositionedDialog m_positionedCreateReportDialog;
-        private TutorialTooltipPositionTracker m_createReportPositionTracker;
+        private readonly string DropPinDialogName = "DropPinDialog";
+        private PositionedDialog m_positionedDropPinDialog;
+        private TutorialTooltipPositionTracker m_dropPinPositionTracker;
 
         private Storyboard m_showAnimation;
         private bool m_hideAnimationRunning;
@@ -72,18 +72,18 @@ namespace ExampleAppWPF
             mapModeDialog.RenderTransformOrigin = new Point(0.0, 0.0);
             mapModeDialog.RenderTransform = new TranslateTransform();
 
-            TutorialTooltipView createReportDialog = (TutorialTooltipView)GetTemplateChild(CreateReportDialogName);
-            m_positionedCreateReportDialog = new PositionedDialog(createReportDialog, (x, y, w, h) =>
+            TutorialTooltipView dropPinDialog = (TutorialTooltipView)GetTemplateChild(DropPinDialogName);
+            m_positionedDropPinDialog = new PositionedDialog(dropPinDialog, (x, y, w, h) =>
             {
-                ((TranslateTransform)createReportDialog.RenderTransform).X = x + w + createReportDialog.ArrowPointHeight + DialogGap;
-                ((TranslateTransform)createReportDialog.RenderTransform).Y = y - (createReportDialog.GetTooltipHeight() - h) - 2;
+                ((TranslateTransform)dropPinDialog.RenderTransform).X = x + w + dropPinDialog.ArrowPointHeight + DialogGap;
+                ((TranslateTransform)dropPinDialog.RenderTransform).Y = y - (dropPinDialog.GetTooltipHeight() - h) - 2;
             });
 
             MyPinCreationButtonView myPinCreationButtonView = ViewHelpers.FindChildrenOfType<MyPinCreationButtonView>(m_mainWindow.MainGrid.Children).Single();
-            m_createReportPositionTracker = new TutorialTooltipPositionTracker(m_mainWindow, myPinCreationButtonView);
-            m_createReportPositionTracker.OnUpdateTransform += m_positionedCreateReportDialog.DialogPosition;
-            createReportDialog.RenderTransformOrigin = new Point(0.0, 0.0);
-            createReportDialog.RenderTransform = new TranslateTransform();
+            m_dropPinPositionTracker = new TutorialTooltipPositionTracker(m_mainWindow, myPinCreationButtonView);
+            m_dropPinPositionTracker.OnUpdateTransform += m_positionedDropPinDialog.DialogPosition;
+            dropPinDialog.RenderTransformOrigin = new Point(0.0, 0.0);
+            dropPinDialog.RenderTransform = new TranslateTransform();
 
             m_showAnimation = (Storyboard)FindResource("ShowAnimation");
             m_hideAnimation = ((Storyboard)FindResource("HideAnimation")).Clone();

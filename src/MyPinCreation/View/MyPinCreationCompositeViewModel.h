@@ -11,6 +11,7 @@
 #include "Search.h"
 #include "BidirectionalBus.h"
 #include "MyPinCreationStateChangedMessage.h"
+#include "Watermark.h"
 
 namespace ExampleApp
 {
@@ -27,7 +28,8 @@ namespace ExampleApp
                                                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                                 ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
                                                 ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
-                                                ScreenControl::View::IScreenControlViewModel& interiorControlViewModel);
+                                                ScreenControl::View::IScreenControlViewModel& interiorControlViewModel,
+                                                ExampleApp::Watermark::View::IWatermarkViewModel& watermarkViewModel);
 
                 ~MyPinCreationCompositeViewModel();
 
@@ -47,6 +49,7 @@ namespace ExampleApp
                 ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
                 bool m_showUiComponents;
                 Eegeo::Helpers::TCallback1<MyPinCreationCompositeViewModel, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
+                ExampleApp::Watermark::View::IWatermarkViewModel& m_watermarkViewModel;
 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
             };

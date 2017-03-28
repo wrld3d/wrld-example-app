@@ -67,6 +67,9 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="QRCoder, Version=1.2.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.2.6\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
     <Reference Include="SimpleOAuth, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleOAuth.Net.1.0.1\lib\net20\SimpleOAuth.dll</HintPath>
       <Private>True</Private>
@@ -930,11 +933,6 @@
   <ItemGroup>
     <Resource Include="..\..\Resources\poi_placeholder%40kiosk.png">
       <Link>Assets\poi_placeholder%40kiosk.png</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="..\..\Resources\qrcode_preview.png">
-      <Link>Assets\qrcode_preview.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>

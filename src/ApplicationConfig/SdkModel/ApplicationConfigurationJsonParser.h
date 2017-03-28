@@ -20,6 +20,7 @@ namespace ExampleApp
 
                 ApplicationConfiguration ParseConfiguration(const std::string& serialized);
                 bool IsValidConfig(const std::string& serialized);
+                bool HasKey(const std::string& serialized, const std::string& key);
             private:
                 const ApplicationConfiguration m_defaultConfig;
                 

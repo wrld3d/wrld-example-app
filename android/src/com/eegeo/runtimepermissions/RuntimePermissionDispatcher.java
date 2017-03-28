@@ -48,6 +48,11 @@ public class RuntimePermissionDispatcher
         }
     }
 
+    public boolean checkStoragePermissions()
+    {
+        return ContextCompat.checkSelfPermission(m_activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
     public boolean hasCameraAndStoragePermissions(MyPinCreationDetailsView myPinCreationDetailView)
     {
         if(ContextCompat.checkSelfPermission(m_activity,

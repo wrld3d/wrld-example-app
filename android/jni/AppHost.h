@@ -65,6 +65,7 @@
 #include "SenionLabBroadcastReceiver.h"
 #include "AndroidAutomatedScreenshotController.h"
 #include "AndroidScreenshotService.h"
+#include "SurfaceScreenshotService.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -174,6 +175,7 @@ private:
     ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver* m_pSenionLabBroadcastReceiver;
 
     ExampleApp::Automation::SdkModel::AndroidAutomatedScreenshotController* m_pAndroidAutomatedScreenshotController;
+    ExampleApp::Automation::SdkModel::SurfaceScreenshotService m_surfaceScreenshotService;
     ExampleApp::Automation::SdkModel::AndroidScreenshotService m_screenshotService;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();

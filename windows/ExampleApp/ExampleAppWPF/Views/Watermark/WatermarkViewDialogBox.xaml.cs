@@ -5,13 +5,16 @@ namespace ExampleAppWPF
 {
     public class WatermarkViewDialogViewModel
     {
-        public WatermarkViewDialogViewModel(string title, string message, string acceptButton, string cancelButton, ImageSource watermarkLogo)
+        
+
+        public WatermarkViewDialogViewModel(string title, string message, string acceptButton, string cancelButton, ImageSource watermarkLogo, string watermarkUrl, int maxQRCodeSize)
         {
             TitleText = title;
             MessageText = message;
             AcceptButtonText = acceptButton;
             CancelButtonText = cancelButton;
             WatermarkLogoImageSource = watermarkLogo;
+            WatermarkQRCodeImageSource = ViewHelpers.GetQRCodeBitmapSourceFromURL(watermarkUrl, maxQRCodeSize);
         }
 
         public string TitleText { get; set; }
@@ -19,6 +22,7 @@ namespace ExampleAppWPF
         public string AcceptButtonText { get; set; }
         public string CancelButtonText { get; set; }
         public ImageSource WatermarkLogoImageSource { get; set; }
+        public ImageSource WatermarkQRCodeImageSource { get; set; }
     }
 
     public partial class WatermarkViewDialogBox : Window
@@ -27,13 +31,13 @@ namespace ExampleAppWPF
         public event ButtonClickHandler ButtonClicked;
         public bool m_modal;
 
-        public WatermarkViewDialogBox(string title, string message, string acceptButton, string cancelButton, ImageSource watermarkLogo, bool modal = true)
+        public WatermarkViewDialogBox(string title, string message, string acceptButton, string cancelButton, ImageSource watermarkLogo, string watermarkUrl, int maxQRCodeSize, bool modal = true)
         {
             m_modal = modal;
 
             InitializeComponent();
 
-            DataContext = new WatermarkViewDialogViewModel(title, message, acceptButton, cancelButton, watermarkLogo);
+            DataContext = new WatermarkViewDialogViewModel(title, message, acceptButton, cancelButton, watermarkLogo, watermarkUrl, maxQRCodeSize);
         }
 
         void OnAcceptButtonClick(object sender, RoutedEventArgs e)

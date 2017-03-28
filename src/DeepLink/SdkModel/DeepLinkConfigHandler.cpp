@@ -110,8 +110,10 @@ namespace ExampleApp
                         m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), newHeading);
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
                         m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());
-                        
-                        const bool useGps = applicationConfig.TryStartAtGpsLocation();
+
+                        const std::string TryStartAtGpsLocation = "try_start_at_gps_location";
+                        const bool mapsceneSpecifiesGpsStart = parser.HasKey(resultString, TryStartAtGpsLocation);
+                        const bool useGps = mapsceneSpecifiesGpsStart && applicationConfig.TryStartAtGpsLocation();
                         if (useGps)
                         {
                             m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);

@@ -27,6 +27,8 @@
 
 - (void) clearSearch;
 
+- (void) interopClearSearch;
+
 - (void) setHasResults :(bool)hasResults;
 
 @end

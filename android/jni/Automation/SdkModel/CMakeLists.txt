@@ -7,6 +7,10 @@ set(currsources
   jni/Automation/SdkModel/ScreengrabScreenshotService.cpp
   jni/Automation/SdkModel/ScreengrabScreenshotService.h
   jni/Automation/SdkModel/AndroidScreenshotService.h
+  jni/Automation/SdkModel/AlbumScreenshotService.cpp
+  jni/Automation/SdkModel/AlbumScreenshotService.h
+  jni/Automation/SdkModel/AlbumScreenshotServiceJni.cpp
+  jni/Automation/SdkModel/AlbumScreenshotServiceJni.h
   jni/Automation/SdkModel/CMakeLists.txt
 )
 set(sources ${sources} ${currsources})

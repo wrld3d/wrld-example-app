@@ -16,7 +16,7 @@
                                  To="1.0"
                                  Duration="0:0:0.25" />
                 
-                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=CreateReportDialog}"
+                <DoubleAnimation Storyboard.TargetName="{Binding ElementName=DropPinDialog}"
                                  Storyboard.TargetProperty="Opacity"
                                  To="1.0"
                                  BeginTime="0:0:0.15"
@@ -29,7 +29,7 @@
                                  To="0.0"
                                  Duration="0:0:0.25" />
 
-                <DoubleAnimation Storyboard.Target="{Binding ElementName=CreateReportDialog}"
+                <DoubleAnimation Storyboard.Target="{Binding ElementName=DropPinDialog}"
                                  Storyboard.TargetProperty="Opacity"
                                  To="0.0"
                                  BeginTime="0:0:0.15"
@@ -50,13 +50,13 @@
                                                    ArrowAngleDegrees="{DynamicResource InitialExperienceMapModeDialogArrowAngle}"
                                                    ArrowSize="{DynamicResource InitialExperienceDialogArrowSize}"/>
 
-                        <local:TutorialTooltipView x:Name="CreateReportDialog"
+                        <local:TutorialTooltipView x:Name="DropPinDialog"
                                                    Style="{StaticResource TutorialTooltipViewStyle}"
                                                    LeftColumnValue="2"
-                                                   Title="Create Report"
-                                                   Description="Submit damage report&#x0a;or suggestions"
-                                                   FixedWidth="{DynamicResource InitialExperienceCreateReportDialogWidth}"
-                                                   ArrowAngleDegrees="{DynamicResource InitialExperienceCreateReportDialogArrowAngle}"
+                                                   Title="Drop Pin"
+                                                   Description="Drop a pin to bookmark&#x0a;a place on the map."
+                                                   FixedWidth="{DynamicResource InitialExperienceDropPinDialogWidth}"
+                                                   ArrowAngleDegrees="{DynamicResource InitialExperienceDropPinDialogArrowAngle}"
                                                    ArrowSize="{DynamicResource InitialExperienceDialogArrowSize}"/>
                     </Grid>
                 </ControlTemplate>

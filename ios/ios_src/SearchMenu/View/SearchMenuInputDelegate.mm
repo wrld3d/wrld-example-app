@@ -20,6 +20,7 @@
     BOOL m_currentSearchIsTag;
     BOOL m_hasResults;
     BOOL m_searchInProgress;
+    BOOL m_editingText;
     
     float m_scrollSpeed;
 }
@@ -51,12 +52,13 @@
     [m_pSearchMenuScrollButton addTarget:self action:@selector(searchMenuScrollStop) forControlEvents:UIControlEventTouchUpInside];
     [m_pSearchMenuScrollButton addTarget:self action:@selector(searchMenuScrollStop) forControlEvents:UIControlEventTouchDragExit];
 
-    [self updateClearButtonVisibility];
+    [self updateClearButtonVisibility:m_pTextField];
     
     m_keyboardActive = false;
     m_returnPressed = false;
     m_currentSearchIsTag = false;
     m_searchInProgress = false;
+    m_editingText = false;
     
     m_scrollSpeed = 25.0f;
     
@@ -69,6 +71,8 @@
                                              selector:@selector(textFieldTextDidChange:)
                                                  name:UITextFieldTextDidChangeNotification
                                                object:m_pTextField];
+    
+    [m_pTextField addTarget:self action:@selector(textFieldDidChange:)forControlEvents:UIControlEventEditingChanged];
     
     return self;
 }
@@ -92,14 +96,13 @@
 {
     [m_pResultsSpinner startAnimating];
     m_searchInProgress = true;
-    [self updateClearButtonVisibility];
+    m_editingText = false;
 }
 
 - (void) setSearchEnded
 {
     [m_pResultsSpinner stopAnimating];
     m_searchInProgress = false;
-    [self updateClearButtonVisibility];
 }
 
 - (void) removeSeachKeyboard
@@ -117,7 +120,7 @@
     
     m_currentSearchIsTag = isTag;
     
-    [self updateClearButtonVisibility];
+    [self updateClearButtonVisibility:m_pTextField];
 }
 
 - (void) clearSearch
@@ -126,18 +129,33 @@
     
     m_pTextField.text = @"";
     
-    [self updateClearButtonVisibility];
+    [self updateClearButtonVisibility:m_pTextField];
+}
+
+- (void) interopClearSearch
+{
+    if(!m_editingText)
+    {
+        m_pTextField.text = @"";
+    }
+    [self updateClearButtonVisibility:m_pTextField];
 }
 
 - (void) setHasResults :(bool)hasResults
 {
     m_hasResults = hasResults;
-    [self updateClearButtonVisibility];
 }
 
-- (void)updateClearButtonVisibility
+- (void)updateClearButtonVisibility :(UITextField*)textField
 {
-    m_pClearButton.hidden = !m_hasResults || m_searchInProgress;
+    if(m_searchInProgress)
+    {
+        m_pClearButton.hidden = YES;
+    }
+    else
+    {
+        m_pClearButton.hidden = !textField.hasText;
+    }
 }
 
 - (void)textFieldTextDidChange:(NSNotification*)aNotification
@@ -146,8 +164,6 @@
     {
         return;
     }
-    
-    [self updateClearButtonVisibility];
 }
 
 - (void)keyboardDidChangeFrame:(NSNotification*)aNotification
@@ -168,8 +184,8 @@
         [textField setText:@""];
         m_currentSearchIsTag = false;
         
-        [self updateClearButtonVisibility];
     }
+    [self updateClearButtonVisibility:textField];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -185,11 +201,17 @@
     
     if (!m_returnPressed || [textField.text isEqualToString:@""])
     {
+        if(!m_editingText)
+        {
+            textField.text = @"";
+        }
+        [self updateClearButtonVisibility:textField];
         return;
     }
     
     std::string searchString = [textField.text UTF8String];
     m_pInterop->SearchPerformed(searchString);
+    [self updateClearButtonVisibility:textField];
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField
@@ -198,7 +220,7 @@
     
     textField.text = @"";
     
-    [self updateClearButtonVisibility];
+    [self updateClearButtonVisibility:textField];
     return NO;
 }
 
@@ -246,6 +268,12 @@
 {
     [searchMenuScrollUpdateTimer invalidate];
     searchMenuScrollUpdateTimer = nil;
+}
+
+- (void) textFieldDidChange :(UITextField *)textField
+{
+    [self updateClearButtonVisibility:textField];
+    m_editingText = true;
 }
 
 @end

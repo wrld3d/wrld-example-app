@@ -759,7 +759,7 @@
 - (void) removeSearchQueryResults
 {
     [self setSearchResultCount:0];
-    self.pSearchEditBox.text = @"";
+    [self.pInputDelegate interopClearSearch];
 }
 
 - (void) onMenuStateUpdated
@@ -903,12 +903,10 @@
         CGRect buttonFrame = self.pSearchMenuScrollButtonContainer.frame;
         buttonFrame.origin.y = onScreenSearchResultsTableHeight - (buttonFrame.size.height * m_pixelScale);
         self.pSearchMenuScrollButtonContainer.frame = buttonFrame;
-        _pSearchMenuScrollButtonContainer.hidden = false;
         
         buttonFrame = self.pSearchMenuFadeImage.frame;
         buttonFrame.origin.y = onScreenSearchResultsTableHeight - (buttonFrame.size.height * m_pixelScale);
         self.pSearchMenuFadeImage.frame = buttonFrame;
-        _pSearchMenuFadeImage.hidden = false;
     }
     else
     {
@@ -932,6 +930,8 @@
     {
         m_resultsScrollable = false;
     }
+    
+    [self updateSearchResultsButtonVisibility];
 }
 
 - (float) getHeightForTable:(CustomTableView*)tableView
