@@ -56,6 +56,8 @@ namespace ExampleAppWPF
 
         private TouchDevice m_searchResultsListCurrentTouchDevice;
 
+        private bool m_editingText;
+
         static SearchMenuView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SearchMenuView), new FrameworkPropertyMetadata(typeof(SearchMenuView)));
@@ -73,6 +75,7 @@ namespace ExampleAppWPF
             m_hasResults = false;
             m_hasTagSearch = false;
             m_touchHandler = new WindowInteractionTouchHandler(this, false, true, true);
+            m_editingText = false;
         }
 
         public Button GetSearchButton()
@@ -241,7 +244,10 @@ namespace ExampleAppWPF
         public void RemoveSearchQueryResults()
         {
             SetSearchResultCount(0);
-            m_editText.Text = String.Empty;
+            if (!m_editingText)
+            {
+                m_editText.Text = String.Empty;
+            }
             m_hasTagSearch = false;
         }
 
@@ -289,6 +295,7 @@ namespace ExampleAppWPF
             {
                 m_resultsClearButton.Visibility = Visibility.Visible;
                 m_editText.Foreground = Colour.black;
+                m_editingText = true;
 
             }
             else if(!m_hasResults)
@@ -566,6 +573,7 @@ namespace ExampleAppWPF
             {
                 m_resultsSpinner.Visibility = Visibility.Visible;
             });
+            m_editingText = false;
         }
         public void SetSearchEnded()
         {
