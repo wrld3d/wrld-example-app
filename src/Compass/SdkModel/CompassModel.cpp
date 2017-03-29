@@ -22,7 +22,6 @@ namespace ExampleApp
         namespace SdkModel
         {
             CompassModel::CompassModel(Eegeo::Location::NavigationService& navigationService,
-                                       Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                        Eegeo::Location::ILocationService& locationService,
                                        ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                        Metrics::IMetricsService& metricsService,
@@ -31,7 +30,6 @@ namespace ExampleApp
                                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                        bool isInKioskMode)
                 : m_navigationService(navigationService)
-                , m_interiorInteractionModel(interiorInteractionModel)
                 , m_locationService(locationService)
                 , m_cameraController(cameraController)
                 , m_metricsService(metricsService)
@@ -115,10 +113,9 @@ namespace ExampleApp
             bool CompassModel::NeedsToExitInterior(GpsMode::Values gpsMode)
             {
                 const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
-                return ((appMode != AppModes::SdkModel::WorldMode) &&
-                        !m_exitInteriorTriggered &&
-                        (gpsMode != GpsMode::GpsDisabled) &&
-                        !Helpers::InteriorNavigationHelpers::IsPositionInInterior(m_interiorInteractionModel, m_locationService));
+                return appMode != AppModes::SdkModel::WorldMode &&
+                       !m_exitInteriorTriggered &&
+                       gpsMode != GpsMode::GpsDisabled;
             }
 
             void CompassModel::TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value)
