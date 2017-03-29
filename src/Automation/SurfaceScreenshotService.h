@@ -4,7 +4,6 @@
 
 #include <functional>
 #include <vector>
-#include <platform/Rendering/ScreenProperties.h>
 
 #include "GlDisplayService.h"
 #include "Graphics.h"

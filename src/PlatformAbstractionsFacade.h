@@ -36,6 +36,7 @@ namespace ExampleApp
         Eegeo::Web::IConnectivityService& GetConnectivityService() const;
         Eegeo::Concurrency::Tasks::IWorkPool& GetWorkPool() const;
         Eegeo::Modules::ISceneBuilderModuleFactory& GetSceneBuilderModuleFactory();
+        Eegeo::Rendering::AsyncTexturing::ITextureFactory& GetTextureFactory() const;
        
         void OnPause();
         void Update();
