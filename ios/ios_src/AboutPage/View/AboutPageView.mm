@@ -1,7 +1,5 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include <string>
-#include <algorithm>
 #include "AboutPageView.h"
 #include "MathFunc.h"
 #include "UIColors.h"

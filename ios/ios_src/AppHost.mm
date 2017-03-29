@@ -80,6 +80,7 @@
 #include "AppUrlDelegate.h"
 #include "InteriorMetaDataRepository.h"
 #include "InteriorMetaDataModule.h"
+#include "iOSAutomatedScreenshotController.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -112,6 +113,8 @@ AppHost::AppHost(
     ,m_pURLRequestHandler(NULL)
     ,m_pMenuReactionModel(NULL)
     ,m_pTagSearchViewModule(NULL)
+    ,m_screenshotService(m_pView)
+    ,m_piOSAutomatedScreenshotController(NULL)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
     
@@ -199,6 +202,12 @@ AppHost::AppHost(
                                                                                                                            m_pApp->CompassModule().GetCompassModel(),
                                                                                                                            m_messageBus);
     
+    ExampleApp::Automation::AutomatedScreenshotController* screenshotController = m_pApp->AutomatedScreenshotController();
+    if (NULL != screenshotController)
+    {
+        m_piOSAutomatedScreenshotController = Eegeo_NEW(ExampleApp::Automation::SdkModel::iOSAutomatedScreenshotController)(m_screenshotService, *screenshotController);
+    }
+    
     CreateApplicationViewModules(screenProperties);
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
@@ -222,6 +231,9 @@ AppHost::~AppHost()
     m_pAppInputDelegate = NULL;
 
     DestroyApplicationViewModules();
+    
+    Eegeo_DELETE(m_piOSAutomatedScreenshotController);
+    m_piOSAutomatedScreenshotController = NULL;
     
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
