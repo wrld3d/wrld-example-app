@@ -28,6 +28,8 @@
 
 - (void) setSearchResultCount:(NSInteger)searchResultCount;
 
+- (void) hideSearchResultCount;
+
 - (void) removeSearchQueryResults;
 
 - (void) collapseAll;
