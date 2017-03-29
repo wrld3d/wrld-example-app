@@ -25,6 +25,7 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<void> mSetSearchEnded;
                 Helpers::ReflectionHelpers::Method<System::String^, bool> mSetEditText;
                 Helpers::ReflectionHelpers::Method<int> mSetSearchResultCount;
+                Helpers::ReflectionHelpers::Method<void> mHideSearchResultCount;
                 Helpers::ReflectionHelpers::Method<void> mRemoveSearchQueryResults;
 
                 std::vector<Menu::View::IMenuSectionViewModel*> m_currentSections;
@@ -43,6 +44,7 @@ namespace ExampleApp
                 void SetEditText(const std::string& searchText, bool isTag);
 
                 void SetSearchResultCount(int searchResultCount);
+                void HideSearchResultCount();
 
                 void RemoveSearchQueryResults();
 

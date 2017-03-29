@@ -243,7 +243,7 @@ namespace ExampleAppWPF
 
         public void RemoveSearchQueryResults()
         {
-            SetSearchResultCount(0);
+            HideSearchResultCount();
             if (!m_editingText)
             {
                 m_editText.Text = String.Empty;
@@ -596,26 +596,27 @@ namespace ExampleAppWPF
         
         public void SetSearchResultCount(int count)
         {
-            if(count > 0)
-            {
-                m_resultsCount.Text = count.ToString();
-                m_resultsCountContainer.Visibility = Visibility.Visible;
-                m_searchResultsFade.Visibility = Visibility.Visible;
-                m_searchResultsScrollButton.Visibility = Visibility.Visible;
-                m_resultsOptionsView.ScrollToTop();
-            }
-            else
-            {
-                m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
-                m_searchResultsFade.Visibility = Visibility.Hidden;
-                m_searchResultsScrollButton.Visibility = Visibility.Hidden;
-                m_resultsCountContainer.Visibility = Visibility.Hidden;
-                m_resultsSpinner.Visibility = Visibility.Hidden;
-                ClearSearchResultsListBox();
-            }
+            m_resultsCount.Text = count.ToString();
+            m_resultsCountContainer.Visibility = Visibility.Visible;
+            m_searchResultsFade.Visibility = Visibility.Visible;
+            m_searchResultsScrollButton.Visibility = Visibility.Visible;
+            m_resultsOptionsView.ScrollToTop();
 
             m_searchInFlight = false;
-            m_hasResults = count > 0;
+            m_hasResults = true;
+        }
+
+        public void HideSearchResultCount()
+        {
+            m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
+            m_searchResultsFade.Visibility = Visibility.Hidden;
+            m_searchResultsScrollButton.Visibility = Visibility.Hidden;
+            m_resultsCountContainer.Visibility = Visibility.Hidden;
+            m_resultsSpinner.Visibility = Visibility.Hidden;
+            ClearSearchResultsListBox();
+
+            m_searchInFlight = false;
+            m_hasResults = false;
         }
 
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)

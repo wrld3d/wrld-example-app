@@ -692,73 +692,74 @@
 
 - (void) setSearchResultCount:(NSInteger)searchResultCount
 {
-    if(searchResultCount == 0)
+    
+    [self.pSearchCountLabel setText:[NSString stringWithFormat:@"%d", static_cast<int>(searchResultCount)]];
+    
+    if(!m_resultsVisible)
     {
-        [self.pSearchCountLabel setText:@""];
+        m_pAnchorAnimationController->Play();
         
-        if(m_resultsVisible)
+        if([super isAnimating])
         {
-            m_pAnchorAnimationController->PlayReverse();
-            
-            if([super isAnimating])
-            {
-                m_titleContainersRequireRefresh = true;
-            }
-            else
-            {
-                m_titleContainersRequireRefresh = false;
-                
-                [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenX, m_titleContainerClosedOnScreenY)
-                                                     :Eegeo::v2(m_titleContainerClosedOnScreenWidth, m_titleContainerClosedOnScreenHeight)
-                                                     :m_searchCountLabelClosedOnScreenAlpha
-                                                     :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenY)];
-            }
-            
-            if([self openOnScreenState] == 0.0f)
-            {
-                m_pOnScreenResultsAnimationController->PlayReverse();
-            }
-            
-            m_resultsVisible = false;
+            m_titleContainersRequireRefresh = true;
         }
-    }
-    else
-    {
-        [self.pSearchCountLabel setText:[NSString stringWithFormat:@"%d", static_cast<int>(searchResultCount)]];
+        else
+        {
+            m_titleContainersRequireRefresh = false;
+            
+            [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenXWithResults, m_titleContainerClosedOnScreenY)
+                                                 :Eegeo::v2(m_titleContainerClosedOnScreenWidthWithResults, m_titleContainerClosedOnScreenHeight)
+                                                 :m_searchCountLabelClosedOnScreenAlphaWithResults
+                                                 :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenYWithResults)];
+        }
         
-        if(!m_resultsVisible)
+        if([self openOnScreenState] == 0.0f)
         {
-            m_pAnchorAnimationController->Play();
-            
-            if([super isAnimating])
-            {
-                m_titleContainersRequireRefresh = true;
-            }
-            else
-            {
-                m_titleContainersRequireRefresh = false;
-                
-                [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenXWithResults, m_titleContainerClosedOnScreenY)
-                                                     :Eegeo::v2(m_titleContainerClosedOnScreenWidthWithResults, m_titleContainerClosedOnScreenHeight)
-                                                     :m_searchCountLabelClosedOnScreenAlphaWithResults
-                                                     :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenYWithResults)];
-            }
-            
-            if([self openOnScreenState] == 0.0f)
-            {
-                m_pOnScreenResultsAnimationController->Play();
-            }
-            
-            m_resultsVisible = true;
+            m_pOnScreenResultsAnimationController->Play();
         }
+        
+        m_resultsVisible = true;
     }
     
     [self.pInputDelegate setHasResults: searchResultCount>0];
 }
 
+- (void) hideSearchResultCount
+{
+    [self.pSearchCountLabel setText:@""];
+    
+    if(m_resultsVisible)
+    {
+        m_pAnchorAnimationController->PlayReverse();
+        
+        if([super isAnimating])
+        {
+            m_titleContainersRequireRefresh = true;
+        }
+        else
+        {
+            m_titleContainersRequireRefresh = false;
+            
+            [self refreshTitleContainerAnimations:Eegeo::v2(m_titleContainerClosedOnScreenX, m_titleContainerClosedOnScreenY)
+                                                 :Eegeo::v2(m_titleContainerClosedOnScreenWidth, m_titleContainerClosedOnScreenHeight)
+                                                 :m_searchCountLabelClosedOnScreenAlpha
+                                                 :Eegeo::v2(m_searchCountLabelClosedOnScreenX, m_searchCountLabelClosedOnScreenY)];
+        }
+        
+        if([self openOnScreenState] == 0.0f)
+        {
+            m_pOnScreenResultsAnimationController->PlayReverse();
+        }
+        
+        m_resultsVisible = false;
+    }
+    
+    [self.pInputDelegate setHasResults: false];
+}
+
 - (void) removeSearchQueryResults
 {
-    [self setSearchResultCount:0];
+    [self hideSearchResultCount];
     [self.pInputDelegate interopClearSearch];
 }
 

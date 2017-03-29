@@ -143,7 +143,7 @@ namespace ExampleApp
             
             void SearchMenuController::OnSearchCleared()
             {
-                m_searchMenuView.SetSearchResultCount(0);
+                m_searchMenuView.HideSearchResultCount();
                 
                 m_messageBus.Publish(SearchResultSection::SearchResultViewClearedMessage());
             }
