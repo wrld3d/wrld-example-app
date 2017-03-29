@@ -36,7 +36,6 @@ namespace ExampleApp
 
             public:
                 CompassModule(Eegeo::Location::NavigationService& navigationService,
-                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                               Eegeo::Location::ILocationService& locationService,
                               ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                               Eegeo::Helpers::IIdentityProvider& identityProvider,
