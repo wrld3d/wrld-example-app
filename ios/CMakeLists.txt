@@ -93,22 +93,7 @@ ${executable_name}
 PROPERTIES 
 RESOURCE "${allresources}"
 )
-
-find_package(XCTest REQUIRED)
-# CMake adds the xctest framework path to the compiler's include path which is forcibly injected into
-# OTHER_SWIFT_FLAGS.  This causes the header to be found twice by swift, resulting in the error 
-# "non-modular header inside framework module".  Clearing the framework include path solves the problem
-# and doesn't appear to have any adverse effect on the Obj-C side.
-set(XCTest_INCLUDE_DIRS "")
-
-xctest_add_bundle(FastlaneUITest ${TARGET_NAME}
-  fastlane_uitest/UITests.mm
-  fastlane_uitest/SnapshotHelper2-3.swift
-  fastlane_uitest/Info.plist)
-set_target_properties(FastlaneUITest
-  PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/fastlane_uitest/Info.plist)
-xctest_add_test(XCTest.FastlaneUITest FastlaneUITest)
-
+  
 option(AUTOMATED_SCREENSHOTS "Build for screenshot automation." OFF)
 if(AUTOMATED_SCREENSHOTS)
   add_definitions(-DAUTOMATED_SCREENSHOTS)
@@ -146,15 +131,32 @@ set_xcode_property(${executable_name} SWIFT_VERSION "2.3")
 unset_xcode_property(${executable_name} OTHER_SWIFT_FLAGS)
 
 # Test Project Settings
-set_xcode_property(FastlaneUITest LD_RUNPATH_SEARCH_PATHS "$(inherited) @executable_path/Frameworks @loader_path/Frameworks")
-set_xcode_property(FastlaneUITest ONLY_ACTIVE_ARCH "YES")
-set_xcode_property(FastlaneUITest PRODUCT_BUNDLE_IDENTIFIER "com.eegeo.FastlaneUITest")
-unset_xcode_property(FastlaneUITest TEST_HOST)
-unset_xcode_property(FastlaneUITest BUNDLE_LOADER)
-set_xcode_property(FastlaneUITest USES_XCTRUNNER "YES")
-set_xcode_property(FastlaneUITest TEST_TARGET_NAME "${executable_name}")
-set_xcode_property(FastlaneUITest FRAMEWORK_SEARCH_PATHS "${framework_search_paths}")
-set_target_properties(FastlaneUITest PROPERTIES XCODE_PRODUCT_TYPE "com.apple.product-type.bundle.ui-testing")
+if (BUILD_SNAPSHOT_TEST)
+  find_package(XCTest REQUIRED)
+  # CMake adds the xctest framework path to the compiler's include path which is forcibly injected into
+  # OTHER_SWIFT_FLAGS.  This causes the header to be found twice by swift, resulting in the error 
+  # "non-modular header inside framework module".  Clearing the framework include path solves the problem
+  # and doesn't appear to have any adverse effect on the Obj-C side.
+  set(XCTest_INCLUDE_DIRS "")
+  
+  xctest_add_bundle(FastlaneUITest ${TARGET_NAME}
+    fastlane_uitest/UITests.mm
+    fastlane_uitest/SnapshotHelper2-3.swift
+    fastlane_uitest/Info.plist)
+  set_target_properties(FastlaneUITest
+    PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/fastlane_uitest/Info.plist)
+  xctest_add_test(XCTest.FastlaneUITest FastlaneUITest)
+
+  set_xcode_property(FastlaneUITest LD_RUNPATH_SEARCH_PATHS "$(inherited) @executable_path/Frameworks @loader_path/Frameworks")
+  set_xcode_property(FastlaneUITest ONLY_ACTIVE_ARCH "YES")
+  set_xcode_property(FastlaneUITest PRODUCT_BUNDLE_IDENTIFIER "com.eegeo.FastlaneUITest")
+  unset_xcode_property(FastlaneUITest TEST_HOST)
+  unset_xcode_property(FastlaneUITest BUNDLE_LOADER)
+  set_xcode_property(FastlaneUITest USES_XCTRUNNER "YES")
+  set_xcode_property(FastlaneUITest TEST_TARGET_NAME "${executable_name}")
+  set_xcode_property(FastlaneUITest FRAMEWORK_SEARCH_PATHS "${framework_search_paths}")
+  set_target_properties(FastlaneUITest PROPERTIES XCODE_PRODUCT_TYPE "com.apple.product-type.bundle.ui-testing")
+endif (BUILD_SNAPSHOT_TEST)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH "YES")
 set_target_properties(${PROJECT_NAME} PROPERTIES
