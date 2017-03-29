@@ -113,6 +113,7 @@ AppHost::AppHost(
     ,m_pURLRequestHandler(NULL)
     ,m_pMenuReactionModel(NULL)
     ,m_pTagSearchViewModule(NULL)
+    ,m_screenshotService(m_pView)
     ,m_piOSAutomatedScreenshotController(NULL)
 {
     Eegeo::TtyHandler::TtyEnabled = true;
