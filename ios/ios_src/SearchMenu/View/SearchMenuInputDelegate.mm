@@ -97,12 +97,14 @@
     [m_pResultsSpinner startAnimating];
     m_searchInProgress = true;
     m_editingText = false;
+    [self updateClearButtonVisibility:m_pTextField];
 }
 
 - (void) setSearchEnded
 {
     [m_pResultsSpinner stopAnimating];
     m_searchInProgress = false;
+    [self updateClearButtonVisibility:m_pTextField];
 }
 
 - (void) removeSeachKeyboard
