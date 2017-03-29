@@ -69,11 +69,12 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:gravity="center"
-	    			android:layout_centerInParent="true"
-        			android:layout_alignTop="@+id/cache_clear_ceremony_view_spinner"
-	                android:text=""
+					android:text=""
 	                android:textColor="@color/darkgrey"
-	                android:textSize="16dp" />
+	                android:textSize="16dp"
+					android:layout_above="@+id/cache_clear_ceremony_view_spinner"
+					android:layout_alignParentStart="true"
+					android:layout_marginBottom="48dp" />
 
 		       <ProgressBar
 					android:id="@+id/cache_clear_ceremony_view_spinner"
