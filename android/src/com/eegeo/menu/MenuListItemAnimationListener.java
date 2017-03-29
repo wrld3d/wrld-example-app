@@ -15,7 +15,13 @@ public class MenuListItemAnimationListener extends AnimatorListenerAdapter
 		m_didExpand = didExpand;
 		m_menuExpandableListAdapter = menuExpandableListAdapter;
 	}
-	
+
+	@Override
+	public void onAnimationCancel(Animator animation)
+	{
+		onAnimationEnd(animation);
+	}
+
 	@Override
 	public void onAnimationEnd(Animator animation)
 	{	
