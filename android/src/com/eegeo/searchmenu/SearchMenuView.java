@@ -325,33 +325,31 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     
     public void setSearchResultCount(final int searchResultCount)
     {
-    	if(searchResultCount == 0)
-    	{
-    		m_searchCount = 0;
-    		m_searchCountText.setText("");
-    		
-    		if(m_searchMenuAnimationHandler != null)
-    		{
-    			m_searchMenuAnimationHandler.hideSearchResultsView();
-    		}
+        m_searchCount = searchResultCount;
+        m_searchCountText.setText(m_searchCount.toString());
+        m_searchMenuAnimationHandler.showSearchResultsView();
+        m_closeButtonView.setVisibility(View.VISIBLE);
+        m_anchorArrow.setVisibility(View.VISIBLE);
+        m_searchMenuResultsSeparator.setVisibility(View.VISIBLE);
+    }
 
-    		m_anchorArrow.setVisibility(View.GONE);
-    		m_searchMenuResultsSeparator.setVisibility(View.GONE);
-    	}
-    	else
-    	{
-    		m_searchCount = searchResultCount;
-    		m_searchCountText.setText(m_searchCount.toString());
-    		m_searchMenuAnimationHandler.showSearchResultsView();
-    		m_closeButtonView.setVisibility(View.VISIBLE);
-    		m_anchorArrow.setVisibility(View.VISIBLE);
-    		m_searchMenuResultsSeparator.setVisibility(View.VISIBLE);
-    	}
+    public void hideSearchResultCount()
+    {
+        m_searchCount = 0;
+        m_searchCountText.setText("");
+        
+        if(m_searchMenuAnimationHandler != null)
+        {
+            m_searchMenuAnimationHandler.hideSearchResultsView();
+        }
+
+        m_anchorArrow.setVisibility(View.GONE);
+        m_searchMenuResultsSeparator.setVisibility(View.GONE);
     }
 
     public void removeSearchQueryResults()
     {
-        setSearchResultCount(0);
+        hideSearchResultCount();
         if(!m_editingText)
         {
             m_editText.setText("");
