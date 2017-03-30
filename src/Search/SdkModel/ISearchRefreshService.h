@@ -16,6 +16,7 @@ namespace ExampleApp
                 virtual ~ISearchRefreshService() { }
 
                 virtual void TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef) = 0;
+                virtual void SetAnchorPoint(const Eegeo::dv3& interestPointEcef) = 0;
                 virtual void SetEnabled(bool enabled) = 0;
                 virtual const bool IsEnabled() const = 0;
             };

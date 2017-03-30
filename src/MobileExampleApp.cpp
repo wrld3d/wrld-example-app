@@ -680,6 +680,7 @@ namespace ExampleApp
                                                                                                            interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                            interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                            m_pAppCameraModule->GetController(),
+                                                                                                           m_pSearchModule->GetSearchRefreshService(),
                                                                                                            m_messageBus);
 
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),

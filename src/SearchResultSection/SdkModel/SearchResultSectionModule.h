@@ -13,6 +13,7 @@
 #include "Interiors.h"
 #include "AppCamera.h"
 #include "Types.h"
+#include "ISearchRefreshService.h"
 
 namespace ExampleApp
 {
@@ -38,6 +39,7 @@ namespace ExampleApp
                                           const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                           const Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& interiorMarkerRepository,
                                           AppCamera::SdkModel::IAppCameraController& appCameraController,
+                                          Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                           ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultSectionModule();
