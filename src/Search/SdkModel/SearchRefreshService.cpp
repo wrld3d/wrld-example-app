@@ -69,6 +69,13 @@ namespace ExampleApp
                 m_searchService.RemoveOnPerformedQueryCallback(m_searchResultQueryIssuedCallback);
             }
 
+            void SearchRefreshService::SetAnchorPoint(const Eegeo::dv3& interestPointEcef)
+            {
+                m_previousQueryLocationEcef = interestPointEcef;
+                m_previousInterestEcefLocation = interestPointEcef;
+                m_previousQueryInterestDistance = 0.0f;
+            }
+
             void SearchRefreshService::SetEnabled(bool enabled)
             {
                 m_enabled = enabled;
