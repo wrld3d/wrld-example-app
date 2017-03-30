@@ -58,10 +58,10 @@ namespace ExampleApp
                 
                 bool CombinedSearchService::CanPerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query, const Search::SdkModel::ISearchService& searchService) const
                 {
+                    const bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
+
                     if (searchService.CanHandleIndoor())
                     {
-                        const bool isIndoor = m_interiorInteractionModel.HasInteriorModel();
-                        
                         if (isIndoor || query.ShouldTryInteriorSearch())
                         {
                             return true;
@@ -71,13 +71,20 @@ namespace ExampleApp
                     const bool isTag = query.IsTag();
                     const bool canPerformTag = isTag && searchService.CanHandleTag(query.Query());
 
-                    if (canPerformTag)
+                    if (isIndoor)
                     {
-                        return true;
+                        return false;
                     }
-                    else if (!isTag)
+                    else
                     {
-                        return true;
+                        if (canPerformTag)
+                        {
+                            return true;
+                        }
+                        else if (!isTag)
+                        {
+                            return true;
+                        }
                     }
 
                     return false;
