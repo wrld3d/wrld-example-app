@@ -60,6 +60,7 @@ namespace ExampleApp
                 ~SearchRefreshService();
 
                 void TryRefreshSearch(float deltaSeconds, const Eegeo::dv3& interestPointEcef, const Eegeo::dv3& viewpointEcef);
+                void SetAnchorPoint(const Eegeo::dv3& interestPointEcef);
                 void SetEnabled(bool enabled);
                 const bool IsEnabled() const
                 {

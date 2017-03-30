@@ -20,6 +20,7 @@ namespace ExampleApp
                                                                  const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                  const Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& interiorMarkerRepository,
                                                                  AppCamera::SdkModel::IAppCameraController& appCameraController,
+                                                                 Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                                  ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService)
             {
@@ -31,6 +32,7 @@ namespace ExampleApp
                                                                                                     messageBus);
 
                 m_pSearchResultSectionItemSelectedMessageHandler = Eegeo_NEW(SearchResultSectionItemSelectedMessageHandler)(cameraTransitionController,
+                                                                                                                            searchRefreshService,
                                                                                                                             messageBus,
                                                                                                                             restrictedBuildingInformationService);
                 
