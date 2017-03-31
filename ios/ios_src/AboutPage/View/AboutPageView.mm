@@ -268,7 +268,13 @@
     teamFrame.origin.y = roundf(legalFrame.origin.y + self.pLegalLink.frame.size.height + 16.f);
     self.pTeamLink.frame = teamFrame;
     
-    
+    CGRect contentRect = CGRectZero;
+    for (UIView *view in self.self.pLabelsContainer.subviews)
+    {
+        contentRect = CGRectUnion(contentRect, view.frame);
+    }
+    contentRect.size.width = std::max(self.pTextContent.frame.size.width, self.pLogoImage.frame.size.width);
+    self.pLabelsContainer.contentSize = contentRect.size;
     
     self.pLabelsContainer.userInteractionEnabled = YES;
     
