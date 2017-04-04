@@ -370,12 +370,18 @@ public class BackgroundThreadActivity extends MainActivity
 
         synchronized void blockUntilThreadHasDestroyedPlatform()
         {
-            while(!m_destroyed);
+            while(!m_destroyed)
+            {
+                SystemClock.sleep(200);
+            }
         }
 
         synchronized void blockUntilThreadHasStoppedUpdatingPlatform()
         {
-            while(!m_stoppedUpdatingPlatformBeforeTeardown);
+            while(!m_stoppedUpdatingPlatformBeforeTeardown)
+            {
+                SystemClock.sleep(200);
+            }
         }
 
         public void postTo(Runnable runnable)
