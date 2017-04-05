@@ -892,6 +892,7 @@ namespace ExampleApp
                                                                                                   m_menuReaction);
         
         m_pCompassModule = Eegeo_NEW(ExampleApp::Compass::SdkModel::CompassModule)(*m_pNavigationService,
+                                                                                   interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                    world.GetLocationService(),
                                                                                    m_pAppCameraModule->GetController(),
                                                                                    m_identityProvider,
