@@ -1199,6 +1199,7 @@ namespace ExampleApp
 
         if (!eegeoWorld.Initialising() && !m_pLoadingScreen->IsDismissed())
         {
+            m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
             m_pLoadingScreen->Dismiss();
         }
 
