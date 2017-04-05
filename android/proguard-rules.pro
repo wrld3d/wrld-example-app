@@ -55,3 +55,5 @@
 
 -keep class javax.lang.model.element.** { *; }
 -dontwarn javax.lang.model.element.**
+
+-keep class com.senionlab.** { *; }
