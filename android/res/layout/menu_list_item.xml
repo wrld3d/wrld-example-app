@@ -15,6 +15,7 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             android:textColor="@drawable/menu_item_states"
             android:textSize="22sp"
+            android:ellipsize="end"
             android:text=""/>
 
         <ImageView
