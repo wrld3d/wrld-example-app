@@ -12,7 +12,8 @@ public class NativeJniCalls
     public static native void destroyNativeCode();
     public static native void pauseNativeCode();
     public static native void resumeNativeCode();
-    public static native void setNativeSurface(Surface surface);
+    public static native void releaseNativeWindow(long oldWindow);
+    public static native long setNativeSurface(Surface surface);
     public static native void updateNativeCode(float deltaTimeSeconds);
     public static native void updateUiViewCode(float deltaTimeSeconds);
     public static native void stopUpdatingNativeCode();
