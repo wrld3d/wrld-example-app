@@ -35,7 +35,6 @@ namespace ExampleApp
                 
                 m_searchRefreshService.SetEnabled(false);
                 m_searchRefreshService.SetAnchorPoint(message.SearchResultLocationEcef());
-                m_cameraTransitionController.InsertTransitioningChangedCallback(m_transitionChangedCallback);
             }
 
             void SearchResultSectionItemSelectedMessageHandler::OnTransitioningChangedCallback()
@@ -43,7 +42,6 @@ namespace ExampleApp
                 if (!m_cameraTransitionController.IsTransitioning())
                 {
                     m_searchRefreshService.SetEnabled(true);
-                    m_cameraTransitionController.RemoveTransitioningChangedCallback(m_transitionChangedCallback);
                 }
              }
  
@@ -60,10 +58,12 @@ namespace ExampleApp
                 , m_restrictedBuildingInformationService(restrictedBuildingInformationService)
             {
                 m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
+                m_cameraTransitionController.InsertTransitioningChangedCallback(m_transitionChangedCallback);
             }
 
             SearchResultSectionItemSelectedMessageHandler::~SearchResultSectionItemSelectedMessageHandler()
             {
+                m_cameraTransitionController.RemoveTransitioningChangedCallback(m_transitionChangedCallback);
                 m_messageBus.UnsubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
             }
         }
