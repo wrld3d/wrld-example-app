@@ -11,13 +11,15 @@ import org.json.JSONObject;
 import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
-import com.eegeo.mobileexampleapp.R;
-import com.eegeo.automation.AutomatedScreenshotController;
+import com.eegeo.helpers.IRuntimePermissionResultHandler;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.SurfaceHolder;
 import android.app.Activity;
@@ -26,6 +28,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
+
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.Constants;
 import net.hockeyapp.android.CrashManagerListener;
@@ -47,6 +50,8 @@ public class BackgroundThreadActivity extends MainActivity
      *  set to null before for the app pauses.
      */
     private Uri m_deepLinkUrlData;
+    private boolean m_locationPermissionRecieved;
+    public static final int LOCATION_PERMISSION_REQUEST_CODE = 52;
 
     static
     {
@@ -63,7 +68,7 @@ public class BackgroundThreadActivity extends MainActivity
             finish();
             return;
         }
-        
+
         m_hockeyAppId = readHockeyAppId();
         Constants.loadFromContext(this);
         NativeJniCalls.setUpBreakpad(Constants.FILES_PATH);
@@ -85,6 +90,7 @@ public class BackgroundThreadActivity extends MainActivity
 
         setContentView(R.layout.activity_main);
 
+
         Intent intent = getIntent();
         if(intent !=null)
         {
@@ -100,6 +106,23 @@ public class BackgroundThreadActivity extends MainActivity
         final float dpi = dm.ydpi;
         final int density = dm.densityDpi;
         final Activity activity = this;
+
+        boolean locationPermissionGranted = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        m_locationPermissionRecieved = locationPermissionGranted;
+
+        getRuntimePermissionDispatcher().addRuntimePermissionResultHandler(new  IRuntimePermissionResultHandler()
+        {
+            @Override
+            public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+            {
+                if(requestCode == LOCATION_PERMISSION_REQUEST_CODE)
+                {
+                    m_locationPermissionRecieved = true;
+                }
+            }
+        });
+
+        this.getRuntimePermissionDispatcher().hasLocationPermissionsWithCode(LOCATION_PERMISSION_REQUEST_CODE);
 
         m_threadedRunner = new ThreadedUpdateRunner(false);
         m_updater = new Thread(m_threadedRunner);
@@ -119,6 +142,8 @@ public class BackgroundThreadActivity extends MainActivity
                 }
             }
         });
+
+
     }
 
     public void runOnNativeThread(Runnable runnable)
@@ -161,14 +186,14 @@ public class BackgroundThreadActivity extends MainActivity
     {
         super.onPause();
 
-        runOnNativeThread(new Runnable()
-        {
-            public void run()
-            {
-                m_threadedRunner.stop();
-                NativeJniCalls.pauseNativeCode();
-            }
-        });
+        if(m_locationPermissionRecieved) {
+            runOnNativeThread(new Runnable() {
+                public void run() {
+                    m_threadedRunner.stop();
+                    NativeJniCalls.pauseNativeCode();
+                }
+            });
+        }
     }
 
     @Override
@@ -425,7 +450,7 @@ public class BackgroundThreadActivity extends MainActivity
 
                     if(deltaSeconds > m_frameThrottleDelaySeconds)
                     {
-                        if(m_running)
+                        if(m_running && m_locationPermissionRecieved)
                         {
                             NativeJniCalls.updateNativeCode(deltaSeconds);
 

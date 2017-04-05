@@ -71,7 +71,7 @@ public class RuntimePermissionDispatcher
         return false;
     }
 
-    public boolean hasLocationPermissions()
+    public boolean hasLocationPermissionsWithCode(int requestCode)
     {
         if(ContextCompat.checkSelfPermission(m_activity,
                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
@@ -81,9 +81,14 @@ public class RuntimePermissionDispatcher
         else
         {
             ActivityCompat.requestPermissions(m_activity, new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
-                    GPS_PERMISSION_REQUEST_CODE);
+                    requestCode);
         }
         return false;
+    }
+
+    public boolean hasLocationPermissions()
+    {
+        return hasLocationPermissionsWithCode(GPS_PERMISSION_REQUEST_CODE);
     }
 
     public void startAppSettings(final Context context)
@@ -104,9 +109,6 @@ public class RuntimePermissionDispatcher
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
-        if(requestCode != CAMERA_PERMISSION_REQUEST_CODE && requestCode != GPS_PERMISSION_REQUEST_CODE)
-            return;
-
         for (IRuntimePermissionResultHandler handler : m_activityCallbacks)
         {
             handler.onRequestPermissionsResult(requestCode, permissions, grantResults);
