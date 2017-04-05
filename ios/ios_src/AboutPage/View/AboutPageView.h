@@ -27,6 +27,8 @@
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
 
+- (void) showHiddenText:(UILongPressGestureRecognizer*)gesture;
+
 - (ExampleApp::AboutPage::View::AboutPageViewInterop*) getInterop;
 
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
@@ -36,6 +38,7 @@
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
 @property (nonatomic, retain) UIImageView* pLogoImage;
+@property (nonatomic, retain) UIButton* pLogoButton;;
 @property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UILabel* pDevelopedByLabel;
 @property (nonatomic, retain) UILabel* pTextContent;
