@@ -46,7 +46,7 @@
 
     <!-- Watermark View -->
     <System:Double x:Key="WatermarkDialogBoxWidth">540</System:Double>
-    <System:Double x:Key="WatermarkDialogBoxHeight">525</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxHeight">570</System:Double>
     <Thickness x:Key="WatermarkDialogBoxBorderThickness" Left="0" Top="0" Right="0" Bottom="0"/>
     <Visibility x:Key="WatermarkDialogBoxContainerNormalVisibility">Collapsed</Visibility>
     <Visibility x:Key="WatermarkDialogBoxContainerKioskVisibility">Visible</Visibility>
@@ -78,7 +78,7 @@
     <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOffColour" Color="White"/>
     <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOnColour" Color="White"/>
     <SolidColorBrush x:Key="WatermarkDialogBoxCloseButtonOverColour" Color="White"/>
-    <System:Double x:Key="WatermarkDialogBoxQRCodeImageSize">176</System:Double>
+    <System:Double x:Key="WatermarkDialogBoxQRCodeImageSize">250</System:Double>
     <Visibility x:Key="WatermarkDialogBoxQRCodeVisibility">Visible</Visibility>
     <Thickness x:Key="WatermarkDialogBoxQRCodeImageMargin" Left="0" Top="30" Right="0" Bottom="0"/>
 
@@ -233,7 +233,7 @@
     <System:Double x:Key="EegeoPOIViewQRCodeFontSize">26</System:Double>
     <System:String x:Key="EegeoPOIViewQRCodeText">Scan the QR Code with your device to find out more.</System:String>
     <Thickness x:Key="EegeoPOIViewQRCodeTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
-    <System:Double x:Key="EegeoPOIViewQRCodeImageSize">176</System:Double>
+    <System:Double x:Key="EegeoPOIViewQRCodeImageSize">250</System:Double>
     <Thickness x:Key="EegeoPOIViewQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="0"/>
 
     <System:Double x:Key="EegeoPOIViewBottomSpacerHeight">20</System:Double>
@@ -310,7 +310,7 @@
     <System:Double x:Key="YelpPOIViewQRCodeFontSize">26</System:Double>
     <System:String x:Key="YelpPOIViewQRCodeText">Scan the QR Code with your device to read the {0} review on Yelp.</System:String>
     <Thickness x:Key="YelpPOIViewQRCodeTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
-    <System:Double x:Key="YelpPOIViewQRCodeImageSize">176</System:Double>
+    <System:Double x:Key="YelpPOIViewQRCodeImageSize">250</System:Double>
     <Thickness x:Key="YelpPOIViewQRCodeImageMargin" Left="0" Top="20" Right="0" Bottom="0"/>
 
     <System:Double x:Key="YelpPOIViewBottomSpacerHeight">20</System:Double>

@@ -169,8 +169,11 @@
                     <Image Source="{Binding WatermarkQRCodeImageSource}"
                            Width="{DynamicResource WatermarkDialogBoxQRCodeImageSize}"
                            Height="{DynamicResource WatermarkDialogBoxQRCodeImageSize}"
+                           Stretch="None"
+                           SnapsToDevicePixels="True"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"
                            HorizontalAlignment="Center"
-                           VerticalAlignment="Bottom"
+                           VerticalAlignment="Top"
                            Visibility="{DynamicResource WatermarkDialogBoxQRCodeVisibility}"
                            Margin="{DynamicResource WatermarkDialogBoxQRCodeImageMargin}"/>
                 </StackPanel>
