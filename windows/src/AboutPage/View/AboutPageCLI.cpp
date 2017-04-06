@@ -5,9 +5,15 @@
 
 namespace ExampleApp
 {
-    void AboutPageCLI::CloseButtonClicked(System::IntPtr^ nativeObejctPtr)
+    void AboutPageCLI::CloseButtonClicked(System::IntPtr^ nativeObjectPtr)
     {
-        AboutPage::View::AboutPageView* view = reinterpret_cast<AboutPage::View::AboutPageView*>(nativeObejctPtr->ToPointer());
+        AboutPage::View::AboutPageView* view = reinterpret_cast<AboutPage::View::AboutPageView*>(nativeObjectPtr->ToPointer());
         view->CloseTapped();
+    }
+
+    void AboutPageCLI::LogoLongPress(System::IntPtr^ nativeObjectPtr)
+    {
+        AboutPage::View::AboutPageView* view = reinterpret_cast<AboutPage::View::AboutPageView*>(nativeObjectPtr->ToPointer());
+        view->ShowHiddenText();
     }
 }
