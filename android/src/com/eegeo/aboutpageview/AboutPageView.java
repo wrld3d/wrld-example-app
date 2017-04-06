@@ -4,6 +4,7 @@ package com.eegeo.aboutpageview;
 
 import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class AboutPageView implements View.OnClickListener
     private TextView m_privacyLink = null;
     private TextView m_legalLink = null;
     private TextView m_teamLink = null;
+    private ImageView m_logoImage = null;
 
     public AboutPageView(MainActivity activity, long nativeCallerPointer)
     {
@@ -38,6 +40,7 @@ public class AboutPageView implements View.OnClickListener
         m_privacyLink = (TextView)m_view.findViewById(R.id.about_page_view_privacy_link);
         m_legalLink = (TextView)m_view.findViewById(R.id.about_page_view_legal_link);
         m_teamLink = (TextView)m_view.findViewById(R.id.about_page_view_team_link);
+        m_logoImage = (ImageView)m_view.findViewById(R.id.about_page_eegeo_logo);
         
         RelativeLayout.LayoutParams layoutParams = (LayoutParams) m_view.getLayoutParams();
         if (m_activity.getResources().getBoolean(R.bool.isPhone)) 
@@ -49,6 +52,16 @@ public class AboutPageView implements View.OnClickListener
             layoutParams.topMargin = layoutParams.bottomMargin = m_activity.dipAsPx(80);
             layoutParams.leftMargin = layoutParams.rightMargin = (int) (m_uiRoot.getWidth() * 0.3f);
         }
+
+        m_logoImage.setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View v)
+            {
+                showHiddenText();
+                return true;
+            }
+        });
 
         m_closeButton.setOnClickListener(this);
         m_view.setVisibility(View.GONE);
@@ -68,6 +81,11 @@ public class AboutPageView implements View.OnClickListener
     public void displayContent(final String content)
     {
         m_aboutTextView.setText(content);
+    }
+
+    public void showHiddenText()
+    {
+        AboutPageViewJniMethods.LogoLongPress(m_nativeCallerPointer);
     }
 
     public void openAboutPage()

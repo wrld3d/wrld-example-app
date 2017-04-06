@@ -22,6 +22,7 @@ namespace ExampleApp
                 jobject m_uiView;
 
                 Eegeo::Helpers::CallbackCollection0 m_callbacks;
+                Eegeo::Helpers::CallbackCollection0 m_hiddenTextCallbacks;
 
             public:
                 AboutPageView(AndroidNativeState& nativeState);
@@ -36,9 +37,15 @@ namespace ExampleApp
 
                 void SetContent(const std::string& content);
 
+                void ShowHiddenText();
+
                 void InsertCloseTappedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveCloseTappedCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertLogoLongPressCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void RemoveLogoLongPressCallback(Eegeo::Helpers::ICallback0& callback);
             };
         }
     }
