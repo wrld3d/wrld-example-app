@@ -69,7 +69,7 @@ namespace ExampleAppWPF
         public static BitmapSource GetQRCodeBitmapSourceFromURL(string url, int maxSize)
         {
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.Q);
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(url, QRCodeGenerator.ECCLevel.L);
             QRCode qrCode = new QRCode(qrCodeData);
 
             int qrCodeBorderSize = 8;

@@ -354,7 +354,16 @@
                                                     </Grid>
                                                     <TextBlock Name="QRCodeText" Text="{DynamicResource EegeoPOIViewQRCodeText}" FontSize="{DynamicResource EegeoPOIViewQRCodeFontSize}" Margin="{DynamicResource EegeoPOIViewQRCodeTextMargin}" Foreground="{StaticResource DarkGrey}" FontFamily="{DynamicResource PrimaryUIFont}" TextWrapping="Wrap"/>
                                                 </Grid>
-                                                <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=QRCodeImage}" Width="{DynamicResource EegeoPOIViewQRCodeImageSize}" Height="{DynamicResource EegeoPOIViewQRCodeImageSize}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="{DynamicResource EegeoPOIViewQRCodeVisibility}" Margin="{DynamicResource EegeoPOIViewQRCodeImageMargin}"/>
+                                                <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:eeGeoSearchResultsPoiView}}, Path=QRCodeImage}"
+                                                       Width="{DynamicResource EegeoPOIViewQRCodeImageSize}"
+                                                       Height="{DynamicResource EegeoPOIViewQRCodeImageSize}"
+                                                       Stretch="None"
+                                                       SnapsToDevicePixels="True"
+                                                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Bottom"
+                                                       Visibility="{DynamicResource EegeoPOIViewQRCodeVisibility}"
+                                                       Margin="{DynamicResource EegeoPOIViewQRCodeImageMargin}"/>
                                             </StackPanel>
 
                                             <!-- Bottom Spacer -->
