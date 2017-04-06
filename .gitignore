@@ -27,4 +27,9 @@ ios/XcodeBuild/
 **/.vscode/
 .gradle
 **/.externalNativeBuild
+*.iml
+gradlew
+gradlew.*
+**/gradle
+**/local.properties
 
