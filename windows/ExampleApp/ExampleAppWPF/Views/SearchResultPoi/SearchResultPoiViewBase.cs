@@ -188,13 +188,13 @@ namespace ExampleAppWPF
                 bool canScroll = m_contentContainer.ExtentHeight > m_contentContainer.ActualHeight;
                 if (m_contentContainer.VerticalOffset == m_contentContainer.ScrollableHeight)
                 {
-                    if (canScroll && m_headerFade.Opacity <= 0)
+                    if (canScroll && m_headerFade.Opacity < 1)
                     {
                         m_scrollFadeInAnim.Begin(m_headerFade);
                         m_scrollFadeInAnim.Begin(m_scrollUpButton);
                     }
 
-                    if (m_footerFade.Opacity >= 1)
+                    if (m_footerFade.Opacity > 0)
                     {
                         m_scrollFadeOutAnim.Begin(m_footerFade);
                         m_scrollFadeOutAnim.Begin(m_scrollDownButton);
@@ -202,13 +202,13 @@ namespace ExampleAppWPF
                 }
                 else if (m_contentContainer.VerticalOffset == 0)
                 {
-                    if (m_headerFade.Opacity >= 1)
+                    if (m_headerFade.Opacity > 0)
                     {
                         m_scrollFadeOutAnim.Begin(m_headerFade);
                         m_scrollFadeOutAnim.Begin(m_scrollUpButton);
                     }
 
-                    if (canScroll && m_footerFade.Opacity <= 0)
+                    if (canScroll && m_footerFade.Opacity < 1)
                     {
                         m_scrollFadeInAnim.Begin(m_footerFade);
                         m_scrollFadeInAnim.Begin(m_scrollDownButton);
@@ -216,13 +216,13 @@ namespace ExampleAppWPF
                 }
                 else if (canScroll)
                 {
-                    if (m_headerFade.Opacity <= 0)
+                    if (m_headerFade.Opacity < 1)
                     {
                         m_scrollFadeInAnim.Begin(m_headerFade);
                         m_scrollFadeInAnim.Begin(m_scrollUpButton);
                     }
 
-                    if (m_footerFade.Opacity <= 0)
+                    if (m_footerFade.Opacity < 1)
                     {
                         m_scrollFadeInAnim.Begin(m_footerFade);
                         m_scrollFadeInAnim.Begin(m_scrollDownButton);
