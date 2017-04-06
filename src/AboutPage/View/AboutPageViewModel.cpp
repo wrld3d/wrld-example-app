@@ -47,7 +47,7 @@ namespace ExampleApp
                 return m_openable.IsFullyOpen();
             }
 
-            const std::string AboutPageViewModel::GetContent() const
+            const std::string AboutPageViewModel::GetContent(bool showHiddenContent) const
             {
                 std::stringstream content;
                 
@@ -60,7 +60,7 @@ namespace ExampleApp
                         << m_indoorPositioningType
                         << "\n";
                 
-                if(m_indoorPositioningType == "\nIndoor positioning type: Senion")
+                if(m_indoorPositioningType == "\nIndoor positioning type: Senion" && showHiddenContent)
                 {
                     content << "\n eeGeo Floor number: " << m_eegeoFloorNumber
                             << "\n Senion Floor number: " << m_senionFloorNumber

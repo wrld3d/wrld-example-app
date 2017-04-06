@@ -21,6 +21,8 @@ namespace ExampleApp
 
                 virtual void InsertCloseTappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveCloseTappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void InsertLogoLongPressCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveLogoLongPressCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }
