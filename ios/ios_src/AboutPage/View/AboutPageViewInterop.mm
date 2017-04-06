@@ -32,6 +32,11 @@ namespace ExampleApp
             {
                 [m_pView setContent:&content];
             }
+            
+            void AboutPageViewInterop::ShowHiddenText()
+            {
+                m_hiddenTextCallbacks.ExecuteCallbacks();
+            }
 
             void AboutPageViewInterop::InsertCloseTappedCallback(Eegeo::Helpers::ICallback0& callback)
             {
@@ -41,6 +46,16 @@ namespace ExampleApp
             void AboutPageViewInterop::RemoveCloseTappedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_callbacks.RemoveCallback(callback);
+            }
+            
+            void AboutPageViewInterop::InsertLogoLongPressCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_hiddenTextCallbacks.AddCallback(callback);
+            }
+            
+            void AboutPageViewInterop::RemoveLogoLongPressCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_hiddenTextCallbacks.RemoveCallback(callback);
             }
         }
     }

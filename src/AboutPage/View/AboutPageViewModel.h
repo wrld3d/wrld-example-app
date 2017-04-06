@@ -62,7 +62,7 @@ namespace ExampleApp
                 
                 void UpdateApplicationName(const std::string& appName);
 
-                const std::string GetContent() const;
+                const std::string GetContent(bool showHiddenContent) const;
 
                 OpenableControl::View::IOpenableControlViewModel& GetOpenableControl();
 

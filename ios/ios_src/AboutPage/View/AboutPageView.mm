@@ -60,6 +60,12 @@
         self.pLogoImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         self.pLogoImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"eegeo_logo");
         [self.pLabelsContainer addSubview: self.pLogoImage];
+        
+        self.pLogoButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showHiddenText:)];
+        [self.pLogoButton addGestureRecognizer:longPress];
+        [longPress autorelease];
+        [self.pLabelsContainer addSubview: self.pLogoButton];
 
         self.pTextContent = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pTextContent.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
@@ -127,6 +133,9 @@
 
     [self.pDevelopedByLabel removeFromSuperview];
     [self.pDevelopedByLabel release];
+    
+    [self.pLogoButton removeFromSuperview];
+    [self.pLogoButton release];
 
     [self.pLogoImage removeFromSuperview];
     [self.pLogoImage release];
@@ -223,6 +232,7 @@
     const float logoX = (static_cast<float>(self.pLabelsContainer.frame.size.width) / 2) - (logoWidth/2);
 
     self.pLogoImage.frame = CGRectMake(logoX, logoY, logoWidth, logoHeight);
+    self.pLogoButton.frame = CGRectMake(logoX, logoY, logoWidth, logoHeight);
 
     const float textContentY = logoY + logoHeight;
     self.pTextContent.frame = CGRectMake(textContentX, textContentY + self.pLegalLink.frame.size.height, textWidth, contentSectionHeight - 300.f);
@@ -338,6 +348,14 @@
 - (void)onCloseButtonTapped
 {
     m_pInterop->CloseTapped();
+}
+
+- (void)showHiddenText:(UILongPressGestureRecognizer*)gesture
+{
+    if ( gesture.state == UIGestureRecognizerStateEnded )
+    {
+        m_pInterop->ShowHiddenText();
+    }
 }
 
 - (void) privacyClickHandler:(UITapGestureRecognizer *)recognizer

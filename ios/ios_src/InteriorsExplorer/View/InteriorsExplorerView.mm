@@ -675,8 +675,8 @@ static NSString *CellIdentifier = @"floorCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     const float divisionWidth = 30;
-    const float divisionLabelWidth = 25;
-    const float divisionLabelSpacing = 15;
+    const float divisionLabelWidth = 35;
+    const float divisionLabelSpacing = 5;
     
     int floorIndex = static_cast<int>(indexPath.row);
     int floorCount = static_cast<int>(m_tableViewFloorNames.size());
