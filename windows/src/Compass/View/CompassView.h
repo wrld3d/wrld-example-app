@@ -34,6 +34,7 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<float> mAnimateToIntermediateOnScreenState;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToActive;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToInactive;
+                Helpers::ReflectionHelpers::Method<bool> mSetRotationHighlight;
 
             public:
                 CompassView(WindowsNativeState& nativeState,
@@ -57,6 +58,8 @@ namespace ExampleApp
                 void SetFullyOnScreen();
 
                 void SetFullyOffScreen();
+
+                void SetRotationHighlight(bool shouldShowRotationHighlight);
 
                 void InsertCycledCallback(Eegeo::Helpers::ICallback0& callback);
 

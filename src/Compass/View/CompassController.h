@@ -10,6 +10,7 @@
 #include "MyPinCreationStateChangedMessage.h"
 #include "AppModeChangedMessage.h"
 #include "VirtualKeyboard.h"
+#include "CompassIsRotatingStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<CompassController> m_viewCycledCallback;
                 Eegeo::Helpers::TCallback1<CompassController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
                 Eegeo::Helpers::TCallback1<CompassController, const VirtualKeyboard::VirtualKeyboardStateChangedMessage&> m_virtualKeyboardStateChangedMessageHandler;
+                Eegeo::Helpers::TCallback1<CompassController, const Compass::CompassIsRotatingStateChangedMessage&> m_isRotatingStateChangedMessageHandler;
 
                 void OnViewCycled();
 
@@ -48,8 +50,12 @@ namespace ExampleApp
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
 
                 void OnVirtualKeyboardStateChangedMessage(const VirtualKeyboard::VirtualKeyboardStateChangedMessage& message);
-                
+
+                void OnIsRotatingStateChangedMessage(const Compass::CompassIsRotatingStateChangedMessage& message);
+
                 bool m_appModeAllowsOpen;
+
+                bool m_isRotating;
                 
             public:
                 CompassController(ICompassView& view,

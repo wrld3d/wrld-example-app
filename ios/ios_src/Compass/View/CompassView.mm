@@ -6,6 +6,11 @@
 #include "ImageHelpers.h"
 #include "CompassViewInterop.h"
 
+static const float CompassOuterShapeInactiveAlpha = 0.5f;
+static const float CompassOuterShapeActiveAlpha = 1.0f;
+
+static const long RotationHighlightAnimationMilliseconds = 200;
+
 enum CompassViewState
 {
     Disabled,
@@ -26,6 +31,7 @@ enum CompassViewState
     CompassViewState m_compassViewState;
     
     bool m_disabledStateHighlighted;
+    float m_currentAngleRadians;
 }
 
 @end
@@ -92,6 +98,9 @@ enum CompassViewState
         self.hidden = YES;
         
         m_disabledStateHighlighted = false;
+
+        m_currentAngleRadians = 0.0f;
+        self.pPoint.alpha = CompassOuterShapeInactiveAlpha;
     }
 
     return self;
@@ -163,6 +172,8 @@ enum CompassViewState
     
     if (!m_disabledStateHighlighted)
     {
+        self.pOuterShape.transform = CGAffineTransformIdentity;
+        m_currentAngleRadians = 0.0f;
         self.pOuterShape.image = m_pCompassDefaultImage;
     }
     
@@ -190,6 +201,7 @@ enum CompassViewState
     if (!m_disabledStateHighlighted)
     {
         self.pOuterShape.image = m_pCompassUnlockedImage;
+        self.pOuterShape.transform = CGAffineTransformIdentity;
     }
 }
 
@@ -206,9 +218,17 @@ enum CompassViewState
 
 - (void) updateHeading:(float)angleRadians
 {
-    self.pPoint.transform = CGAffineTransformTranslate(CGAffineTransformRotate(CGAffineTransformIdentity,
-                                                                               -angleRadians),
-                                                       0, 0.f);
+    const CGAffineTransform rotateTransform = CGAffineTransformRotate(CGAffineTransformIdentity, -angleRadians);
+    m_currentAngleRadians = angleRadians;
+    self.pPoint.transform = CGAffineTransformTranslate(rotateTransform, 0, 0.f);
+    if (m_compassViewState == Follow)
+    {
+        self.pOuterShape.transform = rotateTransform;
+    }
+    else
+    {
+        self.pOuterShape.transform = CGAffineTransformIdentity;
+    }
 }
 
 - (ExampleApp::Compass::View::CompassViewInterop *)getInterop
@@ -329,6 +349,17 @@ enum CompassViewState
             self.pOuterShape.image = m_pCompassUnlockedImage;
         }
     }
+}
+
+- (void) setRotationHighlight:(bool)shouldShowRotationHighlight
+{
+    const float alpha = shouldShowRotationHighlight
+        ? CompassOuterShapeInactiveAlpha
+        : CompassOuterShapeActiveAlpha;
+    [UIView animateWithDuration:RotationHighlightAnimationMilliseconds animations:^
+     {
+         self.pPoint.alpha = alpha;
+     }];
 }
 
 @end

@@ -28,6 +28,7 @@ namespace ExampleAppWPF
         private double m_currentHeading;
         private TranslateTransform m_translateTransform = new TranslateTransform();
         private RotateTransform m_rotateTransform = new RotateTransform();
+        private RotateTransform m_compassLockedRotateTransform = new RotateTransform();
 
         private double m_yPosActive;
         private double m_yPosInactive;
@@ -37,6 +38,12 @@ namespace ExampleAppWPF
         private bool m_isInKioskMode = false;
 
         private WindowInteractionTouchHandler m_touchHandler;
+
+        private static Duration RotationHighlightAnimationMilliseconds = new Duration(TimeSpan.FromMilliseconds(200));
+        private static Duration NeedleLockRotationAnimationMilliseconds = new Duration(TimeSpan.FromMilliseconds(200));
+
+        private const float CompassOuterShapeInactiveAlpha = 0.5f;
+        private const float CompassOuterShapeActiveAlpha = 1.0f;
 
         static CompassView()
         {
@@ -68,8 +75,14 @@ namespace ExampleAppWPF
             m_compassNewLocked = (Image)GetTemplateChild("CompassNewLocked");
             m_compassNewUnlocked = (Image)GetTemplateChild("CompassNewUnlocked");
 
+            var compassNewLockedTransforms = new TransformGroup();
+            m_compassLockedRotateTransform.CenterX = m_compassNewLocked.Width / 2;
+            m_compassLockedRotateTransform.CenterY = m_compassNewLocked.Height / 2;
+            compassNewLockedTransforms.Children.Add(m_compassLockedRotateTransform);
+            compassNewLockedTransforms.Children.Add(new TranslateTransform((m_compassNew.Width - m_compassNewLocked.Width) / 2, (m_compassNew.Width - m_compassNewLocked.Height) / 2));
+            m_compassNewLocked.RenderTransform = compassNewLockedTransforms;
+
             m_compassNewLocate.RenderTransform = new TranslateTransform((m_compassNew.Width - m_compassNewLocate.Width)/2, (m_compassNew.Width - m_compassNewLocate.Height)/2);
-            m_compassNewLocked.RenderTransform = new TranslateTransform((m_compassNew.Width - m_compassNewLocked.Width) / 2, (m_compassNew.Width - m_compassNewLocked.Height) / 2);
             m_compassNewUnlocked.RenderTransform = new TranslateTransform((m_compassNew.Width - m_compassNewUnlocked.Width) / 2, (m_compassNew.Width - m_compassNewUnlocked.Height) / 2);
 
             var canvas = (Canvas)GetTemplateChild("ImageCanvas");
@@ -198,6 +211,18 @@ namespace ExampleAppWPF
             }
         }
 
+        public void SetRotationHighlight(bool shouldShowRotationHighlight)
+        {
+            m_compassNew.BeginAnimation(Image.OpacityProperty,
+                                        new DoubleAnimation
+                                        {
+                                            To = shouldShowRotationHighlight
+                                                   ? CompassOuterShapeActiveAlpha
+                                                   : CompassOuterShapeInactiveAlpha,
+                                            Duration = RotationHighlightAnimationMilliseconds
+                                        });
+        }
+
         private void EnableKioskCompassLocateButton(bool enable)
         {
             Opacity = enable ? 1.0f : 0.5f;
@@ -222,17 +247,17 @@ namespace ExampleAppWPF
             m_currentRenderArgsRenderingTime = renderArgs.RenderingTime;
 
             UpdateOrientationTransform((float)m_currentHeading);
-            InvalidateOrientationTransform();
+            m_compassLockedRotateTransform.Angle = Rad2Deg((float)-m_currentHeading);
+            InvalidateOrientationTransforms();
         }
 
-        private void InvalidateOrientationTransform()
+        private void InvalidateOrientationTransforms()
         {
             m_translateTransform.InvalidateProperty(TranslateTransform.XProperty);
             m_translateTransform.InvalidateProperty(TranslateTransform.YProperty);
 
             m_rotateTransform.InvalidateProperty(RotateTransform.AngleProperty);
-            m_rotateTransform.InvalidateProperty(RotateTransform.CenterXProperty);
-            m_rotateTransform.InvalidateProperty(RotateTransform.CenterYProperty);
+            m_compassLockedRotateTransform.InvalidateProperty(RotateTransform.AngleProperty);
         }
 
         private void UpdateOrientationTransform(float headingAngleRadians)
@@ -249,9 +274,7 @@ namespace ExampleAppWPF
             m_translateTransform.X = m_compassPointOffsetX + newX;
             m_translateTransform.Y = m_compassPointOffsetY + newY;
 
-            m_rotateTransform.CenterX = m_compassNew.Width / 2;
-            m_rotateTransform.CenterY = m_compassNew.Height / 2;
-            m_rotateTransform.Angle = -headingAngleRadians * 180 / Math.PI;
+            m_rotateTransform.Angle = Rad2Deg(-headingAngleRadians);
         }
 
         private void InitialiseTransforms()
@@ -259,10 +282,18 @@ namespace ExampleAppWPF
             var transformGroup = new TransformGroup();
             UpdateOrientationTransform(0.0f);
 
+            m_rotateTransform.CenterX = m_compassNew.Width / 2;
+            m_rotateTransform.CenterY = m_compassNew.Height / 2;
+
             transformGroup.Children.Add(m_rotateTransform);
             transformGroup.Children.Add(m_translateTransform);
             m_compassNew.RenderTransform = transformGroup;
             m_compassNew.Visibility = Visibility.Visible;
+        }
+
+        private static float Rad2Deg(float rads)
+        {
+            return rads * 180.0f / (float) Math.PI;
         }
     }
 }

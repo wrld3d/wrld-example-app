@@ -3,6 +3,7 @@
 #include "CompassModule.h"
 #include "CompassViewModel.h"
 #include "CompassModel.h"
+#include "CompassTouchController.h"
 #include "CompassUpdateController.h"
 #include "CompassModeObserver.h"
 #include "CameraTransitionService.h"
@@ -25,6 +26,7 @@ namespace ExampleApp
                                          AppModes::SdkModel::IAppModeModel& appModeModel,
                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                          bool isInKioskMode)
+                : m_touchController(messageBus)
             {
                 m_pModel = Eegeo_NEW(CompassModel)(navigationService,
                                                    interiorInteractionModel,
@@ -69,6 +71,11 @@ namespace ExampleApp
             ScreenControl::View::IScreenControlViewModel& CompassModule::GetScreenControlViewModel() const
             {
                 return m_pViewModel->GetScreenControlViewModel();
+            }
+
+            ICompassTouchController& CompassModule::GetTouchController()
+            {
+                return m_touchController;
             }
         }
     }

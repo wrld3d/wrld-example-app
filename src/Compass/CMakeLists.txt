@@ -11,6 +11,7 @@ set(currsources
   ../src/Compass/CompassModeUnauthorizedMessage.h
   ../src/Compass/CompassViewCycledMessage.cpp
   ../src/Compass/CompassViewCycledMessage.h
+  ../src/Compass/CompassIsRotatingStateChangedMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Compass FILES ${currsources})

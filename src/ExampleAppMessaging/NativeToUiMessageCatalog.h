@@ -44,6 +44,7 @@
 #include "AttractModeStateChangedMessage.h"
 #include "AboutPageSenionDataTypeMessage.h"
 #include "AboutPageSenionSettingsTypeMessage.h"
+#include "CompassIsRotatingStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -90,6 +91,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<AttractMode::AttractModeStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionDataTypeMessage>
             , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionSettingsTypeMessage>
+            , public Eegeo::Messaging::CatalogBinding<Compass::CompassIsRotatingStateChangedMessage>
             , private Eegeo::NonCopyable
         {
 

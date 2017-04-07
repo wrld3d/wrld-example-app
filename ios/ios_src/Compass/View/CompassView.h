@@ -55,6 +55,8 @@
 
 - (void) animateToY:(float)y;
 
+- (void) setRotationHighlight:(bool)shouldShowRotationHighlight;
+
 @property (nonatomic, retain) UIImageView* pOuterShape;
 @property (nonatomic, retain) UIView* pInnerShape;
 @property (nonatomic, retain) UIImageView* pPoint;
