@@ -54,4 +54,5 @@
     <string name="initial_ux_mapmode_dialog_description">Simple 2D View</string>
     <string name="initial_ux_pincreation_dialog_title">Drop Pin</string>
     <string name="initial_ux_pincreation_dialog_description">Drop a pin on map\nto bookmark a place.</string>
+    <string name="eegeo_app_base">Android-MEA</string>
 </resources>
