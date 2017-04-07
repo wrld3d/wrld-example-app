@@ -39,21 +39,24 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	private final float CompassOuterShapeInactiveAlpha = 0.5f;
 	private final float CompassOuterShapeActiveAlpha = 1.0f;
 
-	public CompassView(MainActivity activity, long nativeCallerPointer) {
+	public CompassView(MainActivity activity, long nativeCallerPointer)
+	{
 		m_activity = activity;
 		m_nativeCallerPointer = nativeCallerPointer;
 
 		createView();
 	}
 
-	public void destroy() {
+	public void destroy()
+	{
 		final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
 		uiRoot.removeView(m_view);
 		m_view = null;
 		m_activity.getRuntimePermissionDispatcher().removeIRuntimePermissionResultHandler(this);
 	}
 
-	private void createView() {
+	private void createView()
+	{
 		final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
 		m_view = m_activity.getLayoutInflater().inflate(R.layout.compass_layout, uiRoot, false);
 		m_view.setOnClickListener(this);
@@ -92,20 +95,23 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		showGpsDisabledView();
 	}
 
-	public void updateHeading(float headingAngleRadians) {
+	public void updateHeading(float headingAngleRadians)
+	{
 		final float rotationDegrees = (float) -Math.toDegrees(headingAngleRadians);
 		m_compassPoint.setRotation(rotationDegrees);
         m_compassLocked.setRotation(rotationDegrees);
 	}
 
-	public void showGpsDisabledView() {
+	public void showGpsDisabledView()
+	{
 		m_compassInner.setVisibility(View.GONE);
 		m_compassDefault.setVisibility(View.VISIBLE);
 		m_compassLocked.setVisibility(View.INVISIBLE);
 		m_compassUnlocked.setVisibility(View.INVISIBLE);
 	}
 
-	public void showGpsFollowView() {
+	public void showGpsFollowView()
+	{
 		m_compassLocked.setRotation(m_compassPoint.getRotation());
 
 		m_compassInner.setVisibility(View.VISIBLE);
@@ -114,7 +120,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		m_compassUnlocked.setVisibility(View.INVISIBLE);
 	}
 
-	public void showGpsCompassModeView() {
+	public void showGpsCompassModeView()
+	{
 		final float NeedleLockeRotationDegrees = 0.0f;
 		m_compassUnlocked.setRotation(m_compassLocked.getRotation());
 
@@ -128,7 +135,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 				.setDuration(NeedleLockRotationAnimationMilliseconds);
 	}
 
-	public void notifyGpsUnauthorized() {
+	public void notifyGpsUnauthorized()
+	{
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(m_activity);
 		alertDialogBuilder.setTitle("Location Services disabled")
 				.setMessage("GPS Compass inaccessable: Location Services are not enabled for this application. You can change this in your device settings.")
@@ -145,43 +153,53 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	}
 
 	@Override
-	public void onClick(View view) {
+	public void onClick(View view)
+	{
 		if (m_activity.getRuntimePermissionDispatcher().hasLocationPermissions()) {
 			CompassViewJniMethods.HandleClick(m_nativeCallerPointer);
 		}
 	}
 
-	public void animateToActive() {
+	public void animateToActive()
+	{
 		animateViewToY((int) m_yPosActive);
 	}
 
-	public void animateToInactive() {
+	public void animateToInactive()
+	{
 		animateViewToY((int) m_yPosInactive);
 	}
 
-	protected void animateViewToY(final int yAsPx) {
+	protected void animateViewToY(final int yAsPx)
+	{
 		m_view.animate()
 				.y(yAsPx)
 				.setDuration(m_stateChangeAnimationTimeMilliseconds);
 	}
 
-	public void animateToIntermediateOnScreenState(final float onScreenState) {
+	public void animateToIntermediateOnScreenState(final float onScreenState)
+	{
 		int viewYPx = (int) m_view.getY();
 		int newYPx = (int) (m_yPosInactive + (int) (((m_yPosActive - m_yPosInactive) * onScreenState) + 0.5f));
 
-		if (viewYPx != newYPx) {
+		if (viewYPx != newYPx)
+		{
 			m_view.setY(newYPx);
 		}
 	}
 
 	@Override
-	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+	{
 		if (requestCode != RuntimePermissionDispatcher.GPS_PERMISSION_REQUEST_CODE)
 			return;
 		// If request is cancelled, the result arrays are empty.
-		if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+		if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+		{
 			CompassViewJniMethods.HandleClick(m_nativeCallerPointer);
-		} else {
+		}
+		else
+        {
 			// If any of the permission is denied, we can't use the camera
 			// properly, so we will show the dialog with agree or cancel dialog
 			showPermissionRequiredDialog(m_activity);
@@ -189,7 +207,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		return;
 	}
 
-	public void setRotationHighlight(boolean shouldShowRotationHighlight) {
+	public void setRotationHighlight(boolean shouldShowRotationHighlight)
+	{
 		m_compassPoint.animate()
 				.alpha(shouldShowRotationHighlight ? CompassOuterShapeActiveAlpha : CompassOuterShapeInactiveAlpha)
 				.setDuration(RotationHighlightAnimationMilliseconds);
