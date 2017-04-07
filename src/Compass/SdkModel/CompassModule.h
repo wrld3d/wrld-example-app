@@ -18,6 +18,7 @@
 #include "AppCamera.h"
 #include "InteriorsExplorer.h"
 #include "CameraTransitionService.h"
+#include "CompassTouchController.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,7 @@ namespace ExampleApp
                 ICompassUpdateController* m_pCompassUpdateController;
                 CompassModeObserver* m_pCompassModeObserver;
                 CompassViewCycledObserver* m_pCompassViewCycledObserver;
+                CompassTouchController m_touchController;
 
             public:
                 CompassModule(Eegeo::Location::NavigationService& navigationService,
@@ -56,6 +58,8 @@ namespace ExampleApp
                 ICompassUpdateController& GetCompassUpdateController() const;
 
                 ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
+
+                ICompassTouchController& GetTouchController();
             };
         }
     }

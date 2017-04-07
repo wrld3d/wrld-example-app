@@ -67,6 +67,11 @@ namespace ExampleApp
             {
                 [m_pView setFullyOffScreen];
             }
+            
+            void CompassViewInterop::SetRotationHighlight(bool shouldShowRotationHighlight)
+            {
+                [m_pView setRotationHighlight:shouldShowRotationHighlight];
+            }
         }
     }
 }

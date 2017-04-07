@@ -1264,6 +1264,7 @@ namespace ExampleApp
             return;
         }
 
+        m_pCompassModule->GetTouchController().HandleRotateStart(data);
         m_pCurrentTouchController->Event_TouchRotate_Start(data);
     }
 
@@ -1274,6 +1275,7 @@ namespace ExampleApp
             return;
         }
 
+        m_pCompassModule->GetTouchController().HandleRotateEnd(data);
         m_pCurrentTouchController->Event_TouchRotate_End(data);
     }
 
