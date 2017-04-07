@@ -429,7 +429,7 @@ void AppHost::Update(float dt)
 
     m_pModalBackgroundNativeViewModule->Update(dt);
 
-    if(m_pApp->GetApplicationConfiguration().IsFixedIndoorLocationEnabled())
+    if(m_pApp->GetApplicationConfiguration().IsFixedIndoorLocationEnabled() && m_pApp->IsLoadingScreenComplete())
     {
         m_pInteriorsLocationServiceController->Update();
     }

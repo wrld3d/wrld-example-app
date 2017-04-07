@@ -384,6 +384,17 @@ namespace ExampleApp
         
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraConfig = Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration::CreateDefault();
         gpsGlobeCameraConfig.panToUnlockThreshold = PanToUnlockThreshold;
+
+        if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
+        {
+            Eegeo::Space::LatLong latlong(0.0, 0.0);
+            Eegeo::Resources::Interiors::InteriorId interiorId;
+            int floorIndex;
+            double headingDegrees;
+            const bool useFixedIndoorLocation = m_applicationConfiguration.FixedIndoorLocation(latlong, interiorId, floorIndex, headingDegrees);
+            gpsGlobeCameraConfig.defaultGpsBearing = headingDegrees;
+        }
+
         Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
         Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(useLowSpecSettings);
         
@@ -764,7 +775,17 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraComponentConfig = Eegeo::Resources::Interiors::InteriorsGpsCameraControllerFactory::DefaultGpsGlobeCameraComponentConfiguration();
         gpsGlobeCameraComponentConfig.defaultGpsDistanceToInterest = ExampleApp::InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance;
         gpsGlobeCameraComponentConfig.panToUnlockThreshold = PanToUnlockThreshold;
-        
+
+        if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
+        {
+            Eegeo::Space::LatLong latlong(0.0, 0.0);
+            Eegeo::Resources::Interiors::InteriorId interiorId;
+            int floorIndex;
+            double headingDegrees;
+            const bool useFixedIndoorLocation = m_applicationConfiguration.FixedIndoorLocation(latlong, interiorId, floorIndex, headingDegrees);
+            gpsGlobeCameraComponentConfig.defaultGpsBearing = headingDegrees;
+        }
+
         const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory interiorsCameraControllerFactory(
                                                                                                              interiorsCameraConfig,
                                                                                                              globeCameraConfig,
