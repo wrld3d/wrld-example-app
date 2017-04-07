@@ -31,6 +31,7 @@ namespace ExampleApp
                 mAnimateToIntermediateOnScreenState.SetupMethod(m_uiViewClass, m_uiView, "AnimateToIntermediateOnScreenState");
                 mAnimateToActive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToActive");
                 mAnimateToInactive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToInactive");
+                mSetRotationHighlight.SetupMethod(m_uiViewClass, m_uiView, "SetRotationHighlight");
             }
 
             CompassView::~CompassView()
@@ -81,6 +82,11 @@ namespace ExampleApp
             void CompassView::SetFullyOffScreen()
             {
                 mAnimateToInactive();
+            }
+
+            void CompassView::SetRotationHighlight(bool shouldShowRotationHighlight)
+            {
+                mSetRotationHighlight(shouldShowRotationHighlight);
             }
 
             void CompassView::InsertCycledCallback(Eegeo::Helpers::ICallback0& callback)

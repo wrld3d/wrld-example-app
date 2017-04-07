@@ -114,6 +114,17 @@ namespace ExampleApp
                 CallVoidMethod("animateToInactive");;
             }
 
+            void CompassView::SetRotationHighlight(bool shouldShowRotationHighlight)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID setRotationHighlight = env->GetMethodID(m_uiViewClass, "setRotationHighlight", "(Z)V");
+                env->CallVoidMethod(m_uiView, setRotationHighlight, shouldShowRotationHighlight);
+            }
+
             void CompassView::InsertCycledCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_callbacks.AddCallback(callback);

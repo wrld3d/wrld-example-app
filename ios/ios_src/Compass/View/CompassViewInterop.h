@@ -40,6 +40,8 @@ namespace ExampleApp
                 void SetFullyOnScreen();
 
                 void SetFullyOffScreen();
+                
+                void SetRotationHighlight(bool shouldShowRotationHighlight);
 
                 void InsertCycledCallback(Eegeo::Helpers::ICallback0& callback);
 
