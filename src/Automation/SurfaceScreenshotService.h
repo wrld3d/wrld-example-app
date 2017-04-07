@@ -31,9 +31,12 @@ namespace ExampleApp
                 void UpdateScreenProperties(Eegeo::Rendering::ScreenProperties& screenProperties);
 
             private:
+                void ReadPixels(const size_t width, const size_t height);
+
                 Eegeo::Rendering::ScreenProperties m_screenProperties;
                 std::vector<GLubyte> m_screenshotBuffer;
                 std::vector<Callback> m_callbacks;
+                bool m_initialised;
             };
         }
     }

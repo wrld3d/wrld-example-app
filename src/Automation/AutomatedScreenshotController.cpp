@@ -29,8 +29,8 @@ namespace ExampleApp
     {
         namespace
         {
-            const int UpdateCyclesToWaitForSplashScreenToDisappear = 80;
-            const int UpdateCyclesPerScreenshot = 25;
+            const int UpdateCyclesToWaitForSplashScreenToDisappear = 30;
+            const int UpdateCyclesPerScreenshot = 15;
 
             enum {
                 ExecStateStreamingInitialSceneAndManifest,

@@ -12,6 +12,7 @@ namespace ExampleApp
         {
             SurfaceScreenshotService::SurfaceScreenshotService(Eegeo::Rendering::ScreenProperties screenProperties)
                 : m_screenProperties(screenProperties)
+                , m_initialised(false)
             {
             }
 
@@ -26,16 +27,18 @@ namespace ExampleApp
 #else
                 const bool EnableScreenshots = false;
 #endif
+                const size_t width = static_cast<size_t>(m_screenProperties.GetScreenWidth());
+                const size_t height = static_cast<size_t>(m_screenProperties.GetScreenHeight());
+
+                if (!m_initialised)
+                {
+                    ReadPixels(width, height);
+                    m_initialised = true;
+                }
+
                 if (EnableScreenshots && !m_callbacks.empty())
                 {
-                    const size_t width = static_cast<size_t>(m_screenProperties.GetScreenWidth());
-                    const size_t height = static_cast<size_t>(m_screenProperties.GetScreenHeight());
-                    const size_t bufSize = width * height * 4*sizeof(GLubyte);
-
-                    m_screenshotBuffer.reserve(bufSize);
-                    Eegeo_GL(glReadPixels(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height), GL_RGBA, GL_UNSIGNED_BYTE, &m_screenshotBuffer[0]));
-                    m_screenshotBuffer.resize(bufSize);
-
+                    ReadPixels(width, height);
                     for (auto callback : m_callbacks)
                     {
                         callback(width, height, m_screenshotBuffer);
@@ -52,6 +55,14 @@ namespace ExampleApp
             void SurfaceScreenshotService::UpdateScreenProperties(Eegeo::Rendering::ScreenProperties& screenProperties)
             {
                 m_screenProperties = screenProperties;
+            }
+
+            void SurfaceScreenshotService::ReadPixels(const size_t width, const size_t height)
+            {
+                const size_t bufSize = width * height * 4*sizeof(GLubyte);
+                m_screenshotBuffer.reserve(bufSize);
+                Eegeo_GL(glReadPixels(0, 0, static_cast<GLsizei>(width), static_cast<GLsizei>(height), GL_RGBA, GL_UNSIGNED_BYTE, &m_screenshotBuffer[0]));
+                m_screenshotBuffer.resize(bufSize);
             }
         }
     }
