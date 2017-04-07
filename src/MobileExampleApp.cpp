@@ -391,7 +391,7 @@ namespace ExampleApp
             Eegeo::Resources::Interiors::InteriorId interiorId;
             int floorIndex;
             double headingDegrees;
-            const bool useFixedIndoorLocation = m_applicationConfiguration.FixedIndoorLocation(latlong, interiorId, floorIndex, headingDegrees);
+            m_applicationConfiguration.FixedIndoorLocation(latlong, interiorId, floorIndex, headingDegrees);
             gpsGlobeCameraConfig.defaultGpsBearing = headingDegrees;
         }
 
@@ -782,7 +782,7 @@ namespace ExampleApp
             Eegeo::Resources::Interiors::InteriorId interiorId;
             int floorIndex;
             double headingDegrees;
-            const bool useFixedIndoorLocation = m_applicationConfiguration.FixedIndoorLocation(latlong, interiorId, floorIndex, headingDegrees);
+            m_applicationConfiguration.FixedIndoorLocation(latlong, interiorId, floorIndex, headingDegrees);
             gpsGlobeCameraComponentConfig.defaultGpsBearing = headingDegrees;
         }
 
