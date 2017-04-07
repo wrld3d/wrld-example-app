@@ -343,6 +343,12 @@ namespace ExampleApp
 
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraConfig = Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration::CreateDefault();
         gpsGlobeCameraConfig.panToUnlockThreshold = PanToUnlockThreshold;
+
+        if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
+        {
+            gpsGlobeCameraConfig.defaultGpsBearing = m_applicationConfiguration.FixedIndoorLocation().GetOrientationDegrees();
+        }
+
         Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
         Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(useLowSpecSettings);
 
@@ -708,6 +714,11 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraComponentConfig = Eegeo::Resources::Interiors::InteriorsGpsCameraControllerFactory::DefaultGpsGlobeCameraComponentConfiguration();
         gpsGlobeCameraComponentConfig.defaultGpsDistanceToInterest = ExampleApp::InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance;
         gpsGlobeCameraComponentConfig.panToUnlockThreshold = PanToUnlockThreshold;
+
+        if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
+        {
+            gpsGlobeCameraComponentConfig.defaultGpsBearing = m_applicationConfiguration.FixedIndoorLocation().GetOrientationDegrees();
+        }
 
         const Eegeo::Resources::Interiors::InteriorsCameraControllerFactory interiorsCameraControllerFactory(
                                                                                                              interiorsCameraConfig,
