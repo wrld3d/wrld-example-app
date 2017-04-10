@@ -3,7 +3,7 @@
 #include "MyPinDetailsViewModule.h"
 #include "IMyPinDetailsViewModel.h"
 #include "MyPinDetailsController.h"
-#include "MyPinDetailsVIew.h"
+#include "MyPinDetailsView.h"
 #include "ScreenProperties.h"
 #include "MyPinDetailsViewInterop.h"
 

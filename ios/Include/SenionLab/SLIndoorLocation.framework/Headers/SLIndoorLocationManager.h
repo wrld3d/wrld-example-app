@@ -10,7 +10,7 @@
 #import "SLIndoorLocationManagerDelegate.h"
 #import "SLLocationState.h"
 #import "SLGeofencing.h"
-#import "SLGeoMessenger.h"
+#import "SLGeomessenger.h"
 #import "SLPath.h"
 
 /**
