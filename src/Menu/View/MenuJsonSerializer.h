@@ -20,11 +20,8 @@ namespace ExampleApp
 
                 writer.StartObject();
 
-                if(!menuItem.Name().empty())
-                {
-                    writer.String("name");
-                    writer.String(menuItem.Name().c_str(), static_cast<rapidjson::SizeType>(menuItem.Name().size()));
-                }
+                writer.String("name");
+                writer.String(menuItem.Name().c_str(), static_cast<rapidjson::SizeType>(menuItem.Name().size()));
 
                 if(!menuItem.Details().empty())
                 {
@@ -32,11 +29,8 @@ namespace ExampleApp
                     writer.String(menuItem.Details().c_str(), static_cast<rapidjson::SizeType>(menuItem.Details().size()));
                 }
 
-                if(!menuItem.Icon().empty())
-                {
-                    writer.String("icon");
-                    writer.String(menuItem.Icon().c_str(), static_cast<rapidjson::SizeType>(menuItem.Icon().size()));
-                }
+                writer.String("icon");
+                writer.String(menuItem.Icon().c_str(), static_cast<rapidjson::SizeType>(menuItem.Icon().size()));
 
                 writer.EndObject();
 
