@@ -3,6 +3,7 @@
 #include "InitialExperienceIntroController.h"
 #include "IInitialExperienceIntroView.h"
 #include "InitialExperienceIntroDismissedMessage.h"
+#include "ICameraTransitionController.h"
 
 namespace ExampleApp
 {
@@ -10,7 +11,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            InitialExperienceIntroController::InitialExperienceIntroController(IInitialExperienceIntroView& view, ExampleAppMessaging::TMessageBus& messageBus, bool isInKioskMode)
+            InitialExperienceIntroController::InitialExperienceIntroController(IInitialExperienceIntroView& view,
+                                                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                                                               bool isInKioskMode,
+                                                                               CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController)
             : m_view(view)
             , m_messageBus(messageBus)
             , m_showIntroMessageHandler(this, &InitialExperienceIntroController::OnShowIntro)
@@ -19,15 +23,22 @@ namespace ExampleApp
             , m_replayExitIUX(true)
             , m_exitIUXViewedCount(0)
             , m_currAppMode(AppModes::SdkModel::WorldMode)
+            , m_shouldShowExitIUX(false)
             , m_appModeChangedHandler(this, &InitialExperienceIntroController::OnAppModeChangedMessage)
+            , m_cameraTransitionController(cameraTransitionController)
+            , m_transitionCompleteHandler(this, &InitialExperienceIntroController::OnTransitionCompleteHandler)
             {
                 m_view.InsertDismissedCallback(m_viewDismissed);
                 m_messageBus.SubscribeUi(m_showIntroMessageHandler);
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
+
+                m_cameraTransitionController.InsertTransitioningChangedCallback(m_transitionCompleteHandler);
             }
             
             InitialExperienceIntroController::~InitialExperienceIntroController()
             {
+                m_cameraTransitionController.RemoveTransitioningChangedCallback(m_transitionCompleteHandler);
+
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_messageBus.UnsubscribeUi(m_showIntroMessageHandler);
                 m_view.RemoveDismissedCallback(m_viewDismissed);
@@ -47,6 +58,8 @@ namespace ExampleApp
             {
                 if(m_isInKioskMode)
                 {
+                    m_shouldShowExitIUX = false;
+
                     AppModes::SdkModel::AppMode newAppMode = message.GetAppMode();
                     if(newAppMode == AppModes::SdkModel::AttractMode)
                     {
@@ -56,16 +69,37 @@ namespace ExampleApp
                     }
                     else if(newAppMode == AppModes::SdkModel::WorldMode && m_currAppMode == AppModes::SdkModel::InteriorMode)
                     {
-                        const int maxTutorialViews = 2;
-                        if(m_replayExitIUX || m_exitIUXViewedCount < maxTutorialViews)
+                        if (m_cameraTransitionController.IsTransitioning())
                         {
-                            m_view.ShowExitIUX();
-                            ReplayExitIUX(false);
-                            ++m_exitIUXViewedCount;
+                            m_shouldShowExitIUX = true;
+                        }
+                        else
+                        {
+                            ShowExitIUX();
                         }
                     }
 
                     m_currAppMode = newAppMode;
+                }
+            }
+
+            void InitialExperienceIntroController::OnTransitionCompleteHandler()
+            {
+                if (!m_cameraTransitionController.IsTransitioning() && m_shouldShowExitIUX)
+                {
+                    m_shouldShowExitIUX = false;
+                    ShowExitIUX();
+                }
+            }
+
+            void InitialExperienceIntroController::ShowExitIUX()
+            {
+                const int maxTutorialViews = 2;
+                if(m_replayExitIUX || m_exitIUXViewedCount < maxTutorialViews)
+                {
+                    m_view.ShowExitIUX();
+                    ReplayExitIUX(false);
+                    ++m_exitIUXViewedCount;
                 }
             }
 
