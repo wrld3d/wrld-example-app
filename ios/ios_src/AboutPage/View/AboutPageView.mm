@@ -360,22 +360,22 @@
 
 - (void) privacyClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.eegeo.com/privacy/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld.com/privacy/"]];
 }
 
 - (void) eulaClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.eegeo.com/tos/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld.com/tos/"]];
 }
 
 - (void) legalClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.eegeo.com/legal/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld.com/legal/"]];
 }
 
 - (void) teamClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.eegeo.com/team/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld.com/team/"]];
 }
 
 @end
