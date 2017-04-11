@@ -74,7 +74,7 @@
 					android:ellipsize="end"
 					android:gravity="top|left"
 					android:singleLine="false"
-					android:text="Slide the elevator button\nup and down to move\nbetween floors."
+					android:text="Slide the elevator \nbutton to move \nbetween floors."
 					android:textColor="@color/black"
 					android:textSize="13sp"
 					android:paddingBottom="12dp" />
