@@ -9,7 +9,7 @@
 static const float CompassOuterShapeInactiveAlpha = 0.5f;
 static const float CompassOuterShapeActiveAlpha = 1.0f;
 
-static const long RotationHighlightAnimationMilliseconds = 200;
+static const float RotationHighlightAnimationSeconds = 0.2;
 
 enum CompassViewState
 {
@@ -354,9 +354,9 @@ enum CompassViewState
 - (void) setRotationHighlight:(bool)shouldShowRotationHighlight
 {
     const float alpha = shouldShowRotationHighlight
-        ? CompassOuterShapeInactiveAlpha
-        : CompassOuterShapeActiveAlpha;
-    [UIView animateWithDuration:RotationHighlightAnimationMilliseconds animations:^
+        ? CompassOuterShapeActiveAlpha
+        : CompassOuterShapeInactiveAlpha;
+    [UIView animateWithDuration:RotationHighlightAnimationSeconds animations:^
      {
          self.pPoint.alpha = alpha;
      }];
