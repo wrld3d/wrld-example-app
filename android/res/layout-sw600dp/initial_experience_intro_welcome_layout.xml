@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/initial_ux_intro_banner"
+    android:layout_width="fill_parent"
+    android:layout_height="205sp"
+    android:layout_centerVertical="true"
+    android:background="@color/white" >
+
+    <RelativeLayout
+        android:id="@+id/welcome_intro_banner_inner"
+        android:layout_width="fill_parent"
+        android:layout_height="200sp"
+        android:layout_centerInParent="true"
+        android:background="@color/gold">
+
+        <TextView
+            android:id="@+id/welcome_intro_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/white"
+            android:textSize="78sp"
+            android:fontFamily="sans-serif-thin"
+            android:text="@string/initial_ux_welcome_title"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20sp" />
+
+        <TextView
+            android:id="@+id/welcome_intro_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/white"
+            android:textSize="42sp"
+            android:fontFamily="sans-serif"
+            android:layout_alignParentTop="true"
+            android:text="@string/initial_ux_welcome_description"
+            android:layout_marginTop="114sp"/>
+    </RelativeLayout>
+</RelativeLayout>

@@ -13,6 +13,7 @@
 #include "IAppModeModel.h"
 #include "CityThemes.h"
 #include "ICallback.h"
+#include "ICityThemeChangedObserver.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class WeatherMenuModule : public IWeatherMenuModule
+            class WeatherMenuModule : public IWeatherMenuModule, public Eegeo::Resources::CityThemes::ICityThemeChangedObserver
             {
             public:
                 WeatherMenuModule(Eegeo::Helpers::IFileIO& fileio,
@@ -45,7 +46,10 @@ namespace ExampleApp
                 
             private:
 
-                void RefreshMenuOptions();
+                void RefreshMenuOptions(const Eegeo::Resources::CityThemes::CityThemeData& themeData);
+                virtual void OnThemeRequested(const Eegeo::Resources::CityThemes::CityThemeData& newTheme);
+                virtual void OnThemeChanged(const Eegeo::Resources::CityThemes::CityThemeData& newTheme);
+
                 void HandleThemeManifestChanged();
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;

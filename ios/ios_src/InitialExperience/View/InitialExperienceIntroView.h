@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 #include "InitialExperienceIntroViewIncludes.h"
 #include <string>
+#include "ScreenProperties.h"
 
 @class InitialExperienceIntroView;
 
@@ -16,9 +17,11 @@
     CGFloat m_screenWidth;
     CGFloat m_screenHeight;
     BOOL m_awaitingInput;
+    float m_pixelScale;
+    float m_tabletPixelScale;
 }
 
-- (id) initView: (InitialExperienceIntroBackgroundView*)pBackground;
+- (id) initView: (InitialExperienceIntroBackgroundView*)pBackground screenProperties:(const Eegeo::Rendering::ScreenProperties&)screenProperties;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
@@ -34,6 +37,7 @@
 @property (nonatomic, retain) UIView* pBannerBarOutline;
 @property (nonatomic, retain) UIView* pBannerBarBackground;
 @property (nonatomic, retain) UILabel* pWelcomeText;
+@property (nonatomic, retain) UILabel* pWelcomeDescription;
 
 @property (nonatomic, retain) UIView* pSearchMenuDialogContainer;
 @property (nonatomic, retain) UIView* pSearchMenuDialogContent;
