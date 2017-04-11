@@ -39,16 +39,21 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
                 Metrics::IMetricsService& m_metricsService;
+                bool m_userInteractionEnabled;
                 
                 Eegeo::Helpers::TCallback2<MyPinCreationInitiationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationInitiationController> m_selectedCallback;
                 Eegeo::Helpers::TCallback1<MyPinCreationInitiationController, const VirtualKeyboard::VirtualKeyboardStateChangedMessage&> m_virtualKeyboardStateChangedMessageHandler;
                 
                 Eegeo::Helpers::TCallback1<MyPinCreationInitiationController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
+                Eegeo::Helpers::TCallback1<MyPinCreationInitiationController, const UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
+
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
 
                 void OnVirtualKeyboardStateChangedMessage(const VirtualKeyboard::VirtualKeyboardStateChangedMessage& message);
-                
+
+                void OnUserInteractionEnabledChanged(const UserInteraction::UserInteractionEnabledChangedMessage& message);
+
                 bool m_appModeAllowsOpen;
             };
         }
