@@ -35,9 +35,6 @@ set(storyboards
     ExampleApp/en.lproj/MainStoryboard_iPad.storyboard
     ExampleApp/en.lproj/MainStoryboard_iPhone.storyboard)
 
-set(CMAKE_Swift_COMPILER_FORCED 1)
-enable_language(Swift)
-
 # plist settings
 set(EEGEO_PLIST_BUNDLE_EXECUTABLE "\${EXECUTABLE_NAME}")
 set(EEGEO_PLIST_BUNDLE_IDENTIFIER "com.eegeo.\${PRODUCT_NAME:rfc1034identifier}")
@@ -126,12 +123,15 @@ set_xcode_property(${executable_name} CLANG_CXX_LIBRARY "libc++")
 
 set_xcode_property(${executable_name} LD_RUNPATH_SEARCH_PATHS "@executable_path/Frameworks")
 
-# CMakeDetermineCompilerId appears to currently hard-code the version at certain points in the pbxproj.
-set_xcode_property(${executable_name} SWIFT_VERSION "2.3")
-unset_xcode_property(${executable_name} OTHER_SWIFT_FLAGS)
-
 # Test Project Settings
 if (BUILD_SNAPSHOT_TEST)
+  set(CMAKE_Swift_COMPILER_FORCED 1)
+  enable_language(Swift)
+
+  # CMakeDetermineCompilerId appears to currently hard-code the version at certain points in the pbxproj.
+  set_xcode_property(${executable_name} SWIFT_VERSION "2.3")
+  unset_xcode_property(${executable_name} OTHER_SWIFT_FLAGS)
+
   find_package(XCTest REQUIRED)
   # CMake adds the xctest framework path to the compiler's include path which is forcibly injected into
   # OTHER_SWIFT_FLAGS.  This causes the header to be found twice by swift, resulting in the error 
