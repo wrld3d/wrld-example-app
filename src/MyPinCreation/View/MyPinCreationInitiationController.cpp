@@ -27,20 +27,24 @@ namespace ExampleApp
                 , m_confirmationViewModel(confirmationViewModel)
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
+                , m_userInteractionEnabled(true)
                 , m_appModeAllowsOpen(true)
                 , m_selectedCallback(this, &MyPinCreationInitiationController::OnSelected)
                 , m_viewStateCallback(this, &MyPinCreationInitiationController::OnViewStateChangeScreenControl)
                 , m_appModeChangedHandler(this, &MyPinCreationInitiationController::OnAppModeChangedMessage)
                 , m_virtualKeyboardStateChangedMessageHandler(this, &MyPinCreationInitiationController::OnVirtualKeyboardStateChangedMessage)
+                , m_userInteractionEnabledChangedHandler(this, &MyPinCreationInitiationController::OnUserInteractionEnabledChanged)
             {
                 m_view.InsertSelectedCallback(m_selectedCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
                 m_messageBus.SubscribeUi(m_virtualKeyboardStateChangedMessageHandler);
+                m_messageBus.SubscribeUi(m_userInteractionEnabledChangedHandler);
             }
 
             MyPinCreationInitiationController::~MyPinCreationInitiationController()
             {
+                m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
                 m_messageBus.UnsubscribeUi(m_virtualKeyboardStateChangedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
@@ -49,7 +53,7 @@ namespace ExampleApp
 
             void MyPinCreationInitiationController::OnSelected()
             {
-                if(m_appModeAllowsOpen && m_confirmationViewModel.TryOpen())
+                if(m_userInteractionEnabled && m_appModeAllowsOpen && m_confirmationViewModel.TryOpen())
                 {
                     m_metricsService.SetEvent("UIItem: MyPinCreation");
                     MyPinCreationViewStateChangedMessage message(ExampleApp::MyPinCreation::Ring);
@@ -101,6 +105,11 @@ namespace ExampleApp
                 {
                     m_viewModel.AddToScreen();
                 }
+            }
+
+            void MyPinCreationInitiationController::OnUserInteractionEnabledChanged(const UserInteraction::UserInteractionEnabledChangedMessage& message)
+            {
+                m_userInteractionEnabled = message.IsEnabled();
             }
         }
     }
