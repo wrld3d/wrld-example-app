@@ -13,6 +13,7 @@
 #include "IAppModeModel.h"
 #include "CityThemes.h"
 #include "ICallback.h"
+#include "ICityThemeChangedObserver.h"
 
 namespace ExampleApp
 {
