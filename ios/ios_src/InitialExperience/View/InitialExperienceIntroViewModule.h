@@ -6,6 +6,7 @@
 #include "InitialExperience.h"
 #include "InitialExperienceIntroViewIncludes.h"
 #include "BidirectionalBus.h"
+#include "CameraTransitions.h"
 
 namespace ExampleApp
 {
@@ -17,7 +18,7 @@ namespace ExampleApp
             {
             public:
                 
-                InitialExperienceIntroViewModule(ExampleAppMessaging::TMessageBus& messageBus);
+                InitialExperienceIntroViewModule(ExampleAppMessaging::TMessageBus& messageBus, CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
                 ~InitialExperienceIntroViewModule();
                 
                 InitialExperienceIntroController& GetIntroViewController() const

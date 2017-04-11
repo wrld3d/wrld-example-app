@@ -609,7 +609,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     // Initial UX layer
     m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(
 									m_nativeState,
-									m_messageBus
+									m_messageBus,
+									app.CameraTransitionController()
 								);
 
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(

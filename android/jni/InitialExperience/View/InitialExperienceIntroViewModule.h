@@ -6,6 +6,7 @@
 #include "InitialExperience.h"
 #include "AndroidNativeState.h"
 #include "BidirectionalBus.h"
+#include "CameraTransitions.h"
 
 namespace ExampleApp
 {
@@ -16,7 +17,9 @@ namespace ExampleApp
 			class InitialExperienceIntroViewModule
 			{
 			public:
-				InitialExperienceIntroViewModule(AndroidNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus);
+				InitialExperienceIntroViewModule(AndroidNativeState& nativeState,
+                                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
 				~InitialExperienceIntroViewModule();
 
 				InitialExperienceIntroController& GetController() { return *m_pController; }
