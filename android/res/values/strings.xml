@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="eula_link"><a href='http://www.eegeo.com/tos'>EULA</a></string>
-    <string name="privacy_link"><a href='http://www.eegeo.com/privacy'>Privacy Policy</a></string>
-    <string name="legal_link"><a href='http://www.eegeo.com/legal'>Legal</a></string>
-    <string name="team_link"><a href='http://www.eegeo.com/team'>Team</a></string>
+    <string name="eula_link"><a href='http://www.wrld.com/tos'>EULA</a></string>
+    <string name="privacy_link"><a href='http://www.wrld.com/privacy'>Privacy Policy</a></string>
+    <string name="legal_link"><a href='http://www.wrld.com/legal'>Legal</a></string>
+    <string name="team_link"><a href='http://www.wrld.com/team'>Team</a></string>
     
     <string name="about_page_title">About this app...</string>
     
@@ -46,12 +46,13 @@
     <string name="cancel_text">Cancel</string>
     
     <string name="initial_ux_welcome_title">Welcome</string>
+    <string name="initial_ux_welcome_description">Design your maps at wrld3d.com</string>
     <string name="initial_ux_search_dialog_title">Search</string>
     <string name="initial_ux_search_dialog_description">Find places fast or just\nstart exploring.</string>
     <string name="initial_ux_compass_dialog_title">Compass</string>
     <string name="initial_ux_compass_dialog_description">Locate me.\nLock rotation to\ncompass.</string>
     <string name="initial_ux_mapmode_dialog_title">Map Mode</string>
-    <string name="initial_ux_mapmode_dialog_description">Simple 2D View</string>
+    <string name="initial_ux_mapmode_dialog_description">Simple 2D View.</string>
     <string name="initial_ux_pincreation_dialog_title">Drop Pin</string>
     <string name="initial_ux_pincreation_dialog_description">Drop a pin on map\nto bookmark a place.</string>
     <string name="eegeo_app_base">Android-MEA</string>

@@ -42,7 +42,7 @@ namespace
     }
 }
 
-- (id) initView: (InitialExperienceIntroBackgroundView*)pBackground;
+- (id) initView: (InitialExperienceIntroBackgroundView*)pBackground screenProperties:(const Eegeo::Rendering::ScreenProperties&)screenProperties;
 {
     self = [super init];
     
@@ -62,7 +62,7 @@ namespace
         
         self.pBannerBarOutline = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pBannerBarOutline.backgroundColor = ExampleApp::Helpers::ColorPalette::White;
-        self.pBannerBarOutline.alpha = 0.5f;
+        self.pBannerBarOutline.alpha = 1.f;
         [self.pBannerBarContainer addSubview: self.pBannerBarOutline];
         
         self.pBannerBarBackground = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -72,9 +72,16 @@ namespace
         self.pWelcomeText = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pWelcomeText.textColor = ExampleApp::Helpers::ColorPalette::White;
         self.pWelcomeText.text = @"Welcome";
-        self.pWelcomeText.font = [UIFont systemFontOfSize:useSmallScreen ? 53.0f : 60.0f];
-        self.pWelcomeText.textAlignment = NSTextAlignmentCenter;
+        const float iPhone7PlusPixelScale = 2.60869575f;
+        m_pixelScale = useSmallScreen ? iPhone7PlusPixelScale / screenProperties.GetPixelScale() : 1.0f;
+        [self.pWelcomeText setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:useSmallScreen ? 45.f/m_pixelScale : 58.0f/m_pixelScale]];
         [self.pBannerBarContainer addSubview:self.pWelcomeText];
+        
+        self.pWelcomeDescription = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pWelcomeDescription.textColor = ExampleApp::Helpers::ColorPalette::White;
+        self.pWelcomeDescription.text = @"Design your maps at wrld3d.com";
+        [self.pWelcomeDescription setFont:[UIFont fontWithName:@"Helvetica Neue" size:useSmallScreen ? 22.f/m_pixelScale : 30.0f/m_pixelScale]];
+        [self.pBannerBarContainer addSubview:self.pWelcomeDescription];
         
         self.pSearchMenuDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
         self.pSearchMenuDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
@@ -115,7 +122,7 @@ namespace
         self.pMapModeDialogIcon = [self createDialogIcon:self.pMapModeDialogContent];
         self.pMapModeDialogTitle = [self createDialogTitle:@"Map Mode"];
         [self.pMapModeDialogContent addSubview:self.pMapModeDialogTitle];
-        self.pMapModeDialogDescription = [self createDialogDescription:@"Simple 2D View"];
+        self.pMapModeDialogDescription = [self createDialogDescription:@"Simple 2D View."];
         [self.pMapModeDialogContent addSubview:self.pMapModeDialogDescription];
         
         self.pPinCreationDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
@@ -279,6 +286,9 @@ namespace
     [self.pWelcomeText removeFromSuperview];
     [self.pWelcomeText release];
     
+    [self.pWelcomeDescription removeFromSuperview];
+    [self.pWelcomeDescription release];
+    
     [self.pBannerBarBackground removeFromSuperview];
     [self.pBannerBarBackground release];
     
@@ -309,15 +319,20 @@ namespace
     
     const bool useSmallScreen = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     
-    const int bannerOutlineSize = 1;
-    const int bannerHeight = 90;
-    const int bannerHeightWithOutline = bannerHeight + (bannerOutlineSize * 2);
+    const int bannerOutlineSize = 2;
+    const int bannerHeight = (useSmallScreen ? 130.f : 145.f)/m_pixelScale;
+    const int bannerHeightWithOutline = bannerHeight + ((bannerOutlineSize * 2))/m_pixelScale;
+    const int welcomeTextYOffset =  (useSmallScreen ? -16.f : -18.f)/m_pixelScale;
+    const int welcomeDescriptionYOffset = (useSmallScreen ? 24.f : 32.f)/m_pixelScale;
     int bannerYOffset = (int)(m_screenHeight/2 - bannerHeightWithOutline/2);
     [self.pBannerBarContainer setFrame:CGRectMake(0, bannerYOffset, m_screenWidth, bannerHeightWithOutline)];
     
     [self.pBannerBarOutline setFrame:CGRectMake(0, 0, m_screenWidth, bannerHeightWithOutline)];
-    [self.pBannerBarBackground setFrame:CGRectMake(0, bannerOutlineSize, m_screenWidth, bannerHeight)];
-    [self.pWelcomeText setFrame:CGRectMake(0, 0, m_screenWidth, bannerHeightWithOutline)];
+    [self.pBannerBarBackground setFrame:CGRectMake(0, bannerOutlineSize/m_pixelScale, m_screenWidth, bannerHeight)];
+    float welcomeTextWidth = [self.pWelcomeText.text boundingRectWithSize:self.pWelcomeText.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:self.pWelcomeText.font } context:nil].size.width;
+    [self.pWelcomeText setFrame:CGRectMake((m_screenWidth - welcomeTextWidth)/2, welcomeTextYOffset, m_screenWidth, bannerHeightWithOutline)];
+    float welcomeDescriptionWidth = [self.pWelcomeDescription.text boundingRectWithSize:self.pWelcomeDescription.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:self.pWelcomeDescription.font } context:nil].size.width;
+    [self.pWelcomeDescription setFrame:CGRectMake((m_screenWidth - welcomeDescriptionWidth)/2, welcomeDescriptionYOffset, m_screenWidth, bannerHeightWithOutline)];
     
     [self layoutDialogSubview: self.pSearchMenuDialogContainer
                       content: self.pSearchMenuDialogContent

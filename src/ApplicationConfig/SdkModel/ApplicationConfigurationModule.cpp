@@ -58,6 +58,8 @@ namespace ExampleApp
                     
                     const std::string timerSurveyUrl = "";
                     
+                    const std::string hockeyAppId = "";
+                    
                     return ApplicationConfiguration ("Eegeo Example App",
                         emptyEegeoApiKey,
                         productVersion,
@@ -94,7 +96,8 @@ namespace ExampleApp
                         attractModePlaybackSpeed,
                         emptyOptionsAdminPassword,
                         surveyTimeRequirementSec,
-                        timerSurveyUrl);
+                        timerSurveyUrl,
+                        hockeyAppId);
                 }
             }
             

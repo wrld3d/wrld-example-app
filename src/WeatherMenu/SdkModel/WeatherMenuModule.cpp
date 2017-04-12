@@ -9,6 +9,7 @@
 #include "WeatherController.h"
 #include "ICityThemesService.h"
 #include "ICityThemeRepository.h"
+#include "CityThemeData.h"
 
 #include <vector>
 #include <string>
@@ -58,13 +59,15 @@ namespace ExampleApp
 
                 m_pWeatherSelectedMessageHandler = Eegeo_NEW(WeatherSelectedMessageHandler)(*m_pWeatherController, messageBus);
 
-                RefreshMenuOptions();
+                RefreshMenuOptions(m_cityThemeService.GetCurrentTheme());
 
                 m_cityThemeService.SubscribeSharedThemeDataChanged(m_themeManifestChangedCallback);
+                m_cityThemeService.RegisterThemeChangedObserver(*this);
             }
 
             WeatherMenuModule::~WeatherMenuModule()
             {
+                m_cityThemeService.UnregisterThemeChangedObserver(*this);
                 m_cityThemeService.UnsubscribeSharedThemeDataChanged(m_themeManifestChangedCallback);
                 Eegeo_DELETE m_pWeatherSelectedMessageHandler;
                 Eegeo_DELETE m_pWeatherController;
@@ -72,7 +75,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pMenuModel;
             }
 
-            void WeatherMenuModule::RefreshMenuOptions()
+            void WeatherMenuModule::RefreshMenuOptions(const Eegeo::Resources::CityThemes::CityThemeData& themeData)
             {
                 for(std::vector<WeatherMenuStateModel>::iterator it = m_weatherStates.begin(); it != m_weatherStates.end(); ++it)
                 {
@@ -83,7 +86,13 @@ namespace ExampleApp
                 for(std::vector<WeatherMenuStateModel>::iterator it = m_weatherStates.begin(); it != m_weatherStates.end(); ++it)
                 {
                     WeatherMenuStateModel& weatherState = *it;
-                    if (m_cityThemeRepository.HasThemeWithNameContaining(weatherState.GetSeasonState()))
+                    std::string time = weatherState.HasTimeState() ? weatherState.GetTimeState() : "Day";
+                    std::string weather = weatherState.HasWeatherState() ? weatherState.GetWeatherState() : "Default";
+
+                    bool shouldAdd = !weatherState.HasSeasonState() || m_cityThemeRepository.HasThemeWithNameContaining(weatherState.GetSeasonState());
+                    shouldAdd &= themeData.IsCityThemeStateSupported(time + weather);
+
+                    if (shouldAdd)
                     {
                         m_pMenuOptionsModel->AddItem(
                             weatherState.GetName(),
@@ -95,8 +104,19 @@ namespace ExampleApp
 
             void WeatherMenuModule::HandleThemeManifestChanged()
             {
-                RefreshMenuOptions();
+                RefreshMenuOptions(m_cityThemeService.GetCurrentTheme());
             }
+
+            void WeatherMenuModule::OnThemeRequested(const Eegeo::Resources::CityThemes::CityThemeData& newTheme)
+            {
+
+            }
+
+            void WeatherMenuModule::OnThemeChanged(const Eegeo::Resources::CityThemes::CityThemeData& newTheme)
+            {
+                RefreshMenuOptions(newTheme);
+            }
+
         }
     }
 }

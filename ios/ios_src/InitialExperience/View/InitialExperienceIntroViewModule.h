@@ -6,6 +6,7 @@
 #include "InitialExperience.h"
 #include "InitialExperienceIntroViewIncludes.h"
 #include "BidirectionalBus.h"
+#include "ScreenProperties.h"
 #include "CameraTransitions.h"
 
 namespace ExampleApp
@@ -18,7 +19,7 @@ namespace ExampleApp
             {
             public:
                 
-                InitialExperienceIntroViewModule(ExampleAppMessaging::TMessageBus& messageBus, CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
+                InitialExperienceIntroViewModule(ExampleAppMessaging::TMessageBus& messageBus, CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, const Eegeo::Rendering::ScreenProperties& screenProperties);
                 ~InitialExperienceIntroViewModule();
                 
                 InitialExperienceIntroController& GetIntroViewController() const

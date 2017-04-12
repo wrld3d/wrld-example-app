@@ -105,7 +105,7 @@ namespace
         self.pChangeFloorDialogTitle = [self createDialogTitle:@"Change Floors"];
         [self.pChangeFloorDialogLabel addSubview:self.pChangeFloorDialogTitle];
         
-        self.pChangeFloorDialogDescription = [self createDialogDescription:@"Slide the elevator button\nup and down to move\nbetween floors."];
+        self.pChangeFloorDialogDescription = [self createDialogDescription:@"Slide the elevator \nbutton to move \nbetween floors."];
         [self.pChangeFloorDialogLabel addSubview:self.pChangeFloorDialogDescription];
         self.pChangeFloorDialogContainer.alpha = 0.0f;
         [self.pChangeFloorDialogContainer setHidden:true];
@@ -181,7 +181,7 @@ namespace
     [self.pChangeFloorDialogTitle setFrame:changeFloorTitleRect];
     
     CGSize changeFloorDescriptionSize = [self.pChangeFloorDialogDescription sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
-    CGRect changeFloorsDescriptonRect = CGRectMake(textPaddingLeft, changeFloorTitleTextSize.height + titlePaddingTop + descriptionPaddingTop, changeFloorTitleWidth, changeFloorDescriptionSize.height);
+    CGRect changeFloorsDescriptonRect = CGRectMake(textPaddingLeft, changeFloorTitleTextSize.height + titlePaddingTop + descriptionPaddingTop, changeFloorTitleWidth - 30.f, changeFloorDescriptionSize.height);
     [self.pChangeFloorDialogDescription setFrame:changeFloorsDescriptonRect];
 }
 

@@ -60,6 +60,8 @@ namespace ExampleApp
             
             long long m_surveyRequirementTimeSec;
             std::string m_timerSurveyUrl;
+            
+            std::string m_hockeyAppId;
 
         public:
             
@@ -100,7 +102,8 @@ namespace ExampleApp
                 const float attractModePlaybackSpeed,
                 const std::string& optionsAdminPassword,
                 const long long& surveyRequirementTimeSec,
-                const std::string& timerSurveyUrl
+                const std::string& timerSurveyUrl,
+                const std::string& hockeyAppId
             );
             
             std::string Name() const;
@@ -174,6 +177,8 @@ namespace ExampleApp
             
             const long long SurveyRequirementTimeSec() const;
             const std::string TimerSurveyUrl() const;
+            
+            const std::string HockeyAppId() const;
         };
     }
 }

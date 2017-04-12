@@ -52,6 +52,16 @@ namespace
     // Flurry metrics service must be started during didFinishLaunchingWithOptions (events not logged on >= iOS 8.0 if started later)
     _metricsService->BeginSession(_applicationConfiguration->FlurryAppKey(), appConfig.CombinedVersionString());
     
+    NSString *hockeyAppId = [NSString stringWithCString:appConfig.HockeyAppId().c_str()
+                                                encoding:[NSString defaultCStringEncoding]];
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:hockeyAppId];
+    // Do some additional configuration if needed here
+    [BITHockeyManager sharedHockeyManager].logLevel = BITLogLevelDebug;
+    [[BITHockeyManager sharedHockeyManager].crashManager setCrashManagerStatus: BITCrashManagerStatusAutoSend];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    [[BITHockeyManager sharedHockeyManager].authenticator
+     authenticateInstallation];
+    
     if(launchOptions[@"UIApplicationLaunchOptionsURLKey"])
     {
         NSURL *url = launchOptions[@"UIApplicationLaunchOptionsURLKey"];
