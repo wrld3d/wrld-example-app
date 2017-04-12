@@ -6,6 +6,7 @@ set(currsources
   ../src/Watermark/Watermark.h
   ../src/Watermark/WatermarkAlignmentStateChangedMessage.h
   ../src/Watermark/WatermarkModelChangedMessage.h
+  ../src/Watermark/WatermarkInteriorStylingStateChangedMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Watermark FILES ${currsources})

@@ -155,6 +155,18 @@ namespace ExampleApp
 				jmethodID setAlignmentMethod = env->GetMethodID(m_uiViewClass, "setAlignmentState", "(ZZ)V");
 				env->CallVoidMethod(m_uiView, setAlignmentMethod, jniAlignAlongBottom, jniAlignBelowFloorDisplay);
             }
+
+            void  WatermarkView::SetInteriorStylingState(bool shouldUseInteriorStyling)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jboolean jniShouldUseInteriorStyling = shouldUseInteriorStyling;
+                jmethodID setInteriorStylingState = env->GetMethodID(m_uiViewClass, "setInteriorStylingState", "(Z)V");
+                env->CallVoidMethod(m_uiView, setInteriorStylingState, jniShouldUseInteriorStyling);
+            }
         }
     }
 }

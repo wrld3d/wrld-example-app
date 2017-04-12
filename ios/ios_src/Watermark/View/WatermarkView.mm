@@ -7,6 +7,15 @@
 #include "UIHelpers.h"
 #include "WatermarkData.h"
 
+const float InteriorStylingEnabledAlpha = 0.5f;
+const float InteriorStylingDisabledAlpha = 0.8f;
+
+@interface WatermarkView()
+
+- (void) fitToSize:(CGSize)size withActivePosition:(bool)active;
+- (void) updateYPositions;
+@end
+
 @implementation WatermarkView
 
 - (ExampleApp::Watermark::View::WatermarkViewInterop *)getInterop
@@ -14,10 +23,11 @@
     return m_pInterop;
 }
 
-- (id) initWithDimensions:(float)width
-                         :(float)height
-                         :(float)pixelScale
-                         :(const ExampleApp::Watermark::View::WatermarkData&) watermarkData
+
+- (id) initWithScreenDimensions:(float)width
+                               :(float)height
+                               :(float)pixelScale
+                               :(const ExampleApp::Watermark::View::WatermarkData&) watermarkData
 {
     if(self = [super init])
     {
@@ -30,30 +40,16 @@
         
         m_pInterop = new ExampleApp::Watermark::View::WatermarkViewInterop(self);
         
-        m_width = 140 * m_pixelScale;
-        m_height = 52 * m_pixelScale;
+        const float initialWidth = 140;
+        const float initialHeight = 52;
+        m_width = initialWidth*pixelScale;
+        m_height = initialHeight*pixelScale;
+        m_alignAlongBottom = !ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
+        m_alignBelowFloorDisplay = false;
+        [self updateYPositions];
         
-        float xPosition = 0.0f;
-        if(ExampleApp::Helpers::UIHelpers::UsePhoneLayout())
-        {
-            m_yPosActive = (20 * m_pixelScale);
-            m_yPosInactive = (-m_height);
-            
-            xPosition = ((m_screenWidth * 0.5f) - (m_width * 0.5f));
-        }
-        else
-        {
-            m_yPosActive = m_screenHeight - m_height - (8 * m_pixelScale);
-            m_yPosInactive = (m_screenWidth + m_height);
-            
-            xPosition = ((m_screenWidth) - (m_width) - (8 * m_pixelScale));
-        }
-        
-        self.frame = CGRectMake(0,
-                                m_yPosInactive,
-                                m_screenWidth,
-                                m_height);
-        
+        self.pButton = [[UIButton alloc] init];
+        [self fitToSize:CGSizeMake(initialWidth, initialHeight) withActivePosition:false];
         self.pShadowGradient = [[UIView alloc] initWithFrame:CGRectMake(0, 0, m_screenWidth, m_height)];
         
         CAGradientLayer *gradient = [CAGradientLayer layer];
@@ -70,24 +66,18 @@
         [self addSubview:self.pShadowGradient];
         
         m_stateChangeAnimationTimeSeconds = 0.2f;
-        self.pButton = [[UIButton alloc] initWithFrame:CGRectMake(xPosition, 0, m_width, m_height)];
         [self addSubview: self.pButton];
         
         [self.pButton addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
         [self updateWatermarkData: watermarkData];
         
         [self.pButton setAlpha:0.8];
-        
-        m_alignAlongBottom = false;
-        
-        
+
 #ifdef AUTOMATED_SCREENSHOTS
         // move offscreen
         m_yPosActive = -10000.f;
         m_yPosActive = -10000.f;
 #endif
-        
-        m_alignAlongBottom = false;
     }
     
     return self;
@@ -246,6 +236,10 @@
 {
     NSString* assetString = [NSString stringWithUTF8String: m_imageAssetName.c_str()];
     UIImage* newImage = ExampleApp::Helpers::ImageHelpers::LoadImage(assetString);
+    if (self.frame.origin.y == m_yPosInactive)
+    {
+        [self fitToSize:newImage.size withActivePosition:false];
+    }
     
     CABasicAnimation *crossFade = [CABasicAnimation animationWithKeyPath:@"contents"];
     
@@ -306,10 +300,7 @@
      }
                      completion:^(BOOL finished)
      {
-         CGRect offscreenFrame = self.frame;
-         offscreenFrame.origin.y = m_yPosInactive;
-         self.frame = offscreenFrame;
-         
+         [self fitToSize:self.pButton.currentBackgroundImage.size withActivePosition:false];
          [self animateToY:m_yPosActive];
      }
      ];
@@ -323,29 +314,48 @@
         return;
     }
     
+    m_alignBelowFloorDisplay = alignBelowFloorDisplay;
     m_alignAlongBottom = alignAlongBottom;
+
+    [self updateYPositions];
     
-    if (!alignAlongBottom)
+    CALayer* gradient = [self.pShadowGradient.layer.sublayers objectAtIndex:0];
+    gradient.frame = CGRectMake(0, 0.f, m_screenWidth, m_screenHeight - m_yPosActive);
+}
+
+- (void) fitToSize:(CGSize)size withActivePosition:(bool)active
+{
+    m_width = size.width * m_pixelScale;
+    m_height = size.height * m_pixelScale;
+    
+    float xPosition = ExampleApp::Helpers::UIHelpers::UsePhoneLayout()
+      ? m_screenWidth*0.5f - m_width*0.5f
+      : 30*m_pixelScale;
+    
+    [self updateYPositions];
+    [self.pButton setFrame:CGRectMake(xPosition, 0, m_width, m_height)];
+    [self setFrame:CGRectMake(0, active ? m_yPosActive : m_yPosInactive, m_screenWidth, m_height)];
+}
+
+- (void) setInteriorStylingState: (bool) shouldUseInteriorStyle
+{
+    self.pButton.alpha = shouldUseInteriorStyle ? InteriorStylingEnabledAlpha : InteriorStylingDisabledAlpha;
+}
+
+- (void) updateYPositions
+{
+    if (!m_alignAlongBottom)
     {
-        if(alignBelowFloorDisplay)
-        {
-            m_yPosActive = m_height + (18 * m_pixelScale);
-        }
-        else
-        {
-            m_yPosActive = (20 * m_pixelScale);
-        }
-        
-        m_yPosInactive = (-m_height);
+        m_yPosActive = m_alignBelowFloorDisplay
+            ? m_height + 40*m_pixelScale
+            : 20 * m_pixelScale;
+        m_yPosInactive = -m_height;
     }
     else
     {
         m_yPosActive = m_screenHeight - m_height - (8 * m_pixelScale);
         m_yPosInactive = (m_screenHeight + m_height);
     }
-    
-    CALayer* gradient = [self.pShadowGradient.layer.sublayers objectAtIndex:0];
-    gradient.frame = CGRectMake(0, 0.f, m_screenWidth, m_screenHeight - m_yPosActive);
 }
 
 @end

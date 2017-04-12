@@ -34,6 +34,7 @@ namespace ExampleApp
                 mAnimateToInactive.SetupMethod(m_uiViewClass, m_uiView, "AnimateToInactive");
 				mUpdateWatermarkData.SetupMethod(m_uiViewClass, m_uiView, "UpdateWatermarkData");
 				mDismiss.SetupMethod(m_uiViewClass, m_uiView, "Dismiss");
+                mSetInteriorStylingState.SetupMethod(m_uiViewClass, m_uiView, "SetInteriorStylingState");
             }
 
             WatermarkView::~WatermarkView()
@@ -89,6 +90,11 @@ namespace ExampleApp
             void WatermarkView::Close()
             {
                 mDismiss();
+            }
+
+            void WatermarkView::SetInteriorStylingState(bool shouldUseInteriorStyling)
+            {
+                mSetInteriorStylingState(shouldUseInteriorStyling);
             }
         }
     }

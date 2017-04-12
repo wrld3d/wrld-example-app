@@ -21,7 +21,7 @@ namespace ExampleApp
                                                      Metrics::IMetricsService& metricsService)
             {
                 WatermarkData defaultWatermarkData = watermarkDataRepository.GetWatermarkDataWithKey("eegeo");
-                m_pView = [[WatermarkView alloc] initWithDimensions
+                m_pView = [[WatermarkView alloc] initWithScreenDimensions
                            :screenProperties.GetScreenWidth()
                            :screenProperties.GetScreenHeight()
                            :screenProperties.GetPixelScale()

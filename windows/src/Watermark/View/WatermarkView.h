@@ -31,6 +31,7 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<void> mAnimateToActive;
                 Helpers::ReflectionHelpers::Method<void> mAnimateToInactive;
                 Helpers::ReflectionHelpers::Method<void> mDismiss;
+                Helpers::ReflectionHelpers::Method<bool> mSetInteriorStylingState;
 				Helpers::ReflectionHelpers::Method<System::String^, System::String^, System::String^, System::String^, bool> mUpdateWatermarkData;
 
                 void Close();
@@ -54,6 +55,8 @@ namespace ExampleApp
 				void UpdateWatermarkData(const WatermarkData& watermarkData);
 
 				void SetWatermarkAlignmentState(bool alignAlongBottom, bool alignBelowFloorDisplay);
+
+                void SetInteriorStylingState(bool shouldUseInteriorStyling);
             };
         }
     }

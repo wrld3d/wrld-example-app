@@ -1,4 +1,4 @@
-//Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+//Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
 package com.eegeo.watermark;
 
@@ -36,6 +36,9 @@ public class WatermarkView implements View.OnClickListener
  private boolean m_shouldShow;
  private final long m_stateChangeAnimationTimeMilliseconds = 300;
  private AnimatorListener m_transitionOffListener;
+
+ private final float InteriorStylingDisabledAlpha = 0.8f;
+ private final float InteriorStylingEnabledAlpha = 0.5f;
 
  public WatermarkView(MainActivity activity, 
 		 			  long nativeCallerPointer, 
@@ -105,7 +108,7 @@ public class WatermarkView implements View.OnClickListener
      m_shouldShow = false;
      refreshPositions();
      m_view.setY(m_yPosInactive);
-     m_view.setAlpha(0.8f);
+     m_view.setAlpha(InteriorStylingDisabledAlpha);
      m_gradientView.setAlpha(0.0f);
      m_gradientView.setY(uiRoot.getHeight() - m_activity.dipAsPx(52.0f));
      uiRoot.addView(m_gradientView);
@@ -245,6 +248,11 @@ public class WatermarkView implements View.OnClickListener
 	 m_alignBelowFloorDisplay = alignBelowFloorDisplay;
  }
 
+public void setInteriorStylingState(final boolean shouldUseInteriorStyling)
+{
+    m_view.setAlpha(shouldUseInteriorStyling ? InteriorStylingEnabledAlpha : InteriorStylingDisabledAlpha);
+}
+
     private void refreshPositions()
     {
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
@@ -265,7 +273,7 @@ public class WatermarkView implements View.OnClickListener
             {
             	if(m_alignBelowFloorDisplay)
             	{
-            		m_yPosActive = viewHeight + m_activity.dipAsPx(18);
+                    m_yPosActive = viewHeight + m_activity.dipAsPx(40);
             	}
             	else
             	{
@@ -282,7 +290,7 @@ public class WatermarkView implements View.OnClickListener
             m_yPosActive = (screenHeight - viewHeight) - m_activity.dipAsPx(8);
             m_yPosInactive = (screenHeight + viewHeight);
 
-            m_view.setX((screenWidth - viewWidth) - m_activity.dipAsPx(8));
+            m_view.setX(m_activity.dipAsPx(20));
         }
     }
 }

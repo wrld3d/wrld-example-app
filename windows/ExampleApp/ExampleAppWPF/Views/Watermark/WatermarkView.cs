@@ -32,6 +32,11 @@ namespace ExampleAppWPF
 
         private int m_qrCodeMaxSize;
 
+        private const float InteriorStylingDisabledAlpha = 0.8f;
+        private const float InteriorStylingEnabledAlpha = 0.5f;
+
+        private const float LeftPadding = 18.0f;
+
         static WatermarkView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WatermarkView), new FrameworkPropertyMetadata(typeof(WatermarkView)));
@@ -123,7 +128,7 @@ namespace ExampleAppWPF
             m_yPosActive = screenHeight * 0.5 - (viewHeight * 0.5) - (margin);
             m_yPosInactive = screenHeight * 0.5 + viewHeight * 0.5;
 
-            var transform = new TranslateTransform((screenWidth * 0.5) - (ActualWidth * 0.5), m_isActive ? m_yPosActive : m_yPosInactive);
+            var transform = new TranslateTransform(-screenWidth * 0.5 + ActualWidth * 0.5 + LeftPadding, m_isActive ? m_yPosActive : m_yPosInactive);
 
             RenderTransform = transform;
         }
@@ -208,6 +213,13 @@ namespace ExampleAppWPF
             }
 
             return src;
+        }
+
+        public void SetInteriorStylingState(bool shouldUseInteriorStyling)
+        {
+            m_imageView.Opacity = shouldUseInteriorStyling
+                ? InteriorStylingEnabledAlpha
+                : InteriorStylingDisabledAlpha;
         }
     }
 }

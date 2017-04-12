@@ -35,14 +35,15 @@
     bool m_shouldShowShadow;
     
     bool m_alignAlongBottom;
+    bool m_alignBelowFloorDisplay;
 }
 
 - (ExampleApp::Watermark::View::WatermarkViewInterop*) getInterop;
 
-- (id) initWithDimensions:(float)width
-                         :(float)height
-                         :(float)pixelScale
-                         :(const ExampleApp::Watermark::View::WatermarkData&) watermarkData;
+- (id) initWithScreenDimensions:(float)width
+                               :(float)height
+                               :(float)pixelScale
+                               :(const ExampleApp::Watermark::View::WatermarkData&) watermarkData;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
@@ -58,6 +59,8 @@
 
 - (void) setWatermarkAlignmentState: (bool) alignAlongBottom
                                    : (bool) alignBelowFloorDisplay;
+
+- (void) setInteriorStylingState: (bool) shouldUseInteriorStyle;
 
 @property(nonatomic, retain) UIView* pShadowGradient;
 

@@ -35,6 +35,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<WatermarkController, const WatermarkModelChangedMessage&> m_watermarkModelChangedHandler;
                 Eegeo::Helpers::TCallback1<WatermarkController, const WatermarkAlignmentStateChangedMessage&> m_watermarkAlignmentStateChangedHandler;
                 Eegeo::Helpers::TCallback1<WatermarkController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
+                Eegeo::Helpers::TCallback1<WatermarkController, const WatermarkInteriorStylingStateChangedMessage&> m_watermarkInteriorStylingStateChangedHandler;
                 Metrics::IMetricsService& m_metricsService;
 
                 void OnSelected();
@@ -46,6 +47,8 @@ namespace ExampleApp
                 void OnWatermarkAlignmentStateChanged(const WatermarkAlignmentStateChangedMessage& message);
                 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
+
+                void OnInteriorStylingStateChanged(const WatermarkInteriorStylingStateChangedMessage& message);
 
             public:
                 WatermarkController(

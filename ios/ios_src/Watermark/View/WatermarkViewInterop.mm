@@ -47,6 +47,11 @@ namespace ExampleApp
             {
                 [m_pView setWatermarkAlignmentState:alignAlongBottom :alignBelowFloorDisplay];
             }
+            
+            void WatermarkViewInterop::SetInteriorStylingState(bool shouldUseInteriorStyle)
+            {
+                [m_pView setInteriorStylingState:shouldUseInteriorStyle];
+            }
         }
     }
 }

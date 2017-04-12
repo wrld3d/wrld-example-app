@@ -42,6 +42,8 @@ namespace ExampleApp
                 void UpdateWatermarkData(const WatermarkData& watermarkData);
 
                 void SetWatermarkAlignmentState(bool alignAlongBottom, bool alignBelowFloorDisplay);
+
+                void  SetInteriorStylingState(bool shouldUseInteriorStyling);
             };
         }
     }

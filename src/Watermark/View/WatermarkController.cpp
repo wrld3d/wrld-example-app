@@ -68,7 +68,12 @@ namespace ExampleApp
                     m_viewModel.RemoveFromScreen();
                 }
             }
-            
+
+            void WatermarkController::OnInteriorStylingStateChanged(const WatermarkInteriorStylingStateChangedMessage& message)
+            {
+                m_view.SetInteriorStylingState(message.ShouldUseInteriorStyling());
+            }
+
             WatermarkController::WatermarkController(
                 IWatermarkViewModel& viewModel,
                 IWatermarkView& view,
@@ -87,6 +92,7 @@ namespace ExampleApp
                 , m_watermarkModelChangedHandler(this, &WatermarkController::OnWatermarkModelChanged)
                 , m_watermarkAlignmentStateChangedHandler(this, &WatermarkController::OnWatermarkAlignmentStateChanged)
                 , m_appModeChangedHandler(this, &WatermarkController::OnAppModeChanged)
+                , m_watermarkInteriorStylingStateChangedHandler(this, &WatermarkController::OnInteriorStylingStateChanged)
                 , m_appModeAllowsOpen(true)
             {
                 m_view.InsertSelectedCallback(m_selectedCallback);
@@ -95,10 +101,12 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_watermarkModelChangedHandler);
                 m_messageBus.SubscribeUi(m_watermarkAlignmentStateChangedHandler);
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
+                m_messageBus.SubscribeUi(m_watermarkInteriorStylingStateChangedHandler);
             }
 
             WatermarkController::~WatermarkController()
             {
+                m_messageBus.UnsubscribeUi(m_watermarkInteriorStylingStateChangedHandler);
                 m_messageBus.UnsubscribeUi(m_setVisibilityHandler);
                 m_messageBus.UnsubscribeUi(m_watermarkAlignmentStateChangedHandler);
                 m_messageBus.UnsubscribeUi(m_watermarkModelChangedHandler);

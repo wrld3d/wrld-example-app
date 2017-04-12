@@ -30,6 +30,7 @@
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "WatermarkModelChangedMessage.h"
 #include "WatermarkAlignmentStateChangedMessage.h"
+#include "WatermarkInteriorStylingStateChangedMessage.h"
 #include "SetWatermarkVisibilityMessage.h"
 #include "AppModeChangedMessage.h"
 #include "UserInteractionEnabledChangedMessage.h"
@@ -80,6 +81,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Watermark::SetWatermarkVisibilityMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkModelChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkAlignmentStateChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkInteriorStylingStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerFloorSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AppModes::AppModeChangedMessage>

@@ -51,6 +51,7 @@ namespace ExampleApp
                     m_watermarkModel.SetId(sourceVendor);
                     m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(false, true));
                     m_messageBus.Publish(WatermarkModelChangedMessage(m_watermarkModel.GetId()));
+                    m_messageBus.Publish(WatermarkInteriorStylingStateChangedMessage(true));
                 }
             }
             
@@ -59,6 +60,7 @@ namespace ExampleApp
                 m_watermarkModel.SetId(DefaultEegeoWatermarkId);
                 m_messageBus.Publish(WatermarkAlignmentStateChangedMessage(false, false));
                 m_messageBus.Publish(WatermarkModelChangedMessage(m_watermarkModel.GetId()));
+                m_messageBus.Publish(WatermarkInteriorStylingStateChangedMessage(false));
             }
         }
     }
