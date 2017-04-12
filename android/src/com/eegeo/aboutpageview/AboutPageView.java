@@ -2,6 +2,7 @@
 
 package com.eegeo.aboutpageview;
 
+import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;

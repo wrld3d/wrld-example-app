@@ -54,7 +54,7 @@ namespace ExampleApp
                 content << m_aboutText
                         << "\n\nApplication build version: " + m_buildVersion
                         << "\n\nPlatform version: " + m_platformVersion
-                        << "\nPlatform hash: " + m_platformHash
+                        << "\nPlatform hash:\n" + m_platformHash
                         << "\nPlatform runtime arch: " + m_platformArchitecture
                         << "\nApplication Name: " + m_appName
                         << m_indoorPositioningType

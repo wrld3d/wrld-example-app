@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Windows;
+using System.Linq;
 using ExampleApp;
-using System.Windows.Controls;
 using System.Diagnostics;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using System.Windows.Documents;
 
 namespace ExampleAppWPF
 {
@@ -55,6 +58,11 @@ namespace ExampleAppWPF
             m_AboutPageView.TouchDown += OnPinDetailsTouchDown;  
             m_AboutPageView.TouchUp += OnPinDetailsTouchUp;
             m_AboutPageView.ManipulationBoundaryFeedback += OnPinDetailsBoundaryFeedback;
+
+            ((Hyperlink)GetTemplateChild("LinkTos")).RequestNavigate += RequestNavigate;
+            ((Hyperlink)GetTemplateChild("LinkPrivacy")).RequestNavigate += RequestNavigate;
+            ((Hyperlink)GetTemplateChild("LinkLegal")).RequestNavigate += RequestNavigate;
+            ((Hyperlink)GetTemplateChild("LinkTeam")).RequestNavigate += RequestNavigate;
         }
 
         private void OnPinDetailsBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
@@ -102,6 +110,12 @@ namespace ExampleAppWPF
         {
             Visibility = Visibility.Hidden;
             m_currentWindow.EnableInput();
+        }
+
+        private void RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }

@@ -54,11 +54,10 @@
 
         self.pDevelopedByLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pDevelopedByLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
-        self.pDevelopedByLabel.textAlignment = NSTextAlignmentCenter;
         [self.pLabelsContainer addSubview: self.pDevelopedByLabel];
 
         self.pLogoImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pLogoImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"eegeo_logo");
+        self.pLogoImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"eegeo_logo_about");
         [self.pLabelsContainer addSubview: self.pLogoImage];
         
         self.pLogoButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -69,7 +68,6 @@
 
         self.pTextContent = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pTextContent.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
-        self.pTextContent.textAlignment = NSTextAlignmentCenter;
         [self.pLabelsContainer addSubview: self.pTextContent];
         
         UITapGestureRecognizer* pPrivacyTapHandler = [[[UITapGestureRecognizer alloc]
@@ -221,15 +219,16 @@
     const float textContentX = ((static_cast<float>(self.pLabelsContainer.frame.size.width) / 2) - (textWidth / 2));
     const float developedByY = 50.f;
     const float developedByHeight = 16.f;
+    const float developedByTopPadding = 45.f;
 
     self.pDevelopedByLabel.font = [UIFont systemFontOfSize:14.f];
     self.pDevelopedByLabel.text = @"Developed by";
     self.pDevelopedByLabel.frame = CGRectMake(textContentX, developedByY, textWidth, developedByHeight);
 
-    const float logoWidth = 140.f;
-    const float logoHeight = 52.f;
-    const float logoY = developedByY + developedByHeight;
-    const float logoX = (static_cast<float>(self.pLabelsContainer.frame.size.width) / 2) - (logoWidth/2);
+    const float logoWidth = self.pLogoImage.image.size.width;
+    const float logoHeight = self.pLogoImage.image.size.height;
+    const float logoY = developedByY + developedByHeight + developedByTopPadding;
+    const float logoX = self.pTextContent.frame.origin.x;
 
     self.pLogoImage.frame = CGRectMake(logoX, logoY, logoWidth, logoHeight);
     self.pLogoButton.frame = CGRectMake(logoX, logoY, logoWidth, logoHeight);
@@ -247,7 +246,7 @@
     [self.pEulaLink sizeToFit];
     self.pEulaLink.userInteractionEnabled = YES;
     CGRect eulaFrame = self.pPrivacyLink.frame;
-    eulaFrame.origin.x = roundf(self.pLabelsContainer.frame.size.width/2.f - self.pEulaLink.frame.size.width/2.f);
+    eulaFrame.origin.x = self.pTextContent.frame.origin.x;
     eulaFrame.origin.y = roundf(textContentY + self.pTextContent.frame.size.height + 16.f);
     self.pEulaLink.frame = eulaFrame;
     
@@ -256,7 +255,7 @@
     [self.pPrivacyLink sizeToFit];
     self.pPrivacyLink.userInteractionEnabled = YES;
     CGRect privacyFrame = self.pPrivacyLink.frame;
-    privacyFrame.origin.x = roundf(self.pLabelsContainer.frame.size.width/2.f - self.pEulaLink.frame.size.width/2.f);
+    privacyFrame.origin.x = self.pTextContent.frame.origin.x;
     privacyFrame.origin.y = roundf(eulaFrame.origin.y + self.pEulaLink.frame.size.height + 16.f);
     self.pPrivacyLink.frame = privacyFrame;
     
@@ -265,7 +264,7 @@
     [self.pLegalLink sizeToFit];
     self.pLegalLink.userInteractionEnabled = YES;
     CGRect legalFrame = self.pLegalLink.frame;
-    legalFrame.origin.x = roundf(self.pLabelsContainer.frame.size.width/2.f - self.pLegalLink.frame.size.width/2.f);
+    legalFrame.origin.x = self.pTextContent.frame.origin.x;
     legalFrame.origin.y = roundf(privacyFrame.origin.y + self.pPrivacyLink.frame.size.height + 16.f);
     self.pLegalLink.frame = legalFrame;
     
@@ -275,6 +274,7 @@
     self.pTeamLink.userInteractionEnabled = YES;
     CGRect teamFrame = self.pTeamLink.frame;
     teamFrame.origin.x = roundf(self.pLabelsContainer.frame.size.width/2.f - self.pTeamLink.frame.size.width/2.f);
+    teamFrame.origin.x = self.pTextContent.frame.origin.x;
     teamFrame.origin.y = roundf(legalFrame.origin.y + self.pLegalLink.frame.size.height + 16.f);
     self.pTeamLink.frame = teamFrame;
     
