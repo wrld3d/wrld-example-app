@@ -243,6 +243,12 @@ set(resources ${resources}
         Resources/eegeo_logo.png
         Resources/eegeo_logo@2x.png
         Resources/eegeo_logo@3x.png
+        Resources/eegeo_logo_tablet.png
+        Resources/eegeo_logo_tablet@2x.png
+        Resources/eegeo_logo_tablet@3x.png
+        Resources/eegeo_logo_about.png
+        Resources/eegeo_logo_about@2x.png
+        Resources/eegeo_logo_about@3x.png
         Resources/embedded_manifest.bin
         Resources/exit_blue_x_button.png
         Resources/exit_blue_x_button@0.75x.png
