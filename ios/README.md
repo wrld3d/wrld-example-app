@@ -4,9 +4,9 @@
 
 # Getting Started on iOS
 
-![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
+![WRLD](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
 
-Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
+Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/wrld3d/wrld-example-app).
 
 ## Requirements
 
@@ -15,7 +15,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 ## Setup
 
-1.  In the root of the repo, run the command `./update.platform.sh -p ios` to download the latest eeGeo iOS SDK.
+1.  In the root of the repo, run the command `./update.platform.sh -p ios` to download the latest WRLD iOS SDK.
 	*	We recommend you run this step frequently to keep your SDK version up to date.
 2.  In the `ios` directory, run `mkdir build` to create a build directory.
 3.  In the `ios/build` directory, run `cmake -G Xcode ..` to generate a project file.

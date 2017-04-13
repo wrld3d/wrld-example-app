@@ -4,10 +4,10 @@
 
 # Getting Started on Android
 
-![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
+![WRLD](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
 
 
-Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
+Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/wrld3d/wrld-example-app).
 
 * [Requirements](#requirements)
 * [Android Studio Setup](#setup)
@@ -16,14 +16,13 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 [Instructions for Eclipse development](#eclipse-project-setup-legacy) are included for transition support. The recommended development environment for Android is now Android Studio.  
 
-
 ## Requirements
 
 - [Android Studio](https://developer.android.com/studio/index.html).
 
 ## Setup
 
-First, download the latest eeGeo Android SDK by running the following command in the root of the repository:
+First, download the latest WRLD Android SDK by running the following command in the root of the repository:
 
 *   `./update.platform.sh -p android`
     *   We recommend you run this step frequently to keep your SDK version up to date.
@@ -32,7 +31,7 @@ First, download the latest eeGeo Android SDK by running the following command in
 
 1. Open Android Studio and if prompted about a missing SDK, (minimally) install the `SDK` and `SDK Platform`.
 2. Select `Open an existing Android Studio project`
-3. Navigate to the [eegeo-example-app/android](https://github.com/eegeo/eegeo-example-app/tree/master/android) directory and hit `Ok`.
+3. Navigate to the [wrld-example-app/android](https://github.com/wrld3d/wrld-example-app/tree/master/android) directory and hit `Ok`.
 4. When prompted to generate a gradle wrapper, select `Ok`.
 5. Once project configuration completes, Open the `Build Variants` pane using the button on the lower-left side, and from the `Build Variant` dropdown, ensure `normalDebug` is selected.
 
@@ -81,7 +80,7 @@ These instructions for Eclipse development are included for transition support o
     
 ## Setting up the Android SDK for use with Eclipse 
 
-Ensure you have the latest eeGeo Android SDK by running the following command in the root of the repository:
+Ensure you have the latest WRLD Android SDK by running the following command in the root of the repository:
 
 *   `./update.platform.sh -p android`
     *   We recommend you run this step frequently to keep your SDK version up to date.
@@ -122,7 +121,7 @@ Ensure you have the latest eeGeo Android SDK by running the following command in
 8.  Right click the project, and select `Android Tools > Add Native Support...`
 9.  Add the cross-platform source by right-clicking the `jni` folder and selecting `New > Folder`.
 10. Click `Advanced` and select the `Linked to alternate location` radio button. 
-11. Click `Browse..` and select the [src](https://github.com/eegeo/eegeo-example-app/tree/master/src) directory. 
+11. Click `Browse..` and select the [src](https://github.com/wrld3d/wrld-example-app/tree/master/src) directory. 
 12. To speed up compile times, see [this section below](#speeding-up-build-times) for compiling with multiple threads.
 13. To run the project, right-click it and select `Run As > Android Application`
 
