@@ -26,7 +26,19 @@ namespace ExampleApp
                 WatermarkData GetWatermarkDataWithKey(const std::string& key) const;
                 
             private:
-                typedef std::map<std::string, WatermarkData> TWatermarkDataMap;
+                struct CaseInsensitiveCompare
+                {
+                    bool operator()(const std::string& l, const std::string& r) const
+                    {
+                        return std::lexicographical_compare(l.begin(), l.end(), r.begin(), r.end(),
+                                                            [](const char c1, const char c2)
+                                                            {
+                                                                return std::tolower(c1) < std::tolower(c2);
+                                                            });
+                    }
+                };
+
+                typedef std::map<std::string, WatermarkData, CaseInsensitiveCompare> TWatermarkDataMap;
                 TWatermarkDataMap m_watermarkDataMap;
             };
         }
