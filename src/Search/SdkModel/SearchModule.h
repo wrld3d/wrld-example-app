@@ -7,7 +7,7 @@
 #include "Search.h"
 #include "ISearchModule.h"
 #include "Location.h"
-#include "GlobeCameraController.h"
+#include "AppCamera.h"
 #include "CameraTransitions.h"
 #include "BidirectionalBus.h"
 #include "SdkModelDomainEventBus.h"
@@ -40,7 +40,7 @@ namespace ExampleApp
 
             public:
                 SearchModule(ISearchService& searchService,
-                             Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                             ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                              CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                              ExampleAppMessaging::TMessageBus& messageBus,

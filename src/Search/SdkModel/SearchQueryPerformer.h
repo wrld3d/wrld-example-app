@@ -11,7 +11,7 @@
 #include "CallbackCollection.h"
 #include "ICallback.h"
 #include "SearchQuery.h"
-#include "GpsGlobeCameraController.h"
+#include "IAppCameraController.h"
 #include "BidirectionalBus.h"
 
 namespace ExampleApp
@@ -29,13 +29,13 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_queryResultsClearedCallbacks;
                 SearchQuery m_previousQuery;
                 bool m_hasQuery;
-                Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;                
+                ExampleApp::AppCamera::SdkModel::IAppCameraController& m_cameraController;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
             public:
                 SearchQueryPerformer(ISearchService& exteriorSearchService,
                                      ISearchResultRepository& searchResultRepository,
-                                     Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                                     ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                      ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchQueryPerformer();
