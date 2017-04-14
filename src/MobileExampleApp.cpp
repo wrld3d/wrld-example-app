@@ -319,6 +319,8 @@ namespace ExampleApp
                                                 NULL,
                                                 &errorHandler
                                                 );
+        
+        m_pWorld->GetMapModule().GetLabelsModule().GetLabelOptionsModel().SetOcclusionMode(Eegeo::Labels::OcclusionResolverMode::Always);
 
         AddLocalMaterials(m_platformAbstractions.GetFileIO(),
                           m_pWorld->GetMapModule().GetInteriorsMaterialsModule().GetInteriorsTextureResourceService(),
@@ -627,7 +629,7 @@ namespace ExampleApp
                                                                                 m_menuReaction);
 
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
-                                                                    *m_pGlobeCameraController,
+                                                                    m_pAppCameraModule->GetController(),
                                                                     *m_pCameraTransitionService,
                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                     m_messageBus,
