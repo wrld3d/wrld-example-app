@@ -33,10 +33,10 @@
 
     
 
-    <application android:icon="@mipmap/icon" android:label="eeGeo Example" android:theme="@android:style/Theme.NoTitleBar">
+    <application android:icon="@mipmap/icon" android:label="WRLD App" android:theme="@android:style/Theme.NoTitleBar">
        
         <activity android:name=".BackgroundThreadActivity"
-                  android:label="WRLD Example"
+                  android:label="WRLD"
                   android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
                   android:windowSoftInputMode="adjustPan"
               	  android:launchMode="singleTask"
