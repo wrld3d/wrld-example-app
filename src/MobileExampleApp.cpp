@@ -145,6 +145,7 @@
 #include "RestrictedBuildingService.h"
 #include "InteriorsStreamingModule.h"
 #include "GlobalAppModeTransitionRules.h"
+#include "ILabelOptionsModel.h"
 #include "CameraSplinePlaybackController.h"
 #include "document.h"
 
@@ -311,6 +312,8 @@ namespace ExampleApp
                                                 NULL,
                                                 &errorHandler
                                                 );
+        
+        m_pWorld->GetMapModule().GetLabelsModule().GetLabelOptionsModel().SetOcclusionMode(Eegeo::Labels::OcclusionResolverMode::Always);
 
         
         m_pWorld->GetMapModule().GetEnvironmentFlatteningService().SetFlattenedScale(0.1f);
@@ -601,7 +604,7 @@ namespace ExampleApp
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
-                                                                    *m_pGlobeCameraController,
+                                                                    m_pAppCameraModule->GetController(),
                                                                     *m_pCameraTransitionService,
                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                     m_messageBus,
