@@ -4,7 +4,7 @@
 
 # eeGeo Example App
 
-![eeGeo](images/screenselection01.png)
+![eeGeo](images/Screensample02.png)
 
 * [Support](#support)
 * [Getting Started](#getting-started)
