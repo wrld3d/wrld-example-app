@@ -21,7 +21,7 @@
     "mypins_web_service_auth_token": "",
     "mypins_poi_set_id": "",
     "use_japanese_font": false,
-    "timer_survey_url":"https://docs.google.com/a/eegeo.com/forms/d/e/1FAIpQLSd3aW8b7BUySV7hOb0I48OrKksHgcgT9S-NS-ySXuf_JsPK9w/viewform",
+    "timer_survey_url":"",
     "outdoor_search_menu_items": [{
                                   "name": "Around Me",
                                   "search_tag": "",
