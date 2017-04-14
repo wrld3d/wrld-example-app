@@ -17,10 +17,10 @@
     },
     {
         "Name": "Dundee",
-        "Latitude": 56.458742,
-        "Longitude": -2.972543,
-        "Distance": 1286,
-        "HeadingDegrees": 355.6,
+        "Latitude": 56.458598,
+        "Longitude": -2.969868,
+        "Distance": 1471.8,
+        "HeadingDegrees": 345.1,
         "Icon": "misc"
     },
     {
@@ -49,10 +49,10 @@
     },
     {
         "Name": "New York",
-        "Latitude": 40.711441,
-        "Longitude": -74.011847,
-        "Distance": 2377.5,
-        "HeadingDegrees": 86.4,
+        "Latitude": 40.710184,
+        "Longitude": -74.012957,
+        "Distance": 2437.6,
+        "HeadingDegrees": 66.1,
         "Icon": "misc"
     },
     {
