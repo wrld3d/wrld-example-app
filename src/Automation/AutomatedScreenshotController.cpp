@@ -5,10 +5,13 @@
 
 #include "ApplicationConfig.h"
 #include "AutomatedScreenshotController.h"
+#include "CityThemeLoader.h"
 #include "EegeoWorld.h"
 #include "GlobeCameraController.h"
 #include "ICallback.h"
 #include "ICameraTransitionController.h"
+#include "ICityThemesService.h"
+#include "ICityThemesUpdater.h"
 #include "IFlattenButtonModel.h"
 #include "InteriorsCameraController.h"
 #include "InteriorsExplorerModel.h"
@@ -49,6 +52,12 @@ namespace ExampleApp
                 };
             }
 
+            template <typename T, typename... Args>
+            const AutomatedScreenshotController::WaitPredicate WaitForStreaming(const T* t, const Args... args)
+            {
+                return [=]() { return !t->IsStreaming(args...); };
+            }
+
             template <typename F>
             const AutomatedScreenshotController::WaitPredicate Act(F f)
             {
@@ -72,6 +81,18 @@ namespace ExampleApp
                         return p2();
                     }
                 };
+            }
+
+            template <typename P>
+            const AutomatedScreenshotController::WaitPredicate Seq(P p)
+            {
+                return p;
+            }
+
+            template <typename P, typename... Ps>
+            const AutomatedScreenshotController::WaitPredicate Seq(P p, Ps... ps)
+            {
+                return Then(p, Seq(ps...));
             }
         }
 
@@ -101,9 +122,19 @@ namespace ExampleApp
         , m_updateCyclesToWait(UpdateCyclesPerScreenshot)
         , m_execState(ExecStateStreamingInitialSceneAndManifest)
         , m_sceneIndex(0)
+        , m_interiorSelectionModel(interiorSelectionModel)
+        , m_interiorsExplorerModel(interiorsExplorerModel)
+        , m_cityThemeLoader(eegeoWorld.GetCityThemesModule().GetCityThemeLoader())
+        , m_cityThemesService(eegeoWorld.GetCityThemesModule().GetCityThemesService())
+        , m_cityThemesUpdater(eegeoWorld.GetCityThemesModule().GetCityThemesUpdater())
+        , m_globeCameraController(globeCameraController)
         , m_messageBus(messageBus)
         {
             m_planeSimulation.SetEnabled(false);
+        }
+
+        AutomatedScreenshotController::~AutomatedScreenshotController()
+        {
         }
 
         bool AutomatedScreenshotController::NextScene()
@@ -120,64 +151,74 @@ namespace ExampleApp
             }
         }
 
-        const std::array<AutomatedScreenshotController::SceneSetupFunction, 3> AutomatedScreenshotController::States() const
+        const std::array<AutomatedScreenshotController::SceneSetupFunction, 4> AutomatedScreenshotController::States() const
         {
             return {{
                 [this]() {
-                    const PlaceJumps::View::PlaceJumpModel GoldenGateBridge(
-                            "SanFranGoldenGate",
-                            Eegeo::Space::LatLong::FromDegrees(37.81588, -122.47787),
-                            336.0,
-                            1800,
+                    const PlaceJumps::View::PlaceJumpModel London(
+                            "London",
+                            Eegeo::Space::LatLong::FromDegrees(51.509471, -0.082125),
+                            155.0f,
+                            2000.0f,
                             "");
 
                     m_flattenButtonModel.Unflatten();
-                    m_placeJumpController.JumpTo(GoldenGateBridge);
+                    m_placeJumpController.JumpTo(London);
                     m_weatherController.SetTime("Day");
-                    m_weatherController.SetTheme("Autumn");
+                    m_weatherController.SetTheme("Summer");
 
                     return WaitMs(10000);
                 },
 
                 [this]() {
-                    const PlaceJumps::View::PlaceJumpModel NewYorkFinancialDistrict(
-                            "NewYorkFinancialDistrict",
-                            Eegeo::Space::LatLong::FromDegrees(40.708798, -74.010326),
-                            0.000000f,
-                            2597.526123f,
+                    const Eegeo::Resources::Interiors::InteriorId WestportHouseInteriorId("westport_house");
+                    const PlaceJumps::View::PlaceJumpModel WestportHouse(
+                            "WestportHouse",
+                            Eegeo::Space::LatLong::FromDegrees(56.459905, -2.977996),
+                            335.0f,
+                            500.0f,
                             "");
 
-                    m_placeJumpController.JumpTo(NewYorkFinancialDistrict);
+                    m_placeJumpController.JumpTo(WestportHouse);
 
-                    m_weatherController.SetTime("Dawn");
-                    m_weatherController.SetTheme("Summer");
-                    m_flattenButtonModel.Unflatten();
-
-                    return NoWait;
+                    return Seq(Act([=]() { m_interiorSelectionModel.SelectInteriorId(WestportHouseInteriorId); }),
+                               WaitMs(1000));
                 },
 
                 [this]() {
-                    const long long MsToWaitForSearchResults = 3000;
-                    const long long MsToWaitForSidebarAnimation = 8000;
-                    const Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(55.948685, -3.201244));
-                    const PlaceJumps::View::PlaceJumpModel EdinburghCastle(
-                            "EdinburghCastle",
-                            location,
-                            0.000000f,
-                            800.0f,
+                    static const std::string LightThemesManifestUrlDefault  = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
+                    const long long MsToWaitForThemeToLoad = 3000;
+                    const PlaceJumps::View::PlaceJumpModel SanFran(
+                            "SanFran",
+                            Eegeo::Space::LatLong::FromDegrees(37.743676, -122.451021),
+                            0.0f,
+                            3000.0f,
                             "");
 
-                    m_placeJumpController.JumpTo(EdinburghCastle);
-
-                    m_weatherController.SetTime("Day");
-                    m_weatherController.SetTheme("Summer");
+                    m_placeJumpController.JumpTo(SanFran);
                     m_flattenButtonModel.Unflatten();
+                    m_cityThemeLoader.LoadThemes(LightThemesManifestUrlDefault, "Summer", "DayDefault");
 
-                    m_searchQueryPerformer.PerformSearchQuery("coffee", false, false, Eegeo::Space::LatLongAltitude(location.GetLatitude(), location.GetLongitude(), 0.0f));
+                    return Seq(WaitForStreaming(&m_cityThemeLoader),
+                               WaitMs(MsToWaitForThemeToLoad));
+                },
 
-                    return Then(WaitMs(MsToWaitForSearchResults),
-                           Then(Act([this]() { m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(true)); }),
-                                WaitMs(MsToWaitForSidebarAnimation)));
+                [this]() {
+                    static const std::string SciFiThemesManifestUrlDefault = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/scifi/manifest.bin.gz";
+                    const long long MsToWaitForSearchResultsToClearAndThemeToLoad = 3000;
+                    const PlaceJumps::View::PlaceJumpModel LA(
+                            "LA",
+                            Eegeo::Space::LatLong::FromDegrees(34.052074, -118.260257),
+                            160.0f,
+                            1000.0f,
+                            "");
+
+                    m_placeJumpController.JumpTo(LA);
+                    m_searchQueryPerformer.RemoveSearchQueryResults();
+                    m_cityThemeLoader.LoadThemes(SciFiThemesManifestUrlDefault, "Summer", "DayDefault");
+
+                    return Seq(WaitForStreaming(&m_cityThemeLoader),
+                               WaitMs(MsToWaitForSearchResultsToClearAndThemeToLoad));
                 }
             }};
         }
