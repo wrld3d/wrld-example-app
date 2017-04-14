@@ -1,10 +1,10 @@
 <a href="http://www.eegeo.com/">
-    <img src="http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo_logo_quite_big.png" alt="eeGeo Logo" title="eegeo" align="right" height="80px" />
+    <img src="http://cdn2.eegeo.com/wp-content/uploads/2017/04/WRLD_Blue.png" title="WRLD" align="right" height="80px" />
 </a>
 
 # eeGeo Example App
 
-![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
+![eeGeo](images/screenselection01.png)
 
 * [Support](#support)
 * [Getting Started](#getting-started)
@@ -82,7 +82,7 @@ This app uses third-party search service providers to allow users to search for 
 
 The [eeGeo Example App](https://github.com/eegeo/eegeo-example-app) demonstrates a variety of SDK features and is a good starting point to learn how the SDK works.
 
-![eeGeo Example App features](http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo-example-app-features.jpg)
+![eeGeo Example App features](http://cdn2.eegeo.com/wp-content/uploads/2017/04/FeatureExamples.jpg)
 
 See [here](https://www.eegeo.com/features/) to learn more about what the eeGeo SDK has to offer.
 
