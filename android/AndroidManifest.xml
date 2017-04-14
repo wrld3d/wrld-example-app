@@ -36,7 +36,7 @@
     <application android:icon="@mipmap/icon" android:label="eeGeo Example" android:theme="@android:style/Theme.NoTitleBar">
        
         <activity android:name=".BackgroundThreadActivity"
-                  android:label="eeGeo Example"
+                  android:label="WRLD Example"
                   android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
                   android:windowSoftInputMode="adjustPan"
               	  android:launchMode="singleTask"
