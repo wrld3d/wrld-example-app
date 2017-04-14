@@ -5,10 +5,13 @@
 #include "ApplicationConfig.h"
 #include "AutomatedScreenshotController.h"
 #include "CallbackCollection.h"
+#include "CityThemesModule.h"
+#include "CityThemes.h"
 #include "EegeoWorld.h"
 #include "GlobeCameraController.h"
 #include "ICallback.h"
 #include "ICameraTransitionController.h"
+#include "ICityThemeChangedObserver.h"
 #include "IFlattenButtonModel.h"
 #include "InteriorsExplorerController.h"
 #include "InteriorsExplorerModel.h"
@@ -44,6 +47,7 @@ namespace ExampleApp
                                           IScreenshotService& screenshotService,
                                           Eegeo::EegeoWorld& eegeoWorld,
                                           ExampleAppMessaging::TMessageBus& messageBus);
+            ~AutomatedScreenshotController();
 
             bool NextScene();
             void Update(const float dt);
@@ -55,10 +59,13 @@ namespace ExampleApp
             typedef std::function<WaitPredicate()> SceneSetupFunction;
 
         private:
-            const std::array<SceneSetupFunction, 3> States() const;
+            const std::array<SceneSetupFunction, 4> States() const;
             const unsigned long NumScenes() const;
             std::function<bool()> SetupState(const unsigned long state);
             bool Done() const;
+
+            void OnThemeRequested(const Eegeo::Resources::CityThemes::CityThemeData& newTheme);
+            void OnThemeChanged(const Eegeo::Resources::CityThemes::CityThemeData& newTheme);
 
             Eegeo::Traffic::PlaneSimulation& m_planeSimulation;
             ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& m_placeJumpController;
@@ -71,6 +78,12 @@ namespace ExampleApp
             std::function<bool()> m_waitPredicate;
             int m_execState;
             unsigned long m_sceneIndex;
+            Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+            ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
+            Eegeo::Resources::CityThemes::CityThemeLoader& m_cityThemeLoader;
+            Eegeo::Resources::CityThemes::ICityThemesService& m_cityThemesService;
+            Eegeo::Resources::CityThemes::ICityThemesUpdater& m_cityThemesUpdater;
+            const Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
             ExampleAppMessaging::TMessageBus& m_messageBus;
 
             Eegeo::Helpers::CallbackCollection0 m_completedScreenshotsCallbacks;
