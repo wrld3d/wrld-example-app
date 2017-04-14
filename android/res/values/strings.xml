@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="eula_link"><a href='http://www.wrld.com/tos'>EULA</a></string>
-    <string name="privacy_link"><a href='http://www.wrld.com/privacy'>Privacy Policy</a></string>
-    <string name="legal_link"><a href='http://www.wrld.com/legal'>Legal</a></string>
-    <string name="team_link"><a href='http://www.wrld.com/team'>Team</a></string>
+    <string name="eula_link"><a href='http://www.wrld3d.com/tos'>EULA</a></string>
+    <string name="privacy_link"><a href='http://www.wrld3d.com/privacy'>Privacy Policy</a></string>
+    <string name="legal_link"><a href='http://www.wrld3d.com/legal'>Legal</a></string>
+    <string name="team_link"><a href='http://www.wrld3d.com/team'>Team</a></string>
     
     <string name="about_page_title">About this app...</string>
     
