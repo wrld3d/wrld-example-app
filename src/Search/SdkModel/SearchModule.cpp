@@ -16,7 +16,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             SearchModule::SearchModule(ISearchService& exteriorSearchService,
-                                       Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                                       ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                        ExampleAppMessaging::TMessageBus& messageBus,

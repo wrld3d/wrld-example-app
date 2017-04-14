@@ -10,6 +10,7 @@
 #include "SearchResultModel.h"
 #include "BidirectionalBus.h"
 #include "SearchQueryResultsRemovedMessage.h"
+#include "CameraState.h"
 
 namespace
 {
@@ -30,7 +31,7 @@ namespace ExampleApp
         {
             SearchQueryPerformer::SearchQueryPerformer(ISearchService& searchService,
                                                        ISearchResultRepository& searchResultRepository,
-                                                       Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& cameraController,
+                                                       ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
                 : m_searchService(searchService)
                 , m_searchResultsRepository(searchResultRepository)
@@ -57,13 +58,13 @@ namespace ExampleApp
 
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch)
             {
-                Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetEcefInterestPoint());
+                Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
                 PerformSearchQuery(query, isTag, tryInteriorSearch, location);
             }
             
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, float radius)
             {
-                const Eegeo::Space::LatLongAltitude& location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetEcefInterestPoint());
+                Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
                 PerformSearchQuery(query, isTag, tryInteriorSearch, location, radius);
             }
 
