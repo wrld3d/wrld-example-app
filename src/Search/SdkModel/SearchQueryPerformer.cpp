@@ -15,9 +15,10 @@ namespace
 {
     float GetSearchRadius(const Eegeo::Camera::RenderCamera& renderCamera)
     {
+        const float SearchRadiusMin = 1000.f;
         const float SearchRadiusMax = 50000.f;
         float radius = (renderCamera.GetAltitude() * Eegeo::Math::Tan(renderCamera.GetFOV()));
-        return Eegeo::Min(SearchRadiusMax, radius);
+        return Eegeo::Clamp(radius, SearchRadiusMin, SearchRadiusMax);
     }
 }
 
