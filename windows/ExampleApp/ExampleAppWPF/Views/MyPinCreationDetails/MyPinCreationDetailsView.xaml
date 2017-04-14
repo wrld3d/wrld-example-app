@@ -35,7 +35,7 @@
                                 <Button x:Name="CloseButton" Content="Button" Height="{DynamicResource PinCreationDetailsCloseButtonSize}" Width="{DynamicResource PinCreationDetailsCloseButtonSize}" Style="{StaticResource Close_CreatePIN}" HorizontalContentAlignment="Center" HorizontalAlignment="Right" Margin="{DynamicResource PinCreationDetailsCloseButtonMargin}" Visibility="{DynamicResource PinCreationDetailsCloseButtonNormalVisibility}"/>
                                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="{DynamicResource PinCreationDetailsShareMargin}" Visibility="{DynamicResource PinCreationDetailsShareVisibility}">
                                     <CheckBox x:Name="ToShare" Margin="{DynamicResource PinCreationDetailsShareCheckboxMargin}"/>
-                                    <TextBlock Foreground="{StaticResource Gold}" FontWeight="Bold"><Run Text="Share "/><Hyperlink  x:Name="TermsLink" NavigateUri="http://www.eegeo.com/tos/"><Run Text="(Terms &amp; Conditions)"/></Hyperlink></TextBlock>
+                                    <TextBlock Foreground="{StaticResource Gold}" FontWeight="Bold"><Run Text="Share "/><Hyperlink  x:Name="TermsLink" NavigateUri="http://www.wrld3d.com/tos/"><Run Text="(Terms &amp; Conditions)"/></Hyperlink></TextBlock>
                                 </StackPanel>
                                 <Grid Margin="{DynamicResource PinCreationDetailsDescriptionMargin}" >
                                     <Border BorderBrush="{StaticResource Gold}" BorderThickness="{DynamicResource PinCreationDetailsDescriptionTextBoxContainerBorderThickness}">
