@@ -360,22 +360,22 @@
 
 - (void) privacyClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld.com/privacy/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld3d.com/privacy/"]];
 }
 
 - (void) eulaClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld.com/tos/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld3d.com/tos/"]];
 }
 
 - (void) legalClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld.com/legal/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld3d.com/legal/"]];
 }
 
 - (void) teamClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld.com/team/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld3d.com/team/"]];
 }
 
 @end

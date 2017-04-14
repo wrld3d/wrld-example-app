@@ -27,25 +27,25 @@
                                 <TextBlock Name="AppText" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left"  FontSize="12pt" />
 
                                 <TextBlock Margin="0 0 0 10px" FontSize="12pt">
-                                    <Hyperlink Name="LinkTos" NavigateUri="http://www.eegeo.com/tos">
+                                    <Hyperlink Name="LinkTos" NavigateUri="http://www.wrld3d.com/tos">
                                         EULA
                                     </Hyperlink>
                                 </TextBlock>
 
                                 <TextBlock Margin="0 0 0 10px" FontSize="12pt">
-                                    <Hyperlink Name="LinkPrivacy" NavigateUri="http://www.eegeo.com/privacy">
+                                    <Hyperlink Name="LinkPrivacy" NavigateUri="http://www.wrld3d.com/privacy">
                                         Privacy Policy
                                     </Hyperlink>
                                 </TextBlock>
 
                                 <TextBlock Margin="0 0 0 10px" FontSize="12pt">
-                                    <Hyperlink Name="LinkLegal" NavigateUri="http://www.eegeo.com/legal">
+                                    <Hyperlink Name="LinkLegal" NavigateUri="http://www.wrld3d.com/legal">
                                         Legal
                                     </Hyperlink>
                                 </TextBlock>
 
                                 <TextBlock FontSize="12pt">
-                                    <Hyperlink Name="LinkTeam" NavigateUri="http://www.eegeo.com/team">
+                                    <Hyperlink Name="LinkTeam" NavigateUri="http://www.wrld3d.com/team">
                                         Team
                                     </Hyperlink>
                                 </TextBlock>
