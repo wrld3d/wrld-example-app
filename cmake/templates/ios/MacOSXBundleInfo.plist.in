@@ -34,6 +34,7 @@
                         <key>CFBundleURLSchemes</key>
                         <array>
                                 <string>wrld</string>
+                                <string>eegeo</string>
                         </array>
                 </dict>
 	</array>
