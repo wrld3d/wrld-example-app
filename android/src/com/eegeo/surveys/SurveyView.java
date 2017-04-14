@@ -42,6 +42,10 @@ public class SurveyView {
                     if (!timerSurveyUrl.startsWith("https://") && !timerSurveyUrl.startsWith("http://")) {
                         prefixedUrl = "http://" + timerSurveyUrl;
                     }
+                    else
+                    {
+                        prefixedUrl = timerSurveyUrl;
+                    }
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(prefixedUrl));
                     m_activity.startActivity(browserIntent);
                 }

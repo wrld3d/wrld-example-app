@@ -132,11 +132,11 @@ namespace ExampleApp
             
             void SurveyObserver::OnTimeSpentInApp(const SurveyTimeRequirementMetMessage& message)
             {
-                if(SurveyOffered())
+                if(SurveyOffered() || !StartUpRequirementsMet())
                 {
                     return;
                 }
-                
+
                 SetSurveyConditionsFlag(TimeSpent);
             }
             
