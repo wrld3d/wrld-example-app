@@ -51,8 +51,12 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
         		<category android:name="android.intent.category.BROWSABLE" />
+
 		        <data android:scheme="wrld" android:host="location" />
 		        <data android:scheme="wrld" android:host="mapscene" />
+
+		        <data android:scheme="eegeo" android:host="location" />
+		        <data android:scheme="eegeo" android:host="mapscene" />
             </intent-filter>
         </activity>
         
