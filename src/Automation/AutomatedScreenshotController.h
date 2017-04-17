@@ -59,7 +59,7 @@ namespace ExampleApp
             typedef std::function<WaitPredicate()> SceneSetupFunction;
 
         private:
-            const std::array<SceneSetupFunction, 4> States() const;
+            const std::array<SceneSetupFunction, 5> States() const;
             const unsigned long NumScenes() const;
             std::function<bool()> SetupState(const unsigned long state);
             bool Done() const;
