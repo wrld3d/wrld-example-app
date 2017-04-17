@@ -384,7 +384,6 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         cell.textLabel.text = [NSString stringWithUTF8String:name.c_str()];
         cell.textLabel.font = [UIFont systemFontOfSize: [self getTextLabelFontSize:isHeader]];
         cell.textLabel.textColor = isHeader ? ExampleApp::Helpers::ColorPalette::TableHeaderTextColor : ExampleApp::Helpers::ColorPalette::TableSubCellTextColor;
-        cell.textLabel.adjustsFontSizeToFitWidth = true;
         [cell.textLabel sizeToFit];
         
         const float titleTextHeight = hasDetails ? cell.textLabel.frame.size.height : textHeight;
