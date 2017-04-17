@@ -14,6 +14,7 @@
 #include "InteriorsExplorerModel.h"
 #include "InteriorNavigationHelpers.h"
 #include "InteriorsCameraController.h"
+#include "InteriorsModel.h"
 
 namespace ExampleApp
 {
@@ -115,11 +116,17 @@ namespace ExampleApp
             bool CompassModel::NeedsToExitInterior(GpsMode::Values gpsMode)
             {
                 const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
-                return ((appMode != AppModes::SdkModel::WorldMode) &&
-                        !m_exitInteriorTriggered &&
-                        (gpsMode != GpsMode::GpsDisabled) &&
-                        !Helpers::InteriorNavigationHelpers::IsPositionInInterior(m_interiorInteractionModel, m_locationService)) &&
-                        !m_locationService.IsIndoors();
+                const bool gpsIsEnabled = gpsMode != GpsMode::GpsDisabled;
+                const bool notCurrentlyExitingToWorldMode = appMode != AppModes::SdkModel::WorldMode &&
+                                                            !m_exitInteriorTriggered;
+                const Eegeo::Resources::Interiors::InteriorsModel* selectedInteriorModel = m_interiorInteractionModel.GetInteriorModel();
+                const bool notInCurrentInterior = !(m_locationService.IsIndoors() &&
+                                                    selectedInteriorModel != nullptr &&
+                                                    m_locationService.GetInteriorId() == selectedInteriorModel->GetId() &&
+                                                    Helpers::InteriorNavigationHelpers::IsPositionInInterior(m_interiorInteractionModel, m_locationService));
+                return gpsIsEnabled &&
+                       notCurrentlyExitingToWorldMode &&
+                       notInCurrentInterior;
             }
 
             void CompassModel::TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value)
