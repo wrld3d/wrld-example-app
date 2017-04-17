@@ -10,7 +10,10 @@ import android.animation.Animator.AnimatorListener;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -35,6 +38,7 @@ public class WatermarkView implements View.OnClickListener
     private float m_yPosInactive;
     private boolean m_shouldShow;
     private AnimatorListener m_transitionOffListener;
+    private Drawable m_currentBackgroundDrawable;
 
     public WatermarkView(MainActivity activity,
                          long nativeCallerPointer,
@@ -57,10 +61,10 @@ public class WatermarkView implements View.OnClickListener
             @Override
             public void onAnimationEnd(Animator animator)
             {
-
                 String uri = "drawable/" + m_imageAssetUrl;
                 int imageResource = m_activity.getResources().getIdentifier(uri, null, m_activity.getPackageName());
                 m_view.setBackgroundResource(imageResource);
+                m_currentBackgroundDrawable = ContextCompat.getDrawable(m_activity, imageResource);
 
                 refreshPositions();
                 m_view.setY(m_yPosInactive);
@@ -207,6 +211,7 @@ public class WatermarkView implements View.OnClickListener
             String uri = "drawable/" + m_imageAssetUrl;
             int imageResource = m_activity.getResources().getIdentifier(uri, null, m_activity.getPackageName());
             m_view.setBackgroundResource(imageResource);
+            m_currentBackgroundDrawable = ContextCompat.getDrawable(m_activity, imageResource);
 
             refreshPositions();
             m_view.setY(m_yPosInactive);
@@ -254,9 +259,7 @@ public class WatermarkView implements View.OnClickListener
         final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
 
         final float screenHeight = uiRoot.getHeight();
-        final float screenWidth = uiRoot.getWidth();
         final float viewHeight = m_view.getHeight();
-        final float viewWidth = m_view.getWidth();
 
         if (m_activity.getResources().getBoolean(R.bool.isPhone))
         {
@@ -278,15 +281,23 @@ public class WatermarkView implements View.OnClickListener
 
                 m_yPosInactive = (-viewHeight);
             }
-
-            m_view.setX((screenWidth * 0.5f) - (viewWidth * 0.5f));
         }
         else
         {
             m_yPosActive = (screenHeight - viewHeight) - m_activity.dipAsPx(8);
             m_yPosInactive = (screenHeight + viewHeight);
-
-            m_view.setX(m_activity.dipAsPx(20));
         }
+
+        refreshXPositionForDrawable(uiRoot, m_currentBackgroundDrawable);
+    }
+
+    private void refreshXPositionForDrawable(final RelativeLayout uiRoot, final Drawable newWatermark)
+    {
+        final float screenWidth = uiRoot.getWidth();
+        final float viewWidth = newWatermark.getIntrinsicWidth();
+
+        m_view.setX(m_activity.getResources().getBoolean(R.bool.isPhone)
+          ? screenWidth * 0.5f - viewWidth * 0.5f
+          : m_activity.dipAsPx(20));
     }
 }
