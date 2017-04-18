@@ -71,7 +71,7 @@ namespace ExampleApp
             {
                 bool p1Done = false;
                 return [=]() mutable {
-                    if (p1Done)
+                    if (!p1Done)
                     {
                         p1Done = p1();
                         return false;
@@ -82,7 +82,6 @@ namespace ExampleApp
                     }
                 };
             }
-
             template <typename P>
             const AutomatedScreenshotController::WaitPredicate Seq(P p)
             {
@@ -151,7 +150,7 @@ namespace ExampleApp
             }
         }
 
-        const std::array<AutomatedScreenshotController::SceneSetupFunction, 4> AutomatedScreenshotController::States() const
+        const std::array<AutomatedScreenshotController::SceneSetupFunction, 5> AutomatedScreenshotController::States() const
         {
             return {{
                 [this]() {
@@ -171,6 +170,7 @@ namespace ExampleApp
                 },
 
                 [this]() {
+                    const long long WaitMsForInteriorToLoad = 4000;
                     const Eegeo::Resources::Interiors::InteriorId WestportHouseInteriorId("westport_house");
                     const PlaceJumps::View::PlaceJumpModel WestportHouse(
                             "WestportHouse",
@@ -181,8 +181,27 @@ namespace ExampleApp
 
                     m_placeJumpController.JumpTo(WestportHouse);
 
-                    return Seq(Act([=]() { m_interiorSelectionModel.SelectInteriorId(WestportHouseInteriorId); }),
-                               WaitMs(1000));
+                    return Seq(WaitMs(WaitMsForInteriorToLoad),
+                               Act([=]() { m_interiorSelectionModel.SelectInteriorId(WestportHouseInteriorId); }),
+                               WaitMs(8000));
+                },
+
+                [this]() {
+                    const long long MsToWaitForSearchResultsToReturn = 3000;
+                    const long long MsToWaitForSearchMenuToOpen = 5000;
+                    const PlaceJumps::View::PlaceJumpModel VA(
+                            "V&A",
+                            Eegeo::Space::LatLong::FromDegrees(51.496592, -0.171757),
+                            0.0f,
+                            1000.0f,
+                            "");
+
+                    m_placeJumpController.JumpTo(VA);
+                    m_searchQueryPerformer.PerformSearchQuery("", true, false);
+
+                    return Seq(WaitMs(MsToWaitForSearchResultsToReturn),
+                               Act([=]() { m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(true)); }),
+                               WaitMs(MsToWaitForSearchMenuToOpen));
                 },
 
                 [this]() {
@@ -195,6 +214,8 @@ namespace ExampleApp
                             3000.0f,
                             "");
 
+                    m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(false));
+                    m_searchQueryPerformer.RemoveSearchQueryResults();
                     m_placeJumpController.JumpTo(SanFran);
                     m_flattenButtonModel.Unflatten();
                     m_cityThemeLoader.LoadThemes(LightThemesManifestUrlDefault, "Summer", "DayDefault");
