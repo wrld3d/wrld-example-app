@@ -48,6 +48,8 @@
 #include "AboutPageSenionSettingsTypeMessage.h"
 #include "OpenSearchMenuMessage.h"
 #include "CompassIsRotatingStateChangedMessage.h"
+#include "SelectMenuItemMessage.h"
+#include "ClosePoiMessage.h"
 
 namespace ExampleApp
 {
@@ -98,6 +100,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionSettingsTypeMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchMenu::OpenSearchMenuMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassIsRotatingStateChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Automation::SelectMenuItemMessage>
+            , public Eegeo::Messaging::CatalogBinding<Automation::ClosePoiMessage>
             , private Eegeo::NonCopyable
         {
 

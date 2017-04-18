@@ -876,7 +876,10 @@ namespace ExampleApp
                                                                                                     streamingModule.GetStreamingController(),
                                                                                                     m_screenshotService,
                                                                                                     world,
-                                                                                                    m_messageBus);
+                                                                                                    m_messageBus,
+                                                                                                    *m_pAppCameraModule,
+                                                                                                    m_screenProperties,
+                                                                                                    *m_pWorldPinsModule);
         }
     }
 

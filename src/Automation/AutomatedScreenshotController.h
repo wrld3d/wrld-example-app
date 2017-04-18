@@ -23,6 +23,7 @@
 #include "IWeatherController.h"
 #include "PlaneSimulation.h"
 #include "Streaming.h"
+#include "IAppCameraModule.h"
 
 namespace ExampleApp
 {
@@ -46,7 +47,10 @@ namespace ExampleApp
                                           Eegeo::Streaming::StreamingController& streamingController,
                                           IScreenshotService& screenshotService,
                                           Eegeo::EegeoWorld& eegeoWorld,
-                                          ExampleAppMessaging::TMessageBus& messageBus);
+                                          ExampleAppMessaging::TMessageBus& messageBus,
+                                          AppCamera::SdkModel::IAppCameraModule& appCameraModule,
+                                          Eegeo::Rendering::ScreenProperties& screenProperties,
+                                          ExampleApp::WorldPins::SdkModel::IWorldPinsModule& worldPinsModule);
             ~AutomatedScreenshotController();
 
             bool NextScene();
@@ -59,7 +63,7 @@ namespace ExampleApp
             typedef std::function<WaitPredicate()> SceneSetupFunction;
 
         private:
-            const std::array<SceneSetupFunction, 5> States() const;
+            const std::array<SceneSetupFunction, 6> States() const;
             const unsigned long NumScenes() const;
             std::function<bool()> SetupState(const unsigned long state);
             bool Done() const;
@@ -87,6 +91,9 @@ namespace ExampleApp
             ExampleAppMessaging::TMessageBus& m_messageBus;
 
             Eegeo::Helpers::CallbackCollection0 m_completedScreenshotsCallbacks;
+            AppCamera::SdkModel::IAppCameraModule& m_appCameraModule;
+            Eegeo::Rendering::ScreenProperties& m_screenProperties;
+            ExampleApp::WorldPins::SdkModel::IWorldPinsModule& m_worldPinsModule;
         };
     }
 }

@@ -25,6 +25,11 @@
 #include "PlaneSimulation.h"
 #include "StreamingController.h"
 #include "TimeHelpers.h"
+#include "AppCameraController.h"
+#include "SelectMenuItemMessage.h"
+#include "WorldPinsModule.h"
+#include "WorldPinsService.h"
+#include "ClosePoiMessage.h"
 
 namespace ExampleApp
 {
@@ -110,7 +115,10 @@ namespace ExampleApp
                                                                      Eegeo::Streaming::StreamingController& streamingController,
                                                                      IScreenshotService& screenshotService,
                                                                      Eegeo::EegeoWorld& eegeoWorld,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus)
+                                                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                                                     AppCamera::SdkModel::IAppCameraModule& appCameraModule,
+                                                                     Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                                     ExampleApp::WorldPins::SdkModel::IWorldPinsModule& worldPinsModule)
         : m_planeSimulation(planeSimulation)
         , m_placeJumpController(placeJumpController)
         , m_weatherController(weatherController)
@@ -128,6 +136,9 @@ namespace ExampleApp
         , m_cityThemesUpdater(eegeoWorld.GetCityThemesModule().GetCityThemesUpdater())
         , m_globeCameraController(globeCameraController)
         , m_messageBus(messageBus)
+        , m_appCameraModule(appCameraModule)
+        , m_screenProperties(screenProperties)
+        , m_worldPinsModule(worldPinsModule)
         {
             m_planeSimulation.SetEnabled(false);
         }
@@ -150,7 +161,7 @@ namespace ExampleApp
             }
         }
 
-        const std::array<AutomatedScreenshotController::SceneSetupFunction, 5> AutomatedScreenshotController::States() const
+        const std::array<AutomatedScreenshotController::SceneSetupFunction, 6> AutomatedScreenshotController::States() const
         {
             return {{
                 [this]() {
@@ -187,8 +198,8 @@ namespace ExampleApp
                 },
 
                 [this]() {
-                    const long long MsToWaitForSearchResultsToReturn = 3000;
-                    const long long MsToWaitForSearchMenuToOpen = 5000;
+                    const long long MsToWaitForSearchResultsToReturn = 5000;
+                    const long long MsToWaitForSearchMenuToOpen = 8000;
                     const PlaceJumps::View::PlaceJumpModel VA(
                             "V&A",
                             Eegeo::Space::LatLong::FromDegrees(51.496592, -0.171757),
@@ -197,14 +208,27 @@ namespace ExampleApp
                             "");
 
                     m_placeJumpController.JumpTo(VA);
-                    m_searchQueryPerformer.PerformSearchQuery("", true, false);
+                    m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(true));
 
                     return Seq(WaitMs(MsToWaitForSearchResultsToReturn),
-                               Act([=]() { m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(true)); }),
+                               Act([=]() {
+                        m_searchQueryPerformer.PerformSearchQuery("", true, false); }),
                                WaitMs(MsToWaitForSearchMenuToOpen));
+                },
+                
+                [this]() {
+                    m_messageBus.Publish(SelectMenuItemMessage(5));
+                    const long long MsWaitForSearchTransition = 10000;
+                    const long long MsWaitForPoiToOpen = 15000;
+                    
+                    return Seq(WaitMs(MsWaitForSearchTransition),
+                               Act([=]() { m_worldPinsModule.GetWorldPinsService().HandleTouchTap({Eegeo::v2(m_screenProperties.GetScreenWidth()/2, m_screenProperties.GetScreenHeight()/2)}); }),
+                               WaitMs(MsWaitForPoiToOpen));
+                 
                 },
 
                 [this]() {
+                    m_messageBus.Publish(ClosePoiMessage());
                     static const std::string LightThemesManifestUrlDefault  = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
                     const long long MsToWaitForThemeToLoad = 3000;
                     const PlaceJumps::View::PlaceJumpModel SanFran(
