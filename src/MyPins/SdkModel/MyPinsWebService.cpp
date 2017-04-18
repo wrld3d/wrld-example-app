@@ -76,7 +76,7 @@ namespace ExampleApp
                     + "\",\n  \"lon\":\"" + ConvertModelDetailToString(pinModel.GetLatLong().GetLongitudeInDegrees())
                     + "\",\n  \"indoor\":\"" + BoolToString(pinModel.IsInterior())
                     + "\",\n  \"indoor_id\":\"" + pinModel.GetBuildingId().Value()
-                    + "\",\n  \"floor_id\":\"" + std::to_string(pinModel.GetFloor())
+                    + "\",\n  \"floor_id\":\"" + ConvertModelDetailToString(pinModel.GetFloor())
                     + "\",\n \"user_data\":{\"description\":\"" + pinModel.GetDescription() + "\"}}";
                 }
                 else
