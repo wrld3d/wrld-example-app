@@ -33,6 +33,7 @@ namespace ExampleApp
                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                            Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                            Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& legacyLabelController,
+                                                           Eegeo::Labels::ILabelAnchorFilterModel& labelHiddenFilterModel,
                                                            const Eegeo::Labels::LabelLayer::IdType interiorLabelLayer,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            IHighlightColorMapper& highlightColorMapper);
@@ -61,6 +62,7 @@ namespace ExampleApp
                     Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                     Eegeo::Resources::Interiors::InteriorsCellResourceObserver& m_interiorsCellResourceObserver;
 
+                    Eegeo::Labels::ILabelAnchorFilterModel& m_labelHiddenFilterModel;
                     const Eegeo::Labels::LabelLayer::IdType m_interiorLabelLayer;
                     Search::SdkModel::ISearchService& m_searchService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
@@ -77,6 +79,8 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_availabilityChangedHandlerBinding;
                     
                     std::map<std::string, std::vector<Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>> m_currentHighlightRenderables;
+                    
+                    Eegeo::Labels::TLabelAnchorFilter<InteriorsHighlightVisibilityController> m_hideLabelAlwaysFilter;
                 };
             }
         }

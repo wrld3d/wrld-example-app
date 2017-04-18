@@ -61,12 +61,32 @@ namespace ExampleApp
                 return m_url + "/" + m_myPinsPoiSetId + PoiEndPoint + "?token=" + m_myPinsWebServiceAuthToken;
             }
             
+            const char * const BoolToString(bool b)
+            {
+                return b ? "true" : "false";
+            }
+            
             const std::string MyPinsWebService::CreatePinPostData(const MyPinModel& pinModel)
             {
-                return "{\n  \"title\":\"" + pinModel.GetTitle()
-                + "\",\n  \"subtitle\":\"\",\n  \"tags\":\"office business\",\n  \"lat\":\"" + ConvertModelDetailToString(pinModel.GetLatLong().GetLatitudeInDegrees())
-                + "\",\n  \"lon\":\"" + ConvertModelDetailToString(pinModel.GetLatLong().GetLongitudeInDegrees())
-                + "\",\n \"user_data\":{\"description\":\"" + pinModel.GetDescription() + "\"}}";
+                std::string json = "";
+                if(pinModel.IsInterior())
+                {
+                    json = "{\n  \"title\":\"" + pinModel.GetTitle()
+                    + "\",\n  \"subtitle\":\"\",\n  \"tags\":\"office business\",\n  \"lat\":\"" + ConvertModelDetailToString(pinModel.GetLatLong().GetLatitudeInDegrees())
+                    + "\",\n  \"lon\":\"" + ConvertModelDetailToString(pinModel.GetLatLong().GetLongitudeInDegrees())
+                    + "\",\n  \"indoor\":\"" + BoolToString(pinModel.IsInterior())
+                    + "\",\n  \"indoor_id\":\"" + pinModel.GetBuildingId().Value()
+                    + "\",\n  \"floor_id\":\"" + std::to_string(pinModel.GetFloor())
+                    + "\",\n \"user_data\":{\"description\":\"" + pinModel.GetDescription() + "\"}}";
+                }
+                else
+                {
+                    json = "{\n  \"title\":\"" + pinModel.GetTitle()
+                    + "\",\n  \"subtitle\":\"\",\n  \"tags\":\"office business\",\n  \"lat\":\"" + ConvertModelDetailToString(pinModel.GetLatLong().GetLatitudeInDegrees())
+                    + "\",\n  \"lon\":\"" + ConvertModelDetailToString(pinModel.GetLatLong().GetLongitudeInDegrees())
+                    + "\",\n \"user_data\":{\"description\":\"" + pinModel.GetDescription() + "\"}}";
+                }
+                return json;
             }
         }
     }
