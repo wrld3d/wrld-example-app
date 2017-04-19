@@ -69,7 +69,7 @@ namespace ExampleApp
 
             WaitPredicate TabletVASceneSetup(bool openSearchMenu) const;
             WaitPredicate PhoneNYCSceneSetup(bool openSearchMenu) const;
-            WaitPredicate SelectedPinSceneSetup(int searchMenuPinIx) const;
+            WaitPredicate SelectedPinSceneSetup(const std::string& query, int searchMenuPinIx) const;
 
             Eegeo::Traffic::PlaneSimulation& m_planeSimulation;
             ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& m_placeJumpController;

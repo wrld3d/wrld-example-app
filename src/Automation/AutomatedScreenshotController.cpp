@@ -209,13 +209,16 @@ namespace ExampleApp
                        WaitMs(MsToWaitForSearchMenuToOpen));
         }
 
-        AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::SelectedPinSceneSetup(int searchMenuPinIx) const
+        AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::SelectedPinSceneSetup(const std::string& query, int searchMenuPinIx) const
         {
-            m_messageBus.Publish(SelectMenuItemMessage(5));
-            const long long MsWaitForSearchTransition = 10000;
-            const long long MsWaitForPoiToOpen = 15000;
+            m_searchQueryPerformer.PerformSearchQuery(query, false, false);
+            const long long MsToWaitForSearchResults = 7000;
+            const long long MsToWaitForCameraToTransitionToPoi = 5000;
+            const long long MsWaitForPoiToOpen = 5000;
 
-            return Seq(WaitMs(MsWaitForSearchTransition),
+            return Seq(WaitMs(MsToWaitForSearchResults),
+                       Act([=]() { m_messageBus.Publish(SelectMenuItemMessage(searchMenuPinIx)); }),
+                       WaitMs(MsToWaitForCameraToTransitionToPoi),
                        Act([=]() { m_worldPinsModule.GetWorldPinsService().HandleTouchTap({Eegeo::v2(m_screenProperties.GetScreenWidth()/2, m_screenProperties.GetScreenHeight()/2)}); }),
                        WaitMs(MsWaitForPoiToOpen));
         }
@@ -243,7 +246,7 @@ namespace ExampleApp
                     const long long WaitMsForInteriorToLoad = 4000;
                     const long long MsToWaitForCameraToEnterInterior = 3000;
                     const Eegeo::Resources::Interiors::InteriorId WestportHouseInteriorId("westport_house");
-                    const Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(56.460108, -2.978494));
+                    const Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(56.460108, -2.978094));
                     const float altitude = 388.7f;
                     const PlaceJumps::View::PlaceJumpModel WestportHouse(
                             "WestportHouse",
@@ -257,7 +260,7 @@ namespace ExampleApp
                     return Seq(WaitMs(WaitMsForInteriorToLoad),
                                Act([=]() { m_interiorSelectionModel.SelectInteriorId(WestportHouseInteriorId); }),
                                WaitMs(MsToWaitForCameraToEnterInterior),
-                               Act([=]() { m_cameraTransitionService.StartTransitionTo(location.ToECEF(), altitude, true); }),
+                               Act([=]() { m_cameraTransitionService.StartTransitionTo(location.ToECEF(), altitude, WestportHouseInteriorId, 0, true); }),
                                WaitForCameraTransition(&m_cameraTransitionService),
                                WaitMs(2000));
                 },
@@ -275,7 +278,9 @@ namespace ExampleApp
                 },
                 
                 [this]() {
-                    return SelectedPinSceneSetup(6);
+                    return IsLandscapeLayout(m_screenProperties)
+                           ? SelectedPinSceneSetup("Victoria and Albert Museum", 0)
+                           : SelectedPinSceneSetup("Empire State Building", 0);
                 },
 
                 [this]() {
