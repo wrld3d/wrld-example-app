@@ -5,12 +5,12 @@
 #include "ApplicationConfig.h"
 #include "AutomatedScreenshotController.h"
 #include "CallbackCollection.h"
+#include "CameraTransitionService.h"
 #include "CityThemesModule.h"
 #include "CityThemes.h"
 #include "EegeoWorld.h"
 #include "GlobeCameraController.h"
 #include "ICallback.h"
-#include "ICameraTransitionController.h"
 #include "ICityThemeChangedObserver.h"
 #include "IFlattenButtonModel.h"
 #include "InteriorsExplorerController.h"
@@ -33,7 +33,7 @@ namespace ExampleApp
         {
         public:
             AutomatedScreenshotController(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                                          ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                          ExampleApp::CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionController,
                                           const Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
                                           Eegeo::Traffic::PlaneSimulation& planeSimulation,
                                           ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& placeJumpController,
@@ -51,7 +51,6 @@ namespace ExampleApp
                                           AppCamera::SdkModel::IAppCameraModule& appCameraModule,
                                           Eegeo::Rendering::ScreenProperties& screenProperties,
                                           ExampleApp::WorldPins::SdkModel::IWorldPinsModule& worldPinsModule);
-            ~AutomatedScreenshotController();
 
             bool NextScene();
             void Update(const float dt);
@@ -63,13 +62,14 @@ namespace ExampleApp
             typedef std::function<WaitPredicate()> SceneSetupFunction;
 
         private:
-            const std::array<SceneSetupFunction, 6> States() const;
-            const unsigned long NumScenes() const;
+            static const int NumScenes = 7;
+            const std::array<SceneSetupFunction, NumScenes> States() const;
             std::function<bool()> SetupState(const unsigned long state);
             bool Done() const;
 
-            void OnThemeRequested(const Eegeo::Resources::CityThemes::CityThemeData& newTheme);
-            void OnThemeChanged(const Eegeo::Resources::CityThemes::CityThemeData& newTheme);
+            WaitPredicate TabletVASceneSetup(bool openSearchMenu) const;
+            WaitPredicate PhoneNYCSceneSetup(bool openSearchMenu) const;
+            WaitPredicate SelectedPinSceneSetup(int searchMenuPinIx) const;
 
             Eegeo::Traffic::PlaneSimulation& m_planeSimulation;
             ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& m_placeJumpController;
@@ -83,17 +83,15 @@ namespace ExampleApp
             int m_execState;
             unsigned long m_sceneIndex;
             Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-            ExampleApp::InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
             Eegeo::Resources::CityThemes::CityThemeLoader& m_cityThemeLoader;
             Eegeo::Resources::CityThemes::ICityThemesService& m_cityThemesService;
             Eegeo::Resources::CityThemes::ICityThemesUpdater& m_cityThemesUpdater;
-            const Eegeo::Camera::GlobeCamera::GlobeCameraController& m_globeCameraController;
             ExampleAppMessaging::TMessageBus& m_messageBus;
-
-            Eegeo::Helpers::CallbackCollection0 m_completedScreenshotsCallbacks;
-            AppCamera::SdkModel::IAppCameraModule& m_appCameraModule;
             Eegeo::Rendering::ScreenProperties& m_screenProperties;
             ExampleApp::WorldPins::SdkModel::IWorldPinsModule& m_worldPinsModule;
+            ExampleApp::CameraTransitions::SdkModel::CameraTransitionService& m_cameraTransitionService;
+
+            Eegeo::Helpers::CallbackCollection0 m_completedScreenshotsCallbacks;
         };
     }
 }
