@@ -471,4 +471,11 @@ enum MenuState
     [m_pDataProvider updateMenuSections:sections];
 }
 
+- (void) toggleSection:(int)sectionIndex
+{
+    [m_pDataProvider tableView:self.pTableViewMap[@(sectionIndex)]
+       didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0
+                                                  inSection:sectionIndex]];
+}
+
 @end

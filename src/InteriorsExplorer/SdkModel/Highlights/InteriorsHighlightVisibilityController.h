@@ -57,7 +57,7 @@ namespace ExampleApp
                     void ActivateLabels(bool active);
 
                     bool HideLabelAlwaysPredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const;
-                    
+                    bool HideLabelByNamePredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const;
                     
                     Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                     Eegeo::Resources::Interiors::InteriorsCellResourceObserver& m_interiorsCellResourceObserver;
@@ -81,6 +81,7 @@ namespace ExampleApp
                     std::map<std::string, std::vector<Eegeo::Rendering::Renderables::InteriorHighlightRenderable*>> m_currentHighlightRenderables;
                     
                     Eegeo::Labels::TLabelAnchorFilter<InteriorsHighlightVisibilityController> m_hideLabelAlwaysFilter;
+                    Eegeo::Labels::TLabelAnchorFilter<InteriorsHighlightVisibilityController> m_hideLabelByNameFilter;
                 };
             }
         }

@@ -42,10 +42,12 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to increase indoor location accuracy using your device's bluetooth.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>$(PRODUCT_NAME) would like to display photos for your custom POIs.</string>
 	<key>NSCameraUsageDescription</key>
 	<string></string>
 	<key>UIMainStoryboardFile</key>

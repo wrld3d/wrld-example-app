@@ -12,6 +12,7 @@ import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
+import com.eegeo.recce.*;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

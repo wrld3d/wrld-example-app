@@ -75,6 +75,11 @@ namespace ExampleApp
                 // The view will copy and manage the image data buffer; we must release the original here.
                 Eegeo_DELETE pDownloadedImageData;
             }
+            
+            void SearchResultPoiController::OnClosePoiMessageRecieved(const Automation::ClosePoiMessage& message)
+            {
+                m_viewModel.Close();
+            }
 
             SearchResultPoiController::SearchResultPoiController(ISearchResultPoiView& view,
                                                                  ISearchResultPoiViewModel& viewModel,
@@ -89,16 +94,19 @@ namespace ExampleApp
                 , m_closeButtonCallback(this, &SearchResultPoiController::OnCloseButtonClicked)
                 , m_togglePinnedCallback(this, &SearchResultPoiController::OnPinToggledButtonClicked)
                 , m_imageLoadedHandlerBinding(this, &SearchResultPoiController::OnSearchResultImageLoaded)
+                , m_closePoiMessageHandler(this, &SearchResultPoiController::OnClosePoiMessageRecieved)
             {
                 m_view.InsertClosedCallback(m_closeButtonCallback);
                 m_view.InsertTogglePinnedCallback(m_togglePinnedCallback);
                 m_viewModel.InsertOpenedCallback(m_viewOpenedCallback);
                 m_viewModel.InsertClosedCallback(m_viewClosedCallback);
                 m_messageBus.SubscribeUi(m_imageLoadedHandlerBinding);
+                m_messageBus.SubscribeUi(m_closePoiMessageHandler);
             }
             
             SearchResultPoiController::~SearchResultPoiController()
             {
+                m_messageBus.UnsubscribeUi(m_closePoiMessageHandler);
                 m_messageBus.UnsubscribeUi(m_imageLoadedHandlerBinding);
                 m_viewModel.RemoveClosedCallback(m_viewClosedCallback);
                 m_viewModel.RemoveOpenedCallback(m_viewOpenedCallback);

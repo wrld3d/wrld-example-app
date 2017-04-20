@@ -106,6 +106,8 @@
 
 - (void)updateMenuSections:(ExampleApp::Menu::View::TSections*)sections;
 
+- (void) toggleSection:(int)sectionIndex;
+
 @property (nonatomic, retain) UIButton* pDragTab;
 @property (nonatomic, retain) UIView* pTitleContainer;
 @property (nonatomic, retain) UIView* pMenuContainer;

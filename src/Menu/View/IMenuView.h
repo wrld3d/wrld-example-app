@@ -58,6 +58,8 @@ namespace ExampleApp
 
                 virtual void InsertOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback) = 0;
                 virtual void RemoveOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback) = 0;
+                
+                virtual void ToggleSection(int sectionIndex) = 0;
             };
         }
     }

@@ -10,6 +10,7 @@
 #include "SearchResultModel.h"
 #include "SearchResultPoiViewImageDownloadCompletedMessage.h"
 #include "IMetricsService.h"
+#include "ClosePoiMessage.h"
 
 namespace ExampleApp
 {
@@ -31,6 +32,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<SearchResultPoiController> m_closeButtonCallback;
                 Eegeo::Helpers::TCallback1<SearchResultPoiController, Search::SdkModel::SearchResultModel> m_togglePinnedCallback;
                 Eegeo::Helpers::TCallback1<SearchResultPoiController, const SearchResultPoiViewImageDownloadCompletedMessage&> m_imageLoadedHandlerBinding;
+                Eegeo::Helpers::TCallback1<SearchResultPoiController, const Automation::ClosePoiMessage&> m_closePoiMessageHandler;
 
                 void OnViewClosed();
 
@@ -39,6 +41,8 @@ namespace ExampleApp
                 void OnPinToggledButtonClicked(Search::SdkModel::SearchResultModel& searchResultModel);
                 
                 void OnSearchResultImageLoaded(const SearchResultPoiViewImageDownloadCompletedMessage& message);
+                
+                void OnClosePoiMessageRecieved(const Automation::ClosePoiMessage& message);
 
             protected:
                 ISearchResultPoiView& GetView() { return m_view; }

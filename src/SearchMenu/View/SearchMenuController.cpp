@@ -6,10 +6,12 @@
 #include "IMenuOption.h"
 #include "IModalBackgroundView.h"
 #include "ISearchMenuView.h"
+#include "OpenSearchMenuSectionMessage.h"
 #include "SearchQuery.h"
 #include "SearchResultModel.h"
 #include "SearchResultViewClearedMessage.h"
 #include "SearchQueryResultsRemovedMessage.h"
+#include "SelectMenuItemMessage.h"
 
 namespace ExampleApp
 {
@@ -43,6 +45,8 @@ namespace ExampleApp
             , m_onSearchItemSelectedCallback(this, &SearchMenuController::OnSearchItemSelected)
             , m_onModalBackgroundTappedCallback(this, &SearchMenuController::OnModalBackgroundTapped)
             , m_onOpenSearchMenuHandler(this, &SearchMenuController::OnOpenSearchMenuMessage)
+            , m_menuItemSelectedHandler(this, &SearchMenuController::OnSearchItemSelectedMessage)
+            , m_onOpenSearchMenuSectionHandler(this, &SearchMenuController::OnOpenSearchMenuSectionMessage)
             {
                 m_searchMenuView.InsertSearchPeformedCallback(m_onSearchCallback);
                 m_searchMenuView.InsertSearchClearedCallback(m_onSearchClearedCallback);
@@ -59,6 +63,8 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_receivedQueryResponseHandler);
                 m_messageBus.SubscribeUi(m_receivedQueryResultsRemovedHandler);
                 m_messageBus.SubscribeUi(m_onOpenSearchMenuHandler);
+                m_messageBus.SubscribeUi(m_menuItemSelectedHandler);
+                m_messageBus.SubscribeUi(m_onOpenSearchMenuSectionHandler);
 
                 const size_t numSections = m_viewModel.SectionsCount();
                 std::vector<Menu::View::IMenuSectionViewModel*> sections;
@@ -75,6 +81,8 @@ namespace ExampleApp
             
             SearchMenuController::~SearchMenuController()
             {
+                m_messageBus.UnsubscribeUi(m_onOpenSearchMenuSectionHandler);
+                m_messageBus.UnsubscribeUi(m_menuItemSelectedHandler);
                 m_messageBus.UnsubscribeUi(m_onOpenSearchMenuHandler);
                 m_messageBus.UnsubscribeUi(m_receivedQueryResultsRemovedHandler);
                 m_messageBus.UnsubscribeUi(m_receivedQueryResponseHandler);
@@ -158,6 +166,12 @@ namespace ExampleApp
                 m_searchSectionViewModel.GetItemAtIndex(index).MenuOption().Select();
             }
             
+            void SearchMenuController::OnSearchItemSelectedMessage(const Automation::SelectMenuItemMessage& message)
+            {
+                int menuItem = message.GetMenuItem();
+                OnSearchItemSelected(menuItem);
+            }
+            
             void SearchMenuController::OnModalBackgroundTapped()
             {
                 if(!m_appModeAllowsOpen)
@@ -197,14 +211,29 @@ namespace ExampleApp
                 {
                     if (!IsFullyOpen())
                     {
-                        m_viewModel.Open(false);
+                        m_view.SetFullyOnScreenOpen();
                     }
                 }
                 else
                 {
                     if (IsFullyOpen())
                     {
-                        m_viewModel.Close();
+                        m_view.SetFullyOnScreenClosed();
+                    }
+                }
+            }
+            
+            void SearchMenuController::OnOpenSearchMenuSectionMessage(const Automation::OpenSearchMenuSectionMessage& message)
+            {
+                for (int i = 0; i < m_viewModel.SectionsCount(); ++i)
+                {
+                    Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(i);
+                    const bool shouldOpenSection = message.ShouldOpenMenuSectionMessage(section);
+                    const bool shouldToggle = (shouldOpenSection && !section.IsExpanded()) ||
+                                              (!shouldOpenSection && section.IsExpanded());
+                    if (shouldToggle)
+                    {
+                        m_view.ToggleSection(i);
                     }
                 }
             }

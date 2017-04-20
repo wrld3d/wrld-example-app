@@ -5,14 +5,15 @@
 
 #include "ApplicationConfig.h"
 #include "AutomatedScreenshotController.h"
+#include "CameraTransitionService.h"
 #include "CityThemeLoader.h"
 #include "EegeoWorld.h"
 #include "GlobeCameraController.h"
 #include "ICallback.h"
-#include "ICameraTransitionController.h"
 #include "ICityThemesService.h"
 #include "ICityThemesUpdater.h"
 #include "IFlattenButtonModel.h"
+#include "IMenuSectionViewModel.h"
 #include "InteriorsCameraController.h"
 #include "InteriorsExplorerModel.h"
 #include "InteriorSelectionModel.h"
@@ -22,9 +23,15 @@
 #include "ISearchResultPoiViewModel.h"
 #include "IWeatherController.h"
 #include "OpenSearchMenuMessage.h"
+#include "OpenSearchMenuSectionMessage.h"
 #include "PlaneSimulation.h"
 #include "StreamingController.h"
 #include "TimeHelpers.h"
+#include "AppCameraController.h"
+#include "SelectMenuItemMessage.h"
+#include "WorldPinsModule.h"
+#include "WorldPinsService.h"
+#include "ClosePoiMessage.h"
 
 namespace ExampleApp
 {
@@ -46,8 +53,12 @@ namespace ExampleApp
             const AutomatedScreenshotController::WaitPredicate NoWait([]() { return true; });
             const AutomatedScreenshotController::WaitPredicate WaitMs(const long long msToWait)
             {
-                const long long currentMillis = Eegeo::Helpers::Time::MillisecondsSinceEpoch();
-                return [=]() {
+                long long currentMillis = 0;
+                return [=]() mutable {
+                    if (currentMillis == 0)
+                    {
+                        currentMillis = Eegeo::Helpers::Time::MillisecondsSinceEpoch();
+                    }
                     return Eegeo::Helpers::Time::MillisecondsSinceEpoch() - currentMillis > msToWait;
                 };
             }
@@ -71,7 +82,7 @@ namespace ExampleApp
             {
                 bool p1Done = false;
                 return [=]() mutable {
-                    if (p1Done)
+                    if (!p1Done)
                     {
                         p1Done = p1();
                         return false;
@@ -82,7 +93,6 @@ namespace ExampleApp
                     }
                 };
             }
-
             template <typename P>
             const AutomatedScreenshotController::WaitPredicate Seq(P p)
             {
@@ -94,10 +104,20 @@ namespace ExampleApp
             {
                 return Then(p, Seq(ps...));
             }
+
+            const AutomatedScreenshotController::WaitPredicate WaitForCameraTransition(ExampleApp::CameraTransitions::SdkModel::CameraTransitionService* cameraTransitionService)
+            {
+                return [=]() { return !cameraTransitionService->IsTransitioning(); };
+            }
+
+            bool IsLandscapeLayout(Eegeo::Rendering::ScreenProperties& screenProperties)
+            {
+                return screenProperties.GetScreenWidth() > screenProperties.GetScreenHeight();
+            }
         }
 
         AutomatedScreenshotController::AutomatedScreenshotController(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-                                                                     ExampleApp::CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                                     CameraTransitions::SdkModel::CameraTransitionService& cameraTransitionService,
                                                                      const Eegeo::Camera::GlobeCamera::GlobeCameraController& globeCameraController,
                                                                      Eegeo::Traffic::PlaneSimulation &planeSimulation,
                                                                      ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& placeJumpController,
@@ -111,7 +131,10 @@ namespace ExampleApp
                                                                      Eegeo::Streaming::StreamingController& streamingController,
                                                                      IScreenshotService& screenshotService,
                                                                      Eegeo::EegeoWorld& eegeoWorld,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus)
+                                                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                                                     AppCamera::SdkModel::IAppCameraModule& appCameraModule,
+                                                                     Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                                     ExampleApp::WorldPins::SdkModel::IWorldPinsModule& worldPinsModule)
         : m_planeSimulation(planeSimulation)
         , m_placeJumpController(placeJumpController)
         , m_weatherController(weatherController)
@@ -123,23 +146,20 @@ namespace ExampleApp
         , m_execState(ExecStateStreamingInitialSceneAndManifest)
         , m_sceneIndex(0)
         , m_interiorSelectionModel(interiorSelectionModel)
-        , m_interiorsExplorerModel(interiorsExplorerModel)
         , m_cityThemeLoader(eegeoWorld.GetCityThemesModule().GetCityThemeLoader())
         , m_cityThemesService(eegeoWorld.GetCityThemesModule().GetCityThemesService())
         , m_cityThemesUpdater(eegeoWorld.GetCityThemesModule().GetCityThemesUpdater())
-        , m_globeCameraController(globeCameraController)
         , m_messageBus(messageBus)
+        , m_screenProperties(screenProperties)
+        , m_worldPinsModule(worldPinsModule)
+        , m_cameraTransitionService(cameraTransitionService)
         {
             m_planeSimulation.SetEnabled(false);
         }
 
-        AutomatedScreenshotController::~AutomatedScreenshotController()
-        {
-        }
-
         bool AutomatedScreenshotController::NextScene()
         {
-            if (m_sceneIndex < NumScenes())
+            if (m_sceneIndex < AutomatedScreenshotController::NumScenes)
             {
                 m_waitPredicate = SetupState(m_sceneIndex);
                 m_sceneIndex++;
@@ -151,15 +171,83 @@ namespace ExampleApp
             }
         }
 
-        const std::array<AutomatedScreenshotController::SceneSetupFunction, 4> AutomatedScreenshotController::States() const
+        AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::SharedLandmarkSceneWaitPredicate(const bool openSearchMenu) const
+        {
+            const long long MsToWaitForWatermarkToSettle = 3000;
+            const long long MsToWaitForSearchResultsToReturn = 3000;
+            const long long MsToWaitForSearchMenuToOpen = 2000;
+
+            return Seq(WaitMs(MsToWaitForWatermarkToSettle),
+                       Act([=]() { m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(openSearchMenu)); }),
+                       WaitMs(MsToWaitForSearchMenuToOpen),
+                       Act([=]() {
+                           if (openSearchMenu)
+                           {
+                               m_messageBus.Publish(OpenSearchMenuSectionMessage([=](const Menu::View::IMenuSectionViewModel& section) {
+                                   return openSearchMenu && section.Name() == "Find";
+                               }));
+                           }
+                           else
+                           {
+                               m_searchQueryPerformer.PerformSearchQuery("", true, false);
+                           }
+                       }),
+                       WaitMs(MsToWaitForSearchResultsToReturn));
+        }
+
+        AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::TabletVASceneSetup(bool openSearchMenu) const
+        {
+            const PlaceJumps::View::PlaceJumpModel VA(
+                    "V&A",
+                    Eegeo::Space::LatLong::FromDegrees(51.496819, -0.171966),
+                    14.6f,
+                    953.6f,
+                    "");
+
+            m_placeJumpController.JumpTo(VA);
+
+            return SharedLandmarkSceneWaitPredicate(openSearchMenu);
+        }
+
+        AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::PhoneNYCSceneSetup(bool openSearchMenu) const
+        {
+            static const std::string LightThemesManifestUrlDefault  = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
+            const PlaceJumps::View::PlaceJumpModel NYC(
+                    "NYC",
+                    Eegeo::Space::LatLong::FromDegrees(40.746636, -73.985261),
+                    169.1f,
+                    1456.0f,
+                    "");
+
+            m_placeJumpController.JumpTo(NYC);
+            m_cityThemeLoader.LoadThemes(LightThemesManifestUrlDefault, "Summer", "DayDefault");
+
+            return SharedLandmarkSceneWaitPredicate(openSearchMenu);
+        }
+
+        AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::SelectedPinSceneSetup(const std::string& query, int searchMenuPinIx) const
+        {
+            const long long MsToWaitForSearchResults = 7000;
+            const long long MsToWaitForCameraToTransitionToPoi = 5000;
+            const long long MsWaitForPoiToOpen = 5000;
+
+            m_searchQueryPerformer.PerformSearchQuery(query, false, false);
+            return Seq(WaitMs(MsToWaitForSearchResults),
+                       Act([=]() { m_messageBus.Publish(SelectMenuItemMessage(searchMenuPinIx)); }),
+                       WaitMs(MsToWaitForCameraToTransitionToPoi),
+                       Act([=]() { m_worldPinsModule.GetWorldPinsService().HandleTouchTap({Eegeo::v2(m_screenProperties.GetScreenWidth()/2, m_screenProperties.GetScreenHeight()/2)}); }),
+                       WaitMs(MsWaitForPoiToOpen));
+        }
+
+        const std::array<AutomatedScreenshotController::SceneSetupFunction, AutomatedScreenshotController::NumScenes> AutomatedScreenshotController::States() const
         {
             return {{
                 [this]() {
                     const PlaceJumps::View::PlaceJumpModel London(
                             "London",
-                            Eegeo::Space::LatLong::FromDegrees(51.509471, -0.082125),
-                            155.0f,
-                            2000.0f,
+                            Eegeo::Space::LatLong::FromDegrees(51.512179, -0.080664),
+                            162.2f,
+                            1780.1f,
                             "");
 
                     m_flattenButtonModel.Unflatten();
@@ -167,39 +255,73 @@ namespace ExampleApp
                     m_weatherController.SetTime("Day");
                     m_weatherController.SetTheme("Summer");
 
-                    return WaitMs(10000);
+                    return WaitMs(8000);
                 },
 
                 [this]() {
+                    const long long WaitMsForInteriorToLoad = 4000;
+                    const long long MsToWaitForCameraToEnterInterior = 3000;
                     const Eegeo::Resources::Interiors::InteriorId WestportHouseInteriorId("westport_house");
+                    const Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(56.460108, -2.978094));
+                    const float altitude = 388.7f;
                     const PlaceJumps::View::PlaceJumpModel WestportHouse(
                             "WestportHouse",
-                            Eegeo::Space::LatLong::FromDegrees(56.459905, -2.977996),
-                            335.0f,
-                            500.0f,
+                            location,
+                            312.8f,
+                            altitude,
                             "");
 
                     m_placeJumpController.JumpTo(WestportHouse);
 
-                    return Seq(Act([=]() { m_interiorSelectionModel.SelectInteriorId(WestportHouseInteriorId); }),
-                               WaitMs(1000));
+                    return Seq(WaitMs(WaitMsForInteriorToLoad),
+                               Act([=]() { m_interiorSelectionModel.SelectInteriorId(WestportHouseInteriorId); }),
+                               WaitMs(MsToWaitForCameraToEnterInterior),
+                               Act([=]() {
+                                   m_cameraTransitionService.StartTransitionTo(location.ToECEF(), altitude, WestportHouseInteriorId, 0, true);
+                               }),
+                               WaitForCameraTransition(&m_cameraTransitionService),
+                               WaitMs(2000));
+                },
+
+                [this]() {
+                    return IsLandscapeLayout(m_screenProperties)
+                            ? TabletVASceneSetup(true)
+                            : PhoneNYCSceneSetup(true);
+                },
+
+                [this]() {
+                    return IsLandscapeLayout(m_screenProperties)
+                           ? TabletVASceneSetup(false)
+                           : PhoneNYCSceneSetup(false);
+                },
+                
+                [this]() {
+                    return IsLandscapeLayout(m_screenProperties)
+                           ? SelectedPinSceneSetup("Victoria and Albert Museum", 0)
+                           : SelectedPinSceneSetup("Empire State Building", 0);
                 },
 
                 [this]() {
                     static const std::string LightThemesManifestUrlDefault  = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
+                    const long long MsToWaitForSearchQueryToClear = 3000;
                     const long long MsToWaitForThemeToLoad = 3000;
                     const PlaceJumps::View::PlaceJumpModel SanFran(
                             "SanFran",
-                            Eegeo::Space::LatLong::FromDegrees(37.743676, -122.451021),
-                            0.0f,
-                            3000.0f,
+                            Eegeo::Space::LatLong::FromDegrees(37.742448, -122.446477),
+                            27.2f,
+                            1914.3f,
                             "");
-
+                    
+                    m_messageBus.Publish(ClosePoiMessage());
+                    m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(false));
                     m_placeJumpController.JumpTo(SanFran);
                     m_flattenButtonModel.Unflatten();
                     m_cityThemeLoader.LoadThemes(LightThemesManifestUrlDefault, "Summer", "DayDefault");
 
-                    return Seq(WaitForStreaming(&m_cityThemeLoader),
+                    return Seq(WaitMs(MsToWaitForSearchQueryToClear),
+                               Act([=]() {
+                        m_searchQueryPerformer.RemoveSearchQueryResults(); }),
+                               WaitForStreaming(&m_cityThemeLoader),
                                WaitMs(MsToWaitForThemeToLoad));
                 },
 
@@ -208,9 +330,9 @@ namespace ExampleApp
                     const long long MsToWaitForSearchResultsToClearAndThemeToLoad = 3000;
                     const PlaceJumps::View::PlaceJumpModel LA(
                             "LA",
-                            Eegeo::Space::LatLong::FromDegrees(34.052074, -118.260257),
-                            160.0f,
-                            1000.0f,
+                            Eegeo::Space::LatLong::FromDegrees(34.051624, -118.254724),
+                            187.6f,
+                            1885.8f,
                             "");
 
                     m_placeJumpController.JumpTo(LA);
@@ -223,11 +345,6 @@ namespace ExampleApp
             }};
         }
 
-        const unsigned long AutomatedScreenshotController::NumScenes() const
-        {
-            return States().size();
-        }
-
         std::function<bool()> AutomatedScreenshotController::SetupState(const unsigned long state)
         {
             return States()[state]();
@@ -235,7 +352,7 @@ namespace ExampleApp
 
         bool AutomatedScreenshotController::Done() const
         {
-            return m_sceneIndex == NumScenes();
+            return m_sceneIndex == AutomatedScreenshotController::NumScenes;
         }
 
         void AutomatedScreenshotController::Update(const float dt)

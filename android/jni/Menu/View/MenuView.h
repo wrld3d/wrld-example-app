@@ -116,6 +116,8 @@ namespace ExampleApp
                 virtual void HandleItemSelected(int sectionIndex, int itemIndex);
 
                 bool CallBeginDrag();
+
+                void ToggleSection(int sectionIndex);
             };
         }
     }
