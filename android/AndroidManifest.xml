@@ -33,7 +33,7 @@
 
     
 
-    <application android:icon="@mipmap/icon" android:label="WRLD App" android:theme="@android:style/Theme.NoTitleBar">
+    <application android:icon="@mipmap/icon" android:label="WRLD" android:theme="@android:style/Theme.NoTitleBar">
        
         <activity android:name="com.eegeo.mobileexampleapp.BackgroundThreadActivity"
                   android:label="WRLD"
