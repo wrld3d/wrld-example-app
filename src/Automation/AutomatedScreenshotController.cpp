@@ -13,6 +13,7 @@
 #include "ICityThemesService.h"
 #include "ICityThemesUpdater.h"
 #include "IFlattenButtonModel.h"
+#include "IMenuSectionViewModel.h"
 #include "InteriorsCameraController.h"
 #include "InteriorsExplorerModel.h"
 #include "InteriorSelectionModel.h"
@@ -22,6 +23,7 @@
 #include "ISearchResultPoiViewModel.h"
 #include "IWeatherController.h"
 #include "OpenSearchMenuMessage.h"
+#include "OpenSearchMenuSectionMessage.h"
 #include "PlaneSimulation.h"
 #include "StreamingController.h"
 #include "TimeHelpers.h"
@@ -172,7 +174,7 @@ namespace ExampleApp
         AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::TabletVASceneSetup(bool openSearchMenu) const
         {
             const long long MsToWaitForSearchResultsToReturn = 3000;
-            const long long MsToWaitForSearchMenuToOpen = 5000;
+            const long long MsToWaitForSearchMenuToOpen = 2000;
             const PlaceJumps::View::PlaceJumpModel VA(
                     "V&A",
                     Eegeo::Space::LatLong::FromDegrees(51.496819, -0.171966),
@@ -181,18 +183,22 @@ namespace ExampleApp
                     "");
 
             m_placeJumpController.JumpTo(VA);
-            m_searchQueryPerformer.PerformSearchQuery("", true, false);
+            m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(openSearchMenu));
 
-            return Seq(WaitMs(MsToWaitForSearchResultsToReturn),
-                       Act([=]() { m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(openSearchMenu)); }),
-                       WaitMs(MsToWaitForSearchMenuToOpen));
+            return Seq(WaitMs(MsToWaitForSearchMenuToOpen),
+                       Act([=]() {
+                           m_messageBus.Publish(OpenSearchMenuSectionMessage([=](const Menu::View::IMenuSectionViewModel& section) {
+                               return openSearchMenu && section.Name() == "Find";
+                           }));
+                       }),
+                       WaitMs(MsToWaitForSearchResultsToReturn));
         }
 
         AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::PhoneNYCSceneSetup(bool openSearchMenu) const
         {
             static const std::string LightThemesManifestUrlDefault  = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
             const long long MsToWaitForSearchResultsToReturn = 3000;
-            const long long MsToWaitForSearchMenuToOpen = 5000;
+            const long long MsToWaitForSearchMenuToOpen = 2000;
             const PlaceJumps::View::PlaceJumpModel NYC(
                     "NYC",
                     Eegeo::Space::LatLong::FromDegrees(40.746636, -73.985261),
@@ -201,21 +207,23 @@ namespace ExampleApp
                     "");
 
             m_placeJumpController.JumpTo(NYC);
-            m_searchQueryPerformer.PerformSearchQuery("", true, false);
+            m_messageBus.Publish(OpenSearchMenuSectionMessage([=](const Menu::View::IMenuSectionViewModel& section) {
+                return openSearchMenu && section.Name() == "Find";
+            }));
             m_cityThemeLoader.LoadThemes(LightThemesManifestUrlDefault, "Summer", "DayDefault");
 
-            return Seq(WaitMs(MsToWaitForSearchResultsToReturn),
-                       Act([=]() { m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(openSearchMenu)); }),
-                       WaitMs(MsToWaitForSearchMenuToOpen));
+            return Seq(WaitMs(MsToWaitForSearchMenuToOpen),
+                       Act([=]() { m_searchQueryPerformer.PerformSearchQuery("", true, false); }),
+                       WaitMs(MsToWaitForSearchResultsToReturn));
         }
 
         AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::SelectedPinSceneSetup(const std::string& query, int searchMenuPinIx) const
         {
-            m_searchQueryPerformer.PerformSearchQuery(query, false, false);
             const long long MsToWaitForSearchResults = 7000;
             const long long MsToWaitForCameraToTransitionToPoi = 5000;
             const long long MsWaitForPoiToOpen = 5000;
 
+            m_searchQueryPerformer.PerformSearchQuery(query, false, false);
             return Seq(WaitMs(MsToWaitForSearchResults),
                        Act([=]() { m_messageBus.Publish(SelectMenuItemMessage(searchMenuPinIx)); }),
                        WaitMs(MsToWaitForCameraToTransitionToPoi),
@@ -260,7 +268,9 @@ namespace ExampleApp
                     return Seq(WaitMs(WaitMsForInteriorToLoad),
                                Act([=]() { m_interiorSelectionModel.SelectInteriorId(WestportHouseInteriorId); }),
                                WaitMs(MsToWaitForCameraToEnterInterior),
-                               Act([=]() { m_cameraTransitionService.StartTransitionTo(location.ToECEF(), altitude, WestportHouseInteriorId, 0, true); }),
+                               Act([=]() {
+                                   m_cameraTransitionService.StartTransitionTo(location.ToECEF(), altitude, WestportHouseInteriorId, 0, true);
+                               }),
                                WaitForCameraTransition(&m_cameraTransitionService),
                                WaitMs(2000));
                 },
@@ -284,8 +294,8 @@ namespace ExampleApp
                 },
 
                 [this]() {
-                    m_messageBus.Publish(ClosePoiMessage());
                     static const std::string LightThemesManifestUrlDefault  = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
+                    const long long MsToWaitForSearchQueryToClear = 3000;
                     const long long MsToWaitForThemeToLoad = 3000;
                     const PlaceJumps::View::PlaceJumpModel SanFran(
                             "SanFran",
@@ -293,14 +303,17 @@ namespace ExampleApp
                             27.2f,
                             1914.3f,
                             "");
-
+                    
+                    m_messageBus.Publish(ClosePoiMessage());
                     m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(false));
-                    m_searchQueryPerformer.RemoveSearchQueryResults();
                     m_placeJumpController.JumpTo(SanFran);
                     m_flattenButtonModel.Unflatten();
                     m_cityThemeLoader.LoadThemes(LightThemesManifestUrlDefault, "Summer", "DayDefault");
 
-                    return Seq(WaitForStreaming(&m_cityThemeLoader),
+                    return Seq(WaitMs(MsToWaitForSearchQueryToClear),
+                               Act([=]() {
+                        m_searchQueryPerformer.RemoveSearchQueryResults(); }),
+                               WaitForStreaming(&m_cityThemeLoader),
                                WaitMs(MsToWaitForThemeToLoad));
                 },
 
