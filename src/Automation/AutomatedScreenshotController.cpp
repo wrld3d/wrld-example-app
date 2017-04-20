@@ -181,9 +181,16 @@ namespace ExampleApp
                        Act([=]() { m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(openSearchMenu)); }),
                        WaitMs(MsToWaitForSearchMenuToOpen),
                        Act([=]() {
-                           m_messageBus.Publish(OpenSearchMenuSectionMessage([=](const Menu::View::IMenuSectionViewModel& section) {
-                               return openSearchMenu && section.Name() == "Find";
-                           }));
+                           if (openSearchMenu)
+                           {
+                               m_messageBus.Publish(OpenSearchMenuSectionMessage([=](const Menu::View::IMenuSectionViewModel& section) {
+                                   return openSearchMenu && section.Name() == "Find";
+                               }));
+                           }
+                           else
+                           {
+                               m_searchQueryPerformer.PerformSearchQuery("", true, false);
+                           }
                        }),
                        WaitMs(MsToWaitForSearchResultsToReturn));
         }
