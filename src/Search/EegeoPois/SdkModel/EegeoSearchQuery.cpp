@@ -33,6 +33,7 @@ namespace ExampleApp
                 {
                     float minimumScore = 0.25;
                     const int maximumNumberOfResults = 60;
+                    float radius = query.Radius() * 1.5f;
 
                     std::string encodedQuery;
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
@@ -50,8 +51,9 @@ namespace ExampleApp
                     }
                     else
                     {
+                        radius = 0.0f;
+                        minimumScore = 0.4f;
                         urlstream << "/search?s=" << encodedQuery << "&";
-                        minimumScore = 0.6;
                     }
 
                     if (interiorId.IsValid())
@@ -60,7 +62,7 @@ namespace ExampleApp
                                   << "f=" << interiorFloorIndex << "&";
                     }
 
-                    urlstream << "r=" << std::setprecision(4) << (query.Radius() * 1.5f);
+                    urlstream << "r=" << std::setprecision(4) << (radius);
                     urlstream << "&lat=" << std::setprecision(8) << query.Location().GetLatitudeInDegrees();
                     urlstream << "&lon=" << std::setprecision(8) << query.Location().GetLongitudeInDegrees();
                     urlstream << "&n=" << maximumNumberOfResults;
