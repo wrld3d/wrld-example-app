@@ -256,9 +256,11 @@ namespace ExampleApp
                 
                 bool InteriorsHighlightVisibilityController::HideLabelByNamePredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const
                 {
-                    const std::string& labelEntityName = anchoredLabel.GetEntityName();
-                    bool shouldHide = labelEntityName != "Escalator" && labelEntityName != "Stairs" && labelEntityName != "Elevator" && labelEntityName != "Toilets";
-  
+                    const std::string& labelCategoryName = anchoredLabel.GetLabelAnchorCategory().GetId();
+                    bool shouldHide =  labelCategoryName != "interior_facility_escalator"
+                                    && labelCategoryName != "interior_facility_stairs"
+                                    && labelCategoryName != "interior_facility_elevator"
+                                    && labelCategoryName != "interior_facility_toilets";
                     return shouldHide;
                 }
             }
