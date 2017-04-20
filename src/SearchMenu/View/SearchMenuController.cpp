@@ -211,14 +211,14 @@ namespace ExampleApp
                 {
                     if (!IsFullyOpen())
                     {
-                        m_viewModel.Open(false);
+                        m_view.SetFullyOnScreenOpen();
                     }
                 }
                 else
                 {
                     if (IsFullyOpen())
                     {
-                        m_viewModel.Close();
+                        m_view.SetFullyOnScreenClosed();
                     }
                 }
             }

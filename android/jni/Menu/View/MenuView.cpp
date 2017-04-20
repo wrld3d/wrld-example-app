@@ -355,6 +355,16 @@ namespace ExampleApp
             {
                 // This is already handled in the Java-side View on Android
             }
+
+            void MenuView::ToggleSection(int sectionIndex)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+                jmethodID toggleSection = env->GetMethodID(m_uiViewClass, "toggleSection", "(I)V");
+                env->CallVoidMethod(m_uiView, toggleSection, sectionIndex);
+            }
         }
     }
 }

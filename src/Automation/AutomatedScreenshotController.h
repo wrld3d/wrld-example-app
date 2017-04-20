@@ -67,6 +67,7 @@ namespace ExampleApp
             std::function<bool()> SetupState(const unsigned long state);
             bool Done() const;
 
+            WaitPredicate SharedLandmarkSceneWaitPredicate(const bool openSearchMenu) const;
             WaitPredicate TabletVASceneSetup(bool openSearchMenu) const;
             WaitPredicate PhoneNYCSceneSetup(bool openSearchMenu) const;
             WaitPredicate SelectedPinSceneSetup(const std::string& query, int searchMenuPinIx) const;

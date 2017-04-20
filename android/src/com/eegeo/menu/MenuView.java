@@ -286,4 +286,9 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
 	{
         m_list.setVisibility(View.VISIBLE);
 	}
+
+	public void toggleSection(int sectionIndex)
+    {
+        m_list.expandGroup(sectionIndex);
+    }
 }

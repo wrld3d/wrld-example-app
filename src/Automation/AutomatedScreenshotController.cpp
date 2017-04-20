@@ -171,21 +171,15 @@ namespace ExampleApp
             }
         }
 
-        AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::TabletVASceneSetup(bool openSearchMenu) const
+        AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::SharedLandmarkSceneWaitPredicate(const bool openSearchMenu) const
         {
+            const long long MsToWaitForWatermarkToSettle = 3000;
             const long long MsToWaitForSearchResultsToReturn = 3000;
             const long long MsToWaitForSearchMenuToOpen = 2000;
-            const PlaceJumps::View::PlaceJumpModel VA(
-                    "V&A",
-                    Eegeo::Space::LatLong::FromDegrees(51.496819, -0.171966),
-                    14.6f,
-                    953.6f,
-                    "");
 
-            m_placeJumpController.JumpTo(VA);
-            m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(openSearchMenu));
-
-            return Seq(WaitMs(MsToWaitForSearchMenuToOpen),
+            return Seq(WaitMs(MsToWaitForWatermarkToSettle),
+                       Act([=]() { m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(openSearchMenu)); }),
+                       WaitMs(MsToWaitForSearchMenuToOpen),
                        Act([=]() {
                            m_messageBus.Publish(OpenSearchMenuSectionMessage([=](const Menu::View::IMenuSectionViewModel& section) {
                                return openSearchMenu && section.Name() == "Find";
@@ -194,11 +188,23 @@ namespace ExampleApp
                        WaitMs(MsToWaitForSearchResultsToReturn));
         }
 
+        AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::TabletVASceneSetup(bool openSearchMenu) const
+        {
+            const PlaceJumps::View::PlaceJumpModel VA(
+                    "V&A",
+                    Eegeo::Space::LatLong::FromDegrees(51.496819, -0.171966),
+                    14.6f,
+                    953.6f,
+                    "");
+
+            m_placeJumpController.JumpTo(VA);
+
+            return SharedLandmarkSceneWaitPredicate(openSearchMenu);
+        }
+
         AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::PhoneNYCSceneSetup(bool openSearchMenu) const
         {
             static const std::string LightThemesManifestUrlDefault  = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
-            const long long MsToWaitForSearchResultsToReturn = 3000;
-            const long long MsToWaitForSearchMenuToOpen = 2000;
             const PlaceJumps::View::PlaceJumpModel NYC(
                     "NYC",
                     Eegeo::Space::LatLong::FromDegrees(40.746636, -73.985261),
@@ -207,14 +213,9 @@ namespace ExampleApp
                     "");
 
             m_placeJumpController.JumpTo(NYC);
-            m_messageBus.Publish(OpenSearchMenuSectionMessage([=](const Menu::View::IMenuSectionViewModel& section) {
-                return openSearchMenu && section.Name() == "Find";
-            }));
             m_cityThemeLoader.LoadThemes(LightThemesManifestUrlDefault, "Summer", "DayDefault");
 
-            return Seq(WaitMs(MsToWaitForSearchMenuToOpen),
-                       Act([=]() { m_searchQueryPerformer.PerformSearchQuery("", true, false); }),
-                       WaitMs(MsToWaitForSearchResultsToReturn));
+            return SharedLandmarkSceneWaitPredicate(openSearchMenu);
         }
 
         AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::SelectedPinSceneSetup(const std::string& query, int searchMenuPinIx) const
