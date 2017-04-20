@@ -208,6 +208,11 @@ namespace ExampleApp
                 {
                     return false;
                 }
+
+                void ToggleSection(int sectionIndex)
+                {
+                    [m_pView toggleSection:sectionIndex];
+                }
             };
         }
     }

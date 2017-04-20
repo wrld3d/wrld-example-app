@@ -13,6 +13,7 @@ set(currsources
   ../src/Automation/ClosePoiMessage.h
   ../src/Automation/SelectMenuItemMessage.cpp
   ../src/Automation/SelectMenuItemMessage.h
+  ../src/Automation/OpenSearchMenuSectionMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Automation FILES ${currsources})
