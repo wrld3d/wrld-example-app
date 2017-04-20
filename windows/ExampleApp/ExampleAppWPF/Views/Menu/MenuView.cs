@@ -343,5 +343,10 @@ namespace ExampleAppWPF
         {
             return m_openState == MENU_OPEN;
         }
+
+        public void ToggleSection(int sectionIndex)
+        {
+            throw new NotImplementedException("ToggleSection not yet implemented on windows!");
+        }
     }
 }

@@ -39,6 +39,7 @@ namespace ExampleApp
                 AnimateToOpenOnScreen.SetupMethod(m_uiViewClass, m_uiView, "AnimateToOpenOnScreen");
                 AnimateOffScreen.SetupMethod(m_uiViewClass, m_uiView, "AnimateOffScreen");
                 AnimateToIntermediateOnScreenState.SetupMethod(m_uiViewClass, m_uiView, "AnimateToIntermediateOnScreenState");
+                mToggleSection.SetupMethod(m_uiViewClass, m_uiView, "ToggleSection");
             }
 
             MenuView::~MenuView()
@@ -252,6 +253,11 @@ namespace ExampleApp
             void MenuView::SetCanInteract(bool canInteract)
             {
                 // This is already handled in the Java-side View on Android
+            }
+
+            void MenuView::ToggleSection(int sectionIndex)
+            {
+                mToggleSection(sectionIndex);
             }
         }
     }
