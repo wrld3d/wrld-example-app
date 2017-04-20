@@ -53,6 +53,7 @@ namespace ExampleApp
                     , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
                     , m_interiorLabelsBuiltHandler(this, &InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt)
                     , m_hideLabelAlwaysFilter(this, &InteriorsHighlightVisibilityController::HideLabelAlwaysPredicate)
+                    , m_hideLabelByNameFilter(this, &InteriorsHighlightVisibilityController::HideLabelByNamePredicate)
                 {
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
@@ -94,7 +95,7 @@ namespace ExampleApp
 
                 void InteriorsHighlightVisibilityController::ActivateLabels(bool active)
                 {
-                    m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, active ? NULL : &m_hideLabelAlwaysFilter);
+                    m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, active ? NULL : &m_hideLabelByNameFilter);
                 }
 
 
@@ -251,6 +252,14 @@ namespace ExampleApp
                 bool InteriorsHighlightVisibilityController::HideLabelAlwaysPredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const
                 {
                     return true;
+                }
+                
+                bool InteriorsHighlightVisibilityController::HideLabelByNamePredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const
+                {
+                    const std::string& labelEntityName = anchoredLabel.GetEntityName();
+                    bool shouldHide = labelEntityName != "Escalator" && labelEntityName != "Stairs" && labelEntityName != "Elevator" && labelEntityName != "Toilets";
+  
+                    return shouldHide;
                 }
             }
         }
