@@ -4,7 +4,7 @@
 
 # WRLD Example App
 
-![eeGeo](images/screenselection01.png)
+![WRLD](http://cdn2.eegeo.com/wp-content/uploads/2017/04/screenselection01.png)
 
 * [Support](#support)
 * [Getting Started](#getting-started)
