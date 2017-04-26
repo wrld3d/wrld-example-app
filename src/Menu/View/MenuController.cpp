@@ -152,11 +152,6 @@ namespace ExampleApp
                 {
                     m_viewModel.Open();
                 }
-
-                if(m_viewModel.HasReactorControl())
-                {
-                    m_viewModel.ReleaseReactorControl();
-                }
             }
 
             void MenuController::OnViewClosed()
