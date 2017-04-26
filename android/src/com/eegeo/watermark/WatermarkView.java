@@ -258,46 +258,35 @@ public class WatermarkView implements View.OnClickListener
     {
         final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
 
+        final float screenWidth = uiRoot.getWidth();
         final float screenHeight = uiRoot.getHeight();
-        final float viewHeight = m_view.getHeight();
+        final float watermarkHeight = m_currentBackgroundDrawable.getIntrinsicHeight();
+        final float watermarkWidth  = m_currentBackgroundDrawable.getIntrinsicWidth();
 
         if (m_activity.getResources().getBoolean(R.bool.isPhone))
         {
             if (m_alignAlongBottom)
             {
-                m_yPosActive = (screenHeight - viewHeight) - m_activity.dipAsPx(8);
-                m_yPosInactive = (screenHeight + viewHeight);
+                m_yPosActive = (screenHeight - watermarkHeight) - m_activity.dipAsPx(8);
+                m_yPosInactive = (screenHeight + watermarkHeight);
             }
             else
             {
-                if (m_alignBelowFloorDisplay)
-                {
-                    m_yPosActive = viewHeight + m_activity.dipAsPx(40);
-                }
-                else
-                {
-                    m_yPosActive = m_activity.dipAsPx(20);
-                }
+                m_yPosActive = m_alignBelowFloorDisplay
+                  ? watermarkHeight + m_activity.dipAsPx(40)
+                  : m_activity.dipAsPx(20);
 
-                m_yPosInactive = (-viewHeight);
+                m_yPosInactive = -watermarkHeight;
             }
         }
         else
         {
-            m_yPosActive = (screenHeight - viewHeight) - m_activity.dipAsPx(8);
-            m_yPosInactive = (screenHeight + viewHeight);
+            m_yPosActive = (screenHeight - watermarkHeight) - m_activity.dipAsPx(8);
+            m_yPosInactive = (screenHeight + watermarkHeight);
         }
 
-        refreshXPositionForDrawable(uiRoot, m_currentBackgroundDrawable);
-    }
-
-    private void refreshXPositionForDrawable(final RelativeLayout uiRoot, final Drawable newWatermark)
-    {
-        final float screenWidth = uiRoot.getWidth();
-        final float viewWidth = newWatermark.getIntrinsicWidth();
-
         m_view.setX(m_activity.getResources().getBoolean(R.bool.isPhone)
-          ? screenWidth * 0.5f - viewWidth * 0.5f
+          ? screenWidth * 0.5f - watermarkWidth * 0.5f
           : m_activity.dipAsPx(20));
     }
 }
