@@ -77,7 +77,6 @@ namespace ExampleApp
                 {
                     m_openState = 1.f;
                     m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
-                    ReleaseReactorControl();
 
                     {
                         const bool acquiredOpenableControl = TryAcquireOpenableControl();
