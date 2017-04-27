@@ -13,6 +13,8 @@
 const float BOUNDS_OCCUPY_MULTIPLIER = 0.9f;
 const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.5f;
 
+const float FOOTER_HEIGHT = 64.f;
+
 @implementation MyPinCreationDetailsView
 
 - (id)initWithParams:(float)width :(float)height :(UIViewController*) rootViewController
@@ -215,7 +217,7 @@ const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.
 - (void) layoutBody
 {
     const float bodyContainerY = m_yCursor;
-    const float bodyContainerHeight = m_controlContainerHeight - static_cast<float>(self.pTitleContainer.frame.size.height) - static_cast<float>(self.pFooterContainer.frame.size.height);
+    const float bodyContainerHeight = m_controlContainerHeight - static_cast<float>(self.pTitleContainer.frame.size.height) - FOOTER_HEIGHT;
 
     self.pBodyContainer.frame = CGRectMake(0, bodyContainerY, m_controlContainerWidth, bodyContainerHeight);
     self.pBodyContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
@@ -295,10 +297,9 @@ const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.
 - (void) layoutFooter
 {
     const float footerY = m_yCursor;
-    const float footerHeight = 64.f;
     const float footerWidth = m_controlContainerWidth;
 
-    self.pFooterContainer.frame = CGRectMake(0, footerY - footerHeight/2 + m_scrollBoxPadding, footerWidth, footerHeight);
+    self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, FOOTER_HEIGHT);
     self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
 
     const int numberOfButtons = 4;
