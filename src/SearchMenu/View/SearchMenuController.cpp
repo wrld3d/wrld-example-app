@@ -190,9 +190,9 @@ namespace ExampleApp
                 }
             }
             
-            void SearchMenuController::RefreshPresentation()
+            void SearchMenuController::RefreshPresentation(bool forceRefresh)
             {
-                MenuController::RefreshPresentation();
+                MenuController::RefreshPresentation(forceRefresh);
                 
                 if(!m_viewModel.IsFullyClosed())
                 {
