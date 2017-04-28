@@ -29,12 +29,10 @@ namespace ExampleApp
                 private:
                     SwallowSearchTransitionPinController* m_pSwallowSearchTransitionPinController;
                     SwallowOfficeResultMenuOptionSelectedMessageHandler* m_pSwallowOfficeResultMenuOptionSelectedMessageHandler;
-                    Search::SdkModel::ISearchService& m_searchService;
-                    Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
+                    Search::SdkModel::ISearchService& m_transitionPoiSearchService;
                     Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
 
                     bool m_hasPerformedFirstSearch;
-                    bool m_clearSearchNextUpdate;
                     bool m_hasTransitionPoiResults;
                     
                     Eegeo::Helpers::TCallback2<SwallowSearchServiceModule, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_handleSearchServiceReceivedQueryResults;
@@ -47,8 +45,7 @@ namespace ExampleApp
                     void PerformTransitionPoiSearch();
 
                 public:
-                    SwallowSearchServiceModule(Search::SdkModel::ISearchService& searchService,
-                                               Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                    SwallowSearchServiceModule(Search::SdkModel::ISearchService& transitionPoiSearchService,
                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                ExampleAppMessaging::TMessageBus& messageBus,

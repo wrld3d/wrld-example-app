@@ -605,10 +605,12 @@ namespace ExampleApp
         }
         
         const bool useEegeoPois = true;
+        const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "swallow_search_tags.json");
+        const auto& handledTags = Search::Swallow::SearchConstants::GetAllTags();
+        
         if(useEegeoPois)
         {
-            const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "swallow_search_tags.json");
-            const auto& handledTags = Search::Swallow::SearchConstants::GetAllTags();
+            
             m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                                m_networkCapabilities,
@@ -619,6 +621,16 @@ namespace ExampleApp
                                                                                                                                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                                                                                m_persistentSettings);
         }
+        
+        m_pTransitionPoiSearchServiceModule = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                               m_platformAbstractions.GetUrlEncoder(),
+                                                                                                               m_networkCapabilities,
+                                                                                                               searchTags,
+                                                                                                               handledTags,
+                                                                                                               m_applicationConfiguration.EegeoSearchServiceUrl(),
+                                                                                                               m_applicationConfiguration.EegeoApiKey(),
+                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                                                               m_persistentSettings);
 
         const bool useYelpSearch = true;
         if (useYelpSearch)
@@ -645,8 +657,7 @@ namespace ExampleApp
                                                                     m_messageBus,
                                                                     m_sdkDomainEventBus);
         
-        m_pSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pSearchServiceModule->GetSearchService(),
-                                                                                                         m_pSearchModule->GetSearchQueryPerformer(),
+        m_pSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pTransitionPoiSearchServiceModule->GetSearchService(),
                                                                                                          *m_pCameraTransitionService,
                                                                                                          m_pAppCameraModule->GetController(),
                                                                                                          m_messageBus,
@@ -1026,6 +1037,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pSearchModule;
         
         Eegeo_DELETE m_pSwallowSearchServiceModule;
+
+        Eegeo_DELETE m_pTransitionPoiSearchServiceModule;
         
         for(std::map<std::string, ExampleApp::Search::SdkModel::ISearchServiceModule*>::iterator it = m_searchServiceModules.begin(); it != m_searchServiceModules.end(); ++it)
         {

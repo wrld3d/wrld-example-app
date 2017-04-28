@@ -162,6 +162,7 @@ namespace ExampleApp
         Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
         Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
+        Search::SdkModel::ISearchServiceModule* m_pTransitionPoiSearchServiceModule;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         Eegeo::Modules::SQLiteModule* m_pSQLiteModule;
