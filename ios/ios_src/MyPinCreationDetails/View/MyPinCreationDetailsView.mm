@@ -13,6 +13,8 @@
 const float BOUNDS_OCCUPY_MULTIPLIER = 0.9f;
 const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.5f;
 
+const float FOOTER_HEIGHT = 64.f;
+
 @implementation MyPinCreationDetailsView
 
 - (id)initWithParams:(float)width :(float)height :(UIViewController*) rootViewController
@@ -31,6 +33,7 @@ const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.
         m_controlContainerHeight = 0.f;
         m_controlContainerWidth = 0.f;
         m_yCursor = 0.f;
+        m_scrollBoxPadding = 5.f;
 
         m_pImageDataBytes = NULL;
         m_imageSize = 0;
@@ -214,7 +217,7 @@ const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.
 - (void) layoutBody
 {
     const float bodyContainerY = m_yCursor;
-    const float bodyContainerHeight = m_controlContainerHeight - static_cast<float>(self.pTitleContainer.frame.size.height) - static_cast<float>(self.pFooterContainer.frame.size.height);
+    const float bodyContainerHeight = m_controlContainerHeight - static_cast<float>(self.pTitleContainer.frame.size.height) - FOOTER_HEIGHT;
 
     self.pBodyContainer.frame = CGRectMake(0, bodyContainerY, m_controlContainerWidth, bodyContainerHeight);
     self.pBodyContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
@@ -250,8 +253,7 @@ const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.
     [self.pTermsLabel setUserInteractionEnabled:YES];
     [self.pTermsLabel addGestureRecognizer:urlTappedGesture];
 
-    const float scrollBoxPadding = 5.f;
-    const float scrollViewY = shareBarY + checkboxSize + scrollBoxPadding;
+    const float scrollViewY = shareBarY + checkboxSize + m_scrollBoxPadding;
     self.pBodyScrollView.frame = CGRectMake(0, scrollViewY, m_controlContainerWidth, bodyContainerHeight);
 
     const float poiDescriptionBoxX = 12.f;
@@ -295,10 +297,9 @@ const float CARD_TOP_MARGINS_MULTIPLIER = (1.0f - BOUNDS_OCCUPY_MULTIPLIER) * 0.
 - (void) layoutFooter
 {
     const float footerY = m_yCursor;
-    const float footerHeight = 64.f;
     const float footerWidth = m_controlContainerWidth;
 
-    self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, footerHeight);
+    self.pFooterContainer.frame = CGRectMake(0, footerY, footerWidth, FOOTER_HEIGHT);
     self.pFooterContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
 
     const int numberOfButtons = 4;
