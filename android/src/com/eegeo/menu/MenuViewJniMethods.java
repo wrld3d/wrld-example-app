@@ -6,6 +6,8 @@ public class MenuViewJniMethods
 {
     public static native void ViewClicked(long nativeCallerPointer);
 
+    public static native void ViewOpenStarted(long nativeCallerPointer);
+
     public static native void ViewOpenCompleted(long nativeCallerPointer);
 
     public static native void ViewCloseCompleted(long nativeCallerPointer);

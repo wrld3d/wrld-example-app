@@ -141,14 +141,15 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     	m_menuAnimationHandler.playToOpenOnScreen();
     	
     	m_menuState = MenuState.OPEN_ON_SCREEN;
-    	
+
+
     	Handler openHandler = new Handler();
     	openHandler.postDelayed(new Runnable()
     	{
 			@Override
 			public void run()
 			{
-				MenuViewJniMethods.ViewOpenCompleted(m_nativeCallerPointer);
+				MenuViewJniMethods.ViewOpenStarted(m_nativeCallerPointer);
 			}
 		}, 1);
     }

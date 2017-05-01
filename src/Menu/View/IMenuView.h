@@ -44,6 +44,9 @@ namespace ExampleApp
                 virtual void InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback) = 0;
 
+                virtual void InsertOnViewOpenStarted(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveOnViewOpenStarted(Eegeo::Helpers::ICallback0& callback) = 0;
+
                 virtual void InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback) = 0;
 

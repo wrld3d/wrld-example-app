@@ -245,6 +245,20 @@ namespace ExampleApp
                 m_onViewOpenedCallbacks.RemoveCallback(callback);
             }
 
+            void MenuView::InsertOnViewOpenStarted(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_onViewOpenStartedCallbacks.AddCallback(callback);
+            }
+
+            void MenuView::RemoveOnViewOpenStarted(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_onViewOpenedCallbacks.RemoveCallback(callback);
+            }
+
             void MenuView::InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
@@ -315,6 +329,13 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_onViewOpenedCallbacks.ExecuteCallbacks();
+            }
+
+            void MenuView::HandleViewOpenStarted()
+            {
+                ASSERT_UI_THREAD
+
+                m_onViewOpenStartedCallbacks.ExecuteCallbacks();
             }
 
             void MenuView::HandleViewCloseCompleted()

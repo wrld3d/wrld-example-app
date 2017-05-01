@@ -153,14 +153,17 @@ namespace ExampleApp
                     m_viewModel.Open();
                 }
 
-                if(m_viewModel.HasReactorControl() && m_openedCounter >= 1)
+                if(m_viewModel.HasReactorControl())
                 {
                     m_viewModel.ReleaseReactorControl();
-                    m_openedCounter = 0;
                 }
-                else
+            }
+
+            void MenuController::OnViewOpenStarted()
+            {
+                if(!m_viewModel.IsFullyOpen())
                 {
-                    m_openedCounter++;
+                    m_viewModel.Open();
                 }
             }
 
@@ -310,6 +313,7 @@ namespace ExampleApp
                 , m_view(view)
                 , m_onClickedCallback(this, &MenuController::OnViewClicked)
                 , m_onViewOpenedCallback(this, &MenuController::OnViewOpened)
+                , m_onViewOpenStartedCallback(this, &MenuController::OnViewOpenStarted)
                 , m_onViewClosedCallback(this, &MenuController::OnViewClosed)
                 , m_onDragStartedCallback(this, &MenuController::OnDragStarted)
                 , m_onDragCallback(this, &MenuController::OnDrag)
@@ -326,7 +330,6 @@ namespace ExampleApp
                 , m_dragInProgress(false)
                 , m_presentationDirty(false)
                 , m_menuContentsChanged(true)
-                , m_openedCounter(0)
             {
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
@@ -336,6 +339,7 @@ namespace ExampleApp
                 m_view.InsertOnItemSelected(m_onItemSelectedCallback);
                 m_view.InsertOnViewClicked(m_onClickedCallback);
                 m_view.InsertOnViewClosed(m_onViewClosedCallback);
+                m_view.InsertOnViewOpenStarted(m_onViewOpenStartedCallback);
                 m_view.InsertOnViewOpened(m_onViewOpenedCallback);
                 m_view.SetTryDragFunc(m_tryDragFunc);
 
@@ -374,6 +378,7 @@ namespace ExampleApp
                 
                 m_view.ClearTryDragFunc();
                 m_view.RemoveOnViewOpened(m_onViewOpenedCallback);
+                m_view.RemoveOnViewOpenStarted(m_onViewOpenStartedCallback);
                 m_view.RemoveOnViewClosed(m_onViewClosedCallback);
                 m_view.RemoveOnViewClicked(m_onClickedCallback);
                 m_view.RemoveOnItemSelected(m_onItemSelectedCallback);

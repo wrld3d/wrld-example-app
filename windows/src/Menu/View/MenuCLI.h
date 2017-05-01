@@ -13,6 +13,9 @@ namespace ExampleApp
         static void ViewOpenCompleted(
             System::IntPtr^ nativeObjectPtr);
 
+        static void ViewOpenStarted(
+            System::IntPtr^ nativeObjectPtr);
+
         static void ViewCloseCompleted(
             System::IntPtr^ nativeObjectPtr);
 
