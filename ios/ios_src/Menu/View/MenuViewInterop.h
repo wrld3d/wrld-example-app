@@ -20,6 +20,7 @@ namespace ExampleApp
                 MenuView* m_pView;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_onViewOpenStartedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
                 Eegeo::Helpers::CallbackCollection2<int, int> m_onItemSelectedCallbacks;
 
@@ -118,6 +119,16 @@ namespace ExampleApp
                 {
                     m_onViewOpenedCallbacks.RemoveCallback(callback);
                 }
+                
+                void InsertOnViewOpenStarted(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_onViewOpenStartedCallbacks.AddCallback(callback);
+                }
+                
+                void RemoveOnViewOpenStarted(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_onViewOpenStartedCallbacks.RemoveCallback(callback);
+                }
 
                 void InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback)
                 {
@@ -177,6 +188,11 @@ namespace ExampleApp
                 void HandleViewOpenCompleted()
                 {
                     m_onViewOpenedCallbacks.ExecuteCallbacks();
+                }
+                
+                void HandleViewOpenStarted()
+                {
+                    m_onViewOpenStartedCallbacks.ExecuteCallbacks();
                 }
 
                 void HandleViewCloseCompleted()
