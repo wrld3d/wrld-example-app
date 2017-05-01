@@ -38,6 +38,16 @@ namespace
     google_breakpad::ExceptionHandler* g_exceptionHandler;
 }
 
+void OnExit()
+{
+    AndroidSafeNativeThreadAttachment attached(g_nativeState);
+    JNIEnv* env = attached.envForThread;
+
+    jclass javaSystemClass = env->FindClass("java/lang/System");
+    jmethodID exit = env->GetStaticMethodID(javaSystemClass, "exit", "(I)V");
+    env->CallStaticVoidMethod(javaSystemClass, exit, 1);
+}
+
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* pvt)
 {
     ExampleApp::AndroidAppThreadAssertions::NominateCurrentlyRunningThreadAsUiThread();
@@ -56,6 +66,8 @@ JNIEXPORT long JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_cr
 		jint versionCode)
 {
     EXAMPLE_LOG("startNativeCode\n");
+
+    atexit(OnExit);
 
     ExampleApp::AndroidAppThreadAssertions::NominateCurrentlyRunningThreadAsNativeThread();
     ExampleApp::Helpers::ImageHelpers::SetDeviceDensity(density);
