@@ -152,6 +152,16 @@ namespace ExampleApp
                 {
                     m_viewModel.Open();
                 }
+
+                if(m_viewModel.HasReactorControl() && m_openedCounter >= 1)
+                {
+                    m_viewModel.ReleaseReactorControl();
+                    m_openedCounter = 0;
+                }
+                else
+                {
+                    m_openedCounter++;
+                }
             }
 
             void MenuController::OnViewClosed()
@@ -316,6 +326,7 @@ namespace ExampleApp
                 , m_dragInProgress(false)
                 , m_presentationDirty(false)
                 , m_menuContentsChanged(true)
+                , m_openedCounter(0)
             {
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
