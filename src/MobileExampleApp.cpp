@@ -157,7 +157,7 @@ namespace ExampleApp
 {
     namespace
     {
-        const float PanToUnlockThreshold = 0.03f;
+        float PanToUnlockThreshold = 0.03f;
         
         Eegeo::Rendering::LoadingScreen* CreateLoadingScreen(const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                              const Eegeo::Modules::Core::RenderingModule& renderingModule,
@@ -340,6 +340,11 @@ namespace ExampleApp
     , m_userIdleService(userIdleService)
     , m_pGlobalAppModeTransitionRules(NULL)
     {
+        if (m_applicationConfiguration.IsInKioskMode())
+        {
+            PanToUnlockThreshold = 0.0f;
+        }
+
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
         
         SetWebProxySettings(m_platformAbstractions.GetProxySettings(), applicationConfiguration);
