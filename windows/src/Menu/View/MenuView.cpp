@@ -159,6 +159,16 @@ namespace ExampleApp
                 m_onViewOpenedCallbacks.RemoveCallback(callback);
             }
 
+            void MenuView::InsertOnViewOpenStarted(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_onViewOpenStartedCallbacks.AddCallback(callback);
+            }
+
+            void MenuView::RemoveOnViewOpenStarted(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_onViewOpenStartedCallbacks.RemoveCallback(callback);
+            }
+
             void MenuView::InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback)
             {
                 m_onViewClosedCallbacks.AddCallback(callback);
@@ -217,6 +227,11 @@ namespace ExampleApp
             void MenuView::HandleViewOpenCompleted()
             {
                 m_onViewOpenedCallbacks.ExecuteCallbacks();
+            }
+
+            void MenuView::HandleViewOpenStarted()
+            {
+                m_onViewOpenStartedCallbacks.ExecuteCallbacks();
             }
 
             void MenuView::HandleViewCloseCompleted()

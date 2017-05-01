@@ -21,6 +21,13 @@ namespace ExampleApp
         pView->HandleViewOpenCompleted();
     }
 
+    void MenuViewCLIMethods::ViewOpenStarted(
+        System::IntPtr^ nativeObjectPtr)
+    {
+        ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr->ToPointer());
+        pView->HandleViewOpenStarted();
+    }
+
     void MenuViewCLIMethods::ViewCloseCompleted(
         System::IntPtr^ nativeObjectPtr)
     {

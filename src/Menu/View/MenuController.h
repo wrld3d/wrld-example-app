@@ -24,6 +24,7 @@ namespace ExampleApp
             private:
                 Eegeo::Helpers::TCallback0<MenuController> m_onClickedCallback;
                 Eegeo::Helpers::TCallback0<MenuController> m_onViewOpenedCallback;
+                Eegeo::Helpers::TCallback0<MenuController> m_onViewOpenStartedCallback;
                 Eegeo::Helpers::TCallback0<MenuController> m_onViewClosedCallback;
                 Eegeo::Helpers::TCallback0<MenuController> m_onDragStartedCallback;
                 Eegeo::Helpers::TCallback1<MenuController, float> m_onDragCallback;
@@ -47,7 +48,6 @@ namespace ExampleApp
                 bool m_dragInProgress;
                 bool m_presentationDirty;
                 bool m_menuContentsChanged;
-                int m_openedCounter;
 
                 virtual void OnMenuSectionExpandeStateChanged(IMenuSectionViewModel& menuSectionViewModel, bool& expanded);
                 
@@ -64,6 +64,8 @@ namespace ExampleApp
                 virtual void OnViewClicked();
 
                 virtual void OnViewOpened();
+
+                virtual void OnViewOpenStarted();
 
                 virtual void OnViewClosed();
 

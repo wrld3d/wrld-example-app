@@ -22,6 +22,7 @@ namespace ExampleApp
                 Eegeo::Helpers::IFunc0<bool>* m_pTryDragFunc;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_onViewOpenStartedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onDragStartedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<float> m_onDragCallbacks;
@@ -81,6 +82,10 @@ namespace ExampleApp
 
                 void RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback);
 
+                void InsertOnViewOpenStarted(Eegeo::Helpers::ICallback0& callback);
+
+                void RemoveOnViewOpenStarted(Eegeo::Helpers::ICallback0& callback);
+
                 void InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback);
@@ -104,6 +109,8 @@ namespace ExampleApp
                 void HandleViewClicked();
 
                 void HandleViewOpenCompleted();
+
+                void HandleViewOpenStarted();
 
                 void HandleViewCloseCompleted();
 

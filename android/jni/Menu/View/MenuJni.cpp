@@ -15,6 +15,16 @@ JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewClicked(
     pView->HandleViewClicked();
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewOpenStarted(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::Menu::View::MenuView* pView = reinterpret_cast<ExampleApp::Menu::View::MenuView*>(nativeObjectPtr);
+    pView->HandleViewOpenStarted();
+}
+
 JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewOpenCompleted(
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)

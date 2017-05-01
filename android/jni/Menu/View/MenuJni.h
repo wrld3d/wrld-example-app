@@ -14,6 +14,10 @@ extern "C"
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
 
+    JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewOpenStarted(
+            JNIEnv* jenv, jobject obj,
+            jlong nativeObjectPtr);
+
     JNIEXPORT void JNICALL Java_com_eegeo_menu_MenuViewJniMethods_ViewCloseCompleted(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
