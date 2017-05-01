@@ -17,36 +17,33 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                SwallowSearchServiceModule::SwallowSearchServiceModule(Search::SdkModel::ISearchService& searchService,
-                                                                       Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                SwallowSearchServiceModule::SwallowSearchServiceModule(Search::SdkModel::ISearchService& transitionPoiSearchService,
                                                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                                        AppCamera::SdkModel::IAppCameraController& appCameraController,
                                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                                        Net::SdkModel::INetworkCapabilities& networkCapabilities)
-                : m_searchService(searchService)
-                , m_searchQueryPerformer(searchQueryPerformer)
+                : m_transitionPoiSearchService(transitionPoiSearchService)
                 , m_networkCapabilities(networkCapabilities)
                 , m_pSwallowOfficeResultMenuOptionSelectedMessageHandler(NULL)
                 , m_pSwallowSearchTransitionPinController(NULL)
                 , m_handleNetworkCapabilitiesChanged(this, &SwallowSearchServiceModule::OnNetworkCapabilitiesChanged)
                 , m_handleSearchServiceReceivedQueryResults(this, &SwallowSearchServiceModule::OnSearchServiceReceivedQueryResults)
-                , m_clearSearchNextUpdate(false)
                 , m_hasTransitionPoiResults(false)
                 , m_hasPerformedFirstSearch(false)
                 {
-                    m_searchService.InsertOnReceivedQueryResultsCallback(m_handleSearchServiceReceivedQueryResults);
+                    m_transitionPoiSearchService.InsertOnReceivedQueryResultsCallback(m_handleSearchServiceReceivedQueryResults);
 
                     m_networkCapabilities.RegisterChangedCallback(m_handleNetworkCapabilitiesChanged);
                     
                     m_pSwallowOfficeResultMenuOptionSelectedMessageHandler = Eegeo_NEW(SwallowOfficeResultMenuOptionSelectedMessageHandler)(cameraTransitionController, messageBus);
                     
-                    m_pSwallowSearchTransitionPinController = Eegeo_NEW(SwallowSearchTransitionPinController)(worldPinsService, cameraTransitionController, appCameraController, m_searchService);
+                    m_pSwallowSearchTransitionPinController = Eegeo_NEW(SwallowSearchTransitionPinController)(worldPinsService, cameraTransitionController, appCameraController, m_transitionPoiSearchService);
                 }
                     
                 SwallowSearchServiceModule::~SwallowSearchServiceModule()
                 {
-                    m_searchService.RemoveOnReceivedQueryResultsCallback(m_handleSearchServiceReceivedQueryResults);
+                    m_transitionPoiSearchService.RemoveOnReceivedQueryResultsCallback(m_handleSearchServiceReceivedQueryResults);
 
                     m_networkCapabilities.UnregisterChangedCallback(m_handleNetworkCapabilitiesChanged);
 
@@ -58,7 +55,7 @@ namespace ExampleApp
                 void SwallowSearchServiceModule::PerformTransitionPoiSearch()
                 {
                     ExampleApp::Search::SdkModel::SearchQuery query(SearchConstants::TRANSITION_CATEGORY_NAME, true, false, Eegeo::Space::LatLongAltitude::FromDegrees(51.520199, -0.086243, 0.0), 1000.0);
-                    m_searchService.PerformLocationQuerySearch(query);
+                    m_transitionPoiSearchService.PerformLocationQuerySearch(query);
                 }
                     
                 std::vector<TagSearch::View::TagSearchModel> SwallowSearchServiceModule::GetTagSearchModels() const
@@ -83,10 +80,6 @@ namespace ExampleApp
                 {
                     if (query.IsTag() && query.Query() == SearchConstants::TRANSITION_CATEGORY_NAME)
                     {
-                        // Due to multiple callbacks of "ReceivedQueryResultsCallback" happening in undetermined order, clear results
-                        // after they've all been resolved by handlers. Needs better model/schedule support. 
-                        m_clearSearchNextUpdate = true;
-
                         m_hasTransitionPoiResults = !results.empty();
                     }
                 }
@@ -103,11 +96,6 @@ namespace ExampleApp
                 void SwallowSearchServiceModule::Update()
                 {
 
-                    if (m_clearSearchNextUpdate)
-                    {
-                        m_searchQueryPerformer.RemoveSearchQueryResults();
-                        m_clearSearchNextUpdate = false;
-                    }
                 }
             }
         }

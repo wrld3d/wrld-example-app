@@ -56,7 +56,7 @@ namespace ExampleApp
 
                 virtual bool TryDrag();
 
-                virtual void RefreshPresentation();
+                virtual void RefreshPresentation(bool forceRefresh);
 
                 virtual void UpdateUiThread(float dt);
 

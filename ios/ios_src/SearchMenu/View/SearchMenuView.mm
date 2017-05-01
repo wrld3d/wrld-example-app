@@ -905,12 +905,21 @@
         CGRect buttonFrame = self.pSearchMenuScrollButtonContainer.frame;
         buttonFrame.origin.y = onScreenSearchResultsTableHeight - (buttonFrame.size.height * m_pixelScale);
         self.pSearchMenuScrollButtonContainer.frame = buttonFrame;
-        _pSearchMenuScrollButtonContainer.hidden = false;
         
         buttonFrame = self.pSearchMenuFadeImage.frame;
         buttonFrame.origin.y = onScreenSearchResultsTableHeight - (buttonFrame.size.height * m_pixelScale);
         self.pSearchMenuFadeImage.frame = buttonFrame;
-        _pSearchMenuFadeImage.hidden = false;
+        
+        if(self.pSearchResultsTableContainerView.contentOffset.y + self.pSearchResultsTableContainerView.frame.size.height == self.pSearchResultsTableContainerView.contentSize.height)
+        {
+            _pSearchMenuScrollButtonContainer.hidden = true;
+            _pSearchMenuFadeImage.hidden = true;
+        }
+        else
+        {
+            _pSearchMenuScrollButtonContainer.hidden = false;
+            _pSearchMenuFadeImage.hidden = false;
+        }
     }
     else
     {

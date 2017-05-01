@@ -7,7 +7,7 @@
 #include "ImageHelpers.h"
 #include "WorldPinOnMapViewInterop.h"
 #include "App.h"
-#include "Document.h"
+#include "document.h"
 #include "ImageStore.h"
 #include "TourDefines.h"
 

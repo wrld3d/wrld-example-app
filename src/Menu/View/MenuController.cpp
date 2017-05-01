@@ -66,7 +66,7 @@ namespace ExampleApp
                 return m_viewModel.TryAcquireReactorControl();
             }
 
-            void MenuController::RefreshPresentation()
+            void MenuController::RefreshPresentation(bool forceRefresh)
             {
                 const size_t numSections = m_viewModel.SectionsCount();
                 TSections sections;
@@ -78,7 +78,7 @@ namespace ExampleApp
                     sections.push_back(&section);
                 }
 
-                if(!m_viewModel.IsFullyClosed())
+                if(!m_viewModel.IsFullyClosed() || forceRefresh)
                 {
                     m_view.UpdateMenuSectionViews(sections, m_menuContentsChanged);
                     m_presentationDirty = false;
@@ -90,7 +90,7 @@ namespace ExampleApp
             {
                 if(m_presentationDirty)
                 {
-                    RefreshPresentation();
+                    RefreshPresentation(false);
                 }
 
                 if(m_dragInProgress)
@@ -271,10 +271,7 @@ namespace ExampleApp
                 const bool appModeAllowsOpen = message.GetAppMode() != AppModes::SdkModel::AppMode::AttractMode;
                 if (!appModeAllowsOpen)
                 {
-                    if (!m_viewModel.IsFullyOffScreen())
-                    {
-                        m_viewModel.RemoveFromScreen();
-                    }
+                    m_viewModel.RemoveFromScreen();
                 }
                 else
                 {
@@ -282,6 +279,18 @@ namespace ExampleApp
                     {
                         m_viewModel.AddToScreen();
                     }
+                }
+
+                if (message.GetAppMode() == AppModes::SdkModel::AppMode::AttractMode)
+                {
+                    // Collapse all sections
+                    for (size_t i = 0; i < m_viewModel.SectionsCount(); ++i)
+                    {
+                        m_viewModel.GetMenuSection(static_cast<int>(i)).Contract();
+                    }
+
+                    RefreshPresentation(true);
+                    
                 }
             }
 
