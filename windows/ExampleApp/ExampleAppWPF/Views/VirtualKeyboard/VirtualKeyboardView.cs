@@ -22,6 +22,7 @@ namespace ExampleAppWPF
             {
                 OnLoadedAddVirtualKeyboardFocusHandlers();
                 m_currentWindow.MainGrid.Children.Add(this);
+                Panel.SetZIndex(this, 1000);
             };
 
             Visibility = Visibility.Hidden;
