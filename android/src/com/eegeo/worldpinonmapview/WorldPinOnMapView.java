@@ -104,7 +104,6 @@ public class WorldPinOnMapView implements View.OnClickListener
     		else 
     		{
     			m_detailsView.setVisibility(View.GONE);
-    			titleMarginDp = 15; 
     		}
     		
     		m_poiRatingImage.setImageDrawable(null);
