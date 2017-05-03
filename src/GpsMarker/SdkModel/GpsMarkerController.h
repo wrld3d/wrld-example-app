@@ -41,6 +41,8 @@ namespace ExampleApp
 
                 float m_screenPixelScale;
                 float m_screenOversampleScale;
+
+                bool m_isInteriorVisible;
                 
                 GpsMarkerModel& m_model;
                 GpsMarkerView& m_view;

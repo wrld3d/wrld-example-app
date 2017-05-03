@@ -23,7 +23,7 @@ namespace ExampleApp
                 , m_latLong(Eegeo::Space::LatLong::FromDegrees(0, 0))
                 , m_floorIndex(-1)
                 , m_interiorId(Eegeo::Resources::Interiors::InteriorId::NullId())
-                , m_isConnected(true)
+                , m_isConnected(false)
                 {
                 }
                 
@@ -79,7 +79,7 @@ namespace ExampleApp
                     }
                     else
                     {
-                        return m_defaultLocationService.GetLocation(m_latLong);
+                        return m_defaultLocationService.GetLocation(latLong);
                     }
                 }
                 

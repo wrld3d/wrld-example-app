@@ -47,6 +47,7 @@ namespace ExampleApp
             , m_currentFloorIndex(0)
             , m_screenPixelScale(screenProperties.GetPixelScale())
             , m_screenOversampleScale(screenProperties.GetOversampleScale())
+            , m_isInteriorVisible(false)
             , m_modalityChangedHandlerBinding(this, &GpsMarkerController::OnModalityChangedMessage)
             , m_visibilityChangedHandlerBinding(this, &GpsMarkerController::OnVisibilityChangedMessage)
             , m_interiorsExplorerStateChangedCallback(this, &GpsMarkerController::OnInteriorsExplorerStateChangedMessage)
@@ -93,6 +94,7 @@ namespace ExampleApp
                 m_currentFloorIndex = message.GetSelectedFloorIndex();
                 m_view.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
                 m_anchorView.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
+                m_isInteriorVisible = message.IsInteriorVisible();
             }
             
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
@@ -111,7 +113,7 @@ namespace ExampleApp
                     }
                     else
                     {
-                        isVisible = true;
+                        isVisible = !m_isInteriorVisible;
                     }
                 }
                 
