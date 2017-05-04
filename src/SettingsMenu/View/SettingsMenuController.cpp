@@ -41,7 +41,7 @@ namespace ExampleApp
             
             void SettingsMenuController::OnModalBackgroundTapped()
             {
-                if(m_viewModel.IsFullyOpen())
+                if(m_viewModel.IsFullyOpen() && !m_view.IsAnimating())
                 {
                     m_viewModel.Close();
                 }

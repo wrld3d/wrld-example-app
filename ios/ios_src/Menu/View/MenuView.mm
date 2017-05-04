@@ -129,7 +129,7 @@ enum MenuState
 
 - (void) animateToClosedOnScreen
 {
-    if(m_menuState == OFF_SCREEN)
+    if(m_menuState == OFF_SCREEN || m_menuState == ANIMATING)
     {
         [self startAnimationForState:CLOSED_ON_SCREEN
                     normalizedOffset:[self onScreenState]
