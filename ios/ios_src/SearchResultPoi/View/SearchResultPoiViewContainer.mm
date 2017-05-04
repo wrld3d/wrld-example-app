@@ -50,7 +50,6 @@
 
     self->m_pCurrentActiveVendorView = [self createSearchResultPoiViewForVendor:pModel->GetVendor()];
     [[self superview] addSubview: self->m_pCurrentActiveVendorView];
-    [self->m_pCurrentActiveVendorView layoutSubviews];
     [self->m_pCurrentActiveVendorView setContent:pModel :isPinned];
     [self->m_pCurrentActiveVendorView setFullyActive];
 }
