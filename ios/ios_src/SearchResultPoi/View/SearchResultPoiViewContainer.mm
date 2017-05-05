@@ -22,7 +22,6 @@
 #include "SwallowFacilitySearchResultPoiView.h"
 #include "SwallowDepartmentSearchResultPoiView.h"
 #include "EegeoSearchResultPoiView.h"
-#include "ExampleTourSearchResultPoiView.h"
 #include "SwallowSearchConstants.h"
 
 @interface SearchResultPoiViewContainer()<UIGestureRecognizerDelegate>
@@ -51,14 +50,14 @@
     [super dealloc];
 }
 
-- (void) open:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
+- (void) open:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel
 {
     Eegeo_ASSERT(m_pCurrentActiveVendorView == NULL);
 
     self->m_pCurrentActiveVendorView = [self createSearchResultPoiViewForVendor:pModel->GetVendor() :pModel->GetPrimaryTag()];
     [[self superview] addSubview: self->m_pCurrentActiveVendorView];
     [self->m_pCurrentActiveVendorView layoutSubviews];
-    [self->m_pCurrentActiveVendorView setContent:pModel :isPinned];
+    [self->m_pCurrentActiveVendorView setContent:pModel];
     [self->m_pCurrentActiveVendorView setFullyActive];
 }
 
@@ -94,10 +93,6 @@
     else if(vendor == ExampleApp::Search::GeoNamesVendorName)
     {
         return [[GeoNamesSearchResultPoiView alloc] initWithInterop:m_pInterop];
-    }
-    else if(vendor == ExampleApp::Search::ExampleTourVendorName)
-    {
-        return [[ExampleTourSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
     else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
     {

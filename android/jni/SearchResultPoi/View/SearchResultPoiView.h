@@ -57,20 +57,20 @@ namespace ExampleApp
                 void HandleAvailabilityChanged(std::string& availability);
 
             private:
-                void CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+                void CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model);
 
-                void CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+                void CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model);
 
-                void CreateAndShowEegeoPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
-                void CreateAndShowPersonSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+                void CreateAndShowEegeoPoiView(const Search::SdkModel::SearchResultModel& model);
+                void CreateAndShowPersonSearchResultPoiView(const Search::SdkModel::SearchResultModel& model);
 
-				void CreateAndShowMeetingRoomSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+				void CreateAndShowMeetingRoomSearchResultPoiView(const Search::SdkModel::SearchResultModel& model);
 
-				void CreateAndShowWorkingGroupSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+				void CreateAndShowWorkingGroupSearchResultPoiView(const Search::SdkModel::SearchResultModel& model);
 
-				void CreateAndShowFacilitySearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+				void CreateAndShowFacilitySearchResultPoiView(const Search::SdkModel::SearchResultModel& model);
 
-				void CreateAndShowDepartmentSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
+				void CreateAndShowDepartmentSearchResultPoiView(const Search::SdkModel::SearchResultModel& model);
 
                 jclass CreateJavaClass(const std::string& viewClass);
 

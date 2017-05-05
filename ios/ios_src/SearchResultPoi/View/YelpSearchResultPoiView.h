@@ -23,13 +23,8 @@
     ExampleApp::Search::Yelp::SdkModel::YelpSearchResultModel m_yelpModel;
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
     
-    bool m_isPinned;
     float m_labelsSectionWidth;
     
-    UIImage* m_pRemovePinButtonImage;
-    UIImage* m_pRemovePinButtonHighlightImage;
-    UIImage* m_pAddPinButtonImage;
-    UIImage* m_pAddPinButtonHighlightImage;
     UIImage* m_pVendorBrandingImage;
     
     CAGradientLayer* m_pGradientMask;
@@ -47,7 +42,7 @@
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned;
+- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel;
 
 - (void) updateImage:(const std::string&)url :(bool)success bytes:(const std::vector<Byte>*)bytes;
 
@@ -60,8 +55,6 @@
 
 @property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
-@property (nonatomic, retain) UIButton* pPinButton;
-@property (nonatomic, retain) UIView* pDropPinContainer;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pTitleCardContainer;
 @property (nonatomic, retain) UIView* pDetailsCardContainer;
@@ -81,7 +74,6 @@
 @property (nonatomic, retain) UILabel* pReviewCountLabel;
 @property (nonatomic, retain) UIButton* pVendorWebLinkButton;
 @property (nonatomic, retain) UIImageView* pVendorBrandingImageContainer;
-@property (nonatomic, retain) UIView* pFooterSpace;
 @property (nonatomic, retain) SearchResultPoiSpinner* pPoiImageLoadingSpinner;
 
 @property (nonatomic, retain) UIImageView* pAddressIconContainer;
@@ -95,6 +87,5 @@
 @property (nonatomic, retain) UIView* pPreviewCardHeaderLine;
 @property (nonatomic, retain) UIView* pDetailsCardHeaderLine;
 @property (nonatomic, retain) UIView* pTagsCardHeaderLine;
-@property (nonatomic, retain) UIView* pFooterLine;
 
 @end

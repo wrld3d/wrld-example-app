@@ -73,13 +73,11 @@
 #include "MapMode.h"
 #include "AppModes.h"
 #include "SwallowPoiDb.h"
-#include "IToursModule.h"
 #include "SwallowSearch.h"
 #include "IAppCameraModule.h"
 #include "CameraTransitionService.h"
 #include "UserInteraction.h"
 #include "TwitterFeed.h"
-#include "TwitterFeedTour.h"
 #include "ReportPinsVisibilityMasking.h"
 #include "PickingController.h"
 #include "IRayCaster.h"
@@ -116,8 +114,6 @@ namespace ExampleApp
         bool m_setMetricsLocation;
         float m_pinDiameter;
         
-        const bool m_enableTours;
-
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
         CameraTransitions::SdkModel::CameraTransitionService* m_pCameraTransitionService;
 
@@ -184,9 +180,7 @@ namespace ExampleApp
         Menu::View::IMenuIgnoredReactionModel* m_pModalityIgnoredReactionModel;
         Menu::View::IMenuIgnoredReactionModel* m_pReactorIgnoredReactionModel;
         
-        Tours::IToursModule* m_pToursModule;
         float m_toursPinDiameter;
-        Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule* m_pTwitterFeedTourModule;
         
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
         ExampleApp::DoubleTapIndoorInteraction::SdkModel::IDoubleTapIndoorInteractionController* m_pDoubleTapIndoorInteractionController;
@@ -222,14 +216,6 @@ namespace ExampleApp
         
         bool CanAcceptTouch() const;
         
-        void AddTours();
-        
-        void InitialiseToursModules(Eegeo::Modules::Map::MapModule& mapModule,
-                                    Eegeo::EegeoWorld& world,
-                                    const bool interiorsAffectedByFlattening);
-        
-        const bool IsTourCameraActive() const;
-
         RenderingTransformMesh::SdkModel::RenderingTransformMeshModule* m_pRenderingTransformMeshModule;
 
         Eegeo::Input::IUserIdleService& m_userIdleService;
@@ -418,25 +404,6 @@ namespace ExampleApp
         const ExampleApp::Social::TwitterFeed::ITwitterFeedModule& TwitterFeedModule() const
         {
             return *m_pTwitterFeedModule;
-        }
-        
-        const ExampleApp::Tours::IToursModule& ToursModule() const
-        {
-            return *m_pToursModule;
-        }
-
-        const ExampleApp::Tours::SdkModel::TourInstances::TwitterFeed::ITwitterFeedTourModule& TwitterFeedTourModule() const
-        {
-            return *m_pTwitterFeedTourModule;
-        }
-        
-        // A flag for opting in/out of tours
-        const bool ToursEnabled() const
-        {
-#ifdef EEGEO_DROID
-            Eegeo_ASSERT(!m_enableTours, "Tours are not currently supported for android");
-#endif
-            return m_enableTours;
         }
         
         // Exposed to allow view model creation in iOS code.

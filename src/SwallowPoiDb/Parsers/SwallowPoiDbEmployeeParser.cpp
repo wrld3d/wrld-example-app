@@ -9,7 +9,7 @@
 #include "stringbuffer.h"
 #include "TimeHelpers.h"
 #include "writer.h"
-
+#include "document.h"
 #include "SearchResultModel.h"
 #include "SearchVendorNames.h"
 #include "SwallowPoiDbParseHelper.h"

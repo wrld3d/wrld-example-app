@@ -19,11 +19,6 @@
 }
 @end
 
-namespace
-{
-    const bool AllowPinning = false;
-}
-
 @implementation SwallowPersonSearchResultPoiView
 
 - (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop
@@ -32,9 +27,6 @@ namespace
     
     if(self)
     {
-        self->m_pRemovePinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
-        self->m_pAddPinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
-        
         m_pInterop = pInterop;
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
@@ -51,13 +43,6 @@ namespace
         [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
-        
-        if(AllowPinning)
-        {
-            self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-            [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-            [self.pCloseButtonContainer addSubview: self.pPinButton];
-        }
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
@@ -146,12 +131,6 @@ namespace
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
     
-    if(AllowPinning)
-    {
-        [self.pPinButton removeFromSuperview];
-        [self.pPinButton release];
-    }
-    
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
     
@@ -160,11 +139,6 @@ namespace
     
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
-    
-    [self->m_pRemovePinButtonBackgroundImage release];
-    [self->m_pRemovePinHighlightButtonBackgroundImage release];
-    [self->m_pAddPinButtonBackgroundImage release];
-    [self->m_pAddPinHighlightButtonBackgroundImage release];
     
     [self removeFromSuperview];
     [super dealloc];
@@ -266,14 +240,6 @@ namespace
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
     
-    if(AllowPinning)
-    {
-        self.pPinButton.frame = CGRectMake(0.f,
-                                           0.f,
-                                           closeButtonSectionHeight,
-                                           closeButtonSectionHeight);
-    }
-    
     self.pProfileImageContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
     
     self.pProfileImageActivityIndicator.center = CGPointMake(headlineHeight / 2.0f, headlineHeight / 2.0f);
@@ -286,21 +252,13 @@ namespace
     self.pNameLabel.font = [UIFont systemFontOfSize:24.0f];
 }
 
-- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
+- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel
 {
     Eegeo_ASSERT(pModel != NULL);
     
     m_model = *pModel;
     
     m_swallowPersonModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(m_model);
-    m_isPinned = isPinned;
-    
-    [self updatePinnedButtonState];
-    
-    if(!AllowPinning && m_isPinned)
-    {
-        [self handlePinButtonSelected];
-    }
     
     [self.pProfileImageActivityIndicator startAnimating];
     
@@ -396,30 +354,5 @@ namespace
 {
     m_pInterop->HandleCloseClicked();
 }
-
-- (void) handlePinButtonSelected
-{
-    m_isPinned = !m_isPinned;
-    m_pInterop->HandlePinToggleClicked(m_model);
-    [self updatePinnedButtonState];
-}
-
-- (void) updatePinnedButtonState
-{
-    if(AllowPinning)
-    {
-        if(m_isPinned)
-        {
-            [self.pPinButton setBackgroundImage:self->m_pRemovePinButtonBackgroundImage forState:UIControlStateNormal];
-            [self.pPinButton setBackgroundImage:self->m_pRemovePinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
-        }
-        else
-        {
-            [self.pPinButton setBackgroundImage:self->m_pAddPinButtonBackgroundImage forState:UIControlStateNormal];
-            [self.pPinButton setBackgroundImage:self->m_pAddPinHighlightButtonBackgroundImage forState:UIControlStateHighlighted];
-        }
-    }
-}
-
 
 @end

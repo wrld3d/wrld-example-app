@@ -23,11 +23,9 @@
 
 namespace
 {
-    const bool AllowPinning = false;
     const float RatingImageWidth = 100.f;
     const float RatingImageHeight = 30.f;
     const int PhoneAlertViewTag = 1;
-    const int DeletePinAlertViewTag = 2;
 }
 
 @implementation YelpSearchResultPoiView
@@ -38,11 +36,6 @@ namespace
     
     if(self)
     {
-        self->m_pRemovePinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
-        self->m_pRemovePinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") retain];
-        self->m_pAddPinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
-        self->m_pAddPinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_on") retain];
-        
         m_pController = [UIViewController alloc];
         [m_pController setView:self];
         
@@ -111,10 +104,6 @@ namespace
         self.pTagsCardHeaderLine.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pTagsCardContainer addSubview:self.pTagsCardHeaderLine];
         
-        self.pFooterLine = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pFooterLine.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self.pControlContainer addSubview:self.pFooterLine];
-        
         self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pTitleCardContainer addSubview: self.pCloseButtonContainer];
@@ -125,17 +114,6 @@ namespace
         [self.pCloseButton setDefaultStatesWithImageNames:@"exit_blue_x_button" :@"exit_dark_blue_x_button"];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
-        
-        self.pDropPinContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pDropPinContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pControlContainer addSubview:self.pDropPinContainer];
-        
-        self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pPinButton setTitle:@"Save Location" forState:UIControlStateNormal];
-        [self.pPinButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBorderColor forState:UIControlStateHighlighted];
-        [self.pPinButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
-        [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-        [self.pDropPinContainer addSubview: self.pPinButton];
         
         self.pPreviewImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pPreviewImage.clipsToBounds = YES;
@@ -196,10 +174,6 @@ namespace
         self.pReviewsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pDescriptionCardContainer addSubview: self.pReviewsContent];
         
-        self.pFooterSpace = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pFooterSpace.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pControlContainer addSubview: self.pFooterSpace];
-        
         m_pGradientMask = [[CAGradientLayer layer] retain];
         m_pGradientMask.colors = @[(id)[UIColor clearColor].CGColor,
                                    (id)[UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.5f].CGColor];
@@ -233,12 +207,6 @@ namespace
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
 
-    [self.pPinButton removeFromSuperview];
-    [self.pPinButton release];
-    
-    [self.pDropPinContainer removeFromSuperview];
-    [self.pDropPinContainer release];
-    
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
     
@@ -308,12 +276,6 @@ namespace
     [self.pTagsCardHeaderLine removeFromSuperview];
     [self.pTagsCardHeaderLine release];
     
-    [self.pFooterLine removeFromSuperview];
-    [self.pFooterLine release];
-    
-    [self.pFooterSpace removeFromSuperview];
-    [self.pFooterSpace release];
-    
     [self.pFadeContainer removeFromSuperview];
     [self.pFadeContainer release];
     
@@ -328,11 +290,6 @@ namespace
     
     [self.pPoiImageLoadingSpinner removeFromSuperview];
     [self.pPoiImageLoadingSpinner release];
-    
-    [self->m_pRemovePinButtonImage release];
-    [self->m_pRemovePinButtonHighlightImage release];
-    [self->m_pAddPinButtonImage release];
-    [self->m_pAddPinButtonHighlightImage release];
     
     [m_pController release];
     [self removeFromSuperview];
@@ -361,11 +318,9 @@ namespace
     
     const float headlineHeight = 50.f;
     const float closeButtonSectionHeight = 64.f;
-    const float pinButtonSectionOffsetY = mainWindowHeight - 46.f;
     const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
     
     const float topMargin = 15.f;
-    const float bottomMargin = 15.f;
     const float sideMargin = 15.f;
     const float cardMargin = 10.f;
     
@@ -410,36 +365,10 @@ namespace
                                                  cardContainerWidth,
                                                  headerLineThickness);
     
-    self.pFooterSpace.frame = CGRectMake(sideMargin,
-                                         pinButtonSectionOffsetY - bottomMargin - 19.f,
-                                         cardContainerWidth,
-                                         19.f);
-    
-    self.pFooterLine.frame = CGRectMake(sideMargin,
-                                        pinButtonSectionOffsetY - bottomMargin - 20.f,
-                                        cardContainerWidth,
-                                        headerLineThickness);
-    
-    self.pDropPinContainer.frame = CGRectMake(sideMargin,
-                                              pinButtonSectionOffsetY - bottomMargin,
-                                              cardContainerWidth,
-                                              42.f);
-    
-    
-    self.pPinButton.frame = CGRectMake(0.f,
-                                       0.f,
-                                       cardContainerWidth,
-                                       42.f);
-    
     self.pFadeContainer.frame = CGRectMake(sideMargin,
-                                           pinButtonSectionOffsetY - 15.f - 60.f,
+                                           mainWindowHeight - 15.f - 60.f,
                                            cardContainerWidth,
                                            40.f);
-    
-    [self.pPinButton setImageEdgeInsets:UIEdgeInsetsMake(2.f, -20.f, 2.f, 0.f)];
-    [self.pPinButton setTitleEdgeInsets:UIEdgeInsetsMake(2.f, -10.f, 2.f, 0.f)];
-    
-    self.pPinButton.titleLabel.font = [UIFont systemFontOfSize:21.0f];
     
     self.pTagIconContainer.frame = CGRectMake(0.f,
                                               0.f,
@@ -743,21 +672,13 @@ namespace
     }
 }
 
-- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned
+- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel
 {
     Eegeo_ASSERT(pModel != NULL);
     
     m_model = *pModel;
-    
+
     m_yelpModel = ExampleApp::Search::Yelp::SdkModel::Helpers::TransformToYelpSearchResult(m_model);
-    
-    m_isPinned = isPinned;
-    [self updatePinnedButtonState];
-    
-    if(!AllowPinning && m_isPinned)
-    {
-        [self togglePinState];
-    }
     
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
@@ -926,15 +847,6 @@ namespace
                 }
             }
             break;
-        case DeletePinAlertViewTag:
-        {
-            alertView.delegate = nil;
-            
-            if (buttonIndex == 1)
-            {
-                [self togglePinState];
-            }
-        }break;
         default:
             break;
     }
@@ -951,83 +863,6 @@ namespace
 - (void) handleClosedButtonSelected
 {
     m_pInterop->HandleCloseClicked();
-}
-
-- (void) handlePinButtonSelected
-{
-    if(m_isPinned)
-    {
-        [self performPinRemoveWarningCeremony];
-    }
-    else
-    {
-        [self togglePinState];
-    }
-}
-
-- (void) togglePinState
-{
-    m_isPinned = !m_isPinned;
-    m_pInterop->HandlePinToggleClicked(m_model);
-    [self updatePinnedButtonState];
-}
-
-- (void) updatePinnedButtonState
-{
-    if(m_isPinned)
-    {
-        [self.pPinButton setImage:self->m_pRemovePinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pRemovePinButtonHighlightImage forState:UIControlStateHighlighted];
-        [self.pPinButton setTitle:@"Remove Pin" forState:UIControlStateNormal];
-    }
-    else
-    {
-        [self.pPinButton setImage:self->m_pAddPinButtonImage forState:UIControlStateNormal];
-        [self.pPinButton setImage:self->m_pAddPinButtonHighlightImage forState:UIControlStateHighlighted];
-        [self.pPinButton setTitle:@"Drop Pin" forState:UIControlStateNormal];
-    }
-}
-
-- (void) performPinRemoveWarningCeremony
-{
-    NSString* alertTitle = @"Remove Pin";
-    NSString* alertMessage = @"Are you sure you want to remove this pin?";
-    NSString* keepButtonText = @"No, keep it";
-    NSString* deleteButtonText = @"Yes, delete it";
-    
-    if([UIAlertController class])
-    {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:alertTitle
-                                                                       message:alertMessage
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:keepButtonText
-                                                                style:UIAlertActionStyleDefault
-                                                              handler:^(UIAlertAction * action) {}];
-        
-        UIAlertAction* removePinAction = [UIAlertAction actionWithTitle:deleteButtonText
-                                                                  style:UIAlertActionStyleDefault
-                                                                handler: ^(UIAlertAction * action)
-                                          {
-                                              [self togglePinState];
-                                          }];
-        
-        [alert addAction:defaultAction];
-        [alert addAction:removePinAction];
-        [m_pController presentViewController:alert animated:YES completion:nil];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
-                                                        message:alertMessage
-                                                       delegate:self
-                                              cancelButtonTitle:keepButtonText
-                                              otherButtonTitles:deleteButtonText, nil];
-        
-        [alert show];
-        alert.tag = DeletePinAlertViewTag;
-        [alert release];
-    }
 }
 
 -(void)scrollViewDidScroll: (UIScrollView*)scrollView

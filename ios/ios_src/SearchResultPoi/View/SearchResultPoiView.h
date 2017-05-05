@@ -13,7 +13,7 @@
 
 - (ExampleApp::SearchResultPoi::View::ISearchResultPoiView*) getInterop;
 
-- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned;
+- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel;
 
 - (void) updateImage:(const std::string&)url :(bool)success bytes:(const std::vector<Byte>*)bytes;
 

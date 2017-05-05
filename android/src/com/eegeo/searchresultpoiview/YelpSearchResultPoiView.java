@@ -23,7 +23,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.helpers.TintablePinToggleButton;
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.tags.TagResources;
 
@@ -35,7 +34,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     private RelativeLayout m_uiRoot = null;
 
     private View m_closeButton = null;
-    private View m_togglePinnedButton = null;
     private TextView m_titleView = null;
     private TextView m_addressView = null;
     private TextView m_phoneView = null;
@@ -64,13 +62,8 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 	private ScrollView m_contentContainer = null;
 	private ImageView m_footerFade = null;
 	private LinearLayout m_linearContentContainer = null;
-	private TextView m_dropPinText = null;
 
     private boolean m_handlingClick = false;
-    private TintablePinToggleButton m_togglePinnedWrapper;
-    
-    private static String m_pinTextDefault = "Drop Pin";
-    private static String m_pinTextPressed = "Remove Pin";
 
     @SuppressLint("NewApi")
 	public YelpSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
@@ -82,8 +75,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_view = m_activity.getLayoutInflater().inflate(R.layout.search_result_poi_yelp_layout, m_uiRoot, false);
 
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
-        m_togglePinnedButton = m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
-        m_togglePinnedWrapper = new TintablePinToggleButton(m_togglePinnedButton);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
         m_addressView = (TextView)m_view.findViewById(R.id.search_result_poi_view_address);
         m_phoneView = (TextView)m_view.findViewById(R.id.search_result_poi_view_phone);
@@ -110,7 +101,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 		m_contentContainer = (ScrollView)m_view.findViewById(R.id.content_container);
 		m_footerFade = (ImageView)m_view.findViewById(R.id.footer_fade);
 		m_linearContentContainer = (LinearLayout)m_view.findViewById(R.id.linear_content_container);
-		m_dropPinText = (TextView)m_view.findViewById(R.id.drop_pin_text);
         
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
@@ -121,7 +111,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_uiRoot.addView(m_view);
         
         m_closeButton.setOnClickListener(this);
-        m_togglePinnedButton.setOnClickListener(this);
         m_webVendorStyleLinkButton.setOnClickListener(this);
     }
 
@@ -141,8 +130,7 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     		final String ratingImageUrl,
     		final String vendor,
     		final String[] reviews,
-    		final int reviewCount,
-    		final boolean isPinned)
+    		final int reviewCount)
     {
     	m_url = url;
     	m_poiImageUrl = imageUrl;
@@ -274,17 +262,11 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_tagIcon.setImageResource(iconId);
 
         m_closeButton.setEnabled(true);
-        m_togglePinnedWrapper.setPinToggleState(isPinned);
     	
         m_view.setVisibility(View.VISIBLE);
         m_view.requestFocus();
 
         m_handlingClick = false;
-        
-        if(m_togglePinnedWrapper.isPinned())
-        {
-        	m_dropPinText.setText("Remove Pin");
-        }
     }
 
     public void onClick(View view)
@@ -298,10 +280,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         if(view == m_closeButton)
         {
 			handleCloseClicked();
-        }
-        else if(view == m_togglePinnedButton)
-        {
-			handleTogglePinnedClicked();
         }
         else if(view == m_webVendorStyleLinkButton) 
         {
@@ -357,7 +335,6 @@ public class YelpSearchResultPoiView implements View.OnClickListener
     private void handleCloseClicked()
     {
         m_view.setEnabled(false);
-        m_togglePinnedButton.setOnClickListener(null);
 
         SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
     }
@@ -408,57 +385,4 @@ public class YelpSearchResultPoiView implements View.OnClickListener
 	    
 	    return inSampleSize;
 	}
-
-    private void handleTogglePinnedClicked()
-    {
-    	if(m_togglePinnedWrapper.isPinned())
-    	{
-    		showRemovePinDialog();
-    	}
-    	else
-    	{
-    		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
-            m_handlingClick = false;
-            m_togglePinnedWrapper.setPinToggleState(true);
-            m_dropPinText.setText(m_pinTextPressed);
-    	}
-    }
-	
-	private void showRemovePinDialog()
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-        builder.setTitle(m_pinTextPressed)
-        .setMessage("Are you sure you want to remove this pin?")
-        .setPositiveButton("Yes,  delete it", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int id)
-            {
-        		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
-                m_handlingClick = false;
-                m_togglePinnedWrapper.setPinToggleState(false);
-                m_dropPinText.setText(m_pinTextDefault);
-            }
-        })
-        .setNegativeButton("No,  keep it", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-            	m_togglePinnedWrapper.setPinToggleState(true);
-                m_handlingClick = false;
-            }
-        })
-        .setOnCancelListener(new DialogInterface.OnCancelListener()
-        {
-            @Override
-            public void onCancel(DialogInterface dialog)
-            {
-            	m_togglePinnedWrapper.setPinToggleState(true);
-                m_handlingClick = false;
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 }

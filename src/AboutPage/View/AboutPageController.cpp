@@ -52,8 +52,7 @@ namespace ExampleApp
             void AboutPageController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
                 const AppModes::SdkModel::AppMode appMode = message.GetAppMode();
-                const bool appModeAllowsOpen = appMode != AppModes::SdkModel::TourMode &&
-                                               appMode != AppModes::SdkModel::AttractMode;
+                const bool appModeAllowsOpen = appMode != AppModes::SdkModel::AttractMode;
 
                 if (!appModeAllowsOpen)
                 {

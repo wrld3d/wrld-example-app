@@ -6,7 +6,6 @@
 #include "WorldPinOnMapController.h"
 #include "WorldPinOnMapViewInterop.h"
 #include "IModalityModel.h"
-#include "TourHovercardView.h"
 
 namespace ExampleApp
 {
@@ -33,7 +32,6 @@ namespace ExampleApp
             WorldPinOnMapViewModule::~WorldPinOnMapViewModule()
             {
                 Eegeo_DELETE m_pController;
-                [m_pTourView release];
             }
 
             WorldPinOnMapController& WorldPinOnMapViewModule::GetWorldPinOnMapController() const

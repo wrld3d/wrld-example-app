@@ -6,6 +6,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "WorldPinOnMapViewInterop.h"
+#include "document.h"
 
 @implementation TwitterWorldHovercard
 

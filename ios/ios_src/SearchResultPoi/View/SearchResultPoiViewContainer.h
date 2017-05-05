@@ -20,7 +20,7 @@
 
 - (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*) getInterop;
 
-- (void) open:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned;
+- (void) open:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel;
 
 - (void) close;
 

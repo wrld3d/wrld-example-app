@@ -20,13 +20,7 @@
     ExampleApp::Search::Swallow::SdkModel::SwallowPersonResultModel m_swallowPersonModel;
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
     
-    bool m_isPinned;
     float m_labelsSectionWidth;
-    
-    UIImage* m_pRemovePinButtonBackgroundImage;
-    UIImage* m_pRemovePinHighlightButtonBackgroundImage;
-    UIImage* m_pAddPinButtonBackgroundImage;
-    UIImage* m_pAddPinHighlightButtonBackgroundImage;
 }
 
 - (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;
@@ -35,7 +29,7 @@
 
 - (BOOL) consumesTouch:(UITouch *)touch;
 
-- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel :(bool)isPinned;
+- (void) setContent:(const ExampleApp::Search::SdkModel::SearchResultModel*)pModel;
 
 - (void) updateImage:(const std::string&)url :(bool)success bytes:(const std::vector<Byte>*)bytes;
 
@@ -47,7 +41,6 @@
 
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
-@property (nonatomic, retain) UIButton* pPinButton;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;
 @property (nonatomic, retain) UIView* pContentSeparator;

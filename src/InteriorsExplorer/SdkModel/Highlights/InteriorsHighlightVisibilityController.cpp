@@ -20,6 +20,7 @@
 #include "InteriorsCellResourceObserver.h"
 #include "LabelAnchorFilterModel.h"
 #include "IAnchoredLabel.h"
+#include "document.h"
 
 namespace ExampleApp
 {

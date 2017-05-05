@@ -36,16 +36,6 @@ set(resources ${resources}
 		Resources/arrow3_up_blue@3x.png
 		Resources/Arrow@2x.png
 		Resources/Arrow@3x.png
-                Resources/button_add_pin_off.png
-                Resources/button_add_pin_off@0.75x.png
-                Resources/button_add_pin_off@1.5x.png
-                Resources/button_add_pin_off@2x.png
-                Resources/button_add_pin_off@3x.png
-                Resources/button_add_pin_on.png
-                Resources/button_add_pin_on@0.75x.png
-                Resources/button_add_pin_on@1.5x.png
-                Resources/button_add_pin_on@2x.png
-                Resources/button_add_pin_on@3x.png
 		Resources/button_checkbox_off.png
 		Resources/button_checkbox_off@2x.png
 		Resources/button_checkbox_off@3x.png
@@ -826,34 +816,6 @@ set(resources ${resources}
 		Resources/search_tags.json
         Resources/swallow_search_tags.json
 		Resources/EmbeddedTheme
-		Resources/Tours
-		Resources/Tours/browser_back.png
-		Resources/Tours/browser_forward.png
-		Resources/Tours/page.png
-		Resources/Tours/placeholder.png
-		Resources/Tours/play_icon.png
-		Resources/Tours/play_icon@2x.png
-		Resources/Tours/play_icon@3x.png
-		Resources/Tours/States
-		Resources/Tours/States/Twitter
-		Resources/Tours/States/Twitter/browser_back.png
-		Resources/Tours/States/Twitter/browser_forward.png
-		Resources/Tours/States/Twitter/favoriteIcon.png
-		Resources/Tours/States/Twitter/NotLoaded
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded.png
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded@2x.png
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicCatNotLoaded@3x.png
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded.png
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded@2x.png
-		Resources/Tours/States/Twitter/NotLoaded/ProfilePicNotLoaded@3x.png
-		Resources/Tours/States/Twitter/play_icon.png
-		Resources/Tours/States/Twitter/play_icon@2x.png
-		Resources/Tours/States/Twitter/play_icon@3x.png
-		Resources/Tours/States/Twitter/replyIcon.png
-		Resources/Tours/States/Twitter/retweetIcon.png
-		Resources/Tours/States/Twitter/tweet_bird.png
-		Resources/Tours/States/Twitter/tweet_bird@2x.png
-		Resources/Tours/States/Twitter/tweet_bird@3x.png
 		Resources/weatherstates.json
 		Resources/interior_exit_down.png
 		Resources/interior_exit_down@2x.png

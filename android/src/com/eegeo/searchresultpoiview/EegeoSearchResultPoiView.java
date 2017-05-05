@@ -23,7 +23,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.helpers.TintablePinToggleButton;
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.tags.TagResources;
 
@@ -36,7 +35,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     
     private View m_searchResultPoiViewContainer = null;
     private View m_closeButton = null;
-    private View m_togglePinnedButton = null;
     private TextView m_titleView = null;
     private TextView m_subtitleView = null;
     private TextView m_addressView = null;
@@ -62,7 +60,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 	private ImageView m_tagsIcon = null;
 	private ImageView m_descriptionIcon = null;
 	private View m_poiImageViewContainer = null;
-	private TextView m_dropPinText = null;
 	private ScrollView m_contentContainer = null;
 	private ImageView m_footerFade = null;
 	private LinearLayout m_linearContentContainer = null;
@@ -71,10 +68,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 	
 	private boolean m_htmlLoaded = true;
     private boolean m_handlingClick = false;
-    private TintablePinToggleButton m_togglePinnedWrapper;
-    
-    private static String m_pinTextDefault = "Drop Pin";
-    private static String m_pinTextPressed = "Remove Pin";
 
     @SuppressLint("NewApi")
 	public EegeoSearchResultPoiView(MainActivity activity, long nativeCallerPointer)
@@ -87,8 +80,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
        
         m_searchResultPoiViewContainer = m_view.findViewById(R.id.search_result_poi_view_container);
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
-        m_togglePinnedButton = m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
-        m_togglePinnedWrapper = new TintablePinToggleButton(m_togglePinnedButton);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
         m_subtitleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_subtitle);
         m_addressView = (TextView)m_view.findViewById(R.id.search_result_poi_view_address);
@@ -112,7 +103,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 		m_tagsIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_tags_icon);
 		m_descriptionIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_description_icon);
 		m_poiImageViewContainer = (View)m_view.findViewById(R.id.search_result_poi_view_image_container);
-		m_dropPinText = (TextView)m_view.findViewById(R.id.drop_pin_text);
 		m_contentContainer = (ScrollView)m_view.findViewById(R.id.content_container);
 		m_footerFade = (ImageView)m_view.findViewById(R.id.footer_fade);
 		m_linearContentContainer = (LinearLayout)m_view.findViewById(R.id.linear_content_container);
@@ -126,7 +116,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     	m_webView.setWebViewClient(new WebViewClient());
         
         m_closeButton.setOnClickListener(this);
-        m_togglePinnedButton.setOnClickListener(this);
         m_facebookUrl.setOnClickListener(this);
         m_twitterUrl.setOnClickListener(this);
         m_email.setOnClickListener(this);
@@ -148,7 +137,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     		final String[] humanReadableTags,
     		final String imageUrl,
     		final String vendor,
-    		final boolean isPinned,
     		final String facebook,
     		final String twitter,
     		final String email,
@@ -313,17 +301,11 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         m_tagIcon.setImageResource(iconId);
 
         m_closeButton.setEnabled(true);
-        m_togglePinnedWrapper.setPinToggleState(isPinned);
     	
         m_view.setVisibility(View.VISIBLE);
         m_view.requestFocus();
 
         m_handlingClick = false;
-        
-        if(m_togglePinnedWrapper.isPinned())
-        {
-        	m_dropPinText.setText("Remove Pin");
-        }
         
         if(!customViewUrl.equals(""))
         {
@@ -380,10 +362,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         if(view == m_closeButton)
         {
 			handleCloseClicked();
-        }
-        else if(view == m_togglePinnedButton)
-        {
-			handleTogglePinnedClicked();
         }
         else if(view == m_facebookUrl || view == m_twitterUrl)
         {
@@ -452,7 +430,6 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
     private void handleCloseClicked()
     {
         m_view.setEnabled(false);
-        m_togglePinnedButton.setOnClickListener(null);
 
         SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
     }
@@ -479,57 +456,4 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
 	    
 	    return inSampleSize;
 	}
-
-    private void handleTogglePinnedClicked()
-    {
-    	if(m_togglePinnedWrapper.isPinned())
-    	{
-    		showRemovePinDialog();
-    	}
-    	else
-    	{
-    		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
-            m_handlingClick = false;
-            m_togglePinnedWrapper.setPinToggleState(true);
-            m_dropPinText.setText(m_pinTextPressed);
-    	}
-    }
-	
-	private void showRemovePinDialog()
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-        builder.setTitle(m_pinTextPressed)
-        .setMessage("Are you sure you want to remove this pin?")
-        .setPositiveButton("Yes,  delete it", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int id)
-            {
-        		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
-                m_handlingClick = false;
-                m_togglePinnedWrapper.setPinToggleState(false);
-                m_dropPinText.setText(m_pinTextDefault);
-            }
-        })
-        .setNegativeButton("No,  keep it", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-            	m_togglePinnedWrapper.setPinToggleState(true);
-                m_handlingClick = false;
-            }
-        })
-        .setOnCancelListener(new DialogInterface.OnCancelListener()
-        {
-            @Override
-            public void onCancel(DialogInterface dialog)
-            {
-            	m_togglePinnedWrapper.setPinToggleState(true);
-                m_handlingClick = false;
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 }

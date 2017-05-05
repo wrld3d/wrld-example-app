@@ -22,11 +22,7 @@
         
         self.pInteriorHovercard = [[InteriorsHovercard alloc]initWithParams:pinDiameter*1.5f :pixelScale :m_pInterop];
         
-        self.pTourHovercard = [[TourHovercardView alloc]initWithParams:pinDiameter :pixelScale :pImageStore :m_pInterop];
-        
         self.pTwitterHovercard = [[TwitterWorldHovercard alloc]initWithParams:pinDiameter :pixelScale :pImageStore :m_pInterop];
-        
-        self.pTwitterTourHovercard = [[TwitterTourHovercard alloc]initWithParams:pinDiameter :pixelScale :pImageStore :m_pInterop];
         
         self.pCurrentHovercard = nil;
         
@@ -44,9 +40,7 @@
     {
         [self.pCurrentHovercard removeFromSuperview];
     }
-    [self.pTwitterTourHovercard release];
     [self.pTwitterHovercard release];
-    [self.pTourHovercard release];
     [self.pInteriorHovercard release];
     [self.pYelpHovercard release];
     
@@ -90,14 +84,6 @@
     {
         self.pCurrentHovercard = self.pTwitterHovercard;
     }
-    else if(worldPinsInFocusModel.GetVendor() == ExampleApp::Search::ExampleTourVendorName)
-    {
-        self.pCurrentHovercard = self.pTourHovercard;
-    }
-    else if (worldPinsInFocusModel.GetVendor() == ExampleApp::Search::TourTwitterVendorName)
-    {
-        self.pCurrentHovercard = self.pTwitterTourHovercard;
-    }
     else
     {
         Eegeo_ASSERT(false, "unhandled search vendor: %s", worldPinsInFocusModel.GetVendor().c_str());
@@ -111,9 +97,7 @@
 - (void) setFullyActive :(float)modality
 {
     self.userInteractionEnabled = YES;
-    [self.pTwitterTourHovercard setFullyActive:modality];
     [self.pTwitterHovercard setFullyActive:modality];
-    [self.pTourHovercard setFullyActive:modality];
     [self.pInteriorHovercard setFullyActive:modality];
     [self.pYelpHovercard setFullyActive:modality];
 }
@@ -121,9 +105,7 @@
 - (void) setFullyInactive
 {
     self.userInteractionEnabled = NO;
-    [self.pTwitterTourHovercard setFullyInactive];
     [self.pTwitterHovercard setFullyInactive];
-    [self.pTourHovercard setFullyInactive];
     [self.pInteriorHovercard setFullyInactive];
     [self.pYelpHovercard setFullyInactive];
 }

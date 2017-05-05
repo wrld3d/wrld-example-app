@@ -3,7 +3,6 @@
 package com.eegeo.searchresultpoiview;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.helpers.TintablePinToggleButton;
 import com.eegeo.tags.TagResources;
 import com.eegeo.ProjectSwallowApp.R;
 
@@ -26,15 +25,12 @@ public class FacilitySearchResultPoiView implements View.OnClickListener
     private RelativeLayout m_uiRoot = null;
 
     private View m_closeButton = null;
-    private View m_togglePinnedButton = null;
     private TextView m_titleView = null;
     private TextView m_descriptionView = null;
     private ImageView m_tagIcon = null;
 	private ImageView m_poiImage = null;
 	private View m_poiImageProgressBar = null;
 	private String m_poiImageUrl;
-
-    private TintablePinToggleButton m_togglePinnedWrapper;
 
     public FacilitySearchResultPoiView(MainActivity activity, long nativeCallerPointer)
     {
@@ -52,8 +48,6 @@ public class FacilitySearchResultPoiView implements View.OnClickListener
 			layoutParams.leftMargin = layoutParams.rightMargin = (int) (m_uiRoot.getWidth() * 0.3f);
 		}
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
-        m_togglePinnedButton = m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
-        m_togglePinnedWrapper = new TintablePinToggleButton(m_togglePinnedButton);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
         m_descriptionView = (TextView)m_view.findViewById(R.id.search_result_poi_view_description);
         m_tagIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_primary_tag_icon);
@@ -66,7 +60,6 @@ public class FacilitySearchResultPoiView implements View.OnClickListener
         m_uiRoot.addView(m_view);
         
         m_closeButton.setOnClickListener(this);
-        m_togglePinnedButton.setOnClickListener(this);
     }
 
     public void destroy()
@@ -78,8 +71,7 @@ public class FacilitySearchResultPoiView implements View.OnClickListener
     		final String title,
     		final String description,
     		final String primaryTag,
-    		final String imageUrl,
-    		final boolean isPinned)
+    		final String imageUrl)
     {
     	m_poiImageUrl = imageUrl;
     	
@@ -99,8 +91,6 @@ public class FacilitySearchResultPoiView implements View.OnClickListener
         m_tagIcon.setImageResource(iconId);
 
         m_closeButton.setEnabled(true);
-        m_togglePinnedWrapper.setPinToggleState(isPinned);
-        m_togglePinnedButton.setVisibility(View.GONE);
         
         m_view.setVisibility(View.VISIBLE);
         m_view.requestFocus();
@@ -111,10 +101,6 @@ public class FacilitySearchResultPoiView implements View.OnClickListener
         if(view == m_closeButton)
         {
 			handleCloseClicked();
-        }
-        else if(view == m_togglePinnedButton)
-        {
-			handleTogglePinnedClicked();
         }
     }
 
@@ -148,7 +134,6 @@ public class FacilitySearchResultPoiView implements View.OnClickListener
     private void handleCloseClicked()
     {
         m_view.setEnabled(false);
-        m_togglePinnedButton.setOnClickListener(null);
 
         SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
     }
@@ -175,51 +160,4 @@ public class FacilitySearchResultPoiView implements View.OnClickListener
 	    
 	    return inSampleSize;
 	}
-
-    private void handleTogglePinnedClicked()
-    {
-    	if(m_togglePinnedWrapper.isPinned())
-    	{
-    		showRemovePinDialog();
-    	}
-    	else
-    	{
-    		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
-            m_togglePinnedWrapper.setPinToggleState(true);
-    	}
-    }
-	
-	private void showRemovePinDialog()
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-        builder.setTitle("Remove Pin")
-        .setMessage("Are you sure you want to remove this pin?")
-        .setPositiveButton("Yes,  delete it", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int id)
-            {
-        		SearchResultPoiViewJniMethods.TogglePinnedButtonClicked(m_nativeCallerPointer);
-                m_togglePinnedWrapper.setPinToggleState(false);
-            }
-        })
-        .setNegativeButton("No,  keep it", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-            	m_togglePinnedWrapper.setPinToggleState(true);
-            }
-        })
-        .setOnCancelListener(new DialogInterface.OnCancelListener()
-        {
-            @Override
-            public void onCancel(DialogInterface dialog)
-            {
-            	m_togglePinnedWrapper.setPinToggleState(true);
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 }

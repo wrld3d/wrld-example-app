@@ -9,9 +9,7 @@
 #include "IWorldPinsInFocusModel.h"
 #include "YelpHovercardView.h"
 #include "InteriorsHovercard.h"
-#include "TourHovercardView.h"
 #include "TwitterWorldHovercard.h"
-#include "TwitterTourHovercard.h"
 #include "ImageStore.h"
 
 @class WorldPinOnMapViewContainer;
@@ -41,9 +39,7 @@
 
 @property (nonatomic, retain) YelpHovercardView* pYelpHovercard;
 @property (nonatomic, retain) InteriorsHovercard* pInteriorHovercard;
-@property (nonatomic, retain) TourHovercardView* pTourHovercard;
 @property (nonatomic, retain) TwitterWorldHovercard* pTwitterHovercard;
-@property (nonatomic, retain) TwitterTourHovercard* pTwitterTourHovercard;
 @property (nonatomic, retain) UIView<WorldPinOnMapView>* pCurrentHovercard;
 
 @end

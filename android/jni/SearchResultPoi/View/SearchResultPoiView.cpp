@@ -40,23 +40,23 @@ namespace ExampleApp
 
                 if(vendor == Search::YelpVendorName)
                 {
-                	CreateAndShowYelpPoiView(model, isPinned);
+                	CreateAndShowYelpPoiView(model);
                 }
                 else if(vendor == Search::GeoNamesVendorName)
                 {
-                	CreateAndShowGeoNamesPoiView(model, isPinned);
+                	CreateAndShowGeoNamesPoiView(model);
                 }
                 else if(vendor == Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
                 {
-                	CreateAndShowPersonSearchResultPoiView(model, isPinned);
+                	CreateAndShowPersonSearchResultPoiView(model);
                 }
                 else if(vendor == Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
 				{
-					CreateAndShowMeetingRoomSearchResultPoiView(model, isPinned);
+					CreateAndShowMeetingRoomSearchResultPoiView(model);
 				}
                 else if(vendor == Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
 				{
-                	CreateAndShowWorkingGroupSearchResultPoiView(model, isPinned);
+                	CreateAndShowWorkingGroupSearchResultPoiView(model);
 				}
                 else if(vendor == ExampleApp::Search::EegeoVendorName && (primaryTag == ExampleApp::Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME
                                                                               || primaryTag == ExampleApp::Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME
@@ -64,15 +64,15 @@ namespace ExampleApp
                                                                               || primaryTag == ExampleApp::Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME
                                                                               || primaryTag == ExampleApp::Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME))
                 {
-                	CreateAndShowFacilitySearchResultPoiView(model, isPinned);
+                	CreateAndShowFacilitySearchResultPoiView(model);
                 }
                 else if(vendor == ExampleApp::Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
                 {
-                	CreateAndShowDepartmentSearchResultPoiView(model, isPinned);
+                	CreateAndShowDepartmentSearchResultPoiView(model);
                 }
                 else if (vendor == Search::EegeoVendorName)
                 {
-                	CreateAndShowEegeoPoiView(model, isPinned);
+                	CreateAndShowEegeoPoiView(model);
                 }
                 else
                 {
@@ -181,7 +181,7 @@ namespace ExampleApp
 				m_availabilityChangedCallbacks.ExecuteCallbacks(m_model, availability);
             }
 
-            void SearchResultPoiView::CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+            void SearchResultPoiView::CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model)
             {
             	const std::string viewClass = "com/eegeo/searchresultpoiview/YelpSearchResultPoiView";
             	m_uiViewClass = CreateJavaClass(viewClass);
@@ -205,7 +205,7 @@ namespace ExampleApp
             	jstring ratingImageUrlStr = env->NewStringUTF(yelpModel.GetRatingImageUrl().c_str());
             	jstring vendorStr = env->NewStringUTF(model.GetVendor().c_str());
 
-            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;IZ)V");
+            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;I)V");
             	env->CallVoidMethod(
             			m_uiView,
 						displayPoiInfoMethod,
@@ -219,8 +219,7 @@ namespace ExampleApp
 						ratingImageUrlStr,
 						vendorStr,
 						reviewsArray,
-						yelpModel.GetReviewCount(),
-						isPinned
+						yelpModel.GetReviewCount()
             	);
 
             	env->DeleteLocalRef(vendorStr);
@@ -235,7 +234,7 @@ namespace ExampleApp
             	env->DeleteLocalRef(humanReadableTagsArray);
             }
 
-            void SearchResultPoiView::CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+            void SearchResultPoiView::CreateAndShowGeoNamesPoiView(const Search::SdkModel::SearchResultModel& model)
             {
             	const std::string viewClass = "com/eegeo/searchresultpoiview/GeoNamesSearchResultPoiView";
             	m_uiViewClass = CreateJavaClass(viewClass);
@@ -248,14 +247,13 @@ namespace ExampleApp
             	jstring addressStr = env->NewStringUTF(model.GetSubtitle().c_str());
             	jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
 
-            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
             	env->CallVoidMethod(
             			m_uiView,
 						displayPoiInfoMethod,
 						titleStr,
 						addressStr,
-						iconKeyStr,
-						isPinned
+						iconKeyStr
             	);
 
             	env->DeleteLocalRef(iconKeyStr);
@@ -263,7 +261,7 @@ namespace ExampleApp
             	env->DeleteLocalRef(titleStr);
             }
 
-            void SearchResultPoiView::CreateAndShowEegeoPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+            void SearchResultPoiView::CreateAndShowEegeoPoiView(const Search::SdkModel::SearchResultModel& model)
             {
             	const std::string viewClass = "com/eegeo/searchresultpoiview/EegeoSearchResultPoiView";
             	m_uiViewClass = CreateJavaClass(viewClass);
@@ -293,7 +291,7 @@ namespace ExampleApp
             	jstring customViewStr = env->NewStringUTF(eegeoSearchResultModel.GetCustomViewUrl().c_str());
             	int customViewHeight = eegeoSearchResultModel.GetCustomViewHeight();
 
-            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V");
+            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V");
             	env->CallVoidMethod(
             			m_uiView,
 						displayPoiInfoMethod,
@@ -307,7 +305,6 @@ namespace ExampleApp
 						humanReadableTagsArray,
 						imageUrlStr,
 						vendorStr,
-						isPinned,
 						facebookStr,
 						twitterStr,
 						emailStr,
@@ -331,7 +328,7 @@ namespace ExampleApp
             	env->DeleteLocalRef(customViewStr);
             }
 
-            void SearchResultPoiView::CreateAndShowPersonSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+            void SearchResultPoiView::CreateAndShowPersonSearchResultPoiView(const Search::SdkModel::SearchResultModel& model)
             {
             	const std::string viewClass = "com/eegeo/searchresultpoiview/PersonSearchResultPoiView";
             	m_uiViewClass = CreateJavaClass(viewClass);
@@ -350,7 +347,7 @@ namespace ExampleApp
 				jstring deskStr = env->NewStringUTF(personModel.GetDeskCode().c_str());
 				jstring imageUrlStr = env->NewStringUTF(personModel.GetImageFilename().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
@@ -359,8 +356,7 @@ namespace ExampleApp
 						workingGroupStr,
 						locationStr,
 						deskStr,
-						imageUrlStr,
-						isPinned
+						imageUrlStr
 				);
 
 				env->DeleteLocalRef(nameStr);
@@ -371,7 +367,7 @@ namespace ExampleApp
 				env->DeleteLocalRef(imageUrlStr);
             }
 
-			void SearchResultPoiView::CreateAndShowMeetingRoomSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+			void SearchResultPoiView::CreateAndShowMeetingRoomSearchResultPoiView(const Search::SdkModel::SearchResultModel& model)
 			{
 				const std::string viewClass = "com/eegeo/searchresultpoiview/MeetingRoomSearchResultPoiView";
 				m_uiViewClass = CreateJavaClass(viewClass);
@@ -388,15 +384,14 @@ namespace ExampleApp
 				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
 				jstring imageUrlStr = env->NewStringUTF(meetingRoomModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
 						titleStr,
 						availabilityStr,
 						primaryTagStr,
-						imageUrlStr,
-						isPinned
+						imageUrlStr
 				);
 
 				env->DeleteLocalRef(titleStr);
@@ -405,7 +400,7 @@ namespace ExampleApp
 				env->DeleteLocalRef(imageUrlStr);
 			}
 
-			void SearchResultPoiView::CreateAndShowWorkingGroupSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+			void SearchResultPoiView::CreateAndShowWorkingGroupSearchResultPoiView(const Search::SdkModel::SearchResultModel& model)
 			{
 				const std::string viewClass = "com/eegeo/searchresultpoiview/DepartmentSearchResultPoiView";
 				m_uiViewClass = CreateJavaClass(viewClass);
@@ -423,7 +418,7 @@ namespace ExampleApp
 				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
 				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
@@ -431,8 +426,7 @@ namespace ExampleApp
 						subtitleStr,
 						descriptionStr,
 						primaryTagStr,
-						imageUrlStr,
-						isPinned
+						imageUrlStr
 				);
 
 				env->DeleteLocalRef(titleStr);
@@ -441,7 +435,7 @@ namespace ExampleApp
 				env->DeleteLocalRef(imageUrlStr);
 			}
 
-			void SearchResultPoiView::CreateAndShowFacilitySearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+			void SearchResultPoiView::CreateAndShowFacilitySearchResultPoiView(const Search::SdkModel::SearchResultModel& model)
 			{
 				const std::string viewClass = "com/eegeo/searchresultpoiview/FacilitySearchResultPoiView";
 				m_uiViewClass = CreateJavaClass(viewClass);
@@ -457,15 +451,14 @@ namespace ExampleApp
 				jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
 				jstring imageUrlStr = env->NewStringUTF(facilityModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
 						titleStr,
 						descriptionStr,
 						iconKeyStr,
-						imageUrlStr,
-						isPinned
+						imageUrlStr
 				);
 
 				env->DeleteLocalRef(titleStr);
@@ -474,7 +467,7 @@ namespace ExampleApp
 				env->DeleteLocalRef(imageUrlStr);
 			}
 
-			void SearchResultPoiView::CreateAndShowDepartmentSearchResultPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
+			void SearchResultPoiView::CreateAndShowDepartmentSearchResultPoiView(const Search::SdkModel::SearchResultModel& model)
 			{
 				const std::string viewClass = "com/eegeo/searchresultpoiview/DepartmentSearchResultPoiView";
 				m_uiViewClass = CreateJavaClass(viewClass);
@@ -492,7 +485,7 @@ namespace ExampleApp
 				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
 				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
@@ -500,8 +493,7 @@ namespace ExampleApp
 						subtitleStr,
 						descriptionStr,
 						primaryTagStr,
-						imageUrlStr,
-						isPinned
+						imageUrlStr
 				);
 
 				env->DeleteLocalRef(titleStr);

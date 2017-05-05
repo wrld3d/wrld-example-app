@@ -31,9 +31,6 @@
 #include "WatermarkModelChangedMessage.h"
 #include "WatermarkAlignmentStateChangedMessage.h"
 #include "SetWatermarkVisibilityMessage.h"
-#include "TourOnMapSelectedMessage.h"
-#include "TourFullScreenImageCeremonyBeganMessage.h"
-#include "TourFullScreenImageCeremonyEndedMessage.h"
 #include "AppModeChangedMessage.h"
 #include "UserInteractionEnabledChangedMessage.h"
 #include "URLRequestedMessage.h"
@@ -80,9 +77,6 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Watermark::SetWatermarkVisibilityMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkModelChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkAlignmentStateChangedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Tours::TourOnMapSelectedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Tours::TourFullScreenImageCeremonyBeganMessage>
-            , public Eegeo::Messaging::CatalogBinding<Tours::TourFullScreenImageCeremonyEndedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerFloorSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AppModes::AppModeChangedMessage>

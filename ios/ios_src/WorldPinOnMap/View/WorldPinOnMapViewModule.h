@@ -10,7 +10,6 @@
 #include "WorldPinOnMapViewIncludes.h"
 #include "IAppModeModel.h"
 #include "ImageStore.h"
-#include "TourHovercardView.h"
 
 namespace ExampleApp
 {
@@ -23,8 +22,6 @@ namespace ExampleApp
             private:
                 WorldPinOnMapViewContainer* m_pView;
                 WorldPinOnMapController* m_pController;
-                
-                TourHovercardView* m_pTourView;
 
             public:
                 WorldPinOnMapViewModule(IWorldPinInFocusViewModel& worldPinInFocusViewModel,

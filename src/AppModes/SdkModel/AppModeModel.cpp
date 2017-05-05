@@ -5,7 +5,6 @@
 #include "AppModeModel.h"
 #include "InteriorSelectionModel.h"
 #include "AppModeChangedMessage.h"
-#include "TourService.h"
 #include "WorldState.h"
 #include "InteriorExplorerState.h"
 #include "GlobalAppModeTransitionRules.h"

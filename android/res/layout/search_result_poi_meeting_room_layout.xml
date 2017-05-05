@@ -123,13 +123,6 @@
         android:layout_alignParentBottom="true"
         android:background="@color/gold" >
 
-        <include
-            android:id="@+id/search_result_poi_view_toggle_pinned_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            layout="@layout/toggle_pinned_control" />
-
         <ImageView
             android:id="@+id/search_result_poi_view_close_button"
             android:layout_width="wrap_content"

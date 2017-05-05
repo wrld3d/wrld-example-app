@@ -4,7 +4,6 @@
 
 #include "WorldPinOnMapViewIncludes.h"
 #include "WorldPins.h"
-#include "TourHovercardView.h"
 
 namespace ExampleApp
 {
