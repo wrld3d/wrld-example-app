@@ -6,34 +6,6 @@
         <ResourceDictionary Source="../../Colours.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="AddRemovePinStyle" TargetType="ToggleButton" x:Shared="false">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ToggleButton">
-                    <Border Background="{StaticResource Transparent}">
-                        <ContentPresenter/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <Image Source="/Assets/button_remove_pin_off.png" Width="48" Height="48"/>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-            <Trigger Property="IsChecked" Value="False">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <Image Source="/Assets/button_add_pin_off.png" Width="48" Height="48"/>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <Style TargetType="{x:Type local:GeoNamesSearchResultsPoiView}">
         <Setter Property="Template">
             <Setter.Value>
@@ -72,7 +44,6 @@
 
                             <!--Bottom Bar-->
                             <Grid VerticalAlignment="Bottom" Background="{StaticResource Gold}" HorizontalAlignment="Stretch" Height="Auto" Grid.Row="2">
-                                <ToggleButton Name="TogglePinnedButton" Style="{StaticResource AddRemovePinStyle}" HorizontalAlignment="Left" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:GeoNamesSearchResultsPoiView}}, Path=IsPinned, Mode=TwoWay}"/>
                                 <Button Name="CloseButton" HorizontalAlignment="Right">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">

@@ -72,7 +72,7 @@ namespace ExampleApp
                     DismissPoiInfo[previousVendor]();
                 }
                 
-				DisplayPoiInfo[m_currentVendor](gcnew SearchResultModelCLI(m_model), isPinned);
+				DisplayPoiInfo[m_currentVendor](gcnew SearchResultModelCLI(m_model));
 
                 m_isAnyPoiOpen = true;
             }

@@ -31,7 +31,6 @@ namespace ExampleAppWPF
         protected RepeatButton m_scrollUpButton;
 
         protected bool m_closing;
-        protected bool m_isPinned;
 
         protected bool m_isOpen;
 
@@ -46,22 +45,6 @@ namespace ExampleAppWPF
         private double m_scrollSpeed;
 
         protected bool m_isInKioskMode;
-
-        public bool IsPinned
-        {
-            get
-            {
-                return m_isPinned;
-            }
-
-            set
-            {
-                if (HandleTogglePinnedClicked(ref m_isPinned, !m_isPinned))
-                {
-                    OnPropertyChanged("IsPinned");
-                }
-            }
-        }
 
         public static bool IsAnyPOIOpen()
         {
@@ -323,15 +306,8 @@ namespace ExampleAppWPF
             }
         }
 
-        public void DisplayPoiInfo(Object modelObject, bool isPinned)
+        public void DisplayPoiInfo(Object modelObject)
         {
-            // set the pinned state from the native model without feeding back into the native model
-            if (m_isPinned != isPinned)
-            {
-                m_isPinned = isPinned;
-                OnPropertyChanged("IsPinned");
-            }
-
             DisplayCustomPoiInfo(modelObject);
         }
 
@@ -346,33 +322,7 @@ namespace ExampleAppWPF
         {
             ExampleApp.SearchResultPoiViewCLI.CloseButtonClicked(m_nativeCallerPointer);
         }
-
-        private bool HandleTogglePinnedClicked(ref bool oldValue, bool newValue)
-        {
-            if (oldValue != newValue)
-            {
-                if (!newValue)
-                {
-                    if (ShowRemovePinDialog() == true)
-                    {
-                        ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
-                        oldValue = newValue;
-
-                        return true;
-                    }
-                }
-                else
-                {
-                    ExampleApp.SearchResultPoiViewCLI.TogglePinnedButtonClicked(m_nativeCallerPointer);
-                    oldValue = newValue;
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
+        
         private void HandleScrollUpButtonClicked(object sender, RoutedEventArgs e)
         {
             if(m_contentContainer != null)
@@ -388,26 +338,7 @@ namespace ExampleAppWPF
                 m_contentContainer.ScrollToVerticalOffset(m_contentContainer.VerticalOffset + m_scrollSpeed);
             }
         }
-
-        private bool ShowRemovePinDialog()
-        {
-            DialogBox dialogBox = new DialogBox("Remove Pin", "Are you sure you want to remove this pin?", "Yes", "No");
-            dialogBox.Owner = m_currentWindow;
-
-            m_currentWindow.SetOpacity(MainWindow.OpacityOnPopup);
-
-            bool? result = dialogBox.ShowDialog();
-
-            m_currentWindow.SetOpacity(1.0f);
-
-            if (result == null)
-            {
-                return false;
-            }
-
-            return (bool)result;
-        }
-
+        
         protected static BitmapImage LoadImageFromByteArray(byte[] imageData)
         {
             if (imageData == null || imageData.Length == 0)
