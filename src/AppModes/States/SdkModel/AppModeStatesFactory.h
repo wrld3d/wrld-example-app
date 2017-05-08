@@ -23,7 +23,7 @@
 #include "Search.h"
 
 #include "VisualMap.h"
-
+#include "IFlattenButtonModel.h"
 #include <vector>
 
 namespace ExampleApp
@@ -50,6 +50,7 @@ namespace ExampleApp
                     Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                     Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
                     VisualMap::SdkModel::IVisualMapService& m_visualMapService;
+                    FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
 
                     Eegeo::Location::ILocationService& m_locationService;
                     Eegeo::Input::IUserIdleService& m_userIdleService;
@@ -88,7 +89,8 @@ namespace ExampleApp
                                          const Eegeo::Rendering::ScreenProperties& screenProperties,
                                          ExampleAppMessaging::TMessageBus& messageBus,
                                          Eegeo::Location::NavigationService& navigationService,
-                                         Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer);
+                                         Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                         FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel);
                     
                     ~AppModeStatesFactory()
                     {
