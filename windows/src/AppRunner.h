@@ -40,6 +40,7 @@ public:
     void SetAllInputEventsToPointerUp(int x, int y);
     void SetTouchInputEventToPointerUp(int touchId);
     void PopAllTouchEvents();
+    void SaveInputTime();
     void RespondToResize();
     void RespondToSize(int width, int height);
 

@@ -41,6 +41,7 @@ namespace ExampleApp
             void SetAllInputEventsToPointerUp(int x, int y);
             void SetTouchInputEventToPointerUp(int touchId);
             void PopAllTouchEvents();
+            void SaveInputTime();
             void Pause() {}
             void Resume() {}
             void RespondToResize(int width, int height);

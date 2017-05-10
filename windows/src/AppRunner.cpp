@@ -224,6 +224,14 @@ void AppRunner::PopAllTouchEvents()
     }
 }
 
+void AppRunner::SaveInputTime()
+{
+    if (m_pAppHost)
+    {
+        m_pAppHost->SaveInputTime();
+    }
+}
+
 void AppRunner::ReleaseDisplay()
 {
     ASSERT_NATIVE_THREAD
