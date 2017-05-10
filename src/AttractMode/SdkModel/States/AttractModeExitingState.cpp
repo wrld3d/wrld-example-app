@@ -66,32 +66,39 @@ namespace ExampleApp
 
                 void AttractModeExitingState::Enter(int previousState)
                 {
-                    Eegeo::Space::LatLong gpsLatLong(0.0, 0.0);
-                    const Eegeo::Space::LatLong targetLocation(m_locationService.GetLocation(gpsLatLong)
-                        ? gpsLatLong
-                        : Eegeo::Space::LatLong::FromECEF(m_worldCameraController.GetCameraState().InterestPointEcef()));
-                    double headingDegrees;
-                    if (!m_locationService.GetHeadingDegrees(headingDegrees))
+                    if (previousState == States::EnterState)
                     {
-                        headingDegrees = m_cameraController.GetHeadingDegrees();
+                        m_cameraController.SetTransitionTimeMultiplier(5.0f);
                     }
-                    Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController = m_worldCameraController.GetGlobeCameraController();
-
-                    double altitude;
-                    if (m_locationService.GetAltitude(altitude) == false)
+                    else
                     {
-                        altitude = globeCameraController.GetDistanceToInterest();
-                    }
-                    globeCameraController.SetView(gpsLatLong.GetLatitudeInDegrees(),
-                                                  gpsLatLong.GetLongitudeInDegrees(),
-                                                  headingDegrees,
-                                                  altitude);
+                        Eegeo::Space::LatLong gpsLatLong(0.0, 0.0);
+                        const Eegeo::Space::LatLong targetLocation(m_locationService.GetLocation(gpsLatLong)
+                            ? gpsLatLong
+                            : Eegeo::Space::LatLong::FromECEF(m_worldCameraController.GetCameraState().InterestPointEcef()));
+                        double headingDegrees;
+                        if (!m_locationService.GetHeadingDegrees(headingDegrees))
+                        {
+                            headingDegrees = m_cameraController.GetHeadingDegrees();
+                        }
+                        Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& globeCameraController = m_worldCameraController.GetGlobeCameraController();
 
-                    const Eegeo::dv3 currentLocation = m_cameraController.GetCameraState().LocationEcef();
-                    const float distanceToTarget = (currentLocation - targetLocation.ToECEF()).Length();
-                    const float approximateMaxDistance = static_cast<float>(ApproximateMaxDistance(targetLocation.ToECEF(), m_cameraPositionPoints.GetPoints()));
-                    const float transitionDuration = TransitionDuration(distanceToTarget, approximateMaxDistance);
-                    m_cameraController.TransitionToCameraWithHandle(m_worldCameraHandle, JumpDistanceThreshold, transitionDuration);
+                        double altitude;
+                        if (m_locationService.GetAltitude(altitude) == false)
+                        {
+                            altitude = globeCameraController.GetDistanceToInterest();
+                        }
+                        globeCameraController.SetView(gpsLatLong.GetLatitudeInDegrees(),
+                                                      gpsLatLong.GetLongitudeInDegrees(),
+                                                      headingDegrees,
+                                                      altitude);
+
+                        const Eegeo::dv3 currentLocation = m_cameraController.GetCameraState().LocationEcef();
+                        const float distanceToTarget = (currentLocation - targetLocation.ToECEF()).Length();
+                        const float approximateMaxDistance = static_cast<float>(ApproximateMaxDistance(targetLocation.ToECEF(), m_cameraPositionPoints.GetPoints()));
+                        const float transitionDuration = TransitionDuration(distanceToTarget, approximateMaxDistance);
+                        m_cameraController.TransitionToCameraWithHandle(m_worldCameraHandle, JumpDistanceThreshold, transitionDuration);
+                    }
                 }
                 
                 void AttractModeExitingState::Update(float dt)

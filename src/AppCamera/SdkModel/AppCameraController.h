@@ -38,6 +38,8 @@ namespace ExampleApp
                 Eegeo::dv3 m_currentNonFlattenedCameraPosition;
                 
                 Eegeo::Helpers::CallbackCollection0 m_transitionInFlightChangedCallbacks;
+
+                float m_transitionTimeMultiplier;
                 
                 void UpdateTransitionBetween(IAppCamera& previousCamera, IAppCamera& nextCamera, float dt);
                 const bool ShouldSkipTransition(IAppCamera& previousCamera, IAppCamera& nextCamera);
@@ -53,6 +55,7 @@ namespace ExampleApp
                 
                 void TransitionToCameraWithHandle(int cameraHandle);
                 void TransitionToCameraWithHandle(int cameraHandle, const double jumpThresholdDistanceBetweenCameras, const float transitionDuration);
+                void SetTransitionTimeMultiplier(float newMultiplier);
                 
                 const bool IsTransitionInFlight() const;
                 
