@@ -137,18 +137,55 @@ namespace ExampleAppWPF
             PreviewMouseLeftButtonUp += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandlePanEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
             MouseRightButtonDown += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleRotateStartEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
             PreviewMouseRightButtonUp += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleRotateEndEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers); };
-            MouseWheel += (o, e) => { if (m_isMouseInputActive) m_mapImage.HandleZoomEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), e.Delta, Keyboard.Modifiers); };
-            MouseLeave += (o, e) => { if (m_isMouseInputActive) m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y)); };
+            MouseWheel += (o, e) =>
+            {
+                if (m_isMouseInputActive)
+                {
+                    m_mapImage.HandleZoomEvent((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), e.Delta, Keyboard.Modifiers);
+                }
+                else
+                {
+                    m_mapImage.SaveInputTime();
+                }
+            };
+            MouseLeave += (o, e) =>
+            {
+                if (m_isMouseInputActive)
+                {
+                    m_mapImage.SetAllInputEventsToPointerUp((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y));
+                }
+                else
+                {
+                    m_mapImage.SaveInputTime();
+                }
+            };
             MouseMove += (o, e) =>
             {
                 var position = e.GetPosition(null);
-                if (m_isMouseInputActive && position != m_lastMovePosition)
+                if (position != m_lastMovePosition)
                 {
-                    m_lastMovePosition = e.GetPosition(null);
-                    m_mapImage.HandleMouseMoveEvent((int)position.X, (int)position.Y, Keyboard.Modifiers);
+                    if(m_isMouseInputActive)
+                    {
+                        m_lastMovePosition = e.GetPosition(null);
+                        m_mapImage.HandleMouseMoveEvent((int)position.X, (int)position.Y, Keyboard.Modifiers);
+                    }
+                    else
+                    {
+                        m_mapImage.SaveInputTime();
+                    }
                 }
             };
-            MouseEnter += (o, e) => { if (m_isMouseInputActive) { EnableInput(); } };
+            MouseEnter += (o, e) =>
+            {
+                if (m_isMouseInputActive)
+                {
+                    EnableInput();
+                }
+                else
+                {
+                    m_mapImage.SaveInputTime();
+                }
+            };
 
             KeyDown += OnKeyDown;
 
@@ -165,6 +202,10 @@ namespace ExampleAppWPF
                 {
                     m_mapImage.SetTouchInputEventToPointerUp(CheckAndGetZeroIndexedId(e.TouchDevice.Id));
                     RemoveTouchId(e.TouchDevice.Id);
+                }
+                else
+                {
+                    m_mapImage.SaveInputTime();
                 }
             };
 
@@ -221,6 +262,10 @@ namespace ExampleAppWPF
             {
                 m_mapImage.HandleTouchMoveEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
             }
+            else
+            {
+                m_mapImage.SaveInputTime();
+            }
         }
 
         private void OnTouchUp(object sender, TouchEventArgs e)
@@ -228,6 +273,10 @@ namespace ExampleAppWPF
             if (m_isTouchInputActive)
             {
                 m_mapImage.HandleTouchUpEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+            }
+            else
+            {
+                m_mapImage.SaveInputTime();
             }
 
             RemoveTouchId(e.TouchDevice.Id);
@@ -244,8 +293,11 @@ namespace ExampleAppWPF
         {
             if (m_isTouchInputActive)
             {
-                
                 m_mapImage.HandleTouchDownEvent((float)e.TouchDevice.GetTouchPoint(this).Position.X, (float)e.TouchDevice.GetTouchPoint(this).Position.Y, 0.0f, CheckAndGetZeroIndexedId(e.TouchDevice.Id));
+            }
+            else
+            {
+                m_mapImage.SaveInputTime();
             }
         }
 
@@ -289,17 +341,31 @@ namespace ExampleAppWPF
 
         private void MainWindow_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Middle && m_isMouseInputActive)
+            if(m_isMouseInputActive)
             {
-                m_mapImage.HandleTiltEnd((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers);
+                if (e.ChangedButton == MouseButton.Middle)
+                {
+                    m_mapImage.HandleTiltEnd((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers);
+                }
+            }
+            else
+            {
+                m_mapImage.SaveInputTime();
             }
         }
 
         private void MainWindow_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Middle && m_isMouseInputActive)
+            if(m_isMouseInputActive)
             {
-                m_mapImage.HandleTiltStart((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers);
+                if (e.ChangedButton == MouseButton.Middle)
+                {
+                    m_mapImage.HandleTiltStart((int)(e.GetPosition(null).X), (int)(e.GetPosition(null).Y), Keyboard.Modifiers);
+                }
+            }
+            else
+            {
+                m_mapImage.SaveInputTime();
             }
         }
 

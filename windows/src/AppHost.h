@@ -107,6 +107,7 @@ public:
     void SetAllInputEventsToPointerUp(int x, int y);
     void SetTouchInputEventToPointerUp(int touchId);
     void PopAllTouchEvents();
+    void SaveInputTime();
 
     void SetEnvironmentFlatten(bool flattenState);
     void SetCameraLocation(const Eegeo::Space::LatLongAltitude& interestPoint, double distanceToInterestPoint, double orientationInDegrees);

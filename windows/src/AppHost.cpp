@@ -414,6 +414,11 @@ void AppHost::PopAllTouchEvents()
     m_pInputProcessor->PopAllTouchEvents();
 }
 
+void AppHost::SaveInputTime()
+{
+    m_pInputProcessor->SaveInputTime();
+}
+
 void AppHost::Update(float dt)
 {
     ASSERT_NATIVE_THREAD

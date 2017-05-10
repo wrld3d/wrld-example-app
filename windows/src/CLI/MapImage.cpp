@@ -278,6 +278,11 @@ namespace ExampleApp
             m_appRunner->PopAllTouchEvents();
         }
 
+        void MapImage::SaveInputTime()
+        {
+            m_appRunner->SaveInputTime();
+        }
+
         void MapImage::RespondToResize(int width, int  height)
         {
             const int scaledWidth = ScaledScreenCoord(width);
