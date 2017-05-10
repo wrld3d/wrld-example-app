@@ -33,6 +33,7 @@ namespace ExampleApp
             , m_isTransitionInFlight(false)
             , m_currentNonFlattenedCameraPosition(0.0, 0.0, 0.0)
             , m_currentInterestPoint(0.0, 0.0, 0.0)
+            , m_transitionTimeMultiplier(1.0f)
             {
                 nextHandleId = -1;
             }
@@ -72,12 +73,18 @@ namespace ExampleApp
                 m_jumpThresholdDistanceBetweenCameras = jumpThresholdDistanceBetweenCameras;
                 m_transitionTimer = 0.0f;
                 m_isTransitionInFlight = true;
+                m_transitionTimeMultiplier = 1.0f;
                 
                 m_previousCameraIndex = m_currentCameraIndex;
                 m_currentCameraIndex = cameraHandle;
                 
                 m_transitionInFlightChangedCallbacks.ExecuteCallbacks();
                 Update(0.0f);
+            }
+
+            void AppCameraController::SetTransitionTimeMultiplier(float newMultiplier)
+            {
+                m_transitionTimeMultiplier = newMultiplier;
             }
 
             const bool AppCameraController::IsTransitionInFlight() const
@@ -126,6 +133,8 @@ namespace ExampleApp
             
             void AppCameraController::Update(float dt)
             {
+                dt *= m_transitionTimeMultiplier;
+
                 if(m_isTransitionInFlight)
                 {
                     m_transitionTimer = Eegeo::Math::Clamp(m_transitionTimer + dt, 0.0f, m_transitionDuration);

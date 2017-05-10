@@ -309,7 +309,7 @@ namespace ExampleApp
     {
         if (m_applicationConfiguration.IsInKioskMode())
         {
-            PanToUnlockThreshold = 0.0f;
+            PanToUnlockThreshold = 0.0001f;
         }
 
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
