@@ -28,7 +28,7 @@ namespace ExampleApp
                 void ExecuteScreenshot();
                 void Screenshot(Callback callback);
 
-                void UpdateScreenProperties(Eegeo::Rendering::ScreenProperties& screenProperties);
+                void UpdateScreenProperties(const Eegeo::Rendering::ScreenProperties& screenProperties);
 
             private:
                 void ReadPixels(const size_t width, const size_t height);

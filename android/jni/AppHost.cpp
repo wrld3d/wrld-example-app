@@ -355,6 +355,7 @@ void AppHost::OnPause()
 void AppHost::NotifyScreenPropertiesChanged(const Eegeo::Rendering::ScreenProperties& screenProperties)
 {
     m_pApp->NotifyScreenPropertiesChanged(screenProperties);
+    m_surfaceScreenshotService.UpdateScreenProperties(screenProperties);
 }
 
 void AppHost::SetSharedSurface(EGLSurface sharedSurface)

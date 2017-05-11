@@ -52,7 +52,7 @@ namespace ExampleApp
                 m_callbacks.push_back(callback);
             }
 
-            void SurfaceScreenshotService::UpdateScreenProperties(Eegeo::Rendering::ScreenProperties& screenProperties)
+            void SurfaceScreenshotService::UpdateScreenProperties(const Eegeo::Rendering::ScreenProperties& screenProperties)
             {
                 m_screenProperties = screenProperties;
             }
