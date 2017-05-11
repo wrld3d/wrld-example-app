@@ -297,7 +297,7 @@ namespace ExampleApp
                 
                 [this]() {
                     return IsLandscapeLayout(m_screenProperties)
-                           ? SelectedPinSceneSetup("Victoria and Albert Museum", 0)
+                           ? SelectedPinSceneSetup("Victoria and Albert Museum", 2)
                            : SelectedPinSceneSetup("Empire State Building", 0);
                 },
 
