@@ -83,7 +83,7 @@ namespace ExampleApp
                     jmethodID run = env->GetMethodID(m_screenshotCompositorClass, "run", "(JJ[B)V");
                     jbyteArray javaSurfaceBytes = env->NewByteArray(surfaceBytes.size());
                     env->SetByteArrayRegion(javaSurfaceBytes, 0, surfaceBytes.size(), (jbyte*) &surfaceBytes[0]);
-                    env->CallVoidMethod(compositorObject, run, width, height, javaSurfaceBytes);
+                    env->CallVoidMethod(compositorObject, run, static_cast<jlong>(width), static_cast<jlong>(height), javaSurfaceBytes);
                     env->DeleteLocalRef(javaSurfaceBytes);
                     env->DeleteGlobalRef(compositorObject);
                 });
