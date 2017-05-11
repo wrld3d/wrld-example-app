@@ -233,6 +233,7 @@ namespace ExampleApp
             void InteriorMenuObserver::UpdateDefaultOutdoorSearchMenuItems(const std::string config)
             {
                 ParseJson(config);
+                NotifyInteriorTagsUpdated();
             }
             
             void InteriorMenuObserver::OnExitInterior()
