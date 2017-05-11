@@ -66,6 +66,7 @@ namespace ExampleApp
                     }
 
                     m_confirmationViewModel.RemoveFromScreen();
+                    m_confirmationViewModel.TryReleaseReactorControl();
                     break;
                 }
                 case Ring:
