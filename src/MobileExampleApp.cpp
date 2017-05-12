@@ -635,6 +635,9 @@ namespace ExampleApp
                                                                                 m_metricsService,
                                                                                 m_menuReaction);
 
+        auto defaultFindMenuItems = TagSearch::View::CreateTagSearchModelsFromFile(m_applicationConfiguration.RawConfig(),
+                                                                                   "outdoor_search_menu_items",
+                                                                                   m_yelpCategoryMapperUpdater);
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
                                                                     m_pAppCameraModule->GetController(),
                                                                     *m_pCameraTransitionService,
@@ -644,7 +647,8 @@ namespace ExampleApp
                                                                     m_metricsService,
                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
                                                                     mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
-                                                                    m_yelpCategoryMapperUpdater);
+                                                                    m_yelpCategoryMapperUpdater,
+                                                                    defaultFindMenuItems);
         m_pTagSearchModule = &m_pSearchModule->GetTagSearchModule();
 
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());

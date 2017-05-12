@@ -48,7 +48,8 @@ namespace ExampleApp
                              Metrics::IMetricsService& metricsService,
                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                              Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
-                             Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater);
+                             Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
+                             std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries);
 
                 ~SearchModule();
 

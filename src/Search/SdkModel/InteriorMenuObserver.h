@@ -20,7 +20,8 @@ namespace ExampleApp
                 InteriorMenuObserver(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                      Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
                                      TagSearch::View::ITagSearchRepository& tagSearchRepository,
-                                     Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater);
+                                     Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
+                                     std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries);
                 ~InteriorMenuObserver();
                 TagSearch::View::ITagSearchRepository& GetTagsRepository() { return m_tagSearchRepository; }
                 void RegisterInteriorTagsUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -59,6 +60,7 @@ namespace ExampleApp
                 bool m_hasSearchMenuItems;
                 
                 Eegeo::Helpers::CallbackCollection0 m_interiorTagsUpdatedCallbacks;
+                std::vector<TagSearch::View::TagSearchModel> m_defaultFindMenuEntries;
             };
             
         }

@@ -15,7 +15,8 @@ namespace ExampleApp
             InteriorMenuObserver::InteriorMenuObserver(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                        Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
                                                        TagSearch::View::ITagSearchRepository& tagSearchRepository,
-                                                       Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater)
+                                                       Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
+                                                       std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries)
             : m_tagSearchRepository(tagSearchRepository)
             , m_interiorSelectionChangedCallback(this, &InteriorMenuObserver::OnSelectionChanged)
             , m_interiorSelectionModel(interiorSelectionModel)
@@ -23,6 +24,7 @@ namespace ExampleApp
             , m_hasSelectedInterior(false)
             , m_hasSearchMenuItems(false)
             , m_yelpCategoryMapperUpdater(yelpCategoryMapperUpdater)
+            , m_defaultFindMenuEntries(defaultFindMenuEntries)
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
                 m_hasSelectedInterior = m_interiorSelectionModel.IsInteriorSelected();
@@ -160,12 +162,10 @@ namespace ExampleApp
                 if (document.HasMember(itemKey) && document[itemKey].IsArray())
                 {
                     const auto& tagSearchModelsMember = document[itemKey];
-                    if(tagSearchModelsMember.Size() > 0)
-                    {
-                        ClearTagSearchRepository();
-                        ClearDefaultOutdoorTags();
-                    }
-                    
+
+                    ClearTagSearchRepository();
+                    ClearDefaultOutdoorTags();
+
                     const bool visibleInSearchMenu = true;
                     const bool interior = true;
                     m_yelpCategoryMapperUpdater.ResetMapping();
@@ -221,6 +221,15 @@ namespace ExampleApp
 
                         m_tagSearchRepository.AddItem(TagSearch::View::TagSearchModel(name, searchTag, interior, icon, visibleInSearchMenu));
                         m_previousTagSearchRepository.AddItem(TagSearch::View::TagSearchModel(name, searchTag, interior, icon, visibleInSearchMenu));
+                    }
+
+                    const bool shouldUseDefaultFindMenuEntries = tagSearchModelsMember.Size() == 0;
+                    if (shouldUseDefaultFindMenuEntries)
+                    {
+                        for (auto& item : m_defaultFindMenuEntries)
+                        {
+                            m_tagSearchRepository.AddItem(item);
+                        }
                     }
                 }
                 else

@@ -115,6 +115,9 @@ namespace ExampleApp
             
             bool CompassModel::NeedsToExitInterior(GpsMode::Values gpsMode)
             {
+                // This has been extended several times to fix exit related bugs
+                // such as https://eegeo-team.atlassian.net/browse/MPLY-8448
+                // The compass model likely shouldn't have knowledge of the interiors.
                 const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
                 const bool gpsIsEnabled = gpsMode != GpsMode::GpsDisabled;
                 const bool notCurrentlyExitingToWorldMode = appMode != AppModes::SdkModel::WorldMode &&
