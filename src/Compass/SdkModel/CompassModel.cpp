@@ -238,6 +238,11 @@ namespace ExampleApp
                     DisableGpsMode();
                     return;
                 }
+
+                if (appMode == AppModes::SdkModel::WorldMode)
+                {
+                    m_exitInteriorTriggered = false;
+                }
             }
             
             void CompassModel::OnInteriorFloorChanged()
