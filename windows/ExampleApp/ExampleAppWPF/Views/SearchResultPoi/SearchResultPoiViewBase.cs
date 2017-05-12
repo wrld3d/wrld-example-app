@@ -141,6 +141,7 @@ namespace ExampleAppWPF
             m_closeButton.Click += HandleCloseButtonClicked;
 
             TouchMove += OnTouchMove;
+            TouchUp += OnTouchUp;
 
             m_contentContainer = (ScrollViewer)GetTemplateChild("ContentContainer");
             if (m_contentContainer != null)
@@ -232,6 +233,11 @@ namespace ExampleAppWPF
         }
 
         private void OnTouchMove(object sender, TouchEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void OnTouchUp(object sender, TouchEventArgs e)
         {
             e.Handled = true;
         }
