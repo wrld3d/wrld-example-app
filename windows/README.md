@@ -1,12 +1,12 @@
-<a href="http://www.eegeo.com/">
-    <img src="http://cdn2.eegeo.com/wp-content/uploads/2016/03/eegeo_logo_quite_big.png" alt="eeGeo Logo" title="eegeo" align="right" height="80px" />
+<a href="http://www.wrld3d.com/">
+    <img src="http://cdn2.eegeo.com/wp-content/uploads/2017/04/WRLD_Blue.png"  align="right" height="80px" />
 </a>
 
 # Getting Started on Windows
 
-![eeGeo](http://cdn2.eegeo.com/wp-content/uploads/2016/03/readme-banner.jpg)
+![WRLD](http://cdn2.eegeo.com/wp-content/uploads/2017/04/screenselection01.png)
 
-Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/eegeo/eegeo-example-app).
+Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/wrld3d/wrld-example-app).
 
 ## Requirements
 
@@ -17,7 +17,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 ## Setup
 
 1.  Open a Git Bash (MinGW) terminal for the following commands.
-2.  In the root of the repo, run the command `./update.platform.sh -p windows` to download the latest eeGeo Windows SDK.
+2.  In the root of the repo, run the command `./update.platform.sh -p windows` to download the latest WRLD Windows SDK.
 	*	We recommend you run this step frequently to keep your SDK version up to date.
 3.  In the `windows` directory, run `mkdir build` to create a build directory.
 4.  In the `windows/build` directory, run `cmake -G "Visual Studio 14 Win64" ..` to generate a project file.
