@@ -31,7 +31,7 @@
 
 		<com.eegeo.menu.MenuExpandableListView
 		    android:id="@+id/settings_menu_item_list"
-		    android:layout_width="@dimen/search_results_bar_width"
+		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:background="@color/ui_border"
 		    android:cacheColorHint="@android:color/transparent"
