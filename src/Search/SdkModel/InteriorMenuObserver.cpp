@@ -25,16 +25,33 @@ namespace ExampleApp
             , m_hasSearchMenuItems(false)
             , m_yelpCategoryMapperUpdater(yelpCategoryMapperUpdater)
             , m_defaultFindMenuEntries(defaultFindMenuEntries)
+            , m_loadInteriorOnAdd(false)
+            , m_idToBeLoaded()
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
                 m_hasSelectedInterior = m_interiorSelectionModel.IsInteriorSelected();
+                m_interiorMetaDataRepo.AddObserver(*this);
             }
             
             InteriorMenuObserver::~InteriorMenuObserver()
             {
+                m_interiorMetaDataRepo.RemoveObserver(*this);
                 m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
             }
             
+            void InteriorMenuObserver::OnItemAdded(const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository::ItemType& item)
+            {
+                if (m_loadInteriorOnAdd && m_interiorMetaDataRepo.Contains(m_idToBeLoaded))
+                {
+                    OnEnterInterior(m_idToBeLoaded);
+                    m_loadInteriorOnAdd = false;
+                }
+            }
+
+            void InteriorMenuObserver::OnItemRemoved(const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository::ItemType& item)
+            {
+            }
+
             void InteriorMenuObserver::OnSelectionChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId)
             {
                 TransitionState transitionState = HandleTransitionStates();
@@ -42,15 +59,20 @@ namespace ExampleApp
                 {
                     OnExitInterior();
                 }
-                else if (m_interiorMetaDataRepo.Contains(interiorId) && (transitionState == TransitionState::EnteringBuilding || transitionState == TransitionState::SwitchingBuilding))
+                else if (!m_interiorMetaDataRepo.Contains(interiorId))
                 {
-                    OnEnterInterior(interiorId, transitionState);
+                    m_loadInteriorOnAdd = true;
+                    m_idToBeLoaded = interiorId;
+                }
+                else if (transitionState == TransitionState::EnteringBuilding || transitionState == TransitionState::SwitchingBuilding)
+                {
+                    OnEnterInterior(interiorId);
                 }
                 
                 NotifyInteriorTagsUpdated();
             }
             
-            void InteriorMenuObserver::OnEnterInterior(const Eegeo::Resources::Interiors::InteriorId& interiorId, const TransitionState& transtionState)
+            void InteriorMenuObserver::OnEnterInterior(const Eegeo::Resources::Interiors::InteriorId& interiorId)
             {
                 const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataDto* dto = m_interiorMetaDataRepo.Get(interiorId);
                 
