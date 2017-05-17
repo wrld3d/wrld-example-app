@@ -16,6 +16,7 @@
 #include "ViewFrameAnimator.h"
 #include "ViewPositionAnimator.h"
 #include "ViewSizeAnimator.h"
+#include "SearchMenuDragTab.h"
 
 #import "UIButton+DefaultStates.h"
 
@@ -100,6 +101,7 @@
 @property (nonatomic, retain) UIView* pSearchMenuScrollButtonContainer;
 @property (nonatomic, retain) UIButton* pSearchMenuScrollButton;
 @property (nonatomic, retain) UIImageView* pSearchMenuFadeImage;
+@property (nonatomic, retain) SearchMenuDragTab* pSearchMenuDragTab;
 
 @end
 
@@ -201,6 +203,9 @@
     
     self.pDragTab = [[[UIButton alloc] initWithFrame:CGRectMake(m_dragTabOffScreenX, m_dragTabOffScreenY, m_dragTabWidth, m_dragTabHeight)] autorelease];
     [self.pDragTab setDefaultStatesWithImageNames:@"button_search_off" :@"button_search_on"];
+    
+    self.pSearchMenuDragTab = [[SearchMenuDragTab alloc] autorelease];
+    [self.pSearchMenuDragTab init:self.pDragTab];
     
     m_titleContainerOffScreenWidth = 0.0f;
     m_titleContainerOffScreenHeight = m_dragTabHeight;
@@ -434,7 +439,8 @@
                                                                resultsSpinner:self.pSearchEditBoxResultsSpinner
                                                                       interop:m_pSearchMenuInterop
                                                                 searchMenuScrollButton:self.pSearchMenuScrollButton
-                                                                searchMenuScrollView:self.pSearchResultsTableContainerView]autorelease];
+                                                                searchMenuScrollView:self.pSearchResultsTableContainerView
+                                                                      dragTab:self.pSearchMenuDragTab]autorelease];
 }
 
 - (void)dealloc
@@ -814,6 +820,12 @@
     {
         m_pOnScreenResultsAnimationController->Update(deltaSeconds);
     }
+    
+    float onScreenState = [self openOnScreenState];
+    bool isPlayingForward = m_openAnimationController->IsPlayingForward();
+    bool showCloseView = (onScreenState > 0.0f && isPlayingForward)
+                            && [self.pInputDelegate getEditText].length() == 0;
+    [self.pSearchMenuDragTab showCloseView:showCloseView];
 }
 
 - (void) updateTableAnimation:(float)deltaSeconds

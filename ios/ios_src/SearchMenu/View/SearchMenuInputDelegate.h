@@ -3,9 +3,10 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
-
+#include <string>
 #include "SearchMenuViewIncludes.h"
 #include "SearchMenuResultsSpinner.h"
+#include "SearchMenuDragTab.h"
 
 @interface SearchMenuInputDelegate : NSObject<UITextFieldDelegate>
 
@@ -14,7 +15,8 @@
             resultsSpinner:(SearchMenuResultsSpinner*)resultsSpinner
             interop:(ExampleApp::SearchMenu::View::SearchMenuViewInterop*)interop
             searchMenuScrollButton:(UIButton*)searchMenuScrollButton
-            searchMenuScrollView:(UIScrollView*)searchMenuScrollView;
+            searchMenuScrollView:(UIScrollView*)searchMenuScrollView
+                dragTab:(SearchMenuDragTab*)dragTab;
 
 - (void) setSearchInProgress;
 
@@ -24,6 +26,8 @@
 
 - (void) setEditText :(NSString*)searchText
                      :(bool)isTag;
+
+- (std::string) getEditText;
 
 - (void) clearSearch;
 

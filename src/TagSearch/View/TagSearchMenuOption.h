@@ -18,17 +18,12 @@ namespace ExampleApp
             class TagSearchMenuOption : public Menu::View::IMenuOption
             {
                 TagSearchModel m_model;
-                Menu::View::IMenuViewModel& m_menuViewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-
-                const Menu::View::IMenuReactionModel& m_menuReaction;
 
             public:
                 TagSearchMenuOption(
                         TagSearchModel model,
-                        Menu::View::IMenuViewModel& menuViewModel,
-                        ExampleAppMessaging::TMessageBus& messageBus,
-                        const Menu::View::IMenuReactionModel& menuReaction);
+                        ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~TagSearchMenuOption();
 

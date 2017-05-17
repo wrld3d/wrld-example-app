@@ -23,9 +23,7 @@ namespace ExampleApp
                 {
                     return Eegeo_NEW(TagSearchMenuOption)(
                             model,
-                            menuViewModel,
-                            messageBus,
-                            menuReaction);
+                            messageBus);
                 }
         }
     }

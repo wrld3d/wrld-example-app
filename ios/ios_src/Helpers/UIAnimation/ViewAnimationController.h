@@ -62,6 +62,8 @@ namespace ExampleApp
                 bool IsActive() const;
                 
                 float GetNormalizedLinearProgress() const;
+                
+                bool IsPlayingForward() const;
             };
         }
     }

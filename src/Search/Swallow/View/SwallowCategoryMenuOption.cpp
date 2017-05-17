@@ -3,6 +3,7 @@
 #include "SwallowCategoryMenuOption.h"
 #include "IMenuViewModel.h"
 #include "TagSearchSelectedMessage.h"
+#include "SwallowSearchConstants.h"
 
 namespace ExampleApp
 {
@@ -61,7 +62,11 @@ namespace ExampleApp
                 
                 void SwallowCategoryMenuOption::Select()
                 {
-                    m_menuViewModel.Close();
+                    if(m_category == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME
+                       || m_category == Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME)
+                    {
+                        m_menuViewModel.Close();
+                    }
 
                     if(m_inInteriorMode && m_closeMenuInInterior)
                     {
