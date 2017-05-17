@@ -19,6 +19,8 @@ import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
 import com.eegeo.searchmenu.SearchResultsScrollListener;
 import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 
+import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.TextUtils.TruncateAt;
@@ -35,6 +37,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -84,7 +87,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
     private int m_menuScrollIndex = 0;
     private boolean m_editingText = false;
-    	
+
+    private ImageButton m_dragButton;
+    private Drawable m_dragButtonSearchStates;
+    private Drawable m_dragButtonCloseStates;
+
     public SearchMenuView(MainActivity activity, long nativeCallerPointer)
     {
         super(activity, nativeCallerPointer);
@@ -99,8 +106,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_list = (MenuExpandableListView)m_view.findViewById(R.id.search_menu_options_list_view);
         m_searchList = (ListView)m_view.findViewById(R.id.search_menu_item_list);
         
-        View dragButtonView = m_view.findViewById(R.id.search_menu_drag_button_view);
-        dragButtonView.setOnClickListener(this);
+        m_dragButton = (ImageButton) m_view.findViewById(R.id.search_menu_drag_button_view);
+        m_dragButton.setOnClickListener(this);
+
+        m_dragButtonSearchStates = m_activity.getResources().getDrawable(R.drawable.button_search_menu_states);
+        m_dragButtonCloseStates = m_activity.getResources().getDrawable(R.drawable.button_search_menu_close_states);
         
         m_closeButtonView = m_view.findViewById(R.id.search_menu_clear_button);
         m_closeButtonView.setOnClickListener(new SearchMenuCloseButtonClickedHandler(m_nativeCallerPointer, this));
@@ -228,10 +238,14 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         {
             setClearButtonVisible(true);
             m_editingText = true;
+
+            showCloseButtonView(false);
         }
         else
 		{
             setClearButtonVisible(false);
+
+            showCloseButtonView(true);
         }
     }
 
@@ -270,6 +284,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
             setClearButtonVisible(false);
         }
     }
+
+    public String getEditText()
+    {
+        return m_editText.getText().toString();
+    }
     
     private void setClearButtonVisible(boolean visible)
     {
@@ -307,13 +326,23 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     @Override
     public void animateOffScreen()
     {
-    	super.animateOffScreen();    	
+    	super.animateOffScreen();
+        showCloseButtonView(false);
+
     }
     
     @Override
     public void animateToClosedOnScreen()
     {
     	super.animateToClosedOnScreen();
+        showCloseButtonView(false);
+    }
+
+    @Override
+    public void animateToOpenOnScreen()
+    {
+        super.animateToOpenOnScreen();
+        showCloseButtonView(m_editText.getText().length() == 0);
     }
 
     @Override
@@ -499,5 +528,17 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 	protected void onMenuChildItemClick(ExpandableListView parent, View view, int groupPosition, int childPosition, long id) {
 		m_isFindMenuChildItemClicked = groupPosition == 0 ? true : false;
 	}
+
+	private void showCloseButtonView(boolean shouldShowCloseView)
+    {
+        if(shouldShowCloseView)
+        {
+            m_dragButton.setImageDrawable(m_dragButtonCloseStates);
+        }
+        else
+        {
+            m_dragButton.setImageDrawable(m_dragButtonSearchStates);
+        }
+    }
 }
 

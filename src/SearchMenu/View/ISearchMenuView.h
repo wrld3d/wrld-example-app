@@ -24,6 +24,7 @@ namespace ExampleApp
                 virtual void SetSearchInProgress(bool inProgress) = 0;
                 
                 virtual void SetEditText(const std::string& searchText, bool isTag) = 0;
+                virtual std::string GetEditText() = 0;
                 
                 virtual void SetSearchResultCount(int searchResultCount) = 0;
 

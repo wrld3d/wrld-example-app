@@ -70,6 +70,7 @@ public class MenuExpandableListView extends ExpandableListView {
 		{
 			if (isGroupExpanded(i))
 			{
+				adapter.triggerAnimationOnArrowView(i, false);
 				delayCollapseGroup(i);
 			}
 		}

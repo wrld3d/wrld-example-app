@@ -198,6 +198,11 @@ namespace ExampleApp
             {
                 return (float)(m_timerSeconds / m_totalDurationSeconds);
             }
+            
+            bool ViewAnimationController::IsPlayingForward() const
+            {
+                return m_isPlayingForward;
+            }
         }
     }
 }
