@@ -146,7 +146,14 @@ namespace ExampleApp
             
             void SearchMenuController::OnViewClicked()
             {
-                MenuController::OnViewClicked();
+                if(IsFullyOpen() && m_searchMenuView.GetEditText().length() > 0)
+                {
+                    OnSearch(m_searchMenuView.GetEditText());
+                }
+                else
+                {
+                    MenuController::OnViewClicked();
+                }
             }
             
             void SearchMenuController::OnSearchCleared()

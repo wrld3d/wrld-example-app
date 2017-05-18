@@ -2,6 +2,7 @@
 
 #include "SearchMenuView.h"
 #include "ReflectionHelpers.h"
+#include <msclr\marshal_cppstd.h>
 
 using namespace ExampleApp::Helpers::ReflectionHelpers;
 
@@ -26,6 +27,7 @@ namespace ExampleApp
                 mSetSearchInProgress.SetupMethod(m_uiViewClass, m_uiView, "SetSearchInProgress");
                 mSetSearchEnded.SetupMethod(m_uiViewClass, m_uiView, "SetSearchEnded");
                 mSetEditText.SetupMethod(m_uiViewClass, m_uiView, "SetEditText");
+                mGetEditText.SetupMethod(m_uiViewClass, m_uiView, "GetEditText");
                 mSetSearchResultCount.SetupMethod(m_uiViewClass, m_uiView, "SetSearchResultCount");
                 mHideSearchResultCount.SetupMethod(m_uiViewClass, m_uiView, "HideSearchResultCount");
                 mRemoveSearchQueryResults.SetupMethod(m_uiViewClass, m_uiView, "RemoveSearchQueryResults");
@@ -71,6 +73,12 @@ namespace ExampleApp
             void SearchMenuView::SetEditText(const std::string& searchText, bool isTag)
             {
                 mSetEditText(gcnew System::String(searchText.c_str()), isTag);
+            }
+
+            std::string SearchMenuView::GetEditText()
+            {
+                std::string editText = msclr::interop::marshal_as<std::string>(mGetEditText.Call<System::String^>());
+                return editText;
             }
 
             void SearchMenuView::SetSearchResultCount(int searchResultCount)

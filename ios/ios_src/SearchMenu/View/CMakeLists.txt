@@ -3,6 +3,8 @@ set(headers ${headers} ios_src/SearchMenu/View
 )
 set(currsources
   ios_src/SearchMenu/View/ISearchMenuViewModule.h
+  ios_src/SearchMenu/View/SearchMenuDragTab.h
+  ios_src/SearchMenu/View/SearchMenuDragTab.mm
   ios_src/SearchMenu/View/SearchMenuInputDelegate.h
   ios_src/SearchMenu/View/SearchMenuInputDelegate.mm
   ios_src/SearchMenu/View/SearchMenuResultsSpinner.h

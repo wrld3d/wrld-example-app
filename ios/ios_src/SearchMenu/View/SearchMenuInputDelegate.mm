@@ -14,6 +14,7 @@
     UIButton* m_pSearchMenuScrollButton;
     UIScrollView* m_pSearchMenuScrollView;
     NSTimer *searchMenuScrollUpdateTimer;
+    SearchMenuDragTab* m_pDragTab;
     
     BOOL m_keyboardActive;
     BOOL m_returnPressed;
@@ -35,6 +36,7 @@
                 interop:(ExampleApp::SearchMenu::View::SearchMenuViewInterop*)interop
             searchMenuScrollButton:(UIButton*)searchMenuScrollButton
             searchMenuScrollView:(UIScrollView*)searchMenuScrollView
+                dragTab:(SearchMenuDragTab*)dragTab
 {
     m_hasResults = NO;
     m_pTextField = textField;
@@ -43,6 +45,7 @@
     m_pInterop = interop;
     m_pSearchMenuScrollButton = searchMenuScrollButton;
     m_pSearchMenuScrollView = searchMenuScrollView;
+    m_pDragTab = dragTab;
     
     m_pTextField.delegate = self;
     
@@ -123,6 +126,12 @@
     m_currentSearchIsTag = isTag;
     
     [self updateClearButtonVisibility:m_pTextField];
+    [m_pDragTab showCloseView: !m_pTextField.hasText];
+}
+
+- (std::string) getEditText
+{
+    return std::string([m_pTextField.text UTF8String]);
 }
 
 - (void) clearSearch
@@ -132,6 +141,7 @@
     m_pTextField.text = @"";
     
     [self updateClearButtonVisibility:m_pTextField];
+    [m_pDragTab showCloseView: true];
 }
 
 - (void) interopClearSearch
@@ -141,6 +151,7 @@
         m_pTextField.text = @"";
     }
     [self updateClearButtonVisibility:m_pTextField];
+    [m_pDragTab showCloseView: true];
 }
 
 - (void) setHasResults :(bool)hasResults
@@ -183,7 +194,6 @@
     
     if(m_currentSearchIsTag)
     {
-        [textField setText:@""];
         m_currentSearchIsTag = false;
         
     }
@@ -203,10 +213,6 @@
     
     if (!m_returnPressed || [textField.text isEqualToString:@""])
     {
-        if(!m_editingText)
-        {
-            textField.text = @"";
-        }
         [self updateClearButtonVisibility:textField];
         return;
     }
@@ -276,6 +282,8 @@
 {
     [self updateClearButtonVisibility:textField];
     m_editingText = true;
+    
+    [m_pDragTab showCloseView: !textField.hasText];
 }
 
 @end

@@ -314,7 +314,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		}
 	}
 	
-	private void triggerAnimationOnArrowView(int groupIndex, boolean rotateCounterClockwise)
+	public void triggerAnimationOnArrowView(int groupIndex, boolean rotateCounterClockwise)
 	{
 		String groupKeyPortion =  m_headerData.get(groupIndex).getText();
 		
