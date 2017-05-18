@@ -21,7 +21,9 @@ namespace ExampleApp
                                                                                                const Menu::View::IMenuReactionModel& menuReaction)
                 {
                     return Eegeo_NEW(TagSearchMenuOption)(model,
-                                                          messageBus);
+                                                          menuViewModel,
+                                                          messageBus,
+                                                          menuReaction);
                 }
         }
     }
