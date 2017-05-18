@@ -11,6 +11,7 @@
 #include "CoverageTrees.h"
 #include "CityThemes.h"
 #include "InteriorMenuObserver.h"
+#include "ISearchQueryPerformer.h"
 #include "AboutPageViewModel.h"
 #include "IAlertBoxFactory.h"
 #include "Location.h"
@@ -34,6 +35,7 @@ namespace ExampleApp
                                       Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                       Eegeo::Resources::CityThemes::ICityThemesService& cityThemeService,
                                       Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
+                                      Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                       AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
                                       Eegeo::Location::NavigationService& navigationService,
                                       Eegeo::Web::ApiTokenService& apiTokenService);
@@ -51,6 +53,7 @@ namespace ExampleApp
                 Eegeo::Resources::CityThemes::CityThemeLoader& m_cityThemeLoader;
                 Eegeo::Resources::CityThemes::ICityThemesService& m_cityThemeService;
                 Search::SdkModel::InteriorMenuObserver& m_interiorMenuObserver;
+                Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                 AboutPage::View::IAboutPageViewModel& m_aboutPageViewModule;
                 Eegeo::Location::NavigationService& m_navigationService;
                 Eegeo::Web::ApiTokenService& m_apiTokenService;

@@ -28,6 +28,7 @@ namespace ExampleApp
                                                          Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                                          Eegeo::Resources::CityThemes::ICityThemesService& cityThemeService,
                                                          Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
+                                                         Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                          AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
                                                          Eegeo::Location::NavigationService& navigationService,
                                                          Eegeo::Web::ApiTokenService& apiTokenService)
@@ -42,6 +43,7 @@ namespace ExampleApp
             ,m_cityThemeLoader(cityThemeLoader)
             ,m_cityThemeService(cityThemeService)
             ,m_interiorMenuObserver(interiorMenuObserver)
+            ,m_searchQueryPerformer(searchQueryPerformer)
             ,m_aboutPageViewModule(aboutPageViewModule)
             ,m_navigationService(navigationService)
             ,m_apiTokenService(apiTokenService)
@@ -121,6 +123,14 @@ namespace ExampleApp
                         else
                         {
                             m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
+                        }
+                        
+                        const std::string PerformStartUpSearch = "perform_start_up_search";
+                        const bool mapsceneSpecifiesStartUpSearch = parser.HasKey(resultString, PerformStartUpSearch);
+                        const bool shouldPerformStartUpSearch = mapsceneSpecifiesStartUpSearch && applicationConfig.ShouldPerformStartUpSearch();
+                        if (shouldPerformStartUpSearch)
+                        {
+                            m_searchQueryPerformer.PerformSearchQuery(applicationConfig.StartUpSearchTag(), true, false, applicationConfig.InterestLocation());
                         }
                     }
                     else
