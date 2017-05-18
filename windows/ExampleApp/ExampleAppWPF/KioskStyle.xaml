@@ -408,6 +408,8 @@
 
     <ImageSource x:Key="ButtonSearchOffImage">Assets/button_search_off@kiosk.png</ImageSource>
     <ImageSource x:Key="ButtonSearchOnImage">Assets/button_search_on@kiosk.png</ImageSource>
+    <ImageSource x:Key="ButtonSearchCloseOffImage">Assets/button_search_close_off@kiosk.png</ImageSource>
+    <ImageSource x:Key="ButtonSearchCloseOnImage">Assets/button_search_close_on@kiosk.png</ImageSource>
 
     <Thickness x:Key="SearchResultCountContainerMargin" Left="37" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="SearchResultCountContainerWidth">62</System:Double>
