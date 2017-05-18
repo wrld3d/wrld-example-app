@@ -1754,6 +1754,19 @@
 	  <Component Id="_dc818069.4591.4afb.adc9.83ff6366c2af" Directory="PINSFOLDER" Guid="{f4959b8c-9136-4998-80bc-ce3a68d9ad6d}">
         <File Id="_4168a0a4.d6de.4321.8d06.bb68eb4ff881" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\pin_sheet_0@2x.png" />
 	  </Component>
+	  <Component Id="_0e4283d9.9d13.44f6.9442.6715b488685f" Directory="RESOURCEFOLDER" Guid="{a97290ae-77ad-433a-885b-5b9b09dcb73b}">
+        <File Id="_a7faf3f2.423d.423c.8005.0850c5b87c2f" KeyPath="yes" Source="payload\Resources\button_search_close_off.png" />
+	  </Component>
+	  <Component Id="_8d059934.1ae8.4c54.be74.09f6e3fc774f" Directory="RESOURCEFOLDER" Guid="{b2f4616b-a804-4d93-89d7-68b9af45e51e}">
+        <File Id="_af189e3b.c69c.4e91.8614.2c380d029087" KeyPath="yes" Source="payload\Resources\button_search_close_off@kiosk.png" />
+	  </Component>
+	  <Component Id="_219f45a3.10c6.48ab.893b.d7012abddc49" Directory="RESOURCEFOLDER" Guid="{ac952671-0c64-4b07-abc3-3c195922e419}">
+        <File Id="_7f7c7d58.6263.44fc.9886.aaaeea90501c" KeyPath="yes" Source="payload\Resources\button_search_close_on.png" />
+	  </Component>
+	  <Component Id="_bf14b965.c272.429e.8320.4068b6e3cc25" Directory="RESOURCEFOLDER" Guid="{c40035cc-cf7e-4bce-9217-5cffb8810e9a}">
+        <File Id="_714dba88.fd9e.4d97.b133.7262d7d83b87" KeyPath="yes" Source="payload\Resources\button_search_close_on@kiosk.png" />
+	  </Component>
+
     </ComponentGroup>
 
     <!-- Start menu definitions-->

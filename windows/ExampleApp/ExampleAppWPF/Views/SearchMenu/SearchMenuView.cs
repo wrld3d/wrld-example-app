@@ -2,19 +2,21 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace ExampleAppWPF
 {
-    public class SearchMenuView : MenuView
+    public class SearchMenuView : MenuView, INotifyPropertyChanged
     {
         private TextBox m_editText;
         private MenuListAdapter m_adapter;
@@ -58,6 +60,47 @@ namespace ExampleAppWPF
         private TouchDevice m_searchResultsListCurrentTouchDevice;
 
         private bool m_editingText;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private ImageSource m_searchIconOffImageSource;
+        private ImageSource m_searchIconOnImageSource;
+        private ImageSource m_closeIconOffImageSource;
+        private ImageSource m_closeIconOnImageSource;
+        private ImageSource m_iconOffImageSource;
+        private ImageSource m_iconOnImageSource;
+
+        public ImageSource SearchMenuIconOffImageSource
+        {
+            get
+            {
+                return m_iconOffImageSource;
+            }
+            set
+            {
+                m_iconOffImageSource = value;
+                OnPropertyChanged("SearchMenuIconOffImageSource");
+            }
+        }
+
+        public ImageSource SearchMenuIconOnImageSource
+        {
+            get
+            {
+                return m_iconOnImageSource;
+            }
+            set
+            {
+                m_iconOnImageSource = value;
+                OnPropertyChanged("SearchMenuIconOnImageSource");
+            }
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         static SearchMenuView()
         {
@@ -239,6 +282,13 @@ namespace ExampleAppWPF
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel", m_isInKioskMode);
 
             m_scrollSpeed = (double) Application.Current.Resources["ScrollViewButtonScrollSpeed"];
+
+            m_searchIconOffImageSource = (ImageSource) Application.Current.Resources["ButtonSearchOffImage"];
+            m_searchIconOnImageSource = (ImageSource) Application.Current.Resources["ButtonSearchOnImage"];
+            m_closeIconOffImageSource = (ImageSource) Application.Current.Resources["ButtonSearchCloseOffImage"];
+            m_closeIconOnImageSource = (ImageSource) Application.Current.Resources["ButtonSearchCloseOnImage"];
+            SearchMenuIconOffImageSource = m_searchIconOffImageSource;
+            SearchMenuIconOnImageSource = m_searchIconOnImageSource;
         }
 
         public void RemoveSearchQueryResults()
@@ -303,6 +353,8 @@ namespace ExampleAppWPF
                 m_resultsClearButton.Visibility = Visibility.Hidden;
                 m_editText.Foreground = Colour.darkgrey;
             }
+
+            ShowCloseButtonView(m_editText.Text.Length == 0);
         }
 
         private void OnMenuScrollWheel(object sender, MouseWheelEventArgs e)
@@ -553,6 +605,8 @@ namespace ExampleAppWPF
                 base.AnimateToClosedOnScreen();
                 m_mainWindow.EnableInput();
             }
+
+            ShowCloseButtonView(false);
         }
 
         public override void AnimateToOpenOnScreen()
@@ -568,6 +622,8 @@ namespace ExampleAppWPF
                 base.AnimateToOpenOnScreen();
                 m_mainWindow.EnableInput();
             }
+
+            ShowCloseButtonView(m_editText.Text.Length == 0);
         }
 
         public void SetSearchInProgress()
@@ -575,6 +631,7 @@ namespace ExampleAppWPF
             Dispatcher.Invoke(() =>
             {
                 m_resultsSpinner.Visibility = Visibility.Visible;
+                m_resultsClearButton.Visibility = Visibility.Hidden;
             });
             m_editingText = false;
         }
@@ -583,6 +640,7 @@ namespace ExampleAppWPF
             Dispatcher.Invoke(() =>
             {
                 m_resultsSpinner.Visibility = Visibility.Hidden;
+                m_resultsClearButton.Visibility = Visibility.Visible;
             });
         }
 
@@ -595,6 +653,11 @@ namespace ExampleAppWPF
                 m_editText.Text = encodedText;
             }
             m_hasTagSearch = isTag;
+        }
+
+        public string GetEditText()
+        {
+            return m_editText.Text;
         }
         
         public void SetSearchResultCount(int count)
@@ -626,6 +689,20 @@ namespace ExampleAppWPF
         {
             m_adapter.SetData(m_list.ItemsSource, groups, groupsExpandable, groupToChildrenMap);
             m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
+        }
+
+        private void ShowCloseButtonView(bool shouldShowCloseView)
+        {
+            if(shouldShowCloseView)
+            {
+                SearchMenuIconOffImageSource = m_closeIconOffImageSource;
+                SearchMenuIconOnImageSource = m_closeIconOnImageSource;
+            }
+            else
+            {
+                SearchMenuIconOffImageSource = m_searchIconOffImageSource;
+                SearchMenuIconOnImageSource = m_searchIconOnImageSource;
+            }
         }
     }
 }

@@ -159,11 +159,11 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Button}">
                                                         <Grid Name="SearchButtonGrid"  Background="{StaticResource Gold}">
-                                                            <Image Source="{DynamicResource ButtonSearchOffImage}" Name="SearchButtonIcon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                            <Image Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SearchMenuView}}, Path=SearchMenuIconOffImageSource}" Name="SearchButtonIcon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                                         </Grid>
                                                         <ControlTemplate.Triggers>
                                                             <Trigger Property="IsPressed" Value="True">
-                                                                <Setter TargetName="SearchButtonIcon" Property="Source" Value="{DynamicResource ButtonSearchOnImage}"/>
+                                                                <Setter TargetName="SearchButtonIcon" Property="Source" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SearchMenuView}}, Path=SearchMenuIconOnImageSource}"/>
                                                                 <Setter TargetName="SearchButtonGrid" Property="Background" Value="{StaticResource PrimaryBG_Down_Colour}"/>
                                                             </Trigger>
                                                             <Trigger Property="IsMouseOver" Value="False">

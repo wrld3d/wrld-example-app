@@ -1130,7 +1130,20 @@
   <ItemGroup>
     <Resource Include="Assets\shift_key_down.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_search_close_off%40kiosk.png">
+      <Link>Assets\button_search_close_off%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_search_close_off.png">
+      <Link>Assets\button_search_close_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_search_close_on%40kiosk.png">
+      <Link>Assets\button_search_close_on%40kiosk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_search_close_on.png">
+      <Link>Assets\button_search_close_on.png</Link>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r /d
