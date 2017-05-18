@@ -12,9 +12,13 @@ namespace ExampleApp
         namespace View
         {
             TagSearchMenuOption::TagSearchMenuOption(TagSearchModel model,
-                    ExampleAppMessaging::TMessageBus& messageBus)
+                    Menu::View::IMenuViewModel& menuViewModel,
+                    ExampleAppMessaging::TMessageBus& messageBus,
+                    const Menu::View::IMenuReactionModel& menuReaction)
                 : m_model(model)
+                , m_menuViewModel(menuViewModel)
                 , m_messageBus(messageBus)
+                , m_menuReaction(menuReaction)
             {
             }
 
@@ -25,6 +29,11 @@ namespace ExampleApp
 
             void TagSearchMenuOption::Select()
             {
+                if (m_menuReaction.GetShouldCloseMenu())
+                {
+                    m_menuViewModel.Close();
+                }
+
                 m_messageBus.Publish(TagSearchSelectedMessage(m_model.SearchTag(), m_model.Interior()));
             }
         }

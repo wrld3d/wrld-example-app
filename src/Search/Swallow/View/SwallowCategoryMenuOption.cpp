@@ -62,11 +62,7 @@ namespace ExampleApp
                 
                 void SwallowCategoryMenuOption::Select()
                 {
-                    if(m_category == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME
-                       || m_category == Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME)
-                    {
-                        m_menuViewModel.Close();
-                    }
+                    m_menuViewModel.Close();
 
                     if(m_inInteriorMode && m_closeMenuInInterior)
                     {
