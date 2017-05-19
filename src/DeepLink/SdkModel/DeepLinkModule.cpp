@@ -31,6 +31,7 @@ namespace ExampleApp
                                                                            Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
                                                                            Eegeo::Resources::CityThemes::ICityThemesService& cityThemeService,
                                                                            Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
+                                                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                            AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
                                                                            Eegeo::Location::NavigationService& navigationService,
                                                                            Eegeo::Web::ApiTokenService& apiTokenService)
@@ -50,6 +51,7 @@ namespace ExampleApp
                     cityThemeLoader,
                     cityThemeService,
                     interiorMenuObserver,
+                    searchQueryPerformer,
                     aboutPageViewModule,
                     navigationService,
                     apiTokenService);

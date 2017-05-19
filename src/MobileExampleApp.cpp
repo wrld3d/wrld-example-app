@@ -478,6 +478,7 @@ namespace ExampleApp
             m_pWorld->GetMapModule().GetCityThemesModule().GetCityThemeLoader(),
             m_pWorld->GetMapModule().GetCityThemesModule().GetCityThemesService(),
             m_pSearchModule->GetInteriorMenuObserver(),
+            m_pSearchModule->GetSearchQueryPerformer(),
             m_pAboutPageModule->GetAboutPageViewModel(),
             *m_pNavigationService,
             m_pWorld->GetApiTokenService());
@@ -922,6 +923,11 @@ namespace ExampleApp
                                                                               m_pFlattenButtonModule->GetFlattenButtonModel());
 
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules), AppModes::SdkModel::WorldMode, m_pGlobalAppModeTransitionRules);
+        
+        if (m_applicationConfiguration.ShouldPerformStartUpSearch())
+        {
+            m_pSearchModule->GetSearchQueryPerformer().PerformSearchQuery(m_applicationConfiguration.StartUpSearchTag(), true, false);
+        }
     }
 
     void MobileExampleApp::DestroyApplicationModelModules()

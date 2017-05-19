@@ -65,6 +65,32 @@ namespace ExampleApp
             {
                 m_repository.RemoveItemRemovedCallback(callback);
             }
+            
+            std::string GetTagSearchNameByQuery(const std::string& query)
+            {
+                if (query.length() == 0)
+                {
+                    return "Around Me";
+                }
+                
+                std::string tagName = query;
+                
+                tagName[0] = toupper(query[0]);
+                
+                for (int i = 1; i < query.length(); ++i)
+                {
+                    if (query[i] == '_')
+                    {
+                        tagName[i] = ' ';
+                    }
+                    else if (query[i-1] == '_')
+                    {
+                        tagName[i] = toupper(query[i]);
+                    }
+                }
+                
+                return tagName;
+            }
 
             std::string GetPresentationStringForQuery(ITagSearchRepository& tagSearchRepository, const Search::SdkModel::SearchQuery& query)
             {
@@ -72,7 +98,10 @@ namespace ExampleApp
                 {
                     std::string tagName;
                     const bool foundName = tagSearchRepository.TryGetTagSearchNameByQuery(query.Query(), tagName);
-                    Eegeo_ASSERT(foundName, "Unable to find name for tag query %s.\n", query.Query().c_str());
+                    if (!foundName)
+                    {
+                        tagName = GetTagSearchNameByQuery(query.Query());
+                    }
                     
                     return tagName;
                 }

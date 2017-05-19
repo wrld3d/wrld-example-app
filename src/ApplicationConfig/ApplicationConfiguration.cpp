@@ -20,6 +20,8 @@ namespace ExampleApp
             float orientationDegrees,
             bool tryStartAtGpsLocation,
             bool startFullscreen,
+            bool performStartUpSearch,
+            const std::string& startUpSearchTag,
             const std::string& googleAnalyticsReferrerToken,
             const std::string& flurryAppKey,
             const std::string& yelpConsumerKey,
@@ -59,6 +61,8 @@ namespace ExampleApp
         , m_orientationDegrees(orientationDegrees)
         , m_tryStartAtGpsLocation(tryStartAtGpsLocation)
         , m_shouldStartFullscreen(startFullscreen)
+        , m_shouldPerformStartUpSearch(performStartUpSearch)
+        , m_startUpSearchTag(startUpSearchTag)
         , m_googleAnalyticsReferrerToken(googleAnalyticsReferrerToken)
         , m_flurryAppKey(flurryAppKey)
         , m_yelpConsumerKey(yelpConsumerKey)
@@ -145,6 +149,16 @@ namespace ExampleApp
         bool ApplicationConfiguration::TryStartAtGpsLocation() const
         {
             return m_tryStartAtGpsLocation;
+        }
+        
+        bool ApplicationConfiguration::ShouldPerformStartUpSearch() const
+        {
+            return m_shouldPerformStartUpSearch;
+        }
+        
+        std::string ApplicationConfiguration::StartUpSearchTag() const
+        {
+            return m_startUpSearchTag;
         }
         
         std::string ApplicationConfiguration::GoogleAnalyticsReferrerToken() const

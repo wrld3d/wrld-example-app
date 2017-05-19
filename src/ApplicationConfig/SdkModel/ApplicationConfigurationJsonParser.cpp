@@ -21,6 +21,8 @@ namespace ExampleApp
                 const std::string StartLocationDistance = "start_location_distance";
                 const std::string StartLocationOrientationDegrees = "start_location_orientation_degrees";
                 const std::string TryStartAtGpsLocation = "try_start_at_gps_location";
+                const std::string PerformStartUpSearch = "perform_start_up_search";
+                const std::string StartUpSearchTag = "start_up_search_tag";
                 const std::string EegeoApiKey = "eegeo_api_key";
                 const std::string CoverageTreeManifestURL = "coveragetree_manifest_url";
                 const std::string ThemeManifestURL = "theme_manifest_url";
@@ -212,6 +214,9 @@ namespace ExampleApp
                                                                                                    startLocationAltitude);
                 
                 const bool tryStartAtGpsLocation = ParseBoolOrDefault(document, TryStartAtGpsLocation, m_defaultConfig.TryStartAtGpsLocation());
+                
+                const bool performStartUpSearch = ParseBoolOrDefault(document, PerformStartUpSearch, m_defaultConfig.ShouldPerformStartUpSearch());
+                const std::string& startUpSearchTag = ParseStringOrDefault(document, StartUpSearchTag, m_defaultConfig.StartUpSearchTag());
 
                 const std::string& name = ParseStringOrDefault(document, Name, m_defaultConfig.Name());
                 const std::string& eegeoApiKey = ParseStringOrDefault(document, EegeoApiKey, m_defaultConfig.EegeoApiKey());
@@ -280,6 +285,8 @@ namespace ExampleApp
                     startLocationOrientationDegrees,
                     tryStartAtGpsLocation,
                     startFullscreen,
+                    performStartUpSearch,
+                    startUpSearchTag,
                     googleAnalyticsReferrerToken,
                     flurryAppKey,
                     yelpConsumerKey,

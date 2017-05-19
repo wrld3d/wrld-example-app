@@ -44,6 +44,9 @@ namespace ExampleApp
                     const bool isInKioskMode = false;
                     const bool useJapaneseFont = false;
                     std::string outdoorSearchMenuItems;
+                    
+                    const bool shouldPerformStartUpSearch = false;
+                    const std::string startUpSearchTag = "";
 
                     const SdkModel::ApplicationFixedIndoorLocation fixedIndoorLocation(Eegeo::Space::LatLong(0.0, 0.0), "", 0, 180.0);
 
@@ -73,6 +76,8 @@ namespace ExampleApp
                         0.f,
                         tryStartAtGpsLocation,
                         shouldStartFullscreen,
+                        shouldPerformStartUpSearch,
+                        startUpSearchTag,
                         emptyGoogleAnalyticsReferrerToken,
                         emptyFlurryApiKey,
                         emptyYelpConsumerKey,
