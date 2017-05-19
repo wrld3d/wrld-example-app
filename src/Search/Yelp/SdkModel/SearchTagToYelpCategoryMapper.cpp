@@ -1,5 +1,15 @@
 #include "SearchTagToYelpCategoryMapper.h"
 
+namespace
+{
+    std::string GetLowerCaseString(const std::string& stringToLower)
+    {
+        std::string lowerCaseString = stringToLower;
+        std::transform(lowerCaseString.begin(), lowerCaseString.end(), lowerCaseString.begin(), tolower);
+        return lowerCaseString;
+    }
+}
+
 namespace ExampleApp
 {
     namespace Search
@@ -22,8 +32,9 @@ namespace ExampleApp
                     
                     for(auto it = m_appTagToYelpCategoryMap.begin(); it != m_appTagToYelpCategoryMap.end(); ++it)
                     {
-                        m_searchTagToYelpRootCategoryModel[it->first].yelpCategoryFilter = it->second;
-                        m_searchTagToYelpRootCategoryModel[it->first].skipYelpSearch = false;
+                        std::string lowerCaseTag = GetLowerCaseString(it->first);
+                        m_searchTagToYelpRootCategoryModel[lowerCaseTag].yelpCategoryFilter = it->second;
+                        m_searchTagToYelpRootCategoryModel[lowerCaseTag].skipYelpSearch = false;
                     }
                 }
                 
@@ -35,12 +46,12 @@ namespace ExampleApp
                 
                 void SearchTagToYelpCategoryMapper::AddMapping(const std::string& tag, const YelpCategoryModel& yelpCategoryModel)
                 {
-                    m_searchTagToYelpRootCategoryModel[tag] = yelpCategoryModel;
+                    m_searchTagToYelpRootCategoryModel[GetLowerCaseString(tag)] = yelpCategoryModel;
                 }
 
                 void SearchTagToYelpCategoryMapper::RemoveMapping(const std::string& tag)
                 {
-                    m_searchTagToYelpRootCategoryModel.erase(tag);
+                    m_searchTagToYelpRootCategoryModel.erase(GetLowerCaseString(tag));
                 }
                 
                 void SearchTagToYelpCategoryMapper::OnYelpCategoryMapperAdded(const std::string& tag, const YelpCategoryModel& yelpCategoryModel)
@@ -53,17 +64,19 @@ namespace ExampleApp
                     m_searchTagToYelpRootCategoryModel.clear();
                     for(auto it = m_appTagToYelpCategoryMap.begin(); it != m_appTagToYelpCategoryMap.end(); ++it)
                     {
-                        m_searchTagToYelpRootCategoryModel[it->first].yelpCategoryFilter = it->second;
-                        m_searchTagToYelpRootCategoryModel[it->first].skipYelpSearch = false;
+                        std::string lowerCaseTag = GetLowerCaseString(it->first);
+                        m_searchTagToYelpRootCategoryModel[lowerCaseTag].yelpCategoryFilter = it->second;
+                        m_searchTagToYelpRootCategoryModel[lowerCaseTag].skipYelpSearch = false;
                     }
                 }
                 
                 bool SearchTagToYelpCategoryMapper::TryGetBestYelpCategoryForSearchTag(const std::string& searchTag, YelpCategoryModel& out_bestMatchedYelpCategoryModel)
                 {
+                    std::string lowerCaseTag = GetLowerCaseString(searchTag);
                     for(int i = 0; i < m_searchTagToYelpRootCategoryModel.size(); i++)
                     {
-                        YelpCategoryModel value = m_searchTagToYelpRootCategoryModel[searchTag];
-                        if (!value.yelpCategoryFilter.empty() || searchTag.empty())
+                        YelpCategoryModel value = m_searchTagToYelpRootCategoryModel[lowerCaseTag];
+                        if (!value.yelpCategoryFilter.empty() || lowerCaseTag.empty())
                         {
                             out_bestMatchedYelpCategoryModel = value;
                             return true;

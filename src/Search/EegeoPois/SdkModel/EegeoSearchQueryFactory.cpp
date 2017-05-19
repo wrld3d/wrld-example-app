@@ -37,12 +37,16 @@ namespace ExampleApp
                 IEegeoSearchQuery* EegeoSearchQueryFactory::CreateEegeoSearchForQuery(const Search::SdkModel::SearchQuery& query,
                                                                                                   Eegeo::Helpers::ICallback0& completionCallback)
                 {
+                    std::string lowerCaseQueryString = query.Query();
+                    std::transform(lowerCaseQueryString.begin(), lowerCaseQueryString.end(), lowerCaseQueryString.begin(), tolower);
+                    Search::SdkModel::SearchQuery lowerCaseSearchQuery(lowerCaseQueryString, query.IsTag(), query.ShouldTryInteriorSearch(), query.Location(), query.Radius());
+                    
                     const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel = m_interiorInteractionModel.GetInteriorModel();
                     if (m_interiorInteractionModel.HasInteriorModel() && query.IsTag() && query.ShouldTryInteriorSearch())
                     {
                         return Eegeo_NEW(EegeoInteriorSearchQuery)(m_webRequestFactory,
                                                                    m_urlEncoder,
-                                                                   query,
+                                                                   lowerCaseSearchQuery,
                                                                    m_serviceUrl,
                                                                    m_apiTokenModel,
                                                                    interiorsModel->GetId(),
@@ -56,7 +60,7 @@ namespace ExampleApp
                             : Eegeo::Resources::Interiors::InteriorId::NullId());
                         return Eegeo_NEW(EegeoSearchQuery)(m_webRequestFactory,
                                                            m_urlEncoder,
-                                                           query,
+                                                           lowerCaseSearchQuery,
                                                            m_serviceUrl,
                                                            m_apiTokenModel,
                                                            interiorId,
