@@ -57,3 +57,6 @@
 -dontwarn javax.lang.model.element.**
 
 -keep class com.senionlab.** { *; }
+
+-keep class com.indooratlas.** { *; }
+-dontwarn com.indooratlas.**
