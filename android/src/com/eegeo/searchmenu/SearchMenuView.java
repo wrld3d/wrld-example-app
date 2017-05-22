@@ -523,12 +523,10 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         final float occupiedHeight = topBar.getHeight() + menuListContainerCollapsedSize + totalMenuSeparatorSize;
         final float availableHeight = viewHeight - occupiedHeight;
 
-    	final float fullHeight = m_cellHeight * resultCount;
+        final float cellDividerHeight = m_activity.getResources().getDimension(R.dimen.search_menu_result_cell_divider_height);
+    	final float fullHeight = ((m_cellHeight + cellDividerHeight) * resultCount) - cellDividerHeight;
 
-        m_visibleItemsCount = (int) Math.min(Math.ceil(availableHeight / m_cellHeight), resultCount);
-
-    	final float listDividerHeight = m_searchList.getDividerHeight();
-    	final int height = (int)Math.min(Math.max(fullHeight - listDividerHeight, 0), availableHeight);
+    	final int height = (int)Math.max(Math.min(fullHeight, availableHeight), 0);
 
     	final ViewGroup.LayoutParams params = m_searchList.getLayoutParams();
     	final int oldHeight = params.height;

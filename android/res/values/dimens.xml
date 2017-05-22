@@ -8,6 +8,7 @@
     <dimen name="search_menu_edit_text_background_width">195dp</dimen>
     <dimen name="search_menu_result_cell_height">44dp</dimen>
     <dimen name="search_editext_width">295dp</dimen>
+    <dimen name="search_menu_result_cell_divider_height">1dp</dimen>
     <dimen name="menu_item_header_height">40dp</dimen>
     <dimen name="menu_subitem_height">39dp</dimen>
     <dimen name="menu_section_divider_height">6dp</dimen>
