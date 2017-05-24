@@ -8,8 +8,9 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            SearchServiceBase::SearchServiceBase(const std::vector<std::string>& handledTags)
+            SearchServiceBase::SearchServiceBase(const std::vector<std::string>& handledTags, bool canHandleCustomTags)
             : m_handledTags(handledTags)
+            , m_canHandleCustomTags(canHandleCustomTags)
             {
 
             }
@@ -21,7 +22,7 @@ namespace ExampleApp
             
             bool SearchServiceBase::CanHandleTag(const std::string& tag) const
             {
-                return(std::find(m_handledTags.begin(), m_handledTags.end(), tag) != m_handledTags.end());
+                return m_canHandleCustomTags || (std::find(m_handledTags.begin(), m_handledTags.end(), tag) != m_handledTags.end());
             }
 
             void SearchServiceBase::ExecuteQueryPerformedCallbacks(const SearchQuery& query)
