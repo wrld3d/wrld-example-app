@@ -218,6 +218,10 @@ namespace ExampleApp
                     repository.AddItem(t);
                 }
             }
+            else
+            {
+                repository.ForceRefresh();
+            }
         }
     }
 
@@ -1251,7 +1255,7 @@ namespace ExampleApp
             MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
 
             AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig(),
-                               m_yelpCategoryMapperUpdater);
+                              m_yelpCategoryMapperUpdater);
 
             if (m_applicationConfiguration.IsAttractModeEnabled())
             {

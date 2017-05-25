@@ -33,6 +33,8 @@ namespace ExampleApp
                 void RemoveItemRemovedCallback(Eegeo::Helpers::ICallback1<TagSearchModel>& callback) override;
 
                 bool TryGetTagSearchNameByQuery(const std::string& query, std::string& out_name) override;
+
+                void ForceRefresh();
             };
         }
     }
