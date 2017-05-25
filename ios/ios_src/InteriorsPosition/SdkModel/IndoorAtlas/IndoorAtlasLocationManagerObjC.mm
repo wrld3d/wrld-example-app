@@ -42,6 +42,8 @@ typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
         m_piOSAlertBoxFactory = iOSAlertBoxFactory;
         m_failureHandlerWrapper = new FailureHandlerType(self);
         m_failAlertHandler = new Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<IndoorAtlasLocationManagerObjC> >(m_failureHandlerWrapper, &FailureHandlerType::HandleFailure);
+        
+        m_pIndoorAtlasLocationService->SetIsAuthorized(true);
     }
     
     return self;

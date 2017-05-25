@@ -1111,7 +1111,10 @@ namespace ExampleApp
         m_pCameraTransitionService->Update(dt);
         m_pAppCameraModule->GetController().Update(dt);
 
-        m_pAppModeModel->Update(dt);
+        if(!eegeoWorld.Initialising() && m_initialisedApplicationViewState)
+        {
+            m_pAppModeModel->Update(dt);
+        }
 
         m_pInteriorsExplorerModule->Update(dt);
 

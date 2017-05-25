@@ -33,6 +33,8 @@ namespace ExampleApp
                 
                 void IndoorAtlasLocationController::OnAppModeChanged()
                 {
+                    m_locationManager.StopUpdatingLocation();
+
                     typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
 
                     Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
@@ -46,9 +48,7 @@ namespace ExampleApp
                     {
                         return;
                     }
-                    
-                    m_locationManager.StopUpdatingLocation();
-                 
+
                     if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
                     {
                         const TrackingInfoMap::const_iterator trackingInfoEntry = trackingInfoMap.find(interiorId.Value());
