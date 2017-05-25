@@ -34,7 +34,7 @@ namespace ExampleApp
 
                 bool TryGetTagSearchNameByQuery(const std::string& query, std::string& out_name) override;
 
-                void ForceRefresh();
+                void ForceRefresh() override;
             };
         }
     }
