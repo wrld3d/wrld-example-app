@@ -10,7 +10,6 @@
 #include "InteriorMetaDataRepository.h"
 #include "ApplicationInteriorTrackingInfo.h"
 #include "BidirectionalBus.h"
-#include "AboutPageSenionSettingsTypeMessage.h"
 
 namespace ExampleApp
 {

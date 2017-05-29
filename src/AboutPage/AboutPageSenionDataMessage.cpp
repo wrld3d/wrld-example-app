@@ -1,12 +1,12 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "AboutPageSenionDataTypeMessage.h"
+#include "AboutPageSenionDataMessage.h"
 
 namespace ExampleApp
 {
     namespace AboutPage
     {
-        AboutPageSenionDataTypeMessage::AboutPageSenionDataTypeMessage(int eeegeoFloorNumber, int32_t senionFloorNumber, double senionLatitude, double senionLongitude)
+        AboutPageSenionDataMessage::AboutPageSenionDataMessage(int eeegeoFloorNumber, int32_t senionFloorNumber, double senionLatitude, double senionLongitude)
         : m_eegeoFloorNumber(eeegeoFloorNumber)
         , m_senionFloorNumber(senionFloorNumber)
         , m_sentionLatitude(senionLatitude)
@@ -14,22 +14,22 @@ namespace ExampleApp
         {
         }
         
-        int32_t AboutPageSenionDataTypeMessage::GetEegeoFloorNumber() const
+        int32_t AboutPageSenionDataMessage::GetEegeoFloorNumber() const
         {
             return m_eegeoFloorNumber;
         }
         
-        int AboutPageSenionDataTypeMessage::GetSenionFloorNumber() const
+        int AboutPageSenionDataMessage::GetSenionFloorNumber() const
         {
             return m_senionFloorNumber;
         }
         
-        double AboutPageSenionDataTypeMessage::GetSenionLatitude() const
+        double AboutPageSenionDataMessage::GetSenionLatitude() const
         {
             return m_sentionLatitude;
         }
         
-        double AboutPageSenionDataTypeMessage::GetSenionLongitude()const
+        double AboutPageSenionDataMessage::GetSenionLongitude()const
         {
             return m_senionLongitude;
         }

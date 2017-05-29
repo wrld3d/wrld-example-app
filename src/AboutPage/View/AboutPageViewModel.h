@@ -29,15 +29,16 @@ namespace ExampleApp
                 const std::string m_aboutText;
                 std::string m_appName;
                 std::string m_indoorPositioningType;
-                int32_t m_eegeoFloorNumber;
+                int32_t m_eegeoFloorIndex;
                 int m_senionFloorNumber;
-                double m_senionLatitude;
-                double m_senionLongitude;
-                std::string m_senionApiKey;
-                std::string m_senionApiSecret;
-                std::map<int, std::string> m_senionFloorMap;
-                std::stringstream m_senionFloorMapString;
-                std::string m_senionInteriorId;
+                std::string m_indoorAtlasFloorId;
+                double m_latitude;
+                double m_longitude;
+                std::string m_apiKey;
+                std::string m_apiSecret;
+                std::map<int, std::string> m_floorMap;
+                std::stringstream m_floorMapString;
+                std::string m_interiorId;
 
             public:
                 AboutPageViewModel(
@@ -53,32 +54,24 @@ namespace ExampleApp
                 ~AboutPageViewModel();
 
                 bool TryAcquireReactorControl();
-
                 bool IsOpen() const;
-
                 void Open();
-
                 void Close();
                 
                 void UpdateApplicationName(const std::string& appName);
 
                 const std::string GetContent(bool showHiddenContent) const;
-
                 OpenableControl::View::IOpenableControlViewModel& GetOpenableControl();
 
                 void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
-
                 void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
-
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
-
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
                 
                 void SetIndoorPositioningType(const std::string& indoorPositioningType);
-                
-                void SetSenionDataType(const int32_t& eegeoFloorNumber, const int& senionFloorNumber, const double& latitude, const double& longitude);
-                
-                void SetSenionSettingsType(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::string>& floorMap, const std::string& interiorId);
+                void SetIndoorPositionSettings(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::string>& floorMap, const std::string& interiorId);
+                void SetSenionData(const int32_t& eegeoFloorNumber, const int& senionFloorNumber, const double& latitude, const double& longitude);
+                void SetIndoorAtlasData(const int32_t& eegeoFloorNumber, const std::string& indoorAtlasFloorId, const double& latitude, const double& longitude);
             };
         }
     }
