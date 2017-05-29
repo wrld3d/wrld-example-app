@@ -34,11 +34,13 @@ typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
 @implementation IndoorAtlasLocationManagerObjC
 
 -(instancetype) init: (ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationService*) indoorAtlasLocationService
+          messageBus: (ExampleAppMessaging::TMessageBus*) messageBus
   iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
 {
     if(self = [super init])
     {
         m_pIndoorAtlasLocationService = indoorAtlasLocationService;
+        m_pMessageBus = messageBus;
         m_piOSAlertBoxFactory = iOSAlertBoxFactory;
         m_failureHandlerWrapper = new FailureHandlerType(self);
         m_failAlertHandler = new Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<IndoorAtlasLocationManagerObjC> >(m_failureHandlerWrapper, &FailureHandlerType::HandleFailure);

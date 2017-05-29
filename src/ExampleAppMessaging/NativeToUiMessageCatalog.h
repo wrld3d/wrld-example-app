@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "Types.h"
 #include "CatalogBinding.h"
 #include "SearchResultAddedMessage.h"
@@ -43,9 +44,10 @@
 #include "TagSearchRemovedMessage.h"
 #include "VirtualKeyboardStateChangedMessage.h"
 #include "AboutPageIndoorPositionTypeMessage.h"
+#include "AboutPageIndoorAtlasDataMessage.h"
 #include "AttractModeStateChangedMessage.h"
-#include "AboutPageSenionDataTypeMessage.h"
-#include "AboutPageSenionSettingsTypeMessage.h"
+#include "AboutPageSenionDataMessage.h"
+#include "AboutPageIndoorPositionSettingsMessage.h"
 #include "OpenSearchMenuMessage.h"
 #include "CompassIsRotatingStateChangedMessage.h"
 #include "SelectMenuItemMessage.h"
@@ -96,9 +98,10 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerUINotifyMessage>
             , public Eegeo::Messaging::CatalogBinding<VirtualKeyboard::VirtualKeyboardStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageIndoorPositionTypeMessage>
+            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionDataMessage>
+            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageIndoorAtlasDataMessage>
+            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageIndoorPositionSettingsMessage>
             , public Eegeo::Messaging::CatalogBinding<AttractMode::AttractModeStateChangedMessage>
-            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionDataTypeMessage>
-            , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionSettingsTypeMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchMenu::OpenSearchMenuMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassIsRotatingStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Automation::SelectMenuItemMessage>

@@ -30,7 +30,8 @@ namespace ExampleApp
                 , m_locationController(m_locationManager,
                                        appModeModel,
                                        interiorSelectionModel,
-                                       interiorMetaDataRepository)
+                                       interiorMetaDataRepository,
+                                       messageBus)
                 {
                     ASSERT_NATIVE_THREAD
                 }

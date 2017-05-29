@@ -39,10 +39,12 @@ namespace ExampleApp
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
                 
                 virtual void SetIndoorPositioningType(const std::string& indoorPositioningType) = 0;
-                
-                virtual void SetSenionDataType(const int& eegeoFloorNumber ,const int32_t& senionFloorNumber, const double& latitude, const double& longitude) = 0;
-                
-                virtual void SetSenionSettingsType(const std::string& floorNumber, const std::string& latitude, const std::map<int, std::string>& longitude, const std::string& interiorId) = 0;
+
+                virtual void SetIndoorPositionSettings(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::string>& floorMap, const std::string& interiorId) = 0;
+
+                virtual void SetSenionData(const int& eegeoFloorindex ,const int32_t& senionFloorNumber, const double& latitude, const double& longitude) = 0;
+
+                virtual void SetIndoorAtlasData(const int& eegeoFloorindex ,const std::string& indoorAtlasFloorId, const double& latitude, const double& longitude) = 0;
             };
         }
     }

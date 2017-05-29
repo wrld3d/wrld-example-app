@@ -4,6 +4,7 @@
 #include "InteriorSelectionModel.h"
 #include "InteriorInteractionModel.h"
 #include "IPSConfigurationParser.h"
+#include "AboutPageIndoorPositionSettingsMessage.h"
 
 namespace ExampleApp
 {
@@ -66,10 +67,11 @@ namespace ExampleApp
                                 const std::map<int, std::string>& floorMap = trackingInfo.GetFloorIndexMap();
 
                                 m_locationManager.StartUpdatingLocation(apiKey, apiSecret, floorMap);
-                                m_messageBus.Publish(AboutPage::AboutPageSenionSettingsTypeMessage(apiKey,
-                                                                                                   apiSecret,
-                                                                                                   floorMap,
-                                                                                                   trackingInfo.GetInteriorId().Value()));
+                                m_messageBus.Publish(AboutPage::AboutPageIndoorPositionSettingsMessage(
+                                        apiKey,
+                                        apiSecret,
+                                        floorMap,
+                                        trackingInfo.GetInteriorId().Value()));
                             }
                         }
                     }

@@ -12,6 +12,7 @@
 @interface IndoorAtlasLocationManagerObjC : NSObject
 
 -(instancetype) init: (ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationService*) indoorAtlasLocationService
+          messageBus: (ExampleAppMessaging::TMessageBus*) messageBus
   iOSAlertBoxFactory: (Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory;
 -(void) startUpdatingLocation: (NSString*) apiKey
                     apiSecret: (NSString*) apiSecret

@@ -4,6 +4,7 @@
 #include "InteriorSelectionModel.h"
 #include "InteriorInteractionModel.h"
 #include "IPSConfigurationParser.h"
+#include "AboutPageIndoorPositionSettingsMessage.h"
 
 namespace ExampleApp
 {
@@ -16,12 +17,14 @@ namespace ExampleApp
                 IndoorAtlasLocationController::IndoorAtlasLocationController(IIndoorAtlasLocationManager& locationManager,
                                                                             ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                             const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                            Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
+                                                                            Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                                                            ExampleAppMessaging::TMessageBus& messageBus)
                 : m_locationManager(locationManager)
                 , m_appModeModel(appModeModel)
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_appModeChangedCallback(this, &IndoorAtlasLocationController::OnAppModeChanged)
                 , m_interiorMetaDataRepository(interiorMetaDataRepository)
+                , m_messageBus(messageBus)
                 {
                     m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
                 }
@@ -64,6 +67,11 @@ namespace ExampleApp
                                 const std::map<int, std::string>& floorMap = trackingInfo.GetFloorIndexMap();
 
                                 m_locationManager.StartUpdatingLocation(apiKey, apiSecret, floorMap);
+                                m_messageBus.Publish(AboutPage::AboutPageIndoorPositionSettingsMessage(
+                                         apiKey,
+                                         apiSecret,
+                                         floorMap,
+                                         trackingInfo.GetInteriorId().Value()));
                             }
                         }
                     }
