@@ -179,7 +179,8 @@ AppHost::AppHost(
                                                                                                                               mapModule.GetEnvironmentFlatteningService(),
                                                                                                                               *m_piOSLocationService,
                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
-                                                                                                                              m_iOSAlertBoxFactory);
+                                                                                                                              m_iOSAlertBoxFactory,
+                                                                                                                              m_messageBus);
     
     m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
                                                                                            interiorsPresentationModule.GetInteriorInteractionModel(),

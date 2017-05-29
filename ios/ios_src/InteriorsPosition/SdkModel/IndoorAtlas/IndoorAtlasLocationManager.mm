@@ -15,7 +15,7 @@ namespace ExampleApp
                                                                        Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory)
                 {
                     m_pLocationManager = [[IndoorAtlasLocationManagerObjC alloc] init: indoorAtlasLocationService
-                        messageBus: &messageBus,
+                        messageBus: &messageBus
                         iOSAlertBoxFactory: &iOSAlertBoxFactory];
                 }
                 
