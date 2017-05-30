@@ -125,9 +125,7 @@ namespace ExampleApp
             
             void WorldPinsService::UpdatePinCategory(const WorldPinItemModel& pinItemModel, const std::string& iconKey)
             {
-                //Eegeo::Pins::Pin* pPin = m_pinRepository.GetPinById(pinItemModel.Id());
-                //Eegeo_ASSERT(pPin != NULL, "Couldn't find Pin to set category on");
-                //pPin->SetCategoryId(m_worldPinIconMapping.IconIndexForKey(iconKey));
+                m_markerService.Get(pinItemModel.Id()).SetIconKey(iconKey);
             }
 
             bool WorldPinsService::HandleTouchTap(const Eegeo::v2& screenTapPoint)
