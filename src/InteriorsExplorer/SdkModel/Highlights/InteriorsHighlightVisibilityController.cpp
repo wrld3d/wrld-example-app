@@ -65,23 +65,19 @@ namespace ExampleApp
                     Search::SdkModel::ISearchService& searchService,
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                     Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                    Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& legacyLabelController,
                     Eegeo::Labels::ILabelAnchorFilterModel& labelHiddenFilterModel,
                     const Eegeo::Labels::LabelLayer::IdType interiorLabelLayer,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     IHighlightColorMapper& highlightColorMapper,
-                    PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                    const bool usingLegacyInteriorLabels)
+                    PersistentSettings::IPersistentSettingsModel& persistentSettings)
                     : m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorsCellResourceObserver(interiorsCellResourceObserver)
-                    , m_legacyInteriorsLabelController(legacyLabelController)
                     , m_interiorLabelLayer(interiorLabelLayer)
                     , m_labelHiddenFilterModel(labelHiddenFilterModel)
                     , m_searchService(searchService)
                     , m_searchQueryPerformer(searchQueryPerformer)
                     , m_searchResultRepository(searchResultRepository)
                     , m_highlightColorMapper(highlightColorMapper)
-                    , m_usingLegacyInteriorLabels(usingLegacyInteriorLabels)
                     , m_searchResultsHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultsLoaded)
                     , m_searchResultsClearedHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultCleared)
                     , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorChanged)
@@ -97,10 +93,6 @@ namespace ExampleApp
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
-                    if (m_usingLegacyInteriorLabels)
-                    {
-                        m_legacyInteriorsLabelController.RegisterLabelsBuiltCallback(m_interiorLabelsBuiltHandler);
-                    }
                     m_interiorsCellResourceObserver.RegisterAddedToSceneGraphCallback(m_interiorCellAddedHandler);
 
                     m_messageBus.SubscribeNative(m_availabilityChangedHandlerBinding);
@@ -111,10 +103,6 @@ namespace ExampleApp
                 InteriorsHighlightVisibilityController::~InteriorsHighlightVisibilityController()
                 {
                     m_interiorsCellResourceObserver.UnregisterAddedToSceneGraphCallback(m_interiorCellAddedHandler);
-                    if (m_usingLegacyInteriorLabels)
-                    {
-                        m_legacyInteriorsLabelController.UnregisterLabelsBuiltCallback(m_interiorLabelsBuiltHandler);
-                    }
                     m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsHandler);
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
@@ -306,45 +294,13 @@ namespace ExampleApp
                 
                 void InteriorsHighlightVisibilityController::RefreshLabels()
                 {
-                    if (m_usingLegacyInteriorLabels)
+                    if (!m_searchResultLabelNames.empty())
                     {
-                        RefreshLabelsLegacy();
+                        m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, &m_hideLabelByNameFilter);
                     }
                     else
                     {
-                        if (!m_searchResultLabelNames.empty())
-                        {
-                            m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, &m_hideLabelByNameFilter);
-                        }
-                        else
-                        {
-                            m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, &m_hideLabelAlwaysFilter);
-                        }
-                    }
-                }
-                
-                void InteriorsHighlightVisibilityController::RefreshLabelsLegacy()
-                {
-                    Eegeo_ASSERT(m_usingLegacyInteriorLabels);
-                    
-                    namespace IE = Eegeo::Resources::Interiors::Entities;
-                    typedef IE::TModelVector InteriorEntityPlaceNameModelPairs;
-                    
-                    const IE::TFloorIndexToModelsMap& floorIndexToModels = m_legacyInteriorsLabelController.GetFloorIndexToModels();
-                    
-                    for (auto const& floorIndexToModelsMap : floorIndexToModels)
-                    {
-                        const InteriorEntityPlaceNameModelPairs& interiorEntityPlaceNameModelPairs = floorIndexToModelsMap.second;
-
-                        for (auto const pair : interiorEntityPlaceNameModelPairs)
-                        {
-                            Eegeo::Resources::PlaceNames::PlaceNameModel& placeNameModel = *pair.second;
-                            
-                            // Placename name format is NAME-ID
-                            const bool resultFoundForModel = HasAnyPrefix(placeNameModel.GetName(), m_searchResultLabelNames);
-                            
-                            placeNameModel.SetEnabled(resultFoundForModel);
-                        }
+                        m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, &m_hideLabelAlwaysFilter);
                     }
                 }
                 

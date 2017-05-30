@@ -446,13 +446,11 @@ namespace ExampleApp
                                                                                                                      m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
                                                                                                                      m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                                      m_pSearchModule->GetSearchResultRepository(),
-                                                                                                                     mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(),
                                                                                                                      mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
                                                                                                                      mapModule.GetInteriorsStreamingModule().GetLabelLayerId(),
                                                                                                                      m_messageBus,
                                                                                                                      *m_pHighlightColorMapper,
-                                                                                                                     m_persistentSettings,
-                                                                                                                     m_usingLegacyInteriorLabels);
+                                                                                                                     m_persistentSettings);
         
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
         

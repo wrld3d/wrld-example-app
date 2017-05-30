@@ -5,7 +5,7 @@
 #include "LatLongAltitude.h"
 #include "IWorldPinsRepository.h"
 #include "IInteriorMarkerPickingService.h"
-
+#include "SwallowSearchConstants.h"
 #include "IMarkerService.h"
 #include "MarkerBuilder.h"
 
@@ -68,12 +68,14 @@ namespace ExampleApp
                                                           const Eegeo::Space::LatLong& location,
                                                           const std::string& pinIconKey,
                                                           float heightAboveTerrainMetres,
-                                                          int visibilityMask)
+                                                          int visibilityMask,
+                                                          const std::string& tag)
             {
-            
+                bool isMeetingRoom = tag == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME;
+
                 const auto& markerCreateParams = Eegeo::Markers::MarkerBuilder()
                     .SetLocation(location.GetLatitudeInDegrees(), location.GetLongitudeInDegrees())
-                    .SetLabelText(worldPinFocusData.title)
+                    .SetLabelText(isMeetingRoom ? "" : worldPinFocusData.title)
                     .SetLabelIcon(pinIconKey)
                     // temp workaround to specify interior floor by zero-based index rather than 'floor number' id (MPLY-8062)
                     .SetInteriorWithFloorIndex(worldPinInteriorData.building.Value(), worldPinInteriorData.floor)

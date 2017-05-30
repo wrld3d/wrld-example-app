@@ -137,7 +137,8 @@ namespace ExampleApp
                                                                                                location,
                                                                                                indoorMapEntryIconKey,
                                                                                                heightOffsetMetres,
-                                                                                               WorldPins::SdkModel::WorldPinVisibility::World);
+                                                                                               WorldPins::SdkModel::WorldPinVisibility::World,
+                                                                                               indoorMapEntryIconKey);
                 m_interiorIdToWorldPinMap[markerModel.GetInteriorId().Value()] = pItemModel;
             }
             

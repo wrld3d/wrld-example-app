@@ -94,7 +94,8 @@ namespace ExampleApp
                                                                                                       pMyPinModel->GetLatLong(),
                                                                                                       pMyPinModel->GetPinIconKey(),
                                                                                                       pMyPinModel->GetHeightAboveTerrainMetres(),
-                                                                                                      pinVisibilityMask);
+                                                                                                      pinVisibilityMask,
+                                                                                                      "");
 
                 m_myPinToWorldPinMap[pMyPinModel->Identifier()] = std::make_pair(pMyPinModel, pWorldPinItemModel);
             }
