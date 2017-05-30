@@ -1751,9 +1751,6 @@
 	  <Component Id="_3991069a.800a.4df2.8af9.86aa1ca13781" Directory="RESOURCEFOLDER" Guid="{ae29d29b-4957-499a-a772-7bf444e7a2c9}">
         <File Id="_cf8fdee1.b0ea.4d25.ae6e.39ccd458f436" KeyPath="yes" Source="payload\Resources\icon1_zoo@1.5x.png" />
 	  </Component>
-	  <Component Id="_215e1f8a.2885.4734.8467.0d2318600116" Directory="PINSFOLDER" Guid="{8785d62a-6fff-4a3c-898f-c32faa308af5}">
-        <File Id="_a85b060e.4754.4f82.8f81.7165be329627" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\pin_sheet_0@1.5x.png" />
-	  </Component>
 	  <Component Id="_dc818069.4591.4afb.adc9.83ff6366c2af" Directory="PINSFOLDER" Guid="{f4959b8c-9136-4998-80bc-ce3a68d9ad6d}">
         <File Id="_4168a0a4.d6de.4321.8d06.bb68eb4ff881" KeyPath="yes" Source="payload\Resources\SearchResultOnMap\pin_sheet_0@2x.png" />
 	  </Component>
