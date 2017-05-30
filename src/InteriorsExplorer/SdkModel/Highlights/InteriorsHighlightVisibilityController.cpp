@@ -34,18 +34,6 @@ namespace ExampleApp
                 {
                     const std::string highlightPrefix = "entity_highlight ";
                     const Eegeo::v4 transparentHighlightColor(1.0f, 1.0f, 1.0f, 0.0f);
-                    
-                    bool HasAnyPrefix(const std::string& s, const std::unordered_set<std::string>& prefixes)
-                    {
-                        for (auto const& candidatePrefix : prefixes)
-                        {
-                            if (s.compare(0, candidatePrefix.length(), candidatePrefix) == 0)
-                            {
-                                return true;
-                            }
-                        }
-                        return false;
-                    }
                 }
                 
                 InteriorsHighlightVisibilityController::AvailabilityToColor InteriorsHighlightVisibilityController::BuildAvailabilityToColor()

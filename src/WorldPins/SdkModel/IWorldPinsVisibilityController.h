@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "ICallback.h"
+
 namespace ExampleApp
 {
     namespace WorldPins
