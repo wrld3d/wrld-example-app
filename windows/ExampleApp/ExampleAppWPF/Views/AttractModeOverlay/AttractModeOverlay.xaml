@@ -137,7 +137,7 @@
                                        FontFamily="Open Sans"
                                        FontSize="35px"
                                        Foreground="{DynamicResource AttractSubtitleColour}"
-                                       Text="Touch the display to find People, Groups, Departments, and Meeting Rooms.">
+                                       Text="Touch the display to find People, Groups, Departments, and Meeting Rooms">
                                 <TextBlock.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
