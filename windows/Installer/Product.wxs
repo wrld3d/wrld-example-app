@@ -872,6 +872,24 @@
 	  <Component Id="_9f8b1002.44eb.42b1.910b.a15ae48febe9" Directory="RESOURCEFOLDER" Guid="{4d95ccde-b018-4221-9afd-b2efbba7199e}">
 		<File Id="_34fc2dba.0bb1.484e.a11d.1d818d26a627" KeyPath="yes" Source="payload\Resources\compass_new_unlocked_over.png" />
 	  </Component>
+	  <Component Id="_4e0e0244.f501.4f03.9780.94113869a0a8" Directory="RESOURCEFOLDER" Guid="{b0a81017-a522-4fe2-8814-3802a82e500c}">
+        <File Id="_45e285ed.afd3.487d.bfc8.f4781b49bddf" KeyPath="yes" Source="payload\Resources\compass_new_locked@kiosk.png" />
+	  </Component>
+	  <Component Id="_8828fe9e.1998.4056.a14e.ce66c1245d45" Directory="RESOURCEFOLDER" Guid="{65092d2c-c29f-4c1b-99ce-67e90d68621d}">
+        <File Id="_41c99819.d553.4ac0.8fea.e71c36f01b2f" KeyPath="yes" Source="payload\Resources\compass_new_locked_down@kiosk.png" />
+	  </Component>
+	  <Component Id="_013ac649.2f7d.4a66.86fe.0b3dd4f99738" Directory="RESOURCEFOLDER" Guid="{98b599d0-ff85-4c61-bd27-c554568b2e02}">
+        <File Id="_7bbf1ccb.56e5.46ad.bcc0.c5ec1ce9d5e8" KeyPath="yes" Source="payload\Resources\compass_new_locked_over@kiosk.png" />
+	  </Component>
+	  <Component Id="_7f1664a8.a7b1.43aa.82a7.993942926817" Directory="RESOURCEFOLDER" Guid="{ff18716f-051e-468c-ae57-510e4f7caefb}">
+        <File Id="_0feb15da.6052.4549.89e8.a074dfe3ece8" KeyPath="yes" Source="payload\Resources\compass_new_unlocked@kiosk.png" />
+	  </Component>
+	  <Component Id="_d6e201d1.4195.4202.a22e.14610f2a39d9" Directory="RESOURCEFOLDER" Guid="{6d83ded3-a61d-42b7-a7b6-b56a2403a343}">
+        <File Id="_311c28a0.3eb6.40cc.9db3.844ad91bcd2f" KeyPath="yes" Source="payload\Resources\compass_new_unlocked_down@kiosk.png" />
+	  </Component>
+	  <Component Id="_042435b6.bc78.46b5.86b8.cd599adbe1c5" Directory="RESOURCEFOLDER" Guid="{693de2c8-d82d-4901-98a2-1d34e121e008}">
+        <File Id="_c6aa9402.f5ce.41fc.a9f8.c67ffcb45089" KeyPath="yes" Source="payload\Resources\compass_new_unlocked_over@kiosk.png" />
+	  </Component>
 	  <Component Id="_ee62f1b0.ffc2.4154.9196.b7aae1539f09" Directory="RESOURCEFOLDER" Guid="{d5fce66e-691c-4d1c-8535-8264d37bf7c1}">
 		<File Id="_c0f07171.6a72.46bb.93b1.2a49f7a76fca" KeyPath="yes" Source="payload\Resources\default_water_reflection_cube_map_negX.png" />
 	  </Component>
