@@ -329,6 +329,8 @@ namespace ExampleAppWPF.VirtualKeyboard
             {
                 key.PreviewMouseDown += new MouseButtonEventHandler(Button_MouseDown);
                 key.PreviewMouseUp += new MouseButtonEventHandler(Button_MouseUp);
+                key.PreviewTouchDown += Button_TouchDown;
+                key.PreviewTouchUp += Button_TouchUp;
 
                 UpdateButtonLabels();
             }
@@ -349,6 +351,17 @@ namespace ExampleAppWPF.VirtualKeyboard
         }
 
         private void Button_MouseUp(object sender, MouseEventArgs e)
+        {
+            var key = sender as VirtualKeyboardButton;
+            OnExecuteVirtualKeyStroke(key.Name, key, IsLongPress(e.Timestamp));
+        }
+
+        private void Button_TouchDown(object sender, TouchEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void Button_TouchUp(object sender, TouchEventArgs e)
         {
             var key = sender as VirtualKeyboardButton;
             OnExecuteVirtualKeyStroke(key.Name, key, IsLongPress(e.Timestamp));
