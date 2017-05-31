@@ -149,9 +149,9 @@
     if(!m_editingText)
     {
         m_pTextField.text = @"";
+        [m_pDragTab showCloseView: false];
     }
     [self updateClearButtonVisibility:m_pTextField];
-    [m_pDragTab showCloseView: true];
 }
 
 - (void) setHasResults :(bool)hasResults

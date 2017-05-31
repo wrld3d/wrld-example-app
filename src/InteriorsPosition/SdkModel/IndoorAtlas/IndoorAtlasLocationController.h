@@ -25,7 +25,8 @@ namespace ExampleApp
                 	IndoorAtlasLocationController(IIndoorAtlasLocationManager& locationManager,
                                                   AppModes::SdkModel::IAppModeModel& appModeModel,
                                                   const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                  Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository);
+                                                  Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                                  ExampleAppMessaging::TMessageBus& messageBus);
                     ~IndoorAtlasLocationController();
                     
                 private:
@@ -34,6 +35,7 @@ namespace ExampleApp
                     const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                     Eegeo::Helpers::TCallback0<IndoorAtlasLocationController> m_appModeChangedCallback;
                     Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& m_interiorMetaDataRepository;
+                    ExampleAppMessaging::TMessageBus& m_messageBus;
                     
                     void OnAppModeChanged();
                 };

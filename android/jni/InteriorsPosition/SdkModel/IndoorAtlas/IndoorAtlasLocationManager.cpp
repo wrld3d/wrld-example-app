@@ -106,6 +106,7 @@ namespace ExampleApp
                 {
                     ASSERT_UI_THREAD
                     m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, FloorIdToFloorIndex(floorId)));
+                    m_messageBus.Publish(AboutPage::AboutPageIndoorAtlasDataMessage(FloorIdToFloorIndex(floorId), floorId, latitude, longitude));
                 }
 
                 void IndoorAtlasLocationManager::SetIsAuthorized(const bool isAuthorized)

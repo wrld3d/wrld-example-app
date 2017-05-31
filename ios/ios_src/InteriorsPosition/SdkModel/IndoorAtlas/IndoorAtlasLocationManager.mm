@@ -11,9 +11,12 @@ namespace ExampleApp
             namespace IndoorAtlas
             {
                 IndoorAtlasLocationManager::IndoorAtlasLocationManager(IndoorAtlasLocationService* indoorAtlasLocationService,
+                                                                       ExampleAppMessaging::TMessageBus& messageBus,
                                                                        Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory)
                 {
-                    m_pLocationManager = [[IndoorAtlasLocationManagerObjC alloc] init: indoorAtlasLocationService iOSAlertBoxFactory: &iOSAlertBoxFactory];
+                    m_pLocationManager = [[IndoorAtlasLocationManagerObjC alloc] init: indoorAtlasLocationService
+                        messageBus: &messageBus
+                        iOSAlertBoxFactory: &iOSAlertBoxFactory];
                 }
                 
                 IndoorAtlasLocationManager::~IndoorAtlasLocationManager()

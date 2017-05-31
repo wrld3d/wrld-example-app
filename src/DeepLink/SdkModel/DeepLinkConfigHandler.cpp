@@ -132,6 +132,10 @@ namespace ExampleApp
                         {
                             m_searchQueryPerformer.PerformSearchQuery(applicationConfig.StartUpSearchTag(), true, false, applicationConfig.InterestLocation());
                         }
+                        else
+                        {
+                            m_searchQueryPerformer.RemoveSearchQueryResults();
+                        }
                     }
                     else
                     {

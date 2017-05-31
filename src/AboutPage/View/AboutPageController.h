@@ -9,8 +9,8 @@
 #include "IAboutPageView.h"
 #include "IMetricsService.h"
 #include "AboutPageIndoorPositionTypeMessage.h"
-#include "AboutPageSenionDataTypeMessage.h"
-#include "AboutPageSenionSettingsTypeMessage.h"
+#include "AboutPageSenionDataMessage.h"
+#include "AboutPageIndoorPositionSettingsMessage.h"
 #include "BidirectionalBus.h"
 
 namespace ExampleApp
@@ -31,28 +31,23 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<AboutPageController> m_logoLongPress;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                
                 Metrics::IMetricsService& m_metricsService;
                 
-                Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageIndoorPositionTypeMessage&> m_aboutPageIndoorPositionTypeMessage;
-                
-                Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageSenionDataTypeMessage&> m_aboutPageSenionDataTypeMessage;
-                
-                Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageSenionSettingsTypeMessage&> m_aboutPageSenionSettingsMessage;
+                Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageIndoorPositionTypeMessage&> m_aboutPageIndoorPositionTypeMessageHandler;
+                Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageIndoorPositionSettingsMessage&> m_aboutPageIndoorPositionSettingsMessageHandler;
+                Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageSenionDataMessage&> m_aboutPageSenionDataMessageHandler;
+                Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageIndoorAtlasDataMessage&> m_aboutPageIndoorAtlasDataMessageHandler;
 
                 void OnOpen();
-
                 void OnClose();
-
                 void OnCloseTapped();
-                
                 void OnLogoLongPress();
                 
-                void OnAboutPageIndoorPositionTypeMessageChanged(const AboutPage::AboutPageIndoorPositionTypeMessage& aboutPageIndoorPositionTypeMessage);
-                
-                void OnAboutPageSenionDataTypeMessageChanged(const AboutPage::AboutPageSenionDataTypeMessage& aboutPageSenionDataTypeMessage);
-                
-                void OnAboutPageSenionSettingsMessageChanged(const AboutPage::AboutPageSenionSettingsTypeMessage& aboutPageSenionSettingsMessage);
+                void OnAboutPageIndoorPositionTypeMessage(const AboutPage::AboutPageIndoorPositionTypeMessage& message);
+                void OnAboutPageIndoorPositionSettingsMessage(const AboutPage::AboutPageIndoorPositionSettingsMessage& message);
+                void OnAboutPageSenionDataMessage(const AboutPage::AboutPageSenionDataMessage& message);
+                void OnAboutPageIndoorAtlasDataMessage(const AboutPage::AboutPageIndoorAtlasDataMessage& message);
+
             public:
                 AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel, Metrics::IMetricsService& metricsService, ExampleAppMessaging::TMessageBus& messageBus);
 

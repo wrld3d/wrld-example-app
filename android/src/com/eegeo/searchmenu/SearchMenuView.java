@@ -234,7 +234,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count)
     {
-        if(count != 0)
+        if(s.length() > 0)
         {
             setClearButtonVisible(true);
             m_editingText = true;
@@ -370,6 +370,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         if(!m_editingText)
         {
             m_editText.setText("");
+            showCloseButtonView(false);
         }
     }
     

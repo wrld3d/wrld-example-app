@@ -104,7 +104,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
         int floorIndex = [self getFloorIndexFromSenionFloorIndex:std::to_string(location.floorNr)];
         m_pSenionLabLocationService->SetFloorIndex(floorIndex);
         
-        m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, location.floorNr, location.latitude, location.longitude));
+        m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionDataMessage(floorIndex, location.floorNr, location.latitude, location.longitude));
     }
 }
 
