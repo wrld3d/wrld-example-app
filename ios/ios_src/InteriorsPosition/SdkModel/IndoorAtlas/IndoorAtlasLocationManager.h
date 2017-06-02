@@ -9,6 +9,7 @@
 #include "IndoorAtlasLocationService.h"
 #include "IndoorAtlasLocationManagerObjC.h"
 #include "iOSAlertBoxFactory.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -22,6 +23,7 @@ namespace ExampleApp
                 {
                 public:
                     IndoorAtlasLocationManager(IndoorAtlas::IndoorAtlasLocationService* indoorAtlasLocationService,
+                                               ExampleAppMessaging::TMessageBus& messageBus,
                                                Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory);
                     ~IndoorAtlasLocationManager();
                     

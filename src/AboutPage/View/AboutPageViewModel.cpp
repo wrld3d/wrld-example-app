@@ -62,14 +62,26 @@ namespace ExampleApp
                 
                 if(m_indoorPositioningType == "\nIndoor positioning type: Senion" && showHiddenContent)
                 {
-                    content << "\n eeGeo Floor number: " << m_eegeoFloorNumber
+                    content << "\n eeGeo Floor number: " << m_eegeoFloorIndex
                             << "\n Senion Floor number: " << m_senionFloorNumber
-                            << "\n Latitude: " << std::setprecision(10) << m_senionLatitude
-                            << "\n Longitude: " << m_senionLongitude
-                            << "\n SenionApiKey: " << m_senionApiKey
-                            << "\n SenionApiSecret: " << m_senionApiSecret
-                            << "\n SenionFloorMap: " << m_senionFloorMapString.str()
-                            << "\n SenionInteriorId: " << m_senionInteriorId
+                            << "\n Latitude: " << std::setprecision(10) << m_latitude
+                            << "\n Longitude: " << m_longitude
+                            << "\n ApiKey: " << m_apiKey
+                            << "\n ApiSecret: " << m_apiSecret
+                            << "\n FloorMap: " << m_floorMapString.str()
+                            << "\n InteriorId: " << m_interiorId
+                            << "\n";
+                }
+                else if(m_indoorPositioningType == "\nIndoor positioning type: IndoorAtlas" && showHiddenContent)
+                {
+                    content << "\n eeGeo Floor number: " << m_eegeoFloorIndex
+                            << "\n IndoorAtlas Floor id: " << m_indoorAtlasFloorId
+                            << "\n Latitude: " << std::setprecision(10) << m_latitude
+                            << "\n Longitude: " << m_longitude
+                            << "\n ApiKey: " << m_apiKey
+                            << "\n ApiSecret: " << m_apiSecret
+                            << "\n FloorMap: " << m_floorMapString.str()
+                            << "\n InteriorId: " << m_interiorId
                             << "\n";
                 }
                 
@@ -135,27 +147,44 @@ namespace ExampleApp
                 m_indoorPositioningType = indoorPositioningType;
             }
             
-            void AboutPageViewModel::SetSenionDataType(const int32_t& eegeoFloorNumber, const int& senionFloorNumber, const double& latitude, const double& longitude)
+            void AboutPageViewModel::SetSenionData(const int32_t& eegeoFloorNumber,
+                                                   const int& senionFloorNumber,
+                                                   const double& latitude,
+                                                   const double& longitude)
             {
-                m_eegeoFloorNumber = eegeoFloorNumber;
+                m_eegeoFloorIndex = eegeoFloorNumber;
                 m_senionFloorNumber = senionFloorNumber;
-                m_senionLatitude = latitude;
-                m_senionLongitude = longitude;
+                m_latitude = latitude;
+                m_longitude = longitude;
             }
-            
-            void AboutPageViewModel::SetSenionSettingsType(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::string>& floorMap, const std::string& interiorId)
+
+            void AboutPageViewModel::SetIndoorAtlasData(const int &eegeoFloorindex,
+                                                        const std::string &indoorAtlasFloorId,
+                                                        const double &latitude,
+                                                        const double &longitude)
             {
-                m_senionApiKey = apiKey;
-                m_senionApiSecret = apiSecret;
-                m_senionFloorMap = floorMap;
-                m_senionInteriorId = interiorId;
+                m_eegeoFloorIndex = eegeoFloorindex;
+                m_indoorAtlasFloorId = indoorAtlasFloorId;
+                m_latitude = latitude;
+                m_longitude = longitude;
+            }
+
+            void AboutPageViewModel::SetIndoorPositionSettings(const std::string& apiKey,
+                                                               const std::string& apiSecret,
+                                                               const std::map<int, std::string>& floorMap,
+                                                               const std::string& interiorId)
+            {
+                m_apiKey = apiKey;
+                m_apiSecret = apiSecret;
+                m_floorMap = floorMap;
+                m_interiorId = interiorId;
                 
                 std::map<int, std::string> map = floorMap;
 
-                m_senionFloorMapString.str(std::string());
+                m_floorMapString.str(std::string());
                 for(std::map<int, std::string>::iterator it = map.begin(); it != map.end(); ++it)
                 {
-                    m_senionFloorMapString << it->second << "\n";
+                    m_floorMapString << it->second << "\n";
                 }
             }
         }

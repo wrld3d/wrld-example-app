@@ -8,7 +8,7 @@ namespace ExampleApp
 {
     namespace AboutPage
     {
-        class AboutPageSenionDataTypeMessage
+        class AboutPageSenionDataMessage
         {
             int m_eegeoFloorNumber;
             int32_t m_senionFloorNumber;
@@ -16,7 +16,7 @@ namespace ExampleApp
             double m_senionLongitude;
             
         public:
-            AboutPageSenionDataTypeMessage(int m_eegeoFloorNumber, int32_t senionFloorNumber, double senionLatitude, double senionLongitude);
+            AboutPageSenionDataMessage(int m_eegeoFloorNumber, int32_t senionFloorNumber, double senionLatitude, double senionLongitude);
             
             int32_t GetEegeoFloorNumber() const;
             int GetSenionFloorNumber() const;

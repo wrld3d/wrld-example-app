@@ -110,6 +110,26 @@ namespace ExampleApp
                     return query.Query();
                 }
             }
+
+            void TagSearchRepository::ForceRefresh()
+            {
+                // HACK: Forcably remove and add all items to ensure the view is updated correctly
+                // This is due to the view not being given initial state on construction
+                size_t itemCount = GetItemCount();
+                std::vector<TagSearch::View::TagSearchModel> tags;
+                for(size_t i = 0; i < itemCount; ++i)
+                {
+                    View::TagSearchModel tag = GetItemAtIndex(i);
+                    tags.push_back(tag);
+                }
+
+                for(size_t i = 0; i < itemCount; ++i)
+                {
+                    View::TagSearchModel tag = tags.at(i);
+                    RemoveItem(tag);
+                    AddItem(tag);
+                }
+            }
         }
     }
 }

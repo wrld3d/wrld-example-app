@@ -20,6 +20,8 @@ namespace ExampleApp
                 virtual ~ITagSearchRepository() { }
 
                 virtual bool TryGetTagSearchNameByQuery(const std::string& query, std::string& out_name) = 0;
+
+                virtual void ForceRefresh() = 0;
             };
             
             std::string GetTagSearchNameByQuery(const std::string& query);

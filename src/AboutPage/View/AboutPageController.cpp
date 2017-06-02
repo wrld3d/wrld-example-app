@@ -41,19 +41,24 @@ namespace ExampleApp
                 }
             }
             
-            void AboutPageController::OnAboutPageIndoorPositionTypeMessageChanged(const AboutPage::AboutPageIndoorPositionTypeMessage& message)
+            void AboutPageController::OnAboutPageIndoorPositionTypeMessage(const AboutPage::AboutPageIndoorPositionTypeMessage& message)
             {
                 m_viewModel.SetIndoorPositioningType(message.GetIndoorPositioningType());
             }
-            
-            void AboutPageController::OnAboutPageSenionDataTypeMessageChanged(const AboutPage::AboutPageSenionDataTypeMessage& message)
+
+            void AboutPageController::OnAboutPageIndoorPositionSettingsMessage(const AboutPage::AboutPageIndoorPositionSettingsMessage& message)
             {
-                m_viewModel.SetSenionDataType(message.GetEegeoFloorNumber(), message.GetSenionFloorNumber(), message.GetSenionLatitude(), message.GetSenionLongitude());
+                m_viewModel.SetIndoorPositionSettings(message.GetApiKey(), message.GetApiSecret(), message.GetFloorMap(), message.GetInteriorId());
             }
-            
-            void AboutPageController::OnAboutPageSenionSettingsMessageChanged(const AboutPage::AboutPageSenionSettingsTypeMessage& message)
+
+            void AboutPageController::OnAboutPageSenionDataMessage(const AboutPage::AboutPageSenionDataMessage& message)
             {
-                m_viewModel.SetSenionSettingsType(message.GetSenionApiKey(), message.GetSenionApiSecret(), message.GetSenionFloorMap(), message.GetSenionInteriorId());
+                m_viewModel.SetSenionData(message.GetEegeoFloorNumber(), message.GetSenionFloorNumber(), message.GetSenionLatitude(), message.GetSenionLongitude());
+            }
+
+            void AboutPageController::OnAboutPageIndoorAtlasDataMessage(const AboutPage::AboutPageIndoorAtlasDataMessage& message)
+            {
+                m_viewModel.SetIndoorAtlasData(message.GetEegeoFloorIndex(), message.GetIndoorAtlasFloorId(), message.GetLatitude(), message.GetLongitude());
             }
 
             AboutPageController::AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel,
@@ -67,24 +72,27 @@ namespace ExampleApp
                 , m_viewCloseTapped(this, &AboutPageController::OnCloseTapped)
                 , m_logoLongPress(this, &AboutPageController::OnLogoLongPress)
                 , m_messageBus(messageBus)
-                , m_aboutPageIndoorPositionTypeMessage(this, &AboutPageController::OnAboutPageIndoorPositionTypeMessageChanged)
-                , m_aboutPageSenionDataTypeMessage(this, &AboutPageController::OnAboutPageSenionDataTypeMessageChanged)
-                , m_aboutPageSenionSettingsMessage(this, &AboutPageController::OnAboutPageSenionSettingsMessageChanged)
+                , m_aboutPageIndoorPositionTypeMessageHandler(this, &AboutPageController::OnAboutPageIndoorPositionTypeMessage)
+                , m_aboutPageIndoorPositionSettingsMessageHandler(this, &AboutPageController::OnAboutPageIndoorPositionSettingsMessage)
+                , m_aboutPageSenionDataMessageHandler(this, &AboutPageController::OnAboutPageSenionDataMessage)
+                , m_aboutPageIndoorAtlasDataMessageHandler(this, &AboutPageController::OnAboutPageIndoorAtlasDataMessage)
             {
                 m_view.InsertCloseTappedCallback(m_viewCloseTapped);
                 m_viewModel.InsertClosedCallback(m_viewClosed);
                 m_viewModel.InsertOpenedCallback(m_viewOpened);
                 m_view.InsertLogoLongPressCallback(m_logoLongPress);
-                m_messageBus.SubscribeUi(m_aboutPageIndoorPositionTypeMessage);
-                m_messageBus.SubscribeUi(m_aboutPageSenionDataTypeMessage);
-                m_messageBus.SubscribeUi(m_aboutPageSenionSettingsMessage);
+                m_messageBus.SubscribeUi(m_aboutPageIndoorPositionTypeMessageHandler);
+                m_messageBus.SubscribeUi(m_aboutPageIndoorPositionSettingsMessageHandler);
+                m_messageBus.SubscribeUi(m_aboutPageSenionDataMessageHandler);
+                m_messageBus.SubscribeUi(m_aboutPageIndoorAtlasDataMessageHandler);
             }
 
             AboutPageController::~AboutPageController()
             {
-                m_messageBus.UnsubscribeUi(m_aboutPageSenionSettingsMessage);
-                m_messageBus.UnsubscribeUi(m_aboutPageSenionDataTypeMessage);
-                m_messageBus.UnsubscribeUi(m_aboutPageIndoorPositionTypeMessage);
+                m_messageBus.UnsubscribeUi(m_aboutPageIndoorAtlasDataMessageHandler);
+                m_messageBus.UnsubscribeUi(m_aboutPageSenionDataMessageHandler);
+                m_messageBus.UnsubscribeUi(m_aboutPageIndoorPositionSettingsMessageHandler);
+                m_messageBus.UnsubscribeUi(m_aboutPageIndoorPositionTypeMessageHandler);
                 m_view.RemoveLogoLongPressCallback(m_logoLongPress);
                 m_viewModel.RemoveOpenedCallback(m_viewOpened);
                 m_viewModel.RemoveClosedCallback(m_viewClosed);

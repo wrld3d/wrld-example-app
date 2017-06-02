@@ -20,7 +20,7 @@ namespace ExampleApp
                                                                IEegeoParser& EegeoParser,
                                                                Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                                                const std::vector<std::string>& handledTags)
-                : Search::SdkModel::SearchServiceBase(handledTags)
+                : Search::SdkModel::SearchServiceBase(handledTags, true)
                 , m_eeGeoSearchQueryFactory(EegeoSearchQueryFactory)
                 , m_eeGeoParser(EegeoParser)
                 , m_networkCapabilities(networkCapabilities)

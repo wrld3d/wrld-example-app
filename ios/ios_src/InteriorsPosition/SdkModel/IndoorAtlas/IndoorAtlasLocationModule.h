@@ -11,6 +11,8 @@
 #include "InteriorsExplorer.h"
 #include "ApplicationConfiguration.h"
 #include "ILocationService.h"
+#include "BidirectionalBus.h"
+
 
 @class IndoorAtlasLocationManager;
 
@@ -31,7 +33,8 @@ namespace ExampleApp
                                               const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                               Eegeo::Location::ILocationService& defaultLocationService,
                                               Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
-                                              Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory);
+                                              Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory,
+                                              ExampleAppMessaging::TMessageBus& messageBu);
                     ~IndoorAtlasLocationModule();
             
                     IndoorAtlasLocationService& GetLocationService() { return *m_pLocationService; }

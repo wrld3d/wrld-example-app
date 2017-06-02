@@ -218,6 +218,10 @@ namespace ExampleApp
                     repository.AddItem(t);
                 }
             }
+            else
+            {
+                repository.ForceRefresh();
+            }
         }
     }
 
@@ -1107,7 +1111,10 @@ namespace ExampleApp
         m_pCameraTransitionService->Update(dt);
         m_pAppCameraModule->GetController().Update(dt);
 
-        m_pAppModeModel->Update(dt);
+        if(!eegeoWorld.Initialising() && m_initialisedApplicationViewState)
+        {
+            m_pAppModeModel->Update(dt);
+        }
 
         m_pInteriorsExplorerModule->Update(dt);
 
@@ -1251,7 +1258,7 @@ namespace ExampleApp
             MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
 
             AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig(),
-                               m_yelpCategoryMapperUpdater);
+                              m_yelpCategoryMapperUpdater);
 
             if (m_applicationConfiguration.IsAttractModeEnabled())
             {
