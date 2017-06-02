@@ -247,6 +247,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
             showCloseButtonView(true);
         }
+
+        m_isTag = false;
     }
 
     public void removeSearchKeyboard()
@@ -288,6 +290,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     public String getEditText()
     {
         return m_editText.getText().toString();
+    }
+
+    public boolean hasTagSearch()
+    {
+        return m_isTag;
     }
     
     private void setClearButtonVisible(boolean visible)

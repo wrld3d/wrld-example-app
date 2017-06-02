@@ -27,6 +27,7 @@ namespace ExampleApp
                 Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 bool m_appModeAllowsOpen;
+                Search::SdkModel::SearchQuery m_lastPerformedQuery;
                 
                 Eegeo::Helpers::TCallback1<SearchMenuController, Menu::View::MenuItemModel> m_onSearchItemAddedCallback;
                 Eegeo::Helpers::TCallback1<SearchMenuController, Menu::View::MenuItemModel> m_onSearchItemRemovedCallback;

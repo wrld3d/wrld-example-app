@@ -356,6 +356,8 @@ namespace ExampleAppWPF
             }
 
             ShowCloseButtonView(m_editText.Text.Length == 0);
+
+            m_hasTagSearch = false;
         }
 
         private void OnMenuScrollWheel(object sender, MouseWheelEventArgs e)
@@ -701,6 +703,11 @@ namespace ExampleAppWPF
                 SearchMenuIconOffImageSource = m_searchIconOffImageSource;
                 SearchMenuIconOnImageSource = m_searchIconOnImageSource;
             }
+        }
+
+        public bool HasTagSearch()
+        {
+            return m_hasTagSearch;
         }
     }
 }

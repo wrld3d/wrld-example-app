@@ -28,6 +28,7 @@ namespace ExampleApp
                 mSetSearchEnded.SetupMethod(m_uiViewClass, m_uiView, "SetSearchEnded");
                 mSetEditText.SetupMethod(m_uiViewClass, m_uiView, "SetEditText");
                 mGetEditText.SetupMethod(m_uiViewClass, m_uiView, "GetEditText");
+                mHasTagSearch.SetupMethod(m_uiViewClass, m_uiView, "HasTagSearch");
                 mSetSearchResultCount.SetupMethod(m_uiViewClass, m_uiView, "SetSearchResultCount");
                 mHideSearchResultCount.SetupMethod(m_uiViewClass, m_uiView, "HideSearchResultCount");
                 mRemoveSearchQueryResults.SetupMethod(m_uiViewClass, m_uiView, "RemoveSearchQueryResults");
@@ -79,6 +80,12 @@ namespace ExampleApp
             {
                 std::string editText = msclr::interop::marshal_as<std::string>(mGetEditText.Call<System::String^>());
                 return editText;
+            }
+
+            bool SearchMenuView::HasTagSearch()
+            {
+                bool result = mHasTagSearch.Call<System::Boolean>();
+                return result;
             }
 
             void SearchMenuView::SetSearchResultCount(int searchResultCount)
