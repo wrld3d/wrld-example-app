@@ -29,6 +29,8 @@
 
 - (std::string) getEditText;
 
+- (bool) hasTagSearch;
+
 - (void) clearSearch;
 
 - (void) interopClearSearch;

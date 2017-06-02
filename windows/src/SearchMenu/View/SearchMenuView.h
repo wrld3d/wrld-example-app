@@ -25,6 +25,7 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<void> mSetSearchEnded;
                 Helpers::ReflectionHelpers::Method<System::String^, bool> mSetEditText;
                 Helpers::ReflectionHelpers::Method<void> mGetEditText;
+                Helpers::ReflectionHelpers::Method<void> mHasTagSearch;
                 Helpers::ReflectionHelpers::Method<int> mSetSearchResultCount;
                 Helpers::ReflectionHelpers::Method<void> mHideSearchResultCount;
                 Helpers::ReflectionHelpers::Method<void> mRemoveSearchQueryResults;
@@ -44,6 +45,8 @@ namespace ExampleApp
 
                 void SetEditText(const std::string& searchText, bool isTag);
                 std::string GetEditText();
+
+                bool HasTagSearch();
 
                 void SetSearchResultCount(int searchResultCount);
                 void HideSearchResultCount();

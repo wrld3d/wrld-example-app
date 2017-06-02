@@ -33,6 +33,7 @@ namespace ExampleApp
             , m_modalBackgroundView(modalBackgroundView)
             , m_messageBus(messageBus)
             , m_appModeAllowsOpen(true)
+            , m_lastPerformedQuery(Search::SdkModel::SearchQuery("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0))
             , m_onSearchItemAddedCallback(this, &SearchMenuController::OnSearchItemAdded)
             , m_onSearchItemRemovedCallback(this, &SearchMenuController::OnSearchItemRemoved)
             , m_onOpenStateChangedCallback(this, &SearchMenuController::OnOpenStateChanged)
@@ -117,6 +118,8 @@ namespace ExampleApp
                     m_searchMenuView.SetEditText(headerString, message.Query().IsTag());
                     m_searchMenuView.SetSearchInProgress(true);
                 }
+
+                m_lastPerformedQuery = message.Query();
             }
             
             void SearchMenuController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
@@ -164,7 +167,9 @@ namespace ExampleApp
             {
                 if(IsFullyOpen() && m_searchMenuView.GetEditText().length() > 0)
                 {
-                    OnSearch(m_searchMenuView.GetEditText());
+                    m_messageBus.Publish(SearchMenuPerformedSearchMessage(m_searchMenuView.HasTagSearch() ? m_lastPerformedQuery.Query() : m_searchMenuView.GetEditText(),
+                                                                          m_searchMenuView.HasTagSearch(),
+                                                                          m_searchMenuView.HasTagSearch() ? m_lastPerformedQuery.ShouldTryInteriorSearch() : false));
                 }
                 else
                 {
