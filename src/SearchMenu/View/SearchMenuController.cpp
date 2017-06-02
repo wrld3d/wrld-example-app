@@ -124,6 +124,11 @@ namespace ExampleApp
             
             void SearchMenuController::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
+				if (message.GetResults().size() <= 0)
+				{
+					m_messageBus.Publish(SearchResultSection::SearchResultViewClearedMessage());
+				}
+
                 m_searchMenuView.CollapseAll();
                 m_searchMenuView.SetSearchInProgress(false);
                 
