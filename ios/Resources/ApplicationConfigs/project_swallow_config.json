@@ -15,8 +15,8 @@
     "YelpOAuthTokenSecret": "hHIaImXUlORnIavm2nXV3NOufpA",
     "TwitterAuthCode": "",
     "GeoNamesUserName": "eegeo_bloomberg_ios",
-    "CoverageTreeManifestURL": "https://cdn1.eegeo.com/coverage-trees/vswallow/v1230/manifest.bin.gz",
-    "ThemeManifestURL": "https://cdn-resources.eegeo.com/mobile-themes-new/v892/default/ssl.manifest.bin.gz",
+    "CoverageTreeManifestURL": "https://cdn1.eegeo.com/coverage-trees/vswallow/v1268/manifest.bin.gz",
+    "ThemeManifestURL": "https://cdn-resources.eegeo.com/mobile-themes-new/v930/default/ssl.manifest.bin.gz",
     "EmbeddedThemeTexturePath": "EmbeddedTheme",
     "SqliteDbUrl": "https://cdn1.eegeo.com/swallow-pois/pois_v160.db.gz",
     "EegeoSearchServiceUrl": "https://swallowapp.dundee.kimbleoperations.com/search/v1.1/",
@@ -73,22 +73,6 @@
                                                 "BuildingFloorIndex": 2,
                                                 "TrackedFloorIndex": "0"
                                                 }]
-                               }],
-    "WifiRestrictedBuildings": [{
-                                "InteriorId": "swallow_lon_38finsbury",
-                                "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }, {
-                                "InteriorId": "swallow_lon_citygatehouse",
-                                "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }, {
-                                "InteriorId": "swallow_lon_50finsbury",
-                                "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }, {
-                                "InteriorId": "swallow_lon_parkhouse",
-                                "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }, {
-                                "InteriorId": "swallow_lon_wallbrooksquare",
-                                "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }]
+                               }]
     
 }

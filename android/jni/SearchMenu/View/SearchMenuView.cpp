@@ -109,6 +109,19 @@ namespace ExampleApp
 				return editString;
 			}
 
+			bool SearchMenuView::HasTagSearch()
+			{
+				ASSERT_UI_THREAD
+
+				AndroidSafeNativeThreadAttachment attached(m_nativeState);
+				JNIEnv* env = attached.envForThread;
+
+				jmethodID hasTagSearchMethod = env->GetMethodID(m_uiViewClass, "hasTagSearch", "()Z");
+				jboolean hasTagSearch = env->CallBooleanMethod(m_uiView, hasTagSearchMethod);
+
+				return hasTagSearch;
+			}
+
 			void SearchMenuView::SetSearchResultCount(int searchResultCount)
 			{
 				ASSERT_UI_THREAD

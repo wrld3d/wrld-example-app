@@ -63,6 +63,11 @@ namespace ExampleApp
                     return [m_pView.pInputDelegate getEditText];
                 }
                 
+                bool HasTagSearch()
+                {
+                    return [m_pView.pInputDelegate hasTagSearch];
+                }
+                
                 void SetSearchResultCount(int searchResultCount)
                 {
                     [m_pView setSearchResultCount:searchResultCount];

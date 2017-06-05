@@ -267,6 +267,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	{
             m_editText.setTextSize(18.0f);
     	}
+
+    	m_isTag = false;
     } 
     
     public void scaleHintText()
@@ -327,6 +329,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     public String getEditText()
     {
         return m_editText.getText().toString();
+    }
+
+    public boolean hasTagSearch()
+    {
+        return m_isTag;
     }
     
     private void setClearButtonVisible(boolean visible)

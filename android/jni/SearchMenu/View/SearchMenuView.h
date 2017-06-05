@@ -34,6 +34,8 @@ namespace ExampleApp
 				void SetEditText(const std::string& searchText, bool isTag);
 				std::string GetEditText();
 
+				bool HasTagSearch();
+
 				void SetSearchResultCount(int searchResultCount);
 				void HideSearchResultCount();
 				void RemoveSearchQueryResults();

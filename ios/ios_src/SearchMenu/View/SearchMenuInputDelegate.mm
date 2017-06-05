@@ -134,6 +134,11 @@
     return std::string([m_pTextField.text UTF8String]);
 }
 
+- (bool) hasTagSearch
+{
+    return m_currentSearchIsTag;
+}
+
 - (void) clearSearch
 {
     m_pInterop->OnSearchCleared();
@@ -142,6 +147,7 @@
     
     [self updateClearButtonVisibility:m_pTextField];
     [m_pDragTab showCloseView: true];
+    m_currentSearchIsTag = false;
 }
 
 - (void) interopClearSearch
@@ -152,6 +158,7 @@
     }
     [self updateClearButtonVisibility:m_pTextField];
     [m_pDragTab showCloseView: true];
+    m_currentSearchIsTag = false;
 }
 
 - (void) setHasResults :(bool)hasResults
@@ -195,7 +202,7 @@
     if(m_currentSearchIsTag)
     {
         m_currentSearchIsTag = false;
-        
+        [self interopClearSearch];
     }
     [self updateClearButtonVisibility:textField];
 }
