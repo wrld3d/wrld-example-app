@@ -55,7 +55,6 @@ namespace ExampleApp
                     void OnSearchResultCleared();
                     void OnInteriorChanged();
                     void OnInteriorAddedToSceneGraph(const Eegeo::Resources::Interiors::InteriorsCellResource& callback);
-                    void OnInteriorLabelsBuilt();
                     void OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message);
                     
                     Eegeo::v4 GetColorForAvailability(const std::string& availability) const;
@@ -66,9 +65,7 @@ namespace ExampleApp
                     
                     void RefreshForSearchResults(const std::vector<Search::SdkModel::SearchResultModel>& results);
                     void RefreshHighlightsColor();
-                    void RefreshLabels();
                     
-                    bool HideLabelByNamePredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const;
                     bool HideLabelAlwaysPredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const;
                     
                     Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
@@ -87,14 +84,11 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const Eegeo::Resources::Interiors::InteriorsCellResource> m_interiorCellAddedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_searchResultsClearedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorInteractionModelChangedHandler;
-                    Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorLabelsBuiltHandler;
                     Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const SearchResultOnMap::SearchResultMeetingAvailabilityChanged&> m_availabilityChangedHandlerBinding;
-                    Eegeo::Labels::TLabelAnchorFilter<InteriorsHighlightVisibilityController> m_hideLabelByNameFilter;
                     Eegeo::Labels::TLabelAnchorFilter<InteriorsHighlightVisibilityController> m_hideLabelAlwaysFilter;
                     
                     HighlightRenderableVector m_highlightRenderablesForInterior;
                     HighlightIdToColor m_searchResultHighlightIdToColor;
-                    SearchResultLabelNameSet m_searchResultLabelNames;
                 };
             }
         }

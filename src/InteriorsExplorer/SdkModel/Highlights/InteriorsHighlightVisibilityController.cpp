@@ -71,11 +71,9 @@ namespace ExampleApp
                     , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorChanged)
                     , m_interiorCellAddedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorAddedToSceneGraph)
                     , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
-                    , m_interiorLabelsBuiltHandler(this, &InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt)
                     , m_messageBus(messageBus)
                     , m_persistentSettings(persistentSettings)
                     , m_availabilityToColor(BuildAvailabilityToColor())
-                    , m_hideLabelByNameFilter(this, &InteriorsHighlightVisibilityController::HideLabelByNamePredicate)
                     , m_hideLabelAlwaysFilter(this, &InteriorsHighlightVisibilityController::HideLabelAlwaysPredicate)
                 {
                     m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
@@ -132,13 +130,6 @@ namespace ExampleApp
                     }
                     
                     RefreshHighlightsColor();
-                }
-                
-                void InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt()
-                {
-                    std::vector<Search::SdkModel::SearchResultModel> results;
-                    GetCurrentSearchResults(results);
-                    RefreshForSearchResults(results);
                 }
                 
                 void InteriorsHighlightVisibilityController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
@@ -227,7 +218,6 @@ namespace ExampleApp
                 
                 void InteriorsHighlightVisibilityController::RefreshForSearchResults(const std::vector<Search::SdkModel::SearchResultModel> &results)
                 {
-                    m_searchResultLabelNames.clear();
                     m_searchResultHighlightIdToColor.clear();
  
                     rapidjson::Document json;
@@ -239,8 +229,6 @@ namespace ExampleApp
                             const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(searchResult);
                             
                             const std::string& roomName = meetingRoom.GetName();
-                            
-                            m_searchResultLabelNames.insert(roomName);
                             
                             std::string availability = meetingRoom.GetAvailability();
                             m_persistentSettings.TryGetValue(roomName, availability);
@@ -262,7 +250,6 @@ namespace ExampleApp
                     }
                     
                     RefreshHighlightsColor();
-                    RefreshLabels();
                 }
                 
                 void InteriorsHighlightVisibilityController::RefreshHighlightsColor()
@@ -278,26 +265,6 @@ namespace ExampleApp
                         
                         pHighlightRenderable->SetDiffuseColor(highlightColor);
                     }
-                }
-                
-                void InteriorsHighlightVisibilityController::RefreshLabels()
-                {
-                    if (!m_searchResultLabelNames.empty())
-                    {
-                        m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, &m_hideLabelByNameFilter);
-                    }
-                    else
-                    {
-                        m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, &m_hideLabelAlwaysFilter);
-                    }
-                }
-                
-                bool InteriorsHighlightVisibilityController::HideLabelByNamePredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const
-                {
-                    const std::string& labelEntityName = anchoredLabel.GetEntityName();
-                    const bool shouldHide = m_searchResultLabelNames.find(labelEntityName) == m_searchResultLabelNames.end();
-
-                    return shouldHide;
                 }
                 
                 bool InteriorsHighlightVisibilityController::HideLabelAlwaysPredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const

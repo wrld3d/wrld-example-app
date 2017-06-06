@@ -78,11 +78,9 @@ namespace ExampleApp
                                                           const std::string& tag,
                                                           std::string identifier)
             {
-                bool isMeetingRoom = tag == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME;
-
                 const auto& markerCreateParams = Eegeo::Markers::MarkerBuilder()
                     .SetLocation(location.GetLatitudeInDegrees(), location.GetLongitudeInDegrees())
-                    .SetLabelText(isMeetingRoom ? "" : worldPinFocusData.title)
+                    .SetLabelText(worldPinFocusData.title)
                     .SetLabelIcon(pinIconKey)
                     // temp workaround to specify interior floor by zero-based index rather than 'floor number' id (MPLY-8062)
                     .SetInteriorWithFloorIndex(worldPinInteriorData.building.Value(), worldPinInteriorData.floor)
