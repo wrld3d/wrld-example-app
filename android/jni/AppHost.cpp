@@ -2,6 +2,7 @@
 
 #include "AppHost.h"
 #include "AndroidSharedGlContext.h"
+#include "AndroidImageNameHelper.h"
 #include "LatLongAltitude.h"
 #include "EegeoWorld.h"
 #include "RenderContext.h"
@@ -183,7 +184,10 @@ AppHost::AppHost(
     Eegeo::EffectHandler::Initialise();
 
     std::string deviceModel = std::string(nativeState.deviceModel, strlen(nativeState.deviceModel));
-    Eegeo::Android::AndroidPlatformConfigBuilder androidPlatformConfigBuilder(deviceModel);
+    Eegeo::Android::AndroidImageNameHelper imageHelper(&nativeState);
+    Eegeo::Android::AndroidPlatformConfigBuilder androidPlatformConfigBuilder(deviceModel,
+                                                                              imageHelper.GetImageResolutionSuffix(),
+                                                                              imageHelper.GetImageResolutionScale());
     const Eegeo::Config::PlatformConfig& platformConfiguration = ExampleApp::ApplicationConfig::SdkModel::BuildPlatformConfig(androidPlatformConfigBuilder, applicationConfiguration);
 
     m_pInputProcessor = Eegeo_NEW(Eegeo::Android::Input::AndroidInputProcessor)(&m_inputHandler, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight());
