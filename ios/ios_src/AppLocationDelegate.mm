@@ -130,6 +130,14 @@ AppLocationDelegate* m_pAppLocationDelegate;
     }
 }
 
+- (void)RetryPermissionRequest
+{
+    if([m_pLocationManager respondsToSelector:@selector(requestWhenInUseAuthorization)])
+    {
+        [m_pLocationManager requestWhenInUseAuthorization];
+    }
+}
+
 @end
 
 AppLocationDelegate::AppLocationDelegate(Eegeo::iOS::iOSLocationService& iOSLocationService,
@@ -156,4 +164,12 @@ void AppLocationDelegate::NotifyReceivedPermissionResponse()
 bool AppLocationDelegate::HasReceivedPermissionResponse() const
 {
     return m_receivedPermissionResponse;
+}
+
+void AppLocationDelegate::RequestPermission()
+{
+    if(!m_receivedPermissionResponse)
+    {
+        [m_pAppLocationDelegateLocationListener RetryPermissionRequest];
+    }
 }
