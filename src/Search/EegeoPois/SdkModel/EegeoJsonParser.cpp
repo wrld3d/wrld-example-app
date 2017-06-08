@@ -10,7 +10,7 @@
 #include "writer.h"
 #include "stringbuffer.h"
 #include "IPersistentSettingsModel.h"
-
+#include "SwallowSearchConstants.h"
 #include <sstream>
 #include <map>
 
@@ -146,8 +146,8 @@ namespace ExampleApp
                         
                         Eegeo::Resources::Interiors::InteriorId interiorId(indoorId);
 
-                        int availabilityState = 1;
-                        persistentSettings.TryGetValue(idStream.str(), availabilityState);
+                        int availabilityState = Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_STATE;
+                        bool hasAvailabilityState = persistentSettings.TryGetValue(idStream.str(), availabilityState);
 
                         std::string userData = "";
                         
@@ -157,6 +157,12 @@ namespace ExampleApp
                             rapidjson::Writer<rapidjson::StringBuffer> writer(strbuf);
                             json[userDataName.c_str()].Accept(writer);
                             userData = strbuf.GetString();
+
+                            if (!hasAvailabilityState && json[userDataName.c_str()].HasMember("availability") && json[userDataName.c_str()]["availability"].IsString())
+                            {
+                                std::string availabilityString = json[userDataName.c_str()]["availability"].GetString();
+                                availabilityState = Swallow::SearchConstants::GetAvailabilityStateFromAvailability(availabilityString);
+                            }
                         }
                         
                         std::vector<std::string> tagSet = SplitIntoTags(tags, ' ');

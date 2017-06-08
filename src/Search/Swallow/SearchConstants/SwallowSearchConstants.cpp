@@ -44,15 +44,14 @@ namespace ExampleApp
                 const std::string MEETING_ROOM_AVAILABLE = "available";
                 const std::string MEETING_ROOM_AVAILABLE_SOON = "available_soon";
                 const std::string MEETING_ROOM_OCCUPIED = "occupied";
+
+                const int MEETING_ROOM_AVAILABLE_STATE = 1;
+                const int MEETING_ROOM_AVAILABLE_SOON_STATE = 2;
+                const int MEETING_ROOM_OCCUPIED_STATE = 3;
                 
                 const std::string MEETING_ROOM_ICON_AVAILABLE = "meeting_room_available";
                 const std::string MEETING_ROOM_ICON_AVAILABLE_SOON = "meeting_room_available_soon";
                 const std::string MEETING_ROOM_ICON_OCCUPIED = "meeting_room_unavailable";
-                
-                const int MEETING_ROOM_AVAILABLE_PRIORITY = 0;
-                const int MEETING_ROOM_AVAILABLE_SOON_PRIORITY = 1;
-                const int MEETING_ROOM_OCCUPIED_PRIORITY = 2;
-                const int MEETING_ROOM_MAX_PRIORITY = 3;
                 
                 std::vector<TagSearch::View::TagSearchModel> GetTagSearchModels()
                 {
@@ -113,6 +112,42 @@ namespace ExampleApp
                     }
                     
                     return true;
+                }
+
+                std::string GetAvailabilityFromAvailabilityState(int availabilityState)
+                {
+                    if (availabilityState == MEETING_ROOM_AVAILABLE_STATE)
+                    {
+                        return MEETING_ROOM_AVAILABLE;
+                    }
+                    else if (availabilityState == MEETING_ROOM_AVAILABLE_SOON_STATE)
+                    {
+                        return MEETING_ROOM_AVAILABLE_SOON;
+                    }
+                    else if (availabilityState == MEETING_ROOM_OCCUPIED_STATE)
+                    {
+                        return MEETING_ROOM_OCCUPIED;
+                    }
+
+                    return MEETING_ROOM_AVAILABLE;
+                }
+
+                int GetAvailabilityStateFromAvailability(std::string availability)
+                {
+                    if (availability == MEETING_ROOM_AVAILABLE)
+                    {
+                        return MEETING_ROOM_AVAILABLE_STATE;
+                    }
+                    else if (availability == MEETING_ROOM_AVAILABLE_SOON)
+                    {
+                        return MEETING_ROOM_AVAILABLE_SOON_STATE;
+                    }
+                    else if (availability == MEETING_ROOM_OCCUPIED)
+                    {
+                        return MEETING_ROOM_OCCUPIED_STATE;
+                    }
+
+                    return MEETING_ROOM_AVAILABLE_STATE;
                 }
             }
         }

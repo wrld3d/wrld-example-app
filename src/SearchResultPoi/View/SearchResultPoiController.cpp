@@ -56,6 +56,7 @@ namespace ExampleApp
                                                              searchResultModel.GetVendor(),
                                                              searchResultModel.GetJsonData(),
                                                              Eegeo::Helpers::Time::MillisecondsSinceEpoch());
+                newModel.SetAvailability(searchResultModel.GetAvailability());
                 
                 m_view.Show(newModel, m_viewModel.IsPinned());
                 

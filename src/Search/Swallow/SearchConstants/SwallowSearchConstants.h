@@ -47,15 +47,14 @@ namespace ExampleApp
                 extern const std::string MEETING_ROOM_AVAILABLE;
                 extern const std::string MEETING_ROOM_AVAILABLE_SOON;
                 extern const std::string MEETING_ROOM_OCCUPIED;
-                
+
+                extern const int MEETING_ROOM_AVAILABLE_STATE;
+                extern const int MEETING_ROOM_AVAILABLE_SOON_STATE;
+                extern const int MEETING_ROOM_OCCUPIED_STATE;
+
                 extern const std::string MEETING_ROOM_ICON_AVAILABLE;
                 extern const std::string MEETING_ROOM_ICON_AVAILABLE_SOON;
                 extern const std::string MEETING_ROOM_ICON_OCCUPIED;
-                
-                extern const int MEETING_ROOM_AVAILABLE_PRIORITY;
-                extern const int MEETING_ROOM_AVAILABLE_SOON_PRIORITY;
-                extern const int MEETING_ROOM_OCCUPIED_PRIORITY;
-                extern const int MEETING_ROOM_MAX_PRIORITY;
 
                 std::vector<TagSearch::View::TagSearchModel> GetTagSearchModels();
                 
@@ -64,6 +63,9 @@ namespace ExampleApp
                 std::vector<std::string> GetTags();
                 
                 bool ShouldShowTagAsSearchResult(const std::string& tag);
+
+                std::string GetAvailabilityFromAvailabilityState(int availabilityState);
+                int GetAvailabilityStateFromAvailability(std::string availability);
             }
         }
     }

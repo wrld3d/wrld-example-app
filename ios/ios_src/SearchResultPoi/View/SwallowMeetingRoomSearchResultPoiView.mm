@@ -316,7 +316,7 @@
     
     m_model = *pModel;
     m_meetingRoomModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(m_model);
-    std::string availability = "available";
+    std::string availability = ExampleApp::Search::Swallow::SearchConstants::GetAvailabilityFromAvailabilityState(m_model.GetAvailability());
     
     NSString *state = [[NSUserDefaults standardUserDefaults]objectForKey:[NSString stringWithUTF8String:m_meetingRoomModel.GetName().c_str()]];
     if(state && state != NULL)

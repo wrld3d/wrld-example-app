@@ -42,20 +42,7 @@ namespace ExampleApp
                 
                 if(m_searchResultModel.GetIdentifier() == updatedModel.GetIdentifier())
                 {
-                    int tempState = 1;
-                    if(message.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
-                    {
-                        tempState = 1;
-                    }
-                    else if (message.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
-                    {
-                        tempState = 2;
-                    }
-                    else
-                    {
-                        tempState = 3;
-                    }
-                    
+                    int tempState = Search::Swallow::SearchConstants::GetAvailabilityStateFromAvailability(message.GetAvailability());
                     m_searchResultModel.SetAvailability(tempState);
                 }
             }

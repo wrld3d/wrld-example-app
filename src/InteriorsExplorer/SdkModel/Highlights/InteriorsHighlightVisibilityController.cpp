@@ -98,20 +98,7 @@ namespace ExampleApp
 
                 void InteriorsHighlightVisibilityController::OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message)
                 {
-                    int tempState = 1;
-                    if(message.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
-                    {
-                        tempState = 1;
-                    }
-                    else if (message.GetAvailability() == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
-                    {
-                        tempState = 2;
-                    }
-                    else
-                    {
-                        tempState = 3;
-                    }
-                    
+                    int tempState = Search::Swallow::SearchConstants::GetAvailabilityStateFromAvailability(message.GetAvailability());
                     m_persistentSettings.SetValue(message.GetModel().GetIdentifier(), tempState);
                     Search::SdkModel::SearchResultModel model = message.GetModel();
                     

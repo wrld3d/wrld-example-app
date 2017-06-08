@@ -122,19 +122,7 @@ namespace ExampleApp
                                                                                strbuf.GetString(),
                                                                                searchResultModel.GetCreationTimestamp());
                         
-                        int tempState = 1;
-                        if(updatedAvailability == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
-                        {
-                            tempState = 1;
-                        }
-                        else if (updatedAvailability == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
-                        {
-                            tempState = 2;
-                        }
-                        else
-                        {
-                            tempState = 3;
-                        }
+                        int tempState = Search::Swallow::SearchConstants::GetAvailabilityStateFromAvailability(updatedAvailability);
                         result.SetAvailability(tempState);
                         return result;
                     }
@@ -147,24 +135,8 @@ namespace ExampleApp
                         
                         TryParseImageDetails(searchResultModel, imageUrl);
                         
-                        std::string availability = "available";
+                        std::string availability = SearchConstants::GetAvailabilityFromAvailabilityState(searchResultModel.GetAvailability());
                         std::string officeLocation = "unknown";
-                        
-                        int availabilityState = searchResultModel.GetAvailability();
-                        
-                        switch (availabilityState) {
-                            case 1:
-                                availability = SearchConstants::MEETING_ROOM_AVAILABLE;
-                                break;
-                            case 2:
-                                availability = SearchConstants::MEETING_ROOM_AVAILABLE_SOON;
-                                break;
-                            case 3:
-                                availability = SearchConstants::MEETING_ROOM_OCCUPIED;
-                                break;
-                            default:
-                                break;
-                        }
                         
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {

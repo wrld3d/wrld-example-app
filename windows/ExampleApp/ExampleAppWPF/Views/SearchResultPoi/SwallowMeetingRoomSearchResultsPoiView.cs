@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExampleAppWPF.Properties;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -112,6 +113,12 @@ namespace ExampleAppWPF
 
             m_swallowMeetingRoomModel = SwallowMeetingRoomResultModel.FromJson(m_model.JsonData);
             Availability = AvailableStringToEnum(m_swallowMeetingRoomModel.Availability);
+
+            if (Settings.Default.UserSettings.ContainsKey(m_model.Title))
+            {
+                String userAvailability = Settings.Default.UserSettings[m_model.Title];
+                Availability = AvailableStringToEnum(userAvailability);
+            }
 
             m_availableButton.Click += OnAvailableSelected;
             m_availableSoonButton.Click += OnAvailableSoonSelected;

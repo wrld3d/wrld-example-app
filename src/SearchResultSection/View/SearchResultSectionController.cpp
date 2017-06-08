@@ -153,19 +153,7 @@ namespace ExampleApp
                 	const Search::SdkModel::SearchResultModel& model(m_lastAddedResults[i]);
                     if(model.GetIdentifier() == message.GetModel().GetIdentifier())
                     {
-						int availability;
-						if (message.GetAvailability() == "available")
-						{
-							availability = 1;
-						}
-						if (message.GetAvailability() == "available_soon")
-						{
-							availability = 2;
-						}
-						if (message.GetAvailability() == "occupied")
-						{
-							availability = 3;
-						}
+						int availability = Search::Swallow::SearchConstants::GetAvailabilityStateFromAvailability(message.GetAvailability());
 						unorderedResults[i].SetAvailability(availability);
 						break;
                     }
