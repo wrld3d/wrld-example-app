@@ -99,6 +99,8 @@ public:
     
     void HandleUrlOpen(const AppInterface::UrlData& data);
 
+    void RequestLocationPermission();
+
 private:
     UIView* m_pView;
     ViewController& m_viewController;

@@ -25,6 +25,12 @@ using namespace Eegeo::iOS;
      name: @"handleResume"
      object: nil];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                        selector:@selector(didBecomeActive)
+                                        name:UIApplicationDidBecomeActiveNotification
+                                        object:nil];
+
+
     if([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)])
     {
         [self setNeedsStatusBarAppearanceUpdate];
@@ -37,6 +43,14 @@ using namespace Eegeo::iOS;
     
     m_previousTimestamp = CFAbsoluteTimeGetCurrent();
     m_pAppRunner = NULL;
+}
+
+-(void) didBecomeActive
+{
+    if(m_pAppRunner != NULL)
+    {
+        m_pAppRunner->RequestLocationPermission();
+    }
 }
 
 - (void)onPause
