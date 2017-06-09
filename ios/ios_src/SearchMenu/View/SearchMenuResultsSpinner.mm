@@ -32,6 +32,8 @@ const float SpinnerPeriod = 2.0f;
 
 - (void)startAnimating
 {
+    [self stopAnimating];
+    
     isAnimating = YES;
     self.hidden = NO;
     
@@ -42,6 +44,8 @@ const float SpinnerPeriod = 2.0f;
 {
     isAnimating = NO;
     self.hidden = YES;
+    
+    [self.layer removeAllAnimations];
 }
 
 - (void)animate
