@@ -155,7 +155,7 @@
     if(!m_editingText)
     {
         m_pTextField.text = @"";
-        [m_pDragTab showCloseView: false];
+        [m_pDragTab showCloseView: true];
     }
     [self updateClearButtonVisibility:m_pTextField];
     m_currentSearchIsTag = false;

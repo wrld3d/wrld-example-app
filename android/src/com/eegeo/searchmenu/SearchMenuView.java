@@ -377,7 +377,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         if(!m_editingText)
         {
             m_editText.setText("");
-            showCloseButtonView(false);
+            showCloseButtonView(true);
         }
     }
     
