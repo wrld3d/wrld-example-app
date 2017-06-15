@@ -111,7 +111,11 @@ typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
     
     NSString* floorPlanId = region.identifier;
     
-    int floorIndex = [self getFloorIndexFromFloorPlanId: std::string([floorPlanId UTF8String])];
+    int floorIndex;
+    if([self tryGetFloorIndexFromFloorPlanId: std::string([floorPlanId UTF8String]) wrldFloorId:floorIndex])
+    {
+        floorIndex = -1;
+    }
     m_eegeoFloorIndex = floorIndex;
     m_indoorAtlasFloorId = std::string([floorPlanId UTF8String]);
     m_pIndoorAtlasLocationService->SetFloorIndex(floorIndex);
@@ -119,17 +123,19 @@ typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
     [self notifyUpdatedPosition];
 }
 
--(int) getFloorIndexFromFloorPlanId: (std::string) floorPlanId
+-(bool) tryGetFloorIndexFromFloorPlanId: (std::string) floorPlanId wrldFloorId:(int&)wrldFloorId
 {
     for(std::map<int, std::string>::iterator it = m_floorMap.begin(); it != m_floorMap.end(); ++it)
     {
         if(it->second == floorPlanId)
         {
-            return it->first;
+            wrldFloorId = it->first;
+            return true;
         }
     }
     
-    return 0;
+    wrldFloorId = -1;
+    return false;
 }
 
 - (void)notifyUpdatedPosition
