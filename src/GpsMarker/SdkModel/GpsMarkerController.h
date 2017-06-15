@@ -9,6 +9,7 @@
 #include "ModalityChangedMessage.h"
 #include "Rendering.h"
 #include "IVisualMapService.h"
+#include "ILocationService.h"
 
 namespace ExampleApp
 {
@@ -19,21 +20,22 @@ namespace ExampleApp
             class GpsMarkerController : public IGpsMarkerController
             {
             public:
-                
+
                 GpsMarkerController(GpsMarkerModel& model,
                                     GpsMarkerView& view,
                                     GpsMarkerAnchorView& anchorView,
                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                    Eegeo::Location::ILocationService& locationService,
                                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                     VisualMap::SdkModel::IVisualMapService& visualMapService,
                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerController();
-                
+
                 void Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera);
-                
+
             private:
-                
+
                 const static float DefaultUpdatePeriod;
                 int m_visibilityCount;
                 float m_viewTransitionParam;
@@ -42,13 +44,12 @@ namespace ExampleApp
                 float m_screenPixelScale;
                 float m_screenOversampleScale;
 
-                bool m_isInteriorVisible;
-                
                 GpsMarkerModel& m_model;
                 GpsMarkerView& m_view;
                 GpsMarkerAnchorView& m_anchorView;
-                
+
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                Eegeo::Location::ILocationService& m_locationService;
                 
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
@@ -74,6 +75,7 @@ namespace ExampleApp
                                                      const Eegeo::Camera::RenderCamera& renderCamera,
                                                      bool flipUpDirection);
                 void GetCurrentVisualMapTime(std::string& currentTime, std::string& currentWeather);
+                const bool IsMarkerVisible(Eegeo::dv3& currentLocationEcef);
             };
         }
     }

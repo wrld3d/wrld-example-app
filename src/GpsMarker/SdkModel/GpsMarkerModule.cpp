@@ -78,6 +78,7 @@ namespace ExampleApp
                                                                *m_pView,
                                                                *m_pAnchorView,
                                                                interiorInteractionModel,
+                                                               locationService,
                                                                mapModule.GetEnvironmentFlatteningService(),
                                                                visualMapService,
                                                                screenProperties,
