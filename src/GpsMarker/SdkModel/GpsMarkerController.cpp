@@ -4,9 +4,7 @@
 #include "GpsMarkerModel.h"
 #include "GpsMarkerView.h"
 #include "GpsMarkerAnchorView.h"
-#include "VectorMath.h"
 #include "EnvironmentFlatteningService.h"
-#include "RenderCamera.h"
 #include "CameraHelpers.h"
 #include "EcefTangentBasis.h"
 #include "MathsHelpers.h"
@@ -15,6 +13,7 @@
 #include "ScaleHelpers.h"
 #include "ScreenProperties.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorsModel.h"
 
 namespace ExampleApp
 {
@@ -23,11 +22,12 @@ namespace ExampleApp
         namespace SdkModel
         {
             const float GpsMarkerController::DefaultUpdatePeriod = 2.f;
-            
+
             GpsMarkerController::GpsMarkerController(GpsMarkerModel& model,
                                                      GpsMarkerView& view,
                                                      GpsMarkerAnchorView& anchorView,
                                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                     Eegeo::Location::ILocationService& locationService,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                      VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
@@ -36,6 +36,7 @@ namespace ExampleApp
             , m_view(view)
             , m_anchorView(anchorView)
             , m_interiorInteractionModel(interiorInteractionModel)
+            , m_locationService(locationService)
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
@@ -56,7 +57,7 @@ namespace ExampleApp
                 m_view.SetVisible(false);
                 m_anchorView.SetVisible(false);
             }
-            
+
             GpsMarkerController::~GpsMarkerController()
             {
                 m_messageBus.UnsubscribeUi(m_interiorsExplorerStateChangedCallback);
@@ -64,19 +65,19 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeNative(m_modalityChangedHandlerBinding);
                 m_interiorInteractionModel.UnregisterInteractionStateChangedCallback(m_floorSelectedCallback);
             }
-            
+
             void GpsMarkerController::OnFloorSelected()
             {
                 m_currentFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
             }
-            
+
             void GpsMarkerController::OnModalityChangedMessage(const Modality::ModalityChangedMessage &message)
             {
                 float scale = 1.0f - message.Modality();
                 m_view.SetScale(scale);
                 m_anchorView.SetScale(scale);
             }
-            
+
             void GpsMarkerController::OnVisibilityChangedMessage(const ExampleApp::GpsMarker::GpsMarkerVisibilityMessage &message)
             {
                 m_visibilityCount += message.ShouldSetVisible() ? 1 : -1;
@@ -84,34 +85,23 @@ namespace ExampleApp
                 m_view.SetVisible(m_visibilityCount == 1);
                 m_anchorView.SetVisible(m_visibilityCount == 1);
             }
-            
+
             void GpsMarkerController::OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage &message)
             {
                 m_currentFloorIndex = message.GetSelectedFloorIndex();
                 m_view.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
                 m_anchorView.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
             }
-            
+
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
             {
                 m_model.UpdateGpsPosition(dt);
                 m_model.UpdateHeading(dt);
                 Eegeo::dv3 currentLocationEcef = m_model.GetCurrentLocationEcef();
-                
+
                 bool isVisible = false;
-                if(currentLocationEcef.LengthSq() != 0 && m_visibilityCount == 1 && m_model.IsAuthorized())
-                {
-                    if(m_model.IsLocationIndoors())
-                    {
-                        if(m_currentFloorIndex == m_model.GetCurrentFloorIndex())
-                            isVisible = true;
-                    }
-                    else
-                    {
-                        isVisible = true;
-                    }
-                }
-                
+                isVisible = IsMarkerVisible(currentLocationEcef);
+
                 m_view.SetVisible(isVisible);
                 m_anchorView.SetVisible(isVisible);
                 
@@ -235,6 +225,34 @@ namespace ExampleApp
                 
                 currentTime = state.substr(0, index);
                 currentWeather = state.substr(index);
+            }
+
+            const bool GpsMarkerController::IsMarkerVisible(Eegeo::dv3& currentLocationEcef)
+            {
+                bool isVisible;
+                if(currentLocationEcef.LengthSq() != 0 && m_visibilityCount == 1 && m_model.IsAuthorized())
+                {
+                    if(m_model.IsLocationIndoors())
+                    {
+                        if(m_currentFloorIndex == m_model.GetCurrentFloorIndex())
+                            isVisible = true;
+                    }
+                    else
+                    {
+                        isVisible = true;
+                    }
+                }
+
+                if (m_interiorInteractionModel.GetInteriorModel() != NULL)
+                {
+                    bool selectedBuildingWithIps = m_interiorInteractionModel.GetInteriorModel()->GetId() == m_locationService.GetInteriorId();
+                    if (!selectedBuildingWithIps)
+                    {
+                        isVisible = false;
+                    }
+                }
+
+                return isVisible;
             }
         }
     }

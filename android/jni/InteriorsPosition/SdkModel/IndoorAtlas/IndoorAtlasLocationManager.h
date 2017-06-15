@@ -42,7 +42,7 @@ namespace ExampleApp
                     void OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message);
 
                 private:
-                    int FloorIdToFloorIndex(const std::string floorId);
+                    int TryMapFloorIdToFloorIndex(const std::string floorId);
 
                     AndroidNativeState& m_nativeState;
                     IndoorAtlasLocationService& m_indoorAtlasLocationService;
