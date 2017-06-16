@@ -256,7 +256,7 @@
                         <Grid Name="SerchMenuMainContainer" Margin="{DynamicResource SearchMenuMainContainerMargin}" Visibility="Visible" HorizontalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="{DynamicResource MenuIconSizeGridLength}"/>
-                                <RowDefinition Height="2"/>
+                                <RowDefinition Height="{DynamicResource MenuSeparatorRowHeight}"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
@@ -307,7 +307,7 @@
                             </Grid>
 
                             <Grid Grid.Row="1">
-                                <Grid Width="{DynamicResource MenuWidth}" Height="2" Background="{StaticResource PrimaryBG_Over_Colour}" />
+                                <Grid Width="{DynamicResource MenuWidth}" Height="Auto" Background="{StaticResource PrimaryBG_Over_Colour}" />
                             </Grid>
 
                             <Grid Grid.Row="2">
@@ -502,9 +502,28 @@
                                         </Grid>
                                     </Grid>
 
-                                    <Grid Name="ResultsListSeparator" Width="{DynamicResource MenuWidth}" Height="2" Background="{StaticResource PrimaryBG_Over_Colour}" Visibility="Collapsed"/>
+                                    <Grid Name="ResultsListSeparator" Width="{DynamicResource MenuWidth}" Height="{DynamicResource MenuSeparatorHeight}" Background="{StaticResource PrimaryBG_Over_Colour}" Visibility="Collapsed"/>
 
-                                    <ScrollViewer Width="{DynamicResource MenuWidth}" Background="{StaticResource PrimaryBG_colour}" Name="MenuOptionsView" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False" >
+                                    <ScrollViewer Width="{DynamicResource MenuWidth}" Background="{StaticResource PrimaryBG_colour}" Name="MenuOptionsView" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" CanContentScroll="False" >
+                                        <Grid>
+                                        <Grid Background="{StaticResource PrimaryBG_colour}"
+                                                Width="{DynamicResource MenuWidth}"
+                                                Height="{DynamicResource SearchLabelClosestHeight}"
+                                                VerticalAlignment="Top">
+
+                                            <Label Content="Show me the closest..."
+                                                    FontSize="{DynamicResource SearchLabelClosestFontSize}"
+                                                    Foreground="{StaticResource LightGrey}"
+                                                    Margin="{DynamicResource SearchLabelClosestMargin}"/>
+
+                                            <Rectangle Fill="{StaticResource MenuSeparator}"
+                                                        IsHitTestVisible="False"
+                                                        Width="{DynamicResource MenuListItemWidthSearch}"
+                                                        Height="1"
+                                                        VerticalAlignment="Bottom"
+                                                        Margin="{DynamicResource SearchLabelClosestSeparatorMargin}"/>
+                                        </Grid>
+
                                         <ListBox Margin="{DynamicResource MenuListMarginSearch}" Name="SecondaryMenuItemList" Template="{StaticResource ListBoxControlTemplateNoPadding}" ItemsSource="{Binding Children}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False">
                                             <ListBox.Resources>
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
@@ -512,7 +531,7 @@
                                                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
 
                                                 <DataTemplate DataType="{x:Type local:MenuListItem}">
-                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="{DynamicResource MenuListItemHeight}" Background="{StaticResource Gold}" Width="{DynamicResource MenuListItemWidthSearch}" IsManipulationEnabled="True">
+                                                    <Grid Name="MenuItemGrid" HorizontalAlignment="Stretch" Height="{DynamicResource MenuListItemHeight}" Background="{StaticResource Gold}" Width="{DynamicResource MenuListItemWidthSearch}" IsManipulationEnabled="True" Margin="{Binding ListItemMargin}">
                                                         <Grid.Triggers>
                                                             <EventTrigger RoutedEvent="MouseLeftButtonDown">
                                                                 <BeginStoryboard>
@@ -657,6 +676,10 @@
                                                                             </Setter>
                                                                         </DataTrigger>
 
+                                                                        <DataTrigger Binding="{Binding HasCustomSeparator}" Value="true">
+                                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                                        </DataTrigger>
+
                                                                         <DataTrigger Binding="{Binding JustAdded}" Value="true">
                                                                             <Setter Property="Visibility" Value="Hidden">
                                                                             </Setter>
@@ -767,6 +790,14 @@
                                                 </Style>
                                             </ListBox.ItemContainerStyle>
                                         </ListBox>
+
+                                        <Grid Name="DropDownSeparator"
+                                              Width="{DynamicResource MenuWidth}"
+                                              Height="{DynamicResource MenuSeparatorHeight}"
+                                              Background="{StaticResource PrimaryBG_Over_Colour}"
+                                              VerticalAlignment="Top"
+                                              Visibility="Collapsed"/>
+                                        </Grid>
                                     </ScrollViewer>
                                 </StackPanel>
                             </Grid>

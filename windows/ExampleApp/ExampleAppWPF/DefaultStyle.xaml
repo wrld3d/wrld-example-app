@@ -451,6 +451,8 @@
     <GridLength x:Key="MenuIconSizeGridLength">36</GridLength>
     <System:Double x:Key="MenuWidth">250</System:Double>
     <SolidColorBrush x:Key="MenuButtonOverColour" Color="{Binding Color, Source={StaticResource PrimaryBG_Over_Colour}}"/>
+    <System:Double x:Key="MenuSeparatorHeight">6</System:Double>
+    <GridLength x:Key="MenuSeparatorRowHeight">6</GridLength>
 
     <!-- Menu List Item -->
     <SolidColorBrush x:Key="MenuListItemOverColour" Color="{Binding Color, Source={StaticResource PrimaryBG_Over_Colour}}"/>
@@ -469,7 +471,7 @@
     <System:Double x:Key="MenuListItemWidthSearch">225</System:Double>
 
     <Thickness x:Key="MenuListMarginSettings" Left="5" Top="0" Right="5" Bottom="0"/>
-    <Thickness x:Key="MenuListMarginSearch" Left="13" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="MenuListMarginSearch" Left="13" Top="21" Right="0" Bottom="0"/>
     
     <!-- SubMenu List Item -->
     <SolidColorBrush x:Key="SubMenuListItemOverColour" Color="{Binding Color, Source={StaticResource SubMenuItemMouseOverColour}}"/>
@@ -550,7 +552,7 @@
     <Thickness x:Key="SearchInputBoxMargin" Left="5" Top="0" Right="0" Bottom="0"/>
 
     <System:Double x:Key="SearchArrowWidth">8</System:Double>
-    <System:Double x:Key="SearchArrowHeight">10</System:Double>
+    <System:Double x:Key="SearchArrowHeight">16</System:Double>
     <ImageSource x:Key="SearchArrowImage">Assets/arrow3_up.png</ImageSource>
 
     <Thickness x:Key="SearchMenuMainContainerMargin" Left="-515" Top="0" Right="0" Bottom="0"/>
@@ -565,9 +567,14 @@
     <ImageSource x:Key="SearchClearButtonOverImage">/Assets/button_clear_search_down.png</ImageSource>
     <System:Double x:Key="SearchClearButtonSize">18</System:Double>
 
+    <System:Double x:Key="SearchLabelClosestHeight">21</System:Double>
+    <System:Double x:Key="SearchLabelClosestFontSize">11</System:Double>
+    <Thickness x:Key="SearchLabelClosestMargin" Left="25" Top="-3" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchLabelClosestSeparatorMargin" Left="13" Top="0" Right="0" Bottom="0"/>
+
     <System:Double x:Key="SearchResultsButtonAndFadeContainerWidth">225</System:Double>
     <System:Double x:Key="SearchResultsButtonAndFadeContainerHeight">56</System:Double>
-    <Thickness x:Key="SearchResultsButtonAndFadeContainerMargin" Left="22" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchResultsButtonAndFadeContainerMargin" Left="20" Top="0" Right="0" Bottom="0"/>
     <ImageSource x:Key="SearchResultsButtonAndFadeContainerImage">/Assets/search_results_fade.png</ImageSource>
     <System:Double x:Key="SearchResultsScrollButtonSize">48</System:Double>
     <ImageSource x:Key="SearchResultsScrollButtonOffImage">/Assets/search_results_scroll_button.png</ImageSource>

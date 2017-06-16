@@ -454,6 +454,8 @@
     <GridLength x:Key="MenuIconSizeGridLength">80</GridLength>
     <System:Double x:Key="MenuWidth">515</System:Double>
     <SolidColorBrush x:Key="MenuButtonOverColour" Color="{Binding Color, Source={StaticResource PrimaryBG_colour}}"/>
+    <System:Double x:Key="MenuSeparatorHeight">6</System:Double>
+    <GridLength x:Key="MenuSeparatorRowHeight">6</GridLength>
 
     <!-- Menu List Item -->
     <SolidColorBrush x:Key="MenuListItemOverColour" Color="{Binding Color, Source={StaticResource PrimaryBG_colour}}"/>
@@ -472,7 +474,7 @@
     <System:Double x:Key="MenuListItemWidthSearch">515</System:Double>
 
     <Thickness x:Key="MenuListMarginSettings" Left="25" Top="0" Right="25" Bottom="0"/>
-    <Thickness x:Key="MenuListMarginSearch" Left="50" Top="0" Right="12" Bottom="0"/>
+    <Thickness x:Key="MenuListMarginSearch" Left="50" Top="30" Right="12" Bottom="0"/>
 
     <!-- SubMenu List Item -->
     <SolidColorBrush x:Key="SubMenuListItemOverColour" Color="{Binding Color, Source={StaticResource SubMenuItemDefaultColour}}"/>
@@ -533,7 +535,7 @@
 
     <Thickness x:Key="SearchBackgroundRectangleMargin" Left="515" Top="0" Right="0" Bottom="0"/>
 
-    <Thickness x:Key="SearchMenuViewContainerMargin" Left="0" Top="50" Right="0" Bottom="19"/>
+    <Thickness x:Key="SearchMenuViewContainerMargin" Left="0" Top="50" Right="0" Bottom="8"/>
 
     <ImageSource x:Key="ButtonSearchOffImage">Assets/button_search_off@kiosk.png</ImageSource>
     <ImageSource x:Key="ButtonSearchOnImage">Assets/button_search_on@kiosk.png</ImageSource>
@@ -552,7 +554,7 @@
     <Thickness x:Key="SearchInputBoxMargin" Left="5" Top="0" Right="0" Bottom="0"/>
 
     <System:Double x:Key="SearchArrowWidth">11</System:Double>
-    <System:Double x:Key="SearchArrowHeight">17</System:Double>
+    <System:Double x:Key="SearchArrowHeight">23</System:Double>
     <ImageSource x:Key="SearchArrowImage">Assets/arrow3_up.png</ImageSource>
 
     <Thickness x:Key="SearchMenuMainContainerMargin" Left="-250" Top="0" Right="0" Bottom="0"/>
@@ -566,6 +568,11 @@
     <ImageSource x:Key="SearchClearButtonOnImage">/Assets/button_clear_search_on@kiosk.png</ImageSource>
     <ImageSource x:Key="SearchClearButtonOverImage">/Assets/button_clear_search_off@kiosk.png</ImageSource>
     <System:Double x:Key="SearchClearButtonSize">30</System:Double>
+
+    <System:Double x:Key="SearchLabelClosestHeight">30</System:Double>
+    <System:Double x:Key="SearchLabelClosestFontSize">17</System:Double>
+    <Thickness x:Key="SearchLabelClosestMargin" Left="67" Top="-2" Right="0" Bottom="0"/>
+    <Thickness x:Key="SearchLabelClosestSeparatorMargin" Left="50" Top="0" Right="12" Bottom="0"/>
 
     <System:Double x:Key="SearchResultsButtonAndFadeContainerWidth">453</System:Double>
     <System:Double x:Key="SearchResultsButtonAndFadeContainerHeight">56</System:Double>
