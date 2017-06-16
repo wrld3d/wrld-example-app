@@ -38,7 +38,7 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
         m_runtimePermissionDispatcher = new RuntimePermissionDispatcher(this);
         m_touchEnabled = true;
         m_onPauseListeners = new LinkedList<OnPauseListener>();
-        m_backButtonListeners = new ArrayList<>();
+        m_backButtonListeners = new ArrayList<IBackButtonListener>();
     }
 
     public PhotoIntentDispatcher getPhotoIntentDispatcher()
