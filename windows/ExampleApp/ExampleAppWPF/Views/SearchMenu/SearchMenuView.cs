@@ -18,8 +18,10 @@ namespace ExampleAppWPF
 {
     public class SearchMenuView : MenuView, INotifyPropertyChanged
     {
+        private const int m_indexOfFirstDropDown = 3;
+
         private TextBox m_editText;
-        private MenuListAdapter m_adapter;
+        private SearchMenuListAdapter m_adapter;
         private Grid m_searchBox;
         
         private ListBox m_resultsList;
@@ -36,6 +38,9 @@ namespace ExampleAppWPF
         private Grid m_searchResultsButtonAndFadeContainer;
 
         private Grid m_resultsCountContainer;
+
+        private double m_resultsSeparatorHeight;
+        private double m_labelClosestHeight;
 
         private bool m_searchInFlight;
         private bool m_hasResults;
@@ -157,19 +162,19 @@ namespace ExampleAppWPF
             var menuViewHeight = m_menuViewContainer.ActualHeight;
             var searchBoxBackgroundDefaultHeight = m_backgroundRectangle.ActualHeight;
             var menuOptionsViewDefaultHeight = m_menuOptionsView.ActualHeight;
-            var separatorHeight = m_resultsSeparator.ActualHeight;
+            var separatorHeight = m_resultsSeparatorHeight;
             var seperatorCount = 2;
 
-            return Math.Max(0.0, menuViewHeight - searchBoxBackgroundDefaultHeight - menuOptionsViewDefaultHeight - seperatorCount * separatorHeight);
+            return Math.Max(0.0, menuViewHeight - searchBoxBackgroundDefaultHeight - menuOptionsViewDefaultHeight - seperatorCount * separatorHeight - m_labelClosestHeight);
         }
 
         private double CalcMenuOptionsViewMaxHeight()
         {
             var menuViewHeight = m_menuViewContainer.ActualHeight;
             var searchBoxBackgroundDefaultHeight = m_backgroundRectangle.ActualHeight;
-            var separatorHeight = m_resultsSeparator.ActualHeight;
+            var separatorHeight = m_resultsSeparatorHeight;
 
-            return Math.Max(0.0, menuViewHeight - searchBoxBackgroundDefaultHeight + 2 * separatorHeight);
+            return Math.Max(0.0, menuViewHeight - searchBoxBackgroundDefaultHeight - 2 * separatorHeight - m_labelClosestHeight);
         }
 
         protected override Size ArrangeOverride(Size arrangeBounds)
@@ -184,6 +189,7 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_menuOptionsView = (ScrollViewer)GetTemplateChild("MenuOptionsView");
+            m_menuOptionsView.ManipulationBoundaryFeedback += (object sender, ManipulationBoundaryFeedbackEventArgs e) => { e.Handled = true; };
 
             m_resultsOptionsView = (ScrollViewer)GetTemplateChild("ResultsMenuOptionsView");
             m_resultsOptionsView.TouchDown += OnResultsListTouchDown;
@@ -278,7 +284,8 @@ namespace ExampleAppWPF
             m_searchArrowClosed = ((Storyboard)Template.Resources[closeSearchArrowString]).Clone();
             XamlHelpers.UpdateThicknessAnimationMarginValue(m_searchArrowClosed, searchAnimString + closeSearchArrowString);
 
-            m_adapter = new MenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel", m_isInKioskMode);
+            double dropDownSeparatorHeight = (double)Application.Current.Resources["MenuSeparatorHeight"];
+            m_adapter = new SearchMenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel", m_isInKioskMode, m_indexOfFirstDropDown, dropDownSeparatorHeight);
             m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel", m_isInKioskMode);
 
             m_scrollSpeed = (double) Application.Current.Resources["ScrollViewButtonScrollSpeed"];
@@ -289,6 +296,16 @@ namespace ExampleAppWPF
             m_closeIconOnImageSource = (ImageSource) Application.Current.Resources["ButtonSearchCloseOnImage"];
             SearchMenuIconOffImageSource = m_searchIconOffImageSource;
             SearchMenuIconOnImageSource = m_searchIconOnImageSource;
+
+            m_resultsSeparatorHeight = (double) Application.Current.Resources["MenuSeparatorHeight"];
+            m_labelClosestHeight = (double) Application.Current.Resources["SearchLabelClosestHeight"];
+
+            double menuListItemHeight = (double) Application.Current.Resources["MenuListItemHeight"];
+            Grid dropDownSeparator = (Grid) GetTemplateChild("DropDownSeparator");
+            Thickness dropDownSeparatorMargin = dropDownSeparator.Margin;
+            dropDownSeparatorMargin.Top = m_labelClosestHeight + (m_indexOfFirstDropDown * menuListItemHeight);
+            dropDownSeparator.Margin = dropDownSeparatorMargin;
+            dropDownSeparator.Visibility = Visibility.Visible;
         }
 
         public void RemoveSearchQueryResults()

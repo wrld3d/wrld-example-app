@@ -135,6 +135,7 @@
     </Compile>
     <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
     <Compile Include="Views\Options\OptionsView.cs" />
+    <Compile Include="Views\SearchMenu\SearchMenuListAdapter.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
     <Compile Include="StartupResourceLoader.cs" />
     <Compile Include="Views\SearchResultPoi\eeGeoSearchResultsPoiView.cs" />

@@ -148,7 +148,7 @@
                         <Grid Name="SettingsMenuMainContainer" Margin="{DynamicResource SettingsMenuMainContainerMargin}" HorizontalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="{DynamicResource MenuIconSizeGridLength}"/>
-                                <RowDefinition Height="2"/>
+                                <RowDefinition Height="{DynamicResource MenuSeparatorRowHeight}"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
@@ -161,7 +161,7 @@
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1">
-                                <Rectangle Width="{DynamicResource MenuWidth}" Height="2" Fill="{StaticResource PrimaryBG_Over_Colour}" />
+                                <Rectangle Width="{DynamicResource MenuWidth}" Height="Auto" Fill="{StaticResource PrimaryBG_Over_Colour}" />
                             </Grid>
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical">

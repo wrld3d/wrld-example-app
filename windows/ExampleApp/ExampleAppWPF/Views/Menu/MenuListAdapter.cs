@@ -164,7 +164,7 @@ namespace ExampleAppWPF
                 NotifyDataSetChanged();
             }
         }
-        private void NotifyDataSetChanged()
+        protected virtual void NotifyDataSetChanged()
         {
             m_children.Clear();
             int overAllItemIndex = 0;

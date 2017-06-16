@@ -1,5 +1,6 @@
 using Newtonsoft.Json.Linq;
 using System.ComponentModel;
+using System.Windows;
 
 namespace ExampleAppWPF
 {
@@ -12,6 +13,8 @@ namespace ExampleAppWPF
         private bool m_isExpanded;
         private bool m_justAdded;
         private bool m_isExpandable;
+        private bool m_hasCustomSeparator;
+        private Thickness m_listItemMargin;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
@@ -55,6 +58,8 @@ namespace ExampleAppWPF
             IsExpanded = isExpanded;
             JustAdded = m_justAdded = false;
             IsExpandable = m_isExpandable = true;
+            m_hasCustomSeparator = false;
+            m_listItemMargin = new Thickness(0);
         }
 
         public int ZIndex
@@ -113,6 +118,40 @@ namespace ExampleAppWPF
         public string Heading
         {
             get { return m_heading; }
+        }
+
+        public bool HasCustomSeparator
+        {
+            get
+            {
+                return m_hasCustomSeparator;
+            }
+            set
+            {
+                if(value != m_hasCustomSeparator)
+                {
+                    m_hasCustomSeparator = value;
+
+                    OnPropertyChanged("HasCustomSeparator");
+                }
+            }
+        }
+
+        public Thickness ListItemMargin
+        {
+            get
+            {
+                return m_listItemMargin;
+            }
+            set
+            {
+                if(value != m_listItemMargin)
+                {
+                    m_listItemMargin = value;
+
+                    OnPropertyChanged("ListItemMargin");
+                }
+            }
         }
     }
 }

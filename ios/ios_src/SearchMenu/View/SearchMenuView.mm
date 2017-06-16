@@ -20,6 +20,8 @@
 
 #import "UIButton+DefaultStates.h"
 
+static const int IndexOfFirstDropDown = 3;
+
 @interface SearchMenuView()
 {
     SearchResultsTableDataProvider* m_pSearchResultsDataProvider;
@@ -88,6 +90,8 @@
     float m_anchorArrowWidth;
     float m_anchorArrowClosedHeight;
     float m_anchorArrowOpenHeight;
+    
+    float m_labelClosestHeight;
 }
 
 @property (nonatomic, retain) UILabel* pSearchCountLabel;
@@ -102,6 +106,9 @@
 @property (nonatomic, retain) UIButton* pSearchMenuScrollButton;
 @property (nonatomic, retain) UIImageView* pSearchMenuFadeImage;
 @property (nonatomic, retain) SearchMenuDragTab* pSearchMenuDragTab;
+@property (nonatomic, retain) UILabel* pLabelClosestLabel;
+@property (nonatomic, retain) UIView* pLabelClosestSeparator;
+@property (nonatomic, retain) UIView* pDropDownSeparator;
 
 @end
 
@@ -121,6 +128,7 @@
                          :tableCount];
     
     dataProvider.rowSelectionDelegate = self;
+    [dataProvider setIndexOfFirstDropDown:IndexOfFirstDropDown];
     
     m_pSearchResultsDataProvider = searchResultsDataProvider;
     [m_pSearchResultsDataProvider initWithParams:self];
@@ -336,6 +344,30 @@
     self.pSearchTableSeparator = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, m_tableSpacing)] autorelease];
     self.pSearchTableSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
     
+    self.pDropDownSeparator = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, m_menuContainerWidth, m_tableSpacing)] autorelease];
+    self.pDropDownSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSeparatorColor;
+    
+    float labelClosestOffset = 3.0f;
+    m_labelClosestHeight = 26.0f;
+    self.pLabelClosestLabel = [[[UILabel alloc] initWithFrame:CGRectMake(tableCellWidth/2 + m_searchCountLabelWidth - (tableCellWidth/2) + labelClosestOffset,
+                                                                         0,
+                                                                         tableCellWidth,
+                                                                         m_labelClosestHeight)] autorelease];
+    self.pLabelClosestLabel.text = @"Show me the closest...";
+    [self.pLabelClosestLabel setFont:[UIFont systemFontOfSize:12.0f]];
+    [self.pLabelClosestLabel setTextColor:ExampleApp::Helpers::ColorPalette::UiTextHeaderColor];
+    
+    self.pLabelClosestSeparator = [[[UIView alloc] initWithFrame:CGRectMake(tableCellWidth/2 + m_searchCountLabelWidth - (tableCellWidth/2),
+                                                                            m_labelClosestHeight,
+                                                                            tableCellWidth,
+                                                                            (1.f / [UIScreen mainScreen].scale))] autorelease];
+    self.pLabelClosestSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::TableDividerColor;
+    
+    self.pLabelClosestContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.0f, m_tableSpacing, m_menuContainerWidth, m_labelClosestHeight)] autorelease];
+    self.pLabelClosestContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+    [self.pLabelClosestContainer addSubview: self.pLabelClosestLabel];
+    [self.pLabelClosestContainer addSubview: self.pLabelClosestSeparator];
+    
     self.pTableViewContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, m_tableSpacing, m_menuContainerWidth, 0.0f)] autorelease];
     self.pTableViewContainer.bounces = NO;
     self.pTableViewContainer.contentSize = CGSizeMake(m_menuContainerWidth, 0.0f);
@@ -426,6 +458,8 @@
         [self.pTableViewContainer addSubview:self.pTableViewMap[@(i)]];
     }
     
+    [self.pTableViewContainer addSubview: self.pLabelClosestContainer];
+    [self.pTableViewContainer addSubview: self.pDropDownSeparator];
     [self.pTableViewContainer addSubview:self.pSearchResultsTableContainerView];
     [self.pSearchResultsTableContainerView addSubview:self.pSearchResultsTableView];
     [self.pTableViewContainer addSubview:self.pSearchMenuFadeImage];
@@ -446,6 +480,18 @@
 - (void)dealloc
 {
     [self.pInputDelegate release];
+    
+    [self.pLabelClosestLabel removeFromSuperview];
+    [self.pLabelClosestLabel release];
+    
+    [self.pLabelClosestSeparator removeFromSuperview];
+    [self.pLabelClosestSeparator release];
+    
+    [self.pLabelClosestContainer removeFromSuperview];
+    [self.pLabelClosestContainer release];
+    
+    [self.pDropDownSeparator removeFromSuperview];
+    [self.pDropDownSeparator release];
     
     [self.pSearchResultsTableView removeFromSuperview];
     [self.pSearchResultsTableView release];
@@ -858,7 +904,7 @@
 
 - (void)refreshTableHeights
 {
-    float totalTableHeight = 0.0f;
+    float totalTableHeight = m_labelClosestHeight;
     float onScreenSearchResultsTableHeight;
     float tableY;
     float maxOnScreenSearchResultsTableHeight = 0.0f;
@@ -868,6 +914,14 @@
         CustomTableView* customTableView = self.pTableViewMap[@(i)];
         
         const float tableHeight = [customTableView refreshHeight:[m_pDataProvider getRealHeightForTable:customTableView]];
+        
+        if(i == IndexOfFirstDropDown)
+        {
+            CGRect frame = self.pDropDownSeparator.frame;
+            frame.origin.y = totalTableHeight;
+            self.pDropDownSeparator.frame = frame;
+            totalTableHeight += frame.size.height;
+        }
         
         CGRect frame = customTableView.frame;
         frame.origin.y = totalTableHeight;
@@ -901,6 +955,10 @@
             frame.origin.y = frame.origin.y + tableY;
             customTableView.frame = frame;
         }
+        
+        CGRect frame = self.pDropDownSeparator.frame;
+        frame.origin.y = frame.origin.y + tableY;
+        self.pDropDownSeparator.frame = frame;
     }
     
     const float tableViewContainerHeight = fminf(m_maxScreenSpace, tableY + totalTableHeight);
@@ -946,6 +1004,10 @@
     self.pTableViewContainer.frame = frame;
     
     [self.pTableViewContainer setContentSize:CGSizeMake(self.pTableViewContainer.frame.size.width, tableY + totalTableHeight)];
+    
+    frame = self.pLabelClosestContainer.frame;
+    frame.origin.y = tableY;
+    self.pLabelClosestContainer.frame = frame;
     
     if (searchResultsTableContentHeight > maxOnScreenSearchResultsTableHeight)
     {

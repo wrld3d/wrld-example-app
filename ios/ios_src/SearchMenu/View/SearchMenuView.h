@@ -39,5 +39,6 @@
 @property (nonatomic, retain) UIScrollView* pSearchResultsTableContainerView;
 @property (nonatomic, retain) CustomTableView* pSearchResultsTableView;
 @property (nonatomic, retain) SearchMenuInputDelegate* pInputDelegate;
+@property (nonatomic, retain) UIView* pLabelClosestContainer;
 
 @end

@@ -24,6 +24,7 @@ static NSString *SubSectionCellIdentifier = @"subsectioncell";
     std::map<CustomTableView*, size_t> m_tableSectionMap;
     std::vector<size_t> m_cachedTableSizes;
     float m_arrowInset;
+    int m_indexOfFirstDropDown;
 }
 
 @end
@@ -103,6 +104,11 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     return ((CellConstants::SectionHeaderCellHeight * numberOfHeaders + CellConstants::SubSectionCellHeight * numberOfSubSectionCells) + totalSeparateHeight);
 }
 
+- (void)setIndexOfFirstDropDown:(int)indexOfFirstDropDown
+{
+    m_indexOfFirstDropDown = indexOfFirstDropDown;
+}
+
 - (void)dealloc
 {
     [self.pOpenableMenuArrow release];
@@ -123,6 +129,8 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
         
         m_tableSectionMap[tableView] = i;
     }
+    
+    m_indexOfFirstDropDown = 0;
 
     self.pOpenableMenuArrow = ExampleApp::Helpers::ImageHelpers::LoadImage(@"sub_menu_arrow_off");
     return self;
@@ -289,7 +297,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
     
     bool isExpandableHeader = section.IsExpandable() && indexPath.row == 0;
     bool isHeader = isExpandableHeader || !section.IsExpandable();
-    bool hasSeparator = isHeader && sectionIndex != 0;
+    bool hasSeparator = isHeader && sectionIndex != 0 && sectionIndex != m_indexOfFirstDropDown;
     
     openableArrow.hidden = !isExpandableHeader;
     [self setCellInfo:customCell :isHeader :hasSeparator];

@@ -37,7 +37,7 @@
 		    android:cacheColorHint="@android:color/transparent"
 		    android:clipChildren="false"
 		    android:clipToPadding="false"
-			android:divider="@color/table_divider"
+			android:divider="@null"
 			android:childDivider="@color/ui_border"
 			android:dividerHeight="@dimen/menu_item_divider_height"
 		    android:listSelector="@android:color/transparent"

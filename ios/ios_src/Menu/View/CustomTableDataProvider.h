@@ -19,6 +19,8 @@
 - (id)initWithParams:(MenuView*)view
                     :(NSMutableDictionary*)tableViewMap;
 
+- (void)setIndexOfFirstDropDown:(int)indexOfFirstDropDown;
+
 - (void)collapseAll;
 
 - (CGAffineTransform)computeOpenableArrowTransform:(float)degrees;
