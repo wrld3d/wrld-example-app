@@ -245,7 +245,10 @@ public class BackgroundThreadActivity extends MainActivity
     @Override
     public void onBackPressed()
     {
-        moveTaskToBack(true);
+        if (!checkLocalBackButtonListeners())
+        {
+            moveTaskToBack(true);
+        }
     }
 
     @Override

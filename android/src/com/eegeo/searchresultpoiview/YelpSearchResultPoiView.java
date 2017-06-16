@@ -13,7 +13,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.util.Linkify;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,11 +22,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.IBackButtonListener;
 import com.eegeo.helpers.TintablePinToggleButton;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.tags.TagResources;
 
-public class YelpSearchResultPoiView implements View.OnClickListener 
+public class YelpSearchResultPoiView implements View.OnClickListener, IBackButtonListener
 {
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
@@ -123,10 +123,12 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         m_closeButton.setOnClickListener(this);
         m_togglePinnedButton.setOnClickListener(this);
         m_webVendorStyleLinkButton.setOnClickListener(this);
+        m_activity.addBackButtonPressedListener(this);
     }
 
     public void destroy()
     {
+        m_activity.removeBackButtonPressedListener(this);
         m_uiRoot.removeView(m_view);
     }
 
@@ -460,5 +462,15 @@ public class YelpSearchResultPoiView implements View.OnClickListener
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public boolean onBackButtonPressed() {
+        if (m_view.getVisibility() == View.VISIBLE)
+        {
+            handleCloseClicked();
+            return true;
+        }
+        return false;
     }
 }

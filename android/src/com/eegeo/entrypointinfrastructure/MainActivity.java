@@ -2,7 +2,9 @@
 
 package com.eegeo.entrypointinfrastructure;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +18,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 
+import com.eegeo.helpers.IBackButtonListener;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
@@ -27,6 +30,7 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     private RuntimePermissionDispatcher m_runtimePermissionDispatcher;
     private boolean m_touchEnabled;
     private LinkedList<OnPauseListener> m_onPauseListeners;
+    private List<IBackButtonListener> m_backButtonListeners;
 
     public MainActivity()
     {
@@ -34,6 +38,7 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
         m_runtimePermissionDispatcher = new RuntimePermissionDispatcher(this);
         m_touchEnabled = true;
         m_onPauseListeners = new LinkedList<OnPauseListener>();
+        m_backButtonListeners = new ArrayList<>();
     }
 
     public PhotoIntentDispatcher getPhotoIntentDispatcher()
@@ -103,6 +108,33 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     public void deleteOnPauseListener(final OnPauseListener l)
     {
         m_onPauseListeners.remove(l);
+    }
+
+    public void addBackButtonPressedListener(IBackButtonListener listener)
+    {
+        if (!m_backButtonListeners.contains(listener))
+        {
+            m_backButtonListeners.add(listener);
+        }
+    }
+
+    public void removeBackButtonPressedListener(IBackButtonListener listener)
+    {
+        if (m_backButtonListeners.contains(listener))
+        {
+            m_backButtonListeners.remove(listener);
+        }
+    }
+
+    public boolean checkLocalBackButtonListeners() {
+        for (IBackButtonListener listener : m_backButtonListeners)
+        {
+            if (listener.onBackButtonPressed())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

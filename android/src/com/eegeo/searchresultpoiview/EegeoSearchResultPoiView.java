@@ -23,11 +23,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.IBackButtonListener;
 import com.eegeo.helpers.TintablePinToggleButton;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.tags.TagResources;
 
-public class EegeoSearchResultPoiView implements View.OnClickListener 
+public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButtonListener
 {
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
@@ -130,11 +131,14 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         m_facebookUrl.setOnClickListener(this);
         m_twitterUrl.setOnClickListener(this);
         m_email.setOnClickListener(this);
+
+        m_activity.addBackButtonPressedListener(this);
     }
 
     public void destroy()
     {
         m_uiRoot.removeView(m_view);
+        m_activity.removeBackButtonPressedListener(this);
     }
 
     public void displayPoiInfo(
@@ -531,5 +535,15 @@ public class EegeoSearchResultPoiView implements View.OnClickListener
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public boolean onBackButtonPressed() {
+        if (m_view.getVisibility() == View.VISIBLE)
+        {
+            handleCloseClicked();
+            return true;
+        }
+        return false;
     }
 }
