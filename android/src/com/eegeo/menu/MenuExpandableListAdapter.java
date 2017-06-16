@@ -40,15 +40,55 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 	final private int m_groupViewId;
 	final private int m_childViewId; 
 	final private int m_childViewWithDetailsId;
+
+	final private int m_groupSeparatorPosition;
+	final private String m_menuTitle;
 	
 	boolean m_isAnimating = false;
-	
+
+	public MenuExpandableListAdapter(MainActivity context,
+									 MenuExpandableListView expandableList,
+									 MenuListAnimationHandler menuListAnimationHandler,
+									 final int groupViewId,
+									 final int childViewId,
+									 final int childViewWithDetailsId)
+	{
+		m_groupViewId = groupViewId;
+		m_childViewId = childViewId;
+		m_childViewWithDetailsId = childViewWithDetailsId;
+
+		m_groupSeparatorPosition = 0;
+		m_menuTitle = "";
+
+		init(context,
+				expandableList,
+				menuListAnimationHandler);
+	}
+
 	public MenuExpandableListAdapter(MainActivity context, 
 									 MenuExpandableListView expandableList, 
 									 MenuListAnimationHandler menuListAnimationHandler, 
 									 final int groupViewId, 
 									 final int childViewId,
-									 final int childViewWithDetailsId)
+									 final int childViewWithDetailsId,
+									 final int groupSeparatorPosition,
+									 final String menuTitle)
+	{
+		m_groupViewId = groupViewId;
+		m_childViewId = childViewId;
+		m_childViewWithDetailsId = childViewWithDetailsId;
+
+		m_groupSeparatorPosition = groupSeparatorPosition;
+		m_menuTitle = menuTitle;
+
+		init(context,
+				expandableList,
+				menuListAnimationHandler);
+	}
+
+	private void init(MainActivity context,
+					  MenuExpandableListView expandableList,
+					  MenuListAnimationHandler menuListAnimationHandler)
 	{
 		m_context = context;
 		m_expandableList = expandableList;
@@ -58,10 +98,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		m_childData = new HashMap<String, List<MenuItemData>>();
 		
 		m_inflater = LayoutInflater.from(m_context);
-		m_groupViewId = groupViewId;
-		m_childViewId = childViewId;
-		m_childViewWithDetailsId = childViewWithDetailsId;
-		
+
 		m_headerViewCache = new HashMap<String, View>();
 		m_childrenViewCache = new HashMap<String, View>();
 	}
@@ -207,6 +244,30 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter
 		{
 			itemView = inflateView(m_groupViewId, menuItemData);		
 			m_headerViewCache.put(key, itemView);
+
+			if(groupPosition == 0)
+			{
+				if(!m_menuTitle.equals(""))
+				{
+					TextView closestLabelText = (TextView) itemView.findViewById(R.id.menu_closest_label_text);
+					closestLabelText.setText(m_menuTitle);
+					View closestLabel = itemView.findViewById(R.id.menu_closest_label);
+					closestLabel.setVisibility(View.VISIBLE);
+				}
+			}
+			else
+			{
+				if(groupPosition == m_groupSeparatorPosition)
+				{
+					View itemSeparator = itemView.findViewById(R.id.menu_list_group_separator);
+					itemSeparator.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					View itemSeparator = itemView.findViewById(R.id.menu_list_item_separator);
+					itemSeparator.setVisibility(View.VISIBLE);
+				}
+			}
 		}
 		
 		List<MenuItemData> children = m_childData.get(menuItemData.getText());

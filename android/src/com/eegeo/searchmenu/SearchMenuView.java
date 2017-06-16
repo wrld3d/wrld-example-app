@@ -41,6 +41,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener, TextWatcher {
+    private final int m_indexOfFirstDropDown = 3;
+
     protected View m_closeButtonView = null;
     protected View m_progressSpinner = null;
     protected View m_anchorArrow = null;
@@ -93,6 +95,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     private boolean m_initializeOnSearchMenuOpenComplete = false;
     private boolean m_fontScaleInitialized = false;
 
+    private int m_menuTitleHeight;
+
     private boolean m_editingText = false;
 
     private ImageButton m_dragButton;
@@ -113,6 +117,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_groupHeaderSize = (int)m_activity.getResources().getDimension(R.dimen.menu_item_header_height);
         m_menuItemDividerHeightSize = (int)m_activity.getResources().getDimension(R.dimen.menu_item_divider_height);
         m_cellHeight = m_activity.getResources().getDimension(R.dimen.search_menu_result_cell_height);
+
+        m_menuTitleHeight = (int) m_activity.getResources().getDimension(R.dimen.menu_title_height);
 
         m_list = (MenuExpandableListView)m_view.findViewById(R.id.search_menu_options_list_view);
         m_searchList = (ListView)m_view.findViewById(R.id.search_menu_item_list);
@@ -182,7 +188,9 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         														m_menuListAnimationHandler, 
         														R.layout.menu_list_item, 
         														R.layout.menu_list_subitem,
-        														R.layout.menu_list_subitem_with_details);
+        														R.layout.menu_list_subitem_with_details,
+                                                                m_indexOfFirstDropDown,
+                                                                m_activity.getString(R.string.search_closest_label));
 
         m_list.setAdapter(m_expandableListAdapter);
         
@@ -525,9 +533,9 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         final int groupCount = m_expandableListAdapter.getGroupCount();
         final int menuListContainerCollapsedSize = groupCount * m_groupHeaderSize + ((groupCount - 1) * m_menuItemDividerHeightSize);
 
-        final int totalMenuSeparatorSize = 2 * (int)m_activity.getResources().getDimension(R.dimen.menu_section_divider_height);
+        final int totalMenuSeparatorSize = 3 * (int)m_activity.getResources().getDimension(R.dimen.menu_section_divider_height);
         
-        final float occupiedHeight = topBar.getHeight() + menuListContainerCollapsedSize + totalMenuSeparatorSize;
+        final float occupiedHeight = topBar.getHeight() + menuListContainerCollapsedSize + totalMenuSeparatorSize + m_menuTitleHeight;
         final float availableHeight = viewHeight - occupiedHeight;
 
         final float cellDividerHeight = m_activity.getResources().getDimension(R.dimen.search_menu_result_cell_divider_height);

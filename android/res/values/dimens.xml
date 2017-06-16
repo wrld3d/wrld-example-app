@@ -9,10 +9,11 @@
     <dimen name="search_menu_result_cell_height">44dp</dimen>
     <dimen name="search_editext_width">295dp</dimen>
     <dimen name="search_menu_result_cell_divider_height">1dp</dimen>
-    <dimen name="menu_item_header_height">40dp</dimen>
+    <dimen name="menu_item_header_height">42dp</dimen>
     <dimen name="menu_subitem_height">39dp</dimen>
     <dimen name="menu_section_divider_height">6dp</dimen>
     <dimen name="menu_item_divider_height">1dp</dimen>
     <dimen name="menu_item_footer_padding_height">2dp</dimen>
     <dimen name="menu_button_top_offset">20dp</dimen>
+    <dimen name="menu_title_height">27dp</dimen>
 </resources>

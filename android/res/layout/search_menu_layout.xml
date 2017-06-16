@@ -88,7 +88,7 @@
 			android:overScrollMode="never"
 			android:paddingLeft="32dp"
 			android:paddingRight="5dp"
-			android:divider="@color/table_divider"
+			android:divider="@color/ui_border"
 			android:childDivider="@color/ui_border"
 			android:dividerHeight="@dimen/menu_item_divider_height"
 			android:groupIndicator="@null"/>
