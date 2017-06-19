@@ -23,7 +23,7 @@
     "MyPinsWebServiceUrl":"https://app.wayfind.bloomberg.com/reports/",
     "MyPinsWebServiceAuthToken":"f475c578eb4592637314e4a05510993b",
     "WebProxyEnabled":true,
-    "WebProxyIpAddress":"69.191.176.39",
+    "WebProxyIpAddress":"webproxyeu.corp.bloomberg.com",
     "WebProxyPort": 81,
     "WebProxyIgnorePattern":"wayfind.bloomberg.com",
 	"IsKioskTouchInputEnabled":false,
