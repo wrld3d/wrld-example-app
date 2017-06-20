@@ -202,6 +202,17 @@ namespace ExampleApp
                     ? document["AttractModePlaybackSpeed"].GetDouble()
                     : DefaultAttractModePlaybackSpeed);
 
+                if (document.HasMember("BuildingsSearchViewLocation"))
+                {
+                    m_builder.SetBuildingsSearchViewLocationAvailable(true);
+                    Eegeo::Space::LatLongAltitude latLongAltitude = ParseLatLongAltitude(document["BuildingsSearchViewLocation"]);
+                    Eegeo_ASSERT(document["BuildingsSearchViewLocation"].HasMember("DistanceToInterest"), "BuildingsSearchViewLocation, DistanceToInterest not found");
+                    float distanceToInterest = static_cast<float>(document["BuildingsSearchViewLocation"]["DistanceToInterest"].GetDouble());
+                    Eegeo_ASSERT(document["BuildingsSearchViewLocation"].HasMember("OrientationDegrees"), "BuildingsSearchViewLocation, OrientationDegrees not found");
+                    float orientationDegrees = static_cast<float>(document["BuildingsSearchViewLocation"]["OrientationDegrees"].GetDouble());
+                    m_builder.SetBuildingsSearchViewLocation(latLongAltitude, distanceToInterest, orientationDegrees);
+                }
+
                 if(document.HasMember("FixedIndoorLocation"))
                 {
                     ParseFixedIndoorLocation(document["FixedIndoorLocation"]);

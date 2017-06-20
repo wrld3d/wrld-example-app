@@ -10,8 +10,18 @@ namespace ExampleApp
         : m_searchQuery(searchQuery)
         , m_isTag(isTag)
         , m_isInterior(isInterior)
+        , m_shouldZoomToBuildingsView(false)
         {
             
+        }
+
+        SearchMenuPerformedSearchMessage::SearchMenuPerformedSearchMessage(const std::string& searchQuery, bool isTag, bool isInterior, bool shouldZoomToBuildingsView)
+        : m_searchQuery(searchQuery)
+        , m_isTag(isTag)
+        , m_isInterior(isInterior)
+        , m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
+        {
+
         }
         
         const std::string& SearchMenuPerformedSearchMessage::SearchQuery() const
@@ -27,6 +37,11 @@ namespace ExampleApp
         bool SearchMenuPerformedSearchMessage::IsInterior() const
         {
             return m_isInterior;
+        }
+
+        bool SearchMenuPerformedSearchMessage::ShouldZoomToBuildingsView() const
+        {
+            return m_shouldZoomToBuildingsView;
         }
     }
 }

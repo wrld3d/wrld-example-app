@@ -57,6 +57,11 @@ namespace ExampleApp
                 bool m_useLabels;
                 bool m_useJapaneseFonts;
 
+                bool m_buildingsSearchViewAvailable;
+                Eegeo::Space::LatLongAltitude m_buildingsSearchViewLatLongAltitude;
+                float m_buildingsSearchViewDistanceToInterest;
+                float m_buildingsSearchViewOrientationDegrees;
+
                 Eegeo::Space::LatLong m_fixedLatlong;
                 std::string m_fixedInteriorId;
                 int m_fixedFloorIndex;
@@ -145,6 +150,9 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetUseLabels(bool useLabels);
 
                 IApplicationConfigurationBuilder& SetInteriorTrackingInfo(const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo);
+
+                IApplicationConfigurationBuilder& SetBuildingsSearchViewLocationAvailable(bool available);
+                IApplicationConfigurationBuilder& SetBuildingsSearchViewLocation(const Eegeo::Space::LatLongAltitude latLongAltitude, const float distanceToInterest, const float orientationDegrees);
 
                 IApplicationConfigurationBuilder& SetFixedIndoorLocation(const Eegeo::Space::LatLong latlong, const std::string& interiorId, const int floorIndex, const double headingDegrees);
 

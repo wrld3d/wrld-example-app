@@ -11,6 +11,9 @@
 #include "BidirectionalBus.h"
 #include "SearchQueryResultsRemovedMessage.h"
 #include "CameraState.h"
+#include "ICameraTransitionController.h"
+#include "ApplicationConfiguration.h"
+#include "SwallowSearchConstants.h"
 
 namespace
 {
@@ -31,6 +34,8 @@ namespace ExampleApp
             SearchQueryPerformer::SearchQueryPerformer(ISearchService& searchService,
                                                        ISearchResultRepository& searchResultRepository,
                                                        ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
+                                                       CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
+                                                       ExampleApp::ApplicationConfig::ApplicationConfiguration& appConfig,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
                 : m_searchService(searchService)
                 , m_searchResultsRepository(searchResultRepository)
@@ -38,9 +43,20 @@ namespace ExampleApp
                 , m_previousQuery("", false, false, Eegeo::Space::LatLongAltitude(0.0, 0.0, 0.0), 0.f)
                 , m_hasQuery(false)
                 , m_cameraController(cameraController)
+                , m_cameraTransitionsController(cameraTransitionsController)
+                , m_isBuildingsViewAvailable(false)
+                , m_buildingsViewLocationECEF(Eegeo::dv3(0, 0,0 ))
+                , m_buildingsViewDistanceToInterest(0)
+                , m_buildingsViewHeadingRadians(0)
                 , m_messageBus(messageBus)
             {
                 m_searchService.InsertOnReceivedQueryResultsCallback(*m_pSearchResultResponseReceivedCallback);
+
+                Eegeo::Space::LatLongAltitude latLongAltitude(0, 0, 0);
+                float headingDegrees = 0;
+                m_isBuildingsViewAvailable = appConfig.BuildingsSearchViewLocation(latLongAltitude, m_buildingsViewDistanceToInterest, headingDegrees);
+                m_buildingsViewLocationECEF = latLongAltitude.ToECEF();
+                m_buildingsViewHeadingRadians = Eegeo::Math::Deg2Rad(headingDegrees);
             }
 
             SearchQueryPerformer::~SearchQueryPerformer()
@@ -55,33 +71,43 @@ namespace ExampleApp
                 return m_hasQuery;
             }
 
-            void SearchQueryPerformer::PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch)
+            void SearchQueryPerformer::PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, bool shouldZoomToBuildingsView)
             {
                 Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
-                PerformSearchQuery(query, isTag, tryInteriorSearch, location);
+                PerformSearchQuery(query, isTag, tryInteriorSearch, shouldZoomToBuildingsView, location);
             }
             
-            void SearchQueryPerformer::PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, float radius)
+            void SearchQueryPerformer::PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, bool shouldZoomToBuildingsView, float radius)
             {
                 Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
-                PerformSearchQuery(query, isTag, tryInteriorSearch, location, radius);
+                PerformSearchQuery(query, isTag, tryInteriorSearch, shouldZoomToBuildingsView, location, radius);
             }
 
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query,
                     bool isTag,
                     bool tryInteriorSearch,
+                    bool shouldZoomToBuildingsView,
                     const Eegeo::Space::LatLongAltitude& location)
             {
                 const float radius = GetSearchRadius(m_cameraController.GetRenderCamera());
-                PerformSearchQuery(query, isTag, tryInteriorSearch, location, radius);
+                PerformSearchQuery(query, isTag, tryInteriorSearch, shouldZoomToBuildingsView, location, radius);
             }
             
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query,
                                                           bool isTag,
                                                           bool tryInteriorSearch,
+                                                          bool shouldZoomToBuildingsView,
                                                           const Eegeo::Space::LatLongAltitude& location,
                                                           float radius)
             {
+                if (shouldZoomToBuildingsView &&
+                    m_isBuildingsViewAvailable &&
+                    isTag &&
+                    query == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
+                {
+                    m_cameraTransitionsController.StartTransitionTo(m_buildingsViewLocationECEF, m_buildingsViewDistanceToInterest, m_buildingsViewHeadingRadians, true);
+                }
+
                 m_hasQuery = true;
                 SearchQuery searchQuery(query, isTag, tryInteriorSearch, location, radius);
                 m_previousQuery = searchQuery;

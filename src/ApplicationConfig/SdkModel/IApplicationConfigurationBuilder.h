@@ -92,6 +92,9 @@ namespace ExampleApp
                 virtual IApplicationConfigurationBuilder& SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList) = 0;
                 virtual IApplicationConfigurationBuilder& SetRestrictedBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingInfo) = 0;
 
+                virtual IApplicationConfigurationBuilder& SetBuildingsSearchViewLocationAvailable(bool available) = 0;
+                virtual IApplicationConfigurationBuilder& SetBuildingsSearchViewLocation(const Eegeo::Space::LatLongAltitude latLongAltitude, const float distanceToInterest, const float orientationDegrees) = 0;
+
                 virtual IApplicationConfigurationBuilder& SetFixedIndoorLocation(const Eegeo::Space::LatLong latlong, const std::string& interiorId, const int floorIndex, const double headingDegrees) = 0;
 
                 virtual IApplicationConfigurationBuilder& SetAttractModeTargetSplinePoints(std::vector<Eegeo::Space::LatLongAltitude> points) = 0;

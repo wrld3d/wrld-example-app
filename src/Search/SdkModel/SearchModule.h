@@ -14,6 +14,7 @@
 #include "SearchQueryObserver.h"
 #include "AppModes.h"
 #include "Interiors.h"
+#include "ApplicationConfig.h"
 
 namespace ExampleApp
 {
@@ -36,6 +37,7 @@ namespace ExampleApp
                              ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                              CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                             ExampleApp::ApplicationConfig::ApplicationConfiguration& appConfig,
                              ExampleAppMessaging::TMessageBus& messageBus,
                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus);
 

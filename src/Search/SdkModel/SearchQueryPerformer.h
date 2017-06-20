@@ -13,6 +13,8 @@
 #include "SearchQuery.h"
 #include "IAppCameraController.h"
 #include "BidirectionalBus.h"
+#include "CameraTransitions.h"
+#include "ApplicationConfig.h"
 
 namespace ExampleApp
 {
@@ -30,12 +32,19 @@ namespace ExampleApp
                 SearchQuery m_previousQuery;
                 bool m_hasQuery;
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_cameraController;
+                CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionsController;
+                bool m_isBuildingsViewAvailable;
+                Eegeo::dv3 m_buildingsViewLocationECEF;
+                float m_buildingsViewDistanceToInterest;
+                float m_buildingsViewHeadingRadians;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
             public:
                 SearchQueryPerformer(ISearchService& exteriorSearchService,
                                      ISearchResultRepository& searchResultRepository,
                                      ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
+                                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
+                                     ExampleApp::ApplicationConfig::ApplicationConfiguration& appConfig,
                                      ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchQueryPerformer();
@@ -47,10 +56,10 @@ namespace ExampleApp
                     return m_previousQuery;
                 }
 
-                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch);
-                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, float radius);
-                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location);
-                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius);
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, bool shouldZoomToBuildingsView);
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, bool shouldZoomToBuildingsView, float radius);
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, bool shouldZoomToBuildingsView, const Eegeo::Space::LatLongAltitude& location);
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, bool shouldZoomToBuildingsView, const Eegeo::Space::LatLongAltitude& location, float radius);
 
                 void RemoveSearchQueryResults();
 

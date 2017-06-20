@@ -156,11 +156,11 @@ namespace ExampleApp
                     if (previousQuery.IsTag() && previousQuery.Query() == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
                     {
                         // Bodged for Swallow Office category query.
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), currentLocation, previousQuery.Radius());
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), false, currentLocation, previousQuery.Radius());
                     }
                     else
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), currentLocation);
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), false, currentLocation);
                     }
 
                     if (m_interiorInteractionModel.HasInteriorModel())
@@ -185,7 +185,7 @@ namespace ExampleApp
                     
                     if (previousQuery.IsTag())
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch());
+                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), false);
                         m_secondsSincePreviousRefresh = 0.f;
                     }
                 }

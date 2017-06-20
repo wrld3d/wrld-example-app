@@ -606,6 +606,7 @@ namespace ExampleApp
                                                                     m_pAppCameraModule->GetController(),
                                                                     *m_pCameraTransitionService,
                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                    m_applicationConfiguration,
                                                                     m_messageBus,
                                                                     m_sdkDomainEventBus);
         

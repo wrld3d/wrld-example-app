@@ -42,6 +42,10 @@ namespace ExampleApp
 												           const bool useLabels,
                                                            const bool useJapaneseFont,
                                                            const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
+                                                           bool buildingsSearchViewAvailable,
+                                                           Eegeo::Space::LatLongAltitude buildingsSearchViewLatLongAltitude,
+                                                           float buildingsSearchViewDistanceToInterest,
+                                                           float buildingsSearchViewOrientationDegrees,
                                                            const Eegeo::Space::LatLong fixedLatlong,
                                                            const std::string& fixedInteriorId,
                                                            const int fixedFloorIndex,
@@ -87,6 +91,10 @@ namespace ExampleApp
         , m_useLabels(useLabels)
         , m_useJapaneseFont(useJapaneseFont)
         , m_interiorTrackingInfo(interiorTrackingInfo)
+        , m_buildingsSearchViewAvailable(buildingsSearchViewAvailable)
+        , m_buildingsSearchViewLatLongAltitude(buildingsSearchViewLatLongAltitude)
+        , m_buildingsSearchViewDistanceToInterest(buildingsSearchViewDistanceToInterest)
+        , m_buildingsSearchViewOrientationDegrees(buildingsSearchViewOrientationDegrees)
         , m_fixedInteriorId(Eegeo::Resources::Interiors::InteriorId(fixedInteriorId))
         , m_fixedLatlong(fixedLatlong)
         , m_fixedFloorIndex(fixedFloorIndex)
@@ -277,6 +285,23 @@ namespace ExampleApp
         const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>& ApplicationConfiguration::RestrictedBuildingsInfo() const
         {
             return m_restrictedBuildingsInfo;
+        }
+
+        bool ApplicationConfiguration::IsBuildingsSearchViewAvailable() const
+        {
+            return m_buildingsSearchViewAvailable;
+        }
+
+        bool ApplicationConfiguration::BuildingsSearchViewLocation(Eegeo::Space::LatLongAltitude& latLongAltitude, float& distanceToInterest, float& orientationDegrees) const
+        {
+            if(!m_buildingsSearchViewAvailable)
+                return false;
+
+            latLongAltitude = m_buildingsSearchViewLatLongAltitude;
+            distanceToInterest = m_buildingsSearchViewDistanceToInterest;
+            orientationDegrees = m_buildingsSearchViewOrientationDegrees;
+
+            return true;
         }
 
         bool ApplicationConfiguration::IsFixedIndoorLocationEnabled() const

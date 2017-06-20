@@ -56,6 +56,11 @@ namespace ExampleApp
             bool m_useLabels;
             bool m_useJapaneseFont;
 
+            bool m_buildingsSearchViewAvailable;
+            Eegeo::Space::LatLongAltitude m_buildingsSearchViewLatLongAltitude;
+            float m_buildingsSearchViewDistanceToInterest;
+            float m_buildingsSearchViewOrientationDegrees;
+
             Eegeo::Space::LatLong m_fixedLatlong;
             Eegeo::Resources::Interiors::InteriorId m_fixedInteriorId;
             int m_fixedFloorIndex;
@@ -109,6 +114,10 @@ namespace ExampleApp
 					                 bool useLabels,
                                      bool useJapaneseFont,
 					                 const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
+                                     bool buildingsSearchViewAvailable,
+                                     Eegeo::Space::LatLongAltitude buildingsSearchViewLatLongAltitude,
+                                     float buildingsSearchViewDistanceToInterest,
+                                     float buildingsSearchViewOrientationDegrees,
                                      const Eegeo::Space::LatLong fixedLatlong,
                                      const std::string& fixedInteriorId,
                                      const int fixedFloorIndex,
@@ -189,6 +198,9 @@ namespace ExampleApp
             bool UseLabels() const;
             
             bool UseJapaneseFont() const;
+
+            bool IsBuildingsSearchViewAvailable() const;
+            bool BuildingsSearchViewLocation(Eegeo::Space::LatLongAltitude& latLongAltitude, float& distanceToInterest, float& orientationDegrees) const;
 
             bool IsFixedIndoorLocationEnabled() const;
 

@@ -52,6 +52,10 @@ namespace ExampleApp
             , m_twitterAuthCode("")
             , m_useLabels(false)
             , m_useJapaneseFonts(false)
+            , m_buildingsSearchViewAvailable(false)
+            , m_buildingsSearchViewLatLongAltitude(0.0, 0.0, 0.0)
+            , m_buildingsSearchViewDistanceToInterest(0.0f)
+            , m_buildingsSearchViewOrientationDegrees(0.0f)
             , m_fixedLatlong(0.0, 0.0)
             , m_fixedFloorIndex(0)
             , m_fixedHeadingDegrees(0.0)
@@ -269,6 +273,20 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetBuildingsSearchViewLocationAvailable(bool available)
+            {
+                m_buildingsSearchViewAvailable = available;
+                return *this;
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetBuildingsSearchViewLocation(const Eegeo::Space::LatLongAltitude latLongAltitude, const float distanceToInterest, const float orientationDegrees)
+            {
+                m_buildingsSearchViewLatLongAltitude = latLongAltitude;
+                m_buildingsSearchViewDistanceToInterest = distanceToInterest;
+                m_buildingsSearchViewOrientationDegrees = orientationDegrees;
+                return *this;
+            }
+
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetFixedIndoorLocation(const Eegeo::Space::LatLong latlong, const std::string& interiorId, const int floorIndex, const double headingDegrees)
             {
                 m_fixedLatlong = latlong;
@@ -367,6 +385,10 @@ namespace ExampleApp
                                                 m_useLabels,
                                                 m_useJapaneseFonts,
                                                 m_interiorTrackingInfo,
+                                                m_buildingsSearchViewAvailable,
+                                                m_buildingsSearchViewLatLongAltitude,
+                                                m_buildingsSearchViewDistanceToInterest,
+                                                m_buildingsSearchViewOrientationDegrees,
                                                 m_fixedLatlong,
                                                 m_fixedInteriorId,
                                                 m_fixedFloorIndex,

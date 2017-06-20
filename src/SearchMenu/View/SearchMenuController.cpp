@@ -172,9 +172,12 @@ namespace ExampleApp
             {
                 if(IsFullyOpen() && m_searchMenuView.GetEditText().length() > 0)
                 {
+                    bool shouldZoomToBuildingsView = true;
+
                     m_messageBus.Publish(SearchMenuPerformedSearchMessage(m_searchMenuView.HasTagSearch() ? m_lastPerformedQuery.Query() : m_searchMenuView.GetEditText(),
                                                                           m_searchMenuView.HasTagSearch(),
-                                                                          m_searchMenuView.HasTagSearch() ? m_lastPerformedQuery.ShouldTryInteriorSearch() : false));
+                                                                          m_searchMenuView.HasTagSearch() ? m_lastPerformedQuery.ShouldTryInteriorSearch() : false,
+                                                                          shouldZoomToBuildingsView));
                 }
                 else
                 {

@@ -30,6 +30,13 @@
 	"IsInKioskMode":false,
 	"StartAppInFullscreen":false,
     "UseLabels": true,
+    "BuildingsSearchViewLocation": {
+        "Latitude": 51.519275,
+        "Longitude": -0.086135,
+        "Altitude": 2.154,
+        "DistanceToInterest": 800,
+        "OrientationDegrees": 180.0
+    },
     "Buildings": [
                   
                   {

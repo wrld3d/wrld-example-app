@@ -68,13 +68,15 @@ namespace ExampleApp
                     {
                     }
                     
+                    bool shouldZoomToBuildingsView = true;
+
                     if (m_hasRadiusOverride)
                     {
-                        m_messageBus.Publish(TagSearch::TagSearchSelectedMessage(m_category, m_interiorSearchAllowed, m_radiusOverride));
+                        m_messageBus.Publish(TagSearch::TagSearchSelectedMessage(m_category, m_interiorSearchAllowed, shouldZoomToBuildingsView, m_radiusOverride));
                     }
                     else
                     {
-                        m_messageBus.Publish(TagSearch::TagSearchSelectedMessage(m_category, m_interiorSearchAllowed));
+                        m_messageBus.Publish(TagSearch::TagSearchSelectedMessage(m_category, m_interiorSearchAllowed, shouldZoomToBuildingsView));
                     }
                 }
             }

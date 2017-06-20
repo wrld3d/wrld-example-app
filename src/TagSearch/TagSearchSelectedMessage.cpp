@@ -14,6 +14,20 @@ namespace ExampleApp
             , m_allowInteriorSearch(allowInteriorSearch)
             , m_hasRadius(false)
             , m_radius(0.f)
+            , m_shouldZoomToBuildingsView(false)
+        {
+        }
+
+        TagSearchSelectedMessage::TagSearchSelectedMessage(
+            const std::string& tag,
+            bool allowInteriorSearch,
+            bool shouldZoomToBuildingsView
+        )
+            : m_tag(tag)
+            , m_allowInteriorSearch(allowInteriorSearch)
+            , m_hasRadius(false)
+            , m_radius(0.f)
+            , m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
         {
         }
         
@@ -25,6 +39,20 @@ namespace ExampleApp
         , m_allowInteriorSearch(allowInteriorSearch)
         , m_hasRadius(true)
         , m_radius(radius)
+        , m_shouldZoomToBuildingsView(false)
+        {
+        }
+
+        TagSearchSelectedMessage::TagSearchSelectedMessage(
+            const std::string& tag,
+            bool allowInteriorSearch,
+            bool shouldZoomToBuildingsView,
+            float radius)
+            : m_tag(tag)
+            , m_allowInteriorSearch(allowInteriorSearch)
+            , m_hasRadius(true)
+            , m_radius(radius)
+            , m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
         {
         }
 
@@ -46,6 +74,11 @@ namespace ExampleApp
         const float TagSearchSelectedMessage::Radius() const
         {
             return m_radius;
+        }
+
+        const bool TagSearchSelectedMessage::ShouldZoomToBuildingsView() const
+        {
+            return m_shouldZoomToBuildingsView;
         }
     }
 }

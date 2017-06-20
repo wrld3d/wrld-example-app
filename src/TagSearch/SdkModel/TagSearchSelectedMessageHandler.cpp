@@ -15,11 +15,11 @@ namespace ExampleApp
                 m_metricsService.SetEvent("Category Search", "Category", message.Tag());
                 if (message.HasRadius())
                 {
-                    m_searchQueryPerformer.PerformSearchQuery(message.Tag(), true, message.InteriorSearchAllowed(), message.Radius());
+                    m_searchQueryPerformer.PerformSearchQuery(message.Tag(), true, message.InteriorSearchAllowed(), message.ShouldZoomToBuildingsView(), message.Radius());
                 }
                 else
                 {
-                    m_searchQueryPerformer.PerformSearchQuery(message.Tag(), true, message.InteriorSearchAllowed());
+                    m_searchQueryPerformer.PerformSearchQuery(message.Tag(), true, message.InteriorSearchAllowed(), message.ShouldZoomToBuildingsView());
                 }
             }
 

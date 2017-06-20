@@ -18,6 +18,7 @@ namespace ExampleApp
                                        ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
                                        CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionsController,
                                        Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                       ExampleApp::ApplicationConfig::ApplicationConfiguration& appConfig,
                                        ExampleAppMessaging::TMessageBus& messageBus,
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus)
             {
@@ -31,6 +32,8 @@ namespace ExampleApp
                 m_pSearchQueryPerformer = Eegeo_NEW(SearchQueryPerformer)(exteriorSearchService,
                                                                           *m_pSearchResultRepository,
                                                                           cameraController,
+                                                                          cameraTransitionsController,
+                                                                          appConfig,
                                                                           messageBus);
 
                 m_pSearchRefreshService = Eegeo_NEW(SearchRefreshService)(exteriorSearchService,
