@@ -50,17 +50,15 @@ AppRunner::~AppRunner()
 {
     ASSERT_NATIVE_THREAD
 
-    bool destroyEGL = true;
-    
-    {
-        LockGL contextLock;
-        m_displayService.ReleaseDisplay(destroyEGL);
-    }
-    
-
     if(m_pAppHost != NULL)
     {
         Eegeo_DELETE(m_pAppHost);
+    }
+    
+    bool destroyEGL = true;
+    {
+        LockGL contextLock;
+        m_displayService.ReleaseDisplay(destroyEGL);
     }
 }
 
