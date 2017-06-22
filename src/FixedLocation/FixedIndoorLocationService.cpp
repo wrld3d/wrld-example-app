@@ -3,7 +3,7 @@
 #include "FixedIndoorLocationService.h"
 #include "LatLongAltitude.h"
 #include "EnvironmentFlatteningService.h"
-#include "InteriorHeightHelpers.h"
+#include "InteriorHelpers.h"
 #include "InteriorsModel.h"
 #include "InteriorInteractionModel.h"
 
@@ -43,7 +43,8 @@ namespace Eegeo
             const Eegeo::Resources::Interiors::InteriorsModel* pInteriorsModel = m_interiorInteractionModel.GetInteriorModel();
             if (pInteriorsModel != nullptr)
             {
-                altitude = ExampleApp::Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(*pInteriorsModel, m_floorIndex, m_environmentFlatteningService.GetCurrentScale());
+                altitude = Eegeo::Resources::Interiors::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(
+                        *pInteriorsModel, static_cast<unsigned int>(m_floorIndex), m_environmentFlatteningService.GetCurrentScale());
                 return true;
             }
 

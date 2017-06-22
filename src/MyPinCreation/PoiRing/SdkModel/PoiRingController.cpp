@@ -21,8 +21,8 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorTransitionModel.h"
 
-#include "InteriorHeightHelpers.h"
 #include "ScreenProperties.h"
+#include "InteriorHelpers.h"
 
 namespace ExampleApp
 {
@@ -140,7 +140,7 @@ namespace ExampleApp
 
                             m_myPinCreationModel.SetFloor(selectedFloorIndex);
                             m_myPinCreationModel.SetTerrainHeight(model.GetTangentSpaceBounds().GetMin().y);
-                            float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(model, selectedFloorIndex);
+                            const float floorHeightAboveSeaLevel = Eegeo::Resources::Interiors::GetFloorHeightAboveSeaLevel(model, static_cast<unsigned int>(selectedFloorIndex));
                             const float floorHeightAboveTerrain = floorHeightAboveSeaLevel - m_myPinCreationModel.GetTerrainHeight();
                             m_myPinCreationModel.SetHeightAboveTerrain(floorHeightAboveTerrain);
                         }

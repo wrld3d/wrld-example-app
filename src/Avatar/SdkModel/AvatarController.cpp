@@ -11,7 +11,7 @@
 
 #include "InteriorsFloorModel.h"
 #include "InteriorInteractionModel.h"
-#include "InteriorHeightHelpers.h"
+#include "InteriorHelpers.h"
 
 namespace ExampleApp
 {
@@ -55,11 +55,19 @@ namespace ExampleApp
                 {
                     return;
                 }
-                float heightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(*m_interiorInteractionModel.GetInteriorModel(), m_interiorInteractionModel.GetSelectedFloorIndex(), m_environmentFlatteningService.GetCurrentScale());
+
+                const float heightAboveSeaLevel = Eegeo::Resources::Interiors::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(
+                        *m_interiorInteractionModel.GetInteriorModel(),
+                        static_cast<unsigned int>(m_interiorInteractionModel.GetSelectedFloorIndex()),
+                        m_environmentFlatteningService.GetCurrentScale());
                 
-                if((building.Value() == "swallow_lon_citygatehouse" || building.Value() == "westport_house") && m_interiorInteractionModel.GetSelectedFloorIndex() == floor){ // here check interior and floor for height offset
-                    m_avatarView.SetHeightAboveSeaLevel(heightAboveSeaLevel+0.26); // #workaround to resolve floor height issue. Might need to look some offset factor for better solution
-                }else{
+                if((building.Value() == "swallow_lon_citygatehouse" || building.Value() == "westport_house") && m_interiorInteractionModel.GetSelectedFloorIndex() == floor)
+                {
+                    // HACK / LDC? check interior and floor for height offset
+                    m_avatarView.SetHeightAboveSeaLevel(heightAboveSeaLevel + 0.26f); // #workaround to resolve floor height issue. Might need to look some offset factor for better solution
+                }
+                else
+                {
                     m_avatarView.SetHeightAboveSeaLevel(heightAboveSeaLevel);
                 }
                 

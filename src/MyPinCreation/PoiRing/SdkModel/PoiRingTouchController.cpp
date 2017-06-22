@@ -13,9 +13,9 @@
 #include "Bounds.h"
 #include "InteriorsModel.h"
 #include "EcefTangentBasis.h"
-#include "InteriorHeightHelpers.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorTransitionModel.h"
+#include "InteriorHelpers.h"
 
 namespace ExampleApp
 {
@@ -218,7 +218,7 @@ namespace ExampleApp
                         
                         const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
 
-                        float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*interiorsModel, selectedFloorIndex);
+                        const float floorHeightAboveSeaLevel = Eegeo::Resources::Interiors::GetFloorHeightAboveSeaLevel(*interiorsModel, static_cast<unsigned int>(selectedFloorIndex));
                         
                         const Eegeo::dv3 point = originNormal * (floorHeightAboveSeaLevel + Eegeo::Space::EarthConstants::Radius);
                         

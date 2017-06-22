@@ -170,8 +170,8 @@ namespace ExampleApp
                 Entities::InteriorsEntityPinData* pPinData = Eegeo_NEW(Entities::InteriorsEntityPinData)(pMetadata->floorNumber);
                 Eegeo::Pins::Pin* pPin = Eegeo_NEW(Eegeo::Pins::Pin)(m_lastId, pinLocation, 0.0f, pinIconIndex, pPinData);
                 
-                float bottomOfInterior = m_interiorInteractionModel.GetInteriorModel()->GetTangentSpaceBounds().GetMin().y;
-                float heightAboveGround = (pMetadata->altitude - bottomOfInterior) + Eegeo::Resources::Interiors::Entities::Helpers::GetHeightOffset(pMetadata);
+                const float bottomOfInterior = m_interiorInteractionModel.GetInteriorModel()->GetBaseAltitude();
+                const float heightAboveGround = static_cast<float>(pMetadata->altitude) - bottomOfInterior + Eegeo::Resources::Interiors::Entities::Helpers::GetHeightOffset(pMetadata);
                 
                 pPin->SetTerrainHeight(bottomOfInterior, 14);
                 pPin->SetHeightAboveTerrain(heightAboveGround);

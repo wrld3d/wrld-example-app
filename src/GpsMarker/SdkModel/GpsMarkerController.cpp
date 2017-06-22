@@ -14,7 +14,6 @@
 #include "VisualMapState.h"
 #include "ScaleHelpers.h"
 #include "ScreenProperties.h"
-#include "InteriorHeightHelpers.h"
 #include "EarthConstants.h"
 #include "InteriorsModel.h"
 #include "InteriorInteractionModel.h"

@@ -13,6 +13,7 @@
 #include "ICameraTransitionController.h"
 #include "CollisionMeshResourceRepository.h"
 #include "DoubleTapIndoorInteractionController.h"
+#include "InteriorHelpers.h"
 
 namespace ExampleApp
 {
@@ -109,8 +110,8 @@ namespace ExampleApp
                     const Eegeo::dv3 originNormal = interiorsModel->GetTangentBasis().GetUp();
                     
                     const int selectedFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
-                    
-                    float floorHeightAboveSeaLevel = Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevel(*interiorsModel, selectedFloorIndex);
+
+                    const float floorHeightAboveSeaLevel = Eegeo::Resources::Interiors::GetFloorHeightAboveSeaLevel(*interiorsModel, static_cast<unsigned int>(selectedFloorIndex));
                     
                     const Eegeo::dv3 point = originNormal * (floorHeightAboveSeaLevel + Eegeo::Space::EarthConstants::Radius);
                     

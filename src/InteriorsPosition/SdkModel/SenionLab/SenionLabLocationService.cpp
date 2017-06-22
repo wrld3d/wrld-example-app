@@ -1,9 +1,9 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
 
 #include "SenionLabLocationService.h"
-#include "InteriorHeightHelpers.h"
 #include "EnvironmentFlatteningService.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorHelpers.h"
 
 namespace ExampleApp
 {
@@ -90,9 +90,11 @@ namespace ExampleApp
                         const Eegeo::Resources::Interiors::InteriorsModel* interiorModel = m_interiorInteractionModel.GetInteriorModel();
                         if(interiorModel)
                         {
-                            altitude = ExampleApp::Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(*interiorModel,
-                                                                                                                                             m_floorIndex,
-                                                                                                                                             m_environmentFlatteningService.GetCurrentScale());
+                            altitude = Eegeo::Resources::Interiors::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(
+                                    *interiorModel,
+                                    static_cast<unsigned int>(m_floorIndex),
+                                    m_environmentFlatteningService.GetCurrentScale());
+
                             return true;
                         }
                     

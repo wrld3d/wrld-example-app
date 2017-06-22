@@ -11,7 +11,6 @@
 #include "IntersectionTests.h"
 #include "TerrainModelModule.h"
 #include "EnvironmentRayCaster.h"
-#include "InteriorHeightHelpers.h"
 #include "InteriorTransitionModel.h"
 #include "ICameraTransitionController.h"
 #include "IDoubleTapIndoorInteractionController.h"
