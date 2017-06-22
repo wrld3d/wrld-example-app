@@ -25,6 +25,7 @@
     "WebProxyEnabled": false,
     "WebProxyIpAddress": "",
     "WebProxyPort": 0,
+	"SSLEnabled": true,
     "SenionMapKey": "a6fd0f11-56fe-4fa1-8e42-f582f4e21a63",
     "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
     "UseLabels": true,

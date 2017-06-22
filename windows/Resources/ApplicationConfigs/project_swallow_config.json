@@ -26,6 +26,7 @@
     "WebProxyIpAddress":"",
     "WebProxyPort":0,
     "WebProxyIgnorePattern":"",
+	"SSLEnabled": true,
 	"IsKioskTouchInputEnabled":false,
 	"IsInKioskMode":false,
 	"StartAppInFullscreen":false,

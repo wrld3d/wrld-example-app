@@ -68,6 +68,10 @@ namespace ExampleApp
                 virtual IApplicationConfigurationBuilder& SetWebProxyPort(int webProxyPort) = 0;
 
                 virtual IApplicationConfigurationBuilder& SetWebProxyIgnorePattern(const std::string& webProxyIgnorePattern) = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetSSLEnabled(bool setSSLEnabled) = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetSSLIgnorePattern(const std::string& sslIgnorePattern) = 0;
 
                 virtual IApplicationConfigurationBuilder& SetShouldStartFullscreen(bool startFullscreen) = 0;
 

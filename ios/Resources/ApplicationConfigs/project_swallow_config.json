@@ -25,6 +25,8 @@
     "WebProxyEnabled": false,
     "WebProxyIpAddress": "",
     "WebProxyPort": 0,
+    "SSLEnabled": true,
+    "SSLIgnorePattern": "",
     "UseLabels": true,
     "BuildingsSearchViewLocation": {
         "Latitude": 51.519275,

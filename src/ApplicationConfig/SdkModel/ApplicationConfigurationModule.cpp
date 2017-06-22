@@ -83,6 +83,8 @@ namespace ExampleApp
                         "",
                         0,
                         "",
+                        true,
+                        "",
                         buildingsInfo,
                         restrictedBuildingsInfo,
                         isKioskTouchInputEnabled,

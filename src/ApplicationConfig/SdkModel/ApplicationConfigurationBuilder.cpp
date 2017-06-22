@@ -45,6 +45,8 @@ namespace ExampleApp
             , m_webProxyIpAddress("")
             , m_webProxyPort(0)
             , m_webProxyIgnorePattern("")
+            , m_sslEnabled(true)
+            , m_sslIgnorePattern("")
             , m_isKioskTouchInputEnabled(false)
             , m_isInKioskMode(false)
             , m_shouldStartFullscreen(false)
@@ -219,6 +221,18 @@ namespace ExampleApp
                 m_webProxyIgnorePattern = webProxyIgnorePattern;
                 return *this;
             }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSSLEnabled(bool sslEnabled)
+            {
+                m_sslEnabled = sslEnabled;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSSLIgnorePattern(const std::string& sslIgnorePattern)
+            {
+                m_sslIgnorePattern = sslIgnorePattern;
+                return *this;
+            }
 
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetBuildingInfoArray(const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>&infoBuildingList){
                 m_buildingsInfo = infoBuildingList;
@@ -376,6 +390,8 @@ namespace ExampleApp
                                                 m_webProxyIpAddress,
                                                 m_webProxyPort,
                                                 m_webProxyIgnorePattern,
+                                                m_sslEnabled,
+                                                m_sslIgnorePattern,
                                                 m_buildingsInfo,
                                                 m_restrictedBuildingsInfo,
                                                 m_isKioskTouchInputEnabled,
