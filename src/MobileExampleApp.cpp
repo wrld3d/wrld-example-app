@@ -131,6 +131,7 @@
 #include "ReactorIgnoredReactionModel.h"
 #include "InteriorsEntityIdHighlightController.h"
 #include "IWebProxySettings.h"
+#include "ISSLSettings.h"
 
 #include "RenderingTransformMesh.h"
 #include "RenderingTransformMeshModule.h"
@@ -196,12 +197,17 @@ namespace ExampleApp
             }
         }
         
-        void SetWebProxySettings(Eegeo::Web::IWebProxySettings& webProxySettings, const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
+        void SetWebSettings(Eegeo::Web::IWebProxySettings& webProxySettings, Eegeo::Web::ISSLSettings& sslSettings,const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
         {
             if (applicationConfiguration.WebProxyEnabled())
             {
                 webProxySettings.EnableProxy(applicationConfiguration.WebProxyIpAddress(), applicationConfiguration.WebProxyPort());
                 webProxySettings.AddProxyIgnorePattern(applicationConfiguration.WebProxyIgnorePattern());
+            }
+            if (!applicationConfiguration.SSLEnabled())
+            {
+                sslSettings.DisableSSL();
+                sslSettings.AddSSLIgnorePattern(applicationConfiguration.SSLIgnorePattern());
             }
         }
     }
@@ -300,7 +306,7 @@ namespace ExampleApp
 
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
         
-        SetWebProxySettings(m_platformAbstractions.GetProxySettings(), applicationConfiguration);
+        SetWebSettings(m_platformAbstractions.GetProxySettings(), m_platformAbstractions.GetSSLSettings(), applicationConfiguration);
         
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(applicationConfiguration.EegeoApiKey(),
                                                 m_platformAbstractions,

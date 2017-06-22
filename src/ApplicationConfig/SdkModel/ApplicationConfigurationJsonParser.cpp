@@ -125,6 +125,14 @@ namespace ExampleApp
                     m_builder.SetWebProxyIgnorePattern(document["WebProxyIgnorePattern"].GetString());
                 }
                 
+                Eegeo_ASSERT(document.HasMember("SSLEnabled"), "SSLEnabled config not found");
+                m_builder.SetSSLEnabled(document["SSLEnabled"].GetBool());
+                
+                if (document.HasMember("SSLIgnorePattern"))
+                {
+                    m_builder.SetSSLIgnorePattern(document["SSLIgnorePattern"].GetString());
+                }
+                
                 std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*> restrictedBuildingModelArray;
                 const char* wifiRestrictedBuildingTag = "WifiRestrictedBuildings";
                 

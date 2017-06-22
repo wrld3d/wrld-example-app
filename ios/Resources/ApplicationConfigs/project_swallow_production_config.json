@@ -25,6 +25,8 @@
     "WebProxyEnabled": false,
     "WebProxyIpAddress": "",
     "WebProxyPort": 0,
+    "SSLEnabled": false,
+    "SSLIgnorePattern": "wayfind.bloomberg.com",
     "UseLabels": true,
     "BuildingsSearchViewLocation": {
         "Latitude": 51.519275,

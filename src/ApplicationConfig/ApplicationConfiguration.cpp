@@ -33,6 +33,8 @@ namespace ExampleApp
                                                            const std::string& webProxyIpAddress,
                                                            int webProxyPort,
                                                            const std::string& webProxyIgnorePattern,
+                                                           bool sslEnabled,
+                                                           const std::string& sslIgnorePattern,
                                                            const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& buildingsInfo,
                                                            const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingsInfo,
                                                            const bool isKioskTouchInputEnabled,
@@ -84,6 +86,8 @@ namespace ExampleApp
         , m_webProxyIpAddress(webProxyIpAddress)
         , m_webProxyPort(webProxyPort)
         , m_webProxyIgnorePattern(webProxyIgnorePattern)
+        , m_sslEnabled(sslEnabled)
+        , m_sslIgnorePattern(sslIgnorePattern)
         , m_buildingsInfo(buildingsInfo)
         , m_restrictedBuildingsInfo(restrictedBuildingsInfo)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
@@ -276,6 +280,16 @@ namespace ExampleApp
         std::string ApplicationConfiguration::WebProxyIgnorePattern() const
         {
             return m_webProxyIgnorePattern;
+        }
+        
+        bool ApplicationConfiguration::SSLEnabled() const
+        {
+            return m_sslEnabled;
+        }
+        
+        std::string ApplicationConfiguration::SSLIgnorePattern() const
+        {
+            return m_sslIgnorePattern;
         }
         
         const std::vector<ExampleApp::ApplicationConfig::ApplicationBuildingInfo*>& ApplicationConfiguration::BuildingsInfo() const{

@@ -26,6 +26,8 @@
     "WebProxyIpAddress":"webproxyeu.corp.bloomberg.com",
     "WebProxyPort": 81,
     "WebProxyIgnorePattern":"wayfind.bloomberg.com",
+	"SSLEnabled": false,
+	"SSLIgnorePattern":"wayfind.bloomberg.com",
 	"IsKioskTouchInputEnabled":false,
 	"IsInKioskMode":false,
 	"StartAppInFullscreen":false,
