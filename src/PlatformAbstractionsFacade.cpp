@@ -45,6 +45,11 @@ namespace ExampleApp
         return m_wrappedPlatformAbstractions.GetProxySettings();
     }
     
+    Eegeo::Web::ISSLSettings& PlatformAbstractionsFacade::GetSSLSettings() const
+    {
+        return m_wrappedPlatformAbstractions.GetSSLSettings();
+    }
+    
     Eegeo::Helpers::IHttpCache& PlatformAbstractionsFacade::GetHttpCache() const
     {
         return m_wrappedPlatformAbstractions.GetHttpCache();
