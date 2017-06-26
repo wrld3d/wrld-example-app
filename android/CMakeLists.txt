@@ -113,6 +113,7 @@ include_directories(
     libs/eegeo/platform/Networking/Posix
     libs/eegeo/platform/Networking/Windows
     libs/eegeo/platform/Pins
+    libs/eegeo/platform/Positioning
     libs/eegeo/platform/Rendering
     libs/eegeo/platform/Rendering/AsyncTexturing
     libs/eegeo/platform/Rendering/Filters
