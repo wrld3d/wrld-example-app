@@ -103,13 +103,14 @@ public class BackgroundThreadActivity extends MainActivity
         {
             public void run()
             {
-                NativeJniCalls.resumeNativeCode();
                 m_threadedRunner.start();
 
                 if(m_surfaceHolder != null && m_surfaceHolder.getSurface() != null)
                 {
                     NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
                 }
+                NativeJniCalls.resumeNativeCode();
+
             }
         });
     }
