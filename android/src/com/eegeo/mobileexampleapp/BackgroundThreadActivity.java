@@ -168,7 +168,6 @@ public class BackgroundThreadActivity extends MainActivity
         {
             public void run()
             {
-                NativeJniCalls.resumeNativeCode();
                 if (m_rotationInitialised)
                 {
                     m_threadedRunner.start();
@@ -185,6 +184,8 @@ public class BackgroundThreadActivity extends MainActivity
                         m_deepLinkUrlData = null;
                     }
                 }
+
+                NativeJniCalls.resumeNativeCode();
             }
         });
     }
