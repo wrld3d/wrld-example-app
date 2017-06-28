@@ -99,35 +99,12 @@ public class BackgroundThreadActivity extends MainActivity
     {
         super.onResume();
 
-        runOnNativeThread(new Runnable()
-        {
-            public void run()
-            {
-                m_threadedRunner.start();
-
-                if(m_surfaceHolder != null && m_surfaceHolder.getSurface() != null)
-                {
-                    NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
-                }
-                NativeJniCalls.resumeNativeCode();
-
-            }
-        });
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
-
-        runOnNativeThread(new Runnable()
-        {
-            public void run()
-            {
-                m_threadedRunner.stop();
-                NativeJniCalls.pauseNativeCode();
-            }
-        });
     }
 
     @Override
@@ -188,6 +165,7 @@ public class BackgroundThreadActivity extends MainActivity
             public void run()
             {
                 m_threadedRunner.stop();
+                NativeJniCalls.pauseNativeCode();
             }
         });
     }
@@ -206,6 +184,7 @@ public class BackgroundThreadActivity extends MainActivity
                 {
                     NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
                     m_threadedRunner.start();
+                    NativeJniCalls.resumeNativeCode();
                 }
             }
         });
