@@ -56,7 +56,8 @@ namespace ExampleApp
                                                                    const bool attractModeEnabled,
                                                                    const long long attractModeTimeout,
                                                                    MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                                                   VisualMap::SdkModel::IVisualMapService& visualMapService)
+                                                                   VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                                                   ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService)
         : m_cameraController(cameraController)
         , m_appModeModel(appModeModel)
         , m_worldCameraController(worldCameraController)
@@ -70,6 +71,7 @@ namespace ExampleApp
         , m_worldCameraHandle(m_cameraController.CreateCameraHandleFromController(m_worldCameraController))
         , m_interiorCameraHandle(m_cameraController.CreateCameraHandleFromController(m_interiorCameraController))
         , m_currentState(appModeModel.GetAppMode())
+        , m_restrictedBuildingInformationService(restrictedBuildingInformationService)
         {
         }
 
@@ -126,9 +128,25 @@ namespace ExampleApp
                 m_visualMapService.RestorePreviousMapState();
             }
         }
+        
+        bool GlobalAppModeTransitionRules::CanEnterInterior(const Eegeo::Resources::Interiors::InteriorId& interiorId)
+        {
+            if(!m_restrictedBuildingInformationService.CanAccessBuildingWithCurrentNetwork(interiorId.Value()))
+            {
+                m_interiorSelectionModel.ClearSelection();
+                m_restrictedBuildingInformationService.ShowAlertMessage();
+                return false;
+            }
+            return true;
+        }
 
         void GlobalAppModeTransitionRules::OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId)
         {
+            if (!CanEnterInterior(interiorId))
+            {
+                return;
+            }
+            
             if(m_interiorSelectionModel.IsInteriorSelected())
             {
                 m_appModeModel.SetAppMode(SdkModel::InteriorMode);

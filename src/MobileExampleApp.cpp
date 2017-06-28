@@ -464,7 +464,8 @@ namespace ExampleApp
                                                                                             m_applicationConfiguration.IsAttractModeEnabled(),
                                                                                             m_applicationConfiguration.GetAttractModeTimeoutMs(),
                                                                                             m_pMyPinCreationModule->GetMyPinCreationModel(),
-                                                                                            m_pVisualMapModule->GetVisualMapService());
+                                                                                            m_pVisualMapModule->GetVisualMapService(),
+                                                                                            *m_pRestrictedBuildingInfoService);
         InitialiseAppState(nativeUIFactories);
         
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
@@ -727,8 +728,7 @@ namespace ExampleApp
                                                                                                            interiorsModelModule.GetInteriorMarkerModelRepository(),
                                                                                                            m_pAppCameraModule->GetController(),
                                                                                                            m_pSearchModule->GetSearchRefreshService(),
-                                                                                                           m_messageBus,
-                                                                                                           *m_pRestrictedBuildingInfoService);
+                                                                                                           m_messageBus);
         
         Eegeo::Camera::GlobeCamera::GlobeCameraControllerFactory cameraControllerFactory(m_pWorld->GetTerrainModelModule().GetTerrainHeightProvider(),
                                                                                          mapModule.GetEnvironmentFlatteningService(),

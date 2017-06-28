@@ -27,14 +27,11 @@ namespace ExampleApp
                 void OnSearchResultSectionItemSelectedMessage(const SearchResultSectionItemSelectedMessage& message);
                 void OnTransitioningChangedCallback();
                 
-                ExampleApp::WifiInfo::IRestrictedBuildingService& m_restrictedBuildingInformationService;
-                
             public:
                 SearchResultSectionItemSelectedMessageHandler(
                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService);
+                    ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultSectionItemSelectedMessageHandler();
             };

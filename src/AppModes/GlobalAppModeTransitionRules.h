@@ -18,6 +18,8 @@
 #include "AppInteriorCameraWrapper.h"
 #include "InteriorsExplorerModel.h"
 
+#include "RestrictedBuildingService.h"
+
 namespace ExampleApp
 {
     namespace AppModes
@@ -38,11 +40,13 @@ namespace ExampleApp
             const int m_worldCameraHandle;
             const int m_interiorCameraHandle;
             SdkModel::AppMode m_currentState;
+            ExampleApp::WifiInfo::IRestrictedBuildingService& m_restrictedBuildingInformationService;
 
             void OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId);
             void SetupCameraForNextMode(const SdkModel::AppMode currentState, const SdkModel::AppMode nextState);
             void SetupInteriorCamera();
             void SetupWorldCamera();
+            bool CanEnterInterior(const Eegeo::Resources::Interiors::InteriorId& interiorId);
             
         public:
             GlobalAppModeTransitionRules(AppCamera::SdkModel::IAppCameraController& cameraController,
@@ -55,7 +59,8 @@ namespace ExampleApp
                                          const bool attractModeEnabled,
                                          const long long attractModeTimeout,
                                          MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
-                                         VisualMap::SdkModel::IVisualMapService& visualMapService);
+                                         VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                         ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService);
             ~GlobalAppModeTransitionRules();
 
             void Enter(int previousState);

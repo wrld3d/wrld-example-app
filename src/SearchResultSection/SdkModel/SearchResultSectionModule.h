@@ -41,8 +41,7 @@ namespace ExampleApp
                                           const Eegeo::Resources::Interiors::Markers::InteriorMarkerModelRepository& interiorMarkerRepository,
                                           AppCamera::SdkModel::IAppCameraController& appCameraController,
                                           Search::SdkModel::ISearchRefreshService& searchRefreshService,
-                                          ExampleAppMessaging::TMessageBus& messageBus,
-                                          ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService);
+                                          ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~SearchResultSectionModule();
 

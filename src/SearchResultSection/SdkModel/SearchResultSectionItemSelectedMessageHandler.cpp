@@ -15,17 +15,10 @@ namespace ExampleApp
                 const float newDistanceFromInterest = 1000;
                 if(message.InInterior())
                 {
-                    if(!m_restrictedBuildingInformationService.CanAccessBuildingWithCurrentNetwork(message.InteriorBuildingId().Value()))
-                    {
-                        m_restrictedBuildingInformationService.ShowAlertMessage();
-                    }
-                    else
-                    {
-                        m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(),
-                                                                       InteriorsExplorer::DefaultInteriorTransitionInterestDistance,
-                                                                       message.InteriorBuildingId(),
-                                                                       message.FloorIndex());
-                    }
+                    m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(),
+                                                                   InteriorsExplorer::DefaultInteriorTransitionInterestDistance,
+                                                                   message.InteriorBuildingId(),
+                                                                   message.FloorIndex());
                 }
                 else
                 {
@@ -48,14 +41,12 @@ namespace ExampleApp
             SearchResultSectionItemSelectedMessageHandler::SearchResultSectionItemSelectedMessageHandler(
                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                 Search::SdkModel::ISearchRefreshService& searchRefreshService,
-                ExampleAppMessaging::TMessageBus& messageBus,
-                ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService)
+                ExampleAppMessaging::TMessageBus& messageBus)
                 : m_cameraTransitionController(cameraTransitionController)
                 , m_searchRefreshService(searchRefreshService)
                 , m_messageBus(messageBus)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &SearchResultSectionItemSelectedMessageHandler::OnSearchResultSectionItemSelectedMessage)
                 , m_transitionChangedCallback(this, &SearchResultSectionItemSelectedMessageHandler::OnTransitioningChangedCallback)
-                , m_restrictedBuildingInformationService(restrictedBuildingInformationService)
             {
                 m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                 m_cameraTransitionController.InsertTransitioningChangedCallback(m_transitionChangedCallback);
