@@ -25,6 +25,9 @@ public class PersonSearchResultPoiView implements View.OnClickListener
 
     private View m_closeButton = null;
     private TextView m_nameView = null;
+    private View m_categoriesDivider = null;
+    private ImageView m_categoriesIcon = null;
+    private TextView m_categoriesView = null;
     private TextView m_jobTitleView = null;
     private TextView m_workingGroupView = null;
     private TextView m_locationView = null;
@@ -51,12 +54,15 @@ public class PersonSearchResultPoiView implements View.OnClickListener
 		}
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
         m_nameView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
+        m_categoriesDivider = m_view.findViewById(R.id.search_result_poi_view_categories_divider);
+        m_categoriesIcon = (ImageView) m_view.findViewById(R.id.search_result_poi_view_categories_icon);
+        m_categoriesView = (TextView) m_view.findViewById(R.id.search_result_poi_view_categories);
         m_jobTitleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_job_title);
         m_workingGroupView = (TextView)m_view.findViewById(R.id.search_result_poi_view_working_group);
         m_locationView = (TextView)m_view.findViewById(R.id.search_result_poi_view_location);
         m_deskView = (TextView)m_view.findViewById(R.id.search_result_poi_view_desk);
         m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
-		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_primary_tag_icon);
+		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_image);
         
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
@@ -77,10 +83,30 @@ public class PersonSearchResultPoiView implements View.OnClickListener
     		final String workingGroup, 
     		final String location,
     		final String deskCode,
+            final String[] humanReadableTags,
     		final String imageUrl)
     {
         m_nameView.setText(name);
         m_poiImageUrl = imageUrl;
+
+        m_categoriesDivider.setVisibility(View.GONE);
+        m_categoriesIcon.setVisibility(View.GONE);
+        m_categoriesView.setVisibility(View.GONE);
+
+        if(humanReadableTags.length > 0)
+        {
+            m_categoriesDivider.setVisibility(View.VISIBLE);
+            m_categoriesIcon.setVisibility(View.VISIBLE);
+            m_categoriesView.setVisibility(View.VISIBLE);
+
+            String output = new String();
+            output += humanReadableTags[0];
+            for(int i = 1; i < humanReadableTags.length; ++ i)
+            {
+                output += (", " + humanReadableTags[i]);
+            }
+            m_categoriesView.setText(output);
+        }
         
         if(!jobTitle.equals(""))
         {
@@ -121,8 +147,15 @@ public class PersonSearchResultPoiView implements View.OnClickListener
         {
         	m_deskView.setVisibility(View.GONE);
         }
-        
-        m_poiImage.setVisibility(View.INVISIBLE);
+
+        m_poiImage.setVisibility(View.GONE);
+        m_poiImageProgressBar.setVisibility(View.GONE);
+
+        if(!imageUrl.equals(""))
+        {
+            m_poiImage.setVisibility(View.VISIBLE);
+            m_poiImageProgressBar.setVisibility(View.VISIBLE);
+        }
         
         m_closeButton.setEnabled(true);
     	

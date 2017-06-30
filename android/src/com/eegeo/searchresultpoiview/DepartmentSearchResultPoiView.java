@@ -26,7 +26,12 @@ public class DepartmentSearchResultPoiView implements View.OnClickListener
 
     private View m_closeButton = null;
     private TextView m_titleView = null;
+    private View m_descriptionDivider = null;
+    private ImageView m_descriptionIcon = null;
     private TextView m_descriptionView = null;
+    private View m_categoriesDivider = null;
+    private ImageView m_categoriesIcon = null;
+    private TextView m_categoriesView = null;
     private ImageView m_tagIcon = null;
 	private ImageView m_poiImage = null;
 	private View m_poiImageProgressBar = null;
@@ -49,7 +54,12 @@ public class DepartmentSearchResultPoiView implements View.OnClickListener
 		}
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
+        m_descriptionDivider = m_view.findViewById(R.id.search_result_poi_view_description_divider);
+        m_descriptionIcon = (ImageView) m_view.findViewById(R.id.search_result_poi_view_description_icon);
         m_descriptionView = (TextView)m_view.findViewById(R.id.search_result_poi_view_description);
+        m_categoriesDivider = m_view.findViewById(R.id.search_result_poi_view_categories_divider);
+        m_categoriesIcon = (ImageView) m_view.findViewById(R.id.search_result_poi_view_categories_icon);
+        m_categoriesView = (TextView) m_view.findViewById(R.id.search_result_poi_view_categories);
         m_tagIcon = (ImageView)m_view.findViewById(R.id.search_result_poi_view_tag_icon);
         m_poiImageProgressBar = m_view.findViewById(R.id.search_result_poi_view_image_progress);
 		m_poiImage = (ImageView)m_view.findViewById(R.id.search_result_poi_view_image);
@@ -72,12 +82,43 @@ public class DepartmentSearchResultPoiView implements View.OnClickListener
     		final String subtitle,
     		final String description,
     		final String primaryTag,
+            final String[] humanReadableTags,
     		final String imageUrl)
     {
     	m_poiImageUrl = imageUrl;
     	
         m_titleView.setText(title);
         m_descriptionView.setText(description + subtitle);
+
+        m_descriptionDivider.setVisibility(View.GONE);
+        m_descriptionIcon.setVisibility(View.GONE);
+        m_descriptionView.setVisibility(View.GONE);
+
+        if(!description.equals("") || !subtitle.equals(""))
+        {
+            m_descriptionDivider.setVisibility(View.VISIBLE);
+            m_descriptionIcon.setVisibility(View.VISIBLE);
+            m_descriptionView.setVisibility(View.VISIBLE);
+        }
+
+        m_categoriesDivider.setVisibility(View.GONE);
+        m_categoriesIcon.setVisibility(View.GONE);
+        m_categoriesView.setVisibility(View.GONE);
+
+        if(humanReadableTags.length > 0)
+        {
+            m_categoriesDivider.setVisibility(View.VISIBLE);
+            m_categoriesIcon.setVisibility(View.VISIBLE);
+            m_categoriesView.setVisibility(View.VISIBLE);
+
+            String output = new String();
+            output += humanReadableTags[0];
+            for(int i = 1; i < humanReadableTags.length; ++ i)
+            {
+                output += (", " + humanReadableTags[i]);
+            }
+            m_categoriesView.setText(output);
+        }
 
         m_poiImage.setVisibility(View.GONE);
         m_poiImageProgressBar.setVisibility(View.GONE);
