@@ -53,8 +53,17 @@ namespace ExampleApp
                         for(std::vector<std::string>::const_iterator it = tags.begin(); it != tags.end(); ++it)
                         {
                             const std::string& tag = *it;
+                            const std::string& readableTagName = tagNameMapper.GetNameForTag(tag);
                             
-                            readableTags.push_back(tagNameMapper.GetNameForTag(tag));
+                            if(readableTagName != tagNameMapper.GetUnknownTagName())
+                            {
+                                readableTags.push_back(readableTagName);
+                            }
+                        }
+                        
+                        if(readableTags.size() == 0)
+                        {
+                            readableTags.push_back(tagNameMapper.GetUnknownTagName());
                         }
                         
                         return readableTags;
@@ -166,8 +175,7 @@ namespace ExampleApp
                         }
                         
                         std::vector<std::string> tagSet = SplitIntoTags(tags, ' ');
-                        std::vector<std::string> readableTags = GetNamesForTags(tagSet, tagNameMapper);
-
+                        
                         rapidjson::Document userDataDocument;
                         if (!userDataDocument.Parse<0>(userData.c_str()).HasParseError())
                         {
@@ -177,6 +185,7 @@ namespace ExampleApp
                             }
                         }
 
+                        std::vector<std::string> readableTags = GetNamesForTags(tagSet, tagNameMapper);
                         const Search::SdkModel::TagIconKey& tagIconKey = tagIconMapper.GetIconKeyForTags(tagSet);
                         
                         ExampleApp::Search::SdkModel::SearchResultModel resultModel = ExampleApp::Search::SdkModel::SearchResultModel(ExampleApp::Search::SdkModel::SearchResultModel::CurrentVersion,

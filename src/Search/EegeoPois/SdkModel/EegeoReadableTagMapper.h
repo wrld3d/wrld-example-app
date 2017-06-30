@@ -22,6 +22,8 @@ namespace ExampleApp
                     
                     const std::string& GetNameForTag(const std::string& tag) const;
                     
+                    const std::string& GetUnknownTagName() const;
+                    
                 private:
                     std::map<std::string, const std::string> m_tagsToReadableNamesMap;
                     std::string m_unknownTagName;

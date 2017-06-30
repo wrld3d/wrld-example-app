@@ -33,6 +33,11 @@ namespace ExampleApp
                     }
                     return m_unknownTagName;
                 }
+                
+                const std::string& EegeoReadableTagMapper::GetUnknownTagName() const
+                {
+                    return m_unknownTagName;
+                }
             }
         }
     }
