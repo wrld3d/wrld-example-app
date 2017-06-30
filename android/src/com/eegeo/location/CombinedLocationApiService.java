@@ -19,14 +19,14 @@ public class CombinedLocationApiService
 {
 
     private Activity m_activity;
-    protected static final String TAG = "CombinedLocationApiService";
+    private static final String TAG = "CombinedLocationApiService";
 
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000 * 60;
-    public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000 * 60;
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
     
-    protected GoogleApiClient m_googleApiClient;
-    protected LocationRequest m_locationRequest;
-    protected Location m_currentLocation;
+    private GoogleApiClient m_googleApiClient;
+    private LocationRequest m_locationRequest;
+    private Location m_currentLocation;
     private FusedLocationUpdateListener m_fusedLocationUpdateListener;
 
     public CombinedLocationApiService(Activity activity, FusedLocationUpdateListener fusedLocationUpdateListener)
@@ -71,15 +71,22 @@ public class CombinedLocationApiService
 
     private void startLocationUpdates()
     {
+        if(m_googleApiClient == null)
+        {
+            buildGoogleApiClient();
+        }
+
         LocationServices.FusedLocationApi.requestLocationUpdates(m_googleApiClient, m_locationRequest, this);
     }
 
     protected void stopLocationUpdates()
     {
-        if(m_googleApiClient != null && m_googleApiClient.isConnected())
+        if(m_googleApiClient != null)
         {
             LocationServices.FusedLocationApi.removeLocationUpdates(m_googleApiClient, this);
-            m_googleApiClient.disconnect();
+            if(m_googleApiClient.isConnected()) {
+                m_googleApiClient.disconnect();
+            }
             m_googleApiClient = null;
             m_locationRequest = null;
             m_currentLocation = null;
