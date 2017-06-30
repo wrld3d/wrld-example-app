@@ -39,15 +39,6 @@
         self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self addSubview: self.pControlContainer];
         
-        self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self.pControlContainer addSubview: self.pCloseButtonContainer];
-        
-        self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
-        [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
-        [self.pCloseButtonContainer addSubview: self.pCloseButton];
-        
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pContentContainer];
@@ -56,15 +47,16 @@
         self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pContentContainer addSubview: self.pLabelsContainer];
         
-        self.pDescriptionHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pDescriptionHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pLabelsContainer addSubview: self.pDescriptionHeaderContainer];
-        
-        self.pDescriptionHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
-        [self.pDescriptionHeaderContainer addSubview: self.pDescriptionHeaderLabel];
+        self.pDescriptionIconContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDescriptionIconContainer.image = [UIImage imageNamed:@"detail_icon_description"];
+        [self.pLabelsContainer addSubview: self.pDescriptionIconContainer];
         
         self.pDescriptionContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pLabelsContainer addSubview: self.pDescriptionContent];
+        
+        self.pDescriptionDivider = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDescriptionDivider.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pLabelsContainer addSubview:self.pDescriptionDivider];
         
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
@@ -75,9 +67,13 @@
         [self.pHeadlineContainer addSubview: self.pCategoryIconContainer];
         
         self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
-        self.pTitleLabel.numberOfLines = 2;
-        self.pTitleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
+        
+        self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"exit_blue_x_button" :@"exit_dark_blue_x_button"];
+        [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self.pHeadlineContainer addSubview: self.pCloseButton];
         
         self.pPreviewImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pPreviewImage.contentMode = UIViewContentModeScaleAspectFill;
@@ -90,15 +86,20 @@
         
         self.pPlaceholderImage = [UIImage imageNamed: @"poi_placeholder.png"];
         
-        self.pCategoriesHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCategoriesHeaderContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self.pLabelsContainer addSubview: self.pCategoriesHeaderContainer];
+        self.pImageDivider = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pImageDivider.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pLabelsContainer addSubview:self.pImageDivider];
         
-        self.pCategoriesHeaderLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextHeaderColor :ExampleApp::Helpers::ColorPalette::UiBorderColor];
-        [self.pCategoriesHeaderContainer addSubview: self.pCategoriesHeaderLabel];
+        self.pCategoriesIconContainer = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pCategoriesIconContainer.image = [UIImage imageNamed:@"poi_tag"];
+        [self.pLabelsContainer addSubview: self.pCategoriesIconContainer];
         
         self.pCategoriesContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
         [self.pLabelsContainer addSubview: self.pCategoriesContent];
+        
+        self.pCategoriesDivider = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pCategoriesDivider.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pLabelsContainer addSubview:self.pCategoriesDivider];
         
         
         [self setTouchExclusivity: self];
@@ -114,23 +115,20 @@
     [self.pCloseButton removeFromSuperview];
     [self.pCloseButton release];
     
-    [self.pCloseButtonContainer removeFromSuperview];
-    [self.pCloseButtonContainer release];
-    
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
     
     [self.pHeadlineContainer removeFromSuperview];
     [self.pHeadlineContainer release];
     
+    [self.pDescriptionIconContainer removeFromSuperview];
+    [self.pDescriptionIconContainer release];
+    
     [self.pDescriptionContent removeFromSuperview];
     [self.pDescriptionContent release];
     
-    [self.pDescriptionHeaderLabel removeFromSuperview];
-    [self.pDescriptionHeaderLabel release];
-    
-    [self.pDescriptionHeaderContainer removeFromSuperview];
-    [self.pDescriptionHeaderContainer release];
+    [self.pDescriptionDivider removeFromSuperview];
+    [self.pDescriptionDivider release];
     
     [self.pLabelsContainer removeFromSuperview];
     [self.pLabelsContainer release];
@@ -144,14 +142,14 @@
     [self.pTitleLabel removeFromSuperview];
     [self.pTitleLabel release];
     
-    [self.pCategoriesHeaderContainer removeFromSuperview];
-    [self.pCategoriesHeaderContainer release];
-    
-    [self.pCategoriesHeaderLabel removeFromSuperview];
-    [self.pCategoriesHeaderLabel release];
-    
     [self.pCategoriesContent removeFromSuperview];
     [self.pCategoriesContent release];
+    
+    [self.pCategoriesIconContainer removeFromSuperview];
+    [self.pCategoriesIconContainer release];
+    
+    [self.pCategoriesDivider removeFromSuperview];
+    [self.pCategoriesDivider release];
     
     [self.pPlaceholderImage release];
     
@@ -160,6 +158,9 @@
     
     [self.pPreviewImageSpinner removeFromSuperview];
     [self.pPreviewImageSpinner release];
+    
+    [self.pImageDivider removeFromSuperview];
+    [self.pImageDivider release];
     
     [m_pController release];
     [self removeFromSuperview];
@@ -175,6 +176,7 @@
     const float mainWindowHeight = boundsHeight * boundsOccupyMultiplierHeight;
     const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
+    const float sideMargin = 15.0f;
     
     self.frame = CGRectMake(mainWindowX,
                             mainWindowY,
@@ -187,40 +189,36 @@
                                               mainWindowHeight);
     
     const float headlineHeight = 60.f;
-    const float closeButtonSectionHeight = 64.f;
-    const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
-    const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + headlineHeight);
+    const float closeButtonSectionHeight = 36.f;
+    const float contentSectionHeight = mainWindowHeight - headlineHeight;
+    const float contentSectionWidth = mainWindowWidth - (2 * sideMargin);
     
     self.pHeadlineContainer.frame = CGRectMake(0.f,
                                                0.f,
                                                mainWindowWidth,
                                                headlineHeight);
     
-    self.pContentContainer.frame = CGRectMake(0.f,
+    self.pContentContainer.frame = CGRectMake(sideMargin,
                                               headlineHeight,
-                                              mainWindowWidth,
+                                              contentSectionWidth,
                                               contentSectionHeight);
     
     const float labelsSectionOffsetX = 0.f;
-    m_labelsSectionWidth = mainWindowWidth - (2.f * labelsSectionOffsetX);
+    m_labelsSectionWidth = contentSectionWidth - (2.f * labelsSectionOffsetX);
     
     self.pLabelsContainer.frame = CGRectMake(labelsSectionOffsetX,
                                              0.f,
                                              m_labelsSectionWidth,
                                              contentSectionHeight);
     
-    
-    self.pCloseButtonContainer.frame = CGRectMake(0.f,
-                                                  closeButtonSectionOffsetY,
-                                                  mainWindowWidth,
-                                                  closeButtonSectionHeight);
-    
-    self.pCloseButton.frame = CGRectMake(mainWindowWidth - closeButtonSectionHeight,
-                                         0.f,
+    const float closeButtonMarginTop = 12.0f;
+    self.pCloseButton.frame = CGRectMake(mainWindowWidth - closeButtonSectionHeight - sideMargin,
+                                         closeButtonMarginTop,
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
 
-    self.pCategoryIconContainer.frame = CGRectMake(0.f, 0.f, headlineHeight, headlineHeight);
+    const float categoryIconContainerLeftMargin = 5.0f;
+    self.pCategoryIconContainer.frame = CGRectMake(categoryIconContainerLeftMargin, 0.f, headlineHeight, headlineHeight);
     
     const float titlePadding = 10.0f;
     
@@ -228,45 +226,103 @@
     
     self.pTitleLabel.frame = CGRectMake(headlineHeight + titlePadding,
                                         0,
-                                        mainWindowWidth - (headlineHeight + titlePadding),
+                                        mainWindowWidth - (headlineHeight + titlePadding) - closeButtonSectionHeight - sideMargin,
                                         titleHeight);
     self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
     
-    m_imageWidth = mainWindowWidth;
-    m_imageHeight = mainWindowWidth;
+    m_imageWidth = contentSectionWidth;
+    m_imageHeight = contentSectionWidth;
     
 }
 
 - (void) performDynamicContentLayout
 {
-    const float headerLabelHeight = 20.f;
     const float labelYSpacing = 8.f;
     const float headerTextPadding = 3.0f;
+    const float dividerHeight = 1.0f;
+    const float detailsImageSize = 18.f;
+    const float detailsImageToTextMargin = 6.f;
     
     float currentLabelY = 8.f;
     if(!m_facilityModel.GetImageUrl().empty())
     {
         currentLabelY = 0.f;
+        const CGFloat imagePadding = 10.0f;
+        
+        self.pImageDivider.frame = CGRectMake(0,
+                                              currentLabelY,
+                                              m_labelsSectionWidth,
+                                              dividerHeight);
+        self.pImageDivider.hidden = false;
+        
+        currentLabelY += dividerHeight + imagePadding;
         
         self.pPreviewImage.frame = CGRectMake(0, currentLabelY, m_imageWidth, m_imageHeight);
         [self.pPreviewImage setClipsToBounds:YES];
         self.pPreviewImageSpinner.center = [self.pPreviewImage convertPoint:self.pPreviewImage.center fromView:self.pPreviewImage.superview];
-        const CGFloat imageBottomPadding = 8.0;
-        currentLabelY += (m_imageHeight + imageBottomPadding);
+        currentLabelY += (m_imageHeight + imagePadding);
         self.pPreviewImage.hidden = false;
+    }
+    
+    if(m_model.GetHumanReadableTags().size() > 0)
+    {
+        self.pCategoriesDivider.frame = CGRectMake(0,
+                                                   currentLabelY,
+                                                   m_labelsSectionWidth,
+                                                   dividerHeight);
+        self.pCategoriesDivider.hidden = false;
+        
+        currentLabelY += labelYSpacing + dividerHeight;
+        
+        self.pCategoriesIconContainer.frame = CGRectMake(headerTextPadding,
+                                                         currentLabelY,
+                                                         detailsImageSize,
+                                                         detailsImageSize);
+        self.pCategoriesIconContainer.hidden = false;
+        
+        self.pCategoriesContent.frame = CGRectMake(headerTextPadding + detailsImageSize + detailsImageToTextMargin,
+                                                   currentLabelY,
+                                                   m_labelsSectionWidth - (2 * headerTextPadding) - (detailsImageSize + detailsImageToTextMargin),
+                                                   32.f);
+        
+        std::vector<std::string> tagVector = m_model.GetHumanReadableTags();
+        std::string tags = "";
+        for(int i = 0; i < tagVector.size(); ++i)
+        {
+            tags += tagVector[i];
+        }
+        self.pCategoriesContent.text = [NSString stringWithUTF8String:tags.c_str()];
+        
+        self.pCategoriesContent.numberOfLines = 0;
+        self.pCategoriesContent.adjustsFontSizeToFitWidth = NO;
+        self.pCategoriesContent.lineBreakMode = NSLineBreakByWordWrapping;
+        
+        self.pCategoriesContent.hidden = false;
+        [self.pCategoriesContent sizeToFit];
+        
+        currentLabelY += labelYSpacing + self.pCategoriesContent.frame.size.height;
     }
     
     if(!m_facilityModel.GetDescription().empty())
     {
-        self.pDescriptionHeaderContainer.frame = CGRectMake(0.f, currentLabelY, m_labelsSectionWidth, headerLabelHeight + 2 * headerTextPadding);
-        self.pDescriptionHeaderContainer.hidden = false;
+        self.pDescriptionDivider.frame = CGRectMake(0,
+                                                    currentLabelY,
+                                                    m_labelsSectionWidth,
+                                                    dividerHeight);
+        self.pDescriptionDivider.hidden = false;
         
-        self.pDescriptionHeaderLabel.frame = CGRectMake(headerTextPadding, headerTextPadding, m_labelsSectionWidth - headerTextPadding, headerLabelHeight);
-        self.pDescriptionHeaderLabel.text = @"Description";
-        self.pDescriptionHeaderLabel.hidden = false;
-        currentLabelY += labelYSpacing + self.pDescriptionHeaderContainer.frame.size.height;
+        currentLabelY += labelYSpacing + dividerHeight;
         
-        self.pDescriptionContent.frame = CGRectMake(headerTextPadding, currentLabelY, m_labelsSectionWidth - headerTextPadding, 32.f);
+        self.pDescriptionIconContainer.frame = CGRectMake(headerTextPadding,
+                                                          currentLabelY,
+                                                          detailsImageSize,
+                                                          detailsImageSize);
+        self.pDescriptionIconContainer.hidden = false;
+        
+        self.pDescriptionContent.frame = CGRectMake(headerTextPadding + detailsImageSize + detailsImageToTextMargin,
+                                                    currentLabelY,
+                                                    m_labelsSectionWidth - (2 * headerTextPadding) - (detailsImageSize + detailsImageToTextMargin),
+                                                    32.f);
         self.pDescriptionContent.text = [NSString stringWithUTF8String:m_facilityModel.GetDescription().c_str()];
         
         self.pDescriptionContent.numberOfLines = 0;
@@ -295,11 +351,13 @@
     std::string iconKey = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetIconKey());
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategoryIconContainer, iconKey, ExampleApp::Helpers::ImageHelpers::Centre);
     
+    self.pImageDivider.hidden = true;
     self.pPreviewImage.hidden = true;
-    self.pCategoriesHeaderContainer.hidden = true;
+    self.pCategoriesDivider.hidden = true;
+    self.pCategoriesIconContainer.hidden = true;
     self.pCategoriesContent.hidden = true;
-    self.pDescriptionHeaderContainer.hidden = true;
-    self.pDescriptionHeaderLabel.hidden = true;
+    self.pDescriptionDivider.hidden = true;
+    self.pDescriptionIconContainer.hidden = true;
     self.pDescriptionContent.hidden = true;
     
     [self performDynamicContentLayout];
