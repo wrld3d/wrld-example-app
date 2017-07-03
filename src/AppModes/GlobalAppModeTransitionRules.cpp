@@ -144,6 +144,7 @@ namespace ExampleApp
         {
             if (!CanEnterInterior(interiorId))
             {
+                m_interiorsExplorerModel.Exit();
                 return;
             }
             
