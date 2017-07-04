@@ -13,10 +13,6 @@ public class ReversibleAnimatorSet
 	private AnimatorSet m_animatorSet = null;
 	private Builder m_animatorSetBuilder = null;
 	private boolean m_isAnimating = false;
-
-//	public boolean isAnimating() {
-//		return m_isAnimating;
-//	}
 	
 	public ReversibleAnimatorSet()
 	{
