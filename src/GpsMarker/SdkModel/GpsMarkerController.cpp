@@ -99,8 +99,7 @@ namespace ExampleApp
                 m_model.UpdateHeading(dt);
                 Eegeo::dv3 currentLocationEcef = m_model.GetCurrentLocationEcef();
 
-                bool isVisible = false;
-                isVisible = IsMarkerVisible(currentLocationEcef);
+                bool isVisible = IsMarkerVisible(currentLocationEcef);
 
                 m_view.SetVisible(isVisible);
                 m_anchorView.SetVisible(isVisible);
@@ -229,7 +228,7 @@ namespace ExampleApp
 
             const bool GpsMarkerController::IsMarkerVisible(Eegeo::dv3& currentLocationEcef)
             {
-                bool isVisible;
+                bool isVisible = false;
                 if(currentLocationEcef.LengthSq() != 0 && m_visibilityCount == 1 && m_model.IsAuthorized())
                 {
                     if(m_model.IsLocationIndoors())
