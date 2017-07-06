@@ -171,7 +171,7 @@
     <Thickness x:Key="POIViewScrollUpButtonMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     
     <!-- Swallow POI View -->
-	<ImageSource x:Key="SwallowPOIViewCloseButtonOffImage">/Assets/button_close_off.png</ImageSource>
+    <ImageSource x:Key="SwallowPOIViewCloseButtonOffImage">/Assets/exit_blue_x_button.png</ImageSource>
     <ImageSource x:Key="SwallowPOIViewCloseButtonOnImage">/Assets/button_close_on.png</ImageSource>
 
     <System:Double x:Key="SwallowPOIViewContainerWidth">480</System:Double>
