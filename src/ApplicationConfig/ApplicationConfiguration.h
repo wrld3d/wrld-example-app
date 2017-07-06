@@ -65,6 +65,9 @@ namespace ExampleApp
             
             std::string m_hockeyAppId;
 
+            bool m_hasMapScene;
+            std::string m_mapSceneId;
+
         public:
             
             ApplicationConfiguration(
@@ -107,7 +110,9 @@ namespace ExampleApp
                 const std::string& optionsAdminPassword,
                 const long long& surveyRequirementTimeSec,
                 const std::string& timerSurveyUrl,
-                const std::string& hockeyAppId
+                const std::string& hockeyAppId,
+                bool hasMapScene,
+                const std::string& mapSceneId
             );
             
             std::string Name() const;
@@ -187,6 +192,9 @@ namespace ExampleApp
             const std::string TimerSurveyUrl() const;
             
             const std::string HockeyAppId() const;
+
+            bool HasMapScene() const;
+            const std::string MapSceneId() const;
         };
     }
 }

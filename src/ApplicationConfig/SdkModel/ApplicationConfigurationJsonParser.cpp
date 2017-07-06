@@ -65,6 +65,7 @@ namespace ExampleApp
                 const std::string SurveyTimeRequirementSec = "survey_time_requirement_sec";
                 const std::string TimerSurveyUrl = "timer_survey_url";
                 const std::string HockeyAppId = "hockey_app_id";
+                const std::string MapSceneId = "map_scene_id";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -271,6 +272,9 @@ namespace ExampleApp
                 
                 const std::string hockeyAppId = ParseStringOrDefault(document, HockeyAppId, m_defaultConfig.HockeyAppId());
 
+                const std::string mapSceneId = ParseStringOrDefault(document, MapSceneId, m_defaultConfig.MapSceneId());
+                const bool hasMapScene = !(mapSceneId == "");
+
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -311,7 +315,9 @@ namespace ExampleApp
                     optionsAdminPassword,
                     surveyTimeRequirementSec,
                     timerSurveyUrl,
-                    hockeyAppId
+                    hockeyAppId,
+                    hasMapScene,
+                    mapSceneId
                 );
             }
             

@@ -102,7 +102,9 @@ namespace ExampleApp
                         emptyOptionsAdminPassword,
                         surveyTimeRequirementSec,
                         timerSurveyUrl,
-                        hockeyAppId);
+                        hockeyAppId,
+                        false,
+                        "");
                 }
             }
             

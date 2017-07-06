@@ -23,6 +23,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            // TODO: This needs factoring out to a MapScene service in C++ SDK
             class DeepLinkConfigHandler: public IDeepLinkHandler, private Eegeo::NonCopyable
             {
             public:

@@ -441,6 +441,17 @@ namespace ExampleApp
             m_pAboutPageModule->GetAboutPageViewModel(),
             *m_pNavigationService,
             m_pWorld->GetApiTokenService());
+
+        if (applicationConfiguration.HasMapScene())
+        {
+            // TODO: This is a bit smelly & needs refactoring because the MapScene responsibility is tightly coupled
+            // to the DeepLink domain. Building up a fake deep link for now....
+            const std::string mapScenePath = "/" + applicationConfiguration.MapSceneId();
+            AppInterface::UrlData data;
+            data.host = "mapscene";
+            data.path = mapScenePath.c_str();
+            m_pDeepLinkModule->GetDeepLinkController().HandleDeepLinkOpen(data);
+        }
     }
     
     MobileExampleApp::~MobileExampleApp()
