@@ -21,6 +21,9 @@
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
     
     float m_labelsSectionWidth;
+    
+    float m_imageWidth;
+    float m_imageHeight;
 }
 
 - (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;
@@ -39,20 +42,25 @@
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
 
-@property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;
-@property (nonatomic, retain) UIView* pContentSeparator;
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
+@property (nonatomic, retain) UIView* pCategoryIconContainer;
 @property (nonatomic, retain) UILabel* pJobTitleLabel;
 @property (nonatomic, retain) UILabel* pWorkingGroupLabel;
 @property (nonatomic, retain) UILabel* pOfficeLocationLabel;
 @property (nonatomic, retain) UILabel* pDeskCodeLabel;
+@property (nonatomic, retain) UIImageView* pDescriptionIconContainer;
+@property (nonatomic, retain) UIView* pDescriptionDivider;
+@property (nonatomic, retain) UILabel* pCategoriesContent;
+@property (nonatomic, retain) UIView* pCategoriesDivider;
+@property (nonatomic, retain) UIImageView* pCategoriesIconContainer;
 @property (nonatomic, retain) UIImageView* pProfileImageContainer;
 @property (nonatomic, retain) UIImage* pPlaceholderImage;
 @property (nonatomic, retain) UIActivityIndicatorView* pProfileImageActivityIndicator;
+@property (nonatomic, retain) UIView* pImageDivider;
 @property (nonatomic, retain) UILabel* pNameLabel;
 
 @end

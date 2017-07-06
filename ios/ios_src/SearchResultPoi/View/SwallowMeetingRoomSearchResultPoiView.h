@@ -46,7 +46,6 @@
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
 
-@property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;
@@ -55,8 +54,7 @@
 @property (nonatomic, retain) UIView* pCategoryIconContainer;
 @property (nonatomic, retain) UILabel* pTitleLabel;
 
-@property (nonatomic, retain) UIView* pAvailableHeaderContainer;
-@property (nonatomic, retain) UILabel* pAvailableHeaderLabel;
+@property (nonatomic, retain) UIView* pAvailableDivider;
 @property (nonatomic, retain) UIButton* pAvailableButton;
 @property (nonatomic, retain) UIButton* pAvailableSoonButton;
 @property (nonatomic, retain) UIButton* pOccupiedButton;
@@ -68,4 +66,5 @@
 @property (nonatomic, retain) UIImageView* pPreviewImage;
 @property (nonatomic, retain) UIImage* pPlaceholderImage;
 @property (nonatomic, retain) UIActivityIndicatorView* pPreviewImageSpinner;
+@property (nonatomic, retain) UIView* pImageDivider;
 @end

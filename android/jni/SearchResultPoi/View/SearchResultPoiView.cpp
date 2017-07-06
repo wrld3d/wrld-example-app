@@ -340,6 +340,8 @@ namespace ExampleApp
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
+                jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
+
 				jstring nameStr = env->NewStringUTF(personModel.GetName().c_str());
 				jstring jobTitleStr = env->NewStringUTF(personModel.GetJobTitle().c_str());
 				jstring workingGroupStr = env->NewStringUTF(personModel.GetWorkingGroup().c_str());
@@ -347,7 +349,7 @@ namespace ExampleApp
 				jstring deskStr = env->NewStringUTF(personModel.GetDeskCode().c_str());
 				jstring imageUrlStr = env->NewStringUTF(personModel.GetImageFilename().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
@@ -356,6 +358,7 @@ namespace ExampleApp
 						workingGroupStr,
 						locationStr,
 						deskStr,
+                        humanReadableTagsArray,
 						imageUrlStr
 				);
 
@@ -365,6 +368,8 @@ namespace ExampleApp
 				env->DeleteLocalRef(locationStr);
 				env->DeleteLocalRef(deskStr);
 				env->DeleteLocalRef(imageUrlStr);
+
+                env->DeleteLocalRef(humanReadableTagsArray);
             }
 
 			void SearchResultPoiView::CreateAndShowMeetingRoomSearchResultPoiView(const Search::SdkModel::SearchResultModel& model)
@@ -412,13 +417,15 @@ namespace ExampleApp
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
+				jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
+
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
 				jstring subtitleStr = env->NewStringUTF(model.GetSubtitle().c_str());
 				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
 				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
 				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
@@ -426,6 +433,7 @@ namespace ExampleApp
 						subtitleStr,
 						descriptionStr,
 						primaryTagStr,
+						humanReadableTagsArray,
 						imageUrlStr
 				);
 
@@ -433,6 +441,8 @@ namespace ExampleApp
 				env->DeleteLocalRef(descriptionStr);
 				env->DeleteLocalRef(primaryTagStr);
 				env->DeleteLocalRef(imageUrlStr);
+
+                env->DeleteLocalRef(humanReadableTagsArray);
 			}
 
 			void SearchResultPoiView::CreateAndShowFacilitySearchResultPoiView(const Search::SdkModel::SearchResultModel& model)
@@ -446,18 +456,21 @@ namespace ExampleApp
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
+                jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
+
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
 				jstring descriptionStr = env->NewStringUTF(facilityModel.GetDescription().c_str());
 				jstring iconKeyStr = env->NewStringUTF(model.GetIconKey().c_str());
 				jstring imageUrlStr = env->NewStringUTF(facilityModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
 						titleStr,
 						descriptionStr,
 						iconKeyStr,
+                        humanReadableTagsArray,
 						imageUrlStr
 				);
 
@@ -465,6 +478,8 @@ namespace ExampleApp
 				env->DeleteLocalRef(descriptionStr);
 				env->DeleteLocalRef(iconKeyStr);
 				env->DeleteLocalRef(imageUrlStr);
+
+                env->DeleteLocalRef(humanReadableTagsArray);
 			}
 
 			void SearchResultPoiView::CreateAndShowDepartmentSearchResultPoiView(const Search::SdkModel::SearchResultModel& model)
@@ -479,13 +494,15 @@ namespace ExampleApp
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
+				jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
+
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
 				jstring subtitleStr = env->NewStringUTF(model.GetSubtitle().c_str());
 				jstring descriptionStr = env->NewStringUTF(departmentModel.GetDescription().c_str());
 				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
 				jstring imageUrlStr = env->NewStringUTF(departmentModel.GetImageUrl().c_str());
 
-				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)V");
 				env->CallVoidMethod(
 						m_uiView,
 						displayPoiInfoMethod,
@@ -493,6 +510,7 @@ namespace ExampleApp
 						subtitleStr,
 						descriptionStr,
 						primaryTagStr,
+						humanReadableTagsArray,
 						imageUrlStr
 				);
 
@@ -500,6 +518,8 @@ namespace ExampleApp
 				env->DeleteLocalRef(descriptionStr);
 				env->DeleteLocalRef(primaryTagStr);
 				env->DeleteLocalRef(imageUrlStr);
+
+                env->DeleteLocalRef(humanReadableTagsArray);
 			}
 
             jclass SearchResultPoiView::CreateJavaClass(const std::string& viewClass)

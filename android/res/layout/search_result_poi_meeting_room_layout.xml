@@ -4,132 +4,145 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <!-- Title bar -->
-
     <RelativeLayout
-        android:id="@+id/search_result_poi_view_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white" >
+        android:id="@+id/search_result_poi_view_container"
+        android:layout_centerInParent="true"
+        android:background="@color/white">
 
-        <ImageView
-            android:id="@+id/search_result_poi_view_primary_tag_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/eegeo_logo"
-            android:scaleType="center"
-            android:src="@drawable/eegeo_logo" />
+        <!-- Title bar -->
 
-        <TextView
-            android:id="@+id/search_result_poi_view_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_margin="10dp"
-            android:layout_toRightOf="@id/search_result_poi_view_primary_tag_icon"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:textColor="@color/gold"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
-    <!-- Scrolling icontent -->
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/search_result_poi_view_footer"
-        android:layout_below="@+id/search_result_poi_view_header"
-        android:background="@color/white" >
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/search_result_poi_view_header"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:background="@color/white" >
 
-            <!-- Preview Image -->
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" >
-                
-                <com.eegeo.helpers.SquareImageView
-	                android:id="@+id/search_result_poi_view_image"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:background="@color/white"
-	                android:adjustViewBounds="true"
-	                android:src="@drawable/poi_placeholder" />	               
-
-                <ProgressBar
-                    android:id="@+id/search_result_poi_view_image_progress"
-                    style="@android:style/Widget.ProgressBar.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true" />
-            </RelativeLayout>
-
-  
-            <!-- Availability -->
+            <ImageView
+                android:id="@+id/search_result_poi_view_primary_tag_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:contentDescription="@string/eegeo_logo"
+                android:scaleType="center"
+                android:src="@drawable/eegeo_logo" />
 
             <TextView
-                android:id="@+id/search_result_poi_view_availability_header"
+                android:id="@+id/search_result_poi_view_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="18dp"
+                android:layout_toLeftOf="@+id/search_result_poi_view_close_button"
+                android:layout_toRightOf="@id/search_result_poi_view_primary_tag_icon"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:textColor="@color/gold"
+                android:textSize="22sp"/>
+
+            <ImageView
+                android:id="@+id/search_result_poi_view_close_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_pressed_colour_change"
+                android:src="@drawable/button_poi_close_states" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/TextView01"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/search_result_poi_view_header"
+            android:background="@color/gold"/>
+
+        <!-- Scrolling icontent -->
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/TextView01"
+            android:background="@color/white" >
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/gold"
-                android:padding="3dp"
-                android:text="@string/header_availability"
-                android:textColor="@color/white" />
+                android:orientation="vertical" >
 
-            <com.eegeo.helpers.TintableImageView
-                android:id="@+id/search_result_poi_view_button_available"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_occupancy_available"
-                android:clickable="true" />
+                <!-- Preview Image -->
 
-            <com.eegeo.helpers.TintableImageView
-                android:id="@+id/search_result_poi_view_button_available_soon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_occupancy_available_soon"
-                android:clickable="true" />
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
 
-            <com.eegeo.helpers.TintableImageView
-                android:id="@+id/search_result_poi_view_button_occupied"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_occupancy_occupied"
-                android:clickable="true" />
-        </LinearLayout>
-    </ScrollView>
+                    <com.eegeo.helpers.SquareImageView
+                        android:id="@+id/search_result_poi_view_image"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/white"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/poi_placeholder" />
 
-    <!-- Bottom bar with close button -->
+                    <ProgressBar
+                        android:id="@+id/search_result_poi_view_image_progress"
+                        style="@android:style/Widget.ProgressBar.Small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/search_result_poi_view_footer"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/gold" >
 
-        <ImageView
-            android:id="@+id/search_result_poi_view_close_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/button_pressed_colour_change"
-            android:src="@drawable/button_pin_close_states" />
+                <!-- Availability -->
+
+                <View
+                    android:id="@+id/search_result_poi_view_description_divider"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_margin="10dp"
+                    android:background="@color/gold"/>
+
+                <com.eegeo.helpers.TintableImageView
+                    android:id="@+id/search_result_poi_view_button_available"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_occupancy_available"
+                    android:clickable="true" />
+
+                <com.eegeo.helpers.TintableImageView
+                    android:id="@+id/search_result_poi_view_button_available_soon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_occupancy_available_soon"
+                    android:clickable="true" />
+
+                <com.eegeo.helpers.TintableImageView
+                    android:id="@+id/search_result_poi_view_button_occupied"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_occupancy_occupied"
+                    android:clickable="true" />
+            </LinearLayout>
+        </ScrollView>
     </RelativeLayout>
-
 </RelativeLayout>
