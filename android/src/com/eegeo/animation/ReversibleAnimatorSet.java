@@ -46,13 +46,14 @@ public class ReversibleAnimatorSet
 		
 		animatedFraction = animatedFractions/(Math.max(animatedFraction, (float)valueAnimators.size()));
 		
-		if(m_isAnimating) 
+		if(m_isAnimating)
 		{
-			if(animatedFraction == 1.0f) 
+			float epsilon = 0.001f;
+			if(animatedFraction > (1.0f - epsilon))
 			{
 				animatedFraction = 0.99f;
 			}
-			else if(animatedFraction == 0.0f)
+			else if(animatedFraction < (0.0f + epsilon))
 			{
 				animatedFraction = 0.01f;
 			}
