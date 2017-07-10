@@ -751,8 +751,6 @@ static const int IndexOfFirstDropDown = 3;
     
     if(!m_resultsVisible)
     {
-        m_pAnchorAnimationController->Play();
-        
         if([super isAnimating])
         {
             m_titleContainersRequireRefresh = true;
@@ -775,6 +773,15 @@ static const int IndexOfFirstDropDown = 3;
         m_resultsVisible = true;
     }
     
+    if(searchResultCount > 0)
+    {
+        m_pAnchorAnimationController->Play();
+    }
+    else if(self.pAnchorArrowImage.frame.size.height > 0)
+    {
+        m_pAnchorAnimationController->PlayReverse();
+    }
+    
     [self.pInputDelegate setHasResults: searchResultCount>0];
 }
 
@@ -784,7 +791,10 @@ static const int IndexOfFirstDropDown = 3;
     
     if(m_resultsVisible)
     {
-        m_pAnchorAnimationController->PlayReverse();
+        if(self.pAnchorArrowImage.frame.size.height > 0)
+        {
+            m_pAnchorAnimationController->PlayReverse();
+        }
         
         if([super isAnimating])
         {

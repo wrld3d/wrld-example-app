@@ -689,6 +689,15 @@ namespace ExampleAppWPF
 
             m_searchInFlight = false;
             m_hasResults = true;
+
+            if (count == 0)
+            {
+                m_resultListAdapter.CollapseAndClearAll();
+                m_searchArrow.Visibility = Visibility.Hidden;
+                m_resultsSeparator.Visibility = Visibility.Collapsed;
+
+                return;
+            }
         }
 
         public void HideSearchResultCount()

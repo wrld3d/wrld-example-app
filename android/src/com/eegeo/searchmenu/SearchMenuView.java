@@ -362,8 +362,17 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_searchCountText.setText(m_searchCount.toString());
         m_searchMenuAnimationHandler.showSearchResultsView();
         m_closeButtonView.setVisibility(View.VISIBLE);
-        m_anchorArrow.setVisibility(View.VISIBLE);
-        m_searchMenuResultsSeparator.setVisibility(View.VISIBLE);
+
+        if(searchResultCount > 0)
+        {
+            m_anchorArrow.setVisibility(View.VISIBLE);
+            m_searchMenuResultsSeparator.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            m_anchorArrow.setVisibility(View.GONE);
+            m_searchMenuResultsSeparator.setVisibility(View.GONE);
+        }
     }
 
     public void hideSearchResultCount()
