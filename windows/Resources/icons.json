@@ -1,28 +1,48 @@
 {
     "icons": [
         {
-            "name": "accommodation", 
-            "file": "icon1_accommodation.png"
+            "name": "accessible", 
+            "file": "icon1_accessible.png"
+        }, 
+        {
+            "name": "accomodation", 
+            "file": "icon1_accomodation.png"
         }, 
         {
             "name": "airport", 
             "file": "icon1_airport.png"
         }, 
         {
+            "name": "alert", 
+            "file": "icon1_alert.png"
+        }, 
+        {
             "name": "aroundme", 
             "file": "icon1_aroundme.png"
         }, 
         {
-            "name": "art_museums", 
-            "file": "icon1_art_museums.png"
+            "name": "art", 
+            "file": "icon1_art.png"
         }, 
         {
             "name": "atm", 
             "file": "icon1_atm.png"
         }, 
         {
+            "name": "autumn", 
+            "file": "icon1_autumn.png"
+        }, 
+        {
+            "name": "badge_reader", 
+            "file": "icon1_badge_reader.png"
+        }, 
+        {
             "name": "bank", 
             "file": "icon1_bank.png"
+        }, 
+        {
+            "name": "bathroom", 
+            "file": "icon1_bathroom.png"
         }, 
         {
             "name": "bed_breakfast", 
@@ -31,6 +51,22 @@
         {
             "name": "beer", 
             "file": "icon1_beer.png"
+        }, 
+        {
+            "name": "bin", 
+            "file": "icon1_bin.png"
+        }, 
+        {
+            "name": "bin_full", 
+            "file": "icon1_bin_full.png"
+        }, 
+        {
+            "name": "blue_meter", 
+            "file": "icon1_blue_meter.png"
+        }, 
+        {
+            "name": "border_crossing", 
+            "file": "icon1_border_crossing.png"
         }, 
         {
             "name": "burgers", 
@@ -49,180 +85,8 @@
             "file": "icon1_camping.png"
         }, 
         {
-            "name": "entertainment", 
-            "file": "icon1_entertainment.png"
-        }, 
-        {
-            "name": "food_drink", 
-            "file": "icon1_food_drink.png"
-        }, 
-        {
-            "name": "amenities", 
-            "file": "icon1_amenities.png"
-        }, 
-        {
-            "name": "health", 
-            "file": "icon1_health.png"
-        }, 
-        {
-            "name": "my_pins", 
-            "file": "icon1_my_pins.png"
-        }, 
-        {
-            "name": "misc", 
-            "file": "icon1_misc.png"
-        }, 
-        {
-            "name": "shopping", 
-            "file": "icon1_shopping.png"
-        }, 
-        {
-            "name": "sports_leisure", 
-            "file": "icon1_sports_leisure.png"
-        }, 
-        {
-            "name": "tourism", 
-            "file": "icon1_tourism.png"
-        }, 
-        {
-            "name": "transport", 
-            "file": "icon1_transport.png"
-        }, 
-        {
-            "name": "spring", 
-            "file": "icon1_spring.png"
-        }, 
-        {
-            "name": "autumn", 
-            "file": "icon1_autumn.png"
-        }, 
-        {
-            "name": "winter", 
-            "file": "icon1_winter.png"
-        }, 
-        {
-            "name": "summer", 
-            "file": "icon1_summer.png"
-        }, 
-        {
-            "name": "dawn", 
-            "file": "icon1_dawn.png"
-        }, 
-        {
-            "name": "day", 
-            "file": "icon1_day.png"
-        }, 
-        {
-            "name": "dusk", 
-            "file": "icon1_dusk.png"
-        }, 
-        {
-            "name": "night", 
-            "file": "icon1_night.png"
-        }, 
-        {
-            "name": "clear", 
-            "file": "icon1_clear.png"
-        }, 
-        {
-            "name": "sun", 
-            "file": "icon1_sun.png"
-        }, 
-        {
-            "name": "fog", 
-            "file": "icon1_fog.png"
-        }, 
-        {
-            "name": "rain", 
-            "file": "icon1_rain.png"
-        }, 
-        {
-            "name": "snow", 
-            "file": "icon1_snow.png"
-        }, 
-        {
-            "name": "emergency_exit", 
-            "file": "icon1_emergency_exit.png"
-        }, 
-        {
-            "name": "fire", 
-            "file": "icon1_fire.png"
-        }, 
-        {
-            "name": "first_aid", 
-            "file": "icon1_first_aid.png"
-        }, 
-        {
-            "name": "disabled_access", 
-            "file": "icon1_disabled_access.png"
-        }, 
-        {
-            "name": "toilets", 
-            "file": "icon1_toilets.png"
-        }, 
-        {
-            "name": "defibrillator", 
-            "file": "icon1_defibrillator.png"
-        }, 
-        {
-            "name": "elevator", 
-            "file": "icon1_elevator.png"
-        }, 
-        {
-            "name": "stairs", 
-            "file": "icon1_stairs.png"
-        }, 
-        {
-            "name": "escalator", 
-            "file": "icon1_escalator.png"
-        }, 
-        {
-            "name": "printer", 
-            "file": "icon1_printer.png"
-        }, 
-        {
-            "name": "reception", 
-            "file": "icon1_reception.png"
-        }, 
-        {
-            "name": "stationery", 
-            "file": "icon1_stationery.png"
-        }, 
-        {
-            "name": "person", 
-            "file": "icon1_person.png"
-        }, 
-        {
-            "name": "department", 
-            "file": "icon1_department.png"
-        }, 
-        {
-            "name": "meeting_room_available", 
-            "file": "icon1_meeting_room_available.png"
-        }, 
-        {
-            "name": "meeting_room_available_soon", 
-            "file": "icon1_meeting_room_available_soon.png"
-        }, 
-        {
-            "name": "meeting_room", 
-            "file": "icon1_meeting_room.png"
-        }, 
-        {
-            "name": "meeting_room_unavailable", 
-            "file": "icon1_meeting_room_unavailable.png"
-        }, 
-        {
-            "name": "working_group", 
-            "file": "icon1_working_group.png"
-        }, 
-        {
             "name": "casino", 
             "file": "icon1_casino.png"
-        }, 
-        {
-            "name": "historic_monument", 
-            "file": "icon1_historic_monument.png"
         }, 
         {
             "name": "charge_point", 
@@ -233,12 +97,32 @@
             "file": "icon1_childcare.png"
         }, 
         {
+            "name": "chinese_thai", 
+            "file": "icon1_chinese_thai.png"
+        }, 
+        {
             "name": "christianity", 
             "file": "icon1_christianity.png"
         }, 
         {
+            "name": "church", 
+            "file": "icon1_church.png"
+        }, 
+        {
             "name": "cinema", 
             "file": "icon1_cinema.png"
+        }, 
+        {
+            "name": "clear", 
+            "file": "icon1_clear.png"
+        }, 
+        {
+            "name": "click_and_collect", 
+            "file": "icon1_click_and_collect.png"
+        }, 
+        {
+            "name": "co2_detector", 
+            "file": "icon1_co2_detector.png"
         }, 
         {
             "name": "cocktail", 
@@ -249,20 +133,80 @@
             "file": "icon1_coffee.png"
         }, 
         {
+            "name": "collaboration_space", 
+            "file": "icon1_collaboration_space.png"
+        }, 
+        {
             "name": "cycling", 
             "file": "icon1_cycling.png"
+        }, 
+        {
+            "name": "dawn", 
+            "file": "icon1_dawn.png"
+        }, 
+        {
+            "name": "day", 
+            "file": "icon1_day.png"
+        }, 
+        {
+            "name": "defibrillator", 
+            "file": "icon1_defibrillator.png"
         }, 
         {
             "name": "dentist", 
             "file": "icon1_dentist.png"
         }, 
         {
+            "name": "department", 
+            "file": "icon1_department.png"
+        }, 
+        {
+            "name": "digital_sign", 
+            "file": "icon1_digital_sign.png"
+        }, 
+        {
+            "name": "dining_room", 
+            "file": "icon1_dining_room.png"
+        }, 
+        {
             "name": "donuts", 
             "file": "icon1_donuts.png"
         }, 
         {
+            "name": "driveway", 
+            "file": "icon1_driveway.png"
+        }, 
+        {
+            "name": "dusk", 
+            "file": "icon1_dusk.png"
+        }, 
+        {
             "name": "education", 
             "file": "icon1_education.png"
+        }, 
+        {
+            "name": "electrical_meter", 
+            "file": "icon1_electrical_meter.png"
+        }, 
+        {
+            "name": "elevator", 
+            "file": "icon1_elevator.png"
+        }, 
+        {
+            "name": "emergency_exit", 
+            "file": "icon1_emergency_exit.png"
+        }, 
+        {
+            "name": "entertainment", 
+            "file": "icon1_entertainment.png"
+        }, 
+        {
+            "name": "escalator", 
+            "file": "icon1_escalator.png"
+        }, 
+        {
+            "name": "events", 
+            "file": "icon1_events.png"
         }, 
         {
             "name": "facebook", 
@@ -273,12 +217,40 @@
             "file": "icon1_farm.png"
         }, 
         {
+            "name": "fashion", 
+            "file": "icon1_fashion.png"
+        }, 
+        {
+            "name": "fashion_kids", 
+            "file": "icon1_fashion_kids.png"
+        }, 
+        {
+            "name": "fashion_men", 
+            "file": "icon1_fashion_men.png"
+        }, 
+        {
+            "name": "fashion_women", 
+            "file": "icon1_fashion_women.png"
+        }, 
+        {
             "name": "ferry", 
             "file": "icon1_ferry.png"
         }, 
         {
+            "name": "fire", 
+            "file": "icon1_fire.png"
+        }, 
+        {
             "name": "fire_extinguisher", 
             "file": "icon1_fire_extinguisher.png"
+        }, 
+        {
+            "name": "fireplace", 
+            "file": "icon1_fireplace.png"
+        }, 
+        {
+            "name": "first_aid", 
+            "file": "icon1_first_aid.png"
         }, 
         {
             "name": "fishing", 
@@ -289,12 +261,36 @@
             "file": "icon1_florist.png"
         }, 
         {
+            "name": "fog", 
+            "file": "icon1_fog.png"
+        }, 
+        {
+            "name": "food_drink", 
+            "file": "icon1_food_drink.png"
+        }, 
+        {
             "name": "football", 
             "file": "icon1_football.png"
         }, 
         {
-            "name": "petrol_station", 
-            "file": "icon1_petrol_station.png"
+            "name": "forest", 
+            "file": "icon1_forest.png"
+        }, 
+        {
+            "name": "fridge", 
+            "file": "icon1_fridge.png"
+        }, 
+        {
+            "name": "gallery", 
+            "file": "icon1_gallery.png"
+        }, 
+        {
+            "name": "gas_meter", 
+            "file": "icon1_gas_meter.png"
+        }, 
+        {
+            "name": "general", 
+            "file": "icon1_general.png"
         }, 
         {
             "name": "golf", 
@@ -309,6 +305,26 @@
             "file": "icon1_groceries.png"
         }, 
         {
+            "name": "health", 
+            "file": "icon1_health.png"
+        }, 
+        {
+            "name": "historic_monument", 
+            "file": "icon1_historic_monument.png"
+        }, 
+        {
+            "name": "home", 
+            "file": "icon1_home.png"
+        }, 
+        {
+            "name": "home_apartment", 
+            "file": "icon1_home_apartment.png"
+        }, 
+        {
+            "name": "homeware", 
+            "file": "icon1_homeware.png"
+        }, 
+        {
             "name": "hospital", 
             "file": "icon1_hospital.png"
         }, 
@@ -321,12 +337,28 @@
             "file": "icon1_hotel.png"
         }, 
         {
+            "name": "hvac_unit", 
+            "file": "icon1_hvac_unit.png"
+        }, 
+        {
+            "name": "indian", 
+            "file": "icon1_indian.png"
+        }, 
+        {
             "name": "islam", 
             "file": "icon1_islam.png"
         }, 
         {
             "name": "judaism", 
             "file": "icon1_judaism.png"
+        }, 
+        {
+            "name": "kitchen", 
+            "file": "icon1_kitchen.png"
+        }, 
+        {
+            "name": "lake", 
+            "file": "icon1_lake.png"
         }, 
         {
             "name": "library", 
@@ -349,36 +381,120 @@
             "file": "icon1_lodge.png"
         }, 
         {
+            "name": "meeting_room", 
+            "file": "icon1_meeting_room.png"
+        }, 
+        {
+            "name": "meeting_room_available", 
+            "file": "icon1_meeting_room_available.png"
+        }, 
+        {
+            "name": "meeting_room_available_soon", 
+            "file": "icon1_meeting_room_available_soon.png"
+        }, 
+        {
+            "name": "meeting_room_unavailable", 
+            "file": "icon1_meeting_room_unavailable.png"
+        }, 
+        {
+            "name": "message", 
+            "file": "icon1_message.png"
+        }, 
+        {
+            "name": "meter", 
+            "file": "icon1_meter.png"
+        }, 
+        {
+            "name": "misc", 
+            "file": "icon1_misc.png"
+        }, 
+        {
+            "name": "mobile_phone", 
+            "file": "icon1_mobile_phone.png"
+        }, 
+        {
+            "name": "mountain", 
+            "file": "icon1_mountain.png"
+        }, 
+        {
             "name": "music", 
             "file": "icon1_music.png"
         }, 
         {
-            "name": "office", 
-            "file": "icon1_office.png"
+            "name": "my_location", 
+            "file": "icon1_my_location.png"
         }, 
         {
-            "name": "parking", 
-            "file": "icon1_parking.png"
+            "name": "night", 
+            "file": "icon1_night.png"
+        }, 
+        {
+            "name": "night_time", 
+            "file": "icon1_night_time.png"
+        }, 
+        {
+            "name": "observation_point", 
+            "file": "icon1_observation_point.png"
+        }, 
+        {
+            "name": "observatory", 
+            "file": "icon1_observatory.png"
+        }, 
+        {
+            "name": "occupancy_sensor", 
+            "file": "icon1_occupancy_sensor.png"
+        }, 
+        {
+            "name": "offices", 
+            "file": "icon1_offices.png"
+        }, 
+        {
+            "name": "oven", 
+            "file": "icon1_oven.png"
         }, 
         {
             "name": "park", 
             "file": "icon1_park.png"
         }, 
         {
+            "name": "parking", 
+            "file": "icon1_parking.png"
+        }, 
+        {
             "name": "payphone", 
             "file": "icon1_payphone.png"
+        }, 
+        {
+            "name": "person", 
+            "file": "icon1_person.png"
+        }, 
+        {
+            "name": "petrol_station", 
+            "file": "icon1_petrol_station.png"
         }, 
         {
             "name": "pharmacy", 
             "file": "icon1_pharmacy.png"
         }, 
         {
+            "name": "photo", 
+            "file": "icon1_photo.png"
+        }, 
+        {
             "name": "picasa", 
             "file": "icon1_picasa.png"
         }, 
         {
+            "name": "pin", 
+            "file": "icon1_pin.png"
+        }, 
+        {
             "name": "pizza", 
             "file": "icon1_pizza.png"
+        }, 
+        {
+            "name": "place_of_worship", 
+            "file": "icon1_place_of_worship.png"
         }, 
         {
             "name": "playing_field", 
@@ -389,48 +505,172 @@
             "file": "icon1_police.png"
         }, 
         {
+            "name": "positioning_beacon", 
+            "file": "icon1_positioning_beacon.png"
+        }, 
+        {
             "name": "post_office", 
             "file": "icon1_post_office.png"
+        }, 
+        {
+            "name": "printer", 
+            "file": "icon1_printer.png"
         }, 
         {
             "name": "race_track", 
             "file": "icon1_race_track.png"
         }, 
         {
-            "name": "place_of_worship", 
-            "file": "icon1_place_of_worship.png"
+            "name": "rain", 
+            "file": "icon1_rain.png"
+        }, 
+        {
+            "name": "reception", 
+            "file": "icon1_reception.png"
+        }, 
+        {
+            "name": "remote_control", 
+            "file": "icon1_remote_control.png"
+        }, 
+        {
+            "name": "river", 
+            "file": "icon1_river.png"
         }, 
         {
             "name": "sailing", 
             "file": "icon1_sailing.png"
         }, 
         {
+            "name": "seafood", 
+            "file": "icon1_seafood.png"
+        }, 
+        {
+            "name": "security_alarm", 
+            "file": "icon1_security_alarm.png"
+        }, 
+        {
+            "name": "security_camera", 
+            "file": "icon1_security_camera.png"
+        }, 
+        {
             "name": "shooting", 
             "file": "icon1_shooting.png"
+        }, 
+        {
+            "name": "shopping", 
+            "file": "icon1_shopping.png"
         }, 
         {
             "name": "skiing", 
             "file": "icon1_skiing.png"
         }, 
         {
+            "name": "smart_post", 
+            "file": "icon1_smart_post.png"
+        }, 
+        {
+            "name": "smoke_detector", 
+            "file": "icon1_smoke_detector.png"
+        }, 
+        {
+            "name": "snow", 
+            "file": "icon1_snow.png"
+        }, 
+        {
+            "name": "solar_panels", 
+            "file": "icon1_solar_panels.png"
+        }, 
+        {
             "name": "spa", 
             "file": "icon1_spa.png"
+        }, 
+        {
+            "name": "sports", 
+            "file": "icon1_sports.png"
         }, 
         {
             "name": "sports_field", 
             "file": "icon1_sports_field.png"
         }, 
         {
+            "name": "spring", 
+            "file": "icon1_spring.png"
+        }, 
+        {
+            "name": "stairs", 
+            "file": "icon1_stairs.png"
+        }, 
+        {
+            "name": "star", 
+            "file": "icon1_star.png"
+        }, 
+        {
+            "name": "stationery", 
+            "file": "icon1_stationery.png"
+        }, 
+        {
+            "name": "steak", 
+            "file": "icon1_steak.png"
+        }, 
+        {
             "name": "subway", 
             "file": "icon1_subway.png"
+        }, 
+        {
+            "name": "summer", 
+            "file": "icon1_summer.png"
+        }, 
+        {
+            "name": "sun", 
+            "file": "icon1_sun.png"
+        }, 
+        {
+            "name": "sushi", 
+            "file": "icon1_sushi.png"
         }, 
         {
             "name": "taxi", 
             "file": "icon1_taxi.png"
         }, 
         {
+            "name": "technology", 
+            "file": "icon1_technology.png"
+        }, 
+        {
+            "name": "telephone_booth", 
+            "file": "icon1_telephone_booth.png"
+        }, 
+        {
+            "name": "temperature_sensor", 
+            "file": "icon1_temperature_sensor.png"
+        }, 
+        {
+            "name": "thermostat", 
+            "file": "icon1_thermostat.png"
+        }, 
+        {
+            "name": "ticket", 
+            "file": "icon1_ticket.png"
+        }, 
+        {
+            "name": "toilet_ladies", 
+            "file": "icon1_toilet_ladies.png"
+        }, 
+        {
+            "name": "toilet_men", 
+            "file": "icon1_toilet_men.png"
+        }, 
+        {
+            "name": "tourist_info", 
+            "file": "icon1_tourist_info.png"
+        }, 
+        {
             "name": "town_hall", 
             "file": "icon1_town_hall.png"
+        }, 
+        {
+            "name": "traffic_counter", 
+            "file": "icon1_traffic_counter.png"
         }, 
         {
             "name": "train", 
@@ -445,20 +685,76 @@
             "file": "icon1_twitter.png"
         }, 
         {
+            "name": "uber", 
+            "file": "icon1_uber.png"
+        }, 
+        {
+            "name": "vegan", 
+            "file": "icon1_vegan.png"
+        }, 
+        {
+            "name": "vegetarian", 
+            "file": "icon1_vegetarian.png"
+        }, 
+        {
             "name": "vet", 
             "file": "icon1_vet.png"
+        }, 
+        {
+            "name": "video", 
+            "file": "icon1_video.png"
+        }, 
+        {
+            "name": "video_conference_telepresence", 
+            "file": "icon1_video_conference_telepresence.png"
         }, 
         {
             "name": "vimeo", 
             "file": "icon1_vimeo.png"
         }, 
         {
+            "name": "virtual_tour", 
+            "file": "icon1_virtual_tour.png"
+        }, 
+        {
+            "name": "vr_experience", 
+            "file": "icon1_vr_experience.png"
+        }, 
+        {
+            "name": "warning", 
+            "file": "icon1_warning.png"
+        }, 
+        {
+            "name": "washing_machine", 
+            "file": "icon1_washing_machine.png"
+        }, 
+        {
+            "name": "water_meter", 
+            "file": "icon1_water_meter.png"
+        }, 
+        {
+            "name": "wi_fi_point", 
+            "file": "icon1_wi_fi_point.png"
+        }, 
+        {
             "name": "wikipedia", 
             "file": "icon1_wikipedia.png"
         }, 
         {
+            "name": "wind_turbine", 
+            "file": "icon1_wind_turbine.png"
+        }, 
+        {
             "name": "wine", 
             "file": "icon1_wine.png"
+        }, 
+        {
+            "name": "winter", 
+            "file": "icon1_winter.png"
+        }, 
+        {
+            "name": "working_group", 
+            "file": "icon1_working_group.png"
         }, 
         {
             "name": "youtube", 
@@ -467,46 +763,6 @@
         {
             "name": "zoo", 
             "file": "icon1_zoo.png"
-        }, 
-        {
-            "name": "forest", 
-            "file": "icon1_forest.png"
-        }, 
-        {
-            "name": "lake", 
-            "file": "icon1_lake.png"
-        }, 
-        {
-            "name": "mountain", 
-            "file": "icon1_mountain.png"
-        }, 
-        {
-            "name": "river", 
-            "file": "icon1_river.png"
-        }, 
-        {
-            "name": "female", 
-            "file": "icon1_female.png"
-        }, 
-        {
-            "name": "male", 
-            "file": "icon1_male.png"
-        }, 
-        {
-            "name": "lamppost", 
-            "file": "icon1_lamppost.png"
-        }, 
-        {
-            "name": "trash_empty", 
-            "file": "icon1_trash_empty.png"
-        }, 
-        {
-            "name": "trash_full", 
-            "file": "icon1_trash_full.png"
-        }, 
-        {
-            "name": "meter", 
-            "file": "icon1_meter.png"
         }
     ]
 }
