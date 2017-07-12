@@ -1,13 +1,216 @@
 set(resources ${resources}
-        Resources/ApplicationConfigs
-        Resources/ApplicationConfigs/standard_config.json
         Resources/Alert_Tutorial_icon.png
         Resources/Alert_Tutorial_icon@2x.png
         Resources/Alert_Tutorial_icon@3x.png
         Resources/Alert_Tutorial_icon_phone.png
         Resources/Alert_Tutorial_icon_phone@2x.png
         Resources/Alert_Tutorial_icon_phone@3x.png
+        Resources/ApplicationConfigs
+        Resources/ApplicationConfigs/standard_config.json
         Resources/Arrow.png
+        Resources/Arrow@2x.png
+        Resources/Arrow@3x.png
+        Resources/CMakeLists.txt
+        Resources/CompassNew.png
+        Resources/CompassNew@0.75x.png
+        Resources/CompassNew@1.5x.png
+        Resources/CompassNew@2x.png
+        Resources/CompassNew@3x.png
+        Resources/CompassNew@4x.png
+        Resources/CompassNewLocate.png
+        Resources/CompassNewLocate@0.75x.png
+        Resources/CompassNewLocate@1.5x.png
+        Resources/CompassNewLocate@2x.png
+        Resources/CompassNewLocate@3x.png
+        Resources/CompassNewLocate@4x.png
+        Resources/CompassNewLocate_Down.png
+        Resources/CompassNewLocate_Down@0.75x.png
+        Resources/CompassNewLocate_Down@1.5x.png
+        Resources/CompassNewLocate_Down@2x.png
+        Resources/CompassNewLocate_Down@3x.png
+        Resources/CompassNewLocate_Down@4x.png
+        Resources/CompassNewLocked.png
+        Resources/CompassNewLocked@0.75x.png
+        Resources/CompassNewLocked@1.5x.png
+        Resources/CompassNewLocked@2x.png
+        Resources/CompassNewLocked@3x.png
+        Resources/CompassNewLocked@4x.png
+        Resources/CompassNewLocked_Down.png
+        Resources/CompassNewLocked_Down@0.75x.png
+        Resources/CompassNewLocked_Down@1.5x.png
+        Resources/CompassNewLocked_Down@2x.png
+        Resources/CompassNewLocked_Down@3x.png
+        Resources/CompassNewLocked_Down@4x.png
+        Resources/CompassNewUnlocked.png
+        Resources/CompassNewUnlocked@0.75x.png
+        Resources/CompassNewUnlocked@1.5x.png
+        Resources/CompassNewUnlocked@2x.png
+        Resources/CompassNewUnlocked@3x.png
+        Resources/CompassNewUnlocked@4x.png
+        Resources/CompassNewUnlocked_Down.png
+        Resources/CompassNewUnlocked_Down@0.75x.png
+        Resources/CompassNewUnlocked_Down@1.5x.png
+        Resources/CompassNewUnlocked_Down@2x.png
+        Resources/CompassNewUnlocked_Down@3x.png
+        Resources/CompassNewUnlocked_Down@4x.png
+        Resources/EmbeddedTheme
+        Resources/EmbeddedTheme/Default_water_reflection_cube_map_cubemap.pvr
+        Resources/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
+        Resources/EmbeddedTheme/SanFrancisco_SanFran_roadDiffuse_repeat.pvr
+        Resources/EmbeddedTheme/SanFrancisco_SanFran_wallDiffuse.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture0.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture0_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture1.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture10.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture10_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture11.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture11_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture12.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture12_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture13.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture13_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture14.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture14_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture15.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture15_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture16.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture16_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture17.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture17_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture18.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture18_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture1_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture2.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture2_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture3.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture3_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture4.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture4_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture5.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture5_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture6.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture6_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture7.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture7_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture8.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture8_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture9.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture9_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_VehicleModels_recce_trams.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_01_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_02.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_02_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_03.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_03_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_ldn_trains_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_placeholder_no_data.pvr
+        Resources/EmbeddedTheme/SanFrancisco_sf_planes_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_sf_vehicles_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_trees_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_trees_top_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_water_normalmap.pvr
+        Resources/EmbeddedTheme/SanFrancisco_water_reflectionmap.pvr
+        Resources/Geosphere_01.pod
+        Resources/IPAexGothic_sdf.fnt
+        Resources/IPAexGothic_sdf_0.png
+        Resources/IPAexGothic_sdf_1.png
+        Resources/IPAexGothic_sdf_2.png
+        Resources/IPAexGothic_sdf_3.png
+        Resources/IPAexGothic_sdf_4.png
+        Resources/IPAexGothic_sdf_5.png
+        Resources/IPAexGothic_sdf_6.png
+        Resources/IPAexGothic_sdf_7.png
+        Resources/Interiors
+        Resources/Interiors/label_category_mapping.json
+        Resources/Labels
+        Resources/Labels/label_category_icon_map.json
+        Resources/Labels/label_style_sheet.json
+        Resources/PlaceholderCube
+        Resources/PlaceholderCube/placeholder_cube_negX.png
+        Resources/PlaceholderCube/placeholder_cube_negY.png
+        Resources/PlaceholderCube/placeholder_cube_negZ.png
+        Resources/PlaceholderCube/placeholder_cube_posX.png
+        Resources/PlaceholderCube/placeholder_cube_posY.png
+        Resources/PlaceholderCube/placeholder_cube_posZ.png
+        Resources/SearchResultOnMap
+        Resources/SearchResultOnMap/pin_sheet.json
+        Resources/SearchResultOnMap/pin_sheet_0.png
+        Resources/SearchResultOnMap/pin_sheet_0@2x.png
+        Resources/SearchResultOnMap/pin_sheet_0@3x.png
+        Resources/SearchResults_Fade.png
+        Resources/SearchResults_Fade@0.75x.png
+        Resources/SearchResults_Fade@1.5x.png
+        Resources/SearchResults_Fade@2x.png
+        Resources/SearchResults_Fade@3x.png
+        Resources/SearchResults_ScrollButton.png
+        Resources/SearchResults_ScrollButton@0.75x.png
+        Resources/SearchResults_ScrollButton@1.5x.png
+        Resources/SearchResults_ScrollButton@2x.png
+        Resources/SearchResults_ScrollButton@3x.png
+        Resources/SearchResults_ScrollButton_Down.png
+        Resources/SearchResults_ScrollButton_Down@0.75x.png
+        Resources/SearchResults_ScrollButton_Down@1.5x.png
+        Resources/SearchResults_ScrollButton_Down@2x.png
+        Resources/SearchResults_ScrollButton_Down@3x.png
+        Resources/Sphere.POD
+        Resources/Sphere_8bit.pvr
+        Resources/Sphere_Night_8bit.pvr
+        Resources/SplashScreen
+        Resources/SplashScreen/Icon-60.png
+        Resources/SplashScreen/Icon-60@2x.png
+        Resources/SplashScreen/Icon-60@3x.png
+        Resources/SplashScreen/Icon-76.png
+        Resources/SplashScreen/Icon-76@2x.png
+        Resources/SplashScreen/Icon-Small-40.png
+        Resources/SplashScreen/Icon-Small-40@2x.png
+        Resources/SplashScreen/Icon-Small-40@3x.png
+        Resources/SplashScreen/Icon-Small.png
+        Resources/SplashScreen/Icon-Small@2x.png
+        Resources/SplashScreen/Icon-Small@3x.png
+        Resources/SplashScreen/SplashScreen.png
+        Resources/SplashScreen/SplashScreen@2x.png
+        Resources/SplashScreen/SplashScreen@3x.png
+        Resources/Stalk.POD
+        Resources/Thumbs.db
+        Resources/Yelp
+        Resources/Yelp/reviewsFromYelpRED.png
+        Resources/Yelp/reviewsFromYelpRED@2x.png
+        Resources/Yelp/reviewsFromYelpRED@3x.png
+        Resources/Yelp/stars_0_0.png
+        Resources/Yelp/stars_0_0@2x.png
+        Resources/Yelp/stars_0_0@3x.png
+        Resources/Yelp/stars_1_0.png
+        Resources/Yelp/stars_1_0@2x.png
+        Resources/Yelp/stars_1_0@3x.png
+        Resources/Yelp/stars_1_5.png
+        Resources/Yelp/stars_1_5@2x.png
+        Resources/Yelp/stars_1_5@3x.png
+        Resources/Yelp/stars_2_0.png
+        Resources/Yelp/stars_2_0@2x.png
+        Resources/Yelp/stars_2_0@3x.png
+        Resources/Yelp/stars_2_5.png
+        Resources/Yelp/stars_2_5@2x.png
+        Resources/Yelp/stars_2_5@3x.png
+        Resources/Yelp/stars_3_0.png
+        Resources/Yelp/stars_3_0@2x.png
+        Resources/Yelp/stars_3_0@3x.png
+        Resources/Yelp/stars_3_5.png
+        Resources/Yelp/stars_3_5@2x.png
+        Resources/Yelp/stars_3_5@3x.png
+        Resources/Yelp/stars_4_0.png
+        Resources/Yelp/stars_4_0@2x.png
+        Resources/Yelp/stars_4_0@3x.png
+        Resources/Yelp/stars_4_5.png
+        Resources/Yelp/stars_4_5@2x.png
+        Resources/Yelp/stars_4_5@3x.png
+        Resources/Yelp/stars_5_0.png
+        Resources/Yelp/stars_5_0@2x.png
+        Resources/Yelp/stars_5_0@3x.png
+        Resources/Yelp/yelp_logo.png
+        Resources/Yelp/yelp_logo@2x.png
+        Resources/Yelp/yelp_logo@3x.png
+        Resources/Yelp/yelp_logo_100x50.png
         Resources/arrow1.png
         Resources/arrow1@2x.png
         Resources/arrow1@3x.png
@@ -35,8 +238,6 @@ set(resources ${resources}
         Resources/arrow3_up_blue.png
         Resources/arrow3_up_blue@2x.png
         Resources/arrow3_up_blue@3x.png
-        Resources/Arrow@2x.png
-        Resources/Arrow@3x.png
         Resources/button_add_pin_off.png
         Resources/button_add_pin_off@0.75x.png
         Resources/button_add_pin_off@1.5x.png
@@ -153,73 +354,43 @@ set(resources ${resources}
         Resources/button_unflatten_on.png
         Resources/button_unflatten_on@2x.png
         Resources/button_unflatten_on@3x.png
-        Resources/CMakeLists.txt
         Resources/compass_point_off.png
         Resources/compass_point_off@2x.png
         Resources/compass_point_off@3x.png
         Resources/compass_point_on.png
         Resources/compass_point_on@2x.png
         Resources/compass_point_on@3x.png
-        Resources/CompassNew.png
-        Resources/CompassNew@0.75x.png
-        Resources/CompassNew@1.5x.png
-        Resources/CompassNew@2x.png
-        Resources/CompassNew@3x.png
-        Resources/CompassNewLocate.png
-        Resources/CompassNewLocate@0.75x.png
-        Resources/CompassNewLocate@1.5x.png
-        Resources/CompassNewLocate@2x.png
-        Resources/CompassNewLocate@3x.png
-        Resources/CompassNewLocked.png
-        Resources/CompassNewLocked@0.75x.png
-        Resources/CompassNewLocked@1.5x.png
-        Resources/CompassNewLocked@2x.png
-        Resources/CompassNewLocked@3x.png
-        Resources/CompassNewLocked_Down.png
-        Resources/CompassNewLocked_Down@0.75x.png
-        Resources/CompassNewLocked_Down@1.5x.png
-        Resources/CompassNewLocked_Down@2x.png
-        Resources/CompassNewLocked_Down@3x.png
-        Resources/CompassNewLocate_Down.png
-        Resources/CompassNewLocate_Down@0.75x.png
-        Resources/CompassNewLocate_Down@1.5x.png
-        Resources/CompassNewLocate_Down@2x.png
-        Resources/CompassNewLocate_Down@3x.png
-        Resources/CompassNewUnlocked_Down.png
-        Resources/CompassNewUnlocked_Down@0.75x.png
-        Resources/CompassNewUnlocked_Down@1.5x.png
-        Resources/CompassNewUnlocked_Down@2x.png
-        Resources/CompassNewUnlocked_Down@3x.png
-        Resources/CompassNewUnlocked.png
-        Resources/CompassNewUnlocked@0.75x.png
-        Resources/CompassNewUnlocked@1.5x.png
-        Resources/CompassNewUnlocked@2x.png
-        Resources/CompassNewUnlocked@3x.png
+        Resources/contact_icon_email.png
+        Resources/contact_icon_email@0.75x.png
+        Resources/contact_icon_email@1.5x.png
+        Resources/contact_icon_email@2x.png
+        Resources/contact_icon_email@3x.png
+        Resources/contact_icon_facebook.png
+        Resources/contact_icon_facebook.png@2x.png
+        Resources/contact_icon_facebook@0.75x.png
+        Resources/contact_icon_facebook@1.5x.png
+        Resources/contact_icon_facebook@3x.png
         Resources/contact_icon_twitter.png
         Resources/contact_icon_twitter@0.75x.png
         Resources/contact_icon_twitter@1.5x.png
         Resources/contact_icon_twitter@2x.png
         Resources/contact_icon_twitter@3x.png
-        Resources/contact_icon_email.png
-        Resources/contact_icon_email@1.5x.png
-        Resources/contact_icon_email@2x.png
-        Resources/contact_icon_email@3x.png
-        Resources/contact_icon_email@0.75x.png
-        Resources/contact_icon_facebook.png
-        Resources/contact_icon_facebook@0.75x.png
-        Resources/contact_icon_facebook.png@2x.png
-        Resources/contact_icon_facebook@3x.png
-        Resources/contact_icon_facebook@1.5x.png
-        Resources/detail_icon_description_active.png
-        Resources/detail_icon_description_active@0.75x.png
-        Resources/detail_icon_description_active@1.5x.png
-        Resources/detail_icon_description_active@2x.png
-        Resources/detail_icon_description_active@3x.png
+        Resources/default_water_reflection_cube_map_negX.png
+        Resources/default_water_reflection_cube_map_negY.png
+        Resources/default_water_reflection_cube_map_negZ.png
+        Resources/default_water_reflection_cube_map_posX.png
+        Resources/default_water_reflection_cube_map_posY.png
+        Resources/default_water_reflection_cube_map_posZ.png
         Resources/detail_icon_description.png
         Resources/detail_icon_description@0.75x.png
         Resources/detail_icon_description@1.5x.png
         Resources/detail_icon_description@2x.png
         Resources/detail_icon_description@3x.png
+        Resources/detail_icon_description_active.png
+        Resources/detail_icon_description_active@0.75x.png
+        Resources/detail_icon_description_active@1.5x.png
+        Resources/detail_icon_description_active@2x.png
+        Resources/detail_icon_description_active@3x.png
         Resources/detail_icon_email.png
         Resources/detail_icon_email@0.75x.png
         Resources/detail_icon_email@1.5x.png
@@ -230,25 +401,25 @@ set(resources ${resources}
         Resources/detail_icon_email_active@1.5x.png
         Resources/detail_icon_email_active@2x.png
         Resources/detail_icon_email_active@3x.png
-        Resources/detail_icon_web_link_active.png
-        Resources/detail_icon_web_link_active@0.75x.png
-        Resources/detail_icon_web_link_active@1.5x.png
-        Resources/detail_icon_web_link_active@2x.png
-        Resources/detail_icon_web_link_active@3x.png
         Resources/detail_icon_web_link.png
         Resources/detail_icon_web_link@0.75x.png
         Resources/detail_icon_web_link@1.5x.png
         Resources/detail_icon_web_link@2x.png
         Resources/detail_icon_web_link@3x.png
+        Resources/detail_icon_web_link_active.png
+        Resources/detail_icon_web_link_active@0.75x.png
+        Resources/detail_icon_web_link_active@1.5x.png
+        Resources/detail_icon_web_link_active@2x.png
+        Resources/detail_icon_web_link_active@3x.png
         Resources/eegeo_logo.png
         Resources/eegeo_logo@2x.png
         Resources/eegeo_logo@3x.png
-        Resources/eegeo_logo_tablet.png
-        Resources/eegeo_logo_tablet@2x.png
-        Resources/eegeo_logo_tablet@3x.png
         Resources/eegeo_logo_about.png
         Resources/eegeo_logo_about@2x.png
         Resources/eegeo_logo_about@3x.png
+        Resources/eegeo_logo_tablet.png
+        Resources/eegeo_logo_tablet@2x.png
+        Resources/eegeo_logo_tablet@3x.png
         Resources/embedded_manifest.bin
         Resources/exit_blue_x_button.png
         Resources/exit_blue_x_button@0.75x.png
@@ -263,37 +434,42 @@ set(resources ${resources}
         Resources/floor_selection_bottom.png
         Resources/floor_selection_bottom@2x.png
         Resources/floor_selection_bottom@3x.png
+        Resources/floor_selection_button.png
+        Resources/floor_selection_button@2x.png
+        Resources/floor_selection_button@3x.png
+        Resources/floor_selection_button_down.png
+        Resources/floor_selection_button_down@2x.png
+        Resources/floor_selection_button_down@3x.png
         Resources/floor_selection_top.png
         Resources/floor_selection_top@2x.png
         Resources/floor_selection_top@3x.png
-        Resources/Geosphere_01.pod
         Resources/gps_marker.png
         Resources/gps_marker@2x.png
         Resources/gps_marker@3x.png
-        Resources/icon1_lamppost.png
-        Resources/icon1_lamppost@2x.png
-        Resources/icon1_lamppost@3x.png
-        Resources/icon1_meter.png
-        Resources/icon1_meter@2x.png
-        Resources/icon1_meter@3x.png
-        Resources/icon1_trash_empty.png
-        Resources/icon1_trash_empty@2x.png
-        Resources/icon1_trash_empty@3x.png
-        Resources/icon1_trash_full.png
-        Resources/icon1_trash_full@2x.png
-        Resources/icon1_trash_full@3x.png
+        Resources/icon1_accessible.png
+        Resources/icon1_accessible@2x.png
+        Resources/icon1_accessible@3x.png
         Resources/icon1_accommodation.png
         Resources/icon1_accommodation@2x.png
         Resources/icon1_accommodation@3x.png
+        Resources/icon1_accomodation.png
+        Resources/icon1_accomodation@2x.png
+        Resources/icon1_accomodation@3x.png
         Resources/icon1_airport.png
         Resources/icon1_airport@2x.png
         Resources/icon1_airport@3x.png
+        Resources/icon1_alert.png
+        Resources/icon1_alert@2x.png
+        Resources/icon1_alert@3x.png
         Resources/icon1_amenities.png
         Resources/icon1_amenities@2x.png
         Resources/icon1_amenities@3x.png
         Resources/icon1_aroundme.png
         Resources/icon1_aroundme@2x.png
         Resources/icon1_aroundme@3x.png
+        Resources/icon1_art.png
+        Resources/icon1_art@2x.png
+        Resources/icon1_art@3x.png
         Resources/icon1_art_museums.png
         Resources/icon1_art_museums@2x.png
         Resources/icon1_art_museums@3x.png
@@ -303,15 +479,33 @@ set(resources ${resources}
         Resources/icon1_autumn.png
         Resources/icon1_autumn@2x.png
         Resources/icon1_autumn@3x.png
+        Resources/icon1_badge_reader.png
+        Resources/icon1_badge_reader@2x.png
+        Resources/icon1_badge_reader@3x.png
         Resources/icon1_bank.png
         Resources/icon1_bank@2x.png
         Resources/icon1_bank@3x.png
+        Resources/icon1_bathroom.png
+        Resources/icon1_bathroom@2x.png
+        Resources/icon1_bathroom@3x.png
         Resources/icon1_bed_breakfast.png
         Resources/icon1_bed_breakfast@2x.png
         Resources/icon1_bed_breakfast@3x.png
         Resources/icon1_beer.png
         Resources/icon1_beer@2x.png
         Resources/icon1_beer@3x.png
+        Resources/icon1_bin.png
+        Resources/icon1_bin@2x.png
+        Resources/icon1_bin@3x.png
+        Resources/icon1_bin_full.png
+        Resources/icon1_bin_full@2x.png
+        Resources/icon1_bin_full@3x.png
+        Resources/icon1_blue_meter.png
+        Resources/icon1_blue_meter@2x.png
+        Resources/icon1_blue_meter@3x.png
+        Resources/icon1_border_crossing.png
+        Resources/icon1_border_crossing@2x.png
+        Resources/icon1_border_crossing@3x.png
         Resources/icon1_burgers.png
         Resources/icon1_burgers@2x.png
         Resources/icon1_burgers@3x.png
@@ -333,21 +527,36 @@ set(resources ${resources}
         Resources/icon1_childcare.png
         Resources/icon1_childcare@2x.png
         Resources/icon1_childcare@3x.png
+        Resources/icon1_chinese_thai.png
+        Resources/icon1_chinese_thai@2x.png
+        Resources/icon1_chinese_thai@3x.png
         Resources/icon1_christianity.png
         Resources/icon1_christianity@2x.png
         Resources/icon1_christianity@3x.png
+        Resources/icon1_church.png
+        Resources/icon1_church@2x.png
+        Resources/icon1_church@3x.png
         Resources/icon1_cinema.png
         Resources/icon1_cinema@2x.png
         Resources/icon1_cinema@3x.png
         Resources/icon1_clear.png
         Resources/icon1_clear@2x.png
         Resources/icon1_clear@3x.png
+        Resources/icon1_click_and_collect.png
+        Resources/icon1_click_and_collect@2x.png
+        Resources/icon1_click_and_collect@3x.png
+        Resources/icon1_co2_detector.png
+        Resources/icon1_co2_detector@2x.png
+        Resources/icon1_co2_detector@3x.png
         Resources/icon1_cocktail.png
         Resources/icon1_cocktail@2x.png
         Resources/icon1_cocktail@3x.png
         Resources/icon1_coffee.png
         Resources/icon1_coffee@2x.png
         Resources/icon1_coffee@3x.png
+        Resources/icon1_collaboration_space.png
+        Resources/icon1_collaboration_space@2x.png
+        Resources/icon1_collaboration_space@3x.png
         Resources/icon1_cycling.png
         Resources/icon1_cycling@2x.png
         Resources/icon1_cycling@3x.png
@@ -366,18 +575,30 @@ set(resources ${resources}
         Resources/icon1_department.png
         Resources/icon1_department@2x.png
         Resources/icon1_department@3x.png
+        Resources/icon1_digital_sign.png
+        Resources/icon1_digital_sign@2x.png
+        Resources/icon1_digital_sign@3x.png
+        Resources/icon1_dining_room.png
+        Resources/icon1_dining_room@2x.png
+        Resources/icon1_dining_room@3x.png
         Resources/icon1_disabled_access.png
         Resources/icon1_disabled_access@2x.png
         Resources/icon1_disabled_access@3x.png
         Resources/icon1_donuts.png
         Resources/icon1_donuts@2x.png
         Resources/icon1_donuts@3x.png
+        Resources/icon1_driveway.png
+        Resources/icon1_driveway@2x.png
+        Resources/icon1_driveway@3x.png
         Resources/icon1_dusk.png
         Resources/icon1_dusk@2x.png
         Resources/icon1_dusk@3x.png
         Resources/icon1_education.png
         Resources/icon1_education@2x.png
         Resources/icon1_education@3x.png
+        Resources/icon1_electrical_meter.png
+        Resources/icon1_electrical_meter@2x.png
+        Resources/icon1_electrical_meter@3x.png
         Resources/icon1_elevator.png
         Resources/icon1_elevator@2x.png
         Resources/icon1_elevator@3x.png
@@ -390,12 +611,27 @@ set(resources ${resources}
         Resources/icon1_escalator.png
         Resources/icon1_escalator@2x.png
         Resources/icon1_escalator@3x.png
+        Resources/icon1_events.png
+        Resources/icon1_events@2x.png
+        Resources/icon1_events@3x.png
         Resources/icon1_facebook.png
         Resources/icon1_facebook@2x.png
         Resources/icon1_facebook@3x.png
         Resources/icon1_farm.png
         Resources/icon1_farm@2x.png
         Resources/icon1_farm@3x.png
+        Resources/icon1_fashion.png
+        Resources/icon1_fashion@2x.png
+        Resources/icon1_fashion@3x.png
+        Resources/icon1_fashion_kids.png
+        Resources/icon1_fashion_kids@2x.png
+        Resources/icon1_fashion_kids@3x.png
+        Resources/icon1_fashion_men.png
+        Resources/icon1_fashion_men@2x.png
+        Resources/icon1_fashion_men@3x.png
+        Resources/icon1_fashion_women.png
+        Resources/icon1_fashion_women@2x.png
+        Resources/icon1_fashion_women@3x.png
         Resources/icon1_female.png
         Resources/icon1_female@2x.png
         Resources/icon1_female@3x.png
@@ -408,6 +644,9 @@ set(resources ${resources}
         Resources/icon1_fire_extinguisher.png
         Resources/icon1_fire_extinguisher@2x.png
         Resources/icon1_fire_extinguisher@3x.png
+        Resources/icon1_fireplace.png
+        Resources/icon1_fireplace@2x.png
+        Resources/icon1_fireplace@3x.png
         Resources/icon1_first_aid.png
         Resources/icon1_first_aid@2x.png
         Resources/icon1_first_aid@3x.png
@@ -429,6 +668,18 @@ set(resources ${resources}
         Resources/icon1_forest.png
         Resources/icon1_forest@2x.png
         Resources/icon1_forest@3x.png
+        Resources/icon1_fridge.png
+        Resources/icon1_fridge@2x.png
+        Resources/icon1_fridge@3x.png
+        Resources/icon1_gallery.png
+        Resources/icon1_gallery@2x.png
+        Resources/icon1_gallery@3x.png
+        Resources/icon1_gas_meter.png
+        Resources/icon1_gas_meter@2x.png
+        Resources/icon1_gas_meter@3x.png
+        Resources/icon1_general.png
+        Resources/icon1_general@2x.png
+        Resources/icon1_general@3x.png
         Resources/icon1_golf.png
         Resources/icon1_golf@2x.png
         Resources/icon1_golf@3x.png
@@ -444,6 +695,15 @@ set(resources ${resources}
         Resources/icon1_historic_monument.png
         Resources/icon1_historic_monument@2x.png
         Resources/icon1_historic_monument@3x.png
+        Resources/icon1_home.png
+        Resources/icon1_home@2x.png
+        Resources/icon1_home@3x.png
+        Resources/icon1_home_apartment.png
+        Resources/icon1_home_apartment@2x.png
+        Resources/icon1_home_apartment@3x.png
+        Resources/icon1_homeware.png
+        Resources/icon1_homeware@2x.png
+        Resources/icon1_homeware@3x.png
         Resources/icon1_hospital.png
         Resources/icon1_hospital@2x.png
         Resources/icon1_hospital@3x.png
@@ -453,15 +713,27 @@ set(resources ${resources}
         Resources/icon1_hotel.png
         Resources/icon1_hotel@2x.png
         Resources/icon1_hotel@3x.png
+        Resources/icon1_hvac_unit.png
+        Resources/icon1_hvac_unit@2x.png
+        Resources/icon1_hvac_unit@3x.png
+        Resources/icon1_indian.png
+        Resources/icon1_indian@2x.png
+        Resources/icon1_indian@3x.png
         Resources/icon1_islam.png
         Resources/icon1_islam@2x.png
         Resources/icon1_islam@3x.png
         Resources/icon1_judaism.png
         Resources/icon1_judaism@2x.png
         Resources/icon1_judaism@3x.png
+        Resources/icon1_kitchen.png
+        Resources/icon1_kitchen@2x.png
+        Resources/icon1_kitchen@3x.png
         Resources/icon1_lake.png
         Resources/icon1_lake@2x.png
         Resources/icon1_lake@3x.png
+        Resources/icon1_lamppost.png
+        Resources/icon1_lamppost@2x.png
+        Resources/icon1_lamppost@3x.png
         Resources/icon1_library.png
         Resources/icon1_library@2x.png
         Resources/icon1_library@3x.png
@@ -492,24 +764,54 @@ set(resources ${resources}
         Resources/icon1_meeting_room_unavailable.png
         Resources/icon1_meeting_room_unavailable@2x.png
         Resources/icon1_meeting_room_unavailable@3x.png
+        Resources/icon1_message.png
+        Resources/icon1_message@2x.png
+        Resources/icon1_message@3x.png
+        Resources/icon1_meter.png
+        Resources/icon1_meter@2x.png
+        Resources/icon1_meter@3x.png
         Resources/icon1_misc.png
         Resources/icon1_misc@2x.png
         Resources/icon1_misc@3x.png
+        Resources/icon1_mobile_phone.png
+        Resources/icon1_mobile_phone@2x.png
+        Resources/icon1_mobile_phone@3x.png
         Resources/icon1_mountain.png
         Resources/icon1_mountain@2x.png
         Resources/icon1_mountain@3x.png
         Resources/icon1_music.png
         Resources/icon1_music@2x.png
         Resources/icon1_music@3x.png
+        Resources/icon1_my_location.png
+        Resources/icon1_my_location@2x.png
+        Resources/icon1_my_location@3x.png
         Resources/icon1_my_pins.png
         Resources/icon1_my_pins@2x.png
         Resources/icon1_my_pins@3x.png
         Resources/icon1_night.png
         Resources/icon1_night@2x.png
         Resources/icon1_night@3x.png
+        Resources/icon1_night_time.png
+        Resources/icon1_night_time@2x.png
+        Resources/icon1_night_time@3x.png
+        Resources/icon1_observation_point.png
+        Resources/icon1_observation_point@2x.png
+        Resources/icon1_observation_point@3x.png
+        Resources/icon1_observatory.png
+        Resources/icon1_observatory@2x.png
+        Resources/icon1_observatory@3x.png
+        Resources/icon1_occupancy_sensor.png
+        Resources/icon1_occupancy_sensor@2x.png
+        Resources/icon1_occupancy_sensor@3x.png
         Resources/icon1_office.png
         Resources/icon1_office@2x.png
         Resources/icon1_office@3x.png
+        Resources/icon1_offices.png
+        Resources/icon1_offices@2x.png
+        Resources/icon1_offices@3x.png
+        Resources/icon1_oven.png
+        Resources/icon1_oven@2x.png
+        Resources/icon1_oven@3x.png
         Resources/icon1_park.png
         Resources/icon1_park@2x.png
         Resources/icon1_park@3x.png
@@ -528,9 +830,15 @@ set(resources ${resources}
         Resources/icon1_pharmacy.png
         Resources/icon1_pharmacy@2x.png
         Resources/icon1_pharmacy@3x.png
+        Resources/icon1_photo.png
+        Resources/icon1_photo@2x.png
+        Resources/icon1_photo@3x.png
         Resources/icon1_picasa.png
         Resources/icon1_picasa@2x.png
         Resources/icon1_picasa@3x.png
+        Resources/icon1_pin.png
+        Resources/icon1_pin@2x.png
+        Resources/icon1_pin@3x.png
         Resources/icon1_pizza.png
         Resources/icon1_pizza@2x.png
         Resources/icon1_pizza@3x.png
@@ -543,6 +851,9 @@ set(resources ${resources}
         Resources/icon1_police.png
         Resources/icon1_police@2x.png
         Resources/icon1_police@3x.png
+        Resources/icon1_positioning_beacon.png
+        Resources/icon1_positioning_beacon@2x.png
+        Resources/icon1_positioning_beacon@3x.png
         Resources/icon1_post_office.png
         Resources/icon1_post_office@2x.png
         Resources/icon1_post_office@3x.png
@@ -558,12 +869,24 @@ set(resources ${resources}
         Resources/icon1_reception.png
         Resources/icon1_reception@2x.png
         Resources/icon1_reception@3x.png
+        Resources/icon1_remote_control.png
+        Resources/icon1_remote_control@2x.png
+        Resources/icon1_remote_control@3x.png
         Resources/icon1_river.png
         Resources/icon1_river@2x.png
         Resources/icon1_river@3x.png
         Resources/icon1_sailing.png
         Resources/icon1_sailing@2x.png
         Resources/icon1_sailing@3x.png
+        Resources/icon1_seafood.png
+        Resources/icon1_seafood@2x.png
+        Resources/icon1_seafood@3x.png
+        Resources/icon1_security_alarm.png
+        Resources/icon1_security_alarm@2x.png
+        Resources/icon1_security_alarm@3x.png
+        Resources/icon1_security_camera.png
+        Resources/icon1_security_camera@2x.png
+        Resources/icon1_security_camera@3x.png
         Resources/icon1_shooting.png
         Resources/icon1_shooting@2x.png
         Resources/icon1_shooting@3x.png
@@ -573,12 +896,24 @@ set(resources ${resources}
         Resources/icon1_skiing.png
         Resources/icon1_skiing@2x.png
         Resources/icon1_skiing@3x.png
+        Resources/icon1_smart_post.png
+        Resources/icon1_smart_post@2x.png
+        Resources/icon1_smart_post@3x.png
+        Resources/icon1_smoke_detector.png
+        Resources/icon1_smoke_detector@2x.png
+        Resources/icon1_smoke_detector@3x.png
         Resources/icon1_snow.png
         Resources/icon1_snow@2x.png
         Resources/icon1_snow@3x.png
+        Resources/icon1_solar_panels.png
+        Resources/icon1_solar_panels@2x.png
+        Resources/icon1_solar_panels@3x.png
         Resources/icon1_spa.png
         Resources/icon1_spa@2x.png
         Resources/icon1_spa@3x.png
+        Resources/icon1_sports.png
+        Resources/icon1_sports@2x.png
+        Resources/icon1_sports@3x.png
         Resources/icon1_sports_field.png
         Resources/icon1_sports_field@2x.png
         Resources/icon1_sports_field@3x.png
@@ -591,12 +926,18 @@ set(resources ${resources}
         Resources/icon1_stairs.png
         Resources/icon1_stairs@2x.png
         Resources/icon1_stairs@3x.png
+        Resources/icon1_star.png
+        Resources/icon1_star@2x.png
+        Resources/icon1_star@3x.png
         Resources/icon1_stationary.png
         Resources/icon1_stationary@2x.png
         Resources/icon1_stationary@3x.png
         Resources/icon1_stationery.png
         Resources/icon1_stationery@2x.png
         Resources/icon1_stationery@3x.png
+        Resources/icon1_steak.png
+        Resources/icon1_steak@2x.png
+        Resources/icon1_steak@3x.png
         Resources/icon1_subway.png
         Resources/icon1_subway@2x.png
         Resources/icon1_subway@3x.png
@@ -606,18 +947,48 @@ set(resources ${resources}
         Resources/icon1_sun.png
         Resources/icon1_sun@2x.png
         Resources/icon1_sun@3x.png
+        Resources/icon1_sushi.png
+        Resources/icon1_sushi@2x.png
+        Resources/icon1_sushi@3x.png
         Resources/icon1_taxi.png
         Resources/icon1_taxi@2x.png
         Resources/icon1_taxi@3x.png
+        Resources/icon1_technology.png
+        Resources/icon1_technology@2x.png
+        Resources/icon1_technology@3x.png
+        Resources/icon1_telephone_booth.png
+        Resources/icon1_telephone_booth@2x.png
+        Resources/icon1_telephone_booth@3x.png
+        Resources/icon1_temperature_sensor.png
+        Resources/icon1_temperature_sensor@2x.png
+        Resources/icon1_temperature_sensor@3x.png
+        Resources/icon1_thermostat.png
+        Resources/icon1_thermostat@2x.png
+        Resources/icon1_thermostat@3x.png
+        Resources/icon1_ticket.png
+        Resources/icon1_ticket@2x.png
+        Resources/icon1_ticket@3x.png
+        Resources/icon1_toilet_ladies.png
+        Resources/icon1_toilet_ladies@2x.png
+        Resources/icon1_toilet_ladies@3x.png
+        Resources/icon1_toilet_men.png
+        Resources/icon1_toilet_men@2x.png
+        Resources/icon1_toilet_men@3x.png
         Resources/icon1_toilets.png
         Resources/icon1_toilets@2x.png
         Resources/icon1_toilets@3x.png
         Resources/icon1_tourism.png
         Resources/icon1_tourism@2x.png
         Resources/icon1_tourism@3x.png
+        Resources/icon1_tourist_info.png
+        Resources/icon1_tourist_info@2x.png
+        Resources/icon1_tourist_info@3x.png
         Resources/icon1_town_hall.png
         Resources/icon1_town_hall@2x.png
         Resources/icon1_town_hall@3x.png
+        Resources/icon1_traffic_counter.png
+        Resources/icon1_traffic_counter@2x.png
+        Resources/icon1_traffic_counter@3x.png
         Resources/icon1_train.png
         Resources/icon1_train@2x.png
         Resources/icon1_train@3x.png
@@ -627,21 +998,63 @@ set(resources ${resources}
         Resources/icon1_transport.png
         Resources/icon1_transport@2x.png
         Resources/icon1_transport@3x.png
+        Resources/icon1_trash_empty.png
+        Resources/icon1_trash_empty@2x.png
+        Resources/icon1_trash_empty@3x.png
+        Resources/icon1_trash_full.png
+        Resources/icon1_trash_full@2x.png
+        Resources/icon1_trash_full@3x.png
         Resources/icon1_twitter.png
         Resources/icon1_twitter@2x.png
         Resources/icon1_twitter@3x.png
+        Resources/icon1_uber.png
+        Resources/icon1_uber@2x.png
+        Resources/icon1_uber@3x.png
         Resources/icon1_university.png
         Resources/icon1_university@2x.png
         Resources/icon1_university@3x.png
+        Resources/icon1_vegan.png
+        Resources/icon1_vegan@2x.png
+        Resources/icon1_vegan@3x.png
+        Resources/icon1_vegetarian.png
+        Resources/icon1_vegetarian@2x.png
+        Resources/icon1_vegetarian@3x.png
         Resources/icon1_vet.png
         Resources/icon1_vet@2x.png
         Resources/icon1_vet@3x.png
+        Resources/icon1_video.png
+        Resources/icon1_video@2x.png
+        Resources/icon1_video@3x.png
+        Resources/icon1_video_conference_telepresence.png
+        Resources/icon1_video_conference_telepresence@2x.png
+        Resources/icon1_video_conference_telepresence@3x.png
         Resources/icon1_vimeo.png
         Resources/icon1_vimeo@2x.png
         Resources/icon1_vimeo@3x.png
+        Resources/icon1_virtual_tour.png
+        Resources/icon1_virtual_tour@2x.png
+        Resources/icon1_virtual_tour@3x.png
+        Resources/icon1_vr_experience.png
+        Resources/icon1_vr_experience@2x.png
+        Resources/icon1_vr_experience@3x.png
+        Resources/icon1_warning.png
+        Resources/icon1_warning@2x.png
+        Resources/icon1_warning@3x.png
+        Resources/icon1_washing_machine.png
+        Resources/icon1_washing_machine@2x.png
+        Resources/icon1_washing_machine@3x.png
+        Resources/icon1_water_meter.png
+        Resources/icon1_water_meter@2x.png
+        Resources/icon1_water_meter@3x.png
+        Resources/icon1_wi_fi_point.png
+        Resources/icon1_wi_fi_point@2x.png
+        Resources/icon1_wi_fi_point@3x.png
         Resources/icon1_wikipedia.png
         Resources/icon1_wikipedia@2x.png
         Resources/icon1_wikipedia@3x.png
+        Resources/icon1_wind_turbine.png
+        Resources/icon1_wind_turbine@2x.png
+        Resources/icon1_wind_turbine@3x.png
         Resources/icon1_wine.png
         Resources/icon1_wine@2x.png
         Resources/icon1_wine@3x.png
@@ -657,10 +1070,16 @@ set(resources ${resources}
         Resources/icon1_zoo.png
         Resources/icon1_zoo@2x.png
         Resources/icon1_zoo@3x.png
+        Resources/icons.json
         Resources/image_blank.png
         Resources/image_blank@2x.png
         Resources/image_blank@3x.png
-        Resources/Interiors
+        Resources/interior_exit.png
+        Resources/interior_exit@2x.png
+        Resources/interior_exit@3x.png
+        Resources/interior_exit_down.png
+        Resources/interior_exit_down@2x.png
+        Resources/interior_exit_down@3x.png
         Resources/menu_background1.png
         Resources/menu_background1@2x.png
         Resources/menu_background1@3x.png
@@ -679,6 +1098,8 @@ set(resources ${resources}
         Resources/micello_logo.png
         Resources/micello_logo@2x.png
         Resources/micello_logo@3x.png
+        Resources/opensans_semibold_sdf.fnt
+        Resources/opensans_semibold_sdf_0.png
         Resources/place_pin_background.png
         Resources/place_pin_background@2x.png
         Resources/place_pin_background@3x.png
@@ -686,50 +1107,43 @@ set(resources ${resources}
         Resources/place_pin_right@2x.png
         Resources/place_pin_right@3x.png
         Resources/placeholder.pvr
-        Resources/PlaceholderCube
-        Resources/PlaceholderCube/placeholder_cube_negX.png
-        Resources/PlaceholderCube/placeholder_cube_negY.png
-        Resources/PlaceholderCube/placeholder_cube_negZ.png
-        Resources/PlaceholderCube/placeholder_cube_posX.png
-        Resources/PlaceholderCube/placeholder_cube_posY.png
-        Resources/PlaceholderCube/placeholder_cube_posZ.png
         Resources/placejumps.json
+        Resources/poi_address.png
+        Resources/poi_address@0.75x.png
+        Resources/poi_address@1.5x.png
+        Resources/poi_address@2x.png
+        Resources/poi_address@3x.png
+        Resources/poi_address_active.png
+        Resources/poi_address_active@0.75x.png
+        Resources/poi_address_active@1.5x.png
+        Resources/poi_address_active@2x.png
+        Resources/poi_address_active@3x.png
         Resources/poi_marker.png
         Resources/poi_marker@2x.png
         Resources/poi_marker@3x.png
-        Resources/poi_tag_active@3x.png
-        Resources/poi_tag_active@2x.png
-        Resources/poi_tag_active@1.5x.png
-        Resources/poi_tag_active@0.75x.png
-        Resources/poi_tag_active.png
-        Resources/poi_tag@3x.png
-        Resources/poi_tag@2x.png
-        Resources/poi_tag@1.5x.png
-        Resources/poi_tag@0.75x.png
-        Resources/poi_tag.png
-        Resources/poi_phone_active@3x.png
-        Resources/poi_phone_active@2x.png
-        Resources/poi_phone_active@1.5x.png
-        Resources/poi_phone_active@0.75x.png
-        Resources/poi_phone_active.png
-        Resources/poi_phone@3x.png
-        Resources/poi_phone@2x.png
-        Resources/poi_phone@1.5x.png
-        Resources/poi_phone@0.75x.png
         Resources/poi_phone.png
-        Resources/poi_address_active@3x.png
-        Resources/poi_address_active@2x.png
-        Resources/poi_address_active@1.5x.png
-        Resources/poi_address_active@0.75x.png
-        Resources/poi_address_active.png
-        Resources/poi_address@3x.png
-        Resources/poi_address@2x.png
-        Resources/poi_address@1.5x.png
-        Resources/poi_address@0.75x.png
-        Resources/poi_address.png
+        Resources/poi_phone@0.75x.png
+        Resources/poi_phone@1.5x.png
+        Resources/poi_phone@2x.png
+        Resources/poi_phone@3x.png
+        Resources/poi_phone_active.png
+        Resources/poi_phone_active@0.75x.png
+        Resources/poi_phone_active@1.5x.png
+        Resources/poi_phone_active@2x.png
+        Resources/poi_phone_active@3x.png
         Resources/poi_placeholder.png
         Resources/poi_placeholder@2x.png
         Resources/poi_placeholder@3x.png
+        Resources/poi_tag.png
+        Resources/poi_tag@0.75x.png
+        Resources/poi_tag@1.5x.png
+        Resources/poi_tag@2x.png
+        Resources/poi_tag@3x.png
+        Resources/poi_tag_active.png
+        Resources/poi_tag_active@0.75x.png
+        Resources/poi_tag_active@1.5x.png
+        Resources/poi_tag_active@2x.png
+        Resources/poi_tag_active@3x.png
         Resources/results_anchor_arrow.png
         Resources/results_anchor_arrow@2x.png
         Resources/results_anchor_arrow@3x.png
@@ -754,129 +1168,20 @@ set(resources ${resources}
         Resources/search_results_spinner.png
         Resources/search_results_spinner@2x.png
         Resources/search_results_spinner@3x.png
-        Resources/SearchResults_Fade.png
-        Resources/SearchResults_Fade@0.75x.png
-        Resources/SearchResults_Fade@1.5x.png
-        Resources/SearchResults_Fade@2x.png
-        Resources/SearchResults_Fade@3x.png
-        Resources/SearchResults_ScrollButton_Down.png
-        Resources/SearchResults_ScrollButton_Down@0.75x.png
-        Resources/SearchResults_ScrollButton_Down@1.5x.png
-        Resources/SearchResults_ScrollButton_Down@2x.png
-        Resources/SearchResults_ScrollButton_Down@3x.png
-        Resources/SearchResults_ScrollButton.png
-        Resources/SearchResults_ScrollButton@0.75x.png
-        Resources/SearchResults_ScrollButton@1.5x.png
-        Resources/SearchResults_ScrollButton@2x.png
-        Resources/SearchResults_ScrollButton@3x.png
-        Resources/Labels
-        Resources/Labels/label_style_sheet.json
-        Resources/Labels/label_category_icon_map.json
-        Resources/IPAexGothic_sdf_0.png
-        Resources/IPAexGothic_sdf_1.png
-        Resources/IPAexGothic_sdf_2.png
-        Resources/IPAexGothic_sdf_3.png
-        Resources/IPAexGothic_sdf_4.png
-        Resources/IPAexGothic_sdf_5.png
-        Resources/IPAexGothic_sdf_6.png
-        Resources/IPAexGothic_sdf_7.png
-        Resources/IPAexGothic_sdf.fnt
-        Resources/opensans_semibold_sdf.fnt
-        Resources/opensans_semibold_sdf_0.png
-        Resources/SearchResultOnMap
-        Resources/SearchResultOnMap/pin_sheet_0.png
-        Resources/SearchResultOnMap/pin_sheet_0@2x.png
-        Resources/SearchResultOnMap/pin_sheet_0@3x.png
-        Resources/SearchResultOnMap/pin_sheet.json
-        Resources/Sphere.POD
-        Resources/Sphere_8bit.pvr
-        Resources/Sphere_Night_8bit.pvr
-        Resources/Stalk.POD
-        Resources/SplashScreen
-        Resources/SplashScreen/Icon-60@2x.png
-        Resources/SplashScreen/Icon-60@3x.png
-        Resources/SplashScreen/Icon-76.png
-        Resources/SplashScreen/Icon-76@2x.png
-        Resources/SplashScreen/Icon-Small-40.png
-        Resources/SplashScreen/Icon-Small-40@2x.png
-        Resources/SplashScreen/Icon-Small-40@3x.png
-        Resources/SplashScreen/Icon-Small.png
-        Resources/SplashScreen/Icon-Small@2x.png
-        Resources/SplashScreen/Icon-Small@3x.png
-        Resources/SplashScreen/SplashScreen.png
-        Resources/SplashScreen/SplashScreen@2x.png
-        Resources/SplashScreen/SplashScreen@3x.png
+        Resources/search_tags.json
         Resources/sub_menu_arrow_off.png
         Resources/sub_menu_arrow_off@2x.png
         Resources/sub_menu_arrow_off@3x.png
         Resources/sub_menu_arrow_on.png
         Resources/sub_menu_arrow_on@2x.png
         Resources/sub_menu_arrow_on@3x.png
-        Resources/search_tags.json
-        Resources/EmbeddedTheme
         Resources/weatherstates.json
-        Resources/Yelp
         Resources/yelp_map.json
-        Resources/Yelp/reviewsFromYelpRED.png
-        Resources/Yelp/reviewsFromYelpRED@2x.png
-        Resources/Yelp/reviewsFromYelpRED@3x.png
         Resources/yelp_powered_btn_light.png
         Resources/yelp_powered_btn_light@2x.png
         Resources/yelp_powered_btn_light@3x.png
         Resources/yelp_review_btn_light.png
         Resources/yelp_review_btn_light@2x.png
         Resources/yelp_review_btn_light@3x.png
-        Resources/Yelp/stars_0_0.png
-        Resources/Yelp/stars_0_0@2x.png
-        Resources/Yelp/stars_0_0@3x.png
-        Resources/Yelp/stars_1_0.png
-        Resources/Yelp/stars_1_0@2x.png
-        Resources/Yelp/stars_1_0@3x.png
-        Resources/Yelp/stars_1_5.png
-        Resources/Yelp/stars_1_5@2x.png
-        Resources/Yelp/stars_1_5@3x.png
-        Resources/Yelp/stars_2_0.png
-        Resources/Yelp/stars_2_0@2x.png
-        Resources/Yelp/stars_2_0@3x.png
-        Resources/Yelp/stars_2_5.png
-        Resources/Yelp/stars_2_5@2x.png
-        Resources/Yelp/stars_2_5@3x.png
-        Resources/Yelp/stars_3_0.png
-        Resources/Yelp/stars_3_0@2x.png
-        Resources/Yelp/stars_3_0@3x.png
-        Resources/Yelp/stars_3_5.png
-        Resources/Yelp/stars_3_5@2x.png
-        Resources/Yelp/stars_3_5@3x.png
-        Resources/Yelp/stars_4_0.png
-        Resources/Yelp/stars_4_0@2x.png
-        Resources/Yelp/stars_4_0@3x.png
-        Resources/Yelp/stars_4_5.png
-        Resources/Yelp/stars_4_5@2x.png
-        Resources/Yelp/stars_4_5@3x.png
-        Resources/Yelp/stars_5_0.png
-        Resources/Yelp/stars_5_0@2x.png
-        Resources/Yelp/stars_5_0@3x.png
-        Resources/Yelp/yelp_logo.png
-        Resources/Yelp/yelp_logo@2x.png
-        Resources/Yelp/yelp_logo@3x.png
-        Resources/Yelp/yelp_logo_100x50.png
-        Resources/interior_exit_down.png
-        Resources/interior_exit_down@2x.png
-        Resources/interior_exit_down@3x.png
-        Resources/interior_exit.png
-        Resources/interior_exit@2x.png
-        Resources/interior_exit@3x.png
-        Resources/floor_selection_button_down.png
-        Resources/floor_selection_button_down@2x.png
-        Resources/floor_selection_button_down@3x.png
-        Resources/floor_selection_button.png
-        Resources/floor_selection_button@2x.png
-        Resources/floor_selection_button@3x.png
-        Resources/default_water_reflection_cube_map_negX.png
-        Resources/default_water_reflection_cube_map_negY.png
-        Resources/default_water_reflection_cube_map_negZ.png
-        Resources/default_water_reflection_cube_map_posX.png
-        Resources/default_water_reflection_cube_map_posY.png
-        Resources/default_water_reflection_cube_map_posZ.png
         ExampleApp/Images.xcassets
 )
