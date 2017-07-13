@@ -195,7 +195,7 @@ namespace ExampleApp
                     
                     ShowHighlightsForResults(results);
                     
-                    bool hasResults = m_searchResultRepository.GetItemCount() > 0;
+                    bool hasResults = results.size() > 0;
                     ActivateLabels(!hasResults);
                 }
 
