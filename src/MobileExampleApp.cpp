@@ -567,15 +567,11 @@ namespace ExampleApp
 
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
 
-        m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
-                                                                                         m_pWorld->GetSceneModelsModule().GetLocalSceneModelFactory(),
-                                                                                         m_platformAbstractions,
-                                                                                         m_pWorld->GetLocationService(),
+        m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetLocationService(),
                                                                                          m_pWorld->GetTerrainModelModule(),
                                                                                          m_pWorld->GetMapModule(),
                                                                                          interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                          m_pVisualMapModule->GetVisualMapService(),
-                                                                                         m_screenProperties,
                                                                                          m_messageBus);
 
         m_pSurveyModule = Eegeo_NEW(Surveys::SdkModel::SurveyModule)(m_messageBus,
