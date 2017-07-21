@@ -61,29 +61,15 @@ namespace ExampleApp
                 {
                     m_currentLocationEcef = newLocationEcef;
                 }
-
-                Eegeo::Space::LatLongAltitude lla = Eegeo::Space::ConvertEcefToLatLongAltitude(m_currentLocationEcef);
                 
-                double altitude;
-                m_locationService.GetAltitude(altitude);
+                Eegeo::Space::LatLong coord = Eegeo::Space::LatLong::FromECEF(m_currentLocationEcef);
                 int floorIndex;
                 m_locationService.GetFloorIndex(floorIndex);
-                const Eegeo::Resources::Interiors::InteriorId interiorId;
+                const Eegeo::Resources::Interiors::InteriorId& interiorId = m_locationService.GetInteriorId();
                 
-                Eegeo::Positioning::PointOnMapBuilder builder;
-                builder.SetCoordinate(lla.GetLatitudeInDegrees(), lla.GetLongitudeInDegrees());
-                builder.SetIndoorMap(m_locationService.GetInteriorId().Value(), floorIndex);
-                
-                const Eegeo::Positioning::PointOnMapCreateParams& createParams = builder.Build();
-                const bool isUsingFloorIndex = true;
-                
-                m_blueSphereModel.SetLocation(Eegeo::Space::LatLong(createParams.GetLatitudeDegrees(), createParams.GetLongitudeDegrees()),
-                                              createParams.GetElevation(),
-                                              createParams.GetElevationMode(),
-                                              createParams.GetInteriorId(),
-                                              createParams.GetInteriorFloorNumber(),
-                                              isUsingFloorIndex);
-                
+                m_blueSphereModel.SetCoordinate(coord);
+                m_blueSphereModel.SetIndoorMap(interiorId.Value(), floorIndex);
+
                 return true;
             }
             
