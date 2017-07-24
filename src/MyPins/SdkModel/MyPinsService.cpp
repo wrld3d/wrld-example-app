@@ -185,7 +185,7 @@ namespace ExampleApp
                                                       bool shouldShare)
             {
                 MyPinModel::TPinIdType idForThisPin = ++m_lastIdUsed;
-                const std::string pinIconKey = "my_pins";
+                const std::string pinIconKey = "my_location";
                 
                 IMyPinBoundObject& boundObject = *m_myPinBoundObjectFactory.CreateUserCreatedPinBoundObject(m_myPinsFileIO,
                                                                                                             idForThisPin,
