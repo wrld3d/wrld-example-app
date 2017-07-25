@@ -17,7 +17,6 @@
     BOOL m_imageAttached;
     float m_maxImageWidth;
 
-    BOOL m_usePopover;
     float m_popoverX;
     float m_popoverY;
 
@@ -78,7 +77,5 @@
 @property (nonatomic, retain) UIButton* pCameraButton;
 @property (nonatomic, retain) UIButton* pGalleryButton;
 @property (nonatomic, retain) UIButton* pConfirmButton;
-
-@property (nonatomic, retain) UIPopoverController* pPopover;
 
 @end

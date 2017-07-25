@@ -207,13 +207,16 @@ enum CompassViewState
 
 - (void) notifyGpsUnauthorized
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Services disabled"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Location Services disabled"
                                                     message:@"GPS Compass inaccessable: Location Services are not enabled for this application. You can change this in your device settings."
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-    [alert release];
+                                                    preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    UIViewController *viewController = window.rootViewController;
+    [viewController presentViewController:alert animated:YES completion:nil];
+    //[alert show];
+    //[alert release];
 }
 
 - (void) updateHeading:(float)angleRadians

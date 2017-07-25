@@ -63,34 +63,43 @@ namespace ExampleApp
         }
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
-                                                            message:alertMessage
-                                                           delegate:self
-                                                  cancelButtonTitle:noMessage
-                                                  otherButtonTitles:yesMessage, nil];
+            //UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
+            //                                                message:alertMessage
+            //                                               delegate:self
+            //                                      cancelButtonTitle:noMessage
+            //                                      otherButtonTitles:yesMessage, nil];
             
-            [alert show];
-            [alert release];
+            //[alert show];
+            //[alert release];
+            
+            
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle
+                                       message:alertMessage
+                                       preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:noMessage style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                [self doPreload:false];
+            }]];
+            [alert addAction:[UIAlertAction actionWithTitle:yesMessage style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                [self doPreload:true];
+            }]];
+
+            
+            UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+            UIViewController *viewController = window.rootViewController;
+            [viewController presentViewController:alert animated:YES completion:nil];
         }
     }
 
     return self;
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)doPreload:(bool) shouldPreload
 {
     if(m_handeled)
     {
         return;
     }
     m_handeled = true;
-    
-    bool shouldPreload = false;
-
-    if (buttonIndex == 1)
-    {
-        shouldPreload = true;
-    }
 
     m_pInitialExperiencePreLoadModel->HandleDismiss(shouldPreload);
 }

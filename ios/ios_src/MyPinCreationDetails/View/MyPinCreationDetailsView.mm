@@ -94,7 +94,6 @@
         self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pFooterContainer addSubview: self.pConfirmButton];
 
-        m_usePopover = !ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
 
         [self layoutSubviews];
         [self setTouchExclusivity: self];
@@ -357,23 +356,7 @@
     imagePicker.delegate=self;
     imagePicker.allowsEditing = NO;
 
-    if(m_usePopover)
-    {
-        self.pPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
-
-        CGRect popoverRect = CGRectMake(m_popoverX, m_popoverY, 1.f, 1.f);
-
-        [self.pPopover presentPopoverFromRect:popoverRect
-         inView:self.pControlContainer
-         permittedArrowDirections:UIPopoverArrowDirectionDown
-         animated:YES];
-
-        [self.pPopover setDelegate: self];
-    }
-    else
-    {
-        [m_pRootViewController presentViewController:imagePicker animated:YES completion:nil];
-    }
+    [m_pRootViewController presentViewController:imagePicker animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
@@ -382,19 +365,11 @@
     [self resizeImageViewToFit:image.size.width :image.size.height];
 
     m_imageAttached = YES;
-    if(m_usePopover)
-    {
-        [self.pPopover dismissPopoverAnimated: YES];
-    }
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    if(m_usePopover)
-    {
-        [self.pPopover dismissPopoverAnimated: YES];
-    }
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -407,14 +382,24 @@
 {
     if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera] == NO)
     {
-        UIAlertView* noCameraAlert = [[UIAlertView alloc] initWithTitle: @"No Camera!"
-                                      message: @"This device has no available camera"
-                                      delegate: nil
-                                      cancelButtonTitle: @"Dismiss"
-                                      otherButtonTitles: nil];
+        //UIAlertView* noCameraAlert = [[UIAlertView alloc] initWithTitle: @"No Camera!"
+        //                              message: @"This device has no available camera"
+        //                              delegate: nil
+        //                              cancelButtonTitle: @"Dismiss"
+        //                              otherButtonTitles: nil];
+        
 
-        [noCameraAlert show];
-        [noCameraAlert release];
+        //[noCameraAlert show];
+        //[noCameraAlert release];
+        
+        UIAlertController *noCameraAlert = [UIAlertController alertControllerWithTitle:@"No Camera!"
+                                            message:@"This device has no available camera"
+                                            preferredStyle:UIAlertControllerStyleAlert];
+        
+        [noCameraAlert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [m_pRootViewController presentViewController:noCameraAlert animated:YES completion:nil];
+        
         return;
     }
 
@@ -422,14 +407,24 @@
     {
         NSString* appName =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
         NSString* message = [NSString stringWithFormat: @"Please ensure %@ has camera access in your privacy settings", appName];
-        UIAlertView* noPermissionsAlert = [[UIAlertView alloc] initWithTitle: @"Unable to access camera"
-                                                                     message: message
-                                                                    delegate: nil
-                                                           cancelButtonTitle: @"Dismiss"
-                                                           otherButtonTitles: nil];
         
-        [noPermissionsAlert show];
-        [noPermissionsAlert release];
+        //UIAlertView* noPermissionsAlert = [[UIAlertView alloc] initWithTitle: @"Unable to access camera"
+        //                                                             message: message
+        //                                                            delegate: nil
+        //                                                   cancelButtonTitle: @"Dismiss"
+        //                                                   otherButtonTitles: nil];
+        
+        //[noPermissionsAlert show];
+        //[noPermissionsAlert release];
+        
+        UIAlertController *noPermissionsAlert = [UIAlertController alertControllerWithTitle:@"Unable to access camera"
+                                                    message:message
+                                                    preferredStyle:UIAlertControllerStyleAlert];
+        
+        [noPermissionsAlert addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [m_pRootViewController presentViewController:noPermissionsAlert animated:YES completion:nil];
+        
         return;
     }
     
@@ -462,12 +457,8 @@
     m_pInterop->OnConfirmed();
 }
 
-- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
+- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverController
 {
-    if(m_usePopover)
-    {
-        [self.pPopover dismissPopoverAnimated: YES];
-    }
     return YES;
 }
 
@@ -623,23 +614,29 @@
 {
     if (self.pCheckbox.selected && !m_hasNetworkConnectivity)
     {
-        UIAlertView* alert = [[[UIAlertView alloc] initWithTitle: @"No network connection"
-                               message: @"Pins cannot be shared when no network connection is available"
-                               delegate: nil
-                               cancelButtonTitle: @"Dismiss"
-                               otherButtonTitles: nil] autorelease];
+        //UIAlertView* alert = [[[UIAlertView alloc] initWithTitle: @"No network connection"
+        //                       message: @"Pins cannot be shared when no network connection is available"
+        //                       delegate: nil
+        //                      cancelButtonTitle: @"Dismiss"
+        //                       otherButtonTitles: nil] autorelease];
 
-        [alert show];
+        //[alert show];
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"No network connection"
+                                                                                    message:@"Pins cannot be shared when no network connection is available"
+                                                                             preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"Dismiss" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [m_pRootViewController presentViewController:alert animated:YES completion:nil];
+        
+        
         self.pCheckbox.selected = NO;
     }
 }
 
 - (void)onPause
 {
-    if(m_usePopover)
-    {
-        [self.pPopover dismissPopoverAnimated: YES];
-    }
     [m_pRootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

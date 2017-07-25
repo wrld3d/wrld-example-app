@@ -39,7 +39,7 @@ namespace ExampleApp
             void URLRequestHandler::RequestExternalURL(const std::string& url)
             {
                 NSString *urlLink = [NSString stringWithUTF8String:url.c_str()];
-                NSString *escaped = [urlLink stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                NSString *escaped = [urlLink stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
                 
                 NSURL* escapedUrl = [NSURL URLWithString:escaped];
                 
