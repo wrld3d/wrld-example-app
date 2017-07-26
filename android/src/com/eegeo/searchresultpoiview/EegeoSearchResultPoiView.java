@@ -332,13 +332,15 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         if(!customViewUrl.equals(""))
         {
         	m_webView.loadUrl(customViewUrl);
-        	if(customViewHeight != -1)
-        	{
-        		RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) m_webView.getLayoutParams();
-            	params.height = m_activity.dipAsPx(customViewHeight);
-            	m_webView.setLayoutParams(params);
-        	}
-        	m_webView.getSettings().setLoadWithOverviewMode(true);
+
+            final int defaultViewHeight = 256;
+            final int viewHeight = (customViewHeight != -1) ? customViewHeight : defaultViewHeight;
+            
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) m_webView.getLayoutParams();
+            params.height = m_activity.dipAsPx(viewHeight);
+            m_webView.setLayoutParams(params);
+
+            m_webView.getSettings().setLoadWithOverviewMode(true);
         	m_webView.getSettings().setUseWideViewPort(true);
         	m_poiImageViewContainer.setVisibility(View.GONE);
         	m_webViewContainer.setVisibility(View.VISIBLE);
