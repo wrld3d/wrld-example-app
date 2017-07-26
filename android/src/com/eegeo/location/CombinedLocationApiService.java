@@ -21,8 +21,8 @@ public class CombinedLocationApiService
     private Activity m_activity;
     private static final String TAG = "CombinedLocationApiService";
 
-    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000 * 60;
-    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000 * 5;
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 1000 * 1;
     
     private GoogleApiClient m_googleApiClient;
     private LocationRequest m_locationRequest;
