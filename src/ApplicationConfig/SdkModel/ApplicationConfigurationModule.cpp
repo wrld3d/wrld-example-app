@@ -143,6 +143,8 @@ namespace ExampleApp
 
                 platformConfig.MapLayersConfig.Interiors.LabelFontTextureFilename = environmentFontFilename;
                 platformConfig.MapLayersConfig.DebugRenderingModuleConfig.DebugFontFilename = defaultFontFilename;
+                
+                platformConfig.MapLayersConfig.BlueSphereConfig.CreateViews = true;
                 return platformConfig;
             }
             

@@ -29,6 +29,7 @@ namespace ExampleApp
                                     VisualMap::SdkModel::IVisualMapService& visualMapService,
                                     Eegeo::BlueSphere::BlueSphereView& blueSphereView,
                                     Eegeo::BlueSphere::BlueSphereAnchorView& blueSphereAnchorView,
+                                    const bool createBlueSphereViews,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerController();
 
@@ -48,6 +49,8 @@ namespace ExampleApp
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
+                
+                bool m_createBlueSphereViews;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback0<GpsMarkerController> m_floorSelectedCallback;

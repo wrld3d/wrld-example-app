@@ -18,6 +18,7 @@ namespace ExampleApp
                                              Eegeo::Modules::Map::MapModule& mapModule,
                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                             const bool createBlueSphereViews,
                                              ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, mapModule.GetBlueSphereModule().GetBlueSphereModel());
@@ -29,12 +30,12 @@ namespace ExampleApp
                                                                visualMapService,
                                                                mapModule.GetBlueSphereModule().GetBlueSphereView(),
                                                                mapModule.GetBlueSphereModule().GetBlueSphereAnchorView(),
+                                                               createBlueSphereViews,
                                                                messageBus);
             }
             
             GpsMarkerModule::~GpsMarkerModule()
             {
-                
                 Eegeo_DELETE m_pController;
                 Eegeo_DELETE m_pModel;
             }

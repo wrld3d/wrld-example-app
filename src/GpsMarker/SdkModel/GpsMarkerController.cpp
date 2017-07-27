@@ -9,6 +9,7 @@
 #include "ScreenProperties.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorsModel.h"
+#include "BlueSphereConfiguration.h"
 
 namespace ExampleApp
 {
@@ -25,6 +26,7 @@ namespace ExampleApp
                                                      VisualMap::SdkModel::IVisualMapService& visualMapService,
                                                      Eegeo::BlueSphere::BlueSphereView& blueSphereView,
                                                      Eegeo::BlueSphere::BlueSphereAnchorView& blueSphereAnchorView,
+                                                     const bool createBlueSphereViews,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
             : m_model(model)
             , m_interiorInteractionModel(interiorInteractionModel)
@@ -39,18 +41,26 @@ namespace ExampleApp
             , m_blueSphereView(blueSphereView)
             , m_blueSphereAnchorView(blueSphereAnchorView)
             , m_environmentFlatteningService(environmentFlatteningService)
+            , m_createBlueSphereViews(createBlueSphereViews)
             {
-                m_messageBus.SubscribeNative(m_modalityChangedHandlerBinding);
-                m_messageBus.SubscribeNative(m_visibilityChangedHandlerBinding);
-                m_messageBus.SubscribeUi(m_interiorsExplorerStateChangedCallback);
+                
+                if(m_createBlueSphereViews)
+                {
+                    m_messageBus.SubscribeNative(m_modalityChangedHandlerBinding);
+                    m_messageBus.SubscribeNative(m_visibilityChangedHandlerBinding);
+                    m_messageBus.SubscribeUi(m_interiorsExplorerStateChangedCallback);
+                }
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_floorSelectedCallback);
             }
 
             GpsMarkerController::~GpsMarkerController()
             {
-                m_messageBus.UnsubscribeUi(m_interiorsExplorerStateChangedCallback);
-                m_messageBus.UnsubscribeNative(m_visibilityChangedHandlerBinding);
-                m_messageBus.UnsubscribeNative(m_modalityChangedHandlerBinding);
+                if(m_createBlueSphereViews)
+                {
+                    m_messageBus.UnsubscribeUi(m_interiorsExplorerStateChangedCallback);
+                    m_messageBus.UnsubscribeNative(m_visibilityChangedHandlerBinding);
+                    m_messageBus.UnsubscribeNative(m_modalityChangedHandlerBinding);
+                }
                 m_interiorInteractionModel.UnregisterInteractionStateChangedCallback(m_floorSelectedCallback);
             }
 
@@ -92,8 +102,11 @@ namespace ExampleApp
                 std::string currentWeather;
                 GetCurrentVisualMapTime(currentTime, currentWeather);
                 bool isFlattened = m_environmentFlatteningService.IsFlattened();
-                m_blueSphereView.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
-                m_blueSphereAnchorView.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
+               if(m_createBlueSphereViews)
+                {
+                    m_blueSphereView.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
+                    m_blueSphereAnchorView.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
+                }
             }
             
             void GpsMarkerController::GetCurrentVisualMapTime(std::string& currentTime, std::string& currentWeather)

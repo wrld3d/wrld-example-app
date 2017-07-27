@@ -357,7 +357,7 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
 
-        CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening);
+        CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening, platformConfig.MapLayersConfig.BlueSphereConfig.CreateViews);
 
         namespace IntHighlights = InteriorsExplorer::SdkModel::Highlights;
 
@@ -491,7 +491,8 @@ namespace ExampleApp
     }
 
     void MobileExampleApp::CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                                         const bool interiorsAffectedByFlattening)
+                                                         const bool interiorsAffectedByFlattening,
+                                                         const bool createBlueSphereViews)
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
 
@@ -572,6 +573,7 @@ namespace ExampleApp
                                                                                          m_pWorld->GetMapModule(),
                                                                                          interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                          m_pVisualMapModule->GetVisualMapService(),
+                                                                                         createBlueSphereViews,
                                                                                          m_messageBus);
 
         m_pSurveyModule = Eegeo_NEW(Surveys::SdkModel::SurveyModule)(m_messageBus,

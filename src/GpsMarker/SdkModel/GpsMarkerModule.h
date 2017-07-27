@@ -8,6 +8,7 @@
 #include "Location.h"
 #include "BidirectionalBus.h"
 #include "VisualMapService.h"
+#include "BlueSphere.h"
 
 namespace ExampleApp
 {
@@ -24,6 +25,7 @@ namespace ExampleApp
                                 Eegeo::Modules::Map::MapModule& mapModule,
                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                 VisualMap::SdkModel::IVisualMapService& visualMapService,
+                                const bool createBlueSphereViews,
                                 ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerModule();
                 
