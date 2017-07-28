@@ -163,7 +163,6 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
     public String getDescription()
     {
         String descriptionText = m_description.getText().toString();
-        descriptionText = descriptionText.isEmpty() ? "No description" : descriptionText;
         return descriptionText;
     }
 
