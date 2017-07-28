@@ -244,12 +244,7 @@ namespace ExampleAppWPF
 
         public string GetDescription()
         {
-            if (m_description.Text.Length > 0)
-            {
-                return m_description.Text;
-            }
-
-            return "No description";
+            return m_description.Text;
         }
 
         public bool GetShouldShare()

@@ -95,7 +95,7 @@
                             </Grid>
                             <ScrollViewer Height="{DynamicResource PinDetailsViewHeight}" Width="auto" Name="PinDetailsView" PanningRatio="1" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" CanContentScroll="False">
                                 <StackPanel Width="Auto">
-                                    <TextBlock Text=" Description" Background="{StaticResource Gold}" Foreground="{StaticResource White}" Width="Auto" Height="20" Margin="5, 10, 5, 0" Visibility="{DynamicResource PinDetailsDescriptionTitleNormalVisibility}"/>
+                                    <TextBlock x:Name="DescriptionHeader" Text=" Description" Background="{StaticResource Gold}" Foreground="{StaticResource White}" Width="Auto" Height="20" Margin="5, 10, 5, 0" Visibility="{DynamicResource PinDetailsDescriptionTitleNormalVisibility}"/>
                                     <TextBlock x:Name="Description" TextWrapping="Wrap" Background="{StaticResource White}" Foreground="{DynamicResource PinDetailsDescriptionTextColour}" Width="Auto" Margin="{DynamicResource PinDetailsDescriptionMargin}" FontSize="{DynamicResource PinDetailsDescriptionFontSize}"/>
                                     <TextBlock x:Name="ImageHeader" Text=" Image" Background="{StaticResource Gold}" Foreground="{StaticResource White}" Width="Auto" Height="20" Margin="5, 10, 5, 0" Visibility="{DynamicResource PinDetailsDescriptionImageVisibility}"/>
                                     <Image x:Name="Image" Margin="5, 10, 5, 0" Stretch="Uniform" Visibility="{DynamicResource PinDetailsDescriptionImageVisibility}"/>

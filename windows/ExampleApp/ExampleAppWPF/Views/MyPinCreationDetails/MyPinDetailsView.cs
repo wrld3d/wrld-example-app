@@ -19,8 +19,8 @@ namespace ExampleAppWPF
         private IntPtr m_nativeCallerPointer;
         
         private TextBlock m_titleView = null;
+        private TextBlock m_descriptionHeader = null;
         private TextBlock m_descriptionView = null;
-        private TextBlock m_descriptHeader = null;
         private TextBlock m_imageHeader = null;
         private Image m_imageView = null;
         private Button m_closeButton = null;
@@ -62,6 +62,7 @@ namespace ExampleAppWPF
         public override void OnApplyTemplate()
         {
             m_titleView = (TextBlock)CheckAndGetProperty("Title");
+            m_descriptionHeader = (TextBlock)CheckAndGetProperty("DescriptionHeader");
             m_descriptionView = (TextBlock)CheckAndGetProperty("Description");
             m_imageView = (Image)CheckAndGetProperty("Image");
             m_imageHeader = (TextBlock)CheckAndGetProperty("ImageHeader");
@@ -115,6 +116,10 @@ namespace ExampleAppWPF
 
             m_titleView.Text = title;
             m_descriptionView.Text = description;
+
+            Visibility descriptionVisibility = (m_descriptionView.Text.Length > 0) ? Visibility.Visible : Visibility.Hidden;
+            m_descriptionHeader.Visibility = descriptionVisibility;
+            m_descriptionView.Visibility = descriptionVisibility;
 
             if (imagePath.Length > 0)
             {
