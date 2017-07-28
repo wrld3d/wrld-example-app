@@ -66,7 +66,7 @@ namespace ExampleApp
             std::string MyPinCreationDetailsViewInterop::GetDescription() const
             {
                 NSString* description = m_pView.pPoiDescriptionBox.text;
-                std::string descriptionAsString = (description != nil && description.length > 0) ? [description UTF8String] : "No Description";
+                std::string descriptionAsString = [description UTF8String];
                 return descriptionAsString;
             }
 
