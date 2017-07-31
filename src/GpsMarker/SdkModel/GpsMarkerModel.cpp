@@ -4,6 +4,8 @@
 #include "LatLongAltitude.h"
 #include "TerrainHeightProvider.h"
 #include "MathsHelpers.h"
+#include "PointOnMapBuilder.h"
+#include "CoordinateConversion.h"
 
 namespace ExampleApp
 {
@@ -11,22 +13,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            namespace
-            {
-                const float SphereHeightAboveMarker = 4.5f;
-                const float AnchorCyclinerHeightAboveMarker = 0.8f;
-            }
-
             GpsMarkerModel::GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
-                                           Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider)
+                                           Eegeo::BlueSphere::BlueSphereModel& blueSphereModel)
             : m_locationService(locationService)
-            , m_terrainHeightProvider(terrainHeightProvider)
-            , m_hasLocation(false)
             , m_currentLocationEcef(Eegeo::dv3::Zero())
             , m_currentHeadingRadians(0)
             , m_currentHeadingVelocity(0)
+            , m_blueSphereModel(blueSphereModel)
             {
-                
+                m_blueSphereModel.SetEnabled(true);
             }
             
             GpsMarkerModel::~GpsMarkerModel()
@@ -36,26 +31,20 @@ namespace ExampleApp
             
             bool GpsMarkerModel::UpdateGpsPosition(float dt)
             {
-                Eegeo::Space::LatLong latLong(0,0);
-                if(!m_locationService.GetLocation(latLong))
+                Eegeo::Space::LatLong locationServiceLatLong(0,0);
+                if(!m_locationService.GetLocation(locationServiceLatLong))
                 {
-                    m_hasLocation = false;
                     return false;
                 }
                 
                 float terrainHeight = 0.0f;
-                Eegeo::dv3 ecefPositionFlat = latLong.ToECEF();
+                Eegeo::dv3 ecefPositionFlat = locationServiceLatLong.ToECEF();
                 
                 if(m_locationService.IsIndoors())
                 {
                     double altitude;
                     m_locationService.GetAltitude(altitude);
                     terrainHeight = static_cast<float>(altitude);
-                }
-                else if(!m_terrainHeightProvider.TryGetHeight(ecefPositionFlat, 1, terrainHeight))
-                {
-                    m_hasLocation = false;
-                    return false;
                 }
                 
                 Eegeo::dv3 newLocationEcef = ecefPositionFlat + (ecefPositionFlat.Norm() * terrainHeight);
@@ -73,7 +62,14 @@ namespace ExampleApp
                     m_currentLocationEcef = newLocationEcef;
                 }
                 
-                m_hasLocation = true;
+                Eegeo::Space::LatLong coord = Eegeo::Space::LatLong::FromECEF(m_currentLocationEcef);
+                int floorIndex;
+                m_locationService.GetFloorIndex(floorIndex);
+                const Eegeo::Resources::Interiors::InteriorId& interiorId = m_locationService.GetInteriorId();
+                
+                m_blueSphereModel.SetCoordinate(coord);
+                m_blueSphereModel.SetIndoorMap(interiorId.Value(), floorIndex);
+
                 return true;
             }
             
@@ -106,30 +102,13 @@ namespace ExampleApp
                 {
                     Eegeo::Helpers::MathsHelpers::AlphaBetaFilter(headingRadians, m_currentHeadingRadians, m_currentHeadingVelocity, m_currentHeadingRadians, m_currentHeadingVelocity, dt);
                 }
-            }
-            
-            const double GpsMarkerModel::GetSmoothedHeadingDegrees() const
-            {
-                double smoothedHeadingDegrees = Eegeo::Math::Rad2Deg(m_currentHeadingRadians);
                 
-                return smoothedHeadingDegrees;
+                m_blueSphereModel.SetHeadingRadians(m_currentHeadingRadians);
             }
             
-            int GpsMarkerModel::GetCurrentFloorIndex() const
+            void GpsMarkerModel::SetEnabled(bool enabled)
             {
-                int floorIndex = 0;
-                m_locationService.GetFloorIndex(floorIndex);
-                return floorIndex;
-            }
-
-            const float GpsMarkerModel::GetSphereHeightAboveMarker() const
-            {
-                return SphereHeightAboveMarker;
-            }
-
-            const float GpsMarkerModel::GetAnchorCyclinerHeightAboveMarker() const
-            {
-                return AnchorCyclinerHeightAboveMarker;
+                m_blueSphereModel.SetEnabled(enabled);
             }
         }
     }

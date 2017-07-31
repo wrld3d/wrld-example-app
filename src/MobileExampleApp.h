@@ -188,7 +188,8 @@ namespace ExampleApp
         ExampleApp::Automation::IScreenshotService& m_screenshotService;
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                           const bool interiorsAffectedByFlattening);
+                                           const bool interiorsAffectedByFlattening,
+                                           const bool createBlueSphereViews);
 
         void DestroyApplicationModelModules();
 
