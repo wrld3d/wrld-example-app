@@ -27,6 +27,10 @@ namespace ExampleApp
                 void UpdateHeading(float dt);
                 
                 void SetEnabled(bool enabled);
+
+                const float GetSphereHeightAboveMarker() const;
+
+                bool IsLocationIndoors() const;
                 
             private:
                 Eegeo::Location::ILocationService& m_locationService;
