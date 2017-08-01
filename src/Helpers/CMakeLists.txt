@@ -13,8 +13,6 @@ set(currsources
   ../src/Helpers/IStateMachineState.h
   ../src/Helpers/SizeHelpers.cpp
   ../src/Helpers/SizeHelpers.h
-  ../src/Helpers/ScaleHelpers.cpp
-  ../src/Helpers/ScaleHelpers.h
   ../src/Helpers/StateMachine.cpp
   ../src/Helpers/StateMachine.h
 )

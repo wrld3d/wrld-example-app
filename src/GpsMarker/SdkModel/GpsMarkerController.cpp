@@ -5,7 +5,6 @@
 #include "EnvironmentFlatteningService.h"
 #include "CameraHelpers.h"
 #include "VisualMapState.h"
-#include "ScaleHelpers.h"
 #include "ScreenProperties.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorsModel.h"
