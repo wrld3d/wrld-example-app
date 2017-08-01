@@ -157,7 +157,10 @@ namespace ExampleApp
             {
                 for(auto i = m_tagSearchRepository.GetItemCount(); i > 0; i--)
                 {
-                    m_tagSearchRepository.RemoveItem(m_tagSearchRepository.GetItemAtIndex(i-1));
+                    if (i <= m_tagSearchRepository.GetItemCount())
+                    {
+                        m_tagSearchRepository.RemoveItem(m_tagSearchRepository.GetItemAtIndex(i-1));
+                    }
                 }
             }
             
@@ -165,8 +168,11 @@ namespace ExampleApp
             {
                 for(auto i = m_previousTagSearchRepository.GetItemCount(); i > 0; i--)
                 {
-                    const TagSearch::View::TagSearchModel& searchRepo = m_previousTagSearchRepository.GetItemAtIndex(i-1);
-                    m_previousTagSearchRepository.RemoveItem(searchRepo);
+                    if (i <= m_previousTagSearchRepository.GetItemCount())
+                    {
+                        const TagSearch::View::TagSearchModel& searchRepo = m_previousTagSearchRepository.GetItemAtIndex(i-1);
+                        m_previousTagSearchRepository.RemoveItem(searchRepo);
+                    }
                 }
             }
             
