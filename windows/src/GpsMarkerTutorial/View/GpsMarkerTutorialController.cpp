@@ -28,6 +28,7 @@ namespace ExampleApp
 				, m_isInInterior(false)
 				, m_oldCameraPosition(Eegeo::dv3::Zero())
 				, m_cameraIsMoving(false)
+				, m_oldGpsMode(ExampleApp::Compass::GpsMode::Values::GpsDisabled)
 				, m_compassModeChangedHandler(this, &GpsMarkerTutorialController::OnCompassModeChangedMessage)
 				, m_appModeChangedHandler(this, &GpsMarkerTutorialController::OnAppModeChangedMessage)
 				, m_interiorStateChangedCallback(this, &GpsMarkerTutorialController::OnInteriorStateChanged)
@@ -102,6 +103,12 @@ namespace ExampleApp
 				switch (message.GetMode())
 				{
 				case ExampleApp::Compass::GpsMode::GpsFollow:
+					if(m_oldGpsMode == ExampleApp::Compass::GpsMode::GpsDisabled)
+					{
+						m_cameraIsMoving = true;
+						m_shouldShowTutorial = true;
+					}
+					break;
 				case ExampleApp::Compass::GpsMode::GpsCompassMode:
 					m_cameraIsMoving = true;
 					m_shouldShowTutorial = true;
@@ -110,6 +117,8 @@ namespace ExampleApp
 					Eegeo_ASSERT(false, "Invalid gps mode");
 					break;
 				}
+				
+				m_oldGpsMode = message.GetMode();
 			}
 
 			void GpsMarkerTutorialController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
