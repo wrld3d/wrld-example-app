@@ -140,7 +140,7 @@ namespace ExampleApp
 
                 Eegeo::v3 markerUp = scaledPoint.Norm().ToSingle();
                 
-				const float scale = ExampleApp::Helpers::ScaleHelpers::ComputeModelScaleForScreenWithPixelScaling(renderCamera, scaledPoint, m_screenPixelScale, m_screenOversampleScale) * 4.25f;
+				const float scale = Eegeo::Helpers::ScaleHelpers::ComputeModelScaleForScreenWithPixelScaling(renderCamera, scaledPoint, m_screenPixelScale, m_screenOversampleScale) * 4.25f;
                 Eegeo::v3 markerScale = Eegeo::v3(scale, scale, scale);
                 
                 const Eegeo::dv3& ecefCameraPosition = renderCamera.GetEcefLocation();
