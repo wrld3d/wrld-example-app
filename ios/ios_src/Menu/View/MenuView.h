@@ -12,6 +12,14 @@
 
 @class MenuView;
 
+enum MenuState
+{
+    OFF_SCREEN,
+    CLOSED_ON_SCREEN,
+    OPEN_ON_SCREEN,
+    ANIMATING
+};
+
 @interface MenuView : UIView
 {
     CustomTableDataProvider* m_pDataProvider;
@@ -58,6 +66,8 @@
     float m_menuContainerClosedOnScreenY;
     float m_menuContainerOpenOnScreenX;
     float m_menuContainerOpenOnScreenY;
+    
+    MenuState m_menuState;
 }
 
 - (id) initWithParams:(float)width

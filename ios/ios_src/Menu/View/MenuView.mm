@@ -10,14 +10,6 @@
 #include "ViewFrameAnimator.h"
 #include "CircleCurve.h"
 
-enum MenuState
-{
-    OFF_SCREEN,
-    CLOSED_ON_SCREEN,
-    OPEN_ON_SCREEN,
-    ANIMATING
-};
-
 @interface MenuView()<UIGestureRecognizerDelegate>
 {
     ExampleApp::Menu::View::MenuViewInterop* m_pInterop;
@@ -25,8 +17,6 @@ enum MenuState
     UITapGestureRecognizer* m_tapGestureRecogniser;
     
     ExampleApp::Helpers::UIAnimation::ViewAnimationController* m_currentAnimationController;
-    
-    MenuState m_menuState;
 }
 
 @end

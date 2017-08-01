@@ -781,6 +781,14 @@
 
 - (void) onMenuStateUpdated
 {
+    switch (m_menuState)
+    {
+        case OFF_SCREEN: [self.pInputDelegate setMenuOpen:false]; break;
+        case CLOSED_ON_SCREEN: [self.pInputDelegate setMenuOpen:false]; break;
+        case OPEN_ON_SCREEN: [self.pInputDelegate setMenuOpen:true]; break;
+        default: break;
+    }
+    
     if(m_titleContainersRequireRefresh)
     {
         if(m_resultsVisible)
