@@ -221,6 +221,11 @@ namespace ExampleAppWPF
                                                    : CompassOuterShapeInactiveAlpha,
                                             Duration = RotationHighlightAnimationMilliseconds
                                         });
+
+            if (m_isInKioskMode)
+            {
+                EnableKioskCompassLocateButton(true);
+            }
         }
 
         private void EnableKioskCompassLocateButton(bool enable)

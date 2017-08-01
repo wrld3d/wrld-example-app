@@ -36,6 +36,7 @@ namespace ExampleApp
 				bool m_isInInterior;
 				Eegeo::dv3 m_oldCameraPosition;
 				bool m_cameraIsMoving;
+				ExampleApp::Compass::GpsMode::Values m_oldGpsMode;
 
 				const GpsMarker::SdkModel::GpsMarkerModel& m_gpsMarkerModel;
 				Eegeo::dv3 m_markerLocationEcef;
