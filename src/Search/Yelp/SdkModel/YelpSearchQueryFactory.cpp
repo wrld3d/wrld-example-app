@@ -23,7 +23,6 @@ namespace ExampleApp
             {
                 namespace
                 {
-                    const float MaxRadiusMetres = 40000.0f;
                     
                     std::string UrlGetParamsEncoder(const std::map<std::string, std::string>& params)
                     {
@@ -86,8 +85,6 @@ namespace ExampleApp
                         searchTerm = searchQuery.Query();
                     }
                     
-                    int radiusFilter = (int)((searchQuery.Radius() > MaxRadiusMetres || !searchQuery.IsTag()) ? MaxRadiusMetres : searchQuery.Radius());
-                    
                     std::map<std::string, std::string> params;
                     std::stringstream conversionStream;
                     
@@ -97,16 +94,9 @@ namespace ExampleApp
                     << "," << std::setprecision(17) << searchQuery.Location().GetLongitudeInDegrees();
                     std::string latLong = conversionStream.str();
                     
-                    conversionStream.clear();
-                    conversionStream.str("");
-                    
-                    conversionStream << radiusFilter;
-                    std::string radiusFilterStr = conversionStream.str();
-                    
                     params["term"] = searchTerm;
                     params["category_filter"] = categoryFilter.yelpCategoryFilter;
                     params["ll"] = latLong;
-                    params["radius_filter"] = radiusFilterStr;
                     params["limit"] = searchLimit;
                     
                     std::stringstream rawUrl;
