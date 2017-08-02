@@ -30,6 +30,7 @@ namespace ExampleAppWPF
         private double m_maxDelta = 0.0;
         private bool m_logging = false;
         private bool m_firstFrame = true;
+        private int m_buttonsDown = 0;
 
         private const float m_maxWaitPercentage = 1.1f;
 
@@ -183,7 +184,20 @@ namespace ExampleAppWPF
             KeyDown += OnKeyDown;
 
             MouseDown += MainWindow_MouseDown;
-            PreviewMouseDown += (o, e) => m_mapImage.HandlePreviewMouseDown((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers);
+            PreviewMouseDown += (o, e) =>
+            {
+                m_mapImage.HandlePreviewMouseDown((int)e.GetPosition(null).X, (int)e.GetPosition(null).Y, Keyboard.Modifiers);
+                m_buttonsDown++;
+            };
+            PreviewMouseUp += (o, e) =>
+            {
+                m_buttonsDown--;
+            };
+            PreviewMouseWheel += (o, e) =>
+            {
+                m_mapImage.SaveInputTime();
+            };
+
             MouseUp += MainWindow_MouseUp;
 
             TouchDown += OnTouchDown;
@@ -431,6 +445,11 @@ namespace ExampleAppWPF
             m_hasHadRenderEventSinceRender = false;
             ++m_frameCount;
             m_frameTimer.Restart();
+
+            if(m_buttonsDown>0)
+            {
+                m_mapImage.SaveInputTime();
+            }
 
             m_mapImage.Render((float)dt);
         }
