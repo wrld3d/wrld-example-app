@@ -21,13 +21,14 @@ namespace ExampleApp
                                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                              Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
                                              Eegeo::Markers::IMarkerService& markerService,
-                                             bool isInKioskMode)
+                                             bool isInKioskMode,
+                                             Eegeo::Location::NavigationService& navigationService)
             {
                 m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
 
                 m_pWorldPinsRepository = Eegeo_NEW(WorldPinsRepository);
                 
-                m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository, interiorMarkerPickingService, markerService, sdkDomainEventBus, messageBus);
+                m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository, interiorMarkerPickingService, markerService, sdkDomainEventBus, messageBus, navigationService);
                 
                 m_pWorldPinsVisibilityController = Eegeo_NEW(WorldPinsVisibilityController)(*m_pWorldPinsRepository,
                                                                                             messageBus,

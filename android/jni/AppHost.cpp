@@ -593,7 +593,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     		app.InteriorsExplorerModule().GetInteriorsExplorerModel(),
 			app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
             m_messageBus,
-            m_nativeState);
+            m_nativeState,
+            app.GetNavigationService());
 
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
             m_nativeState,

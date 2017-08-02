@@ -81,8 +81,7 @@ namespace ExampleApp
                                                              visualMapService,
                                                              messageBus,
                                                              metricsService,
-                                                             persistentSettings,
-                                                             navigationService);
+                                                             persistentSettings);
                 
                 m_pViewModel = Eegeo_NEW(View::InteriorsExplorerViewModel)(false, identityProvider.GetNextIdentity(), messageBus);
                 

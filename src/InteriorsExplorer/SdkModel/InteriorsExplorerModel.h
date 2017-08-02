@@ -32,8 +32,7 @@ namespace ExampleApp
                                        VisualMap::SdkModel::IVisualMapService& visualMapService,
                                        ExampleAppMessaging::TMessageBus& messageBus,
                                        Metrics::IMetricsService& metricsServic,
-                                       PersistentSettings::IPersistentSettingsModel& persistentSettings,
-                                       Eegeo::Location::NavigationService& navigationService);
+                                       PersistentSettings::IPersistentSettingsModel& persistentSettings);
                 ~InteriorsExplorerModel();
                 
                 void SelectFloor(int floor);
@@ -74,8 +73,6 @@ namespace ExampleApp
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Metrics::IMetricsService& m_metricsService;
-                
-                Eegeo::Location::NavigationService& m_navigationService;
                 
                 PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                 int m_interiorExitTutorialViewedCount;

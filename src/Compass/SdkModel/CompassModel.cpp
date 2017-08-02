@@ -40,7 +40,6 @@ namespace ExampleApp
                 , m_metricsService(metricsService)
                 , m_interiorExplorerModel(interiorExplorerModel)
                 , m_appModeModel(appModeModel)
-                , m_appModeChangedCallback(this, &CompassModel::OnAppModeChanged)
                 , m_alertBoxFactory(alertBoxFactory)
                 , m_failAlertHandler(this, &CompassModel::OnFailedToGetLocation)
                 , m_interiorFloorChangedCallback(this, &CompassModel::OnInteriorFloorChanged)
@@ -59,8 +58,6 @@ namespace ExampleApp
                 m_gpsModeToString[GpsMode::GpsFollow] = "GpsFollow";
                 m_gpsModeToString[GpsMode::GpsCompassMode] = "GpsCompassMode";
                 
-                
-                m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
                 m_interiorExplorerModel.InsertInteriorExplorerFloorSelectionDraggedCallback(m_interiorFloorChangedCallback);
             }
 
@@ -68,7 +65,6 @@ namespace ExampleApp
             {
                 
                 m_interiorExplorerModel.RemoveInteriorExplorerFloorSelectionDraggedCallback(m_interiorFloorChangedCallback);
-                m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
             }
 
             bool CompassModel::GetGpsModeActive() const
@@ -176,11 +172,14 @@ namespace ExampleApp
 
             void CompassModel::SetGpsMode(GpsMode::Values gpsMode)
             {
-                m_gpsMode = gpsMode;
-                m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[m_gpsMode]);
-                m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
+                if(!m_cameraController.IsTransitionInFlight())
+                {
+                    m_gpsMode = gpsMode;
+                    m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[m_gpsMode]);
+                    m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
                 
-                m_gpsModeChangedCallbacks.ExecuteCallbacks();
+                    m_gpsModeChangedCallbacks.ExecuteCallbacks();
+                }
             }
 
             float CompassModel::GetHeadingRadians() const
@@ -230,16 +229,6 @@ namespace ExampleApp
             void CompassModel::RemoveGpsModeUnauthorizedCallback(Eegeo::Helpers::ICallback0 &callback)
             {
                 m_gpsModeUnauthorizedCallbacks.RemoveCallback(callback);
-            }
-            
-            void CompassModel::OnAppModeChanged()
-            {
-                const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
-                if (appMode != AppModes::SdkModel::WorldMode && !m_isInKioskMode)
-                {
-                    DisableGpsMode();
-                    return;
-                }
             }
             
             void CompassModel::OnInteriorFloorChanged()

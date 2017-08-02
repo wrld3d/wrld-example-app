@@ -17,6 +17,7 @@
 #include "IInteriorsExplorerViewModule.h"
 #include "InteriorsExplorerView.h"
 #include "AndroidNativeState.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -34,7 +35,8 @@ namespace ExampleApp
                 InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
                 							InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
-											AndroidNativeState &nativeState);
+											AndroidNativeState &nativeState,
+                                            Eegeo::Location::NavigationService& navigationService);
                 
                 ~InteriorsExplorerViewModule();
                 
