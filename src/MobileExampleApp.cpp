@@ -1089,7 +1089,8 @@ namespace ExampleApp
                                                                                          m_sdkDomainEventBus,
                                                                                          interiorsPresentationModule.GetInteriorMarkerPickingService(),
                                                                                          mapModule.GetMarkersModule().GetMarkerService(),
-                                                                                         m_applicationConfiguration.IsInKioskMode());
+                                                                                         m_applicationConfiguration.IsInKioskMode(),
+                                                                                         *m_pNavigationService);
     }
     
     void MobileExampleApp::OnPause()

@@ -12,6 +12,7 @@
 #include "IAppModeModel.h" // FM: Included for definition of AppMode, may want to extract AppMode to separate .h
 #include <sstream>
 #include "InteriorsExplorerUINotifyMessage.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -26,7 +27,8 @@ namespace ExampleApp
                 InteriorsExplorerController(SdkModel::InteriorsExplorerModel& model,
                                             IInteriorsExplorerView& view,
                                             InteriorsExplorerViewModel& viewModel,
-                                            ExampleAppMessaging::TMessageBus& messageBus);
+                                            ExampleAppMessaging::TMessageBus& messageBus,
+                                            Eegeo::Location::NavigationService& navigationService);
                 
                 ~InteriorsExplorerController();
 
@@ -63,6 +65,8 @@ namespace ExampleApp
                 AppModes::SdkModel::AppMode m_appMode;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+
+                Eegeo::Location::NavigationService& m_navigationService;
             };
         }
     }

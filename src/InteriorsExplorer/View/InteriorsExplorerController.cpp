@@ -20,13 +20,15 @@ namespace ExampleApp
             InteriorsExplorerController::InteriorsExplorerController(SdkModel::InteriorsExplorerModel& model,
                                                                      IInteriorsExplorerView& view,
                                                                      InteriorsExplorerViewModel& viewModel,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus)
+                                                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                                                     Eegeo::Location::NavigationService& navigationService)
             : m_model(model)
             , m_view(view)
             , m_viewModel(viewModel)
             , m_replayTutorials(false)
             , m_messageBus(messageBus)
             , m_appMode(AppModes::SdkModel::WorldMode)
+            , m_navigationService(navigationService)
             , m_dismissedCallback(this, &InteriorsExplorerController::OnDismiss)
             , m_selectFloorCallback(this, &InteriorsExplorerController::OnSelectFloor)
             , m_stateChangedCallback(this, &InteriorsExplorerController::OnStateChanged)
@@ -64,6 +66,7 @@ namespace ExampleApp
             
             void InteriorsExplorerController::OnDismiss()
             {
+                m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsMode::GpsModeOff);
                 m_messageBus.Publish(InteriorsExplorerExitMessage());
                 m_view.SetTouchEnabled(false);
             }

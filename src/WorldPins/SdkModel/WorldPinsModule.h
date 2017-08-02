@@ -13,6 +13,7 @@
 #include "Interiors.h"
 #include "SdkModelDomainEventBus.h"
 #include "Markers.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -35,7 +36,8 @@ namespace ExampleApp
                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
                                 Eegeo::Markers::IMarkerService& markerService,
-                                bool isInKioskMode);
+                                bool isInKioskMode,
+                                Eegeo::Location::NavigationService& navigationService);
 
                 ~WorldPinsModule();
                 

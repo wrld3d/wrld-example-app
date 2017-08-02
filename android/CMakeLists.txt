@@ -35,6 +35,7 @@ include_directories(
     libs/eegeo/platform/AnimatedObjects
     libs/eegeo/platform/Base
     libs/eegeo/platform/Base/Model
+    libs/eegeo/platform/BlueSphere
     libs/eegeo/platform/BuildingFootprints
     libs/eegeo/platform/Camera
     libs/eegeo/platform/Camera/GlobeCamera
@@ -160,6 +161,9 @@ include_directories(
     libs/eegeo/platform/Routes/Webservice
     libs/eegeo/platform/Search
     libs/eegeo/platform/Search/Service
+    libs/eegeo/platform/Shapes
+    libs/eegeo/platform/Shapes/Polygons
+    libs/eegeo/platform/Shapes/Polylines
     libs/eegeo/platform/Space
     libs/eegeo/platform/Streaming
     libs/eegeo/platform/Streaming/BlockCoverageTrees
