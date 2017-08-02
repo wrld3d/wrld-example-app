@@ -23,7 +23,8 @@ namespace ExampleApp
                                                Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
                                                Eegeo::Markers::IMarkerService& markerService,
                                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                               ExampleAppMessaging::TMessageBus& messageBus)
+                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                               Eegeo::Location::NavigationService& navigationService)
             : m_worldPinsRepository(worldPinsRepository)
             , m_interiorMarkerPickingService(interiorMarkerPickingService)
             , m_markerService(markerService)
@@ -31,6 +32,7 @@ namespace ExampleApp
             , m_worldPinHiddenStateChangedMessageBinding(this, &WorldPinsService::OnWorldPinHiddenStateChanged)
             , m_onSearchResultSelected(this, &WorldPinsService::OnMenuItemSelected)
             , m_messageBus(messageBus)
+            , m_navigationService(navigationService)
             {
                 m_sdkModelDomainEventBus.Subscribe(m_worldPinHiddenStateChangedMessageBinding);
                 m_messageBus.SubscribeNative(m_onSearchResultSelected);
@@ -166,6 +168,7 @@ namespace ExampleApp
             {
                 if (m_interiorMarkerPickingService.TryEnterInterior(screenPoint))
                 {
+                    m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsMode::GpsModeOff);
                     return true;
                 }
                 

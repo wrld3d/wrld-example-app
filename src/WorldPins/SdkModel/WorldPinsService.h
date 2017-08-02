@@ -18,6 +18,7 @@
 #include "SdkModelDomainEventBus.h"
 #include "SearchResultSectionItemSelectedMessage.h"
 #include "BidirectionalBus.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -35,7 +36,8 @@ namespace ExampleApp
                                  Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
                                  Eegeo::Markers::IMarkerService& markerService,
                                  ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
-                                 ExampleAppMessaging::TMessageBus& messageBus);
+                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                 Eegeo::Location::NavigationService& navigationService);
                 ~WorldPinsService();
                 
                 WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
@@ -78,6 +80,8 @@ namespace ExampleApp
                 
                 IWorldPinsRepository& m_worldPinsRepository;
                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& m_interiorMarkerPickingService;
+                
+                Eegeo::Location::NavigationService& m_navigationService;
                 
                 Eegeo::Markers::IMarkerService& m_markerService;
                 ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;

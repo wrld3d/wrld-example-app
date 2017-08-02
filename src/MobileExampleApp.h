@@ -409,6 +409,11 @@ namespace ExampleApp
         {
             return *m_pAppModeModel;
         }
+
+        Eegeo::Location::NavigationService& GetNavigationService() const
+        {
+            return *m_pNavigationService;
+        }
         
         void OnPause();
 

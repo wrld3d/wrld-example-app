@@ -1044,7 +1044,8 @@ namespace ExampleApp
                                                                                          interiorsPresentationModule.GetInteriorTransitionModel(),
                                                                                          m_sdkDomainEventBus,
                                                                                          interiorsPresentationModule.GetInteriorMarkerPickingService(),
-                                                                                         mapModule.GetMarkersModule().GetMarkerService());
+                                                                                         mapModule.GetMarkersModule().GetMarkerService(),
+                                                                                         *m_pNavigationService);
     }
 
     void MobileExampleApp::OnPause()

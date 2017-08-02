@@ -14,14 +14,16 @@ namespace ExampleApp
         {
             InteriorsExplorerViewModule::InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
 																	 InteriorsExplorerViewModel& viewModel,
-                                                                     ExampleAppMessaging::TMessageBus& messageBus)
+                                                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                                                     Eegeo::Location::NavigationService& navigationService)
             {
                 m_pView = Eegeo_NEW(InteriorsExplorerView)();
                 
                 m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
 																	  *m_pView,
                                                                        viewModel,
-                                                                       messageBus);
+                                                                       messageBus,
+                                                                       navigationService);
             }
             
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()

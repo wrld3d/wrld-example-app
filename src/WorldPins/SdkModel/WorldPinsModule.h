@@ -13,6 +13,7 @@
 #include "Interiors.h"
 #include "SdkModelDomainEventBus.h"
 #include "Markers.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -34,8 +35,8 @@ namespace ExampleApp
                                 const Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkDomainEventBus,
                                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
-                                Eegeo::Markers::IMarkerService& markerService
-                                );
+                                Eegeo::Markers::IMarkerService& markerService,
+                                Eegeo::Location::NavigationService& navigationService);
 
                 ~WorldPinsModule();
                 

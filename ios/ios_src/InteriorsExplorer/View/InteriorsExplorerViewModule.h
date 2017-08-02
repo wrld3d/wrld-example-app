@@ -17,6 +17,7 @@
 #include "InteriorsExplorerTutorialView.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "IInteriorsExplorerViewModule.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -36,7 +37,8 @@ namespace ExampleApp
                                             InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
-                                            Eegeo::Helpers::IdentityProvider& identityProvider);
+                                            Eegeo::Helpers::IdentityProvider& identityProvider,
+                                            Eegeo::Location::NavigationService& navigationService);
                 
                 ~InteriorsExplorerViewModule();
                 

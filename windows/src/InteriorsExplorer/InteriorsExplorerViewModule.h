@@ -33,7 +33,8 @@ namespace ExampleApp
             public:
                 InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
 											InteriorsExplorerViewModel& viewModel,
-                                            ExampleAppMessaging::TMessageBus& messageBus);
+                                            ExampleAppMessaging::TMessageBus& messageBus,
+                                            Eegeo::Location::NavigationService& navigationService);
                 
                 ~InteriorsExplorerViewModule();
                 

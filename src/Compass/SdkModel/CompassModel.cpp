@@ -177,11 +177,14 @@ namespace ExampleApp
 
             void CompassModel::SetGpsMode(GpsMode::Values gpsMode)
             {
-                m_gpsMode = gpsMode;
-                m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[m_gpsMode]);
-                m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
+                if(!m_cameraController.IsTransitionInFlight())
+                {
+                    m_gpsMode = gpsMode;
+                    m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[m_gpsMode]);
+                    m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
                 
-                m_gpsModeChangedCallbacks.ExecuteCallbacks();
+                    m_gpsModeChangedCallbacks.ExecuteCallbacks();
+                }
             }
 
             float CompassModel::GetHeadingRadians() const
@@ -236,12 +239,6 @@ namespace ExampleApp
             void CompassModel::OnAppModeChanged()
             {
                 const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
-                if (appMode != AppModes::SdkModel::WorldMode && !m_isInKioskMode)
-                {
-                    DisableGpsMode();
-                    return;
-                }
-
                 if (appMode == AppModes::SdkModel::WorldMode)
                 {
                     m_exitInteriorTriggered = false;
