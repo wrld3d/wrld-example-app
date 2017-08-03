@@ -20,7 +20,7 @@ namespace ExampleApp
         {
             namespace
             {
-                const std::string defaultKey = "misc";
+                const std::string defaultKey = "pin";
                 
                 struct WorldPinIconMappingPage
                 {

@@ -33,8 +33,8 @@ namespace ExampleApp
                     // TODO tags: would be nice to have a mechanism to resolve unknown tags for icons
                     // downstream for non-eegeo types?
                     // also: would be cool to do something to use a more specific icon for countries/regions/lakes/hamlets etc.
-                    std::vector<std::string> tags = { "misc" };
-                    Search::SdkModel::TagIconKey tagIconKey = "misc";
+                    std::vector<std::string> tags = { "pin" };
+                    Search::SdkModel::TagIconKey tagIconKey = "pin";
 
                     Search::SdkModel::SearchResultModel model(Search::SdkModel::SearchResultModel::CurrentVersion,
                                                               m_id,

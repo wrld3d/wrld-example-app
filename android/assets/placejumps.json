@@ -5,7 +5,7 @@
         "Longitude": 100.533493,
         "HeadingDegrees":44.9,
         "Distance": 1595.6,
-        "Icon": "misc"
+        "Icon": "pin"
     },
     {
         "Name": "Chicago",
@@ -13,7 +13,7 @@
         "Longitude": -87.629201,
         "HeadingDegrees":51.2,
         "Distance": 2517.5,
-        "Icon": "misc"
+        "Icon": "pin"
     },
     {
         "Name": "Dundee",
@@ -21,7 +21,7 @@
         "Longitude": -2.969868,
         "Distance": 1471.8,
         "HeadingDegrees": 345.1,
-        "Icon": "misc"
+        "Icon": "pin"
     },
     {
         "Name": "Edinburgh",
@@ -29,7 +29,7 @@
         "Longitude": -3.199949,
         "HeadingDegrees": 115.4,
         "Distance": 1399.9,
-        "Icon": "misc"
+        "Icon": "pin"
     },
     {
         "Name": "London",
@@ -37,7 +37,7 @@
         "Longitude": -0.081494,
         "Distance": 2104.7,
         "HeadingDegrees": 142.1,
-        "Icon": "misc"
+        "Icon": "pin"
     },
     {
         "Name": "Milan",
@@ -45,7 +45,7 @@
         "Longitude": 9.177512,
         "Distance": 2086.6,
         "HeadingDegrees": 191,
-        "Icon": "misc"
+        "Icon": "pin"
     },
     {
         "Name": "New York",
@@ -53,7 +53,7 @@
         "Longitude": -74.012957,
         "Distance": 2437.6,
         "HeadingDegrees": 66.1,
-        "Icon": "misc"
+        "Icon": "pin"
     },
     {
         "Name": "Oslo",
@@ -61,7 +61,7 @@
         "Longitude": 10.752348,
         "Distance": 1438,
         "HeadingDegrees": 59.6,
-        "Icon": "misc"
+        "Icon": "pin"
     },
     {
         "Name": "Rio de Janeiro",
@@ -69,7 +69,7 @@
         "Longitude": -43.207783,
         "Distance": 1576.10181,
         "HeadingDegrees": 46.298,
-        "Icon": "misc"
+        "Icon": "pin"
     },
     {
         "Name": "San Francisco",
@@ -77,7 +77,7 @@
         "Longitude": -122.39937,
         "Distance": 2076.6,
         "HeadingDegrees": 0.5,
-        "Icon": "misc"
+        "Icon": "pin"
     },
     {
         "Name": "Vancouver",
@@ -85,6 +85,6 @@
         "Longitude": -123.125933,
         "Distance": 1995.2,
         "HeadingDegrees": 261.4,
-        "Icon": "misc"
+        "Icon": "pin"
     }
 ]
