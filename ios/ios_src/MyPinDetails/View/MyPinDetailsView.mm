@@ -225,7 +225,7 @@
 
     const float titlePadding = 23.0f;
     self.pTitleLabel.frame = CGRectMake(iconImageSize + titlePadding,
-                                        4.f,
+                                        0.f,
                                         mainWindowWidth - headlineHeight - titlePadding,
                                         headlineHeight);
     self.pTitleLabel.font = [UIFont systemFontOfSize:24.0f];
