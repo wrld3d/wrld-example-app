@@ -1,0 +1,14 @@
+[
+  {
+	"mid": 0,
+	"availability": "occupied"
+  },
+  {
+	"mid": 1,
+	"availability": "available_soon"
+  },
+  {
+	"mid": 2,
+	"availability": "occupied"
+  }
+]
