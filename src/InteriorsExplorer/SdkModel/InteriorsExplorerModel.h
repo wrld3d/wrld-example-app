@@ -59,6 +59,8 @@ namespace ExampleApp
                 
                 void SetLastEntryAttemptSuccessful(bool successful);
                 bool GetLastEntryAttemptSuccessful() const;
+                
+                bool IsEnabled() const;
 
 
             private:
