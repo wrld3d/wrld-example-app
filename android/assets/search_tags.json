@@ -66,6 +66,7 @@
     { "tag": "fuel", "readable_tag": "Fuel", "icon_key": "fuel" },
     { "tag": "gallery", "readable_tag": "Gallery", "icon_key": "gallery" },
     { "tag": "gas_meter", "readable_tag": "Gas meter", "icon_key": "gas_meter" },
+    { "tag": "general", "readable_tag": "General", "icon_key": "general" },
     { "tag": "golf", "readable_tag": "Golf", "icon_key": "golf" },
     { "tag": "google_plus", "readable_tag": "Google+", "icon_key": "google_plus" },
     { "tag": "groceries", "readable_tag": "Groceries", "icon_key": "groceries" },
