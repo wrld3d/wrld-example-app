@@ -452,27 +452,18 @@ set(resources ${resources}
         Resources/icon1_accommodation.png
         Resources/icon1_accommodation@2x.png
         Resources/icon1_accommodation@3x.png
-        Resources/icon1_accomodation.png
-        Resources/icon1_accomodation@2x.png
-        Resources/icon1_accomodation@3x.png
         Resources/icon1_airport.png
         Resources/icon1_airport@2x.png
         Resources/icon1_airport@3x.png
         Resources/icon1_alert.png
         Resources/icon1_alert@2x.png
         Resources/icon1_alert@3x.png
-        Resources/icon1_amenities.png
-        Resources/icon1_amenities@2x.png
-        Resources/icon1_amenities@3x.png
         Resources/icon1_aroundme.png
         Resources/icon1_aroundme@2x.png
         Resources/icon1_aroundme@3x.png
         Resources/icon1_art.png
         Resources/icon1_art@2x.png
         Resources/icon1_art@3x.png
-        Resources/icon1_art_museums.png
-        Resources/icon1_art_museums@2x.png
-        Resources/icon1_art_museums@3x.png
         Resources/icon1_atm.png
         Resources/icon1_atm@2x.png
         Resources/icon1_atm@3x.png
@@ -506,9 +497,6 @@ set(resources ${resources}
         Resources/icon1_border.png
         Resources/icon1_border@2x.png
         Resources/icon1_border@3x.png
-        Resources/icon1_border_crossing.png
-        Resources/icon1_border_crossing@2x.png
-        Resources/icon1_border_crossing@3x.png
         Resources/icon1_burgers.png
         Resources/icon1_burgers@2x.png
         Resources/icon1_burgers@3x.png
@@ -548,9 +536,6 @@ set(resources ${resources}
         Resources/icon1_click_and_collect.png
         Resources/icon1_click_and_collect@2x.png
         Resources/icon1_click_and_collect@3x.png
-        Resources/icon1_co2_detector.png
-        Resources/icon1_co2_detector@2x.png
-        Resources/icon1_co2_detector@3x.png
         Resources/icon1_co_two_detector.png
         Resources/icon1_co_two_detector@2x.png
         Resources/icon1_co_two_detector@3x.png
@@ -587,9 +572,6 @@ set(resources ${resources}
         Resources/icon1_dining_room.png
         Resources/icon1_dining_room@2x.png
         Resources/icon1_dining_room@3x.png
-        Resources/icon1_disabled_access.png
-        Resources/icon1_disabled_access@2x.png
-        Resources/icon1_disabled_access@3x.png
         Resources/icon1_donuts.png
         Resources/icon1_donuts@2x.png
         Resources/icon1_donuts@3x.png
@@ -602,9 +584,6 @@ set(resources ${resources}
         Resources/icon1_education.png
         Resources/icon1_education@2x.png
         Resources/icon1_education@3x.png
-        Resources/icon1_electrical_meter.png
-        Resources/icon1_electrical_meter@2x.png
-        Resources/icon1_electrical_meter@3x.png
         Resources/icon1_electricity_meter.png
         Resources/icon1_electricity_meter@2x.png
         Resources/icon1_electricity_meter@3x.png
@@ -641,9 +620,6 @@ set(resources ${resources}
         Resources/icon1_fashion_women.png
         Resources/icon1_fashion_women@2x.png
         Resources/icon1_fashion_women@3x.png
-        Resources/icon1_female.png
-        Resources/icon1_female@2x.png
-        Resources/icon1_female@3x.png
         Resources/icon1_ferry.png
         Resources/icon1_ferry@2x.png
         Resources/icon1_ferry@3x.png
@@ -743,9 +719,6 @@ set(resources ${resources}
         Resources/icon1_lake.png
         Resources/icon1_lake@2x.png
         Resources/icon1_lake@3x.png
-        Resources/icon1_lamppost.png
-        Resources/icon1_lamppost@2x.png
-        Resources/icon1_lamppost@3x.png
         Resources/icon1_library.png
         Resources/icon1_library@2x.png
         Resources/icon1_library@3x.png
@@ -761,9 +734,6 @@ set(resources ${resources}
         Resources/icon1_lodge.png
         Resources/icon1_lodge@2x.png
         Resources/icon1_lodge@3x.png
-        Resources/icon1_male.png
-        Resources/icon1_male@2x.png
-        Resources/icon1_male@3x.png
         Resources/icon1_meeting_room.png
         Resources/icon1_meeting_room@2x.png
         Resources/icon1_meeting_room@3x.png
@@ -782,9 +752,6 @@ set(resources ${resources}
         Resources/icon1_meter.png
         Resources/icon1_meter@2x.png
         Resources/icon1_meter@3x.png
-        Resources/icon1_misc.png
-        Resources/icon1_misc@2x.png
-        Resources/icon1_misc@3x.png
         Resources/icon1_mobile_phone.png
         Resources/icon1_mobile_phone@2x.png
         Resources/icon1_mobile_phone@3x.png
@@ -797,18 +764,12 @@ set(resources ${resources}
         Resources/icon1_my_location.png
         Resources/icon1_my_location@2x.png
         Resources/icon1_my_location@3x.png
-        Resources/icon1_my_pins.png
-        Resources/icon1_my_pins@2x.png
-        Resources/icon1_my_pins@3x.png
         Resources/icon1_night.png
         Resources/icon1_night@2x.png
         Resources/icon1_night@3x.png
         Resources/icon1_night_shopping.png
         Resources/icon1_night_shopping@2x.png
         Resources/icon1_night_shopping@3x.png
-        Resources/icon1_night_time.png
-        Resources/icon1_night_time@2x.png
-        Resources/icon1_night_time@3x.png
         Resources/icon1_observation_point.png
         Resources/icon1_observation_point@2x.png
         Resources/icon1_observation_point@3x.png
@@ -818,9 +779,6 @@ set(resources ${resources}
         Resources/icon1_occupancy_sensor.png
         Resources/icon1_occupancy_sensor@2x.png
         Resources/icon1_occupancy_sensor@3x.png
-        Resources/icon1_office.png
-        Resources/icon1_office@2x.png
-        Resources/icon1_office@3x.png
         Resources/icon1_offices.png
         Resources/icon1_offices@2x.png
         Resources/icon1_offices@3x.png
@@ -839,9 +797,6 @@ set(resources ${resources}
         Resources/icon1_person.png
         Resources/icon1_person@2x.png
         Resources/icon1_person@3x.png
-        Resources/icon1_petrol_station.png
-        Resources/icon1_petrol_station@2x.png
-        Resources/icon1_petrol_station@3x.png
         Resources/icon1_pharmacy.png
         Resources/icon1_pharmacy@2x.png
         Resources/icon1_pharmacy@3x.png
@@ -932,9 +887,6 @@ set(resources ${resources}
         Resources/icon1_sports_field.png
         Resources/icon1_sports_field@2x.png
         Resources/icon1_sports_field@3x.png
-        Resources/icon1_sports_leisure.png
-        Resources/icon1_sports_leisure@2x.png
-        Resources/icon1_sports_leisure@3x.png
         Resources/icon1_spring.png
         Resources/icon1_spring@2x.png
         Resources/icon1_spring@3x.png
@@ -944,9 +896,6 @@ set(resources ${resources}
         Resources/icon1_star.png
         Resources/icon1_star@2x.png
         Resources/icon1_star@3x.png
-        Resources/icon1_stationary.png
-        Resources/icon1_stationary@2x.png
-        Resources/icon1_stationary@3x.png
         Resources/icon1_stationery.png
         Resources/icon1_stationery@2x.png
         Resources/icon1_stationery@3x.png
@@ -989,12 +938,6 @@ set(resources ${resources}
         Resources/icon1_toilet_men.png
         Resources/icon1_toilet_men@2x.png
         Resources/icon1_toilet_men@3x.png
-        Resources/icon1_toilets.png
-        Resources/icon1_toilets@2x.png
-        Resources/icon1_toilets@3x.png
-        Resources/icon1_tourism.png
-        Resources/icon1_tourism@2x.png
-        Resources/icon1_tourism@3x.png
         Resources/icon1_tourist_info.png
         Resources/icon1_tourist_info@2x.png
         Resources/icon1_tourist_info@3x.png
@@ -1010,24 +953,12 @@ set(resources ${resources}
         Resources/icon1_tram.png
         Resources/icon1_tram@2x.png
         Resources/icon1_tram@3x.png
-        Resources/icon1_transport.png
-        Resources/icon1_transport@2x.png
-        Resources/icon1_transport@3x.png
-        Resources/icon1_trash_empty.png
-        Resources/icon1_trash_empty@2x.png
-        Resources/icon1_trash_empty@3x.png
-        Resources/icon1_trash_full.png
-        Resources/icon1_trash_full@2x.png
-        Resources/icon1_trash_full@3x.png
         Resources/icon1_twitter.png
         Resources/icon1_twitter@2x.png
         Resources/icon1_twitter@3x.png
         Resources/icon1_uber.png
         Resources/icon1_uber@2x.png
         Resources/icon1_uber@3x.png
-        Resources/icon1_university.png
-        Resources/icon1_university@2x.png
-        Resources/icon1_university@3x.png
         Resources/icon1_vegan.png
         Resources/icon1_vegan@2x.png
         Resources/icon1_vegan@3x.png
@@ -1043,9 +974,6 @@ set(resources ${resources}
         Resources/icon1_video_conference.png
         Resources/icon1_video_conference@2x.png
         Resources/icon1_video_conference@3x.png
-        Resources/icon1_video_conference_telepresence.png
-        Resources/icon1_video_conference_telepresence@2x.png
-        Resources/icon1_video_conference_telepresence@3x.png
         Resources/icon1_vimeo.png
         Resources/icon1_vimeo@2x.png
         Resources/icon1_vimeo@3x.png
