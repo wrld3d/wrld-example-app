@@ -36,8 +36,8 @@
                                   "icon_key": "accommodation"
                                   }, {
                                   "name": "Art & Museum",
-                                  "search_tag": "art_museums",
-                                  "icon_key": "art_museums"
+                                  "search_tag": "art",
+                                  "icon_key": "art"
                                   }, {
                                   "name": "Business",
                                   "search_tag": "business",
@@ -52,8 +52,8 @@
                                   "icon_key": "food_drink"
                                   }, {
                                   "name": "General Amenities",
-                                  "search_tag": "amenities",
-                                  "icon_key": "amenities"
+                                  "search_tag": "general",
+                                  "icon_key": "general"
                                   }, {
                                   "name": "Health",
                                   "search_tag": "health",
@@ -64,15 +64,15 @@
                                   "icon_key": "shopping"
                                   }, {
                                   "name": "Sport & Leisure",
-                                  "search_tag": "sports_leisure",
-                                  "icon_key": "sports_leisure"
+                                  "search_tag": "sports",
+                                  "icon_key": "sports"
                                   }, {
-                                  "name": "Tourist",
-                                  "search_tag": "tourism",
-                                  "icon_key": "tourism"
+                                  "name": "Tourist info",
+                                  "search_tag": "tourist_info",
+                                  "icon_key": "tourist_info"
                                   }, {
                                   "name": "Transport",
                                   "search_tag": "transport",
-                                  "icon_key": "transport"
+                                  "icon_key": "bus"
                                   }]
 }
