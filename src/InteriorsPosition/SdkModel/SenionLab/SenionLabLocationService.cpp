@@ -37,7 +37,11 @@ namespace ExampleApp
                 
                 Eegeo::Resources::Interiors::InteriorId SenionLabLocationService::GetInteriorId()
                 {
-                    return m_interiorInteractionModel.GetInteriorModel()->GetId();
+                    if(m_interiorInteractionModel.HasInteriorModel())
+                    {
+                        return m_interiorInteractionModel.GetInteriorModel()->GetId();
+                    }
+                    else return Eegeo::Resources::Interiors::InteriorId::NullId();
                 }
                 
                 bool SenionLabLocationService::GetLocation(Eegeo::Space::LatLong& latLong)

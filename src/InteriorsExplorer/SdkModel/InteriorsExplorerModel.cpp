@@ -196,12 +196,16 @@ namespace ExampleApp
             
             void InteriorsExplorerModel::Exit()
             {
-            	m_persistentSettings.SetValue(InteriorExitTutorialViewedCount, m_interiorExitTutorialViewedCount);
-				m_persistentSettings.SetValue(InteriorChangeFloorTutorialViewedCount, m_interiorChangeFloorTutorialViewedCount);
 
-                HideInteriorExplorer();
-                m_metricsService.SetEvent(MetricEventInteriorExitPressed);
-                m_interiorExplorerExitedCallbacks.ExecuteCallbacks();
+                if(m_interiorExplorerEnabled)
+                {
+                    m_persistentSettings.SetValue(InteriorExitTutorialViewedCount, m_interiorExitTutorialViewedCount);
+                    m_persistentSettings.SetValue(InteriorChangeFloorTutorialViewedCount, m_interiorChangeFloorTutorialViewedCount);
+
+                    HideInteriorExplorer();
+                    m_metricsService.SetEvent(MetricEventInteriorExitPressed);
+                    m_interiorExplorerExitedCallbacks.ExecuteCallbacks();
+                }
             }
             
             void InteriorsExplorerModel::OnSelectFloor(const InteriorsExplorerSelectFloorMessage &message)
@@ -319,6 +323,11 @@ namespace ExampleApp
             bool InteriorsExplorerModel::GetLastEntryAttemptSuccessful() const
             {
                 return m_lastEntryAttemptSuccessful;
+            }
+            
+            bool InteriorsExplorerModel::IsEnabled() const
+            {
+                return m_interiorExplorerEnabled;
             }
 
         }

@@ -24,6 +24,10 @@ namespace ExampleApp
             
             void ExitCurrentInteriorStage::Update(float dt)
             {
+                if(m_interiorsExplorerModel.IsEnabled())
+                {
+                    m_interiorsExplorerModel.Exit();
+                }
             }
             
             void ExitCurrentInteriorStage::End()
