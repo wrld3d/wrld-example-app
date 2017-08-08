@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -450,9 +450,6 @@
     <Resource Include="..\..\Resources\icon1_aroundme.png">
       <Link>Assets\icon1_aroundme.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_art_museums.png">
-      <Link>Assets\icon1_art_museums.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\icon1_autumn.png">
       <Link>Assets\icon1_autumn.png</Link>
     </Resource>
@@ -477,14 +474,8 @@
     <Resource Include="..\..\Resources\icon1_entertainment.png">
       <Link>Assets\icon1_entertainment.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_misc.png">
-      <Link>Assets\icon1_misc.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\icon1_night.png">
       <Link>Assets\icon1_night.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_amenities.png">
-      <Link>Assets\icon1_amenities.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\icon1_health.png">
       <Link>Assets\icon1_health.png</Link>
@@ -498,20 +489,8 @@
     <Resource Include="..\..\Resources\icon1_winter.png">
       <Link>Assets\icon1_winter.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_my_pins.png">
-      <Link>Assets\icon_my_pins.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\icon1_shopping.png">
       <Link>Assets\icon1_shopping.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_sports_leisure.png">
-      <Link>Assets\icon1_sports_leisure.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_tourism.png">
-      <Link>Assets\icon1_tourism.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_transport.png">
-      <Link>Assets\icon1_transport.png</Link>
     </Resource>
     <Resource Include="..\..\Resources\button_close_place_pin_off.png">
       <Link>Assets\button_close_place_pin_off.png</Link>
@@ -731,9 +710,6 @@
     <Resource Include="..\..\Resources\icon1_defibrillator.png">
       <Link>Assets\icon1_defibrillator.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\icon1_disabled_access.png">
-      <Link>Assets\icon1_disabled_access.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\icon1_elevator.png">
       <Link>Assets\icon1_elevator.png</Link>
     </Resource>
@@ -757,9 +733,6 @@
     </Resource>
     <Resource Include="..\..\Resources\icon1_stairs.png">
       <Link>Assets\icon1_stairs.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_stationary.png">
-      <Link>Assets\icon1_stationary.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>
