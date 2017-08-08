@@ -503,6 +503,9 @@ set(resources ${resources}
         Resources/icon1_blue_meter.png
         Resources/icon1_blue_meter@2x.png
         Resources/icon1_blue_meter@3x.png
+        Resources/icon1_border.png
+        Resources/icon1_border@2x.png
+        Resources/icon1_border@3x.png
         Resources/icon1_border_crossing.png
         Resources/icon1_border_crossing@2x.png
         Resources/icon1_border_crossing@3x.png
@@ -548,6 +551,9 @@ set(resources ${resources}
         Resources/icon1_co2_detector.png
         Resources/icon1_co2_detector@2x.png
         Resources/icon1_co2_detector@3x.png
+        Resources/icon1_co_two_detector.png
+        Resources/icon1_co_two_detector@2x.png
+        Resources/icon1_co_two_detector@3x.png
         Resources/icon1_cocktail.png
         Resources/icon1_cocktail@2x.png
         Resources/icon1_cocktail@3x.png
@@ -599,6 +605,9 @@ set(resources ${resources}
         Resources/icon1_electrical_meter.png
         Resources/icon1_electrical_meter@2x.png
         Resources/icon1_electrical_meter@3x.png
+        Resources/icon1_electricity_meter.png
+        Resources/icon1_electricity_meter@2x.png
+        Resources/icon1_electricity_meter@3x.png
         Resources/icon1_elevator.png
         Resources/icon1_elevator@2x.png
         Resources/icon1_elevator@3x.png
@@ -671,6 +680,9 @@ set(resources ${resources}
         Resources/icon1_fridge.png
         Resources/icon1_fridge@2x.png
         Resources/icon1_fridge@3x.png
+        Resources/icon1_fuel.png
+        Resources/icon1_fuel@2x.png
+        Resources/icon1_fuel@3x.png
         Resources/icon1_gallery.png
         Resources/icon1_gallery@2x.png
         Resources/icon1_gallery@3x.png
@@ -791,6 +803,9 @@ set(resources ${resources}
         Resources/icon1_night.png
         Resources/icon1_night@2x.png
         Resources/icon1_night@3x.png
+        Resources/icon1_night_shopping.png
+        Resources/icon1_night_shopping@2x.png
+        Resources/icon1_night_shopping@3x.png
         Resources/icon1_night_time.png
         Resources/icon1_night_time@2x.png
         Resources/icon1_night_time@3x.png
@@ -1025,6 +1040,9 @@ set(resources ${resources}
         Resources/icon1_video.png
         Resources/icon1_video@2x.png
         Resources/icon1_video@3x.png
+        Resources/icon1_video_conference.png
+        Resources/icon1_video_conference@2x.png
+        Resources/icon1_video_conference@3x.png
         Resources/icon1_video_conference_telepresence.png
         Resources/icon1_video_conference_telepresence@2x.png
         Resources/icon1_video_conference_telepresence@3x.png
