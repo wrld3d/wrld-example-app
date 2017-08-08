@@ -5,8 +5,8 @@
             "file": "icon1_accessible.png"
         }, 
         {
-            "name": "accomodation", 
-            "file": "icon1_accomodation.png"
+            "name": "accommodation", 
+            "file": "icon1_accommodation.png"
         }, 
         {
             "name": "airport", 
@@ -65,8 +65,8 @@
             "file": "icon1_blue_meter.png"
         }, 
         {
-            "name": "border_crossing", 
-            "file": "icon1_border_crossing.png"
+            "name": "border", 
+            "file": "icon1_border.png"
         }, 
         {
             "name": "burgers", 
@@ -121,8 +121,8 @@
             "file": "icon1_click_and_collect.png"
         }, 
         {
-            "name": "co2_detector", 
-            "file": "icon1_co2_detector.png"
+            "name": "co_two_detector", 
+            "file": "icon1_co_two_detector.png"
         }, 
         {
             "name": "cocktail", 
@@ -185,8 +185,8 @@
             "file": "icon1_education.png"
         }, 
         {
-            "name": "electrical_meter", 
-            "file": "icon1_electrical_meter.png"
+            "name": "electricity_meter", 
+            "file": "icon1_electricity_meter.png"
         }, 
         {
             "name": "elevator", 
@@ -279,6 +279,10 @@
         {
             "name": "fridge", 
             "file": "icon1_fridge.png"
+        }, 
+        {
+            "name": "fuel", 
+            "file": "icon1_fuel.png"
         }, 
         {
             "name": "gallery", 
@@ -405,10 +409,6 @@
             "file": "icon1_meter.png"
         }, 
         {
-            "name": "misc", 
-            "file": "icon1_misc.png"
-        }, 
-        {
             "name": "mobile_phone", 
             "file": "icon1_mobile_phone.png"
         }, 
@@ -429,8 +429,8 @@
             "file": "icon1_night.png"
         }, 
         {
-            "name": "night_time", 
-            "file": "icon1_night_time.png"
+            "name": "night_shopping", 
+            "file": "icon1_night_shopping.png"
         }, 
         {
             "name": "observation_point", 
@@ -467,10 +467,6 @@
         {
             "name": "person", 
             "file": "icon1_person.png"
-        }, 
-        {
-            "name": "petrol_station", 
-            "file": "icon1_petrol_station.png"
         }, 
         {
             "name": "pharmacy", 
@@ -705,8 +701,8 @@
             "file": "icon1_video.png"
         }, 
         {
-            "name": "video_conference_telepresence", 
-            "file": "icon1_video_conference_telepresence.png"
+            "name": "video_conference", 
+            "file": "icon1_video_conference.png"
         }, 
         {
             "name": "vimeo", 
