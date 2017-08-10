@@ -1,6 +1,5 @@
 package com.eegeo.interiorsposition.senionlab;
 
-import android.bluetooth.BluetoothAdapter;
 import com.senionlab.slutilities.geofencing.interfaces.SLGeometry;
 import com.senionlab.slutilities.service.SLBroadcastReceiver;
 import com.senionlab.slutilities.type.LocationAvailability;
@@ -102,9 +101,7 @@ class SenionLabBroadcastReceiver extends SLBroadcastReceiver
     {
         synchronized (m_errorLock)
         {
-            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            boolean bluetoothEnabled = (bluetoothAdapter != null) && bluetoothAdapter.isEnabled();
-            SenionLabBroadcastReceiverJniMethods.SetIsAuthorized(m_nativeCallerPointer, (!didError) && bluetoothEnabled);
+            SenionLabBroadcastReceiverJniMethods.SetIsAuthorized(m_nativeCallerPointer, !didError);
         }
     }
 }
