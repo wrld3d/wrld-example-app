@@ -21,7 +21,7 @@
             android:gravity="left"
             android:text="@string/search_closest_label"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
-            android:textColor="@drawable/menu_item_states"
+            android:textColor="@color/table_header_text"
             android:textSize="14sp"
             android:paddingLeft="8dp"/>
 

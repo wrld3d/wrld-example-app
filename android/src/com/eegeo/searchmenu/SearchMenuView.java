@@ -16,6 +16,7 @@ import com.eegeo.menu.MenuListAnimationHandler;
 import com.eegeo.menu.MenuView;
 import com.eegeo.ProjectSwallowApp.R;
 
+import android.animation.Animator;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.text.Editable;
@@ -384,9 +385,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         {
             m_searchMenuAnimationHandler.hideSearchResultsView();
         }
-
-        m_anchorArrow.setVisibility(View.GONE);
-        m_searchMenuResultsSeparator.setVisibility(View.GONE);
     }
 
     public void removeSearchQueryResults()
@@ -559,6 +557,25 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
     	ReversibleValueAnimator menuHeightAnimator = ReversibleValueAnimator.ofInt(oldHeight, height);
     	menuHeightAnimator.addUpdateListener(new ViewHeightAnimatorUpdateListener<LinearLayout.LayoutParams>(m_searchList));
+        menuHeightAnimator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {}
+
+            @Override
+            public void onAnimationEnd(Animator animation)
+            {
+                if(m_resultsCount == 0)
+                {
+                    m_anchorArrow.setVisibility(View.GONE);
+                    m_searchMenuResultsSeparator.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {}
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+        });
     	menuHeightAnimator.setDuration(SearchMenuResultsListAnimationConstants.SearchMenuListTotalAnimationSpeedMilliseconds);
     	menuHeightAnimator.start();
 
