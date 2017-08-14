@@ -94,7 +94,7 @@ namespace ExampleApp
 				}
 
 				Eegeo::dv3 scaledPoint = m_environmentFlatteningService.GetScaledPointEcef(m_markerLocationEcef, currentScale);
-				scaledPoint += scaledPoint.Norm() * m_gpsMarkerModel.GetSphereHeightAboveMarker();
+				scaledPoint += scaledPoint.Norm() * m_gpsMarkerModel.GetSphereHeightAboveBase();
 				return scaledPoint;
 			}
 
