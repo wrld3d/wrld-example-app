@@ -111,11 +111,6 @@ namespace ExampleApp
                 m_blueSphereModel.SetEnabled(enabled);
             }
 
-            const float GpsMarkerModel::GetSphereHeightAboveMarker() const
-            {
-                return m_blueSphereModel.GetSphereHeightAboveBlueSphere();
-            }
-
             bool GpsMarkerModel::IsLocationIndoors() const
             {
                 return m_blueSphereModel.IsLocationIndoors();

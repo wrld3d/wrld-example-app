@@ -28,8 +28,6 @@ namespace ExampleApp
                 
                 void SetEnabled(bool enabled);
 
-                const float GetSphereHeightAboveMarker() const;
-
                 bool IsLocationIndoors() const;
                 
             private:
