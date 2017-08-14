@@ -1,0 +1,178 @@
+[
+	{
+		"interior_id": "swallow_lon_38finsbury",
+		"floors":
+		[
+			{
+				"floorName": "-1 - Lower Level 1",
+				"interior_floor": 0
+			},
+			{
+				"floorName": "00 - Ground Floor",
+				"interior_floor": 1
+			},
+			{
+				"floorName": "01 - First Floor",
+				"interior_floor": 2
+			},
+			{
+				"floorName": "02 - Second Floor",
+				"interior_floor": 3
+			},
+			{
+				"floorName": "03 - Third Floor",
+				"interior_floor": 4
+			},
+			{
+				"floorName": "04 - Forth Floor",
+				"interior_floor": 5
+			},
+			{
+				"floorName": "05 - Fifth Floor",
+				"interior_floor": 6
+			},
+			{
+				"floorName": "06 - Sixth Floor",
+				"interior_floor": 7
+			}
+		]
+	},
+	{
+		"interior_id": "swallow_lon_citygatehouse",
+		"floors":
+		[
+			{
+				"floorName": "-1 - Lower Level 1",
+				"interior_floor": 0
+			},
+			{
+				"floorName": "00 - Ground Floor",
+				"interior_floor": 1
+			},
+			{
+				"floorName": "01 - First Floor",
+				"interior_floor": 2
+			},
+			{
+				"floorName": "02 - Second Floor",
+				"interior_floor": 3
+			},
+			{
+				"floorName": "03 - Third Floor",
+				"interior_floor": 4
+			}
+		]
+	},
+	{
+		"interior_id": "swallow_lon_50finsbury",
+		"floors":
+		[
+			{
+				"floorName": "-1 - Lower Level 1",
+				"interior_floor": 0
+			},
+			{
+				"floorName": "01 - First Floor",
+				"interior_floor": 1
+			},
+			{
+				"floorName": "02 - Second Floor",
+				"interior_floor": 2
+			},
+			{
+				"floorName": "03 - Third Floor",
+				"interior_floor": 3
+			},
+			{
+				"floorName": "04 - Forth Floor",
+				"interior_floor": 4
+			},
+			{
+				"floorName": "05 - Fifth Floor",
+				"interior_floor": 5
+			},
+			{
+				"floorName": "06 - Sixth Floor",
+				"interior_floor": 6
+			},
+			{
+				"floorName": "07 - Seventh Floor",
+				"interior_floor": 7
+			}
+		]
+	},
+	{
+		"interior_id": "swallow_lon_parkhouse",
+		"floors":
+		[
+			{
+				"floorName": "03 - Third Floor",
+				"interior_floor": 0
+			},
+			{
+				"floorName": "04 - Forth Floor",
+				"interior_floor": 1
+			},
+			{
+				"floorName": "05 - Fifth Floor",
+				"interior_floor": 2
+			}
+		]
+	},
+	{
+		"interior_id": "swallow_lon_wallbrooksquare",
+		"floors":
+		[
+			{
+				"floorName": "-1 - Lower Level 1",
+				"interior_floor": 3
+			},
+			{
+				"floorName": "00 - Ground Floor",
+				"interior_floor": 4
+			},
+			{
+				"floorName": "01 - First Floor",
+				"interior_floor": 5
+			},
+			{
+				"floorName": "02 - Second Floor",
+				"interior_floor": 6
+			},
+			{
+				"floorName": "03 - Third Floor",
+				"interior_floor": 7
+			},
+			{
+				"floorName": "04 - Forth Floor",
+				"interior_floor": 8
+			},
+			{
+				"floorName": "05 - Fifth Floor",
+				"interior_floor": 9
+			},
+			{
+				"floorName": "06 - Sixth Floor",
+				"interior_floor": 10
+			},
+			{
+				"floorName": "07 - Seventh Floor",
+				"interior_floor": 11
+			},
+			{
+				"floorName": "08 - Eighth Floor",
+				"interior_floor": 12
+			}
+		]
+	},
+	{
+		"interior_id": "westport_house",
+		"floors":
+		[
+			{
+				"floorName": "02 - Second Floor",
+				"interior_floor": 2
+			}
+		]
+	}
+]

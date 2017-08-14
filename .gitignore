@@ -33,4 +33,5 @@ gradlew
 gradlew.*
 **/gradle
 **/local.properties
-db/asset-pipeline/meetingroom-occupancy/data/meetingroom-poi-data.json
+db/asset-pipeline/meetingroom-occupancy/generated/
+db/asset-pipeline/meetingroom-occupancy/packages/

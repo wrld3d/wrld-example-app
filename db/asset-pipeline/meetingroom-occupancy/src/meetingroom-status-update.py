@@ -3,39 +3,54 @@ import json
 import requests
 import sys
 
+from zeep import Client
+
 
 MEETING_ROOM_TAG = "meeting_room"
 
 
-def get_meeting_room_definitions(filename):
+def get_meeting_room_poi_dict(filename):
+    meeting_room_poi_dict = {}
+
     with open(filename) as meeting_room_json_file:
         meeting_room_list_json = json.load(meeting_room_json_file)
         for meeting_room_json in meeting_room_list_json:
-            yield {
-                "id": meeting_room_json["id"],
-                "user_data": meeting_room_json["user_data"]
-            }
+            meeting_room_poi_dict[meeting_room_json["user_data"]["space_id"]] = {"id": meeting_room_json["id"], "user_data": meeting_room_json["user_data"]}
+
+    return meeting_room_poi_dict
 
 
-def get_meeting_room_status_definitions(data_filename, status_filename):
-    meeting_room_poi_list = []
-    for meeting_room_definition in get_meeting_room_definitions(data_filename):
-        meeting_room_poi_list.append(meeting_room_definition)
-    # print meeting_room_poi_list
+def get_updated_meeting_room_poi_json(web_service_url, region_code, meeting_room_poi_dict):
+    availability_states = ["available", "occupied", "available_soon"]
 
-    with open(status_filename) as meeting_room_json_file:
-        meeting_room_list_json = json.load(meeting_room_json_file)
-        for meeting_room_json in meeting_room_list_json:
-            for meeting_room_poi in meeting_room_poi_list:
-                if meeting_room_poi["user_data"]["mid"] == meeting_room_json["mid"]:
-                    yield {
-                        "id": meeting_room_poi["id"],
+    client = Client(web_service_url)
+    response = client.service.GetMeetingSpaceOccupancyDetails(region_code)
+
+    if response is not None and response != "":
+        meeting_room_list_json = json.loads(response)
+        for meeting_room_json in meeting_room_list_json["meetingSpaceOccupancyDetails"]:
+            space_id = meeting_room_json["spaceId"]
+            if meeting_room_poi_dict[space_id]:
+                user_data = meeting_room_poi_dict[space_id]["user_data"]
+                yield\
+                    {
+                        "id": meeting_room_poi_dict[space_id]["id"],
                         "user_data":
                         {
-                            "image_url": meeting_room_poi["user_data"]["image_url"],
-                            "availability": meeting_room_json["availability"],
-                            "office_location": meeting_room_poi["user_data"]["office_location"],
-                            "mid": meeting_room_json["mid"]
+                            "image_url": user_data["image_url"],
+                            "availability": availability_states[int(meeting_room_json["statusId"]) - 1],
+                            "office_location": user_data["office_location"],
+                            "space_id": user_data["space_id"],
+                            "floor_name": user_data["floor_name"],
+                            "short_description": user_data["short_description"],
+                            "is_admin": user_data["is_admin"],
+                            "capacity": user_data["capacity"],
+                            "phone": user_data["phone"],
+                            "tieline": user_data["tieline"],
+                            "nexi": user_data["nexi"],
+                            "is_occupancy_enabled": user_data["is_occupancy_enabled"],
+                            "is_temporarily_deactivated": user_data["is_temporarily_deactivated"],
+                            "notes": meeting_room_json["notes"]
                         }
                     }
 
@@ -63,15 +78,17 @@ def print_usage():
     print "Options: "
     print "-u --poi_service_url     URL to poi-service"
     print "-k --dev_auth_token      eeGeo Developer Auth Token"
+    print "-r --region_code         region code for web service"
     print "-h --help                Display this screen"
 
 
 def get_args(argv):
     poi_service_url = ""
     dev_auth_token = ""
+    region_code = ""
 
     try:
-        opts, args = getopt.getopt(argv, "hvsi:u:k:", ["poi_service_url=", "dev_auth_token=", "cdn_base_url="])
+        opts, args = getopt.getopt(argv, "hvsi:u:k:", ["poi_service_url=", "dev_auth_token=", "cdn_base_url=", "region_code="])
     except getopt.GetoptError:
         print_usage()
         sys.exit(2)
@@ -83,15 +100,19 @@ def get_args(argv):
             poi_service_url = arg
         elif opt in ("-k", "--dev_auth_token"):
             dev_auth_token = arg
+        elif opt in {"-r", "--region_code"}:
+            region_code = arg
 
-    return poi_service_url, dev_auth_token
+    return poi_service_url, dev_auth_token, region_code
 
 
 if __name__ == "__main__":
-    poi_service_url, dev_auth_token = get_args(sys.argv[1:])
+    poi_service_url, dev_auth_token, region_code = get_args(sys.argv[1:])
+
+    meeting_room_poi_dict = get_meeting_room_poi_dict("../generated/MeetingRoomPoiData.json")
 
     meeting_room_json = []
-    for meeting_room in get_meeting_room_status_definitions("../data/meetingroom-poi-data.json", "../data/meetingroom-status-definition.json"):
+    for meeting_room in get_updated_meeting_room_poi_json("../data/Service.wsdl", region_code, meeting_room_poi_dict):
         meeting_room_json.append(meeting_room)
 
     update_meeting_room_pois(meeting_room_json, poi_service_url, dev_auth_token)
