@@ -86,8 +86,8 @@ namespace ExampleApp
             void GpsMarkerController::OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage &message)
             {
                 m_currentFloorIndex = message.GetSelectedFloorIndex();
-                m_blueSphereView.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
-                m_blueSphereAnchorView.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
+                m_blueSphereView.UpdateBlueSphereRenderingLayer(message.IsInteriorVisible());
+                m_blueSphereAnchorView.UpdateBlueSphereRenderingLayer(message.IsInteriorVisible());
             }
 
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
@@ -103,8 +103,8 @@ namespace ExampleApp
                 bool isFlattened = m_environmentFlatteningService.IsFlattened();
                if(m_createBlueSphereViews)
                 {
-                    m_blueSphereView.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
-                    m_blueSphereAnchorView.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
+                    m_blueSphereView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
+                    m_blueSphereAnchorView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
                 }
             }
             

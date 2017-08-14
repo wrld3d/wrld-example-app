@@ -113,7 +113,7 @@ namespace ExampleApp
 
             const float GpsMarkerModel::GetSphereHeightAboveMarker() const
             {
-                return m_blueSphereModel.GetSphereHeightAboveMarker();
+                return m_blueSphereModel.GetSphereHeightAboveBlueSphere();
             }
 
             bool GpsMarkerModel::IsLocationIndoors() const
