@@ -94,7 +94,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		addAnimator(m_openAnimatorSet, menuButtonMarginPx, titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, 0, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, 0, false, new ViewXAnimatorUpdateListener(searchMenuSeparatorView), new CircleInOutTimeInterpolator());
-		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, 0, false, new ViewXAnimatorUpdateListener(searchMenuFooterSeparatorView), new CircleInOutTimeInterpolator());
+		addAnimator(m_openAnimatorSet, 0, 0, false, new ViewXAnimatorUpdateListener(searchMenuFooterSeparatorView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, 0, false, new ViewXAnimatorUpdateListener(listContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, true, new ViewScaleYAnimatorUpdateListener(editBoxBackgroundView), new BackOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, titleBarControlsYStartPx, editTextYEndPx, true, new ViewYAnimatorUpdateListener(editBoxView), new CircleInOutTimeInterpolator());
