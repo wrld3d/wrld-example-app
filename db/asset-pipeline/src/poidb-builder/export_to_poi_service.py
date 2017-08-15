@@ -545,12 +545,14 @@ def get_office_location_from_interior_and_floor(interior_id, floor_id):
     interior_ids_to_names["swallow_lon_citygatehouse"] = "City Gate House"
     interior_ids_to_names["swallow_lon_50finsbury"] = "50 Finsbury"
     interior_ids_to_names["swallow_lon_parkhouse"] = "Park House"
+    interior_ids_to_names["swallow_lon_wallbrooksquare"] = "Bloomberg London"
 
     interior_floor_to_name = {}
     interior_floor_to_name["swallow_lon_38finsbury"] = ["Lower Ground Floor", "Ground Floor", "1st Floor", "2nd Floor", "3rd Floor", "4th Floor", "5th Floor", "6th Floor"]
     interior_floor_to_name["swallow_lon_citygatehouse"] = ["Lower Ground Floor", "Ground Floor", "1st Floor", "2nd Floor", "3rd Floor"]
     interior_floor_to_name["swallow_lon_50finsbury"] = ["Lower Ground Floor", "1st Floor", "2nd Floor", "3rd Floor", "4th Floor", "5th Floor", "6th Floor", "7th Floor"]
     interior_floor_to_name["swallow_lon_parkhouse"] = ["3rd Floor", "4th Floor", "5th Floor"]
+    interior_floor_to_name["swallow_lon_wallbrooksquare"] = ["B4", "B3", "B2", "B1", "Ground Floor", "1st Floor", "2nd Floor", "3rd Floor", "4th Floor", "5th Floor", "6th Floor", "7th Floor", "8th Floor"]
 
     return interior_floor_to_name[interior_id][floor_id] + ", " + interior_ids_to_names[interior_id];
 
@@ -886,3 +888,4 @@ if __name__ == '__main__':
         _, _, exc_traceback = sys.exc_info()
         print(str(traceback.format_exc(exc_traceback)))
         sys.exit(1)
+

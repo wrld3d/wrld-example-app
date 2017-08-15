@@ -1,0 +1,26 @@
+[
+  {
+	"locationId": "GB025",
+	"interior_id": "swallow_lon_38finsbury"
+  },
+  {
+	"locationId": "GB006",
+	"interior_id": "swallow_lon_citygatehouse"
+  },
+  {
+	"locationId": "GB012",
+	"interior_id": "swallow_lon_50finsbury"
+  },
+  {
+	"locationId": "GB032",
+	"interior_id": "swallow_lon_parkhouse"
+  },
+  {
+	"locationId": "GB033",
+	"interior_id": "swallow_lon_wallbrooksquare"
+  },
+  {
+	"locationId": "WPH01",
+	"interior_id": "westport_house"
+  }
+]
