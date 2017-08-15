@@ -76,15 +76,17 @@ public class CombinedLocationApiService
             buildGoogleApiClient();
         }
 
-        LocationServices.FusedLocationApi.requestLocationUpdates(m_googleApiClient, m_locationRequest, this);
+        if(m_googleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(m_googleApiClient, m_locationRequest, this);
+        }
     }
 
     protected void stopLocationUpdates()
     {
         if(m_googleApiClient != null)
         {
-            LocationServices.FusedLocationApi.removeLocationUpdates(m_googleApiClient, this);
             if(m_googleApiClient.isConnected()) {
+                LocationServices.FusedLocationApi.removeLocationUpdates(m_googleApiClient, this);
                 m_googleApiClient.disconnect();
             }
             m_googleApiClient = null;
