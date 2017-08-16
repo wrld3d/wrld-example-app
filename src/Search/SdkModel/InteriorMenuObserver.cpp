@@ -257,6 +257,7 @@ namespace ExampleApp
                         for (auto& item : m_defaultFindMenuEntries)
                         {
                             m_tagSearchRepository.AddItem(item);
+                            m_previousTagSearchRepository.AddItem(item);
                         }
                     }
                 }
