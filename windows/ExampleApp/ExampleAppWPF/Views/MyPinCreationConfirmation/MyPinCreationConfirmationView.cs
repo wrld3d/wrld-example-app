@@ -83,11 +83,13 @@ namespace ExampleAppWPF
 
         private void OnAcceptClicked(object sender, RoutedEventArgs e)
         {
+            IsEnabled = false;
             ExampleApp.MyPinCreationViewCLIMethods.ConfirmationOkButtonPressed(m_nativeCallerPointer);
         }
 
         private void OnCloseClicked(object sender, RoutedEventArgs e)
         {
+            IsEnabled = false;
             ExampleApp.MyPinCreationViewCLIMethods.ConfirmationCancelButtonPressed(m_nativeCallerPointer);
         }
 
@@ -173,6 +175,8 @@ namespace ExampleAppWPF
             }
 
             m_active = true;
+
+            IsEnabled = true;
         }
 
         public void AnimateViewToY(double y)
