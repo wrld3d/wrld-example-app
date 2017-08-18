@@ -16,10 +16,34 @@ if [ -z "$devAuthToken" ]; then
         exit 1
 fi
 
-regionCode=$3
+appSecret=$3
+if [ -z "$appSecret" ]; then
+        echo
+        echo "Error: appSecret must be provided"
+        echo
+        exit 1
+fi
+
+appId=$4
+if [ -z "$appId" ]; then
+        echo
+        echo "Error: appId must be provided"
+        echo
+        exit 1
+fi
+
+regionCode=$5
 if [ -z "$regionCode" ]; then
         echo
         echo "Error: regionCode must be provided"
+        echo
+        exit 1
+fi
+
+debugData=$6
+if [ -z "$debugData" ]; then
+        echo
+        echo "Error: debugData must be provided"
         echo
         exit 1
 fi
@@ -33,4 +57,4 @@ if [ ! -f ../generated/MeetingRoomPoiData.json ]; then
         exit 1
 fi
 
-python meetingroom-status-update.py --poi_service_url $poiServiceURL --dev_auth_token $devAuthToken --region_code $regionCode
+python meetingroom-status-update.py --poi_service_url $poiServiceURL --dev_auth_token $devAuthToken --app_secret $appSecret --app_id $appId --region_code $regionCode --debug_data $debugData

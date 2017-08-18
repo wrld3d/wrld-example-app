@@ -1,12 +1,44 @@
-import getopt
+import base64
 import json
+import getopt
+import hmac
 import requests
 import sys
 
+import zeep
 from zeep import Client
 
+from datetime import datetime
+
+
+REQUEST_TIME_UTC = "requestTimeUtc"
+APP_ID = "appId"
+DEBUG_DATA = "debug_Data"
+REQUEST_KEY = "requestKey"
 
 MEETING_ROOM_TAG = "meeting_room"
+
+
+class CustomTransport(zeep.Transport):
+    def post(self, address, message, headers):
+        headers[REQUEST_TIME_UTC] = unicode(datetime.utcnow())
+        headers[APP_ID] = app_id
+
+        if debug_data:
+            headers[DEBUG_DATA] = "debug_Data?"
+
+        hmac_generator = hmac.new(app_secret)
+        hmac_generator.update(message + "," + headers[REQUEST_TIME_UTC] + "," + headers[APP_ID])
+        headers[REQUEST_KEY] = base64.encodestring(hmac_generator.digest())[:-1]
+
+        # print "\n-----------"
+        # print address
+        # print "-----------"
+        # print message
+        # print "-----------"
+        # print headers
+        # print "-----------\n"
+        return super(CustomTransport, self).post(address, message, headers)
 
 
 def get_interior_id_dict(filename):
@@ -59,46 +91,48 @@ def get_image_dict(filename):
 
 
 def get_meeting_room_definitions(web_service_url, region_code, interior_id_dict, interior_floor_dict, location_dict, image_dict):
-    client = Client(web_service_url)
+    transport = CustomTransport()
+    client = Client(web_service_url, transport=transport)
     response = client.service.GetMeetingSpaceDetails(region_code)
 
     if response is not None and response != "":
         meeting_room_list_json = json.loads(response)
-        for meeting_room_json in meeting_room_list_json["meetingSpaceDetails"]:
-            location_id = meeting_room_json["locationId"]
-            space_id = meeting_room_json["spaceId"]
-            interior_id = interior_id_dict[location_id]
-            floor_name = meeting_room_json["floorName"]
-            floor_id = interior_floor_dict[interior_id][floor_name]
-            location = location_dict[str(space_id)]
-            image = image_dict[str(space_id)]
-            yield\
-                {
-                    "title": meeting_room_json["name"],
-                    "subtitle": "",
-                    "tags": MEETING_ROOM_TAG,
-                    "lat": float(location["lat"]),
-                    "lon": float(location["lon"]),
-                    "indoor": True,
-                    "indoor_id": interior_id,
-                    "floor_id": int(floor_id),
-                    "user_data":
+        if "meetingSpaceDetails" in meeting_room_list_json:
+            for meeting_room_json in meeting_room_list_json["meetingSpaceDetails"]:
+                location_id = meeting_room_json["locationId"]
+                space_id = meeting_room_json["spaceId"]
+                interior_id = interior_id_dict[location_id]
+                floor_name = meeting_room_json["floorName"]
+                floor_id = interior_floor_dict[interior_id][floor_name]
+                location = location_dict[str(space_id)]
+                image = image_dict[str(space_id)]
+                yield\
                     {
-                        "image_url": image,
-                        "availability": "available",
-                        "office_location": meeting_room_json["shortDescription"],
-                        "space_id": space_id,
-                        "floor_name": floor_name,
-                        "short_description": meeting_room_json["shortDescription"],
-                        "is_admin": bool(meeting_room_json["isAdmin"]),
-                        "capacity": int(meeting_room_json["capacity"]),
-                        "phone": meeting_room_json["phone"],
-                        "tieline": meeting_room_json["tieline"],
-                        "nexi": int(meeting_room_json["nexi"]),
-                        "is_occupancy_enabled": bool(meeting_room_json["isOccupancyEnabled"]),
-                        "is_temporarily_deactivated": bool(meeting_room_json["isTemporarilyDeactivated"])
+                        "title": meeting_room_json["name"],
+                        "subtitle": "",
+                        "tags": MEETING_ROOM_TAG,
+                        "lat": float(location["lat"]),
+                        "lon": float(location["lon"]),
+                        "indoor": True,
+                        "indoor_id": interior_id,
+                        "floor_id": int(floor_id),
+                        "user_data":
+                        {
+                            "image_url": image,
+                            "availability": "available",
+                            "office_location": meeting_room_json["shortDescription"],
+                            "space_id": space_id,
+                            "floor_name": floor_name,
+                            "short_description": meeting_room_json["shortDescription"],
+                            "is_admin": bool(meeting_room_json["isAdmin"]),
+                            "capacity": int(meeting_room_json["capacity"]),
+                            "phone": meeting_room_json["phone"],
+                            "tieline": meeting_room_json["tieline"],
+                            "nexi": int(meeting_room_json["nexi"]),
+                            "is_occupancy_enabled": bool(meeting_room_json["isOccupancyEnabled"]),
+                            "is_temporarily_deactivated": bool(meeting_room_json["isTemporarilyDeactivated"])
+                        }
                     }
-                }
 
 
 def delete_existing_meeting_room_pois(poi_service_url, dev_auth_token):
@@ -169,19 +203,25 @@ def print_usage():
     print "Options: "
     print "-u --poi_service_url     URL to poi-service"
     print "-k --dev_auth_token      eeGeo Developer Auth Token"
-    print "-c --cdn_base_url        base URL of CDN"
+    print "-s --app_secret          app secret for web service"
+    print "-i --app_id              app id for web service"
     print "-r --region_code         region code for web service"
+    print "-d --debug_data          send debug data to web service"
+    print "-c --cdn_base_url        base URL of CDN"
     print "-h --help                Display this screen"
 
 
 def get_args(argv):
     poi_service_url = ""
     dev_auth_token = ""
-    cdn_base_url = ""
+    app_secret = ""
+    app_id = ""
     region_code = ""
+    debug_data = ""
+    cdn_base_url = ""
 
     try:
-        opts, args = getopt.getopt(argv, "hvsi:u:k:c:r:", ["poi_service_url=", "dev_auth_token=", "cdn_base_url=", "region_code="])
+        opts, args = getopt.getopt(argv, "hvsi:u:k:s:i:r:d:c:", ["poi_service_url=", "dev_auth_token=", "app_secret=", "app_id=", "region_code=", "debug_data=", "cdn_base_url="])
     except getopt.GetoptError:
         print_usage()
         sys.exit(2)
@@ -193,16 +233,22 @@ def get_args(argv):
             poi_service_url = arg
         elif opt in ("-k", "--dev_auth_token"):
             dev_auth_token = arg
-        elif opt in ("-c", "--cdn_base_url"):
-            cdn_base_url = arg
+        elif opt in {"-s", "--app_secret"}:
+            app_secret = arg
+        elif opt in {"-i", "--app_id"}:
+            app_id = arg
         elif opt in {"-r", "--region_code"}:
             region_code = arg
+        elif opt in {"-d", "--debug_data"}:
+            debug_data = arg
+        elif opt in ("-c", "--cdn_base_url"):
+            cdn_base_url = arg
 
-    return poi_service_url, dev_auth_token, cdn_base_url, region_code
+    return poi_service_url, dev_auth_token, app_secret, app_id, region_code, debug_data, cdn_base_url
 
 
 if __name__ == "__main__":
-    poi_service_url, dev_auth_token, cdn_base_url, region_code = get_args(sys.argv[1:])
+    poi_service_url, dev_auth_token, app_secret, app_id, region_code, debug_data, cdn_base_url = get_args(sys.argv[1:])
 
     interior_id_dict = get_interior_id_dict("../data/InteriorIdMap.json")
     interior_floor_dict = get_interior_floor_dict("../data/InteriorFloorMap.json")
@@ -210,7 +256,7 @@ if __name__ == "__main__":
     image_dict = get_image_dict("../generated/ImageMap.json")
 
     meeting_room_json = []
-    for meeting_room in get_meeting_room_definitions("../data/Service.wsdl", region_code, interior_id_dict, interior_floor_dict, location_dict, image_dict):
+    for meeting_room in get_meeting_room_definitions("http://localhost/webservice/pythonservice?wsdl", region_code, interior_id_dict, interior_floor_dict, location_dict, image_dict):
         meeting_room_json.append(meeting_room)
 
     delete_existing_meeting_room_pois(poi_service_url, dev_auth_token)
