@@ -46,12 +46,12 @@ class PythonSoapService(spyne.Service):
         header[APP_ID] = ctx.transport.req[REQUEST_HTTP_SUFFIX + APP_ID.upper()]
         header[DEBUG_DATA] = ctx.transport.req[REQUEST_HTTP_SUFFIX + DEBUG_DATA.upper()]
 
-        request_key = ctx.transport.req[REQUEST_HTTP_SUFFIX + REQUEST_KEY.upper()]
+        header[REQUEST_KEY] = base64.b64decode(ctx.transport.req[REQUEST_HTTP_SUFFIX + REQUEST_KEY.upper()])
         body = "<?xml version='1.0' encoding='utf-8'?>\n" + etree.tostring(ctx.in_document, pretty_print=False)
 
         hmac_generator = hmac.new(SECRET_KEY)
         hmac_generator.update(body + "," + header[REQUEST_TIME_UTC] + "," + header[APP_ID])
-        header[REQUEST_KEY] = base64.encodestring(hmac_generator.digest())[:-1]
+        request_key = hmac_generator.digest()
 
         is_valid_key = header[REQUEST_KEY] == request_key
 

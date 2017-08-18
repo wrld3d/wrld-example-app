@@ -26,12 +26,14 @@ class CustomTransport(zeep.Transport):
         headers[REQUEST_TIME_UTC] = unicode(datetime.utcnow())
         headers[APP_ID] = app_id
 
+        key_input = message + "," + headers[REQUEST_TIME_UTC] + "," + headers[APP_ID]
+
         if debug_data:
-            headers[DEBUG_DATA] = "debug_Data?"
+            headers[DEBUG_DATA] = base64.b64encode(key_input)
 
         hmac_generator = hmac.new(app_secret)
-        hmac_generator.update(message + "," + headers[REQUEST_TIME_UTC] + "," + headers[APP_ID])
-        headers[REQUEST_KEY] = base64.encodestring(hmac_generator.digest())[:-1]
+        hmac_generator.update(key_input)
+        headers[REQUEST_KEY] = base64.b64encode(hmac_generator.digest())
 
         # print "\n-----------"
         # print address
