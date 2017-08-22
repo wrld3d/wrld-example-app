@@ -6,14 +6,14 @@
       "icon_key": "aroundme"
     },
     {
-      "name": "Accommodation",
+      "name": "Accomodation",
       "search_tag": "accommodation",
-      "icon_key": "accommodation"
+      "icon_key": "accomodation"
     },
     {
       "name": "Art & Museum",
       "search_tag": "art_museums",
-      "icon_key": "art_museums"
+      "icon_key": "art"
     },
     {
       "name": "Business",
@@ -33,7 +33,7 @@
     {
       "name": "General Amenities",
       "search_tag": "amenities",
-      "icon_key": "amenities"
+      "icon_key": "general"
     },
     {
       "name": "Health",
@@ -48,17 +48,17 @@
     {
       "name": "Sport & Leisure",
       "search_tag": "sports_leisure",
-      "icon_key": "sports_leisure"
+      "icon_key": "sports"
     },
     {
       "name": "Tourist",
       "search_tag": "tourism",
-      "icon_key": "tourism"
+      "icon_key": "tourist_info"
     },
     {
       "name": "Transport",
       "search_tag": "transport",
-      "icon_key": "transport"
+      "icon_key": "bus"
     }
   ]
 }

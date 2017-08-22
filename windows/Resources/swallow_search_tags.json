@@ -2,7 +2,7 @@
   "tags": [
 	{ "tag": "meeting_room", "readable_tag": "Meeting Rooms", "icon_key": "meeting_room" },
 	{ "tag": "working_group", "readable_tag": "Working Group", "icon_key": "working_group" },
-	{ "tag": "office", "readable_tag": "Buildings", "icon_key": "office" },
+	{ "tag": "office", "readable_tag": "Buildings", "icon_key": "offices" },
 	{ "tag": "toilets", "readable_tag": "Toilets", "icon_key": "bathroom" },
 	{ "tag": "toilets_disabled", "readable_tag": "Disabled Toilets", "icon_key": "accessible" },
 	{ "tag": "toilets_female", "readable_tag": "Female Toilets", "icon_key": "toilet_ladies" },
