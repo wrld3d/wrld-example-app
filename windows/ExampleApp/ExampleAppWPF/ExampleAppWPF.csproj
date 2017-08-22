@@ -927,167 +927,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="..\..\Resources\icon1_accommodation.png">
-      <Link>Assets\icon1_accommodation.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_amenities.png">
-      <Link>Assets\icon1_amenities.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_aroundme.png">
-      <Link>Assets\icon1_aroundme.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_art_museums.png">
-      <Link>Assets\icon1_art_museums.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_autumn.png">
-      <Link>Assets\icon1_autumn.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_bank.png">
-      <Link>Assets\icon1_bank.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_business.png">
-      <Link>Assets\icon1_business.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_clear.png">
-      <Link>Assets\icon1_clear.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_coffee.png">
-      <Link>Assets\icon1_coffee.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_dawn.png">
-      <Link>Assets\icon1_dawn.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_day.png">
-      <Link>Assets\icon1_day.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_defibrillator.png">
-      <Link>Assets\icon1_defibrillator.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_department.png">
-      <Link>Assets\icon1_department.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_disabled_access.png">
-      <Link>Assets\icon1_disabled_access.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_dusk.png">
-      <Link>Assets\icon1_dusk.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_elevator.png">
-      <Link>Assets\icon1_elevator.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_emergency_exit.png">
-      <Link>Assets\icon1_emergency_exit.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_entertainment.png">
-      <Link>Assets\icon1_entertainment.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_escalator.png">
-      <Link>Assets\icon1_escalator.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_fire.png">
-      <Link>Assets\icon1_fire.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_first_aid.png">
-      <Link>Assets\icon1_first_aid.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_fog.png">
-      <Link>Assets\icon1_fog.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_food_drink.png">
-      <Link>Assets\icon1_food_drink.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_health.png">
-      <Link>Assets\icon1_health.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_hotel.png">
-      <Link>Assets\icon1_hotel.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_meeting_room.png">
-      <Link>Assets\icon1_meeting_room.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_meeting_room_available.png">
-      <Link>Assets\icon1_meeting_room_available.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_meeting_room_available_soon.png">
-      <Link>Assets\icon1_meeting_room_available_soon.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_meeting_room_unavailable.png">
-      <Link>Assets\icon1_meeting_room_unavailable.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_misc.png">
-      <Link>Assets\icon1_misc.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_my_pins.png">
-      <Link>Assets\icon1_my_pins.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_night.png">
-      <Link>Assets\icon1_night.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_office.png">
-      <Link>Assets\icon1_office.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_park.png">
-      <Link>Assets\icon1_park.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_person.png">
-      <Link>Assets\icon1_person.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_person_POI.png">
-      <Link>Assets\icon1_person_POI.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_printer.png">
-      <Link>Assets\icon1_printer.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_rain.png">
-      <Link>Assets\icon1_rain.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_reception.png">
-      <Link>Assets\icon1_reception.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_shopping.png">
-      <Link>Assets\icon1_shopping.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_snow.png">
-      <Link>Assets\icon1_snow.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_sports_leisure.png">
-      <Link>Assets\icon1_sports_leisure.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_spring.png">
-      <Link>Assets\icon1_spring.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_stairs.png">
-      <Link>Assets\icon1_stairs.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_stationary.png">
-      <Link>Assets\icon1_stationary.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_summer.png">
-      <Link>Assets\icon1_summer.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_sun.png">
-      <Link>Assets\icon1_sun.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_toilets.png">
-      <Link>Assets\icon1_toilets.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_tourism.png">
-      <Link>Assets\icon1_tourism.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_transition.png">
-      <Link>Assets\icon1_transition.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_transport.png">
-      <Link>Assets\icon1_transport.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_winter.png">
-      <Link>Assets\icon1_winter.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\icon1_working_group.png">
-      <Link>Assets\icon1_working_group.png</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\shift_key.png" />
   </ItemGroup>
   <ItemGroup>
@@ -1139,6 +978,581 @@
     <Resource Include="..\..\Resources\button_search_close_on.png">
       <Link>Assets\button_search_close_on.png</Link>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+	<Resource Include="..\..\Resources\icon1_accessible.png">
+	  <Link>Assets\icon1_accessible.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_accomodation.png">
+	  <Link>Assets\icon1_accomodation.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_airport.png">
+	  <Link>Assets\icon1_airport.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_alert.png">
+	  <Link>Assets\icon1_alert.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_aroundme.png">
+	  <Link>Assets\icon1_aroundme.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_art.png">
+	  <Link>Assets\icon1_art.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_atm.png">
+	  <Link>Assets\icon1_atm.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_autumn.png">
+	  <Link>Assets\icon1_autumn.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_badge_reader.png">
+	  <Link>Assets\icon1_badge_reader.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_bank.png">
+	  <Link>Assets\icon1_bank.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_bathroom.png">
+	  <Link>Assets\icon1_bathroom.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_bed_breakfast.png">
+	  <Link>Assets\icon1_bed_breakfast.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_beer.png">
+	  <Link>Assets\icon1_beer.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_bin.png">
+	  <Link>Assets\icon1_bin.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_bin_full.png">
+	  <Link>Assets\icon1_bin_full.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_blue_meter.png">
+	  <Link>Assets\icon1_blue_meter.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_border_crossing.png">
+	  <Link>Assets\icon1_border_crossing.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_burgers.png">
+	  <Link>Assets\icon1_burgers.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_bus.png">
+	  <Link>Assets\icon1_bus.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_business.png">
+	  <Link>Assets\icon1_business.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_camping.png">
+	  <Link>Assets\icon1_camping.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_casino.png">
+	  <Link>Assets\icon1_casino.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_charge_point.png">
+	  <Link>Assets\icon1_charge_point.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_childcare.png">
+	  <Link>Assets\icon1_childcare.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_chinese_thai.png">
+	  <Link>Assets\icon1_chinese_thai.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_christianity.png">
+	  <Link>Assets\icon1_christianity.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_church.png">
+	  <Link>Assets\icon1_church.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_cinema.png">
+	  <Link>Assets\icon1_cinema.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_clear.png">
+	  <Link>Assets\icon1_clear.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_click_and_collect.png">
+	  <Link>Assets\icon1_click_and_collect.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_co2_detector.png">
+	  <Link>Assets\icon1_co2_detector.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_cocktail.png">
+	  <Link>Assets\icon1_cocktail.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_coffee.png">
+	  <Link>Assets\icon1_coffee.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_collaboration_space.png">
+	  <Link>Assets\icon1_collaboration_space.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_cycling.png">
+	  <Link>Assets\icon1_cycling.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_dawn.png">
+	  <Link>Assets\icon1_dawn.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_day.png">
+	  <Link>Assets\icon1_day.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_defibrillator.png">
+	  <Link>Assets\icon1_defibrillator.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_dentist.png">
+	  <Link>Assets\icon1_dentist.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_department.png">
+	  <Link>Assets\icon1_department.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_digital_sign.png">
+	  <Link>Assets\icon1_digital_sign.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_dining_room.png">
+	  <Link>Assets\icon1_dining_room.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_donuts.png">
+	  <Link>Assets\icon1_donuts.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_driveway.png">
+	  <Link>Assets\icon1_driveway.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_dusk.png">
+	  <Link>Assets\icon1_dusk.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_education.png">
+	  <Link>Assets\icon1_education.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_electrical_meter.png">
+	  <Link>Assets\icon1_electrical_meter.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_elevator.png">
+	  <Link>Assets\icon1_elevator.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_emergency_exit.png">
+	  <Link>Assets\icon1_emergency_exit.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_entertainment.png">
+	  <Link>Assets\icon1_entertainment.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_escalator.png">
+	  <Link>Assets\icon1_escalator.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_events.png">
+	  <Link>Assets\icon1_events.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_facebook.png">
+	  <Link>Assets\icon1_facebook.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_farm.png">
+	  <Link>Assets\icon1_farm.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_fashion.png">
+	  <Link>Assets\icon1_fashion.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_fashion_kids.png">
+	  <Link>Assets\icon1_fashion_kids.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_fashion_men.png">
+	  <Link>Assets\icon1_fashion_men.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_fashion_women.png">
+	  <Link>Assets\icon1_fashion_women.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_ferry.png">
+	  <Link>Assets\icon1_ferry.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_fire.png">
+	  <Link>Assets\icon1_fire.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_fire_extinguisher.png">
+	  <Link>Assets\icon1_fire_extinguisher.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_fireplace.png">
+	  <Link>Assets\icon1_fireplace.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_first_aid.png">
+	  <Link>Assets\icon1_first_aid.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_fishing.png">
+	  <Link>Assets\icon1_fishing.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_florist.png">
+	  <Link>Assets\icon1_florist.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_fog.png">
+	  <Link>Assets\icon1_fog.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_food_drink.png">
+	  <Link>Assets\icon1_food_drink.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_football.png">
+	  <Link>Assets\icon1_football.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_forest.png">
+	  <Link>Assets\icon1_forest.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_fridge.png">
+	  <Link>Assets\icon1_fridge.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_gallery.png">
+	  <Link>Assets\icon1_gallery.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_gas_meter.png">
+	  <Link>Assets\icon1_gas_meter.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_general.png">
+	  <Link>Assets\icon1_general.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_golf.png">
+	  <Link>Assets\icon1_golf.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_google_plus.png">
+	  <Link>Assets\icon1_google_plus.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_groceries.png">
+	  <Link>Assets\icon1_groceries.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_health.png">
+	  <Link>Assets\icon1_health.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_historic_monument.png">
+	  <Link>Assets\icon1_historic_monument.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_home.png">
+	  <Link>Assets\icon1_home.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_home_apartment.png">
+	  <Link>Assets\icon1_home_apartment.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_homeware.png">
+	  <Link>Assets\icon1_homeware.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_hospital.png">
+	  <Link>Assets\icon1_hospital.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_hostel.png">
+	  <Link>Assets\icon1_hostel.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_hotel.png">
+	  <Link>Assets\icon1_hotel.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_hvac_unit.png">
+	  <Link>Assets\icon1_hvac_unit.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_indian.png">
+	  <Link>Assets\icon1_indian.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_islam.png">
+	  <Link>Assets\icon1_islam.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_judaism.png">
+	  <Link>Assets\icon1_judaism.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_kitchen.png">
+	  <Link>Assets\icon1_kitchen.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_lake.png">
+	  <Link>Assets\icon1_lake.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_library.png">
+	  <Link>Assets\icon1_library.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_lifeguard.png">
+	  <Link>Assets\icon1_lifeguard.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_limo.png">
+	  <Link>Assets\icon1_limo.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_link.png">
+	  <Link>Assets\icon1_link.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_lodge.png">
+	  <Link>Assets\icon1_lodge.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_meeting_room.png">
+	  <Link>Assets\icon1_meeting_room.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_meeting_room_available.png">
+	  <Link>Assets\icon1_meeting_room_available.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_meeting_room_available_soon.png">
+	  <Link>Assets\icon1_meeting_room_available_soon.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_meeting_room_unavailable.png">
+	  <Link>Assets\icon1_meeting_room_unavailable.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_message.png">
+	  <Link>Assets\icon1_message.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_meter.png">
+	  <Link>Assets\icon1_meter.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_misc.png">
+	  <Link>Assets\icon1_misc.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_mobile_phone.png">
+	  <Link>Assets\icon1_mobile_phone.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_mountain.png">
+	  <Link>Assets\icon1_mountain.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_music.png">
+	  <Link>Assets\icon1_music.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_my_location.png">
+	  <Link>Assets\icon1_my_location.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_night.png">
+	  <Link>Assets\icon1_night.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_night_time.png">
+	  <Link>Assets\icon1_night_time.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_observation_point.png">
+	  <Link>Assets\icon1_observation_point.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_observatory.png">
+	  <Link>Assets\icon1_observatory.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_occupancy_sensor.png">
+	  <Link>Assets\icon1_occupancy_sensor.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_offices.png">
+	  <Link>Assets\icon1_offices.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_oven.png">
+	  <Link>Assets\icon1_oven.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_park.png">
+	  <Link>Assets\icon1_park.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_parking.png">
+	  <Link>Assets\icon1_parking.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_payphone.png">
+	  <Link>Assets\icon1_payphone.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_person.png">
+	  <Link>Assets\icon1_person.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_petrol_station.png">
+	  <Link>Assets\icon1_petrol_station.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_pharmacy.png">
+	  <Link>Assets\icon1_pharmacy.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_photo.png">
+	  <Link>Assets\icon1_photo.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_picasa.png">
+	  <Link>Assets\icon1_picasa.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_pin.png">
+	  <Link>Assets\icon1_pin.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_pizza.png">
+	  <Link>Assets\icon1_pizza.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_place_of_worship.png">
+	  <Link>Assets\icon1_place_of_worship.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_playing_field.png">
+	  <Link>Assets\icon1_playing_field.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_police.png">
+	  <Link>Assets\icon1_police.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_positioning_beacon.png">
+	  <Link>Assets\icon1_positioning_beacon.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_post_office.png">
+	  <Link>Assets\icon1_post_office.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_printer.png">
+	  <Link>Assets\icon1_printer.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_race_track.png">
+	  <Link>Assets\icon1_race_track.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_rain.png">
+	  <Link>Assets\icon1_rain.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_reception.png">
+	  <Link>Assets\icon1_reception.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_remote_control.png">
+	  <Link>Assets\icon1_remote_control.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_river.png">
+	  <Link>Assets\icon1_river.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_sailing.png">
+	  <Link>Assets\icon1_sailing.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_seafood.png">
+	  <Link>Assets\icon1_seafood.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_security_alarm.png">
+	  <Link>Assets\icon1_security_alarm.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_security_camera.png">
+	  <Link>Assets\icon1_security_camera.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_shooting.png">
+	  <Link>Assets\icon1_shooting.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_shopping.png">
+	  <Link>Assets\icon1_shopping.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_skiing.png">
+	  <Link>Assets\icon1_skiing.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_smart_post.png">
+	  <Link>Assets\icon1_smart_post.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_smoke_detector.png">
+	  <Link>Assets\icon1_smoke_detector.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_snow.png">
+	  <Link>Assets\icon1_snow.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_solar_panels.png">
+	  <Link>Assets\icon1_solar_panels.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_spa.png">
+	  <Link>Assets\icon1_spa.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_sports.png">
+	  <Link>Assets\icon1_sports.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_sports_field.png">
+	  <Link>Assets\icon1_sports_field.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_spring.png">
+	  <Link>Assets\icon1_spring.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_stairs.png">
+	  <Link>Assets\icon1_stairs.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_star.png">
+	  <Link>Assets\icon1_star.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_stationery.png">
+	  <Link>Assets\icon1_stationery.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_steak.png">
+	  <Link>Assets\icon1_steak.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_subway.png">
+	  <Link>Assets\icon1_subway.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_summer.png">
+	  <Link>Assets\icon1_summer.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_sun.png">
+	  <Link>Assets\icon1_sun.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_sushi.png">
+	  <Link>Assets\icon1_sushi.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_taxi.png">
+	  <Link>Assets\icon1_taxi.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_technology.png">
+	  <Link>Assets\icon1_technology.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_telephone_booth.png">
+	  <Link>Assets\icon1_telephone_booth.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_temperature_sensor.png">
+	  <Link>Assets\icon1_temperature_sensor.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_thermostat.png">
+	  <Link>Assets\icon1_thermostat.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_ticket.png">
+	  <Link>Assets\icon1_ticket.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_toilet_ladies.png">
+	  <Link>Assets\icon1_toilet_ladies.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_toilet_men.png">
+	  <Link>Assets\icon1_toilet_men.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_tourist_info.png">
+	  <Link>Assets\icon1_tourist_info.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_town_hall.png">
+	  <Link>Assets\icon1_town_hall.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_traffic_counter.png">
+	  <Link>Assets\icon1_traffic_counter.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_train.png">
+	  <Link>Assets\icon1_train.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_tram.png">
+	  <Link>Assets\icon1_tram.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_twitter.png">
+	  <Link>Assets\icon1_twitter.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_uber.png">
+	  <Link>Assets\icon1_uber.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_vegan.png">
+	  <Link>Assets\icon1_vegan.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_vegetarian.png">
+	  <Link>Assets\icon1_vegetarian.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_vet.png">
+	  <Link>Assets\icon1_vet.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_video.png">
+	  <Link>Assets\icon1_video.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_video_conference_telepresence.png">
+	  <Link>Assets\icon1_video_conference_telepresence.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_vimeo.png">
+	  <Link>Assets\icon1_vimeo.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_virtual_tour.png">
+	  <Link>Assets\icon1_virtual_tour.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_vr_experience.png">
+	  <Link>Assets\icon1_vr_experience.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_warning.png">
+	  <Link>Assets\icon1_warning.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_washing_machine.png">
+	  <Link>Assets\icon1_washing_machine.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_water_meter.png">
+	  <Link>Assets\icon1_water_meter.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_wi_fi_point.png">
+	  <Link>Assets\icon1_wi_fi_point.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_wikipedia.png">
+	  <Link>Assets\icon1_wikipedia.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_wind_turbine.png">
+	  <Link>Assets\icon1_wind_turbine.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_wine.png">
+	  <Link>Assets\icon1_wine.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_winter.png">
+	  <Link>Assets\icon1_winter.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_working_group.png">
+	  <Link>Assets\icon1_working_group.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_youtube.png">
+	  <Link>Assets\icon1_youtube.png</Link>
+	</Resource>
+	<Resource Include="..\..\Resources\icon1_zoo.png">
+	  <Link>Assets\icon1_zoo.png</Link>
+	</Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

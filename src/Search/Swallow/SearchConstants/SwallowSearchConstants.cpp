@@ -38,6 +38,9 @@ namespace ExampleApp
                 const std::string STATIONERY_CATEGORY_NAME = "stationery";
                 const std::string RECEPTION_CATEGORY_NAME = "reception";
                 const std::string TOILETS_CATEGORY_NAME = "toilets";
+                const std::string TOILETS_DISABLED_CATEGORY_NAME = "toilets_disabled";
+                const std::string TOILETS_FEMALE_CATEGORY_NAME = "toilets_female";
+                const std::string TOILETS_MALE_CATEGORY_NAME = "toilets_male";
                 const std::string PRINT_STATION_CATEGORY_NAME = "printer";
                 const std::string EMERGENCY_EXIT_CATEGORY_NAME = "emergency_exit";
                 
@@ -82,6 +85,9 @@ namespace ExampleApp
                     tags.push_back(FACILITY_CATEGORY_NAME);
                     tags.push_back(OFFICE_CATEGORY_NAME);
                     tags.push_back(TOILETS_CATEGORY_NAME);
+                    tags.push_back(TOILETS_DISABLED_CATEGORY_NAME);
+                    tags.push_back(TOILETS_FEMALE_CATEGORY_NAME);
+                    tags.push_back(TOILETS_MALE_CATEGORY_NAME);
                     tags.push_back(PRINT_STATION_CATEGORY_NAME);
                     tags.push_back(DEPARTMENT_CATEGORY_NAME);
                     tags.push_back(STATIONERY_CATEGORY_NAME);
