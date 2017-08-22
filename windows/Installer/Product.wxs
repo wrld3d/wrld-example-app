@@ -1781,7 +1781,483 @@
 	  <Component Id="_bf14b965.c272.429e.8320.4068b6e3cc25" Directory="RESOURCEFOLDER" Guid="{c40035cc-cf7e-4bce-9217-5cffb8810e9a}">
         <File Id="_714dba88.fd9e.4d97.b133.7262d7d83b87" KeyPath="yes" Source="payload\Resources\button_search_close_on@kiosk.png" />
 	  </Component>
-
+	  <Component Id="_95705c1a.2adb.445e.945d.f42e285c38f4" Directory="RESOURCEFOLDER" Guid="{1e39a642-0590-4cc7-976f-f0c4c44d1d64}">
+        <File Id="_3846bdeb.3a5f.4221.8053.4a05287b3e7e" KeyPath="yes" Source="payload\Resources\icon1_accessible.png" />
+	  </Component>
+	  <Component Id="_b76b4c16.1616.425f.a2e2.e1425ea51a64" Directory="RESOURCEFOLDER" Guid="{c52ed4c1-f33c-4502-accf-d789316eb926}">
+        <File Id="_48084ab4.8ca7.4477.86a6.30098a6cccdd" KeyPath="yes" Source="payload\Resources\icon1_accessible@1.5x.png" />
+	  </Component>
+	  <Component Id="_ee10587e.6b23.44de.8776.7232cb63cb9c" Directory="RESOURCEFOLDER" Guid="{f8321845-de33-4d1f-861f-542790806373}">
+        <File Id="_bb3fc579.88ff.4e37.bfd9.a3ee46f36a8c" KeyPath="yes" Source="payload\Resources\icon1_accomodation.png" />
+	  </Component>
+	  <Component Id="_536eeb22.4410.41fe.af1f.881b77c289b7" Directory="RESOURCEFOLDER" Guid="{06c64317-e4fc-46a4-acfb-92f54b88df06}">
+        <File Id="_52d5c8e1.70e7.426f.90cb.771912c51d6c" KeyPath="yes" Source="payload\Resources\icon1_accomodation@1.5x.png" />
+	  </Component>
+	  <Component Id="_5ac3cb57.04d2.4a10.8187.04220e559bc1" Directory="RESOURCEFOLDER" Guid="{f3cc887b-4d77-46b2-aeaf-54ea09e9caa8}">
+        <File Id="_2004919c.04a8.493a.8412.a0e63a3a93b3" KeyPath="yes" Source="payload\Resources\icon1_alert.png" />
+	  </Component>
+	  <Component Id="_86bc1e0e.1d93.43f9.af40.408b4001f7ef" Directory="RESOURCEFOLDER" Guid="{5f3a8054-5f86-4df0-af5e-5478737f5ede}">
+        <File Id="_c64260a4.b623.4875.a7f1.8ae305835f62" KeyPath="yes" Source="payload\Resources\icon1_alert@1.5x.png" />
+	  </Component>
+	  <Component Id="_fc89ea07.fa16.407d.bcde.67a728230a80" Directory="RESOURCEFOLDER" Guid="{47f7acf7-b8a7-46e9-9075-3be5fa9f0c00}">
+        <File Id="_717007e3.43fd.434b.a4b0.73a1e21a1059" KeyPath="yes" Source="payload\Resources\icon1_art.png" />
+	  </Component>
+	  <Component Id="_d1ad028e.06c5.4992.9b15.38f06e01ac21" Directory="RESOURCEFOLDER" Guid="{7f0a1595-ff8e-485e-af07-84e150e48ce3}">
+        <File Id="_de14d5dd.472f.4b1a.b097.8dd6535a4f05" KeyPath="yes" Source="payload\Resources\icon1_art@1.5x.png" />
+	  </Component>
+	  <Component Id="_c3f41f57.5973.40fd.b3a0.9f8ac8533765" Directory="RESOURCEFOLDER" Guid="{3f03dddf-ccd0-408c-9bdc-5071523e929a}">
+        <File Id="_20957ccd.4045.48d8.8e23.3a6b168454ea" KeyPath="yes" Source="payload\Resources\icon1_badge_reader.png" />
+	  </Component>
+	  <Component Id="_33e30fb8.6b68.4ce3.84f5.a92d423ec58e" Directory="RESOURCEFOLDER" Guid="{e5e48a79-1885-4b5c-b9d9-25fb8ca66b47}">
+        <File Id="_bf2ecc48.4576.4bde.bc68.791c7cd2fabf" KeyPath="yes" Source="payload\Resources\icon1_badge_reader@1.5x.png" />
+	  </Component>
+	  <Component Id="_8aaa82ea.ecc6.431d.9580.13245cdf1222" Directory="RESOURCEFOLDER" Guid="{89ccc81e-90e5-4ce2-9c20-7936715f9f4d}">
+        <File Id="_5f17e39f.fc40.448c.9fad.02288fabf2ae" KeyPath="yes" Source="payload\Resources\icon1_bathroom.png" />
+	  </Component>
+	  <Component Id="_024a28a2.1863.4022.bcf8.e1ba7b0cce57" Directory="RESOURCEFOLDER" Guid="{74bc45b9-f776-4ba5-a2bd-4dae570acf21}">
+        <File Id="_2b641de1.e589.4b3a.a7f8.6153ad34df7f" KeyPath="yes" Source="payload\Resources\icon1_bathroom@1.5x.png" />
+	  </Component>
+	  <Component Id="_74232138.3418.4ffb.9260.f16e7c89b128" Directory="RESOURCEFOLDER" Guid="{d58bd654-85e6-4ca6-b0ca-8f41d7417e51}">
+        <File Id="_760ad5c4.7341.400c.9819.86b8ef9fcbce" KeyPath="yes" Source="payload\Resources\icon1_bin.png" />
+	  </Component>
+	  <Component Id="_9cb9e319.08cc.4bc8.b800.d07fce6797d1" Directory="RESOURCEFOLDER" Guid="{32c05242-e92f-4d01-8802-f72f33e4b9cf}">
+        <File Id="_b0aedd57.704d.4421.b7c5.e7c362d0c772" KeyPath="yes" Source="payload\Resources\icon1_bin@1.5x.png" />
+	  </Component>
+	  <Component Id="_04c515f0.8f96.46cc.a7a7.c9d6a482bdf9" Directory="RESOURCEFOLDER" Guid="{8c754dda-3ddb-4c83-85b6-29c2f2b6170e}">
+        <File Id="_836301f8.f812.4d6d.9801.2dbd0d1772f1" KeyPath="yes" Source="payload\Resources\icon1_bin_full.png" />
+	  </Component>
+	  <Component Id="_4e617974.06fb.4bbd.9307.686da0267959" Directory="RESOURCEFOLDER" Guid="{97c64f19-16f8-4b29-b9c4-0d087d26964f}">
+        <File Id="_8dbf759c.6790.431e.8fc9.134a626b6202" KeyPath="yes" Source="payload\Resources\icon1_bin_full@1.5x.png" />
+	  </Component>
+	  <Component Id="_6a046cde.67da.4a5b.af61.7fce1cbff8cf" Directory="RESOURCEFOLDER" Guid="{897b01a2-8bc9-4e01-90ca-2e2e22fef61d}">
+        <File Id="_a4b80c38.2fa9.42f0.8f44.c827b88ea7fc" KeyPath="yes" Source="payload\Resources\icon1_blue_meter.png" />
+	  </Component>
+	  <Component Id="_1c8df880.a02c.42ec.89ea.305aaa4b8592" Directory="RESOURCEFOLDER" Guid="{dc821122-faa2-4544-87cb-be47f9c0f139}">
+        <File Id="_a9d5e6ac.21ea.4470.8106.3ddbb497a697" KeyPath="yes" Source="payload\Resources\icon1_blue_meter@1.5x.png" />
+	  </Component>
+	  <Component Id="_0e025d1a.5c16.4626.841b.4867abfe49d0" Directory="RESOURCEFOLDER" Guid="{94ba356b-44cd-4953-95f5-de566d50b57a}">
+        <File Id="_39055f34.2c97.4beb.a36a.8cd81d84ef6a" KeyPath="yes" Source="payload\Resources\icon1_border_crossing.png" />
+	  </Component>
+	  <Component Id="_b7802c43.0adb.4f1b.a93f.fade085cc0c7" Directory="RESOURCEFOLDER" Guid="{14791d23-4695-420d-813f-e728245dc746}">
+        <File Id="_6af9d135.5422.4f77.b7ed.512fb45d7666" KeyPath="yes" Source="payload\Resources\icon1_border_crossing@1.5x.png" />
+	  </Component>
+	  <Component Id="_62a52faa.00e7.4b77.9054.ed515828763d" Directory="RESOURCEFOLDER" Guid="{af6399fb-f817-4f21-b6c8-36df23133e22}">
+        <File Id="_1b493799.2610.4ecb.86a2.2286a4a28356" KeyPath="yes" Source="payload\Resources\icon1_chinese_thai.png" />
+	  </Component>
+	  <Component Id="_7599da7b.4164.4f38.8f50.bd7ed43e7c3a" Directory="RESOURCEFOLDER" Guid="{5362c02d-10f7-4031-afa7-7efef4d12e23}">
+        <File Id="_7b9c2546.033b.45c7.bc9d.b24058ad75d3" KeyPath="yes" Source="payload\Resources\icon1_chinese_thai@1.5x.png" />
+	  </Component>
+	  <Component Id="_aa7a9ce5.c152.45c2.918f.3c34d20f35a9" Directory="RESOURCEFOLDER" Guid="{ea554c2c-9acc-4f3d-b1b5-5f2db5cd76b7}">
+        <File Id="_00db807e.fb7b.4766.932f.7e64db1812a8" KeyPath="yes" Source="payload\Resources\icon1_church.png" />
+	  </Component>
+	  <Component Id="_7ab6ba69.1b2f.48e9.8a6f.acb564751f37" Directory="RESOURCEFOLDER" Guid="{37956b50-5bf8-4505-89a3-a5e29536c302}">
+        <File Id="_183e23d8.4db1.4117.bc3c.cf0efe476f06" KeyPath="yes" Source="payload\Resources\icon1_church@1.5x.png" />
+	  </Component>
+	  <Component Id="_a7b05fdc.d68e.4c72.9b55.a5903dace2df" Directory="RESOURCEFOLDER" Guid="{d861fdf5-a8bf-4925-a309-671d9d0e515b}">
+        <File Id="_dbf4cb6b.6b23.4212.a69e.256edeb1e6fd" KeyPath="yes" Source="payload\Resources\icon1_click_and_collect.png" />
+	  </Component>
+	  <Component Id="_8492cca9.a331.4da1.a429.a8f9de4abf0b" Directory="RESOURCEFOLDER" Guid="{08cfc923-58b9-4ac9-ab02-0bd2882cbca7}">
+        <File Id="_37867646.a1ba.48b3.bef9.f5be2ac37f30" KeyPath="yes" Source="payload\Resources\icon1_click_and_collect@1.5x.png" />
+	  </Component>
+	  <Component Id="_eaee003c.2095.4691.84d9.8d71e910a3a2" Directory="RESOURCEFOLDER" Guid="{6116d454-e9a4-4481-9d30-63bc0817da83}">
+        <File Id="_c99a76a6.868c.4d9e.970e.7c1f462b6ddd" KeyPath="yes" Source="payload\Resources\icon1_co2_detector.png" />
+	  </Component>
+	  <Component Id="_32efb6b2.32a2.4195.94d1.55863ae26f26" Directory="RESOURCEFOLDER" Guid="{bbed1e49-f790-43d9-a823-ae72b643161d}">
+        <File Id="_75db3130.6610.4358.90df.7d3dc626511a" KeyPath="yes" Source="payload\Resources\icon1_co2_detector@1.5x.png" />
+	  </Component>
+	  <Component Id="_64162ec6.3ce3.4d4f.89bd.878c440a6de7" Directory="RESOURCEFOLDER" Guid="{0e988563-34e3-40b8-ae42-e1186052f36a}">
+        <File Id="_f15adb0f.6a62.4c53.b8b5.9914c8143548" KeyPath="yes" Source="payload\Resources\icon1_collaboration_space.png" />
+	  </Component>
+	  <Component Id="_0c09138e.e94f.4875.90a3.175171d4b050" Directory="RESOURCEFOLDER" Guid="{7818c845-8bb3-4a9d-b510-eef1f79d10a1}">
+        <File Id="_cbccadd3.12f8.463b.bfb4.606af4226f3b" KeyPath="yes" Source="payload\Resources\icon1_collaboration_space@1.5x.png" />
+	  </Component>
+	  <Component Id="_9d5f3273.f397.4a8c.9053.28b17d76735f" Directory="RESOURCEFOLDER" Guid="{3ce3a117-6c26-4fc3-a851-3fc95bbeeefc}">
+        <File Id="_a32ef4f2.d179.4ed1.8e44.58aee14dbf14" KeyPath="yes" Source="payload\Resources\icon1_digital_sign.png" />
+	  </Component>
+	  <Component Id="_fe165d21.c958.4224.ae06.5b23574cd1bb" Directory="RESOURCEFOLDER" Guid="{f2982ef1-f7db-4430-b85a-8d8f08fbd416}">
+        <File Id="_72691b8d.9ad8.49f3.bd4b.997dfdd83315" KeyPath="yes" Source="payload\Resources\icon1_digital_sign@1.5x.png" />
+	  </Component>
+	  <Component Id="_81a4d5f0.c02c.416a.83b9.0e4ebb2a6a1a" Directory="RESOURCEFOLDER" Guid="{91bc7b38-b39f-40d3-ba82-4f3468a6734a}">
+        <File Id="_d69b8da7.d644.4f72.8ace.c3976b930c72" KeyPath="yes" Source="payload\Resources\icon1_dining_room.png" />
+	  </Component>
+	  <Component Id="_3f8dc413.a996.4e9c.b64f.6017c1485516" Directory="RESOURCEFOLDER" Guid="{fddc207a-9c4f-43ee-b22b-e61de330fb0e}">
+        <File Id="_2539384f.015f.411c.aebb.43c1a457136c" KeyPath="yes" Source="payload\Resources\icon1_dining_room@1.5x.png" />
+	  </Component>
+	  <Component Id="_ecd9e2ec.e294.4674.876a.69db37d0710f" Directory="RESOURCEFOLDER" Guid="{85d978a4-42d9-47f9-8ffd-d327af68bb99}">
+        <File Id="_e748f221.d841.44f1.b413.06f399f47f2d" KeyPath="yes" Source="payload\Resources\icon1_driveway.png" />
+	  </Component>
+	  <Component Id="_0691eaff.b556.49b4.bd63.281554e4fd16" Directory="RESOURCEFOLDER" Guid="{ffb4c726-ae89-48bf-a938-8d78dc4f382f}">
+        <File Id="_ce682545.09b2.4276.b7cd.4ab14ab9e423" KeyPath="yes" Source="payload\Resources\icon1_driveway@1.5x.png" />
+	  </Component>
+	  <Component Id="_88816d1a.1f4a.4908.a0be.5b72295a3744" Directory="RESOURCEFOLDER" Guid="{277592dd-26d3-4a04-9d3c-ffb1c7df235f}">
+        <File Id="_5ef8789f.e914.4664.8b30.f31ac462723b" KeyPath="yes" Source="payload\Resources\icon1_electrical_meter.png" />
+	  </Component>
+	  <Component Id="_a9064c68.10a4.4257.a677.64d4196527ff" Directory="RESOURCEFOLDER" Guid="{f3f4870d-2237-4234-a4c5-93d4a83904aa}">
+        <File Id="_6b616164.bccc.47e8.9baa.ba47370e9b19" KeyPath="yes" Source="payload\Resources\icon1_electrical_meter@1.5x.png" />
+	  </Component>
+	  <Component Id="_34bae5e9.9bbd.43da.9d69.befdafaa07f6" Directory="RESOURCEFOLDER" Guid="{6d2f8942-eb57-4811-a91c-cf3104bff5a6}">
+        <File Id="_a4e3f3ae.29ce.4821.b92a.2ccd2e210ef9" KeyPath="yes" Source="payload\Resources\icon1_events.png" />
+	  </Component>
+	  <Component Id="_37265306.6b53.4e08.bdda.7c60c8980bbf" Directory="RESOURCEFOLDER" Guid="{acc06281-638e-4131-8275-2e326e60706b}">
+        <File Id="_650436f3.f1a6.45ee.a6f7.04e21cce1861" KeyPath="yes" Source="payload\Resources\icon1_events@1.5x.png" />
+	  </Component>
+	  <Component Id="_46e3acbb.b3ce.47dd.b6d6.7b5aef5e73a8" Directory="RESOURCEFOLDER" Guid="{434215f4-acb5-4339-9156-36f87bb24bd0}">
+        <File Id="_c4f1c1cd.f10e.49f6.9764.a0936e7ed9bd" KeyPath="yes" Source="payload\Resources\icon1_fashion.png" />
+	  </Component>
+	  <Component Id="_4dc6df6d.2eb9.45b7.adf4.5e1163800eea" Directory="RESOURCEFOLDER" Guid="{b2dfd800-7005-4078-9d68-424c9205d07a}">
+        <File Id="_11dd4bb0.4e6f.4996.a3a2.766b25ba2431" KeyPath="yes" Source="payload\Resources\icon1_fashion@1.5x.png" />
+	  </Component>
+	  <Component Id="_47ff3e10.6223.4398.98c3.ae2350175657" Directory="RESOURCEFOLDER" Guid="{336dfc57-615a-46d2-980f-67a3a2af916b}">
+        <File Id="_65a59f59.33f6.49f0.af66.9442f1547501" KeyPath="yes" Source="payload\Resources\icon1_fashion_kids.png" />
+	  </Component>
+	  <Component Id="_81e40ff0.cc87.43eb.9b4c.786ac869f2b2" Directory="RESOURCEFOLDER" Guid="{ec97f88a-af14-4bed-8535-b72856192e9f}">
+        <File Id="_eb596c03.ef68.49d3.bdd8.635348fcc608" KeyPath="yes" Source="payload\Resources\icon1_fashion_kids@1.5x.png" />
+	  </Component>
+	  <Component Id="_736b99db.dd84.4ba6.923c.5d3bf7a57cf1" Directory="RESOURCEFOLDER" Guid="{44990817-bc7e-4afb-b5cf-c69da82b35c5}">
+        <File Id="_20fa2fc2.6a91.43cb.ae36.d6b553cb24b0" KeyPath="yes" Source="payload\Resources\icon1_fashion_men.png" />
+	  </Component>
+	  <Component Id="_ab74b1e5.598c.43e6.a553.73946e3513d7" Directory="RESOURCEFOLDER" Guid="{54ce52ed-ce84-4e00-a8d5-be525eee1136}">
+        <File Id="_96dcf47e.53b3.4018.b030.37e42e7d2b97" KeyPath="yes" Source="payload\Resources\icon1_fashion_men@1.5x.png" />
+	  </Component>
+	  <Component Id="_3a3cacea.646d.4618.9829.fbe53d8029f1" Directory="RESOURCEFOLDER" Guid="{403ed67e-4408-44b9-bd56-f294f3f480f9}">
+        <File Id="_c3112978.36ca.4f65.8b50.99d205ff9c15" KeyPath="yes" Source="payload\Resources\icon1_fashion_women.png" />
+	  </Component>
+	  <Component Id="_893de38e.2815.4163.ad75.53955314f949" Directory="RESOURCEFOLDER" Guid="{feecb44b-478d-4b8e-a750-08d0103befbf}">
+        <File Id="_7e1fdf37.974b.4f62.b951.3799ebcf8ec3" KeyPath="yes" Source="payload\Resources\icon1_fashion_women@1.5x.png" />
+	  </Component>
+	  <Component Id="_eb3c25b2.7971.4284.acc4.7c6831f38866" Directory="RESOURCEFOLDER" Guid="{1237ecb6-f930-48f1-ab87-d8f78f86be07}">
+        <File Id="_85042242.12e3.4f8e.90a2.6421e70ffdec" KeyPath="yes" Source="payload\Resources\icon1_fireplace.png" />
+	  </Component>
+	  <Component Id="_04957572.7cf5.4bab.81ee.a755783d7067" Directory="RESOURCEFOLDER" Guid="{42a1d038-6028-4d64-a413-e04f2ceb5ff8}">
+        <File Id="_1fa0561f.b266.459a.8e10.4e44ab5b0afe" KeyPath="yes" Source="payload\Resources\icon1_fireplace@1.5x.png" />
+	  </Component>
+	  <Component Id="_fb6ba797.bc3a.451f.a9ed.9a89f805b947" Directory="RESOURCEFOLDER" Guid="{6c4036a2-e676-42e1-bb63-454c71280d8c}">
+        <File Id="_3d2e9142.23a6.4364.830e.f1c58dff13d0" KeyPath="yes" Source="payload\Resources\icon1_fridge.png" />
+	  </Component>
+	  <Component Id="_e5e4c9f0.7788.4b80.8747.65922405654d" Directory="RESOURCEFOLDER" Guid="{45ed2f32-dbe7-446b-9dde-4be57870a23a}">
+        <File Id="_9f2567ac.bf10.43bd.96b3.f9ef4c0c41a8" KeyPath="yes" Source="payload\Resources\icon1_fridge@1.5x.png" />
+	  </Component>
+	  <Component Id="_59dc3769.30bc.4f8e.9221.d23a5ae576b7" Directory="RESOURCEFOLDER" Guid="{4d027aeb-d800-44b9-b573-9df02cebec86}">
+        <File Id="_3d5b34fc.bdeb.4bdc.a991.45a257f3436d" KeyPath="yes" Source="payload\Resources\icon1_gallery.png" />
+	  </Component>
+	  <Component Id="_506e6501.72a7.4ca8.bf7c.b80c7fc738dd" Directory="RESOURCEFOLDER" Guid="{ed609ac2-e2c0-44b3-a5bc-a199792f9392}">
+        <File Id="_9d7926cf.6b38.4661.a679.c9a7b5e3f349" KeyPath="yes" Source="payload\Resources\icon1_gallery@1.5x.png" />
+	  </Component>
+	  <Component Id="_fcaa2b98.f005.4d08.b2c4.537de7289c9c" Directory="RESOURCEFOLDER" Guid="{151944ce-7d99-478d-ad8a-b3f2347e6dda}">
+        <File Id="_21857aec.ae67.49c3.affb.e5c969a6a53e" KeyPath="yes" Source="payload\Resources\icon1_gas_meter.png" />
+	  </Component>
+	  <Component Id="_26038a64.93ad.453e.b6fd.b05feab34c6c" Directory="RESOURCEFOLDER" Guid="{e185375b-5efb-4995-a930-bc392a315cce}">
+        <File Id="_617dc213.a28e.444c.9870.31eaa7c23972" KeyPath="yes" Source="payload\Resources\icon1_gas_meter@1.5x.png" />
+	  </Component>
+	  <Component Id="_c00a8daf.393e.4fac.b0bc.2612dd5e24e5" Directory="RESOURCEFOLDER" Guid="{9af2ce6e-d4b5-426a-a77d-79024bb08b5e}">
+        <File Id="_760d08f4.c496.46f0.91d2.c51cdc201808" KeyPath="yes" Source="payload\Resources\icon1_general.png" />
+	  </Component>
+	  <Component Id="_d3c31f82.5c4e.49be.8605.f3d33bda0f90" Directory="RESOURCEFOLDER" Guid="{f5cb147b-c418-48d3-88e5-e2172a8e7f2e}">
+        <File Id="_aca7f0a5.d45e.43d2.a34a.09f090891ba6" KeyPath="yes" Source="payload\Resources\icon1_general@1.5x.png" />
+	  </Component>
+	  <Component Id="_df6b16c9.f5b9.4cc6.a221.b39c35a1579e" Directory="RESOURCEFOLDER" Guid="{f5fda856-107f-441d-b175-a1d8ae0d0954}">
+        <File Id="_a139761d.fa28.4e64.9b99.97ab0dcb804c" KeyPath="yes" Source="payload\Resources\icon1_home.png" />
+	  </Component>
+	  <Component Id="_18dcce6a.04d0.4c8c.9db6.e02a8a048d6a" Directory="RESOURCEFOLDER" Guid="{e98f765d-9d3c-4839-9264-60f0c56fcbb4}">
+        <File Id="_dd534417.c3f1.4a9c.9bd2.a7a6b0f6d7e0" KeyPath="yes" Source="payload\Resources\icon1_home@1.5x.png" />
+	  </Component>
+	  <Component Id="_f869a9c0.6b4e.4f5a.a143.60edc6d7d53d" Directory="RESOURCEFOLDER" Guid="{357707c3-af4d-40ca-a4f5-74cb52ebfb3e}">
+        <File Id="_f574cb5c.3fec.491f.a4f1.42c25eb3b625" KeyPath="yes" Source="payload\Resources\icon1_homeware.png" />
+	  </Component>
+	  <Component Id="_6d8b34f7.ee38.4089.af66.8409fe9cd3a3" Directory="RESOURCEFOLDER" Guid="{8603df19-3c5e-4dd3-80df-f81380a65bf1}">
+        <File Id="_b26e336b.9323.4144.9a48.dd9d5340efc0" KeyPath="yes" Source="payload\Resources\icon1_homeware@1.5x.png" />
+	  </Component>
+	  <Component Id="_974fd39e.2ea6.485a.906a.01b19a05428b" Directory="RESOURCEFOLDER" Guid="{4506e786-f692-4f16-90a0-84e61bfd9462}">
+        <File Id="_7b1dc47c.1634.4d78.abb0.89b23c1d687b" KeyPath="yes" Source="payload\Resources\icon1_home_apartment.png" />
+	  </Component>
+	  <Component Id="_51dadf8c.3205.498c.a4d9.dcd69a66fcda" Directory="RESOURCEFOLDER" Guid="{410a72ba-2f9e-4f48-b0a8-93f641a05927}">
+        <File Id="_c7aa567e.98a7.4ea8.bd24.1073923eb89b" KeyPath="yes" Source="payload\Resources\icon1_home_apartment@1.5x.png" />
+	  </Component>
+	  <Component Id="_0dda0123.fabc.4acf.9486.57f1f724ced6" Directory="RESOURCEFOLDER" Guid="{ccb3acf5-14e3-44f5-8dc8-97a47af12881}">
+        <File Id="_95e06887.ba6a.46b4.a05d.75bce4e434eb" KeyPath="yes" Source="payload\Resources\icon1_hvac_unit.png" />
+	  </Component>
+	  <Component Id="_23a2405c.6ed7.4f3e.9b47.ed2f85597031" Directory="RESOURCEFOLDER" Guid="{490f5e3b-92ac-4d78-b55a-3c0b86ef65af}">
+        <File Id="_9b5bf1f8.7fa6.49af.84eb.68dab2722430" KeyPath="yes" Source="payload\Resources\icon1_hvac_unit@1.5x.png" />
+	  </Component>
+	  <Component Id="_6ef81fce.7820.4c05.810f.f70b9b444672" Directory="RESOURCEFOLDER" Guid="{185aa4ee-bdf1-4088-9958-90665f40becb}">
+        <File Id="_2edb2d39.c4c7.476a.8155.a60fb2496b36" KeyPath="yes" Source="payload\Resources\icon1_indian.png" />
+	  </Component>
+	  <Component Id="_51adee4e.19d7.45b5.a5cf.c07f78011606" Directory="RESOURCEFOLDER" Guid="{e5ffd607-c248-46ad-b468-c42399ffb9f3}">
+        <File Id="_16455afd.6907.46a7.9f9c.4b22264ccb95" KeyPath="yes" Source="payload\Resources\icon1_indian@1.5x.png" />
+	  </Component>
+	  <Component Id="_287b4264.b061.4be2.b4c7.97aca46cf123" Directory="RESOURCEFOLDER" Guid="{ba44fd56-6255-47e0-af6c-f45f7be9fac5}">
+        <File Id="_80d7838a.538a.494f.954b.c663a669bc00" KeyPath="yes" Source="payload\Resources\icon1_kitchen.png" />
+	  </Component>
+	  <Component Id="_f3d466c4.9092.4a7a.86d5.dd3e2e958cb5" Directory="RESOURCEFOLDER" Guid="{46c69714-4174-4647-8540-0e0dccdd4524}">
+        <File Id="_f5eeb907.e42f.4754.81b8.c9781a2d4130" KeyPath="yes" Source="payload\Resources\icon1_kitchen@1.5x.png" />
+	  </Component>
+	  <Component Id="_20cd95ff.4c91.452a.9ebf.d658a53a0b5c" Directory="RESOURCEFOLDER" Guid="{e8ec3987-ea4e-4e5b-b522-39bc1e2c8301}">
+        <File Id="_664e9cb1.3b90.4349.8f64.00c8b8f0b20a" KeyPath="yes" Source="payload\Resources\icon1_message.png" />
+	  </Component>
+	  <Component Id="_00549a90.bee1.4adb.b75b.f3fb250f6c95" Directory="RESOURCEFOLDER" Guid="{ef06fcbb-639e-4949-9228-5232aacebf89}">
+        <File Id="_454c21a7.8b33.4fbe.b4d8.01aa513280b1" KeyPath="yes" Source="payload\Resources\icon1_message@1.5x.png" />
+	  </Component>
+	  <Component Id="_c29d9a36.ace8.4239.a2d7.06bfe5bfdaba" Directory="RESOURCEFOLDER" Guid="{59e24999-b94d-4c3a-bcde-21b070f9cce3}">
+        <File Id="_be9a60f6.2597.455b.a7d0.86243c287d55" KeyPath="yes" Source="payload\Resources\icon1_meter.png" />
+	  </Component>
+	  <Component Id="_1090b104.0a7b.46fb.a91c.f01d6f3f39bd" Directory="RESOURCEFOLDER" Guid="{05a0acd1-b8de-4d51-82ea-23fd2b2505b1}">
+        <File Id="_068529c4.b0d5.4a87.af26.0b129383b9a5" KeyPath="yes" Source="payload\Resources\icon1_mobile_phone.png" />
+	  </Component>
+	  <Component Id="_ef39d8c0.e3fa.4e99.aead.4119349baa51" Directory="RESOURCEFOLDER" Guid="{88f4e2d1-06c1-4792-9e23-c4c052c9eebc}">
+        <File Id="_1b4c92e3.6a24.482b.96d8.b44b2ac7a5a4" KeyPath="yes" Source="payload\Resources\icon1_mobile_phone@1.5x.png" />
+	  </Component>
+	  <Component Id="_8fc7dab8.8a60.45d3.8287.6a5129f25627" Directory="RESOURCEFOLDER" Guid="{7dd0d275-1e47-4abb-bc55-3257c5a323f0}">
+        <File Id="_a991ef7a.b665.4618.8437.09e253fd6c12" KeyPath="yes" Source="payload\Resources\icon1_my_location.png" />
+	  </Component>
+	  <Component Id="_7f859b21.65f9.4ae7.be2f.188bb73d7162" Directory="RESOURCEFOLDER" Guid="{27948746-9b59-459a-abcf-bd71bf9b98cb}">
+        <File Id="_0af2786b.7b71.4849.93c0.184e5bf91d19" KeyPath="yes" Source="payload\Resources\icon1_my_location@1.5x.png" />
+	  </Component>
+	  <Component Id="_d2992f79.725e.4022.aba2.8fcc846dd315" Directory="RESOURCEFOLDER" Guid="{4558440f-fc37-413d-bab5-cf9bd62cee4c}">
+        <File Id="_4283f1ea.0406.49c1.94ab.5ead945a48a7" KeyPath="yes" Source="payload\Resources\icon1_night_time.png" />
+	  </Component>
+	  <Component Id="_38710edf.36e3.4001.8478.d9654e417a1a" Directory="RESOURCEFOLDER" Guid="{79ba33e2-32b7-4d18-82c7-98d025dcc613}">
+        <File Id="_39b5fa13.0674.4c83.826e.e47756109490" KeyPath="yes" Source="payload\Resources\icon1_night_time@1.5x.png" />
+	  </Component>
+	  <Component Id="_c19b2bf4.e774.490f.b0e4.b29b6f83a543" Directory="RESOURCEFOLDER" Guid="{00496ec7-11f4-411e-8fd0-e622e4202f78}">
+        <File Id="_63e2da6f.5113.4632.9eaa.3fcb82e6f707" KeyPath="yes" Source="payload\Resources\icon1_observation_point.png" />
+	  </Component>
+	  <Component Id="_8472eec2.3305.4d65.8d25.755dc805c61f" Directory="RESOURCEFOLDER" Guid="{55ab0ab9-107e-4b85-9a61-4bb1dadffef2}">
+        <File Id="_921bec3b.83ec.406c.bc5f.0c060580c28f" KeyPath="yes" Source="payload\Resources\icon1_observation_point@1.5x.png" />
+	  </Component>
+	  <Component Id="_19f84393.b713.4aaf.b29f.a73a50ff7daa" Directory="RESOURCEFOLDER" Guid="{25ab54df-ca7c-44fe-8c83-147b6e32bb48}">
+        <File Id="_d5a85e05.bf25.4801.a7c3.c2e91b1ce30b" KeyPath="yes" Source="payload\Resources\icon1_observatory.png" />
+	  </Component>
+	  <Component Id="_9ff60f08.c593.4ce2.b349.a45429374ff4" Directory="RESOURCEFOLDER" Guid="{239b2a72-8c89-4413-ba89-4330d07043a4}">
+        <File Id="_e142e73b.7181.439d.aaca.8e587241e19a" KeyPath="yes" Source="payload\Resources\icon1_observatory@1.5x.png" />
+	  </Component>
+	  <Component Id="_1c4aebfb.d4a6.40d1.b58a.a82399b084be" Directory="RESOURCEFOLDER" Guid="{f0e56562-1893-4437-9f1c-8c7e95da6591}">
+        <File Id="_905aafb9.c2c7.47ce.be6b.93f9ee709dd2" KeyPath="yes" Source="payload\Resources\icon1_occupancy_sensor.png" />
+	  </Component>
+	  <Component Id="_44933e50.e32a.42a9.af39.08e2bc9d690d" Directory="RESOURCEFOLDER" Guid="{1e8374ef-5b36-46c5-9236-291d22a4edd4}">
+        <File Id="_084fef70.9503.49b9.98c3.639702c77fa6" KeyPath="yes" Source="payload\Resources\icon1_occupancy_sensor@1.5x.png" />
+	  </Component>
+	  <Component Id="_c135eae9.f250.48c4.9a8f.7af754a03ead" Directory="RESOURCEFOLDER" Guid="{07cb30ec-43e0-4849-9682-da8719d63cf7}">
+        <File Id="_4577de94.8215.46d6.bd20.c17f99d9bfa5" KeyPath="yes" Source="payload\Resources\icon1_offices.png" />
+	  </Component>
+	  <Component Id="_da251aee.f43b.4f95.867a.eef9d776bc01" Directory="RESOURCEFOLDER" Guid="{a308a850-25be-4b8d-a76b-2efd249865c0}">
+        <File Id="_e1586bb0.1cc5.45b8.bbbb.6775e5391e47" KeyPath="yes" Source="payload\Resources\icon1_offices@1.5x.png" />
+	  </Component>
+	  <Component Id="_85d1dcd4.f105.48df.8105.ea6121576a84" Directory="RESOURCEFOLDER" Guid="{dcb7f369-f822-46b2-80ed-f243174b92a2}">
+        <File Id="_8e4f4c30.0b22.4b47.a818.b3f8af1fcf6e" KeyPath="yes" Source="payload\Resources\icon1_oven.png" />
+	  </Component>
+	  <Component Id="_5220e648.7b8f.4cfb.b780.4a7ff14b1507" Directory="RESOURCEFOLDER" Guid="{3abf53ab-de06-4414-90f9-44fc5e6daf44}">
+        <File Id="_4ea5db05.dda8.46cd.a1fe.c4000e42b334" KeyPath="yes" Source="payload\Resources\icon1_oven@1.5x.png" />
+	  </Component>
+	  <Component Id="_5e237880.a918.4bc4.a6d9.04afcec84f00" Directory="RESOURCEFOLDER" Guid="{33a59f24-0992-40e6-b7a9-49e739097b0c}">
+        <File Id="_b67ee0ae.ef28.4011.82da.83a55a3050ce" KeyPath="yes" Source="payload\Resources\icon1_photo.png" />
+	  </Component>
+	  <Component Id="_fc74a7fa.0e12.4062.ae2b.e6e67c9032bc" Directory="RESOURCEFOLDER" Guid="{2b05fc09-40a6-4bb1-adcc-4cd29b6e11dd}">
+        <File Id="_b172a7e2.daaf.4380.a133.65e1b97d0abf" KeyPath="yes" Source="payload\Resources\icon1_photo@1.5x.png" />
+	  </Component>
+	  <Component Id="_d644fd7f.4ea8.4d54.939f.fa96a59cc395" Directory="RESOURCEFOLDER" Guid="{1f49a6f2-43fa-499b-a560-58b1b2e744b0}">
+        <File Id="_b86bb321.89dc.49ff.b496.0b6963ccc567" KeyPath="yes" Source="payload\Resources\icon1_pin.png" />
+	  </Component>
+	  <Component Id="_32be7a4a.bf77.4f96.972c.cb6a6468fc76" Directory="RESOURCEFOLDER" Guid="{c749e2d8-06a2-4f08-954c-a1639643105c}">
+        <File Id="_b2b9d727.0183.4357.b664.fd424e847251" KeyPath="yes" Source="payload\Resources\icon1_pin@1.5x.png" />
+	  </Component>
+	  <Component Id="_70551962.9b59.4b7f.bd85.123611331ba9" Directory="RESOURCEFOLDER" Guid="{e782465c-188f-424c-9ddf-bf86049b9eff}">
+        <File Id="_d09ab415.fc1a.4f44.96bd.cc0a16f91a8d" KeyPath="yes" Source="payload\Resources\icon1_positioning_beacon.png" />
+	  </Component>
+	  <Component Id="_41f3fd31.d5c0.416b.a6e9.8f50cbc16cfe" Directory="RESOURCEFOLDER" Guid="{1ef2f03a-6b11-45c4-822e-8e54d14f8b86}">
+        <File Id="_631c2ac2.0b8d.4726.872b.002ddac9848c" KeyPath="yes" Source="payload\Resources\icon1_positioning_beacon@1.5x.png" />
+	  </Component>
+	  <Component Id="_df66fe95.be1b.4625.a744.f82c54e045a6" Directory="RESOURCEFOLDER" Guid="{8adec20d-2f1e-4b13-b07b-114554b9b232}">
+        <File Id="_4dcd77fb.7d0d.4930.9aca.8449342f87d3" KeyPath="yes" Source="payload\Resources\icon1_remote_control.png" />
+	  </Component>
+	  <Component Id="_976cc1bb.4d7b.492a.a419.23dc557bb028" Directory="RESOURCEFOLDER" Guid="{873367ee-51fd-4360-810a-64fec492741d}">
+        <File Id="_fc98d604.85d5.4147.870f.3232b62638e5" KeyPath="yes" Source="payload\Resources\icon1_remote_control@1.5x.png" />
+	  </Component>
+	  <Component Id="_8e1b5b96.e1d4.485d.ab2a.376b0509b269" Directory="RESOURCEFOLDER" Guid="{9ca48272-b11b-46de-93c3-41f4dba56db6}">
+        <File Id="_f25b53c4.7a8e.4538.a0a6.af2ad3876951" KeyPath="yes" Source="payload\Resources\icon1_seafood.png" />
+	  </Component>
+	  <Component Id="_f4078874.f184.47cc.9420.a161db6076f7" Directory="RESOURCEFOLDER" Guid="{67a96c5a-162b-465c-a92f-29b3de1c5f60}">
+        <File Id="_d523295d.a084.4137.837b.1c8ceffff858" KeyPath="yes" Source="payload\Resources\icon1_seafood@1.5x.png" />
+	  </Component>
+	  <Component Id="_9490941b.9c5d.48b9.86cb.d413ddcfc61d" Directory="RESOURCEFOLDER" Guid="{e5aa164e-1a79-4ba5-847a-02ff42364e9e}">
+        <File Id="_f8a98a66.1825.44e6.ace9.9c27313a9a73" KeyPath="yes" Source="payload\Resources\icon1_security_alarm.png" />
+	  </Component>
+	  <Component Id="_34e69214.eaef.4c51.b460.ba775cf50579" Directory="RESOURCEFOLDER" Guid="{00d92f8b-260e-410a-bef0-58b50227e6ca}">
+        <File Id="_2df3a7f2.5abb.46d5.a67a.19e416d1026d" KeyPath="yes" Source="payload\Resources\icon1_security_alarm@1.5x.png" />
+	  </Component>
+	  <Component Id="_9d9e977e.e6ff.436a.b682.4bebfa04dd2f" Directory="RESOURCEFOLDER" Guid="{ae55808d-33a3-4933-87c1-f7a51c774030}">
+        <File Id="_59cb712c.ce17.4dfc.b661.f9155d88ab42" KeyPath="yes" Source="payload\Resources\icon1_security_camera.png" />
+	  </Component>
+	  <Component Id="_264147d8.d5f9.4e4b.8cdb.dbcda28504f7" Directory="RESOURCEFOLDER" Guid="{a72211a4-c930-4c1e-b3a2-f7f640bde0c9}">
+        <File Id="_27d2eeea.32e6.4b47.bd4e.8b7e52b9b94c" KeyPath="yes" Source="payload\Resources\icon1_security_camera@1.5x.png" />
+	  </Component>
+	  <Component Id="_a62b53a8.3702.4c7b.bbe2.2011479e977a" Directory="RESOURCEFOLDER" Guid="{23c6967d-ed1a-4dc5-b772-79220cf07149}">
+        <File Id="_dea7e5f9.535e.4e4b.a61f.802e3755be5b" KeyPath="yes" Source="payload\Resources\icon1_smart_post.png" />
+	  </Component>
+	  <Component Id="_fb0b2065.1850.4ec5.80fd.020a620564a8" Directory="RESOURCEFOLDER" Guid="{a8a31e12-e5bd-4b41-a904-c6571c07c9b5}">
+        <File Id="_78bfb159.7962.411b.b770.60bceb8ad915" KeyPath="yes" Source="payload\Resources\icon1_smart_post@1.5x.png" />
+	  </Component>
+	  <Component Id="_d654d735.5283.4106.996f.365f725c8488" Directory="RESOURCEFOLDER" Guid="{79401498-3cc8-48f6-a137-d3d722490917}">
+        <File Id="_54fc2691.fe82.4977.ac6e.31c1ee367ed9" KeyPath="yes" Source="payload\Resources\icon1_smoke_detector.png" />
+	  </Component>
+	  <Component Id="_f5793f6f.5d5b.496d.958a.a7d4cd72cbf7" Directory="RESOURCEFOLDER" Guid="{17b58f4a-195b-4fb7-a0f3-5aa12d89147b}">
+        <File Id="_711c77b1.5beb.4ce9.a686.7bff3d6c6671" KeyPath="yes" Source="payload\Resources\icon1_smoke_detector@1.5x.png" />
+	  </Component>
+	  <Component Id="_1b0f00fd.ba9e.4193.87ef.06479d122f2a" Directory="RESOURCEFOLDER" Guid="{a73fde4b-de4b-4c1d-9b29-1610d54d680b}">
+        <File Id="_8aa7aa1a.133d.4266.8a9f.ef2a04f7409f" KeyPath="yes" Source="payload\Resources\icon1_solar_panels.png" />
+	  </Component>
+	  <Component Id="_3cf4300b.e7bf.483b.ac54.dbe6a731e091" Directory="RESOURCEFOLDER" Guid="{ff62b4d3-71b1-4eaf-9794-c705e2d3b537}">
+        <File Id="_60dca4bc.231f.4841.b2dd.79762859a71f" KeyPath="yes" Source="payload\Resources\icon1_solar_panels@1.5x.png" />
+	  </Component>
+	  <Component Id="_ec3a297d.fcce.481c.a285.d2dcb7e17b28" Directory="RESOURCEFOLDER" Guid="{1ad51050-914b-4463-b003-72996f6e0af3}">
+        <File Id="_c4b3210d.abae.4c9d.b180.85af5dcc07a6" KeyPath="yes" Source="payload\Resources\icon1_sports.png" />
+	  </Component>
+	  <Component Id="_459dde2d.c026.49c1.b0a4.cea62ce324c6" Directory="RESOURCEFOLDER" Guid="{847d81a3-ba18-448f-8721-172e98f1365c}">
+        <File Id="_d5966ffa.b180.4c1c.9025.12096c2fbefc" KeyPath="yes" Source="payload\Resources\icon1_sports@1.5x.png" />
+	  </Component>
+	  <Component Id="_ec554653.aa1a.44d8.8218.64be3a3e9f0f" Directory="RESOURCEFOLDER" Guid="{edbfe3b6-13fe-4f82-a819-4dd77e4196e4}">
+        <File Id="_7fc3ba91.cd43.4357.84cf.a00f5c1f5493" KeyPath="yes" Source="payload\Resources\icon1_star.png" />
+	  </Component>
+	  <Component Id="_62cb00c9.b9b6.4d5a.af33.e26904f85acc" Directory="RESOURCEFOLDER" Guid="{5a476229-8f26-4512-9b2f-87aae2a2474b}">
+        <File Id="_24b2f835.592b.4dc0.a07e.fd3d8dc1fcb1" KeyPath="yes" Source="payload\Resources\icon1_star@1.5x.png" />
+	  </Component>
+	  <Component Id="_7071c75b.f5d7.453b.ad2f.1cc661ab01c9" Directory="RESOURCEFOLDER" Guid="{449f561a-962e-4a35-aa81-9c42a39ca543}">
+        <File Id="_578ea998.f6f3.4c18.8100.4ea9333b97b1" KeyPath="yes" Source="payload\Resources\icon1_steak.png" />
+	  </Component>
+	  <Component Id="_2c5de9f3.6aa5.4e26.b305.8adfcfe101a0" Directory="RESOURCEFOLDER" Guid="{d33f5894-5962-44b4-9e76-a64435ecc687}">
+        <File Id="_7c80517c.b10e.4fa4.a361.472687e4403a" KeyPath="yes" Source="payload\Resources\icon1_steak@1.5x.png" />
+	  </Component>
+	  <Component Id="_7f729a57.4b5e.4f8b.9922.41f1df337e90" Directory="RESOURCEFOLDER" Guid="{3a72f781-5d14-4854-bd25-fa5d3c8acf6f}">
+        <File Id="_124c02a4.ad8c.4e11.bf9d.4cfa9e1bb8ba" KeyPath="yes" Source="payload\Resources\icon1_sushi.png" />
+	  </Component>
+	  <Component Id="_52bd6e6e.ff8d.4193.8b1f.8b793dbbb2e7" Directory="RESOURCEFOLDER" Guid="{44e2b7ec-29a9-4e08-a4b1-f86469263e3c}">
+        <File Id="_02dca434.1b13.4c85.bd9f.9aa503702b55" KeyPath="yes" Source="payload\Resources\icon1_sushi@1.5x.png" />
+	  </Component>
+	  <Component Id="_8e22d866.01ac.4096.8233.c924b4751da2" Directory="RESOURCEFOLDER" Guid="{873bbc71-4a4a-49bc-97a2-82c801ab112e}">
+        <File Id="_b213b140.15ad.469a.820d.430f5490a4d3" KeyPath="yes" Source="payload\Resources\icon1_technology.png" />
+	  </Component>
+	  <Component Id="_85ac3d0b.29f7.40c1.a3e1.dcdf0cb00ab4" Directory="RESOURCEFOLDER" Guid="{4328a475-c4bb-4cd0-8e44-25abdf08a21a}">
+        <File Id="_a0032828.8068.462f.9534.0f119e9fdf03" KeyPath="yes" Source="payload\Resources\icon1_technology@1.5x.png" />
+	  </Component>
+	  <Component Id="_e82ecd20.e8d3.4815.8ec2.6d13e8559188" Directory="RESOURCEFOLDER" Guid="{c93875ac-0cbc-47db-9ed7-0ef8373b1c56}">
+        <File Id="_dcede6e7.2ada.4c3b.bb26.87f5a36ca0b5" KeyPath="yes" Source="payload\Resources\icon1_telephone_booth.png" />
+	  </Component>
+	  <Component Id="_00a5834a.dc45.4618.95eb.06ad1f8b57b0" Directory="RESOURCEFOLDER" Guid="{f7108955-2fd8-4356-9376-89fc0e882a8c}">
+        <File Id="_03b37930.2cde.469e.a90f.be7249e4cca2" KeyPath="yes" Source="payload\Resources\icon1_telephone_booth@1.5x.png" />
+	  </Component>
+	  <Component Id="_ab6d0bd1.46dc.44d3.9368.40f1838a49ab" Directory="RESOURCEFOLDER" Guid="{227cda4f-c65e-4f07-8527-24b80e0caef6}">
+        <File Id="_853d471e.164b.414f.adc6.5ff107fd7b9b" KeyPath="yes" Source="payload\Resources\icon1_temperature_sensor.png" />
+	  </Component>
+	  <Component Id="_d442b4b1.5dda.4029.8559.31256421987d" Directory="RESOURCEFOLDER" Guid="{dd322529-4bd3-4e2e-996b-979faa461afc}">
+        <File Id="_d6a84877.fb37.4a2c.80f1.7d41f5ca2809" KeyPath="yes" Source="payload\Resources\icon1_temperature_sensor@1.5x.png" />
+	  </Component>
+	  <Component Id="_cf5f8419.f3f0.4b8f.adac.dc914744ad83" Directory="RESOURCEFOLDER" Guid="{0cfe236f-8eab-4192-868d-9dbe114f6122}">
+        <File Id="_f0d0366b.44db.457f.b858.2a01c262d65b" KeyPath="yes" Source="payload\Resources\icon1_thermostat.png" />
+	  </Component>
+	  <Component Id="_692b10dc.9190.4f79.9d6d.bf25b09eb4d7" Directory="RESOURCEFOLDER" Guid="{7cca6b63-d3e5-4859-b408-1638cfd7b952}">
+        <File Id="_c64545ca.aebd.4e7e.8362.5055478df15e" KeyPath="yes" Source="payload\Resources\icon1_thermostat@1.5x.png" />
+	  </Component>
+	  <Component Id="_a3306519.f4b9.4133.9796.f75464be3de8" Directory="RESOURCEFOLDER" Guid="{48208731-cdab-4a71-986b-ce1e2c0c4397}">
+        <File Id="_29964141.a121.4171.8c6d.60738966cd0e" KeyPath="yes" Source="payload\Resources\icon1_ticket.png" />
+	  </Component>
+	  <Component Id="_79aed32c.17fc.4307.b56a.c26d6dba58f1" Directory="RESOURCEFOLDER" Guid="{87e07762-c614-4c3f-ad46-33c663f1b189}">
+        <File Id="_6942c117.eafd.4490.93cd.5f87756b03d3" KeyPath="yes" Source="payload\Resources\icon1_ticket@1.5x.png" />
+	  </Component>
+	  <Component Id="_bce9806e.c542.4ce0.b4bb.6c50eb67b8da" Directory="RESOURCEFOLDER" Guid="{0f8abd00-7e85-424d-a24e-de73133187df}">
+        <File Id="_947e4a0f.bbdf.4d30.b464.d3e4bf63574a" KeyPath="yes" Source="payload\Resources\icon1_toilet_ladies.png" />
+	  </Component>
+	  <Component Id="_d5332103.6202.4985.9930.f896c3babf2b" Directory="RESOURCEFOLDER" Guid="{44c519ca-7279-40cc-8628-640cc3dc272b}">
+        <File Id="_50018609.9d9f.4e73.ad48.dd5bbe99aecd" KeyPath="yes" Source="payload\Resources\icon1_toilet_ladies@1.5x.png" />
+	  </Component>
+	  <Component Id="_eb2ea761.b003.4e52.974a.70e460ef0d3d" Directory="RESOURCEFOLDER" Guid="{e9981409-349d-4486-933a-931483457b71}">
+        <File Id="_bad99973.acea.46df.a394.c739df71d31d" KeyPath="yes" Source="payload\Resources\icon1_toilet_men.png" />
+	  </Component>
+	  <Component Id="_bbc6e56d.2a53.4565.8ddf.544fe0d0b254" Directory="RESOURCEFOLDER" Guid="{22c504ff-4c2f-4892-a25f-2809abdc981e}">
+        <File Id="_3b3b359a.8def.45cc.bd19.1176b880a18f" KeyPath="yes" Source="payload\Resources\icon1_toilet_men@1.5x.png" />
+	  </Component>
+	  <Component Id="_73c0eafb.7410.46dc.ba4b.bb379e4c3d44" Directory="RESOURCEFOLDER" Guid="{109ab52f-b901-4d42-a507-e890ad10c4af}">
+        <File Id="_15931865.734f.4e25.bda4.8432c51030a9" KeyPath="yes" Source="payload\Resources\icon1_tourist_info.png" />
+	  </Component>
+	  <Component Id="_b9813a02.f7a8.4716.9021.52e4db403623" Directory="RESOURCEFOLDER" Guid="{d0d48d8a-d218-402f-b373-208f07e031b4}">
+        <File Id="_3b38b2cf.e495.41cc.bbd3.b1a58040adb1" KeyPath="yes" Source="payload\Resources\icon1_tourist_info@1.5x.png" />
+	  </Component>
+	  <Component Id="_91c82f68.1c4a.489d.a237.33df667eabbf" Directory="RESOURCEFOLDER" Guid="{029272f2-c620-47e4-9c22-b1c72e624ca6}">
+        <File Id="_829c4b8b.a9cf.4dd2.a632.7410fa922c4a" KeyPath="yes" Source="payload\Resources\icon1_traffic_counter.png" />
+	  </Component>
+	  <Component Id="_8fd1bef5.3305.4565.801a.772ce6d7ff85" Directory="RESOURCEFOLDER" Guid="{20c15398-e290-44e4-bd94-ef29a3e04d36}">
+        <File Id="_5d626a94.14b2.473c.897f.0a420d23e612" KeyPath="yes" Source="payload\Resources\icon1_traffic_counter@1.5x.png" />
+	  </Component>
+	  <Component Id="_26c23fd2.326a.4fe4.adc0.85145819aee6" Directory="RESOURCEFOLDER" Guid="{01958e76-6aa7-46d5-be9b-b5f6be90c490}">
+        <File Id="_8ecdfeee.21cb.46d3.8791.39d26a689349" KeyPath="yes" Source="payload\Resources\icon1_uber.png" />
+	  </Component>
+	  <Component Id="_1a20d381.9ce4.4507.b8d6.bfaafebbf21e" Directory="RESOURCEFOLDER" Guid="{a60c940b-40b5-4adc-bab1-bfb6a9238c06}">
+        <File Id="_48171498.b075.4f0e.b379.1d7a614b308f" KeyPath="yes" Source="payload\Resources\icon1_uber@1.5x.png" />
+	  </Component>
+	  <Component Id="_2337909f.e1aa.4ea0.bf10.735c91c39d2d" Directory="RESOURCEFOLDER" Guid="{d06c1858-3b87-4074-9d04-f9d04452abb9}">
+        <File Id="_c60d4645.32e1.4b98.99f1.de28ae6cbb2f" KeyPath="yes" Source="payload\Resources\icon1_vegan.png" />
+	  </Component>
+	  <Component Id="_b9c11b8e.dc25.4ab6.989e.ee23e8db4a04" Directory="RESOURCEFOLDER" Guid="{3cf40250-91e3-48a1-a4fc-f79caaa0ac2c}">
+        <File Id="_5416b66e.381b.4b8e.93cc.cfe5e962b53a" KeyPath="yes" Source="payload\Resources\icon1_vegan@1.5x.png" />
+	  </Component>
+	  <Component Id="_29a6332c.a157.4081.8ef9.f572c71659c2" Directory="RESOURCEFOLDER" Guid="{3ab4e256-3ce3-4092-9e8a-c339a65869d1}">
+        <File Id="_0f72d4f5.0e74.4f78.a470.49745767a123" KeyPath="yes" Source="payload\Resources\icon1_vegetarian.png" />
+	  </Component>
+	  <Component Id="_c03f69d6.27d7.41a3.9797.ea29a6c58204" Directory="RESOURCEFOLDER" Guid="{e1b40da1-88b7-4171-92d1-460b9cf7f374}">
+        <File Id="_4eacfa9e.92da.4ee8.8662.194c1e45481d" KeyPath="yes" Source="payload\Resources\icon1_vegetarian@1.5x.png" />
+	  </Component>
+	  <Component Id="_0545cc0f.253d.42ef.a940.0abeae7dcee1" Directory="RESOURCEFOLDER" Guid="{38e7ccad-d6a4-4d1e-8af9-a285b673f85b}">
+        <File Id="_bc083ef7.d1db.4f38.84a0.ea03413d6444" KeyPath="yes" Source="payload\Resources\icon1_video.png" />
+	  </Component>
+	  <Component Id="_afd838cd.1849.478c.8f02.00ccf33eddda" Directory="RESOURCEFOLDER" Guid="{ed6126c9-7bce-4f73-8bc5-98f92245e240}">
+        <File Id="_05653346.813d.4505.8ab4.d89b5e247ed9" KeyPath="yes" Source="payload\Resources\icon1_video@1.5x.png" />
+	  </Component>
+	  <Component Id="_70375b22.6e4e.41bd.9422.74fd6ed00a7e" Directory="RESOURCEFOLDER" Guid="{db79175c-f863-40b5-ba08-4cfa8bdc72b0}">
+        <File Id="_c0692cfc.cba7.4ae6.bdf9.dd1dd6276a14" KeyPath="yes" Source="payload\Resources\icon1_video_conference_telepresence.png" />
+	  </Component>
+	  <Component Id="_8e52f1f2.e1b8.4549.8a3b.5b8eba49e1cd" Directory="RESOURCEFOLDER" Guid="{ee2a779d-4825-4acd-9855-e3677c4c093e}">
+        <File Id="_1df7d36d.1a74.468b.84bc.82cdeed717f4" KeyPath="yes" Source="payload\Resources\icon1_video_conference_telepresence@1.5x.png" />
+	  </Component>
+	  <Component Id="_146154bc.39f0.40cb.94a6.8c60f418c8bf" Directory="RESOURCEFOLDER" Guid="{7b8fa47c-b60f-4ff6-92e3-3b9bf29c29d7}">
+        <File Id="_5b3e5176.03e6.4e41.879d.ef48a320589e" KeyPath="yes" Source="payload\Resources\icon1_virtual_tour.png" />
+	  </Component>
+	  <Component Id="_af7304eb.6519.4ddb.b29d.6ebf563d192d" Directory="RESOURCEFOLDER" Guid="{9d4a5da4-4dbd-4a35-bb4b-f4f2e6b6eba1}">
+        <File Id="_606a9e16.6dda.4aaf.91e3.be0e3a7bcd91" KeyPath="yes" Source="payload\Resources\icon1_virtual_tour@1.5x.png" />
+	  </Component>
+	  <Component Id="_9624b24a.b1c4.4a28.b005.63399979e4bb" Directory="RESOURCEFOLDER" Guid="{b8be2a2c-2412-4115-9fd3-70e2bb10b54c}">
+        <File Id="_33befac8.5189.4600.b8e7.a4dfb7033349" KeyPath="yes" Source="payload\Resources\icon1_vr_experience.png" />
+	  </Component>
+	  <Component Id="_6e7fbdf4.8f75.481a.8c1b.f92f4ed63bc1" Directory="RESOURCEFOLDER" Guid="{78173f2d-7368-474f-a269-4b33bbb539d4}">
+        <File Id="_6247e1e3.f399.4ee1.b131.1caf024a4c84" KeyPath="yes" Source="payload\Resources\icon1_vr_experience@1.5x.png" />
+	  </Component>
+	  <Component Id="_981be763.5f71.4f65.8264.c2f0521d2d13" Directory="RESOURCEFOLDER" Guid="{dca1af39-754e-47e5-b877-3dc5c726e264}">
+        <File Id="_896d1d60.904d.42c1.ad30.52089e69f275" KeyPath="yes" Source="payload\Resources\icon1_warning.png" />
+	  </Component>
+	  <Component Id="_6932a097.cef0.4a8c.b944.ce6040436373" Directory="RESOURCEFOLDER" Guid="{4dba6e6b-2f8b-4450-91ef-7c09d0c54ced}">
+        <File Id="_d9b34afb.a870.44ea.889a.4d5ac363c6ce" KeyPath="yes" Source="payload\Resources\icon1_warning@1.5x.png" />
+	  </Component>
+	  <Component Id="_3b5a4f99.f609.4082.9ee9.a2ee9e11833a" Directory="RESOURCEFOLDER" Guid="{4881cb2a-8cb1-4be2-a977-9123d8818202}">
+        <File Id="_75501586.1bda.489a.9dd3.2ba464ff63f6" KeyPath="yes" Source="payload\Resources\icon1_washing_machine.png" />
+	  </Component>
+	  <Component Id="_6a0383ec.e5b7.4d07.8d09.8d89c4fdb976" Directory="RESOURCEFOLDER" Guid="{1b85a848-384f-43ad-8340-e1ff7c9914dd}">
+        <File Id="_e7387e69.bd82.4ba4.9399.364ec8bebb6b" KeyPath="yes" Source="payload\Resources\icon1_washing_machine@1.5x.png" />
+	  </Component>
+	  <Component Id="_e990470e.c975.4795.a0c6.fadea727ffd9" Directory="RESOURCEFOLDER" Guid="{ed444161-262b-4c1d-8426-5f97e8f1942e}">
+        <File Id="_9ae8976a.373d.4b52.9fd8.a9993fb47e58" KeyPath="yes" Source="payload\Resources\icon1_water_meter.png" />
+	  </Component>
+	  <Component Id="_ac02e473.c26c.46dc.be8e.e68082269b04" Directory="RESOURCEFOLDER" Guid="{5b40a967-50cc-4d2f-aea0-40f8fb9d5f73}">
+        <File Id="_5ba68177.1261.47da.80b7.2ac41caef41b" KeyPath="yes" Source="payload\Resources\icon1_water_meter@1.5x.png" />
+	  </Component>
+	  <Component Id="_c92a9b8b.772c.429c.b1be.8fdf383c9b80" Directory="RESOURCEFOLDER" Guid="{e2851c19-601f-4cfe-959f-9fd273bacaf1}">
+        <File Id="_5f1bb5e0.9bae.4638.9fc9.5b0e4b575e6b" KeyPath="yes" Source="payload\Resources\icon1_wind_turbine.png" />
+	  </Component>
+	  <Component Id="_31ba787b.145d.443c.b66d.b372486c8b1b" Directory="RESOURCEFOLDER" Guid="{3ab86a61-43c0-410a-9262-734491858711}">
+        <File Id="_3f6da3a6.d054.486e.b700.f4447db0054c" KeyPath="yes" Source="payload\Resources\icon1_wind_turbine@1.5x.png" />
+	  </Component>
+	  <Component Id="_fe6c45e4.4534.4fd0.8330.e9b079da98fd" Directory="RESOURCEFOLDER" Guid="{cd63ad8a-515e-43e3-98d1-b29e9e86c2df}">
+        <File Id="_0b0e80f2.7ea5.4cb8.a33b.a7fd3939e78a" KeyPath="yes" Source="payload\Resources\icon1_wi_fi_point.png" />
+	  </Component>
+	  <Component Id="_8a70be7f.40e4.4bcc.b645.324564effdc9" Directory="RESOURCEFOLDER" Guid="{6c9dd25f-1e0f-4631-8195-a494ed004427}">
+        <File Id="_dc28d94b.a9c3.40e7.8e8d.1c23e4edcc56" KeyPath="yes" Source="payload\Resources\icon1_wi_fi_point@1.5x.png" />
+	  </Component>
     </ComponentGroup>
 
     <!-- Start menu definitions-->
