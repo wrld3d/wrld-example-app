@@ -65,6 +65,10 @@ namespace ExampleApp
 
                             return std::vector<std::string>(1, person.GetDeskCode());
                         }
+                        else if (selectedSearchResult.GetPrimaryTag() == Search::Swallow::SearchConstants::DESK_CATEGORY_NAME)
+                        {
+                            return std::vector<std::string>(1, selectedSearchResult.GetTitle());
+                        }
 
                         return std::vector<std::string>();
                     }

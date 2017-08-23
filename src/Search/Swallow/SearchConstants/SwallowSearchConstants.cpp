@@ -43,6 +43,7 @@ namespace ExampleApp
                 const std::string TOILETS_MALE_CATEGORY_NAME = "toilets_male";
                 const std::string PRINT_STATION_CATEGORY_NAME = "printer";
                 const std::string EMERGENCY_EXIT_CATEGORY_NAME = "emergency_exit";
+                const std::string DESK_CATEGORY_NAME = "desk";
                 
                 const std::string MEETING_ROOM_AVAILABLE = "available";
                 const std::string MEETING_ROOM_AVAILABLE_SOON = "available_soon";
@@ -73,6 +74,7 @@ namespace ExampleApp
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("People", PERSON_CATEGORY_NAME, false, "person", false));
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Department", DEPARTMENT_CATEGORY_NAME, false, "department", false));
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Transitions", TRANSITION_CATEGORY_NAME, false, "transition", false));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Desks", DESK_CATEGORY_NAME, false, "desk", false));
                     return tags;
                 }
                 
@@ -94,6 +96,7 @@ namespace ExampleApp
                     tags.push_back(RECEPTION_CATEGORY_NAME);
                     tags.push_back(PERSON_CATEGORY_NAME);
                     tags.push_back(TRANSITION_CATEGORY_NAME);
+                    tags.push_back(DESK_CATEGORY_NAME);
                     
                     return tags;
                 }
