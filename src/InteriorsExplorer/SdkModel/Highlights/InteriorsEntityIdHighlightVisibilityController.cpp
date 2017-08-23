@@ -113,16 +113,7 @@ namespace ExampleApp
 
                 void InteriorsEntityIdHighlightVisibilityController::ClearHighlights()
                 {
-                    for (InstancedRenderableVector::const_iterator iter = m_lastHighlightedRenderables.begin(); iter != m_lastHighlightedRenderables.end(); ++iter)
-                    {
-                        Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable& currentRenderable = **iter;
-                        Eegeo::Rendering::Renderables::InstancedRenderState currentState = currentRenderable.GetInstancedRenderState();
-
-                        currentState.IsHighlightingActive = false;
-
-                        currentRenderable.SetInstancedRenderState(currentState);
-                    }
-
+                    m_interiorsEntityIdHighlightController.ClearHighlights(m_lastHighlightedRenderables);
                     m_lastHighlightedRenderables.clear();
                 }
 
