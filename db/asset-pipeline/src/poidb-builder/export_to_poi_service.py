@@ -752,8 +752,21 @@ def delete_existing_pois(poi_service_url, dev_auth_token):
 	print "delete {1}: {0}".format(url, response.status_code)
 
 
-def persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url):
+def persist_entities_batch(entities_batch):
+    url = "{0}/bulk/?token={1}".format(poi_service_url, dev_auth_token)
+    response = requests.post(url, json={"create": entities_batch}, verify=False)
+    print "post {2}: {0}".format(url, {"create": entities_batch}, response.status_code)
+
+
+def persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url, batch_count):
+    entities_batch = []
+
+    count = 0
+
     for entity in entities:
+        entities_batch.append(entity)
+        count += 1
+        
         if 'user_data' in entity:
             if 'image_url' in entity['user_data']:
                 original = entity['user_data']['image_url']
@@ -762,12 +775,17 @@ def persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url):
             user_data = entity['user_data']
             entity['user_data'] = json.dumps(user_data, ensure_ascii=False)
 
-    url = "{0}/bulk/?token={1}".format(poi_service_url, dev_auth_token)
-    response = requests.post(url, json={"create":entities}, verify=False)
-    print "post {2}: {0}".format(url, {"create":entities}, response.status_code)
+        if count >= batch_count:
+            persist_entities_batch(entities_batch)
+
+            count = 0
+            entities_batch = []
+
+    if count > 0:
+        persist_entities_batch(entities_batch)
 
 
-def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbose, stop_on_first_error):
+def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbose, stop_on_first_error, entities_batch_count):
     src_dir = os.path.normpath(os.path.dirname(src_xls_path))
 
     column_name_row = 0
@@ -783,12 +801,24 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
 
     xls_book =  xlrd.open_workbook(src_xls_path)
 
+    entities = []
+    departments = {}
+
     sheet_index = 7
 
     desks = collect_desks(xls_book, sheet_index, first_data_row_number, column_name_row)
 
-    entities = []
-    departments = {}
+    for deskCode in desks:
+        desk = desks[deskCode]
+        e = {"title": desk['desk'],
+             "subtitle": "",
+             "tags": "desk",
+             "lat": desk['lat'],
+             "lon": desk['lon'],
+             "indoor": True,
+             "indoor_id": desk['indoor_id'],
+             "floor_id": desk['floor_id']}
+        entities.append(e)
 
     sheet_index = 0
 
@@ -830,7 +860,7 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     	entities.append(e)
 
     delete_existing_pois(poi_service_url, dev_auth_token)
-    persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url)
+    persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url, entities_batch_count)
 
 def print_usage():
     print 'Usage: '
@@ -880,10 +910,12 @@ if __name__ == '__main__':
     try:
         src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbose, stop_on_first_error = get_args(sys.argv[1:])
 
+        entities_batch_count = 1000
+
         print 'src_xls_path=' + src_xls_path
         print 'poi_service_url=' + poi_service_url
 
-        build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbose, stop_on_first_error)
+        build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbose, stop_on_first_error, entities_batch_count)
     except Exception as e:
         _, _, exc_traceback = sys.exc_info()
         print(str(traceback.format_exc(exc_traceback)))
