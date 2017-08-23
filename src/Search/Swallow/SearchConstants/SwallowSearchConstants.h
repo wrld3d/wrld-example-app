@@ -46,6 +46,7 @@ namespace ExampleApp
                 extern const std::string TOILETS_MALE_CATEGORY_NAME;
                 extern const std::string PRINT_STATION_CATEGORY_NAME;
                 extern const std::string EMERGENCY_EXIT_CATEGORY_NAME;
+                extern const std::string DESK_CATEGORY_NAME;
                 
                 extern const std::string MEETING_ROOM_AVAILABLE;
                 extern const std::string MEETING_ROOM_AVAILABLE_SOON;
