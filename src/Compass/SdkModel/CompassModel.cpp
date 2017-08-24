@@ -64,7 +64,6 @@ namespace ExampleApp
 
             CompassModel::~CompassModel()
             {
-                
                 m_interiorExplorerModel.RemoveInteriorExplorerFloorSelectionDraggedCallback(m_interiorFloorChangedCallback);
                 m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
             }
@@ -235,11 +234,16 @@ namespace ExampleApp
             {
                 m_gpsModeUnauthorizedCallbacks.RemoveCallback(callback);
             }
+
             
             void CompassModel::OnAppModeChanged()
             {
                 const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
-                if (appMode == AppModes::SdkModel::WorldMode)
+                if (appMode == AppModes::SdkModel::AttractMode)
+                {
+                    DisableGpsMode();
+                }
+                else if (appMode == AppModes::SdkModel::WorldMode)
                 {
                     m_exitInteriorTriggered = false;
                 }
