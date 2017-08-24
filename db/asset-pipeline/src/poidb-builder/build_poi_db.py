@@ -10,6 +10,9 @@ import xlrd
 IMAGES_FOLDER = "images"
 TAGS = [u'stationery',
               u'toilets',
+              u'toilets_disabled',
+              u'toilets_female',
+              u'toilets_male',
               u'print_station',
               u'emergency_exit']
 MEETING_ROOM_STATUSES = [u'available',
