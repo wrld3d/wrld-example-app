@@ -40,6 +40,7 @@ namespace ExampleApp
                 , m_metricsService(metricsService)
                 , m_interiorExplorerModel(interiorExplorerModel)
                 , m_appModeModel(appModeModel)
+                , m_appModeChangedCallback(this, &CompassModel::OnAppModeChanged)
                 , m_alertBoxFactory(alertBoxFactory)
                 , m_failAlertHandler(this, &CompassModel::OnFailedToGetLocation)
                 , m_interiorFloorChangedCallback(this, &CompassModel::OnInteriorFloorChanged)
@@ -58,13 +59,14 @@ namespace ExampleApp
                 m_gpsModeToString[GpsMode::GpsFollow] = "GpsFollow";
                 m_gpsModeToString[GpsMode::GpsCompassMode] = "GpsCompassMode";
                 
+                m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
                 m_interiorExplorerModel.InsertInteriorExplorerFloorSelectionDraggedCallback(m_interiorFloorChangedCallback);
             }
 
             CompassModel::~CompassModel()
             {
-                
                 m_interiorExplorerModel.RemoveInteriorExplorerFloorSelectionDraggedCallback(m_interiorFloorChangedCallback);
+                m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
             }
 
             bool CompassModel::GetGpsModeActive() const
@@ -229,6 +231,16 @@ namespace ExampleApp
             void CompassModel::RemoveGpsModeUnauthorizedCallback(Eegeo::Helpers::ICallback0 &callback)
             {
                 m_gpsModeUnauthorizedCallbacks.RemoveCallback(callback);
+            }
+
+            void CompassModel::OnAppModeChanged()
+            {
+                const AppModes::SdkModel::AppMode appMode = m_appModeModel.GetAppMode();
+                if (appMode == AppModes::SdkModel::AttractMode)
+                {
+                    DisableGpsMode();
+                    return;
+                }
             }
             
             void CompassModel::OnInteriorFloorChanged()
