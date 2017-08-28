@@ -192,4 +192,6 @@ private:
     ExampleApp::AttractModeOverlay::View::AttractModeOverlayView* m_pAttractModeOverlayView;
 
     Eegeo::Rendering::ScreenProperties m_screenProperties;
+
+	std::vector<std::vector<std::string>> m_pCustomKeyboardLayout;
 };

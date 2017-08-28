@@ -116,6 +116,8 @@ namespace ExampleApp
 
                 virtual IApplicationConfigurationBuilder& SetAdminPassword(const std::string& adminPassword) = 0;
 
+                virtual IApplicationConfigurationBuilder& SetCustomKeyboardLayout(const std::vector<std::vector<std::string>>& customKeyboardLayout) = 0;
+
                 virtual IApplicationConfigurationBuilder& SetCompassCameraOffset(const float compassCameraOffset) = 0;
                 virtual IApplicationConfigurationBuilder& SetCompassCameraOffsetTopDown(const float compassCameraOffsetTopDown) = 0;
                 virtual IApplicationConfigurationBuilder& SetCompassCameraDampingEnabled(const bool compassCameraDampingEnabled) = 0;

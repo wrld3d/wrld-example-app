@@ -371,6 +371,12 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetCustomKeyboardLayout(const std::vector<std::vector<std::string>>& customKeyboardLayout)
+            {
+                m_customKeyboardLayout = customKeyboardLayout;
+                return *this;
+            }
+
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetCompassCameraOffset(const float compassCameraOffset)
             {
                 m_compassCameraOffset = compassCameraOffset;
@@ -467,6 +473,7 @@ namespace ExampleApp
                                                 m_attractModeTimeoutMs,
                                                 m_attractModePlaybackSpeed,
                                                 m_adminPassword,
+                                                m_customKeyboardLayout,
                                                 m_compassCameraOffset,
                                                 m_compassCameraOffsetTopDown,
                                                 m_compassCameraDampingEnabled);

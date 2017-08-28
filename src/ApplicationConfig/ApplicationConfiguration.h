@@ -86,6 +86,8 @@ namespace ExampleApp
             float m_compassCameraOffsetTopDown;
             bool m_compassCameraDampingEnabled;
 
+			std::vector<std::vector<std::string>> m_customKeyboardLayout;
+
         public:
             
             ApplicationConfiguration(const std::string& name,
@@ -143,6 +145,7 @@ namespace ExampleApp
                                      const long long attractModeTimeoutMs,
                                      const double attractModePlaybackSpeed,
                                      const std::string& adminPassword,
+                                     const std::vector<std::vector<std::string>>& customKeyboardLayout,
                                      const float compassCameraOffset,
                                      const float compassCameraOffsetTopDown,
                                      const bool compassCameraDampingEnabled);
@@ -244,6 +247,8 @@ namespace ExampleApp
             const bool IsAttractModeEnabled() const;
 
             const std::string& OptionsAdminPassword() const;
+
+            const std::vector<std::vector<std::string>> CustomKeyboardLayout() const;
 
             const float CompassCameraOffset() const;
             const float CompassCameraOffsetTopDown() const;

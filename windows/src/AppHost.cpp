@@ -193,6 +193,8 @@ AppHost::AppHost(
         ExampleApp::ApplicationConfigurationPath,
         ExampleApp::ApplicationConfigurationSecret);
 
+    m_pCustomKeyboardLayout = applicationConfiguration.CustomKeyboardLayout();
+
     m_pWindowsLocationService = Eegeo_NEW(Eegeo::Windows::WindowsLocationService)(&nativeState, &locationOverride);
     m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_pWindowsLocationService);
 

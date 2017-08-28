@@ -373,6 +373,7 @@ namespace ExampleApp
                 m_builder.SetAdminPassword(ParseStringOrDefault(document, OptionsAdminPassword.c_str(), ""));
 
                 const std::vector<std::vector<std::string>> customKeyboardLayout = ParseCustomKeyboardLayout(document, CustomKeyboardLayout);
+                m_builder.SetCustomKeyboardLayout(customKeyboardLayout);
 
                 if (document.HasMember(CompassCameraOffset.c_str()))
                 {

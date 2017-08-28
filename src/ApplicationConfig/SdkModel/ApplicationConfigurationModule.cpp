@@ -62,6 +62,8 @@ namespace ExampleApp
                     const std::string startLocationIndoorId = "";
                     const int startLocationFloorIndex = 0;
 
+                    const std::vector<std::vector<std::string>> customKeyboardLayout = {};
+
                     return ApplicationConfiguration ("Eegeo Example App", 
                         emptyEegeoApiKey,
                         Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
@@ -117,6 +119,7 @@ namespace ExampleApp
                         0,
                         attractModePlaybackSpeed,
                         emptyAdminPassword,
+                        customKeyboardLayout,
                         0.0f,
                         0.0f,
                         false);

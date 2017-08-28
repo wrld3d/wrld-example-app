@@ -86,6 +86,8 @@ namespace ExampleApp
                 float m_compassCameraOffset;
                 float m_compassCameraOffsetTopDown;
                 bool m_compassCameraDampingEnabled;
+
+                std::vector<std::vector<std::string>> m_customKeyboardLayout;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -184,6 +186,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetAttractModePlaybackSpeed(const double playbackSpeed);
 
                 IApplicationConfigurationBuilder& SetAdminPassword(const std::string& adminPassword);
+
+                IApplicationConfigurationBuilder& SetCustomKeyboardLayout(const std::vector<std::vector<std::string>>& customKeyboardLayout);
 
                 IApplicationConfigurationBuilder& SetCompassCameraOffset(const float compassCameraOffset);
                 IApplicationConfigurationBuilder& SetCompassCameraOffsetTopDown(const float compassCameraOffsetTopDown);
