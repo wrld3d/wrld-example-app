@@ -48,7 +48,8 @@ namespace ExampleApp
             const std::string& timerSurveyUrl,
             const std::string& hockeyAppId,
             bool hasMapScene,
-            const std::string& mapSceneId
+            const std::string& mapSceneId,
+			const std::vector<std::vector<std::string>>& customKeyboardLayout
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -92,6 +93,7 @@ namespace ExampleApp
         , m_hockeyAppId(hockeyAppId)
         , m_hasMapScene(hasMapScene)
         , m_mapSceneId(mapSceneId)
+		, m_customKeyboardLayout(customKeyboardLayout)
         {
         }
         
@@ -316,5 +318,10 @@ namespace ExampleApp
         {
             return m_mapSceneId;
         }
+
+		const std::vector<std::vector<std::string>> ApplicationConfiguration::CustomKeyboardLayout() const
+		{
+			return m_customKeyboardLayout;
+		}
     }
 }

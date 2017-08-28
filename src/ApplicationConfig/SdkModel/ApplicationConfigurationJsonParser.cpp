@@ -347,7 +347,8 @@ namespace ExampleApp
                     timerSurveyUrl,
                     hockeyAppId,
                     hasMapScene,
-                    mapSceneId
+                    mapSceneId,
+					customKeyboardLayout
                 );
             }
             
