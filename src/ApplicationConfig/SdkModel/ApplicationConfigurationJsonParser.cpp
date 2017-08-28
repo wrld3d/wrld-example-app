@@ -65,7 +65,8 @@ namespace ExampleApp
                 const std::string SurveyTimeRequirementSec = "survey_time_requirement_sec";
                 const std::string TimerSurveyUrl = "timer_survey_url";
                 const std::string HockeyAppId = "hockey_app_id";
-                const std::string MapSceneId = "map_scene_id";
+				const std::string MapSceneId = "map_scene_id";
+				const std::string CustomKeyboardLayout = "custom_keyboard_layout";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -189,6 +190,33 @@ namespace ExampleApp
                             ? fixedIndoorLocation[OrientationDegrees.c_str()].GetDouble()
                             : 180.0);
                 }
+
+				std::vector<std::vector<std::string>> ParseCustomKeyboardLayout(rapidjson::Document& document, const std::string& customKeyboard)
+				{
+					std::vector<std::vector<std::string>> customKeyboardLayout;
+
+					if(document.HasMember(customKeyboard.c_str()) && document[customKeyboard.c_str()].IsArray())
+					{
+						for (rapidjson::SizeType i = 0; i < document[customKeyboard.c_str()].Size(); ++i)
+						{
+							if (document[customKeyboard.c_str()][i].HasMember("row") && document[customKeyboard.c_str()][i]["row"].IsString() &&
+								document[customKeyboard.c_str()][i].HasMember("index") && document[customKeyboard.c_str()][i]["index"].IsInt() &&
+								document[customKeyboard.c_str()][i].HasMember("lowercase") && document[customKeyboard.c_str()][i]["lowercase"].IsString() &&
+								document[customKeyboard.c_str()][i].HasMember("uppercase") && document[customKeyboard.c_str()][i]["uppercase"].IsString())
+							{
+								std::vector<std::string> customKeyLayout = {
+									document[customKeyboard.c_str()][i]["row"].GetString(),
+									std::to_string(document[customKeyboard.c_str()][i]["index"].GetInt()),
+									document[customKeyboard.c_str()][i]["lowercase"].GetString(),
+									document[customKeyboard.c_str()][i]["uppercase"].GetString()
+								};
+								customKeyboardLayout.push_back(customKeyLayout);
+							}
+						}
+					}
+					return customKeyboardLayout;
+				}
+
             }
 
             ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig)
@@ -274,6 +302,8 @@ namespace ExampleApp
 
                 const std::string mapSceneId = ParseStringOrDefault(document, MapSceneId, m_defaultConfig.MapSceneId());
                 const bool hasMapScene = !(mapSceneId == "");
+
+				const std::vector<std::vector<std::string>> customKeyboardLayout = ParseCustomKeyboardLayout(document, CustomKeyboardLayout);
 
                 return ApplicationConfiguration(
                     name,
