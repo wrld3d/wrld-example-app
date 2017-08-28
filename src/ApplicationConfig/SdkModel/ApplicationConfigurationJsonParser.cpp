@@ -83,6 +83,7 @@ namespace ExampleApp
                 const std::string AttractModePlaybackSpeed = "attract_mode_playback_speed";
                 const std::string FixedIndoorLocation = "fixed_indoor_location";
                 const std::string OptionsAdminPassword = "options_admin_password";
+                const std::string CustomKeyboardLayout = "custom_keyboard_layout";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -159,6 +160,32 @@ namespace ExampleApp
                         }
                     }
                     return defaultValue;
+                }
+
+                std::vector<std::vector<std::string>> ParseCustomKeyboardLayout(rapidjson::Document& document, const std::string& customKeyboard)
+                {
+                    std::vector<std::vector<std::string>> customKeyboardLayout;
+
+                    if(document.HasMember(customKeyboard.c_str()) && document[customKeyboard.c_str()].IsArray())
+                    {
+                        for (rapidjson::SizeType i = 0; i < document[customKeyboard.c_str()].Size(); ++i)
+                        {
+                            if (document[customKeyboard.c_str()][i].HasMember("row") && document[customKeyboard.c_str()][i]["row"].IsString() &&
+                                document[customKeyboard.c_str()][i].HasMember("index") && document[customKeyboard.c_str()][i]["index"].IsInt() &&
+                                document[customKeyboard.c_str()][i].HasMember("lowercase") && document[customKeyboard.c_str()][i]["lowercase"].IsString() &&
+                                document[customKeyboard.c_str()][i].HasMember("uppercase") && document[customKeyboard.c_str()][i]["uppercase"].IsString())
+                            {
+                                std::vector<std::string> customKeyLayout = {
+                                    document[customKeyboard.c_str()][i]["row"].GetString(),
+                                    std::to_string(document[customKeyboard.c_str()][i]["index"].GetInt()),
+                                    document[customKeyboard.c_str()][i]["lowercase"].GetString(),
+                                    document[customKeyboard.c_str()][i]["uppercase"].GetString()
+                                };
+                                customKeyboardLayout.push_back(customKeyLayout);
+                            }
+                        }
+                    }
+                    return customKeyboardLayout;
                 }
             }
 
@@ -344,6 +371,8 @@ namespace ExampleApp
                 }
 
                 m_builder.SetAdminPassword(ParseStringOrDefault(document, OptionsAdminPassword.c_str(), ""));
+
+                const std::vector<std::vector<std::string>> customKeyboardLayout = ParseCustomKeyboardLayout(document, CustomKeyboardLayout);
 
                 if (document.HasMember(CompassCameraOffset.c_str()))
                 {
