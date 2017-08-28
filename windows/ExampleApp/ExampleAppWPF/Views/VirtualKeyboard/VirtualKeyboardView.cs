@@ -46,6 +46,10 @@ namespace ExampleAppWPF
             };
         }
 
+        public void AddCustomKeyboardKey(string row, string index, string uppercase, string lowercase)
+        {
+        }
+
         public void ShowVirtualKeyboard()
         {
             SetVisibility(true);

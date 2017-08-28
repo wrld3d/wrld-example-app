@@ -18,12 +18,14 @@ namespace ExampleApp
                 VirtualKeyboardView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus);
                 ~VirtualKeyboardView();
 
+				void AddCustomKeyboardLayout(std::vector<std::vector<std::string>>);
                 void OnVisibilityChanged(const bool isVisible);
                 void HideVirtualKeyboard();
 
             private:
                 Helpers::ReflectionHelpers::Method<void> mDestroy;
                 Helpers::ReflectionHelpers::Method<void> mHideVirtualKeyboard;
+				Helpers::ReflectionHelpers::Method<System::String^, System::String^, System::String^, System::String^> mAddCustomKeyboardKey;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
