@@ -25,13 +25,26 @@ namespace ExampleApp
                 m_uiView = ctor->Invoke(CreateObjects(gcnew IntPtr(this)));
 
                 mHideVirtualKeyboard.SetupMethod(m_uiViewClass, m_uiView, "HideVirtualKeyboard");
-                mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
+				mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
+				mAddCustomKeyboardKey.SetupMethod(m_uiViewClass, m_uiView, "AddCustomKeyboardKey");
             }
 
             VirtualKeyboardView::~VirtualKeyboardView()
             {
                 mDestroy();
             }
+
+			void VirtualKeyboardView::AddCustomKeyboardLayout(std::vector<std::vector<std::string>> customKeyboardLayout)
+			{
+				for(int i = 0; i < customKeyboardLayout.size(); i++)
+				{
+					mAddCustomKeyboardKey(
+						gcnew String(customKeyboardLayout[i][0].c_str()), // Row
+						gcnew String(customKeyboardLayout[i][1].c_str()), // Index
+						gcnew String(customKeyboardLayout[i][2].c_str()), // Lowercase
+						gcnew String(customKeyboardLayout[i][3].c_str())); // Uppercase
+				}
+			}
 
             void VirtualKeyboardView::OnVisibilityChanged(const bool isVisible)
             {

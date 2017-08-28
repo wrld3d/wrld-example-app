@@ -696,6 +696,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     if (IsInKioskMode())
     {
         m_pVirtualKeyboardView = Eegeo_NEW(ExampleApp::VirtualKeyboard::View::VirtualKeyboardView)(m_nativeState, m_messageBus);
+		m_pVirtualKeyboardView->AddCustomKeyboardLayout(m_pCustomKeyboardLayout);
     }
 
     if (m_pApp->GetApplicationConfiguration().IsAttractModeEnabled())
