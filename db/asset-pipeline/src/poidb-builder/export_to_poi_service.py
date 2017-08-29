@@ -470,6 +470,52 @@ def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, ve
             }
        }
 
+
+def collect_working_group_from_desks_table(desks):
+    desk_groups = set()
+
+    for desk_name in desks:
+        if "3QVS" in desk_name:
+            desk_group_name = desk_name[:9]
+
+            if desk_group_name not in desk_groups:
+                desk_groups.add(desk_group_name)
+
+                desk = desks[desk_name]
+                floor_id = int(desk["floor_id"])
+                ground_floor = 4
+                floor_no = floor_id - ground_floor
+
+                floor = "{0}th Floor".format(floor_no)
+                if floor_no < 0:
+                    floor = "Basement {0}".format(abs(floor_no))
+                elif floor_no == 0:
+                    floor = "Ground Floor"
+                elif floor_no == 1:
+                    floor = "1st Floor"
+                elif floor_no == 2:
+                    floor = "2nd Floor"
+                elif floor_no == 3:
+                    floor = "3rd Floor"
+
+                yield {
+                    "title": desk_group_name,
+                    "subtitle": "",
+                    "tags": "working_group",
+                    "lat": float(desk["lat"]),
+                    "lon": float(desk["lon"]),
+                    "indoor": True,
+                    "indoor_id": desk["indoor_id"],
+                    "floor_id": floor_id,
+                    "user_data":
+                        {
+                            "image_url": "cgh_g_mailroom.jpg",
+                            "description": desk_group_name,
+                            "office_location": floor + ", Bloomberg London"
+                        }
+                }
+
+
 def collect_facility_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
@@ -841,6 +887,9 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
 
     for e in collect_working_group_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     	entities.append(e)
+
+    for e in collect_working_group_from_desks_table(desks):
+        entities.append(e)
 
     sheet_index = 3
 
