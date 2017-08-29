@@ -810,9 +810,6 @@ set(resources ${resources}
         Resources/icon1_my_location.png
         Resources/icon1_my_location@2x.png
         Resources/icon1_my_location@3x.png
-        Resources/icon1_my_pins.png
-        Resources/icon1_my_pins@2x.png
-        Resources/icon1_my_pins@3x.png
         Resources/icon1_night.png
         Resources/icon1_night@2x.png
         Resources/icon1_night@3x.png

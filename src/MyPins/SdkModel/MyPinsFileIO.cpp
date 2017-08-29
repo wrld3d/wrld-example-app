@@ -37,7 +37,7 @@ namespace ExampleApp
                     "accommodation",
                     "art_museums",
                     "art_museums",
-                    "my_pins",
+                    "my_location",
                     
                     "tour_entry",    //10
                     "indoor_map_entry",
@@ -75,7 +75,7 @@ namespace ExampleApp
                     }
                     else
                     {
-                        return "my_pins";
+                        return "my_location";
                     }
                 }
                 

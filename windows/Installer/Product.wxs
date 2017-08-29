@@ -770,9 +770,6 @@
       <Component Id="_7fc5d036.2b3d.4033.851a.0599685a036f" Directory="RESOURCEFOLDER" Guid="{5d73ff12-b40f-41b5-a0c8-b2f1bd4a9ddf}">
         <File Id="_868a0def.7c02.47c1.88f2.2f77d16254af" KeyPath="yes" Source="payload\Resources\icon1_meeting_room_unavailable.png" />
       </Component>
-      <Component Id="_7987ab5e.c94a.47e0.9af7.120f2b808423" Directory="RESOURCEFOLDER" Guid="{ff574023-97c7-4dac-bbf0-9429bc34afdb}">
-        <File Id="_1510c0b2.6011.487c.a70d.6f396e9471b5" KeyPath="yes" Source="payload\Resources\icon1_my_pins.png" />
-      </Component>
       <Component Id="_0e5895e2.7fd1.43e0.b7db.3ac23b0e0720" Directory="RESOURCEFOLDER" Guid="{33865953-bb3e-46e1-b4a2-a1063920ec4f}">
         <File Id="_7458364f.5ed8.4231.a4bf.a4b0c2fb6dcd" KeyPath="yes" Source="payload\Resources\icon1_printer.png" />
       </Component>
@@ -1540,9 +1537,6 @@
 	  </Component>
 	  <Component Id="_7db45461.b801.4f35.86f3.51945aa4e592" Directory="RESOURCEFOLDER" Guid="{569f6a9e-5977-4fc8-944c-68783359aac5}">
         <File Id="_360f796c.9b65.485f.a3ed.634ff835526f" KeyPath="yes" Source="payload\Resources\icon1_music@1.5x.png" />
-	  </Component>
-	  <Component Id="_cfa1af7e.c820.4687.aeaf.87b84e9b0ccf" Directory="RESOURCEFOLDER" Guid="{bdb5196c-3cf8-49fd-a56a-6cbcd7c59e8e}">
-        <File Id="_8f469032.f3bf.4951.9adb.70b6fcd5a173" KeyPath="yes" Source="payload\Resources\icon1_my_pins@1.5x.png" />
 	  </Component>
 	  <Component Id="_76d4d48d.5baf.411b.8d7e.2d3dbdd7dc08" Directory="RESOURCEFOLDER" Guid="{684c5ddc-3645-41b3-9f19-9157e4acf6cf}">
         <File Id="_c28b9ff2.2f38.4319.a763.0a81162ce81a" KeyPath="yes" Source="payload\Resources\icon1_night@1.5x.png" />
