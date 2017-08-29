@@ -26,6 +26,7 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<void> mDestroy;
                 Helpers::ReflectionHelpers::Method<void> mHideVirtualKeyboard;
 				Helpers::ReflectionHelpers::Method<System::String^, System::String^, System::String^, System::String^> mAddCustomKeyboardKey;
+				Helpers::ReflectionHelpers::Method<void> mClearCustomKeyboardKeys;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 

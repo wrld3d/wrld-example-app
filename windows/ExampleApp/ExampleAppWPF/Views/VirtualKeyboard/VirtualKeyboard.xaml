@@ -215,7 +215,7 @@
                                     </pk:VirtualKeyboardSpecialButton>
                                 </StackPanel>
 
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <StackPanel x:Name="QButtonRow" HorizontalAlignment="Center" Orientation="Horizontal">
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="q"
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue="Q"/>
@@ -252,7 +252,7 @@
                                     </pk:VirtualKeyboardControlButton>
                                 </StackPanel>
 
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <StackPanel x:Name="AButtonRow" HorizontalAlignment="Center" Orientation="Horizontal">
                                     <pk:VirtualKeyboardInputButton Style="{StaticResource KeyboardButtonStyle}"
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="a"
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue="A"/>
@@ -287,7 +287,7 @@
                                     </pk:VirtualKeyboardControlButton>
                                 </StackPanel>
 
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <StackPanel x:Name="ZButtonRow" HorizontalAlignment="Center" Orientation="Horizontal">
                                     <pk:VirtualKeyboardSpecialButton Style="{StaticResource KeyboardShiftButtonStyle}"
                                                                      pk:VirtualKeyboardSpecialButton.KeySpecialInputValue="ShiftKey" />
 
@@ -317,7 +317,7 @@
                                                               pk:VirtualKeyboardInputButton.AutoLabel="False"
                                                               pk:VirtualKeyboardInputButton.KeyInputValue=","
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue="!">
-                                        <StackPanel>
+                                        <StackPanel x:Name="Label8">
                                             <TextBlock Text="!">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">
@@ -349,7 +349,7 @@
                                                               pk:VirtualKeyboardInputButton.AutoLabel="False"
                                                               pk:VirtualKeyboardInputButton.KeyInputValue="."
                                                               pk:VirtualKeyboardInputButton.KeyShiftInputValue="?">
-                                        <StackPanel>
+                                        <StackPanel x:Name="Label9">
                                             <TextBlock Text="?">
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock">

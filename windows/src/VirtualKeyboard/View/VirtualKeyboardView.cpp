@@ -27,6 +27,7 @@ namespace ExampleApp
                 mHideVirtualKeyboard.SetupMethod(m_uiViewClass, m_uiView, "HideVirtualKeyboard");
 				mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
 				mAddCustomKeyboardKey.SetupMethod(m_uiViewClass, m_uiView, "AddCustomKeyboardKey");
+				mClearCustomKeyboardKeys.SetupMethod(m_uiViewClass, m_uiView, "ClearCustomKeyboardKeys");
             }
 
             VirtualKeyboardView::~VirtualKeyboardView()
@@ -36,6 +37,8 @@ namespace ExampleApp
 
 			void VirtualKeyboardView::AddCustomKeyboardLayout(std::vector<std::vector<std::string>> customKeyboardLayout)
 			{
+				mClearCustomKeyboardKeys();
+
 				for(int i = 0; i < customKeyboardLayout.size(); i++)
 				{
 					mAddCustomKeyboardKey(
