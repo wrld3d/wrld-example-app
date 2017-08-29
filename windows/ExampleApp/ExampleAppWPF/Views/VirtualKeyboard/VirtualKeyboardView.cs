@@ -12,9 +12,12 @@ namespace ExampleAppWPF
     {
         private IntPtr m_nativeCallerPointer;
         private MainWindow m_currentWindow;
+        private List<List<string>> customKeyboardLayout;
 
         public VirtualKeyboardView(IntPtr nativeCallerPointer)
         {
+            customKeyboardLayout = new List<List<string>>();
+
             m_nativeCallerPointer = nativeCallerPointer;
 
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
@@ -48,11 +51,60 @@ namespace ExampleAppWPF
 
         public void AddCustomKeyboardKey(string row, string index, string uppercase, string lowercase)
         {
+            customKeyboardLayout.Add(new List<string>() { row, index, uppercase, lowercase });
+        }
+
+        public void ClearCustomKeyboardKeys()
+        {
+            customKeyboardLayout.Clear();
+        }
+
+        public void ProcessCustomKeyboardKeys()
+        {
+            foreach (var customKeyLayout in this.customKeyboardLayout)
+            {
+                string row = customKeyLayout[0];
+                int index = int.Parse(customKeyLayout[1]);
+                string lowercase = customKeyLayout[2];
+                string uppercase = customKeyLayout[3];
+
+                StackPanel keyboardRow = ViewHelpers.FindChildByName<StackPanel>(this, row);
+
+                VirtualKeyboard.VirtualKeyboardInputButton keyToChange = keyboardRow.Children[index] as VirtualKeyboard.VirtualKeyboardInputButton;
+
+                VirtualKeyboard.VirtualKeyboardInputButton.SetKeyInputValue(keyToChange, lowercase);
+
+                if (lowercase != "")
+                {
+                    VirtualKeyboard.VirtualKeyboardInputButton.SetKeyShiftInputValue(keyToChange, uppercase);
+                }
+                else if (VirtualKeyboard.VirtualKeyboardInputButton.GetKeyShiftInputValue(keyToChange) != null)
+                {
+                    uppercase = lowercase;
+                    VirtualKeyboard.VirtualKeyboardInputButton.SetKeyShiftInputValue(keyToChange, uppercase);
+                }
+
+                if (keyToChange.GetAutoLabel())
+                {
+                    keyToChange.Content = keyToChange.GetKeyInputValue();
+                }
+                else
+                {
+                    StackPanel customKeyLabel = ViewHelpers.FindChildByName<StackPanel>(this, "Label" + customKeyLayout[1]);
+
+                    TextBlock upperCaseLabel = customKeyLabel.Children[0] as TextBlock;
+                    upperCaseLabel.Text = uppercase;
+
+                    TextBlock lowerCaseLabel = customKeyLabel.Children[1] as TextBlock;
+                    lowerCaseLabel.Text = lowercase;
+                }
+            }
         }
 
         public void ShowVirtualKeyboard()
         {
             SetVisibility(true);
+            ProcessCustomKeyboardKeys();
         }
 
         public void HideVirtualKeyboard()
