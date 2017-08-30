@@ -17,9 +17,10 @@
 #include "InstancedInteriorFloorRenderable.h"
 #include "InteriorsCellResource.h"
 #include "SearchResultSectionItemSelectedMessage.h"
-#include "InteriorsEntityIdHighlightController.h"
+#include "InteriorsInstanceRepository.h"
+#include "IInteriorsHighlightService.h"
+#include "InteriorInteractionModel.h"
 #include "document.h"
-
 #include <algorithm>
 #include <iterator>
 
@@ -71,13 +72,15 @@ namespace ExampleApp
                 }
 
                 InteriorsEntityIdHighlightVisibilityController::InteriorsEntityIdHighlightVisibilityController(
-                    Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController& interiorsEntityIdHighlightController,
-                    Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                    Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                    ExampleAppMessaging::TMessageBus& messageBus,
-                    Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository,
-                    IHighlightColorMapper& highlightColorMapper)
-                : m_interiorsEntityIdHighlightController(interiorsEntityIdHighlightController)
+                        const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                        Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& interiorsHighlightService,
+                        Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                        Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                        ExampleAppMessaging::TMessageBus& messageBus,
+                        Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository,
+                        IHighlightColorMapper& highlightColorMapper)
+                : m_interiorInteractionModel(interiorInteractionModel)
+                , m_interiorsHighlightService(interiorsHighlightService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_searchResultsHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded)
                 , m_searchResultsClearedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared)
@@ -113,8 +116,7 @@ namespace ExampleApp
 
                 void InteriorsEntityIdHighlightVisibilityController::ClearHighlights()
                 {
-                    m_interiorsEntityIdHighlightController.ClearHighlights(m_lastHighlightedRenderables);
-                    m_lastHighlightedRenderables.clear();
+                    m_interiorsHighlightService.ClearAllHighlights();
                 }
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
@@ -173,8 +175,15 @@ namespace ExampleApp
                         
                         filteredEntityIds.erase(std::remove_if(filteredEntityIds.begin(), filteredEntityIds.end(), std::not1(IsInteriorInstancePresentForId(m_interiorsInstanceRepository))), filteredEntityIds.end());
 
-                        m_interiorsEntityIdHighlightController.SetDefaultHighlightColour(m_highlightColorMapper.GetColor(selectedSearchResult, "entity_highlight_color"));
-                        m_interiorsEntityIdHighlightController.HighlightEntityIds(filteredEntityIds, m_lastHighlightedRenderables);
+                        if (m_interiorInteractionModel.HasInteriorModel())
+                        {
+                        Eegeo::v4 highlightColor = m_highlightColorMapper.GetColor(selectedSearchResult, "entity_highlight_color");
+                            const std::string& interiorId = m_interiorInteractionModel.GetInteriorModel()->GetId().Value();
+                            for (const auto& entityId : filteredEntityIds)
+                            {
+                                m_interiorsHighlightService.SetHighlight(interiorId, entityId, highlightColor);
+                            }
+                        }
                     }
                 }
             }
