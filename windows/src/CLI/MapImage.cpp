@@ -301,8 +301,8 @@ namespace ExampleApp
             AddDirtyRect(System::Windows::Int32Rect(
                 0,
                 0,
-                width,
-                height
+                scaledWidth,
+                scaledHeight
                 ));
             
             Unlock();
