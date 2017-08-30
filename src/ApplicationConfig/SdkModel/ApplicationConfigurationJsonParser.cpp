@@ -57,6 +57,7 @@ namespace ExampleApp
                 const std::string Altitude = "altitude";
                 const std::string OrientationDegrees = "orientation_degrees";
                 const std::string FixedIndoorLocation = "fixed_indoor_location";
+                const std::string LocationDistance = "location_distance";
                 const std::string AttractModeTargetSpline = "attract_mode_target_spline";
                 const std::string AttractModePositionSpline = "attract_mode_position_spline";
                 const std::string AttractModeTimeoutMillis = "attract_mode_timeout_millis";
@@ -65,8 +66,8 @@ namespace ExampleApp
                 const std::string SurveyTimeRequirementSec = "survey_time_requirement_sec";
                 const std::string TimerSurveyUrl = "timer_survey_url";
                 const std::string HockeyAppId = "hockey_app_id";
-				const std::string MapSceneId = "map_scene_id";
-				const std::string CustomKeyboardLayout = "custom_keyboard_layout";
+                const std::string MapSceneId = "map_scene_id";
+                const std::string CustomKeyboardLayout = "custom_keyboard_layout";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -109,7 +110,7 @@ namespace ExampleApp
                 {
                     if (document.HasMember(key.c_str()))
                     {
-                        if(document[key.c_str()].IsDouble())
+                        if(document[key.c_str()].IsNumber())
                         {
                             return document[key.c_str()].GetDouble();
                         }
@@ -148,16 +149,16 @@ namespace ExampleApp
                 Eegeo::Space::LatLong ParseLatLong(const rapidjson::Value& latlong)
                 {
                     return Eegeo::Space::LatLong::FromDegrees(
-                            latlong.HasMember(Latitude.c_str()) && latlong[Latitude.c_str()].IsDouble() ? latlong[Latitude.c_str()].GetDouble() : 0.0,
-                            latlong.HasMember(Longitude.c_str()) && latlong[Longitude.c_str()].IsDouble() ? latlong[Longitude.c_str()].GetDouble() : 0.0);
+                            latlong.HasMember(Latitude.c_str()) && latlong[Latitude.c_str()].IsNumber() ? latlong[Latitude.c_str()].GetDouble() : 0.0,
+                            latlong.HasMember(Longitude.c_str()) && latlong[Longitude.c_str()].IsNumber() ? latlong[Longitude.c_str()].GetDouble() : 0.0);
                 }
 
                 Eegeo::Space::LatLongAltitude ParseLatLongAltitude(const rapidjson::Value& location)
                 {
                     return Eegeo::Space::LatLongAltitude::FromDegrees(
-                            location.HasMember(Latitude.c_str()) && location[Latitude.c_str()].IsDouble() ? location[Latitude.c_str()].GetDouble() : 0.0,
-                            location.HasMember(Longitude.c_str()) && location[Longitude.c_str()].IsDouble() ? location[Longitude.c_str()].GetDouble() : 0.0,
-                            location.HasMember(Altitude.c_str()) && location[Altitude.c_str()].IsDouble() ? location[Altitude.c_str()].GetDouble() : 0.0);
+                            location.HasMember(Latitude.c_str()) && location[Latitude.c_str()].IsNumber() ? location[Latitude.c_str()].GetDouble() : 0.0,
+                            location.HasMember(Longitude.c_str()) && location[Longitude.c_str()].IsNumber() ? location[Longitude.c_str()].GetDouble() : 0.0,
+                            location.HasMember(Altitude.c_str()) && location[Altitude.c_str()].IsNumber() ? location[Altitude.c_str()].GetDouble() : 0.0);
                 }
 
                 template <typename T, typename Parser>
@@ -178,6 +179,7 @@ namespace ExampleApp
                 SdkModel::ApplicationFixedIndoorLocation ParseFixedIndoorLocation(const rapidjson::Value& fixedIndoorLocation)
                 {
                     const rapidjson::Value empty(rapidjson::kObjectType);
+
                     return SdkModel::ApplicationFixedIndoorLocation(
                         ParseLatLong(fixedIndoorLocation.HasMember(LocationDegrees.c_str()) ? fixedIndoorLocation[LocationDegrees.c_str()] : empty),
                         fixedIndoorLocation.HasMember(InteriorId.c_str()) && fixedIndoorLocation[InteriorId.c_str()].IsString()
@@ -186,36 +188,39 @@ namespace ExampleApp
                         fixedIndoorLocation.HasMember(BuildingFloorIndex.c_str()) && fixedIndoorLocation[BuildingFloorIndex.c_str()].IsInt()
                             ? fixedIndoorLocation[BuildingFloorIndex.c_str()].GetInt()
                             : 0,
-                        fixedIndoorLocation.HasMember(OrientationDegrees.c_str()) && fixedIndoorLocation[OrientationDegrees.c_str()].IsDouble()
+                        fixedIndoorLocation.HasMember(OrientationDegrees.c_str()) && fixedIndoorLocation[OrientationDegrees.c_str()].IsNumber()
                             ? fixedIndoorLocation[OrientationDegrees.c_str()].GetDouble()
-                            : 180.0);
+                            : 180.0,
+                        fixedIndoorLocation.HasMember(LocationDistance.c_str()) && fixedIndoorLocation[LocationDistance.c_str()].IsNumber()
+                            ? fixedIndoorLocation[LocationDistance.c_str()].GetDouble()
+                            : 500.0);
                 }
 
-				std::vector<std::vector<std::string>> ParseCustomKeyboardLayout(rapidjson::Document& document, const std::string& customKeyboard)
-				{
-					std::vector<std::vector<std::string>> customKeyboardLayout;
+                std::vector<std::vector<std::string>> ParseCustomKeyboardLayout(rapidjson::Document& document, const std::string& customKeyboard)
+                {
+                    std::vector<std::vector<std::string>> customKeyboardLayout;
 
-					if(document.HasMember(customKeyboard.c_str()) && document[customKeyboard.c_str()].IsArray())
-					{
-						for (rapidjson::SizeType i = 0; i < document[customKeyboard.c_str()].Size(); ++i)
-						{
-							if (document[customKeyboard.c_str()][i].HasMember("row") && document[customKeyboard.c_str()][i]["row"].IsString() &&
-								document[customKeyboard.c_str()][i].HasMember("index") && document[customKeyboard.c_str()][i]["index"].IsInt() &&
-								document[customKeyboard.c_str()][i].HasMember("lowercase") && document[customKeyboard.c_str()][i]["lowercase"].IsString() &&
-								document[customKeyboard.c_str()][i].HasMember("uppercase") && document[customKeyboard.c_str()][i]["uppercase"].IsString())
-							{
-								std::vector<std::string> customKeyLayout = {
-									document[customKeyboard.c_str()][i]["row"].GetString(),
-									std::to_string(document[customKeyboard.c_str()][i]["index"].GetInt()),
-									document[customKeyboard.c_str()][i]["lowercase"].GetString(),
-									document[customKeyboard.c_str()][i]["uppercase"].GetString()
-								};
-								customKeyboardLayout.push_back(customKeyLayout);
-							}
-						}
-					}
-					return customKeyboardLayout;
-				}
+                    if(document.HasMember(customKeyboard.c_str()) && document[customKeyboard.c_str()].IsArray())
+                    {
+                        for (rapidjson::SizeType i = 0; i < document[customKeyboard.c_str()].Size(); ++i)
+                        {
+                            if (document[customKeyboard.c_str()][i].HasMember("row") && document[customKeyboard.c_str()][i]["row"].IsString() &&
+                                document[customKeyboard.c_str()][i].HasMember("index") && document[customKeyboard.c_str()][i]["index"].IsInt() &&
+                                document[customKeyboard.c_str()][i].HasMember("lowercase") && document[customKeyboard.c_str()][i]["lowercase"].IsString() &&
+                                document[customKeyboard.c_str()][i].HasMember("uppercase") && document[customKeyboard.c_str()][i]["uppercase"].IsString())
+                            {
+                                std::vector<std::string> customKeyLayout = {
+                                    document[customKeyboard.c_str()][i]["row"].GetString(),
+                                    std::to_string(document[customKeyboard.c_str()][i]["index"].GetInt()),
+                                    document[customKeyboard.c_str()][i]["lowercase"].GetString(),
+                                    document[customKeyboard.c_str()][i]["uppercase"].GetString()
+                                };
+                                customKeyboardLayout.push_back(customKeyLayout);
+                            }
+                        }
+                    }
+                    return customKeyboardLayout;
+                }
 
             }
 
@@ -303,7 +308,7 @@ namespace ExampleApp
                 const std::string mapSceneId = ParseStringOrDefault(document, MapSceneId, m_defaultConfig.MapSceneId());
                 const bool hasMapScene = !(mapSceneId == "");
 
-				const std::vector<std::vector<std::string>> customKeyboardLayout = ParseCustomKeyboardLayout(document, CustomKeyboardLayout);
+                const std::vector<std::vector<std::string>> customKeyboardLayout = ParseCustomKeyboardLayout(document, CustomKeyboardLayout);
 
                 return ApplicationConfiguration(
                     name,
@@ -348,7 +353,7 @@ namespace ExampleApp
                     hockeyAppId,
                     hasMapScene,
                     mapSceneId,
-					customKeyboardLayout
+                    customKeyboardLayout
                 );
             }
             

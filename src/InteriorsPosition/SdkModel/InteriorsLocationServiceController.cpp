@@ -14,14 +14,30 @@ namespace ExampleApp
             InteriorsLocationServiceController::InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                                                                   Compass::SdkModel::ICompassModel& compassModel)
-            : m_currentLocationService(currentLocationService)
-            , m_interiorInteractionModel(interiorInteractionModel)
-            , m_cameraTransitionController(cameraTransitionController)
-            , m_compassModel(compassModel)
+                                                                                   Compass::SdkModel::ICompassModel& compassModel,
+                                                                                   float locationDistance)
+                : m_currentLocationService(currentLocationService)
+                , m_interiorInteractionModel(interiorInteractionModel)
+                , m_cameraTransitionController(cameraTransitionController)
+                , m_compassModel(compassModel)
+                , m_hasLocationDistance(true)
+                , m_locationDistance(locationDistance)
             {
             }
-            
+
+            InteriorsLocationServiceController::InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
+                                                                                   Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                                   CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                                                   Compass::SdkModel::ICompassModel& compassModel)
+                : m_currentLocationService(currentLocationService)
+                , m_interiorInteractionModel(interiorInteractionModel)
+                , m_cameraTransitionController(cameraTransitionController)
+                , m_compassModel(compassModel)
+                , m_hasLocationDistance(false)
+                , m_locationDistance(0.0)
+            {
+            }
+
             InteriorsLocationServiceController::~InteriorsLocationServiceController()
             {
             }
@@ -40,14 +56,14 @@ namespace ExampleApp
                         if(m_currentLocationService.GetLocation(latLong))
                         {
                             m_cameraTransitionController.StartTransitionTo(latLong.ToECEF(),
-                                                                           0,
-                                                                           0,
-                                                                           m_currentLocationService.GetInteriorId(),
-                                                                           floorIndex,
-                                                                           true,
-                                                                           false,
-                                                                           false,
-                                                                           false);
+                                m_locationDistance,
+                                0.0,                    
+                                m_currentLocationService.GetInteriorId(),                                
+                                floorIndex,                                
+                                true,                                
+                                false,                                
+                                false,                                
+                                m_hasLocationDistance);
                         }
                     }
                 }

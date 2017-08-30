@@ -48,7 +48,7 @@ namespace ExampleApp
                     const bool shouldPerformStartUpSearch = false;
                     const std::string startUpSearchTag = "";
 
-                    const SdkModel::ApplicationFixedIndoorLocation fixedIndoorLocation(Eegeo::Space::LatLong(0.0, 0.0), "", 0, 180.0);
+                    const SdkModel::ApplicationFixedIndoorLocation fixedIndoorLocation(Eegeo::Space::LatLong(0.0, 0.0), "", 0, 180.0, 500.0);
 
                     const std::vector<Eegeo::Space::LatLongAltitude> attractModeTargetSplinePoints;
                     const std::vector<Eegeo::Space::LatLongAltitude> attractModePositionSplinePoints;
@@ -63,51 +63,51 @@ namespace ExampleApp
                     
                     const std::string hockeyAppId = "";
 
-					const std::vector<std::vector<std::string>> customKeyboardLayout = {};
+                    const std::vector<std::vector<std::string>> customKeyboardLayout = {};
 
-					return ApplicationConfiguration("Eegeo Example App",
-						emptyEegeoApiKey,
-						productVersion,
-						buildNumber,
-						combinedVersionString,
-						Eegeo::Config::CoverageTreeManifestUrlDefault,
-						Eegeo::Config::CityThemesManifestUrlDefault,
-						"EmbeddedTheme",
-						Eegeo::Space::LatLongAltitude(37.7858f, -122.401f, 2.7),
-						1781.0f,
-						0.f,
-						tryStartAtGpsLocation,
-						shouldStartFullscreen,
-						shouldPerformStartUpSearch,
-						startUpSearchTag,
-						emptyGoogleAnalyticsReferrerToken,
-						emptyFlurryApiKey,
-						emptyYelpConsumerKey,
-						emptyYelpConsumerSecret,
-						emptyYelpOAuthToken,
-						emptyYelpOAuthTokenSecret,
-						emptyGeoNamesUserName,
-						eegeoSearchServiceUrl,
-						emptyMyPinsWebServiceUrl,
-						emptyMyPinsWebServiceAuthToken,
-						emptyMyPinsPoiSetId,
-						isKioskTouchInputEnabled,
-						isInKioskMode,
-						useJapaneseFont,
-						interiorTrackingInfo,
-						outdoorSearchMenuItems,
-						fixedIndoorLocation,
-						attractModeTargetSplinePoints,
-						attractModePositionSplinePoints,
-						attractModeTimeoutDisabled,
-						attractModePlaybackSpeed,
-						emptyOptionsAdminPassword,
-						surveyTimeRequirementSec,
-						timerSurveyUrl,
-						hockeyAppId,
-						false,
-						"",
-						customKeyboardLayout);
+                    return ApplicationConfiguration("Eegeo Example App",
+                        emptyEegeoApiKey,
+                        productVersion,
+                        buildNumber,
+                        combinedVersionString,
+                        Eegeo::Config::CoverageTreeManifestUrlDefault,
+                        Eegeo::Config::CityThemesManifestUrlDefault,
+                        "EmbeddedTheme",
+                        Eegeo::Space::LatLongAltitude(37.7858f, -122.401f, 2.7),
+                        1781.0f,
+                        0.f,
+                        tryStartAtGpsLocation,
+                        shouldStartFullscreen,
+                        shouldPerformStartUpSearch,
+                        startUpSearchTag,
+                        emptyGoogleAnalyticsReferrerToken,
+                        emptyFlurryApiKey,
+                        emptyYelpConsumerKey,
+                        emptyYelpConsumerSecret,
+                        emptyYelpOAuthToken,
+                        emptyYelpOAuthTokenSecret,
+                        emptyGeoNamesUserName,
+                        eegeoSearchServiceUrl,
+                        emptyMyPinsWebServiceUrl,
+                        emptyMyPinsWebServiceAuthToken,
+                        emptyMyPinsPoiSetId,
+                        isKioskTouchInputEnabled,
+                        isInKioskMode,
+                        useJapaneseFont,
+                        interiorTrackingInfo,
+                        outdoorSearchMenuItems,
+                        fixedIndoorLocation,
+                        attractModeTargetSplinePoints,
+                        attractModePositionSplinePoints,
+                        attractModeTimeoutDisabled,
+                        attractModePlaybackSpeed,
+                        emptyOptionsAdminPassword,
+                        surveyTimeRequirementSec,
+                        timerSurveyUrl,
+                        hockeyAppId,
+                        false,
+                        "",
+                        customKeyboardLayout);
                 }
             }
             
@@ -160,7 +160,7 @@ namespace ExampleApp
                 m_pApplicationConfigurationReader = Eegeo_NEW(ApplicationConfigurationReader)(fileIO);
                 m_pApplicationConfigurationParser = Eegeo_NEW(ApplicationConfigurationJsonParser)(defaultConfig);
                 m_pApplicationConfigurationService = Eegeo_NEW(ApplicationConfigurationService)(*m_pApplicationConfigurationParser,
-																								*m_pApplicationConfigurationReader);                    
+                                                                                                *m_pApplicationConfigurationReader);                    
             }
             
             ApplicationConfigurationModule::~ApplicationConfigurationModule()

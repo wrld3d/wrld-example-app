@@ -11,11 +11,13 @@ namespace ExampleApp
             ApplicationFixedIndoorLocation::ApplicationFixedIndoorLocation(const Eegeo::Space::LatLong location,
                                                                            const std::string interiorId,
                                                                            const int buildingFloorIndex,
-                                                                           const double orientationDegrees)
+                                                                           const double orientationDegrees,
+                                                                           const double locationDistance)
                 : m_location(location)
                 , m_interiorId(interiorId)
                 , m_buildingFloorIndex(buildingFloorIndex)
                 , m_orientationDegrees(orientationDegrees)
+                , m_locationDistance(locationDistance)
             {
             }
 
@@ -37,6 +39,11 @@ namespace ExampleApp
             const double ApplicationFixedIndoorLocation::GetOrientationDegrees() const
             {
                 return m_orientationDegrees;
+            }
+
+            const double ApplicationFixedIndoorLocation::GetLocationDistance() const
+            {
+                return m_locationDistance;
             }
         }
     }
