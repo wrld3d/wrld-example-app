@@ -119,7 +119,6 @@
 #include "SearchTagsFactory.h"
 #include "ITagSearchRepository.h"
 #include "InteriorsHighlightVisibilityController.h"
-#include "InteriorsEntityIdHighlightController.h"
 #include "Colors.h"
 #include "HighlightColorMapper.h"
 #include "InteriorInteractionModel.h"
@@ -417,15 +416,18 @@ namespace ExampleApp
         
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
         
-        Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController& interiorsEntityIdHighlightController = interiorsModelModule.GetInteriorsEntityIdHighlightController();
-        interiorsEntityIdHighlightController.SetDefaultHighlightColour(Eegeo::v4(0.0f, 1.0f, 0.0f, 1.0f));
+        Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& highlightService =
+            m_pWorld->GetInteriorHighlightsModule().GetHighlightService();
 
-        m_pInteriorsEntityIdHighlightVisibilityController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController)(interiorsEntityIdHighlightController,
-                                                                                                                                                               m_pSearchModule->GetSearchQueryPerformer(),
-                                                                                                                                                               m_pSearchModule->GetSearchResultRepository(),
-                                                                                                                                                               m_messageBus,
-                                                                                                                                                               interiorsModelModule.GetInteriorsInstanceRepository(),
-                                                                                                                                                               *m_pHighlightColorMapper);
+        m_pInteriorsEntityIdHighlightVisibilityController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController)(
+            interiorsPresentationModule.GetInteriorInteractionModel(),
+            highlightService,
+            m_pSearchModule->GetSearchQueryPerformer(),
+            m_pSearchModule->GetSearchResultRepository(),
+            m_messageBus,
+            interiorsModelModule.GetInteriorsInstanceRepository(),
+            *m_pHighlightColorMapper);
+
         m_pInteriorsPickingController = Eegeo_NEW(IntHighlights::InteriorsHighlightPickingController)(*m_pRayCaster,
                                                                                                       mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                                                       mapModule.GetEnvironmentFlatteningService()

@@ -25,7 +25,8 @@ namespace ExampleApp
                 {
                 public:
                     InteriorsEntityIdHighlightVisibilityController(
-                        Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController& interiorsEntityIdHighlightController,
+                        const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                        Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& highlightsService,
                         Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                         Search::SdkModel::ISearchResultRepository& searchResultRepository,
                         ExampleAppMessaging::TMessageBus& messageBus,
@@ -48,8 +49,10 @@ namespace ExampleApp
 
                     typedef std::vector<Eegeo::Rendering::Renderables::InstancedInteriorFloorRenderable*> InstancedRenderableVector;
                     InstancedRenderableVector m_lastHighlightedRenderables;
+
+                    const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                    Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& m_interiorsHighlightService;
                     
-                    Eegeo::Resources::Interiors::InteriorsEntityIdHighlightController& m_interiorsEntityIdHighlightController;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     
