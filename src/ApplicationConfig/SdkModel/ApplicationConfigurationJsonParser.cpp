@@ -199,7 +199,6 @@ namespace ExampleApp
                 std::vector<std::vector<std::string>> ParseCustomKeyboardLayout(rapidjson::Document& document, const std::string& customKeyboard)
                 {
                     std::vector<std::vector<std::string>> customKeyboardLayout;
-
                     if(document.HasMember(customKeyboard.c_str()) && document[customKeyboard.c_str()].IsArray())
                     {
                         for (rapidjson::SizeType i = 0; i < document[customKeyboard.c_str()].Size(); ++i)
@@ -209,9 +208,18 @@ namespace ExampleApp
                                 document[customKeyboard.c_str()][i].HasMember("lowercase") && document[customKeyboard.c_str()][i]["lowercase"].IsString() &&
                                 document[customKeyboard.c_str()][i].HasMember("uppercase") && document[customKeyboard.c_str()][i]["uppercase"].IsString())
                             {
+                                /*
+                                 * Would use std::to_string instead of std::stringstream, except the
+                                 * android version of wrld-example-app doesn't recognise
+                                 * std::to_string.
+                                 * */
+                                std::stringstream stringStream;
+                                stringStream << document[customKeyboard.c_str()][i]["index"].GetInt();
+                                std::string indexString = stringStream.str();
+
                                 std::vector<std::string> customKeyLayout = {
                                     document[customKeyboard.c_str()][i]["row"].GetString(),
-                                    std::to_string(document[customKeyboard.c_str()][i]["index"].GetInt()),
+                                    indexString,
                                     document[customKeyboard.c_str()][i]["lowercase"].GetString(),
                                     document[customKeyboard.c_str()][i]["uppercase"].GetString()
                                 };
@@ -221,7 +229,6 @@ namespace ExampleApp
                     }
                     return customKeyboardLayout;
                 }
-
             }
 
             ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig)
