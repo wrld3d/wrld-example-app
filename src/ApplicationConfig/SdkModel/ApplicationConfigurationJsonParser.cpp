@@ -175,9 +175,18 @@ namespace ExampleApp
                                 document[customKeyboard.c_str()][i].HasMember("lowercase") && document[customKeyboard.c_str()][i]["lowercase"].IsString() &&
                                 document[customKeyboard.c_str()][i].HasMember("uppercase") && document[customKeyboard.c_str()][i]["uppercase"].IsString())
                             {
+                                /*
+                                 * Would use std::to_string instead of std::stringstream, except the
+                                 * android version of wrld-example-app doesn't recognise
+                                 * std::to_string.
+                                 * */
+                                std::stringstream stringStream;
+                                stringStream << document[customKeyboard.c_str()][i]["index"].GetInt();
+                                std::string indexString = stringStream.str();
+
                                 std::vector<std::string> customKeyLayout = {
                                     document[customKeyboard.c_str()][i]["row"].GetString(),
-                                    std::to_string(document[customKeyboard.c_str()][i]["index"].GetInt()),
+                                    indexString,
                                     document[customKeyboard.c_str()][i]["lowercase"].GetString(),
                                     document[customKeyboard.c_str()][i]["uppercase"].GetString()
                                 };
