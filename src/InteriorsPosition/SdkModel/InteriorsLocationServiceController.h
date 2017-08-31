@@ -21,8 +21,14 @@ namespace ExampleApp
                 InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                                   Compass::SdkModel::ICompassModel& compassModel);
-                
+                                                   Compass::SdkModel::ICompassModel& compassModel,
+                                                   float locationDistance);
+
+                InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
+                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                    Compass::SdkModel::ICompassModel& compassModel);
+
                 ~InteriorsLocationServiceController();
                 
                 void Update();
@@ -35,6 +41,10 @@ namespace ExampleApp
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
                 
                 Compass::SdkModel::ICompassModel& m_compassModel;
+
+                bool m_hasLocationDistance;
+
+                float m_locationDistance;
             };
         }
     }
