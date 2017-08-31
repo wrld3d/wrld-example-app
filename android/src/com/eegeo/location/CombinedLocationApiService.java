@@ -71,11 +71,6 @@ public class CombinedLocationApiService
 
     private void startLocationUpdates()
     {
-        if(m_googleApiClient == null)
-        {
-            buildGoogleApiClient();
-        }
-
         if(m_googleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.requestLocationUpdates(m_googleApiClient, m_locationRequest, this);
         }
@@ -98,6 +93,11 @@ public class CombinedLocationApiService
     @Override
     public void onConnected(Bundle connectionHint)
     {
+        if(m_googleApiClient == null)
+        {
+            buildGoogleApiClient();
+        }
+
         Log.v(TAG, "Connected to GoogleApiClient");
         if(m_currentLocation == null)
         {
