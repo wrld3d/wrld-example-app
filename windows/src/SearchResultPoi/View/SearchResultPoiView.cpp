@@ -67,19 +67,25 @@ namespace ExampleApp
                 m_model = model;
                 CreateVendorSpecificPoiView(m_model.GetVendor(), m_model.GetPrimaryTag());
 
-                if (m_isAnyPoiOpen && previousVendor != m_currentVendor)
+                if (m_isAnyPoiOpen && previousVendor != m_currentVendor && previousVendor != -1)
                 {
                     DismissPoiInfo[previousVendor]();
                 }
                 
-				DisplayPoiInfo[m_currentVendor](gcnew SearchResultModelCLI(m_model));
+                if(m_currentVendor != -1)
+                {
+				    DisplayPoiInfo[m_currentVendor](gcnew SearchResultModelCLI(m_model));
 
-                m_isAnyPoiOpen = true;
+                    m_isAnyPoiOpen = true;
+                }
             }
 
             void SearchResultPoiView::Hide()
             {
-                DismissPoiInfo[m_currentVendor]();
+                if(m_currentVendor != -1)
+                {
+                    DismissPoiInfo[m_currentVendor]();
+                }
 
                 m_isAnyPoiOpen = false;
             }
@@ -192,7 +198,6 @@ namespace ExampleApp
 				}
                 else
                 {
-                    Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());
                     m_currentVendor = -1;
                 }
             }
