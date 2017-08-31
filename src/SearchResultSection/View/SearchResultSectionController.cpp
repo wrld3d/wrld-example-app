@@ -59,6 +59,10 @@ namespace ExampleApp
                     {
                         return Search::Swallow::SearchConstants::MEETING_ROOM_ICON_OCCUPIED;
                     }
+                    else if(availability.compare(Search::Swallow::SearchConstants::MEETING_ROOM_INACTIVE) == 0)
+                    {
+                        return Search::Swallow::SearchConstants::MEETING_ROOM_ICON_INACTIVE;
+                    }
                     return "";
                 }
             }

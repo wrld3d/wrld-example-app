@@ -43,7 +43,8 @@ namespace ExampleApp
                         { std::string(), transparentHighlightColor },
                         { Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE, Eegeo::v4(0.0f, 1.0f, 0.0f, 0.4f) },
                         { Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON, Eegeo::v4(1.0f, 0.8f, 0.0f, 0.4f) },
-                        { Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED, Eegeo::v4(1.0f, 0.0f, 0.0f, 0.4f) }
+                        { Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED, Eegeo::v4(1.0f, 0.0f, 0.0f, 0.4f) },
+                        { Search::Swallow::SearchConstants::MEETING_ROOM_INACTIVE, Eegeo::v4(0.0f, 0.0f, 0.0f, 0.7f) }
                     };
                     return availabilityToColor;
                 }

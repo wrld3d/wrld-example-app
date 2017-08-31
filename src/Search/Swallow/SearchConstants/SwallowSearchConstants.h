@@ -51,14 +51,17 @@ namespace ExampleApp
                 extern const std::string MEETING_ROOM_AVAILABLE;
                 extern const std::string MEETING_ROOM_AVAILABLE_SOON;
                 extern const std::string MEETING_ROOM_OCCUPIED;
+                extern const std::string MEETING_ROOM_INACTIVE;
 
                 extern const int MEETING_ROOM_AVAILABLE_STATE;
                 extern const int MEETING_ROOM_AVAILABLE_SOON_STATE;
                 extern const int MEETING_ROOM_OCCUPIED_STATE;
+                extern const int MEETING_ROOM_INACTIVE_STATE;
 
                 extern const std::string MEETING_ROOM_ICON_AVAILABLE;
                 extern const std::string MEETING_ROOM_ICON_AVAILABLE_SOON;
                 extern const std::string MEETING_ROOM_ICON_OCCUPIED;
+                extern const std::string MEETING_ROOM_ICON_INACTIVE;
 
                 std::vector<TagSearch::View::TagSearchModel> GetTagSearchModels();
                 

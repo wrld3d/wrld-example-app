@@ -48,14 +48,17 @@ namespace ExampleApp
                 const std::string MEETING_ROOM_AVAILABLE = "available";
                 const std::string MEETING_ROOM_AVAILABLE_SOON = "available_soon";
                 const std::string MEETING_ROOM_OCCUPIED = "occupied";
+                const std::string MEETING_ROOM_INACTIVE = "inactive";
 
                 const int MEETING_ROOM_AVAILABLE_STATE = 1;
                 const int MEETING_ROOM_AVAILABLE_SOON_STATE = 2;
                 const int MEETING_ROOM_OCCUPIED_STATE = 3;
+                const int MEETING_ROOM_INACTIVE_STATE = 4;
                 
                 const std::string MEETING_ROOM_ICON_AVAILABLE = "meeting_room_available";
                 const std::string MEETING_ROOM_ICON_AVAILABLE_SOON = "meeting_room_available_soon";
                 const std::string MEETING_ROOM_ICON_OCCUPIED = "meeting_room_unavailable";
+                const std::string MEETING_ROOM_ICON_INACTIVE = "meeting_room";
                 
                 std::vector<TagSearch::View::TagSearchModel> GetTagSearchModels()
                 {
@@ -137,6 +140,10 @@ namespace ExampleApp
                     {
                         return MEETING_ROOM_OCCUPIED;
                     }
+                    else if (availabilityState == MEETING_ROOM_INACTIVE_STATE)
+                    {
+                        return MEETING_ROOM_INACTIVE;
+                    }
 
                     return MEETING_ROOM_AVAILABLE;
                 }
@@ -154,6 +161,10 @@ namespace ExampleApp
                     else if (availability == MEETING_ROOM_OCCUPIED)
                     {
                         return MEETING_ROOM_OCCUPIED_STATE;
+                    }
+                    else if (availability == MEETING_ROOM_INACTIVE)
+                    {
+                        return MEETING_ROOM_INACTIVE_STATE;
                     }
 
                     return MEETING_ROOM_AVAILABLE_STATE;

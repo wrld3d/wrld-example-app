@@ -10,6 +10,7 @@ namespace ExampleApp
     {
         SearchResultIconKeyMapper::SearchResultIconKeyMapper()
         {
+            m_availabilityToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_INACTIVE] = "meeting_room";
             m_availabilityToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED] = "meeting_room_unavailable";
             m_availabilityToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON] = "meeting_room_available_soon";
             m_availabilityToIconIndex[Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE] = "meeting_room_available";

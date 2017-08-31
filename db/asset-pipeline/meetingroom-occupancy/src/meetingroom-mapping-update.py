@@ -258,6 +258,10 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, fir
         image_map.append({"spaceId": space_id, "image_filename": v[column_names.index("image_filename")]})
         location_map.append({"spaceId": space_id, "latitude_degrees": float(v[column_names.index("latitude_degrees")]), "longitude_degrees": float(v[column_names.index("longitude_degrees")])})
 
+        is_occupancy_enabled = 1
+        if v[column_names.index("name")] == "Ocean":
+            is_occupancy_enabled = 0
+
         get_meeting_space_details.append\
             (
                 {
@@ -271,7 +275,7 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, fir
                     "phone": "0203 525 2668",
                     "tieline": "807 2668",
                     "nexi": 1,
-                    "isOccupancyEnabled": 0,
+                    "isOccupancyEnabled": is_occupancy_enabled,
                     "isTemporarilyDeactivated": 0
                 }
             )

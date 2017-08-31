@@ -87,6 +87,10 @@ namespace ExampleApp
                         {
                             return "Occupied";
                         }
+                        else if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_INACTIVE)
+                        {
+                            return "Inactive";
+                        }
                         else
                         {
                             Eegeo_ASSERT(false, "Unrecognised meeting room availabity string");

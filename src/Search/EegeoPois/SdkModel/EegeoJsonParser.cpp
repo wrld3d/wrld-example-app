@@ -171,6 +171,23 @@ namespace ExampleApp
                             {
                                 std::string availabilityString = json[userDataName.c_str()]["availability"].GetString();
                                 availabilityState = Swallow::SearchConstants::GetAvailabilityStateFromAvailability(availabilityString);
+
+                                bool isOccupancyEnabled = true;
+                                if (json[userDataName.c_str()].HasMember("is_occupancy_enabled") && json[userDataName.c_str()]["is_occupancy_enabled"].IsBool())
+                                {
+                                    isOccupancyEnabled = json[userDataName.c_str()]["is_occupancy_enabled"].GetBool();
+                                }
+
+                                bool isTemporarilyDeactivated = false;
+                                if (json[userDataName.c_str()].HasMember("is_temporarily_deactivated") && json[userDataName.c_str()]["is_temporarily_deactivated"].IsBool())
+                                {
+                                    isTemporarilyDeactivated = json[userDataName.c_str()]["is_temporarily_deactivated"].GetBool();
+                                }
+
+                                if (!isOccupancyEnabled || isTemporarilyDeactivated)
+                                {
+                                    availabilityState = Swallow::SearchConstants::MEETING_ROOM_INACTIVE_STATE;
+                                }
                             }
                         }
                         
