@@ -13,11 +13,13 @@ namespace ExampleApp
                 SwallowWorkingGroupResultModel::SwallowWorkingGroupResultModel(const std::string& name,
                                                                                const std::string& imageUrl,
                                                                                const std::string& description,
-                                                                               const std::string& officeLocation)
+                                                                               const std::string& officeLocation,
+                                                                               const std::vector<std::string>& desks)
                 : m_name(name)
                 , m_imageUrl(imageUrl)
                 , m_description(description)
                 , m_officeLocation(officeLocation)
+                , m_desks(desks)
                 {
                     
                 }
@@ -50,6 +52,11 @@ namespace ExampleApp
                 const std::string& SwallowWorkingGroupResultModel::GetOfficeLocation() const
                 {
                     return m_officeLocation;
+                }
+
+                const std::vector<std::string>& SwallowWorkingGroupResultModel::GetAllDesks() const
+                {
+                    return m_desks;
                 }
             }
         }

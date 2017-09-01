@@ -402,7 +402,7 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, ver
             }
        }
 
-def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
+def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, employee_departments):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
     poi_columns = ['name', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'office_location']
@@ -453,8 +453,14 @@ def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, ve
 
     column_names = ['id'] + poi_columns
     for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename')):
+        working_group_desks = []
+        working_group_name = v[column_names.index('name')]
+        if working_group_name in employee_departments:
+            for employee in employee_departments[working_group_name]:
+                working_group_desks.append(employee["user_data"]["desk_code"])
+
     	yield {
-            "title":v[column_names.index('name')],
+            "title":working_group_name,
             "subtitle":"",
             "tags":"working_group",
             "lat":float(v[column_names.index('latitude_degrees')]),
@@ -466,12 +472,13 @@ def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, ve
             {
               "image_url":v[column_names.index('image_filename')],
               "description":v[column_names.index('description')],
-              "office_location":v[column_names.index('office_location')]
+              "office_location":v[column_names.index('office_location')],
+              "desks": working_group_desks
             }
        }
 
 
-def collect_working_group_from_desks_table(desks):
+def collect_working_group_from_desks_table(desks, employee_departments):
     desk_groups = set()
 
     for desk_name in desks:
@@ -483,20 +490,11 @@ def collect_working_group_from_desks_table(desks):
 
                 desk = desks[desk_name]
                 floor_id = int(desk["floor_id"])
-                ground_floor = 4
-                floor_no = floor_id - ground_floor
 
-                floor = "{0}th Floor".format(floor_no)
-                if floor_no < 0:
-                    floor = "Basement {0}".format(abs(floor_no))
-                elif floor_no == 0:
-                    floor = "Ground Floor"
-                elif floor_no == 1:
-                    floor = "1st Floor"
-                elif floor_no == 2:
-                    floor = "2nd Floor"
-                elif floor_no == 3:
-                    floor = "3rd Floor"
+                working_group_desks = []
+                if desk_group_name in employee_departments:
+                    for employee in employee_departments[desk_group_name]:
+                        working_group_desks.append(employee["user_data"]["desk_code"])
 
                 yield {
                     "title": desk_group_name,
@@ -511,7 +509,8 @@ def collect_working_group_from_desks_table(desks):
                         {
                             "image_url": "cgh_g_mailroom.jpg",
                             "description": desk_group_name,
-                            "office_location": floor + ", Bloomberg London"
+                            "office_location": get_office_location_from_interior_and_floor(desk["indoor_id"], floor_id),
+                            "desks": working_group_desks
                         }
                 }
 
@@ -872,11 +871,11 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     sheet_index = 0
 
     for e in collect_employee_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, desks):
-    	department = e['user_data']['working_group']
-    	if not department in departments:
-			departments[department] = []    		
-    	departments[department].append(e)
-    	entities.append(e)
+        department = e['user_data']['working_group']
+        if not department in departments:
+            departments[department] = []
+        departments[department].append(e)
+        entities.append(e)
 
     sheet_index = 1
 
@@ -885,10 +884,10 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
 
     sheet_index = 2
 
-    for e in collect_working_group_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
+    for e in collect_working_group_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
     	entities.append(e)
 
-    for e in collect_working_group_from_desks_table(desks):
+    for e in collect_working_group_from_desks_table(desks, departments):
         entities.append(e)
 
     sheet_index = 3

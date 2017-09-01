@@ -69,6 +69,12 @@ namespace ExampleApp
                         {
                             return std::vector<std::string>(1, selectedSearchResult.GetTitle());
                         }
+                        else if (selectedSearchResult.GetPrimaryTag() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+                        {
+                            const Search::Swallow::SdkModel::SwallowWorkingGroupResultModel& workingGroup = Search::Swallow::SdkModel::SearchParser::TransformToSwallowWorkingGroupResult(selectedSearchResult);
+
+                            return workingGroup.GetAllDesks();
+                        }
 
                         return std::vector<std::string>();
                     }

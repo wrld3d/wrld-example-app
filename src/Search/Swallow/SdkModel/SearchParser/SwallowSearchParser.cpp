@@ -163,6 +163,7 @@ namespace ExampleApp
                         rapidjson::Document json;
                         std::string description;
                         std::string officeLocation = "unknown";
+                        std::vector<std::string> desks;
                         
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
@@ -175,11 +176,25 @@ namespace ExampleApp
                             {
                                 officeLocation = json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].GetString();
                             }
+
+                            if(json.HasMember(SearchConstants::DESKS_FIELD_NAME.c_str()) && json[SearchConstants::DESKS_FIELD_NAME.c_str()].IsArray())
+                            {
+                                rapidjson::Value& deskJsonArray = json[SearchConstants::DESKS_FIELD_NAME.c_str()];
+                                desks.reserve(deskJsonArray.Size());
+                                for (rapidjson::SizeType i = 0; i < deskJsonArray.Size(); i++)
+                                {
+                                    if (deskJsonArray[i].IsString())
+                                    {
+                                        desks.push_back(deskJsonArray[i].GetString());
+                                    }
+                                }
+                            }
                         }
                         return SwallowWorkingGroupResultModel(searchResultModel.GetTitle(),
                                                               imageUrl,
                                                               description,
-                                                              officeLocation);
+                                                              officeLocation,
+                                                              desks);
                     }
                     
                     SwallowFacilityResultModel TransformToSwallowFacilityResult(const Search::SdkModel::SearchResultModel& searchResultModel)
