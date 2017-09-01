@@ -136,6 +136,7 @@ include_directories(
     libs/eegeo/platform/Resources/Interiors
     libs/eegeo/platform/Resources/Interiors/Builder
     libs/eegeo/platform/Resources/Interiors/Entities
+    libs/eegeo/platform/Resources/Interiors/Highlights
     libs/eegeo/platform/Resources/Interiors/Markers
     libs/eegeo/platform/Resources/Interiors/Materials
     libs/eegeo/platform/Resources/Interiors/MetaData
