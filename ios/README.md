@@ -12,15 +12,17 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 - [Xcode](https://developer.apple.com/xcode/) (7.2 tested)
 - [CMake](https://cmake.org/) (3.1.1  or higher)
+- [Senion SDK](https://senion.com/)
 
 ## Setup
 
 1.  In the root of the repo, run the command `./update.platform.sh -p ios` to download the latest WRLD iOS SDK.
 	*	We recommend you run this step frequently to keep your SDK version up to date.
-2.  In the `ios` directory, run `mkdir build` to create a build directory.
-3.  In the `ios/build` directory, run `cmake -G Xcode ..` to generate a project file.
-4.  Open the `ExampleApp.xcodeproj` project file in Xcode.
-5.  Build and run the ExampleApp target.
+2.  Copy your Senion SDK framework file into the [wrld-example-app/ios/Include/SenionLab/](https://github.com/wrld3d/wrld-example-app/tree/master/ios/Include/SenionLab) directory
+3.  In the `ios` directory, run `mkdir build` to create a build directory.
+4.  In the `ios/build` directory, run `cmake -G Xcode ..` to generate a project file.
+5.  Open the `ExampleApp.xcodeproj` project file in Xcode.
+6.  Build and run the ExampleApp target.
 
 ## Building from the command line
 

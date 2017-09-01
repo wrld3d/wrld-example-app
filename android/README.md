@@ -19,6 +19,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 ## Requirements
 
 - [Android Studio](https://developer.android.com/studio/index.html).
+- [Senion SDK](https://senion.com/)
 
 ## Setup
 
@@ -34,6 +35,7 @@ First, download the latest WRLD Android SDK by running the following command in 
 3. Navigate to the [wrld-example-app/android](https://github.com/wrld3d/wrld-example-app/tree/master/android) directory and hit `Ok`.
 4. When prompted to generate a gradle wrapper, select `Ok`.
 5. Once project configuration completes, Open the `Build Variants` pane using the button on the lower-left side, and from the `Build Variant` dropdown, ensure `normalDebug` is selected.
+6. Copy your Senion SDK JAR file into the [wrld-example-app/android/libs](https://github.com/wrld3d/wrld-example-app/tree/master/android/libs) directory
 
 ## Speeding up build times
 
