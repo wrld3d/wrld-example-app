@@ -63,7 +63,7 @@ verify="$(jarsigner -verify bin/NativeActivityRelease.apk)"
 # Did the jar sign succeed?
 resultcode=$?
 echo
-if [ $resultcode = 0 ] && [[ "$verify" == "jar verified."* ]] ; then
+if [ $resultcode = 0 ] && [[ "$verify" == *"jar verified."* ]] ; then
   echo "JAR SIGN SUCCEEDED"
 else
   echo "JAR SIGN FAILED"
