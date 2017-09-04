@@ -207,10 +207,7 @@ namespace ExampleApp
                         {
                             Eegeo::v4 highlightColor = m_highlightColorMapper.GetColor(selectedSearchResult, "entity_highlight_color");
                             const std::string& interiorId = m_interiorInteractionModel.GetInteriorModel()->GetId().Value();
-                            for (const auto& entityId : filteredEntityIds)
-                            {
-                                m_interiorsHighlightService.SetHighlight(interiorId, entityId, highlightColor);
-                            }
+                            m_interiorsHighlightService.SetHighlights(interiorId, filteredEntityIds, highlightColor);
                         }
                     }
                 }
