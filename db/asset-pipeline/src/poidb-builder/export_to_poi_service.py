@@ -794,6 +794,69 @@ def collect_transition_table(xls_book, sheet_index, src_image_folder_path, verbo
             }
        }
 
+
+def collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
+
+    poi_columns = ['name', 'tags', 'latitude_degrees', 'longitude_degrees', 'interior_id',
+                   'interior_floor']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
+
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number,
+                                                  available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'tags', first_data_row_number,
+                                                  available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated tags column values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number,
+                                                  available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number,
+                                                  available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated longitude_degrees values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number,
+                                                  available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior_id column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number,
+                                                 available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior floor number")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    column_names = ['id'] + poi_columns
+    for v in gather_table(column_names, xls_sheet, first_data_row_number, available_in_app_col_index):
+        yield {
+            "title": v[column_names.index('name')],
+            "subtitle": "",
+            "tags": v[column_names.index('tags')],
+            "lat": float(v[column_names.index('latitude_degrees')]),
+            "lon": float(v[column_names.index('longitude_degrees')]),
+            "indoor": True,
+            "indoor_id": v[column_names.index('interior_id')],
+            "floor_id": int(v[column_names.index('interior_floor')])
+        }
+
+
 def delete_existing_pois(poi_service_url, dev_auth_token):
 	url = "{0}/pois/?token={1}".format(poi_service_url, dev_auth_token)
 	response = requests.delete(url, verify=False)
@@ -909,6 +972,11 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     
     for e in collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
     	entities.append(e)
+
+    sheet_index = 8
+
+    for e in collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
+        entities.append(e)
 
     delete_existing_pois(poi_service_url, dev_auth_token)
     persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url, entities_batch_count)

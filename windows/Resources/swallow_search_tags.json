@@ -13,7 +13,8 @@
 	{ "tag": "stationery", "readable_tag": "Stationery", "icon_key": "stationery" },
 	{ "tag": "reception", "readable_tag": "Reception", "icon_key": "reception" },
 	{ "tag": "person", "readable_tag": "Person", "icon_key": "person" },
-	{ "tag": "transition", "readable_tag": "Indoor Map", "icon_key": "indoor_map" }
+	{ "tag": "transition", "readable_tag": "Indoor Map", "icon_key": "indoor_map" },
+	{ "tag": "education", "readable_tag": "Education", "icon_key": "education" }
   ],
   "default_readable_tag": "Unknown",
   "default_icon_key": "misc"

@@ -80,7 +80,7 @@ namespace ExampleApp
                         continue;
                     }
 
-                    if (model.GetIconKey() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                    if (model.GetPrimaryTag() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
 					{
 						// Availability is no longer a subtitle as that affects search results.
 						Search::Swallow::SdkModel::SwallowMeetingRoomResultModel meetingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
@@ -88,12 +88,12 @@ namespace ExampleApp
 
                         iconKey = GetMeetingRoomAvailablityIcon(meetingRoomModel.GetAvailability());
 					}
-					else if(model.GetIconKey() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+					else if(model.GetPrimaryTag() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
 					{
 						Search::Swallow::SdkModel::SwallowWorkingGroupResultModel workingGroupmodel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowWorkingGroupResult(model);
 						subtitle = workingGroupmodel.GetOfficeLocation();
 					}
-					else if(model.GetIconKey() == Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME || model.GetIconKey() == Search::Swallow::SearchConstants::PRINT_STATION_CATEGORY_NAME)
+					else if(model.GetPrimaryTag() == Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME)
 					{
 						Search::Swallow::SdkModel::SwallowFacilityResultModel facilityModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowFacilityResult(model);
 						subtitle = facilityModel.GetOfficeLocation();
