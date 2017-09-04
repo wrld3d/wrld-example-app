@@ -113,7 +113,7 @@
             android:layout_centerVertical="true"
             android:gravity="center_horizontal"
             android:text="0"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
     
     <ImageView
