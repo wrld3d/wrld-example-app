@@ -543,7 +543,7 @@
     <ImageSource x:Key="ButtonSearchCloseOnImage">Assets/button_search_close_on@kiosk.png</ImageSource>
 
     <Thickness x:Key="SearchResultCountContainerMargin" Left="37" Top="0" Right="0" Bottom="0"/>
-    <System:Double x:Key="SearchResultCountContainerWidth">62</System:Double>
+    <System:Double x:Key="SearchResultCountContainerWidth">65</System:Double>
     <Thickness x:Key="SearchResultCountTextMargin" Left="6" Top="24" Right="2" Bottom="0"/>
     <System:Double x:Key="SearchResultCountTextFontSize">24</System:Double>
 

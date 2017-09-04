@@ -150,7 +150,7 @@
                     </ControlTemplate.Resources>
                     <Grid Margin="{DynamicResource SearchMenuViewContainerMargin}" Name="SearchMenuViewContainer">
                         <!--Mag glass button. Closed Margin: 114, Open Margin: 714-->
-                        <Grid Margin="114,0,0,0"  Width="{DynamicResource MenuIconSize}" Height="{DynamicResource MenuIconSize}" HorizontalAlignment="Center" VerticalAlignment="Top" Name="SearchIconGrid" Background="{StaticResource Gold}" Visibility="Visible" Panel.ZIndex="98">
+                        <Grid Margin="114,0,0,0"  Width="{DynamicResource MenuIconSize}" Height="{DynamicResource MenuIconSize}" HorizontalAlignment="Center" VerticalAlignment="Top" Name="SearchIconGrid" Background="{StaticResource Gold}" Visibility="Visible" Panel.ZIndex="102">
                             <Button Width="Auto" Height="Auto" Name="SecondaryMenuDragTabView" VerticalAlignment="Center" HorizontalAlignment="Center" Focusable="False">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}">
@@ -205,7 +205,7 @@
                             </Rectangle.Resources>
                         </Rectangle>
 
-                        <Grid Name="SearchBox" VerticalAlignment="Top" HorizontalAlignment="Center" Width="{DynamicResource SearchBoxWidth}" Height="{DynamicResource SearchBoxHeight}" RenderTransformOrigin="1.0, 0.5">
+                        <Grid Name="SearchBox" VerticalAlignment="Top" HorizontalAlignment="Center" Width="{DynamicResource SearchBoxWidth}" Height="{DynamicResource SearchBoxHeight}" RenderTransformOrigin="1.0, 0.5" Panel.ZIndex="101">
                             <Grid.Resources>
                                 <Style TargetType="{x:Type Grid}">
                                     <Setter Property="RenderTransform">
@@ -253,7 +253,7 @@
                         </Grid>
 
                         <!--Main Container. Closed Margin: -332 Open Margin: 332-->
-                        <Grid Name="SerchMenuMainContainer" Margin="{DynamicResource SearchMenuMainContainerMargin}" Visibility="Visible" HorizontalAlignment="Center">
+                        <Grid Name="SerchMenuMainContainer" Margin="{DynamicResource SearchMenuMainContainerMargin}" Visibility="Visible" HorizontalAlignment="Center" Panel.ZIndex="103">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="{DynamicResource MenuIconSizeGridLength}"/>
                                 <RowDefinition Height="{DynamicResource MenuSeparatorRowHeight}"/>

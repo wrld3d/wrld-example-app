@@ -540,9 +540,9 @@
     <ImageSource x:Key="ButtonSearchCloseOnImage">Assets/button_search_close_on.png</ImageSource>
 
     <Thickness x:Key="SearchResultCountContainerMargin" Left="20" Top="0" Right="0" Bottom="0"/>
-    <System:Double x:Key="SearchResultCountContainerWidth">20</System:Double>
+    <System:Double x:Key="SearchResultCountContainerWidth">30</System:Double>
     <Thickness x:Key="SearchResultCountTextMargin" Left="0" Top="9" Right="2" Bottom="0"/>
-    <System:Double x:Key="SearchResultCountTextFontSize">12</System:Double>
+    <System:Double x:Key="SearchResultCountTextFontSize">10</System:Double>
 
     <System:Double x:Key="SearchBoxWidth">225</System:Double>
     <System:Double x:Key="SearchBoxHeight">26</System:Double>
