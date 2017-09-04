@@ -28,7 +28,7 @@ namespace ExampleApp
                 , m_webRequestCompleteCallback(this, &EegeoSearchQuery::OnWebResponseReceived)
                 {
                     float minimumScore = 0.25;
-                    const int maximumNumberOfResults = 99;
+                    const int maximumNumberOfResults = 999;
                     const int timeOutSecs = 30;
 
                     std::string encodedQuery;
