@@ -241,13 +241,11 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         if(!imageUrl.equals(""))
         {
         	m_poiImageProgressBar.setVisibility(View.VISIBLE);
-            m_poiImageHeader.setVisibility(View.VISIBLE);
-            m_poiImageViewContainer.setVisibility(View.VISIBLE);
+            setPoiImageVisibility(View.VISIBLE);
         }
         else
         {
-        	m_poiImageHeader.setVisibility(View.GONE);
-        	m_poiImageViewContainer.setVisibility(View.GONE);
+            setPoiImageVisibility(View.GONE);
         }
         
         if(!facebook.equals(""))
@@ -440,20 +438,33 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
 				int height = (int) (width * 2.f / 3.f);
 				Bitmap poiBitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length, bmOptions);
 
-			    if(m_poiImageViewContainer.getVisibility() != View.GONE)
-			    {
-			    	m_poiImage.setImageBitmap(Bitmap.createBitmap(poiBitmap));
-			    }
+                // result if BitmapFactory.decodeByteArray fails to convert to image
+                if(poiBitmap == null)
+                {
+                    setPoiImageVisibility(View.GONE);
+                }
+                else
+                {
+                    if(m_poiImageViewContainer.getVisibility() != View.GONE)
+                    {
+                        m_poiImage.setImageBitmap(Bitmap.createBitmap(poiBitmap));
+                    }
+                }
 			}
 			else
 			{
-				m_poiImageHeader.setVisibility(View.GONE);
-				m_poiImageViewContainer.setVisibility(View.GONE);
+                setPoiImageVisibility(View.GONE);
 			}
 		}
 		
 		HandleFooterFadeInitialVisibility();
 	}
+
+	private void setPoiImageVisibility(int view)
+    {
+        m_poiImageHeader.setVisibility(view);
+        m_poiImageViewContainer.setVisibility(view);
+    }
 
     private void handleCloseClicked()
     {
