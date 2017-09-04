@@ -61,7 +61,7 @@ include $(PREBUILT_STATIC_LIBRARY)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := eegeo-mobile-example-app
-LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz -lm
+LOCAL_LDLIBS := -llog -landroid -lEGL -lGLESv2 -lz -lm -latomic
 LOCAL_LDLIBS += -Wl,--stub-group-size=2085000
 LOCAL_STATIC_LIBRARIES := recce-common-lib eegeo-sdk-lib png-lib curl-lib uv-lib ssl-lib crypto-lib http-parser-lib jpeg-lib turbojpeg-lib sqlite-lib
 
