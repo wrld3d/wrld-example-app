@@ -36,3 +36,14 @@ Before you begin, ensure you have completed the initial steps as described in th
 5. Create a new DWORD value in :HKEY_LOCAL_MACHINE (or HKEY_CURRENT_USER) > SOFTWARE > Microsoft > Internet Explorer > Main > FeatureControl > FEATURE_BROWSER_EMULATION
 6. Call it (appName).exe, for windows example app it will be ExampleAppWPF.exe
 7. Set the Decimal data to 11000. Other IE rendering mode values can be found [here](https://msdn.microsoft.com/library/ee330730(v=vs.85).aspx)
+
+## Troubleshooting
+
+### Touch Input recieves double input when interacting with virtual keyboard
+
+With touch input enabled on some touchscreen devices, the virtual keyboard can be seen entering characters twice upon pressing.  This can be resolved by disabling the "Enable Press-and-hold for right clicking" feature in the Pen and Touch control panel:
+1. Press the windows key.
+2. type "pen and touch" and press enter.
+3. In the window that appears, left-click the entry "Press and hold" and click "settings".
+4. Uncheck "Enable press and hold for right-clicking".
+5. Click OK on both windows to close them.
