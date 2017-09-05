@@ -88,7 +88,6 @@ namespace ExampleApp
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                     Search::SdkModel::ISearchResultRepository& searchResultRepository,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository,
                     IHighlightColorMapper& highlightColorMapper)
                 : m_interiorsHighlightService(interiorsHighlightService)
                 , m_searchQueryPerformer(searchQueryPerformer)
@@ -96,7 +95,6 @@ namespace ExampleApp
                 , m_searchResultsClearedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected)
                 , m_messageBus(messageBus)
-                , m_interiorsInstanceRepository(interiorsInstanceRepository)
                 , m_searchResultsIndex(-1)
                 , m_highlightColorMapper(highlightColorMapper)
                 {

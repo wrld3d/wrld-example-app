@@ -424,7 +424,6 @@ namespace ExampleApp
             m_pSearchModule->GetSearchQueryPerformer(),
             m_pSearchModule->GetSearchResultRepository(),
             m_messageBus,
-            interiorsModelModule.GetInteriorsInstanceRepository(),
             *m_pHighlightColorMapper);
 
         m_pInteriorsPickingController = Eegeo_NEW(IntHighlights::InteriorsHighlightPickingController)(*m_pRayCaster,
