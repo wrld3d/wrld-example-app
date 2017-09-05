@@ -420,7 +420,6 @@ namespace ExampleApp
             m_pWorld->GetInteriorHighlightsModule().GetHighlightService();
 
         m_pInteriorsEntityIdHighlightVisibilityController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController)(
-            interiorsPresentationModule.GetInteriorInteractionModel(),
             highlightService,
             m_pSearchModule->GetSearchQueryPerformer(),
             m_pSearchModule->GetSearchResultRepository(),

@@ -81,49 +81,28 @@ namespace ExampleApp
 
                         return std::vector<std::string>();
                     }
-                    
-                    struct IsInteriorInstancePresentForId
-                    {
-                        typedef const std::string& argument_type;
-                        
-                        IsInteriorInstancePresentForId(const Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository)
-                        : m_interiorsInstanceRepository(interiorsInstanceRepository)
-                        {}
-                        
-                        bool operator()(argument_type id) const
-                        {
-                            return m_interiorsInstanceRepository.Contains(id);
-                        }
-                    private:
-                        const Eegeo::Resources::Interiors::InteriorsInstanceRepository& m_interiorsInstanceRepository;
-                    };
                 }
 
                 InteriorsEntityIdHighlightVisibilityController::InteriorsEntityIdHighlightVisibilityController(
-                    const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                     Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& interiorsHighlightService,
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                     Search::SdkModel::ISearchResultRepository& searchResultRepository,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Eegeo::Resources::Interiors::InteriorsInstanceRepository& interiorsInstanceRepository,
                     IHighlightColorMapper& highlightColorMapper)
-                    : m_interiorInteractionModel(interiorInteractionModel)
-                    , m_interiorsHighlightService(interiorsHighlightService)
+                : m_interiorsHighlightService(interiorsHighlightService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_searchResultsHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded)
                 , m_searchResultsClearedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected)
                 , m_messageBus(messageBus)
                 , m_interiorsInstanceRepository(interiorsInstanceRepository)
-                , m_interiorsInstanceRepositoryChangedHandler(this, &InteriorsEntityIdHighlightVisibilityController::OnInteriorsInstanceRepositoryChanged)
                 , m_searchResultsIndex(-1)
                 , m_highlightColorMapper(highlightColorMapper)
                 {
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                     m_messageBus.SubscribeUi(m_searchResultsHandler);
-                    
-                    m_interiorsInstanceRepository.RegisterChangedCallback(m_interiorsInstanceRepositoryChangedHandler);
                 }
                 
                 InteriorsEntityIdHighlightVisibilityController::~InteriorsEntityIdHighlightVisibilityController()
@@ -131,8 +110,6 @@ namespace ExampleApp
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_messageBus.UnsubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                     m_messageBus.UnsubscribeUi(m_searchResultsHandler);
-                    
-                    m_interiorsInstanceRepository.UnregisterChangedCallback(m_interiorsInstanceRepositoryChangedHandler);
                 }
                 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared()
@@ -160,12 +137,6 @@ namespace ExampleApp
                     
                     RefreshHighlights();
                 }
-                
-                void InteriorsEntityIdHighlightVisibilityController::OnInteriorsInstanceRepositoryChanged()
-                {
-                    RefreshHighlights();
-                }
-
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
                 {
@@ -198,16 +169,11 @@ namespace ExampleApp
                     if (m_searchResultsIndex >= 0)
                     {
                         const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
-
-                        std::vector<std::string> filteredEntityIds = GetEntityIdsFromSearchResultModel(selectedSearchResult);
-                        
-                        filteredEntityIds.erase(std::remove_if(filteredEntityIds.begin(), filteredEntityIds.end(), std::not1(IsInteriorInstancePresentForId(m_interiorsInstanceRepository))), filteredEntityIds.end());
-
-                        if (m_interiorInteractionModel.HasInteriorModel())
+                        if (selectedSearchResult.IsInterior())
                         {
+                            std::vector<std::string> entityIds = GetEntityIdsFromSearchResultModel(selectedSearchResult);
                             Eegeo::v4 highlightColor = m_highlightColorMapper.GetColor(selectedSearchResult, "entity_highlight_color");
-                            const std::string& interiorId = m_interiorInteractionModel.GetInteriorModel()->GetId().Value();
-                            m_interiorsHighlightService.SetHighlights(interiorId, filteredEntityIds, highlightColor);
+                            m_interiorsHighlightService.SetHighlights(selectedSearchResult.GetBuildingId().Value(), entityIds, highlightColor);
                         }
                     }
                 }
