@@ -4,6 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #include "IMenuView.h"
+#include "SearchResultsTableScrollDelegate.h"
 
 @class SearchMenuView;
 
@@ -17,5 +18,7 @@
 - (float)getRealTableHeight;
 
 - (nonnull id)initWithParams:(nonnull SearchMenuView*)view;
+
+@property (nonatomic, retain, nullable) id  <SearchResultsTableScrollDelegate> scrollDelegate;
 
 @end;

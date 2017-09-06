@@ -133,6 +133,8 @@ static const int IndexOfFirstDropDown = 3;
     m_pSearchResultsDataProvider = searchResultsDataProvider;
     [m_pSearchResultsDataProvider initWithParams:self];
     
+    m_pSearchResultsDataProvider.scrollDelegate = self;
+    
     return self;
 }
 
@@ -442,6 +444,9 @@ static const int IndexOfFirstDropDown = 3;
     self.pSearchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.pSearchResultsTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     
+    self.pSearchResultsTableView.scrollEnabled = true;
+
+    
     [self addSubview: self.pDragTab];
     [self addSubview: self.pTitleContainer];
     [self.pTitleContainer addSubview: self.pSearchCountLabel];
@@ -473,7 +478,7 @@ static const int IndexOfFirstDropDown = 3;
                                                                resultsSpinner:self.pSearchEditBoxResultsSpinner
                                                                       interop:m_pSearchMenuInterop
                                                                 searchMenuScrollButton:self.pSearchMenuScrollButton
-                                                                searchMenuScrollView:self.pSearchResultsTableContainerView
+                                                                searchMenuScrollView:self.pSearchResultsTableView
                                                                       dragTab:self.pSearchMenuDragTab]autorelease];
 }
 
@@ -940,13 +945,14 @@ static const int IndexOfFirstDropDown = 3;
         totalTableHeight += tableHeight;
     }
     
-    const float searchResultsTableContentHeight = [self.pSearchResultsTableView refreshHeight:[m_pSearchResultsDataProvider getRealTableHeight]];
+    maxOnScreenSearchResultsTableHeight = fmaxf(0.0f, m_maxScreenSpace - totalTableHeight - m_tableSpacing);
+    self.resultsContentSize = [m_pSearchResultsDataProvider getRealTableHeight];
+
+    [self.pSearchResultsTableView refreshHeight:fminf(maxOnScreenSearchResultsTableHeight, self.resultsContentSize)];
     
-    if(searchResultsTableContentHeight > 0.0f)
+    if(self.resultsContentSize > 0.0f)
     {
-        maxOnScreenSearchResultsTableHeight = fmaxf(0.0f, m_maxScreenSpace - totalTableHeight - m_tableSpacing);
-        
-        onScreenSearchResultsTableHeight = fminf(maxOnScreenSearchResultsTableHeight, searchResultsTableContentHeight);
+        onScreenSearchResultsTableHeight = fminf(maxOnScreenSearchResultsTableHeight, self.resultsContentSize);
         tableY = (onScreenSearchResultsTableHeight > 0.0f) ? onScreenSearchResultsTableHeight + m_tableSpacing : 0.0f;
     }
     else
@@ -990,7 +996,7 @@ static const int IndexOfFirstDropDown = 3;
         buttonFrame.origin.y = onScreenSearchResultsTableHeight - (buttonFrame.size.height * m_pixelScale);
         self.pSearchMenuFadeImage.frame = buttonFrame;
         
-        if(self.pSearchResultsTableContainerView.contentOffset.y + self.pSearchResultsTableContainerView.frame.size.height == self.pSearchResultsTableContainerView.contentSize.height)
+        if([self shouldShowScrollButton])
         {
             _pSearchMenuScrollButtonContainer.hidden = true;
             _pSearchMenuFadeImage.hidden = true;
@@ -1007,7 +1013,7 @@ static const int IndexOfFirstDropDown = 3;
         _pSearchMenuFadeImage.hidden = true;
     }
 
-    [self.pSearchResultsTableContainerView setContentSize:CGSizeMake(self.pSearchResultsTableView.frame.size.width, searchResultsTableContentHeight)];
+    [self.pSearchResultsTableContainerView setContentSize:CGSizeMake(self.pSearchResultsTableView.frame.size.width, onScreenSearchResultsTableHeight)];
     
     frame = self.pTableViewContainer.frame;
     frame.size.height = tableViewContainerHeight;
@@ -1019,14 +1025,12 @@ static const int IndexOfFirstDropDown = 3;
     frame.origin.y = tableY;
     self.pLabelClosestContainer.frame = frame;
     
-    if (searchResultsTableContentHeight > maxOnScreenSearchResultsTableHeight)
-    {
-        m_resultsScrollable = true;
-    }
-    else
-    {
-        m_resultsScrollable = false;
-    }
+    m_resultsScrollable = self.resultsContentSize > maxOnScreenSearchResultsTableHeight;
+}
+
+- (bool) shouldShowScrollButton
+{
+    return self.pSearchResultsTableView.contentOffset.y + self.pSearchResultsTableView.frame.size.height == self.resultsContentSize;
 }
 
 - (float) getHeightForTable:(CustomTableView*)tableView
@@ -1066,9 +1070,14 @@ static const int IndexOfFirstDropDown = 3;
     [self updateSearchResultsButtonVisibility];
 }
 
+- (void)scrollViewDidScroll
+{
+    [self updateSearchResultsButtonVisibility];
+}
+
 - (void)updateSearchResultsButtonVisibility
 {
-    if(self.pSearchResultsTableContainerView.contentOffset.y + self.pSearchResultsTableContainerView.frame.size.height == self.pSearchResultsTableContainerView.contentSize.height)
+    if([self shouldShowScrollButton])
     {
         _pSearchMenuScrollButtonContainer.hidden = true;
         _pSearchMenuFadeImage.hidden = true;
