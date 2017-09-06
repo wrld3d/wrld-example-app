@@ -107,14 +107,14 @@ ifeq ($(os_name),Darwin)
 	includes += ${shell ${get_external_libs_includes_cmd}}
 else
 	# assume windows if not specified for now (due to no uname)
-	android_cpp_files := ${shell sh -c '${get_android_cpp_files_cmd}'}
-	shared_cpp_files := ${shell sh -c '${get_shared_cpp_files_cmd}'}
-	shared_cpp_files += ${shell sh -c '${get_external_libs_cpp_cmd}'}
+	android_cpp_files := ${shell sh -l -c '${get_android_cpp_files_cmd}'}
+	shared_cpp_files := ${shell sh -l -c '${get_shared_cpp_files_cmd}'}
+	shared_cpp_files += ${shell sh -l -c '${get_external_libs_cpp_cmd}'}
 	
-	includes := ${shell sh -c '${get_android_includes_cmd}'}
-	includes += ${shell sh -c '${get_shared_includes_cmd}'}
-	includes += ${shell sh -c '${get_platform_includes_cmd}'}
-	includes += ${shell sh -c '${get_external_libs_includes_cmd}'}
+	includes := ${shell sh -l -c '${get_android_includes_cmd}'}
+	includes += ${shell sh -l -c '${get_shared_includes_cmd}'}
+	includes += ${shell sh -l -c '${get_platform_includes_cmd}'}
+	includes += ${shell sh -l -c '${get_external_libs_includes_cmd}'}
 endif 
 
 includes += ./libs/eegeo/rapidjson
