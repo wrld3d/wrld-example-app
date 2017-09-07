@@ -264,4 +264,13 @@ static NSString *CellIdentifier = @"searchCell";
     }
 }
 
+
+- (void)scrollViewDidScroll:(UIScrollView *)sender
+{
+    if(self.scrollDelegate != NULL)
+    {
+        [self.scrollDelegate scrollViewDidScroll];
+    }
+}
+
 @end;

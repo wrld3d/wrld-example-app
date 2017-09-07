@@ -17,6 +17,7 @@ set(currsources
   ios_src/SearchMenu/View/SearchMenuViewModule.mm
   ios_src/SearchMenu/View/SearchResultsTableDataProvider.h
   ios_src/SearchMenu/View/SearchResultsTableDataProvider.mm
+  ios_src/SearchMenu/View/SearchResultsTableScrollDelegate.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\SearchMenu\\View FILES ${currsources})

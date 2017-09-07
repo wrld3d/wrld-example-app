@@ -8,11 +8,12 @@
 #include "SearchMenuInputDelegate.h"
 #include "SearchMenuViewIncludes.h"
 #include "CustomTableRowSelectionDelegate.h"
+#include "SearchResultsTableScrollDelegate.h"
 
 @class SearchMenuView;
 @class SearchResultsTableDataProvider;
 
-@interface SearchMenuView : MenuView<CustomTableRowSelectionDelegate, UIScrollViewDelegate>
+@interface SearchMenuView : MenuView<CustomTableRowSelectionDelegate, UIScrollViewDelegate, SearchResultsTableScrollDelegate>
 {
     
 }
@@ -36,9 +37,12 @@
 
 - (void) setSearchSection:(ExampleApp::Menu::View::IMenuSectionViewModel*)searchSection;
 
+- (bool) shouldShowScrollButton;
+
 @property (nonatomic, retain) UIScrollView* pSearchResultsTableContainerView;
 @property (nonatomic, retain) CustomTableView* pSearchResultsTableView;
 @property (nonatomic, retain) SearchMenuInputDelegate* pInputDelegate;
 @property (nonatomic, retain) UIView* pLabelClosestContainer;
+@property (nonatomic) float resultsContentSize;
 
 @end
