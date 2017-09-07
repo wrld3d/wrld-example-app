@@ -44,6 +44,7 @@ namespace ExampleApp
                 const std::string PRINT_STATION_CATEGORY_NAME = "printer";
                 const std::string EMERGENCY_EXIT_CATEGORY_NAME = "emergency_exit";
                 const std::string DESK_CATEGORY_NAME = "desk";
+                const std::string DESK_GROUP_CATEGORY_NAME = "desk_group";
                 
                 const std::string MEETING_ROOM_AVAILABLE = "available";
                 const std::string MEETING_ROOM_AVAILABLE_SOON = "available_soon";
@@ -100,6 +101,7 @@ namespace ExampleApp
                     tags.push_back(PERSON_CATEGORY_NAME);
                     tags.push_back(TRANSITION_CATEGORY_NAME);
                     tags.push_back(DESK_CATEGORY_NAME);
+                    tags.push_back(DESK_GROUP_CATEGORY_NAME);
                     
                     return tags;
                 }

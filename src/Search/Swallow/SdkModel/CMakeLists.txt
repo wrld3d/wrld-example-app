@@ -4,6 +4,8 @@ set(currsources
   ../src/Search/Swallow/SdkModel/ISwallowSearchMenuModule.h
   ../src/Search/Swallow/SdkModel/SwallowDepartmentResultModel.cpp
   ../src/Search/Swallow/SdkModel/SwallowDepartmentResultModel.h
+  ../src/Search/Swallow/SdkModel/SwallowDeskGroupResultModel.cpp
+  ../src/Search/Swallow/SdkModel/SwallowDeskGroupResultModel.h
   ../src/Search/Swallow/SdkModel/SwallowFacilityResultModel.cpp
   ../src/Search/Swallow/SdkModel/SwallowFacilityResultModel.h
   ../src/Search/Swallow/SdkModel/SwallowMeetingRoomResultModel.cpp

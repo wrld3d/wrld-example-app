@@ -14,7 +14,7 @@
 	{ "tag": "reception", "readable_tag": "Reception", "icon_key": "reception" },
 	{ "tag": "person", "readable_tag": "Person", "icon_key": "person" },
 	{ "tag": "transition", "readable_tag": "Indoor Map", "icon_key": "indoor_map" },
-	{ "tag": "education", "readable_tag": "Education", "icon_key": "education" }
+	{ "tag": "desk_group", "readable_tag": "Desk Group", "icon_key": "pin" }
   ],
   "default_readable_tag": "Unknown",
   "default_icon_key": "misc"

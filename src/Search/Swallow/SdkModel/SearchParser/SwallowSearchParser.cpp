@@ -324,6 +324,30 @@ namespace ExampleApp
                                                             targetInteriorFloor,
                                                             Eegeo::Space::LatLong::FromDegrees(targetLatitudeDegrees, targetLongitudeDegrees));
                     }
+
+                    SwallowDeskGroupResultModel TransformToSwallowDeskGroupResult(const Search::SdkModel::SearchResultModel& searchResultModel)
+                    {
+                        rapidjson::Document json;
+                        std::vector<std::string> desks;
+
+                        if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
+                        {
+                            if(json.HasMember(SearchConstants::DESKS_FIELD_NAME.c_str()) && json[SearchConstants::DESKS_FIELD_NAME.c_str()].IsArray())
+                            {
+                                rapidjson::Value& deskJsonArray = json[SearchConstants::DESKS_FIELD_NAME.c_str()];
+                                desks.reserve(deskJsonArray.Size());
+                                for (rapidjson::SizeType i = 0; i < deskJsonArray.Size(); i++)
+                                {
+                                    if (deskJsonArray[i].IsString())
+                                    {
+                                        desks.push_back(deskJsonArray[i].GetString());
+                                    }
+                                }
+                            }
+                        }
+                        return SwallowDeskGroupResultModel(searchResultModel.GetTitle(),
+                                                           desks);
+                    }
                     
                     bool TryParseImageDetails(const Search::SdkModel::SearchResultModel& searchResultModel, std::string& out_imageUrl)
                     {

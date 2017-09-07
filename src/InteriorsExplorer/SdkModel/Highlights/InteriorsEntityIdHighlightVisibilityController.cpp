@@ -78,6 +78,12 @@ namespace ExampleApp
 
                             return workingGroup.GetAllDesks();
                         }
+                        else if (selectedSearchResult.GetPrimaryTag() == Search::Swallow::SearchConstants::DESK_GROUP_CATEGORY_NAME)
+                        {
+                            const Search::Swallow::SdkModel::SwallowDeskGroupResultModel& deskGroup = Search::Swallow::SdkModel::SearchParser::TransformToSwallowDeskGroupResult(selectedSearchResult);
+
+                            return deskGroup.GetAllDesks();
+                        }
 
                         return std::vector<std::string>();
                     }

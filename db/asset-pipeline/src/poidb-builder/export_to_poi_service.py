@@ -478,7 +478,7 @@ def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, ve
        }
 
 
-def collect_working_group_from_desks_table(desks, employee_departments):
+def collect_misc_from_desks_table(desks, employee_departments):
     desk_groups = set()
 
     for desk_name in desks:
@@ -491,15 +491,15 @@ def collect_working_group_from_desks_table(desks, employee_departments):
                 desk = desks[desk_name]
                 floor_id = int(desk["floor_id"])
 
-                working_group_desks = []
+                desk_group_desks = []
                 if desk_group_name in employee_departments:
                     for employee in employee_departments[desk_group_name]:
-                        working_group_desks.append(employee["user_data"]["desk_code"])
+                        desk_group_desks.append(employee["user_data"]["desk_code"])
 
                 yield {
                     "title": desk_group_name,
                     "subtitle": "",
-                    "tags": "working_group",
+                    "tags": "desk_group",
                     "lat": float(desk["lat"]),
                     "lon": float(desk["lon"]),
                     "indoor": True,
@@ -507,10 +507,7 @@ def collect_working_group_from_desks_table(desks, employee_departments):
                     "floor_id": floor_id,
                     "user_data":
                         {
-                            "image_url": "cgh_g_mailroom.jpg",
-                            "description": desk_group_name,
-                            "office_location": get_office_location_from_interior_and_floor(desk["indoor_id"], floor_id),
-                            "desks": working_group_desks
+                            "desks": desk_group_desks
                         }
                 }
 
@@ -950,9 +947,6 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     for e in collect_working_group_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
     	entities.append(e)
 
-    for e in collect_working_group_from_desks_table(desks, departments):
-        entities.append(e)
-
     sheet_index = 3
 
     for e in collect_facility_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
@@ -976,6 +970,9 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     sheet_index = 8
 
     for e in collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
+        entities.append(e)
+
+    for e in collect_misc_from_desks_table(desks, departments):
         entities.append(e)
 
     delete_existing_pois(poi_service_url, dev_auth_token)
