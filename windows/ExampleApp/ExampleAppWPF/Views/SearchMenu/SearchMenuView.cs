@@ -23,12 +23,12 @@ namespace ExampleAppWPF
         private Grid m_searchBox;
 
         private ListBox m_resultsList;
+        private ScrollViewer m_resultsListScrollViewer;
         private MenuListAdapter m_resultListAdapter;
         private Grid m_resultsSpinner;
         private TextBlock m_resultsCount;
         private Button m_resultsClearButton;
         private ScrollViewer m_menuOptionsView;
-        private ScrollViewer m_resultsOptionsView;
         private FrameworkElement m_searchArrow;
         private FrameworkElement m_resultsSeparator;
         private RepeatButton m_searchResultsScrollButton;
@@ -132,6 +132,10 @@ namespace ExampleAppWPF
             PerformLayout(sender, null);
 
             m_menuViewContainer.SizeChanged += OnMenuContainerSizeChanged;
+            
+            m_resultsListScrollViewer = (ScrollViewer) VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(m_resultsList, 0), 0);
+            m_resultsListScrollViewer.ScrollChanged += OnSearchResultsScrolled;
+            m_resultsListScrollViewer.ManipulationBoundaryFeedback += OnResultsListBoundaryFeedback;
         }
 
         private new void PerformLayout(object sender, SizeChangedEventArgs e)
@@ -148,7 +152,7 @@ namespace ExampleAppWPF
 
         private void OnMenuContainerSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
+            m_resultsList.MaxHeight = CalcResultOptionsViewMaxHeight();
             m_menuOptionsView.MaxHeight = CalcMenuOptionsViewMaxHeight();
         }
 
@@ -174,7 +178,7 @@ namespace ExampleAppWPF
 
         protected override Size ArrangeOverride(Size arrangeBounds)
         {
-            m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
+            m_resultsList.MaxHeight = CalcResultOptionsViewMaxHeight();
             m_menuOptionsView.MaxHeight = CalcMenuOptionsViewMaxHeight();
             return base.ArrangeOverride(arrangeBounds);
         }
@@ -184,12 +188,6 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_menuOptionsView = (ScrollViewer)GetTemplateChild("MenuOptionsView");
-
-            m_resultsOptionsView = (ScrollViewer)GetTemplateChild("ResultsMenuOptionsView");
-            m_resultsOptionsView.TouchDown += OnResultsListTouchDown;
-            m_resultsOptionsView.TouchUp += OnResultsListTouchUp;
-            m_resultsOptionsView.ManipulationBoundaryFeedback += OnResultsListBoundaryFeedback;
-            m_resultsOptionsView.ScrollChanged += OnSearchResultsScrolled;
 
             m_resultsSpinner = (Grid)GetTemplateChild("SearchResultsSpinner");
             m_resultsCount = (TextBlock)GetTemplateChild("SearchResultCount");
@@ -304,7 +302,7 @@ namespace ExampleAppWPF
 
         private void OnSearchResultsScrolled(object sender, RoutedEventArgs e)
         {
-            if (m_resultsOptionsView.VerticalOffset == m_resultsOptionsView.ScrollableHeight)
+            if (m_resultsListScrollViewer.VerticalOffset == m_resultsListScrollViewer.ScrollableHeight)
             {
                 m_searchResultsButtonAndFadeContainer.Visibility = Visibility.Collapsed;
                 m_searchResultsFade.Visibility = Visibility.Hidden;
@@ -316,28 +314,20 @@ namespace ExampleAppWPF
                 m_searchResultsFade.Visibility = Visibility.Visible;
                 m_searchResultsScrollButton.Visibility = Visibility.Visible;
             }
+
+            m_resultsList.Items.Refresh();
         }
 
         private void OnResultsScrollButtonMouseDown(object sender, RoutedEventArgs e)
         {
-            m_resultsOptionsView.ScrollToVerticalOffset(m_resultsOptionsView.VerticalOffset + m_scrollSpeed);
+            m_resultsListScrollViewer.ScrollToVerticalOffset(m_resultsListScrollViewer.VerticalOffset + m_scrollSpeed);
         }
 
         private void OnResultsListBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
         {
             e.Handled = true;
-        }
 
-        private void OnResultsListTouchUp(object sender, TouchEventArgs e)
-        {
-            m_resultsOptionsView.ReleaseTouchCapture(e.TouchDevice);
-            m_resultsOptionsView.VerticalScrollBarVisibility = ScrollBarVisibility.Hidden;
-        }
-
-        private void OnResultsListTouchDown(object sender, TouchEventArgs e)
-        {
-            m_resultsOptionsView.CaptureTouch(e.TouchDevice);
-            m_resultsOptionsView.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+            m_resultsList.Items.Refresh();
         }
 
         private void OnSearchBoxTextChanged(object sender, TextChangedEventArgs e)
@@ -368,7 +358,7 @@ namespace ExampleAppWPF
 
         private void OnResultsMenuScrollWheel(object sender, MouseWheelEventArgs e)
         {
-            m_resultsOptionsView.ScrollToVerticalOffset(m_resultsOptionsView.VerticalOffset - e.Delta);
+            m_resultsListScrollViewer.ScrollToVerticalOffset(m_resultsListScrollViewer.VerticalOffset - e.Delta);
             e.Handled = true;
         }
 
@@ -422,6 +412,8 @@ namespace ExampleAppWPF
 
         private void OnSearchResultsListTouchDown(object sender, TouchEventArgs touchEventArgs)
         {
+            m_resultsList.CaptureTouch(touchEventArgs.TouchDevice);
+
             if(m_searchResultsListCurrentTouchDevice == null)
             {
                 CaptureSearchResultsListTouchDevice(touchEventArgs);
@@ -434,6 +426,8 @@ namespace ExampleAppWPF
 
         private void OnSearchResultsListTouchUp(object sender, TouchEventArgs touchEventArgs)
         {
+            m_resultsList.ReleaseTouchCapture(touchEventArgs.TouchDevice);
+
             if (m_searchResultsListCurrentTouchDevice != null && m_searchResultsListCurrentTouchDevice.Id == touchEventArgs.TouchDevice.Id)
             {
                 ReleaseSearchResultsListCurrentTouchDevice();
@@ -442,6 +436,8 @@ namespace ExampleAppWPF
 
         private void OnSearchResultsListTouchLeave(object sender, TouchEventArgs touchEventArgs)
         {
+            m_resultsList.ReleaseTouchCapture(touchEventArgs.TouchDevice);
+
             if (m_searchResultsListCurrentTouchDevice != null && m_searchResultsListCurrentTouchDevice.Id == touchEventArgs.TouchDevice.Id)
             {
                 ReleaseSearchResultsListCurrentTouchDevice();
@@ -462,7 +458,7 @@ namespace ExampleAppWPF
             {
                 TouchDevice currentTouchDevice = m_searchResultsListCurrentTouchDevice;
                 m_searchResultsListCurrentTouchDevice = null;
-                m_resultsList.ReleaseTouchCapture(currentTouchDevice);
+                m_resultsListScrollViewer.ReleaseTouchCapture(currentTouchDevice);
 
                 if(m_resultsList.SelectedIndex < 0)
                 {
@@ -473,7 +469,7 @@ namespace ExampleAppWPF
 
         private void CaptureSearchResultsListTouchDevice(TouchEventArgs touchEventArgs)
         {
-            if (m_resultsList.CaptureTouch(touchEventArgs.TouchDevice))
+            if (m_resultsListScrollViewer.CaptureTouch(touchEventArgs.TouchDevice))
             {
                 m_searchResultsListCurrentTouchDevice = touchEventArgs.TouchDevice;
             }
@@ -666,7 +662,7 @@ namespace ExampleAppWPF
             m_resultsCountContainer.Visibility = Visibility.Visible;
             m_searchResultsFade.Visibility = Visibility.Visible;
             m_searchResultsScrollButton.Visibility = Visibility.Visible;
-            m_resultsOptionsView.ScrollToTop();
+            m_resultsListScrollViewer.ScrollToTop();
 
             m_searchInFlight = false;
             m_hasResults = true;
@@ -697,7 +693,7 @@ namespace ExampleAppWPF
         protected override void RefreshListData(List<string> groups, List<bool> groupsExpandable, Dictionary<string, List<string>> groupToChildrenMap)
         {
             m_adapter.SetData(m_list.ItemsSource, groups, groupsExpandable, groupToChildrenMap);
-            m_resultsOptionsView.MaxHeight = CalcResultOptionsViewMaxHeight();
+            m_resultsList.MaxHeight = CalcResultOptionsViewMaxHeight();
         }
 
         private void ShowCloseButtonView(bool shouldShowCloseView)

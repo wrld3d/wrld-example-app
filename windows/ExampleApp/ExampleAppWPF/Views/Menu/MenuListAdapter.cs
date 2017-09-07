@@ -210,7 +210,7 @@ namespace ExampleAppWPF
 
         public List<FrameworkElement> ChildStackPanelsFor(List<FrameworkElement> parentItems)
         {
-            var controls = parentItems.Select(_x => FindChildControl<StackPanel>(_x as DependencyObject, ControlToAnimate) as FrameworkElement).ToList();
+            var controls = parentItems.Where(_x => _x != null).Select(_x => FindChildControl<StackPanel>(_x as DependencyObject, ControlToAnimate) as FrameworkElement).ToList();
             return controls;
         }
 
@@ -403,9 +403,20 @@ namespace ExampleAppWPF
                 var menuDelayedSourceUpdateAnimatorListener = new MenuDelayedSourceUpdateAnimatorListener(groups, groupsExpandable, groupToChildren, this);
                 var controls = ChildStackPanelsFor(itemsToAnimate);
                 m_slideOutStoryboardRunner.AllCompleted += menuDelayedSourceUpdateAnimatorListener.OnCompleted;
-                m_slideOutStoryboardRunner.Begin(itemsToAnimate);
-                m_itemShutterCloseStoryboardRunner.Begin(controls);
+                m_slideOutStoryboardRunner.Begin(itemsToAnimate.Where(_x => _x != null).ToList());
+
+                if (!m_itemShutterCloseStoryboardRunner.IsAnimating)
+                {
+                    m_itemShutterCloseStoryboardRunner.AllCompleted += ItemShutterCloseCompleted;
+                    m_itemShutterCloseStoryboardRunner.Begin(controls);
+                }
             }
+        }
+
+        private void ItemShutterCloseCompleted()
+        {
+            m_list.ItemsSource = null;
+            m_itemShutterCloseStoryboardRunner.AllCompleted -= ItemShutterCloseCompleted;
         }
 
         private void AnimateItemsOutAndIn(
@@ -454,8 +465,11 @@ namespace ExampleAppWPF
 
                 foreach (var item in itemsToAnimate)
                 {
-                    var thickness = new Thickness(0, 0, 0, 0);
-                    item.Margin = thickness;
+                    if(item != null)
+                    {
+                        var thickness = new Thickness(0, 0, 0, 0);
+                        item.Margin = thickness;
+                    }
                 }
 
                 m_itemShutterOpenStoryboardRunner.Begin(controls);
