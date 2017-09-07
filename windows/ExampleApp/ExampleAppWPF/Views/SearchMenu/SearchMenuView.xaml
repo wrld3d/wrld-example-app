@@ -313,8 +313,21 @@
                             <Grid Grid.Row="2">
                                 <StackPanel  Orientation="Vertical" >
                                     <Grid>
-                                        <ScrollViewer Width="{DynamicResource MenuWidth}" Background="{StaticResource PrimaryBG_colour}" Name="ResultsMenuOptionsView" PanningRatio="3" PanningDeceleration="0" PanningMode="VerticalOnly" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden" CanContentScroll="True">
-                                            <ListBox Name="SearchResultsList" Template="{StaticResource ListBoxControlTemplateNoPadding}" Background="{StaticResource PrimaryBG_colour}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" BorderThickness="0" Focusable="False" IsManipulationEnabled="True">
+                                            <ListBox Name="SearchResultsList"
+                                                     Width="{DynamicResource MenuWidth}"
+                                                     Template="{StaticResource ListBoxControlTemplateNoPadding}"
+                                                     Background="{StaticResource PrimaryBG_colour}"
+                                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                     ScrollViewer.PanningRatio="1"
+                                                     ScrollViewer.PanningDeceleration="0.0025"
+                                                     ScrollViewer.PanningMode="VerticalOnly"
+                                                     ScrollViewer.CanContentScroll="True"
+                                                     HorizontalContentAlignment="Stretch"
+                                                     BorderThickness="0"
+                                                     Focusable="False"
+                                                     IsManipulationEnabled="True"
+                                                     VirtualizingPanel.ScrollUnit="Pixel">
                                                 <ListBox.Resources>
                                                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
                                                     <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent"/>
@@ -422,7 +435,6 @@
                                                     </Style>
                                                 </ListBox.ItemContainerStyle>
                                             </ListBox>
-                                        </ScrollViewer>
 
                                         <Grid Name="SearchResultsButtonAndFadeContainer" Visibility="Collapsed">
                                             <Grid.RowDefinitions>
