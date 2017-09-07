@@ -205,7 +205,7 @@ namespace ExampleApp
                         }
 
                         std::vector<std::string> readableTags = GetNamesForTags(tagSet, swallowTagNameMapper);
-                        Search::SdkModel::TagIconKey& tagIconKey = swallowTagIconMapper.GetIconKeyForTags(tagSet);
+                        Search::SdkModel::TagIconKey tagIconKey = swallowTagIconMapper.GetIconKeyForTags(tagSet);
 
                         if(readableTags.size() == 1 && readableTags[0] == swallowTagNameMapper.GetUnknownTagName())
                         {
