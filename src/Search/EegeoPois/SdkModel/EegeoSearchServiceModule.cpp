@@ -22,6 +22,7 @@ namespace ExampleApp
                                                                    Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                                                    Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                                                    const Search::SdkModel::SearchTags& searchTags,
+                                                                   const Search::SdkModel::SearchTags& swallowSearchTags,
                                                                    const std::vector<std::string>& handledTags,
                                                                    const std::string& serviceUrl,
                                                                    const std::string& apiKey,
@@ -42,7 +43,11 @@ namespace ExampleApp
 
                     m_pReadableTagMapper = Eegeo_NEW(EegeoReadableTagMapper)(searchTags);
 
-                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pTagIconMapper, *m_pReadableTagMapper, persistentSettings);
+                    m_pSwallowTagIconMapper = TagSearch::SdkModel::CreateTagIconMapper(swallowSearchTags);
+
+                    m_pSwallowReadableTagMapper = Eegeo_NEW(EegeoReadableTagMapper)(swallowSearchTags);
+
+                    m_pEegeoParser = Eegeo_NEW(EegeoJsonParser)(*m_pTagIconMapper, *m_pReadableTagMapper, *m_pSwallowTagIconMapper, *m_pSwallowReadableTagMapper, persistentSettings);
 
                     m_pSearchService = Eegeo_NEW(EegeoSearchService)(*m_pEegeoSearchQueryFactory,
                                                                      *m_pEegeoParser,
@@ -54,6 +59,8 @@ namespace ExampleApp
                 {
                     Eegeo_DELETE m_pSearchService;
                     Eegeo_DELETE m_pEegeoParser;
+                    Eegeo_DELETE m_pSwallowTagIconMapper;
+                    Eegeo_DELETE m_pSwallowReadableTagMapper;
                     Eegeo_DELETE m_pTagIconMapper;
                     Eegeo_DELETE m_pReadableTagMapper;
                     Eegeo_DELETE m_pEegeoSearchQueryFactory;

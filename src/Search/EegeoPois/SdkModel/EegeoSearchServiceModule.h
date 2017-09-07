@@ -38,12 +38,16 @@ namespace ExampleApp
 
                     TagSearch::SdkModel::ITagIconMapper *m_pTagIconMapper;
                     EegeoReadableTagMapper *m_pReadableTagMapper;
+
+                    TagSearch::SdkModel::ITagIconMapper *m_pSwallowTagIconMapper;
+                    EegeoReadableTagMapper *m_pSwallowReadableTagMapper;
                     
                 public:
                     EegeoSearchServiceModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                              Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                              Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                              const Search::SdkModel::SearchTags& searchTags,
+                                             const Search::SdkModel::SearchTags& swallowSearchTags,
                                              const std::vector<std::string>& handledTags,
                                              const std::string& serviceUrl,
                                              const std::string& apiKey,

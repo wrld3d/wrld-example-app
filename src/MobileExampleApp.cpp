@@ -564,16 +564,17 @@ namespace ExampleApp
         }
         
         const bool useEegeoPois = true;
-        const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "swallow_search_tags.json");
+        const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "search_tags.json");
+        const auto& swallowSearchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "swallow_search_tags.json");
         const auto& handledTags = Search::Swallow::SearchConstants::GetAllTags();
         
         if(useEegeoPois)
         {
-            
             m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                                m_networkCapabilities,
                                                                                                                                searchTags,
+                                                                                                                               swallowSearchTags,
                                                                                                                                handledTags,
                                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
                                                                                                                                m_applicationConfiguration.EegeoApiKey(),
@@ -585,6 +586,7 @@ namespace ExampleApp
                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                m_networkCapabilities,
                                                                                                                searchTags,
+                                                                                                               swallowSearchTags,
                                                                                                                handledTags,
                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
                                                                                                                m_applicationConfiguration.EegeoApiKey(),
@@ -594,7 +596,6 @@ namespace ExampleApp
         const bool useYelpSearch = true;
         if (useYelpSearch)
         {
-            const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "search_tags.json");
             m_searchServiceModules[ExampleApp::Search::YelpVendorName] = Eegeo_NEW(ExampleApp::Search::Yelp::YelpSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                                       m_networkCapabilities,
                                                                                                                                       m_platformAbstractions.GetUrlEncoder(),
