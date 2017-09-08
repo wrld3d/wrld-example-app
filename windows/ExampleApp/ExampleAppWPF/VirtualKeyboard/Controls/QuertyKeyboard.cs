@@ -20,12 +20,9 @@ namespace ExampleAppWPF.VirtualKeyboard
         private enum ShiftState
         {
             ShiftUp,
-            ShiftDown,
-            ShiftHeld
+            ShiftDown
         }
 
-        private const int LongPressTime = 1000;
-        private int m_touchDownTime = 0;
         private ShiftState m_shiftState = ShiftState.ShiftUp;
 
         public event CustomKeyEvent CustomKeyUp;
@@ -33,19 +30,10 @@ namespace ExampleAppWPF.VirtualKeyboard
 
         private static List<VirtualKeyboardButton> KeyboardButtons = new List<VirtualKeyboardButton>();
 
-        public static readonly DependencyProperty IsShiftHeldProperty =
-            DependencyProperty.Register(
-                "IsShiftHeld", typeof(bool), typeof(QuertyKeyboard),
-                new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty IsShiftPressedProperty =
             DependencyProperty.Register(
                 "IsShiftPressed", typeof(bool), typeof(QuertyKeyboard),
                 new FrameworkPropertyMetadata(false));
-
-        public bool IsShiftHeld
-        {
-            get { return m_shiftState == ShiftState.ShiftHeld; }
-        }
 
         public bool IsShiftPressed
         {
@@ -174,14 +162,15 @@ namespace ExampleAppWPF.VirtualKeyboard
             VirtualKeyboardService.Instance.ReleaseStickyKeys();
         }
 
-        private void OnCustomKeyEvent(string key, bool isLongPress)
+        private void OnCustomKeyEvent(string key)
         {
             if (key == "ShiftKey")
             {
-                OnShiftPressed(isLongPress);
+                UpdateKeyboardShift(IsShiftPressed ? ShiftState.ShiftUp: ShiftState.ShiftDown);
             }
             else if (CustomKeyUp != null)
             {
+                UpdateKeyboardShift(ShiftState.ShiftUp);
                 CustomKeyUp(key);
             }
         }
@@ -190,6 +179,7 @@ namespace ExampleAppWPF.VirtualKeyboard
         {
             if (ControlKeyUp != null)
             {
+                UpdateKeyboardShift(ShiftState.ShiftUp);
                 ControlKeyUp((int)controlInputValue);
             }
         }
@@ -237,7 +227,7 @@ namespace ExampleAppWPF.VirtualKeyboard
             }
         }
 
-        private void OnExecuteVirtualKeyStroke(string partName, VirtualKeyboardButton key, bool isLongPress)
+        private void OnExecuteVirtualKeyStroke(string partName, VirtualKeyboardButton key)
         {
             if (!OnCanExecuteStringStroke(partName)) { return; }
 
@@ -251,8 +241,7 @@ namespace ExampleAppWPF.VirtualKeyboard
                     VirtualKeyboardService.Instance.SendKey(IsShiftPressed && !String.IsNullOrEmpty(keyShiftInput)
                         ? keyShiftInput[0]
                         : keyInput[0]);
-
-                    TryClearShift();
+                    UpdateKeyboardShift(ShiftState.ShiftUp);
                     break;
 
                 case VirtualKeyboardButton.KeyType.Control:
@@ -263,7 +252,7 @@ namespace ExampleAppWPF.VirtualKeyboard
 
                 case VirtualKeyboardButton.KeyType.Special:
                     VirtualKeyboardSpecialButton specialButton = (VirtualKeyboardSpecialButton)key;
-                    OnCustomKeyEvent(specialButton.GetKeySpecialInputValue(), isLongPress);
+                    OnCustomKeyEvent(specialButton.GetKeySpecialInputValue());
                     break;
 
                 default:
@@ -271,28 +260,15 @@ namespace ExampleAppWPF.VirtualKeyboard
             }
         }
 
-        private void TryClearShift()
-        {
-            if (m_shiftState != ShiftState.ShiftHeld)
-            {
-                UpdateKeyboardShift(ShiftState.ShiftUp);
-            }
-        }
-
         private void UpdateKeyboardShift(ShiftState shiftState)
         {
-            m_shiftState = shiftState;
-            SetValue(IsShiftHeldProperty, IsShiftHeld);
-            SetValue(IsShiftPressedProperty, IsShiftPressed);
+            if (m_shiftState != shiftState)
+            {
+                m_shiftState = shiftState;
+                SetValue(IsShiftPressedProperty, IsShiftPressed);
 
-            UpdateButtonLabels();
-        }
-
-        private void OnShiftPressed(bool isLongPress)
-        {
-            UpdateKeyboardShift(isLongPress
-                ? ShiftState.ShiftHeld
-                : IsShiftPressed ? ShiftState.ShiftUp : ShiftState.ShiftDown);
+                UpdateButtonLabels();
+            }
         }
 
         private void UpdateButtonLabels()
@@ -347,13 +323,12 @@ namespace ExampleAppWPF.VirtualKeyboard
 
         private void Button_MouseDown(object sender, MouseEventArgs e)
         {
-            m_touchDownTime = e.Timestamp;
         }
 
         private void Button_MouseUp(object sender, MouseEventArgs e)
         {
             var key = sender as VirtualKeyboardButton;
-            OnExecuteVirtualKeyStroke(key.Name, key, IsLongPress(e.Timestamp));
+            OnExecuteVirtualKeyStroke(key.Name, key);
         }
 
         private void Button_TouchDown(object sender, TouchEventArgs e)
@@ -364,12 +339,7 @@ namespace ExampleAppWPF.VirtualKeyboard
         private void Button_TouchUp(object sender, TouchEventArgs e)
         {
             var key = sender as VirtualKeyboardButton;
-            OnExecuteVirtualKeyStroke(key.Name, key, IsLongPress(e.Timestamp));
-        }
-
-        private bool IsLongPress(int touchUpTime)
-        {
-            return touchUpTime - m_touchDownTime > LongPressTime;
+            OnExecuteVirtualKeyStroke(key.Name, key);
         }
 
         public void ReleaseKeys()

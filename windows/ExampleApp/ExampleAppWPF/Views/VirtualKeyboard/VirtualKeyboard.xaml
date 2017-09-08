@@ -54,10 +54,6 @@
                             <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
                             <Setter Property="Source" TargetName="arrow" Value="/Assets/shift_key_down.png" />
                         </Trigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent},Path=IsShiftHeld}" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryBG_Down_Colour}" />
-                            <Setter Property="Source" TargetName="arrow" Value="/Assets/shift_key_down.png" />
-                        </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
