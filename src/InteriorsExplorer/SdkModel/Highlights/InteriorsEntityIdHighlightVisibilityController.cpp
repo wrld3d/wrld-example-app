@@ -180,6 +180,19 @@ namespace ExampleApp
                             m_interiorsHighlightService.SetHighlights(selectedSearchResult.GetBuildingId().Value(), entityIds, highlightColor);
                         }
                     }
+                    else
+                    {
+                        for (int i = 0; i < m_searchResults.size(); ++i)
+                        {
+                            const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(i);
+                            if (selectedSearchResult.IsInterior())
+                            {
+                                std::vector<std::string> entityIds = GetEntityIdsFromSearchResultModel(selectedSearchResult);
+                                Eegeo::v4 highlightColor = m_highlightColorMapper.GetColor(selectedSearchResult, "entity_highlight_color");
+                                m_interiorsHighlightService.SetHighlights(selectedSearchResult.GetBuildingId().Value(), entityIds, highlightColor);
+                            }
+                        }
+                    }
                 }
             }
         }
