@@ -137,7 +137,24 @@ namespace ExampleApp
                     m_myPinToWorldPinMap.erase(it);
                 }
             }
-            
+
+            void MyPinsService::RemoveAllPins()
+            {
+                std::vector<int> pinIDs;
+
+                for (int pinIndex = 0; pinIndex < m_myPinsRepository.GetItemCount(); ++pinIndex)
+                {
+                    MyPinModel* pinAtIndex = m_myPinsRepository.GetItemAtIndex(pinIndex);
+                    int pinID = pinAtIndex->Identifier();
+                    pinIDs.push_back(pinID);
+                }
+
+                for (int i = 0; i < pinIDs.size(); i++)
+                {
+                    RemovePinWithId(pinIDs.at(i));
+                }
+            }
+
             void MyPinsService::UpdatePinWithResult(const int myPinId, const Search::SdkModel::SearchResultModel& result)
             {
                 TMyPinToWorldPinMap::iterator it = m_myPinToWorldPinMap.find(myPinId);

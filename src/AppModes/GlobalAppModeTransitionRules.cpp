@@ -17,6 +17,7 @@
 #include "AppInteriorCameraWrapper.h"
 #include "InteriorsExplorerModel.h"
 #include "GpsGlobeCameraController.h"
+#include "IMyPinsService.h"
 
 #include <limits>
 
@@ -49,7 +50,8 @@ namespace ExampleApp
                                                                    Eegeo::Input::IUserIdleService& userIdleService,
                                                                    const bool attractModeEnabled,
                                                                    const long long attractModeTimeout,
-                                                                   MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel)
+                                                                   MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
+                                                                   MyPins::SdkModel::IMyPinsService& myPinsService)
         : m_cameraController(cameraController)
         , m_appModeModel(appModeModel)
         , m_worldCameraController(worldCameraController)
@@ -62,6 +64,7 @@ namespace ExampleApp
         , m_worldCameraHandle(m_cameraController.CreateCameraHandleFromController(m_worldCameraController))
         , m_interiorCameraHandle(m_cameraController.CreateCameraHandleFromController(m_interiorCameraController))
         , m_currentState(appModeModel.GetAppMode())
+        , m_myPinsService(myPinsService)
         {
         }
 
@@ -97,6 +100,7 @@ namespace ExampleApp
                 {
                     m_interiorsExplorerModel.Exit();
                 }
+                m_myPinsService.RemoveAllPins();
                 m_appModeModel.SetAppMode(SdkModel::AttractMode);
             }
         }

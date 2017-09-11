@@ -29,6 +29,8 @@ namespace ExampleApp
 
                 virtual void RemovePinWithId(const int myPinId) = 0;
 
+                virtual void RemoveAllPins() = 0;
+
                 virtual void SaveUserCreatedPoiPin(const std::string& title,
                                                    const std::string& description,
                                                    const std::string& ratingsImage,

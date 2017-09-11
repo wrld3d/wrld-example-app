@@ -37,6 +37,7 @@ namespace ExampleApp
             const int m_worldCameraHandle;
             const int m_interiorCameraHandle;
             SdkModel::AppMode m_currentState;
+            MyPins::SdkModel::IMyPinsService& m_myPinsService;
 
             void OnInteriorSelectionModelChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId);
             void SetupCameraForNextMode(const SdkModel::AppMode currentState, const SdkModel::AppMode nextState);
@@ -53,7 +54,8 @@ namespace ExampleApp
                                          Eegeo::Input::IUserIdleService& userIdleService,
                                          const bool attractModeEnabled,
                                          const long long attractModeTimeout,
-                                         MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel);
+                                         MyPinCreation::SdkModel::IMyPinCreationModel& myPinCreationModel,
+                                         MyPins::SdkModel::IMyPinsService& myPinsService);
             ~GlobalAppModeTransitionRules();
 
             void Enter(int previousState);

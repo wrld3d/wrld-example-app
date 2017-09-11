@@ -35,6 +35,7 @@ namespace ExampleApp
                                                      ExampleApp::WorldPins::SdkModel::WorldPinItemModel*& out_pWorldPinItemModel) const;
                 
                 void RemovePinWithId(const int myPinId);
+                void RemoveAllPins();
                 
                 void SaveUserCreatedPoiPin(const std::string& title,
                                            const std::string& description,
