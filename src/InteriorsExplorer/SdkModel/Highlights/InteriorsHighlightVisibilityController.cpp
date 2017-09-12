@@ -21,6 +21,7 @@
 #include "LabelAnchorFilterModel.h"
 #include "IAnchoredLabel.h"
 #include "document.h"
+#include "IInteriorsHighlightService.h"
 
 namespace ExampleApp
 {
@@ -58,7 +59,8 @@ namespace ExampleApp
                     const Eegeo::Labels::LabelLayer::IdType interiorLabelLayer,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     IHighlightColorMapper& highlightColorMapper,
-                    PersistentSettings::IPersistentSettingsModel& persistentSettings)
+                    PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                    Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& interiorsHighlightService)
                     : m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorsCellResourceObserver(interiorsCellResourceObserver)
                     , m_interiorLabelLayer(interiorLabelLayer)
@@ -67,13 +69,16 @@ namespace ExampleApp
                     , m_searchQueryPerformer(searchQueryPerformer)
                     , m_searchResultRepository(searchResultRepository)
                     , m_highlightColorMapper(highlightColorMapper)
+                    , m_searchResultsIndex(-1)
                     , m_searchResultsHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultsLoaded)
                     , m_searchResultsClearedHandler(this, &InteriorsHighlightVisibilityController::OnSearchResultCleared)
+                    , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsHighlightVisibilityController::OnSearchItemSelected)
                     , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorChanged)
                     , m_interiorCellAddedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorAddedToSceneGraph)
                     , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
                     , m_messageBus(messageBus)
                     , m_persistentSettings(persistentSettings)
+                    , m_interiorsHighlightService(interiorsHighlightService)
                     , m_availabilityToColor(BuildAvailabilityToColor())
                     , m_hideLabelAlwaysFilter(this, &InteriorsHighlightVisibilityController::HideLabelAlwaysPredicate)
                 {
@@ -83,6 +88,7 @@ namespace ExampleApp
                     m_interiorsCellResourceObserver.RegisterAddedToSceneGraphCallback(m_interiorCellAddedHandler);
 
                     m_messageBus.SubscribeNative(m_availabilityChangedHandlerBinding);
+                    m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
 
                     m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, &m_hideLabelAlwaysFilter);
                 }
@@ -94,6 +100,7 @@ namespace ExampleApp
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
                     
+                    m_messageBus.UnsubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
                     m_messageBus.UnsubscribeNative(m_availabilityChangedHandlerBinding);
                 }
 
@@ -122,11 +129,49 @@ namespace ExampleApp
                 
                 void InteriorsHighlightVisibilityController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
                 {
+                    if (m_searchResultsIndex >= 0)
+                    {
+                        const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
+
+                        const std::vector<Search::SdkModel::SearchResultModel>& newSearchResults = results;
+
+                        std::vector<Search::SdkModel::SearchResultModel>::const_iterator iter = std::find(newSearchResults.begin(), newSearchResults.end(), selectedSearchResult);
+                        if (iter == newSearchResults.end())
+                        {
+                            m_searchResultsIndex = -1;                            
+                        }
+                        else
+                        {
+                            m_searchResultsIndex = static_cast<int>(std::distance(newSearchResults.begin(), iter));
+                        }
+                    }
+
+                    m_searchResults = results;
+
                     RefreshForSearchResults(results);
                 }
 
                 void InteriorsHighlightVisibilityController::OnSearchResultCleared()
                 {
+                    m_searchResultsIndex = -1;
+                    m_searchResults.clear();
+
+                    std::vector<Search::SdkModel::SearchResultModel> results;
+                    GetCurrentSearchResults(results);
+                    RefreshForSearchResults(results);
+                }
+
+                void InteriorsHighlightVisibilityController::OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
+                {
+                    if (message.ItemIndex() >= m_searchResults.size())
+                    {
+                        m_searchResultsIndex = -1;
+                    }
+                    else
+                    {
+                        m_searchResultsIndex = message.ItemIndex();
+                    }
+
                     std::vector<Search::SdkModel::SearchResultModel> results;
                     GetCurrentSearchResults(results);
                     RefreshForSearchResults(results);
@@ -242,16 +287,45 @@ namespace ExampleApp
                 
                 void InteriorsHighlightVisibilityController::RefreshHighlightsColor()
                 {
-                    for (auto const pHighlightRenderable : m_highlightRenderablesForInterior)
+                    if (m_searchResultsIndex >= 0)
                     {
-                        const std::string& renderableId = pHighlightRenderable->GetRenderableId();
+                        const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
+                        if (selectedSearchResult.IsInterior())
+                        {
+                            for (auto const pHighlightRenderable : m_highlightRenderablesForInterior)
+                            {
+                                const std::string& highlightId = pHighlightRenderable->GetHighlightId();
+                                if (selectedSearchResult.GetTitle() == highlightId)
+                                {
+                                    const std::string& renderableId = pHighlightRenderable->GetRenderableId();
+
+                                    HighlightIdToColor::const_iterator iter = m_searchResultHighlightIdToColor.find(renderableId);
+                                    const Eegeo::v4& highlightColor = (iter != m_searchResultHighlightIdToColor.end())
+                                        ? iter->second
+                                        : transparentHighlightColor;
+
+                                    m_interiorsHighlightService.SetHighlight(pHighlightRenderable->GetInteriorId(), highlightId, highlightColor);
+                                }
+                                else
+                                {
+                                    m_interiorsHighlightService.SetHighlight(pHighlightRenderable->GetInteriorId(), highlightId, transparentHighlightColor);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (auto const pHighlightRenderable : m_highlightRenderablesForInterior)
+                        {
+                            const std::string& renderableId = pHighlightRenderable->GetRenderableId();
                         
-                        HighlightIdToColor::const_iterator iter = m_searchResultHighlightIdToColor.find(renderableId);
-                        const Eegeo::v4& highlightColor = (iter != m_searchResultHighlightIdToColor.end())
-                        ? iter->second
-                        : transparentHighlightColor;
-                        
-                        pHighlightRenderable->SetDiffuseColor(highlightColor);
+                            HighlightIdToColor::const_iterator iter = m_searchResultHighlightIdToColor.find(renderableId);
+                            const Eegeo::v4& highlightColor = (iter != m_searchResultHighlightIdToColor.end())
+                            ? iter->second
+                            : transparentHighlightColor;
+
+                            m_interiorsHighlightService.SetHighlight(pHighlightRenderable->GetInteriorId(), pHighlightRenderable->GetHighlightId(), highlightColor);
+                        }
                     }
                 }
                 
