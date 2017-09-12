@@ -2,6 +2,8 @@
 
 #include "SearchResultPoiViewModel.h"
 #include "LatLongAltitude.h"
+#include "SwallowSearchConstants.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -53,12 +55,36 @@ namespace ExampleApp
             void SearchResultPoiViewModel::Open(const Search::SdkModel::SearchResultModel& searchResultModel,
                                                 bool isPinned)
             {
-                Eegeo_ASSERT(!IsOpen(), "Cannot open SearchResultPoiViewModel when already open.\n");
-                if(m_openable.Open())
+                const std::string& vendor = searchResultModel.GetVendor();
+                const std::string& primaryTag = searchResultModel.GetPrimaryTag();
+                
+                bool canOpenPOIView = false;
+                if(vendor == ExampleApp::Search::YelpVendorName
+                   || vendor == ExampleApp::Search::GeoNamesVendorName)
                 {
-                    m_searchResultModel = searchResultModel;
-                    m_isPinned = isPinned;
-                    m_openedCallbacks.ExecuteCallbacks();
+                    canOpenPOIView = true;
+                }
+                else if(vendor == ExampleApp::Search::EegeoVendorName)
+                {
+                    if(primaryTag == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME
+                       || primaryTag == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME
+                       || primaryTag == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME
+                       || primaryTag == ExampleApp::Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME
+                       || primaryTag == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                    {
+                        canOpenPOIView = true;
+                    }
+                }
+                
+                if(canOpenPOIView)
+                {
+                    Eegeo_ASSERT(!IsOpen(), "Cannot open SearchResultPoiViewModel when already open.\n");
+                    if(m_openable.Open())
+                    {
+                        m_searchResultModel = searchResultModel;
+                        m_isPinned = isPinned;
+                        m_openedCallbacks.ExecuteCallbacks();
+                    }
                 }
             }
 
