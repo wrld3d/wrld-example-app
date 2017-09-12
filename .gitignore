@@ -32,4 +32,6 @@ gradlew
 gradlew.*
 **/gradle
 **/local.properties
+ios/Include/SenionLab/*.framework
+android/libs/SLDistribution_4.13.1-rc1.jar
 
