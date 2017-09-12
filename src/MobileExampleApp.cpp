@@ -363,7 +363,10 @@ namespace ExampleApp
         namespace IntHighlights = InteriorsExplorer::SdkModel::Highlights;
 
         m_pHighlightColorMapper = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::HighlightColorMapper)(Eegeo::v4(0.0, 1.0, 0.0, 1.0));
-
+        
+        Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& highlightService =
+            m_pWorld->GetInteriorHighlightsModule().GetHighlightService();
+        
         m_pInteriorsHighlightVisibilityController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController)(
                                                                                                                      mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                                                                      mapModule.GetInteriorsModelModule().GetInteriorsCellResourceObserver(),
@@ -374,12 +377,10 @@ namespace ExampleApp
                                                                                                                      mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
                                                                                                                      mapModule.GetInteriorsStreamingModule().GetLabelLayerId(),
                                                                                                                      m_messageBus,
-                                                                                                                     *m_pHighlightColorMapper);
-
+                                                                                                                     *m_pHighlightColorMapper,
+                                                                                                                     highlightService);
+        
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
-
-        Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& highlightService =
-                m_pWorld->GetInteriorHighlightsModule().GetHighlightService();
 
         m_pInteriorsEntityIdHighlightVisibilityController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController)(
                 interiorsPresentationModule.GetInteriorInteractionModel(),

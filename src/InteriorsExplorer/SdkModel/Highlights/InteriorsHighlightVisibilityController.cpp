@@ -19,6 +19,7 @@
 #include "LabelAnchorFilterModel.h"
 #include "IAnchoredLabel.h"
 #include "document.h"
+#include "IInteriorsHighlightService.h"
 
 namespace ExampleApp
 {
@@ -37,7 +38,8 @@ namespace ExampleApp
                     Eegeo::Labels::ILabelAnchorFilterModel& labelHiddenFilterModel,
                     const Eegeo::Labels::LabelLayer::IdType interiorLabelLayer,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    IHighlightColorMapper& highlightColorMapper)
+                    IHighlightColorMapper& highlightColorMapper,
+                    Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& interiorsHighlightService)
                     : m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorsCellResourceObserver(interiorsCellResourceObserver)
                     , m_interiorLabelLayer(interiorLabelLayer)
@@ -52,6 +54,7 @@ namespace ExampleApp
                     , m_interiorCellAddedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorAddedToSceneGraph)
                     , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
                     , m_interiorLabelsBuiltHandler(this, &InteriorsHighlightVisibilityController::OnInteriorLabelsBuilt)
+                    , m_interiorsHighlightService(interiorsHighlightService)
                     , m_hideLabelAlwaysFilter(this, &InteriorsHighlightVisibilityController::HideLabelAlwaysPredicate)
                     , m_hideLabelByNameFilter(this, &InteriorsHighlightVisibilityController::HideLabelByNamePredicate)
                 {
@@ -88,7 +91,7 @@ namespace ExampleApp
                     {
                         for (auto& renderable : it->second)
                         {
-                            renderable->SetDiffuseColor(transparent);
+                            m_interiorsHighlightService.ClearHighlight(renderable->GetInteriorId(), renderable->GetHighlightId());
                         }
                     }
                 }
@@ -239,7 +242,7 @@ namespace ExampleApp
                                 {
                                     if (renderable->GetRenderableId().compare("entity_highlight " + highlightedRoomId) == 0)
                                     {
-                                        renderable->SetDiffuseColor(m_highlightColorMapper.GetColor(*resultsItt, "highlight_color"));
+                                        m_interiorsHighlightService.SetHighlight(renderable->GetInteriorId(), highlightedRoomId, m_highlightColorMapper.GetColor(*resultsItt, "highlight_color"));
                                         showingHighlights = true;
                                     }
                                 }

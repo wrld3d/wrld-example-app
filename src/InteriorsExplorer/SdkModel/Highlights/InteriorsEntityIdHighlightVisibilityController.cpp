@@ -109,14 +109,22 @@ namespace ExampleApp
                 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsCleared()
                 {
+                    ClearHighlights();
                     m_searchResultsIndex = -1;
                     m_searchResults.clear();
-                    ClearHighlights();
                 }
 
                 void InteriorsEntityIdHighlightVisibilityController::ClearHighlights()
                 {
-                    m_interiorsHighlightService.ClearAllHighlights();
+                    for (int i = 0; i < m_searchResults.size(); ++i)
+                    {
+                        const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(i);
+                        if (selectedSearchResult.IsInterior())
+                        {
+                            std::vector<std::string> entityIds = GetEntityIdsFromSearchResultModel(selectedSearchResult);
+                            m_interiorsHighlightService.ClearHighlights(selectedSearchResult.GetBuildingId().Value(), entityIds);
+                        }
+                    }
                 }
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
@@ -130,6 +138,7 @@ namespace ExampleApp
                         m_searchResultsIndex = message.ItemIndex();
                     }
                     
+                    ClearHighlights();
                     RefreshHighlights();
                 }
                 
@@ -141,6 +150,8 @@ namespace ExampleApp
 
                 void InteriorsEntityIdHighlightVisibilityController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
                 {
+                    ClearHighlights();
+
                     if (m_searchResultsIndex >= 0)
                     {
                         const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
@@ -165,8 +176,6 @@ namespace ExampleApp
                 
                 void InteriorsEntityIdHighlightVisibilityController::RefreshHighlights()
                 {
-                    ClearHighlights();
-
                     if (m_searchResultsIndex >= 0)
                     {
                         const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(m_searchResultsIndex);
