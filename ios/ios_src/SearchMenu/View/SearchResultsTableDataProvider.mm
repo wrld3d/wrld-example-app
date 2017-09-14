@@ -66,6 +66,10 @@ static NSString *CellIdentifier = @"searchCell";
         
         [m_pView.pSearchResultsTableView insertRowsAtIndexPaths:[NSArray arrayWithObjects:tempPaths count:rows] withRowAnimation:UITableViewRowAnimationNone];
     }
+    
+    CGPoint contentOffset = m_pView.pSearchResultsTableView.contentOffset;
+    contentOffset.y = 0;
+    m_pView.pSearchResultsTableView.contentOffset = contentOffset;
 }
 
 - (float)getRealTableHeight
