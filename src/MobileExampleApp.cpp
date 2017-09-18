@@ -345,6 +345,8 @@ namespace ExampleApp
         
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraConfig = Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration::CreateDefault();
         gpsGlobeCameraConfig.panToUnlockThreshold = PanToUnlockThreshold;
+        gpsGlobeCameraConfig.compassCameraOffset = m_applicationConfiguration.CompassCameraOffset();
+        gpsGlobeCameraConfig.compassCameraOffsetTopDown = m_applicationConfiguration.CompassCameraOffsetTopDown();
 
         if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
         {
@@ -747,6 +749,8 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraComponentConfig = Eegeo::Resources::Interiors::InteriorsGpsCameraControllerFactory::DefaultGpsGlobeCameraComponentConfiguration();
         gpsGlobeCameraComponentConfig.defaultGpsDistanceToInterest = ExampleApp::InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance;
         gpsGlobeCameraComponentConfig.panToUnlockThreshold = PanToUnlockThreshold;
+        gpsGlobeCameraComponentConfig.compassCameraOffset = m_applicationConfiguration.CompassCameraOffset();
+        gpsGlobeCameraComponentConfig.compassCameraOffsetTopDown = m_applicationConfiguration.CompassCameraOffsetTopDown();
 
         if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
         {

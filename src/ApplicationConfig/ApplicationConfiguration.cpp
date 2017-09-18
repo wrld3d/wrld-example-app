@@ -56,7 +56,9 @@ namespace ExampleApp
                                                            const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
                                                            const long long attractModeTimeoutMs,
                                                            const double attractModePlaybackSpeed,
-                                                           const std::string& adminPassword)
+                                                           const std::string& adminPassword,
+                                                           const float compassCameraOffset,
+                                                           const float compassCameraOffsetTopDown)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_embeddedThemeTexturePath(embeddedThemeTexturePath)
@@ -108,6 +110,8 @@ namespace ExampleApp
         , m_attractModeTimeoutMs(attractModeTimeoutMs)
         , m_attractModePlaybackSpeed(attractModePlaybackSpeed)
         , m_adminPassword(adminPassword)
+        , m_compassCameraOffset(compassCameraOffset)
+        , m_compassCameraOffsetTopDown(compassCameraOffsetTopDown)
         {
             
         }
@@ -366,6 +370,16 @@ namespace ExampleApp
         const std::string& ApplicationConfiguration::OptionsAdminPassword() const
         {
             return m_adminPassword;
+        }
+
+        const float ApplicationConfiguration::CompassCameraOffset() const
+        {
+            return m_compassCameraOffset;
+        }
+
+        const float ApplicationConfiguration::CompassCameraOffsetTopDown() const
+        {
+            return m_compassCameraOffsetTopDown;
         }
     }
 }

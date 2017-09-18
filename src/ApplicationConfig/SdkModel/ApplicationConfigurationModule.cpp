@@ -106,7 +106,9 @@ namespace ExampleApp
                         std::vector<Eegeo::Space::LatLongAltitude>(),
                         0,
                         attractModePlaybackSpeed,
-                        emptyAdminPassword);
+                        emptyAdminPassword,
+                        0.0f,
+                        0.0f);
                 }
             }
             

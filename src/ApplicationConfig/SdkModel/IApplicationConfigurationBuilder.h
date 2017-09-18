@@ -107,6 +107,9 @@ namespace ExampleApp
                 virtual IApplicationConfigurationBuilder& SetAttractModePlaybackSpeed(const double playbackSpeed) = 0;
 
                 virtual IApplicationConfigurationBuilder& SetAdminPassword(const std::string& adminPassword) = 0;
+
+                virtual IApplicationConfigurationBuilder& SetCompassCameraOffset(const float compassCameraOffset) = 0;
+                virtual IApplicationConfigurationBuilder& SetCompassCameraOffsetTopDown(const float compassCameraOffsetTopDown) = 0;
             };
         }
     }

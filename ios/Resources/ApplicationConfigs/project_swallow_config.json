@@ -98,6 +98,10 @@
                                 }, {
                                 "InteriorId": "swallow_lon_wallbrooksquare",
                                 "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }]
+                                }],
+   "CompassCameraOffset": {
+       "Offset": 0.5,
+       "OffsetTopDown": 0.3
+   }
     
 }

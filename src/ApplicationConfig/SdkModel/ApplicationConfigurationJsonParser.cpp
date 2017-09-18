@@ -227,6 +227,19 @@ namespace ExampleApp
                 }
 
                 m_builder.SetAdminPassword(document.HasMember("OptionsAdminPassword") ? document["OptionsAdminPassword"].GetString() : "");
+
+                if (document.HasMember("CompassCameraOffset"))
+                {
+                    const rapidjson::Value& offsetJSON = document["CompassCameraOffset"];
+
+                    Eegeo_ASSERT(offsetJSON.HasMember("Offset"));
+                    float offset = offsetJSON["Offset"].GetDouble();
+                    m_builder.SetCompassCameraOffset(offset);
+
+                    Eegeo_ASSERT(offsetJSON.HasMember("OffsetTopDown"));
+                    float offsetTopDown = offsetJSON["OffsetTopDown"].GetDouble();
+                    m_builder.SetCompassCameraOffsetTopDown(offsetTopDown);
+                }
                 
                 return m_builder.Build();
             }

@@ -78,6 +78,9 @@ namespace ExampleApp
                 double m_attractModePlaybackSpeed;
 
                 std::string m_adminPassword;
+
+                float m_compassCameraOffset;
+                float m_compassCameraOffsetTopDown;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -168,6 +171,9 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetAttractModePlaybackSpeed(const double playbackSpeed);
 
                 IApplicationConfigurationBuilder& SetAdminPassword(const std::string& adminPassword);
+
+                IApplicationConfigurationBuilder& SetCompassCameraOffset(const float compassCameraOffset);
+                IApplicationConfigurationBuilder& SetCompassCameraOffsetTopDown(const float compassCameraOffsetTopDown);
                 
                 std::string Decrypt(const std::string& message) const;
 
