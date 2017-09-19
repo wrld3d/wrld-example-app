@@ -1027,6 +1027,142 @@
       <Link>Assets\icon1_storage.png</Link>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\icon1_1.png">
+      <Link>Assets\icon1_1.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_10.png">
+      <Link>Assets\icon1_10.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_11.png">
+      <Link>Assets\icon1_11.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_12.png">
+      <Link>Assets\icon1_12.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_13.png">
+      <Link>Assets\icon1_13.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_14.png">
+      <Link>Assets\icon1_14.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_15.png">
+      <Link>Assets\icon1_15.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_16.png">
+      <Link>Assets\icon1_16.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_17.png">
+      <Link>Assets\icon1_17.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_18.png">
+      <Link>Assets\icon1_18.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_19.png">
+      <Link>Assets\icon1_19.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_2.png">
+      <Link>Assets\icon1_2.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_20.png">
+      <Link>Assets\icon1_20.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_3.png">
+      <Link>Assets\icon1_3.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_4.png">
+      <Link>Assets\icon1_4.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_5.png">
+      <Link>Assets\icon1_5.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_6.png">
+      <Link>Assets\icon1_6.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_7.png">
+      <Link>Assets\icon1_7.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_8.png">
+      <Link>Assets\icon1_8.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_9.png">
+      <Link>Assets\icon1_9.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\icon1_dir_elevator.png">
+      <Link>Assets\icon1_dir_elevator.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_elevator_h.png">
+      <Link>Assets\icon1_dir_elevator_h.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_enter_map.png">
+      <Link>Assets\icon1_dir_enter_map.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_enter_map_h.png">
+      <Link>Assets\icon1_dir_enter_map_h.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_ferry.png">
+      <Link>Assets\icon1_dir_ferry.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_ferry_train.png">
+      <Link>Assets\icon1_dir_ferry_train.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_fork_left.png">
+      <Link>Assets\icon1_dir_fork_left.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_fork_right.png">
+      <Link>Assets\icon1_dir_fork_right.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_merge.png">
+      <Link>Assets\icon1_dir_merge.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_ramp_left.png">
+      <Link>Assets\icon1_dir_ramp_left.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_ramp_right.png">
+      <Link>Assets\icon1_dir_ramp_right.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_roundabout_left.png">
+      <Link>Assets\icon1_dir_roundabout_left.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_roundabout_right.png">
+      <Link>Assets\icon1_dir_roundabout_right.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_route_end.png">
+      <Link>Assets\icon1_dir_route_end.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_route_start.png">
+      <Link>Assets\icon1_dir_route_start.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_straight_ahead.png">
+      <Link>Assets\icon1_dir_straight_ahead.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_turn_left.png">
+      <Link>Assets\icon1_dir_turn_left.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_turn_right.png">
+      <Link>Assets\icon1_dir_turn_right.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_turn_sharp_left.png">
+      <Link>Assets\icon1_dir_turn_sharp_left.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_turn_sharp_right.png">
+      <Link>Assets\icon1_dir_turn_sharp_right.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_u_turn_left.png">
+      <Link>Assets\icon1_dir_u_turn_left.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_u_turn_right.png">
+      <Link>Assets\icon1_dir_u_turn_right.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_veer_left.png">
+      <Link>Assets\icon1_dir_veer_left.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_dir_veer_right.png">
+      <Link>Assets\icon1_dir_veer_right.png</Link>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r
