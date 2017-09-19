@@ -446,6 +446,66 @@ set(resources ${resources}
         Resources/gps_marker.png
         Resources/gps_marker@2x.png
         Resources/gps_marker@3x.png
+        Resources/icon1_1.png
+        Resources/icon1_10.png
+        Resources/icon1_10@2x.png
+        Resources/icon1_10@3x.png
+        Resources/icon1_11.png
+        Resources/icon1_11@2x.png
+        Resources/icon1_11@3x.png
+        Resources/icon1_12.png
+        Resources/icon1_12@2x.png
+        Resources/icon1_12@3x.png
+        Resources/icon1_13.png
+        Resources/icon1_13@2x.png
+        Resources/icon1_13@3x.png
+        Resources/icon1_14.png
+        Resources/icon1_14@2x.png
+        Resources/icon1_14@3x.png
+        Resources/icon1_15.png
+        Resources/icon1_15@2x.png
+        Resources/icon1_15@3x.png
+        Resources/icon1_16.png
+        Resources/icon1_16@2x.png
+        Resources/icon1_16@3x.png
+        Resources/icon1_17.png
+        Resources/icon1_17@2x.png
+        Resources/icon1_17@3x.png
+        Resources/icon1_18.png
+        Resources/icon1_18@2x.png
+        Resources/icon1_18@3x.png
+        Resources/icon1_19.png
+        Resources/icon1_19@2x.png
+        Resources/icon1_19@3x.png
+        Resources/icon1_1@2x.png
+        Resources/icon1_1@3x.png
+        Resources/icon1_2.png
+        Resources/icon1_20.png
+        Resources/icon1_20@2x.png
+        Resources/icon1_20@3x.png
+        Resources/icon1_2@2x.png
+        Resources/icon1_2@3x.png
+        Resources/icon1_3.png
+        Resources/icon1_3@2x.png
+        Resources/icon1_3@3x.png
+        Resources/icon1_4.png
+        Resources/icon1_4@2x.png
+        Resources/icon1_4@3x.png
+        Resources/icon1_5.png
+        Resources/icon1_5@2x.png
+        Resources/icon1_5@3x.png
+        Resources/icon1_6.png
+        Resources/icon1_6@2x.png
+        Resources/icon1_6@3x.png
+        Resources/icon1_7.png
+        Resources/icon1_7@2x.png
+        Resources/icon1_7@3x.png
+        Resources/icon1_8.png
+        Resources/icon1_8@2x.png
+        Resources/icon1_8@3x.png
+        Resources/icon1_9.png
+        Resources/icon1_9@2x.png
+        Resources/icon1_9@3x.png
         Resources/icon1_accessible.png
         Resources/icon1_accessible@2x.png
         Resources/icon1_accessible@3x.png
@@ -575,6 +635,78 @@ set(resources ${resources}
         Resources/icon1_dining_room.png
         Resources/icon1_dining_room@2x.png
         Resources/icon1_dining_room@3x.png
+        Resources/icon1_dir_elevator.png
+        Resources/icon1_dir_elevator@2x.png
+        Resources/icon1_dir_elevator@3x.png
+        Resources/icon1_dir_elevator_h.png
+        Resources/icon1_dir_elevator_h@2x.png
+        Resources/icon1_dir_elevator_h@3x.png
+        Resources/icon1_dir_enter_map.png
+        Resources/icon1_dir_enter_map@2x.png
+        Resources/icon1_dir_enter_map@3x.png
+        Resources/icon1_dir_enter_map_h.png
+        Resources/icon1_dir_enter_map_h@2x.png
+        Resources/icon1_dir_enter_map_h@3x.png
+        Resources/icon1_dir_ferry.png
+        Resources/icon1_dir_ferry@2x.png
+        Resources/icon1_dir_ferry@3x.png
+        Resources/icon1_dir_ferry_train.png
+        Resources/icon1_dir_ferry_train@2x.png
+        Resources/icon1_dir_ferry_train@3x.png
+        Resources/icon1_dir_fork_left.png
+        Resources/icon1_dir_fork_left@2x.png
+        Resources/icon1_dir_fork_left@3x.png
+        Resources/icon1_dir_fork_right.png
+        Resources/icon1_dir_fork_right@2x.png
+        Resources/icon1_dir_fork_right@3x.png
+        Resources/icon1_dir_merge.png
+        Resources/icon1_dir_merge@2x.png
+        Resources/icon1_dir_merge@3x.png
+        Resources/icon1_dir_ramp_left.png
+        Resources/icon1_dir_ramp_left@2x.png
+        Resources/icon1_dir_ramp_left@3x.png
+        Resources/icon1_dir_ramp_right.png
+        Resources/icon1_dir_ramp_right@2x.png
+        Resources/icon1_dir_ramp_right@3x.png
+        Resources/icon1_dir_roundabout_left.png
+        Resources/icon1_dir_roundabout_left@2x.png
+        Resources/icon1_dir_roundabout_left@3x.png
+        Resources/icon1_dir_roundabout_right.png
+        Resources/icon1_dir_roundabout_right@2x.png
+        Resources/icon1_dir_roundabout_right@3x.png
+        Resources/icon1_dir_route_end.png
+        Resources/icon1_dir_route_end@2x.png
+        Resources/icon1_dir_route_end@3x.png
+        Resources/icon1_dir_route_start.png
+        Resources/icon1_dir_route_start@2x.png
+        Resources/icon1_dir_route_start@3x.png
+        Resources/icon1_dir_straight_ahead.png
+        Resources/icon1_dir_straight_ahead@2x.png
+        Resources/icon1_dir_straight_ahead@3x.png
+        Resources/icon1_dir_turn_left.png
+        Resources/icon1_dir_turn_left@2x.png
+        Resources/icon1_dir_turn_left@3x.png
+        Resources/icon1_dir_turn_right.png
+        Resources/icon1_dir_turn_right@2x.png
+        Resources/icon1_dir_turn_right@3x.png
+        Resources/icon1_dir_turn_sharp_left.png
+        Resources/icon1_dir_turn_sharp_left@2x.png
+        Resources/icon1_dir_turn_sharp_left@3x.png
+        Resources/icon1_dir_turn_sharp_right.png
+        Resources/icon1_dir_turn_sharp_right@2x.png
+        Resources/icon1_dir_turn_sharp_right@3x.png
+        Resources/icon1_dir_u_turn_left.png
+        Resources/icon1_dir_u_turn_left@2x.png
+        Resources/icon1_dir_u_turn_left@3x.png
+        Resources/icon1_dir_u_turn_right.png
+        Resources/icon1_dir_u_turn_right@2x.png
+        Resources/icon1_dir_u_turn_right@3x.png
+        Resources/icon1_dir_veer_left.png
+        Resources/icon1_dir_veer_left@2x.png
+        Resources/icon1_dir_veer_left@3x.png
+        Resources/icon1_dir_veer_right.png
+        Resources/icon1_dir_veer_right@2x.png
+        Resources/icon1_dir_veer_right@3x.png
         Resources/icon1_donuts.png
         Resources/icon1_donuts@2x.png
         Resources/icon1_donuts@3x.png
