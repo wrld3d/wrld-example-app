@@ -566,6 +566,9 @@ set(resources ${resources}
         Resources/icon1_department.png
         Resources/icon1_department@2x.png
         Resources/icon1_department@3x.png
+        Resources/icon1_desk.png
+        Resources/icon1_desk@2x.png
+        Resources/icon1_desk@3x.png
         Resources/icon1_digital_sign.png
         Resources/icon1_digital_sign@2x.png
         Resources/icon1_digital_sign@3x.png
@@ -731,9 +734,15 @@ set(resources ${resources}
         Resources/icon1_link.png
         Resources/icon1_link@2x.png
         Resources/icon1_link@3x.png
+        Resources/icon1_lockers.png
+        Resources/icon1_lockers@2x.png
+        Resources/icon1_lockers@3x.png
         Resources/icon1_lodge.png
         Resources/icon1_lodge@2x.png
         Resources/icon1_lodge@3x.png
+        Resources/icon1_logistics.png
+        Resources/icon1_logistics@2x.png
+        Resources/icon1_logistics@3x.png
         Resources/icon1_meeting_room.png
         Resources/icon1_meeting_room@2x.png
         Resources/icon1_meeting_room@3x.png
@@ -902,6 +911,9 @@ set(resources ${resources}
         Resources/icon1_steak.png
         Resources/icon1_steak@2x.png
         Resources/icon1_steak@3x.png
+        Resources/icon1_storage.png
+        Resources/icon1_storage@2x.png
+        Resources/icon1_storage@3x.png
         Resources/icon1_subway.png
         Resources/icon1_subway@2x.png
         Resources/icon1_subway@3x.png
