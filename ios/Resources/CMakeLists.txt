@@ -528,6 +528,9 @@ set(resources ${resources}
         Resources/icon1_blue_meter.png
         Resources/icon1_blue_meter@2x.png
         Resources/icon1_blue_meter@3x.png
+        Resources/icon1_border.png
+        Resources/icon1_border@2x.png
+        Resources/icon1_border@3x.png
         Resources/icon1_border_crossing.png
         Resources/icon1_border_crossing@2x.png
         Resources/icon1_border_crossing@3x.png
@@ -570,9 +573,9 @@ set(resources ${resources}
         Resources/icon1_click_and_collect.png
         Resources/icon1_click_and_collect@2x.png
         Resources/icon1_click_and_collect@3x.png
-        Resources/icon1_co2_detector.png
-        Resources/icon1_co2_detector@2x.png
-        Resources/icon1_co2_detector@3x.png
+        Resources/icon1_co_two_detector.png
+        Resources/icon1_co_two_detector@2x.png
+        Resources/icon1_co_two_detector@3x.png
         Resources/icon1_cocktail.png
         Resources/icon1_cocktail@2x.png
         Resources/icon1_cocktail@3x.png
@@ -600,6 +603,9 @@ set(resources ${resources}
         Resources/icon1_department.png
         Resources/icon1_department@2x.png
         Resources/icon1_department@3x.png
+        Resources/icon1_desk.png
+        Resources/icon1_desk@2x.png
+        Resources/icon1_desk@3x.png
         Resources/icon1_digital_sign.png
         Resources/icon1_digital_sign@2x.png
         Resources/icon1_digital_sign@3x.png
@@ -621,9 +627,9 @@ set(resources ${resources}
         Resources/icon1_education.png
         Resources/icon1_education@2x.png
         Resources/icon1_education@3x.png
-        Resources/icon1_electrical_meter.png
-        Resources/icon1_electrical_meter@2x.png
-        Resources/icon1_electrical_meter@3x.png
+        Resources/icon1_electricity_meter.png
+        Resources/icon1_electricity_meter@2x.png
+        Resources/icon1_electricity_meter@3x.png
         Resources/icon1_elevator.png
         Resources/icon1_elevator@2x.png
         Resources/icon1_elevator@3x.png
@@ -699,6 +705,9 @@ set(resources ${resources}
         Resources/icon1_fridge.png
         Resources/icon1_fridge@2x.png
         Resources/icon1_fridge@3x.png
+        Resources/icon1_fuel.png
+        Resources/icon1_fuel@2x.png
+        Resources/icon1_fuel@3x.png
         Resources/icon1_gallery.png
         Resources/icon1_gallery@2x.png
         Resources/icon1_gallery@3x.png
@@ -771,9 +780,15 @@ set(resources ${resources}
         Resources/icon1_link.png
         Resources/icon1_link@2x.png
         Resources/icon1_link@3x.png
+        Resources/icon1_lockers.png
+        Resources/icon1_lockers@2x.png
+        Resources/icon1_lockers@3x.png
         Resources/icon1_lodge.png
         Resources/icon1_lodge@2x.png
         Resources/icon1_lodge@3x.png
+        Resources/icon1_logistics.png
+        Resources/icon1_logistics@2x.png
+        Resources/icon1_logistics@3x.png
         Resources/icon1_male.png
         Resources/icon1_male@2x.png
         Resources/icon1_male@3x.png
@@ -813,9 +828,9 @@ set(resources ${resources}
         Resources/icon1_night.png
         Resources/icon1_night@2x.png
         Resources/icon1_night@3x.png
-        Resources/icon1_night_time.png
-        Resources/icon1_night_time@2x.png
-        Resources/icon1_night_time@3x.png
+        Resources/icon1_night_shopping.png
+        Resources/icon1_night_shopping@2x.png
+        Resources/icon1_night_shopping@3x.png
         Resources/icon1_observation_point.png
         Resources/icon1_observation_point@2x.png
         Resources/icon1_observation_point@3x.png
@@ -958,6 +973,9 @@ set(resources ${resources}
         Resources/icon1_steak.png
         Resources/icon1_steak@2x.png
         Resources/icon1_steak@3x.png
+        Resources/icon1_storage.png
+        Resources/icon1_storage@2x.png
+        Resources/icon1_storage@3x.png
         Resources/icon1_subway.png
         Resources/icon1_subway@2x.png
         Resources/icon1_subway@3x.png
@@ -1039,6 +1057,9 @@ set(resources ${resources}
         Resources/icon1_video.png
         Resources/icon1_video@2x.png
         Resources/icon1_video@3x.png
+        Resources/icon1_video_conference.png
+        Resources/icon1_video_conference@2x.png
+        Resources/icon1_video_conference@3x.png
         Resources/icon1_video_conference_telepresence.png
         Resources/icon1_video_conference_telepresence@2x.png
         Resources/icon1_video_conference_telepresence@3x.png
