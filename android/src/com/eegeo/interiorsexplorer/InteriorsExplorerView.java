@@ -309,7 +309,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     	{
     		m_floorButton.setY(newY);
     		
-    		m_floorList.setSelection(startFloorIndex);
+			m_floorList.smoothScrollToPositionFromTop(startFloorIndex, 0, 0);
     	}
     	
     	if(floorCount > m_maxFloorsViewableCount)
