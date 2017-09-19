@@ -78,6 +78,9 @@ namespace ExampleApp
 
             std::string m_adminPassword;
 
+            float m_compassCameraOffset;
+            float m_compassCameraOffsetTopDown;
+
         public:
             
             ApplicationConfiguration(const std::string& name,
@@ -130,7 +133,9 @@ namespace ExampleApp
                                      const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
                                      const long long attractModeTimeoutMs,
                                      const double attractModePlaybackSpeed,
-                                     const std::string& adminPassword);
+                                     const std::string& adminPassword,
+                                     const float compassCameraOffset,
+                                     const float compassCameraOffsetTopDown);
             
             std::string Name() const;
 
@@ -221,6 +226,9 @@ namespace ExampleApp
             const bool IsAttractModeEnabled() const;
 
             const std::string& OptionsAdminPassword() const;
+
+            const float CompassCameraOffset() const;
+            const float CompassCameraOffsetTopDown() const;
         };
     }
 }

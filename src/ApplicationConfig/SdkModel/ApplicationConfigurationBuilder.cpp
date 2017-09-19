@@ -62,6 +62,8 @@ namespace ExampleApp
             , m_fixedFloorIndex(0)
             , m_fixedHeadingDegrees(0.0)
             , m_adminPassword("")
+            , m_compassCameraOffset(0.0f)
+            , m_compassCameraOffsetTopDown(0.0f)
             {
                 
             }
@@ -340,6 +342,18 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetCompassCameraOffset(const float compassCameraOffset)
+            {
+                m_compassCameraOffset = compassCameraOffset;
+                return *this;
+            }
+
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetCompassCameraOffsetTopDown(const float compassCameraOffsetTopDown)
+            {
+                m_compassCameraOffsetTopDown = compassCameraOffsetTopDown;
+                return *this;
+            }
+
             std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
             {
                 return m_cipher.Decrypt(value);
@@ -413,7 +427,9 @@ namespace ExampleApp
                                                 m_attractModePositionSplinePoints,
                                                 m_attractModeTimeoutMs,
                                                 m_attractModePlaybackSpeed,
-                                                m_adminPassword);
+                                                m_adminPassword,
+                                                m_compassCameraOffset,
+                                                m_compassCameraOffsetTopDown);
             }
         }
     }
