@@ -1013,6 +1013,20 @@
       <Link>Assets\button_search_close_on.png</Link>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\icon1_desk.png">
+      <Link>Assets\icon1_desk.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_lockers.png">
+      <Link>Assets\icon1_lockers.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_logistics.png">
+      <Link>Assets\icon1_logistics.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\icon1_storage.png">
+      <Link>Assets\icon1_storage.png</Link>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r
