@@ -1,6 +1,86 @@
 {
     "icons": [
         {
+            "name": "1", 
+            "file": "icon1_1.png"
+        }, 
+        {
+            "name": "10", 
+            "file": "icon1_10.png"
+        }, 
+        {
+            "name": "11", 
+            "file": "icon1_11.png"
+        }, 
+        {
+            "name": "12", 
+            "file": "icon1_12.png"
+        }, 
+        {
+            "name": "13", 
+            "file": "icon1_13.png"
+        }, 
+        {
+            "name": "14", 
+            "file": "icon1_14.png"
+        }, 
+        {
+            "name": "15", 
+            "file": "icon1_15.png"
+        }, 
+        {
+            "name": "16", 
+            "file": "icon1_16.png"
+        }, 
+        {
+            "name": "17", 
+            "file": "icon1_17.png"
+        }, 
+        {
+            "name": "18", 
+            "file": "icon1_18.png"
+        }, 
+        {
+            "name": "19", 
+            "file": "icon1_19.png"
+        }, 
+        {
+            "name": "2", 
+            "file": "icon1_2.png"
+        }, 
+        {
+            "name": "20", 
+            "file": "icon1_20.png"
+        }, 
+        {
+            "name": "3", 
+            "file": "icon1_3.png"
+        }, 
+        {
+            "name": "4", 
+            "file": "icon1_4.png"
+        }, 
+        {
+            "name": "5", 
+            "file": "icon1_5.png"
+        }, 
+        {
+            "name": "6", 
+            "file": "icon1_6.png"
+        }, 
+        {
+            "name": "7", 
+            "file": "icon1_7.png"
+        }, 
+        {
+            "name": "8", 
+            "file": "icon1_8.png"
+        }, 
+        {
+            "name": "9", 
+            "file": "icon1_9.png"
+        }, 
+        {
             "name": "accessible", 
             "file": "icon1_accessible.png"
         }, 
@@ -161,12 +241,112 @@
             "file": "icon1_department.png"
         }, 
         {
+            "name": "desk", 
+            "file": "icon1_desk.png"
+        }, 
+        {
             "name": "digital_sign", 
             "file": "icon1_digital_sign.png"
         }, 
         {
             "name": "dining_room", 
             "file": "icon1_dining_room.png"
+        }, 
+        {
+            "name": "dir_elevator", 
+            "file": "icon1_dir_elevator.png"
+        }, 
+        {
+            "name": "dir_elevator_h", 
+            "file": "icon1_dir_elevator_h.png"
+        }, 
+        {
+            "name": "dir_enter_map", 
+            "file": "icon1_dir_enter_map.png"
+        }, 
+        {
+            "name": "dir_enter_map_h", 
+            "file": "icon1_dir_enter_map_h.png"
+        }, 
+        {
+            "name": "dir_ferry", 
+            "file": "icon1_dir_ferry.png"
+        }, 
+        {
+            "name": "dir_ferry_train", 
+            "file": "icon1_dir_ferry_train.png"
+        }, 
+        {
+            "name": "dir_fork_left", 
+            "file": "icon1_dir_fork_left.png"
+        }, 
+        {
+            "name": "dir_fork_right", 
+            "file": "icon1_dir_fork_right.png"
+        }, 
+        {
+            "name": "dir_merge", 
+            "file": "icon1_dir_merge.png"
+        }, 
+        {
+            "name": "dir_ramp_left", 
+            "file": "icon1_dir_ramp_left.png"
+        }, 
+        {
+            "name": "dir_ramp_right", 
+            "file": "icon1_dir_ramp_right.png"
+        }, 
+        {
+            "name": "dir_roundabout_left", 
+            "file": "icon1_dir_roundabout_left.png"
+        }, 
+        {
+            "name": "dir_roundabout_right", 
+            "file": "icon1_dir_roundabout_right.png"
+        }, 
+        {
+            "name": "dir_route_end", 
+            "file": "icon1_dir_route_end.png"
+        }, 
+        {
+            "name": "dir_route_start", 
+            "file": "icon1_dir_route_start.png"
+        }, 
+        {
+            "name": "dir_straight_ahead", 
+            "file": "icon1_dir_straight_ahead.png"
+        }, 
+        {
+            "name": "dir_turn_left", 
+            "file": "icon1_dir_turn_left.png"
+        }, 
+        {
+            "name": "dir_turn_right", 
+            "file": "icon1_dir_turn_right.png"
+        }, 
+        {
+            "name": "dir_turn_sharp_left", 
+            "file": "icon1_dir_turn_sharp_left.png"
+        }, 
+        {
+            "name": "dir_turn_sharp_right", 
+            "file": "icon1_dir_turn_sharp_right.png"
+        }, 
+        {
+            "name": "dir_u_turn_left", 
+            "file": "icon1_dir_u_turn_left.png"
+        }, 
+        {
+            "name": "dir_u_turn_right", 
+            "file": "icon1_dir_u_turn_right.png"
+        }, 
+        {
+            "name": "dir_veer_left", 
+            "file": "icon1_dir_veer_left.png"
+        }, 
+        {
+            "name": "dir_veer_right", 
+            "file": "icon1_dir_veer_right.png"
         }, 
         {
             "name": "donuts", 
@@ -381,8 +561,16 @@
             "file": "icon1_link.png"
         }, 
         {
+            "name": "lockers", 
+            "file": "icon1_lockers.png"
+        }, 
+        {
             "name": "lodge", 
             "file": "icon1_lodge.png"
+        }, 
+        {
+            "name": "logistics", 
+            "file": "icon1_logistics.png"
         }, 
         {
             "name": "meeting_room", 
@@ -607,6 +795,10 @@
         {
             "name": "steak", 
             "file": "icon1_steak.png"
+        }, 
+        {
+            "name": "storage", 
+            "file": "icon1_storage.png"
         }, 
         {
             "name": "subway", 
