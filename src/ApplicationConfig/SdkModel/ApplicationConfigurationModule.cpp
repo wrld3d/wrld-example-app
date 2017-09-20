@@ -64,6 +64,9 @@ namespace ExampleApp
                     const std::string hockeyAppId = "";
 
                     const std::vector<std::vector<std::string>> customKeyboardLayout = {};
+                    
+                    const std::string startLocationIndoorId = "";
+                    const std::string startLocationFloorId = "";
 
                     return ApplicationConfiguration("Eegeo Example App",
                         emptyEegeoApiKey,
@@ -76,6 +79,8 @@ namespace ExampleApp
                         Eegeo::Space::LatLongAltitude(37.7858f, -122.401f, 2.7),
                         1781.0f,
                         0.f,
+                        startLocationIndoorId,
+                        startLocationFloorId,
                         tryStartAtGpsLocation,
                         shouldStartFullscreen,
                         shouldPerformStartUpSearch,

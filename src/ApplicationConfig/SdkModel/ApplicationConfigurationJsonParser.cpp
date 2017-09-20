@@ -20,6 +20,8 @@ namespace ExampleApp
                 const std::string StartLocationAltitude = "start_location_altitude";
                 const std::string StartLocationDistance = "start_location_distance";
                 const std::string StartLocationOrientationDegrees = "start_location_orientation_degrees";
+                const std::string StartLocationIndoorId = "start_location_indoor_id";
+                const std::string StartLocationFloorId = "start_location_floor_id";
                 const std::string TryStartAtGpsLocation = "try_start_at_gps_location";
                 const std::string PerformStartUpSearch = "perform_start_up_search";
                 const std::string StartUpSearchTag = "start_up_search_tag";
@@ -249,6 +251,8 @@ namespace ExampleApp
                 const double startLocationAltitude = ParseDoubleOrDefault(document, StartLocationAltitude, m_defaultConfig.InterestLocation().GetAltitude());
                 const double startLocationDistance = ParseDoubleOrDefault(document, StartLocationDistance, m_defaultConfig.DistanceToInterestMetres());
                 const double startLocationOrientationDegrees = ParseDoubleOrDefault(document, StartLocationOrientationDegrees, m_defaultConfig.OrientationDegrees());
+                const std::string& startLocationIndoorId = ParseStringOrDefault(document, StartLocationIndoorId, m_defaultConfig.IndoorId());
+                const std::string& startLocationFloorId = ParseStringOrDefault(document, StartLocationFloorId, m_defaultConfig.FloorId());
 
                 const Eegeo::Space::LatLongAltitude& lla = Eegeo::Space::LatLongAltitude::FromDegrees(startLocationLatitude,
                                                                                                    startLocationLongitude,
@@ -329,6 +333,8 @@ namespace ExampleApp
                     lla,
                     startLocationDistance,
                     startLocationOrientationDegrees,
+                    startLocationIndoorId,
+                    startLocationFloorId,
                     tryStartAtGpsLocation,
                     startFullscreen,
                     performStartUpSearch,

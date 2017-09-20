@@ -18,6 +18,8 @@ namespace ExampleApp
             const Eegeo::Space::LatLongAltitude& interestLocation,
             float distanceToInterestMetres,
             float orientationDegrees,
+            const std::string& indoorId,
+            const std::string& floorId,
             bool tryStartAtGpsLocation,
             bool startFullscreen,
             bool performStartUpSearch,
@@ -62,6 +64,8 @@ namespace ExampleApp
         , m_interestLocation(interestLocation)
         , m_distanceToInterestMetres(distanceToInterestMetres)
         , m_orientationDegrees(orientationDegrees)
+        , m_indoorId(indoorId)
+        , m_floorId(floorId)
         , m_tryStartAtGpsLocation(tryStartAtGpsLocation)
         , m_shouldStartFullscreen(startFullscreen)
         , m_shouldPerformStartUpSearch(performStartUpSearch)
@@ -150,6 +154,16 @@ namespace ExampleApp
         float ApplicationConfiguration::OrientationDegrees() const
         {
             return m_orientationDegrees;
+        }
+        
+        std::string ApplicationConfiguration::IndoorId() const
+        {
+            return m_indoorId;
+        }
+        
+        std::string ApplicationConfiguration::FloorId() const
+        {
+            return m_floorId;
         }
         
         bool ApplicationConfiguration::TryStartAtGpsLocation() const
