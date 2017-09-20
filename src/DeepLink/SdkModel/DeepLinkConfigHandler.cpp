@@ -109,7 +109,7 @@ namespace ExampleApp
                         }
                         
                         const float newHeading = Eegeo::Math::Deg2Rad(applicationConfig.OrientationDegrees());
-                        int floorIndex = applicationConfig.FloorId().empty() ? 0 : std::stoi(applicationConfig.FloorId());
+                        int floorIndex = applicationConfig.FloorId().empty() ? 0 : static_cast<int>(std::strtol(applicationConfig.FloorId().c_str(), NULL, 10));
                         m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), newHeading, applicationConfig.IndoorId(), floorIndex);
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
                         m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());
