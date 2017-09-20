@@ -177,7 +177,10 @@ namespace ExampleApp
             
             void SearchMenuController::OnSearchItemSelected(int& index)
             {
-                m_searchSectionViewModel.GetItemAtIndex(index).MenuOption().Select();
+                if(index < m_searchSectionViewModel.GetTotalItemCount())
+                {
+                    m_searchSectionViewModel.GetItemAtIndex(index).MenuOption().Select();
+                }
             }
             
             void SearchMenuController::OnSearchItemSelectedMessage(const Automation::SelectMenuItemMessage& message)
