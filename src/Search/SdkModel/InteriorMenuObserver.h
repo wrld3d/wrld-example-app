@@ -31,6 +31,8 @@ namespace ExampleApp
                 
                 void UpdateDefaultOutdoorSearchMenuItems(const std::string config);
                 
+                void ApplyCustomInteriorSearchMenuItems(const Eegeo::Resources::Interiors::InteriorId& interiorId);
+                
             private:
                 enum TransitionState
                 {
@@ -62,6 +64,7 @@ namespace ExampleApp
                 
                 bool m_hasSelectedInterior;
                 bool m_hasSearchMenuItems;
+                bool m_shouldOverrideIndoorSearchMenuItems;
 
                 bool m_loadInteriorOnAdd;
                 Eegeo::Resources::Interiors::InteriorId m_idToBeLoaded;

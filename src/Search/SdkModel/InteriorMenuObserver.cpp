@@ -26,6 +26,7 @@ namespace ExampleApp
             , m_yelpCategoryMapperUpdater(yelpCategoryMapperUpdater)
             , m_defaultFindMenuEntries(defaultFindMenuEntries)
             , m_loadInteriorOnAdd(false)
+            , m_shouldOverrideIndoorSearchMenuItems(false)
             , m_idToBeLoaded()
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
@@ -72,7 +73,7 @@ namespace ExampleApp
                 NotifyInteriorTagsUpdated();
             }
             
-            void InteriorMenuObserver::OnEnterInterior(const Eegeo::Resources::Interiors::InteriorId& interiorId)
+            void InteriorMenuObserver::ApplyCustomInteriorSearchMenuItems(const Eegeo::Resources::Interiors::InteriorId& interiorId)
             {
                 const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataDto* dto = m_interiorMetaDataRepo.Get(interiorId);
                 
@@ -151,6 +152,14 @@ namespace ExampleApp
                             }
                         }
                     }
+                }
+            }
+            
+            void InteriorMenuObserver::OnEnterInterior(const Eegeo::Resources::Interiors::InteriorId& interiorId)
+            {
+                if(!m_shouldOverrideIndoorSearchMenuItems)
+                {
+                    ApplyCustomInteriorSearchMenuItems(interiorId);
                 }
             }
             void InteriorMenuObserver::ClearTagSearchRepository()
@@ -264,6 +273,12 @@ namespace ExampleApp
                 else
                 {
                     Eegeo_TTY("outdoor_search_menu_items not a member or not an array");
+                }
+                
+                itemKey = "override_indoor_search_menu_items";
+                if (document.HasMember(itemKey) && document[itemKey].IsBool())
+                {
+                    m_shouldOverrideIndoorSearchMenuItems = document[itemKey].GetBool();
                 }
             }
 
