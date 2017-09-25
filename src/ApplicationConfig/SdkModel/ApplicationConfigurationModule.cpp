@@ -66,7 +66,7 @@ namespace ExampleApp
                     const std::vector<std::vector<std::string>> customKeyboardLayout = {};
                     
                     const std::string startLocationIndoorId = "";
-                    const std::string startLocationFloorId = "";
+                    const int startLocationFloorIndex = 0;
 
                     return ApplicationConfiguration("Eegeo Example App",
                         emptyEegeoApiKey,
@@ -80,7 +80,7 @@ namespace ExampleApp
                         1781.0f,
                         0.f,
                         startLocationIndoorId,
-                        startLocationFloorId,
+                        startLocationFloorIndex,
                         tryStartAtGpsLocation,
                         shouldStartFullscreen,
                         shouldPerformStartUpSearch,

@@ -16,6 +16,7 @@
 #include "IAlertBoxFactory.h"
 #include "Location.h"
 #include "ICallback.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
@@ -39,7 +40,9 @@ namespace ExampleApp
                                       Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                       AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
                                       Eegeo::Location::NavigationService& navigationService,
-                                      Eegeo::Web::ApiTokenService& apiTokenService);
+                                      Eegeo::Web::ApiTokenService& apiTokenService,
+                                      Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                      const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
                 ~DeepLinkConfigHandler();
                 void HandleDeepLink(const AppInterface::UrlData& data);
             private:
@@ -60,6 +63,8 @@ namespace ExampleApp
                 Eegeo::Web::ApiTokenService& m_apiTokenService;
                 std::string m_previouslyLoadedCoverageTreeUrl;
                 std::string m_previouslyLoadedThemeManifestUrl;
+                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                const ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
                 
                 Eegeo::Helpers::TCallback1<DeepLinkConfigHandler, const Eegeo::Streaming::CoverageTrees::CoverageTreeManifest> m_newManifestCallback;
                 void HandleNewCoverageTreeManifestLoaded(const Eegeo::Streaming::CoverageTrees::CoverageTreeManifest& manifest);

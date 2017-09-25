@@ -6,6 +6,8 @@
     "start_location_altitude": 2.7,
     "start_location_distance": 1781.0,
     "start_location_orientation_degrees": 0.0,
+    "start_location_indoor_id": "",
+    "start_location_floor_index": "",
     "try_start_at_gps_location": true,
     "perform_start_up_search": false,
     "start_up_search_tag": "",

@@ -431,6 +431,12 @@ namespace ExampleApp
         InitialiseAppState(nativeUIFactories);
 
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
+        
+        if (!applicationConfiguration.TryStartAtGpsLocation())
+        {
+            const float heading = Eegeo::Math::Deg2Rad(applicationConfiguration.OrientationDegrees());
+            m_pCameraTransitionController->StartTransitionTo(location.ToECEF(), m_applicationConfiguration.DistanceToInterestMetres(), heading, m_applicationConfiguration.IndoorId(), applicationConfiguration.FloorIndex());
+        }
 
         m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(
             *m_pCameraTransitionController,
@@ -445,7 +451,9 @@ namespace ExampleApp
             m_pSearchModule->GetSearchQueryPerformer(),
             m_pAboutPageModule->GetAboutPageViewModel(),
             *m_pNavigationService,
-            m_pWorld->GetApiTokenService());
+            m_pWorld->GetApiTokenService(),
+            interiorsPresentationModule.GetInteriorSelectionModel(),
+            *m_pAppModeModel);
 
         if (applicationConfiguration.HasMapScene())
         {

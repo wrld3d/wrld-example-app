@@ -29,7 +29,7 @@ namespace ExampleApp
             float m_distanceToInterestMetres;
             float m_orientationDegrees;
             std::string m_indoorId;
-            std::string m_floorId;
+            int m_floorIndex;
             bool m_tryStartAtGpsLocation;
             bool m_shouldStartFullscreen;
             bool m_shouldPerformStartUpSearch;
@@ -87,7 +87,7 @@ namespace ExampleApp
 				float distanceToInterestMetres,
 				float orientationDegrees,
                 const std::string& indoorId,
-                const std::string& floorId,
+                const int floorIndex,
 				bool tryStartAtGpsLocation,
 				bool startFullscreen,
 				bool performStartUpSearch,
@@ -146,7 +146,7 @@ namespace ExampleApp
             
             std::string IndoorId() const;
             
-            std::string FloorId() const;
+            int FloorIndex() const;
             
             bool TryStartAtGpsLocation() const;
 

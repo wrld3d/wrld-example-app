@@ -12,6 +12,7 @@
 #include "ICityThemesService.h"
 #include "NavigationService.h"
 #include "CityThemeData.h"
+#include "IAppModeModel.h"
 
 namespace ExampleApp
 {
@@ -31,7 +32,9 @@ namespace ExampleApp
                                                          Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                          AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
                                                          Eegeo::Location::NavigationService& navigationService,
-                                                         Eegeo::Web::ApiTokenService& apiTokenService)
+                                                         Eegeo::Web::ApiTokenService& apiTokenService,
+                                                         Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                         const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel)
             :m_webRequestFactory(webRequestFactory)
             ,m_configRequestCompleteCallback(this, &DeepLinkConfigHandler::HandleConfigResponse)
             ,m_failAlertHandler(this, &DeepLinkConfigHandler::OnFailAlertBoxDismissed)
@@ -51,6 +54,9 @@ namespace ExampleApp
             ,m_previouslyLoadedThemeManifestUrl("")
             ,m_newManifestCallback(this, &DeepLinkConfigHandler::HandleNewCoverageTreeManifestLoaded)
             ,m_newThemeDataCallback(this, &DeepLinkConfigHandler::HandleNewThemeManifestLoaded)
+            ,m_interiorSelectionModel(interiorSelectionModel)
+            ,m_appModeModel(appModeModel)
+
             {
                 m_manifestNotifier.AddManifestLoadedObserver(m_newManifestCallback);
                 m_cityThemeService.SubscribeSharedThemeDataChanged(m_newThemeDataCallback);
@@ -109,8 +115,11 @@ namespace ExampleApp
                         }
                         
                         const float newHeading = Eegeo::Math::Deg2Rad(applicationConfig.OrientationDegrees());
-                        int floorIndex = applicationConfig.FloorId().empty() ? 0 : static_cast<int>(std::strtol(applicationConfig.FloorId().c_str(), NULL, 10));
-                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), newHeading, applicationConfig.IndoorId(), floorIndex);
+                        if(m_appModeModel.GetAppMode() != ExampleApp::AppModes::SdkModel::InteriorMode)
+                        {
+                            m_interiorSelectionModel.ClearSelection();
+                        }
+                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), newHeading, applicationConfig.IndoorId(), applicationConfig.FloorIndex());
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
                         m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());
 

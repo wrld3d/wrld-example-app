@@ -34,7 +34,9 @@ namespace ExampleApp
                                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                                            AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
                                                                            Eegeo::Location::NavigationService& navigationService,
-                                                                           Eegeo::Web::ApiTokenService& apiTokenService)
+                                                                           Eegeo::Web::ApiTokenService& apiTokenService,
+                                                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                                                           const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel)
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
                 DeepLinkLocationHandler* locationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
@@ -54,7 +56,9 @@ namespace ExampleApp
                     searchQueryPerformer,
                     aboutPageViewModule,
                     navigationService,
-                    apiTokenService);
+                    apiTokenService,
+                    interiorSelectionModel,
+                    appModeModel);
 
                     m_pDeepLinkModel->AddRoute(MYMAP_PATH, configHandler);
                 }
