@@ -37,6 +37,7 @@ include_directories(
     libs/eegeo/platform/Base/Model
     libs/eegeo/platform/BlueSphere
     libs/eegeo/platform/BuildingFootprints
+    libs/eegeo/platform/BuildingHighlight
     libs/eegeo/platform/Camera
     libs/eegeo/platform/Camera/GlobeCamera
     libs/eegeo/platform/Camera/SplinePlayback
@@ -84,6 +85,7 @@ include_directories(
     libs/eegeo/platform/Emscripten
     libs/eegeo/platform/Emscripten/Debug
     libs/eegeo/platform/Emscripten/Input
+    libs/eegeo/platform/FeatureInteraction
     libs/eegeo/platform/Fireworks
     libs/eegeo/platform/Fonts
     libs/eegeo/platform/Fonts/BMFont
