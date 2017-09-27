@@ -92,7 +92,6 @@
             android:id="@+id/content_container"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-			android:layout_above="@+id/footer_line"
 			android:layout_below="@+id/search_result_title_header_line"
 			android:background="@color/white">
          
