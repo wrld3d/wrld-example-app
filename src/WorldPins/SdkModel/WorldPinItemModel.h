@@ -65,6 +65,8 @@ namespace ExampleApp
 
                 const WorldPinItemModelId& Id() const;
 
+                void SetId(const WorldPinItemModelId& worldPinItemModelId);
+
                 void Select();
 
                 bool IsHidden() const;

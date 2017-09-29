@@ -459,6 +459,15 @@
         "halo_color_rgba": "3A3A3AFF",
         "halo_width": 2.0,
         "halo_hardness": 1.0
+    },
+    {
+        "name": "selected_default",
+        "label_resource_font_binding": "markers",
+        "size_px": 11,
+        "glyph_color_rgba": "FFFFFFFF",
+        "halo_color_rgba": "1256B0FF",
+        "halo_width": 2.0,
+        "halo_hardness": 1.0
     }
     ],
     "LabelIconStyles":[
@@ -479,9 +488,54 @@
         "size_px": 28,
         "color": "FFFFFFFF",
         "masked_color": "F0F0F080"
+    },
+    {
+        "name": "selected_highlight",
+        "size_px": 42,
+        "color": "FFFFFFFF",
+        "masked_color": "F0F0F080"
     }
 	],
 	"LabelStyles": [{
+		"name": "selected_highlight",
+		"label_text_style_name": "place_name_default",
+		"label_icon_style_name": "selected_highlight",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "left",
+        "label_vertical_alignment": "middle",
+        "constraint_radius_scale": 1.0,
+        "pickable": true,
+        "fade_duration": 0.25,
+        "screen_margin": 41.0,
+        "screen_margin_hiding": "if_icon_outside_margin",
+        "stencil_mode": "always",
+        "initially_faded_out":true,
+        "priority": 0,
+		"ignore_occlusion": true,
+		"x_offset": 0.5,
+		"icon_y_offset": -3
+	},
+	{
+		"name": "selected_default",
+		"label_text_style_name": "selected_default",
+		"label_icon_style_name": "marker_default",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "left",
+        "label_vertical_alignment": "middle",
+        "constraint_radius_scale": 1.0,
+        "pickable": true,
+        "fade_duration": 0.25,
+        "screen_margin": 36.0,
+        "screen_margin_hiding": "if_icon_outside_margin",
+        "stencil_mode": "always",
+        "initially_faded_out":false,
+        "priority": 0,
+		"ignore_occlusion": true,
+		"x_offset": 0.5
+	},
+	{
 		"name": "road_default",
 		"label_text_style_name": "road_default",
 		"label_orientation": "map_feature_auto_upright",
@@ -903,6 +957,23 @@
         "screen_margin_hiding": "if_icon_outside_margin",
         "stencil_mode": "always",
         "initially_faded_out":true,
+        "priority": 0
+    },
+	{
+        "name": "marker_faded_in",
+        "label_text_style_name": "marker_default",
+        "label_icon_style_name": "marker_default",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "left",
+        "label_vertical_alignment": "middle",
+        "constraint_radius_scale": 1.0,
+        "pickable": true,
+        "fade_duration": 0.25,
+        "screen_margin": 36.0,
+        "screen_margin_hiding": "if_icon_outside_margin",
+        "stencil_mode": "always",
+        "initially_faded_out":false,
         "priority": 0
     }
     ],

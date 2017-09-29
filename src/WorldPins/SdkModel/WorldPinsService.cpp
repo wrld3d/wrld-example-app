@@ -33,6 +33,8 @@ namespace ExampleApp
             , m_onSearchResultSelected(this, &WorldPinsService::OnMenuItemSelected)
             , m_messageBus(messageBus)
             , m_navigationService(navigationService)
+            , m_pSelectedPinHighlight(nullptr)
+            , m_selectedPinId(-1)
             {
                 m_sdkModelDomainEventBus.Subscribe(m_worldPinHiddenStateChangedMessageBinding);
                 m_messageBus.SubscribeNative(m_onSearchResultSelected);
@@ -76,9 +78,9 @@ namespace ExampleApp
                                                           const std::string& pinIconKey,
                                                           float heightAboveTerrainMetres,
                                                           int visibilityMask,
-                                                          std::string identifier)
+                                                          std::string identifier,
+                                                          std::string labelStyleName)
             {
-            
                 const auto& markerCreateParams = Eegeo::Markers::MarkerBuilder()
                     .SetLocation(location.GetLatitudeInDegrees(), location.GetLongitudeInDegrees())
                     .SetLabelText(worldPinFocusData.title)
@@ -86,10 +88,13 @@ namespace ExampleApp
                     // temp workaround to specify interior floor by zero-based index rather than 'floor number' id (MPLY-8062)
                     .SetInteriorWithFloorIndex(worldPinInteriorData.building.Value(), worldPinInteriorData.floor)
                     .SetSubPriority(worldPinFocusData.priorityOrder)
+                    .SetLabelStyle(labelStyleName)
                     .Build();
                 
                 const Eegeo::Markers::IMarker::IdType markerId = m_markerService.Create(markerCreateParams);
                 const WorldPinItemModel::WorldPinItemModelId pinId = markerId;
+                
+                m_pinsToIconKeys[pinId] = pinIconKey;
                 
                 Eegeo_ASSERT(m_pinsToSelectionHandlers.find(pinId) == m_pinsToSelectionHandlers.end(), "Attempting to add same pin ID %d twice.\n", pinId);
                 m_pinsToSelectionHandlers[pinId] = pSelectionHandler;
@@ -127,9 +132,131 @@ namespace ExampleApp
                 IWorldPinVisibilityStateChangedHandler* pVisibilityHandler = m_pinsToVisbilityChangedHandlers.at(pinId);
                 m_pinsToVisbilityChangedHandlers.erase(pinId);
                 Eegeo_DELETE pVisibilityHandler;
+
+                if(!m_selectedSearchResultId.empty())
+                {
+                    const WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(m_selectedSearchResultId);
+                    if (pWorldPinItemModel != nullptr && pWorldPinItemModel->Id() == pinId)
+                    {
+                        RemoveHighlightPin(m_pSelectedPinHighlight);
+                    }
+                }
                 
                 m_worldPinsRepository.RemoveItem(pPinItemModel);
                 Eegeo_DELETE pPinItemModel;
+            }
+
+            void WorldPinsService::AddHighlight(WorldPinItemModel* pinItemModel)
+            {
+                if(pinItemModel != nullptr)
+                {
+                    bool pinAlreadySelected = m_selectedPinId == pinItemModel->Id();
+
+                    UpdateLabelStyle(pinItemModel, "selected_default");
+
+                    m_selectedSearchResultId = pinItemModel->GetIdentifier();
+                    m_selectedPinId = pinItemModel->Id();
+
+                    const auto& markerId = GetMarkerIdForWorldPinItemModelId(pinItemModel->Id());
+                    Eegeo::Markers::IMarker& marker = m_markerService.Get(markerId);
+
+                    if (m_pSelectedPinHighlight == nullptr || !pinAlreadySelected)
+                    {
+                        AddHighlightPin(pinItemModel, marker);
+                    }
+
+                    const int highPriorityDrawOrder = 0;
+                    marker.SetSubPriority(highPriorityDrawOrder);
+                }
+                else
+                {
+                    m_selectedSearchResultId = "";
+                    m_selectedPinId = -1;
+                }
+            }
+
+            void WorldPinsService::AddHighlightPin(const WorldPinItemModel* pinItemModel, const Eegeo::Markers::IMarker& marker)
+            {
+                const IWorldPinsInFocusModel& inFocusModel = pinItemModel->GetInFocusModel();
+                const WorldPinFocusData focusData = WorldPinFocusData("", "", "", "", "", 0, inFocusModel.GetPriorityOrder() + 1);
+
+                const Eegeo::Space::LatLong& location = marker.GetAnchorLocation().GetLatLong();
+
+                m_pSelectedPinHighlight = AddPin(m_pinsToSelectionHandlers[pinItemModel->Id()],
+                                                    m_pinsToVisbilityChangedHandlers[pinItemModel->Id()],
+                                                    focusData,
+                                                    pinItemModel->IsInterior(),
+                                                    pinItemModel->GetInteriorData(),
+                                                    location,
+                                                    "selected_pin",
+                                                    0,
+                                                    pinItemModel->VisibilityMask(),
+                                                    "selected_highlight",
+                                                    "selected_highlight");
+            }
+
+            void WorldPinsService::RemoveHighlight(SdkModel::WorldPinItemModel::WorldPinItemModelId id)
+            {
+                WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(id);
+                if (pWorldPinItemModel != nullptr)
+                {
+                    UpdateLabelStyle(pWorldPinItemModel, "marker_faded_in");
+                    RemoveHighlightPin(m_pSelectedPinHighlight);
+                }
+            }
+
+            void WorldPinsService::RemoveHighlightPin(WorldPinItemModel* pPinItemModel)
+            {
+                if (m_pSelectedPinHighlight != nullptr)
+                {
+                    const Eegeo::Markers::IMarker::IdType markerId = GetWorldPinItemModelIdForMarkerId(pPinItemModel->Id());
+                    m_markerService.Destroy(markerId);
+
+                    m_worldPinsRepository.RemoveItem(pPinItemModel);
+                    Eegeo_DELETE pPinItemModel;
+
+                    m_pSelectedPinHighlight = nullptr;
+                }
+            }
+
+            void WorldPinsService::UpdateLabelStyle(WorldPinItemModel* pinItemModel, const std::string& labelStyleName)
+            {
+                const auto& oldMarkerId = GetMarkerIdForWorldPinItemModelId(pinItemModel->Id());
+                const Eegeo::Space::LatLong& location = m_markerService.Get(oldMarkerId).GetAnchorLocation().GetLatLong();
+                m_markerService.Destroy(oldMarkerId);
+
+                const IWorldPinsInFocusModel& inFocusModel = pinItemModel->GetInFocusModel();
+                const WorldPinInteriorData interiorData = pinItemModel->GetInteriorData();
+
+                WorldPinItemModel::WorldPinItemModelId pinId = pinItemModel->Id();
+
+                IWorldPinSelectionHandler* pSelectionHandler = m_pinsToSelectionHandlers.at(pinId);
+                m_pinsToSelectionHandlers.erase(pinId);
+
+                IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler = m_pinsToVisbilityChangedHandlers.at(pinId);
+                m_pinsToVisbilityChangedHandlers.erase(pinId);
+
+                const std::string iconKey = m_pinsToIconKeys.at(pinId);
+                m_pinsToIconKeys.erase(pinId);
+
+                const auto& markerCreateParams = Eegeo::Markers::MarkerBuilder()
+                    .SetLocation(location.GetLatitudeInDegrees(), location.GetLongitudeInDegrees())
+                    .SetLabelText(inFocusModel.GetTitle())
+                    .SetLabelIcon(iconKey)
+                    // temp workaround to specify interior floor by zero-based index rather than 'floor number' id (MPLY-8062)
+                    .SetInteriorWithFloorIndex(interiorData.building.Value(), interiorData.floor)
+                    .SetSubPriority(inFocusModel.GetPriorityOrder())
+                    .SetLabelStyle(labelStyleName)
+                    .Build();
+
+                const Eegeo::Markers::IMarker::IdType markerId = m_markerService.Create(markerCreateParams);
+                pinId = markerId;
+
+                m_pinsToSelectionHandlers[pinId] = pSelectionHandler;
+                m_pinsToVisbilityChangedHandlers[pinId] = pVisibilityStateChangedHandler;
+                m_pinsToIconKeys[pinId] = iconKey;
+
+                pinItemModel->SetId(pinId);
             }
             
             bool WorldPinsService::HandleTouchTap(const Eegeo::v2& screenTapPoint)
@@ -147,8 +274,16 @@ namespace ExampleApp
                 IWorldPinSelectionHandler* selectionHandler = GetSelectionHandlerForPin(worldPinItemModelId);
                 if(selectionHandler != NULL)
                 {
+                    if(m_selectedPinId != worldPinItemModelId)
+                    {
+                        RemoveHighlight(m_selectedPinId);
+                    }
+                    
                     selectionHandler->SelectPin();
                     ClearSelectedSearchResult();
+
+                    WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(worldPinItemModelId);
+                    AddHighlight(pWorldPinItemModel);
                 }
             }
             
@@ -175,7 +310,13 @@ namespace ExampleApp
                 auto pickedMarkerId = Eegeo::Markers::IMarker::InvalidId;
                 if (m_markerService.TryPick(screenPoint, pickedMarkerId))
                 {
-                    const WorldPinItemModel::WorldPinItemModelId pinId = GetWorldPinItemModelIdForMarkerId(pickedMarkerId);
+                    WorldPinItemModel::WorldPinItemModelId pinId = GetWorldPinItemModelIdForMarkerId(pickedMarkerId);
+
+                    if (m_pSelectedPinHighlight != nullptr && pinId == m_pSelectedPinHighlight->Id())
+                    {
+                        pinId = m_selectedPinId;
+                    }
+
                     SelectPin(pinId);
                     return true;
                 }
@@ -201,24 +342,41 @@ namespace ExampleApp
                 
                 return nullptr;
             }
+
+            WorldPinItemModel* WorldPinsService::FindWorldPinItemModelOrNull(SdkModel::WorldPinItemModel::WorldPinItemModelId id) const
+            {
+                if (id < 0)
+                {
+                    return nullptr;
+                }
+
+                for (int i = 0; i < m_worldPinsRepository.GetItemCount(); i++)
+                {
+                    WorldPinItemModel* pWorldPinItemModel = m_worldPinsRepository.GetItemAtIndex(i);
+                    if (pWorldPinItemModel->Id() == id)
+                    {
+                        return pWorldPinItemModel;
+                    }
+                }
+
+                return nullptr;
+            }
             
             void WorldPinsService::OnMenuItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
             {
+                if (m_selectedSearchResultId != message.ModelIdentifier())
+                {
+                    RemoveHighlight(m_selectedPinId);
+                }
+                
                 ClearSelectedSearchResult();
                 
                 Eegeo_ASSERT(m_selectedSearchResultId.empty());
             
                 m_selectedSearchResultId = message.ModelIdentifier();
                 
-                const WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(m_selectedSearchResultId);
-                if (pWorldPinItemModel != nullptr)
-                {
-                    const auto& lastHighPriorityMarkerId = GetMarkerIdForWorldPinItemModelId(pWorldPinItemModel->Id());
-                    Eegeo::Markers::IMarker& marker = m_markerService.Get(lastHighPriorityMarkerId);
-                    
-                    const int highPriorityDrawOrder = 0;
-                    marker.SetSubPriority(highPriorityDrawOrder);
-                }
+                WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(m_selectedSearchResultId);
+                AddHighlight(pWorldPinItemModel);
             }
             
             void WorldPinsService::ClearSelectedSearchResult()

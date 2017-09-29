@@ -76,6 +76,11 @@ namespace ExampleApp
             {
                 return m_worldPinItemModelId;
             }
+
+            void WorldPinsInFocusModel::SetPinId(int worldPinItemModelId)
+            {
+                m_worldPinItemModelId = worldPinItemModelId;
+            }
             
             const int WorldPinsInFocusModel::GetPriorityOrder() const
             {
