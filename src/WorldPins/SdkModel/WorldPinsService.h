@@ -50,7 +50,8 @@ namespace ExampleApp
                                           float heightAboveTerrainMetres,
                                           int visibilityMask,
                                           const std::string& tag,
-                                          std::string identifier = "");
+                                          std::string identifier = "",
+                                          std::string labelStyleName = "marker_default");
                 
                 void RemovePin(WorldPinItemModel* pinItemModel);
 
@@ -80,6 +81,14 @@ namespace ExampleApp
                 void ClearSelectedSearchResult();
                 
                 WorldPinItemModel* FindWorldPinItemModelOrNull(const std::string& searchResultId) const;
+                WorldPinItemModel* FindWorldPinItemModelOrNull(SdkModel::WorldPinItemModel::WorldPinItemModelId id) const;
+
+                void AddHighlight(WorldPinItemModel* pinItemModel);
+                void AddHighlightPin(const WorldPinItemModel* pinItemModel, const Eegeo::Markers::IMarker& marker);
+                void RemoveHighlight(SdkModel::WorldPinItemModel::WorldPinItemModelId id);
+                void RemoveHighlightPin(WorldPinItemModel* pinItemModel);
+
+                void UpdateLabelStyle(WorldPinItemModel* pinItemModel, const std::string& labelStyleName);
                 
                 IWorldPinsRepository& m_worldPinsRepository;
                 Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& m_interiorMarkerPickingService;
@@ -101,7 +110,13 @@ namespace ExampleApp
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
+                std::map<WorldPinItemModel::WorldPinItemModelId, std::string> m_pinsToIconKeys;
+
                 std::string m_selectedSearchResultId;
+
+                WorldPinItemModel* m_pSelectedPinHighlight;
+
+                WorldPinItemModel::WorldPinItemModelId m_selectedPinId;
             };
 
         }

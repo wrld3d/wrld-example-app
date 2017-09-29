@@ -67,6 +67,12 @@ namespace ExampleApp
                 return m_id;
             }
 
+            void WorldPinItemModel::SetId(const WorldPinItemModelId& worldPinItemModelId)
+            {
+                m_id = worldPinItemModelId;
+                m_focusModel.SetPinId(m_id);
+            }
+
             void WorldPinItemModel::Select()
             {
                 m_pSelectionHandler->SelectPin();
