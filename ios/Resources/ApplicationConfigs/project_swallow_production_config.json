@@ -100,7 +100,7 @@
                                 "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
                                 }],
     "CompassCameraOffset": {
-        "Offset": 0.5,
-        "OffsetTopDown": 0.3
+        "Offset": 0.6,
+        "OffsetTopDown": 0.4
     }
 }
