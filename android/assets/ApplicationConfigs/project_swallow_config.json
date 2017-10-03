@@ -1,107 +1,137 @@
 {
-    "Name": "Project Swallow App",
-    "StartLocationLatitude": 51.520275,
-    "StartLocationLongitude": -0.086135,
-    "StartLocationAltitude": 10.0,
-    "StartLocationDistance": 500.0,
-    "StartLocationOrientationDegrees": 180.0,
-    "TryStartAtGpsLocation": false,
-    "EegeoApiKey": "065f472a5e1143fbef57d3a97b019ef9",
-    "GoogleAnalyticsReferrerToken": "eegeo_project_swallow_android",
-    "FlurryAppKey": "INSERT_HERE",
-    "YelpConsumerKey": "Qe4ymT_eYH4a_aWiJwuEYw",
-    "YelpConsumerSecret": "KNyIA_pYqESfzUjO2if771UjB2o",
-    "YelpOAuthToken": "7-QonSpP1C_iiSLw5UzkyLYXBETWxZtr",
-    "YelpOAuthTokenSecret": "QfVQgyStNDTrdoagSRUBZeTgdj4",
-    "GeoNamesUserName": "eegeo_swallow_droid",
-    "CoverageTreeManifestURL": "https://cdn1.eegeo.com/coverage-trees/vswallow/v1409/manifest.bin.gz",
-    "ThemeManifestURL": "https://cdn-resources.eegeo.com/mobile-themes-new/v988/default/ssl.manifest.bin.gz",
-    "SqliteDbUrl": "https://cdn1.eegeo.com/swallow-pois/pois_v160.db.gz",
-    "MyPinsWebServiceUrl": "https://swallowapp.dundee.kimbleoperations.com/reports/",
-    "MyPinsWebServiceAuthToken": "f475c578eb4592637314e4a05510993b",
-    "EegeoSearchServiceUrl": "https://swallowapp.dundee.kimbleoperations.com/search/v1.1/",
-    "EmbeddedThemeTexturePath": "EmbeddedTheme",
-    "TwitterAuthCode": "",
-    "WebProxyEnabled": false,
-    "WebProxyIpAddress": "",
-    "WebProxyPort": 0,
-	"SSLEnabled": true,
-    "SenionMapKey": "a6fd0f11-56fe-4fa1-8e42-f582f4e21a63",
-    "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
-    "UseLabels": true,
-    "BuildingsSearchViewLocation": {
-      "Latitude": 51.519275,
-      "Longitude": -0.086135,
-      "Altitude": 2.154,
-      "DistanceToInterest": 800,
-      "OrientationDegrees": 180.0
-    },
-    "IndoorTrackedBuildings": [{
-                               "InteriorId": "swallow_lon_citygatehouse",
-                               "Type": "Senion",
-                               "Config": [{
-                                          "ApiKey": "70f77f56-78b7-42bb-b94f-3c2c6d8dd30a",
-                                          "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
-                                          }],
-                               "FloorMapping": [{
-                                                "BuildingFloorIndex": 2,
-                                                "TrackedFloorIndex": "0"
-                                                }, {
-                                                "BuildingFloorIndex": 1,
-                                                "TrackedFloorIndex": "1"
-                                                }]
-                               }, {
-                               "InteriorId": "swallow_lon_50finsbury",
-                               "Type": "Senion",
-                               "Config": [{
-                                          "ApiKey": "be293ffa-91f9-40d1-a213-e50e7895766d",
-                                          "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
-                                          }],
-                               "FloorMapping": [{
-                                                "BuildingFloorIndex": 7,
-                                                "TrackedFloorIndex": "0"
-                                                }]
-                               }, {
-                               "InteriorId": "swallow_lon_wallbrooksquare",
-                               "Type": "Senion",
-                               "Config": [{
-                                          "ApiKey": "7E679588-CF0C-4CAC-845D-02D609657D0D",
-                                          "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
-                                          }],
-                               "FloorMapping": [{
-                                                "BuildingFloorIndex": 2,
-                                                "TrackedFloorIndex": "0"
-                                                }]
-                               }, {
-                               "InteriorId": "westport_house",
-                               "Type": "Senion",
-                               "Config": [{
-                                          "ApiKey": "a6fd0f11-56fe-4fa1-8e42-f582f4e21a63",
-                                          "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
-                                          }],
-                               "FloorMapping": [{
-                                                "BuildingFloorIndex": 2,
-                                                "TrackedFloorIndex": "0"
-                                                }]
-                               }],
-    "WifiRestrictedBuildings": [{
-                                "InteriorId": "swallow_lon_38finsbury",
-                                "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }, {
-                                "InteriorId": "swallow_lon_citygatehouse",
-                                "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }, {
-                                "InteriorId": "swallow_lon_50finsbury",
-                                "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }, {
-                                "InteriorId": "swallow_lon_parkhouse",
-                                "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }, {
-                                "InteriorId": "swallow_lon_wallbrooksquare",
-                                "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
-                                }],
-    "CompassCameraOffset": {
-    	"Offset": 0.6,
-    	"OffsetTopDown": 0.4
-	}
+  "Name": "Project Swallow App",
+  "StartLocationLatitude": 51.520275,
+  "StartLocationLongitude": -0.086135,
+  "StartLocationAltitude": 10.0,
+  "StartLocationDistance": 500.0,
+  "StartLocationOrientationDegrees": 180.0,
+  "TryStartAtGpsLocation": false,
+  "EegeoApiKey": "065f472a5e1143fbef57d3a97b019ef9",
+  "GoogleAnalyticsReferrerToken": "eegeo_project_swallow_android",
+  "FlurryAppKey": "INSERT_HERE",
+  "YelpConsumerKey": "Qe4ymT_eYH4a_aWiJwuEYw",
+  "YelpConsumerSecret": "KNyIA_pYqESfzUjO2if771UjB2o",
+  "YelpOAuthToken": "7-QonSpP1C_iiSLw5UzkyLYXBETWxZtr",
+  "YelpOAuthTokenSecret": "QfVQgyStNDTrdoagSRUBZeTgdj4",
+  "GeoNamesUserName": "eegeo_swallow_droid",
+  "CoverageTreeManifestURL": "https://cdn1.eegeo.com/coverage-trees/vswallow/v1409/manifest.bin.gz",
+  "ThemeManifestURL": "https://cdn-resources.eegeo.com/mobile-themes-new/v988/default/ssl.manifest.bin.gz",
+  "SqliteDbUrl": "https://cdn1.eegeo.com/swallow-pois/pois_v160.db.gz",
+  "MyPinsWebServiceUrl": "https://swallowapp.dundee.kimbleoperations.com/reports/",
+  "MyPinsWebServiceAuthToken": "f475c578eb4592637314e4a05510993b",
+  "EegeoSearchServiceUrl": "https://swallowapp.dundee.kimbleoperations.com/search/v1.1/",
+  "EmbeddedThemeTexturePath": "EmbeddedTheme",
+  "TwitterAuthCode": "",
+  "WebProxyEnabled": false,
+  "WebProxyIpAddress": "",
+  "WebProxyPort": 0,
+  "SSLEnabled": true,
+  "SenionMapKey": "a6fd0f11-56fe-4fa1-8e42-f582f4e21a63",
+  "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
+  "UseLabels": true,
+  "BuildingsSearchViewLocation": {
+    "Latitude": 51.519275,
+    "Longitude": -0.086135,
+    "Altitude": 2.154,
+    "DistanceToInterest": 800,
+    "OrientationDegrees": 180.0
+  },
+  "IndoorTrackedBuildings": [{
+    "InteriorId": "swallow_lon_citygatehouse",
+    "Type": "Senion",
+    "Config": [{
+      "ApiKey": "70f77f56-78b7-42bb-b94f-3c2c6d8dd30a",
+      "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
+    }],
+    "FloorMapping": [{
+      "BuildingFloorIndex": 2,
+      "TrackedFloorIndex": "0"
+    }, {
+      "BuildingFloorIndex": 1,
+      "TrackedFloorIndex": "1"
+    }]
+  }, {
+    "InteriorId": "swallow_lon_50finsbury",
+    "Type": "Senion",
+    "Config": [{
+      "ApiKey": "be293ffa-91f9-40d1-a213-e50e7895766d",
+      "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
+    }],
+    "FloorMapping": [{
+      "BuildingFloorIndex": 7,
+      "TrackedFloorIndex": "0"
+    }]
+  }, {
+    "InteriorId": "swallow_lon_wallbrooksquare",
+    "Type": "Senion",
+    "Config": [{
+      "ApiKey": "5a61199b-459f-4e4c-8cef-924524a9c07e",
+      "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
+    }],
+    "FloorMapping": [{
+      "BuildingFloorIndex": 0,
+      "TrackedFloorIndex": "0"
+    },{
+      "BuildingFloorIndex": 1,
+      "TrackedFloorIndex": "1"
+    },{
+      "BuildingFloorIndex": 2,
+      "TrackedFloorIndex": "2"
+    },{
+      "BuildingFloorIndex": 3,
+      "TrackedFloorIndex": "3"
+    },{
+      "BuildingFloorIndex": 4,
+      "TrackedFloorIndex": "4"
+    },{
+      "BuildingFloorIndex": 5,
+      "TrackedFloorIndex": "5"
+    },{
+      "BuildingFloorIndex": 6,
+      "TrackedFloorIndex": "6"
+    },{
+      "BuildingFloorIndex": 7,
+      "TrackedFloorIndex": "7"
+    },{
+      "BuildingFloorIndex": 8,
+      "TrackedFloorIndex": "8"
+    },{
+      "BuildingFloorIndex": 9,
+      "TrackedFloorIndex": "9"
+    },{
+      "BuildingFloorIndex": 10,
+      "TrackedFloorIndex": "10"
+    }]
+  }, {
+    "InteriorId": "westport_house",
+    "Type": "Senion",
+    "Config": [{
+      "ApiKey": "a6fd0f11-56fe-4fa1-8e42-f582f4e21a63",
+      "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
+    }],
+    "FloorMapping": [{
+      "BuildingFloorIndex": 2,
+      "TrackedFloorIndex": "0"
+    }]
+  }],
+  "WifiRestrictedBuildings": [{
+    "InteriorId": "swallow_lon_38finsbury",
+    "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+  }, {
+    "InteriorId": "swallow_lon_citygatehouse",
+    "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+  }, {
+    "InteriorId": "swallow_lon_50finsbury",
+    "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+  }, {
+    "InteriorId": "swallow_lon_parkhouse",
+    "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+  }, {
+    "InteriorId": "swallow_lon_wallbrooksquare",
+    "AllowedSSIDs": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+  }],
+  "CompassCameraOffset": {
+    "Offset": 0.6,
+    "OffsetTopDown": 0.4
+  }
 }
