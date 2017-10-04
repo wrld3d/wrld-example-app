@@ -79,7 +79,6 @@
             android:id="@+id/content"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
-			android:layout_above="@+id/footer_line"
 			android:layout_below="@+id/TextView01"
 			android:background="@color/white">
          
