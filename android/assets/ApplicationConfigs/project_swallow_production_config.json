@@ -66,41 +66,41 @@
     "InteriorId": "swallow_lon_wallbrooksquare",
     "Type": "Senion",
     "Config": [{
-      "ApiKey": "5a61199b-459f-4e4c-8cef-924524a9c07e",
+      "ApiKey": "eb40cf71-6ef6-4ae1-969c-b4c4abe5fb5e",
       "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
     }],
     "FloorMapping": [{
-      "BuildingFloorIndex": 0,
-      "TrackedFloorIndex": "0"
-    },{
       "BuildingFloorIndex": 1,
-      "TrackedFloorIndex": "1"
-    },{
-      "BuildingFloorIndex": 2,
       "TrackedFloorIndex": "2"
-    },{
+    }, {
+      "BuildingFloorIndex": 2,
+      "TrackedFloorIndex": "1"
+    }, {
       "BuildingFloorIndex": 3,
-      "TrackedFloorIndex": "3"
-    },{
-      "BuildingFloorIndex": 4,
-      "TrackedFloorIndex": "4"
-    },{
+      "TrackedFloorIndex": "0"
+    }, {
       "BuildingFloorIndex": 5,
-      "TrackedFloorIndex": "5"
-    },{
+      "TrackedFloorIndex": "3"
+    }, {
       "BuildingFloorIndex": 6,
-      "TrackedFloorIndex": "6"
-    },{
+      "TrackedFloorIndex": "4"
+    }, {
       "BuildingFloorIndex": 7,
-      "TrackedFloorIndex": "7"
-    },{
+      "TrackedFloorIndex": "5"
+    }, {
       "BuildingFloorIndex": 8,
-      "TrackedFloorIndex": "8"
-    },{
+      "TrackedFloorIndex": "6"
+    }, {
       "BuildingFloorIndex": 9,
-      "TrackedFloorIndex": "9"
-    },{
+      "TrackedFloorIndex": "7"
+    }, {
       "BuildingFloorIndex": 10,
+      "TrackedFloorIndex": "8"
+    }, {
+      "BuildingFloorIndex": 11,
+      "TrackedFloorIndex": "9"
+    }, {
+      "BuildingFloorIndex": 12,
       "TrackedFloorIndex": "10"
     }]
   }, {
