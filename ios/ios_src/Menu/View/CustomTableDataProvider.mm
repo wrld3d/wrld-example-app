@@ -401,6 +401,7 @@ NSInteger const SubItemCellOpenableMenuArrowTag = 1;
             details = document["details"].GetString();
             cell.detailTextLabel.text = [NSString stringWithUTF8String:details.c_str()];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:11.0f];
+            cell.detailTextLabel.backgroundColor = [UIColor clearColor];
             cell.detailTextLabel.textColor = ExampleApp::Helpers::ColorPalette::TableSearchDetailTextColor;
             [cell.detailTextLabel sizeToFit];
             
