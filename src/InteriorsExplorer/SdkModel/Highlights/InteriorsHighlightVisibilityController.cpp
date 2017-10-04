@@ -240,11 +240,14 @@ namespace ExampleApp
                             {
                                 for (auto& renderable : renderItt->second)
                                 {
-                                    if (renderable->GetRenderableId().compare("entity_highlight " + highlightedRoomId) == 0)
-                                    {
-                                        m_interiorsHighlightService.SetHighlight(renderable->GetInteriorId(), highlightedRoomId, m_highlightColorMapper.GetColor(*resultsItt, "highlight_color"));
-                                        showingHighlights = true;
-                                    }
+									if (renderable->GetInteriorId().compare(resultsItt->GetBuildingId().Value()) == 0)
+									{
+										if (renderable->GetRenderableId().compare("entity_highlight " + highlightedRoomId) == 0)
+										{
+											m_interiorsHighlightService.SetHighlight(renderable->GetInteriorId(), highlightedRoomId, m_highlightColorMapper.GetColor(*resultsItt, "highlight_color"));
+											showingHighlights = true;
+										}
+									}
                                 }
                             }
                         }

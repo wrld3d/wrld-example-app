@@ -61,6 +61,14 @@ namespace ExampleApp
                 m_viewModel.SetIndoorAtlasData(message.GetEegeoFloorIndex(), message.GetIndoorAtlasFloorId(), message.GetLatitude(), message.GetLongitude());
             }
 
+            void AboutPageController::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
+            {
+                if (message.GetAppMode() == AppModes::SdkModel::AppMode::AttractMode && m_viewModel.IsOpen())
+                {
+                    m_viewModel.Close();
+                }
+            }
+
             AboutPageController::AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel,
                                                      Metrics::IMetricsService& metricsService,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
@@ -76,6 +84,7 @@ namespace ExampleApp
                 , m_aboutPageIndoorPositionSettingsMessageHandler(this, &AboutPageController::OnAboutPageIndoorPositionSettingsMessage)
                 , m_aboutPageSenionDataMessageHandler(this, &AboutPageController::OnAboutPageSenionDataMessage)
                 , m_aboutPageIndoorAtlasDataMessageHandler(this, &AboutPageController::OnAboutPageIndoorAtlasDataMessage)
+                , m_appModeChangedMessageHandler(this, &AboutPageController::OnAppModeChanged)
             {
                 m_view.InsertCloseTappedCallback(m_viewCloseTapped);
                 m_viewModel.InsertClosedCallback(m_viewClosed);
@@ -85,10 +94,12 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_aboutPageIndoorPositionSettingsMessageHandler);
                 m_messageBus.SubscribeUi(m_aboutPageSenionDataMessageHandler);
                 m_messageBus.SubscribeUi(m_aboutPageIndoorAtlasDataMessageHandler);
+                m_messageBus.SubscribeUi(m_appModeChangedMessageHandler);
             }
 
             AboutPageController::~AboutPageController()
             {
+                m_messageBus.UnsubscribeUi(m_appModeChangedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_aboutPageIndoorAtlasDataMessageHandler);
                 m_messageBus.UnsubscribeUi(m_aboutPageSenionDataMessageHandler);
                 m_messageBus.UnsubscribeUi(m_aboutPageIndoorPositionSettingsMessageHandler);

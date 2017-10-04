@@ -37,6 +37,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageIndoorPositionSettingsMessage&> m_aboutPageIndoorPositionSettingsMessageHandler;
                 Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageSenionDataMessage&> m_aboutPageSenionDataMessageHandler;
                 Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageIndoorAtlasDataMessage&> m_aboutPageIndoorAtlasDataMessageHandler;
+                Eegeo::Helpers::TCallback1<AboutPageController, const AppModes::AppModeChangedMessage&> m_appModeChangedMessageHandler;
 
                 void OnOpen();
                 void OnClose();
@@ -47,6 +48,7 @@ namespace ExampleApp
                 void OnAboutPageIndoorPositionSettingsMessage(const AboutPage::AboutPageIndoorPositionSettingsMessage& message);
                 void OnAboutPageSenionDataMessage(const AboutPage::AboutPageSenionDataMessage& message);
                 void OnAboutPageIndoorAtlasDataMessage(const AboutPage::AboutPageIndoorAtlasDataMessage& message);
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
 
             public:
                 AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel, Metrics::IMetricsService& metricsService, ExampleAppMessaging::TMessageBus& messageBus);

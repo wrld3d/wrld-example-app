@@ -50,7 +50,7 @@ namespace ExampleApp
                     int currentVisibleFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
                     
                     int floorIndex = 0;
-                    if(m_currentLocationService.GetFloorIndex(floorIndex) && currentVisibleFloorIndex != floorIndex)
+                    if(m_currentLocationService.GetFloorIndex(floorIndex) && floorIndex >= 0 && currentVisibleFloorIndex != floorIndex)
                     {
                         Eegeo::Space::LatLong latLong(0, 0);
                         if(m_currentLocationService.GetLocation(latLong))
