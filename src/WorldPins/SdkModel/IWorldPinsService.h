@@ -37,6 +37,8 @@ namespace ExampleApp
 
                 virtual void RemovePin(WorldPinItemModel* pinItemModel) = 0;
 
+                virtual void HighlightPin(WorldPinItemModel* pinItemModel,
+                                            std::string labelStyleName = "selected_highlight") = 0;
                 virtual void UpdatePinCategory(const WorldPinItemModel& pinItemModel, const std::string& iconKey) = 0;
 
 

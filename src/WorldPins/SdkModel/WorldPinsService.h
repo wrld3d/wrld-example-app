@@ -19,6 +19,7 @@
 #include "SearchResultSectionItemSelectedMessage.h"
 #include "BidirectionalBus.h"
 #include "NavigationService.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -37,7 +38,8 @@ namespace ExampleApp
                                  Eegeo::Markers::IMarkerService& markerService,
                                  ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                 Eegeo::Location::NavigationService& navigationService);
+                                 Eegeo::Location::NavigationService& navigationService,
+                                 Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService);
                 ~WorldPinsService();
                 
                 WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
@@ -55,19 +57,21 @@ namespace ExampleApp
                 
                 void RemovePin(WorldPinItemModel* pinItemModel);
 
+                void HighlightPin(WorldPinItemModel* pinItemModel,
+                                    std::string labelStyleName = "selected_highlight");
+                
                 void UpdatePinCategory(const WorldPinItemModel& pinItemModel, const std::string& iconKey);
 
                 bool HandleTouchTap(const Eegeo::v2& screenTapPoint);
                 
                 bool HandleTouchDoubleTap(const Eegeo::v2& screenTapPoint);
                 
-                
             private:
                 
                 IWorldPinSelectionHandler* GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
                 
                 bool TrySelectPinAtPoint(const Eegeo::v2& screenPoint);
-                
+
                 void SelectPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
                 
                 void OnWorldPinHiddenStateChanged(const WorldPinHiddenStateChangedMessage& message);
@@ -83,8 +87,8 @@ namespace ExampleApp
                 WorldPinItemModel* FindWorldPinItemModelOrNull(const std::string& searchResultId) const;
                 WorldPinItemModel* FindWorldPinItemModelOrNull(SdkModel::WorldPinItemModel::WorldPinItemModelId id) const;
 
-                void AddHighlight(WorldPinItemModel* pinItemModel);
-                void AddHighlightPin(const WorldPinItemModel* pinItemModel, const Eegeo::Markers::IMarker& marker);
+                void AddHighlight(WorldPinItemModel* pinItemModel, std::string labelStyleName = "selected_highlight");
+                void AddHighlightPin(const WorldPinItemModel* pinItemModel, const Eegeo::Markers::IMarker& marker, std::string labelStyleName);
                 void RemoveHighlight(SdkModel::WorldPinItemModel::WorldPinItemModelId id);
                 void RemoveHighlightPin(WorldPinItemModel* pinItemModel);
 
@@ -117,6 +121,8 @@ namespace ExampleApp
                 WorldPinItemModel* m_pSelectedPinHighlight;
 
                 WorldPinItemModel::WorldPinItemModelId m_selectedPinId;
+
+                const Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultOnMapMyPinsService;
             };
 
         }

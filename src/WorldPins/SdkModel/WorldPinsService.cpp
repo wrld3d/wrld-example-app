@@ -5,6 +5,7 @@
 #include "LatLongAltitude.h"
 #include "IWorldPinsRepository.h"
 #include "IInteriorMarkerPickingService.h"
+#include "ISearchResultMyPinsService.h"
 #include "SwallowSearchConstants.h"
 #include "IMarkerService.h"
 #include "MarkerBuilder.h"
@@ -24,7 +25,8 @@ namespace ExampleApp
                                                Eegeo::Markers::IMarkerService& markerService,
                                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                ExampleAppMessaging::TMessageBus& messageBus,
-                                               Eegeo::Location::NavigationService& navigationService)
+                                               Eegeo::Location::NavigationService& navigationService,
+                                               Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService)
             : m_worldPinsRepository(worldPinsRepository)
             , m_interiorMarkerPickingService(interiorMarkerPickingService)
             , m_markerService(markerService)
@@ -35,6 +37,7 @@ namespace ExampleApp
             , m_navigationService(navigationService)
             , m_pSelectedPinHighlight(nullptr)
             , m_selectedPinId(-1)
+            , m_searchResultOnMapMyPinsService(searchResultOnMapMyPinsService)
             {
                 m_sdkModelDomainEventBus.Subscribe(m_worldPinHiddenStateChangedMessageBinding);
                 m_messageBus.SubscribeNative(m_onSearchResultSelected);
@@ -147,7 +150,18 @@ namespace ExampleApp
                 Eegeo_DELETE pPinItemModel;
             }
 
-            void WorldPinsService::AddHighlight(WorldPinItemModel* pinItemModel)
+            void WorldPinsService::HighlightPin(WorldPinItemModel* pinItemModel, std::string labelStyleName)
+            {
+                if(m_selectedPinId != pinItemModel->Id())
+                {
+                    RemoveHighlight(m_selectedPinId);
+                }
+
+                WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(pinItemModel->Id());
+                AddHighlight(pWorldPinItemModel, labelStyleName);
+            }
+
+            void WorldPinsService::AddHighlight(WorldPinItemModel* pinItemModel, std::string labelStyleName)
             {
                 if(pinItemModel != nullptr)
                 {
@@ -163,7 +177,7 @@ namespace ExampleApp
 
                     if (m_pSelectedPinHighlight == nullptr || !pinAlreadySelected)
                     {
-                        AddHighlightPin(pinItemModel, marker);
+                        AddHighlightPin(pinItemModel, marker, labelStyleName);
                     }
 
                     const int highPriorityDrawOrder = 0;
@@ -176,7 +190,7 @@ namespace ExampleApp
                 }
             }
 
-            void WorldPinsService::AddHighlightPin(const WorldPinItemModel* pinItemModel, const Eegeo::Markers::IMarker& marker)
+            void WorldPinsService::AddHighlightPin(const WorldPinItemModel* pinItemModel, const Eegeo::Markers::IMarker& marker, std::string labelStyleName)
             {
                 const IWorldPinsInFocusModel& inFocusModel = pinItemModel->GetInFocusModel();
                 const WorldPinFocusData focusData = WorldPinFocusData("", "", "", "", "", 0, inFocusModel.GetPriorityOrder() + 1);
@@ -193,7 +207,7 @@ namespace ExampleApp
                                                     0,
                                                     pinItemModel->VisibilityMask(),
                                                     "selected_highlight",
-                                                    "selected_highlight");
+                                                    labelStyleName);
             }
 
             void WorldPinsService::RemoveHighlight(SdkModel::WorldPinItemModel::WorldPinItemModelId id)
@@ -370,19 +384,34 @@ namespace ExampleApp
             
             void WorldPinsService::OnMenuItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
             {
-                if (m_selectedSearchResultId != message.ModelIdentifier())
+                std::string identifier = message.ModelIdentifier();
+
+                WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(identifier);
+                if (pWorldPinItemModel == nullptr)
                 {
-                    RemoveHighlight(m_selectedPinId);
+                    std::string title = "";
+                    if (m_searchResultOnMapMyPinsService.TryGetPinTitleForSearchResultIdentifier(identifier, title))
+                    {
+                        identifier = title;
+                        pWorldPinItemModel = FindWorldPinItemModelOrNull(identifier);
+                    }
                 }
+
+                if(pWorldPinItemModel != nullptr)
+                {
+                    if (m_selectedSearchResultId != identifier)
+                    {
+                        RemoveHighlight(m_selectedPinId);
+                    }
                 
-                ClearSelectedSearchResult();
+                    ClearSelectedSearchResult();
                 
-                Eegeo_ASSERT(m_selectedSearchResultId.empty());
+                    Eegeo_ASSERT(m_selectedSearchResultId.empty());
             
-                m_selectedSearchResultId = message.ModelIdentifier();
+                    m_selectedSearchResultId = identifier;
                 
-                WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(m_selectedSearchResultId);
-                AddHighlight(pWorldPinItemModel);
+                    AddHighlight(pWorldPinItemModel);
+                }
             }
             
             void WorldPinsService::ClearSelectedSearchResult()

@@ -36,7 +36,8 @@ namespace ExampleApp
                                          IMyPinVisibilityStateChangedHandlerFactory& myPinVisibilityStateChangedHandlerFactory,
                                          IMyPinBoundObjectFactory& myPinBoundObjectFactory,
                                          IMyPinBoundObjectRepository& myPinBoundObjectRepository,
-                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService)
+                                         WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                         ExampleAppMessaging::TMessageBus& messageBus)
                 : m_myPinsRepository(myPinsRepository)
                 , m_myPinsFileIO(myPinsFileIO)
                 , m_myPinSelectionHandlerFactory(myPinSelectionHandlerFactory)
@@ -45,7 +46,15 @@ namespace ExampleApp
                 , m_myPinBoundObjectRepository(myPinBoundObjectRepository)
                 , m_worldPinsService(worldPinsService)
                 , m_lastIdUsed(m_myPinsFileIO.GetLastIdWrittenToDisk())
+                , m_onMenuPinItemSelected(this, &MyPinsService::OnMenuPinItemSelected)
+                , m_messageBus(messageBus)
             {
+                m_messageBus.SubscribeNative(m_onMenuPinItemSelected);
+            }
+
+            MyPinsService::~MyPinsService()
+            {
+                m_messageBus.UnsubscribeNative(m_onMenuPinItemSelected);
             }
             
             void MyPinsService::LoadAllPinsFromDisk()
@@ -98,7 +107,7 @@ namespace ExampleApp
                                                                                                       pMyPinModel->GetPinIconKey(),
                                                                                                       pMyPinModel->GetHeightAboveTerrainMetres(),
                                                                                                       pinVisibilityMask,
-                                                                                                      "");
+                                                                                                      pMyPinModel->GetTitle());
 
                 m_myPinToWorldPinMap[pMyPinModel->Identifier()] = std::make_pair(pMyPinModel, pWorldPinItemModel);
             }
@@ -126,6 +135,7 @@ namespace ExampleApp
                     
                     MyPinModel* pPinModel = it->second.first;
                     WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = it->second.second;
+                    m_worldPinsService.RemovePin(pWorldPinItemModel);
 
                     IMyPinBoundObject& boundObject = m_myPinBoundObjectRepository.GetBoundObjectForPin(*pPinModel);
                     m_myPinBoundObjectRepository.RemoveBoundItemForPin(pPinModel->Identifier());
@@ -133,7 +143,6 @@ namespace ExampleApp
                     boundObject.HandlePinDestroyed(*pPinModel);
                     Eegeo_DELETE &boundObject;
                         
-                    m_worldPinsService.RemovePin(pWorldPinItemModel);
                     m_myPinsRepository.RemoveItem(pPinModel);
                     m_myPinToWorldPinMap.erase(it);
                 }
@@ -256,6 +265,18 @@ namespace ExampleApp
                 
                 m_myPinsRepository.AddItem(pinModel);
                 AddPinToMap(pinModel, WorldPins::SdkModel::WorldPinVisibility::Search);
+                m_worldPinsService.HighlightPin(m_myPinToWorldPinMap[pinModel->Identifier()].second, "selected_highlight_faded_in");
+            }
+
+            void MyPinsService::OnMenuPinItemSelected(const MyPinSelectedMessage& message)
+            {
+                int pinId = message.GetPinId();
+
+                WorldPins::SdkModel::WorldPinItemModel* pWorldPinItemModel = NULL;
+
+                TryGetWorldPinItemModelForMyPin(pinId, pWorldPinItemModel);
+
+                m_worldPinsService.HighlightPin(pWorldPinItemModel);
             }
         }
     }

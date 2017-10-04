@@ -1096,7 +1096,8 @@ namespace ExampleApp
                                                                                          interiorsPresentationModule.GetInteriorMarkerPickingService(),
                                                                                          mapModule.GetMarkersModule().GetMarkerService(),
                                                                                          m_applicationConfiguration.IsInKioskMode(),
-                                                                                         *m_pNavigationService);
+                                                                                         *m_pNavigationService,
+                                                                                         m_pSearchModule->GetSearchResultMyPinsService());
     }
     
     void MobileExampleApp::OnPause()
