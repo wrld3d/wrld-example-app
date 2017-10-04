@@ -24,6 +24,9 @@ namespace ExampleApp
                     
                     virtual bool TryGetPinForSearchResult(const Search::SdkModel::SearchResultModel& searchResult,
                                                           ExampleApp::MyPins::SdkModel::MyPinModel& out_myPinModel) const = 0;
+
+                    virtual bool TryGetPinTitleForSearchResultIdentifier(const std::string& identifier,
+                                                                         std::string& out_pinTitle) const = 0;
                     
                     virtual bool ContainsPinWithId(ExampleApp::MyPins::SdkModel::MyPinModel::TPinIdType pinId) const = 0;
                     

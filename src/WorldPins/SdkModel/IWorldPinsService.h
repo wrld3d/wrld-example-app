@@ -36,6 +36,9 @@ namespace ExampleApp
 
                 virtual void RemovePin(WorldPinItemModel* pinItemModel) = 0;
 
+                virtual void HighlightPin(WorldPinItemModel* pinItemModel,
+                                            std::string labelStyleName = "selected_highlight") = 0;
+
                 virtual bool HandleTouchTap(const Eegeo::v2& screenTapPoint) = 0;
 
 				virtual bool HandleTouchDoubleTap(const Eegeo::v2& screenTapPoint) = 0;

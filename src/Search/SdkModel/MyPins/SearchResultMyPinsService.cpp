@@ -49,6 +49,23 @@ namespace ExampleApp
                     
                     return false;
                 }
+
+                bool SearchResultMyPinsService::TryGetPinTitleForSearchResultIdentifier(const std::string& identifier,
+                                                                                        std::string& out_pinTitle) const
+                {
+                    for (TSearchResultToPinIdMap::const_iterator it = m_searchResultToPinId.begin();
+                        it != m_searchResultToPinId.end();
+                        ++it)
+                    {
+                        if (it->first.GetIdentifier() == identifier)
+                        {
+                            out_pinTitle = it->second.GetTitle();
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
                 
                 bool SearchResultMyPinsService::ContainsPinWithId(ExampleApp::MyPins::SdkModel::MyPinModel::TPinIdType pinId) const
                 {

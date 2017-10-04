@@ -94,7 +94,8 @@ namespace ExampleApp
                                                             *m_pMyPinVisibilityStateChangedHandlerFactory,
                                                             *m_pMyPinBoundObjectFactory,
                                                             *m_pMyPinBoundObjectRepository,
-                                                            worldPinsService);
+                                                            worldPinsService,
+                                                            messageBus);
                 
                 m_pMyPinSelectedMessageHandler = Eegeo_NEW(MyPinSelectedMessageHandler)(cameraTransitionController,
                                                  messageBus);

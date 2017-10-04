@@ -165,6 +165,7 @@ namespace ExampleApp
                 {
                     AddSearchResultOnMap(searchResultModel);
                     m_hiddenSearchResultsDueToMyPins.erase(hiddenItemIterator);
+                    m_worldPinsService.HighlightPin(m_searchResultsToPinModel[searchResultModel], "selected_highlight_faded_in");
                 }
             }
             

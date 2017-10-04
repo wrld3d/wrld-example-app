@@ -47,6 +47,9 @@ namespace ExampleApp
                     
                     bool TryGetPinForSearchResult(const Search::SdkModel::SearchResultModel& searchResult,
                                                   ExampleApp::MyPins::SdkModel::MyPinModel& out_myPinModel) const;
+
+                    bool TryGetPinTitleForSearchResultIdentifier(const std::string& identifier,
+                                                                 std::string& out_pinTitle) const;
                     
                     bool ContainsPinWithId(ExampleApp::MyPins::SdkModel::MyPinModel::TPinIdType pinId) const;
                     
