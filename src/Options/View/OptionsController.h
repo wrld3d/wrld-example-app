@@ -36,6 +36,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheSelected;
                 Eegeo::Helpers::TCallback1<OptionsController, bool> m_replayTutorialsToggled;
                 Eegeo::Helpers::TCallback1<OptionsController, bool> m_onReplayTutorialsModelChanged;
+                Eegeo::Helpers::TCallback1<OptionsController, const AppModes::AppModeChangedMessage&> m_appModeChangedMessageHandler;
 
                 void OnViewModelOpened();
 
@@ -54,6 +55,8 @@ namespace ExampleApp
                 void OnReplayTutorialsToggled(bool& replayTutorials);
 
                 void OnReplayTutorialsModelChanged(bool& replayTutorials);
+
+                void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
 
             public:
                 OptionsController(IOptionsView& view,

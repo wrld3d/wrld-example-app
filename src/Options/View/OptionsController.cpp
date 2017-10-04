@@ -78,6 +78,14 @@ namespace ExampleApp
                     }
                 }
             }
+
+            void OptionsController::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
+            {
+                if (message.GetAppMode() == AppModes::SdkModel::AppMode::AttractMode && m_viewModel.IsOpen())
+                {
+                    m_viewModel.Close();
+                }
+            }
             
             OptionsController::OptionsController(IOptionsView& view,
                                                  IOptionsViewModel& viewModel,
@@ -99,6 +107,7 @@ namespace ExampleApp
             , m_viewClearCacheSelected(this, &OptionsController::OnViewClearCacheSelected)
             , m_replayTutorialsToggled(this, &OptionsController::OnReplayTutorialsToggled)
             , m_onReplayTutorialsModelChanged(this, &OptionsController::OnReplayTutorialsModelChanged)
+            , m_appModeChangedMessageHandler(this, &OptionsController::OnAppModeChanged)
             {
                 m_view.InsertCloseSelectedCallback(m_viewCloseSelected);
                 m_view.InsertStreamOverWifiOnlySelectionChangedCallback(m_viewStreamOverWifiOnlySelectionChanged);
@@ -115,10 +124,14 @@ namespace ExampleApp
 
                 m_interiorsExplorerController.InsertReplayTutorialsChangedCallback(m_onReplayTutorialsModelChanged);
                 m_initialExperienceIntroController.InsertReplayExitIUXChangedCallback(m_onReplayTutorialsModelChanged);
+
+                m_messageBus.SubscribeUi(m_appModeChangedMessageHandler);
             }
             
             OptionsController::~OptionsController()
             {
+                m_messageBus.UnsubscribeUi(m_appModeChangedMessageHandler);
+
                 m_initialExperienceIntroController.RemoveReplayExitIUXChangedCallback(m_onReplayTutorialsModelChanged);
                 m_interiorsExplorerController.RemoveReplayTutorialsChangedCallback(m_onReplayTutorialsModelChanged);
 
