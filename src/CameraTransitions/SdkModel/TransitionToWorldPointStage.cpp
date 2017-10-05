@@ -82,6 +82,12 @@ namespace ExampleApp
                 if(m_jumpIfFar && ShouldJumpTo(m_endTransitionInterestPointEcef))
                 {
                     m_transitionTime = m_transitionDuration;
+
+                    // Calling SetView here instead of just doing an early-out so that anything that depends on the camera's position will work
+                    // (such as mapscene startup searches) [MPLY-8855]
+                    Eegeo::v3 endHeadingVector = ComputeHeadingVector(m_endTransitionInterestPointEcef, m_endInterestHeading);
+                    Eegeo::Space::EcefTangentBasis newInterestBasis(m_endTransitionInterestPointEcef, endHeadingVector);
+                    m_gpsGlobeCameraController.SetView(newInterestBasis, m_endInterestDistance);
                     return;
                 }
                 

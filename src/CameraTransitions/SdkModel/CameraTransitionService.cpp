@@ -121,6 +121,15 @@ namespace ExampleApp
             {
                 m_transitioningChangedCallbacks.RemoveCallback(callback);
             }
+
+            void CameraTransitionService::InsertTransitionCompletedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitionCompletedCallbacks.AddCallback(callback);
+            }
+            void CameraTransitionService::RemoveTransitionCompletedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitionCompletedCallbacks.RemoveCallback(callback);
+            }
             
             void CameraTransitionService::OnTransitioningChanged()
             {

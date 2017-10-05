@@ -14,11 +14,12 @@
 
 namespace
 {
-    float GetSearchRadius(const Eegeo::Camera::RenderCamera& renderCamera)
+    float GetSearchRadius(ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController)
     {
         const float SearchRadiusMin = 1000.f;
         const float SearchRadiusMax = 50000.f;
-        float radius = (renderCamera.GetAltitude() * Eegeo::Math::Tan(renderCamera.GetFOV()));
+        Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(cameraController.GetCameraState().LocationEcef());
+        float radius = (location.GetAltitude() * Eegeo::Math::Tan(cameraController.GetRenderCamera().GetFOV()));
         return Eegeo::Clamp(radius, SearchRadiusMin, SearchRadiusMax);
     }
 }
@@ -73,7 +74,7 @@ namespace ExampleApp
                     bool tryInteriorSearch,
                     const Eegeo::Space::LatLongAltitude& location)
             {
-                const float radius = GetSearchRadius(m_cameraController.GetRenderCamera());
+                const float radius = GetSearchRadius(m_cameraController);
                 PerformSearchQuery(query, isTag, tryInteriorSearch, location, radius);
             }
             

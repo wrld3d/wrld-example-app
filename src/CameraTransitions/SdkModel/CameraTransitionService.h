@@ -62,6 +62,9 @@ namespace ExampleApp
                 
                 void InsertTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertTransitionCompletedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveTransitionCompletedCallback(Eegeo::Helpers::ICallback0& callback);
                 
             private:
                 
@@ -72,6 +75,7 @@ namespace ExampleApp
                 ICameraTransitionController* m_pTransitionController;
                 
                 Eegeo::Helpers::CallbackCollection0 m_transitioningChangedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_transitionCompletedCallbacks;
                 Eegeo::Helpers::TCallback0<CameraTransitionService> m_transitioningChangedHandler;
             };
         }

@@ -197,6 +197,7 @@ namespace ExampleApp
                     else
                     {
                         StopCurrentTransition();
+                        m_transitionCompletedCallbacks.ExecuteCallbacks();
                     }
                 }
                 else if(pCurrentStage->StageHasFailed())
@@ -212,6 +213,15 @@ namespace ExampleApp
             void CameraTransitionController::RemoveTransitioningChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_transitioningChangedCallbacks.RemoveCallback(callback);
+            }
+
+            void CameraTransitionController::InsertTransitionCompletedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitionCompletedCallbacks.AddCallback(callback);
+            }
+            void CameraTransitionController::RemoveTransitionCompletedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitionCompletedCallbacks.RemoveCallback(callback);
             }
             
             void CameraTransitionController::EnqueueExitInteriorStage()

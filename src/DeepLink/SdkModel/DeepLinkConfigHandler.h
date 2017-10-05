@@ -71,7 +71,13 @@ namespace ExampleApp
             
                 Eegeo::Helpers::TCallback0<DeepLinkConfigHandler> m_newThemeDataCallback;
                 void HandleNewThemeManifestLoaded();
-                
+
+                Eegeo::Helpers::TCallback0<DeepLinkConfigHandler> m_startupSearchCameraTransitionCompleteCallback;
+                std::string m_startupSearchTag;
+                Eegeo::Space::LatLongAltitude m_startupSearchLocation;
+                bool m_shouldPerformStartupSearch;
+                void HandleStartupSearchCameraTransitionComplete();
+
                 std::string GenerateConfigUrl(const AppInterface::UrlData& data) const;
                 void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
                 void OnFailAlertBoxDismissed();
