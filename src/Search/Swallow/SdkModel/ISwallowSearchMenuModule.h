@@ -21,6 +21,7 @@ namespace ExampleApp
                     virtual Menu::View::IMenuModel& GetWorkingGroupsMenuModel() const = 0;
                     virtual Menu::View::IMenuModel& GetFacilitiesMenuModel() const = 0;
                     virtual Menu::View::IMenuModel& GetOfficesMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetDeskGroupsMenuModel() const = 0;
                     
                 };
             }

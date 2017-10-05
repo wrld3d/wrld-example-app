@@ -18,7 +18,7 @@ namespace ExampleAppWPF
 {
     public class SearchMenuView : MenuView, INotifyPropertyChanged
     {
-        private const int m_indexOfFirstDropDown = 3;
+        private const int m_indexOfFirstDropDown = 4;
 
         private TextBox m_editText;
         private SearchMenuListAdapter m_adapter;

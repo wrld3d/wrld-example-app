@@ -84,7 +84,19 @@ namespace ExampleApp
                                                                                                    true,
                                                                                                    menuViewModel,
                                                                                                    static_cast<float>(Eegeo::Space::EarthConstants::Radius*2.0),
-                                                                                                   messageBus));                }
+                                                                                                   messageBus));                
+                    m_pDeskGroupsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
+                    m_pDeskGroupsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pDeskGroupsMenuModel);
+                    m_pDeskGroupsMenuOptionsModel->AddItem("Desk Groups",
+                        "Desk Groups",
+                        "",
+                        "",
+                        Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::DESK_GROUP_CATEGORY_NAME,
+                            true,
+                            true,
+                            menuViewModel,
+                            messageBus));
+                }
                 
                 SwallowSearchMenuModule::~SwallowSearchMenuModule()
                 {
@@ -103,6 +115,10 @@ namespace ExampleApp
                     Eegeo_DELETE m_pMeetingRoomsMenuOptionsModel;
                     
                     Eegeo_DELETE m_pMeetingRoomsMenuModel;
+
+                    Eegeo_DELETE m_pDeskGroupsMenuOptionsModel;
+
+                    Eegeo_DELETE m_pDeskGroupsMenuModel;
                 }
                 
                 Menu::View::IMenuModel& SwallowSearchMenuModule::GetMeetingRoomsMenuModel() const
@@ -123,6 +139,11 @@ namespace ExampleApp
                 Menu::View::IMenuModel& SwallowSearchMenuModule::GetOfficesMenuModel() const
                 {
                     return *m_pOfficesMenuModel;
+                }
+
+                Menu::View::IMenuModel& SwallowSearchMenuModule::GetDeskGroupsMenuModel() const
+                {
+                    return *m_pDeskGroupsMenuModel;
                 }
             }
         }

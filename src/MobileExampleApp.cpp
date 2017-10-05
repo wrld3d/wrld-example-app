@@ -894,6 +894,7 @@ namespace ExampleApp
         m_pSearchMenuModule->AddMenuSection("Meeting Rooms", m_pSwallowSearchMenuModule->GetMeetingRoomsMenuModel(), false);
         m_pSearchMenuModule->AddMenuSection("Facilities & Amenities",        m_pSwallowSearchMenuModule->GetFacilitiesMenuModel(), false);
         m_pSearchMenuModule->AddMenuSection("Buildings",          m_pSwallowSearchMenuModule->GetOfficesMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Desk Groups", m_pSwallowSearchMenuModule->GetDeskGroupsMenuModel(), false);
 
         if(!m_applicationConfiguration.IsInKioskMode())
         {

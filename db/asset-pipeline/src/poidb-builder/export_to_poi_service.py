@@ -481,12 +481,29 @@ def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, ve
 def collect_misc_from_desks_table(desks):
     desk_groups = {}
 
+    desk_highlight_colors = {
+        "A": [32.0, 116.0, 233.0, 128.0],
+        "B": [22.0, 106.0, 223.0, 128.0],
+        "C": [20.0, 97.0, 204.0, 128.0],
+        "D": [18.0, 85.0, 179.0, 128.0],
+        "E": [17.0, 79.0, 167.0, 128.0],
+        "F": [15.0, 70.0, 149.0, 128.0],
+        "G": [13.0, 62.0, 130.0, 128.0],
+        "H": [9.0, 44.0, 93.0, 128.0],
+        "I": [9.0, 44.0, 93.0, 128.0],
+        "J": [7.0, 35.0, 74.0, 128.0],
+        "K": [6.0, 26.0, 56.0, 128.0]
+    }
+
     for desk_name in desks:
         if "3QVS" in desk_name:
             desk_group_name = desk_name[:9]
 
             desk = desks[desk_name]
             floor_id = int(desk["floor_id"])
+
+            desk_group = desk_group_name[-1:]
+            highlight_color_group = desk_group if desk_highlight_colors.has_key(desk_group) else "A"
 
             if desk_group_name not in desk_groups:
                 desk_groups[desk_group_name] = {
@@ -500,7 +517,8 @@ def collect_misc_from_desks_table(desks):
                     "floor_id": floor_id,
                     "user_data":
                         {
-                            "desks": []
+                            "desks": [],
+                            "entity_highlight_color":desk_highlight_colors[highlight_color_group]
                         }}
 
             desk_groups[desk_group_name]["user_data"]["desks"].append(desk_name)

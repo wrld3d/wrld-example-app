@@ -26,6 +26,7 @@ namespace ExampleApp
                     Menu::View::IMenuModel& GetWorkingGroupsMenuModel() const;
                     Menu::View::IMenuModel& GetFacilitiesMenuModel() const;
                     Menu::View::IMenuModel& GetOfficesMenuModel() const;
+                    Menu::View::IMenuModel& GetDeskGroupsMenuModel() const;
                     
                 private:
                     Menu::View::IMenuModel* m_pMeetingRoomsMenuModel;
@@ -41,8 +42,10 @@ namespace ExampleApp
                     Menu::View::IMenuOptionsModel* m_pOfficesMenuOptionsModel;
                     
                     Menu::View::IMenuModel* m_pPersonMenuModel;
-                    Menu::View::IMenuOptionsModel* m_pPersonsMenuOptionsModel;                    
-                    
+                    Menu::View::IMenuOptionsModel* m_pPersonsMenuOptionsModel;
+
+                    Menu::View::IMenuModel* m_pDeskGroupsMenuModel;
+                    Menu::View::IMenuOptionsModel* m_pDeskGroupsMenuOptionsModel;
                 };
             }
         }
