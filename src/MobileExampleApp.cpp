@@ -531,12 +531,6 @@ namespace ExampleApp
         
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
         
-        InitialisePinsModules(mapModule, world, interiorsAffectedByFlattening, m_screenProperties.GetOversampleScale());
-        
-        m_pReportPinsVisibilityMaskingModule = Eegeo_NEW(ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule)(m_pWorldPinsModule->GetWorldPinsVisibilityController(),
-                                                                                                                                   mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
-                                                                                                                                   m_messageBus);
-        
         Eegeo_ASSERT(m_pSwallowPoiDbModule == NULL);
         Eegeo_ASSERT(m_pSQLiteModule != NULL);
 
@@ -620,6 +614,12 @@ namespace ExampleApp
                                                                     m_applicationConfiguration,
                                                                     m_messageBus,
                                                                     m_sdkDomainEventBus);
+
+        InitialisePinsModules(mapModule, world, interiorsAffectedByFlattening, m_screenProperties.GetOversampleScale());
+
+        m_pReportPinsVisibilityMaskingModule = Eegeo_NEW(ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule)(m_pWorldPinsModule->GetWorldPinsVisibilityController(),
+            mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+            m_messageBus);
         
         m_pSwallowSearchServiceModule = Eegeo_NEW(Search::Swallow::SdkModel::SwallowSearchServiceModule)(m_pTransitionPoiSearchServiceModule->GetSearchService(),
                                                                                                          *m_pCameraTransitionService,
@@ -1097,7 +1097,8 @@ namespace ExampleApp
                                                                                          mapModule.GetMarkersModule().GetMarkerService(),
                                                                                          m_applicationConfiguration.IsInKioskMode(),
                                                                                          *m_pNavigationService,
-                                                                                         m_pSearchModule->GetSearchResultMyPinsService());
+                                                                                         m_pSearchModule->GetSearchResultMyPinsService(),
+                                                                                         *m_pCameraTransitionService);
     }
     
     void MobileExampleApp::OnPause()

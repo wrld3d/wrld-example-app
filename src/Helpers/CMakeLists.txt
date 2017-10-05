@@ -9,6 +9,7 @@ set(currsources
   ../src/Helpers/InteriorNavigationHelpers.cpp
   ../src/Helpers/InteriorNavigationHelpers.h
   ../src/Helpers/IStateMachineState.h
+  ../src/Helpers/PinHelpers.h
   ../src/Helpers/SizeHelpers.cpp
   ../src/Helpers/SizeHelpers.h
   ../src/Helpers/StateMachine.cpp

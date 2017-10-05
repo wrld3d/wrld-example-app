@@ -15,6 +15,7 @@
 #include "Markers.h"
 #include "NavigationService.h"
 #include "Search.h"
+#include "CameraTransitions.h"
 
 namespace ExampleApp
 {
@@ -39,7 +40,8 @@ namespace ExampleApp
                                 Eegeo::Markers::IMarkerService& markerService,
                                 bool isInKioskMode,
                                 Eegeo::Location::NavigationService& navigationService,
-                                Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService);
+                                Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
+                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
 
                 ~WorldPinsModule();
                 
