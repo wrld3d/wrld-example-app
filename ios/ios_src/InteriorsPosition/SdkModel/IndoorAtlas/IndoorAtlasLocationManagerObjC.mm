@@ -109,17 +109,20 @@ typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
 {
     m_pIndoorAtlasLocationService->SetIsAuthorized(true);
     
-    NSString* floorPlanId = region.identifier;
-    
-    int floorIndex;
-    if([self tryGetFloorIndexFromFloorPlanId: std::string([floorPlanId UTF8String]) wrldFloorId:floorIndex])
+    if(region.type == kIARegionTypeFloorPlan)
     {
-        floorIndex = -1;
+        NSString* floorPlanId = region.identifier;
+
+        int floorIndex;
+        if(![self tryGetFloorIndexFromFloorPlanId: std::string([floorPlanId UTF8String]) wrldFloorId:floorIndex])
+        {
+            floorIndex = -1;
+        }
+        m_eegeoFloorIndex = floorIndex;
+        m_indoorAtlasFloorId = std::string([floorPlanId UTF8String]);
+        m_pIndoorAtlasLocationService->SetFloorIndex(floorIndex);
+        
     }
-    m_eegeoFloorIndex = floorIndex;
-    m_indoorAtlasFloorId = std::string([floorPlanId UTF8String]);
-    m_pIndoorAtlasLocationService->SetFloorIndex(floorIndex);
-    
     [self notifyUpdatedPosition];
 }
 
