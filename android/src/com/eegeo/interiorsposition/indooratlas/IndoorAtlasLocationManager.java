@@ -96,7 +96,10 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
     @Override
     public void onEnterRegion(IARegion region)
     {
-    	m_floorPlanId = region.getId();
+		if(region.getType() == IARegion.TYPE_FLOOR_PLAN)
+		{
+            m_floorPlanId = region.getId();
+        }
     }
     
     @Override
