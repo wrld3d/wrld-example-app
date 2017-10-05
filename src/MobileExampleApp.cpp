@@ -1059,7 +1059,8 @@ namespace ExampleApp
                                                                                          interiorsPresentationModule.GetInteriorMarkerPickingService(),
                                                                                          mapModule.GetMarkersModule().GetMarkerService(),
                                                                                          *m_pNavigationService,
-                                                                                         m_pSearchModule->GetSearchResultMyPinsService());
+                                                                                         m_pSearchModule->GetSearchResultMyPinsService(),
+                                                                                         *m_pCameraTransitionService);
     }
 
     void MobileExampleApp::OnPause()

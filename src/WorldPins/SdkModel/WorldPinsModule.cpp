@@ -22,13 +22,21 @@ namespace ExampleApp
                                              Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
                                              Eegeo::Markers::IMarkerService& markerService,
                                              Eegeo::Location::NavigationService& navigationService,
-                                             Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService)
+                                             Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
+                                             CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController)
             {
                 m_pWorldPinsFactory = Eegeo_NEW(WorldPinsFactory);
 
                 m_pWorldPinsRepository = Eegeo_NEW(WorldPinsRepository);
                 
-                m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository, interiorMarkerPickingService, markerService, sdkDomainEventBus, messageBus, navigationService, searchResultOnMapMyPinsService);
+                m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository,
+                                                                    interiorMarkerPickingService,
+                                                                    markerService,
+                                                                    sdkDomainEventBus,
+                                                                    messageBus,
+                                                                    navigationService,
+                                                                    searchResultOnMapMyPinsService,
+                                                                    cameraTransitionController);
                 
                 m_pWorldPinsVisibilityController = Eegeo_NEW(WorldPinsVisibilityController)(*m_pWorldPinsRepository,
                                                                                             messageBus,

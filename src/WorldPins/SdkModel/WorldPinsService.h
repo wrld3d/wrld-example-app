@@ -20,6 +20,7 @@
 #include "BidirectionalBus.h"
 #include "NavigationService.h"
 #include "Search.h"
+#include "CameraTransitions.h"
 
 namespace ExampleApp
 {
@@ -39,7 +40,8 @@ namespace ExampleApp
                                  ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Eegeo::Location::NavigationService& navigationService,
-                                 Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService);
+                                 Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
+                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
                 ~WorldPinsService();
                 
                 WorldPinItemModel* AddPin(IWorldPinSelectionHandler* pSelectionHandler,
@@ -120,6 +122,8 @@ namespace ExampleApp
                 WorldPinItemModel::WorldPinItemModelId m_selectedPinId;
 
                 const Search::SdkModel::MyPins::ISearchResultMyPinsService& m_searchResultOnMapMyPinsService;
+
+                CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
             };
 
         }

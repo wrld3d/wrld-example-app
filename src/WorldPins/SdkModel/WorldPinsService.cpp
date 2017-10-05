@@ -8,9 +8,11 @@
 #include "ISearchResultMyPinsService.h"
 #include "IMarkerService.h"
 #include "MarkerBuilder.h"
-
+#include "ICameraTransitionController.h"
 #include <cstdlib>
 #include <sstream>
+#include "InteriorsExplorer.h"
+#include "PinHelpers.h"
 
 namespace ExampleApp
 {
@@ -25,7 +27,8 @@ namespace ExampleApp
                                                ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                Eegeo::Location::NavigationService& navigationService,
-                                               Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService)
+                                               Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
+                                               CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController)
             : m_worldPinsRepository(worldPinsRepository)
             , m_interiorMarkerPickingService(interiorMarkerPickingService)
             , m_markerService(markerService)
@@ -37,6 +40,7 @@ namespace ExampleApp
             , m_pSelectedPinHighlight(nullptr)
             , m_selectedPinId(-1)
             , m_searchResultOnMapMyPinsService(searchResultOnMapMyPinsService)
+            , m_cameraTransitionController(cameraTransitionController)
             {
                 m_sdkModelDomainEventBus.Subscribe(m_worldPinHiddenStateChangedMessageBinding);
                 m_messageBus.SubscribeNative(m_onSearchResultSelected);
@@ -297,6 +301,22 @@ namespace ExampleApp
 
                     WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(worldPinItemModelId);
                     AddHighlight(pWorldPinItemModel);
+
+                    const Eegeo::Markers::IMarker::IdType markerId = GetMarkerIdForWorldPinItemModelId(pWorldPinItemModel->Id());
+                    const Eegeo::Space::LatLong& location = m_markerService.Get(markerId).GetAnchorLocation().GetLatLong();
+
+                    if(pWorldPinItemModel->IsInterior())
+                    {
+                        m_cameraTransitionController.StartTransitionTo(location.ToECEF(),
+                                                                        InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance,
+                                                                        pWorldPinItemModel->GetInteriorData().building,
+                                                                        pWorldPinItemModel->GetInteriorData().floor);
+                    }
+                    else
+                    {
+                        const float pinAltitude = Helpers::PinHelpers::PIN_ALTITUDE;
+                        m_cameraTransitionController.StartTransitionTo(location.ToECEF(), pinAltitude);
+                    }
                 }
             }
             
