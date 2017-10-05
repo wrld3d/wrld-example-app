@@ -68,38 +68,8 @@
       "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
     }],
     "FloorMapping": [{
-      "BuildingFloorIndex": 1,
-      "TrackedFloorIndex": "2"
-    }, {
       "BuildingFloorIndex": 2,
       "TrackedFloorIndex": "1"
-    }, {
-      "BuildingFloorIndex": 3,
-      "TrackedFloorIndex": "0"
-    }, {
-      "BuildingFloorIndex": 5,
-      "TrackedFloorIndex": "3"
-    }, {
-      "BuildingFloorIndex": 6,
-      "TrackedFloorIndex": "4"
-    }, {
-      "BuildingFloorIndex": 7,
-      "TrackedFloorIndex": "5"
-    }, {
-      "BuildingFloorIndex": 8,
-      "TrackedFloorIndex": "6"
-    }, {
-      "BuildingFloorIndex": 9,
-      "TrackedFloorIndex": "7"
-    }, {
-      "BuildingFloorIndex": 10,
-      "TrackedFloorIndex": "8"
-    }, {
-      "BuildingFloorIndex": 11,
-      "TrackedFloorIndex": "9"
-    }, {
-      "BuildingFloorIndex": 12,
-      "TrackedFloorIndex": "10"
     }]
   }, {
     "InteriorId": "westport_house",
