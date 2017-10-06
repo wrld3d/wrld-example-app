@@ -74,9 +74,9 @@ public class MeetingRoomSearchResultPoiView implements View.OnClickListener
 		m_uiRoot.addView(m_view);
 	
 		m_closeButton.setOnClickListener(this);
-		m_availableButton.setOnClickListener(this);
-		m_availableSoonButton.setOnClickListener(this);
-		m_occupiedButton.setOnClickListener(this);
+		m_availableButton.setEnabled(false);
+		m_availableSoonButton.setEnabled(false);
+		m_occupiedButton.setEnabled(false);
 	}
 	
 	public void destroy() 
@@ -122,18 +122,6 @@ public class MeetingRoomSearchResultPoiView implements View.OnClickListener
         {
 			handleCloseClicked();
 		}
-        else if (view == m_availableButton) 
-        {
-			handleAvailableButtonSelected();
-		} 
-        else if (view == m_availableSoonButton) 
-        {
-			handleAvailableSoonButtonSelected();
-		} 
-        else if (view == m_occupiedButton) 
-        {
-			handleOccupiedButtonSelected();
-		}
 	}
 
 	public void dismissPoiInfo() 
@@ -161,30 +149,6 @@ public class MeetingRoomSearchResultPoiView implements View.OnClickListener
 				m_poiImage.setImageBitmap(Bitmap.createScaledBitmap(poiBitmap, size, size, false));
 			}
 		}
-	}
-
-	private void handleAvailableButtonSelected() 
-	{
-		m_availability = MEETING_ROOM_AVAILABLE;
-		persistMeetingRoomState(m_availability);
-		refreshOccupancyButtonStates();
-		SearchResultPoiViewJniMethods.AvailabilityChanged(m_nativeCallerPointer, m_availability);
-	}
-
-	private void handleAvailableSoonButtonSelected() 
-	{
-		m_availability = MEETING_ROOM_AVAILABLE_SOON;
-		persistMeetingRoomState(m_availability);
-		refreshOccupancyButtonStates();
-		SearchResultPoiViewJniMethods.AvailabilityChanged(m_nativeCallerPointer, m_availability);
-	}
-
-	private void handleOccupiedButtonSelected() 
-	{
-		m_availability = MEETING_ROOM_OCCUPIED;
-		persistMeetingRoomState(m_availability);
-		refreshOccupancyButtonStates();
-		SearchResultPoiViewJniMethods.AvailabilityChanged(m_nativeCallerPointer, m_availability);
 	}
 
 	private void persistMeetingRoomState(String avalability) 

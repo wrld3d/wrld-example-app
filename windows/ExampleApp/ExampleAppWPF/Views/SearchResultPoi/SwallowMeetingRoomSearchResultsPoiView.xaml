@@ -239,7 +239,8 @@
                                                              Style="{StaticResource AvailableToggleImageStyle}"
                                                              GroupName="AvailabilityGroup"
                                                              Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}"
-                                                             Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}"/>
+                                                             Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}"
+                                                             IsEnabled="False"/>
                                                             </Border>
                                                             <Border Background="{StaticResource Transparent}" Padding="{DynamicResource SwallowMeetingRoomPOIViewContentAvailableSoonButtonPadding}">
                                                                 <RadioButton Name="AvailableSoonButton"
@@ -250,7 +251,8 @@
                                                              Style="{StaticResource AvailableSoonToggleImageStyle}"
                                                              GroupName="AvailabilityGroup"
                                                              Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}"
-                                                             Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}"/>
+                                                             Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}"
+                                                             IsEnabled="False"/>
                                                             </Border>
                                                             <Border Background="{StaticResource Transparent}" Padding="{DynamicResource SwallowMeetingRoomPOIViewContentOccupiedButtonPadding}">
                                                                 <RadioButton Name="OccupiedButton"
@@ -261,7 +263,8 @@
                                                              Style="{StaticResource OccupiedToggleImageStyle}"
                                                              GroupName="AvailabilityGroup"
                                                              Width="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyWidth}"
-                                                             Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}"/>
+                                                             Height="{DynamicResource SwallowMeetingRoomPOIViewButtonOccupancyHeight}"
+                                                             IsEnabled="False"/>
                                                             </Border>
                                                         </StackPanel>
                                                     </Grid>
