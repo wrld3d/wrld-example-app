@@ -877,9 +877,6 @@ def persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url, ba
                 original = entity['user_data']['image_url']
                 entity['user_data']['image_url'] = "{0}/images/{1}".format(cdn_base_url, original)
 
-            user_data = entity['user_data']
-            entity['user_data'] = json.dumps(user_data, ensure_ascii=False)
-
         if count >= batch_count:
             persist_entities_batch(entities_batch)
 
