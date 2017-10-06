@@ -178,16 +178,6 @@ set(resources ${resources}
         Resources/Sphere_8bit.pvr
         Resources/Sphere_Night_8bit.pvr
         Resources/SplashScreen
-        Resources/SplashScreen/Icon-60@2x.png
-        Resources/SplashScreen/Icon-60@3x.png
-        Resources/SplashScreen/Icon-76.png
-        Resources/SplashScreen/Icon-76@2x.png
-        Resources/SplashScreen/Icon-Small-40.png
-        Resources/SplashScreen/Icon-Small-40@2x.png
-        Resources/SplashScreen/Icon-Small-40@3x.png
-        Resources/SplashScreen/Icon-Small.png
-        Resources/SplashScreen/Icon-Small@2x.png
-        Resources/SplashScreen/Icon-Small@3x.png
         Resources/SplashScreen/SplashScreen.png
         Resources/SplashScreen/SplashScreen@2x.png
         Resources/SplashScreen/SplashScreen@3x.png
