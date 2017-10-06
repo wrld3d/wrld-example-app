@@ -57,7 +57,6 @@
 #include "OptionsMenuOption.h"
 #include "AboutPageMenuOption.h"
 #include "ImagePathHelpers.h"
-#include "WatermarkModule.h"
 #include "InteriorsPresentationModule.h"
 #include "InteriorsModelModule.h"
 #include "InteriorsExplorerModule.h"
@@ -268,7 +267,6 @@ namespace ExampleApp
     , m_pMyPinsModule(NULL)
     , m_pMyPinDetailsModule(NULL)
     , m_pOptionsModule(NULL)
-    , m_pWatermarkModule(NULL)
     , m_pInteriorsExplorerModule(NULL)
     , m_pInteriorsEntitiesPinsModule(NULL)
     , m_screenProperties(screenProperties)
@@ -866,14 +864,6 @@ namespace ExampleApp
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsCameraController());
         
-        m_pWatermarkModule = Eegeo_NEW(ExampleApp::Watermark::SdkModel::WatermarkModule)(m_identityProvider,
-                                                                                         m_applicationConfiguration.Name(),
-                                                                                         m_applicationConfiguration.GoogleAnalyticsReferrerToken(),
-                                                                                         world.GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
-                                                                                         world.GetMapModule().GetInteriorsModelModule().GetInteriorsModelRepository(),
-                                                                                         m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
-                                                                                         m_messageBus);
-        
         m_pRenderingTransformMeshModule = Eegeo_NEW(RenderingTransformMesh::SdkModel::RenderingTransformMeshModule)(m_pWorld->GetRenderingModule(),
                                                                                                                     m_platformAbstractions.GetTextureFileLoader());
 
@@ -989,8 +979,6 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pInteriorCameraWrapper;
         
-        Eegeo_DELETE m_pWatermarkModule;
-        
         Eegeo_DELETE m_pRestrictedBuildingInfoService;
         
         Eegeo_DELETE m_pInteriorsExplorerModule;
@@ -1051,7 +1039,6 @@ namespace ExampleApp
         reactors.push_back(&FlattenButtonModule().GetScreenControlViewModel());
         reactors.push_back(&CompassModule().GetScreenControlViewModel());
         reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
-        reactors.push_back(&WatermarkModule().GetScreenControlViewModel());
         reactors.push_back(&InteriorsExplorerModule().GetScreenControlViewModel());
         return reactors;
     }
@@ -1245,7 +1232,6 @@ namespace ExampleApp
         m_pFlattenButtonModule->GetScreenControlViewModel().AddToScreen();
         m_pCompassModule->GetScreenControlViewModel().AddToScreen();
         m_pMyPinCreationModule->GetInitiationScreenControlViewModel().AddToScreen();
-        m_pWatermarkModule->GetWatermarkViewModel().AddToScreen();
     }
     
     void MobileExampleApp::UpdateLoadingScreen(float dt)

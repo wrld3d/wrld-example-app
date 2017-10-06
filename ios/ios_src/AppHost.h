@@ -35,7 +35,6 @@
 #include "MyPinDetailsViewIncludes.h"
 #include "iOSConnectivityService.h"
 #include "OptionsViewIncludes.h"
-#include "WatermarkViewIncludes.h"
 #include "InitialExperienceIntroViewIncludes.h"
 #include "NetIncludes.h"
 #include "Search.h"
@@ -128,7 +127,6 @@ private:
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
-    ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::InitialExperience::View::IInitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;

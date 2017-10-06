@@ -162,13 +162,9 @@
     <Compile Include="Views\TutorialTooltip\TutorialTooltipPositionTransform.cs" />
     <Compile Include="Views\TutorialTooltip\TutorialTooltipView.cs" />
     <Compile Include="Views\VirtualKeyboard\VirtualKeyboardView.cs" />
-    <Compile Include="Views\Watermark\WatermarkView.cs" />
     <Compile Include="Views\Menu\MenuView.cs" />
     <Compile Include="Views\SettingsMenu\SettingsMenuView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuView.cs" />
-    <Compile Include="Views\Watermark\WatermarkViewDialogBox.xaml.cs">
-      <DependentUpon>WatermarkViewDialogBox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VirtualKeyboard\Controls\QuertyKeyboard.cs" />
     <Compile Include="VirtualKeyboard\Controls\QuertyKeyboardButton.cs" />
     <Compile Include="VirtualKeyboard\Controls\VirtualKeyboardButton.cs" />
@@ -355,14 +351,6 @@
     <Page Include="Views\VirtualKeyboard\VirtualKeyboard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Watermark\WatermarkView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Watermark\WatermarkViewDialogBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
