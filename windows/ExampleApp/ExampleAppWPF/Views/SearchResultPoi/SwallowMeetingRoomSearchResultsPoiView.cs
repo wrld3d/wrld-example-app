@@ -43,7 +43,14 @@ namespace ExampleAppWPF
         {
             AvailalabilityType availabilityEnum;
 
-            availabilityStringMap.TryGetValue(availabilityString, out availabilityEnum);
+            try
+            {
+                availabilityStringMap.TryGetValue(availabilityString, out availabilityEnum);
+            }
+            catch (ArgumentNullException)
+            {
+                availabilityEnum = AvailalabilityType.None;
+            }
 
             return availabilityEnum;
         }
