@@ -36,17 +36,6 @@
     "OrientationDegrees": 180.0
   },
   "IndoorTrackedBuildings": [{
-    "InteriorId": "swallow_lon_wallbrooksquare",
-    "Type": "Senion",
-    "Config": [{
-      "ApiKey": "eb40cf71-6ef6-4ae1-969c-b4c4abe5fb5e",
-      "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
-    }],
-    "FloorMapping": [{
-      "BuildingFloorIndex": 2,
-      "TrackedFloorIndex": "1"
-    }]
-  }, {
     "InteriorId": "westport_house",
     "Type": "Senion",
     "Config": [{
