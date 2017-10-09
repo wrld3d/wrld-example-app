@@ -59,7 +59,6 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
     protected ScrollView m_scrollSection = null;
 
     private byte[] m_imageBuffer = null;
-    private Uri m_currentImageUri = null;
     private boolean m_awaitingIntentResponse;
     private boolean m_hasNetworkConnectivity = false;
     private boolean m_showingNoNetworkDialog = false;
@@ -141,7 +140,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 
         m_shouldShareButton.setChecked(m_hasNetworkConnectivity);
 
-        m_currentImageUri = null;
+        m_imageBuffer = null;
 
         m_awaitingIntentResponse = false;
 
@@ -224,28 +223,6 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         }
         else if(view == m_submitButton)
         {
-            if(m_currentImageUri != null)
-            {
-                try
-                {
-                    Bitmap bitmap = decodeImage();
-
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream);
-                    m_imageBuffer = stream.toByteArray();
-                    stream.close();
-
-                }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-            else
-            {
-                m_imageBuffer = null;
-            }
-
             MyPinCreationDetailsJniMethods.SubmitButtonPressed(m_nativeCallerPointer);
         }
     }
@@ -256,39 +233,16 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         if(requestCode == PhotoIntentDispatcher.REQUEST_IMAGE_CAPTURE && resultCode == MainActivity.RESULT_OK)
         {
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            Uri contentUri = m_activity.getPhotoIntentDispatcher().getCurrentPhotoPath();
-            mediaScanIntent.setData(contentUri);
+            Uri uri = m_activity.getPhotoIntentDispatcher().getCurrentPhotoPath();
+            mediaScanIntent.setData(uri);
             m_activity.sendBroadcast(mediaScanIntent);
 
-            m_currentImageUri = contentUri;
-
-            try
-            {
-                Bitmap bitmap = decodeImage();
-                m_poiImage.setImageBitmap(bitmap);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+            setImageUri(uri);
         }
         else if(requestCode == PhotoIntentDispatcher.SELECT_PHOTO_FROM_GALLERY && resultCode == MainActivity.RESULT_OK)
         {
-            Uri selectedUri = data.getData();
-            m_currentImageUri = selectedUri;
-
-            try
-            {
-                Bitmap bitmap = decodeImage();
-                if (bitmap != null)
-                {
-                    m_poiImage.setImageBitmap(bitmap);
-                }
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+            Uri uri = data.getData();
+            setImageUri(uri);
         }
 
         if(requestCode == PhotoIntentDispatcher.SELECT_PHOTO_FROM_GALLERY || requestCode == PhotoIntentDispatcher.REQUEST_IMAGE_CAPTURE)
@@ -297,11 +251,34 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         }
     }
 
-    private Bitmap decodeImage() throws IOException
+    private void setImageUri(final Uri uri)
+    {
+        try
+        {
+            Bitmap bitmap = decodeImage(uri);
+            if (bitmap != null)
+            {
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream);
+                m_imageBuffer = stream.toByteArray();
+                stream.close();
+
+                m_poiImage.setImageBitmap(bitmap);
+            }
+        }
+        catch (IOException e)
+        {
+            m_poiImage.setImageResource(R.drawable.image_blank);
+            m_imageBuffer = null;
+            e.printStackTrace();
+        }
+    }
+
+    private Bitmap decodeImage(final Uri uri) throws IOException
     {
         final int idealSizePx = 512;
 
-        InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
+        InputStream is = m_activity.getContentResolver().openInputStream(uri);
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
@@ -316,7 +293,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
-        is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
+        is = m_activity.getContentResolver().openInputStream(uri);
         bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
         is.close();
         if (bitmap == null)
@@ -327,42 +304,42 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         int finalWidth = bitmap.getWidth();
         int finalHeight = bitmap.getHeight();
 
-        float rotation = getOrientationRotation();
+        float rotation = getOrientationRotation(uri);
         Matrix mtx = new Matrix();
         mtx.postRotate(rotation);
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, finalWidth, finalHeight, mtx, true);
         return bitmap;
     }
 
-    private float getOrientationRotation()
+    private float getOrientationRotation(final Uri uri)
     {
         float photoRotation = 0;
         boolean hasRotation = false;
         String[] projection = { Images.ImageColumns.ORIENTATION };
         try
         {
-            Cursor cursor = m_activity.getContentResolver().query(m_currentImageUri, projection, null, null, null);
+            Cursor cursor = m_activity.getContentResolver().query(uri, projection, null, null, null);
             if(cursor.moveToFirst())
             {
-                photoRotation = cursor.getInt(0);
-                hasRotation = true;
+                if (cursor.moveToFirst())
+                {
+                    int orientation = cursor.getInt(0);
+                    photoRotation = orientation;
+                    hasRotation = (orientation != 0);
+                }
             }
         }
         catch (Exception e)
         {
-            Log.d("EEGEO", "Failed to fetch orientation data for " + m_currentImageUri.toString());
+            Log.d("EEGEO", "Failed to fetch orientation data for " + uri.toString());
         }
 
         if(!hasRotation)
         {
-            ExifInterface exif;
-            try
+            ExifInterface exif = createExifInterface(uri);
+            if(exif==null)
             {
-                exif = new ExifInterface(m_currentImageUri.getPath());
-            }
-            catch (IOException e)
-            {
-                Log.d("EEGEO", "Failed to fetch exif interface for image " + m_currentImageUri.toString());
+                Log.d("EEGEO", "Failed to fetch exif interface for image " + uri.toString());
                 return photoRotation;
             }
 
@@ -386,6 +363,26 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         }
 
         return photoRotation;
+    }
+
+    private ExifInterface createExifInterface(final Uri uri)
+    {
+        try
+        {
+            if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+            {
+                InputStream is = m_activity.getContentResolver().openInputStream(uri);
+                return (is == null)?null : new ExifInterface(is);
+            }
+            else
+            {
+                return new ExifInterface(uri.getPath());
+            }
+        }
+        catch (IOException e)
+        {
+            return null;
+        }
     }
 
     private void verifyShareSettingsValid()
