@@ -42,7 +42,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener, TextWatcher {
-    private final int m_indexOfFirstDropDown = 3;
+    private final int m_indexOfFirstDropDown = 4;
 
     protected View m_closeButtonView = null;
     protected View m_progressSpinner = null;
