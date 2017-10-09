@@ -16,6 +16,8 @@ set(currsources
   ../src/SwallowPoiDb/Parsers/SwallowPoiDbParseHelper.h
   ../src/SwallowPoiDb/Parsers/SwallowPoiDbTransitionParser.cpp
   ../src/SwallowPoiDb/Parsers/SwallowPoiDbTransitionParser.h
+  ../src/SwallowPoiDb/Parsers/SwallowPoiDbTrainingRoomParser.cpp
+  ../src/SwallowPoiDb/Parsers/SwallowPoiDbTrainingRoomParser.h
   ../src/SwallowPoiDb/Parsers/SwallowPoiDbWorkingGroupParser.cpp
   ../src/SwallowPoiDb/Parsers/SwallowPoiDbWorkingGroupParser.h
 )

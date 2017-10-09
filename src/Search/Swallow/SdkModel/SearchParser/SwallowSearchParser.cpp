@@ -155,6 +155,21 @@ namespace ExampleApp
                                                              availability,
                                                              officeLocation);
                     }
+
+                    SwallowTrainingRoomResultModel TransformToSwallowTrainingRoomResult(const Search::SdkModel::SearchResultModel& searchResultModel)
+                    {
+                        rapidjson::Document json;
+                        std::string officeLocation = "unknown";
+
+                        if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
+                        {
+                            if(json.HasMember(SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()) && json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].IsString())
+                            {
+                                officeLocation = json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].GetString();
+                            }
+                        }
+                        return SwallowTrainingRoomResultModel(searchResultModel.GetTitle(), officeLocation);
+                    }
                     
                     SwallowWorkingGroupResultModel TransformToSwallowWorkingGroupResult(const Search::SdkModel::SearchResultModel& searchResultModel)
                     {

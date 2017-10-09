@@ -26,6 +26,8 @@ set(currsources
   ../src/Search/Swallow/SdkModel/SwallowSearchTransitionPinController.h
   ../src/Search/Swallow/SdkModel/SwallowSearchTransitionPinSelectionHandler.cpp
   ../src/Search/Swallow/SdkModel/SwallowSearchTransitionPinSelectionHandler.h
+  ../src/Search/Swallow/SdkModel/SwallowTrainingRoomResultModel.cpp
+  ../src/Search/Swallow/SdkModel/SwallowTrainingRoomResultModel.h
   ../src/Search/Swallow/SdkModel/SwallowTransitionResultModel.cpp
   ../src/Search/Swallow/SdkModel/SwallowTransitionResultModel.h
   ../src/Search/Swallow/SdkModel/SwallowWorkingGroupResultModel.cpp

@@ -23,6 +23,7 @@ namespace ExampleApp
                     ~SwallowSearchMenuModule();
                     
                     Menu::View::IMenuModel& GetMeetingRoomsMenuModel() const;
+                    Menu::View::IMenuModel& GetTrainingRoomsMenuModel() const;
                     Menu::View::IMenuModel& GetWorkingGroupsMenuModel() const;
                     Menu::View::IMenuModel& GetFacilitiesMenuModel() const;
                     Menu::View::IMenuModel& GetOfficesMenuModel() const;
@@ -30,7 +31,10 @@ namespace ExampleApp
                 private:
                     Menu::View::IMenuModel* m_pMeetingRoomsMenuModel;
                     Menu::View::IMenuOptionsModel* m_pMeetingRoomsMenuOptionsModel;
-                    
+
+                    Menu::View::IMenuModel* m_pTrainingRoomsMenuModel;
+                    Menu::View::IMenuOptionsModel* m_pTrainingRoomsMenuOptionsModel;
+
                     Menu::View::IMenuModel* m_pWorkingGroupsMenuModel;
                     Menu::View::IMenuOptionsModel* m_pWorkingGroupsMenuOptionsModel;
                     

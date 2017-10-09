@@ -15,6 +15,7 @@ namespace ExampleApp
         {
             SwallowPeopleVendorPriority = 0,
             SwallowMeetingRoomsVendorPriority,
+            SwallowTrainingRoomsVendorPriority,
             SwallowWorkingGroupsVendorPriority,
             SwallowFacilitiesVendorPriority,
             SwallowDepartmentsVendorPriority,

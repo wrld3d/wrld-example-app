@@ -19,6 +19,10 @@ namespace ExampleApp
             const std::string MeetingRoomTableName = "MeetingRoomPois";
             const std::string MeetingRoomFtsColumnNames[1] = { NAME_FIELD_NAME };
             const float MeetingRoomFtsColumnWeights[1] = { 1.0f };
+
+            const std::string TrainingRoomTableName = "TrainingRoomPois";
+            const std::string TrainingRoomFtsColumnNames[1] = { NAME_FIELD_NAME };
+            const float TrainingRoomFtsColumnWeights[1] = { 1.0f };
             
             const std::string WorkingGroupTableName = "WorkingGroupPois";
             const std::string WorkingGroupFtsColumnNames[2] = { NAME_FIELD_NAME, DESCRIPTION_FIELD_NAME };

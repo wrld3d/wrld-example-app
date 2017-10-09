@@ -88,6 +88,11 @@ namespace ExampleApp
 
                         iconKey = GetMeetingRoomAvailablityIcon(meetingRoomModel.GetAvailability());
 					}
+                    else if(model.GetPrimaryTag() == Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME)
+                    {
+                        Search::Swallow::SdkModel::SwallowTrainingRoomResultModel trainingRoomModel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowTrainingRoomResult(model);
+                        subtitle = trainingRoomModel.GetOfficeLocation();
+                    }
 					else if(model.GetPrimaryTag() == Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME)
 					{
 						Search::Swallow::SdkModel::SwallowWorkingGroupResultModel workingGroupmodel = Search::Swallow::SdkModel::SearchParser::TransformToSwallowWorkingGroupResult(model);

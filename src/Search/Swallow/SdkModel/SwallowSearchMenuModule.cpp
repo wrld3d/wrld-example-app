@@ -19,6 +19,8 @@ namespace ExampleApp
                                                                  ExampleAppMessaging::TMessageBus& messageBus)
                 : m_pMeetingRoomsMenuModel(NULL)
                 , m_pMeetingRoomsMenuOptionsModel(NULL)
+                , m_pTrainingRoomsMenuModel(NULL)
+                , m_pTrainingRoomsMenuOptionsModel(NULL)
                 , m_pWorkingGroupsMenuModel(NULL)
                 , m_pWorkingGroupsMenuOptionsModel(NULL)
                 , m_pOfficesMenuModel(NULL)
@@ -37,6 +39,18 @@ namespace ExampleApp
                                                                                                         true,
                                                                                                         menuViewModel,
                                                                                                         messageBus));
+
+                    m_pTrainingRoomsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
+                    m_pTrainingRoomsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pTrainingRoomsMenuModel);
+                    m_pTrainingRoomsMenuOptionsModel->AddItem("Training Rooms",
+                                                           "Training Rooms",
+                                                           "",
+                                                           "",
+                                                           Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME,
+                                                                                                      true,
+                                                                                                      true,
+                                                                                                      menuViewModel,
+                                                                                                      messageBus));
                     
                     m_pWorkingGroupsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                     m_pWorkingGroupsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pWorkingGroupsMenuModel);
@@ -99,15 +113,24 @@ namespace ExampleApp
                     Eegeo_DELETE m_pWorkingGroupsMenuOptionsModel;
                     
                     Eegeo_DELETE m_pWorkingGroupsMenuModel;
+
+                    Eegeo_DELETE m_pTrainingRoomsMenuOptionsModel;
+
+                    Eegeo_DELETE m_pTrainingRoomsMenuModel;
                     
                     Eegeo_DELETE m_pMeetingRoomsMenuOptionsModel;
                     
                     Eegeo_DELETE m_pMeetingRoomsMenuModel;
                 }
-                
+
                 Menu::View::IMenuModel& SwallowSearchMenuModule::GetMeetingRoomsMenuModel() const
                 {
                     return *m_pMeetingRoomsMenuModel;
+                }
+
+                Menu::View::IMenuModel& SwallowSearchMenuModule::GetTrainingRoomsMenuModel() const
+                {
+                    return *m_pTrainingRoomsMenuModel;
                 }
                 
                 Menu::View::IMenuModel& SwallowSearchMenuModule::GetWorkingGroupsMenuModel() const

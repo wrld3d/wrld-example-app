@@ -18,6 +18,7 @@ namespace ExampleApp
                     virtual ~ISwallowSearchMenuModule() { }
                     
                     virtual Menu::View::IMenuModel& GetMeetingRoomsMenuModel() const = 0;
+                    virtual Menu::View::IMenuModel& GetTrainingRoomsMenuModel() const = 0;
                     virtual Menu::View::IMenuModel& GetWorkingGroupsMenuModel() const = 0;
                     virtual Menu::View::IMenuModel& GetFacilitiesMenuModel() const = 0;
                     virtual Menu::View::IMenuModel& GetOfficesMenuModel() const = 0;

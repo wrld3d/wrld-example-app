@@ -19,6 +19,7 @@
 #include "SwallowPoiDbDepartmentParser.h"
 #include "SwallowPoiDbFacilityParser.h"
 #include "SwallowPoiDbMeetingRoomParser.h"
+#include "SwallowPoiDbTrainingRoomParser.h"
 #include "SwallowPoiDbOfficeParser.h"
 #include "SwallowPoiDbService.h"
 #include "SwallowPoiDbTransitionParser.h"
@@ -94,6 +95,14 @@ namespace ExampleApp
                                                                                                                       m_spellFixOptions,
                                                                                                                       Eegeo_NEW(Parsers::SwallowPoiDbMeetingRoomParser),
                                                                                                                       m_assetsBaseUrl);
+
+            serviceMap[Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME] = Eegeo_NEW(SwallowPoiDbService)(BuildFtsComponent(*pSQLiteDbConnection,
+                                                                                                                                    Constants::TrainingRoomTableName,
+                                                                                                                                    Eegeo::Helpers::makeVector(Constants::TrainingRoomFtsColumnNames),
+                                                                                                                                    Eegeo::Helpers::makeVector(Constants::TrainingRoomFtsColumnWeights)),
+                                                                                                                  m_spellFixOptions,
+                                                                                                                  Eegeo_NEW(Parsers::SwallowPoiDbTrainingRoomParser),
+                                                                                                                  m_assetsBaseUrl);
             
             serviceMap[Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME] = Eegeo_NEW(SwallowPoiDbService)(BuildFtsComponent(*pSQLiteDbConnection,
                                                                                                                                          Constants::WorkingGroupTableName,

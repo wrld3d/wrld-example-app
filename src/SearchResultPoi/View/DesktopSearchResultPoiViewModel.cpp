@@ -68,6 +68,7 @@ namespace ExampleApp
                 {
                     if (primaryTag == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME
                         || primaryTag == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME
+                        || primaryTag == ExampleApp::Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME
                         || primaryTag == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME
                         || primaryTag == ExampleApp::Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME
                         || primaryTag == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
