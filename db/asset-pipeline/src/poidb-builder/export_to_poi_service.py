@@ -865,7 +865,13 @@ def collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, fi
             "lon": float(v[column_names.index('longitude_degrees')]),
             "indoor": True,
             "indoor_id": v[column_names.index('interior_id')],
-            "floor_id": int(v[column_names.index('interior_floor')])
+            "floor_id": int(v[column_names.index('interior_floor')]),
+            "user_data":
+            {
+                "office_location": get_office_location_from_interior_and_floor(
+                    v[column_names.index('interior_id')],
+                    int(v[column_names.index('interior_floor')]))
+            }
         }
 
 
