@@ -88,19 +88,16 @@
         self.pAvailableButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pAvailableButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_available_off") forState:UIControlStateNormal];
         [self.pAvailableButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_available_on") forState:UIControlStateSelected];
-        [self.pAvailableButton addTarget:self action:@selector(handleAvailableButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pLabelsContainer addSubview: self.pAvailableButton];
         
         self.pAvailableSoonButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pAvailableSoonButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_availablesoon_off") forState:UIControlStateNormal];
         [self.pAvailableSoonButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_availablesoon_on") forState:UIControlStateSelected];
-        [self.pAvailableSoonButton addTarget:self action:@selector(handleAvailableSoonButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pLabelsContainer addSubview: self.pAvailableSoonButton];
         
         self.pOccupiedButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pOccupiedButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_occupied_off") forState:UIControlStateNormal];
         [self.pOccupiedButton setBackgroundImage:ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_occupancy_occupied_on") forState:UIControlStateSelected];
-        [self.pOccupiedButton addTarget:self action:@selector(handleOccupiedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pLabelsContainer addSubview: self.pOccupiedButton];
         
         self.pCategoriesHeaderContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -291,16 +288,19 @@
         self.pAvailableButton.frame = CGRectMake(buttonX, currentContentY, buttonWidth, buttonHeight);
         self.pAvailableButton.hidden = false;
         self.pAvailableButton.selected = m_availability == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE;
+        self.pAvailableButton.enabled = self.pAvailableButton.selected;
         currentContentY += buttonSpacing + self.pAvailableButton.frame.size.height;
         
         self.pAvailableSoonButton.frame = CGRectMake(buttonX, currentContentY, buttonWidth, buttonHeight);
         self.pAvailableSoonButton.hidden = false;
         self.pAvailableSoonButton.selected = m_availability == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON;
+        self.pAvailableSoonButton.enabled = self.pAvailableSoonButton.selected;
         currentContentY += buttonSpacing + self.pAvailableSoonButton.frame.size.height;
         
         self.pOccupiedButton.frame = CGRectMake(buttonX, currentContentY, buttonWidth, buttonHeight);
         self.pOccupiedButton.hidden = false;
         self.pOccupiedButton.selected = m_availability == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED;
+        self.pOccupiedButton.enabled = self.pOccupiedButton.selected;
         currentContentY += labelYSpacing + self.pOccupiedButton.frame.size.height;
     }
     
@@ -427,33 +427,6 @@
     pLabel.backgroundColor = backgroundColor;
     pLabel.textAlignment = NSTextAlignmentLeft;
     return pLabel;
-}
-
-- (void) handleAvailableButtonSelected
-{
-    m_availability = ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE;
-    
-    [self performDynamicContentLayout];
-    
-    m_pInterop->HandleAvailabilityChanged(m_model, m_availability);
-}
-
-- (void) handleAvailableSoonButtonSelected
-{
-    m_availability = ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_SOON;
-    
-    [self performDynamicContentLayout];
-    m_pInterop->HandleAvailabilityChanged(m_model, m_availability);
-
-}
-
-- (void) handleOccupiedButtonSelected
-{
-    m_availability = ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_OCCUPIED;
-    
-    [self performDynamicContentLayout];
-    
-    m_pInterop->HandleAvailabilityChanged(m_model, m_availability);
 }
 
 - (void) handleClosedButtonSelected
