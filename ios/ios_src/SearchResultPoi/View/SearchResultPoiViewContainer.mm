@@ -98,7 +98,8 @@
     {
         return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
-    else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+    else if(vendor == ExampleApp::Search::EegeoVendorName
+            && (category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME || category == ExampleApp::Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME))
     {
         return [[SwallowMeetingRoomSearchResultPoiView alloc] initWithInterop:m_pInterop];
     }
