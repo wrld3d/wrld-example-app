@@ -1,64 +1,41 @@
 package com.eegeo.interiorsposition.senionlab;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.bluetooth.BluetoothAdapter;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 
 import java.util.ArrayList;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.util.Log;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.senionlab.slutilities.service.SLBroadcastReceiver;
-import com.senionlab.slutilities.service.SLConsumer;
-import com.senionlab.slutilities.service.SLServiceManager;
-import com.senionlab.slutilities.type.SLIndoorLocationException;
 
-public class SenionLabLocationManager implements SLConsumer
+import com.senion.stepinside.sdk.GeoMessengerApi;
+import com.senion.stepinside.sdk.PositioningApi;
+import com.senion.stepinside.sdk.StepInsideSdk.StatusListener;
+import com.senion.stepinside.sdk.StepInsideSdkManager;
+import com.senion.stepinside.sdk.StepInsideSdkHandle;
+import com.senion.stepinside.sdk.MapKey;
+import com.senion.stepinside.sdk.ApiKey;
+import com.senion.stepinside.sdk.Subscription;
+
+public class SenionLabLocationManager
 {
     private final MainActivity m_activity;
-    private final SLServiceManager m_serviceManager;
-    private boolean m_consumerIsBound = false;
-    
+
     private static AlertDialog m_connectionDialog = null;
-    private String[] m_mapKeyArray;
-    private String m_apiSecret;
-    private boolean m_requestedConnection = false;
+
+    private StepInsideSdkManager m_stepInsideSdkManager;
+    private StepInsideSdkHandle m_stepInsideSdk;
+    private ArrayList<Subscription> m_subscriptions = new ArrayList<>();
+    private long m_nativeCallerPointer;
+
+    ArrayList<SdkReadyCallback> m_sdkReadyCallbacks = new ArrayList<>();
+    private boolean m_isSdkReady = false;
 
     public SenionLabLocationManager(MainActivity activity, long nativeCallerPointer)
     {
         m_activity = activity;
-        m_serviceManager = SLServiceManager.getInstance(m_activity);
-        
-        getContext().registerReceiver(new BroadcastReceiver() 
-        {
-			
-			@Override
-			public void onReceive(Context context, Intent intent) 
-			{
-				if (intent.getAction().equals(BluetoothAdapter.ACTION_STATE_CHANGED))
-				{
-					final int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
-					if (state == BluetoothAdapter.STATE_ON)
-					{
-						try 
-						{
-							if(m_requestedConnection) 
-							{
-								reallyStartUpdatingLocation();
-							}
-						} 
-						catch (SLIndoorLocationException e) 
-						{
-							Log.e("EEGEO", "failed to start Senion location service manager.");
-						}
-					}
-				}
-			}
-		}, new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED));
+        m_nativeCallerPointer = nativeCallerPointer;
     }
 
     public void askUserToEnableBluetoothIfDisabled()
@@ -71,46 +48,56 @@ public class SenionLabLocationManager implements SLConsumer
 			m_activity.startActivity(enableBtIntent);
 		}
     }
-    
-    public void startUpdatingLocation(final String[] mapKeyArray, final String apiSecret) throws SLIndoorLocationException
-    {
-		m_requestedConnection = true;
-		m_mapKeyArray = mapKeyArray;
-		m_apiSecret = apiSecret;
-		BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		if (bluetoothAdapter != null && bluetoothAdapter.isEnabled())
-		{
-			reallyStartUpdatingLocation();
-		}
-	}
-	
-	// The commit attached to this change can be undone once Senion properly handle start and bind service while bluetooth is turned off.
-	public void reallyStartUpdatingLocation() throws SLIndoorLocationException
-	{
-		ArrayList<String> mapKeyList = new ArrayList<String>();
-		
-		for(int i = 0; i < m_mapKeyArray.length; ++i)
-		{
-			mapKeyList.add(m_mapKeyArray[i]);
-		}
 
-		m_serviceManager.start(mapKeyList, m_apiSecret);
-		bindService();
-	}
+    private void onAttachedToSdk(StepInsideSdkHandle sdk){
+        m_stepInsideSdk = sdk;
+        m_isSdkReady = true;
+        for(SdkReadyCallback callback : m_sdkReadyCallbacks){
+            callback.invoke();
+        }
+        m_sdkReadyCallbacks.clear();
+        m_stepInsideSdk.start();
+    }
+
+    private final StepInsideSdkManager.AttachCallback attachCallback = new StepInsideSdkManager.AttachCallback() {
+        public void onAttached(StepInsideSdkHandle sdk) {
+            if (m_activity.isDestroyed()) return;
+            onAttachedToSdk(sdk);
+        }
+    };
+
+    public void startUpdatingLocation(final String[] mapKeyArray, final String apiSecret)
+    {
+        ArrayList<MapKey> mapKeyList = new ArrayList<>();
+
+        for(int i = 0; i < mapKeyArray.length; ++i)
+        {
+            mapKeyList.add(new MapKey(mapKeyArray[i]));
+        }
+
+        m_stepInsideSdkManager = new StepInsideSdkManager.Builder(getContext())
+                .withApiKey(new ApiKey(apiSecret))
+                .withMapKeys(mapKeyList)
+                .build();
+
+        m_stepInsideSdkManager.initialize();
+
+        m_stepInsideSdkManager.attachForeground(m_activity, attachCallback);
+    }
 
     public void stopUpdatingLocation()
     {
-    	m_requestedConnection = false;
-        unbindService();
-        
-        try
-        {
-        	m_serviceManager.stop();
+        if (m_stepInsideSdk != null) {
+            m_stepInsideSdk.stop();
+            m_stepInsideSdk.detach();
+            m_isSdkReady = false;
         }
-        catch(SLIndoorLocationException slIndoorLocationException)
-    	{
-    		slIndoorLocationException.printStackTrace();
-    	}
+
+        for (Subscription subscription : m_subscriptions) {
+            subscription.unsubscribe();
+        }
+
+        m_stepInsideSdkManager.terminate();
         
         if(m_connectionDialog != null)
 		{
@@ -119,94 +106,50 @@ public class SenionLabLocationManager implements SLConsumer
 		}
     }
 
-    public void registerReceiver(SLBroadcastReceiver receiver)
+    public Subscription registerGeoMessengerReceiver(GeoMessengerApi.Listener listener)
     {
-        m_serviceManager.registerReceiver(receiver);
+        Subscription subscription = m_stepInsideSdk.geoMessenger().addListener(listener);
+        m_subscriptions.add(subscription);
+        return subscription;
     }
 
-    public void unregisterReceiver(SLBroadcastReceiver receiver)
+    public Subscription registerStatusReceiver(StatusListener listener)
     {
-        m_serviceManager.unregisterReceiver(receiver);
+        Subscription subscription = m_stepInsideSdk.addStatusListener(listener);
+        m_subscriptions.add(subscription);
+        return subscription;
     }
 
-    @Override
+    public Subscription registerPositioningReceiver(PositioningApi.Listener listener)
+    {
+        Subscription subscription = m_stepInsideSdk.positioning().addListener(listener);
+        m_subscriptions.add(subscription);
+        return subscription;
+    }
+
+    public void unregisterReceiver(Subscription subscription)
+    {
+        m_subscriptions.remove(subscription);
+        subscription.unsubscribe();
+    }
+
     public Context getContext()
     {
         return m_activity.getApplicationContext();
     }
 
-    @Override
-    public void didBindToService()
-    {
-    }
-    
-    public void updateAvailability(boolean available)
-    {
-    	if(available)
-    	{
-    		showConnectionDialog("Senion available", "Recently connected to Senion.");
-    	}
-    	else
-    	{
-    		showConnectionDialog("Senion unavailable", "Recently lost connection to Senion.");
-    	}
+
+    public interface SdkReadyCallback {
+        void invoke();
     }
 
-    private void bindService()
-    {
-        if (!m_consumerIsBound)
-        {
-        	try
-        	{
-        		m_serviceManager.bindService(this);
-        	}
-        	catch(SLIndoorLocationException slIndoorLocationException)
-        	{
-        		slIndoorLocationException.printStackTrace();
-        	}
-        	
-            m_consumerIsBound = true;
+    public void onSdkReady(SdkReadyCallback callback){
+        if(m_isSdkReady){
+            callback.invoke();
+        }
+        else{
+            m_sdkReadyCallbacks.add(callback);
         }
     }
 
-    private void unbindService()
-    {
-        if (m_consumerIsBound)
-        {
-        	try
-        	{
-        		m_serviceManager.unbindService(this);
-        	}
-        	catch(SLIndoorLocationException slIndoorLocationException)
-        	{
-        		slIndoorLocationException.printStackTrace();
-        	}
-        	
-            m_consumerIsBound = false;
-        }
-    }
-    
-    private void showConnectionDialog(String Title, String message)
-    {
-    	/*
-    	AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-        builder.setTitle(Title);
-        builder.setMessage(message);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-            	m_connectionDialog.dismiss();
-            	m_connectionDialog = null;
-            }
-        });
-        
-        if(m_connectionDialog != null)
-        {
-        	m_connectionDialog.dismiss();
-        }
-        m_connectionDialog = builder.show();
-        //*/
-    }
 }
