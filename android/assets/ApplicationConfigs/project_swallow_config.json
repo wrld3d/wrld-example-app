@@ -37,31 +37,6 @@
     "OrientationDegrees": 180.0
   },
   "IndoorTrackedBuildings": [{
-    "InteriorId": "swallow_lon_citygatehouse",
-    "Type": "Senion",
-    "Config": [{
-      "ApiKey": "70f77f56-78b7-42bb-b94f-3c2c6d8dd30a",
-      "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
-    }],
-    "FloorMapping": [{
-      "BuildingFloorIndex": 2,
-      "TrackedFloorIndex": "0"
-    }, {
-      "BuildingFloorIndex": 1,
-      "TrackedFloorIndex": "1"
-    }]
-  }, {
-    "InteriorId": "swallow_lon_50finsbury",
-    "Type": "Senion",
-    "Config": [{
-      "ApiKey": "be293ffa-91f9-40d1-a213-e50e7895766d",
-      "ApiSecret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
-    }],
-    "FloorMapping": [{
-      "BuildingFloorIndex": 7,
-      "TrackedFloorIndex": "0"
-    }]
-  }, {
     "InteriorId": "swallow_lon_wallbrooksquare",
     "Type": "Senion",
     "Config": [{
