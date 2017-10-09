@@ -50,8 +50,9 @@ namespace ExampleApp
                 {
                 	CreateAndShowPersonSearchResultPoiView(model);
                 }
-                 else if((vendor == Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
-                            || (vendor == Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME))
+                 else if(vendor == Search::EegeoVendorName
+                         && (primaryTag == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME
+                             || primaryTag == ExampleApp::Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME))
                 {
                     CreateAndShowMeetingRoomSearchResultPoiView(model);
                 }
