@@ -69,7 +69,7 @@ namespace ExampleApp
                     std::vector<ExampleApp::TagSearch::View::TagSearchModel> tags;
                     
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, true, "meetingroom", showCategoriesInSearchMenu));
-                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Training Rooms", TRAINING_ROOM_CATEGORY_NAME, true, "collaboration_space", showCategoriesInSearchMenu));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Training Rooms", TRAINING_ROOM_CATEGORY_NAME, true, "education", showCategoriesInSearchMenu));
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, false, "workinggroup", showCategoriesInSearchMenu));
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Facilities", FACILITY_CATEGORY_NAME, true, "toilets", showCategoriesInSearchMenu));
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Buildings", OFFICE_CATEGORY_NAME, false, "office", showCategoriesInSearchMenu));
