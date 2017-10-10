@@ -43,11 +43,11 @@ namespace ExampleAppWPF
         {
             AvailalabilityType availabilityEnum;
 
-            try
+            if (availabilityString != null && availabilityStringMap.ContainsKey(availabilityString))
             {
                 availabilityStringMap.TryGetValue(availabilityString, out availabilityEnum);
             }
-            catch (ArgumentNullException)
+            else
             {
                 availabilityEnum = AvailalabilityType.None;
             }
