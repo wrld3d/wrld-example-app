@@ -20,7 +20,7 @@
 
 #import "UIButton+DefaultStates.h"
 
-static const int IndexOfFirstDropDown = 4;
+static const int IndexOfFirstDropDown = 5;
 
 @interface SearchMenuView()
 {
