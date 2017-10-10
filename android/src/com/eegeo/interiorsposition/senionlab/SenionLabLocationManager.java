@@ -26,10 +26,10 @@ public class SenionLabLocationManager
 
     private StepInsideSdkManager m_stepInsideSdkManager;
     private StepInsideSdkHandle m_stepInsideSdk;
-    private ArrayList<Subscription> m_subscriptions = new ArrayList<>();
+    private ArrayList<Subscription> m_subscriptions = new ArrayList<Subscription>();
     private long m_nativeCallerPointer;
 
-    ArrayList<SdkReadyCallback> m_sdkReadyCallbacks = new ArrayList<>();
+    ArrayList<SdkReadyCallback> m_sdkReadyCallbacks = new ArrayList<SdkReadyCallback>();
     private boolean m_isSdkReady = false;
 
     public SenionLabLocationManager(MainActivity activity, long nativeCallerPointer)
@@ -68,7 +68,7 @@ public class SenionLabLocationManager
 
     public void startUpdatingLocation(final String[] mapKeyArray, final String apiSecret)
     {
-        ArrayList<MapKey> mapKeyList = new ArrayList<>();
+        ArrayList<MapKey> mapKeyList = new ArrayList<MapKey>();
 
         for(int i = 0; i < mapKeyArray.length; ++i)
         {
