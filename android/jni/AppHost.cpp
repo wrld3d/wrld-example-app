@@ -73,8 +73,6 @@
 #include "ApiKey.h"
 #include "OptionsViewModule.h"
 #include "OptionsView.h"
-#include "WatermarkViewModule.h"
-#include "WatermarkView.h"
 #include "NetworkCapabilities.h"
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
@@ -477,14 +475,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_createdUIModules = true;
     ExampleApp::MobileExampleApp& app = *m_pApp;
 
-    m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(
-		m_nativeState,
-		app.WatermarkModule().GetWatermarkViewModel(),
-		app.WatermarkModule().GetWatermarkDataRepository(),
-		m_messageBus,
-		*m_pAndroidFlurryMetricsService
-    );
-
     // 3d map view layer.
 
     // HUD behind modal background layer.
@@ -661,8 +651,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pCompassViewModule;
 
         Eegeo_DELETE m_pInitialExperienceIntroViewModule;
-
-        Eegeo_DELETE m_pWatermarkViewModule;
     }
     m_createdUIModules = false;
 }

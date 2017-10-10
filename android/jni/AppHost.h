@@ -42,7 +42,6 @@
 #include "AndroidConnectivityService.h"
 #include "InitialExperienceViewIncludes.h"
 #include "OptionsViewIncludes.h"
-#include "WatermarkViewIncludes.h"
 #include "NetIncludes.h"
 #include "Search.h"
 #include "SdkModelDomainEventBus.h"
@@ -137,7 +136,6 @@ private:
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule; // TODO: Interface.
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
-    ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Metrics::AndroidFlurryMetricsService* m_pAndroidFlurryMetricsService;
 

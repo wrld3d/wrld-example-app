@@ -42,7 +42,6 @@
 #include "WindowsConnectivityService.h"
 #include "InitialExperienceViewIncludes.h"
 #include "OptionsViewIncludes.h"
-#include "WatermarkViewIncludes.h"
 #include "NetIncludes.h"
 #include "Search.h"
 #include "SdkModelDomainEventBus.h"
@@ -157,7 +156,6 @@ private:
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
     ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule; // TODO: Interface.
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
-    ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Metrics::WindowsFlurryMetricsService* m_pWindowsFlurryMetricsService;
 	ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;

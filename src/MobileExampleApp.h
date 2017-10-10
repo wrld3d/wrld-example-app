@@ -65,8 +65,6 @@
 #include "GpsMarker.h"
 #include "SdkModelDomainEventBus.h"
 #include "IMetricsService.h"
-#include "Watermark.h"
-#include "IWatermarkModule.h"
 #include "ApplicationConfiguration.h"
 #include "InteriorsExplorer.h"
 #include "InteriorsEntitiesPins.h"
@@ -151,7 +149,6 @@ namespace ExampleApp
         Search::Swallow::SdkModel::SwallowSearchServiceModule* m_pSwallowSearchServiceModule;
         Search::Swallow::SdkModel::ISwallowSearchMenuModule* m_pSwallowSearchMenuModule;
         ExampleApp::Options::IOptionsModule* m_pOptionsModule;
-        Watermark::SdkModel::IWatermarkModule* m_pWatermarkModule;
         ExampleApp::ApplicationConfig::ApplicationConfiguration m_applicationConfiguration;
         Eegeo::Streaming::CameraFrustumStreamingVolume* m_pStreamingVolume;
         ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -391,11 +388,6 @@ namespace ExampleApp
         const ExampleApp::Options::IOptionsModule& OptionsModule() const
         {
             return *m_pOptionsModule;
-        }
-        
-        const ExampleApp::Watermark::SdkModel::IWatermarkModule& WatermarkModule() const
-        {
-            return *m_pWatermarkModule;
         }
         
         const InteriorsExplorer::SdkModel::IInteriorsExplorerModule& InteriorsExplorerModule() const

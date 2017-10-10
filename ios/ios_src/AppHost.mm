@@ -58,8 +58,6 @@
 #include "ModalBackgroundViewModule.h"
 #include "OptionsViewModule.h"
 #include "OptionsView.h"
-#include "WatermarkViewModule.h"
-#include "WatermarkView.h"
 #include "NetworkCapabilities.h"
 #include "InitialExperienceIntroViewModule.h"
 #include "InitialExperienceIntroView.h"
@@ -294,12 +292,6 @@ bool AppHost::IsRunning()
 void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties,const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration)
 {
     ExampleApp::MobileExampleApp& app = *m_pApp;
-    
-    m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
-                                                                                         app.WatermarkModule().GetWatermarkDataRepository(),
-                                                                                         screenProperties,
-                                                                                         m_messageBus,
-                                                                                         m_iOSFlurryMetricsService);
 
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
     
@@ -393,7 +385,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroBackgroundView()];
 
     // HUD behind modal background layer.
-    [m_pView addSubview: &m_pWatermarkViewModule->GetWatermarkView()];
     [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
     [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
@@ -437,7 +428,6 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pInitialExperienceIntroViewModule->GetIntroBackgroundView() removeFromSuperview];
 
     // HUD behind modal background layer.
-    [&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
     [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
@@ -493,8 +483,6 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pFlattenButtonViewModule;
     
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;
-    
-    Eegeo_DELETE m_pWatermarkViewModule;
 }
 
 void AppHost::SetTouchExclusivity()

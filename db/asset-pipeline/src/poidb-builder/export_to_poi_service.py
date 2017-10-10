@@ -481,12 +481,29 @@ def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, ve
 def collect_misc_from_desks_table(desks):
     desk_groups = {}
 
+    desk_highlight_colors = {
+        "A": [218.0, 232.0, 251.0, 128.0],
+        "B": [15.0, 70.0, 149.0, 128.0],
+        "C": [181.0, 209.0, 248.0, 128.0],
+        "D": [15.0, 70.0, 149.0, 128.0],
+        "E": [125.0, 174.0, 242.0, 128.0],
+        "F": [11.0, 53.0, 111.0, 128.0],
+        "G": [69.0, 139.0, 237.0, 128.0],
+        "H": [7.0, 35.0, 74.0, 128.0],
+        "I": [32.0, 116.0, 233.0, 128.0],
+        "J": [4.0, 18.0, 37.0, 128.0],
+        "K": [20.0, 97.0, 204.0, 128.0]
+    }
+
     for desk_name in desks:
         if "3QVS" in desk_name:
             desk_group_name = desk_name[:9]
 
             desk = desks[desk_name]
             floor_id = int(desk["floor_id"])
+
+            desk_group = desk_group_name[-1:]
+            highlight_color_group = desk_group if desk_highlight_colors.has_key(desk_group) else "A"
 
             if desk_group_name not in desk_groups:
                 desk_groups[desk_group_name] = {
@@ -500,7 +517,8 @@ def collect_misc_from_desks_table(desks):
                     "floor_id": floor_id,
                     "user_data":
                         {
-                            "desks": []
+                            "desks": [],
+                            "entity_highlight_color":desk_highlight_colors[highlight_color_group]
                         }}
 
             desk_groups[desk_group_name]["user_data"]["desks"].append(desk_name)
@@ -847,7 +865,13 @@ def collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, fi
             "lon": float(v[column_names.index('longitude_degrees')]),
             "indoor": True,
             "indoor_id": v[column_names.index('interior_id')],
-            "floor_id": int(v[column_names.index('interior_floor')])
+            "floor_id": int(v[column_names.index('interior_floor')]),
+            "user_data":
+            {
+                "office_location": get_office_location_from_interior_and_floor(
+                    v[column_names.index('interior_id')],
+                    int(v[column_names.index('interior_floor')]))
+            }
         }
 
 
@@ -876,9 +900,6 @@ def persist_entities(entities, poi_service_url, dev_auth_token, cdn_base_url, ba
             if 'image_url' in entity['user_data']:
                 original = entity['user_data']['image_url']
                 entity['user_data']['image_url'] = "{0}/images/{1}".format(cdn_base_url, original)
-
-            user_data = entity['user_data']
-            entity['user_data'] = json.dumps(user_data, ensure_ascii=False)
 
         if count >= batch_count:
             persist_entities_batch(entities_batch)

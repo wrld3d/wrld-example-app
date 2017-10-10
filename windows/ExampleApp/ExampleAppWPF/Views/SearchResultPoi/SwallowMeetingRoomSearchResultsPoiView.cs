@@ -80,11 +80,7 @@ namespace ExampleAppWPF
 
         public string TitleText { get; set; }
         public AvailalabilityType Availability { get; set; }
-
-        RoutedEventHandler OnAvailableSelected;
-        RoutedEventHandler OnAvailableSoonSelected;
-        RoutedEventHandler OnOccupiedSelected;
-
+        
         static SwallowMeetingRoomSearchResultsPoiView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SwallowMeetingRoomSearchResultsPoiView), new FrameworkPropertyMetadata(typeof(SwallowMeetingRoomSearchResultsPoiView)));
@@ -93,9 +89,6 @@ namespace ExampleAppWPF
         public SwallowMeetingRoomSearchResultsPoiView(IntPtr nativeCallerPointer, bool isInKioskMode)
             : base(nativeCallerPointer, isInKioskMode)
         {
-            OnAvailableSelected = (object sender, RoutedEventArgs e) => { HandleAvailabilityChanged(AvailalabilityType.Available); };
-            OnAvailableSoonSelected = (object sender, RoutedEventArgs e) => { HandleAvailabilityChanged(AvailalabilityType.AvailableSoon); };
-            OnOccupiedSelected = (object sender, RoutedEventArgs e) => { HandleAvailabilityChanged(AvailalabilityType.Occupied); };
         }
 
         public override void OnApplyTemplate()
@@ -126,11 +119,7 @@ namespace ExampleAppWPF
                 String userAvailability = Settings.Default.UserSettings[m_model.Title];
                 Availability = AvailableStringToEnum(userAvailability);
             }
-
-            m_availableButton.Click += OnAvailableSelected;
-            m_availableSoonButton.Click += OnAvailableSoonSelected;
-            m_occupiedButton.Click += OnOccupiedSelected;
-
+            
             m_closing = false;
             
             TitleText = m_model.Title;
@@ -147,10 +136,6 @@ namespace ExampleAppWPF
 
         public override void DismissPoiInfo()
         {
-            m_availableButton.Click -= OnAvailableSelected;
-            m_availableSoonButton.Click -= OnAvailableSoonSelected;
-            m_occupiedButton.Click -= OnOccupiedSelected;
-
             base.DismissPoiInfo();
         }
 

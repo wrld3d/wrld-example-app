@@ -81,6 +81,7 @@ namespace ExampleApp
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Department", DEPARTMENT_CATEGORY_NAME, false, "department", false));
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Transitions", TRANSITION_CATEGORY_NAME, false, "transition", false));
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Desks", DESK_CATEGORY_NAME, false, "desk", false));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Desk Groups", DESK_GROUP_CATEGORY_NAME, false, "deskgroup", false));
                     return tags;
                 }
                 

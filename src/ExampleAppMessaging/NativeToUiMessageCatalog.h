@@ -28,9 +28,6 @@
 #include "SearchResultPoiViewImageDownloadCompletedMessage.h"
 #include "InteriorsExplorerFloorSelectedMessage.h"
 #include "InteriorsExplorerStateChangedMessage.h"
-#include "WatermarkModelChangedMessage.h"
-#include "WatermarkAlignmentStateChangedMessage.h"
-#include "SetWatermarkVisibilityMessage.h"
 #include "AppModeChangedMessage.h"
 #include "UserInteractionEnabledChangedMessage.h"
 #include "URLRequestedMessage.h"
@@ -75,9 +72,6 @@ namespace ExampleApp
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::ShowInitialExperienceIntroMessage>
             , public Eegeo::Messaging::CatalogBinding<Options::CompletedCacheClearMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewImageDownloadCompletedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Watermark::SetWatermarkVisibilityMessage>
-            , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkModelChangedMessage>
-            , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkAlignmentStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerFloorSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AppModes::AppModeChangedMessage>
