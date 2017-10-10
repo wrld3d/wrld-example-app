@@ -249,9 +249,9 @@
 {
     const float labelYSpacing = 8.f;
     const float buttonSpacing = 16.0f;
-    const float buttonWidth = m_labelsSectionWidth / 2.0f;
+    const float buttonWidth = 192.0f;
     const float buttonHeight = 40.0f;
-    const float buttonX = m_labelsSectionWidth / 4.0f;
+    const float buttonX = (m_labelsSectionWidth - buttonWidth) / 2.0f;
     const float dividerHeight = 1.0f;
     
     float currentContentY = 8.f;
