@@ -26,7 +26,7 @@ namespace ExampleApp
 
                 virtual void Close() = 0;
 
-                virtual const std::string GetContent() const = 0;
+                virtual const std::string GetContent(bool showHiddenContent) const = 0;
 
                 virtual void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
 

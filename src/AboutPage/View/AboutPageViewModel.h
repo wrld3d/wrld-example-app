@@ -58,7 +58,7 @@ namespace ExampleApp
 
                 void Close();
 
-                const std::string GetContent() const;
+                const std::string GetContent(bool showHiddenContent) const;
 
                 OpenableControl::View::IOpenableControlViewModel& GetOpenableControl();
 

@@ -45,29 +45,25 @@ namespace ExampleApp
                 return m_openable.IsFullyOpen();
             }
 
-            const std::string AboutPageViewModel::GetContent() const
+            const std::string AboutPageViewModel::GetContent(bool showHiddenContent) const
             {
                 std::stringstream content;
                 
                 content << m_aboutText
-                        << "\n\nApplication build version: " + m_buildVersion
                         << "\n\nPlatform version: " + m_platformVersion
                         << "\nPlatform hash: " + m_platformHash
-                        << "\nPlatform runtime arch: " + m_platformArchitecture
-                        << m_indoorPositioningType
-                        << "\n";
-                
-                if(m_indoorPositioningType == "\nIndoor positioning type: Senion")
+                        << "\nPlatform runtime arch: " + m_platformArchitecture;
+
+                if(m_indoorPositioningType == "\nIndoor positioning type: Senion" && showHiddenContent)
                 {
-                    content << "\n eeGeo Floor number: " << m_eegeoFloorNumber
+                    content << "\n\n eeGeo Floor number: " << m_eegeoFloorNumber
                             << "\n Senion Floor number: " << m_senionFloorNumber
                             << "\n Latitude: " << std::setprecision(10) << m_senionLatitude
                             << "\n Longitude: " << m_senionLongitude
                             << "\n SenionApiKey: " << m_senionApiKey
                             << "\n SenionApiSecret: " << m_senionApiSecret
                             << "\n SenionFloorMap: " << m_senionFloorMapString.str()
-                            << "\n SenionInteriorId: " << m_senionInteriorId
-                            << "\n";
+                            << "\n SenionInteriorId: " << m_senionInteriorId;
                 }
                 
                 return content.str();
