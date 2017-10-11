@@ -1,10 +1,10 @@
 {
     "Name": "Project Swallow App",
-    "StartLocationLatitude": 51.520275,
-    "StartLocationLongitude": -0.086135,
+    "StartLocationLatitude": 51.512432, 
+    "StartLocationLongitude": -0.091633,
     "StartLocationAltitude": 10.0,
-    "StartLocationDistance": 500.0,
-    "StartLocationOrientationDegrees": 180.0,
+    "StartLocationDistance": 800.0,
+    "StartLocationOrientationDegrees": 0.0,
     "TryStartAtGpsLocation":false,
     "EegeoApiKey":"6d27c9936af66fa250dbc30172d7fec4",
     "GoogleAnalyticsReferrerToken":"eegeo_project_swallow_ios",
@@ -33,11 +33,11 @@
 	"StartAppInFullscreen":false,
     "UseLabels": true,
     "BuildingsSearchViewLocation": {
-        "Latitude": 51.519275,
-        "Longitude": -0.086135,
-        "Altitude": 2.154,
+        "Latitude":  51.512432,
+        "Longitude": -0.091633,
+        "Altitude": 10.0,
         "DistanceToInterest": 800,
-        "OrientationDegrees": 180.0
+        "OrientationDegrees": 0.0
     },
     "Buildings": [
                   

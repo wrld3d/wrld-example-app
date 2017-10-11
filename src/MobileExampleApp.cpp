@@ -345,6 +345,7 @@ namespace ExampleApp
         gpsGlobeCameraConfig.panToUnlockThreshold = PanToUnlockThreshold;
         gpsGlobeCameraConfig.compassCameraOffset = m_applicationConfiguration.CompassCameraOffset();
         gpsGlobeCameraConfig.compassCameraOffsetTopDown = m_applicationConfiguration.CompassCameraOffsetTopDown();
+        gpsGlobeCameraConfig.defaultGpsDistanceToInterest = m_applicationConfiguration.DistanceToInterestMetres();
 
         if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
         {

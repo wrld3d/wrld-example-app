@@ -1,10 +1,10 @@
 {
     "Name": "Project Swallow App",
-    "StartLocationLatitude": 51.520275,
-    "StartLocationLongitude": -0.086135,
+    "StartLocationLatitude": 51.512432, 
+    "StartLocationLongitude": -0.091633,
     "StartLocationAltitude": 10.0,
-    "StartLocationDistance": 500.0,
-    "StartLocationOrientationDegrees": 180.0,
+    "StartLocationDistance": 800.0,
+    "StartLocationOrientationDegrees": 0.0,
     "TryStartAtGpsLocation":false,
     "EegeoApiKey":"6d27c9936af66fa250dbc30172d7fec4",
     "GoogleAnalyticsReferrerToken":"eegeo_project_swallow_ios",
@@ -32,11 +32,11 @@
 	"StartAppInFullscreen":false,
     "UseLabels": true,
 	"BuildingsSearchViewLocation": {
-        "Latitude": 51.519275,
-        "Longitude": -0.086135,
-        "Altitude": 2.154,
+        "Latitude":  51.512432,
+        "Longitude": -0.091633,
+        "Altitude": 10.0,
         "DistanceToInterest": 800,
-        "OrientationDegrees": 180.0
+        "OrientationDegrees": 0.0
     },
     "Buildings": [
                   
@@ -71,41 +71,29 @@
                   ],
     "AttractModeTimeout": 0,
     "AttractModePositionSpline": [
-        { "Latitude": 51.5202, "Longitude": -0.086306,  "Altitude": 14.9857 },
-        { "Latitude": 51.5202, "Longitude": -0.0862034, "Altitude": 14.9801 },
-        { "Latitude": 51.5191, "Longitude": -0.0855265, "Altitude": 12.6934 },
-        { "Latitude": 51.5182, "Longitude": -0.0853365, "Altitude": 11.9583 },
-        { "Latitude": 51.5151, "Longitude": -0.081224,  "Altitude": 14.8458 },
-        { "Latitude": 51.5132, "Longitude": -0.0898176, "Altitude": 11.2608 },
-        { "Latitude": 51.5124, "Longitude": -0.0915521, "Altitude": 9.99952 },
-        { "Latitude": 51.5123, "Longitude": -0.0913823, "Altitude": 9.99118 },
-        { "Latitude": 51.5122, "Longitude": -0.0913037, "Altitude": 9.98657 },
-        { "Latitude": 51.5123, "Longitude": -0.0896122, "Altitude": 11.1778 },
-        { "Latitude": 51.5142, "Longitude": -0.0858973, "Altitude": 14.0482 },
-        { "Latitude": 51.5195, "Longitude": -0.0866817, "Altitude": 13.6796 },
-        { "Latitude": 51.5202, "Longitude": -0.086306,  "Altitude": 14.9857 }
+        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
+        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
+        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
+        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
+        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
+        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
+        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 }
     ],
     "AttractModeTargetSpline": [
-        { "Latitude": 51.5226, "Longitude": -0.0860427, "Altitude": 286.154 },
-        { "Latitude": 51.5211, "Longitude": -0.0823726, "Altitude": 301.889 },
-        { "Latitude": 51.5183, "Longitude": -0.0801345, "Altitude": 395.15  },
-        { "Latitude": 51.5201, "Longitude": -0.0869705, "Altitude": 245.618 },
-        { "Latitude": 51.516,  "Longitude": -0.0832619, "Altitude": 932.155 },
-        { "Latitude": 51.5154, "Longitude": -0.097494,  "Altitude": 597.992 },
-        { "Latitude": 51.5099, "Longitude": -0.0957182, "Altitude": 412.625 },
-        { "Latitude": 51.5096, "Longitude": -0.0882955, "Altitude": 378.8   },
-        { "Latitude": 51.516,  "Longitude": -0.0918273, "Altitude": 431.668 },
-        { "Latitude": 51.5169, "Longitude": -0.0945064, "Altitude": 624.286 },
-        { "Latitude": 51.5182, "Longitude": -0.100278,  "Altitude": 1102.62 },
-        { "Latitude": 51.5223, "Longitude": -0.0904093, "Altitude": 421.092 },
-        { "Latitude": 51.5226, "Longitude": -0.0860427, "Altitude": 286.154 }
+        { "Latitude": 51.510632, "Longitude": -0.092568, "Altitude": 222.676522 },
+        { "Latitude": 51.512275, "Longitude": -0.094450, "Altitude": 222.676500 },
+        { "Latitude": 51.514181, "Longitude": -0.092448, "Altitude": 222.676488 },
+        { "Latitude": 51.513643, "Longitude": -0.089085, "Altitude": 222.676506 },
+        { "Latitude": 51.511738, "Longitude": -0.088518, "Altitude": 222.676519 },
+        { "Latitude": 51.510569, "Longitude": -0.090499, "Altitude": 222.676509 },
+        { "Latitude": 51.510632, "Longitude": -0.092568, "Altitude": 222.676522 }
     ],
     "AttractModePlaybackSpeed": 0.007,
 
     "FixedIndoorLocation": {
-        "Latitude": 51.520275,
-        "Longitude": -0.086135,
         "InteriorId": "",
+        "Latitude": 51.512432, 
+        "Longitude": -0.091633,
         "FloorIndex": 2,
         "OrientationDegrees": 180.0
     },
