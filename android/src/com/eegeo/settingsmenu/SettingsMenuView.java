@@ -53,6 +53,10 @@ public class SettingsMenuView extends MenuView
 		        m_menuAnimationHandler.setToIntermediateOnScreenState(0.0f);
 		        
 		        m_view.removeOnLayoutChangeListener(this);
+
+                if(m_shouldBeOnClosedScreen && m_menuState != MenuState.CLOSED_ON_SCREEN) {
+                    animateToClosedOnScreen();
+                }
 			}
 		});
         
