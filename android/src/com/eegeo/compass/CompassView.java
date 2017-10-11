@@ -6,6 +6,9 @@ import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
+import com.eegeo.ui.IAnimatedView;
+import com.eegeo.ui.IViewAnimator;
+import com.eegeo.ui.ViewAnimator;
 
 import android.Manifest;
 import android.app.Activity;
@@ -18,22 +21,19 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
-import android.view.ViewPropertyAnimator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-public class CompassView implements View.OnClickListener, IRuntimePermissionResultHandler {
+public class CompassView implements View.OnClickListener, IRuntimePermissionResultHandler, IAnimatedView {
 	private MainActivity m_activity = null;
 	private long m_nativeCallerPointer;
 	private View m_view = null;
+	private IViewAnimator m_viewAnimator;
 	private View m_compassPoint = null;
 	private ImageView m_compassInner = null;
 	private View m_compassDefault = null;
 	private View m_compassLocked = null;
 	private View m_compassUnlocked = null;
-
-	private float m_yPosActive;
-	private float m_yPosInactive;
 
 	private final long m_stateChangeAnimationTimeMilliseconds = 200;
 	private final long RotationHighlightAnimationMilliseconds = 200;
@@ -41,6 +41,7 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 
 	private final float CompassOuterShapeInactiveAlpha = 0.5f;
 	private final float CompassOuterShapeActiveAlpha = 1.0f;
+
 
 	public CompassView(MainActivity activity, long nativeCallerPointer) {
 		m_activity = activity;
@@ -53,6 +54,7 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
 		uiRoot.removeView(m_view);
 		m_view = null;
+		m_viewAnimator = null;
 		m_activity.getRuntimePermissionDispatcher().removeIRuntimePermissionResultHandler(this);
 	}
 
@@ -69,30 +71,32 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		m_compassLocked = m_view.findViewById(R.id.compass_new_locked);
 		m_compassUnlocked = m_view.findViewById(R.id.compass_new_unlocked);
 
+		m_viewAnimator = new ViewAnimator(this, m_view);
+
+		m_viewAnimator.registerLayoutChangeListener();
+
 		m_activity.getRuntimePermissionDispatcher().addRuntimePermissionResultHandler(this);
-
-		m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-			@Override
-			public void onLayoutChange(View v, int left, int top, int right,
-									   int bottom, int oldLeft, int oldTop, int oldRight,
-									   int oldBottom) {
-				final float screenWidth = uiRoot.getWidth();
-				final float screenHeight = uiRoot.getHeight();
-				final float viewWidth = m_view.getWidth();
-				final float viewHeight = m_view.getHeight();
-
-				m_yPosActive = (screenHeight - viewWidth) - m_activity.dipAsPx(8.f);
-				m_yPosInactive = screenHeight + viewHeight;
-
-				m_view.setX((screenWidth * 0.5f) - (viewWidth * 0.5f));
-				m_view.setY(m_yPosInactive);
-				m_view.removeOnLayoutChangeListener(this);
-			}
-		});
 
 		m_compassPoint.setAlpha(CompassOuterShapeInactiveAlpha);
 		uiRoot.addView(m_view);
 		showGpsDisabledView();
+	}
+
+	public void ViewLayoutChanged()
+	{
+		final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
+
+		final float screenWidth = uiRoot.getWidth();
+		final float screenHeight = uiRoot.getHeight();
+
+		final float viewWidth = m_view.getWidth();
+		final float viewHeight = m_view.getHeight();
+
+		m_viewAnimator.setActivePos((screenHeight - viewHeight) - m_activity.dipAsPx(8.f));
+		m_viewAnimator.setInactivePos(screenHeight + viewHeight);
+
+		m_view.setX((screenWidth * 0.5f) - (viewWidth * 0.5f));
+		m_view.setY(screenHeight + viewHeight);
 	}
 
 	public void updateHeading(float headingAngleRadians) {
@@ -173,26 +177,15 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
     }
 
 	public void animateToActive() {
-		animateViewToY((int) m_yPosActive);
+		m_viewAnimator.animateToActive(m_stateChangeAnimationTimeMilliseconds);
 	}
 
 	public void animateToInactive() {
-		animateViewToY((int) m_yPosInactive);
-	}
-
-	protected void animateViewToY(final int yAsPx) {
-		m_view.animate()
-				.y(yAsPx)
-				.setDuration(m_stateChangeAnimationTimeMilliseconds);
+		m_viewAnimator.animateToInactive(m_stateChangeAnimationTimeMilliseconds);
 	}
 
 	public void animateToIntermediateOnScreenState(final float onScreenState) {
-		int viewYPx = (int) m_view.getY();
-		int newYPx = (int) (m_yPosInactive + (int) (((m_yPosActive - m_yPosInactive) * onScreenState) + 0.5f));
-
-		if (viewYPx != newYPx) {
-			m_view.setY(newYPx);
-		}
+		m_viewAnimator.animateToOnScreenState(onScreenState);
 	}
 
 	@Override
