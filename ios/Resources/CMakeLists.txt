@@ -182,6 +182,9 @@ set(resources ${resources}
         Resources/SplashScreen/SplashScreen@2x.png
         Resources/SplashScreen/SplashScreen@3x.png
         Resources/Stalk.POD
+        Resources/swallow_logo_about.png
+        Resources/swallow_logo_about@2x.png
+        Resources/swallow_logo_about@3x.png
         Resources/Thumbs.db
         Resources/Yelp
         Resources/Yelp/reviewsFromYelpRED.png
@@ -1336,6 +1339,9 @@ set(resources ${resources}
         Resources/sub_menu_arrow_on@3x.png
         Resources/swallow_search_tags.json
         Resources/weatherstates.json
+        Resources/wrld_logo_about.png
+        Resources/wrld_logo_about@2x.png
+        Resources/wrld_logo_about@3x.png
         Resources/yelp_map.json
         Resources/yelp_powered_btn_light.png
         Resources/yelp_powered_btn_light@2x.png
