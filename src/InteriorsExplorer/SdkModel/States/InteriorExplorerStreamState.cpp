@@ -22,7 +22,7 @@ namespace ExampleApp
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
                 , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
-                , m_maxTimeout(5.0f)
+                , m_maxTimeout(60.0f)
                 , m_hasFailed(false)
                 {
                 }

@@ -16,7 +16,7 @@ namespace ExampleApp
                 if(message.InInterior())
                 {
                     m_cameraTransitionController.StartTransitionTo(message.SearchResultLocationEcef(),
-                                                                   InteriorsExplorer::DefaultInteriorTransitionInterestDistance,
+                                                                   InteriorsExplorer::SearchResultSectionTransitionInterestDistance,
                                                                    message.InteriorBuildingId(),
                                                                    message.FloorIndex());
                 }
