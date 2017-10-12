@@ -12,6 +12,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 - [Xcode](https://developer.apple.com/xcode/) (7.2 tested)
 - [CMake](https://cmake.org/) (3.1.1  or higher)
+- [Python] (https://python.org) (2.7.12 tested)
 
 ## Setup
 
@@ -19,8 +20,9 @@ Before you begin, ensure you have completed the initial steps as described in th
 	*	We recommend you run this step frequently to keep your SDK version up to date.
 2.  In the `ios` directory, run `mkdir build` to create a build directory.
 3.  In the `ios/build` directory, run `cmake -G Xcode ..` to generate a project file.
-4.  Open the `ExampleApp.xcodeproj` project file in Xcode.
-5.  Build and run the ExampleApp target.
+4.  Still in the `ios/build` directory, run `python ../embedsenion.py` to set the embed framework build phases in the project file.
+5.  Open the `ExampleApp.xcodeproj` project file in Xcode.
+6.  Build and run the ExampleApp target.
 
 ## Building from the command line
 

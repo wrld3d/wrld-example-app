@@ -29,7 +29,7 @@ namespace ExampleApp
                 const std::string m_aboutText;
                 std::string m_indoorPositioningType;
                 int32_t m_eegeoFloorNumber;
-                int m_senionFloorNumber;
+                std::string m_senionFloorId;
                 double m_senionLatitude;
                 double m_senionLongitude;
                 std::string m_senionApiKey;
@@ -72,7 +72,7 @@ namespace ExampleApp
                 
                 void SetIndoorPositioningType(const std::string& indoorPositioningType);
                 
-                void SetSenionDataType(const int32_t& eegeoFloorNumber, const int& senionFloorNumber, const double& latitude, const double& longitude);
+                void SetSenionDataType(const int32_t& eegeoFloorNumber, const std::string& senionFloorNumber, const double& latitude, const double& longitude);
                 
                 void SetSenionSettingsType(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::string>& floorMap, const std::string& interiorId);
             };

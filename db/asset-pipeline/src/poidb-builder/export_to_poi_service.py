@@ -810,7 +810,7 @@ def collect_transition_table(xls_book, sheet_index, src_image_folder_path, verbo
 def collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
-    poi_columns = ['name', 'tags', 'latitude_degrees', 'longitude_degrees', 'interior_id',
+    poi_columns = ['name', 'image_filename', 'description', 'tags', 'latitude_degrees', 'longitude_degrees', 'interior_id',
                    'interior_floor']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
@@ -870,7 +870,9 @@ def collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, fi
             {
                 "office_location": get_office_location_from_interior_and_floor(
                     v[column_names.index('interior_id')],
-                    int(v[column_names.index('interior_floor')]))
+                    int(v[column_names.index('interior_floor')])),
+                "image_url": v[column_names.index('image_filename')],
+                "description": v[column_names.index('description')]
             }
         }
 
@@ -937,13 +939,13 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     for deskCode in desks:
         desk = desks[deskCode]
         e = {"title": desk['desk'],
-             "subtitle": "",
-             "tags": "desk",
-             "lat": desk['lat'],
-             "lon": desk['lon'],
-             "indoor": True,
-             "indoor_id": desk['indoor_id'],
-             "floor_id": desk['floor_id']}
+            "subtitle": "",
+            "tags": "desk",
+            "lat": desk['lat'],
+            "lon": desk['lon'],
+            "indoor": True,
+            "indoor_id": desk['indoor_id'],
+            "floor_id": desk['floor_id']}
         entities.append(e)
 
     sheet_index = 0
@@ -978,12 +980,12 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     sheet_index = 5
 
     for e in collect_transition_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
-    	entities.append(e)
-    
+        entities.append(e)
+
     sheet_index = 6
-    
+
     for e in collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
-    	entities.append(e)
+        entities.append(e)
 
     sheet_index = 8
 

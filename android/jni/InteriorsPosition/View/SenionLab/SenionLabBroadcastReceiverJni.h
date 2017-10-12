@@ -11,7 +11,7 @@ extern "C"
             jlong nativeObjectPtr,
             jdouble latitude,
             jdouble longitude,
-            jint floorNumber);
+            jstring floorId);
 
     JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroadcastReceiverJniMethods_SetIsAuthorized(
             JNIEnv *jenv, jclass clazz,

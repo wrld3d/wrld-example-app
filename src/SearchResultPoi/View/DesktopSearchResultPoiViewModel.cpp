@@ -71,7 +71,8 @@ namespace ExampleApp
                         || primaryTag == ExampleApp::Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME
                         || primaryTag == ExampleApp::Search::Swallow::SearchConstants::WORKING_GROUP_CATEGORY_NAME
                         || primaryTag == ExampleApp::Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME
-                        || primaryTag == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME)
+                        || primaryTag == ExampleApp::Search::Swallow::SearchConstants::DEPARTMENT_CATEGORY_NAME
+                        || primaryTag == ExampleApp::Search::Swallow::SearchConstants::SHOW_POI_CARD_NAME)
                     {
                         canOpenPOIView = true;
                     }

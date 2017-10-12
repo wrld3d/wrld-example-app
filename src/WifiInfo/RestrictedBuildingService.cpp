@@ -4,6 +4,7 @@
 #include "RestrictedBuildingService.h"
 #include "IAlertBoxFactory.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "NavigationService.h"
 
 namespace ExampleApp
 {
@@ -12,9 +13,14 @@ namespace ExampleApp
 
         RestrictedBuildingService::RestrictedBuildingService(const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingsInfo,
                                                              Eegeo::Web::IConnectivityService& connectivityService,
-                                                             Eegeo::UI::NativeUIFactories& nativeUIFactories)
-        : m_restrictedBuildingsInfo(restrictedBuildingsInfo),m_connectivityService(connectivityService),m_nativeUIFactories(nativeUIFactories), m_pAlertBoxDismissedHandler(NULL),
-        m_isRestrictedBuildingAlertShown(false)
+                                                             Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                                             Eegeo::Location::NavigationService& navigationService)
+        : m_restrictedBuildingsInfo(restrictedBuildingsInfo)
+        , m_connectivityService(connectivityService)
+        , m_nativeUIFactories(nativeUIFactories)
+        , m_pAlertBoxDismissedHandler(NULL)
+        , m_isRestrictedBuildingAlertShown(false)
+        , m_navigationService(navigationService)
         {
              m_pAlertBoxDismissedHandler = Eegeo_NEW(Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<RestrictedBuildingService>(this, &RestrictedBuildingService::HandleAlertBoxDismissed));
         }
@@ -81,6 +87,8 @@ namespace ExampleApp
             	m_nativeUIFactories.AlertBoxFactory().CreateSingleOptionAlertBox("Indoor Map Not Available", "Sorry, that indoor map cannot be explored over your current network.", *m_pAlertBoxDismissedHandler);
                 
                 m_isRestrictedBuildingAlertShown = true;
+                
+                m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
             }
         }
         

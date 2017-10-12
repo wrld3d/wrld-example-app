@@ -60,7 +60,7 @@ namespace ExampleApp
                 if(m_indoorPositioningType == "\nIndoor positioning type: Senion")
                 {
                     content << "\n eeGeo Floor number: " << m_eegeoFloorNumber
-                            << "\n Senion Floor number: " << m_senionFloorNumber
+                            << "\n Senion Floor Id: " << m_senionFloorId
                             << "\n Latitude: " << std::setprecision(10) << m_senionLatitude
                             << "\n Longitude: " << m_senionLongitude
                             << "\n SenionApiKey: " << m_senionApiKey
@@ -127,10 +127,10 @@ namespace ExampleApp
                 m_indoorPositioningType = indoorPositioningType;
             }
             
-            void AboutPageViewModel::SetSenionDataType(const int32_t& eegeoFloorNumber, const int& senionFloorNumber, const double& latitude, const double& longitude)
+            void AboutPageViewModel::SetSenionDataType(const int32_t& eegeoFloorNumber, const std::string& senionFloorId, const double& latitude, const double& longitude)
             {
                 m_eegeoFloorNumber = eegeoFloorNumber;
-                m_senionFloorNumber = senionFloorNumber;
+                m_senionFloorId = senionFloorId;
                 m_senionLatitude = latitude;
                 m_senionLongitude = longitude;
             }

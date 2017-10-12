@@ -74,11 +74,11 @@ namespace ExampleApp
                 	env->CallVoidMethod(m_broadcastReceiverInstance, unregisterMethod);
 				}
 
-                void SenionLabBroadcastReceiver::DidUpdateLocation(const double latitude, const double longitude, const int floorNumber)
+                void SenionLabBroadcastReceiver::DidUpdateLocation(const double latitude, const double longitude, const std::string floorId)
                 {
                     ASSERT_UI_THREAD
                     Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(latitude, longitude));
-                    m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, floorNumber));
+                    m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, floorId));
                 }
 
                 void SenionLabBroadcastReceiver::SetIsAuthorized(const bool isAuthorized)

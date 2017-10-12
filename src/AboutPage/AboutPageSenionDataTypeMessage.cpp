@@ -6,10 +6,10 @@ namespace ExampleApp
 {
     namespace AboutPage
     {
-        AboutPageSenionDataTypeMessage::AboutPageSenionDataTypeMessage(int eeegeoFloorNumber, int32_t senionFloorNumber, double senionLatitude, double senionLongitude)
+        AboutPageSenionDataTypeMessage::AboutPageSenionDataTypeMessage(int eeegeoFloorNumber, std::string senionFloorId, double senionLatitude, double senionLongitude)
         : m_eegeoFloorNumber(eeegeoFloorNumber)
-        , m_senionFloorNumber(senionFloorNumber)
-        , m_sentionLatitude(senionLatitude)
+        , m_senionFloorId(senionFloorId)
+        , m_senionLatitude(senionLatitude)
         , m_senionLongitude(senionLongitude)
         {
         }
@@ -19,14 +19,14 @@ namespace ExampleApp
             return m_eegeoFloorNumber;
         }
         
-        int AboutPageSenionDataTypeMessage::GetSenionFloorNumber() const
+        std::string AboutPageSenionDataTypeMessage::GetSenionFloorId() const
         {
-            return m_senionFloorNumber;
+            return m_senionFloorId;
         }
         
         double AboutPageSenionDataTypeMessage::GetSenionLatitude() const
         {
-            return m_sentionLatitude;
+            return m_senionLatitude;
         }
         
         double AboutPageSenionDataTypeMessage::GetSenionLongitude()const
