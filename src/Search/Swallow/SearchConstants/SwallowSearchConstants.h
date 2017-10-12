@@ -19,6 +19,7 @@ namespace ExampleApp
                 extern const std::string IMAGE_FILENAME_FIELD_NAME;
                 extern const std::string WORKING_GROUP_FIELD_NAME;
                 extern const std::string OFFICE_LOCATION_FIELD_NAME;
+                extern const std::string HIGHLIGHT_ID_FIELD_NAME;
                 extern const std::string DESK_CODE_FIELD_NAME;
                 extern const std::string DESKS_FIELD_NAME;
                 extern const std::string SHOW_POI_CARD_NAME;

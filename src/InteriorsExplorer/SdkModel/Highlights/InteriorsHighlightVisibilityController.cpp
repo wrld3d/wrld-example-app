@@ -261,12 +261,12 @@ namespace ExampleApp
                         {
                             const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(searchResult);
                             
-                            const std::string& roomName = meetingRoom.GetName();
+                            const std::string& highlightId = meetingRoom.GetHighlightId();
                             
                             std::string availability = meetingRoom.GetAvailability();
-                            m_persistentSettings.TryGetValue(roomName, availability);
+                            m_persistentSettings.TryGetValue(highlightId, availability);
                             
-                            const std::string highlightRenderableId(highlightPrefix + roomName);
+                            const std::string highlightRenderableId(highlightPrefix + highlightId);
                             const Eegeo::v4& highlightColor = GetColorForAvailability(availability);
                             
                             m_searchResultHighlightIdToColor[highlightRenderableId] = highlightColor;

@@ -13,11 +13,13 @@ namespace ExampleApp
                 SwallowMeetingRoomResultModel::SwallowMeetingRoomResultModel(const std::string& name,
                                                                              const std::string& imageUrl,
                                                                              const std::string& availability,
-                                                                             const std::string& officeLocation)
+                                                                             const std::string& officeLocation,
+                                                                             const std::string& highlightId)
                 : m_name(name)
                 , m_imageUrl(imageUrl)
                 , m_availability(availability)
                 , m_officeLocation(officeLocation)
+                , m_highlightId(highlightId)
                 {
                     
                 }
@@ -50,6 +52,11 @@ namespace ExampleApp
                 const std::string& SwallowMeetingRoomResultModel::GetOfficeLocation() const
                 {
                     return m_officeLocation;
+                }
+
+                const std::string& SwallowMeetingRoomResultModel::GetHighlightId() const
+                {
+                    return m_highlightId;
                 }
             }
         }

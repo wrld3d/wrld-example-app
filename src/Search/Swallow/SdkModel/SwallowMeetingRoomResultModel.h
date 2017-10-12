@@ -19,13 +19,15 @@ namespace ExampleApp
                     std::string m_imageUrl;
                     std::string m_availability;
                     std::string m_officeLocation;
+                    std::string m_highlightId;
                     
                 public:
                     
                     SwallowMeetingRoomResultModel(const std::string& name,
                                                   const std::string& imageUrl,
                                                   const std::string& availability,
-                                                  const std::string& officeLocation);
+                                                  const std::string& officeLocation,
+                                                  const std::string& highlightId);
                     
                     SwallowMeetingRoomResultModel();
                     
@@ -38,6 +40,8 @@ namespace ExampleApp
                     const std::string& GetAvailability() const;
                     
                     const std::string& GetOfficeLocation() const;
+
+                    const std::string& GetHighlightId() const;
                 };
             }
         }
