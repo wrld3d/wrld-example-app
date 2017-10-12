@@ -6,7 +6,7 @@
 #include "RestrictedBuildingInfo.h"
 #include "IRestrictedBuildingService.h"
 #include "NativeUIFactories.h"
-
+#include "Location.h"
 
 namespace ExampleApp
 {
@@ -18,7 +18,8 @@ namespace ExampleApp
             
             RestrictedBuildingService(const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&restrictedBuildingsInfo,
                                       Eegeo::Web::IConnectivityService& connectivityService,
-                                      Eegeo::UI::NativeUIFactories& nativeUIFactories);
+                                      Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                      Eegeo::Location::NavigationService& navigationService);
             ~RestrictedBuildingService();
             
             bool CanAccessBuildingWithCurrentNetwork(std::string interior_id);
@@ -32,7 +33,7 @@ namespace ExampleApp
             const std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>&m_restrictedBuildingsInfo;
             Eegeo::UI::NativeUIFactories& m_nativeUIFactories;
             Eegeo::UI::NativeAlerts::ISingleOptionAlertBoxDismissedHandler* m_pAlertBoxDismissedHandler;
-            
+            Eegeo::Location::NavigationService& m_navigationService;
         };
     }
 }
