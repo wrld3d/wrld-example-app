@@ -89,6 +89,12 @@ namespace ExampleApp
                 env->DeleteLocalRef(contentStr);
             }
 
+            void AboutPageView::ShowHiddenText()
+            {
+                ASSERT_UI_THREAD
+                m_hiddenTextCallbacks.ExecuteCallbacks();
+            }
+
             void AboutPageView::InsertCloseTappedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
@@ -99,6 +105,18 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
                 m_callbacks.RemoveCallback(callback);
+            }
+
+            void AboutPageView::InsertLogoLongPressCallback(Eegeo::Helpers::ICallback0 &callback)
+            {
+                ASSERT_UI_THREAD
+                m_hiddenTextCallbacks.AddCallback(callback);
+            }
+
+            void AboutPageView::RemoveLogoLongPressCallback(Eegeo::Helpers::ICallback0 &callback)
+            {
+                ASSERT_UI_THREAD
+                m_hiddenTextCallbacks.RemoveCallback(callback);
             }
         }
     }
