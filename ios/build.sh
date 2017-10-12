@@ -35,6 +35,14 @@ if [ $resultcode -ne 0 ]; then
     exit $resultcode
 fi
 
+(cd $projectPath && python ../embedsenion.py)
+
+resultcode=$?
+if [ $resultcode -ne 0 ]; then
+    echo "FAILED TO EMBED SENION FRAMEWORK IN PROJECT"
+    exit $resultcode
+fi
+
 (cd $projectPath && xcodebuild -target ProjectSwallowApp -arch "i386" -sdk "iphonesimulator")
 resultcode=$?
 
