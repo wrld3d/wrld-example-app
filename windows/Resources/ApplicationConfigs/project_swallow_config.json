@@ -91,11 +91,11 @@
     "AttractModePlaybackSpeed": 0.007,
 
     "FixedIndoorLocation": {
-        "InteriorId": "",
-        "Latitude": 51.512432, 
-        "Longitude": -0.091633,
-        "FloorIndex": 2,
-        "OrientationDegrees": 180.0
+        "Latitude": 51.512772344503013,
+        "Longitude": -0.091198986816446,
+        "InteriorId": "swallow_lon_wallbrooksquare",
+        "FloorIndex": 5,
+        "OrientationDegrees": 157.5
     },
 
     "OptionsAdminPassword": "1234"
