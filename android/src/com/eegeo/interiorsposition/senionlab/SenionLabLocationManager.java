@@ -6,6 +6,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import android.content.Intent;
+import android.util.Log;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 
@@ -88,8 +89,16 @@ public class SenionLabLocationManager
     public void stopUpdatingLocation()
     {
         if (m_stepInsideSdk != null) {
-            m_stepInsideSdk.stop();
-            m_stepInsideSdk.detach();
+            try
+            {
+                m_stepInsideSdk.stop();
+                m_stepInsideSdk.detach();
+            }
+            catch(Exception e)
+            {
+                Log.v("SLLocationManager", e.getMessage());
+            }
+
             m_isSdkReady = false;
         }
 
