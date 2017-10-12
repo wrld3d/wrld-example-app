@@ -7,7 +7,7 @@ public class SenionLabBroadcastReceiverJniMethods
     public static native void DidUpdateLocation(long nativeCallerPointer,
                                                 double latitude,
                                                 double longitude,
-                                                int floorNumber);
+                                                String floorId);
 
     public static native void SetIsAuthorized(long nativeCallerPointer, boolean isAuthorized);
     

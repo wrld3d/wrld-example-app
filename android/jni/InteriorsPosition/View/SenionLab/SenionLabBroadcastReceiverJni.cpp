@@ -14,12 +14,16 @@ JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroad
         jlong nativeObjectPtr,
         jdouble latitude,
         jdouble longitude,
-        jint floorNumber)
+        jstring floorId)
 {
+    const char* chars = jenv->GetStringUTFChars(floorId, 0);
+    std::string floorIdString = chars;
+    jenv->ReleaseStringUTFChars(floorId, chars);
+
     using ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver;
     reinterpret_cast<SenionLabBroadcastReceiver *>(nativeObjectPtr)->DidUpdateLocation(latitude,
                                                                                      longitude,
-                                                                                     floorNumber);
+                                                                                     floorIdString);
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroadcastReceiverJniMethods_SetIsAuthorized(

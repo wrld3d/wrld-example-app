@@ -9,10 +9,10 @@ namespace ExampleApp
         class InteriorsLocationChangedMessage
         {
         public:
-            InteriorsLocationChangedMessage(const double latitude, const double longitude, const int floorNumber)
+            InteriorsLocationChangedMessage(const double latitude, const double longitude, const std::string& floorId)
             : m_latitude(latitude)
             , m_longitude(longitude)
-            , m_floorNumber(floorNumber)
+            , m_floorId(floorId)
             {}
 
             const double Latitude() const
@@ -25,15 +25,15 @@ namespace ExampleApp
                 return m_longitude;
             }
 
-            const int FloorNumber() const
+            const std::string& FloorId() const
             {
-                return m_floorNumber;
+                return m_floorId;
             }
 
         private:
             double m_latitude;
             double m_longitude;
-            int m_floorNumber;
+            std::string m_floorId;
         };
     }
 }
