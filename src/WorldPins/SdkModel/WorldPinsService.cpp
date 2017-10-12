@@ -303,9 +303,6 @@ namespace ExampleApp
                     {
                         RemoveHighlight(m_selectedPinId);
                     }
-                    
-                    selectionHandler->SelectPin();
-                    ClearSelectedSearchResult();
 
                     WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(worldPinItemModelId);
                     AddHighlight(pWorldPinItemModel);
@@ -325,6 +322,9 @@ namespace ExampleApp
                         const float pinAltitude = Helpers::PinHelpers::PIN_ALTITUDE;
                         m_cameraTransitionController.StartTransitionTo(location.ToECEF(), pinAltitude);
                     }
+
+                    selectionHandler->SelectPin();
+                    ClearSelectedSearchResult();
                 }
             }
             
