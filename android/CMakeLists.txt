@@ -374,9 +374,6 @@ include_directories(
     ../src/VirtualKeyboard
     ../src/VisualMap
     ../src/VisualMap/SdkModel
-    ../src/Watermark
-    ../src/Watermark/SdkModel
-    ../src/Watermark/View
     ../src/WifiInfo
     ../src/WorldAreaLoader
     ../src/WorldAreaLoader/SdkModel
@@ -436,8 +433,6 @@ include_directories(
     jni/SettingsMenu/View
     jni/TagSearch
     jni/TagSearch/View
-    jni/Watermark
-    jni/Watermark/View
     jni/WorldPins
     jni/WorldPins/View
 
