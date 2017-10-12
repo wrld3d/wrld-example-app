@@ -19,6 +19,7 @@ namespace ExampleApp
                 const std::string AVAILABILITY_FIELD_NAME = "availability";
                 const std::string DESCRIPTION_FIELD_NAME = "description";
                 const std::string DESKS_FIELD_NAME = "desks";
+                const std::string SHOW_POI_CARD_NAME = "show_poi_card";
                 const std::string CATEGORY_FIELD_NAME = "category";
                 const std::string SUBCATEGORY_FIELD_NAME = "subcategory";
                 const std::string DISTANCE_FIELD_NAME = "distance";
