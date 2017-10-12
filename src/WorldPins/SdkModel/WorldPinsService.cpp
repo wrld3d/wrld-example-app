@@ -140,9 +140,9 @@ namespace ExampleApp
                 m_pinsToVisbilityChangedHandlers.erase(pinId);
                 Eegeo_DELETE pVisibilityHandler;
 
-                if(!m_selectedSearchResultId.empty())
+                if(m_selectedPinId == pinId)
                 {
-                    const WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(m_selectedSearchResultId);
+                    const WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(pPinItemModel->GetIdentifier());
                     if (pWorldPinItemModel != nullptr && pWorldPinItemModel->Id() == pinId)
                     {
                         RemoveHighlightPin(m_pSelectedPinHighlight);
