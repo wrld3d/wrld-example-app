@@ -398,7 +398,8 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, ver
             {
               "image_url":v[column_names.index('image_filename')],
               "availability":v[column_names.index('availability')],
-              "office_location":v[column_names.index('office_location')]
+              "office_location":v[column_names.index('office_location')],
+              "highlight_id":v[column_names.index('name')]
             }
        }
 
