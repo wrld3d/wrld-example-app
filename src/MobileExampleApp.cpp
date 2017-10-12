@@ -670,7 +670,10 @@ namespace ExampleApp
                                                                                                      m_identityProvider,
                                                                                                      m_messageBus);
         
-        m_pRestrictedBuildingInfoService = Eegeo_NEW(ExampleApp::WifiInfo::RestrictedBuildingService)(m_applicationConfiguration.RestrictedBuildingsInfo(),m_platformAbstractions.GetConnectivityService(), m_pWorld->GetNativeUIFactories());
+        m_pRestrictedBuildingInfoService = Eegeo_NEW(ExampleApp::WifiInfo::RestrictedBuildingService)(m_applicationConfiguration.RestrictedBuildingsInfo(),
+                                                                                                      m_platformAbstractions.GetConnectivityService(),
+                                                                                                      m_pWorld->GetNativeUIFactories(),
+                                                                                                      *m_pNavigationService);
         
         m_pMyPinsModule = Eegeo_NEW(ExampleApp::MyPins::SdkModel::MyPinsModule)(m_pWorldPinsModule->GetWorldPinsService(),
                                                                                 m_platformAbstractions,
