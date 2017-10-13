@@ -37,6 +37,7 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     
     protected MenuState m_menuState = MenuState.OFF_SCREEN;
     protected boolean m_animating = false;
+    protected boolean m_shouldBeOnClosedScreen = false;
     
     protected MenuAnimationHandler m_menuAnimationHandler = null;
 
@@ -105,6 +106,7 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
     
     public void animateToClosedOnScreen()
     {
+        m_shouldBeOnClosedScreen = true;
     	if((m_animating && m_menuState != MenuState.OFF_SCREEN) || m_menuAnimationHandler == null || m_menuAnimationHandler.isClosedOnScreen())
     	{
     		return;
@@ -131,6 +133,7 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
 
     public void animateToOpenOnScreen()
     {
+        m_shouldBeOnClosedScreen = false;
     	if(m_animating || m_menuAnimationHandler.isOpenOnScreen())
     	{
     		return;
@@ -155,6 +158,7 @@ public abstract class MenuView implements View.OnClickListener, MenuAnimationSta
 
     public void animateOffScreen()
     {
+        m_shouldBeOnClosedScreen = false;
     	if(m_animating) 
     	{
     		if(m_menuAnimationHandler.isOffScreen()) 

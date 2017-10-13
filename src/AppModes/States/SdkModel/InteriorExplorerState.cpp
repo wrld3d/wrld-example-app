@@ -58,8 +58,7 @@ namespace ExampleApp
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerViewingState)(*this,
                                                                                                                        interiorsExplorerModel,
-                                                                                                                       interiorExplorerUserInteractionModel,
-                                                                                                                       cameraFrustumStreamingVolume));
+                                                                                                                       interiorExplorerUserInteractionModel));
                     
                     m_subStates.push_back(Eegeo_NEW(InteriorsExplorer::SdkModel::States::InteriorExplorerExitingState)(*this,
                                                                                                                        interiorSelectionModel,

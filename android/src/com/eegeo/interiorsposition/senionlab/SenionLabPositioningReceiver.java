@@ -28,11 +28,10 @@ class SenionLabPositioningReceiver extends PositioningApi.Listener
     {
         synchronized (m_updateLock)
         {
-            //TODO MOD make the destination for this accept a string and feed it location.getFloorId.getValue()
             SenionLabBroadcastReceiverJniMethods.DidUpdateLocation(m_nativeCallerPointer,
                                                                    location.getLatitude(),
                                                                    location.getLongitude(),
-                                                                   0);//location.getFloorId().getValue());
+                                                                   location.getFloorId().getValue());
         }
     }
 

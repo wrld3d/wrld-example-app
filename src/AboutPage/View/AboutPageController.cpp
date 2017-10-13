@@ -49,7 +49,7 @@ namespace ExampleApp
             
             void AboutPageController::OnAboutPageSenionDataTypeMessageChanged(const AboutPage::AboutPageSenionDataTypeMessage& message)
             {
-                m_viewModel.SetSenionDataType(message.GetEegeoFloorNumber(), message.GetSenionFloorNumber(), message.GetSenionLatitude(), message.GetSenionLongitude());
+                m_viewModel.SetSenionDataType(message.GetEegeoFloorNumber(), message.GetSenionFloorId(), message.GetSenionLatitude(), message.GetSenionLongitude());
             }
             
             void AboutPageController::OnAboutPageSenionSettingsMessageChanged(const AboutPage::AboutPageSenionSettingsTypeMessage& message)

@@ -19,7 +19,7 @@ public class CombinedLocationApiService
 {
 
     private Activity m_activity;
-    protected static final String TAG = "CombinedLocationApiService";
+    protected static final String TAG = "CLApiService";
 
     public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000 * 60;
     public static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = UPDATE_INTERVAL_IN_MILLISECONDS / 2;

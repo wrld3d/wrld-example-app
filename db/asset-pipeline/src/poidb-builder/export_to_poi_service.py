@@ -398,7 +398,8 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, ver
             {
               "image_url":v[column_names.index('image_filename')],
               "availability":v[column_names.index('availability')],
-              "office_location":v[column_names.index('office_location')]
+              "office_location":v[column_names.index('office_location')],
+              "highlight_id":v[column_names.index('name')]
             }
        }
 
@@ -482,17 +483,17 @@ def collect_misc_from_desks_table(desks):
     desk_groups = {}
 
     desk_highlight_colors = {
-        "A": [218.0, 232.0, 251.0, 128.0],
-        "B": [15.0, 70.0, 149.0, 128.0],
-        "C": [181.0, 209.0, 248.0, 128.0],
-        "D": [15.0, 70.0, 149.0, 128.0],
-        "E": [125.0, 174.0, 242.0, 128.0],
-        "F": [11.0, 53.0, 111.0, 128.0],
-        "G": [69.0, 139.0, 237.0, 128.0],
-        "H": [7.0, 35.0, 74.0, 128.0],
-        "I": [32.0, 116.0, 233.0, 128.0],
-        "J": [4.0, 18.0, 37.0, 128.0],
-        "K": [20.0, 97.0, 204.0, 128.0]
+        "A": [0.0, 255.0, 0.0, 255.0],
+        "B": [0.0, 128.0, 0.0, 255.0],
+        "C": [0.0, 255.0, 0.0, 255.0],
+        "D": [0.0, 128.0, 0.0, 255.0],
+        "E": [0.0, 255.0, 0.0, 255.0],
+        "F": [0.0, 128.0, 0.0, 255.0],
+        "G": [0.0, 255.0, 0.0, 255.0],
+        "H": [0.0, 128.0, 0.0, 255.0],
+        "I": [0.0, 255.0, 0.0, 255.0],
+        "J": [0.0, 128.0, 0.0, 255.0],
+        "K": [0.0, 255.0, 0.0, 255.0]
     }
 
     for desk_name in desks:
@@ -605,7 +606,7 @@ def get_office_location_from_interior_and_floor(interior_id, floor_id):
     interior_ids_to_names["swallow_lon_citygatehouse"] = "City Gate House"
     interior_ids_to_names["swallow_lon_50finsbury"] = "50 Finsbury"
     interior_ids_to_names["swallow_lon_parkhouse"] = "Park House"
-    interior_ids_to_names["swallow_lon_wallbrooksquare"] = "Bloomberg London"
+    interior_ids_to_names["swallow_lon_wallbrooksquare"] = "3QVS"
 
     interior_floor_to_name = {}
     interior_floor_to_name["swallow_lon_38finsbury"] = ["Lower Ground Floor", "Ground Floor", "1st Floor", "2nd Floor", "3rd Floor", "4th Floor", "5th Floor", "6th Floor"]
@@ -810,7 +811,7 @@ def collect_transition_table(xls_book, sheet_index, src_image_folder_path, verbo
 def collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
-    poi_columns = ['name', 'tags', 'latitude_degrees', 'longitude_degrees', 'interior_id',
+    poi_columns = ['name', 'image_filename', 'description', 'tags', 'latitude_degrees', 'longitude_degrees', 'interior_id',
                    'interior_floor']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
@@ -870,7 +871,9 @@ def collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, fi
             {
                 "office_location": get_office_location_from_interior_and_floor(
                     v[column_names.index('interior_id')],
-                    int(v[column_names.index('interior_floor')]))
+                    int(v[column_names.index('interior_floor')])),
+                "image_url": v[column_names.index('image_filename')],
+                "description": v[column_names.index('description')]
             }
         }
 
@@ -937,13 +940,13 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     for deskCode in desks:
         desk = desks[deskCode]
         e = {"title": desk['desk'],
-             "subtitle": "",
-             "tags": "desk",
-             "lat": desk['lat'],
-             "lon": desk['lon'],
-             "indoor": True,
-             "indoor_id": desk['indoor_id'],
-             "floor_id": desk['floor_id']}
+            "subtitle": "",
+            "tags": "desk",
+            "lat": desk['lat'],
+            "lon": desk['lon'],
+            "indoor": True,
+            "indoor_id": desk['indoor_id'],
+            "floor_id": desk['floor_id']}
         entities.append(e)
 
     sheet_index = 0
@@ -978,12 +981,12 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     sheet_index = 5
 
     for e in collect_transition_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
-    	entities.append(e)
-    
+        entities.append(e)
+
     sheet_index = 6
-    
+
     for e in collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
-    	entities.append(e)
+        entities.append(e)
 
     sheet_index = 8
 

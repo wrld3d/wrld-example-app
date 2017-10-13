@@ -8,6 +8,8 @@ namespace ExampleApp
     namespace Helpers
     {
         int deviceFramerateWhitelist[] = {
+            GAME_DEVICE_IPHONE8_PLUS,
+            GAME_DEVICE_IPHONE8,
             GAME_DEVICE_IPADPRO_12_9_INCH,
             GAME_DEVICE_IPADPRO_9_7_INCH,
             GAME_DEVICE_IPHONE_SE,

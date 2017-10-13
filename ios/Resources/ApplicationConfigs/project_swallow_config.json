@@ -1,10 +1,10 @@
 {
   "Name": "Project Swallow App",
-  "StartLocationLatitude": 51.520275,
-  "StartLocationLongitude": -0.086135,
+  "StartLocationLatitude": 51.512432,
+  "StartLocationLongitude": -0.091633,
   "StartLocationAltitude": 10.0,
-  "StartLocationDistance": 500.0,
-  "StartLocationOrientationDegrees": 180.0,
+  "StartLocationDistance": 800.0,
+  "StartLocationOrientationDegrees": 0.0,
   "TryStartAtGpsLocation": false,
   "EegeoApiKey": "3ceebbe9943e604ee4ac39b3977be5e1",
   "GoogleAnalyticsReferrerToken": "eegeo_project_swallow_ios",
@@ -15,8 +15,8 @@
   "YelpOAuthTokenSecret": "hHIaImXUlORnIavm2nXV3NOufpA",
   "TwitterAuthCode": "",
   "GeoNamesUserName": "eegeo_bloomberg_ios",
-  "CoverageTreeManifestURL": "https://cdn1.eegeo.com/coverage-trees/vswallow/v1419/manifest.bin.gz",
-  "ThemeManifestURL": "https://cdn-resources.eegeo.com/mobile-themes-new/v988/default/ssl.manifest.bin.gz",
+  "CoverageTreeManifestURL": "https://cdn1.eegeo.com/coverage-trees/vswallow/v1424/manifest.bin.gz",
+  "ThemeManifestURL": "https://cdn-resources.eegeo.com/mobile-themes-new/v990/default/ssl.manifest.bin.gz",
   "EmbeddedThemeTexturePath": "EmbeddedTheme",
   "SqliteDbUrl": "https://cdn1.eegeo.com/swallow-pois/pois_v160.db.gz",
   "EegeoSearchServiceUrl": "https://swallowapp.dundee.kimbleoperations.com/search/v1.1/",
@@ -29,11 +29,11 @@
   "SSLIgnorePattern": "",
   "UseLabels": true,
   "BuildingsSearchViewLocation": {
-    "Latitude": 51.519275,
-    "Longitude": -0.086135,
-    "Altitude": 2.154,
+    "Latitude":  51.512432,
+    "Longitude": -0.091633,
+    "Altitude": 10.0,
     "DistanceToInterest": 800,
-    "OrientationDegrees": 180.0
+    "OrientationDegrees": 0.0
   },
   "IndoorTrackedBuildings": [{
     "InteriorId": "westport_house",

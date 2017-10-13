@@ -121,6 +121,10 @@ class LocationService
                     LocationService.locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, LocationService.locationListener);
                 }
             }
+            catch(SecurityException e)
+            {
+                Log.v("Location", e.getMessage());
+            }
             catch (Exception e)
             {
                 Log.v("Location", e.getMessage());
@@ -181,7 +185,17 @@ class LocationService
         Location bestCachedLocation = null;
         for (String provider : providers)
         {
-            Location l = locationManager.getLastKnownLocation(provider);
+            Location l = null;
+
+            try
+            {
+                l = locationManager.getLastKnownLocation(provider);
+            }
+            catch(SecurityException e)
+            {
+                Log.v("Location", e.getMessage());
+            }
+
             if (l == null)
             {
                 continue;

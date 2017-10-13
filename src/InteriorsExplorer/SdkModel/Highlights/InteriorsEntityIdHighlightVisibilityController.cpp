@@ -191,9 +191,9 @@ namespace ExampleApp
                     }
                     else
                     {
-                        for (int i = 0; i < m_searchResults.size(); ++i)
+                        for (auto reverseIter = m_searchResults.rbegin(); reverseIter != m_searchResults.rend(); ++reverseIter)
                         {
-                            const Search::SdkModel::SearchResultModel& selectedSearchResult = m_searchResults.at(i);
+                            const Search::SdkModel::SearchResultModel& selectedSearchResult = *reverseIter;
                             if (selectedSearchResult.IsInterior())
                             {
                                 std::vector<std::string> entityIds = GetEntityIdsFromSearchResultModel(selectedSearchResult);

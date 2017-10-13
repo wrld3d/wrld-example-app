@@ -15,10 +15,12 @@ namespace ExampleApp
                 const std::string IMAGE_FILENAME_FIELD_NAME = "image_filename";
                 const std::string WORKING_GROUP_FIELD_NAME = "working_group";
                 const std::string OFFICE_LOCATION_FIELD_NAME = "office_location";
+                const std::string HIGHLIGHT_ID_FIELD_NAME = "highlight_id";
                 const std::string DESK_CODE_FIELD_NAME = "desk_code";
                 const std::string AVAILABILITY_FIELD_NAME = "availability";
                 const std::string DESCRIPTION_FIELD_NAME = "description";
                 const std::string DESKS_FIELD_NAME = "desks";
+                const std::string SHOW_POI_CARD_NAME = "show_poi_card";
                 const std::string CATEGORY_FIELD_NAME = "category";
                 const std::string SUBCATEGORY_FIELD_NAME = "subcategory";
                 const std::string DISTANCE_FIELD_NAME = "distance";
@@ -69,7 +71,7 @@ namespace ExampleApp
                     std::vector<ExampleApp::TagSearch::View::TagSearchModel> tags;
                     
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Meeting Rooms", MEETING_ROOM_CATEGORY_NAME, true, "meetingroom", showCategoriesInSearchMenu));
-                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Training Rooms", TRAINING_ROOM_CATEGORY_NAME, true, "collaboration_space", showCategoriesInSearchMenu));
+                    tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Training Rooms", TRAINING_ROOM_CATEGORY_NAME, true, "education", showCategoriesInSearchMenu));
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Working Groups", WORKING_GROUP_CATEGORY_NAME, false, "workinggroup", showCategoriesInSearchMenu));
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Facilities", FACILITY_CATEGORY_NAME, true, "toilets", showCategoriesInSearchMenu));
                     tags.push_back(ExampleApp::TagSearch::View::TagSearchModel("Buildings", OFFICE_CATEGORY_NAME, false, "office", showCategoriesInSearchMenu));

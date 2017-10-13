@@ -65,8 +65,8 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT(!HasCompleted(), "Cannot PrecacheRegion in InitialExperiencePreLoadModel step, has already completed.\n");
 
-                    double sphereVolumeCentreLatitudeDegrees = 51.520275;
-                    double sphereVolumeCentreLongitudeDegrees = -0.086135;
+                    double sphereVolumeCentreLatitudeDegrees = 51.512432;
+                    double sphereVolumeCentreLongitudeDegrees = -0.091633;
                     double sphereVolumeRadiusMetres = 1000.0;
                     PreloadSphereVolume volume(sphereVolumeCentreLatitudeDegrees, sphereVolumeCentreLongitudeDegrees, sphereVolumeRadiusMetres);
                     m_worldAreaLoaderModel.PreloadResourcesInVolume(volume);

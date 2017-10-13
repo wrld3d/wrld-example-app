@@ -108,10 +108,10 @@ namespace ExampleApp
                 {
                     Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(message.Latitude(), message.Longitude()));
                     m_senionLabLocationService.SetLocation(location);
-                    int floorIndex = FloorNumberToFloorIndex(m_mapKey, message.FloorNumber());
+                    int floorIndex = FloorIdToFloorIndex(m_mapKey, message.FloorId());
                     m_senionLabLocationService.SetFloorIndex(floorIndex);
 
-                    m_messageBus.Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, message.FloorNumber(), message.Latitude(), message.Longitude()));
+                    m_messageBus.Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, message.FloorId(), message.Latitude(), message.Longitude()));
                 }
 
                 void SenionLabLocationManager::OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message)
@@ -150,26 +150,22 @@ namespace ExampleApp
                 	}
                 }
 
-                int SenionLabLocationManager::FloorNumberToFloorIndex(const std::string& mapKey, const int floorIndex)
+                int SenionLabLocationManager::FloorIdToFloorIndex(const std::string& mapKey, const std::string& floorId)
                 {
                 	std::map<std::string, std::map<int, std::string>>::iterator it = m_floorMaps.find(mapKey);
 
                 	if(it != m_floorMaps.end())
                 	{
-                		std::stringstream floorNameStream;
-                		floorNameStream << floorIndex;
-                		std::string floorName(floorNameStream.str());
-
 						for (auto &kv : it->second)
 						{
-							if (kv.second == floorName)
+							if (kv.second == floorId)
 							{
 								return kv.first;
 							}
 						}
                 	}
 
-                    return floorIndex;
+                    return -1;
                 }
 
                 void SenionLabLocationManager::OnResume()

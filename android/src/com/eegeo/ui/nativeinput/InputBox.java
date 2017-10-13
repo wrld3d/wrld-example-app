@@ -19,6 +19,7 @@ public class InputBox
     private static String ms_text = "";
     private static AlertDialog m_inputBox = null;
 
+    @SuppressWarnings("JniMissingFunction")
     public native static void callback(long ptr);
 
     public static void close()

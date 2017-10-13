@@ -50,7 +50,7 @@ namespace ExampleApp
                     void OnPause();
 
                 private:
-                    int FloorNumberToFloorIndex(const std::string& mapKey, const int floorIndex);
+                    int FloorIdToFloorIndex(const std::string& mapKey, const std::string& floorId);
 
                     void AskUserToEnableBluetoothIfDisabled();
                     void StartLocationUpdates();

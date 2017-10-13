@@ -11,15 +11,15 @@ namespace ExampleApp
         class AboutPageSenionDataTypeMessage
         {
             int m_eegeoFloorNumber;
-            int32_t m_senionFloorNumber;
-            double m_sentionLatitude;
+            std::string m_senionFloorId;
+            double m_senionLatitude;
             double m_senionLongitude;
             
         public:
-            AboutPageSenionDataTypeMessage(int m_eegeoFloorNumber, int32_t senionFloorNumber, double senionLatitude, double senionLongitude);
+            AboutPageSenionDataTypeMessage(int m_eegeoFloorNumber, std::string senionFloorId, double senionLatitude, double senionLongitude);
             
             int32_t GetEegeoFloorNumber() const;
-            int GetSenionFloorNumber() const;
+            std::string GetSenionFloorId() const;
             double GetSenionLatitude() const;
             double GetSenionLongitude() const;
         };

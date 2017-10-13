@@ -1,8 +1,6 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
 #import "SenionLabLocationManager.h"
-#import <SLIndoorLocation/SLCoordinate3D.h>
-#import <SLIndoorLocation/SLIndoorLocationManager.h>
-#import <SLIndoorLocation/SLSenionLocationSource.h>
+#import <StepInsideSdk/StepInsideSdk.h>
 #include "LatLongAltitude.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "AppHost.h"
@@ -23,20 +21,21 @@ private:
 
 typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
-@interface SenionLabLocationManager()<SLIndoorLocationManagerDelegate>
+@interface SenionLabLocationManager()<SSIStepInsideSdkStatusDelegate, SSIPositioningApiDelegate>
 {
     std::map<std::string, std::map<int, std::string>> m_floorMap;
     std::map<std::string, Eegeo::Resources::Interiors::InteriorId> m_interiorIdMap;
     int m_floorIndex;
     ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService* m_pSenionLabLocationService;
-    SLLocationAvailability m_lastLocationAvailability;
+    SSILocationAvailability m_lastLocationAvailability;
     Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory *m_piOSAlertBoxFactory;
     FailureHandlerType *m_failureHandlerWrapper;
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<SenionLabLocationManager>> *m_failAlertHandler;
     ExampleApp::ExampleAppMessaging::TMessageBus* m_messageBus;
     NSString* m_customerId;
 }
-@property (nonatomic, strong) SLIndoorLocationManager *locationManager;
+@property (nonatomic, strong) SSIStepInsideSdkManager *stepInsideManager;
+@property (nonatomic, strong) SSIStepInsideSdk *stepInside;
 @end
 
 @implementation SenionLabLocationManager
@@ -45,7 +44,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
   iOSAlertBoxFactory:(Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory*) iOSAlertBoxFactory
           messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus
 {
-    m_lastLocationAvailability = SLLocationAvailabilityNotAvailable;
+    m_lastLocationAvailability = SSILocationAvailabilityNotAvailable;
     if(self = [super init])
     {
         m_pSenionLabLocationService = senionLabLocationService;
@@ -63,9 +62,27 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
                      floorMap: (std::map<std::string, std::map<int, std::string>>) floorMap
                 interiorIdMap: (std::map<std::string, Eegeo::Resources::Interiors::InteriorId>) interiorIdMap
 {
-    [SLIndoorLocationManager setIbeaconAuthorizationMethod:SLRequestWhenInUseAuthorization];
-    self.locationManager = [SLIndoorLocationManager defaultIndoorLocationMangerWithMapKeys:mapKey customerId:apiSecret];
-    self.locationManager.delegate = self;
+    [SSISensors requestCoreLocationWhenInUseAuthorization];
+    
+    self.stepInsideManager = [SSIStepInsideSdkManager managerWithConfig:^(SSIStepInsideSdkManagerConfig * _Nonnull config)
+    {
+        NSMutableArray<SSIMapKey*>* mapKeyArray = [[NSMutableArray<SSIMapKey*> alloc] init];
+        for(NSString* key in mapKey)
+        {
+            [mapKeyArray addObject:[[SSIMapKey alloc] initWithValue:key]];
+        }
+        
+        [config withApiKey:[[SSIApiKey alloc] initWithValue:apiSecret]];
+        [config withMapKeys:mapKeyArray];
+    }];
+    
+    [self.stepInsideManager loadSdk];
+    
+    self.stepInside = [self.stepInsideManager attachHighPerformanceMode];
+    
+    [self.stepInside addStatusDelegate:self];
+    [self.stepInside.positioning addDelegate:self];
+    [self.stepInside start];
     
     m_floorMap = floorMap;
     m_interiorIdMap = interiorIdMap;
@@ -74,41 +91,36 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0, 0);
     m_pSenionLabLocationService->SetLocation(latLong);
     m_pSenionLabLocationService->SetInteriorId(Eegeo::Resources::Interiors::InteriorId::NullId());
+    m_pSenionLabLocationService->SetIsAuthorized(true);
 }
 
 -(void) StopUpdatingLocation
 {
-    [self.locationManager stopUpdatingLocation];
+    [self.stepInside stop];
+    [self.stepInside removeStatusDelegate:self];
+    [self.stepInside.positioning removeDelegate:self];
+    self.stepInside = nil;
+    self.stepInsideManager = nil;
 }
 
 -(void) dealloc
 {
-    [self.locationManager stopUpdatingLocation];
-    [self.locationManager release];
+    [self StopUpdatingLocation];
     [super dealloc];
 }
 
--(void) didFinishLoadingManager
+- (void)positioningApi:(SSIPositioningApi *)positioningApi didUpdateLocation:(SSILocation *)location
 {
-    [self.locationManager startUpdatingLocation];
-    m_pSenionLabLocationService->SetIsAuthorized(true);
-}
-
--(void) didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius
-{
-}
-
--(void) didUpdateLocation:(SLCoordinate3D *)location withUncertainty:(double)radius locationSource:(SLLocationSource *)locationSource
-{
-    if(locationSource != nil && [locationSource isKindOfClass:[SLSenionLocationSource class]])
+    if(location != nil && [location.source isKindOfClass:[SSISenionLocationSource class]])
     {
         m_pSenionLabLocationService->SetIsAuthorized(true);
-    
+        
         Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude);
         m_pSenionLabLocationService->SetLocation(latLong);
-    
-        std::string mapKey = std::string([static_cast<SLSenionLocationSource*>(locationSource).mapKey UTF8String]);
-        int floorIndex = [self getFloorIndexFromSenionFloorIndex:std::to_string(location.floorNr) senionMapKey:mapKey];
+        
+        std::string mapKey = std::string([static_cast<SSISenionLocationSource*>(location.source).mapKey.value UTF8String]);
+        std::string floorId = std::string([location.floorId.value UTF8String]);
+        int floorIndex = [self getFloorIndexFromSenionFloorIndex:floorId senionMapKey:mapKey];
         m_pSenionLabLocationService->SetFloorIndex(floorIndex);
         
         std::map<std::string, Eegeo::Resources::Interiors::InteriorId>::iterator it = m_interiorIdMap.find(mapKey);
@@ -123,17 +135,22 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
                 m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionSettingsTypeMessage(mapKey, std::string([m_customerId UTF8String]), floor_it->second, it->second.Value()));
             }
         }
-    
-        m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, location.floorNr, location.latitude, location.longitude));
+        
+        m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, floorId, location.latitude, location.longitude));
     }
 }
 
--(void) didUpdateLocationAvailability:(SLLocationAvailability)locationAvailability
+- (void)positioningApi:(SSIPositioningApi *)positioningApi didUpdateHeading:(SSIHeading *)heading
+{
+    m_pSenionLabLocationService->SetIsAuthorized(true);
+}
+
+- (void)positioningApi:(SSIPositioningApi *)positioningApi didUpdateLocationAvailability:(SSILocationAvailability)locationAvailability
 {
     if(locationAvailability != m_lastLocationAvailability)
     {
         m_lastLocationAvailability = locationAvailability;
-        if(locationAvailability == SLLocationAvailabilityNotAvailable)
+        if(locationAvailability == SSILocationAvailabilityNotAvailable)
         {
             /*
             m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
@@ -147,7 +164,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
             m_pSenionLabLocationService->SetIsConnected(false);
             m_messageBus->Publish(ExampleApp::AboutPage::AboutPageIndoorPositionTypeMessage("\nIndoor positioning type: GPS"));
         }
-        if(locationAvailability == SLLocationAvailabilityAvailable)
+        if(locationAvailability == SSILocationAvailabilityAvailable)
         {
             /*
             m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
@@ -164,37 +181,38 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     }
 }
 
--(void) didUpdateHeading:(double)heading withStatus:(BOOL)status
+- (void) positioningApi:(SSIPositioningApi *)positioningApi didUpdateMotionType:(SSIMotionType)motionType
 {
     m_pSenionLabLocationService->SetIsAuthorized(true);
 }
 
--(void) didUpdateMotionType:(SLMotionState)motionState
+- (void) stepInsideSdk:(SSIStepInsideSdk *)stepInsideSdk didFailWithError:(NSError *)error
 {
-    m_pSenionLabLocationService->SetIsAuthorized(true);
-}
+    switch(error.code)
+    {
+        case SSIStepInsideSdkErrorTypeInvalidKeys:
+            NSLog(@"SenionLabLocationManager didFailWithError: InvalidKeys");
+            break;
+        case SSIStepInsideSdkErrorTypeBleNotEnabled:
+            NSLog(@"SenionLabLocationManager didFailWithError: BleNotEnabled");
+            break;
+        case SSIStepInsideSdkErrorTypeLocationFailed:
+            NSLog(@"SenionLabLocationManager didFailWithError: LocationFailed");
+            break;
+        case SSIStepInsideSdkErrorTypeFailedToLoadGeoMessengerData:
+            NSLog(@"SenionLabLocationManager didFailWithError: FailedToLoadGeoMessengerData");
+            break;
+        case SSIStepInsideSdkErrorTypeFailedToLoadPositioningPackage:
+            NSLog(@"SenionLabLocationManager didFailWithError: FailedToLoadPositioningPackage");
+            break;
+        case SSIStepInsideSdkErrorTypeCoreLocationAuthorizationDenied:
+            NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationDenied");
+            break;
+        case SSIStepInsideSdkErrorTypeCoreLocationAuthorizationNotDetermined:
+            NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationNotDetermined");
+            break;
+    }
 
--(void) didFailInternetConnectionWithError:(NSError *)error
-{
-    NSLog(@"SenionLabLocationManager didFailInternetConnectionWithError");
-    m_pSenionLabLocationService->SetIsAuthorized(false);
-}
-
--(void) didFailInvalidIds:(NSError *)error
-{
-    NSLog(@"SenionLabLocationManager didFailInvalidIds");
-    m_pSenionLabLocationService->SetIsAuthorized(false);
-}
-
--(void) didFailLocationAuthorizationStatus
-{
-    NSLog(@"SenionLabLocationManager didFailLocationAuthorizationStatus");
-    m_pSenionLabLocationService->SetIsAuthorized(false);
-}
-
--(void) didFailScanningBT
-{
-    NSLog(@"SenionLabLocationManager didFailScanningBT");
     m_pSenionLabLocationService->SetIsAuthorized(false);
 }
 

@@ -58,7 +58,7 @@ set(ios_frameworks
   -framework CoreMotion
   -framework CoreBluetooth
   -framework IndoorAtlas
-  -framework SLIndoorLocation")
+  -framework StepInsideSdk")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
 set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab")
@@ -79,6 +79,12 @@ set_target_properties(
 ${executable_name} 
 PROPERTIES 
 RESOURCE "${allresources}"
+)
+
+set_target_properties(
+${executable_name} 
+PROPERTIES 
+XCODE_ATTRIBUTE_LD_RUNPATH_SEARCH_PATHS "@executable_path/Frameworks"
 )
 
 # project settings

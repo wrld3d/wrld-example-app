@@ -1,0 +1,6 @@
+framework module StepInsideSdk {
+  umbrella header "StepInsideSdk.h"
+
+  export *
+  module * { export * }
+}

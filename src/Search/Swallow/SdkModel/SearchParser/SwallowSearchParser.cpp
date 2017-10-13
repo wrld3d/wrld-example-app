@@ -141,6 +141,7 @@ namespace ExampleApp
                         
                         std::string availability = SearchConstants::GetAvailabilityFromAvailabilityState(searchResultModel.GetAvailability());
                         std::string officeLocation = "unknown";
+                        std::string highlightId = "unknown";
                         
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
@@ -148,12 +149,18 @@ namespace ExampleApp
                             {
                                 officeLocation = json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].GetString();
                             }
+
+                            if (json.HasMember(SearchConstants::HIGHLIGHT_ID_FIELD_NAME.c_str()) && json[SearchConstants::HIGHLIGHT_ID_FIELD_NAME.c_str()].IsString())
+                            {
+                                highlightId = json[SearchConstants::HIGHLIGHT_ID_FIELD_NAME.c_str()].GetString();
+                            }
                         }
                         
                         return SwallowMeetingRoomResultModel(searchResultModel.GetTitle(),
                                                              imageUrl,
                                                              availability,
-                                                             officeLocation);
+                                                             officeLocation,
+                                                             highlightId);
                     }
 
                     SwallowTrainingRoomResultModel TransformToSwallowTrainingRoomResult(const Search::SdkModel::SearchResultModel& searchResultModel)
