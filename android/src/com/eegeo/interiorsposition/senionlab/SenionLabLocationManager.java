@@ -96,7 +96,8 @@ public class SenionLabLocationManager
             }
             catch(Exception e)
             {
-                Log.v("SLLocationManager", e.getMessage());
+                String message = e.getMessage();
+                Log.v("SLLocationManager", message == null ? "exception with no message" : message);
             }
 
             m_isSdkReady = false;
