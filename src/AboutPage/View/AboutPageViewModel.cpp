@@ -50,7 +50,8 @@ namespace ExampleApp
                 std::stringstream content;
 
                 content << m_aboutText
-                        << "\n\nPlatform version: " + m_platformVersion
+                        << "\n\nApplication build version: " + m_buildVersion
+                        << "\nPlatform version: " + m_platformVersion
                         << "\nPlatform hash: " + m_platformHash
                         << "\nPlatform runtime arch: " + m_platformArchitecture;
 
