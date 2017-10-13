@@ -61,7 +61,9 @@ namespace
 
         void NominateCurrentlyRunningThreadAsNativeThread()
         {
-            Eegeo_ASSERT(!m_hasSetNativeThreadId, "Can only nominate native thread once.\n");
+            if(m_hasSetNativeThreadId){
+                Eegeo_TTY("Warning: Native thread has already been set.\n");
+            }
             m_nativeThreadId = pthread_self();
             m_hasSetNativeThreadId = true;
         }
