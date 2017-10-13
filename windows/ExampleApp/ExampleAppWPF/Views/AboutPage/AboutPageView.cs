@@ -4,6 +4,8 @@ using ExampleApp;
 using System.Windows.Controls;
 using System.Diagnostics;
 using System.Windows.Input;
+using System.Windows.Documents;
+using System.Windows.Navigation;
 
 namespace ExampleAppWPF
 {
@@ -55,6 +57,17 @@ namespace ExampleAppWPF
             m_AboutPageView.TouchDown += OnPinDetailsTouchDown;
             m_AboutPageView.TouchUp += OnPinDetailsTouchUp;
             m_AboutPageView.ManipulationBoundaryFeedback += OnPinDetailsBoundaryFeedback;
+
+            ((Hyperlink)GetTemplateChild("LinkLegal")).RequestNavigate += RequestNavigate;
+
+            bool IsInKioskMode = (bool)Application.Current.Resources["IsInKioskMode"];
+
+            if (IsInKioskMode)
+            {
+                StackPanel m_subContainer = CheckAndGetProperty("SubContainer") as StackPanel;
+                TextBlock m_LegalText = CheckAndGetProperty("LegalText") as TextBlock;
+                m_subContainer.Children.Remove(m_LegalText);
+            }
         }
 
         private void OnPinDetailsBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
@@ -102,6 +115,12 @@ namespace ExampleAppWPF
         {
             Visibility = Visibility.Hidden;
             m_currentWindow.EnableInput();
+        }
+
+        private void RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }

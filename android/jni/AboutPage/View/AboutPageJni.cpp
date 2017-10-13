@@ -14,3 +14,12 @@ JNIEXPORT void JNICALL Java_com_eegeo_aboutpageview_AboutPageViewJniMethods_Clos
     pView->CloseTapped();
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_aboutpageview_AboutPageViewJniMethods_LogoLongPress(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::AboutPage::View::AboutPageView* pView = reinterpret_cast<ExampleApp::AboutPage::View::AboutPageView*>(nativeObjectPtr);
+    pView->ShowHiddenText();
+}

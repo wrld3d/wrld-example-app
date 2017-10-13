@@ -31,6 +31,8 @@ namespace ExampleApp
 
                 Eegeo::Helpers::CallbackCollection0 m_callbacks;
 
+                Eegeo::Helpers::CallbackCollection0 m_logoLongPressCallbacks;
+
             public:
                 AboutPageView(WindowsNativeState& nativeState);
 
@@ -44,9 +46,15 @@ namespace ExampleApp
 
                 void SetContent(const std::string& content);
 
+                void ShowHiddenText();
+
                 void InsertCloseTappedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveCloseTappedCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertLogoLongPressCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void RemoveLogoLongPressCallback(Eegeo::Helpers::ICallback0& callback);
             };
         }
     }

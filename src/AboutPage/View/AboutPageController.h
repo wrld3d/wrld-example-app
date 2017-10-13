@@ -28,6 +28,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewOpened;
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewClosed;
                 Eegeo::Helpers::TCallback0<AboutPageController> m_viewCloseTapped;
+                Eegeo::Helpers::TCallback0<AboutPageController> m_logoLongPress;
+                
                 Eegeo::Helpers::TCallback1<AboutPageController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -45,6 +47,8 @@ namespace ExampleApp
                 void OnClose();
 
                 void OnCloseTapped();
+                
+                void OnLogoLongPress();
                 
                 void OnAboutPageIndoorPositionTypeMessageChanged(const AboutPage::AboutPageIndoorPositionTypeMessage& aboutPageIndoorPositionTypeMessage);
                 
