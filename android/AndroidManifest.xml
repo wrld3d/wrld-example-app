@@ -30,7 +30,7 @@
                   android:label="BWAY"
                   android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
                   android:windowSoftInputMode="adjustPan"
-              	  android:launchMode="standard"
+              	  android:launchMode="singleTask"
               	  android:hardwareAccelerated="true"
               	  android:resizeableActivity="false">
             <intent-filter>
