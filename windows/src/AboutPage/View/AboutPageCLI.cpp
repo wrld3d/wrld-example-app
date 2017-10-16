@@ -10,4 +10,10 @@ namespace ExampleApp
         AboutPage::View::AboutPageView* view = reinterpret_cast<AboutPage::View::AboutPageView*>(nativeObejctPtr->ToPointer());
         view->CloseTapped();
     }
+
+    void AboutPageCLI::LogoLongPress(System::IntPtr^ nativeObjectPtr)
+    {
+        AboutPage::View::AboutPageView* view = reinterpret_cast<AboutPage::View::AboutPageView*>(nativeObjectPtr->ToPointer());
+        view->ShowHiddenText();
+    }
 }

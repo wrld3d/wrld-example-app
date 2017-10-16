@@ -1708,6 +1708,10 @@
       <Link>Assets\icon1_dir_veer_right.png</Link>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\swallow_logo_about.png" />
+    <Resource Include="Assets\wrld_logo_about.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r /d

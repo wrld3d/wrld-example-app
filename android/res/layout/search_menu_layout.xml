@@ -102,7 +102,7 @@
 
     <RelativeLayout
         android:id="@+id/search_menu_result_count_container"
-        android:layout_width="@dimen/menu_button_margin"
+        android:layout_width="30dp"
         android:layout_height="50dp"
         android:background="@color/ui_border" >
 		

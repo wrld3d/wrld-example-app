@@ -88,6 +88,10 @@ public class SenionLabLocationManager
 
     public void stopUpdatingLocation()
     {
+        for (Subscription subscription : m_subscriptions) {
+            subscription.unsubscribe();
+        }
+
         if (m_stepInsideSdk != null) {
             try
             {
@@ -101,10 +105,6 @@ public class SenionLabLocationManager
             }
 
             m_isSdkReady = false;
-        }
-
-        for (Subscription subscription : m_subscriptions) {
-            subscription.unsubscribe();
         }
 
         m_stepInsideSdkManager.terminate();

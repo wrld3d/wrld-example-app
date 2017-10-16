@@ -1,7 +1,5 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include <string>
-#include <algorithm>
 #include "AboutPageView.h"
 #include "MathFunc.h"
 #include "UIColors.h"
@@ -17,13 +15,12 @@
 - (id)initView
 {
     self = [super init];
-
+    
     if(self)
     {
         m_pInterop = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewInterop)(self);
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
-
 
         self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
@@ -38,14 +35,6 @@
         [self.pCloseButton addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
 
-        self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pControlContainer addSubview: self.pContentContainer];
-
-        self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pContentContainer addSubview: self.pLabelsContainer];
-
         self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview: self.pHeadlineContainer];
@@ -54,35 +43,47 @@
         self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
         [self.pHeadlineContainer addSubview: self.pTitleLabel];
 
-        self.pDevelopedByLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pDevelopedByLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
-        self.pDevelopedByLabel.textAlignment = NSTextAlignmentCenter;
-        [self.pLabelsContainer addSubview: self.pDevelopedByLabel];
+        self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pControlContainer addSubview: self.pContentContainer];
 
-        self.pLogoImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pLogoImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"eegeo_logo");
-        [self.pLabelsContainer addSubview: self.pLogoImage];
+        self.pLabelsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pLabelsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pContentContainer addSubview: self.pLabelsContainer];
+
+        self.pSwallowLogoImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pSwallowLogoImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"swallow_logo_about");
+        [self.pLabelsContainer addSubview: self.pSwallowLogoImage];
 
         self.pTextContent = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pTextContent.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
-        self.pTextContent.textAlignment = NSTextAlignmentCenter;
         [self.pLabelsContainer addSubview: self.pTextContent];
-        
-        UITapGestureRecognizer* pPrivacyTapHandler = [[[UITapGestureRecognizer alloc]
-                                                          initWithTarget:self
-                                                          action:@selector(privacyClickHandler:)] autorelease];
-        self.pPrivacyLink = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pPrivacyLink.textColor = ExampleApp::Helpers::ColorPalette::UiTextLinkColor;
-        [self.pPrivacyLink addGestureRecognizer: pPrivacyTapHandler];
-        [self.pLabelsContainer addSubview: self.pPrivacyLink];
-        
-        UITapGestureRecognizer* pEulaTapHandler = [[[UITapGestureRecognizer alloc]
-                                                    initWithTarget:self
-                                                    action:@selector(eulaClickHandler:)] autorelease];
-        self.pEulaLink = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pEulaLink.textColor = ExampleApp::Helpers::ColorPalette::UiTextLinkColor;
-        [self.pEulaLink addGestureRecognizer: pEulaTapHandler];
-        [self.pLabelsContainer addSubview: self.pEulaLink];
+
+        self.pSeperator = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pSeperator.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pLabelsContainer addSubview: self.pSeperator];
+
+        self.pDevelopedByLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDevelopedByLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
+        [self.pLabelsContainer addSubview: self.pDevelopedByLabel];
+
+        self.pWrldLogoImage = [[[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pWrldLogoImage.image = ExampleApp::Helpers::ImageHelpers::LoadImage(@"wrld_logo_about");
+        [self.pLabelsContainer addSubview: self.pWrldLogoImage];
+
+        self.pWrldLogoButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(showHiddenText:)];
+        [self.pWrldLogoButton addGestureRecognizer:longPress];
+        [longPress autorelease];
+        [self.pLabelsContainer addSubview: self.pWrldLogoButton];
+
+        self.pLegalLink = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pLegalLink.textColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        UITapGestureRecognizer* pLegalTapHandler = [[[UITapGestureRecognizer alloc]
+                                                     initWithTarget:self
+                                                     action:@selector(legalClickHandler:)] autorelease];
+        [self.pLabelsContainer addSubview: self.pLegalLink];
+        [self.pLegalLink addGestureRecognizer: pLegalTapHandler];
     }
 
     return self;
@@ -90,41 +91,47 @@
 
 - (void)dealloc
 {
-    [self.pCloseButton removeFromSuperview];
-    [self.pCloseButton release];
+    [self.pControlContainer removeFromSuperview];
+    [self.pControlContainer release];
 
     [self.pCloseButtonContainer removeFromSuperview];
     [self.pCloseButtonContainer release];
-    
-    [self.pControlContainer removeFromSuperview];
-    [self.pControlContainer release];
+
+    [self.pCloseButton removeFromSuperview];
+    [self.pCloseButton release];
 
     [self.pHeadlineContainer removeFromSuperview];
     [self.pHeadlineContainer release];
 
-    [self.pLabelsContainer removeFromSuperview];
-    [self.pLabelsContainer release];
+    [self.pTitleLabel removeFromSuperview];
+    [self.pTitleLabel release];
 
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
 
-    [self.pTitleLabel removeFromSuperview];
-    [self.pTitleLabel release];
+    [self.pLabelsContainer removeFromSuperview];
+    [self.pLabelsContainer release];
+
+    [self.pSwallowLogoImage removeFromSuperview];
+    [self.pSwallowLogoImage release];
+
+    [self.pTextContent removeFromSuperview];
+    [self.pTextContent release];
+
+    [self.pSeperator removeFromSuperview];
+    [self.pSeperator release];
 
     [self.pDevelopedByLabel removeFromSuperview];
     [self.pDevelopedByLabel release];
 
-    [self.pLogoImage removeFromSuperview];
-    [self.pLogoImage release];
+    [self.pWrldLogoImage removeFromSuperview];
+    [self.pWrldLogoImage release];
 
-    [self.pTextContent removeFromSuperview];
-    [self.pTextContent release];
-    
-    [self.pPrivacyLink removeFromSuperview];
-    [self.pPrivacyLink release];
-    
-    [self.pEulaLink removeFromSuperview];
-    [self.pEulaLink release];
+    [self.pWrldLogoButton removeFromSuperview];
+    [self.pWrldLogoButton release];
+
+    [self.pLegalLink removeFromSuperview];
+    [self.pLegalLink release];
 
     [self removeFromSuperview];
     [super dealloc];
@@ -149,109 +156,117 @@
                             mainWindowHeight);
 
     self.pControlContainer.frame = CGRectMake(0.f,
-                                   0.f,
-                                   mainWindowWidth,
-                                   mainWindowHeight);
+                                              0.f,
+                                              mainWindowWidth,
+                                              mainWindowHeight);
 
-    const float headlineHeight = 50.f;
-    const float headlineMargin = 10.f;
+    const float separatorSize = 15.f;
+
     const float closeButtonSectionHeight = 64.f;
-    const float headlineOffsetY = 10.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
-    const float contentSectionOffsetY = headlineOffsetY + headlineHeight;
-    const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + contentSectionOffsetY);
-   
+    const float headlineOffsetY = 2.f * separatorSize;
+    const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + 0.f);
+
     self.pHeadlineContainer.frame = CGRectMake(0.f,
-                                    headlineOffsetY,
-                                    mainWindowWidth,
-                                    headlineHeight);
+                                               headlineOffsetY,
+                                               mainWindowWidth,
+                                               0.f);
 
     self.pContentContainer.frame = CGRectMake(0.f,
-                                   contentSectionOffsetY,
-                                   mainWindowWidth,
-                                   contentSectionHeight);
+                                              0.f,
+                                              mainWindowWidth,
+                                              contentSectionHeight);
 
-    const float labelsSectionOffsetX = 8.f;
-    const float labelsSectionWidth = mainWindowWidth - (2.f * labelsSectionOffsetX);
+    const float labelsContainerOffsetX = 2.f * separatorSize;
+    const float labelsContainerWidth = mainWindowWidth - (2.f * labelsContainerOffsetX);
 
-    self.pLabelsContainer.frame = CGRectMake(labelsSectionOffsetX,
-                                  0.f,
-                                  labelsSectionWidth,
-                                  contentSectionHeight);
+    self.pLabelsContainer.frame = CGRectMake(labelsContainerOffsetX,
+                                             0.f,
+                                             labelsContainerWidth,
+                                             contentSectionHeight);
 
+    const float currentLabelsContainerWidth = static_cast<float>(self.pLabelsContainer.frame.size.width);
 
     self.pCloseButtonContainer.frame = CGRectMake(0.f,
-                                       closeButtonSectionOffsetY,
-                                       mainWindowWidth,
-                                       closeButtonSectionHeight);
+                                                  closeButtonSectionOffsetY,
+                                                  mainWindowWidth,
+                                                  closeButtonSectionHeight);
 
     self.pCloseButton.frame = CGRectMake(mainWindowWidth - closeButtonSectionHeight,
                                          0.f,
                                          closeButtonSectionHeight,
                                          closeButtonSectionHeight);
 
-    const float headlineWidth = mainWindowWidth - headlineMargin;
 
-    self.pTitleLabel.frame = CGRectMake(headlineMargin,
-                                        0.f,
-                                        headlineWidth,
-                                        headlineHeight);
-    self.pTitleLabel.font = [UIFont systemFontOfSize:18.0f];
+    const float swallowLogoX = 0.f;
+    const float swallowLogoY = 2.f * separatorSize;
+    const float swallowLogoWidth = self.pSwallowLogoImage.image.size.width;
+    const float swallowLogoHeight = self.pSwallowLogoImage.image.size.height;
 
-    self.pTitleLabel.text = @"About this app...";
+    self.pSwallowLogoImage.frame = CGRectMake(swallowLogoX, swallowLogoY, swallowLogoWidth, swallowLogoHeight);
 
-    const float textWidth = static_cast<float>(self.pLabelsContainer.frame.size.width) * 0.8f;
-    const float textContentX = ((static_cast<float>(self.pLabelsContainer.frame.size.width) / 2) - (textWidth / 2)) + labelsSectionOffsetX;
-    const float developedByY = 10.f;
-    const float developedByHeight = 16.f;
 
-    self.pDevelopedByLabel.font = [UIFont systemFontOfSize:14.f];
-    self.pDevelopedByLabel.text = @"Developed by eeGeo";
-    self.pDevelopedByLabel.frame = CGRectMake(textContentX, developedByY, textWidth, developedByHeight);
+    const float textContentX = 0.f;
+    const float textContentY = swallowLogoY + swallowLogoHeight + separatorSize;
+    const float textWidth = currentLabelsContainerWidth;
+    const float textContentHeight = 0.f;
 
-    const float logoWidth = 140.f;
-    const float logoHeight = 52.f;
-    const float logoY = developedByY + developedByHeight;
-    const float logoX = (static_cast<float>(self.pLabelsContainer.frame.size.width) / 2) - (logoWidth/2) + labelsSectionOffsetX;
-
-    self.pLogoImage.frame = CGRectMake(logoX, logoY, logoWidth, logoHeight);
-
-    const float textContentY = logoY + logoHeight;
-    self.pTextContent.frame = CGRectMake(textContentX, textContentY, textWidth, contentSectionHeight - 300.f);
+    self.pTextContent.frame = CGRectMake(textContentX, textContentY, textWidth, textContentHeight);
     self.pTextContent.numberOfLines = 0;
     self.pTextContent.adjustsFontSizeToFitWidth = NO;
-    self.pTextContent.font = [UIFont systemFontOfSize:14.0f];
+    self.pTextContent.font = [UIFont systemFontOfSize:14.5f];
     self.pTextContent.lineBreakMode = NSLineBreakByWordWrapping;
     [self.pTextContent sizeToFit];
-    
-    self.pEulaLink.text = @"EULA";
-    self.pEulaLink.font = [UIFont systemFontOfSize:14.f];
-    [self.pEulaLink sizeToFit];
-    self.pEulaLink.userInteractionEnabled = YES;
-    CGRect eulaFrame = self.pPrivacyLink.frame;
-    eulaFrame.origin.x = roundf(mainWindowWidth/2.f - self.pEulaLink.frame.size.width/2.f);
-    eulaFrame.origin.y = roundf(textContentY + self.pTextContent.frame.size.height);
-    self.pEulaLink.frame = eulaFrame;
-    
-    self.pPrivacyLink.text = @"Privacy Policy";
-    self.pPrivacyLink.font = [UIFont systemFontOfSize:14.f];
-    [self.pPrivacyLink sizeToFit];
-    self.pPrivacyLink.userInteractionEnabled = YES;
-    CGRect privacyFrame = self.pPrivacyLink.frame;
-    privacyFrame.origin.x = roundf(mainWindowWidth/2.f - self.pEulaLink.frame.size.width/2.f);
-    privacyFrame.origin.y = roundf(eulaFrame.origin.y + self.pEulaLink.frame.size.height + 16.f);
-    self.pPrivacyLink.frame = privacyFrame;
-    
+
+
+    const float seperatorX = 0.f;
+    const float seperatorY = textContentY + self.pTextContent.frame.size.height + separatorSize * 2.f;
+    const float seperatorWidth = currentLabelsContainerWidth;
+    const float seperatorHeight = 1.f;
+
+    self.pSeperator.frame = CGRectMake(seperatorX, seperatorY, seperatorWidth, seperatorHeight);
+
+
+    const float developedByX = 0.f;
+    const float developedByY = seperatorY + seperatorHeight + separatorSize * 2.f;
+    const float developedByWidth = currentLabelsContainerWidth;
+    const float developedByHeight = 16.f;
+
+    self.pDevelopedByLabel.font = [UIFont systemFontOfSize:16.f];
+    self.pDevelopedByLabel.text = @"Developed by Bloomberg L.P and";
+    self.pDevelopedByLabel.frame = CGRectMake(developedByX, developedByY, developedByWidth, developedByHeight);
+    [self.pDevelopedByLabel sizeToFit];
+
+
+    const float wrldLogoWidth = self.pWrldLogoImage.image.size.width;
+    const float wrldLogoHeight = self.pWrldLogoImage.image.size.height;
+    const float wrldLogoX = 0.f;
+    const float wrldLogoY = developedByY + wrldLogoHeight;
+
+    self.pWrldLogoImage.frame = CGRectMake(wrldLogoX, wrldLogoY, wrldLogoWidth, wrldLogoHeight);
+    self.pWrldLogoButton.frame = CGRectMake(wrldLogoX, wrldLogoY, wrldLogoWidth, wrldLogoHeight);
+
+
+    const float legalLinkX = 0.f;
+    const float legalLinkY = wrldLogoY + wrldLogoHeight * 2.f;
+    const float legalLinkWidth = currentLabelsContainerWidth;
+    const float legalLinkHeight = 0.f;
+
+    self.pLegalLink.frame = CGRectMake(legalLinkX, legalLinkY, legalLinkWidth, legalLinkHeight);
+    self.pLegalLink.userInteractionEnabled = YES;
+    self.pLegalLink.text = @"Legal";
+    self.pLegalLink.font = [UIFont boldSystemFontOfSize:16.f];
+    [self.pLegalLink sizeToFit];
+
+
     CGRect contentRect = CGRectZero;
-    for (UIView *view in self.self.pLabelsContainer.subviews) {
+    for (UIView *view in self.self.pLabelsContainer.subviews)
+    {
         contentRect = CGRectUnion(contentRect, view.frame);
     }
-    
-    contentRect.size.width = std::max(self.pTextContent.frame.size.width, self.pLogoImage.frame.size.width);
+    contentRect.size.width = std::max(self.pTextContent.frame.size.width, self.pWrldLogoImage.frame.size.width);
     self.pLabelsContainer.contentSize = contentRect.size;
-    
     self.pLabelsContainer.userInteractionEnabled = YES;
-    
 }
 
 - (ExampleApp::AboutPage::View::AboutPageViewInterop*)getInterop
@@ -271,7 +286,7 @@
     {
         return;
     }
-
+    
     [self animateToAlpha:1.f];
 }
 
@@ -281,7 +296,7 @@
     {
         return;
     }
-
+    
     [self animateToAlpha:0.f];
 }
 
@@ -314,14 +329,16 @@
     m_pInterop->CloseTapped();
 }
 
-- (void) privacyClickHandler:(UITapGestureRecognizer *)recognizer
+- (void)showHiddenText:(UILongPressGestureRecognizer*)gesture
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.eegeo.com/privacy/"]];
+    if ( gesture.state == UIGestureRecognizerStateEnded )
+    {
+        m_pInterop->ShowHiddenText();
+    }
 }
 
-- (void) eulaClickHandler:(UITapGestureRecognizer *)recognizer
+- (void) legalClickHandler:(UITapGestureRecognizer *)recognizer
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.eegeo.com/tos/"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.wrld3d.com/legal/"]];
 }
-
 @end

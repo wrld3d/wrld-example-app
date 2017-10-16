@@ -111,7 +111,8 @@
                                                               || category == ExampleApp::Search::Swallow::SearchConstants::TOILETS_CATEGORY_NAME
                                                               || category == ExampleApp::Search::Swallow::SearchConstants::FACILITY_CATEGORY_NAME
                                                               || category == ExampleApp::Search::Swallow::SearchConstants::EMERGENCY_EXIT_CATEGORY_NAME
-                                                              || category == ExampleApp::Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME))
+                                                              || category == ExampleApp::Search::Swallow::SearchConstants::STATIONERY_CATEGORY_NAME
+                                                              || category == ExampleApp::Search::Swallow::SearchConstants::SHOW_POI_CARD_NAME))
     {
         return [[SwallowFacilitySearchResultPoiView alloc] initWithInterop:m_pInterop];
     }

@@ -47,6 +47,11 @@ namespace ExampleApp
                 mDisplayContent(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(content));
             }
 
+            void AboutPageView::ShowHiddenText()
+            {
+                m_logoLongPressCallbacks.ExecuteCallbacks();
+            }
+
             void AboutPageView::InsertCloseTappedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_callbacks.AddCallback(callback);
@@ -55,6 +60,16 @@ namespace ExampleApp
             void AboutPageView::RemoveCloseTappedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_callbacks.RemoveCallback(callback);
+            }
+
+            void AboutPageView::InsertLogoLongPressCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_logoLongPressCallbacks.AddCallback(callback);
+            }
+
+            void AboutPageView::RemoveLogoLongPressCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_logoLongPressCallbacks.RemoveCallback(callback);
             }
         }
     }

@@ -27,19 +27,23 @@
 
 - (void) setActiveStateToIntermediateValue:(float)activeState;
 
+- (void) showHiddenText:(UILongPressGestureRecognizer*)gesture;
+
 - (ExampleApp::AboutPage::View::AboutPageViewInterop*) getInterop;
 
+@property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
-@property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pHeadlineContainer;
+@property (nonatomic, retain) UILabel* pTitleLabel;
 @property (nonatomic, retain) UIView* pContentContainer;
 @property (nonatomic, retain) UIScrollView* pLabelsContainer;
-@property (nonatomic, retain) UIImageView* pLogoImage;
-@property (nonatomic, retain) UILabel* pTitleLabel;
-@property (nonatomic, retain) UILabel* pDevelopedByLabel;
+@property (nonatomic, retain) UIImageView* pSwallowLogoImage;
 @property (nonatomic, retain) UILabel* pTextContent;
-@property (nonatomic, retain) UILabel* pPrivacyLink;
-@property (nonatomic, retain) UILabel* pEulaLink;
+@property (nonatomic, retain) UIView* pSeperator;
+@property (nonatomic, retain) UILabel* pDevelopedByLabel;
+@property (nonatomic, retain) UIImageView* pWrldLogoImage;
+@property (nonatomic, retain) UIButton* pWrldLogoButton;
+@property (nonatomic, retain) UILabel* pLegalLink;
 
 @end

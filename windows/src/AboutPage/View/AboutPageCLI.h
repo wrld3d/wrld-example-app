@@ -8,5 +8,7 @@ namespace ExampleApp
     {
     public:
         static void CloseButtonClicked(System::IntPtr^ nativeObjectPtr);
+
+        static void LogoLongPress(System::IntPtr^ nativeObjectPtr);
     };
 }

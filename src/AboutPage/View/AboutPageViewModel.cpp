@@ -27,12 +27,12 @@ namespace ExampleApp
                 , m_aboutText(aboutText)
                 , m_indoorPositioningType("")
             {
-                
+
             }
 
             AboutPageViewModel::~AboutPageViewModel()
             {
-                
+
             }
 
             bool AboutPageViewModel::TryAcquireReactorControl()
@@ -45,31 +45,28 @@ namespace ExampleApp
                 return m_openable.IsFullyOpen();
             }
 
-            const std::string AboutPageViewModel::GetContent() const
+            const std::string AboutPageViewModel::GetContent(bool showHiddenContent) const
             {
                 std::stringstream content;
-                
+
                 content << m_aboutText
                         << "\n\nApplication build version: " + m_buildVersion
-                        << "\n\nPlatform version: " + m_platformVersion
+                        << "\nPlatform version: " + m_platformVersion
                         << "\nPlatform hash: " + m_platformHash
-                        << "\nPlatform runtime arch: " + m_platformArchitecture
-                        << m_indoorPositioningType
-                        << "\n";
-                
-                if(m_indoorPositioningType == "\nIndoor positioning type: Senion")
+                        << "\nPlatform runtime arch: " + m_platformArchitecture;
+
+                if(m_indoorPositioningType == "\nIndoor positioning type: Senion" && showHiddenContent)
                 {
-                    content << "\n eeGeo Floor number: " << m_eegeoFloorNumber
+                    content << "\n\n eeGeo Floor number: " << m_eegeoFloorNumber
                             << "\n Senion Floor Id: " << m_senionFloorId
                             << "\n Latitude: " << std::setprecision(10) << m_senionLatitude
                             << "\n Longitude: " << m_senionLongitude
                             << "\n SenionApiKey: " << m_senionApiKey
                             << "\n SenionApiSecret: " << m_senionApiSecret
                             << "\n SenionFloorMap: " << m_senionFloorMapString.str()
-                            << "\n SenionInteriorId: " << m_senionInteriorId
-                            << "\n";
+                            << "\n SenionInteriorId: " << m_senionInteriorId;
                 }
-                
+
                 return content.str();
             }
 
@@ -121,12 +118,12 @@ namespace ExampleApp
             {
                 m_closedCallbacks.RemoveCallback(closedCallback);
             }
-            
+
             void AboutPageViewModel::SetIndoorPositioningType(const std::string& indoorPositioningType)
             {
                 m_indoorPositioningType = indoorPositioningType;
             }
-            
+
             void AboutPageViewModel::SetSenionDataType(const int32_t& eegeoFloorNumber, const std::string& senionFloorId, const double& latitude, const double& longitude)
             {
                 m_eegeoFloorNumber = eegeoFloorNumber;
@@ -134,14 +131,14 @@ namespace ExampleApp
                 m_senionLatitude = latitude;
                 m_senionLongitude = longitude;
             }
-            
+
             void AboutPageViewModel::SetSenionSettingsType(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::string>& floorMap, const std::string& interiorId)
             {
                 m_senionApiKey = apiKey;
                 m_senionApiSecret = apiSecret;
                 m_senionFloorMap = floorMap;
                 m_senionInteriorId = interiorId;
-                
+
                 std::map<int, std::string> map = floorMap;
 
                 m_senionFloorMapString.str(std::string());
