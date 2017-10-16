@@ -13,6 +13,7 @@ namespace ExampleApp
                 // note: have left the metric event name the same after category => tag rename so that existing metrics
                 // aren't affected. If this is not a concern, we should rename the strings from category => tag
                 m_metricsService.SetEvent("Category Search", "Category", message.Tag());
+                m_searchQueryPerformer.RemoveSearchQueryResults();
                 if (message.HasRadius())
                 {
                     m_searchQueryPerformer.PerformSearchQuery(message.Tag(), true, message.InteriorSearchAllowed(), message.ShouldZoomToBuildingsView(), message.Radius());
