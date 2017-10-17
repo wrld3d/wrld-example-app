@@ -47,3 +47,12 @@ With touch input enabled on some touchscreen devices, the virtual keyboard can b
 3. In the window that appears, left-click the entry "Press and hold" and click "settings".
 4. Uncheck "Enable press and hold for right-clicking".
 5. Click OK on both windows to close them.
+
+
+### System.Windows.Markup.XamlParseException and/or EEFileLoadException
+
+When encountering this kind of exceptions: 
+1. Open Apps & Features
+2. Search for Microsoft Visual Studio Professional 2015 and select Modify
+3. Select all features and apply update
+4. Re-open adn rebuild the solution
