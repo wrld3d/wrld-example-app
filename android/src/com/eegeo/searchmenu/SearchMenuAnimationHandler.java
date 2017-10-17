@@ -49,11 +49,9 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
         int clearButtonHeightPx =  (int)m_mainActivity.getResources().getDimension(R.dimen.search_clear_button_size);
         int clearButtonYEndPx = (dragTabWidthPx - clearButtonHeightPx) / 2;
         int anchorArrowMarginPx = (int)m_mainActivity.getResources().getDimension(R.dimen.search_result_anchor_margin);
-        
-        m_view.setX(0.0f);
-        
-        int menuButtonMarginPx = (int)m_mainActivity.getResources().getDimension(R.dimen.menu_button_margin);
+		int menuButtonMarginPx = (int)m_mainActivity.getResources().getDimension(R.dimen.menu_button_margin);
 
+        m_view.setX(0.0f);
         titleContainerView.setPivotX(0.0f);
 		searchCountView.setVisibility(View.GONE);
 	
@@ -66,7 +64,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		addAnimator(m_onScreenAnimatorSet, titleBarControlsYStartPx, titleBarControlsYStartPx, false, new ViewYAnimatorUpdateListener(clearButtonView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, 0.0f, 0.0f, false, new ViewAlphaAnimatorUpdateListener(clearButtonView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(anchorArrowView), new CircleInOutTimeInterpolator());
-		addAnimator(m_onScreenAnimatorSet, -menuButtonMarginPx, 0, false, new ViewXAnimatorUpdateListener(searchCountView), new CircleInOutTimeInterpolator());
+		addAnimator(m_onScreenAnimatorSet, -menuButtonMarginPx * 2, 0, false, new ViewXAnimatorUpdateListener(searchCountView), new CircleInOutTimeInterpolator());
 		
 		addAnimator(m_openAnimatorSet, menuButtonMarginPx, titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, -menuButtonMarginPx, 0, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
