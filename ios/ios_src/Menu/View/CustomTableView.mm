@@ -69,11 +69,11 @@
 {
     [super layoutSubviews];
     
+    float zOffset = 0.f;
+    const float zOffsetIncrement = 0.001f;
+    
     if(m_hasSubMenus)
     {
-        float zOffset = 0.f;
-        const float zOffsetIncrement = 0.001f;
-        
         NSArray *sortedIndexPaths = [[self indexPathsForVisibleRows] sortedArrayUsingSelector:@selector(compare:)];
         for (NSIndexPath *path in sortedIndexPaths)
         {
@@ -86,6 +86,7 @@
     }
     
     [self sendSubviewToBack:self.pBackgroundView];
+    [self.pBackgroundView.layer setZPosition:zOffset];
 }
 
 - (BOOL)hasDynamicCellPresentation
