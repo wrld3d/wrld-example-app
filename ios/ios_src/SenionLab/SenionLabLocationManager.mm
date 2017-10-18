@@ -62,6 +62,16 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
                      floorMap: (std::map<std::string, std::map<int, std::string>>) floorMap
                 interiorIdMap: (std::map<std::string, Eegeo::Resources::Interiors::InteriorId>) interiorIdMap
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self StartSenion: mapKey apiSecret:apiSecret floorMap:floorMap interiorIdMap:interiorIdMap];
+    });
+}
+
+-(void) StartSenion: (NSArray<NSString*>*) mapKey
+          apiSecret: (NSString*) apiSecret
+           floorMap: (std::map<std::string, std::map<int, std::string>>) floorMap
+      interiorIdMap: (std::map<std::string, Eegeo::Resources::Interiors::InteriorId>) interiorIdMap
+{
     [SSISensors requestCoreLocationWhenInUseAuthorization];
     
     self.stepInsideManager = [SSIStepInsideSdkManager managerWithConfig:^(SSIStepInsideSdkManagerConfig * _Nonnull config)
