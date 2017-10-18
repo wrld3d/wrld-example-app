@@ -98,7 +98,7 @@ namespace ExampleAppWPF
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
             m_floorPanel.RenderTransform = new TranslateTransform(m_panelOffscreenOffsetX, currentPosition.Y);
 
-            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
+            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point(0.0, 0.0));
             m_dismissButton.RenderTransform = new TranslateTransform(m_panelOffscreenOffsetX, dismissButtonPosition.Y);
 
             m_tutorialView = (InteriorsExplorerTutorialView) GetTemplateChild("InteriorsExplorerTutorialView");
@@ -209,13 +209,7 @@ namespace ExampleAppWPF
 
         public void SetOnScreenStateToIntermediateValue(float transitionParam)
         {
-            double newX = CalcPanelX(transitionParam);
-            m_detailsPanel.Opacity = transitionParam;
-            var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
-            m_floorPanel.RenderTransform = new TranslateTransform(newX, currentPosition.Y);
-
-            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
-            m_dismissButton.RenderTransform = new TranslateTransform(newX, dismissButtonPosition.Y);
+            AnimateTo(transitionParam);
         }
 
         private double CalcPanelX(double t)
@@ -238,41 +232,40 @@ namespace ExampleAppWPF
         private void AnimateTo(float t)
         {
             bool onScreen = false;
-
             if (t > 0.0f)
             {
                 Visibility = Visibility.Visible;
                 onScreen = true;
             }
-
-            var storyboard = new Storyboard();
+            double delayMilliseconds = onScreen ? 1000.0f : 0.0;
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
-
-            double delayMilliseconds = onScreen ? m_stateChangeAnimationTimeMilliseconds * 5 : 0.0;
-
+            
             var floorPanelAnimation = new DoubleAnimation();
+            var floorPanelTransform = new TranslateTransform(currentPosition.X, currentPosition.Y);
             floorPanelAnimation.BeginTime = TimeSpan.FromMilliseconds(delayMilliseconds);
             floorPanelAnimation.From = currentPosition.X;
             floorPanelAnimation.To = CalcPanelX(FloorSelectionEnabled ? t : 0.0f);
             floorPanelAnimation.Completed += Storyboard_Completed;
             floorPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
-
-            var floorPanelTransform = new TranslateTransform(currentPosition.X, currentPosition.Y);
             m_floorPanel.RenderTransform = floorPanelTransform;
-            floorPanelTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
 
-            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point());
+            var dismissButtonPosition = m_dismissButton.RenderTransform.Transform(new Point(0.0, 0.0));
+            var dissmisButtonAnimation = new DoubleAnimation();
             var dismissButtonTransform = new TranslateTransform(dismissButtonPosition.X, dismissButtonPosition.Y);
+            dissmisButtonAnimation.BeginTime = TimeSpan.FromMilliseconds(delayMilliseconds);
+            dissmisButtonAnimation.From = dismissButtonPosition.X;
+            dissmisButtonAnimation.To = CalcPanelX(t);
+            dissmisButtonAnimation.Completed += Storyboard_Completed;
+            dissmisButtonAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
             m_dismissButton.RenderTransform = dismissButtonTransform;
-            floorPanelAnimation.From = dismissButtonPosition.X;
-            floorPanelAnimation.To = CalcPanelX(t);
-            dismissButtonTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
 
             var detailsPanelAnimation = new DoubleAnimation();
             detailsPanelAnimation.From = m_detailsPanel.Opacity;
             detailsPanelAnimation.To = t;
             detailsPanelAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
 
+            floorPanelTransform.BeginAnimation(TranslateTransform.XProperty, floorPanelAnimation);
+            dismissButtonTransform.BeginAnimation(TranslateTransform.XProperty, dissmisButtonAnimation);
             m_detailsPanel.BeginAnimation(OpacityProperty, detailsPanelAnimation);
         }
 
