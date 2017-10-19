@@ -5,11 +5,14 @@ package com.eegeo.entrypointinfrastructure;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -32,6 +35,10 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     private LinkedList<OnPauseListener> m_onPauseListeners;
     private List<IBackButtonListener> m_backButtonListeners;
 
+    private String tag = "VOICE_CONTROL_TEST";
+
+    private static final int REQ_CODE_SPEECH_INPUT = 100;
+
     public MainActivity()
     {
         m_photoIntentDispatcher = new PhotoIntentDispatcher(this);
@@ -39,6 +46,19 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
         m_touchEnabled = true;
         m_onPauseListeners = new LinkedList<OnPauseListener>();
         m_backButtonListeners = new ArrayList<IBackButtonListener>();
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "asking for voice authorisation");
+        startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
     }
 
     public PhotoIntentDispatcher getPhotoIntentDispatcher()
@@ -146,11 +166,26 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     	}
     	return m_touchEnabled;
     }
-    
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        m_photoIntentDispatcher.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case PhotoIntentDispatcher.REQUEST_IMAGE_CAPTURE: case PhotoIntentDispatcher.SELECT_PHOTO_FROM_GALLERY: {
+                m_photoIntentDispatcher.onActivityResult(requestCode, resultCode, data);
+                break;
+            }
+            case REQ_CODE_SPEECH_INPUT: {
+                if (resultCode == RESULT_OK && null != data) {
+
+                    ArrayList<String> result = data
+                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    Log.v(tag, "Recorded words: \""+result.get(0)+"\"");
+                }
+                break;
+            }
+        }
     }
 
     @Override
