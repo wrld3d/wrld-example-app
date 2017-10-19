@@ -15,9 +15,13 @@ JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasL
         jdouble longitude,
         jstring floorId)
 {
-	const char* chars = jenv->GetStringUTFChars(floorId, 0);
-	std::string floorIdString = chars;
-	jenv->ReleaseStringUTFChars(floorId, chars);
+    std::string floorIdString = "";
+    if(floorId != NULL)
+    {
+        const char *chars = jenv->GetStringUTFChars(floorId, 0);
+        floorIdString = chars;
+        jenv->ReleaseStringUTFChars(floorId, chars);
+    }
 
     using ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationManager;
     reinterpret_cast<IndoorAtlasLocationManager *>(nativeObjectPtr)->DidUpdateLocation(latitude,
