@@ -5,14 +5,11 @@ package com.eegeo.entrypointinfrastructure;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.speech.RecognizerIntent;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -26,22 +23,21 @@ import com.eegeo.mobileexampleapp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 import com.eegeo.view.OnPauseListener;
+import com.eegeo.voice.VoiceIntentDispatcher;
 
 public abstract class MainActivity extends Activity implements SurfaceHolder.Callback, INativeMessageRunner
 {
     private PhotoIntentDispatcher m_photoIntentDispatcher;
+    private VoiceIntentDispatcher m_voiceIntentDispatcher;
     private RuntimePermissionDispatcher m_runtimePermissionDispatcher;
     private boolean m_touchEnabled;
     private LinkedList<OnPauseListener> m_onPauseListeners;
     private List<IBackButtonListener> m_backButtonListeners;
 
-    private String tag = "VOICE_CONTROL_TEST";
-
-    private static final int REQ_CODE_SPEECH_INPUT = 100;
-
     public MainActivity()
     {
         m_photoIntentDispatcher = new PhotoIntentDispatcher(this);
+        m_voiceIntentDispatcher = new VoiceIntentDispatcher(this);
         m_runtimePermissionDispatcher = new RuntimePermissionDispatcher(this);
         m_touchEnabled = true;
         m_onPauseListeners = new LinkedList<OnPauseListener>();
@@ -52,18 +48,17 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
     public void onStart()
     {
         super.onStart();
-
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "asking for voice authorisation");
-        startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        m_voiceIntentDispatcher.listenToVoice();
     }
 
     public PhotoIntentDispatcher getPhotoIntentDispatcher()
     {
         return m_photoIntentDispatcher;
+    }
+
+    public VoiceIntentDispatcher getVoiceIntentDispatcher()
+    {
+        return m_voiceIntentDispatcher;
     }
     
     public RuntimePermissionDispatcher getRuntimePermissionDispatcher()
@@ -176,13 +171,8 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
                 m_photoIntentDispatcher.onActivityResult(requestCode, resultCode, data);
                 break;
             }
-            case REQ_CODE_SPEECH_INPUT: {
-                if (resultCode == RESULT_OK && null != data) {
-
-                    ArrayList<String> result = data
-                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    Log.v(tag, "Recorded words: \""+result.get(0)+"\"");
-                }
+            case VoiceIntentDispatcher.REQ_CODE_SPEECH_INPUT: {
+                m_voiceIntentDispatcher.onActivityResult(requestCode, resultCode, data);
                 break;
             }
         }
