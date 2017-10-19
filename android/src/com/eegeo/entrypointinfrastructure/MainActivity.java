@@ -44,13 +44,6 @@ public abstract class MainActivity extends Activity implements SurfaceHolder.Cal
         m_backButtonListeners = new ArrayList<IBackButtonListener>();
     }
 
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        m_voiceIntentDispatcher.listenToVoice();
-    }
-
     public PhotoIntentDispatcher getPhotoIntentDispatcher()
     {
         return m_photoIntentDispatcher;

@@ -4,30 +4,27 @@ package com.eegeo.voice;
 
 import android.content.Intent;
 import android.speech.RecognizerIntent;
-import android.util.Log;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.IActivityIntentResultHandler;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
-
-import static android.app.Activity.RESULT_OK;
 
 // This class handles the dispatching of intents related to voice controls
 public class VoiceIntentDispatcher {
 
     public static final int REQ_CODE_SPEECH_INPUT = 100;
-    private String tag = "VOICE_CONTROL_TEST";
 
     private MainActivity m_activity = null;
-//    private List<IActivityIntentResultHandler> m_activityCallbacks = new ArrayList<IActivityIntentResultHandler>();
-//
+    private List<IActivityIntentResultHandler> m_activityCallbacks = new ArrayList<IActivityIntentResultHandler>();
+
     public VoiceIntentDispatcher(MainActivity activity)
     {
         m_activity = activity;
     }
 
-//    public boolean listenToVoice()
     public void listenToVoice()
     {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -38,34 +35,32 @@ public class VoiceIntentDispatcher {
         m_activity.startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
     }
 
-//    public void addActivityIntentResultHandler(IActivityIntentResultHandler handler)
-//    {
-//        if(!m_activityCallbacks.contains(handler))
-//        {
-//            m_activityCallbacks.add(handler);
-//        }
-//    }
-//
-//    public void removeActivityIntentResultHandler(IActivityIntentResultHandler handler)
-//    {
-//        if(m_activityCallbacks.contains(handler))
-//        {
-//            m_activityCallbacks.remove(handler);
-//        }
-//    }
+    public void addActivityIntentResultHandler(IActivityIntentResultHandler handler)
+    {
+        if(!m_activityCallbacks.contains(handler))
+        {
+            m_activityCallbacks.add(handler);
+        }
+    }
+
+    public void removeActivityIntentResultHandler(IActivityIntentResultHandler handler)
+    {
+        if(m_activityCallbacks.contains(handler))
+        {
+            m_activityCallbacks.remove(handler);
+        }
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (resultCode == RESULT_OK && null != data) {
-
-            ArrayList<String> result = data
-                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            Log.v(tag, "Recorded words: \""+result.get(0)+"\"");
+        if(requestCode != REQ_CODE_SPEECH_INPUT)
+        {
+            return;
         }
 
-//        for(IActivityIntentResultHandler handler : m_activityCallbacks)
-//        {
-//            handler.onActivityResult(requestCode, resultCode, data);
-//        }
+        for(IActivityIntentResultHandler handler : m_activityCallbacks)
+        {
+            handler.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

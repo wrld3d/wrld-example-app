@@ -9,6 +9,7 @@ import java.util.List;
 import com.eegeo.animation.ReversibleValueAnimator;
 import com.eegeo.animation.updatelisteners.ViewHeightAnimatorUpdateListener;
 import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.helpers.IActivityIntentResultHandler;
 import com.eegeo.menu.MenuExpandableListAdapter;
 import com.eegeo.menu.MenuExpandableListOnClickListener;
 import com.eegeo.menu.MenuExpandableListView;
@@ -19,11 +20,14 @@ import com.eegeo.searchmenu.SearchResultsScrollButtonTouchDownListener;
 import com.eegeo.searchmenu.SearchResultsScrollListener;
 import com.eegeo.searchmenu.SearchMenuResultsListAnimationConstants;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.TextUtils.TruncateAt;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -44,7 +48,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener, TextWatcher
+import static android.app.Activity.RESULT_OK;
+
+public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener, TextWatcher, IActivityIntentResultHandler
 {
     protected View m_closeButtonView = null;
     protected View m_progressSpinner = null;
@@ -98,6 +104,20 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     {
         super(activity, nativeCallerPointer);
         createView();
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data)
+    {
+        String tag = "VOICE_CONTROL_TEST";
+        Log.v(tag, "onActivityResult has been hit");
+
+        if (resultCode == RESULT_OK && null != data) {
+            ArrayList<String> result = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            Log.v(tag, "Recorded words: \""+result.get(0)+"\"");
+            m_editText.setText(result.get(0));
+        }
     }
 
     protected void createView()
@@ -197,6 +217,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
                 
         m_searchResultsScrollButtonTouchDownListener = new SearchResultsScrollButtonTouchDownListener(m_searchList, m_activity);
         m_searchResultsScrollButton.setOnTouchListener(m_searchResultsScrollButtonTouchDownListener);
+
+        m_activity.getVoiceIntentDispatcher().addActivityIntentResultHandler(this);
     }
     
     @Override
@@ -529,6 +551,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	updateSearchMenuHeight(m_resultsCount);
 
         m_searchList.setSelection(m_menuScrollIndex);
+
+        m_activity.getVoiceIntentDispatcher().listenToVoice();
 	}
 
 	@Override
