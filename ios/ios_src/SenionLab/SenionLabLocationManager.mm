@@ -121,6 +121,13 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 - (void)positioningApi:(SSIPositioningApi *)positioningApi didUpdateLocation:(SSILocation *)location
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self locationUpdate: location];
+    });
+}
+
+- (void)locationUpdate:(SSILocation *)location
+{
     if(location != nil && [location.source isKindOfClass:[SSISenionLocationSource class]])
     {
         m_pSenionLabLocationService->SetIsAuthorized(true);
@@ -152,10 +159,24 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 - (void)positioningApi:(SSIPositioningApi *)positioningApi didUpdateHeading:(SSIHeading *)heading
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self headingUpdate: heading];
+    });
+}
+
+- (void)headingUpdate:(SSIHeading *)heading
+{
     m_pSenionLabLocationService->SetIsAuthorized(true);
 }
 
 - (void)positioningApi:(SSIPositioningApi *)positioningApi didUpdateLocationAvailability:(SSILocationAvailability)locationAvailability
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self availabilityUpdate: locationAvailability];
+    });
+}
+
+- (void)availabilityUpdate:(SSILocationAvailability)locationAvailability
 {
     if(locationAvailability != m_lastLocationAvailability)
     {
@@ -192,6 +213,13 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 }
 
 - (void) positioningApi:(SSIPositioningApi *)positioningApi didUpdateMotionType:(SSIMotionType)motionType
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self motionTypeUpdate: motionType];
+    });
+}
+
+- (void) motionTypeUpdate:(SSIMotionType)motionType
 {
     m_pSenionLabLocationService->SetIsAuthorized(true);
 }
