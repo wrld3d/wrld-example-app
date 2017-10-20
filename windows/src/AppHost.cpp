@@ -278,7 +278,7 @@ AppHost::AppHost(
 
         m_pInteriorsLocationServiceController = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceController)(*m_pCurrentLocationService,
                                                                                                                                        mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
-                                                                                                                                       interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                                                                                       mapModule.GetInteriorsPresentationModule().GetInteriorSelectionModel(),
                                                                                                                                        m_pApp->CompassModule().GetCompassModel());
     }
 
