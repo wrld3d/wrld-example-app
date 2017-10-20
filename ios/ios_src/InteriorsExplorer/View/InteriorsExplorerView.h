@@ -65,7 +65,7 @@
 
 - (void) setOnScreenStateToIntermediateValue:(float)openState;
 
-- (void) animateTo:(float)t;
+- (void) animateTo:(float)t delaySeconds:(float)delaySeconds;
 
 - (void) setTouchEnabled:(BOOL)enabled;
 

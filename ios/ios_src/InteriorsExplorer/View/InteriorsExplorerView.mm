@@ -378,47 +378,36 @@ namespace
 
 - (void) setFullyOnScreen
 {
-    [self animateTo:1.0f];
+    [self animateTo:1.0f
+       delaySeconds:0.8f];
 }
 
 - (void) setFullyOffScreen
 {
-    [self animateTo:0.0f];
+    [self animateTo:0.0f
+       delaySeconds:0.0f];
 }
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
-    
-    CGRect floorPanel = self.pFloorPanel.frame;
-    floorPanel.origin.x = [self GetXPositionForFloorPanelAt :onScreenState];
-    
-    CGRect dismissPanel = self.pDismissButtonBackground.frame;
-    dismissPanel.origin.x = [self GetXPositionForDismissButtonAt:onScreenState];
-    
-    self.pDismissButtonBackground.frame = dismissPanel;
-    
-    self.hidden = onScreenState == 0.0f;
-    self.pFloorPanel.frame = floorPanel;
-    
-    self.pDetailsPanel.alpha = onScreenState;
-    m_onScreenParam = onScreenState;
+    onScreenState = roundf(onScreenState);
+    [self animateTo:onScreenState
+       delaySeconds:0.0f];
 }
 
-- (void) animateTo:(float)t
+- (void) animateTo:(float)t delaySeconds:(float)delaySeconds
 {
     CGRect floorFrame = self.pFloorPanel.frame;
     floorFrame.origin.x = [self GetXPositionForFloorPanelAt:t];
     
     CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
-
+    
     dismissButtonFrame.origin.x = [self GetXPositionForDismissButtonAt:t];
     
-    bool isOnScreenAnim = false;
     
     if(t > 0.f)
     {
         self.hidden = false;
-        isOnScreenAnim = true;
     }
     
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
@@ -436,7 +425,7 @@ namespace
      ];
     
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
-                          delay:isOnScreenAnim ? 1.0f : 0.0f
+                          delay:delaySeconds
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^
      {
