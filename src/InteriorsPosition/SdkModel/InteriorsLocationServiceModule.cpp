@@ -22,7 +22,7 @@ namespace ExampleApp
             {
                 m_pController = Eegeo_NEW(InteriorsLocationServiceController)(currentLocationService,
                                                                               interiorInteractionModel,
-                                                                              cameraTransitionController,
+                                                                              interiorSelectionModel,
                                                                               compassModel);
                 
                 m_pProvider = Eegeo_NEW(InteriorsLocationServiceProvider)(trackingInfoMap,

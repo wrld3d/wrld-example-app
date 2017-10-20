@@ -237,7 +237,7 @@ AppHost::AppHost(
 
     m_pInteriorsLocationServiceController = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceController)(*m_pCurrentLocationService,
                                                                                                                                    interiorsPresentationModule.GetInteriorInteractionModel(),
-                                                                                                                                   m_pApp->CameraTransitionController(),
+                                                                                                                                   interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                                    m_pApp->CompassModule().GetCompassModel());
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(

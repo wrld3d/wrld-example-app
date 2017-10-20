@@ -20,7 +20,7 @@ namespace ExampleApp
             public:
                 InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                   CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                    Compass::SdkModel::ICompassModel& compassModel);
                 
                 ~InteriorsLocationServiceController();
@@ -32,7 +32,7 @@ namespace ExampleApp
                 
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 
-                CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
+                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 
                 Compass::SdkModel::ICompassModel& m_compassModel;
             };

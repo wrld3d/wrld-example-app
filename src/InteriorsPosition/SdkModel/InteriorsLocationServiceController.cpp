@@ -2,6 +2,7 @@
 
 #include "InteriorsLocationServiceController.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorSelectionModel.h"
 #include "ICompassModel.h"
 #include "InteriorsCameraController.h"
 
@@ -13,12 +14,11 @@ namespace ExampleApp
         {
             InteriorsLocationServiceController::InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                                                                   CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                                                   Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                    Compass::SdkModel::ICompassModel& compassModel)
             : m_currentLocationService(currentLocationService)
             , m_interiorInteractionModel(interiorInteractionModel)
-            , m_cameraTransitionController(cameraTransitionController)
-            , m_compassModel(compassModel)
+            , m_interiorSelectionModel(interiorSelectionModel)            , m_compassModel(compassModel)
             {
             }
             
@@ -31,24 +31,17 @@ namespace ExampleApp
                 Compass::GpsMode::Values gpsMode = m_compassModel.GetGpsMode();
                 if(gpsMode == Compass::GpsMode::GpsFollow || gpsMode == Compass::GpsMode::GpsCompassMode)
                 {
+                    if(m_currentLocationService.GetInteriorId() != m_interiorSelectionModel.GetSelectedInteriorId())
+                    {
+                        m_interiorSelectionModel.SelectInteriorId(m_currentLocationService.GetInteriorId());
+                    }
+                    
                     int currentVisibleFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
                     
                     int floorIndex = 0;
                     if(m_currentLocationService.GetFloorIndex(floorIndex) && currentVisibleFloorIndex != floorIndex)
                     {
-                        Eegeo::Space::LatLong latLong(0, 0);
-                        if(m_currentLocationService.GetLocation(latLong))
-                        {
-                            m_cameraTransitionController.StartTransitionTo(latLong.ToECEF(),
-                                                                           0,
-                                                                           0,
-                                                                           m_currentLocationService.GetInteriorId(),
-                                                                           floorIndex,
-                                                                           true,
-                                                                           false,
-                                                                           false,
-                                                                           false);
-                        }
+                        m_interiorInteractionModel.SetSelectedFloorIndex(floorIndex);
                     }
                 }
             }
