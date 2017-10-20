@@ -388,10 +388,10 @@
     
     self.pNameLabel.text = [NSString stringWithUTF8String:m_swallowPersonModel.GetName().c_str()];
     
-    const std::string jobTitlePrefix = "Job Title: ";
-    const std::string workingGroupPrefix = "Working Group: ";
-    const std::string officeLocationPrefix = "Location: ";
-    const std::string deskCodePrefix = "Desk: ";
+    const std::string jobTitlePrefix = "";
+    const std::string workingGroupPrefix = "";
+    const std::string officeLocationPrefix = "";
+    const std::string deskCodePrefix = "";
     
     self.pJobTitleLabel.text = [NSString stringWithUTF8String:(jobTitlePrefix + m_swallowPersonModel.GetJobTitle()).c_str()];
     self.pWorkingGroupLabel.text = [NSString stringWithUTF8String:(workingGroupPrefix + m_swallowPersonModel.GetWorkingGroup()).c_str()];
