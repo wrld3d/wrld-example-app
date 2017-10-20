@@ -295,6 +295,13 @@ namespace ExampleApp
                             for (auto const pHighlightRenderable : m_highlightRenderablesForInterior)
                             {
                                 const std::string& highlightId = pHighlightRenderable->GetHighlightId();
+                                std::string resultHighlightId = selectedSearchResult.GetTitle();
+                                if (selectedSearchResult.GetPrimaryTag() == Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+                                {
+                                    const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(selectedSearchResult);
+                                    resultHighlightId = meetingRoom.GetHighlightId();
+                                }
+
                                 if (selectedSearchResult.GetTitle() == highlightId)
                                 {
                                     const std::string& renderableId = pHighlightRenderable->GetRenderableId();
