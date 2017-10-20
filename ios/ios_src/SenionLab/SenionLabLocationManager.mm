@@ -62,6 +62,16 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
                      floorMap: (std::map<std::string, std::map<int, std::string>>) floorMap
                 interiorIdMap: (std::map<std::string, Eegeo::Resources::Interiors::InteriorId>) interiorIdMap
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self StartSenion: mapKey apiSecret:apiSecret floorMap:floorMap interiorIdMap:interiorIdMap];
+    });
+}
+
+-(void) StartSenion: (NSArray<NSString*>*) mapKey
+          apiSecret: (NSString*) apiSecret
+           floorMap: (std::map<std::string, std::map<int, std::string>>) floorMap
+      interiorIdMap: (std::map<std::string, Eegeo::Resources::Interiors::InteriorId>) interiorIdMap
+{
     [SSISensors requestCoreLocationWhenInUseAuthorization];
     
     self.stepInsideManager = [SSIStepInsideSdkManager managerWithConfig:^(SSIStepInsideSdkManagerConfig * _Nonnull config)
@@ -111,6 +121,13 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 - (void)positioningApi:(SSIPositioningApi *)positioningApi didUpdateLocation:(SSILocation *)location
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self locationUpdate: location];
+    });
+}
+
+- (void)locationUpdate:(SSILocation *)location
+{
     if(location != nil && [location.source isKindOfClass:[SSISenionLocationSource class]])
     {
         m_pSenionLabLocationService->SetIsAuthorized(true);
@@ -142,10 +159,24 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 - (void)positioningApi:(SSIPositioningApi *)positioningApi didUpdateHeading:(SSIHeading *)heading
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self headingUpdate: heading];
+    });
+}
+
+- (void)headingUpdate:(SSIHeading *)heading
+{
     m_pSenionLabLocationService->SetIsAuthorized(true);
 }
 
 - (void)positioningApi:(SSIPositioningApi *)positioningApi didUpdateLocationAvailability:(SSILocationAvailability)locationAvailability
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self availabilityUpdate: locationAvailability];
+    });
+}
+
+- (void)availabilityUpdate:(SSILocationAvailability)locationAvailability
 {
     if(locationAvailability != m_lastLocationAvailability)
     {
@@ -183,6 +214,13 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 - (void) positioningApi:(SSIPositioningApi *)positioningApi didUpdateMotionType:(SSIMotionType)motionType
 {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self motionTypeUpdate: motionType];
+    });
+}
+
+- (void) motionTypeUpdate:(SSIMotionType)motionType
+{
     m_pSenionLabLocationService->SetIsAuthorized(true);
 }
 
@@ -191,25 +229,25 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     switch(error.code)
     {
         case SSIStepInsideSdkErrorTypeInvalidKeys:
-            NSLog(@"SenionLabLocationManager didFailWithError: InvalidKeys");
+            //NSLog(@"SenionLabLocationManager didFailWithError: InvalidKeys");
             break;
         case SSIStepInsideSdkErrorTypeBleNotEnabled:
-            NSLog(@"SenionLabLocationManager didFailWithError: BleNotEnabled");
+            //NSLog(@"SenionLabLocationManager didFailWithError: BleNotEnabled");
             break;
         case SSIStepInsideSdkErrorTypeLocationFailed:
-            NSLog(@"SenionLabLocationManager didFailWithError: LocationFailed");
+            //NSLog(@"SenionLabLocationManager didFailWithError: LocationFailed");
             break;
         case SSIStepInsideSdkErrorTypeFailedToLoadGeoMessengerData:
-            NSLog(@"SenionLabLocationManager didFailWithError: FailedToLoadGeoMessengerData");
+            //NSLog(@"SenionLabLocationManager didFailWithError: FailedToLoadGeoMessengerData");
             break;
         case SSIStepInsideSdkErrorTypeFailedToLoadPositioningPackage:
-            NSLog(@"SenionLabLocationManager didFailWithError: FailedToLoadPositioningPackage");
+            //NSLog(@"SenionLabLocationManager didFailWithError: FailedToLoadPositioningPackage");
             break;
         case SSIStepInsideSdkErrorTypeCoreLocationAuthorizationDenied:
-            NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationDenied");
+            //NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationDenied");
             break;
         case SSIStepInsideSdkErrorTypeCoreLocationAuthorizationNotDetermined:
-            NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationNotDetermined");
+            //NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationNotDetermined");
             break;
     }
 
