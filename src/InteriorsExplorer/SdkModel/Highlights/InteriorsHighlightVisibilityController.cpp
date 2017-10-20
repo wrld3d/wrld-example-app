@@ -273,7 +273,7 @@ namespace ExampleApp
                                     resultHighlightId = meetingRoom.GetHighlightId();
                                 }
 
-                                if (selectedSearchResult.GetTitle() == highlightId)
+                                if (resultHighlightId == highlightId)
                                 {
                                     const std::string& renderableId = pHighlightRenderable->GetRenderableId();
 
