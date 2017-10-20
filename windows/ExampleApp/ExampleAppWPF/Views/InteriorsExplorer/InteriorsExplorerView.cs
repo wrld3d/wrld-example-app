@@ -34,7 +34,8 @@ namespace ExampleAppWPF
         private double m_panelOffscreenOffsetX;
         private double m_stateChangeAnimationTimeMilliseconds = 200.0;
         private bool m_dragInProgress = false;
-        private bool m_animationInProgress = false;
+        private bool m_shakingAnimationInProgress = false;
+        private bool m_sliderAnimationInProgress = false;
         private string[] m_floorShortNames = new string[] {};
 
         private int FloorCount { get { return m_floorShortNames.Length; } }
@@ -110,7 +111,7 @@ namespace ExampleAppWPF
 
         public void PlaySliderShakeAnim()
         {
-            if(m_animationInProgress)
+            if(m_shakingAnimationInProgress)
             {
                 return;
             }
@@ -127,19 +128,24 @@ namespace ExampleAppWPF
                 Springiness = 2
             };
             anim.Duration = new Duration(TimeSpan.FromMilliseconds(1100));
-            anim.Completed += OnAnimCompleted;
+            anim.Completed += OnShakingAnimCompleted;
 
             var transform = new TranslateTransform(position.X - offset, position.Y);
 
             m_floorSlider.RenderTransform = transform;
             transform.BeginAnimation(TranslateTransform.XProperty, anim);
 
-            m_animationInProgress = true;
+            m_shakingAnimationInProgress = true;
         }
 
-        private void OnAnimCompleted(object sender, EventArgs e)
+        private void OnShakingAnimCompleted(object sender, EventArgs e)
         {
-            m_animationInProgress = false;
+            m_shakingAnimationInProgress = false;
+        }
+
+        private void OnSlidingAnimCompleted(object sender, EventArgs e)
+        {
+            m_sliderAnimationInProgress = false;
         }
 
         private static Thumb GetThumb(Slider slider)
@@ -209,7 +215,9 @@ namespace ExampleAppWPF
 
         public void SetOnScreenStateToIntermediateValue(float transitionParam)
         {
-            AnimateTo(transitionParam);
+            float roundedTransition = (float)Math.Round((Decimal)transitionParam, 0, MidpointRounding.AwayFromZero);
+            m_sliderAnimationInProgress = true;
+            AnimateTo(roundedTransition, 0.0f);
         }
 
         private double CalcPanelX(double t)
@@ -221,23 +229,24 @@ namespace ExampleAppWPF
 
         public void SetFullyOnScreen()
         {
-            AnimateTo(1.0f);
+            if (!m_sliderAnimationInProgress)
+            {
+                m_sliderAnimationInProgress = true;
+                AnimateTo(1.0f, 1000.0f);
+            }
         }
 
         public void SetFullyOffScreen()
         {
             RemoveTutorialDialogs();
-            AnimateTo(0.0f);
+            AnimateTo(0.0f, 0.0f);
         }
-        private void AnimateTo(float t)
+        private void AnimateTo(float t, float delayMilliseconds)
         {
-            bool onScreen = false;
             if (t > 0.0f)
             {
                 Visibility = Visibility.Visible;
-                onScreen = true;
             }
-            double delayMilliseconds = onScreen ? 1000.0f : 0.0;
             var currentPosition = m_floorPanel.RenderTransform.Transform(new Point(0.0, 0.0));
             
             var floorPanelAnimation = new DoubleAnimation();
@@ -257,6 +266,7 @@ namespace ExampleAppWPF
             dissmisButtonAnimation.To = CalcPanelX(t);
             dissmisButtonAnimation.Completed += Storyboard_Completed;
             dissmisButtonAnimation.Duration = new Duration(TimeSpan.FromMilliseconds(m_stateChangeAnimationTimeMilliseconds));
+            dissmisButtonAnimation.Completed += OnSlidingAnimCompleted;
             m_dismissButton.RenderTransform = dismissButtonTransform;
 
             var detailsPanelAnimation = new DoubleAnimation();

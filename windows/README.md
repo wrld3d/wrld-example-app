@@ -55,4 +55,4 @@ When encountering this kind of exceptions:
 1. Open Apps & Features
 2. Search for Microsoft Visual Studio Professional 2015 and select Modify
 3. Select all features and apply update
-4. Re-open adn rebuild the solution
+4. Re-open and rebuild the solution
