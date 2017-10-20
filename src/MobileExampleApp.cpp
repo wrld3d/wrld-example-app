@@ -416,7 +416,6 @@ namespace ExampleApp
                                                                                                                      mapModule.GetInteriorsStreamingModule().GetLabelLayerId(),
                                                                                                                      m_messageBus,
                                                                                                                      *m_pHighlightColorMapper,
-                                                                                                                     m_persistentSettings,
                                                                                                                      highlightService);
         
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
@@ -574,8 +573,7 @@ namespace ExampleApp
                                                                                                                                handledTags,
                                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
                                                                                                                                m_applicationConfiguration.EegeoApiKey(),
-                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
-                                                                                                                               m_persistentSettings);
+                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         }
         
         m_pTransitionPoiSearchServiceModule = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
@@ -586,8 +584,7 @@ namespace ExampleApp
                                                                                                                handledTags,
                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
                                                                                                                m_applicationConfiguration.EegeoApiKey(),
-                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel(),
-                                                                                                               m_persistentSettings);
+                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
 
         const bool useYelpSearch = true;
         if (useYelpSearch)

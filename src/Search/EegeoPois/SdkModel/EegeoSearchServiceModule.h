@@ -51,8 +51,7 @@ namespace ExampleApp
                                              const std::vector<std::string>& handledTags,
                                              const std::string& serviceUrl,
                                              const std::string& apiKey,
-                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                                             ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings);
+                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
                     
                     ~EegeoSearchServiceModule();
                     

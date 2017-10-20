@@ -39,7 +39,6 @@ namespace ExampleApp
                                                            const Eegeo::Labels::LabelLayer::IdType interiorLabelLayer,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            IHighlightColorMapper& highlightColorMapper,
-                                                           PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                                            Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& interiorsHighlightService);
                     
                     ~InteriorsHighlightVisibilityController();
@@ -57,7 +56,6 @@ namespace ExampleApp
                     void OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message);
                     void OnInteriorChanged();
                     void OnInteriorAddedToSceneGraph(const Eegeo::Resources::Interiors::InteriorsCellResource& callback);
-                    void OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message);
                     
                     Eegeo::v4 GetColorForAvailability(const std::string& availability) const;
                     void GetCurrentSearchResults(std::vector<Search::SdkModel::SearchResultModel>& out_results) const;
@@ -79,7 +77,6 @@ namespace ExampleApp
                     Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     IHighlightColorMapper& m_highlightColorMapper;
-                    ExampleApp::PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                     Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& m_interiorsHighlightService;
                     const AvailabilityToColor m_availabilityToColor;
                     std::vector<Search::SdkModel::SearchResultModel> m_searchResults;
@@ -89,7 +86,6 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const Eegeo::Resources::Interiors::InteriorsCellResource> m_interiorCellAddedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_searchResultsClearedHandler;
                     Eegeo::Helpers::TCallback0<InteriorsHighlightVisibilityController> m_interiorInteractionModelChangedHandler;
-                    Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const SearchResultOnMap::SearchResultMeetingAvailabilityChanged&> m_availabilityChangedHandlerBinding;
                     Eegeo::Helpers::TCallback1<InteriorsHighlightVisibilityController, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_handleSearchResultSectionItemSelectedMessageBinding;
                     Eegeo::Labels::TLabelAnchorFilter<InteriorsHighlightVisibilityController> m_hideLabelAlwaysFilter;
                     

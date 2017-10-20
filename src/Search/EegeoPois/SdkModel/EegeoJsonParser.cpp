@@ -9,7 +9,6 @@
 #include "document.h"
 #include "writer.h"
 #include "stringbuffer.h"
-#include "IPersistentSettingsModel.h"
 #include "SwallowSearchConstants.h"
 #include <sstream>
 #include <map>
@@ -73,8 +72,7 @@ namespace ExampleApp
                                                                                         const TagSearch::SdkModel::ITagIconMapper& tagIconMapper,
                                                                                         const EegeoReadableTagMapper& tagNameMapper,
                                                                                         const TagSearch::SdkModel::ITagIconMapper& swallowTagIconMapper,
-                                                                                        const EegeoReadableTagMapper& swallowTagNameMapper,
-                                                                                        PersistentSettings::IPersistentSettingsModel& persistentSettings)
+                                                                                        const EegeoReadableTagMapper& swallowTagNameMapper)
                     {
                         
                         std::string title = "";
@@ -158,7 +156,6 @@ namespace ExampleApp
                         Eegeo::Resources::Interiors::InteriorId interiorId(indoorId);
 
                         int availabilityState = Swallow::SearchConstants::MEETING_ROOM_AVAILABLE_STATE;
-                        bool hasAvailabilityState = persistentSettings.TryGetValue(idStream.str(), availabilityState);
 
                         std::string userData = "";
                         
@@ -169,7 +166,7 @@ namespace ExampleApp
                             json[userDataName.c_str()].Accept(writer);
                             userData = strbuf.GetString();
 
-                            if (!hasAvailabilityState && json[userDataName.c_str()].HasMember("availability") && json[userDataName.c_str()]["availability"].IsString())
+                            if (json[userDataName.c_str()].HasMember("availability") && json[userDataName.c_str()]["availability"].IsString())
                             {
                                 std::string availabilityString = json[userDataName.c_str()]["availability"].GetString();
                                 availabilityState = Swallow::SearchConstants::GetAvailabilityStateFromAvailability(availabilityString);
@@ -237,13 +234,11 @@ namespace ExampleApp
                         const TagSearch::SdkModel::ITagIconMapper &tagIconMapper,
                         const EegeoReadableTagMapper& tagReadableNameMapper,
                         const TagSearch::SdkModel::ITagIconMapper& swallowTagIconMapper,
-                        const EegeoReadableTagMapper& swallowTagReadableNameMapper,
-                        ExampleApp::PersistentSettings::IPersistentSettingsModel& persistentSettings)
+                        const EegeoReadableTagMapper& swallowTagReadableNameMapper)
                 : m_tagIconMapper(tagIconMapper)
                 , m_tagReadableNameMapper(tagReadableNameMapper)
                 , m_swallowTagIconMapper(swallowTagIconMapper)
                 , m_swallowTagReadableNameMapper(swallowTagReadableNameMapper)
-                , m_persistentSettings(persistentSettings)
                 {
 
                 }
@@ -260,7 +255,7 @@ namespace ExampleApp
                         for(int i = 0; i < numEntries; ++i)
                         {
                             const rapidjson::Value& json = document[i];
-                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_tagIconMapper, m_tagReadableNameMapper, m_swallowTagIconMapper, m_swallowTagReadableNameMapper, m_persistentSettings));
+                            Search::SdkModel::SearchResultModel result(ParseSearchResultFromJsonObject(json, m_tagIconMapper, m_tagReadableNameMapper, m_swallowTagIconMapper, m_swallowTagReadableNameMapper));
                             out_results.push_back(result);
                         }
                     }

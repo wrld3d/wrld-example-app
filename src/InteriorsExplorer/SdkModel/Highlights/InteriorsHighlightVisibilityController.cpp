@@ -59,7 +59,6 @@ namespace ExampleApp
                     const Eegeo::Labels::LabelLayer::IdType interiorLabelLayer,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     IHighlightColorMapper& highlightColorMapper,
-                    PersistentSettings::IPersistentSettingsModel& persistentSettings,
                     Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& interiorsHighlightService)
                     : m_interiorInteractionModel(interiorInteractionModel)
                     , m_interiorsCellResourceObserver(interiorsCellResourceObserver)
@@ -75,9 +74,7 @@ namespace ExampleApp
                     , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorsHighlightVisibilityController::OnSearchItemSelected)
                     , m_interiorInteractionModelChangedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorChanged)
                     , m_interiorCellAddedHandler(this, &InteriorsHighlightVisibilityController::OnInteriorAddedToSceneGraph)
-                    , m_availabilityChangedHandlerBinding(this, &InteriorsHighlightVisibilityController::OnAvailabilityChanged)
                     , m_messageBus(messageBus)
-                    , m_persistentSettings(persistentSettings)
                     , m_interiorsHighlightService(interiorsHighlightService)
                     , m_availabilityToColor(BuildAvailabilityToColor())
                     , m_hideLabelAlwaysFilter(this, &InteriorsHighlightVisibilityController::HideLabelAlwaysPredicate)
@@ -87,7 +84,6 @@ namespace ExampleApp
                     m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
                     m_interiorsCellResourceObserver.RegisterAddedToSceneGraphCallback(m_interiorCellAddedHandler);
 
-                    m_messageBus.SubscribeNative(m_availabilityChangedHandlerBinding);
                     m_messageBus.SubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
 
                     m_labelHiddenFilterModel.SetFilter(m_interiorLabelLayer, &m_hideLabelAlwaysFilter);
@@ -101,30 +97,6 @@ namespace ExampleApp
                     m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
                     
                     m_messageBus.UnsubscribeNative(m_handleSearchResultSectionItemSelectedMessageBinding);
-                    m_messageBus.UnsubscribeNative(m_availabilityChangedHandlerBinding);
-                }
-
-                void InteriorsHighlightVisibilityController::OnAvailabilityChanged(const ExampleApp::SearchResultOnMap::SearchResultMeetingAvailabilityChanged& message)
-                {
-                    int tempState = Search::Swallow::SearchConstants::GetAvailabilityStateFromAvailability(message.GetAvailability());
-                    m_persistentSettings.SetValue(message.GetModel().GetIdentifier(), tempState);
-                    Search::SdkModel::SearchResultModel model = message.GetModel();
-                    
-                    const Search::Swallow::SdkModel::SwallowMeetingRoomResultModel& meetingRoom = Search::Swallow::SdkModel::SearchParser::TransformToSwallowMeetingRoomResult(model);
-                    
-                    const std::string& roomName = meetingRoom.GetName();
-                    m_persistentSettings.SetValue(roomName, message.GetAvailability());
-                    
-                    const Eegeo::v4& highlightColor = GetColorForAvailability(message.GetAvailability());
-
-                    const std::string highlightRenderableId(highlightPrefix + roomName);
-                    
-                    if (m_searchResultHighlightIdToColor.find(highlightRenderableId) != m_searchResultHighlightIdToColor.end())
-                    {
-                        m_searchResultHighlightIdToColor.at(highlightRenderableId) = highlightColor;
-                    }
-                    
-                    RefreshHighlightsColor();
                 }
                 
                 void InteriorsHighlightVisibilityController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
@@ -264,7 +236,6 @@ namespace ExampleApp
                             const std::string& highlightId = meetingRoom.GetHighlightId();
                             
                             std::string availability = meetingRoom.GetAvailability();
-                            m_persistentSettings.TryGetValue(highlightId, availability);
                             
                             const std::string highlightRenderableId(highlightPrefix + highlightId);
                             const Eegeo::v4& highlightColor = GetColorForAvailability(availability);
