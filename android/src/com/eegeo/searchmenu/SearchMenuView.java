@@ -56,6 +56,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     protected View m_progressSpinner = null;
     protected View m_anchorArrow = null;
     protected View m_searchMenuResultsSeparator = null;
+    protected View m_voiceView = null;
 
     protected int m_totalHeightPx;
 
@@ -117,6 +118,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             Log.v(tag, "Recorded words: \""+result.get(0)+"\"");
             m_editText.setText(result.get(0));
+
+            onEditorAction(m_editText, EditorInfo.IME_ACTION_DONE, null);
         }
     }
 
@@ -140,6 +143,14 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
         m_progressSpinner = m_view.findViewById(R.id.search_menu_spinner);
         m_progressSpinner.setVisibility(View.GONE);
+
+        m_voiceView = m_view.findViewById(R.id.search_menu_voice_button_view);
+        m_voiceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                m_activity.getVoiceIntentDispatcher().listenToVoice();
+            }
+        });
         
         m_editText = (EditText)m_view.findViewById(R.id.search_menu_view_edit_text_view);
         m_editText.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
@@ -220,7 +231,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
 
         m_activity.getVoiceIntentDispatcher().addActivityIntentResultHandler(this);
     }
-    
+
     @Override
     public boolean onEditorAction(TextView view, int actionId, KeyEvent event)
     {
@@ -551,8 +562,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     	updateSearchMenuHeight(m_resultsCount);
 
         m_searchList.setSelection(m_menuScrollIndex);
-
-        m_activity.getVoiceIntentDispatcher().listenToVoice();
 	}
 
 	@Override

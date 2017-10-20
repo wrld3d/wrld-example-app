@@ -35,6 +35,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 
 		View listContainerView = m_view.findViewById(R.id.search_menu_list_container);
 		View dragTabView = m_view.findViewById(R.id.search_menu_drag_button_view);
+		View voiceView = m_view.findViewById(R.id.search_menu_voice_button_view);
 		View titleContainerView = m_view.findViewById(R.id.search_menu_title_bar);
 		View editBoxBackgroundView = titleContainerView.findViewById(R.id.search_menu_edit_text_background);
 		View editBoxView = titleContainerView.findViewById(R.id.search_menu_view_edit_text_view);
@@ -43,6 +44,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		View anchorArrowView = m_view.findViewById(R.id.search_results_anchor_arrow);
 			
         int dragTabWidthPx = dragTabView.getWidth();
+        int voiceWidthPx = voiceView.getWidth();
         int titleContainerWidthPx = titleContainerView.getWidth();
         int titleBarControlsYStartPx = -dragTabWidthPx / 2;
         int editTextYEndPx = (int)editBoxView.getY();
@@ -56,6 +58,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		searchCountView.setVisibility(View.GONE);
 	
 		addAnimator(m_onScreenAnimatorSet, -(dragTabWidthPx + menuButtonMarginPx), menuButtonMarginPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());
+		addAnimator(m_onScreenAnimatorSet, -(voiceWidthPx + menuButtonMarginPx), -(voiceWidthPx + menuButtonMarginPx), false, new ViewXAnimatorUpdateListener(voiceView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, -menuButtonMarginPx, -menuButtonMarginPx, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, -titleContainerWidthPx, -titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(listContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_onScreenAnimatorSet, 0.0f, 0.0f, false, new ViewScaleYAnimatorUpdateListener(editBoxBackgroundView), new BackOutTimeInterpolator());
@@ -67,6 +70,7 @@ public class SearchMenuAnimationHandler extends MenuAnimationHandler
 		addAnimator(m_onScreenAnimatorSet, -menuButtonMarginPx * 2, 0, false, new ViewXAnimatorUpdateListener(searchCountView), new CircleInOutTimeInterpolator());
 		
 		addAnimator(m_openAnimatorSet, menuButtonMarginPx, titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(dragTabView), new CircleInOutTimeInterpolator());
+		addAnimator(m_openAnimatorSet, -(voiceWidthPx + menuButtonMarginPx), titleContainerWidthPx, false, new ViewXAnimatorUpdateListener(voiceView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, -menuButtonMarginPx, 0, false, new ViewXAnimatorUpdateListener(titleContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, -titleContainerWidthPx, 0, false, new ViewXAnimatorUpdateListener(listContainerView), new CircleInOutTimeInterpolator());
 		addAnimator(m_openAnimatorSet, 0.0f, 1.0f, true, new ViewScaleYAnimatorUpdateListener(editBoxBackgroundView), new BackOutTimeInterpolator());

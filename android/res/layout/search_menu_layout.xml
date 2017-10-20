@@ -133,4 +133,13 @@
 	    android:background="@drawable/menu_button_color_states"
 	    android:src="@drawable/button_search_menu_states" />
 
+	<ImageButton
+		android:id="@+id/search_menu_voice_button_view"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:contentDescription="Activate voice control."
+		android:background="@drawable/menu_voice_button_color_states"
+		android:src="@drawable/button_voice_menu_states"
+		android:layout_below="@+id/search_menu_drag_button_view" />
+
 </RelativeLayout>

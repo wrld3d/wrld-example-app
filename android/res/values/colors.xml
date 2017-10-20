@@ -32,4 +32,7 @@
 	<color name="menu_header_separator">#002B63</color>
 	
 	<color name="initial_ux_intro_banner_outline">#80FFFFFF</color>
+
+    <color name="voice_1">#FF69B4</color>
+    <color name="voice_2">#ffff00</color>
 </resources>
