@@ -50,6 +50,10 @@
 	<string>$(PRODUCT_NAME) would like to display photos for your custom POIs.</string>
 	<key>NSCameraUsageDescription</key>
 	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to record your speech to expedite searching. Please avoid voicing sensitive information while using this feature.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to analyse your speech to expedite searching. Please avoid voicing sensitive information while using this feature.</string>
 	<key>UIMainStoryboardFile</key>
 	<string>MainStoryboard_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>

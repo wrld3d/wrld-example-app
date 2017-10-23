@@ -69,7 +69,8 @@ set(ios_frameworks
   -framework CoreBluetooth
   -framework IndoorAtlas
   -framework SLIndoorLocation
-  -framework HockeySDK")
+  -framework HockeySDK
+  -framework Speech")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
 set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab ${CMAKE_CURRENT_SOURCE_DIR}/Include/HockeySDK-iOS/HockeySDK.embeddedframework")

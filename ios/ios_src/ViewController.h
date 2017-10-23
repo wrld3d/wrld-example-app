@@ -6,10 +6,17 @@
 #import <GLKit/GLKit.h>
 #include "AppRunner.h"
 
-@interface ViewController : GLKViewController <UIGestureRecognizerDelegate>
+#import <Speech/Speech.h>
+
+@interface ViewController : GLKViewController <UIGestureRecognizerDelegate, SFSpeechRecognizerDelegate>
 {
     CFTimeInterval m_previousTimestamp;
     AppRunner* m_pAppRunner;
+    
+    SFSpeechRecognizer *speechRecognizer;
+    SFSpeechAudioBufferRecognitionRequest *recognitionRequest;
+    SFSpeechRecognitionTask *recognitionTask;
+    AVAudioEngine *audioEngine;
 }
 
 @property (nonatomic, retain) UIView* pBackingView;
