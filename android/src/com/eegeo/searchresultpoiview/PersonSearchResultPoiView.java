@@ -111,7 +111,7 @@ public class PersonSearchResultPoiView implements View.OnClickListener
         if(!jobTitle.equals(""))
         {
             m_jobTitleView.setVisibility(View.VISIBLE);
-            m_jobTitleView.setText("Job Title: " + jobTitle);
+            m_jobTitleView.setText(jobTitle);
         }
         else
         {
@@ -121,7 +121,7 @@ public class PersonSearchResultPoiView implements View.OnClickListener
         if(!workingGroup.equals(""))
         {
             m_workingGroupView.setVisibility(View.VISIBLE);
-            m_workingGroupView.setText("Working Group: " + workingGroup);
+            m_workingGroupView.setText(workingGroup);
         }
         else
         {
@@ -131,7 +131,7 @@ public class PersonSearchResultPoiView implements View.OnClickListener
         if(!location.equals(""))
         {
             m_locationView.setVisibility(View.VISIBLE);
-            m_locationView.setText("Location: " + location);
+            m_locationView.setText(location);
         }
         else
         {
@@ -141,7 +141,7 @@ public class PersonSearchResultPoiView implements View.OnClickListener
         if(!deskCode.equals(""))
         {
             m_deskView.setVisibility(View.VISIBLE);
-            m_deskView.setText("Desk: " + deskCode);
+            m_deskView.setText(deskCode);
         }
         else
         {
