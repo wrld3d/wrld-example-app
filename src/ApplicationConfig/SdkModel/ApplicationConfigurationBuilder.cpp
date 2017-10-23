@@ -64,6 +64,7 @@ namespace ExampleApp
             , m_adminPassword("")
             , m_compassCameraOffset(0.0f)
             , m_compassCameraOffsetTopDown(0.0f)
+            , m_compassCameraDampingEnabled(false)
             {
                 
             }
@@ -353,6 +354,12 @@ namespace ExampleApp
                 m_compassCameraOffsetTopDown = compassCameraOffsetTopDown;
                 return *this;
             }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetCompassCameraDampingEnabled(const bool compassCameraDampingEnabled)
+            {
+                m_compassCameraDampingEnabled = compassCameraDampingEnabled;
+                return *this;
+            }
 
             std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
             {
@@ -429,7 +436,8 @@ namespace ExampleApp
                                                 m_attractModePlaybackSpeed,
                                                 m_adminPassword,
                                                 m_compassCameraOffset,
-                                                m_compassCameraOffsetTopDown);
+                                                m_compassCameraOffsetTopDown,
+                                                m_compassCameraDampingEnabled);
             }
         }
     }

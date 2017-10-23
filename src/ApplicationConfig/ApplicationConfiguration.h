@@ -80,6 +80,7 @@ namespace ExampleApp
 
             float m_compassCameraOffset;
             float m_compassCameraOffsetTopDown;
+            bool m_compassCameraDampingEnabled;
 
         public:
             
@@ -135,7 +136,8 @@ namespace ExampleApp
                                      const double attractModePlaybackSpeed,
                                      const std::string& adminPassword,
                                      const float compassCameraOffset,
-                                     const float compassCameraOffsetTopDown);
+                                     const float compassCameraOffsetTopDown,
+                                     const bool compassCameraDampingEnabled);
             
             std::string Name() const;
 
@@ -229,6 +231,7 @@ namespace ExampleApp
 
             const float CompassCameraOffset() const;
             const float CompassCameraOffsetTopDown() const;
+            const bool CompassCameraDampingEnabled() const;
         };
     }
 }

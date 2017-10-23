@@ -108,7 +108,8 @@ namespace ExampleApp
                         attractModePlaybackSpeed,
                         emptyAdminPassword,
                         0.0f,
-                        0.0f);
+                        0.0f,
+                        false);
                 }
             }
             

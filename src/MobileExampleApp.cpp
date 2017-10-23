@@ -346,6 +346,7 @@ namespace ExampleApp
         gpsGlobeCameraConfig.compassCameraOffset = m_applicationConfiguration.CompassCameraOffset();
         gpsGlobeCameraConfig.compassCameraOffsetTopDown = m_applicationConfiguration.CompassCameraOffsetTopDown();
         gpsGlobeCameraConfig.defaultGpsDistanceToInterest = m_applicationConfiguration.DistanceToInterestMetres();
+        gpsGlobeCameraConfig.compassCameraDampingEnabled = m_applicationConfiguration.CompassCameraDampingEnabled();
 
         if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
         {
@@ -750,6 +751,7 @@ namespace ExampleApp
         gpsGlobeCameraComponentConfig.panToUnlockThreshold = PanToUnlockThreshold;
         gpsGlobeCameraComponentConfig.compassCameraOffset = m_applicationConfiguration.CompassCameraOffset();
         gpsGlobeCameraComponentConfig.compassCameraOffsetTopDown = m_applicationConfiguration.CompassCameraOffsetTopDown();
+        gpsGlobeCameraComponentConfig.compassCameraDampingEnabled = m_applicationConfiguration.CompassCameraDampingEnabled();
 
         if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
         {

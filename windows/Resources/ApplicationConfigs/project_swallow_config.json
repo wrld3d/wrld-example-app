@@ -98,5 +98,6 @@
         "OrientationDegrees": 157.5
     },
 
-    "OptionsAdminPassword": "1234"
+    "OptionsAdminPassword": "1234",
+    "CompassCameraDampingEnabled": true
 }

@@ -241,6 +241,11 @@ namespace ExampleApp
                     m_builder.SetCompassCameraOffsetTopDown(offsetTopDown);
                 }
                 
+                if (document.HasMember("CompassCameraDampingEnabled") && !document["CompassCameraDampingEnabled"].IsNull())
+                {
+                    m_builder.SetCompassCameraDampingEnabled(document["CompassCameraDampingEnabled"].GetBool());
+                }
+                
                 return m_builder.Build();
             }
 

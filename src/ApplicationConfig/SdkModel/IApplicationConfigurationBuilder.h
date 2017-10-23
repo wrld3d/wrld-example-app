@@ -110,6 +110,7 @@ namespace ExampleApp
 
                 virtual IApplicationConfigurationBuilder& SetCompassCameraOffset(const float compassCameraOffset) = 0;
                 virtual IApplicationConfigurationBuilder& SetCompassCameraOffsetTopDown(const float compassCameraOffsetTopDown) = 0;
+                virtual IApplicationConfigurationBuilder& SetCompassCameraDampingEnabled(const bool compassCameraDampingEnabled) = 0;
             };
         }
     }

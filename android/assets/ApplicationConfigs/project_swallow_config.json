@@ -67,5 +67,6 @@
   "CompassCameraOffset": {
     "Offset": 0.4,
     "OffsetTopDown": 0.25
-  }
+  },
+  "CompassCameraDampingEnabled": true
 }

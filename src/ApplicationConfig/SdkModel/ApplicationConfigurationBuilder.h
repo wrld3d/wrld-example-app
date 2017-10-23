@@ -81,6 +81,7 @@ namespace ExampleApp
 
                 float m_compassCameraOffset;
                 float m_compassCameraOffsetTopDown;
+                bool m_compassCameraDampingEnabled;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -174,6 +175,7 @@ namespace ExampleApp
 
                 IApplicationConfigurationBuilder& SetCompassCameraOffset(const float compassCameraOffset);
                 IApplicationConfigurationBuilder& SetCompassCameraOffsetTopDown(const float compassCameraOffsetTopDown);
+                IApplicationConfigurationBuilder& SetCompassCameraDampingEnabled(const bool compassCameraDampingEnabled);
                 
                 std::string Decrypt(const std::string& message) const;
 

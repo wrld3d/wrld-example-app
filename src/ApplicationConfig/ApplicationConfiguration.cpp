@@ -58,7 +58,8 @@ namespace ExampleApp
                                                            const double attractModePlaybackSpeed,
                                                            const std::string& adminPassword,
                                                            const float compassCameraOffset,
-                                                           const float compassCameraOffsetTopDown)
+                                                           const float compassCameraOffsetTopDown,
+                                                           const bool compassCameraDampingEnabled)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_embeddedThemeTexturePath(embeddedThemeTexturePath)
@@ -112,6 +113,7 @@ namespace ExampleApp
         , m_adminPassword(adminPassword)
         , m_compassCameraOffset(compassCameraOffset)
         , m_compassCameraOffsetTopDown(compassCameraOffsetTopDown)
+        , m_compassCameraDampingEnabled(compassCameraDampingEnabled)
         {
             
         }
@@ -380,6 +382,11 @@ namespace ExampleApp
         const float ApplicationConfiguration::CompassCameraOffsetTopDown() const
         {
             return m_compassCameraOffsetTopDown;
+        }
+        
+        const bool ApplicationConfiguration::CompassCameraDampingEnabled() const
+        {
+            return m_compassCameraDampingEnabled;
         }
     }
 }

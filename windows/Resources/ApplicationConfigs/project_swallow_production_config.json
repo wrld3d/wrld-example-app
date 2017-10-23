@@ -69,5 +69,6 @@
                                                   "FloorIindex": 2
                                                   }]
                   }
-                  ]
+                  ],
+    "CompassCameraDampingEnabled": true
 }
