@@ -3,6 +3,7 @@
 #pragma once
 
 #import <UIKit/UIKit.h>
+#import <Speech/Speech.h>
 
 #include "MenuView.h"
 #include "SearchMenuInputDelegate.h"
@@ -12,9 +13,12 @@
 @class SearchMenuView;
 @class SearchResultsTableDataProvider;
 
-@interface SearchMenuView : MenuView<CustomTableRowSelectionDelegate, UIScrollViewDelegate>
+@interface SearchMenuView : MenuView<CustomTableRowSelectionDelegate, UIScrollViewDelegate, SFSpeechRecognizerDelegate>
 {
-    
+    SFSpeechRecognizer *speechRecognizer;
+    SFSpeechAudioBufferRecognitionRequest *recognitionRequest;
+    SFSpeechRecognitionTask *recognitionTask;
+    AVAudioEngine *audioEngine;
 }
 
 - (id)initWithParams:(float)width

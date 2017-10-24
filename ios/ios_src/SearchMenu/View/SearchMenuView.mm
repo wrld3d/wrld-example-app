@@ -121,7 +121,6 @@
                          :pixelScale
                          :dataProvider
                          :tableCount];
-    
     dataProvider.rowSelectionDelegate = self;
     
     m_pSearchResultsDataProvider = searchResultsDataProvider;
@@ -439,6 +438,8 @@
                                                                 searchMenuScrollButton:self.pSearchMenuScrollButton
                                                                 searchMenuScrollView:self.pSearchResultsTableContainerView
                                                                       dragTab:self.pSearchMenuDragTab]autorelease];
+
+    [self intialiseVoiceControlStuff];
 }
 
 - (void)dealloc
@@ -785,7 +786,10 @@
     {
         case OFF_SCREEN: [self.pInputDelegate setMenuOpen:false]; break;
         case CLOSED_ON_SCREEN: [self.pInputDelegate setMenuOpen:false]; break;
-        case OPEN_ON_SCREEN: [self.pInputDelegate setMenuOpen:true]; break;
+        case OPEN_ON_SCREEN:
+            [self.pInputDelegate setMenuOpen:true];
+            [self activateAudioStuff];
+            break;
         default: break;
     }
     
@@ -1025,6 +1029,93 @@
           withEvent:(UIEvent*)event
 {
     return point.y < [self getUpperMargin] + m_dragTabHeight + m_totalTableHeight + self.pSearchResultsTableContainerView.frame.size.height + 2.0f*m_tableSpacing;
+}
+
+- (void) intialiseVoiceControlStuff
+{
+    speechRecognizer = [[SFSpeechRecognizer alloc] initWithLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+    speechRecognizer.delegate = self;
+    [SFSpeechRecognizer requestAuthorization:^(SFSpeechRecognizerAuthorizationStatus status) {
+        switch (status) {
+            case SFSpeechRecognizerAuthorizationStatusAuthorized:
+                NSLog(@"___FILTER___ Authorized");
+                break;
+            case SFSpeechRecognizerAuthorizationStatusDenied:
+                NSLog(@"___FILTER___ Denied");
+                break;
+            case SFSpeechRecognizerAuthorizationStatusNotDetermined:
+                NSLog(@"___FILTER___ Not Determined");
+                break;
+            case SFSpeechRecognizerAuthorizationStatusRestricted:
+                NSLog(@"___FILTER___ Restricted");
+                break;
+            default:
+                break;
+        }
+    }];
+}
+
+- (void)startListening {
+    audioEngine = [[AVAudioEngine alloc] init];
+
+    if (recognitionTask) {
+        [recognitionTask cancel];
+        recognitionTask = nil;
+    }
+    
+    NSError *error;
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    [audioSession setCategory:AVAudioSessionCategoryRecord error:&error];
+    [audioSession setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error];
+    
+    NSLog(@"___FILTER___ RECORDING HAS STARTED???");
+    
+    // Starts a recognition process, in the block it logs the input or stops the audio
+    // process if there's an error.
+    recognitionRequest = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
+    AVAudioInputNode *inputNode = audioEngine.inputNode;
+    recognitionRequest.shouldReportPartialResults = YES;
+    recognitionTask = [speechRecognizer recognitionTaskWithRequest:recognitionRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+        BOOL isFinal = NO;
+        if (result) {
+            // Whatever you say in the microphone after pressing the button should be being logged
+            // in the console.
+            NSLog(@"___FILTER___ RESULT:%@",result.bestTranscription.formattedString);
+            self.pSearchEditBox.text = result.bestTranscription.formattedString;
+            m_pSearchMenuInterop->SearchPerformed([self.pSearchEditBox.text cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+            isFinal = !result.isFinal;
+        }
+        if (error) {
+            [audioEngine stop];
+            [inputNode removeTapOnBus:0];
+            recognitionRequest = nil;
+            recognitionTask = nil;
+        }
+    }];
+    
+    // Sets the recording format
+    AVAudioFormat *recordingFormat = [inputNode outputFormatForBus:0];
+    [inputNode installTapOnBus:0 bufferSize:1024 format:recordingFormat block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when) {
+        [recognitionRequest appendAudioPCMBuffer:buffer];
+    }];
+    
+    // Starts the audio engine, i.e. it starts listening.
+    [audioEngine prepare];
+    [audioEngine startAndReturnError:&error];
+    NSLog(@"___FILTER___ Say Something, I'm listening");
+}
+
+- (void) activateAudioStuff {
+    if (audioEngine.isRunning) {
+        [audioEngine stop];
+        [recognitionRequest endAudio];
+    } else {
+        [self startListening];
+    }
+}
+
+- (void)speechRecognizer:(SFSpeechRecognizer *)speechRecognizer availabilityDidChange:(BOOL)available {
+    //    NSLog(@"Availability:%d",available);
 }
 
 @end
