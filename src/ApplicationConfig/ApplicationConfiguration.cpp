@@ -39,7 +39,6 @@ namespace ExampleApp
             const bool isInKioskMode,
             const bool useJapaneseFont,
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
-            const std::string& rawConfig,
             const SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation,
             const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
             const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
@@ -51,7 +50,9 @@ namespace ExampleApp
             const std::string& hockeyAppId,
             bool hasMapScene,
             const std::string& mapSceneId,
-			const std::vector<std::vector<std::string>>& customKeyboardLayout
+			const std::vector<std::vector<std::string>>& customKeyboardLayout,
+            const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig>& outdoorSearchMenuItems,
+            bool overrideIndoorSearchMenuItems
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -85,7 +86,6 @@ namespace ExampleApp
         , m_isInKioskMode(isInKioskMode)
         , m_useJapaneseFont(useJapaneseFont)
         , m_interiorTrackingInfo(interiorTrackingInfo)
-        , m_rawConfig(rawConfig)
         , m_fixedIndoorLocation(fixedIndoorLocation)
         , m_attractModeTargetSplinePoints(attractModeTargetSplinePoints)
         , m_attractModePositionSplinePoints(attractModePositionSplinePoints)
@@ -98,6 +98,8 @@ namespace ExampleApp
         , m_hasMapScene(hasMapScene)
         , m_mapSceneId(mapSceneId)
 		, m_customKeyboardLayout(customKeyboardLayout)
+        , m_outdoorSearchMenuItems(outdoorSearchMenuItems)
+        , m_overrideIndoorSearchMenuItems(overrideIndoorSearchMenuItems)
         {
         }
         
@@ -260,11 +262,6 @@ namespace ExampleApp
         {
             return m_interiorTrackingInfo;
         }
-        
-        std::string ApplicationConfiguration::RawConfig() const
-        {
-            return m_rawConfig;
-        }
 
         bool ApplicationConfiguration::IsFixedIndoorLocationEnabled() const
         {
@@ -337,5 +334,15 @@ namespace ExampleApp
 		{
 			return m_customKeyboardLayout;
 		}
+
+        const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> ApplicationConfiguration::OutdoorSearchMenuItems() const
+        {
+            return m_outdoorSearchMenuItems;
+        }
+
+        bool ApplicationConfiguration::OverrideIndoorSearchMenuItems() const
+        {
+            return m_overrideIndoorSearchMenuItems;
+        }
     }
 }

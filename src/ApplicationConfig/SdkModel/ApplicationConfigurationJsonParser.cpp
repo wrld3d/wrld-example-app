@@ -70,6 +70,8 @@ namespace ExampleApp
                 const std::string HockeyAppId = "hockey_app_id";
                 const std::string MapSceneId = "map_scene_id";
                 const std::string CustomKeyboardLayout = "custom_keyboard_layout";
+                const std::string OutdoorSearchMenuItems = "outdoor_search_menu_items";
+                const std::string OverrideIndoorSearchMenuItems = "override_indoor_search_menu_items";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -198,6 +200,15 @@ namespace ExampleApp
                             : 500.0);
                 }
 
+                const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> ParseMenuItems(rapidjson::Document& document, const std::string& menuItem)
+                {
+                    if(document.HasMember(menuItem.c_str()) && document[menuItem.c_str()].IsArray())
+                    {
+                        return ApplicationConfigurationJsonParser::ParseSearchMenuConfig(document[menuItem.c_str()]);
+                    }
+                    return std::vector<SdkModel::ApplicationMenuItemTagSearchConfig>();
+                }
+
                 std::vector<std::vector<std::string>> ParseCustomKeyboardLayout(rapidjson::Document& document, const std::string& customKeyboard)
                 {
                     std::vector<std::vector<std::string>> customKeyboardLayout;
@@ -321,6 +332,9 @@ namespace ExampleApp
 
                 const std::vector<std::vector<std::string>> customKeyboardLayout = ParseCustomKeyboardLayout(document, CustomKeyboardLayout);
 
+                const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> outdoorSearchMenuItems = ParseMenuItems(document, OutdoorSearchMenuItems);
+                bool overrideIndoorSearchMenuItems = ParseBoolOrDefault(document, OverrideIndoorSearchMenuItems, m_defaultConfig.OverrideIndoorSearchMenuItems());
+
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -354,7 +368,6 @@ namespace ExampleApp
                     isInKioskMode,
                     useJapaneseFont,
                     interiorTrackingInfoList,
-                    serialized,
                     fixedIndoorLocation,
                     attractModeTargetSplinePoints,
                     attractModePositionSplinePoints,
@@ -366,7 +379,9 @@ namespace ExampleApp
                     hockeyAppId,
                     hasMapScene,
                     mapSceneId,
-                    customKeyboardLayout
+                    customKeyboardLayout,
+                    outdoorSearchMenuItems,
+                    overrideIndoorSearchMenuItems
                 );
             }
             
@@ -424,6 +439,66 @@ namespace ExampleApp
                     interiorTrackingInfoList.insert(std::pair<std::string, SdkModel::ApplicationInteriorTrackingInfo>(interiorId.Value(),interiorTrackingInfo));
                 }
             }
+
+            // static -- also used to parse search menu config from mapscenes
+            std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> ApplicationConfigurationJsonParser::ParseSearchMenuConfig(const rapidjson::Value& menuItemArray)
+            {
+                std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> menuItems;
+                std::set<std::string> menuNames;
+                if(menuItemArray.IsArray())
+                {
+                    for(rapidjson::SizeType i = 0; i < menuItemArray.Size(); i++)
+                    {
+                        const auto& item = menuItemArray[i];
+
+                        const char* nameKey = "name";
+                        if(!item.HasMember(nameKey) || !item[nameKey].IsString())
+                        {
+                            Eegeo_TTY("no member 'name' or is not a string");
+                            continue;
+                        }
+                        const std::string& name = item[nameKey].GetString();
+                        if (menuNames.find(name) != menuNames.end())
+                        {
+                            Eegeo_TTY("skipping menu item with duplicate name");
+                            continue;
+                        }
+                        const char* searchTagKey = "search_tag";
+                        if(!item.HasMember(searchTagKey) || !item[searchTagKey].IsString())
+                        {
+                            Eegeo_TTY("no member search_tag or is not a string");
+                            continue;
+                        }
+                        const std::string& searchTag = item[searchTagKey].GetString();
+
+                        const char* iconKey = "icon_key";
+                        if(!item.HasMember(iconKey) || !item[iconKey].IsString())
+                        {
+                            Eegeo_TTY("no member icon_key or is not a string");
+                            continue;
+                        }
+                        const std::string& icon = item[iconKey].GetString();
+
+                        const char* skipYelpSearchKey = "skip_yelp_search";
+                        const char* yelpMappingKey = "yelp_mapping";
+                        bool skipYelpSearch = false;
+                        std::string yelpMapping = "unused_string";
+                        if(item.HasMember(skipYelpSearchKey) && item[skipYelpSearchKey].IsBool())
+                        {
+                            skipYelpSearch = item[skipYelpSearchKey].GetBool();
+                        }
+                        if(item.HasMember(yelpMappingKey) && item[yelpMappingKey].IsString() && skipYelpSearch == false)
+                        {
+                             yelpMapping = item[yelpMappingKey].GetString();
+                        }
+                        menuItems.push_back(SdkModel::ApplicationMenuItemTagSearchConfig(name, searchTag, icon, skipYelpSearch, yelpMapping));
+                        menuNames.insert(name);
+                    }
+                }
+
+                return menuItems;
+            }
+
         }
     }
 }

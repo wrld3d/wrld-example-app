@@ -8,6 +8,7 @@
 #include "LatLongAltitude.h"
 #include "ApplicationInteriorTrackingInfo.h"
 #include "ApplicationFixedIndoorLocation.h"
+#include "ApplicationMenuItemTagSearchConfig.h"
 #include "document.h"
 
 namespace ExampleApp
@@ -52,7 +53,6 @@ namespace ExampleApp
             SdkModel::ApplicationFixedIndoorLocation m_fixedIndoorLocation;
             
             std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> m_interiorTrackingInfo;
-            std::string m_rawConfig;
 
             std::vector<Eegeo::Space::LatLongAltitude> m_attractModeTargetSplinePoints;
             std::vector<Eegeo::Space::LatLongAltitude> m_attractModePositionSplinePoints;
@@ -71,6 +71,8 @@ namespace ExampleApp
             std::string m_mapSceneId;
 
 			std::vector<std::vector<std::string>> m_customKeyboardLayout;
+			std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> m_outdoorSearchMenuItems;
+            bool m_overrideIndoorSearchMenuItems;
 
         public:
             
@@ -107,7 +109,6 @@ namespace ExampleApp
 				const bool isInKioskMode,
 				bool useJapaneseFont,
 				const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
-				const std::string& rawConfig,
 				const SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation,
 				const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
 				const std::vector<Eegeo::Space::LatLongAltitude>& attractModePositionSplinePoints,
@@ -119,7 +120,9 @@ namespace ExampleApp
 				const std::string& hockeyAppId,
 				bool hasMapScene,
 				const std::string& mapSceneId,
-				const std::vector<std::vector<std::string>>& customKeyboardLayout
+				const std::vector<std::vector<std::string>>& customKeyboardLayout,
+                const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig>& outdoorSearchMenuItems,
+                bool overrideIndoorSearchMenuItems
             );
             
             std::string Name() const;
@@ -185,8 +188,6 @@ namespace ExampleApp
             bool UseJapaneseFont() const;
             
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& InteriorTrackingInfo() const;
-            
-            std::string RawConfig() const;
 
             bool IsFixedIndoorLocationEnabled() const;
             const SdkModel::ApplicationFixedIndoorLocation& FixedIndoorLocation() const;
@@ -208,6 +209,8 @@ namespace ExampleApp
             const std::string MapSceneId() const;
 
 			const std::vector<std::vector<std::string>> CustomKeyboardLayout() const;
+            const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> OutdoorSearchMenuItems() const;
+            bool OverrideIndoorSearchMenuItems() const;
         };
     }
 }

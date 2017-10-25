@@ -8,6 +8,7 @@
 #include "TagSearchRepository.h"
 #include "YelpCategoryMapperUpdater.h"
 #include "IModelRepository.h"
+#include "ApplicationMenuItemTagSearchConfig.h"
 
 namespace ExampleApp
 {
@@ -29,7 +30,8 @@ namespace ExampleApp
                 
                 void UnregisterInteriorTagsUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
                 
-                void UpdateDefaultOutdoorSearchMenuItems(const std::string config);
+                void UpdateDefaultOutdoorSearchMenuItems(const std::vector<ExampleApp::ApplicationConfig::SdkModel::ApplicationMenuItemTagSearchConfig>& menuItems,
+                                                         bool overrideIndoorSearchMenuItems);
                 
                 void ApplyCustomInteriorSearchMenuItems(const Eegeo::Resources::Interiors::InteriorId& interiorId);
                 
@@ -52,7 +54,7 @@ namespace ExampleApp
                 void OnExitInterior();
                 void ClearTagSearchRepository();
                 void NotifyInteriorTagsUpdated() const;
-                void ParseJson(const std::string config);
+                void CreateModelsFromConfig(const std::vector<ExampleApp::ApplicationConfig::SdkModel::ApplicationMenuItemTagSearchConfig>& menuItems);
                 void ClearDefaultOutdoorTags();
                 
                 TagSearch::View::ITagSearchRepository& m_tagSearchRepository;

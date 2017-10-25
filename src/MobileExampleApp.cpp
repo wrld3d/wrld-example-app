@@ -164,11 +164,11 @@ namespace ExampleApp
 
         void AddTagSearchModels(
                                 TagSearch::View::ITagSearchRepository& repository,
-                                std::string rawConfig,
+                                const ApplicationConfig::ApplicationConfiguration& applicationConfig,
                                 Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater)
         {
-            const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromFile(
-                                                                                         rawConfig,
+            const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromConfig(
+                                                                                         applicationConfig,
                                                                                          "outdoor_search_menu_items",
                                                                                          yelpCategoryMapperUpdater);
             if(repository.GetItemCount() == 0)
@@ -617,7 +617,7 @@ namespace ExampleApp
                                                                                 m_metricsService,
                                                                                 m_menuReaction);
 
-        auto defaultFindMenuItems = TagSearch::View::CreateTagSearchModelsFromFile(m_applicationConfiguration.RawConfig(),
+        auto defaultFindMenuItems = TagSearch::View::CreateTagSearchModelsFromConfig(m_applicationConfiguration,
                                                                                    "outdoor_search_menu_items",
                                                                                    m_yelpCategoryMapperUpdater);
         m_pSearchModule = Eegeo_NEW(Search::SdkModel::SearchModule)(m_pSearchServiceModule->GetSearchService(),
@@ -1237,7 +1237,7 @@ namespace ExampleApp
             // ... doing it a little later ensures the view will get the notifications when items are added.
             MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
 
-            AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration.RawConfig(),
+            AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration,
                               m_yelpCategoryMapperUpdater);
 
             if (m_applicationConfiguration.IsAttractModeEnabled())

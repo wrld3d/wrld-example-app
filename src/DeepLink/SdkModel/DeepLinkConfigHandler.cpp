@@ -126,7 +126,7 @@ namespace ExampleApp
                         }
 
                         m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), newHeading, applicationConfig.IndoorId(), applicationConfig.FloorIndex());
-                        m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.RawConfig());
+                        m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.OutdoorSearchMenuItems(), applicationConfig.OverrideIndoorSearchMenuItems());
                         m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());
 
                         const std::string TryStartAtGpsLocation = "try_start_at_gps_location";

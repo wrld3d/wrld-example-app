@@ -43,7 +43,6 @@ namespace ExampleApp
                     const bool isKioskTouchInputEnabled = false;
                     const bool isInKioskMode = false;
                     const bool useJapaneseFont = false;
-                    std::string outdoorSearchMenuItems;
                     
                     const bool shouldPerformStartUpSearch = false;
                     const std::string startUpSearchTag = "";
@@ -68,6 +67,8 @@ namespace ExampleApp
                     const std::string startLocationIndoorId = "";
                     const int startLocationFloorIndex = 0;
 
+                    const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> outdoorSearchMenuItems;
+                    bool overrideIndoorSearchMenuItems = false;
                     return ApplicationConfiguration("Eegeo Example App",
                         emptyEegeoApiKey,
                         productVersion,
@@ -100,7 +101,6 @@ namespace ExampleApp
                         isInKioskMode,
                         useJapaneseFont,
                         interiorTrackingInfo,
-                        outdoorSearchMenuItems,
                         fixedIndoorLocation,
                         attractModeTargetSplinePoints,
                         attractModePositionSplinePoints,
@@ -112,7 +112,9 @@ namespace ExampleApp
                         hockeyAppId,
                         false,
                         "",
-                        customKeyboardLayout);
+                        customKeyboardLayout,
+                        outdoorSearchMenuItems,
+                        overrideIndoorSearchMenuItems);
                 }
             }
             
