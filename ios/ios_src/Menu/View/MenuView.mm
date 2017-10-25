@@ -209,6 +209,7 @@
 {
     CGPoint touchLocation = [touch locationInView:self];
     return CGRectContainsPoint(self.pDragTab.frame, touchLocation)
+           || CGRectContainsPoint(self.pVoiceButton.frame, touchLocation)
            || CGRectContainsPoint(self.pTitleContainer.frame, touchLocation)
            || CGRectContainsPoint(self.pMenuContainer.frame, touchLocation);
 }

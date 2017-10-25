@@ -90,6 +90,8 @@
     float m_anchorArrowOpenHeight;
     
     float m_totalTableHeight;
+    
+    NSTimer *silenceTimer;
 }
 
 @property (nonatomic, retain) UILabel* pSearchCountLabel;
@@ -213,6 +215,22 @@
     
     self.pSearchMenuDragTab = [[SearchMenuDragTab alloc] autorelease];
     [self.pSearchMenuDragTab init:self.pDragTab];
+    
+    m_voiceButtonOffsetX = m_dragTabOffsetX;
+    m_voiceButtonWidth = m_dragTabWidth;
+    m_voiceButtonHeight = m_dragTabHeight;
+    m_voiceButtonOffScreenX = m_dragTabOffScreenX;
+    m_voiceButtonOffScreenY = m_dragTabOffScreenY + m_dragTabHeight;
+    m_voiceButtonClosedOnScreenX = m_voiceButtonOffScreenX;
+    m_voiceButtonClosedOnScreenY = m_dragTabClosedOnScreenY;
+    m_voiceButtonOpenOnScreenX = m_dragTabOpenOnScreenX;
+    m_voiceButtonOpenOnScreenY = m_dragTabOpenOnScreenY + m_voiceButtonHeight;
+    
+    self.pVoiceButton = [[[UIButton alloc] initWithFrame:CGRectMake(m_voiceButtonOffScreenX, m_voiceButtonOffScreenY, m_voiceButtonWidth, m_voiceButtonHeight)] autorelease];
+    [self.pVoiceButton setDefaultStatesWithImageNames:@"button_search_off" :@"button_search_on"];
+    [self.pVoiceButton addTarget:self
+                          action:@selector(voiceButtonOnPress:)
+                forControlEvents:UIControlEventTouchUpInside];
     
     m_titleContainerOffScreenWidth = 0.0f;
     m_titleContainerOffScreenHeight = m_dragTabHeight;
@@ -408,6 +426,7 @@
     self.pSearchResultsTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     
     [self addSubview: self.pDragTab];
+    [self addSubview: self.pVoiceButton];
     [self addSubview: self.pTitleContainer];
     [self.pTitleContainer addSubview: self.pSearchCountLabel];
     [self.pTitleContainer addSubview: self.pSearchEditBoxBackground];
@@ -488,6 +507,9 @@
     [self.pTitleContainer removeFromSuperview];
     [self.pTitleContainer release];
 
+    [self.pVoiceButton removeFromSuperview];
+    [self.pVoiceButton release];
+    
     [self.pDragTab removeFromSuperview];
     [self.pDragTab release];
     
@@ -629,6 +651,22 @@
                                                                                                             Eegeo::v2(m_anchorArrowWidth, m_anchorArrowClosedHeight),
                                                                                                             Eegeo::v2(m_anchorArrowWidth, m_anchorArrowOpenHeight),
                                                                                                             Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>())));
+
+    // VoiceButton animations
+    m_onScreenAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pVoiceButton,
+                                                                                                                 m_stateChangeAnimationTimeSeconds,
+                                                                                                                 0.0,
+                                                                                                                 Eegeo::v2(m_voiceButtonOffScreenX, m_voiceButtonOffScreenY),
+                                                                                                                 Eegeo::v2(m_voiceButtonClosedOnScreenX, m_voiceButtonClosedOnScreenY),
+                                                                                                                 Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+    
+    m_openAnimationController->AddAnimator(Eegeo_NEW(ExampleApp::Helpers::UIAnimation::ViewPositionAnimator)(self.pVoiceButton,
+                                                                                                             m_stateChangeAnimationTimeSeconds,
+                                                                                                             0.0,
+                                                                                                             Eegeo::v2(m_voiceButtonClosedOnScreenX, m_voiceButtonClosedOnScreenY),
+                                                                                                             Eegeo::v2(m_voiceButtonOpenOnScreenX, m_voiceButtonOpenOnScreenY),
+                                                                                                             Eegeo_NEW(ExampleApp::Helpers::UIAnimation::Easing::CircleInOut<Eegeo::v2>)()));
+    
 }
 
 - (void) refreshTitleContainerAnimations:(Eegeo::v2)titleContainerClosedOnScreenPosition
@@ -786,10 +824,7 @@
     {
         case OFF_SCREEN: [self.pInputDelegate setMenuOpen:false]; break;
         case CLOSED_ON_SCREEN: [self.pInputDelegate setMenuOpen:false]; break;
-        case OPEN_ON_SCREEN:
-            [self.pInputDelegate setMenuOpen:true];
-            [self activateAudioStuff];
-            break;
+        case OPEN_ON_SCREEN: [self.pInputDelegate setMenuOpen:true]; break;
         default: break;
     }
     
@@ -1067,42 +1102,77 @@
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     [audioSession setCategory:AVAudioSessionCategoryRecord error:&error];
     [audioSession setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&error];
-    
-    NSLog(@"___FILTER___ RECORDING HAS STARTED???");
-    
-    // Starts a recognition process, in the block it logs the input or stops the audio
-    // process if there's an error.
+
     recognitionRequest = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
     AVAudioInputNode *inputNode = audioEngine.inputNode;
     recognitionRequest.shouldReportPartialResults = YES;
-    recognitionTask = [speechRecognizer recognitionTaskWithRequest:recognitionRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+    recognitionTask = [speechRecognizer recognitionTaskWithRequest:recognitionRequest
+                                                     resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error)
+    {
+        NSLog(@"____speech recogniser has been called");
         BOOL isFinal = NO;
-        if (result) {
-            // Whatever you say in the microphone after pressing the button should be being logged
-            // in the console.
-            NSLog(@"___FILTER___ RESULT:%@",result.bestTranscription.formattedString);
-            self.pSearchEditBox.text = result.bestTranscription.formattedString;
-            m_pSearchMenuInterop->SearchPerformed([self.pSearchEditBox.text cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-            isFinal = !result.isFinal;
+ 
+        if ([silenceTimer isValid]) {
+            NSLog(@"____reseting silenceTimer");
+            [silenceTimer invalidate];
+            [silenceTimer release];
         }
+        
+        silenceTimer = [[NSTimer scheduledTimerWithTimeInterval:2.5
+                                                        target:self
+                                                      selector:@selector(silenceHasBeenRegistered:)
+                                                      userInfo:nil
+                                                       repeats:NO]
+                        retain];
+        
+        if (result) {
+            NSLog(@"______result: %@", result.bestTranscription.formattedString);
+            self.pSearchEditBox.text = result.bestTranscription.formattedString;
+            isFinal = !result.isFinal;
+            if (isFinal) {
+                m_pSearchMenuInterop->SetEditText([self.pSearchEditBox.text cStringUsingEncoding:[NSString defaultCStringEncoding]], NO);
+            }
+        }
+        
         if (error) {
+            NSLog(@"______error");
             [audioEngine stop];
             [inputNode removeTapOnBus:0];
             recognitionRequest = nil;
             recognitionTask = nil;
         }
     }];
-    
-    // Sets the recording format
+
     AVAudioFormat *recordingFormat = [inputNode outputFormatForBus:0];
     [inputNode installTapOnBus:0 bufferSize:1024 format:recordingFormat block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when) {
         [recognitionRequest appendAudioPCMBuffer:buffer];
     }];
-    
+
     // Starts the audio engine, i.e. it starts listening.
     [audioEngine prepare];
     [audioEngine startAndReturnError:&error];
-    NSLog(@"___FILTER___ Say Something, I'm listening");
+}
+
+- (void) endVoiceRecognition
+{
+    NSLog(@"____ending recording");
+    if (recognitionTask) {
+        [recognitionTask cancel];
+        recognitionTask = nil;
+    }
+    if (audioEngine) {
+        [audioEngine stop];
+    }
+    m_pSearchMenuInterop->SearchPerformed([self.pSearchEditBox.text cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+}
+
+- (void) silenceHasBeenRegistered: (NSTimer *)timer{
+    [self endVoiceRecognition];
+}
+
+- (void) voiceButtonOnPress: (UIButton *)sender{
+    [self endVoiceRecognition];
+    [self activateAudioStuff];
 }
 
 - (void) activateAudioStuff {
@@ -1114,8 +1184,6 @@
     }
 }
 
-- (void)speechRecognizer:(SFSpeechRecognizer *)speechRecognizer availabilityDidChange:(BOOL)available {
-    //    NSLog(@"Availability:%d",available);
-}
+- (void)speechRecognizer:(SFSpeechRecognizer *)speechRecognizer availabilityDidChange:(BOOL)available {}
 
 @end

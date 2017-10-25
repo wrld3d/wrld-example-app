@@ -45,6 +45,16 @@ enum MenuState
     float m_dragTabOpenOnScreenX;
     float m_dragTabOpenOnScreenY;
     
+    float m_voiceButtonOffsetX;
+    float m_voiceButtonWidth;
+    float m_voiceButtonHeight;
+    float m_voiceButtonOffScreenX;
+    float m_voiceButtonOffScreenY;
+    float m_voiceButtonClosedOnScreenX;
+    float m_voiceButtonClosedOnScreenY;
+    float m_voiceButtonOpenOnScreenX;
+    float m_voiceButtonOpenOnScreenY;
+    
     float m_titleContainerOffScreenWidth;
     float m_titleContainerOffScreenHeight;
     float m_titleContainerOffScreenX;
@@ -119,6 +129,7 @@ enum MenuState
 - (void) toggleSection:(int)sectionIndex;
 
 @property (nonatomic, retain) UIButton* pDragTab;
+@property (nonatomic, retain) UIButton* pVoiceButton;
 @property (nonatomic, retain) UIView* pTitleContainer;
 @property (nonatomic, retain) UIView* pMenuContainer;
 @property (nonatomic, retain) UIView* pTopTableSeparator;
