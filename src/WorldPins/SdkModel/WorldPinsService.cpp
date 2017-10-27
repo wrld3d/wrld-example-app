@@ -142,8 +142,8 @@ namespace ExampleApp
 
                 if(m_selectedPinId == pinId)
                 {
-                    const WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(pPinItemModel->GetIdentifier());
-                    if (pWorldPinItemModel != nullptr && pWorldPinItemModel->Id() == pinId)
+                    const WorldPinItemModel* pWorldPinItemModel = FindWorldPinItemModelOrNull(pinId);
+                    if (pWorldPinItemModel != nullptr)
                     {
                         RemoveHighlightPin(m_pSelectedPinHighlight);
                     }
