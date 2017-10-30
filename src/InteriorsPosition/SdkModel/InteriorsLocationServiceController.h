@@ -4,10 +4,11 @@
 
 
 #include "CurrentLocationService.h"
-#include "InteriorsExplorerModel.h"
+#include "InteriorsExplorer.h"
 #include "ICameraTransitionController.h"
 #include "Compass.h"
 #include "CompassModeChangedMessage.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,9 @@ namespace ExampleApp
                 InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                   Compass::SdkModel::ICompassModel& compassModel);
+                                                   InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                                   Compass::SdkModel::ICompassModel& compassModel,
+                                                   AppModes::SdkModel::IAppModeModel& appModeModel);
                 
                 ~InteriorsLocationServiceController();
                 
@@ -33,8 +36,12 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+
+                InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                 
                 Compass::SdkModel::ICompassModel& m_compassModel;
+
+                AppModes::SdkModel::IAppModeModel& m_appModeModel;
             };
         }
     }

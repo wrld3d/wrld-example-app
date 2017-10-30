@@ -18,12 +18,15 @@ namespace ExampleApp
                                                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                            CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                                            Compass::SdkModel::ICompassModel& compassModel,
+                                                                           AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                            ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pController = Eegeo_NEW(InteriorsLocationServiceController)(currentLocationService,
                                                                               interiorInteractionModel,
                                                                               interiorSelectionModel,
-                                                                              compassModel);
+                                                                              interiorsExplorerModel,
+                                                                              compassModel,
+                                                                              appModeModel);
                 
                 m_pProvider = Eegeo_NEW(InteriorsLocationServiceProvider)(trackingInfoMap,
                                                                           interiorsExplorerModel,

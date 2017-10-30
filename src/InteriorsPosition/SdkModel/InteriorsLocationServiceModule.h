@@ -10,6 +10,7 @@
 #include "Compass.h"
 #include "CompassModeChangedMessage.h"
 #include "InteriorMetaDataRepository.h"
+#include "AppModes.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,7 @@ namespace ExampleApp
                                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                Compass::SdkModel::ICompassModel& compassModel,
+                                               AppModes::SdkModel::IAppModeModel& appModeModel,
                                                ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~InteriorsLocationServiceModule();

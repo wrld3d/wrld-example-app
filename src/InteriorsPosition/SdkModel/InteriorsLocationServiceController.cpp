@@ -5,6 +5,8 @@
 #include "InteriorSelectionModel.h"
 #include "ICompassModel.h"
 #include "InteriorsCameraController.h"
+#include "InteriorsExplorerModel.h"
+#include "AppModeModel.h"
 
 namespace ExampleApp
 {
@@ -15,10 +17,15 @@ namespace ExampleApp
             InteriorsLocationServiceController::InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
                                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                    Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                                   Compass::SdkModel::ICompassModel& compassModel)
+                                                                                   InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
+                                                                                   Compass::SdkModel::ICompassModel& compassModel,
+                                                                                   AppModes::SdkModel::IAppModeModel& appModeModel)
             : m_currentLocationService(currentLocationService)
             , m_interiorInteractionModel(interiorInteractionModel)
-            , m_interiorSelectionModel(interiorSelectionModel)            , m_compassModel(compassModel)
+            , m_interiorSelectionModel(interiorSelectionModel)
+            , m_interiorsExplorerModel(interiorsExplorerModel)
+            , m_compassModel(compassModel)
+            , m_appModeModel(appModeModel)
             {
             }
             
@@ -31,9 +38,18 @@ namespace ExampleApp
                 Compass::GpsMode::Values gpsMode = m_compassModel.GetGpsMode();
                 if(gpsMode == Compass::GpsMode::GpsFollow || gpsMode == Compass::GpsMode::GpsCompassMode)
                 {
-                    if(m_currentLocationService.GetInteriorId() != m_interiorSelectionModel.GetSelectedInteriorId())
+                    Eegeo::Resources::Interiors::InteriorId newInteriorId = m_currentLocationService.GetInteriorId();
+                    Eegeo::Resources::Interiors::InteriorId currInteriorId = m_interiorSelectionModel.GetSelectedInteriorId();
+                    if(newInteriorId != currInteriorId)
                     {
-                        m_interiorSelectionModel.SelectInteriorId(m_currentLocationService.GetInteriorId());
+                        if (currInteriorId.IsValid())
+                        {
+                            m_interiorsExplorerModel.Exit();
+                        }
+                        else if(m_appModeModel.GetAppMode() == ExampleApp::AppModes::SdkModel::WorldMode)
+                        {
+                            m_interiorSelectionModel.SelectInteriorId(newInteriorId);
+                        }
                     }
                     
                     int currentVisibleFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
