@@ -998,13 +998,13 @@ static const int IndexOfFirstDropDown = 5;
         
         if([self shouldShowScrollButton])
         {
-            _pSearchMenuScrollButtonContainer.hidden = true;
-            _pSearchMenuFadeImage.hidden = true;
+            _pSearchMenuScrollButtonContainer.hidden = false;
+            _pSearchMenuFadeImage.hidden = false;
         }
         else
         {
-            _pSearchMenuScrollButtonContainer.hidden = false;
-            _pSearchMenuFadeImage.hidden = false;
+            _pSearchMenuScrollButtonContainer.hidden = true;
+            _pSearchMenuFadeImage.hidden = true;
         }
     }
     else
@@ -1030,7 +1030,7 @@ static const int IndexOfFirstDropDown = 5;
 
 - (bool) shouldShowScrollButton
 {
-    return self.pSearchResultsTableView.contentOffset.y + self.pSearchResultsTableView.frame.size.height == self.resultsContentSize;
+    return self.pSearchResultsTableView.contentOffset.y + self.pSearchResultsTableView.frame.size.height < self.resultsContentSize;
 }
 
 - (float) getHeightForTable:(CustomTableView*)tableView
@@ -1079,11 +1079,6 @@ static const int IndexOfFirstDropDown = 5;
 {
     if([self shouldShowScrollButton])
     {
-        _pSearchMenuScrollButtonContainer.hidden = true;
-        _pSearchMenuFadeImage.hidden = true;
-    }
-    else
-    {
         if(_pSearchMenuScrollButtonContainer.hidden == true)
         {
             _pSearchMenuScrollButton.alpha = 0.0;
@@ -1091,6 +1086,11 @@ static const int IndexOfFirstDropDown = 5;
         }
         _pSearchMenuScrollButtonContainer.hidden = false;
         _pSearchMenuFadeImage.hidden = false;
+    }
+    else
+    {
+        _pSearchMenuScrollButtonContainer.hidden = true;
+        _pSearchMenuFadeImage.hidden = true;
     }
 }
 
