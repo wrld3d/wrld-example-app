@@ -47,7 +47,7 @@ namespace ExampleApp
                     double distance = DEFAULT_DISTANCE;
                     if(numParts > DISTANCE_INDEX)
                     {
-                        if(!Eegeo::Helpers::TryParseDouble(parts.at(DISTANCE_INDEX), DEFAULT_DISTANCE))
+                        if(!Eegeo::Helpers::TryParseDouble(parts.at(DISTANCE_INDEX), distance))
                         {
                             m_alertBoxFactory.CreateSingleOptionAlertBox("Invalid distance in deep link: "+parts.at(HEADING_INDEX), URL_FORMAT_MESSAGE, m_failAlertHandler);
                         }
@@ -56,7 +56,7 @@ namespace ExampleApp
                     double heading = DEFAULT_HEADING;
                     if(numParts > HEADING_INDEX)
                     {
-                        if(!Eegeo::Helpers::TryParseDouble(parts.at(4), heading))
+                        if(!Eegeo::Helpers::TryParseDouble(parts.at(HEADING_INDEX), heading))
                         {
                             m_alertBoxFactory.CreateSingleOptionAlertBox("Invalid bearing in deep link: "+parts.at(4), URL_FORMAT_MESSAGE, m_failAlertHandler);
                         }
