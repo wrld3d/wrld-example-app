@@ -203,6 +203,8 @@ namespace ExampleAppWPF
             m_searchResultsScrollButton = (RepeatButton)GetTemplateChild("SearchResultsScrollButton");
             m_searchResultsScrollButton.Click += OnResultsScrollButtonMouseDown;
             m_searchResultsScrollButton.PreviewMouseWheel += OnResultsMenuScrollWheel;
+            m_searchResultsScrollButton.MouseUp += OnResultsScrollButtonMouseUp;
+            m_searchResultsScrollButton.MouseLeave += OnResultsScrollButtonMouseLeave;
 
             m_resultsClearButton = (Button)GetTemplateChild("SearchClear");
             m_resultsClearButton.Click += OnResultsClear;
@@ -320,7 +322,18 @@ namespace ExampleAppWPF
 
         private void OnResultsScrollButtonMouseDown(object sender, RoutedEventArgs e)
         {
+            m_resultsListScrollViewer.IsEnabled = false;
             m_resultsListScrollViewer.ScrollToVerticalOffset(m_resultsListScrollViewer.VerticalOffset + m_scrollSpeed);
+        }
+
+        private void OnResultsScrollButtonMouseUp(object sender, RoutedEventArgs e)
+        {
+            m_resultsListScrollViewer.IsEnabled = true;
+        }
+
+        private void OnResultsScrollButtonMouseLeave(object sender, RoutedEventArgs e)
+        {
+            m_resultsListScrollViewer.IsEnabled = true;
         }
 
         private void OnResultsListBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
