@@ -34,7 +34,6 @@ namespace ExampleApp
                 Menu::View::IMenuOptionsModel* m_pAboutMenuOptionsModel;
                 Menu::View::IMenuModel* m_pOptionsMenuModel;
                 Menu::View::IMenuOptionsModel* m_pOptionsMenuOptionsModel;
-                Menu::View::IMenuModel& m_weatherMenuModel;
 
             public:
                 SettingsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
@@ -54,8 +53,6 @@ namespace ExampleApp
                 Menu::View::IMenuOptionsModel& GetSettingsMenuOptionsModel() const;
 
                 Menu::View::IMenuViewModel& GetSettingsMenuViewModel() const;
-
-                Menu::View::IMenuModel& GetMenuModel(MenuModelTypes model) const;
             };
         }
     }

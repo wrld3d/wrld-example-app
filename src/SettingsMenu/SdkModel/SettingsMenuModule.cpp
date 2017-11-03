@@ -19,8 +19,7 @@ namespace ExampleApp
                                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                    AboutPage::View::IAboutPageViewModel& aboutPageViewModel,
                                                    Options::View::IOptionsViewModel& optionsViewModel,
-                                                   Menu::View::IMenuModel& weatherMenuModel):
-                m_weatherMenuModel(weatherMenuModel)
+                                                   Menu::View::IMenuModel& weatherMenuModel)
             {
                 m_pModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pModel);
@@ -29,7 +28,7 @@ namespace ExampleApp
                                                                     identityProvider.GetNextIdentity(),
                                                                     reactionControllerModel);
 
-                AddMenuSection("Weather", m_weatherMenuModel, true);
+                AddMenuSection("Weather", weatherMenuModel, true);
                 
                 m_pOptionsMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pOptionsMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pOptionsMenuModel);
@@ -85,19 +84,6 @@ namespace ExampleApp
             Menu::View::IMenuViewModel& SettingsMenuModule::GetSettingsMenuViewModel() const
             {
                 return *m_pViewModel;
-            }
-
-            Menu::View::IMenuModel& SettingsMenuModule::GetMenuModel(MenuModelTypes model) const
-            {
-                switch(model)
-                {
-                case MenuModelTypes::Weather:
-                    return m_weatherMenuModel;
-                case MenuModelTypes::Options:
-                    return *m_pOptionsMenuModel;
-                case MenuModelTypes::About:
-                    return *m_pAboutMenuModel;
-                }
             }
         }
     }

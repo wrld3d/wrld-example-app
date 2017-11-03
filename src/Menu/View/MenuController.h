@@ -57,10 +57,6 @@ namespace ExampleApp
 
                 virtual bool TryDrag();
 
-                virtual bool ShouldHideSection(ExampleApp::Menu::View::IMenuSectionViewModel& section);
-
-                void RequestRefreshPresentation();
-
                 virtual void RefreshPresentation(bool forceRefresh);
 
                 virtual void UpdateUiThread(float dt);

@@ -24,15 +24,6 @@ namespace ExampleApp
                 virtual Menu::View::IMenuOptionsModel& GetSettingsMenuOptionsModel() const = 0;
 
                 virtual Menu::View::IMenuViewModel& GetSettingsMenuViewModel() const = 0;
-
-                enum class MenuModelTypes
-                {
-                    Weather,
-                    Options,
-                    About
-                };
-
-                virtual Menu::View::IMenuModel& GetMenuModel(MenuModelTypes model) const = 0;
             };
         }
     }

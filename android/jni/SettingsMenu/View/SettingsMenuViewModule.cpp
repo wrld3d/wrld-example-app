@@ -18,7 +18,6 @@ namespace ExampleApp
                 AndroidNativeState& nativeState,
                 Menu::View::IMenuModel& menuModel,
                 Menu::View::IMenuViewModel& menuViewModel,
-                Menu::View::IMenuModel& weatherMenuModel,
 				Modality::View::IModalBackgroundView& modalBackgroundView,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
@@ -32,7 +31,6 @@ namespace ExampleApp
                                     *view,
                                     menuModel,
                                     menuViewModel,
-                                    weatherMenuModel,
 									modalBackgroundView,
                                     messageBus
                                 );
