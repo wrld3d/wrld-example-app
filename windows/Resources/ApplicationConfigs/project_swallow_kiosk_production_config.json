@@ -19,7 +19,7 @@
   "yelp_oauth_token_secret": "FOU6tqR69K4d-gJRkXo_DOrkLCM",
   "twitter_auth_code": "",
   "geonames_username": "eegeo_swallow_win",
-  "coveragetree_manifest_url": "https://cdn1.eegeo.com/coverage-trees/vswallow-production/v1459/manifest.bin.gz",
+  "coveragetree_manifest_url": "https://cdn1.eegeo.com/coverage-trees/vswallow-production/v1460/manifest.bin.gz",
   "theme_manifest_url": "https://cdn-resources.eegeo.com/mobile-themes-new/v1009/default/ssl.manifest.bin.gz",
   "embedded_theme_texture_path": "EmbeddedTheme",
   "sqlite_db_url": "https://cdn1.eegeo.com/swallow-pois/pois_v168.db.gz",
