@@ -4,6 +4,7 @@
 #include "ApplicationConfigurationJsonParser.h"
 #include "MathFunc.h"
 #include "ConfigSections.h"
+#include "StringHelpers.h"
 
 namespace ExampleApp
 {
@@ -14,6 +15,151 @@ namespace ExampleApp
             namespace
             {
                 static const double DefaultAttractModePlaybackSpeed = 0.03;
+                const std::string Encrypted = "Encrypted";
+                const std::string HMAC_SHA1 = "HMAC_SHA1";
+                const std::string Name = "name";
+                const std::string StartLocationLatitude = "start_location_latitude";
+                const std::string StartLocationLongitude = "start_location_longitude";
+                const std::string StartLocationAltitude = "start_location_altitude";
+                const std::string StartLocationDistance = "start_location_distance";
+                const std::string StartLocationOrientationDegrees = "start_location_orientation_degrees";
+                const std::string StartLocationIndoorId = "start_location_indoor_id";
+                const std::string StartLocationFloorIndex = "start_location_floor_index";
+                const std::string TryStartAtGpsLocation = "try_start_at_gps_location";
+                const std::string PerformStartUpSearch = "perform_start_up_search";
+                const std::string StartUpSearchTag = "start_up_search_tag";
+                const std::string EegeoApiKey = "eegeo_api_key";
+                const std::string CoverageTreeManifestURL = "coveragetree_manifest_url";
+                const std::string ThemeManifestURL = "theme_manifest_url";
+                const std::string EmbeddedThemeTexturePath = "embedded_theme_texture_path";
+                const std::string GoogleAnalyticsReferrerToken = "google_analytics_referrer_token";
+                const std::string FlurryAppKey = "flurry_app_key";
+                const std::string YelpConsumerKey = "yelp_consumer_key";
+                const std::string YelpConsumerSecret = "yelp_consumer_secret";
+                const std::string YelpOAuthToken = "yelp_oauth_token";
+                const std::string YelpOAuthTokenSecret = "yelp_oauth_token_secret";
+                const std::string GeoNamesUserName = "geonames_username";
+                const std::string SqliteDbUrl = "sqlite_db_url";
+                const std::string EegeoSearchServiceUrl = "eegeo_search_service_url";
+                const std::string MyPinsWebServiceUrl = "mypins_web_service_url";
+                const std::string MyPinsWebServiceAuthToken = "mypins_web_service_auth_token";
+                const std::string TwitterAuthCode = "twitter_auth_code";
+                const std::string IsInKioskMode = "is_in_kiosk_mode";
+                const std::string IsKioskTouchInputEnabled = "is_kiosk_touch_input_enabled";
+                const std::string StartAppInFullscreen = "start_app_in_fullscreen";
+                const std::string UseLabels = "use_labels";
+                const std::string UseJapaneseFont = "use_japanese_font";
+                const std::string IndoorTrackedBuildings = "indoor_tracked_buildings";
+                const std::string InteriorId = "interior_id";
+                const std::string Type = "type";
+                const std::string Config = "config";
+                const std::string ApiKey = "api_key";
+                const std::string ApiSecret = "api_secret";
+                const std::string FloorMapping = "floor_mapping";
+                const std::string BuildingFloorIndex = "building_floor_index";
+                const std::string TrackedFloorIndex = "tracked_floor_index";
+                const std::string WebProxyEnabled = "web_proxy_enabled";
+                const std::string WebProxyIgnorePattern = "web_proxy_ignore_pattern";
+                const std::string WebProxyIpAddress = "web_proxy_ip_address";
+                const std::string WebProxyPort = "web_proxy_port";
+                const std::string SSLEnabled = "ssl_enabled";
+                const std::string SSLIgnorePattern = "ssl_ignore_pattern";
+                const std::string BuildingsSearchViewLocation = "buildings_search_view_location";
+                const std::string Latitude = "latitude";
+                const std::string Longitude = "longitude";
+                const std::string Altitude = "altitude";
+                const std::string DistanceToInterest = "distance_to_interest";
+                const std::string OrientationDegrees = "orientation_degrees";
+                const std::string FloorIndex = "floor_index";
+                const std::string WifiRestrictedBuildings = "wifi_restricted_buildings";
+                const std::string AllowedSSIDs = "allowed_ssids";
+                const std::string CompassCameraOffset = "compass_camera_offset";
+                const std::string Offset = "offset";
+                const std::string OffsetTopDown = "offset_top_down";
+                const std::string CompassCameraDampingEnabled = "compass_camera_damping_enabled";
+                const std::string AttractModeTimeout = "attract_mode_timeout";
+                const std::string AttractModePositionSpline = "attract_mode_position_spline";
+                const std::string AttractModeTargetSpline = "attract_mode_target_spline";
+                const std::string AttractModePlaybackSpeed = "attract_mode_playback_speed";
+                const std::string FixedIndoorLocation = "fixed_indoor_location";
+                const std::string OptionsAdminPassword = "options_admin_password";
+                
+                std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
+                {
+                    if (document.HasMember(key.c_str()))
+                    {
+                        const std::string& value = document[key.c_str()].GetString();
+                        if (!value.empty())
+                        {
+                            return value;
+                        }
+                    }
+                    return defaultValue;
+                }
+                
+                bool ParseBoolOrDefault(rapidjson::Document& document, const std::string& key, bool defaultValue)
+                {
+                    if (document.HasMember(key.c_str()))
+                    {
+                        if(document[key.c_str()].IsBool())
+                        {
+                            return document[key.c_str()].GetBool();
+                        }
+                        else if(document[key.c_str()].IsString())
+                        {
+                            std::string documentString = document[key.c_str()].GetString();
+                            if(documentString == "true")
+                            {
+                                return true;
+                            }
+                            else if(documentString == "false")
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    return defaultValue;
+                }
+                
+                double ParseDoubleOrDefault(rapidjson::Document& document, const std::string& key, double defaultValue)
+                {
+                    if (document.HasMember(key.c_str()))
+                    {
+                        if(document[key.c_str()].IsNumber())
+                        {
+                            return document[key.c_str()].GetDouble();
+                        }
+                        else if(document[key.c_str()].IsString())
+                        {
+                            double valueFromString;
+                            if(Eegeo::Helpers::TryParseDouble(document[key.c_str()].GetString(), valueFromString))
+                            {
+                                return valueFromString;
+                            }
+                        }
+                    }
+                    return defaultValue;
+                }
+                
+                int ParseIntOrDefault(rapidjson::Document& document, const std::string& key, int defaultValue)
+                {
+                    if (document.HasMember(key.c_str()))
+                    {
+                        if(document[key.c_str()].IsInt())
+                        {
+                            return document[key.c_str()].GetInt();
+                        }
+                        else if(document[key.c_str()].IsString())
+                        {
+                            int valueFromString;
+                            if(Eegeo::Helpers::TryParseInt(document[key.c_str()].GetString(), valueFromString))
+                            {
+                                return valueFromString;
+                            }
+                        }
+                    }
+                    return defaultValue;
+                }
             }
 
             ApplicationConfigurationJsonParser::ApplicationConfigurationJsonParser(const ApplicationConfiguration& defaultConfig,
@@ -31,12 +177,12 @@ namespace ExampleApp
                 const bool hasParseError(document.Parse<0>(serialized.c_str()).HasParseError());
                 Eegeo_ASSERT(!hasParseError);
 
-                if (document.HasMember("Encrypted"))
+                if (document.HasMember(Encrypted.c_str()))
                 {
-                    Eegeo_ASSERT(document.HasMember("HMAC_SHA1"), "must have HMAC_SHA1 digest field if Encrypted field is present");
+                    Eegeo_ASSERT(document.HasMember(HMAC_SHA1.c_str()), "must have HMAC_SHA1 digest field if Encrypted field is present");
                     
-                    const std::string& encryptedValue = document["Encrypted"].GetString();
-                    const std::string& digest = document["HMAC_SHA1"].GetString();
+                    const std::string& encryptedValue = document[Encrypted.c_str()].GetString();
+                    const std::string& digest = document[HMAC_SHA1.c_str()].GetString();
 
                     const std::string& decrypted = m_builder.Decrypt(encryptedValue);
                     const bool validHMAC = m_builder.ValidateHMAC(decrypted, digest);
@@ -50,103 +196,70 @@ namespace ExampleApp
                 m_builder.SetProductVersion(m_defaultConfig.ProductVersion());
                 m_builder.SetBuildNumber(m_defaultConfig.BuildNumber());
 
-                Eegeo_ASSERT(document.HasMember("Name"));
-                m_builder.SetApplicationName(document["Name"].GetString());
+                m_builder.SetApplicationName(ParseStringOrDefault(document, Name, m_defaultConfig.Name()));
+                m_builder.SetEegeoApiKey(ParseStringOrDefault(document, EegeoApiKey, m_defaultConfig.EegeoApiKey()));
+                
+                m_builder.SetStartInterestPointLocation(Eegeo::Space::LatLongAltitude::FromDegrees(ParseDoubleOrDefault(document, StartLocationLatitude, m_defaultConfig.InterestLocation().GetLatitudeInDegrees()),
+                    ParseDoubleOrDefault(document, StartLocationLongitude, m_defaultConfig.InterestLocation().GetLongitudeInDegrees()),
+                    ParseDoubleOrDefault(document, StartLocationAltitude, m_defaultConfig.InterestLocation().GetAltitude())));
 
-                Eegeo_ASSERT(document.HasMember("EegeoApiKey"));
-                m_builder.SetEegeoApiKey(document["EegeoApiKey"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("StartLocationLatitude"));
-                Eegeo_ASSERT(document.HasMember("StartLocationLongitude"));
-                Eegeo_ASSERT(document.HasMember("StartLocationAltitude"));
-                m_builder.SetStartInterestPointLocation(Eegeo::Space::LatLongAltitude::FromDegrees(document["StartLocationLatitude"].GetDouble(),
-                    document["StartLocationLongitude"].GetDouble(),
-                    document["StartLocationAltitude"].GetDouble()));
+                m_builder.SetStartDistanceFromInterestPoint(static_cast<float>(ParseDoubleOrDefault(document, StartLocationDistance, m_defaultConfig.DistanceToInterestMetres())));
+                m_builder.SetStartOrientationAboutInterestPoint(static_cast<float>(ParseDoubleOrDefault(document, StartLocationOrientationDegrees, m_defaultConfig.OrientationDegrees())));
 
-                Eegeo_ASSERT(document.HasMember("StartLocationDistance"));
-                m_builder.SetStartDistanceFromInterestPoint(static_cast<float>(document["StartLocationDistance"].GetDouble()));
+                m_builder.SetTryStartAtGpsLocation(ParseBoolOrDefault(document, TryStartAtGpsLocation, m_defaultConfig.TryStartAtGpsLocation()));
+                
+                m_builder.SetPerformStartupSearch(ParseBoolOrDefault(document, PerformStartUpSearch, m_defaultConfig.ShouldPerformStartUpSearch()));
+                m_builder.SetStartupSearchTag(ParseStringOrDefault(document, StartUpSearchTag, m_defaultConfig.StartUpSearchTag()));
+                
+                m_builder.SetGoogleAnalyticsReferrerToken(ParseStringOrDefault(document, GoogleAnalyticsReferrerToken, m_defaultConfig.GoogleAnalyticsReferrerToken()));
+                m_builder.SetFlurryAppKey(ParseStringOrDefault(document, FlurryAppKey, m_defaultConfig.FlurryAppKey()));
+                
+                m_builder.SetYelpConsumerKey(ParseStringOrDefault(document, YelpConsumerKey, m_defaultConfig.YelpConsumerKey()));
+                m_builder.SetYelpConsumerSecret(ParseStringOrDefault(document, YelpConsumerSecret, m_defaultConfig.YelpConsumerSecret()));
+                m_builder.SetYelpOAuthToken(ParseStringOrDefault(document, YelpOAuthToken, m_defaultConfig.YelpOAuthToken()));
+                m_builder.SetYelpOAuthTokenSecret(ParseStringOrDefault(document, YelpOAuthTokenSecret, m_defaultConfig.YelpOAuthTokenSecret()));
+                
+                m_builder.SetGeoNamesUserName(ParseStringOrDefault(document, GeoNamesUserName, m_defaultConfig.GeoNamesUserName()));
+                
+                m_builder.SetCoverageTreeManifestURL(ParseStringOrDefault(document, CoverageTreeManifestURL, m_defaultConfig.CoverageTreeManifestURL()));
+                m_builder.SetThemeManifestURL(ParseStringOrDefault(document, ThemeManifestURL, m_defaultConfig.ThemeManifestURL()));
+                
+                m_builder.SetSqliteDbUrl(ParseStringOrDefault(document, SqliteDbUrl, m_defaultConfig.SqliteDbUrl()));
+                
+                m_builder.SetSearchServiceUrl(ParseStringOrDefault(document, EegeoSearchServiceUrl, m_defaultConfig.EegeoSearchServiceUrl()));
+                
+                m_builder.SetMyPinsWebServiceUrl(ParseStringOrDefault(document, MyPinsWebServiceUrl, m_defaultConfig.MyPinsWebServiceUrl()));
+                m_builder.SetMyPinsWebServiceAuthToken(ParseStringOrDefault(document, MyPinsWebServiceAuthToken, m_defaultConfig.MyPinsWebServiceAuthToken()));
+                
+                m_builder.SetWebProxyEnabled(ParseBoolOrDefault(document, WebProxyEnabled, m_defaultConfig.WebProxyEnabled()));
+                m_builder.SetWebProxyIpAddress(ParseStringOrDefault(document, WebProxyIpAddress, m_defaultConfig.WebProxyIpAddress()));
+                m_builder.SetWebProxyPort(ParseIntOrDefault(document, WebProxyPort, m_defaultConfig.WebProxyPort()));
 
-                Eegeo_ASSERT(document.HasMember("StartLocationOrientationDegrees"));
-                m_builder.SetStartOrientationAboutInterestPoint(static_cast<float>(document["StartLocationOrientationDegrees"].GetDouble()));
-
-                Eegeo_ASSERT(document.HasMember("TryStartAtGpsLocation"));
-                m_builder.SetTryStartAtGpsLocation(document["TryStartAtGpsLocation"].GetBool());
-                
-                Eegeo_ASSERT(document.HasMember("GoogleAnalyticsReferrerToken"));
-                m_builder.SetGoogleAnalyticsReferrerToken(document["GoogleAnalyticsReferrerToken"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("FlurryAppKey"), "FlurryAppKey config not found");
-                m_builder.SetFlurryAppKey(document["FlurryAppKey"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("YelpConsumerKey"), "YelpConsumerKey config not found");
-                m_builder.SetYelpConsumerKey(document["YelpConsumerKey"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("YelpConsumerSecret"), "YelpConsumerSecret config not found");
-                m_builder.SetYelpConsumerSecret(document["YelpConsumerSecret"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("YelpOAuthToken"), "YelpOAuthToken config not found");
-                m_builder.SetYelpOAuthToken(document["YelpOAuthToken"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("YelpOAuthTokenSecret"), "YelpOAuthTokenSecret config not found");
-                m_builder.SetYelpOAuthTokenSecret(document["YelpOAuthTokenSecret"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("GeoNamesUserName"), "GeoNamesUserName config not found");
-                m_builder.SetGeoNamesUserName(document["GeoNamesUserName"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("CoverageTreeManifestURL"), "CoverageTreeManifestURL config not found");
-                m_builder.SetCoverageTreeManifestURL(document["CoverageTreeManifestURL"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("ThemeManifestURL"), "ThemeManifestURL config not found");
-                m_builder.SetThemeManifestURL(document["ThemeManifestURL"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("SqliteDbUrl"), "SqliteDbUrl config not found");
-                m_builder.SetSqliteDbUrl(document["SqliteDbUrl"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("EegeoSearchServiceUrl"), "EegeoSearchServiceUrl not found");
-                m_builder.SetSearchServiceUrl(document["EegeoSearchServiceUrl"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("MyPinsWebServiceUrl"), "MyPinsWebServiceUrl config not found");
-                m_builder.SetMyPinsWebServiceUrl(document["MyPinsWebServiceUrl"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("MyPinsWebServiceAuthToken"), "MyPinsWebServiceAuthToken config not found");
-                m_builder.SetMyPinsWebServiceAuthToken(document["MyPinsWebServiceAuthToken"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("WebProxyEnabled"), "WebProxyEnabled config not found");
-                m_builder.SetWebProxyEnabled(document["WebProxyEnabled"].GetBool());
-                
-                Eegeo_ASSERT(document.HasMember("WebProxyIpAddress"), "WebProxyIpAddress config not found");
-                m_builder.SetWebProxyIpAddress(document["WebProxyIpAddress"].GetString());
-                
-                Eegeo_ASSERT(document.HasMember("WebProxyPort"), "WebProxyPort config not found");
-                m_builder.SetWebProxyPort(document["WebProxyPort"].GetInt());
-
-                if (document.HasMember("WebProxyIgnorePattern"))
+                if (document.HasMember(WebProxyIgnorePattern.c_str()))
                 {
-                    m_builder.SetWebProxyIgnorePattern(document["WebProxyIgnorePattern"].GetString());
+                    m_builder.SetWebProxyIgnorePattern(document[WebProxyIgnorePattern.c_str()].GetString());
                 }
                 
-                Eegeo_ASSERT(document.HasMember("SSLEnabled"), "SSLEnabled config not found");
-                m_builder.SetSSLEnabled(document["SSLEnabled"].GetBool());
+                m_builder.SetSSLEnabled(ParseBoolOrDefault(document, SSLEnabled, m_defaultConfig.SSLEnabled()));
                 
-                if (document.HasMember("SSLIgnorePattern"))
+                if (document.HasMember(SSLIgnorePattern.c_str()))
                 {
-                    m_builder.SetSSLIgnorePattern(document["SSLIgnorePattern"].GetString());
+                    m_builder.SetSSLIgnorePattern(document[SSLIgnorePattern.c_str()].GetString());
                 }
                 
                 std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*> restrictedBuildingModelArray;
-                const char* wifiRestrictedBuildingTag = "WifiRestrictedBuildings";
                 
-                if (document.HasMember(wifiRestrictedBuildingTag))
+                if (document.HasMember(WifiRestrictedBuildings.c_str()))
                 {
-                    const rapidjson::Value& restrictedBuildingJsonArray = document[wifiRestrictedBuildingTag];
+                    const rapidjson::Value& restrictedBuildingJsonArray = document[WifiRestrictedBuildings.c_str()];
                     for (rapidjson::SizeType i = 0; i < restrictedBuildingJsonArray.Size(); i++)
                     {
                         const rapidjson::Value& restrictedBuilding = restrictedBuildingJsonArray[i];
 
-                        Eegeo_ASSERT(restrictedBuilding.HasMember("InteriorId"), "InteriorId config not found");
-                        std::string interiorId = restrictedBuilding["InteriorId"].GetString();
+                        Eegeo_ASSERT(restrictedBuilding.HasMember(InteriorId.c_str()), "InteriorId config not found");
+                        std::string interiorId = restrictedBuilding[InteriorId.c_str()].GetString();
 
-                        const rapidjson::Value& allowedWifiIDsJsonArray = restrictedBuilding["AllowedSSIDs"];
+                        const rapidjson::Value& allowedWifiIDsJsonArray = restrictedBuilding[AllowedSSIDs.c_str()];
                         std::vector<std::string> allowedWifiIDsModelArray;
                         for (rapidjson::SizeType i = 0; i < allowedWifiIDsJsonArray.Size(); i++)
                         {
@@ -158,125 +271,145 @@ namespace ExampleApp
                         restrictedBuildingModelArray.push_back(restricitedBuildingInfo);
                     }
                 }
-
+                
                 m_builder.SetRestrictedBuildingInfoArray(restrictedBuildingModelArray);
 
-                if (document.HasMember("IsKioskTouchInputEnabled") && !document["IsKioskTouchInputEnabled"].IsNull())
+                if (document.HasMember(IsKioskTouchInputEnabled.c_str()) && !document[IsKioskTouchInputEnabled.c_str()].IsNull())
                 {
-                    m_builder.SetIsKioskTouchInputEnabled(document["IsKioskTouchInputEnabled"].GetBool());
+                    m_builder.SetIsKioskTouchInputEnabled(document[IsKioskTouchInputEnabled.c_str()].GetBool());
                 }
 
-                if (document.HasMember("IsInKioskMode") && !document["IsInKioskMode"].IsNull())
+                if (document.HasMember(IsInKioskMode.c_str()) && !document[IsInKioskMode.c_str()].IsNull())
                 {
-					m_builder.SetIsInKioskMode(document["IsInKioskMode"].GetBool());
+					m_builder.SetIsInKioskMode(document[IsInKioskMode.c_str()].GetBool());
                 }
 
-                if (document.HasMember("StartAppInFullscreen") && !document["StartAppInFullscreen"].IsNull())
+                if (document.HasMember(StartAppInFullscreen.c_str()) && !document[StartAppInFullscreen.c_str()].IsNull())
                 {
-                    m_builder.SetShouldStartFullscreen(document["StartAppInFullscreen"].GetBool());
+                    m_builder.SetShouldStartFullscreen(document[StartAppInFullscreen.c_str()].GetBool());
                 }
 
-                Eegeo_ASSERT(document.HasMember("EmbeddedThemeTexturePath"), "EmbeddedThemeTexturePath not found");
-                m_builder.SetEmbeddedThemeTexturePath(document["EmbeddedThemeTexturePath"].GetString());
+                m_builder.SetEmbeddedThemeTexturePath(ParseStringOrDefault(document, EmbeddedThemeTexturePath, m_defaultConfig.EmbeddedThemeTexturePath()));
 
-                Eegeo_ASSERT(document.HasMember("TwitterAuthCode"), "TwitterAuthCode not found");
-                m_builder.SetTwitterAuthCode(document["TwitterAuthCode"].GetString());
+                m_builder.SetTwitterAuthCode(ParseStringOrDefault(document, TwitterAuthCode, m_defaultConfig.TwitterAuthCode()));
+                
+                const std::string& startLocationIndoorId = ParseStringOrDefault(document, StartLocationIndoorId, m_defaultConfig.IndoorId());
+                m_builder.SetIndoorId(startLocationIndoorId);
+                
+                const int startLocationFloorIndex = ParseIntOrDefault(document, StartLocationFloorIndex, m_defaultConfig.FloorIndex());
+                m_builder.SetFloorIndex(startLocationFloorIndex);
 
-                if (document.HasMember("UseLabels") && !document["UseLabels"].IsNull())
+                if (document.HasMember(UseLabels.c_str()) && !document[UseLabels.c_str()].IsNull())
                 {
-                    m_builder.SetUseLabels(document["UseLabels"].GetBool());
+                    m_builder.SetUseLabels(document[UseLabels.c_str()].GetBool());
                 }
 
                 std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfoList;
-                if(document.HasMember("IndoorTrackedBuildings") && !document["IndoorTrackedBuildings"].IsNull())
+                if(document.HasMember(IndoorTrackedBuildings.c_str()) && !document[IndoorTrackedBuildings.c_str()].IsNull())
                 {
-                    const rapidjson::Value& indoorTrackedBuildingsArray = document["IndoorTrackedBuildings"];
+                    const rapidjson::Value& indoorTrackedBuildingsArray = document[IndoorTrackedBuildings.c_str()];
                     ParseIndoorTrackingInfo(interiorTrackingInfoList, indoorTrackedBuildingsArray);
                     m_builder.SetInteriorTrackingInfo(interiorTrackingInfoList);
                 }
 
-                m_builder.SetAttractModeTimeoutMs(document.HasMember("AttractModeTimeout") ? document["AttractModeTimeout"].GetInt() : 0);
-                if(document.HasMember("AttractModeTargetSpline"))
+                m_builder.SetAttractModeTimeoutMs(document.HasMember(AttractModeTimeout.c_str()) ? document[AttractModeTimeout.c_str()].GetInt() : 0);
+                if(document.HasMember(AttractModeTargetSpline.c_str()))
                 {
-                    m_builder.SetAttractModeTargetSplinePoints(ParseLatLongAltitudeArray(document["AttractModeTargetSpline"]));
+                    m_builder.SetAttractModeTargetSplinePoints(ParseLatLongAltitudeArray(document[AttractModeTargetSpline.c_str()]));
                 }
 
-                if(document.HasMember("AttractModePositionSpline"))
+                if(document.HasMember(AttractModePositionSpline.c_str()))
                 {
-                    m_builder.SetAttractModePositionSplinePoints(ParseLatLongAltitudeArray(document["AttractModePositionSpline"]));
+                    m_builder.SetAttractModePositionSplinePoints(ParseLatLongAltitudeArray(document[AttractModePositionSpline.c_str()]));
                 }
 
-                m_builder.SetAttractModePlaybackSpeed(document.HasMember("AttractModePlaybackSpeed")
-                    ? document["AttractModePlaybackSpeed"].GetDouble()
+                m_builder.SetAttractModePlaybackSpeed(document.HasMember(AttractModePlaybackSpeed.c_str())
+                    ? document[AttractModePlaybackSpeed.c_str()].GetDouble()
                     : DefaultAttractModePlaybackSpeed);
 
-                if (document.HasMember("BuildingsSearchViewLocation"))
+                if (document.HasMember(BuildingsSearchViewLocation.c_str()))
                 {
                     m_builder.SetBuildingsSearchViewLocationAvailable(true);
-                    Eegeo::Space::LatLongAltitude latLongAltitude = ParseLatLongAltitude(document["BuildingsSearchViewLocation"]);
-                    Eegeo_ASSERT(document["BuildingsSearchViewLocation"].HasMember("DistanceToInterest"), "BuildingsSearchViewLocation, DistanceToInterest not found");
-                    float distanceToInterest = static_cast<float>(document["BuildingsSearchViewLocation"]["DistanceToInterest"].GetDouble());
-                    Eegeo_ASSERT(document["BuildingsSearchViewLocation"].HasMember("OrientationDegrees"), "BuildingsSearchViewLocation, OrientationDegrees not found");
-                    float orientationDegrees = static_cast<float>(document["BuildingsSearchViewLocation"]["OrientationDegrees"].GetDouble());
+                    Eegeo::Space::LatLongAltitude latLongAltitude = ParseLatLongAltitude(document[BuildingsSearchViewLocation.c_str()]);
+                    Eegeo_ASSERT(document[BuildingsSearchViewLocation.c_str()].HasMember(DistanceToInterest.c_str()), "BuildingsSearchViewLocation, DistanceToInterest not found");
+                    float distanceToInterest = static_cast<float>(document[BuildingsSearchViewLocation.c_str()][DistanceToInterest.c_str()].GetDouble());
+                    Eegeo_ASSERT(document[BuildingsSearchViewLocation.c_str()].HasMember(OrientationDegrees.c_str()), "BuildingsSearchViewLocation, OrientationDegrees not found");
+                    float orientationDegrees = static_cast<float>(document[BuildingsSearchViewLocation.c_str()][OrientationDegrees.c_str()].GetDouble());
                     m_builder.SetBuildingsSearchViewLocation(latLongAltitude, distanceToInterest, orientationDegrees);
                 }
 
-                if(document.HasMember("FixedIndoorLocation"))
+                if(document.HasMember(FixedIndoorLocation.c_str()))
                 {
-                    ParseFixedIndoorLocation(document["FixedIndoorLocation"]);
+                    ParseFixedIndoorLocation(document[FixedIndoorLocation.c_str()]);
                 }
 
-                m_builder.SetAdminPassword(document.HasMember("OptionsAdminPassword") ? document["OptionsAdminPassword"].GetString() : "");
+                m_builder.SetAdminPassword(ParseStringOrDefault(document, OptionsAdminPassword.c_str(), ""));
 
-                if (document.HasMember("CompassCameraOffset"))
+                if (document.HasMember(CompassCameraOffset.c_str()))
                 {
-                    const rapidjson::Value& offsetJSON = document["CompassCameraOffset"];
+                    const rapidjson::Value& offsetJSON = document[CompassCameraOffset.c_str()];
 
-                    Eegeo_ASSERT(offsetJSON.HasMember("Offset"));
-                    float offset = offsetJSON["Offset"].GetDouble();
+                    Eegeo_ASSERT(offsetJSON.HasMember(Offset.c_str()));
+                    float offset = offsetJSON[Offset.c_str()].GetDouble();
                     m_builder.SetCompassCameraOffset(offset);
 
-                    Eegeo_ASSERT(offsetJSON.HasMember("OffsetTopDown"));
-                    float offsetTopDown = offsetJSON["OffsetTopDown"].GetDouble();
+                    Eegeo_ASSERT(offsetJSON.HasMember(OffsetTopDown.c_str()));
+                    float offsetTopDown = offsetJSON[OffsetTopDown.c_str()].GetDouble();
                     m_builder.SetCompassCameraOffsetTopDown(offsetTopDown);
                 }
                 
-                if (document.HasMember("CompassCameraDampingEnabled") && !document["CompassCameraDampingEnabled"].IsNull())
+                if (document.HasMember(CompassCameraDampingEnabled.c_str()) && !document[CompassCameraDampingEnabled.c_str()].IsNull())
                 {
-                    m_builder.SetCompassCameraDampingEnabled(document["CompassCameraDampingEnabled"].GetBool());
+                    m_builder.SetCompassCameraDampingEnabled(document[CompassCameraDampingEnabled.c_str()].GetBool());
                 }
                 
                 return m_builder.Build();
             }
-
-			void ApplicationConfigurationJsonParser::ParseIndoorTrackingInfo(std::map<std::string,
-                                                                             SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
+            
+            bool ApplicationConfigurationJsonParser::IsValidConfig(const std::string& serialized)
+            {
+                rapidjson::Document document;
+                const bool hasParseError(document.Parse<0>(serialized.c_str()).HasParseError());
+                return !hasParseError;
+            }
+            
+            bool ApplicationConfigurationJsonParser::HasKey(const std::string& serialized, const std::string& key)
+            {
+                rapidjson::Document document;
+                const bool hasParseError(document.Parse<0>(serialized.c_str()).HasParseError());
+                if (!hasParseError) {
+                    return document.HasMember(key.c_str());
+                }
+                return false;
+            }
+            
+            void ApplicationConfigurationJsonParser::ParseIndoorTrackingInfo(std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
                                                                              const rapidjson::Value& indoorTrackedBuildingsArray)
             {
                 for(rapidjson::SizeType i = 0; i < indoorTrackedBuildingsArray.Size(); ++i)
                 {
                     const rapidjson::Value& building = indoorTrackedBuildingsArray[i];
                     
-                    Eegeo_ASSERT(building.HasMember("InteriorId"), "Interior Id not found");
-                    const std::string& id = building["InteriorId"].GetString();
+                    Eegeo_ASSERT(building.HasMember(InteriorId.c_str()), "Interior Id not found");
+                    const std::string& id = building[InteriorId.c_str()].GetString();
                     const Eegeo::Resources::Interiors::InteriorId& interiorId(id);
                     
-                    Eegeo_ASSERT(building.HasMember("Type"), "Type not found");
-                    const std::string& type = building["Type"].GetString();
+                    Eegeo_ASSERT(building.HasMember(Type.c_str()), "Type not found");
+                    const std::string& type = building[Type.c_str()].GetString();
 
                     
-                    Eegeo_ASSERT(building.HasMember("Config"), "Config not found");
-                    const std::string& apiKey = building["Config"][0]["ApiKey"].GetString();
-                    const std::string& apiSecret = building["Config"][0]["ApiSecret"].GetString();
+                    Eegeo_ASSERT(building.HasMember(Config.c_str()), "Config not found");
+                    const std::string& apiKey = building[Config.c_str()][0][ApiKey.c_str()].GetString();
+                    const std::string& apiSecret = building[Config.c_str()][0][ApiSecret.c_str()].GetString();
                     SdkModel::ApplicationInteriorTrackingConfig interiorTrackingConfig(apiKey, apiSecret);
                     
-                    Eegeo_ASSERT(building.HasMember("FloorMapping"), "FloorMapping not found");
-                    const rapidjson::Value& floorMappingArray = building["FloorMapping"];
+                    Eegeo_ASSERT(building.HasMember(FloorMapping.c_str()), "FloorMapping not found");
+                    const rapidjson::Value& floorMappingArray = building[FloorMapping.c_str()];
                     
                     std::map<int, std::string> floorMapping;
                     for(rapidjson::SizeType j = 0; j < floorMappingArray.Size(); ++j)
                     {
-                        floorMapping[floorMappingArray[j]["BuildingFloorIndex"].GetInt()] = floorMappingArray[j]["TrackedFloorIndex"].GetString();
+                        floorMapping[floorMappingArray[j][BuildingFloorIndex.c_str()].GetInt()] = floorMappingArray[j][TrackedFloorIndex.c_str()].GetString();
                     }
                     
                     SdkModel::ApplicationInteriorTrackingInfo interiorTrackingInfo(interiorId,
@@ -290,26 +423,26 @@ namespace ExampleApp
 
             void ApplicationConfigurationJsonParser::ParseFixedIndoorLocation(const rapidjson::Value& fixedIndoorLocation)
             {
-                Eegeo_ASSERT(fixedIndoorLocation.HasMember("Latitude"),   "FixedIndoorLocation.Latitude not found");
-                Eegeo_ASSERT(fixedIndoorLocation.HasMember("Longitude"),  "FixedIndoorLocation.Longitude not found");
-                Eegeo_ASSERT(fixedIndoorLocation.HasMember("InteriorId"), "FixedIndoorLocation.InteriorId not found");
-                Eegeo_ASSERT(fixedIndoorLocation.HasMember("FloorIndex"), "FixedIndoorLocation.FloorIndex not found");
-                Eegeo_ASSERT(fixedIndoorLocation.HasMember("OrientationDegrees"), "FixedIndoorLocation.OrientationDegrees not found");
-				m_builder.SetFixedIndoorLocation(Eegeo::Space::LatLong::FromDegrees(fixedIndoorLocation["Latitude"].GetDouble(), fixedIndoorLocation["Longitude"].GetDouble()),
-                                                 fixedIndoorLocation["InteriorId"].GetString(),
-										         fixedIndoorLocation["FloorIndex"].GetInt(),
-										         fixedIndoorLocation["OrientationDegrees"].GetDouble());
+                Eegeo_ASSERT(fixedIndoorLocation.HasMember(Latitude.c_str()),   "FixedIndoorLocation.Latitude not found");
+                Eegeo_ASSERT(fixedIndoorLocation.HasMember(Longitude.c_str()),  "FixedIndoorLocation.Longitude not found");
+                Eegeo_ASSERT(fixedIndoorLocation.HasMember(InteriorId.c_str()), "FixedIndoorLocation.InteriorId not found");
+                Eegeo_ASSERT(fixedIndoorLocation.HasMember(FloorIndex.c_str()), "FixedIndoorLocation.FloorIndex not found");
+                Eegeo_ASSERT(fixedIndoorLocation.HasMember(OrientationDegrees.c_str()), "FixedIndoorLocation.OrientationDegrees not found");
+				m_builder.SetFixedIndoorLocation(Eegeo::Space::LatLong::FromDegrees(fixedIndoorLocation[Latitude.c_str()].GetDouble(), fixedIndoorLocation[Longitude.c_str()].GetDouble()),
+                                                 fixedIndoorLocation[InteriorId.c_str()].GetString(),
+										         fixedIndoorLocation[FloorIndex.c_str()].GetInt(),
+										         fixedIndoorLocation[OrientationDegrees.c_str()].GetDouble());
             }
 
             Eegeo::Space::LatLongAltitude ApplicationConfigurationJsonParser::ParseLatLongAltitude(const rapidjson::Value& location)
             {
-                Eegeo_ASSERT(location.HasMember("Latitude"),  "Latitude not found");
-                Eegeo_ASSERT(location.HasMember("Longitude"), "Longitude not found");
-                Eegeo_ASSERT(location.HasMember("Altitude"),  "Altitude not found");
+                Eegeo_ASSERT(location.HasMember(Latitude.c_str()),  "Latitude not found");
+                Eegeo_ASSERT(location.HasMember(Longitude.c_str()), "Longitude not found");
+                Eegeo_ASSERT(location.HasMember(Altitude.c_str()),  "Altitude not found");
                 return Eegeo::Space::LatLongAltitude::FromDegrees(
-                        location["Latitude"].GetDouble(),
-                        location["Longitude"].GetDouble(),
-                        location["Altitude"].GetDouble());
+                        location[Latitude.c_str()].GetDouble(),
+                        location[Longitude.c_str()].GetDouble(),
+                        location[Altitude.c_str()].GetDouble());
             }
 
             std::vector<Eegeo::Space::LatLongAltitude> ApplicationConfigurationJsonParser::ParseLatLongAltitudeArray(rapidjson::Value& pointsAst)

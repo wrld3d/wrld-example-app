@@ -247,6 +247,8 @@ include_directories(
     ../src/Compass
     ../src/Compass/SdkModel
     ../src/Compass/View
+    ../src/DeepLink
+    ../src/DeepLink/SdkModel
     ../src/DoubleTapIndoorInteraction
     ../src/DoubleTapIndoorInteraction/SdkModel
     ../src/ExampleAppMessaging

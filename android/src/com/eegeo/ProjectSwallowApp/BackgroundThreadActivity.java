@@ -18,7 +18,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
-
+import android.content.res.Configuration;
+import android.net.Uri;
+import android.view.Surface;
 
 public class BackgroundThreadActivity extends MainActivity
 {
@@ -27,6 +29,12 @@ public class BackgroundThreadActivity extends MainActivity
     private long m_nativeAppWindowPtr;
     private ThreadedUpdateRunner m_threadedRunner;
     private Thread m_updater;
+    /* The url used if the app is opened by a deep link.
+     *  As the app in singleTask this is set in onNewIntent and must be
+     *  set to null before for the app pauses.
+     */
+    private Uri m_deepLinkUrlData;
+    private boolean m_rotationInitialised = false;
 
     static
     {
@@ -56,9 +64,15 @@ public class BackgroundThreadActivity extends MainActivity
         final String versionName = pInfo.versionName;
         final int versionCode = pInfo.versionCode;
         
-        setDisplayOrientationBasedOnDeviceProperties();
+        m_rotationInitialised = !setDisplayOrientationBasedOnDeviceProperties();
 
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        if(intent !=null)
+        {
+            m_deepLinkUrlData = intent.getData();
+        }
 
         m_surfaceView = (EegeoSurfaceView)findViewById(R.id.surface);
         m_surfaceView.getHolder().addCallback(this);
@@ -98,7 +112,6 @@ public class BackgroundThreadActivity extends MainActivity
     protected void onResume()
     {
         super.onResume();
-
     }
 
     @Override
@@ -171,23 +184,41 @@ public class BackgroundThreadActivity extends MainActivity
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+    public void surfaceChanged(final SurfaceHolder holder, int format, int width, int height)
     {
-        final SurfaceHolder h = holder;
+        m_surfaceHolder = holder;
+        if(!m_rotationInitialised)
+        {
+            return;
+        }
 
         runOnNativeThread(new Runnable()
         {
             public void run()
             {
-                m_surfaceHolder = h;
+                m_surfaceHolder = holder;
                 if(m_surfaceHolder != null)
                 {
-                    NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
+                    long oldWindow = NativeJniCalls.setNativeSurface(m_surfaceHolder.getSurface());
                     m_threadedRunner.start();
+                    releaseNativeWindowDeferred(oldWindow);
+
+                    if(m_deepLinkUrlData != null)
+                    {
+                        NativeJniCalls.handleUrlOpenEvent(m_deepLinkUrlData.getHost(), m_deepLinkUrlData.getPath());
+                        m_deepLinkUrlData = null;
+                    }
+
                     NativeJniCalls.resumeNativeCode();
                 }
             }
         });
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        m_deepLinkUrlData = intent.getData();
+
     }
 
     public void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer)
@@ -211,17 +242,33 @@ public class BackgroundThreadActivity extends MainActivity
             }
         });
     }
-    
-    private void setDisplayOrientationBasedOnDeviceProperties()
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfiguration)
     {
+        super.onConfigurationChanged(newConfiguration);
+        m_rotationInitialised = true;
+    }
+    
+    private boolean setDisplayOrientationBasedOnDeviceProperties()
+    {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        final int width = displayMetrics.widthPixels;
+        final int height = displayMetrics.heightPixels;
+
     	// Technique based on http://stackoverflow.com/a/9308284 using res/values configuration.
         if(getResources().getBoolean(R.bool.isPhone))
         {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            final boolean needsRotation = width > height;
+            return needsRotation;
         }
         else
         {
         	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            final boolean needsRotation = width < height;
+            return needsRotation;
         }
     }
 
@@ -333,5 +380,15 @@ public class BackgroundThreadActivity extends MainActivity
 
             Looper.loop();
         }
+    }
+
+    public void releaseNativeWindowDeferred(final long oldWindow)
+    {
+        runOnNativeThread(new Runnable() {
+            @Override
+            public void run() {
+                NativeJniCalls.releaseNativeWindow(oldWindow);
+            }
+        });
     }
 }

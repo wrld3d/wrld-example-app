@@ -25,7 +25,11 @@ namespace ExampleApp
                 Eegeo::Space::LatLongAltitude m_interestLocation;
                 float m_distanceToInterestMetres;
                 float m_orientationDegrees;
+                std::string m_indoorId;
+                int m_floorIndex;
                 bool m_tryStartAtGpsLocation;
+                bool m_performStartupSearch;
+                std::string m_startupSearchTag;
                 bool m_shouldStartFullscreen;
                 std::string m_googleAnalyticsReferrerToken;
                 std::string m_flurryAppKey;
@@ -97,7 +101,15 @@ namespace ExampleApp
                 
                 IApplicationConfigurationBuilder& SetStartOrientationAboutInterestPoint(float degrees);
                 
+                IApplicationConfigurationBuilder& SetIndoorId(const std::string& indoorId);
+                
+                IApplicationConfigurationBuilder& SetFloorIndex(const int floorIndex);
+                
                 IApplicationConfigurationBuilder& SetTryStartAtGpsLocation(bool tryStartAtGpsLocation);
+                
+                IApplicationConfigurationBuilder& SetPerformStartupSearch(bool performStartupSearch);
+                
+                IApplicationConfigurationBuilder& SetStartupSearchTag(std::string startupSearchTag);
                 
                 IApplicationConfigurationBuilder& SetGoogleAnalyticsReferrerToken(const std::string& googleAnalyticsReferrerToken);
                 

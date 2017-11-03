@@ -32,7 +32,7 @@ namespace ExampleApp
                                             Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                             const std::string& serviceUrl,
-					    const std::string& apiKey);
+                                            const Eegeo::Web::ApiTokenModel& apiTokenModel);
                     
                     ~EegeoSearchQueryFactory();
                     
@@ -40,7 +40,7 @@ namespace ExampleApp
                                                                          Eegeo::Helpers::ICallback0& completionCallback);
                     
                 private:
-                    const std::string m_apiKey;
+                    const Eegeo::Web::ApiTokenModel& m_apiTokenModel;
                 };
             }
         }

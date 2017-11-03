@@ -27,7 +27,15 @@ namespace ExampleApp
                 
                 virtual IApplicationConfigurationBuilder& SetStartOrientationAboutInterestPoint(float degrees) = 0;
                 
+                virtual IApplicationConfigurationBuilder& SetIndoorId(const std::string& indoorId) = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetFloorIndex(const int floorIndex) = 0;
+                
                 virtual IApplicationConfigurationBuilder& SetTryStartAtGpsLocation(bool tryStartAtGpsLocation) = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetPerformStartupSearch(bool performStartupSearch) = 0;
+                
+                virtual IApplicationConfigurationBuilder& SetStartupSearchTag(std::string startupSearchTag) = 0;
                 
                 virtual IApplicationConfigurationBuilder& SetGoogleAnalyticsReferrerToken(const std::string& googleAnalyticsReferrerToken) = 0;
                 

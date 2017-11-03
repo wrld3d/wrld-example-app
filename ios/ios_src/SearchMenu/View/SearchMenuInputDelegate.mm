@@ -22,6 +22,7 @@
     BOOL m_hasResults;
     BOOL m_searchInProgress;
     BOOL m_editingText;
+    BOOL m_menuOpen;
     
     float m_scrollSpeed;
 }
@@ -46,6 +47,7 @@
     m_pSearchMenuScrollButton = searchMenuScrollButton;
     m_pSearchMenuScrollView = searchMenuScrollView;
     m_pDragTab = dragTab;
+    m_menuOpen = false;
     
     m_pTextField.delegate = self;
     
@@ -155,15 +157,20 @@
     if(!m_editingText)
     {
         m_pTextField.text = @"";
+        [m_pDragTab showCloseView: m_menuOpen];
     }
     [self updateClearButtonVisibility:m_pTextField];
-    [m_pDragTab showCloseView: true];
     m_currentSearchIsTag = false;
 }
 
 - (void) setHasResults :(bool)hasResults
 {
     m_hasResults = hasResults;
+}
+
+- (void) setMenuOpen :(bool)menuOpen
+{
+    m_menuOpen = menuOpen;
 }
 
 - (void)updateClearButtonVisibility :(UITextField*)textField

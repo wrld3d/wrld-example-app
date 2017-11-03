@@ -37,4 +37,6 @@
 
 - (void) setHasResults :(bool)hasResults;
 
+- (void) setMenuOpen :(bool)menuOpen;
+
 @end

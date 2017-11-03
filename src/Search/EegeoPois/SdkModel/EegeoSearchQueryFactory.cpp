@@ -19,12 +19,12 @@ namespace ExampleApp
                                                                  Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                                                  const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                  const std::string& serviceUrl,
-							         const std::string& apiKey)
+                                                                 const Eegeo::Web::ApiTokenModel& apiTokenModel)
                 : m_webRequestFactory(webRequestFactory)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_urlEncoder(urlEncoder)
                 , m_serviceUrl(serviceUrl)
-                , m_apiKey(apiKey)
+                , m_apiTokenModel(apiTokenModel)
                 {
                     
                 }
@@ -45,7 +45,7 @@ namespace ExampleApp
                                                                    m_urlEncoder,
                                                                    query,
                                                                    m_serviceUrl,
-                                                                   m_apiKey,
+                                                                   m_apiTokenModel,
                                                                    interiorsModel.GetId(),
                                                                    m_interiorInteractionModel.GetSelectedFloorIndex(),
                                                                    completionCallback);
@@ -56,7 +56,7 @@ namespace ExampleApp
                                                            m_urlEncoder,
                                                            query,
                                                            m_serviceUrl,
-                                                           m_apiKey,
+                                                           m_apiTokenModel,
                                                            completionCallback);
                     }
                 }

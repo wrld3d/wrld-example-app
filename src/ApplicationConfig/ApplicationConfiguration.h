@@ -31,8 +31,13 @@ namespace ExampleApp
             Eegeo::Space::LatLongAltitude m_interestLocation;
             float m_distanceToInterestMetres;
             float m_orientationDegrees;
+            std::string m_indoorId;
+            int m_floorIndex;
             bool m_tryStartAtGpsLocation;
             bool m_shouldStartFullscreen;
+            bool m_shouldPerformStartUpSearch;
+            std::string m_startUpSearchTag;
+            std::string m_googleAnalyticsReferrerToken;
             std::string m_flurryAppKey;
             std::string m_yelpConsumerKey;
             std::string m_yelpConsumerSecret;
@@ -40,7 +45,6 @@ namespace ExampleApp
             std::string m_yelpOAuthTokenSecret;
             std::string m_geoNamesUserName;
             std::string m_twitterAuthCode;
-            std::string m_googleAnalyticsReferrerToken;
             std::string m_sqliteDbUrl;
             std::string m_eegeoSearchServiceUrl;
             std::string m_myPinsWebServiceUrl;
@@ -89,8 +93,12 @@ namespace ExampleApp
                                      const Eegeo::Space::LatLongAltitude& interestLocation,
                                      float distanceToInterestMetres,
                                      float orientationDegrees,
+                                     const std::string& indoorId,
+                                     const int floorIndex,
                                      bool tryStartAtGpsLocation,
                                      bool startFullscreen,
+                                     bool performStartUpSearch,
+                                     const std::string& startUpSearchTag,
                                      const std::string& googleAnalyticsReferrerToken,
                                      const std::string& flurryAppKey,
                                      const std::string& yelpConsumerKey,
@@ -151,9 +159,17 @@ namespace ExampleApp
             
             float OrientationDegrees() const;
             
+            std::string IndoorId() const;
+            
+            int FloorIndex() const;
+            
             bool TryStartAtGpsLocation() const;
 
             bool ShouldStartFullscreen() const;
+            
+            bool ShouldPerformStartUpSearch() const;
+            
+            std::string StartUpSearchTag() const;
             
             std::string GoogleAnalyticsReferrerToken() const;
 

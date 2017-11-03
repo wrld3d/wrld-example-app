@@ -724,3 +724,8 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
 	jmethodID touchEnabledMethod = env->GetMethodID(m_nativeState.activityClass, methodName.c_str(), "(Z)V");
 	env->CallVoidMethod(m_nativeState.activity, touchEnabledMethod, message.IsEnabled());
 }
+void AppHost::HandleOpenUrlEvent(const AppInterface::UrlData& data)
+{
+	m_pApp->Event_OpenUrl(data);
+}
+

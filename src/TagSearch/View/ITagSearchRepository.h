@@ -21,6 +21,8 @@ namespace ExampleApp
 
                 virtual bool TryGetTagSearchNameByQuery(const std::string& query, std::string& out_name) = 0;
             };
+            
+            std::string GetTagSearchNameByQuery(const std::string& query);
 
             std::string GetPresentationStringForQuery(ITagSearchRepository& tagSearchRepository, const Search::SdkModel::SearchQuery& query);
         }

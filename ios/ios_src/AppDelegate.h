@@ -27,4 +27,6 @@ namespace ExampleApp
 
 @property (nonatomic) ExampleApp::ApplicationConfig::ApplicationConfiguration* applicationConfiguration;
 
+@property (nonatomic, readonly) NSURL* launchUrl;
+
 @end
