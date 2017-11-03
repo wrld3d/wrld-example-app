@@ -306,7 +306,11 @@ void AppHost::OnResume()
     ASSERT_NATIVE_THREAD
 
 	m_pSenionLabLocationModule->GetLocationManager().OnResume();
-    m_pSenionLabBroadcastReceiver->RegisterReceiver();
+
+    if(m_pSenionLabBroadcastReceiver != NULL)
+    {
+        m_pSenionLabBroadcastReceiver->RegisterReceiver();
+    }
 
     m_pApp->OnResume();
     m_isPaused = false;
