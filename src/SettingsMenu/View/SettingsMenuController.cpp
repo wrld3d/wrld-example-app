@@ -15,11 +15,13 @@ namespace ExampleApp
             SettingsMenuController::SettingsMenuController(Menu::View::IMenuView& menuView,
                                                            Menu::View::IMenuModel& menuModel,
                                                            Menu::View::IMenuViewModel& menuViewModel,
+                                                           Menu::View::IMenuModel& weatherMenuModel,
                                                            Modality::View::IModalBackgroundView& modalBackgroundView,
                                                            ExampleAppMessaging::TMessageBus& messageBus)
             : Menu::View::MenuController(menuModel, menuViewModel, menuView, messageBus)
             , m_modalBackgroundView(modalBackgroundView)
             , m_onModalBackgroundTappedCallback(this, & SettingsMenuController::OnModalBackgroundTapped)
+            , m_weatherMenuModel(weatherMenuModel)
             {
                 m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
             }
@@ -45,6 +47,21 @@ namespace ExampleApp
                 {
                     m_viewModel.Close();
                 }
+            }
+
+            void SettingsMenuController::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
+            {
+                m_hideWeather = message.GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode;
+                RequestRefreshPresentation();
+                Menu::View::MenuController::OnAppModeChanged(message); 
+            }
+
+            bool SettingsMenuController::ShouldHideSection(ExampleApp::Menu::View::IMenuSectionViewModel& section)
+            {
+                if(!m_hideWeather)
+                    return false;
+
+                return ((&section.GetModel()) == (&m_weatherMenuModel));
             }
         }
     }

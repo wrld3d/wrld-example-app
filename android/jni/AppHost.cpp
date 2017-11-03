@@ -567,6 +567,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     		                                     m_nativeState,
     		                                     app.SettingsMenuModule().GetSettingsMenuModel(),
     		                                     app.SettingsMenuModule().GetSettingsMenuViewModel(),
+                                                 app.SettingsMenuModule().GetMenuModel(ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule::MenuModelTypes::Weather),
 												 m_pModalBackgroundViewModule->GetModalBackgroundView(),
     		                                     m_messageBus
     		                                 );

@@ -66,20 +66,35 @@ namespace ExampleApp
                 return m_viewModel.TryAcquireReactorControl();
             }
 
+
+            bool MenuController::ShouldHideSection(ExampleApp::Menu::View::IMenuSectionViewModel& section)
+            {
+                return false;
+            }
+
+            void MenuController::RequestRefreshPresentation()
+            {
+                m_presentationDirty = true;
+                m_menuContentsChanged = true;
+            }
+
             void MenuController::RefreshPresentation(bool forceRefresh)
             {
-                const size_t numSections = m_viewModel.SectionsCount();
-                TSections sections;
-                sections.reserve(numSections);
-
-                for(size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
-                {
-                    IMenuSectionViewModel& section = m_viewModel.GetMenuSection(static_cast<int>(groupIndex));
-                    sections.push_back(&section);
-                }
-
                 if(!m_viewModel.IsFullyClosed() || forceRefresh)
                 {
+                    const size_t numSections = m_viewModel.SectionsCount();
+                    TSections sections;
+                    sections.reserve(numSections);
+
+                    for(size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
+                    {
+                        IMenuSectionViewModel& section = m_viewModel.GetMenuSection(static_cast<int>(groupIndex));
+                        if(!ShouldHideSection(section))
+                        {
+                          sections.push_back(&section);
+                        }
+                    }
+
                     m_view.UpdateMenuSectionViews(sections, m_menuContentsChanged);
                     m_presentationDirty = false;
                     m_menuContentsChanged = false;
