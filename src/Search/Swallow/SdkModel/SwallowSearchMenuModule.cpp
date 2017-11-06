@@ -95,7 +95,7 @@ namespace ExampleApp
                                                         "",
                                                         Eegeo_NEW(View::SwallowCategoryMenuOption)(Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME,
                                                                                                    false,
-                                                                                                   true,
+                                                                                                   false,
                                                                                                    menuViewModel,
                                                                                                    static_cast<float>(Eegeo::Space::EarthConstants::Radius*2.0),
                                                                                                    messageBus));                

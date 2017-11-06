@@ -23,7 +23,7 @@ namespace ExampleApp
                     bool m_hasRadiusOverride;
                     bool m_interiorSearchAllowed;
                     bool m_inInteriorMode;
-                    bool m_closeMenuInInterior;
+                    bool m_closeMenuOnSelect;
                     float m_radiusOverride;
                     Menu::View::IMenuViewModel& m_menuViewModel;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -33,13 +33,13 @@ namespace ExampleApp
                 public:
                     SwallowCategoryMenuOption(std::string category,
                                               bool interiorSearchAllowed,
-                                              bool closeMenuWhenInInterior,
+                                              bool closeMenuOnSelect,
                                               Menu::View::IMenuViewModel& menuViewModel,
                                               ExampleAppMessaging::TMessageBus& messageBus);
 
                     SwallowCategoryMenuOption(std::string category,
                                               bool interiorSearchAllowed,
-                                              bool closeMenuWhenInInterior,
+                                              bool closeMenuOnSelect,
                                               Menu::View::IMenuViewModel& menuViewModel,
                                               float radius,
                                               ExampleAppMessaging::TMessageBus& messageBus);

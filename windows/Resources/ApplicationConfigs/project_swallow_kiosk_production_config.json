@@ -32,13 +32,6 @@
   "IsInKioskMode": true,
   "StartAppInFullscreen": true,
   "UseLabels": true,
-  "BuildingsSearchViewLocation": {
-    "Latitude": 51.512432,
-    "Longitude": -0.091633,
-    "Altitude": 10.0,
-    "DistanceToInterest": 800,
-    "OrientationDegrees": 0.0
-  },
   "Buildings": [
     {
       "SenionMapKey": "70f77f56-78b7-42bb-b94f-3c2c6d8dd30a",

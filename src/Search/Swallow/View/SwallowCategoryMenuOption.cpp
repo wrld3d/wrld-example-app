@@ -15,7 +15,7 @@ namespace ExampleApp
             {
                 SwallowCategoryMenuOption::SwallowCategoryMenuOption(std::string category,
                                                                      bool interiorSearchAllowed,
-                                                                     bool closeMenuWhenInInterior,
+                                                                     bool closeMenuOnSelect,
                                                                      Menu::View::IMenuViewModel& menuViewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
@@ -25,7 +25,7 @@ namespace ExampleApp
                 , m_hasRadiusOverride(false)
                 , m_radiusOverride(0.f)
                 , m_inInteriorMode(false)
-                , m_closeMenuInInterior(closeMenuWhenInInterior)
+                , m_closeMenuOnSelect(closeMenuOnSelect)
                 , m_appModeChangedHandler(this, &SwallowCategoryMenuOption::OnAppModeChangedMessage)
                 {
                     m_messageBus.SubscribeUi(m_appModeChangedHandler);
@@ -33,7 +33,7 @@ namespace ExampleApp
                 
                 SwallowCategoryMenuOption::SwallowCategoryMenuOption(std::string category,
                                                                      bool interiorSearchAllowed,
-                                                                     bool closeMenuWhenInInterior,
+                                                                     bool closeMenuOnSelect,
                                                                      Menu::View::IMenuViewModel& menuViewModel,
                                                                      float radius,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
@@ -44,7 +44,7 @@ namespace ExampleApp
                 , m_hasRadiusOverride(true)
                 , m_radiusOverride(radius)
                 , m_inInteriorMode(false)
-                , m_closeMenuInInterior(closeMenuWhenInInterior)
+                , m_closeMenuOnSelect(closeMenuOnSelect)
                 , m_appModeChangedHandler(this, &SwallowCategoryMenuOption::OnAppModeChangedMessage)
                 {
                     m_messageBus.SubscribeUi(m_appModeChangedHandler);
@@ -62,10 +62,9 @@ namespace ExampleApp
                 
                 void SwallowCategoryMenuOption::Select()
                 {
-                    m_menuViewModel.Close();
-
-                    if(m_inInteriorMode && m_closeMenuInInterior)
+                    if (m_closeMenuOnSelect)
                     {
+                        m_menuViewModel.Close();
                     }
                     
                     bool shouldZoomToBuildingsView = true;
