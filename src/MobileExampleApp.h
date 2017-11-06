@@ -86,6 +86,7 @@
 #include "DoubleTapIndoorInteraction.h"
 #include "IRayCaster.h"
 #include "RenderingTransformMesh.h"
+#include "DeepLink.h"
 
 #include "IRestrictedBuildingService.h"
 #include "IUserIdleService.h"
@@ -169,6 +170,7 @@ namespace ExampleApp
         InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightVisibilityController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
+        DeepLink::SdkModel::DeepLinkModule* m_pDeepLinkModule;
         InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper* m_pHighlightColorMapper;
         
         AppModes::SdkModel::IAppModeModel* m_pAppModeModel;
@@ -220,6 +222,7 @@ namespace ExampleApp
         Eegeo::Input::IUserIdleService& m_userIdleService;
         AppModes::GlobalAppModeTransitionRules* m_pGlobalAppModeTransitionRules;
         
+
     public:
         MobileExampleApp(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                          Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
@@ -480,5 +483,6 @@ namespace ExampleApp
         void Event_TiltStart(const AppInterface::TiltData& data);
         void Event_TiltEnd(const AppInterface::TiltData& data);
         void Event_Tilt(const AppInterface::TiltData& data);
+        void Event_OpenUrl(const AppInterface::UrlData& data);
     };
 }

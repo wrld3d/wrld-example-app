@@ -51,18 +51,28 @@ namespace ExampleApp
                     const bool isInKioskMode = false;
                     const bool useLabels = false;
                     const bool useJapaneseFont = false;
+                    
+                    const bool shouldPerformStartUpSearch = false;
+                    const std::string startUpSearchTag = "";
 
                     const double attractModePlaybackSpeed = 0.03;
 
                     const std::string emptyAdminPassword;
+
+                    const std::string startLocationIndoorId = "";
+                    const int startLocationFloorIndex = 0;
 
                     return ApplicationConfiguration ("Eegeo Example App", 
                         emptyEegeoApiKey,
                         Eegeo::Space::LatLongAltitude(0.0f, 0.0f, 0.0f),
                         1000.f,
                         0.f,
+                        startLocationIndoorId,
+                        startLocationFloorIndex,
                         tryStartAtGpsLocation,
                         shouldStartFullscreen,
+                        shouldPerformStartUpSearch,
+                        startUpSearchTag,
                         emptyGoogleAnalyticsReferrerToken,
                         emptyFlurryApiKey,
                         emptyYelpConsumerKey,

@@ -130,6 +130,11 @@
 #include "InteriorsEntityIdHighlightController.h"
 #include "IWebProxySettings.h"
 #include "ISSLSettings.h"
+#include "StringHelpers.h"
+#include "ApplicationConfigurationJsonParser.h"
+#include "IAlertBoxFactory.h"
+#include "DeepLinkModule.h"
+#include "DeepLinkController.h"
 
 #include "RenderingTransformMesh.h"
 #include "RenderingTransformMeshModule.h"
@@ -147,6 +152,8 @@
 #include "MarkersModule.h"
 #include "CameraSplinePlaybackController.h"
 #include "document.h"
+#include "InteriorMetaDataModule.h"
+#include "CoverageTreeModule.h"
 
 namespace ExampleApp
 {
@@ -295,6 +302,7 @@ namespace ExampleApp
     , m_pInteriorsEntityIdHighlightVisibilityController(NULL)
     , m_userIdleService(userIdleService)
     , m_pGlobalAppModeTransitionRules(NULL)
+    , m_pDeepLinkModule(NULL)
     {
         if (m_applicationConfiguration.IsInKioskMode())
         {
@@ -471,6 +479,27 @@ namespace ExampleApp
         InitialiseAppState(nativeUIFactories);
         
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
+        
+        if (!applicationConfiguration.TryStartAtGpsLocation())
+        {
+            const float heading = Eegeo::Math::Deg2Rad(applicationConfiguration.OrientationDegrees());
+            m_pCameraTransitionController->StartTransitionTo(location.ToECEF(), m_applicationConfiguration.DistanceToInterestMetres(), heading, m_applicationConfiguration.IndoorId(), applicationConfiguration.FloorIndex());
+        }
+
+        m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(
+            *m_pCameraTransitionController,
+            m_platformAbstractions.GetWebLoadRequestFactory(),
+            m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
+            m_applicationConfiguration,
+            m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader(),
+            m_pWorld->GetMapModule().GetCoverageTreeModule().CoverageTreeManifestNotifier(),
+            m_pWorld->GetMapModule().GetCityThemesModule().GetCityThemeLoader(),
+            m_pWorld->GetMapModule().GetCityThemesModule().GetCityThemesService(),
+            m_pSearchModule->GetSearchQueryPerformer(),
+            *m_pNavigationService,
+            m_pWorld->GetApiTokenService(),
+            interiorsPresentationModule.GetInteriorSelectionModel(),
+            *m_pAppModeModel);
     }
     
     MobileExampleApp::~MobileExampleApp()
@@ -478,6 +507,8 @@ namespace ExampleApp
         OnPause();
 
 		m_pAppModeModel->DestroyStateMachine();
+        
+        Eegeo_DELETE m_pDeepLinkModule;
         
         Eegeo_DELETE m_pUserInteractionModule;
 
@@ -573,7 +604,7 @@ namespace ExampleApp
                                                                                                                                swallowSearchTags,
                                                                                                                                handledTags,
                                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
-                                                                                                                               m_applicationConfiguration.EegeoApiKey(),
+                                                                                                                               m_pWorld->GetApiTokenModel(),
                                                                                                                                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
         }
         
@@ -584,7 +615,7 @@ namespace ExampleApp
                                                                                                                swallowSearchTags,
                                                                                                                handledTags,
                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
-                                                                                                               m_applicationConfiguration.EegeoApiKey(),
+                                                                                                               m_pWorld->GetApiTokenModel(),
                                                                                                                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
 
         const bool useYelpSearch = true;
@@ -930,6 +961,11 @@ namespace ExampleApp
                                                                       m_pFlattenButtonModule->GetFlattenButtonModel());
 
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules), AppModes::SdkModel::WorldMode, m_pGlobalAppModeTransitionRules);
+        
+        if (m_applicationConfiguration.ShouldPerformStartUpSearch())
+        {
+            m_pSearchModule->GetSearchQueryPerformer().PerformSearchQuery(m_applicationConfiguration.StartUpSearchTag(), true, false, false);
+        }
     }
     
     void MobileExampleApp::DestroyApplicationModelModules()
@@ -1520,6 +1556,11 @@ namespace ExampleApp
         }
         
         m_pCurrentTouchController->Event_Tilt(data);
+    }
+
+    void MobileExampleApp::Event_OpenUrl(const AppInterface::UrlData& data)
+    {
+        m_pDeepLinkModule->GetDeepLinkController().HandleDeepLinkOpen(data);
     }
     
     bool MobileExampleApp::CanAcceptTouch() const

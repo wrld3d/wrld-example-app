@@ -1,96 +1,154 @@
 {
-    "Name": "Project Swallow App",
-    "StartLocationLatitude": 51.512432, 
-    "StartLocationLongitude": -0.091633,
-    "StartLocationAltitude": 10.0,
-    "StartLocationDistance": 800.0,
-    "StartLocationOrientationDegrees": 0.0,
-    "TryStartAtGpsLocation":false,
-    "EegeoApiKey":"6d27c9936af66fa250dbc30172d7fec4",
-    "GoogleAnalyticsReferrerToken":"eegeo_project_swallow_ios",
-    "FlurryAppKey":"",
-    "YelpConsumerKey":"KsLkLS9cLzSTTPKdSS6aFA",
-    "YelpConsumerSecret":"9KLdDS4qRwLrjHTPTPiRaQu2BfI",
-    "YelpOAuthToken":"nZYNtFsgNlKL6qrZI5meRoYFSDqEdB3L",
-    "YelpOAuthTokenSecret":"FOU6tqR69K4d-gJRkXo_DOrkLCM",
-	"TwitterAuthCode": "",
-    "GeoNamesUserName":"eegeo_swallow_win",
-    "CoverageTreeManifestURL": "https://cdn1.eegeo.com/coverage-trees/vswallow/v1459/manifest.bin.gz",
-    "ThemeManifestURL": "https://cdn-resources.eegeo.com/mobile-themes-new/v1009/default/ssl.manifest.bin.gz",
-	"EmbeddedThemeTexturePath": "EmbeddedTheme",
-    "SqliteDbUrl":"https://cdn1.eegeo.com/swallow-pois/pois_v168.db.gz",
-    "EegeoSearchServiceUrl":"https://swallowapp.dundee.kimbleoperations.com/search/v1.1/",
-    "MyPinsWebServiceUrl":"https://swallowapp.dundee.kimbleoperations.com/reports/",
-    "MyPinsWebServiceAuthToken":"f475c578eb4592637314e4a05510993b",
-    "WebProxyEnabled":false,
-    "WebProxyIpAddress":"",
-    "WebProxyPort":0,
-    "WebProxyIgnorePattern":"",
-	"SSLEnabled": true,
-	"IsKioskTouchInputEnabled":false,
-	"IsInKioskMode":false,
-	"StartAppInFullscreen":false,
-    "UseLabels": true,
-    "Buildings": [
-                  
-                  {
-                  "SenionMapKey": "70f77f56-78b7-42bb-b94f-3c2c6d8dd30a",
-                  "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
-                  "InteriorId": "swallow_lon_citygatehouse",
-                  "SenionidToFloorIndexMapping": [{
-                                                  "SenionIndex": 0,
-                                                  "FloorIindex": 1
-                                                  }, {
-                                                  "SenionIndex": 1,
-                                                  "FloorIindex": 2
-                                                  }]
-                  }, {
-                  "SenionMapKey": "27f5638e-0190-4318-97d8-364aac7a55ab",
-                  "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
-                  "InteriorId": "swallow_lon_50finsbury",
-                  "SenionidToFloorIndexMapping": [{
-                                                  "SenionIndex": 0,
-                                                  "FloorIindex": 7
-                                                  }]
-                  }, {
-                  "SenionMapKey": "a6fd0f11-56fe-4fa1-8e42-f582f4e21a63",
-                  "SenionMapCustomerID": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
-                  "InteriorId": "westport_house",
-                  "SenionidToFloorIndexMapping": [{
-                                                  "SenionIndex": 0,
-                                                  "FloorIindex": 2
-                                                  }]
-                  }
-                  ],
-    "AttractModeTimeout": 0,
-    "AttractModePositionSpline": [
-        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
-        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
-        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
-        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
-        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
-        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 },
-        { "Latitude": 51.512392, "Longitude": -0.091394, "Altitude": 10.540936 }
-    ],
-    "AttractModeTargetSpline": [
-        { "Latitude": 51.510632, "Longitude": -0.092568, "Altitude": 222.676522 },
-        { "Latitude": 51.512275, "Longitude": -0.094450, "Altitude": 222.676500 },
-        { "Latitude": 51.514181, "Longitude": -0.092448, "Altitude": 222.676488 },
-        { "Latitude": 51.513643, "Longitude": -0.089085, "Altitude": 222.676506 },
-        { "Latitude": 51.511738, "Longitude": -0.088518, "Altitude": 222.676519 },
-        { "Latitude": 51.510569, "Longitude": -0.090499, "Altitude": 222.676509 },
-        { "Latitude": 51.510632, "Longitude": -0.092568, "Altitude": 222.676522 }
-    ],
-    "AttractModePlaybackSpeed": 0.007,
+  "name": "Project Swallow App",
+  "start_location_latitude": 51.512432,
+  "start_location_longitude": -0.091633,
+  "start_location_altitude": 10.0,
+  "start_location_distance": 800.0,
+  "start_location_orientation_degrees": 0.0,
+  "start_location_indoor_id": "",
+  "start_location_floor_index": 0,
+  "try_start_at_gps_location": false,
+  "perform_start_up_search": false,
+  "start_up_search_tag": "",
+  "eegeo_api_key": "6d27c9936af66fa250dbc30172d7fec4",
+  "google_analytics_referrer_token": "eegeo_project_swallow_ios",
+  "flurry_app_key": "",
+  "yelp_consumer_key": "KsLkLS9cLzSTTPKdSS6aFA",
+  "yelp_consumer_secret": "9KLdDS4qRwLrjHTPTPiRaQu2BfI",
+  "yelp_oauth_token": "nZYNtFsgNlKL6qrZI5meRoYFSDqEdB3L",
+  "yelp_oauth_token_secret": "FOU6tqR69K4d-gJRkXo_DOrkLCM",
+  "twitter_auth_code": "",
+  "geonames_username": "eegeo_swallow_win",
+  "coveragetree_manifest_url": "https://cdn1.eegeo.com/coverage-trees/vswallow/v1460/manifest.bin.gz",
+  "theme_manifest_url": "https://cdn-resources.eegeo.com/mobile-themes-new/v1009/default/ssl.manifest.bin.gz",
+  "embedded_theme_texture_path": "EmbeddedTheme",
+  "sqlite_db_url": "https://cdn1.eegeo.com/swallow-pois/pois_v168.db.gz",
+  "eegeo_search_service_url": "https://swallowapp.dundee.kimbleoperations.com/search/v1.1/",
+  "mypins_web_service_url": "https://swallowapp.dundee.kimbleoperations.com/reports/",
+  "mypins_web_service_auth_token": "f475c578eb4592637314e4a05510993b",
+  "web_proxy_enabled": false,
+  "web_proxy_ip_address": "",
+  "web_proxy_port": 0,
+  "web_proxy_ignore_pattern": "",
+  "ssl_enabled": true,
+  "is_kiosk_touch_input_enabled": false,
+  "is_in_kiosk_mode": false,
+  "start_app_in_fullscreen": false,
+  "use_labels": true,
+  "buildings": [
 
-    "FixedIndoorLocation": {
-        "Latitude": 51.512772344503013,
-        "Longitude": -0.091198986816446,
-        "InteriorId": "swallow_lon_wallbrooksquare",
-        "FloorIndex": 5,
-        "OrientationDegrees": 157.5
+    {
+      "senion_map_key": "70f77f56-78b7-42bb-b94f-3c2c6d8dd30a",
+      "senion_map_customer_id": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
+      "interior_id": "swallow_lon_citygatehouse",
+      "senionid_to_floor_index_mapping": [{
+        "senion_index": 0,
+        "floor_index": 1
+      }, {
+        "senion_index": 1,
+        "floor_index": 2
+      }]
+    }, {
+      "senion_map_key": "27f5638e-0190-4318-97d8-364aac7a55ab",
+      "senion_map_customer_id": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
+      "interior_id": "swallow_lon_50finsbury",
+      "senionid_to_floor_index_mapping": [{
+        "senion_index": 0,
+        "floor_index": 7
+      }]
+    }, {
+      "senion_map_key": "a6fd0f11-56fe-4fa1-8e42-f582f4e21a63",
+      "senion_map_customer_id": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a",
+      "interior_id": "westport_house",
+      "senionid_to_floor_index_mapping": [{
+        "senion_index": 0,
+        "floor_index": 2
+      }]
+    }
+  ],
+  "attract_mode_timeout": 0,
+  "attract_mode_position_spline": [{
+      "latitude": 51.512392,
+      "longitude": -0.091394,
+      "altitude": 10.540936
     },
+    {
+      "latitude": 51.512392,
+      "longitude": -0.091394,
+      "altitude": 10.540936
+    },
+    {
+      "latitude": 51.512392,
+      "longitude": -0.091394,
+      "altitude": 10.540936
+    },
+    {
+      "latitude": 51.512392,
+      "longitude": -0.091394,
+      "altitude": 10.540936
+    },
+    {
+      "latitude": 51.512392,
+      "longitude": -0.091394,
+      "altitude": 10.540936
+    },
+    {
+      "latitude": 51.512392,
+      "longitude": -0.091394,
+      "altitude": 10.540936
+    },
+    {
+      "latitude": 51.512392,
+      "longitude": -0.091394,
+      "altitude": 10.540936
+    }
+  ],
+  "attract_mode_target_spline": [{
+      "latitude": 51.510632,
+      "longitude": -0.092568,
+      "altitude": 222.676522
+    },
+    {
+      "latitude": 51.512275,
+      "longitude": -0.094450,
+      "altitude": 222.676500
+    },
+    {
+      "latitude": 51.514181,
+      "longitude": -0.092448,
+      "altitude": 222.676488
+    },
+    {
+      "latitude": 51.513643,
+      "longitude": -0.089085,
+      "altitude": 222.676506
+    },
+    {
+      "latitude": 51.511738,
+      "longitude": -0.088518,
+      "altitude": 222.676519
+    },
+    {
+      "latitude": 51.510569,
+      "longitude": -0.090499,
+      "altitude": 222.676509
+    },
+    {
+      "latitude": 51.510632,
+      "longitude": -0.092568,
+      "altitude": 222.676522
+    }
+  ],
+  "attract_mode_playback_speed": 0.007,
 
-    "OptionsAdminPassword": "1234",
-    "CompassCameraDampingEnabled": true
+  "fixed_indoor_location": {
+    "latitude": 51.512772344503013,
+    "longitude": -0.091198986816446,
+    "interior_id": "swallow_lon_wallbrooksquare",
+    "floor_index": 5,
+    "orientation_degrees": 157.5
+  },
+
+  "options_admin_password": "1234",
+  "compass_camera_damping_enabled": true
 }

@@ -50,7 +50,7 @@ namespace ExampleApp
                                              const Search::SdkModel::SearchTags& swallowSearchTags,
                                              const std::vector<std::string>& handledTags,
                                              const std::string& serviceUrl,
-                                             const std::string& apiKey,
+                                             const Eegeo::Web::ApiTokenModel& apiTokenModel,
                                              const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
                     
                     ~EegeoSearchServiceModule();

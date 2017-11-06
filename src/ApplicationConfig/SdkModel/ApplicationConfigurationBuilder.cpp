@@ -28,7 +28,11 @@ namespace ExampleApp
             , m_interestLocation(0.0, 0.0, 0.0)
             , m_distanceToInterestMetres(0.f)
             , m_orientationDegrees(0.f)
+            , m_indoorId("")
+            , m_floorIndex(0)
             , m_tryStartAtGpsLocation(false)
+            , m_performStartupSearch(false)
+            , m_startupSearchTag("")
             , m_googleAnalyticsReferrerToken("")
             , m_flurryAppKey("")
             , m_yelpConsumerKey("")
@@ -99,9 +103,33 @@ namespace ExampleApp
                 return *this;
             }
             
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetIndoorId(const std::string& indoorId)
+            {
+                m_indoorId = indoorId;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetFloorIndex(const int floorIndex)
+            {
+                m_floorIndex = floorIndex;
+                return *this;
+            }
+            
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetTryStartAtGpsLocation(bool tryStartAtGpsLocation)
             {
                 m_tryStartAtGpsLocation = tryStartAtGpsLocation;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetPerformStartupSearch(bool performStartupSearch)
+            {
+                m_performStartupSearch = performStartupSearch;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetStartupSearchTag(std::string startupSearchTag)
+            {
+                m_startupSearchTag = startupSearchTag;
                 return *this;
             }
             
@@ -389,8 +417,12 @@ namespace ExampleApp
                                                 m_interestLocation,
                                                 m_distanceToInterestMetres,
                                                 m_orientationDegrees,
+                                                m_indoorId,
+                                                m_floorIndex,
                                                 m_tryStartAtGpsLocation,
                                                 m_shouldStartFullscreen,
+                                                m_performStartupSearch,
+                                                m_startupSearchTag,
                                                 m_googleAnalyticsReferrerToken,
                                                 m_flurryAppKey,
                                                 m_yelpConsumerKey,

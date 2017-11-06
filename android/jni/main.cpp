@@ -146,14 +146,18 @@ JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_de
     g_pAppRunner->DestroyApplicationUi();
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_setNativeSurface(JNIEnv* jenv, jobject obj, jobject surface)
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_releaseNativeWindow(JNIEnv* jenv, jobject obj, jlong oldWindow)
 {
-    if(g_nativeState.window != NULL)
+    ANativeWindow* pWindow = reinterpret_cast<ANativeWindow*>(oldWindow);
+    if (pWindow != NULL)
     {
-        ANativeWindow_release(g_nativeState.window);
-        g_nativeState.window = NULL;
+        ANativeWindow_release(pWindow);
     }
+}
 
+JNIEXPORT jlong JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_setNativeSurface(JNIEnv* jenv, jobject obj, jobject surface)
+{
+    ANativeWindow* pWindow = g_nativeState.window;
     if (surface != NULL)
     {
         g_nativeState.window = ANativeWindow_fromSurface(jenv, surface);
@@ -163,6 +167,21 @@ JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_se
             g_pAppRunner->ActivateSurface();
         }
     }
+
+    return reinterpret_cast<jlong>(pWindow);
+}
+
+JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_handleUrlOpenEvent(
+    JNIEnv* jenv, jobject obj,
+	jstring host,
+	jstring path)
+{
+    const char* nativeHost = jenv->GetStringUTFChars(host, JNI_FALSE);
+    const char* nativePath = jenv->GetStringUTFChars(path, JNI_FALSE);
+    const AppInterface::UrlData data = {nativeHost, nativePath};
+    g_pAppRunner->HandleUrlOpenEvent(data);
+    jenv->ReleaseStringUTFChars(host, nativeHost);
+    jenv->ReleaseStringUTFChars(path, nativePath);
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_EegeoSurfaceView_processNativePointerDown(JNIEnv* jenv, jobject obj,

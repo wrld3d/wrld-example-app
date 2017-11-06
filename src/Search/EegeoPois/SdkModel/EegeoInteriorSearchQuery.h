@@ -36,7 +36,7 @@ namespace ExampleApp
                                          Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                                          const Search::SdkModel::SearchQuery& query,
                                          const std::string& serviceUrl,
-                                         const std::string& apiKey,
+                                         const Eegeo::Web::ApiTokenModel& apiTokenModel,
                                          const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                          int floorIdx,
                                          Eegeo::Helpers::ICallback0& completionCallback);
@@ -51,7 +51,7 @@ namespace ExampleApp
                     
                 private:
                     void OnWebResponseReceived(Eegeo::Web::IWebResponse& webResponse);
-                    const std::string m_apiKey;
+                    const Eegeo::Web::ApiTokenModel& m_apiTokenModel;
                 };
             }
         }

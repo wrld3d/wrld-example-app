@@ -306,7 +306,11 @@ void AppHost::OnResume()
     ASSERT_NATIVE_THREAD
 
 	m_pSenionLabLocationModule->GetLocationManager().OnResume();
-    m_pSenionLabBroadcastReceiver->RegisterReceiver();
+
+    if(m_pSenionLabBroadcastReceiver != NULL)
+    {
+        m_pSenionLabBroadcastReceiver->RegisterReceiver();
+    }
 
     m_pApp->OnResume();
     m_isPaused = false;
@@ -720,3 +724,8 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
 	jmethodID touchEnabledMethod = env->GetMethodID(m_nativeState.activityClass, methodName.c_str(), "(Z)V");
 	env->CallVoidMethod(m_nativeState.activity, touchEnabledMethod, message.IsEnabled());
 }
+void AppHost::HandleOpenUrlEvent(const AppInterface::UrlData& data)
+{
+	m_pApp->Event_OpenUrl(data);
+}
+

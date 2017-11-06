@@ -74,6 +74,7 @@
 #include "IOSMenuReactionModel.h"
 #include "TagSearchViewModule.h"
 #include "InteriorsExplorerModel.h"
+#include "AppUrlDelegate.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -182,14 +183,18 @@ AppHost::AppHost(
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
     m_pAppLocationDelegate = Eegeo_NEW(AppLocationDelegate)(*m_piOSLocationService, m_viewController);
-    
+    m_pAppUrlDelegate = Eegeo_NEW(AppUrlDelegate)(*m_pApp);
+
     m_messageBus.SubscribeUi(m_userInteractionEnabledChangedHandler);
 }
 
 AppHost::~AppHost()
 {
     m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
-    
+ 
+    Eegeo_DELETE m_pAppUrlDelegate;
+    m_pAppUrlDelegate = NULL;
+   
     Eegeo_DELETE m_pAppLocationDelegate;
     m_pAppLocationDelegate = NULL;
 
@@ -535,3 +540,8 @@ void AppHost::HandleUserInteractionEnabledChanged(const ExampleApp::UserInteract
 {
     m_pView.userInteractionEnabled = message.IsEnabled();
 }
+void AppHost::HandleUrlOpen(const AppInterface::UrlData &data)
+{
+    m_pApp->Event_OpenUrl(data);
+}
+
