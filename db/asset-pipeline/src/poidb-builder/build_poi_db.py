@@ -19,11 +19,11 @@ MEETING_ROOM_STATUSES = [u'available',
                          u'available_soon',
                          u'occupied']
 
-# UK bounds
-MIN_LAT = 49.0
+# UK + US bounds
+MIN_LAT = 29.0
 MAX_LAT = 61.0
 
-MIN_LNG = -8.0
+MIN_LNG = -80.0
 MAX_LNG = 2.5
 
 MIN_DISTANCE = 0.0
