@@ -12,7 +12,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             namespace SenionLab
-            {
+            {   
                 SenionLabLocationService::SenionLabLocationService(Eegeo::Location::ILocationService& defaultLocationService,
                                                                    const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                    const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
@@ -24,6 +24,7 @@ namespace ExampleApp
                 , m_floorIndex(-1)
                 , m_interiorId(Eegeo::Resources::Interiors::InteriorId::NullId())
                 , m_isConnected(false)
+                , m_headingDegrees(0.0)
                 {
                 }
                 
@@ -133,6 +134,12 @@ namespace ExampleApp
                 
                 bool SenionLabLocationService::GetHeadingDegrees(double& headingDegrees)
                 {
+                    if (m_isConnected)
+                    {
+                        headingDegrees = m_headingDegrees;
+                        return true;
+                    }
+                    
                     return m_defaultLocationService.GetHeadingDegrees(headingDegrees);
                 }
                 
@@ -148,6 +155,11 @@ namespace ExampleApp
                 void SenionLabLocationService::SetLocation(Eegeo::Space::LatLong &latLong)
                 {
                     m_latLong = latLong;
+                }
+                
+                void SenionLabLocationService::SetHeadingDegrees(double headingDegrees)
+                {
+                    m_headingDegrees = headingDegrees;
                 }
                 
                 void SenionLabLocationService::SetFloorIndex(int floorIndex)

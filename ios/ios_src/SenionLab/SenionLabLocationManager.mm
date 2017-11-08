@@ -167,6 +167,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 - (void)headingUpdate:(SSIHeading *)heading
 {
     m_pSenionLabLocationService->SetIsAuthorized(true);
+    m_pSenionLabLocationService->SetHeadingDegrees([heading angle]);
 }
 
 - (void)positioningApi:(SSIPositioningApi *)positioningApi didUpdateLocationAvailability:(SSILocationAvailability)locationAvailability

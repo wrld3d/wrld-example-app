@@ -34,6 +34,7 @@ namespace ExampleApp
                     
                     void SetIsAuthorized(bool isAuthorized);
                     void SetLocation(Eegeo::Space::LatLong& latLong);
+                    void SetHeadingDegrees(double headingDegrees);
                     void SetFloorIndex(int floorIndex);
                     void SetInteriorId(const Eegeo::Resources::Interiors::InteriorId& interiorId);
                     void SetIsConnected(bool isConnected);
@@ -45,6 +46,7 @@ namespace ExampleApp
                     
                     bool m_isAuthorized;
                     Eegeo::Space::LatLong m_latLong;
+                    double m_headingDegrees;
                     int m_floorIndex;
                     Eegeo::Resources::Interiors::InteriorId m_interiorId;
                     bool m_isConnected;
