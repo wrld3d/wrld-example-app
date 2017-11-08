@@ -23,7 +23,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 @interface SenionLabLocationManager()<SSIStepInsideSdkStatusDelegate, SSIPositioningApiDelegate>
 {
-    std::map<std::string, std::map<int, std::string>> m_floorMap;
+    std::map<std::string, std::map<int, std::vector<std::string> > > m_floorMap; // TJ: This looks somewhat interesting.... This needs the bullet. Boy scout later.
     std::map<std::string, Eegeo::Resources::Interiors::InteriorId> m_interiorIdMap;
     int m_floorIndex;
     ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService* m_pSenionLabLocationService;
@@ -59,7 +59,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 -(void) StartUpdatingLocation: (NSArray<NSString*>*) mapKey
                     apiSecret: (NSString*) apiSecret
-                     floorMap: (std::map<std::string, std::map<int, std::string>>) floorMap
+                     floorMap: (std::map<std::string, std::map<int, std::vector<std::string> > >) floorMap
                 interiorIdMap: (std::map<std::string, Eegeo::Resources::Interiors::InteriorId>) interiorIdMap
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -69,7 +69,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 -(void) StartSenion: (NSArray<NSString*>*) mapKey
           apiSecret: (NSString*) apiSecret
-           floorMap: (std::map<std::string, std::map<int, std::string>>) floorMap
+           floorMap: (std::map<std::string, std::map<int, std::vector<std::string> > >) floorMap
       interiorIdMap: (std::map<std::string, Eegeo::Resources::Interiors::InteriorId>) interiorIdMap
 {
     [SSISensors requestCoreLocationWhenInUseAuthorization];
@@ -146,7 +146,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
         {
             m_pSenionLabLocationService->SetInteriorId(it->second);
             
-            std::map<std::string, std::map<int, std::string>>::iterator floor_it = m_floorMap.find(mapKey);
+            std::map<std::string, std::map<int, std::vector<std::string>>>::iterator floor_it = m_floorMap.find(mapKey);
             if(floor_it != m_floorMap.end())
             {
                 m_messageBus->Publish(ExampleApp::AboutPage::AboutPageSenionSettingsTypeMessage(mapKey, std::string([m_customerId UTF8String]), floor_it->second, it->second.Value()));
@@ -257,15 +257,20 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 -(int) getFloorIndexFromSenionFloorIndex: (std::string) senionFloorIndex senionMapKey: (std::string) senionMapKey
 {
-    std::map<std::string, std::map<int, std::string>>::iterator mapKey_it = m_floorMap.find(senionMapKey);
+    std::map<std::string, std::map<int, std::vector<std::string> > >::iterator mapKey_it = m_floorMap.find(senionMapKey);
 
     if(mapKey_it != m_floorMap.end())
     {
-        for(std::map<int, std::string>::iterator floor_it = mapKey_it->second.begin(); floor_it != mapKey_it->second.end(); ++floor_it)
+        for(std::map<int, std::vector<std::string> >::iterator floor_it = mapKey_it->second.begin(); floor_it != mapKey_it->second.end(); ++floor_it)
         {
-            if(floor_it->second == senionFloorIndex)
+            for(std::vector<std::string>::iterator possible_target_it = floor_it->second.begin();
+                possible_target_it != floor_it->second.end();
+                ++possible_target_it)
             {
-                return floor_it->first;
+                if(*possible_target_it == senionFloorIndex)
+                {
+                    return floor_it->first;
+                }
             }
         }
     }

@@ -13,7 +13,7 @@ namespace ExampleApp
 {
     namespace ApplicationConfig
     {
-        ApplicationBuildingInfo::ApplicationBuildingInfo(const std::string senionMapKey,const std::string senionMapCustomerID,const std::string interiorID, const std::map<int,int> senionFloorMap): m_senionMapKey(senionMapKey),
+        ApplicationBuildingInfo::ApplicationBuildingInfo(const std::string senionMapKey,const std::string senionMapCustomerID,const std::string interiorID, const std::map<int,std::vector<std::string> > senionFloorMap): m_senionMapKey(senionMapKey),
                                     m_senionMapCustomerID(senionMapCustomerID),
                                     m_interiorID(interiorID),
                                     m_senionfloorMap(senionFloorMap)
@@ -33,7 +33,7 @@ namespace ExampleApp
             return m_interiorID;
         }
         
-        const std::map<int,int>& ApplicationBuildingInfo::SenionFloorMap() const{
+        const std::map<int,std::vector<std::string> >& ApplicationBuildingInfo::SenionFloorMap() const{
             return m_senionfloorMap;
         }
     }

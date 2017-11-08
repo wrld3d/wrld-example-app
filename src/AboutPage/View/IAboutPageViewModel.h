@@ -6,6 +6,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 namespace ExampleApp
 {
@@ -40,7 +41,7 @@ namespace ExampleApp
                 
                 virtual void SetSenionDataType(const int& eegeoFloorNumber ,const std::string& senionFloorNumber, const double& latitude, const double& longitude) = 0;
                 
-                virtual void SetSenionSettingsType(const std::string& floorNumber, const std::string& latitude, const std::map<int, std::string>& longitude, const std::string& interiorId) = 0;
+                virtual void SetSenionSettingsType(const std::string& floorNumber, const std::string& latitude, const std::map<int, std::vector<std::string> >& longitude, const std::string& interiorId) = 0;
             };
         }
     }

@@ -24,13 +24,13 @@ namespace ExampleApp
         
         void SenionLabLocationManagerInterop::StartUpdatingLocation(const std::string& apiSecret,
                                                                     const std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& senionInfoMap,
-                                                                    const std::map<std::string, std::map<int, std::string> >& floorMaps,
+                                                                    const std::map<std::string, std::map<int, std::vector<std::string> > >& floorMaps,
                                                                     const std::map<std::string, Eegeo::Resources::Interiors::InteriorId>& interiorIds)
         {
             std::map<std::string, ExampleApp::ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>::const_iterator it;
             
             NSMutableArray<NSString*>* mutableMapKeyArray = [NSMutableArray array];
-            std::map<std::string, std::map<int, std::string>> floorMap;
+            std::map<std::string, std::map<int, std::vector<std::string>>> floorMap;
             std::map<std::string, Eegeo::Resources::Interiors::InteriorId> interiorIdMap;
             
             for(it = senionInfoMap.begin(); it != senionInfoMap.end(); ++it)
@@ -41,7 +41,7 @@ namespace ExampleApp
                     
                     [mutableMapKeyArray addObject:[NSString stringWithCString:mapKey.c_str() encoding:[NSString defaultCStringEncoding]]];
                     
-                    floorMap.insert(std::pair<std::string, std::map<int, std::string>>(mapKey, it->second.GetFloorIndexMap()));
+                    floorMap.insert(std::pair<std::string, std::map<int, std::vector<std::string > > >(mapKey, it->second.GetFloorIndexMap()));
                     
                     interiorIdMap.insert(std::pair<std::string, Eegeo::Resources::Interiors::InteriorId>(mapKey, it->second.GetInteriorId()));
                 }

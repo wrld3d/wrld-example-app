@@ -26,6 +26,16 @@ JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroad
                                                                                      floorIdString);
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroadcastReceiverJniMethods_DidUpdateHeading(
+        JNIEnv *jenv, jclass jobj,
+        jlong nativeObjectPtr,
+        jdouble headingDegrees)
+{
+    using ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver;
+    reinterpret_cast<SenionLabBroadcastReceiver *>(nativeObjectPtr)->DidUpdateHeading(headingDegrees);
+}
+
+
 JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroadcastReceiverJniMethods_SetIsAuthorized(
         JNIEnv *jenv, jclass obj,
         jlong nativeObjectPtr,

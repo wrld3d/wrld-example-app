@@ -12,7 +12,7 @@
 -(instancetype) Init: (ExampleApp::IndoorAtlas::IndoorAtlasLocationService*) indoorAtlasLocationService;
 -(void) StartUpdatingLocation: (NSString*) apiKey
                     apiSecret: (NSString*) apiSecret
-                     floorMap: (std::map<int, std::string>) floorMap
+                     floorMap: (std::map<int, std::vector<std::string> >) floorMap
                    floorIndex: (int) floorIndex;
 -(void) StopUpdatingLocation;
 -(void) SetFloorIndex: (int) floorIndex;

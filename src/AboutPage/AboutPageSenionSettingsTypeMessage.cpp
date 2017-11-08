@@ -6,7 +6,7 @@ namespace ExampleApp
 {
     namespace AboutPage
     {
-        AboutPageSenionSettingsTypeMessage::AboutPageSenionSettingsTypeMessage(std::string apiKey, std::string apiSecret, std::map<int, std::string> floorMap, std::string interiorId)
+        AboutPageSenionSettingsTypeMessage::AboutPageSenionSettingsTypeMessage(std::string apiKey, std::string apiSecret, std::map<int, std::vector<std::string> > floorMap, std::string interiorId)
         : m_senionApiKey(apiKey)
         , m_senionApiSecret(apiSecret)
         , m_senionfloorMap(floorMap)
@@ -24,7 +24,7 @@ namespace ExampleApp
             return m_senionApiSecret;
         }
         
-        std::map<int, std::string> AboutPageSenionSettingsTypeMessage::GetSenionFloorMap() const
+        std::map<int, std::vector<std::string> > AboutPageSenionSettingsTypeMessage::GetSenionFloorMap() const
         {
             return m_senionfloorMap;
         }

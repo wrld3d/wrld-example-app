@@ -132,19 +132,22 @@ namespace ExampleApp
                 m_senionLongitude = longitude;
             }
 
-            void AboutPageViewModel::SetSenionSettingsType(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::string>& floorMap, const std::string& interiorId)
+            void AboutPageViewModel::SetSenionSettingsType(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::vector<std::string> >& floorMap, const std::string& interiorId)
             {
                 m_senionApiKey = apiKey;
                 m_senionApiSecret = apiSecret;
                 m_senionFloorMap = floorMap;
                 m_senionInteriorId = interiorId;
 
-                std::map<int, std::string> map = floorMap;
+                std::map<int, std::vector<std::string> > map = floorMap;
 
                 m_senionFloorMapString.str(std::string());
-                for(std::map<int, std::string>::iterator it = map.begin(); it != map.end(); ++it)
+                for(std::map<int, std::vector<std::string> >::iterator it = map.begin(); it != map.end(); ++it)
                 {
-                    m_senionFloorMapString << it->second << "\n";
+                    for(std::vector<std::string>::iterator sit = it->second.begin(); sit != it->second.end(); ++sit)
+                    {
+                        m_senionFloorMapString << *sit << "\n";
+                    }
                 }
             }
         }

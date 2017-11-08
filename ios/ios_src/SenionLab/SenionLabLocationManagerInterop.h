@@ -21,7 +21,7 @@ namespace ExampleApp
             ~SenionLabLocationManagerInterop();
             void StartUpdatingLocation(const std::string& apiSecret,
                                        const std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& senionInfoMap,
-                                       const std::map<std::string, std::map<int, std::string> >& floorMaps,
+                                       const std::map<std::string, std::map<int, std::vector<std::string> > >& floorMaps,
                                        const std::map<std::string, Eegeo::Resources::Interiors::InteriorId>& interiorIds);
             void StopUpdatingLocation();
             

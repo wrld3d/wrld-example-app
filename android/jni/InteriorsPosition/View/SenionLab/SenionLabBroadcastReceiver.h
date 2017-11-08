@@ -31,6 +31,7 @@ namespace ExampleApp
                     void UnregisterReceiver();
 
                     void DidUpdateLocation(const double latitude, const double longitude, const std::string floorId);
+                    void DidUpdateHeading(const double headingDegrees);
                     void SetIsAuthorized(const bool isAuthorized);
                     void SetInteriorIdFromMapKey(const std::string mapKey);
                     void SetIsConnected(const bool isConnected);

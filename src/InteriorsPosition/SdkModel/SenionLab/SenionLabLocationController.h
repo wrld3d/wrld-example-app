@@ -34,7 +34,7 @@ namespace ExampleApp
                 private:
                     ISenionLabLocationManager& m_locationManager;
                     std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> m_trackingInfoMap;
-                    std::map<std::string, std::map<int, std::string> > m_floorMaps;
+                    std::map<std::string, std::map<int, std::vector<std::string> > > m_floorMaps;
                     std::map<std::string, Eegeo::Resources::Interiors::InteriorId> m_interiorIds;
                 };
             }
