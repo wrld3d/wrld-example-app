@@ -26,7 +26,7 @@ namespace ExampleApp
                                     "unused_string", true};
                             yelpCategoryMapperUpdater.AddMapping(iter->searchTag,
                                                                  yelpCategoryModel);
-                        } else if (iter->yelpMapping.length() > 0) {
+                        } else if (iter->yelpMapping.length() > 0 && iter->yelpMapping != "unused_string") {
                             Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel{
                                     iter->yelpMapping, false};
                             yelpCategoryMapperUpdater.AddMapping(iter->searchTag,
