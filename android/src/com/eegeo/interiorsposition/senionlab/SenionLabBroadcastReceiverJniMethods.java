@@ -9,6 +9,8 @@ public class SenionLabBroadcastReceiverJniMethods
                                                 double longitude,
                                                 String floorId);
 
+    public static native void DidUpdateHeading(long nativeCallerPointer, double headingDegrees);
+
     public static native void SetIsAuthorized(long nativeCallerPointer, boolean isAuthorized);
     
     public static native void SetInteriorIdFromMapKey(long nativeCallerPointer, String mapKey);

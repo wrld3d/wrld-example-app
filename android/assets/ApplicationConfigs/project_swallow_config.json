@@ -85,6 +85,12 @@
       }, {
         "building_floor_index": 12,
         "tracked_floor_index": "10"
+      }, {
+        "building_floor_index": 5,
+        "tracked_floor_index": "11"
+      }, {
+        "building_floor_index": 6,
+        "tracked_floor_index": "12"
       }]
     }
   ],

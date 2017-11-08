@@ -5,7 +5,7 @@
 
 @interface IndoorAtlasLocationManager()<IALocationManagerDelegate>
 {
-    std::map<int, std::string> m_floorMap;
+    std::map<int, std::vector<std::string> > m_floorMap;
     int m_floorIndex;
     ExampleApp::IndoorAtlas::IndoorAtlasLocationService* m_pIndoorAtlasLocationService;
 }
@@ -26,7 +26,7 @@
 
 -(void) StartUpdatingLocation: (NSString*) apiKey
                     apiSecret: (NSString*) apiSecret
-                     floorMap: (std::map<int, std::string>) floorMap
+                     floorMap: (std::map<int, std::vector<std::string> >) floorMap
                    floorIndex: (int) floorIndex
 {
     self.locationManager = [IALocationManager sharedInstance];
@@ -85,11 +85,11 @@
 
 -(NSString*) getFloorPlanIdFromFloorIndex: (int) floorIndex
 {
-    std::map<int, std::string>::iterator it = m_floorMap.find(floorIndex);
+    std::map<int, std::vector<std::string> >::iterator it = m_floorMap.find(floorIndex);
     
     if(it != m_floorMap.end())
     {
-        return [NSString stringWithCString:it->second.c_str() encoding:[NSString defaultCStringEncoding]];
+        return [NSString stringWithCString:it->second[0].c_str() encoding:[NSString defaultCStringEncoding]];
     }
     
     return nil;

@@ -36,6 +36,7 @@
 #include "WorldPinsSelectedFocussedMessage.h"
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
+#include "InteriorsHeadingChangedMessage.h"
 #include "InteriorsLocationMapKeyChangedMessage.h"
 #include "InteriorsLocationConnectionChangedMessage.h"
 
@@ -75,6 +76,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Menu::MenuSectionExpandedChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<WorldPins::WorldPinsSelectedFocussedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsHeadingChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationAuthorizationChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationMapKeyChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationConnectionChangedMessage>

@@ -17,12 +17,12 @@
           messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus*) messageBus;
 -(void) StartUpdatingLocation: (NSArray<NSString*>*) mapKey
                     apiSecret: (NSString*) apiSecret
-                     floorMap: (std::map<std::string, std::map<int, std::string>>) floorMap
+                     floorMap: (std::map<std::string, std::map<int, std::vector<std::string> > >) floorMap
                 interiorIdMap: (std::map<std::string, Eegeo::Resources::Interiors::InteriorId>) interiorIdMap;
 -(void) StopUpdatingLocation;
 -(void) StartSenion: (NSArray<NSString*>*) mapKey
           apiSecret: (NSString*) apiSecret
-           floorMap: (std::map<std::string, std::map<int, std::string>>) floorMap
+           floorMap: (std::map<std::string, std::map<int, std::vector<std::string> > >) floorMap
       interiorIdMap: (std::map<std::string, Eegeo::Resources::Interiors::InteriorId>) interiorIdMap;
 
 @end

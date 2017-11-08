@@ -6,6 +6,7 @@
 #include "AndroidNativeState.h"
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
+#include "InteriorsHeadingChangedMessage.h"
 #include "InteriorsLocationMapKeyChangedMessage.h"
 #include "InteriorsLocationConnectionChangedMessage.h"
 #include "SenionLabLocationService.h"
@@ -79,6 +80,12 @@ namespace ExampleApp
                     ASSERT_UI_THREAD
                     Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(latitude, longitude));
                     m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, floorId));
+                }
+
+                void SenionLabBroadcastReceiver::DidUpdateHeading(const double headingDegrees)
+                {
+                    ASSERT_UI_THREAD
+                    m_messageBus.Publish(InteriorsHeadingChangedMessage(headingDegrees));
                 }
 
                 void SenionLabBroadcastReceiver::SetIsAuthorized(const bool isAuthorized)

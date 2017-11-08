@@ -49,13 +49,19 @@ class SenionLabPositioningReceiver extends PositioningApi.Listener
     @Override
     public void onLocationAvailabilityUpdated(@NonNull LocationAvailability locationAvailability)
     {
-    	boolean available = locationAvailability == LocationAvailability.Available;
+        boolean available = locationAvailability == LocationAvailability.Available;
     	SenionLabBroadcastReceiverJniMethods.SetIsConnected(m_nativeCallerPointer, available);
     }
 
     @Override
     public void onHeadingUpdated(@NonNull Heading heading)
     {
+        synchronized (m_updateLock)
+        {
+            SenionLabBroadcastReceiverJniMethods.DidUpdateHeading(m_nativeCallerPointer,
+                    heading.getAngle());
+        }
+
         m_broadcastReceiver.didLocationError(false);
     }
 }

@@ -10,6 +10,7 @@
 #include "ApplicationConfiguration.h"
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
+#include "InteriorsHeadingChangedMessage.h"
 #include "SenionLabLocationService.h"
 #include "SenionLabLocationManager.h"
 
@@ -28,6 +29,7 @@ namespace ExampleApp
                 , m_senionLabLocationService(senionLabLocationService)
                 , m_messageBus(messageBus)
                 , m_onDidUpdateLocationCallback(this, &SenionLabLocationManager::OnDidUpdateLocation)
+                , m_onDidUpdateHeadingCallback(this, &SenionLabLocationManager::OnDidUpdateHeading)
                 , m_onSetIsAuthorized(this, &SenionLabLocationManager::OnSetIsAuthorized)
                 , m_onSetInteriorIdFromMapKey(this, &SenionLabLocationManager::OnSetInteriorIdFromMapKey)
                 , m_onSetIsConnected(this, &SenionLabLocationManager::OnSetIsConnected)
@@ -36,6 +38,7 @@ namespace ExampleApp
                     ASSERT_NATIVE_THREAD
 
                     m_messageBus.SubscribeNative(m_onDidUpdateLocationCallback);
+                    m_messageBus.SubscribeNative(m_onDidUpdateHeadingCallback);
                     m_messageBus.SubscribeNative(m_onSetIsAuthorized);
                     m_messageBus.SubscribeNative(m_onSetInteriorIdFromMapKey);
                     m_messageBus.SubscribeNative(m_onSetIsConnected);
@@ -64,6 +67,7 @@ namespace ExampleApp
                     m_messageBus.UnsubscribeNative(m_onSetIsConnected);
                     m_messageBus.UnsubscribeNative(m_onSetInteriorIdFromMapKey);
                     m_messageBus.UnsubscribeNative(m_onSetIsAuthorized);
+                    m_messageBus.UnsubscribeNative(m_onDidUpdateHeadingCallback);
                     m_messageBus.UnsubscribeNative(m_onDidUpdateLocationCallback);
 
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -75,7 +79,7 @@ namespace ExampleApp
 
                 void SenionLabLocationManager::StartUpdatingLocation(const std::string& apiSecret,
                                                                      const std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& senionInfoMap,
-                                                                     const std::map<std::string, std::map<int, std::string> >& floorMaps,
+                                                                     const std::map<std::string, std::map<int, std::vector<std::string> > >& floorMaps,
                                                                      const std::map<std::string, Eegeo::Resources::Interiors::InteriorId>& interiorIds)
                 {
                     m_floorMaps = floorMaps;
@@ -114,6 +118,11 @@ namespace ExampleApp
                     m_messageBus.Publish(ExampleApp::AboutPage::AboutPageSenionDataTypeMessage(floorIndex, message.FloorId(), message.Latitude(), message.Longitude()));
                 }
 
+                void SenionLabLocationManager::OnDidUpdateHeading(const InteriorsHeadingChangedMessage& message)
+                {
+                    m_senionLabLocationService.SetHeadingDegrees(message.HeadingDegrees());
+                }
+
                 void SenionLabLocationManager::OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message)
                 {
                     m_senionLabLocationService.SetIsAuthorized(message.IsAuthorized());
@@ -128,7 +137,7 @@ namespace ExampleApp
                     {
                         m_senionLabLocationService.SetInteriorId(it->second);
 
-                        std::map<std::string, std::map<int, std::string>>::iterator floor_it = m_floorMaps.find(m_mapKey);
+                        std::map<std::string, std::map<int, std::vector<std::string> > >::iterator floor_it = m_floorMaps.find(m_mapKey);
                         if(floor_it != m_floorMaps.end())
                         {
                             m_messageBus.Publish(ExampleApp::AboutPage::AboutPageSenionSettingsTypeMessage(m_mapKey, m_customerId, floor_it->second, it->second.Value()));
@@ -152,17 +161,22 @@ namespace ExampleApp
 
                 int SenionLabLocationManager::FloorIdToFloorIndex(const std::string& mapKey, const std::string& floorId)
                 {
-                	std::map<std::string, std::map<int, std::string>>::iterator it = m_floorMaps.find(mapKey);
+                    std::map<std::string, std::map<int, std::vector<std::string> > >::iterator mapKey_it = m_floorMaps.find(mapKey);
 
-                	if(it != m_floorMaps.end())
+                	if(mapKey_it != m_floorMaps.end())
                 	{
-						for (auto &kv : it->second)
-						{
-							if (kv.second == floorId)
-							{
-								return kv.first;
-							}
-						}
+                        for(std::map<int, std::vector<std::string> >::iterator floor_it = mapKey_it->second.begin(); floor_it != mapKey_it->second.end(); ++floor_it)
+                        {
+                            for (std::vector<std::string>::iterator possible_target_it = floor_it->second.begin();
+                                 possible_target_it != floor_it->second.end();
+                                 ++possible_target_it)
+                            {
+                                if (*possible_target_it == floorId)
+                                {
+                                    return floor_it->first;
+                                }
+                            }
+                        }
                 	}
 
                     return -1;

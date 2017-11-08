@@ -54,7 +54,7 @@ namespace ExampleApp
                     {
                         NSString* apiKey = [NSString stringWithCString:trackingInfo.GetConfig().GetApiKey().c_str() encoding:[NSString defaultCStringEncoding]];
                         NSString* apiSecret = [NSString stringWithCString:trackingInfo.GetConfig().GetApiSecret().c_str() encoding:[NSString defaultCStringEncoding]];
-                        std::map<int, std::string> floorMap = trackingInfo.GetFloorIndexMap();
+                        std::map<int, std::vector<std::string> > floorMap = trackingInfo.GetFloorIndexMap();
          
                         [&m_locationManager StartUpdatingLocation: apiKey
                                                         apiSecret: apiSecret

@@ -11,7 +11,7 @@ namespace ExampleApp
             ApplicationInteriorTrackingInfo::ApplicationInteriorTrackingInfo(const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                                              const std::string& type,
                                                                              const ApplicationInteriorTrackingConfig& config,
-                                                                             const std::map<int, std::string>& floorIndexMap)
+                                                                             const std::map<int, std::vector<std::string> >& floorIndexMap)
             : m_interiorId(interiorId)
             , m_type(type)
             , m_config(config)
@@ -38,7 +38,7 @@ namespace ExampleApp
                 return m_config;
             }
             
-            const std::map<int, std::string>& ApplicationInteriorTrackingInfo::GetFloorIndexMap() const
+            const std::map<int, std::vector<std::string> >& ApplicationInteriorTrackingInfo::GetFloorIndexMap() const
             {
                 return m_floorIndexMap;
             }

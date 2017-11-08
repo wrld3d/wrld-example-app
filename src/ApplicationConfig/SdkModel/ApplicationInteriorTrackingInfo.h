@@ -19,19 +19,19 @@ namespace ExampleApp
                 ApplicationInteriorTrackingInfo(const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                 const std::string& type,
                                                 const ApplicationInteriorTrackingConfig& config,
-                                                const std::map<int, std::string>& floorIndexMap);
+                                                const std::map<int, std::vector<std::string> >& floorIndexMap);
                 ~ApplicationInteriorTrackingInfo();
                 
                 const Eegeo::Resources::Interiors::InteriorId& GetInteriorId() const;
                 const std::string& GetType() const;
                 const ApplicationInteriorTrackingConfig& GetConfig() const;
-                const std::map<int, std::string>& GetFloorIndexMap() const;
+                const std::map<int, std::vector<std::string> >& GetFloorIndexMap() const;
                 
             private:
                 Eegeo::Resources::Interiors::InteriorId m_interiorId;
                 std::string m_type;
                 ApplicationInteriorTrackingConfig m_config;
-                std::map<int, std::string> m_floorIndexMap;
+                std::map<int, std::vector<std::string> > m_floorIndexMap;
             };
         }
     }

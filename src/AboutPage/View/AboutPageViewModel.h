@@ -34,7 +34,7 @@ namespace ExampleApp
                 double m_senionLongitude;
                 std::string m_senionApiKey;
                 std::string m_senionApiSecret;
-                std::map<int, std::string> m_senionFloorMap;
+                std::map<int, std::vector<std::string> > m_senionFloorMap;
                 std::stringstream m_senionFloorMapString;
                 std::string m_senionInteriorId;
 
@@ -74,7 +74,7 @@ namespace ExampleApp
                 
                 void SetSenionDataType(const int32_t& eegeoFloorNumber, const std::string& senionFloorNumber, const double& latitude, const double& longitude);
                 
-                void SetSenionSettingsType(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::string>& floorMap, const std::string& interiorId);
+                void SetSenionSettingsType(const std::string& apiKey, const std::string& apiSecret, const std::map<int, std::vector<std::string> >& floorMap, const std::string& interiorId);
             };
         }
     }

@@ -406,10 +406,10 @@ namespace ExampleApp
                     Eegeo_ASSERT(building.HasMember(FloorMapping.c_str()), "FloorMapping not found");
                     const rapidjson::Value& floorMappingArray = building[FloorMapping.c_str()];
                     
-                    std::map<int, std::string> floorMapping;
+                    std::map<int, std::vector<std::string> > floorMapping;
                     for(rapidjson::SizeType j = 0; j < floorMappingArray.Size(); ++j)
                     {
-                        floorMapping[floorMappingArray[j][BuildingFloorIndex.c_str()].GetInt()] = floorMappingArray[j][TrackedFloorIndex.c_str()].GetString();
+                        floorMapping[floorMappingArray[j][BuildingFloorIndex.c_str()].GetInt()].push_back(floorMappingArray[j][TrackedFloorIndex.c_str()].GetString());
                     }
                     
                     SdkModel::ApplicationInteriorTrackingInfo interiorTrackingInfo(interiorId,
