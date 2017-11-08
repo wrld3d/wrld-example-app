@@ -24,6 +24,7 @@ namespace ExampleApp
                 bool m_streamOverWifiOnly;
                 bool m_networkAvailable;
                 bool m_connectedToWifi;
+                std::string m_ssid;
                 
                 Eegeo::Helpers::TCallback1<NetworkCapabilities, const bool&> m_connectionChangedCallback;
                 Eegeo::Helpers::CallbackCollection0 m_notifyChangedCallbacks;
@@ -31,6 +32,7 @@ namespace ExampleApp
                 void RefreshConnectivity();
                 bool QueryIsNetworkAvailable() const;
                 bool QueryIsConnectedToWifi() const;
+                const std::string& QueryNetworkSSID() const;
             public:
                 NetworkCapabilities(Eegeo::Web::IConnectivityService& connectivityService,
                                     Eegeo::Helpers::IHttpCache& httpCache,

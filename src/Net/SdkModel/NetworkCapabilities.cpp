@@ -24,6 +24,7 @@ namespace ExampleApp
             , m_streamOverWifiOnly(false)
             , m_networkAvailable(QueryIsNetworkAvailable())
             , m_connectedToWifi(QueryIsConnectedToWifi())
+            , m_ssid(QueryNetworkSSID())
             , m_connectionChangedCallback(this, &NetworkCapabilities::HandleConnectionChanged)
             {
                 if(!m_persistentSettings.TryGetValue(NetworkCapabilities_OnlyStreamOverWifi_Key, m_streamOverWifiOnly))
@@ -112,11 +113,13 @@ namespace ExampleApp
             {
                 const bool networkAvailable = QueryIsNetworkAvailable();
                 const bool connectedToWifi = QueryIsConnectedToWifi();
+                const std::string& ssid = QueryNetworkSSID();
                 
                 
-                const bool changed = (networkAvailable != m_networkAvailable) || (connectedToWifi != m_connectedToWifi);
+                const bool changed = (networkAvailable != m_networkAvailable) || (connectedToWifi != m_connectedToWifi) || (ssid != m_ssid);
                 m_networkAvailable = networkAvailable;
                 m_connectedToWifi = connectedToWifi;
+                m_ssid = ssid;
                 
                 if (changed)
                 {
@@ -132,6 +135,11 @@ namespace ExampleApp
             bool NetworkCapabilities::QueryIsConnectedToWifi() const
             {
                 return (m_connectivityService.GetConnectivityType() == Eegeo::Web::Wifi);
+            }
+            
+            const std::string& NetworkCapabilities::QueryNetworkSSID() const
+            {
+                return m_connectivityService.GetSSIDForCurrentWifi();
             }
         }
     }
