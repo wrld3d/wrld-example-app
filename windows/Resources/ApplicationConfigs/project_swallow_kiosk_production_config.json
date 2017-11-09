@@ -151,5 +151,15 @@
     "orientation_degrees": 157.5
   },
   "options_admin_password": "1234",
-  "compass_camera_damping_enabled": true
+  "compass_camera_damping_enabled": true,
+  
+  "custom_keyboard_layout":
+  [
+	{
+	  "row":"ZButtonRow",
+	  "index":9,
+	  "uppercase":"-",
+	  "lowercase":"."
+	}
+  ]
 }
