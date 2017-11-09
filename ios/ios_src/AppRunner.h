@@ -33,6 +33,7 @@ public:
     bool ShouldAutoRotateToInterfaceOrientation(UIInterfaceOrientation interfaceOrientation);
     
     void HandleUrlOpen(const AppInterface::UrlData& data);
+    void RequestLocationPermission();
 
 private:
     ViewController& m_viewController;

@@ -545,3 +545,7 @@ void AppHost::HandleUrlOpen(const AppInterface::UrlData &data)
     m_pApp->Event_OpenUrl(data);
 }
 
+void AppHost::RequestLocationPermission()
+{
+    m_pAppLocationDelegate->RequestPermission();
+}

@@ -132,3 +132,11 @@ void AppRunner::HandleUrlOpen(const AppInterface::UrlData& data)
 {
     m_pAppHost->HandleUrlOpen(data);
 }
+
+void AppRunner::RequestLocationPermission()
+{
+    if(m_pAppHost != NULL)
+    {
+        m_pAppHost->RequestLocationPermission();
+    }
+}

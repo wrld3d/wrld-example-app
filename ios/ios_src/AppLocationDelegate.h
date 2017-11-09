@@ -26,4 +26,5 @@ public:
     void NotifyReceivedPermissionResponse();
 
     bool HasReceivedPermissionResponse() const;
+    void RequestPermission();
 };
