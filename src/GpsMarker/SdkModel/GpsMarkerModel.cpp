@@ -13,8 +13,8 @@ namespace ExampleApp
         {
             namespace
             {
-                const float SphereHeightAboveMarker = 4.5f;
-                const float AnchorCyclinerHeightAboveMarker = 0.8f;
+                const float SphereHeightAboveMarker = 2.0f;
+                const float AnchorCyclinerHeightAboveMarker = 0.5f;
             }
 
             GpsMarkerModel::GpsMarkerModel(Eegeo::Location::ILocationService& locationService,

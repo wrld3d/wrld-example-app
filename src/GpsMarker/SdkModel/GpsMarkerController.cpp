@@ -152,12 +152,12 @@ namespace ExampleApp
                 m_view.SetMarkerTransform(modelViewProjectionSphere, modelViewProjectionArrow);
                 
                 float scaleAnchor = 0.1f;
-                float scaleAnchorCylinder = 0.4f;
+                float scaleAnchorCylinder = 0.15f;
                 Eegeo::m44 modelViewProjectionAnchorSphere;
                 CreateModelViewProjectionMatrix(modelViewProjectionAnchorSphere,
                                                 scaledPoint,
                                                 0,
-                                                cameraRelativeModelOrigin + markerUp,
+                                                cameraRelativeModelOrigin + markerUp * m_model.GetAnchorCyclinerHeightAboveMarker(),
                                                 Eegeo::v3(scaleAnchor, scaleAnchor, scaleAnchor) * m_viewTransitionParam,
                                                 renderCamera,
                                                 false);
