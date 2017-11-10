@@ -81,7 +81,10 @@ namespace ExampleApp
                     if(interiorId.IsValid())
                     {
                         Eegeo_TTY("lat=%f lon=%f, distance=%f, heading=%f, indoorId=%s, floorIndex=%d", latLon.GetLatitudeInDegrees(), latLon.GetLongitudeInDegrees(), distance, heading, interiorId.Value().c_str(), floorIndex);
-                        m_cameraTransitionController.StartTransitionTo(latLon.ToECEF(), (float) distance, (float) Eegeo::Math::Deg2Rad(heading), interiorId, floorIndex);
+                        bool jumpIfFar = true;
+                        bool setGpsModeOff = true;
+                        bool setInteriorHeading = true;
+                        m_cameraTransitionController.StartTransitionTo(latLon.ToECEF(), (float) distance, (float) Eegeo::Math::Deg2Rad(heading), interiorId, floorIndex, jumpIfFar, setGpsModeOff, setInteriorHeading);
                     }
                     else
                     {
