@@ -124,8 +124,11 @@ namespace ExampleApp
                         {
                             m_interiorSelectionModel.ClearSelection();
                         }
-
-                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), newHeading, applicationConfig.IndoorId(), applicationConfig.FloorIndex());
+                        
+                        bool jumpIfFar = true;
+                        bool setGpsModeOff = true;
+                        bool setInteriorHeading = true;
+                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), newHeading, applicationConfig.IndoorId(), applicationConfig.FloorIndex(), jumpIfFar, setGpsModeOff, setInteriorHeading);
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.OutdoorSearchMenuItems(), applicationConfig.OverrideIndoorSearchMenuItems());
                         m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());
 
