@@ -511,7 +511,7 @@
         "screen_margin_hiding": "if_icon_outside_margin",
         "stencil_mode": "always",
         "initially_faded_out":true,
-        "priority": 0,
+        "priority": -1,
 		"ignore_occlusion": true,
 		"x_offset": 0.5,
 		"icon_y_offset": -3
@@ -531,7 +531,7 @@
         "screen_margin_hiding": "if_icon_outside_margin",
         "stencil_mode": "always",
         "initially_faded_out":false,
-        "priority": 0,
+        "priority": -1,
 		"ignore_occlusion": true,
 		"x_offset": 0.5,
 		"icon_y_offset": -3
@@ -551,7 +551,7 @@
         "screen_margin_hiding": "if_icon_outside_margin",
         "stencil_mode": "always",
         "initially_faded_out":false,
-        "priority": 0,
+        "priority": -1,
 		"ignore_occlusion": true,
 		"x_offset": 0.5
 	},
