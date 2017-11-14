@@ -883,7 +883,7 @@ const int PhoneAlertViewTag = 1;
 {
     NSString* preFormattedUrlString = [NSString stringWithUTF8String:m_eegeoModel.GetWebUrl().c_str()];
     
-    NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"http"].location != NSNotFound)
+    NSString* webUrlString = ([preFormattedUrlString rangeOfString:@"://"].location != NSNotFound)
     ? preFormattedUrlString
     : [NSString stringWithFormat:@"http://%@", preFormattedUrlString];
     
