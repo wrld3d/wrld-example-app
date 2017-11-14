@@ -16,6 +16,8 @@ namespace ExampleApp
             {
                 extern const std::string NAME_FIELD_NAME;
                 extern const std::string JOB_TITLE_FIELD_NAME;
+                extern const std::string EMPLOYEE_TITLE_FIELD_NAME;
+                extern const std::string EMPLOYEE_SUBTITLE_FIELD_NAME;
                 extern const std::string IMAGE_FILENAME_FIELD_NAME;
                 extern const std::string WORKING_GROUP_FIELD_NAME;
                 extern const std::string OFFICE_LOCATION_FIELD_NAME;

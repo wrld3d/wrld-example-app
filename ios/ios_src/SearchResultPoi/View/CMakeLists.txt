@@ -18,6 +18,8 @@ set(currsources
   ios_src/SearchResultPoi/View/SearchResultPoiViewModule.mm
   ios_src/SearchResultPoi/View/SwallowDepartmentSearchResultPoiView.h
   ios_src/SearchResultPoi/View/SwallowDepartmentSearchResultPoiView.mm
+  ios_src/SearchResultPoi/View/SwallowDeskSearchResultPoiView.h
+  ios_src/SearchResultPoi/View/SwallowDeskSearchResultPoiView.mm
   ios_src/SearchResultPoi/View/SwallowFacilitySearchResultPoiView.h
   ios_src/SearchResultPoi/View/SwallowFacilitySearchResultPoiView.mm
   ios_src/SearchResultPoi/View/SwallowMeetingRoomSearchResultPoiView.h

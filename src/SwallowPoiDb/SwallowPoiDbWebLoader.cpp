@@ -16,6 +16,7 @@
 #include "SwallowPoiDbConstants.h"
 #include "SwallowPoiDbCombinedService.h"
 #include "SwallowPoiDbEmployeeParser.h"
+#include "SwallowPoiDbDeskParser.h"
 #include "SwallowPoiDbDepartmentParser.h"
 #include "SwallowPoiDbFacilityParser.h"
 #include "SwallowPoiDbMeetingRoomParser.h"
@@ -86,6 +87,14 @@ namespace ExampleApp
                                                                                                                                   Eegeo::Helpers::makeVector(Constants::EmployeeFtsColumnWeights)),
                                                                                                                 m_spellFixOptions,
                                                                                                                 Eegeo_NEW(Parsers::SwallowPoiDbEmployeeParser),
+                                                                                                                m_assetsBaseUrl);
+            
+            serviceMap[Search::Swallow::SearchConstants::DESK_CATEGORY_NAME] = Eegeo_NEW(SwallowPoiDbService)(BuildFtsComponent(*pSQLiteDbConnection,
+                                                                                                                                  Constants::DeskTableName,
+                                                                                                                                  Eegeo::Helpers::makeVector(Constants::DeskFtsColumnNames),
+                                                                                                                                  Eegeo::Helpers::makeVector(Constants::DeskFtsColumnWeights)),
+                                                                                                                m_spellFixOptions,
+                                                                                                                Eegeo_NEW(Parsers::SwallowPoiDbDeskParser),
                                                                                                                 m_assetsBaseUrl);
             
             serviceMap[Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME] = Eegeo_NEW(SwallowPoiDbService)(BuildFtsComponent(*pSQLiteDbConnection,

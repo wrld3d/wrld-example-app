@@ -73,6 +73,72 @@ namespace ExampleApp
                                                         deskCode);
                     }
                     
+                    SwallowDeskResultModel TransformToSwallowDeskResult(const Search::SdkModel::SearchResultModel& searchResultModel)
+                    {
+                        rapidjson::Document json;
+                        
+                        std::string employeeTitle;
+                        std::string employeeSubtitle;
+                        std::string workingGroup;
+                        std::string officeLocation;
+                        std::string deskCode;
+                        std::string imageUrl;
+                        
+                        std::string serialized_json;
+                        
+                        TryParseImageDetails(searchResultModel, imageUrl);
+                        
+                        if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
+                        {
+                            if(json.HasMember(SearchConstants::EMPLOYEE_TITLE_FIELD_NAME.c_str())
+                               && json[SearchConstants::EMPLOYEE_TITLE_FIELD_NAME.c_str()].IsString())
+                            {
+                                employeeTitle = json[SearchConstants::EMPLOYEE_TITLE_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::EMPLOYEE_SUBTITLE_FIELD_NAME.c_str())
+                               && json[SearchConstants::EMPLOYEE_SUBTITLE_FIELD_NAME.c_str()].IsString())
+                            {
+                                employeeSubtitle = json[SearchConstants::EMPLOYEE_SUBTITLE_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::WORKING_GROUP_FIELD_NAME.c_str())
+                               && json[SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()].IsString())
+                            {
+                                workingGroup = json[SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str())
+                               && json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].IsString())
+                            {
+                                officeLocation = json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::DESK_CODE_FIELD_NAME.c_str())
+                               && json[SearchConstants::DESK_CODE_FIELD_NAME.c_str()].IsString())
+                            {
+                                deskCode = json[SearchConstants::DESK_CODE_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            rapidjson::StringBuffer string_buffer;
+                            string_buffer.Clear();
+                            rapidjson::Writer<rapidjson::StringBuffer> writer(string_buffer);
+                            json.Accept(writer);
+                            serialized_json = string_buffer.GetString();
+                        }
+                        else
+                        {
+                            Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow desk model");
+                        }
+                        
+                        return SwallowDeskResultModel(employeeTitle,
+                                                        employeeSubtitle,
+                                                        imageUrl,
+                                                        workingGroup,
+                                                        officeLocation,
+                                                        deskCode);
+                    }
+                    
                     std::string GetFormattedAvailabilityString(const std::string& availabilityString)
                     {
                         if(availabilityString == Search::Swallow::SearchConstants::MEETING_ROOM_AVAILABLE)
