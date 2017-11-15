@@ -110,6 +110,9 @@
   }, {
     "interior_id": "swallow_lon_wallbrooksquare",
     "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+  }, {
+    "interior_id": "swallow_ny_731lex",
+    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
   }],
   "compass_camera_offset": {
     "offset": 0.4,
