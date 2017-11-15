@@ -347,6 +347,12 @@ set(resources ${resources}
         Resources/button_photo_on.png
         Resources/button_photo_on@2x.png
         Resources/button_photo_on@3x.png
+        Resources/button_playtutorial_off.png
+        Resources/button_playtutorial_off@2x.png
+        Resources/button_playtutorial_off@3x.png
+        Resources/button_playtutorial_on.png
+        Resources/button_playtutorial_on@2x.png
+        Resources/button_playtutorial_on@3x.png
         Resources/button_remove_pin_off.png
         Resources/button_remove_pin_off@0.75x.png
         Resources/button_remove_pin_off@1.5x.png

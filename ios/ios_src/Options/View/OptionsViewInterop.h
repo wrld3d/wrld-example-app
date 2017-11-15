@@ -50,6 +50,8 @@ namespace ExampleApp
                 void HandleCacheEnabledSelectionStateChanged();
                 
                 void HandleClearCacheSelected();
+                
+                void HandleReplayTutorialsToggled(bool enableTutorials);
 
                 void InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);

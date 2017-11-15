@@ -9,6 +9,11 @@ namespace ExampleApp
 {
     namespace InitialExperience
     {
+        namespace
+        {
+            const int maxTutorialViews = 2;
+        }
+        
         namespace View
         {
             InitialExperienceIntroController::InitialExperienceIntroController(IInitialExperienceIntroView& view,
@@ -19,9 +24,8 @@ namespace ExampleApp
             , m_messageBus(messageBus)
             , m_showIntroMessageHandler(this, &InitialExperienceIntroController::OnShowIntro)
             , m_viewDismissed(this, &InitialExperienceIntroController::OnViewDismissed)
-            , m_isInKioskMode(isInKioskMode)
-            , m_replayExitIUX(true)
-            , m_exitIUXViewedCount(0)
+            , m_replayExitIUX(isInKioskMode ? true : false)
+            , m_exitIUXViewedCount(isInKioskMode ? 0 : maxTutorialViews)
             , m_currAppMode(AppModes::SdkModel::WorldMode)
             , m_shouldShowExitIUX(false)
             , m_appModeChangedHandler(this, &InitialExperienceIntroController::OnAppModeChangedMessage)
@@ -56,8 +60,6 @@ namespace ExampleApp
 
             void InitialExperienceIntroController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
-                if(m_isInKioskMode)
-                {
                     m_shouldShowExitIUX = false;
 
                     AppModes::SdkModel::AppMode newAppMode = message.GetAppMode();
@@ -80,7 +82,6 @@ namespace ExampleApp
                     }
 
                     m_currAppMode = newAppMode;
-                }
             }
 
             void InitialExperienceIntroController::OnTransitionCompleteHandler()
@@ -94,7 +95,6 @@ namespace ExampleApp
 
             void InitialExperienceIntroController::ShowExitIUX()
             {
-                const int maxTutorialViews = 2;
                 if(m_replayExitIUX || m_exitIUXViewedCount < maxTutorialViews)
                 {
                     m_view.ShowExitIUX();

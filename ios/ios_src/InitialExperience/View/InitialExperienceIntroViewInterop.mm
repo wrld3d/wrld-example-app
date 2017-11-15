@@ -46,10 +46,12 @@ namespace ExampleApp
             
             void InitialExperienceIntroViewInterop::ShowExitIUX()
             {
+                Show();
             }
             
             void InitialExperienceIntroViewInterop::DismissExitIUX()
             {
+                Dismiss();
             }
         }
     }

@@ -72,6 +72,11 @@ namespace ExampleApp
             {
                 m_clearCacheCallbacks.ExecuteCallbacks();
             }
+            
+            void OptionsViewInterop::HandleReplayTutorialsToggled(bool enableTutorials)
+            {
+                m_replayTutorialsToggledCallbacks.ExecuteCallbacks(enableTutorials);
+            }
 
             void OptionsViewInterop::InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {

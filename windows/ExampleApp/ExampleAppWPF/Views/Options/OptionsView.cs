@@ -61,7 +61,12 @@ namespace ExampleAppWPF
                 if(value != m_playTutorialsAgainEnabled)
                 {
                     m_playTutorialsAgainEnabled = value;
-                    ReplayTutorials(m_playTutorialsAgainEnabled);
+
+                    if (!m_explicitlySettingValue)
+                    {
+                        ReplayTutorials(m_playTutorialsAgainEnabled);
+                    }
+
                     OnPropertyChanged("PlayTutorialsAgainEnabled");
                 }
             }
@@ -175,7 +180,9 @@ namespace ExampleAppWPF
 
         public void SetReplayTutorialsSelected(bool replayTutorialsSelected)
         {
+            m_explicitlySettingValue = true;
             PlayTutorialsAgainEnabled = replayTutorialsSelected;
+            m_explicitlySettingValue = false;
         }
 
         public void ConcludeCacheClearCeremony()
