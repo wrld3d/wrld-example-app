@@ -14,6 +14,10 @@ namespace ExampleApp
             extern const std::string EmployeeFtsColumnNames[5];
             extern const float EmployeeFtsColumnWeights[5];
             
+            extern const std::string DeskTableName;
+            extern const std::string DeskFtsColumnNames[5];
+            extern const float DeskFtsColumnWeights[5];
+            
             extern const std::string MeetingRoomTableName;
             extern const std::string MeetingRoomFtsColumnNames[1];
             extern const float MeetingRoomFtsColumnWeights[1];

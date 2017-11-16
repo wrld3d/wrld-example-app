@@ -12,6 +12,8 @@ namespace ExampleApp
             {
                 const std::string NAME_FIELD_NAME = "name";
                 const std::string JOB_TITLE_FIELD_NAME = "job_title";
+                const std::string EMPLOYEE_TITLE_FIELD_NAME = "employee_title";
+                const std::string EMPLOYEE_SUBTITLE_FIELD_NAME = "employee_subtitle";
                 const std::string IMAGE_FILENAME_FIELD_NAME = "image_filename";
                 const std::string WORKING_GROUP_FIELD_NAME = "working_group";
                 const std::string OFFICE_LOCATION_FIELD_NAME = "office_location";

@@ -26,7 +26,7 @@
     float m_imageHeight;
 }
 
-- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;
+- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop swallowSearchTags:(const ExampleApp::Search::SdkModel::SearchTags&) swallowSearchTags;
 
 - (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*) getInterop;
 

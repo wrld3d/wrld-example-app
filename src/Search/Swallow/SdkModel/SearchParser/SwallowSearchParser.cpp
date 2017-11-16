@@ -43,6 +43,9 @@ namespace ExampleApp
                         std::string imageUrl;
                         
                         TryParseImageDetails(searchResultModel, imageUrl);
+                        
+                        if(searchResultModel.GetPrimaryTag() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                        {
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
                             if(json.HasMember(SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()) && json[SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()].IsString())
@@ -71,6 +74,64 @@ namespace ExampleApp
                                                         workingGroup,
                                                         officeLocation,
                                                         deskCode);
+                        }
+                        else
+                        {
+                        std::string employeeTitle;
+                        std::string employeeSubtitle;
+                            
+                        std::string serialized_json;
+                        
+                        if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
+                        {
+                            if(json.HasMember(SearchConstants::EMPLOYEE_TITLE_FIELD_NAME.c_str())
+                               && json[SearchConstants::EMPLOYEE_TITLE_FIELD_NAME.c_str()].IsString())
+                            {
+                                employeeTitle = json[SearchConstants::EMPLOYEE_TITLE_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::EMPLOYEE_SUBTITLE_FIELD_NAME.c_str())
+                               && json[SearchConstants::EMPLOYEE_SUBTITLE_FIELD_NAME.c_str()].IsString())
+                            {
+                                employeeSubtitle = json[SearchConstants::EMPLOYEE_SUBTITLE_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::WORKING_GROUP_FIELD_NAME.c_str())
+                               && json[SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()].IsString())
+                            {
+                                workingGroup = json[SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str())
+                               && json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].IsString())
+                            {
+                                officeLocation = json[SearchConstants::OFFICE_LOCATION_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            if(json.HasMember(SearchConstants::DESK_CODE_FIELD_NAME.c_str())
+                               && json[SearchConstants::DESK_CODE_FIELD_NAME.c_str()].IsString())
+                            {
+                                deskCode = json[SearchConstants::DESK_CODE_FIELD_NAME.c_str()].GetString();
+                            }
+                            
+                            rapidjson::StringBuffer string_buffer;
+                            string_buffer.Clear();
+                            rapidjson::Writer<rapidjson::StringBuffer> writer(string_buffer);
+                            json.Accept(writer);
+                            serialized_json = string_buffer.GetString();
+                        }
+                        else
+                        {
+                            Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow desk model");
+                        }
+                        
+                        return SwallowPersonResultModel(employeeTitle,
+                                                        employeeSubtitle,
+                                                        imageUrl,
+                                                        workingGroup,
+                                                        officeLocation,
+                                                        deskCode);
+                    }
                     }
                     
                     std::string GetFormattedAvailabilityString(const std::string& availabilityString)

@@ -15,9 +15,10 @@ namespace ExampleApp
         {
             SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
                                                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                                                 Metrics::IMetricsService& metricsService)
+                                                                 Metrics::IMetricsService& metricsService,
+                                                                 const ExampleApp::Search::SdkModel::SearchTags& swallowSearchTags)
             {
-                m_pView = [[SearchResultPoiViewContainer alloc] initWithoutParams];
+                m_pView = [[SearchResultPoiViewContainer alloc] init: swallowSearchTags];
                 
                 m_pController = Eegeo_NEW(SearchResultPoiController)(*[m_pView getInterop],
                                                                      searchResultPoiViewModel,

@@ -592,7 +592,7 @@ namespace ExampleApp
         
         const bool useEegeoPois = true;
         const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "search_tags.json");
-        const auto& swallowSearchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "swallow_search_tags.json");
+        m_swallowSearchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "swallow_search_tags.json");
         const auto& handledTags = Search::Swallow::SearchConstants::GetAllTags();
         
         if(useEegeoPois)
@@ -601,7 +601,7 @@ namespace ExampleApp
                                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                                m_networkCapabilities,
                                                                                                                                searchTags,
-                                                                                                                               swallowSearchTags,
+                                                                                                                               m_swallowSearchTags,
                                                                                                                                handledTags,
                                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
                                                                                                                                m_pWorld->GetApiTokenModel(),
@@ -612,7 +612,7 @@ namespace ExampleApp
                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                m_networkCapabilities,
                                                                                                                searchTags,
-                                                                                                               swallowSearchTags,
+                                                                                                               m_swallowSearchTags,
                                                                                                                handledTags,
                                                                                                                m_applicationConfiguration.EegeoSearchServiceUrl(),
                                                                                                                m_pWorld->GetApiTokenModel(),

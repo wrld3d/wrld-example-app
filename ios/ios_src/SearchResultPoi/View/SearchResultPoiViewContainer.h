@@ -16,7 +16,7 @@
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
 }
 
-- (id) initWithoutParams;
+- (id) init:(const ExampleApp::Search::SdkModel::SearchTags&) swallowSearchTags;
 
 - (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*) getInterop;
 
