@@ -12,21 +12,34 @@
 #include "SwallowPersonSearchResultPoiView.h"
 #include "App.h"
 #include "SwallowSearchParser.h"
+#include "SwallowSearchConstants.h"
 #import "UIButton+DefaultStates.h"
 
 @interface SwallowPersonSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
+    std::string personReadableTag;
 }
 @end
 
 @implementation SwallowPersonSearchResultPoiView
 
-- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop
+- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop swallowSearchTags:(const ExampleApp::Search::SdkModel::SearchTags&) swallowSearchTags
 {
     self = [super init];
     
     if(self)
     {
+        personReadableTag = swallowSearchTags.defaultReadableTag;
+        std::vector<ExampleApp::Search::SdkModel::SearchTag> tags = swallowSearchTags.tags;
+        for(int i = 0; i < tags.size(); ++i)
+        {
+            if(tags[i].tag == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+            {
+                personReadableTag = tags[i].readableTag;
+                break;
+            }
+        }
+        
         m_pInterop = pInterop;
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
@@ -287,11 +300,17 @@
                                                    m_labelsSectionWidth - (2 * headerTextPadding) - (detailsImageSize + detailsImageToTextMargin),
                                                    32.f);
         
-        std::vector<std::string> tagVector = m_model.GetHumanReadableTags();
+        std::vector<std::string> tagVector = m_model.GetTags();
+        std::vector<std::string> tagReadableVector = m_model.GetHumanReadableTags();
         std::string tags = "";
-        for(int i = 0; i < tagVector.size(); ++i)
+        for(int i = 0; i < tagReadableVector.size(); ++i)
         {
-            tags += tagVector[i];
+            std::string nextTag = tagReadableVector[i];
+            if(tagVector[i] == ExampleApp::Search::Swallow::SearchConstants::DESK_CATEGORY_NAME)
+            {
+                nextTag = personReadableTag;
+            }
+            tags += nextTag;
         }
         self.pCategoriesContent.text = [NSString stringWithUTF8String:tags.c_str()];
         
@@ -383,7 +402,7 @@
     [self.pProfileImageActivityIndicator startAnimating];
     
     [self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
-    std::string tagIcon = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetPrimaryTag());
+    std::string tagIcon = ExampleApp::Helpers::IconResources::GetSmallIconForTag(ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME);
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategoryIconContainer, tagIcon, ExampleApp::Helpers::ImageHelpers::Centre);
     
     self.pNameLabel.text = [NSString stringWithUTF8String:m_swallowPersonModel.GetName().c_str()];

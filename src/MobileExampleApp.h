@@ -87,7 +87,7 @@
 #include "IRayCaster.h"
 #include "RenderingTransformMesh.h"
 #include "DeepLink.h"
-
+#include "SearchTags.h"
 #include "IRestrictedBuildingService.h"
 #include "IUserIdleService.h"
 #include "GlobalAppModeTransitionRules.h"
@@ -221,6 +221,8 @@ namespace ExampleApp
 
         Eegeo::Input::IUserIdleService& m_userIdleService;
         AppModes::GlobalAppModeTransitionRules* m_pGlobalAppModeTransitionRules;
+        
+        ExampleApp::Search::SdkModel::SearchTags m_swallowSearchTags;
         
 
     public:
@@ -456,6 +458,11 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& GetCameraController()
         {
             return *m_pGlobeCameraController;
+        }
+        
+        const ExampleApp::Search::SdkModel::SearchTags& GetSwallowSearchTags()
+        {
+            return m_swallowSearchTags;
         }
 
         void Event_TouchRotate 			(const AppInterface::RotateData& data);

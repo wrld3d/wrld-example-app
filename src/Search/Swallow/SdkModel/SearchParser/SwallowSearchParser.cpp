@@ -43,6 +43,9 @@ namespace ExampleApp
                         std::string imageUrl;
                         
                         TryParseImageDetails(searchResultModel, imageUrl);
+                        
+                        if(searchResultModel.GetPrimaryTag() == Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                        {
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
                             if(json.HasMember(SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()) && json[SearchConstants::WORKING_GROUP_FIELD_NAME.c_str()].IsString())
@@ -71,22 +74,13 @@ namespace ExampleApp
                                                         workingGroup,
                                                         officeLocation,
                                                         deskCode);
-                    }
-                    
-                    SwallowDeskResultModel TransformToSwallowDeskResult(const Search::SdkModel::SearchResultModel& searchResultModel)
-                    {
-                        rapidjson::Document json;
-                        
+                        }
+                        else
+                        {
                         std::string employeeTitle;
                         std::string employeeSubtitle;
-                        std::string workingGroup;
-                        std::string officeLocation;
-                        std::string deskCode;
-                        std::string imageUrl;
-                        
+                            
                         std::string serialized_json;
-                        
-                        TryParseImageDetails(searchResultModel, imageUrl);
                         
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
                         {
@@ -131,12 +125,13 @@ namespace ExampleApp
                             Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow desk model");
                         }
                         
-                        return SwallowDeskResultModel(employeeTitle,
+                        return SwallowPersonResultModel(employeeTitle,
                                                         employeeSubtitle,
                                                         imageUrl,
                                                         workingGroup,
                                                         officeLocation,
                                                         deskCode);
+                    }
                     }
                     
                     std::string GetFormattedAvailabilityString(const std::string& availabilityString)

@@ -9,6 +9,7 @@
 #include "SearchResultPoiViewContainer.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
+#include "EegeoPois.h"
 
 namespace ExampleApp
 {
@@ -25,7 +26,8 @@ namespace ExampleApp
             public:
                 SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
                                           ExampleAppMessaging::TMessageBus& messageBus,
-                                          Metrics::IMetricsService& metricsService);
+                                          Metrics::IMetricsService& metricsService,
+                                          const ExampleApp::Search::SdkModel::SearchTags& swallowSearchTags);
 
                 ~SearchResultPoiViewModule();
 

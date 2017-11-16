@@ -17,7 +17,6 @@
 #include "YelpSearchResultPoiView.h"
 #include "GeoNamesSearchResultPoiView.h"
 #include "SwallowPersonSearchResultPoiView.h"
-#include "SwallowDeskSearchResultPoiView.h"
 #include "SwallowMeetingRoomSearchResultPoiView.h"
 #include "SwallowWorkingGroupSearchResultPoiView.h"
 #include "SwallowFacilitySearchResultPoiView.h"
@@ -27,18 +26,21 @@
 
 @interface SearchResultPoiViewContainer()<UIGestureRecognizerDelegate>
 {
+    ExampleApp::Search::SdkModel::SearchTags swallowSearchTags;
 }
 @end
 
 @implementation SearchResultPoiViewContainer
 
-- (id)initWithoutParams
+- (id)init:(const ExampleApp::Search::SdkModel::SearchTags&) swallowSearchTags
 {
     self = [super init];
     
     if(self)
     {
         m_pInterop = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop)(self);
+        
+        self->swallowSearchTags = swallowSearchTags;
     }
 
     return self;
@@ -97,11 +99,11 @@
     }
     else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
     {
-        return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop];
+        return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop swallowSearchTags:swallowSearchTags];
     }
     else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::DESK_CATEGORY_NAME)
     {
-        return [[SwallowDeskSearchResultPoiView alloc] initWithInterop:m_pInterop];
+        return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop swallowSearchTags:swallowSearchTags];
     }
     else if(vendor == ExampleApp::Search::EegeoVendorName
             && (category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME || category == ExampleApp::Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME))
