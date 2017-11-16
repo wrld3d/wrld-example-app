@@ -85,8 +85,7 @@ namespace ExampleApp
                 else
                 {
                     ++m_tutorialsReplayedCount;
-                    const int tutorialCount = 2;
-                    if(m_tutorialsReplayedCount >= tutorialCount)
+                    if(m_tutorialsReplayedCount > 0)
                     {
                         m_view.SetReplayTutorialsSelected(enableTutorials);
                     }

@@ -87,6 +87,16 @@
         
         [self.pOptionsContainer addSubview: self.pClearCacheCheckbox];
         
+        self.pReplayTutorialsCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:buttonSize
+                                                                                       :"button_playtutorial_off"
+                                                                                       :"button_playtutorial_on"
+                                                                                       :"Play tutorial again"
+                                                                                       :false
+                                                                                       :self
+                                                                                       :@selector(replayTutorialsSelectionHandler)] autorelease];
+        
+        [self.pOptionsContainer addSubview: self.pReplayTutorialsCheckbox];
+        
         [self setTouchExclusivity:self];
         
         self.pOptionsCacheClearSubView = [[[OptionsCacheClearSubView alloc] init] autorelease];
@@ -108,6 +118,9 @@
 
     [self.pHeadlineContainer removeFromSuperview];
     [self.pHeadlineContainer release];
+    
+    [self.pReplayTutorialsCheckbox removeFromSuperview];
+    [self.pReplayTutorialsCheckbox release];
     
     [self.pClearCacheLabel removeFromSuperview];
     [self.pClearCacheLabel release];
@@ -227,6 +240,10 @@
     clearCacheLabelFrame.origin.x = clearCacheButtonFrame.origin.x + clearCacheButtonFrame.size.width + 5.0;
     clearCacheLabelFrame.origin.y = clearCacheButtonFrame.origin.y + ((clearCacheButtonFrame.size.height / 2.0) - (clearCacheLabelFrame.size.height / 2.0));
     self.pClearCacheLabel.frame = clearCacheLabelFrame;
+    
+    CGRect replayTutorialsCheckboxFrame = self.pReplayTutorialsCheckbox.frame;
+    replayTutorialsCheckboxFrame.origin.y = optionsContentY + (optionsDeltaY * 3);
+    self.pReplayTutorialsCheckbox.frame = replayTutorialsCheckboxFrame;
 }
 
 - (void) setStreamOverWifiOnlySelected:(bool)isStreamOverWifiOnlySelected
@@ -241,8 +258,7 @@
 
 - (void) setReplayTutorialsSelected:(bool)isReplayTutorialsSelected
 {
-    // To be implemented in the future.
-    // Currently only implented in windows.
+    [self.pReplayTutorialsCheckbox setVisualSelectionState:isReplayTutorialsSelected];
 }
 
 - (bool)isStreamOverWifiOnlySelected
@@ -275,6 +291,12 @@
 {
     Eegeo_ASSERT(![[self pOptionsCacheClearSubView] isDisplayed]);
     [[self pOptionsCacheClearSubView] displayWarning:self:@selector(clearCacheSelectionConfirmedHandler)];
+}
+
+- (void)replayTutorialsSelectionHandler
+{
+    bool isSelected = self.pReplayTutorialsCheckbox.isSelected;
+    m_pInterop->HandleReplayTutorialsToggled(isSelected);
 }
 
 - (void)clearCacheSelectionConfirmedHandler

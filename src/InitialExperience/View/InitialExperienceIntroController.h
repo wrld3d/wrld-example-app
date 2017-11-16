@@ -41,8 +41,6 @@ namespace ExampleApp
                 void OnShowIntro(const ShowInitialExperienceIntroMessage& message);
                 void OnViewDismissed();
 
-                bool m_isInKioskMode;
-
                 bool m_replayExitIUX;
                 int m_exitIUXViewedCount;
                 AppModes::SdkModel::AppMode m_currAppMode;
