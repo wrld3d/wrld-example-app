@@ -77,9 +77,9 @@ namespace ExampleApp
                         }
                         else
                         {
-                        std::string employeeTitle;
+                        std::string employeeTitle = "Unassigned";
                         std::string employeeSubtitle;
-                            
+                        
                         std::string serialized_json;
                         
                         if (!json.Parse<0>(searchResultModel.GetJsonData().c_str()).HasParseError())
@@ -119,10 +119,6 @@ namespace ExampleApp
                             rapidjson::Writer<rapidjson::StringBuffer> writer(string_buffer);
                             json.Accept(writer);
                             serialized_json = string_buffer.GetString();
-                        }
-                        else
-                        {
-                            Eegeo_ASSERT(false, "JSON parse error transforming search result model to swallow desk model");
                         }
                         
                         return SwallowPersonResultModel(employeeTitle,
