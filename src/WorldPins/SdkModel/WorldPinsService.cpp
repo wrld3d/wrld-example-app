@@ -199,6 +199,7 @@ namespace ExampleApp
                 const WorldPinFocusData focusData = WorldPinFocusData("", "", "", "", "", 0, inFocusModel.GetPriorityOrder() + 1);
 
                 const Eegeo::Space::LatLong& location = marker.GetAnchorLocation().GetLatLong();
+                float elevation = marker.GetElevation();
 
                 m_pSelectedPinHighlight = AddPin(m_pinsToSelectionHandlers[pinItemModel->Id()],
                                                     m_pinsToVisbilityChangedHandlers[pinItemModel->Id()],
@@ -207,7 +208,7 @@ namespace ExampleApp
                                                     pinItemModel->GetInteriorData(),
                                                     location,
                                                     "selected_pin",
-                                                    0,
+                                                    elevation,
                                                     pinItemModel->VisibilityMask(),
                                                     "selected_highlight",
                                                     labelStyleName);
@@ -240,7 +241,9 @@ namespace ExampleApp
             void WorldPinsService::UpdateLabelStyle(WorldPinItemModel* pinItemModel, const std::string& labelStyleName)
             {
                 const auto& oldMarkerId = GetMarkerIdForWorldPinItemModelId(pinItemModel->Id());
-                const Eegeo::Space::LatLong& location = m_markerService.Get(oldMarkerId).GetAnchorLocation().GetLatLong();
+                Eegeo::Markers::IMarker& oldMarker = m_markerService.Get(oldMarkerId);
+                const Eegeo::Space::LatLong& location = oldMarker.GetAnchorLocation().GetLatLong();
+                double elevation = oldMarker.GetElevation();
                 m_markerService.Destroy(oldMarkerId);
 
                 const IWorldPinsInFocusModel& inFocusModel = pinItemModel->GetInFocusModel();
@@ -259,6 +262,7 @@ namespace ExampleApp
 
                 const auto& markerCreateParams = Eegeo::Markers::MarkerBuilder()
                     .SetLocation(location.GetLatitudeInDegrees(), location.GetLongitudeInDegrees())
+                    .SetElevation(elevation)
                     .SetLabelText(inFocusModel.GetTitle())
                     .SetLabelIcon(iconKey)
                     // temp workaround to specify interior floor by zero-based index rather than 'floor number' id (MPLY-8062)
