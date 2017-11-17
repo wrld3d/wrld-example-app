@@ -26,7 +26,7 @@
 
 @interface SearchResultPoiViewContainer()<UIGestureRecognizerDelegate>
 {
-    ExampleApp::Search::SdkModel::SearchTags swallowSearchTags;
+    ExampleApp::Search::SdkModel::SearchTags searchTagsSwallow;
 }
 @end
 
@@ -40,7 +40,7 @@
     {
         m_pInterop = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop)(self);
         
-        self->swallowSearchTags = swallowSearchTags;
+        searchTagsSwallow = swallowSearchTags;
     }
 
     return self;
@@ -99,11 +99,11 @@
     }
     else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
     {
-        return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop swallowSearchTags:swallowSearchTags];
+        return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop swallowSearchTags:searchTagsSwallow];
     }
     else if(vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::DESK_CATEGORY_NAME)
     {
-        return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop swallowSearchTags:swallowSearchTags];
+        return [[SwallowPersonSearchResultPoiView alloc] initWithInterop:m_pInterop swallowSearchTags:searchTagsSwallow];
     }
     else if(vendor == ExampleApp::Search::EegeoVendorName
             && (category == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME || category == ExampleApp::Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME))
