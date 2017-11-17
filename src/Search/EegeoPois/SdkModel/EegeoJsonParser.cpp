@@ -314,8 +314,12 @@ namespace ExampleApp
                         {
                             imageUrl = json[imageName.c_str()].GetString();
                             const size_t lastSlashIndex(imageUrl.rfind("/"));
-                            Eegeo_ASSERT(lastSlashIndex != std::string::npos, "The image_url is not well formed: %s.\n",
-                                         imageUrl.c_str());
+                            const size_t lastDotIndex(imageUrl.rfind("."));
+                            if(lastSlashIndex == std::string::npos
+                               || lastDotIndex == std::string::npos)
+                            {
+                                imageUrl = "";
+                            }
                         }
                         
                         if(json.HasMember(facebookName.c_str()) && json[facebookName.c_str()].IsString())
