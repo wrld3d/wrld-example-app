@@ -113,8 +113,8 @@ class PythonSoapService(spyne.Service):
 
         return json.dumps({"result": {"message": "", "rCode": 0}, "meetingSpaceOccupancyDetails": []})
 
-    @spyne.rpc(Unicode, _returns=Unicode)
-    def GetDeskDetails(ctx, regionCode):
+    @spyne.rpc(Unicode, Unicode, _returns=Unicode)
+    def GetDeskDetails(ctx, regionCode, locationId):
         header, body, is_valid_key = PythonSoapService.__get_http_head_body(ctx)
         if not is_valid_key:
             return json.dumps({"result": "invalid key"})
@@ -125,8 +125,8 @@ class PythonSoapService(spyne.Service):
 
         return json.dumps({"result": {"message": "", "rCode": 0}, "deskDetails": []})
 
-    @spyne.rpc(Unicode, _returns=Unicode)
-    def GetEmployeeDetails(ctx, regionCode):
+    @spyne.rpc(Unicode, Unicode, _returns=Unicode)
+    def GetEmployeeDetails(ctx, regionCode, locationId):
         header, body, is_valid_key = PythonSoapService.__get_http_head_body(ctx)
         if not is_valid_key:
             return json.dumps({"result": "invalid key"})
@@ -162,4 +162,4 @@ class PythonSoapService(spyne.Service):
     
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=27844)
