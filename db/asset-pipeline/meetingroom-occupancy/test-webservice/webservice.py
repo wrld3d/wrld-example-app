@@ -119,7 +119,7 @@ class PythonSoapService(spyne.Service):
         if not is_valid_key:
             return json.dumps({"result": "invalid key"})
 
-        if regionCode == "EMEA":
+        if regionCode == "EMEA" and locationId == "GB033":
             with open("test-webservice/App_Data/GetDeskDetails.json") as desk_json_file:
                 return json.dumps(json.load(desk_json_file))
 
@@ -131,7 +131,7 @@ class PythonSoapService(spyne.Service):
         if not is_valid_key:
             return json.dumps({"result": "invalid key"})
 
-        if regionCode == "EMEA":
+        if regionCode == "EMEA" and locationId == "GB033":
             with open("test-webservice/App_Data/GetEmployeeDetails.json") as employee_json_file:
                 return json.dumps(json.load(employee_json_file))
 
