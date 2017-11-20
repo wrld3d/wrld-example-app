@@ -347,7 +347,7 @@ def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image
 
     table_name = xls_sheet.name
 
-    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code']
+    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'uuid']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)
@@ -378,13 +378,9 @@ def build_employee_table(xls_book, sheet_index, db_cursor, connection, src_image
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated office_location column values")
 
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'desk_code', first_data_row_number, available_in_app_col_index)
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'uuid', first_data_row_number, available_in_app_col_index, -1)
     if not all_validated and stop_on_first_error:
         raise ValueError("failed to validated desk_code column values")
-
-    all_validated &= validate_foreign_key_exists(xls_sheet, poi_columns, 'desk_code', first_data_row_number, available_in_app_col_index, desk_ids)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated desk_code foreign keys")
 
     if not all_validated:
         raise ValueError("failed validation")
@@ -412,7 +408,7 @@ def build_meeting_room_table(xls_book, sheet_index, db_cursor, connection, src_i
 
     print(str(table_name))
 
-    poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'office_location']
+    poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'office_location', 'space_class_id', 'space_id']
     control_columns = ['available_in_app']
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)

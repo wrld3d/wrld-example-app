@@ -1319,7 +1319,6 @@ set(resources ${resources}
         Resources/search_mag_glass_on.png
         Resources/search_mag_glass_on@2x.png
         Resources/search_mag_glass_on@3x.png
-        Resources/search_menu_items.json
         Resources/search_result_background.png
         Resources/search_result_background@2x.png
         Resources/search_result_background@3x.png

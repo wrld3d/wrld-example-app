@@ -180,8 +180,8 @@ static NSString *CellIdentifier = @"searchCell";
         
         const float imageSize = 36.0f;
         const float imageInset = 6.0f;
-        
-        const std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "misc";
+
+        const std::string icon = document.HasMember("icon") ? document["icon"].GetString() : "pin";
         const std::string iconResourceName = ExampleApp::Helpers::IconResources::GetSmallIconPathForResourceName(icon);
         
         cell.imageView.image = ExampleApp::Helpers::ImageHelpers::LoadImage(iconResourceName);

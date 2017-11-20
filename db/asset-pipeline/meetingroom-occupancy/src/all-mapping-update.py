@@ -83,6 +83,21 @@ def gather_table_with_image(column_names,
             raise ValueError("mismatched columns for row: " + insert_values)
         yield insert_values
 
+def gather_table(column_names, 
+                      xls_sheet, 
+                      first_data_row_number, 
+                      available_in_app_col_index):
+    for row_num in range(first_data_row_number, xls_sheet.nrows):
+        if not is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
+            print("skipping row " + str(row_num))
+            continue
+        row_values = xls_sheet.row_values(row_num, 0, len(column_names) - 1)
+
+        insert_values = [None] + row_values
+        if len(insert_values) != len(column_names):
+            raise ValueError("mismatched columns for row: " + insert_values)
+        yield insert_values        
+
 
 def is_row_available_in_app(xls_sheet, row_num, available_in_app_col_index):
     available_in_app = xls_sheet.cell_value(row_num, available_in_app_col_index).encode("utf-8")
@@ -192,11 +207,77 @@ def filename_to_jpg(image_filename):
     (base_image_filename, ext) = os.path.splitext(image_filename)
     return base_image_filename + ".jpg"
 
+def collect_employee_table(xls_book, sheet_index, first_data_row_number, column_name_row):
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
+
+    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'uuid']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
+
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name column values")
+
+    allow_empty = True
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'job_title', first_data_row_number, available_in_app_col_index, allow_empty)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated job_title column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'working_group', first_data_row_number, available_in_app_col_index, allow_empty)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated working_group column values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'office_location', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated office_location column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'uuid', first_data_row_number, available_in_app_col_index, -1)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated uuid column values")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    column_names = ['id'] + poi_columns
+
+    get_employee_details = []
+    for v in gather_table(column_names, xls_sheet, first_data_row_number, available_in_app_col_index):
+        name = v[column_names.index("name")]
+        first_name = name.split(" ")[0]
+        last_name = " ".join(name.split(" ")[1:])
+        working_group = v[column_names.index("working_group")]
+        job_title = v[column_names.index("job_title")]
+        office = v[column_names.index("office_location")]
+
+        get_employee_details.append\
+        (
+            {
+                "uuid": int(v[column_names.index("uuid")]),
+                "FirstName": first_name,
+                "LastName": last_name,
+                "PictureId": len(get_employee_details),
+                "DeptCode": working_group,
+                "DeptDescription": job_title,
+                "Office": office,
+                "Ext":"5435",
+                "Phone":"+441382221424",
+                "Email":"enquiries@wrld3d.com"
+            }
+        )
+
+    return get_employee_details
 
 def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, first_data_row_number, column_name_row, interior_id_dict, interior_floor_dict):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
-    poi_columns = ["name", "image_filename", "availability", "interior_id", "interior_floor", "latitude_degrees", "longitude_degrees", "office_location"]
+    poi_columns = ["name", "image_filename", "availability", "interior_id", "interior_floor", "latitude_degrees", "longitude_degrees", "office_location", "space_class_id", "space_id"]
     control_columns = ["available_in_app"]
     expected_columns = poi_columns + control_columns
     available_in_app_col_index = len(poi_columns)
@@ -238,7 +319,7 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, fir
     if not all_validated:
         raise ValueError("failed validation")
 
-    poi_columns = ["name", "image_filename", "availability", "interior_id", "interior_floor", "latitude_degrees", "longitude_degrees", "office_location"]
+    poi_columns = ["name", "image_filename", "availability", "interior_id", "interior_floor", "latitude_degrees", "longitude_degrees", "office_location", "space_class_id", "space_id"]
 
     column_names = ["id"] + poi_columns
 
@@ -252,11 +333,11 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, fir
 
     for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index("image_filename")):
         interior_id = v[column_names.index("interior_id")]
-        space_id = len(image_map)
+        space_id = int(v[column_names.index('space_id')])
         floor_id = int(v[column_names.index('interior_floor')])
 
         image_map.append({"spaceId": space_id, "image_filename": v[column_names.index("image_filename")]})
-        location_map.append({"spaceId": space_id, "latitude_degrees": float(v[column_names.index("latitude_degrees")]), "longitude_degrees": float(v[column_names.index("longitude_degrees")])})
+        location_map.append({"spaceId": space_id, "room": v[column_names.index("name")], "latitude_degrees": float(v[column_names.index("latitude_degrees")]), "longitude_degrees": float(v[column_names.index("longitude_degrees")])})
 
         is_occupancy_enabled = 1
         if v[column_names.index("name")] == "Ocean":
@@ -276,7 +357,8 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, fir
                     "tieline": "807 2668",
                     "nexi": 1,
                     "isOccupancyEnabled": is_occupancy_enabled,
-                    "isTemporarilyDeactivated": 0
+                    "isTemporarilyDeactivated": 0,
+                    "spaceClassId":int(v[column_names.index("space_class_id")])
                 }
             )
 
@@ -290,6 +372,70 @@ def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, fir
             )
 
     return image_map, location_map, get_meeting_space_details, get_meeting_space_occupancy_details
+
+def collect_desks(xls_book, sheet_index, first_data_row_number, column_name_row, interior_id_dict, interior_floor_dict):
+    desks = {}
+    xls_sheet = xls_book.sheet_by_index(sheet_index)
+
+    poi_columns = ['desk', 'latitude_degrees', 'longitude_degrees', 'interior_id', 'interior_floor', 'space_id', 'assigned_uuid']
+    control_columns = ['available_in_app']
+    expected_columns = poi_columns + control_columns
+    available_in_app_col_index = len(poi_columns)
+
+    all_validated = True
+
+    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated column names")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'desk', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated name column values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title latitude_degrees values")
+
+    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated title longitude_degrees values")
+
+    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior_id column values")
+
+    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
+    if not all_validated and stop_on_first_error:
+        raise ValueError("failed to validated interior floor number")
+
+    if not all_validated:
+        raise ValueError("failed validation")
+
+    column_names = ['id'] + poi_columns
+    location_map = []    
+    get_desk_details = []    
+    for v in gather_table(column_names, xls_sheet, first_data_row_number, available_in_app_col_index):
+        interior_id = v[column_names.index("interior_id")]
+        space_id = int(v[column_names.index('space_id')])
+        floor_id = int(v[column_names.index('interior_floor')])
+
+        if space_id > -1:
+
+            location_map.append({"spaceId": space_id, "desk": v[column_names.index("desk")], "latitude_degrees": float(v[column_names.index("latitude_degrees")]), "longitude_degrees": float(v[column_names.index("longitude_degrees")])})
+
+            get_desk_details.append\
+            (
+                {
+                    "locationId": interior_id_dict[interior_id],
+                    "spaceId": space_id,
+                    "floor": interior_floor_dict[interior_id][floor_id].split(" ")[0],
+                    "floorName": interior_floor_dict[interior_id][floor_id],
+                    "name": v[column_names.index("desk")].split("-")[-1],
+                    "assignedPersonUuid": int(v[column_names.index("assigned_uuid")])
+                }
+            )
+
+    return location_map, get_desk_details
 
 
 def build_map_files(src_xls_path, interior_id_dict, interior_floor_dict):
@@ -308,9 +454,13 @@ def build_map_files(src_xls_path, interior_id_dict, interior_floor_dict):
 
     xls_book = xlrd.open_workbook(src_xls_path)
 
-    sheet_index = 1
+    meeting_room_sheet_index = 1
+    employee_sheet_undex = 0
+    desk_sheet_index = 7
 
-    image_map, location_map, get_meeting_space_details, get_meeting_space_occupancy_details = collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, first_data_row_number, column_name_row, interior_id_dict, interior_floor_dict)
+    image_map, location_map, get_meeting_space_details, get_meeting_space_occupancy_details = collect_meeting_room_table(xls_book, meeting_room_sheet_index, src_image_folder_path, first_data_row_number, column_name_row, interior_id_dict, interior_floor_dict)
+    desk_location_map, get_desk_details = collect_desks(xls_book, desk_sheet_index, first_data_row_number, column_name_row, interior_id_dict, interior_floor_dict)
+    get_employee_details = collect_employee_table(xls_book, employee_sheet_undex, first_data_row_number, column_name_row)
 
     with open("../generated/ImageMap.json", "w") as image_map_file:
         json.dump(image_map, image_map_file)
@@ -318,7 +468,10 @@ def build_map_files(src_xls_path, interior_id_dict, interior_floor_dict):
     with open("../generated/LocationMap.json", "w") as location_map_file:
         json.dump(location_map, location_map_file)
 
-    # used for test web service, remove when proper web service is in place
+    with open("../generated/DeskLocationMap.json", "w") as desk_location_map_file:
+        json.dump(desk_location_map, desk_location_map_file)        
+
+    # used for test web service
     get_meeting_space_details_json = {"result": {"rCode": 0, "message": ""}, "meetingSpaceDetails":get_meeting_space_details}
     with open("../generated/GetMeetingSpaceDetails.json", "w") as get_meeting_space_details_file:
         json.dump(get_meeting_space_details_json, get_meeting_space_details_file)
@@ -326,6 +479,14 @@ def build_map_files(src_xls_path, interior_id_dict, interior_floor_dict):
     get_meeting_space_occupancy_details_json = {"result": {"rCode": 0, "message": ""}, "meetingSpaceOccupancyDetails": get_meeting_space_occupancy_details}
     with open("../generated/GetMeetingSpaceOccupancyDetails.json", "w") as get_meeting_space_occupancy_details_file:
         json.dump(get_meeting_space_occupancy_details_json, get_meeting_space_occupancy_details_file)
+
+    get_desk_details_json = {"result": {"rCode": 0, "message": ""}, "deskDetails":get_desk_details}
+    with open("../generated/GetDeskDetails.json", "w") as get_desk_details_file:
+        json.dump(get_desk_details_json, get_desk_details_file)
+
+    get_employee_details_json = {"result": {"rCode": 0, "message": ""}, "employeeDetails":get_employee_details}
+    with open("../generated/GetEmployeeDetails.json", "w") as get_employee_details_file:
+        json.dump(get_employee_details_json, get_employee_details_file)                
 
 
 def print_usage():

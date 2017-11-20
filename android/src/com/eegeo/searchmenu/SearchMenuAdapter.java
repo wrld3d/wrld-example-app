@@ -34,7 +34,7 @@ public class SearchMenuAdapter extends BaseAdapter
     private int m_itemViewId;
     private List<String> m_nameData;
     private Activity m_context;
-    private final String m_defaultIconString = "misc";
+    private final String m_defaultIconString = "pin";
     private SparseArray<View> m_viewCache = new SparseArray<View>();
 
     public SearchMenuAdapter(Activity context, int itemViewId)
