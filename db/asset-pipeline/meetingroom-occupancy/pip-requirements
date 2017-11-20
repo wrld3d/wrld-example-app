@@ -1,0 +1,11 @@
+xlrd
+zeep
+requests
+requests-mock
+requests_toolbelt
+flask
+flask_spyne
+datetime
+ddt
+paramiko
+scp

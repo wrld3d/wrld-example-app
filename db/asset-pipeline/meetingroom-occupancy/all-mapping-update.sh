@@ -10,4 +10,6 @@ fi
 
 cd ${0%/*}/src
 
-python meetingroom-mapping-update.py --input_xls_path $inputXlsPath
+python all-mapping-update.py --input_xls_path $inputXlsPath
+
+cp -R ../generated/* ../test-webservice/App_Data/

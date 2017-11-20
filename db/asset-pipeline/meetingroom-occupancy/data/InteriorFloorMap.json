@@ -4,7 +4,7 @@
 		"floors":
 		[
 			{
-				"floorName": "-1 - Lower Level 1",
+				"floorName": "LL1 - Lower Level 1",
 				"interior_floor": 0
 			},
 			{
@@ -24,7 +24,7 @@
 				"interior_floor": 4
 			},
 			{
-				"floorName": "04 - Forth Floor",
+				"floorName": "04 - Fourth Floor",
 				"interior_floor": 5
 			},
 			{
@@ -42,7 +42,7 @@
 		"floors":
 		[
 			{
-				"floorName": "-1 - Lower Level 1",
+				"floorName": "LL1 - Lower Level 1",
 				"interior_floor": 0
 			},
 			{
@@ -68,7 +68,7 @@
 		"floors":
 		[
 			{
-				"floorName": "-1 - Lower Level 1",
+				"floorName": "LL1 - Lower Level 1",
 				"interior_floor": 0
 			},
 			{
@@ -84,7 +84,7 @@
 				"interior_floor": 3
 			},
 			{
-				"floorName": "04 - Forth Floor",
+				"floorName": "04 - Fourth Floor",
 				"interior_floor": 4
 			},
 			{
@@ -110,7 +110,7 @@
 				"interior_floor": 0
 			},
 			{
-				"floorName": "04 - Forth Floor",
+				"floorName": "04 - Fourth Floor",
 				"interior_floor": 1
 			},
 			{
@@ -124,7 +124,7 @@
 		"floors":
 		[
 			{
-				"floorName": "-1 - Lower Level 1",
+				"floorName": "LL1 - Lower Level 1",
 				"interior_floor": 3
 			},
 			{
@@ -144,7 +144,7 @@
 				"interior_floor": 7
 			},
 			{
-				"floorName": "04 - Forth Floor",
+				"floorName": "04 - Fourth Floor",
 				"interior_floor": 8
 			},
 			{

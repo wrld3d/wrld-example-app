@@ -5,45 +5,16 @@ import hmac
 import requests
 import sys
 
+from hotcoldpoiset import HotColdPoiSet
+from feedconfig import FeedConfig
 import zeep
+import hmactransport
+from hmactransport import HmacTransport
 from zeep import Client
-
-from datetime import datetime
 
 import logging.config
 
-
-REQUEST_TIME_UTC = "requestTimeUtc"
-APP_ID = "appId"
-DEBUG_DATA = "debug_Data"
-REQUEST_KEY = "requestKey"
-
 MEETING_ROOM_TAG = "meeting_room"
-
-
-class CustomTransport(zeep.Transport):
-    def post(self, address, message, headers):
-        headers[REQUEST_TIME_UTC] = unicode(datetime.utcnow())
-        headers[APP_ID] = app_id
-
-        key_input = message + "," + headers[REQUEST_TIME_UTC] + "," + headers[APP_ID]
-
-        if debug_data:
-            headers[DEBUG_DATA] = base64.b64encode(key_input)
-
-        hmac_generator = hmac.new(app_secret)
-        hmac_generator.update(key_input)
-        headers[REQUEST_KEY] = base64.b64encode(hmac_generator.digest())
-
-        # print "\n-----------"
-        # print address
-        # print "-----------"
-        # print message
-        # print "-----------"
-        # print headers
-        # print "-----------\n"
-        return super(CustomTransport, self).post(address, message, headers)
-
 
 def get_meeting_room_poi_dict(filename):
     meeting_room_poi_dict = {}
@@ -56,19 +27,23 @@ def get_meeting_room_poi_dict(filename):
     return meeting_room_poi_dict
 
 
-def get_updated_meeting_room_poi_json(web_service_url, region_code, meeting_room_poi_dict):
+def get_updated_meeting_room_poi_json(feedconfig, meeting_room_poi_dict):
     availability_states = ["available", "occupied", "available_soon"]
 
-    transport = CustomTransport()
-    client = Client(web_service_url, transport=transport)
-    response = client.service.GetMeetingSpaceOccupancyDetails(region_code)
+    transport = HmacTransport()
+    client = Client(feedconfig.soap_service_wsdl_url, transport=transport)
+    response = client.service.GetMeetingSpaceOccupancyDetails(feedconfig.soap_region)
 
     if response is not None and response != "":
-        meeting_room_list_json = json.loads(response)
+        meeting_room_list_json = {}
+        if type(response) is str:
+            meeting_room_list_json = json.loads(response)      
+        else:
+            meeting_room_list_json = zeep.helpers.serialize_object(response)
         if "meetingSpaceOccupancyDetails" in meeting_room_list_json:
             for meeting_room_json in meeting_room_list_json["meetingSpaceOccupancyDetails"]:
                 space_id = meeting_room_json["spaceId"]
-                if meeting_room_poi_dict[space_id]:
+                if space_id in meeting_room_poi_dict:
                     user_data = meeting_room_poi_dict[space_id]["user_data"]
                     yield\
                         {
@@ -88,75 +63,24 @@ def get_updated_meeting_room_poi_json(web_service_url, region_code, meeting_room
                                 "nexi": user_data["nexi"],
                                 "is_occupancy_enabled": user_data["is_occupancy_enabled"],
                                 "is_temporarily_deactivated": user_data["is_temporarily_deactivated"],
-                                "notes": meeting_room_json["notes"]
+                                "notes": meeting_room_json["notes"],
+                                "highlight_id": user_data["highlight_id"]
                             }
                         }
+                else:
+                    print "Skipping Room NOSPACE %s" % space_id
 
 
-def update_meeting_room_pois(meeting_room_json, poi_service_url, dev_auth_token):
-    for meeting_room in meeting_room_json:
-        if "user_data" in meeting_room:
-            user_data = meeting_room["user_data"]
-            meeting_room["user_data"] = json.dumps(user_data, ensure_ascii=False)
-
+def update_meeting_room_pois(meeting_room_json, feedconfig, hotcold):
     if len(meeting_room_json) > 0:
-        url = "{0}/bulk/?token={1}".format(poi_service_url, dev_auth_token)
+        url = "{0}/bulk/?token={1}".format(hotcold.hot, feedconfig.wrld_dev_auth_token)
         response = requests.post(url, json={"update": meeting_room_json}, verify=False)
         print "post {1}: {0}".format(url, response.status_code)
-        # print {"update": meeting_room_json}
     else:
         print "no meeting room POIs to update"
 
-
-def print_usage():
-    print "Usage: "
-    print "export_to_poi_service.py -u <poi_service_url> -k <dev_auth_token> -s <app_secret> -i <app_id> -r <region_code> -d <debug_data>"
-    print "export_to_poi_service.py [-h | -help]"
-    print
-    print "Options: "
-    print "-u --poi_service_url     URL to poi-service"
-    print "-k --dev_auth_token      eeGeo Developer Auth Token"
-    print "-s --app_secret          app secret for web service"
-    print "-i --app_id              app id for web service"
-    print "-r --region_code         region code for web service"
-    print "-d --debug_data          send debug data to web service"
-    print "-h --help                Display this screen"
-
-
-def get_args(argv):
-    poi_service_url = ""
-    dev_auth_token = ""
-    app_secret = ""
-    app_id = ""
-    region_code = ""
-    debug_data = ""
-
-    try:
-        opts, args = getopt.getopt(argv, "hvsi:u:k:r:d", ["poi_service_url=", "dev_auth_token=", "app_secret=", "app_id=", "region_code=", "debug_data="])
-    except getopt.GetoptError:
-        print_usage()
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == "-h":
-            print_usage()
-            sys.exit()
-        elif opt in ("-u", "--poi_service_url"):
-            poi_service_url = arg
-        elif opt in ("-k", "--dev_auth_token"):
-            dev_auth_token = arg
-        elif opt in {"-s", "--app_secret"}:
-            app_secret = arg
-        elif opt in {"-i", "--app_id"}:
-            app_id = arg
-        elif opt in {"-r", "--region_code"}:
-            region_code = arg
-        elif opt in {"-d", "--debug_data"}:
-            debug_data = arg
-
-    return poi_service_url, dev_auth_token, app_secret, app_id, region_code, debug_data
-
-
 if __name__ == "__main__":
+    feedconfig = FeedConfig.build()
     # logging.config.dictConfig({
     #     'version': 1,
     #     'formatters': {
@@ -180,12 +104,13 @@ if __name__ == "__main__":
     #     }
     # })
 
-    poi_service_url, dev_auth_token, app_secret, app_id, region_code, debug_data = get_args(sys.argv[1:])
+    hotcold = HotColdPoiSet(feedconfig.poi_service_a_base_path, feedconfig.poi_service_b_base_path, feedconfig.wrld_dev_auth_token, keys=["6d27c9936af66fa250dbc30172d7fec4", "3ceebbe9943e604ee4ac39b3977be5e1", "065f472a5e1143fbef57d3a97b019ef9"])
+    hotcold.determine_hot_cold()
 
     meeting_room_poi_dict = get_meeting_room_poi_dict("../generated/MeetingRoomPoiData.json")
 
     meeting_room_json = []
-    for meeting_room in get_updated_meeting_room_poi_json("http://localhost/webservice/pythonservice?wsdl", region_code, meeting_room_poi_dict):
+    for meeting_room in get_updated_meeting_room_poi_json(feedconfig, meeting_room_poi_dict):
         meeting_room_json.append(meeting_room)
 
-    update_meeting_room_pois(meeting_room_json, poi_service_url, dev_auth_token)
+    update_meeting_room_pois(meeting_room_json, feedconfig, hotcold)

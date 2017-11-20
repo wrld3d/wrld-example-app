@@ -1,0 +1,365 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xs:schema
+        xmlns:xs='http://www.w3.org/2001/XMLSchema'
+        xmlns:wsdl='http://schemas.xmlsoap.org/wsdl/'
+        xmlns:tns='http://bloomberg.com/internalsystems/RsrvEegeoSvc'
+        xmlns:soapenc='http://schemas.xmlsoap.org/soap/encoding/'
+        xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/'
+        xmlns:mime='http://schemas.xmlsoap.org/wsdl/mime/'
+        xmlns:http='http://schemas.xmlsoap.org/wsdl/http/'
+        xmlns:bdem='http://bloomberg.com/schemas/bdem'
+        targetNamespace='http://bloomberg.com/internalsystems/RsrvEegeoSvc'
+        elementFormDefault='qualified'
+        bdem:serviceInfo='rsrveegeosvc:234653'
+        bdem:responseType='RsrvEegeoSvcPortTypeResponse'
+        bdem:requestType='RsrvEegeoSvcPortTypeRequest'>
+
+      <xs:complexType name="ErrorResponseType">
+        <xs:sequence>
+          <xs:element name="code" type="xs:int"/>
+          <xs:element name="message" type="xs:string"/>
+          <xs:element name="detail" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ResultType">
+        <xs:sequence>
+          <xs:element name="rCode" type="xs:int"/>
+          <xs:element name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <!--GetLocationDetails-->
+      <xs:complexType name="FloorDetailType">
+        <xs:sequence>
+          <xs:element name="level" type="xs:int"/>
+          <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="SpaceStatusType">
+        <xs:sequence>
+          <xs:element name="statusId" type="xs:int"/>
+          <xs:element name="description" type="xs:string"/>
+          <xs:element name="color" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="LocationDetailType">
+        <xs:sequence>
+          <xs:element name="locationId" type="xs:string"/>
+          <xs:element name="locationName" type="xs:string"/>
+          <xs:element name="regionCode" type="xs:string"/>
+          <xs:element name="floorDetails" type="tns:FloorDetailType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="GetLocationDetailsRequestType">
+        <xs:sequence>
+          <xs:element name="regionCode" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetLocationDetails" type="tns:GetLocationDetailsRequestType"/>
+
+      <xs:complexType name="GetLocationDetailsResponseType">
+        <xs:sequence>
+          <xs:element name="result" type="tns:ResultType"/>
+          <xs:element name="locationDetails" type="tns:LocationDetailType" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="spaceStatusDetails" type="tns:SpaceStatusType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetLocationDetailsResponse" type="tns:GetLocationDetailsResponseType"/>
+
+    <!--GetEmployeeDetails-->
+      <xs:complexType name="EmployeeDetailType">
+        <xs:sequence>
+          <xs:element name="uuid" type="xs:int"/>
+          <xs:element name="FirstName" type="xs:string"/>
+          <xs:element name="LastName" type="xs:string"/>
+          <xs:element name="PictureId" type="xs:int"/>
+          <xs:element name="DeptCode" type="xs:string"/>
+          <xs:element name="DeptDescription" type="xs:string"/>
+          <xs:element name="Office" type="xs:string"/>
+          <xs:element name="Ext" type="xs:string"/>
+          <xs:element name="Phone" type="xs:string"/>
+          <xs:element name="Email" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="GetEmployeeDetailsRequestType">
+        <xs:sequence>
+          <xs:element name="regionCode" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetEmployeeDetails" type="tns:GetEmployeeDetailsRequestType"/>
+
+      <xs:complexType name="GetEmployeeDetailsResponseType">
+        <xs:sequence>
+          <xs:element name="result" type="tns:ResultType"/>
+          <xs:element name="employeeDetails" type="tns:EmployeeDetailType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetEmployeeDetailsResponse" type="tns:GetEmployeeDetailsResponseType"/>
+
+      <!--GetDeskDetails-->
+      <xs:complexType name="DeskDetailType">
+        <xs:sequence>
+          <xs:element name="locationId" type="xs:string"/>
+          <xs:element name="spaceId" type="xs:string"/>
+          <xs:element name="name" type="xs:string"/>
+          <xs:element name="floor" type="xs:string"/>
+          <xs:element name="floorName" type="xs:string"/>
+          <xs:element name="assignedPersonUuid" type="xs:int" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="GetDeskDetailsRequestType">
+        <xs:sequence>
+          <xs:element name="regionCode" type="xs:string"/>
+          <xs:element name="locationId" type="xs:string" minOccurs="0"/>
+          <xs:element name="floor" type="xs:string" minOccurs="0"/>
+          <xs:element name="floorName" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetDeskDetails" type="tns:GetDeskDetailsRequestType"/>
+
+      <xs:complexType name="GetDeskDetailsResponseType">
+        <xs:sequence>
+          <xs:element name="result" type="tns:ResultType"/>
+          <xs:element name="deskDetails" type="tns:DeskDetailType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetDeskDetailsResponse" type="tns:GetDeskDetailsResponseType"/>
+
+      <!--GetMeetingSpaceDetails-->
+      <xs:complexType name="MeetingSpaceDetailType">
+        <xs:sequence>
+          <xs:element name="locationId" type="xs:string"/>
+          <xs:element name="spaceId" type="xs:string"/>
+          <xs:element name="floorName" type="xs:string"/>
+          <xs:element name="name" type="xs:string"/>
+          <xs:element name="shortDescription" type="xs:string"/>
+          <xs:element name="isAdmin" type="xs:boolean"/>
+          <xs:element name="capacity" type="xs:int"/>
+          <xs:element name="phone" type="xs:string"/>
+          <xs:element name="tieline" type="xs:string"/>
+          <xs:element name="nexi" type="xs:string"/>
+          <xs:element name="isOccupancyEnabled" type="xs:boolean"/>
+          <xs:element name="isTemporarilyDeactivated" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="GetMeetingSpaceDetailsRequestType">
+        <xs:sequence>
+          <xs:element name="regionCode" type="xs:string"/>
+          <xs:element name="locationId" type="xs:string" minOccurs="0"/>
+          <xs:element name="floorName" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetMeetingSpaceDetails" type="tns:GetMeetingSpaceDetailsRequestType"/>
+
+      <xs:complexType name="GetMeetingSpaceDetailsResponseType">
+        <xs:sequence>
+          <xs:element name="result" type="tns:ResultType"/>
+          <xs:element name="meetingSpaceDetails" type="tns:MeetingSpaceDetailType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetMeetingSpaceDetailsResponse" type="tns:GetMeetingSpaceDetailsResponseType"/>
+
+      <!--GetMeetingSpaceOccupancyDetails-->
+      <xs:complexType name="OccupancyDetailType">
+        <xs:sequence>
+          <xs:element name="spaceId" type="xs:string"/>
+          <xs:element name="statusId" type="xs:int">
+              <xs:annotation>
+                <xs:documentation>status id is one of the supported values from GetLocationDetails.spaceStatusDetails.statusId</xs:documentation>
+              </xs:annotation>
+          </xs:element>
+          <xs:element name="notes" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="GetMeetingSpaceOccupancyDetailsRequestType">
+        <xs:sequence>
+          <xs:element name="regionCode" type="xs:string"/>
+          <xs:element name="locationId" type="xs:string" minOccurs="0"/>
+          <xs:element name="floorName" type="xs:string" minOccurs="0"/>
+          <xs:element name="spaceId" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetMeetingSpaceOccupancyDetails" type="tns:GetMeetingSpaceOccupancyDetailsRequestType"/>
+
+      <xs:complexType name="GetMeetingSpaceOccupancyDetailsResponseType">
+        <xs:sequence>
+          <xs:element name="result" type="tns:ResultType"/>
+          <xs:element name="meetingSpaceOccupancyDetails" type="tns:OccupancyDetailType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetMeetingSpaceOccupancyDetailsResponse" type="tns:GetMeetingSpaceOccupancyDetailsResponseType"/>
+
+      <!--GetEmpBadgeDetails-->
+      <xs:complexType name="EmpBadgeDetailType">
+        <xs:sequence>
+          <xs:element name="uuid" type="xs:int"/>
+          <xs:element name="Badge" type="xs:string"/>
+          <xs:element name="BadgeInOut" type="xs:int"/>
+          <xs:element name="LogInStatus" type="xs:string"/>
+          <xs:element name="OUTStatus" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="GetEmpBadgeDetailsRequestType">
+        <xs:sequence>
+          <xs:element name="UUIDs" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetEmpBadgeDetails" type="tns:GetEmpBadgeDetailsRequestType"/>
+
+      <xs:complexType name="GetEmpBadgeDetailsResponseType">
+        <xs:sequence>
+          <xs:element name="result" type="tns:ResultType"/>
+          <xs:element name="empBadgeDetails" type="tns:EmpBadgeDetailType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetEmpBadgeDetailsResponse" type="tns:GetEmpBadgeDetailsResponseType"/>
+
+      <xs:complexType name="ImageType">
+        <xs:sequence>
+          <xs:element name="imageId" type="xs:int"/>
+          <xs:element name="data" type="xs:base64Binary"/>
+        </xs:sequence>
+      </xs:complexType>   
+
+      <xs:complexType name="GetImageRequestType">
+        <xs:sequence>
+          <xs:element name="imageIds" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetImage" type="tns:GetImageRequestType"/>
+
+      <xs:complexType name="GetImageResponseType">
+        <xs:sequence>
+          <xs:element name="result" type="tns:ResultType"/>
+          <xs:element name="images" type="tns:ImageType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="GetImageResponse" type="tns:GetImageResponseType"/>
+
+  <xs:complexType name='GetLocationDetailsRequestMessage' bdem:cpptype='GetLocationDetailsRequest'>
+    <xs:sequence>
+      <xs:element ref='tns:GetLocationDetails'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetLocationDetailsResponseMessage' bdem:cpptype='GetLocationDetailsResponse'>
+    <xs:sequence>
+      <xs:element ref='tns:GetLocationDetailsResponse'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetEmployeeDetailsRequestMessage' bdem:cpptype='GetEmployeeDetailsRequest'>
+    <xs:sequence>
+      <xs:element ref='tns:GetEmployeeDetails'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetEmployeeDetailsResponseMessage' bdem:cpptype='GetEmployeeDetailsResponse'>
+    <xs:sequence>
+      <xs:element ref='tns:GetEmployeeDetailsResponse'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetDeskDetailsRequestMessage' bdem:cpptype='GetDeskDetailsRequest'>
+    <xs:sequence>
+      <xs:element ref='tns:GetDeskDetails'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetDeskDetailsResponseMessage' bdem:cpptype='GetDeskDetailsResponse'>
+    <xs:sequence>
+      <xs:element ref='tns:GetDeskDetailsResponse'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetMeetingSpaceDetailsRequestMessage' bdem:cpptype='GetMeetingSpaceDetailsRequest'>
+    <xs:sequence>
+      <xs:element ref='tns:GetMeetingSpaceDetails'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetMeetingSpaceDetailsResponseMessage' bdem:cpptype='GetMeetingSpaceDetailsResponse'>
+    <xs:sequence>
+      <xs:element ref='tns:GetMeetingSpaceDetailsResponse'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetMeetingSpaceOccupancyDetailsRequestMessage' bdem:cpptype='GetMeetingSpaceOccupancyDetailsRequest'>
+    <xs:sequence>
+      <xs:element ref='tns:GetMeetingSpaceOccupancyDetails'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetMeetingSpaceOccupancyDetailsResponseMessage' bdem:cpptype='GetMeetingSpaceOccupancyDetailsResponse'>
+    <xs:sequence>
+      <xs:element ref='tns:GetMeetingSpaceOccupancyDetailsResponse'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetEmpBadgeDetailsRequestMessage' bdem:cpptype='GetEmpBadgeDetailsRequest'>
+    <xs:sequence>
+      <xs:element ref='tns:GetEmpBadgeDetails'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetEmpBadgeDetailsResponseMessage' bdem:cpptype='GetEmpBadgeDetailsResponse'>
+    <xs:sequence>
+      <xs:element ref='tns:GetEmpBadgeDetailsResponse'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetImageRequestMessage' bdem:cpptype='GetImageRequest'>
+    <xs:sequence>
+      <xs:element ref='tns:GetImage'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='GetImageResponseMessage' bdem:cpptype='GetImageResponse'>
+    <xs:sequence>
+      <xs:element ref='tns:GetImageResponse'/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name='RsrvEegeoSvcPortTypeRequest'>
+    <xs:choice>
+      <xs:element name='GetLocationDetails' type='tns:GetLocationDetailsRequestMessage'/>
+      <xs:element name='GetEmployeeDetails' type='tns:GetEmployeeDetailsRequestMessage'/>
+      <xs:element name='GetDeskDetails' type='tns:GetDeskDetailsRequestMessage'/>
+      <xs:element name='GetMeetingSpaceDetails' type='tns:GetMeetingSpaceDetailsRequestMessage'/>
+      <xs:element name='GetMeetingSpaceOccupancyDetails' type='tns:GetMeetingSpaceOccupancyDetailsRequestMessage'/>
+      <xs:element name='GetEmpBadgeDetails' type='tns:GetEmpBadgeDetailsRequestMessage'/>
+      <xs:element name='GetImage' type='tns:GetImageRequestMessage'/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name='RsrvEegeoSvcPortTypeResponse'>
+    <xs:choice>
+      <xs:element name='GetLocationDetails' type='tns:GetLocationDetailsResponseMessage'/>
+      <xs:element name='GetEmployeeDetails' type='tns:GetEmployeeDetailsResponseMessage'/>
+      <xs:element name='GetDeskDetails' type='tns:GetDeskDetailsResponseMessage'/>
+      <xs:element name='GetMeetingSpaceDetails' type='tns:GetMeetingSpaceDetailsResponseMessage'/>
+      <xs:element name='GetMeetingSpaceOccupancyDetails' type='tns:GetMeetingSpaceOccupancyDetailsResponseMessage'/>
+      <xs:element name='GetEmpBadgeDetails' type='tns:GetEmpBadgeDetailsResponseMessage'/>
+      <xs:element name='GetImage' type='tns:GetImageResponseMessage'/>
+      <xs:element name='errorResponse' type='tns:ErrorResponseType'/>
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:element name='RsrvEegeoSvcPortTypeRequest'
+              type='tns:RsrvEegeoSvcPortTypeRequest'/>
+
+  <xs:element name='RsrvEegeoSvcPortTypeResponse'
+              type='tns:RsrvEegeoSvcPortTypeResponse'/>
+</xs:schema>
+
+<!-- $Id$ $CSID$ $CCId$ -->
+<!-- GENERATED BY BLP_BAS_CODEGEN_3.8.26 Fri Oct  6 15:54:28 2017 -->
+

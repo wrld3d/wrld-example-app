@@ -215,195 +215,7 @@ def filename_to_jpg(image_filename):
     (base_image_filename, ext) = os.path.splitext(image_filename)
     return base_image_filename + '.jpg'
 
-def collect_desks(xls_book, sheet_index, first_data_row_number, column_name_row):
-    desks = {}
-    xls_sheet = xls_book.sheet_by_index(sheet_index)
-
-    poi_columns = ['desk', 'latitude_degrees', 'longitude_degrees', 'interior_id', 'interior_floor']
-    control_columns = ['available_in_app']
-    expected_columns = poi_columns + control_columns
-    available_in_app_col_index = len(poi_columns)
-
-    all_validated = True
-
-    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated column names")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'desk', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated name column values")
-
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title latitude_degrees values")
-
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title longitude_degrees values")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior_id column values")
-
-    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior floor number")
-
-    if not all_validated:
-        raise ValueError("failed validation")
-
-    column_names = ['id'] + poi_columns
-    for v in gather_table(column_names, xls_sheet, first_data_row_number, available_in_app_col_index):
-        desk = {
-            "desk":v[column_names.index('desk')],
-            "lat":float(v[column_names.index('latitude_degrees')]),
-            "lon":float(v[column_names.index('longitude_degrees')]),
-   			"indoor_id":v[column_names.index('interior_id')],
-  			"floor_id":int(v[column_names.index('interior_floor')]),
-	       }
-        desks[desk['desk']] = desk
-    return desks
-
-def collect_employee_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, desks):
-    xls_sheet = xls_book.sheet_by_index(sheet_index)
-
-    poi_columns = ['name', 'job_title', 'image_filename', 'working_group', 'office_location', 'desk_code']
-    control_columns = ['available_in_app']
-    expected_columns = poi_columns + control_columns
-    available_in_app_col_index = len(poi_columns)
-
-    all_validated = True
-
-    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated column names")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated name column values")
-
-    allow_empty = True
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'job_title', first_data_row_number, available_in_app_col_index, allow_empty)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated job_title column values")
-
-    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated image_filename column values")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'working_group', first_data_row_number, available_in_app_col_index, allow_empty)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated working_group column values")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'office_location', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated office_location column values")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'desk_code', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated desk_code column values")
-
-    if not all_validated:
-        raise ValueError("failed validation")
-
-    column_names = ['id'] + poi_columns
-    for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename')):
-    	desk_code = v[column_names.index('desk_code')]
-    	if not desk_code in desks:
-    		print "WARNING: No desk found for {0} skipping employee {1}".format(desk_code, v[column_names.index('name')])
-    	else:
-	    	desk = desks[desk_code]
-	    	yield {
-	            "title":v[column_names.index('name')],
-	            "subtitle":v[column_names.index('job_title')],
-	            "tags":"person",
-	            "lat":desk['lat'],
-	            "lon":desk['lon'],
-	            "indoor":True,
-	  			"indoor_id":desk['indoor_id'],
-	  			"floor_id":desk['floor_id'],
-	            "user_data":
-	            {
-	              "image_url":v[column_names.index('image_filename')],
-	              "desk_code":desk_code,
-	              "office_location":v[column_names.index('office_location')],
-	              "working_group":v[column_names.index('working_group')]
-	            }
-	       }
-
-def collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
-    xls_sheet = xls_book.sheet_by_index(sheet_index)
-
-    poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'office_location']
-    control_columns = ['available_in_app']
-    expected_columns = poi_columns + control_columns
-    available_in_app_col_index = len(poi_columns)
-
-    all_validated = True
-
-    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated column names")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated name column values")
-
-    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated image_filename column values")
-
-    all_validated &= validate_tags_text_field(xls_sheet, poi_columns, 'availability', first_data_row_number, available_in_app_col_index, MEETING_ROOM_STATUSES)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated availability column values")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior_id column values")
-
-    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior floor number")
-
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title latitude_degrees values")
-
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title longitude_degrees values")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'office_location', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated office_location column values")
-
-    if not all_validated:
-        raise ValueError("failed validation")
-
-    poi_columns = ['name', 'image_filename', 'availability', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'office_location']
-
-    column_names = ['id'] + poi_columns
-    for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename')):
-        yield  {
-            "title":v[column_names.index('name')],
-            "subtitle":"",
-            "tags":"meeting_room",
-            "lat":float(v[column_names.index('latitude_degrees')]),
-            "lon":float(v[column_names.index('longitude_degrees')]),
-            "indoor":True,
-  			"indoor_id":v[column_names.index('interior_id')],
-  			"floor_id":int(v[column_names.index('interior_floor')]),
-            "user_data":
-            {
-              "image_url":v[column_names.index('image_filename')],
-              "availability":v[column_names.index('availability')],
-              "office_location":v[column_names.index('office_location')],
-              "highlight_id":v[column_names.index('name')]
-            }
-       }
-
-def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, employee_departments):
+def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
 
     poi_columns = ['name', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees', 'office_location']
@@ -456,9 +268,6 @@ def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, ve
     for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename')):
         working_group_desks = []
         working_group_name = v[column_names.index('name')]
-        if working_group_name in employee_departments:
-            for employee in employee_departments[working_group_name]:
-                working_group_desks.append(employee["user_data"]["desk_code"])
 
     	yield {
             "title":working_group_name,
@@ -474,59 +283,9 @@ def collect_working_group_table(xls_book, sheet_index, src_image_folder_path, ve
               "image_url":v[column_names.index('image_filename')],
               "description":v[column_names.index('description')],
               "office_location":v[column_names.index('office_location')],
-              "desks": working_group_desks
+              "desks": []
             }
        }
-
-
-def collect_misc_from_desks_table(desks):
-    desk_groups = {}
-
-    desk_highlight_colors = {
-        "A": [0.0, 255.0, 0.0, 255.0],
-        "B": [0.0, 128.0, 0.0, 255.0],
-        "C": [0.0, 255.0, 0.0, 255.0],
-        "D": [0.0, 128.0, 0.0, 255.0],
-        "E": [0.0, 255.0, 0.0, 255.0],
-        "F": [0.0, 128.0, 0.0, 255.0],
-        "G": [0.0, 255.0, 0.0, 255.0],
-        "H": [0.0, 128.0, 0.0, 255.0],
-        "I": [0.0, 255.0, 0.0, 255.0],
-        "J": [0.0, 128.0, 0.0, 255.0],
-        "K": [0.0, 255.0, 0.0, 255.0]
-    }
-
-    for desk_name in desks:
-        if "3QVS" in desk_name:
-            desk_group_name = desk_name[:9]
-
-            desk = desks[desk_name]
-            floor_id = int(desk["floor_id"])
-
-            desk_group = desk_group_name[-1:]
-            highlight_color_group = desk_group if desk_highlight_colors.has_key(desk_group) else "A"
-
-            if desk_group_name not in desk_groups:
-                desk_groups[desk_group_name] = {
-                    "title": desk_group_name,
-                    "subtitle": "",
-                    "tags": "desk_group",
-                    "lat": float(desk["lat"]),
-                    "lon": float(desk["lon"]),
-                    "indoor": True,
-                    "indoor_id": desk["indoor_id"],
-                    "floor_id": floor_id,
-                    "user_data":
-                        {
-                            "desks": [],
-                            "entity_highlight_color":desk_highlight_colors[highlight_color_group]
-                        }}
-
-            desk_groups[desk_group_name]["user_data"]["desks"].append(desk_name)
-
-    for desk_group in desk_groups:
-        yield desk_groups[desk_group]
-
 
 def collect_facility_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
@@ -606,7 +365,7 @@ def get_office_location_from_interior_and_floor(interior_id, floor_id):
     interior_ids_to_names["swallow_lon_citygatehouse"] = "City Gate House"
     interior_ids_to_names["swallow_lon_50finsbury"] = "50 Finsbury"
     interior_ids_to_names["swallow_lon_parkhouse"] = "Park House"
-    interior_ids_to_names["swallow_lon_wallbrooksquare"] = "3QVS"
+    interior_ids_to_names["swallow_lon_wallbrooksquare"] = "Bloomberg London"
 
     interior_floor_to_name = {}
     interior_floor_to_name["swallow_lon_38finsbury"] = ["Lower Ground Floor", "Ground Floor", "1st Floor", "2nd Floor", "3rd Floor", "4th Floor", "5th Floor", "6th Floor"]
@@ -616,75 +375,6 @@ def get_office_location_from_interior_and_floor(interior_id, floor_id):
     interior_floor_to_name["swallow_lon_wallbrooksquare"] = ["B4", "B3", "B2", "B1", "Ground Floor", "1st Floor", "2nd Floor", "3rd Floor", "4th Floor", "5th Floor", "6th Floor", "7th Floor", "8th Floor"]
 
     return interior_floor_to_name[interior_id][floor_id] + ", " + interior_ids_to_names[interior_id];
-
-def collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
-    xls_sheet = xls_book.sheet_by_index(sheet_index)
-
-    poi_columns = ['name', 'image_filename', 'description', 'interior_id', 'interior_floor', 'latitude_degrees', 'longitude_degrees']
-    control_columns = ['available_in_app']
-    expected_columns = poi_columns + control_columns
-    available_in_app_col_index = len(poi_columns)
-
-    all_validated = True
-
-    all_validated &= validate_column_names(xls_sheet, column_name_row, expected_columns)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated column names")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'name', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated name column values")
-
-    all_validated &= validate_images(xls_sheet, first_data_row_number, poi_columns.index('image_filename'), available_in_app_col_index, src_image_folder_path)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated image_filename column values")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'description', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated description column values")
-
-    all_validated &= validate_required_text_field(xls_sheet, poi_columns, 'interior_id', first_data_row_number, available_in_app_col_index)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior_id column values")
-
-    all_validated &= validate_required_int_field(xls_sheet, poi_columns, 'interior_floor', first_data_row_number, available_in_app_col_index, MIN_FLOOR)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated interior floor number")
-
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'latitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LAT, MAX_LAT)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title latitude_degrees values")
-
-    all_validated &= validate_required_real_field(xls_sheet, poi_columns, 'longitude_degrees', first_data_row_number, available_in_app_col_index, MIN_LNG, MAX_LNG)
-    if not all_validated and stop_on_first_error:
-        raise ValueError("failed to validated title longitude_degrees values")
-
-    if not all_validated:
-        raise ValueError("failed validation")
-
-    column_names = ['id'] + poi_columns
-    for v in gather_table_with_image(column_names, xls_sheet, first_data_row_number, available_in_app_col_index, poi_columns.index('image_filename')):
-        department_name = v[column_names.index('name')]
-        department_desks = []
-        if department_name in departments:
-            for employee in departments[department_name]:
-                department_desks.append(employee["user_data"]["desk_code"])
-    	yield {
-            "title":department_name,
-            "subtitle":"",
-            "tags":"department",
-            "lat":float(v[column_names.index('latitude_degrees')]),
-            "lon":float(v[column_names.index('longitude_degrees')]),
-            "indoor":True,
-  			"indoor_id":v[column_names.index('interior_id')],
-  			"floor_id":int(v[column_names.index('interior_floor')]),
-            "user_data":
-            {
-              "image_url":v[column_names.index('image_filename')],
-              "description":v[column_names.index('description')],
-              "desks":department_desks
-            }
-       }
 
 def collect_office_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     xls_sheet = xls_book.sheet_by_index(sheet_index)
@@ -870,8 +560,8 @@ def collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, fi
             "user_data":
             {
                 "office_location": get_office_location_from_interior_and_floor(
-                    v[column_names.index('interior_id')],
-                    int(v[column_names.index('interior_floor')])),
+                v[column_names.index('interior_id')],
+                int(v[column_names.index('interior_floor')])),
                 "image_url": v[column_names.index('image_filename')],
                 "description": v[column_names.index('description')]
             }
@@ -931,41 +621,10 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     xls_book =  xlrd.open_workbook(src_xls_path)
 
     entities = []
-    departments = {}
-
-    sheet_index = 7
-
-    desks = collect_desks(xls_book, sheet_index, first_data_row_number, column_name_row)
-
-    for deskCode in desks:
-        desk = desks[deskCode]
-        e = {"title": desk['desk'],
-            "subtitle": "",
-            "tags": "desk",
-            "lat": desk['lat'],
-            "lon": desk['lon'],
-            "indoor": True,
-            "indoor_id": desk['indoor_id'],
-            "floor_id": desk['floor_id']}
-        entities.append(e)
-
-    sheet_index = 0
-
-    for e in collect_employee_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, desks):
-        department = e['user_data']['working_group']
-        if not department in departments:
-            departments[department] = []
-        departments[department].append(e)
-        entities.append(e)
-
-    sheet_index = 1
-
-    for e in collect_meeting_room_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
-    	entities.append(e)
 
     sheet_index = 2
 
-    for e in collect_working_group_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
+    for e in collect_working_group_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
     	entities.append(e)
 
     sheet_index = 3
@@ -981,19 +640,11 @@ def build_db(src_xls_path, poi_service_url, dev_auth_token, cdn_base_url, verbos
     sheet_index = 5
 
     for e in collect_transition_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
-        entities.append(e)
-
-    sheet_index = 6
-
-    for e in collect_department_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row, departments):
-        entities.append(e)
+    	entities.append(e)
 
     sheet_index = 8
 
     for e in collect_misc_table(xls_book, sheet_index, src_image_folder_path, verbose, first_data_row_number, column_name_row):
-        entities.append(e)
-
-    for e in collect_misc_from_desks_table(desks):
         entities.append(e)
 
     delete_existing_pois(poi_service_url, dev_auth_token)
