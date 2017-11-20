@@ -230,25 +230,25 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     switch(error.code)
     {
         case SSIStepInsideSdkErrorTypeInvalidKeys:
-            //NSLog(@"SenionLabLocationManager didFailWithError: InvalidKeys");
+            NSLog(@"SenionLabLocationManager didFailWithError: InvalidKeys");
             break;
         case SSIStepInsideSdkErrorTypeBleNotEnabled:
-            //NSLog(@"SenionLabLocationManager didFailWithError: BleNotEnabled");
+            NSLog(@"SenionLabLocationManager didFailWithError: BleNotEnabled");
             break;
         case SSIStepInsideSdkErrorTypeLocationFailed:
-            //NSLog(@"SenionLabLocationManager didFailWithError: LocationFailed");
+            NSLog(@"SenionLabLocationManager didFailWithError: LocationFailed");
             break;
         case SSIStepInsideSdkErrorTypeFailedToLoadGeoMessengerData:
-            //NSLog(@"SenionLabLocationManager didFailWithError: FailedToLoadGeoMessengerData");
+            NSLog(@"SenionLabLocationManager didFailWithError: FailedToLoadGeoMessengerData");
             break;
         case SSIStepInsideSdkErrorTypeFailedToLoadPositioningPackage:
-            //NSLog(@"SenionLabLocationManager didFailWithError: FailedToLoadPositioningPackage");
+            NSLog(@"SenionLabLocationManager didFailWithError: FailedToLoadPositioningPackage");
             break;
         case SSIStepInsideSdkErrorTypeCoreLocationAuthorizationDenied:
-            //NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationDenied");
+            NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationDenied");
             break;
         case SSIStepInsideSdkErrorTypeCoreLocationAuthorizationNotDetermined:
-            //NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationNotDetermined");
+            NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationNotDetermined");
             break;
     }
 
