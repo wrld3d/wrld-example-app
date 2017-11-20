@@ -1136,9 +1136,6 @@
       <Component Id="_4e099e34.dbf0.44e2.b5c8.051fe1526979" Directory="RESOURCEFOLDER" Guid="{f9551bbb-32b6-4888-ba11-99773f659920}">
         <File Id="_6adbed84.a9e6.41a3.b144.45722f0df7bb" KeyPath="yes" Source="payload\Resources\opensans_semibold_sdf_0.png" />
       </Component>
-	  <Component Id="_cd407c20.cf85.4b46.9380.14b05ab9fc82" Directory="RESOURCEFOLDER" Guid="{d262b1a5-51a1-4faf-ace2-640fc1e90f2b}">
-		<File Id="_3bb6cfff.fee8.46a0.a66f.d44446212e44" KeyPath="yes" Source="payload\Resources\search_menu_items.json" />
-	  </Component>
 	  <Component Id="_de0b606a.5686.4945.9a95.0d88299bcd06" Directory="RESOURCEFOLDER" Guid="{588a60c1-1d60-4f22-b685-93c0f1a72f58}">
 		<File Id="_b40d4561.8a35.4c91.9e08.08b994d52de2" KeyPath="yes" Source="payload\Resources\search_tags.json" />
 	  </Component>
