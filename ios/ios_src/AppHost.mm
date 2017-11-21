@@ -281,6 +281,8 @@ void AppHost::Update(float dt)
     m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel().UpdateObjectsUiThread(dt);
     
     m_pInteriorsLocationServiceController->Update();
+    
+    m_pSenionLabLocationModule->GetLocationService().Update(dt);
 
     m_messageBus.FlushToUi();
     m_messageBus.FlushToNative();

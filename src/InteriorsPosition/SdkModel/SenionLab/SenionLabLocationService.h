@@ -39,7 +39,11 @@ namespace ExampleApp
                     void SetInteriorId(const Eegeo::Resources::Interiors::InteriorId& interiorId);
                     void SetIsConnected(bool isConnected);
                     
+                    void Update(float dt);
+                    
                 private:
+                    bool ShouldUseSenionData() const;
+                    
                     Eegeo::Location::ILocationService& m_defaultLocationService;
                     const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                     const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
@@ -50,6 +54,8 @@ namespace ExampleApp
                     int m_floorIndex;
                     Eegeo::Resources::Interiors::InteriorId m_interiorId;
                     bool m_isConnected;
+                    
+                    float m_disconnectTime;
                 };
             }
         }

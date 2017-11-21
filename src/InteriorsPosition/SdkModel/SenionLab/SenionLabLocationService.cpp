@@ -11,6 +11,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace
+            {
+                float timeBeforeDisconnect = 30.0f;
+            }
+            
             namespace SenionLab
             {   
                 SenionLabLocationService::SenionLabLocationService(Eegeo::Location::ILocationService& defaultLocationService,
@@ -25,12 +30,13 @@ namespace ExampleApp
                 , m_interiorId(Eegeo::Resources::Interiors::InteriorId::NullId())
                 , m_isConnected(false)
                 , m_headingDegrees(0.0)
+                , m_disconnectTime(0.0f)
                 {
                 }
                 
                 const bool SenionLabLocationService::GetIsAuthorized() const
                 {
-                    if(m_isConnected)
+                    if(ShouldUseSenionData())
                     {
                         return m_isAuthorized;
                     }
@@ -42,7 +48,7 @@ namespace ExampleApp
                 
                 bool SenionLabLocationService::IsIndoors()
                 {
-                    if(m_isConnected)
+                    if(ShouldUseSenionData())
                     {
                         return true;
                     }
@@ -54,7 +60,7 @@ namespace ExampleApp
                 
                 Eegeo::Resources::Interiors::InteriorId SenionLabLocationService::GetInteriorId()
                 {
-                    if(m_isConnected)
+                    if(ShouldUseSenionData())
                     {
                         const Eegeo::Resources::Interiors::InteriorsModel* interiorModel = m_interiorInteractionModel.GetInteriorModel();
                         if(m_interiorId.IsValid())
@@ -72,7 +78,7 @@ namespace ExampleApp
                 
                 bool SenionLabLocationService::GetLocation(Eegeo::Space::LatLong& latLong)
                 {
-                    if(m_isConnected && (std::abs(m_latLong.GetLatitude()) > 0 || std::abs(m_latLong.GetLongitude()) > 0))
+                    if(ShouldUseSenionData() && (std::abs(m_latLong.GetLatitude()) > 0 || std::abs(m_latLong.GetLongitude()) > 0))
                     {
                         latLong.SetLatitude(m_latLong.GetLatitude());
                         latLong.SetLongitude(m_latLong.GetLongitude());
@@ -86,7 +92,7 @@ namespace ExampleApp
                 
                 bool SenionLabLocationService::GetAltitude(double& altitude)
                 {
-                    if(m_isConnected)
+                    if(ShouldUseSenionData())
                     {
                         const Eegeo::Resources::Interiors::InteriorsModel* interiorModel = m_interiorInteractionModel.GetInteriorModel();
                         if(interiorModel)
@@ -109,7 +115,7 @@ namespace ExampleApp
                 
                 bool SenionLabLocationService::GetFloorIndex(int& floorIndex)
                 {
-                    if(m_isConnected)
+                    if(ShouldUseSenionData())
                     {
                         floorIndex = m_floorIndex;
                         return true;
@@ -122,7 +128,7 @@ namespace ExampleApp
                 
                 bool SenionLabLocationService::GetHorizontalAccuracy(double& accuracy)
                 {
-                    if(m_isConnected)
+                    if(ShouldUseSenionData())
                     {
                         return false;
                     }
@@ -134,7 +140,7 @@ namespace ExampleApp
                 
                 bool SenionLabLocationService::GetHeadingDegrees(double& headingDegrees)
                 {
-                    if (m_isConnected)
+                    if (ShouldUseSenionData())
                     {
                         headingDegrees = m_headingDegrees;
                         return true;
@@ -175,6 +181,29 @@ namespace ExampleApp
                 void SenionLabLocationService::SetIsConnected(bool isConnected)
                 {
                     m_isConnected = isConnected;
+                    
+                    if(m_isConnected)
+                    {
+                        m_disconnectTime = 0.0f;
+                    }
+                }
+                
+                void SenionLabLocationService::Update(float dt)
+                {
+                    if(!m_isConnected && m_disconnectTime < timeBeforeDisconnect)
+                    {
+                        m_disconnectTime += dt;
+                    }
+                }
+                
+                bool SenionLabLocationService::ShouldUseSenionData() const
+                {
+                    if(m_isConnected || m_disconnectTime < timeBeforeDisconnect)
+                    {
+                        return true;
+                    }
+                    
+                    return false;
                 }
             }
         }
