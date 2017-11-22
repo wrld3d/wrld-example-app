@@ -5,6 +5,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "CompassViewInterop.h"
+#include "CoreBluetooth/CoreBluetooth.h"
 
 static const float CompassOuterShapeInactiveAlpha = 0.5f;
 static const float CompassOuterShapeActiveAlpha = 1.0f;
@@ -158,6 +159,9 @@ enum CompassViewState
     if(CGRectContainsPoint(self.bounds, touchLocation))
     {
         m_pInterop->OnCycle();
+        
+        // Makes iOS display a popup telling you Bluetooth is off with option to go to Bluetooth settings which is not possible with app popup
+        [[[CBCentralManager alloc] init] release];
     }
 }
 

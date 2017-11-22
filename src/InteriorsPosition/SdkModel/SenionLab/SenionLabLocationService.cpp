@@ -32,7 +32,7 @@ namespace ExampleApp
                 , m_interiorId(Eegeo::Resources::Interiors::InteriorId::NullId())
                 , m_isConnected(false)
                 , m_headingDegrees(0.0)
-                , m_disconnectTime(0.0f)
+                , m_disconnectTime(timeBeforeDisconnect)
                 , m_messageBus(messageBus)
                 {
                 }

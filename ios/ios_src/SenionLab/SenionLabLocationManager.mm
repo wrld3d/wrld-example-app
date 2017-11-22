@@ -5,7 +5,6 @@
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "AppHost.h"
 #include "AboutPageViewModel.h"
-#include "CoreBluetooth/CoreBluetooth.h"
 
 template <typename T>
 class FailureHandler
@@ -235,8 +234,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
             NSLog(@"SenionLabLocationManager didFailWithError: InvalidKeys");
             break;
         case SSIStepInsideSdkErrorTypeBleNotEnabled:
-            //Makes iOS display a popup telling you Bluetooth is off with option to go to Bluetooth settings which is not possible with app popup
-            [[[CBCentralManager alloc] init] release];
+            NSLog(@"SenionLabLocationManager didFailWithError: BleNotEnabled");
             break;
         case SSIStepInsideSdkErrorTypeLocationFailed:
             NSLog(@"SenionLabLocationManager didFailWithError: LocationFailed");
