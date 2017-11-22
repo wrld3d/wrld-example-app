@@ -17,7 +17,7 @@ namespace ExampleApp
                                                          Eegeo::Location::ILocationService& defaultLocationService,
                                                          Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory,
                                                          ExampleAppMessaging::TMessageBus& messageBus)
-        : m_locationService(defaultLocationService, environmentFlatteningService, interiorInteractionModel)
+        : m_locationService(defaultLocationService, environmentFlatteningService, interiorInteractionModel, messageBus)
         , m_locationManager(m_locationService, iOSAlertBoxFactory, messageBus)
         , m_locationController(m_locationManager,
                                applicationConfiguration.InteriorTrackingInfo())

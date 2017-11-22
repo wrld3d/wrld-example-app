@@ -26,7 +26,8 @@ namespace ExampleApp
                                                                  AndroidNativeState& nativeState)
                 : m_locationService(defaultLocationService,
                                     environmentFlatteningService,
-                                    interiorInteractionModel)
+                                    interiorInteractionModel,
+                                    messageBus)
                 , m_locationManager(m_locationService, messageBus, nativeState)
                 , m_locationController(m_locationManager,
                                        trackingInfoMap)

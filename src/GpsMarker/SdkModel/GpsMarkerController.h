@@ -10,6 +10,7 @@
 #include "Rendering.h"
 #include "IVisualMapService.h"
 #include "ILocationService.h"
+#include "InteriorsPositionConnectionMessage.h"
 
 namespace ExampleApp
 {
@@ -54,16 +55,20 @@ namespace ExampleApp
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
                 
+                bool m_isLocationServiceConnected;
+                
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback0<GpsMarkerController> m_floorSelectedCallback;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const Modality::ModalityChangedMessage&> m_modalityChangedHandlerBinding;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const GpsMarkerVisibilityMessage&> m_visibilityChangedHandlerBinding;
                 Eegeo::Helpers::TCallback1<GpsMarkerController, const InteriorsExplorer::InteriorsExplorerStateChangedMessage&> m_interiorsExplorerStateChangedCallback;
+                Eegeo::Helpers::TCallback1<GpsMarkerController, const InteriorsPosition::InteriorsPositionConnectionMessage&> m_interiorsPositionConnectionCallback;
                 
                 void OnFloorSelected();
                 void OnModalityChangedMessage(const Modality::ModalityChangedMessage& message);
                 void OnVisibilityChangedMessage(const GpsMarkerVisibilityMessage& message);
                 void OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage& message);
+                void OnInteriorsPositionConnectionMessage(const InteriorsPosition::InteriorsPositionConnectionMessage& message);
                 
                 void UpdateTransition(bool isVisible, float dt);
                 

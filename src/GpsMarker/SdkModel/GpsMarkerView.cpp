@@ -53,6 +53,7 @@ namespace ExampleApp
             , m_isInInterior(false)
             , m_highlightColor(GpsMarkerViewStyle::HighlightColorDefault)
             , m_hiddenColor(GpsMarkerViewStyle::HiddenColor)
+            , m_mainColor(GpsMarkerViewStyle::MainColorFlattened)
             , m_colorLerpValue(0)
             , m_textureLerpValue(0)
             {
@@ -132,6 +133,11 @@ namespace ExampleApp
                 m_pMarkerMaterial->SetTextureLerpValue(newTextureLerpValue);
                 m_pMarkerNotHiddenMaterial->SetTextureLerpValue(newTextureLerpValue);
                 
+                Eegeo::v4 currentMainColor = m_pMarkerMaterial->GetColor();
+                Eegeo::v4 newMainColor = Eegeo::v4::Lerp(currentMainColor, m_mainColor, dt);
+                m_pMarkerMaterial->SetColor(newMainColor);
+                m_pMarkerNotHiddenMaterial->SetColor(newMainColor);
+                
                 Eegeo::v4 currentHiddenColor = m_pMarkerHiddenMaterial->GetColor();
                 Eegeo::v4 newHiddenColor = Eegeo::v4::Lerp(currentHiddenColor, m_hiddenColor, dt);
                 m_pMarkerHiddenMaterial->SetColor(newHiddenColor);
@@ -199,11 +205,15 @@ namespace ExampleApp
                 m_pMarkerStencilClearArrow->SetModelViewProjection(modelViewProjectionArrow);
             }
             
-            void GpsMarkerView::SetMarkerStyle(const std::string& currentVisualMapTime, const std::string& currentVisualMapWeather, const int environmentScale)
+            void GpsMarkerView::SetMarkerStyle(const std::string& currentVisualMapTime,
+                                               const std::string& currentVisualMapWeather,
+                                               const int environmentScale,
+                                               const bool isLocationServiceConnected)
             {
                 m_colorLerpValue = 0;
                 m_textureLerpValue = 0;
                 m_hiddenColor = GpsMarkerViewStyle::HiddenColor;
+                m_mainColor = GpsMarkerViewStyle::MainColorFlattened;
                 m_highlightColor = GpsMarkerViewStyle::HighlightColorDefault;
                 
                 if(environmentScale <= 0.0f && !m_isInInterior)
@@ -211,6 +221,11 @@ namespace ExampleApp
                     m_colorLerpValue = 1;
                     m_hiddenColor = GpsMarkerViewStyle::MainColorFlattened;
                     m_highlightColor = GpsMarkerViewStyle::HighlightColorFlattened;
+                }
+                else if(!isLocationServiceConnected && m_isInInterior)
+                {
+                    m_colorLerpValue = 1;
+                    m_mainColor = GpsMarkerViewStyle::HiddenColor;
                 }
                 else if(currentVisualMapTime.compare(GpsMarkerViewStyle::TimeNameNight) == 0)
                 {

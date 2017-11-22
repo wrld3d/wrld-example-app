@@ -132,6 +132,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     if(location != nil && [location.source isKindOfClass:[SSISenionLocationSource class]])
     {
         m_pSenionLabLocationService->SetIsAuthorized(true);
+        m_pSenionLabLocationService->SetIsConnected(true);
         
         Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude);
         m_pSenionLabLocationService->SetLocation(latLong);
@@ -248,13 +249,15 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
             break;
         case SSIStepInsideSdkErrorTypeCoreLocationAuthorizationDenied:
             NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationDenied");
+            m_pSenionLabLocationService->SetIsAuthorized(false);
             break;
         case SSIStepInsideSdkErrorTypeCoreLocationAuthorizationNotDetermined:
             NSLog(@"SenionLabLocationManager didFailWithError: CoreLocationAuthorizationNotDetermined");
+            m_pSenionLabLocationService->SetIsAuthorized(false);
             break;
     }
 
-    m_pSenionLabLocationService->SetIsAuthorized(false);
+    m_pSenionLabLocationService->SetIsConnected(false);
 }
 
 -(int) getFloorIndexFromSenionFloorIndex: (std::string) senionFloorIndex senionMapKey: (std::string) senionMapKey

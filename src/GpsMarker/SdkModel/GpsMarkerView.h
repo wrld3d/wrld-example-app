@@ -57,7 +57,10 @@ namespace ExampleApp
                 void DrawIconAtEcefPosition(const Eegeo::Camera::RenderCamera& renderCamera, const Eegeo::dv3& ecefPosition);
                 void EnqueueRenderables(const Eegeo::Rendering::RenderContext& renderContext, Eegeo::Rendering::RenderQueue& renderQueue);
                 void SetMarkerTransform(const Eegeo::m44& modelViewProjection, const Eegeo::m44& modelViewProjectionArrow) const;
-                void SetMarkerStyle(const std::string& currentVisualMapTime, const std::string& currentVisualMapWeather, const int environmentScale);
+                void SetMarkerStyle(const std::string& currentVisualMapTime,
+                                    const std::string& currentVisualMapWeather,
+                                    const int environmentScale,
+                                    const bool isLocationServiceConnected);
                 void UpdateMarkerRenderingLayer(bool inInterior);
                 
             private:
@@ -70,6 +73,7 @@ namespace ExampleApp
                 
                 Eegeo::v4 m_highlightColor;
                 Eegeo::v4 m_hiddenColor;
+                Eegeo::v4 m_mainColor;
                 float m_colorLerpValue;
                 float m_textureLerpValue;
                 

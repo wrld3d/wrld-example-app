@@ -47,14 +47,17 @@ namespace ExampleApp
             , m_currentFloorIndex(0)
             , m_screenPixelScale(screenProperties.GetPixelScale())
             , m_screenOversampleScale(screenProperties.GetOversampleScale())
+            , m_isLocationServiceConnected(false)
             , m_modalityChangedHandlerBinding(this, &GpsMarkerController::OnModalityChangedMessage)
             , m_visibilityChangedHandlerBinding(this, &GpsMarkerController::OnVisibilityChangedMessage)
+            , m_interiorsPositionConnectionCallback(this, &GpsMarkerController::OnInteriorsPositionConnectionMessage)
             , m_interiorsExplorerStateChangedCallback(this, &GpsMarkerController::OnInteriorsExplorerStateChangedMessage)
             , m_floorSelectedCallback(this, &GpsMarkerController::OnFloorSelected)
             {
                 m_messageBus.SubscribeNative(m_modalityChangedHandlerBinding);
                 m_messageBus.SubscribeNative(m_visibilityChangedHandlerBinding);
                 m_messageBus.SubscribeUi(m_interiorsExplorerStateChangedCallback);
+                m_messageBus.SubscribeUi(m_interiorsPositionConnectionCallback);
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_floorSelectedCallback);
                 m_view.SetVisible(false);
                 m_anchorView.SetVisible(false);
@@ -62,6 +65,7 @@ namespace ExampleApp
 
             GpsMarkerController::~GpsMarkerController()
             {
+                m_messageBus.UnsubscribeUi(m_interiorsPositionConnectionCallback);
                 m_messageBus.UnsubscribeUi(m_interiorsExplorerStateChangedCallback);
                 m_messageBus.UnsubscribeNative(m_visibilityChangedHandlerBinding);
                 m_messageBus.UnsubscribeNative(m_modalityChangedHandlerBinding);
@@ -94,7 +98,12 @@ namespace ExampleApp
                 m_view.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
                 m_anchorView.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
             }
-
+            
+            void GpsMarkerController::OnInteriorsPositionConnectionMessage(const InteriorsPosition::InteriorsPositionConnectionMessage &message)
+            {
+                m_isLocationServiceConnected = message.IsConnected();
+            }
+            
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
             {
                 m_model.UpdateGpsPosition(dt);
@@ -176,7 +185,7 @@ namespace ExampleApp
                 std::string currentWeather;
                 GetCurrentVisualMapTime(currentTime, currentWeather);
                 bool isFlattened = m_environmentFlatteningService.IsFlattened();
-                m_view.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
+                m_view.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1, m_isLocationServiceConnected);
                 m_anchorView.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
             }
             

@@ -4,6 +4,7 @@
 #include "EnvironmentFlatteningService.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorHelpers.h"
+#include "InteriorsPositionConnectionMessage.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,8 @@ namespace ExampleApp
             {   
                 SenionLabLocationService::SenionLabLocationService(Eegeo::Location::ILocationService& defaultLocationService,
                                                                    const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+                                                                   const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                                                   ExampleAppMessaging::TMessageBus& messageBus)
                 : m_defaultLocationService(defaultLocationService)
                 , m_environmentFlatteningService(environmentFlatteningService)
                 , m_interiorInteractionModel(interiorInteractionModel)
@@ -31,6 +33,7 @@ namespace ExampleApp
                 , m_isConnected(false)
                 , m_headingDegrees(0.0)
                 , m_disconnectTime(0.0f)
+                , m_messageBus(messageBus)
                 {
                 }
                 
@@ -180,6 +183,12 @@ namespace ExampleApp
                 
                 void SenionLabLocationService::SetIsConnected(bool isConnected)
                 {
+                    if(m_isConnected != isConnected)
+                    {
+                        InteriorsPositionConnectionMessage message(isConnected);
+                        m_messageBus.Publish(message);
+                    }
+                    
                     m_isConnected = isConnected;
                     
                     if(m_isConnected)

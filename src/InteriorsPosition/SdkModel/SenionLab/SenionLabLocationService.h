@@ -5,6 +5,7 @@
 #include "ILocationService.h"
 #include "LatLongAltitude.h"
 #include "InteriorsModel.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -19,7 +20,8 @@ namespace ExampleApp
                 public:
                     SenionLabLocationService(Eegeo::Location::ILocationService& defaultLocationService,
                                              const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                                             const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                             ExampleAppMessaging::TMessageBus& messageBus);
                     
                     const bool GetIsAuthorized() const;
                     
@@ -56,6 +58,8 @@ namespace ExampleApp
                     bool m_isConnected;
                     
                     float m_disconnectTime;
+                    
+                    ExampleAppMessaging::TMessageBus& m_messageBus;
                 };
             }
         }
