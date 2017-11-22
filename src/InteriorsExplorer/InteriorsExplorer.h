@@ -28,6 +28,7 @@ namespace ExampleApp
         {
             class InteriorsExplorerViewModel;
             class IInteriorsExplorerView;
+            class IInteriorStreamingDialogView;
             class InteriorsExplorerController;
         }
         

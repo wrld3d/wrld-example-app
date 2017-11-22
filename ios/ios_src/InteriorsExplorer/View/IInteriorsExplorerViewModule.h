@@ -21,6 +21,8 @@ namespace ExampleApp
                 virtual InteriorsExplorerView& GetView() const = 0;
                 
                 virtual InteriorsExplorerTutorialView& GetTutorialView() const = 0;
+                
+                virtual InteriorStreamingDialogView& GetStreamingDialogView() const = 0;
             };
         }
     }

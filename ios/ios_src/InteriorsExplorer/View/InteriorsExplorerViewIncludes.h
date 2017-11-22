@@ -3,6 +3,7 @@
 #pragma once
 
 @class InteriorsExplorerView;
+@class InteriorStreamingDialogView;
 
 namespace ExampleApp
 {
@@ -11,6 +12,7 @@ namespace ExampleApp
         namespace View
         {
             class InteriorsExplorerViewInterop;
+            class InteriorStreamingDialogViewInterop;
             class IInteriorsExplorerViewModule;
         }
     }

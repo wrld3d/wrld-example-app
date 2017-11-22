@@ -27,6 +27,7 @@
 #include "CompletedCacheClearMessage.h"
 #include "SearchResultPoiViewImageDownloadCompletedMessage.h"
 #include "InteriorsExplorerFloorSelectedMessage.h"
+#include "InteriorsExplorerInteriorStreamingMessage.h"
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "AppModeChangedMessage.h"
 #include "UserInteractionEnabledChangedMessage.h"
@@ -74,6 +75,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Options::CompletedCacheClearMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewImageDownloadCompletedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerFloorSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerInteriorStreamingMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AppModes::AppModeChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<UserInteraction::UserInteractionEnabledChangedMessage>

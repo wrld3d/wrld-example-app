@@ -104,6 +104,7 @@ include_directories(
     libs/eegeo/platform/Lighting
     libs/eegeo/platform/Location
     libs/eegeo/platform/MapLayers
+    libs/eegeo/platform/Mapscenes
     libs/eegeo/platform/Markers
     libs/eegeo/platform/MemoryTracking
     libs/eegeo/platform/Messaging

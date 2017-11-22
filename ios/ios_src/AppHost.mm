@@ -68,6 +68,7 @@
 #include "IInteriorsExplorerModule.h"
 #include "InteriorsPresentationModule.h"
 #include "InteriorsExplorerView.h"
+#include "InteriorStreamingDialogView.h"
 #include "ImageStore.h"
 #include "SearchVendorNames.h"
 #include "UserInteractionEnabledChangedMessage.h"
@@ -418,6 +419,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     
     // Interior tutorial layer
     [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetTutorialView()];
+    [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetStreamingDialogView()];
     
     // Initial experience layer
     [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroView()];
@@ -453,6 +455,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
 
     // Pop-up layer.
+    
     [&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
     [&m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView() removeFromSuperview];
     [&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
@@ -460,6 +463,8 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
 
     // Initial experience layer
+    [&m_pInteriorsExplorerViewModule->GetStreamingDialogView() removeFromSuperview];
+    
     [&m_pInitialExperienceIntroViewModule->GetIntroView() removeFromSuperview];
     
     Eegeo_DELETE m_pOptionsViewModule;

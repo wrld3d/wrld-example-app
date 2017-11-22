@@ -4,6 +4,7 @@
 #include "InteriorsExplorerModel.h"
 #include "InteriorsExplorerViewModel.h"
 #include "IInteriorsExplorerView.h"
+#include "IInteriorStreamingDialogView.h"
 #include "IMenuViewModel.h"
 #include "IScreenControlViewModel.h"
 #include "IMyPinCreationInitiationViewModel.h"
@@ -20,11 +21,13 @@ namespace ExampleApp
             InteriorsExplorerController::InteriorsExplorerController(SdkModel::InteriorsExplorerModel& model,
                                                                      IInteriorsExplorerView& view,
                                                                      InteriorsExplorerViewModel& viewModel,
+                                                                     IInteriorStreamingDialogView& streamingDialogView,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
                                                                      Eegeo::Location::NavigationService& navigationService)
             : m_model(model)
             , m_view(view)
             , m_viewModel(viewModel)
+            , m_streamingDialogView(streamingDialogView)
             , m_replayTutorials(false)
             , m_messageBus(messageBus)
             , m_appMode(AppModes::SdkModel::WorldMode)
@@ -37,9 +40,11 @@ namespace ExampleApp
             , m_viewStateCallback(this, &InteriorsExplorerController::OnViewStateChangeScreenControl)
             , m_appModeChangedCallback(this, &InteriorsExplorerController::OnAppModeChanged)
             , m_interiorsUINotificationCallback(this, &InteriorsExplorerController::OnInteriorsUINotificationRequired)
+            , m_interiorStreamingCallback(this, &InteriorsExplorerController::OnInteriorStreaming)
             {
                 m_messageBus.SubscribeUi(m_stateChangedCallback);
                 m_messageBus.SubscribeUi(m_floorSelectedCallback);
+                m_messageBus.SubscribeUi(m_interiorStreamingCallback);
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
                 m_messageBus.SubscribeUi(m_interiorsUINotificationCallback);
                 
@@ -60,6 +65,7 @@ namespace ExampleApp
                 
                 m_messageBus.UnsubscribeUi(m_interiorsUINotificationCallback);
                 m_messageBus.UnsubscribeUi(m_stateChangedCallback);
+                m_messageBus.UnsubscribeUi(m_interiorStreamingCallback);
                 m_messageBus.UnsubscribeUi(m_floorSelectedCallback);
                 m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
             }
@@ -79,6 +85,18 @@ namespace ExampleApp
             void InteriorsExplorerController::OnFloorSelectionDragged(float &dragParam)
             {
                 m_messageBus.Publish(InteriorsExplorerFloorSelectionDraggedMessage(dragParam));
+            }
+            
+            void InteriorsExplorerController::OnInteriorStreaming(const InteriorsExplorerInteriorStreamingMessage& message)
+            {
+                if(message.GetInteriorStreaming())
+                {
+                    m_streamingDialogView.Show();
+                }
+                else
+                {
+                    m_streamingDialogView.Hide();
+                }
             }
             
             void InteriorsExplorerController::OnFloorSelected(const InteriorsExplorerFloorSelectedMessage& message)

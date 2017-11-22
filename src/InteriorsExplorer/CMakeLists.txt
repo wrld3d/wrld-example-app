@@ -5,6 +5,7 @@ set(currsources
   ../src/InteriorsExplorer/InteriorsExplorer.h
   ../src/InteriorsExplorer/InteriorsExplorerExitMessage.h
   ../src/InteriorsExplorer/InteriorsExplorerFloorSelectedMessage.h
+  ../src/InteriorsExplorer/InteriorsExplorerInteriorStreamingMessage.h
   ../src/InteriorsExplorer/InteriorsExplorerSelectFloorMessage.h
   ../src/InteriorsExplorer/InteriorsExplorerStateChangedMessage.h
   ../src/InteriorsExplorer/InteriorsExplorerUINotifyMessage.h

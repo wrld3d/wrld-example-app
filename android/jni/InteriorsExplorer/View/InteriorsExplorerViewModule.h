@@ -30,6 +30,7 @@ namespace ExampleApp
             private:
                 InteriorsExplorerController* m_pController;
                 InteriorsExplorerView* m_pView;
+                InteriorStreamingDialogView* m_pStreamingDialogView;
                 
             public:
                 InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,

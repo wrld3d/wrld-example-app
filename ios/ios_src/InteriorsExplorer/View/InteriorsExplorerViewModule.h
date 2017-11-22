@@ -31,6 +31,7 @@ namespace ExampleApp
                 InteriorsExplorerController* m_pController;
                 InteriorsExplorerView* m_pView;
                 InteriorsExplorerTutorialView* m_pTutorialView;
+                InteriorStreamingDialogView* m_pStreamingDialogView;
                 
             public:
                 InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
@@ -47,6 +48,8 @@ namespace ExampleApp
                 InteriorsExplorerView& GetView() const;
                 
                 InteriorsExplorerTutorialView& GetTutorialView() const;
+                
+                InteriorStreamingDialogView& GetStreamingDialogView() const;
             };
         }
     }

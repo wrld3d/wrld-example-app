@@ -2,7 +2,6 @@
 
 #include "InteriorsExplorerView.h"
 #include "UIColors.h"
-#include "UIHelpers.h"
 #include "ImageHelpers.h"
 #include "InteriorsExplorerViewInterop.h"
 #include "UIHelpers.h"

@@ -11,6 +11,7 @@ namespace ExampleApp
             class InteriorsExplorerView;
             class InteriorsExplorerViewInterop;
             class IInteriorsExplorerViewModule;
+            class InteriorStreamingDialogView;
         }
     }
 }

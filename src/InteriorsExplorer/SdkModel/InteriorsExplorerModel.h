@@ -50,6 +50,10 @@ namespace ExampleApp
 				int GetInteriorChangeFloorTutorialViewedCount();
 				void RecordHasViewedInteriorChangeFloorTutorial();
                 
+                bool GetInteriorStreamingDialogVisibility();
+                void ShowInteriorStreamingDialog();
+                void HideInteriorStreamingDialog();
+                
                 void InsertInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
                 void InsertInteriorExplorerExitedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -87,6 +91,7 @@ namespace ExampleApp
                 
                 int m_currentInteriorFloorIndex;
                 bool m_interiorExplorerEnabled;
+                bool m_interiorStreamingDialogVisibility;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerEnteredCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerExitedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerFloorSelectionDraggedCallbacks;

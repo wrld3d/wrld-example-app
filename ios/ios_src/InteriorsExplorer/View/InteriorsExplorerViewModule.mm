@@ -4,6 +4,8 @@
 #include "ScreenProperties.h"
 #include "InteriorsExplorerView.h"
 #include "InteriorsExplorerViewInterop.h"
+#include "InteriorStreamingDialogView.h"
+#include "InteriorStreamingDialogViewInterop.h"
 #include "InteriorsExplorerController.h"
 
 namespace ExampleApp
@@ -27,9 +29,12 @@ namespace ExampleApp
                 
                 m_pView = [[InteriorsExplorerView alloc] initWithParams: screenWidth : screenHeight : pixelScale : *m_pTutorialView ];
                 
+                m_pStreamingDialogView = [[InteriorStreamingDialogView alloc] initWithParams: screenWidth : screenHeight : pixelScale ];
+                
                 m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
                                                                        *[m_pView getInterop],
                                                                        viewModel,
+                                                                       *[m_pStreamingDialogView getInterop],
                                                                        messageBus,
                                                                        navigationService);
             }
@@ -37,6 +42,8 @@ namespace ExampleApp
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()
             {
                 Eegeo_DELETE m_pController;
+                
+                [m_pStreamingDialogView release];
                 
                 [m_pView release];
                 
@@ -56,6 +63,11 @@ namespace ExampleApp
             InteriorsExplorerTutorialView& InteriorsExplorerViewModule::GetTutorialView() const
             {
                 return *m_pTutorialView;
+            }
+            
+            InteriorStreamingDialogView& InteriorsExplorerViewModule::GetStreamingDialogView() const
+            {
+                return *m_pStreamingDialogView;
             }
         }
     }

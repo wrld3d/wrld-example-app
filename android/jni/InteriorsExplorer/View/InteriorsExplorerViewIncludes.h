@@ -9,6 +9,7 @@ namespace ExampleApp
         namespace View
         {
         	class InteriorsExplorerView;
+        	class InteriorStreamingDialogView;
         	class IInteriorsExplorerViewModule;
         }
     }
