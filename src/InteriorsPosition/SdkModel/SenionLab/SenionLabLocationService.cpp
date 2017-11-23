@@ -14,7 +14,7 @@ namespace ExampleApp
         {
             namespace
             {
-                float timeBeforeDisconnect = 30.0f;
+                float timeBeforeDisconnect = 60.0f;
             }
             
             namespace SenionLab
