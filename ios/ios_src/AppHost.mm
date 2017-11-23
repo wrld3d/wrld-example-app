@@ -81,6 +81,11 @@
 
 using namespace Eegeo::iOS;
 
+namespace
+{
+    CFTimeInterval previousTimestamp;
+}
+
 AppHost::AppHost(
     ViewController& viewController,
     UIView* pView,
@@ -109,6 +114,8 @@ AppHost::AppHost(
     ,m_pMenuReactionModel(NULL)
     ,m_pTagSearchViewModule(NULL)
 {
+    previousTimestamp = CFAbsoluteTimeGetCurrent();
+    
     Eegeo::TtyHandler::TtyEnabled = true;
     
     m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
@@ -283,8 +290,11 @@ void AppHost::Update(float dt)
     
     m_pInteriorsLocationServiceController->Update();
     
-    m_pSenionLabLocationModule->GetLocationService().Update(dt);
-
+    CFTimeInterval timeNow = CFAbsoluteTimeGetCurrent();
+    CFTimeInterval timeSinceLastUpdate = timeNow - previousTimestamp;
+    m_pSenionLabLocationModule->GetLocationService().Update(static_cast<float>(timeSinceLastUpdate));
+    previousTimestamp = timeNow;
+    
     m_messageBus.FlushToUi();
     m_messageBus.FlushToNative();
 }
