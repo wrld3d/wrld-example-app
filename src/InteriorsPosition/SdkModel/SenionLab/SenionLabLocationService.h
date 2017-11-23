@@ -33,6 +33,7 @@ namespace ExampleApp
                     bool GetHorizontalAccuracy(double& accuracy);
                     bool GetHeadingDegrees(double& headingDegrees);
                     void StopListening();
+                    bool GetIsConnected();
                     
                     void SetIsAuthorized(bool isAuthorized);
                     void SetLocation(Eegeo::Space::LatLong& latLong);

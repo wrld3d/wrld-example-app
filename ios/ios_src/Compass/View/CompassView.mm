@@ -31,18 +31,27 @@ enum CompassViewState
     
     CompassViewState m_compassViewState;
     
+    ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService* m_pSenionLabLocationService;
+    
     bool m_disabledStateHighlighted;
     float m_currentAngleRadians;
 }
 
 @end
 
+namespace
+{
+    CBCentralManager* bluetoothManager;
+}
+
 @implementation CompassView
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService*) pSenionLabLocationService
 {
     if(self = [super init])
     {
+        bluetoothManager = [[CBCentralManager alloc] initWithDelegate:nil queue:nil options:@{CBCentralManagerOptionShowPowerAlertKey: @(NO)}];
+        
         m_pInterop = Eegeo_NEW(ExampleApp::Compass::View::CompassViewInterop)(self);
         m_stateChangeAnimationTimeSeconds = 0.2f;
         m_pixelScale = 1.f;
@@ -50,6 +59,8 @@ enum CompassViewState
         m_screenHeight = height/pixelScale;
         
         m_compassViewState = Disabled;
+        
+        m_pSenionLabLocationService = pSenionLabLocationService;
         
         //control positioning
         m_width = 80.f;
@@ -109,6 +120,8 @@ enum CompassViewState
 
 - (void)dealloc
 {
+    [bluetoothManager release];
+    
     Eegeo_DELETE m_pInterop;
 
     [self.pOuterShape removeFromSuperview];
@@ -158,10 +171,27 @@ enum CompassViewState
     [self setHighlighted:NO];
     if(CGRectContainsPoint(self.bounds, touchLocation))
     {
-        m_pInterop->OnCycle();
+        bool bluetoothIsDisabled = false;
+        CBCentralManagerState bluetoothState = static_cast<CBCentralManagerState>(bluetoothManager.state);
+        if(bluetoothState == CBCentralManagerStatePoweredOff || bluetoothState == CBCentralManagerStateUnauthorized)
+        {
+            bluetoothIsDisabled = true;
+        }
         
-        // Makes iOS display a popup telling you Bluetooth is off with option to go to Bluetooth settings which is not possible with app popup
-        [[[CBCentralManager alloc] init] release];
+        // We're using the GetIsConnected function to avoid a disconnect from displaying this popup when the BlueSphere
+        // still shows as connected as Senion can still push position updates after Bluetooth is disabled
+        if(m_compassViewState == Disabled && bluetoothIsDisabled && !m_pSenionLabLocationService->GetIsConnected())
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please turn on Bluetooth for this app"
+                                                            message:@"Please turn on Bluetooth for this app to improve indoor location service."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+        }
+        
+        m_pInterop->OnCycle();
     }
 }
 

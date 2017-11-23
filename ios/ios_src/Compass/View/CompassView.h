@@ -4,6 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #include "CompassViewIncludes.h"
+#include "SenionLabLocationService.h"
 
 @class CompassView;
 
@@ -31,7 +32,7 @@
     float m_compassPointNaturalOffsetY;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale;
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService*) pSenionLabLocationService;
 
 - (ExampleApp::Compass::View::CompassViewInterop*) getInterop;
 

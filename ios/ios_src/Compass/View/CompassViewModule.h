@@ -9,6 +9,7 @@
 #include "ICompassViewModule.h"
 #include "BidirectionalBus.h"
 #include "CompassController.h"
+#include "SenionLabLocationService.h"
 
 namespace ExampleApp
 {
@@ -25,6 +26,7 @@ namespace ExampleApp
             public:
                 CompassViewModule(ICompassViewModel& viewModel,
                                   const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                  ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService& senionLabLocationService,
                                   ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~CompassViewModule();

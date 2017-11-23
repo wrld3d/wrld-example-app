@@ -14,13 +14,15 @@ namespace ExampleApp
         {
             CompassViewModule::CompassViewModule(ICompassViewModel& viewModel,
                                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                 ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService& senionLabLocationService,
                                                  ExampleAppMessaging::TMessageBus& messageBus)
             {
 
                 m_pView = [[CompassView alloc] initWithParams
                             :screenProperties.GetScreenWidth()
                             :screenProperties.GetScreenHeight()
-                            :screenProperties.GetPixelScale()];
+                            :screenProperties.GetPixelScale()
+                            :&senionLabLocationService];
 
                 m_pController = Eegeo_NEW(CompassController)(*[m_pView getInterop], viewModel, messageBus);
             }

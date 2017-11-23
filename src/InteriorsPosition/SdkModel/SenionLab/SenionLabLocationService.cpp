@@ -152,6 +152,11 @@ namespace ExampleApp
                     return m_defaultLocationService.GetHeadingDegrees(headingDegrees);
                 }
                 
+                bool SenionLabLocationService::GetIsConnected()
+                {
+                    return m_isConnected;
+                }
+                
                 void SenionLabLocationService::StopListening()
                 {
                 }
