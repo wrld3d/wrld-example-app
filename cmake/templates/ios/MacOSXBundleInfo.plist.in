@@ -44,7 +44,7 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to increase indoor location accuracy using your device's bluetooth.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>If you allow access to your location the app can display your position in the map.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string></string>
 	<key>NSCameraUsageDescription</key>
