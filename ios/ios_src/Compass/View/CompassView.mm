@@ -182,8 +182,8 @@ namespace
         // still shows as connected as Senion can still push position updates after Bluetooth is disabled
         if(m_compassViewState == Disabled && bluetoothIsDisabled && !m_pSenionLabLocationService->GetIsConnected())
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please turn on Bluetooth for this app"
-                                                            message:@"Please turn on Bluetooth for this app to improve indoor location service."
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please turn on Bluetooth to show your location"
+                                                            message:@"Please ensure Bluetooth is turned on in both Settings and in Control Center."
                                                            delegate:nil
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];

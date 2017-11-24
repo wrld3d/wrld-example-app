@@ -92,7 +92,7 @@ namespace ExampleApp
                 if(!m_locationService.GetLocation(latlong))
                 {
                     m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to obtain location",
-                        "Could not get the device location. Please ensure you have GPS enabled",
+                        "Could not get the device location. Please ensure you have GPS enabled.",
                         m_failAlertHandler);
                     DisableGpsMode();
                     return;
