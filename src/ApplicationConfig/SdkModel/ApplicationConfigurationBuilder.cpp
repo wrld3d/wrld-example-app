@@ -69,6 +69,7 @@ namespace ExampleApp
             , m_compassCameraOffset(0.0f)
             , m_compassCameraOffsetTopDown(0.0f)
             , m_compassCameraDampingEnabled(false)
+            , m_outdoorSearchMenuItemJson("")
             {
                 
             }
@@ -395,6 +396,12 @@ namespace ExampleApp
                 return *this;
             }
 
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetOutdoorSearchMenuItemJson(const std::string& outdoorSearchMenuItemJson)
+            {
+                m_outdoorSearchMenuItemJson = outdoorSearchMenuItemJson;
+                return *this;
+            }
+
             std::string ApplicationConfigurationBuilder::Decrypt(const std::string& value) const
             {
                 return m_cipher.Decrypt(value);
@@ -476,7 +483,8 @@ namespace ExampleApp
                                                 m_customKeyboardLayout,
                                                 m_compassCameraOffset,
                                                 m_compassCameraOffsetTopDown,
-                                                m_compassCameraDampingEnabled);
+                                                m_compassCameraDampingEnabled,
+                                                m_outdoorSearchMenuItemJson);
             }
         }
     }

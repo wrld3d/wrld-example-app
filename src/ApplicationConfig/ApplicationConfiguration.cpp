@@ -64,7 +64,8 @@ namespace ExampleApp
                                                            const std::vector<std::vector<std::string>>& customKeyboardLayout,
                                                            const float compassCameraOffset,
                                                            const float compassCameraOffsetTopDown,
-                                                           const bool compassCameraDampingEnabled)
+                                                           const bool compassCameraDampingEnabled,
+                                                           const std::string& outdoorSearchMenuItemJson)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_embeddedThemeTexturePath(embeddedThemeTexturePath)
@@ -124,6 +125,7 @@ namespace ExampleApp
         , m_compassCameraOffset(compassCameraOffset)
         , m_compassCameraOffsetTopDown(compassCameraOffsetTopDown)
         , m_compassCameraDampingEnabled(compassCameraDampingEnabled)
+        , m_outdoorSearchMenuItemJson(outdoorSearchMenuItemJson)
         {
             
         }
@@ -423,5 +425,10 @@ namespace ExampleApp
 		{
 			return m_customKeyboardLayout;
 		}
+
+        const std::string& ApplicationConfiguration::OutdoorSearchMenuItemJson() const
+        {
+            return m_outdoorSearchMenuItemJson;
+        }
     }
 }

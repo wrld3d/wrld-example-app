@@ -88,6 +88,8 @@ namespace ExampleApp
                 bool m_compassCameraDampingEnabled;
 
                 std::vector<std::vector<std::string>> m_customKeyboardLayout;
+
+                std::string m_outdoorSearchMenuItemJson;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -192,6 +194,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetCompassCameraOffset(const float compassCameraOffset);
                 IApplicationConfigurationBuilder& SetCompassCameraOffsetTopDown(const float compassCameraOffsetTopDown);
                 IApplicationConfigurationBuilder& SetCompassCameraDampingEnabled(const bool compassCameraDampingEnabled);
+
+                IApplicationConfigurationBuilder& SetOutdoorSearchMenuItemJson(const std::string& outdoorSearchMenuItemJson);
                 
                 std::string Decrypt(const std::string& message) const;
 

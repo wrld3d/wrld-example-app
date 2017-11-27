@@ -88,6 +88,8 @@ namespace ExampleApp
 
 			std::vector<std::vector<std::string>> m_customKeyboardLayout;
 
+            std::string m_outdoorSearchMenuItemJson;
+
         public:
             
             ApplicationConfiguration(const std::string& name,
@@ -148,7 +150,8 @@ namespace ExampleApp
                                      const std::vector<std::vector<std::string>>& customKeyboardLayout,
                                      const float compassCameraOffset,
                                      const float compassCameraOffsetTopDown,
-                                     const bool compassCameraDampingEnabled);
+                                     const bool compassCameraDampingEnabled,
+                                     const std::string& outdoorSearchMenuItemJson);
             
             std::string Name() const;
 
@@ -253,6 +256,8 @@ namespace ExampleApp
             const float CompassCameraOffset() const;
             const float CompassCameraOffsetTopDown() const;
             const bool CompassCameraDampingEnabled() const;
+
+            const std::string& OutdoorSearchMenuItemJson() const;
         };
     }
 }

@@ -4,10 +4,6 @@
 #include "document.h"
 #include "Types.h"
 #include "FileHelpers.h"
-#include "ApiKey.h"
-#include "base64.h"
-#include "ApplicationConfigurationXorCipher.h"
-#include "ApplicationConfigurationBuilder.h"
 
 namespace ExampleApp
 {
@@ -17,9 +13,6 @@ namespace ExampleApp
         {
             namespace
             {
-                const std::string Encrypted = "Encrypted";
-                const std::string HMAC_SHA1 = "HMAC_SHA1";
-
                 void ParseJson(const std::string& json, std::vector<ExampleApp::TagSearch::View::TagSearchModel>& out_models, const std::string& jsonAttributeName)
                 {
                     rapidjson::Document document;
@@ -28,26 +21,6 @@ namespace ExampleApp
                     {
                         Eegeo_ASSERT(false, "failed to parse json");
                         return;
-                    }
-
-                    if (document.HasMember(Encrypted.c_str()))
-                    {
-                        Eegeo_ASSERT(document.HasMember(HMAC_SHA1.c_str()), "must have HMAC_SHA1 digest field if Encrypted field is present");
-
-                        const std::string& configKey = base64_decode(ExampleApp::ApplicationConfigurationSecret);
-                        ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationXorCipher cipher(configKey);
-                        ExampleApp::ApplicationConfig::SdkModel::ApplicationConfigurationBuilder builder(cipher, configKey);
-
-                        const std::string& encryptedValue = document[Encrypted.c_str()].GetString();
-                        const std::string& digest = document[HMAC_SHA1.c_str()].GetString();
-
-                        const std::string& decrypted = builder.Decrypt(encryptedValue);
-                        const bool validHMAC = builder.ValidateHMAC(decrypted, digest);
-                        Eegeo_ASSERT(validHMAC, "HMAC_SHA1 digest does not match, check that app secret matches that used to encrypt app config");
-
-                        document.Parse<0>(decrypted.c_str());
-
-                        Eegeo_ASSERT(!document.HasParseError(), "unable to parse Encrypted config field");
                     }
 
                     const char* itemKey = jsonAttributeName.c_str();
@@ -91,11 +64,8 @@ namespace ExampleApp
                 }
             }
 
-            std::vector<TagSearch::View::TagSearchModel> CreateTagSearchModelsFromFile(
-                                                                                       Eegeo::Helpers::IFileIO& fileIO, const std::string& fileName, const std::string& jsonAttributeName)
+            std::vector<TagSearch::View::TagSearchModel> CreateTagSearchModelsFromFile(const std::string& json, const std::string& jsonAttributeName)
             {
-                const std::string& json = Helpers::FileHelpers::GetFileContentsAsString(fileIO, fileName);
-
                 std::vector<ExampleApp::TagSearch::View::TagSearchModel> result;
                 ParseJson(json, result, jsonAttributeName);
                 return result;

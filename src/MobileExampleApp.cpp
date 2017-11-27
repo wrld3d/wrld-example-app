@@ -189,13 +189,10 @@ namespace ExampleApp
             return loadingScreen;
         }
         
-        void AddTagSearchModels(
-                                Eegeo::Helpers::IFileIO& fileIO,
+        void AddTagSearchModels(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                 TagSearch::View::ITagSearchRepository& repository)
         {
-            const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromFile(
-                                                                                         fileIO,
-                                                                                         ExampleApp::ApplicationConfigurationPath,
+            const auto& tagSearchModels = TagSearch::View::CreateTagSearchModelsFromFile(applicationConfiguration.OutdoorSearchMenuItemJson(),
                                                                                          "outdoor_search_menu_items");
             
             for (const auto& t : tagSearchModels)
@@ -1302,7 +1299,7 @@ namespace ExampleApp
             // ... doing it a little later ensures the view will get the notifications when items are added.
             MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
             
-            AddTagSearchModels(m_platformAbstractions.GetFileIO(), m_pTagSearchModule->GetTagSearchRepository());
+            AddTagSearchModels(m_applicationConfiguration, m_pTagSearchModule->GetTagSearchRepository());
 
             if (m_applicationConfiguration.IsAttractModeEnabled())
             {
