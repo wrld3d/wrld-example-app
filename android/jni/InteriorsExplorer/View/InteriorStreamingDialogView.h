@@ -4,6 +4,7 @@
 
 #include "IInteriorStreamingDialogView.h"
 #include "InteriorsExplorerViewIncludes.h"
+#include "AndroidNativeState.h"
 
 namespace ExampleApp
 {
@@ -14,8 +15,13 @@ namespace ExampleApp
             class InteriorStreamingDialogView : public IInteriorStreamingDialogView
             {
             public:
+                AndroidNativeState& m_nativeState;
+                jclass m_uiViewClass;
+                jobject m_uiView;
 
-                InteriorStreamingDialogView();
+                InteriorStreamingDialogView(AndroidNativeState& nativeState);
+
+                ~InteriorStreamingDialogView();
 
                 void Show();
                 void Hide();
