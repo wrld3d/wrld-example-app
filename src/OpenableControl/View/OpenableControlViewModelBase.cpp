@@ -75,6 +75,12 @@ namespace ExampleApp
                 }
                 else if(TryAcquireReactorControl())
                 {
+                    if (m_reactionControllerModel.IsAnyOpenableOpen())
+                    {
+                        ReleaseReactorControl();
+                        return false;
+                    }
+
                     m_openState = 1.f;
                     m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
                     ReleaseReactorControl();
