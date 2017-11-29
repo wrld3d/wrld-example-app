@@ -98,6 +98,7 @@
 #include "ImagePathHelpers.h"
 #include "GpsMarkerTutorialViewModule.h"
 #include "GpsMarkerModule.h"
+#include "InteriorsPositionConnectionMessage.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -292,6 +293,9 @@ AppHost::AppHost(
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp);
     m_inputHandler.AddDelegateInputHandler(m_pAppInputDelegate);
+
+    ExampleApp::InteriorsPosition::InteriorsPositionConnectionMessage message(true);
+    m_messageBus.Publish(message);
 }
 
 AppHost::~AppHost()
