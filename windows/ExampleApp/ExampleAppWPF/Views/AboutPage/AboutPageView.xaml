@@ -27,7 +27,7 @@
                                 <TextBlock Name="AppText" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Left"  FontSize="12pt" />
 
                                 <TextBlock Margin="0 0 0 10px" FontSize="12pt">
-                                    <Hyperlink Name="LinkTos" NavigateUri="http://www.wrld3d.com/tos">
+                                    <Hyperlink Name="LinkTos" NavigateUri="http://www.wrld3d.com/terms-of-service">
                                         EULA
                                     </Hyperlink>
                                 </TextBlock>
@@ -45,7 +45,7 @@
                                 </TextBlock>
 
                                 <TextBlock FontSize="12pt">
-                                    <Hyperlink Name="LinkTeam" NavigateUri="http://www.wrld3d.com/team">
+                                    <Hyperlink Name="LinkTeam" NavigateUri="http://www.wrld3d.com/company/about-us">
                                         Team
                                     </Hyperlink>
                                 </TextBlock>

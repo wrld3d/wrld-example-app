@@ -64,7 +64,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
     private boolean m_showingNoNetworkDialog = false;
 
     private final int JPEG_QUALITY = 90;
-    private final String TERMS_AND_CONDITIONS_LINK = "http://wrld3d.com/tos";
+    private final String TERMS_AND_CONDITIONS_LINK = "http://wrld3d.com/terms-of-service";
 
     public MyPinCreationDetailsView(MainActivity activity, long nativeCallerPointer)
     {
