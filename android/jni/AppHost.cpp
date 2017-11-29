@@ -380,6 +380,8 @@ void AppHost::Update(float dt)
         m_requestedApplicationInitialiseViewState = true;
         DispatchRevealUiMessageToUiThreadFromNativeThread();
     }
+
+    m_pSenionLabLocationModule->GetLocationService().Update(dt);
 }
 
 void AppHost::Draw(float dt)
