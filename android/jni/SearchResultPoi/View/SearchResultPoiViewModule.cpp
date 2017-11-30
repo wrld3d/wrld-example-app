@@ -15,12 +15,13 @@ namespace ExampleApp
             SearchResultPoiViewModule::SearchResultPoiViewModule(
                 AndroidNativeState& nativeState,
                 ISearchResultPoiViewModel& searchResultPoiViewModel,
+                const ExampleApp::Search::SdkModel::SearchTags& swallowSearchTags,
                 ExampleAppMessaging::TMessageBus& messageBus,
                 Metrics::IMetricsService& metricsService
             )
             {
                 ASSERT_UI_THREAD
-                m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState);
+                m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState, swallowSearchTags);
                 m_pController = Eegeo_NEW(SearchResultPoiController)(*m_pView, searchResultPoiViewModel, messageBus, metricsService);
             }
 

@@ -3,6 +3,7 @@
 #pragma once
 
 #include <string>
+#include <SearchTags.h>
 #include "Types.h"
 #include "ISearchResultPoiView.h"
 #include "AndroidNativeState.h"
@@ -28,7 +29,7 @@ namespace ExampleApp
                 Search::SdkModel::SearchResultModel m_model;
 
             public:
-                SearchResultPoiView(AndroidNativeState& nativeState);
+                SearchResultPoiView(AndroidNativeState& nativeState, const ExampleApp::Search::SdkModel::SearchTags& swallowSearchTags);
 
                 ~SearchResultPoiView();
 
