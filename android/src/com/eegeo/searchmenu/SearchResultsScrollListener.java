@@ -60,7 +60,7 @@ public class SearchResultsScrollListener implements OnScrollListener
 		View lastChild = (View) view.getChildAt(view.getChildCount() - 1);
 		
 	    boolean childAlignsWithBottomofView = false;
-		if(lastChild.getBottom() - (view.getHeight() + view.getScrollY()) == 0)
+		if(lastChild != null && lastChild.getBottom() - (view.getHeight() + view.getScrollY()) == 0)
 		{
 				childAlignsWithBottomofView = true;
 		}
