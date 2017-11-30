@@ -367,7 +367,11 @@ void AppHost::Update(float dt)
         return;
     }
 
-    m_messageBus.FlushToNative();
+    if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
+    {
+        m_requestedApplicationInitialiseViewState = true;
+        DispatchRevealUiMessageToUiThreadFromNativeThread();
+    }
 
     m_pApp->Update(dt);
 
@@ -375,13 +379,9 @@ void AppHost::Update(float dt)
 
     m_pInteriorsLocationServiceController->Update();
 
-    if(m_pApp->IsLoadingScreenComplete() && !m_requestedApplicationInitialiseViewState)
-    {
-        m_requestedApplicationInitialiseViewState = true;
-        DispatchRevealUiMessageToUiThreadFromNativeThread();
-    }
-
     m_pSenionLabLocationModule->GetLocationService().Update(dt);
+
+    m_messageBus.FlushToNative();
 }
 
 void AppHost::Draw(float dt)
