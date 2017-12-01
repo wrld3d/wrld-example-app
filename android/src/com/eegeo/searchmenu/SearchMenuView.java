@@ -501,13 +501,7 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
             if (resultsCount != m_resultsCount)
             {
                 m_searchListAdapter.animateItemScales(0, m_visibleItemsCount, 0, SearchMenuAdapter.ScaleDirection.ScaleDown);
-                new Handler().postDelayed(new Runnable()
-                {
-                    @Override
-                    public void run() {
-                        updateEmptyResults(resultsCount);
-                    }
-                }, SearchMenuResultsListAnimationConstants.SearchMenuItemScaleAnimationSpeedMilliseconds);
+                updateEmptyResults(resultsCount);
             }
             m_pendingResults = null;
         }
