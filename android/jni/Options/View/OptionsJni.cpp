@@ -44,3 +44,14 @@ JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_ClearCacheSe
     pView->HandleClearCacheSelected();
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_PlayTutorialAgainToggled(
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr,
+    jboolean enableTutorials)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::Options::View::OptionsView* pView = reinterpret_cast<ExampleApp::Options::View::OptionsView*>(nativeObjectPtr);
+    pView->HandleReplayTutorialsToggled(enableTutorials);
+}
+

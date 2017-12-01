@@ -164,6 +164,11 @@ namespace ExampleApp
                 m_clearCacheCallbacks.ExecuteCallbacks();
             }
 
+            void OptionsView::HandleReplayTutorialsToggled(bool enableTutorials)
+            {
+                m_replayTutorialsToggledCallbacks.ExecuteCallbacks(enableTutorials);
+            }
+
             void OptionsView::InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
