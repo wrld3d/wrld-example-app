@@ -44,6 +44,7 @@
 #include "AboutPageSenionSettingsTypeMessage.h"
 #include "CompassIsRotatingStateChangedMessage.h"
 #include "InteriorsPositionConnectionMessage.h"
+#include "CameraTransitionControllerChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -90,6 +91,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionSettingsTypeMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassIsRotatingStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsPositionConnectionMessage>
+            , public Eegeo::Messaging::CatalogBinding<CameraTransitions::CameraTransitionControllerChangedMessage>
             , private Eegeo::NonCopyable
         {
 

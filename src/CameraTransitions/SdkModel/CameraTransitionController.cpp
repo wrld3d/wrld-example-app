@@ -18,6 +18,7 @@
 #include "TransitionToInteriorStage.h"
 #include "IAppCameraController.h"
 #include "InteriorsModelRepository.h"
+#include "CameraTransitionControllerChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -50,6 +51,7 @@ namespace ExampleApp
             , m_interiorsModelRepository(interiorsModelRepository)
             , m_isTransitioning(false)
             , m_defaultInteriorId(Eegeo::Resources::Interiors::InteriorId::NullId())
+            , m_messageBus(messageBus)
             {
 
             }
@@ -167,8 +169,8 @@ namespace ExampleApp
                 
                 m_isTransitioning = true;
                 m_transitionStages.front()->Start();
-                
-                m_transitioningChangedCallbacks.ExecuteCallbacks();
+
+                NotifyTransitionChanged();
             }
             
             void CameraTransitionController::StopCurrentTransition()
@@ -181,7 +183,7 @@ namespace ExampleApp
                     m_transitionStages.pop();
                     Eegeo_DELETE pStage;
                 }
-                m_transitioningChangedCallbacks.ExecuteCallbacks();
+                NotifyTransitionChanged();
             }
 
             void CameraTransitionController::Update(float dt)
@@ -286,6 +288,12 @@ namespace ExampleApp
                                                                                            jumpIfFar);
                 m_transitionStages.push(pStage);
 
+            }
+
+            void CameraTransitionController::NotifyTransitionChanged()
+            {
+                m_transitioningChangedCallbacks.ExecuteCallbacks();
+                m_messageBus.Publish(CameraTransitionControllerChangedMessage());
             }
         }
     }

@@ -4,6 +4,7 @@
 #include "IInitialExperienceIntroView.h"
 #include "InitialExperienceIntroDismissedMessage.h"
 #include "ICameraTransitionController.h"
+#include "CameraTransitionControllerChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -35,14 +36,12 @@ namespace ExampleApp
                 m_view.InsertDismissedCallback(m_viewDismissed);
                 m_messageBus.SubscribeUi(m_showIntroMessageHandler);
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
-
-                m_cameraTransitionController.InsertTransitioningChangedCallback(m_transitionCompleteHandler);
+                m_messageBus.SubscribeUi(m_transitionCompleteHandler);
             }
             
             InitialExperienceIntroController::~InitialExperienceIntroController()
             {
-                m_cameraTransitionController.RemoveTransitioningChangedCallback(m_transitionCompleteHandler);
-
+                m_messageBus.UnsubscribeUi(m_transitionCompleteHandler);
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_messageBus.UnsubscribeUi(m_showIntroMessageHandler);
                 m_view.RemoveDismissedCallback(m_viewDismissed);
@@ -84,7 +83,7 @@ namespace ExampleApp
                     m_currAppMode = newAppMode;
             }
 
-            void InitialExperienceIntroController::OnTransitionCompleteHandler()
+            void InitialExperienceIntroController::OnTransitionCompleteHandler(const CameraTransitions::CameraTransitionControllerChangedMessage& message)
             {
                 if (!m_cameraTransitionController.IsTransitioning() && m_shouldShowExitIUX)
                 {

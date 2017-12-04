@@ -55,8 +55,8 @@ namespace ExampleApp
                 bool m_shouldShowExitIUX;
 
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
-                Eegeo::Helpers::TCallback0<InitialExperienceIntroController> m_transitionCompleteHandler;
-                void OnTransitionCompleteHandler();
+                Eegeo::Helpers::TCallback1<InitialExperienceIntroController, const CameraTransitions::CameraTransitionControllerChangedMessage&>  m_transitionCompleteHandler;
+                void OnTransitionCompleteHandler(const CameraTransitions::CameraTransitionControllerChangedMessage& message);
             
             };
         }
