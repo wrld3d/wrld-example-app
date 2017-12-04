@@ -35,7 +35,8 @@ namespace ExampleApp
                 std::string imageAssetName = "eegeo_logo";
                 std::string popupTitle = "Maps by WRLD";
                 std::string popupBody = "This app is open source. It's built using the WRLD maps SDK, a cross platform API for building engaging, customizable apps.";
-                std::string webUrl = "http://wrld3d.com/?utm_source=" + m_googleAnalyticsReferrerToken + "&utm_medium=referral&utm_campaign=eegeo";
+                std::string utmSource = m_googleAnalyticsReferrerToken.empty() ? "unspecified" : m_googleAnalyticsReferrerToken;
+                std::string webUrl = "http://wrld3d.com/?utm_source=" + utmSource + "&utm_medium=referral&utm_campaign=eegeo";
                 
                 return Create(imageAssetName,
                               popupTitle,
