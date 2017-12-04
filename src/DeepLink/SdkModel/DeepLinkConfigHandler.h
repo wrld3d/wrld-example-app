@@ -75,6 +75,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<DeepLinkConfigHandler> m_startupSearchCameraTransitionCompleteCallback;
                 std::string m_startupSearchTag;
                 Eegeo::Space::LatLongAltitude m_startupSearchLocation;
+                bool m_startAtGPSLocation;
                 bool m_shouldPerformStartupSearch;
                 void HandleStartupSearchCameraTransitionComplete();
 

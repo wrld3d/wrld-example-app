@@ -72,20 +72,28 @@ namespace ExampleApp
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query,
                     bool isTag,
                     bool tryInteriorSearch,
-                    const Eegeo::Space::LatLongAltitude& location)
+                    const Eegeo::Space::LatLongAltitude& location,
+                    bool startAtGPSLocation)
             {
                 const float radius = GetSearchRadius(m_cameraController);
-                PerformSearchQuery(query, isTag, tryInteriorSearch, location, radius);
+                PerformSearchQuery(query, isTag, tryInteriorSearch, location, radius, startAtGPSLocation);
             }
             
             void SearchQueryPerformer::PerformSearchQuery(const std::string& query,
                                                           bool isTag,
                                                           bool tryInteriorSearch,
                                                           const Eegeo::Space::LatLongAltitude& location,
-                                                          float radius)
+                                                          float radius,
+                                                          bool startAtGPSLocation)
             {
                 m_hasQuery = true;
-                SearchQuery searchQuery(query, isTag, tryInteriorSearch, location, radius);
+                Eegeo::Space::LatLongAltitude searchLocation = location;
+                if (startAtGPSLocation)
+                {
+                    searchLocation = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetRenderCamera().GetEcefLocation());
+                }
+                SearchQuery searchQuery(query, isTag, tryInteriorSearch, searchLocation, radius);
+                
                 m_previousQuery = searchQuery;
                 m_searchService.PerformLocationQuerySearch(searchQuery);
             }

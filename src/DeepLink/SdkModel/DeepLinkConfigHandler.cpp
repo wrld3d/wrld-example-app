@@ -59,6 +59,7 @@ namespace ExampleApp
             ,m_startupSearchTag("")
             ,m_startupSearchLocation(0, 0, 0)
             ,m_shouldPerformStartupSearch(false)
+            ,m_startAtGPSLocation(false)
             ,m_startupSearchCameraTransitionCompleteCallback(this, &DeepLinkConfigHandler::HandleStartupSearchCameraTransitionComplete)
             {
                 m_manifestNotifier.AddManifestLoadedObserver(m_newManifestCallback);
@@ -134,8 +135,8 @@ namespace ExampleApp
 
                         const std::string TryStartAtGpsLocation = "try_start_at_gps_location";
                         const bool mapsceneSpecifiesGpsStart = parser.HasKey(resultString, TryStartAtGpsLocation);
-                        const bool useGps = mapsceneSpecifiesGpsStart && applicationConfig.TryStartAtGpsLocation();
-                        if (useGps)
+                        m_startAtGPSLocation = mapsceneSpecifiesGpsStart && applicationConfig.TryStartAtGpsLocation();
+                        if (m_startAtGPSLocation)
                         {
                             m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
                         }
@@ -178,7 +179,7 @@ namespace ExampleApp
                 if(m_shouldPerformStartupSearch)
                 {
                     m_shouldPerformStartupSearch = false;
-                    m_searchQueryPerformer.PerformSearchQuery(m_startupSearchTag, true, false, m_startupSearchLocation);
+                    m_searchQueryPerformer.PerformSearchQuery(m_startupSearchTag, true, false, m_startupSearchLocation, m_startAtGPSLocation);
                 }
 
             }
