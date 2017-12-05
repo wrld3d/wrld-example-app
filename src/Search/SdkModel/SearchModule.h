@@ -20,6 +20,7 @@
 #include "InteriorMenuObserver.h"
 #include "YelpCategoryMapperUpdater.h"
 
+
 namespace ExampleApp
 {
     namespace Search
@@ -37,7 +38,6 @@ namespace ExampleApp
                 MyPins::IMyPinsSearchResultRefreshService* m_pMyPinsSearchResultRefreshService;
                 TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
                 InteriorMenuObserver* m_pInteriorMenuObserver;
-
             public:
                 SearchModule(ISearchService& searchService,
                              ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController,
@@ -49,8 +49,9 @@ namespace ExampleApp
                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                              Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
                              Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
-                             std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries);
-
+                             std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries,
+                             Search::SdkModel::TagIconKey defaultIconKey);
+                
                 ~SearchModule();
 
                 ISearchResultRepository& GetSearchResultRepository() const;

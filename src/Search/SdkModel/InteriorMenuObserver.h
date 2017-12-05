@@ -9,6 +9,7 @@
 #include "YelpCategoryMapperUpdater.h"
 #include "IModelRepository.h"
 #include "ApplicationMenuItemTagSearchConfig.h"
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -23,7 +24,8 @@ namespace ExampleApp
                                      Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
                                      TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                      Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
-                                     std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries);
+                                     std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries,
+                                     Search::SdkModel::TagIconKey defaultIconKey);
                 ~InteriorMenuObserver();
                 TagSearch::View::ITagSearchRepository& GetTagsRepository() { return m_tagSearchRepository; }
                 void RegisterInteriorTagsUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -73,6 +75,8 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::CallbackCollection0 m_interiorTagsUpdatedCallbacks;
                 std::vector<TagSearch::View::TagSearchModel> m_defaultFindMenuEntries;
+                
+                std::string m_defaultIconKey;
             };
             
         }

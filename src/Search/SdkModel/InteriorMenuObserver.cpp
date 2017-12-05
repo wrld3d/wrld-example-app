@@ -17,7 +17,8 @@ namespace ExampleApp
                                                        Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
                                                        TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                                        Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
-                                                       std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries)
+                                                       std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries,
+                                                       Search::SdkModel::TagIconKey defaultIconKey)
             : m_tagSearchRepository(tagSearchRepository)
             , m_interiorSelectionChangedCallback(this, &InteriorMenuObserver::OnSelectionChanged)
             , m_interiorSelectionModel(interiorSelectionModel)
@@ -29,6 +30,7 @@ namespace ExampleApp
             , m_loadInteriorOnAdd(false)
             , m_shouldOverrideIndoorSearchMenuItems(false)
             , m_idToBeLoaded()
+            , m_defaultIconKey(defaultIconKey)
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
                 m_hasSelectedInterior = m_interiorSelectionModel.IsInteriorSelected();
@@ -174,9 +176,11 @@ namespace ExampleApp
                         Search::Yelp::SdkModel::YelpCategoryModel yelpCategoryModel { iter->yelpMapping, false };
                         m_yelpCategoryMapperUpdater.AddMapping(iter->searchTag, yelpCategoryModel);
                     }
-
-                    m_tagSearchRepository.AddItem(TagSearch::View::TagSearchModel(iter->name, iter->searchTag, interior , iter->iconKey, visibleInSearchMenu));
-                    m_previousTagSearchRepository.AddItem(TagSearch::View::TagSearchModel(iter->name, iter->searchTag, interior, iter->iconKey, visibleInSearchMenu));
+                    
+                    auto icon = iter->iconKey.length() == 0 ? m_defaultIconKey : iter->iconKey;
+                    
+                    m_tagSearchRepository.AddItem(TagSearch::View::TagSearchModel(iter->name, iter->searchTag, interior , icon, visibleInSearchMenu));
+                    m_previousTagSearchRepository.AddItem(TagSearch::View::TagSearchModel(iter->name, iter->searchTag, interior, icon, visibleInSearchMenu));
                 }
 
                 const bool shouldUseDefaultFindMenuEntries = menuItems.size() == 0;
@@ -196,6 +200,7 @@ namespace ExampleApp
                     bool overrideIndoorSearchMenuItems
             )
             {
+                
                 CreateModelsFromConfig(menuItems);
                 m_shouldOverrideIndoorSearchMenuItems = overrideIndoorSearchMenuItems;
                 NotifyInteriorTagsUpdated();

@@ -630,7 +630,9 @@ namespace ExampleApp
                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
                                                                     mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                     m_yelpCategoryMapperUpdater,
-                                                                    defaultFindMenuItems);
+                                                                    defaultFindMenuItems,
+                                                                    searchTags.defaultIconKey);
+        
         m_pTagSearchModule = &m_pSearchModule->GetTagSearchModule();
 
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
