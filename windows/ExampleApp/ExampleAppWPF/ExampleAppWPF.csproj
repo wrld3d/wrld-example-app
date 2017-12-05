@@ -123,6 +123,7 @@
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerTutorialDialogView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerTutorialView.cs" />
     <Compile Include="Views\InteriorsExplorer\InteriorsExplorerView.cs" />
+    <Compile Include="Views\InteriorsExplorer\InteriorStreamingDialogView.cs" />
     <Compile Include="Views\Menu\MenuDelayedSourceUpdateAnimatorListener.cs" />
     <Compile Include="Views\Menu\MenuListAdapter.cs" />
     <Compile Include="Views\Menu\MenuListItem.cs" />
@@ -265,6 +266,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\InteriorsExplorer\InteriorsExplorerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InteriorsExplorer\InteriorStreamingDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1711,6 +1716,12 @@
   <ItemGroup>
     <Resource Include="Assets\swallow_logo_about.png" />
     <Resource Include="Assets\wrld_logo_about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\streaming_dialog_spinner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\streaming_dialog_loaded.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

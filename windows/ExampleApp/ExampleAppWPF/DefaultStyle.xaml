@@ -714,6 +714,12 @@
     <ImageSource x:Key="ExitButtonOnImage">Assets/button_exit_interior_on.png</ImageSource>
     <Thickness x:Key="ElevatorSliderMargin" Left="0" Top="0" Right="13" Bottom="13"/>
     <System:Double x:Key="ElevatorSliderMinHeight">300</System:Double>
+    
+    <!-- Interior Streaming Dialog View -->
+    <ImageSource x:Key="InteriorStreamingDialogViewSpinnerImage">/Assets/streaming_dialog_spinner.png</ImageSource>
+    <System:Double x:Key="InteriorStreamingDialogViewSpinnerSize">100</System:Double>
+    <ImageSource x:Key="InteriorStreamingDialogViewLoadedImage">/Assets/streaming_dialog_loaded.png</ImageSource>
+    <System:Double x:Key="InteriorStreamingDialogViewLoadedSize">100</System:Double>
 
     <!-- Simple Slider Control -->
     <System:Double x:Key="SliderThumbSize">50</System:Double>

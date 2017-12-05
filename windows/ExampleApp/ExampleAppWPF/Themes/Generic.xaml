@@ -34,6 +34,7 @@
         <ResourceDictionary Source="../Views/AdminLogin/AdminLogin.xaml" />
         <ResourceDictionary Source="../Views/GpsMarkerTutorial/GpsMarkerTutorialView.xaml" />
         <ResourceDictionary Source="../Views/InitialExperience/InitialExperienceView.xaml" />
+        <ResourceDictionary Source="../Views/InteriorsExplorer/InteriorStreamingDialogView.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
