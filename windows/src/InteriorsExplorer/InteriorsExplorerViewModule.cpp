@@ -13,14 +13,15 @@ namespace ExampleApp
     {
         namespace View
         {
-            InteriorsExplorerViewModule::InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
+            InteriorsExplorerViewModule::InteriorsExplorerViewModule(WindowsNativeState& nativeState,
+                                                                     SdkModel::InteriorsExplorerModel& model,
 																	 InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
                                                                      Eegeo::Location::NavigationService& navigationService)
             {
                 m_pView = Eegeo_NEW(InteriorsExplorerView)();
 
-                m_pStreamingDialogView = Eegeo_NEW(InteriorStreamingDialogView);
+                m_pStreamingDialogView = Eegeo_NEW(InteriorStreamingDialogView)(nativeState);
                 
                 m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
 																	  *m_pView,

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "IInteriorStreamingDialogView.h"
+#include "ReflectionHelpers.h"
 
 namespace ExampleApp
 {
@@ -12,9 +13,19 @@ namespace ExampleApp
         {
             class InteriorStreamingDialogView : public IInteriorStreamingDialogView
             {
-            public:
+            private:
+                WindowsNativeState& m_nativeState;
 
-                InteriorStreamingDialogView();
+                gcroot<System::Type^> m_uiViewClass;
+                gcroot<System::Object^> m_uiView;
+
+                Helpers::ReflectionHelpers::Method<void> mDestroy;
+                Helpers::ReflectionHelpers::Method<void> mOpenInteriorStreamingDialogView;
+                Helpers::ReflectionHelpers::Method<void> mDismissInteriorStreamingDialogView;
+
+            public:
+                InteriorStreamingDialogView(WindowsNativeState& nativeState);
+                ~InteriorStreamingDialogView();
 
                 void Show();
                 void Hide();

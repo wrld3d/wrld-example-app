@@ -8,19 +8,31 @@ namespace ExampleApp
     {
         namespace View
         {
-            InteriorStreamingDialogView::InteriorStreamingDialogView()
+            InteriorStreamingDialogView::InteriorStreamingDialogView(WindowsNativeState& nativeState)
+                : m_nativeState(nativeState)
             {
+                m_uiViewClass = Helpers::ReflectionHelpers::GetTypeFromEntryAssembly("ExampleAppWPF.InteriorStreamingDialogView");
+                System::Reflection::ConstructorInfo^ ctor = m_uiViewClass->GetConstructor(Helpers::ReflectionHelpers::CreateTypes(System::IntPtr::typeid));
+                m_uiView = ctor->Invoke(Helpers::ReflectionHelpers::CreateObjects(gcnew System::IntPtr(this)));
 
+                mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
+                mOpenInteriorStreamingDialogView.SetupMethod(m_uiViewClass, m_uiView, "OpenInteriorStreamingDialogView");
+                mDismissInteriorStreamingDialogView.SetupMethod(m_uiViewClass, m_uiView, "DismissInteriorStreamingDialogView");
+            }
+
+            InteriorStreamingDialogView::~InteriorStreamingDialogView()
+            {
+                mDestroy();
             }
 
             void InteriorStreamingDialogView::Show()
             {
-                // TODO: Implementation of windows view
+                mOpenInteriorStreamingDialogView();
             }
 
             void InteriorStreamingDialogView::Hide()
             {
-                // TODO: Implementation of windows view
+                mDismissInteriorStreamingDialogView();
             }
         }
     }

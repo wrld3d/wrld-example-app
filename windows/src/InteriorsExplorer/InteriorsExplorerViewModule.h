@@ -32,7 +32,8 @@ namespace ExampleApp
                 
                 
             public:
-                InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
+                InteriorsExplorerViewModule(WindowsNativeState& nativeState,
+                                            SdkModel::InteriorsExplorerModel& model,
 											InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
                                             Eegeo::Location::NavigationService& navigationService);
