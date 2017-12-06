@@ -26,8 +26,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
                 android:contentDescription="@string/eegeo_logo"
-                android:scaleType="center"
-                android:src="@drawable/eegeo_logo" />
+                android:scaleType="center" />
 
             <TextView
                 android:id="@+id/search_result_poi_view_title"

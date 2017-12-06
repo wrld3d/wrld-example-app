@@ -419,7 +419,7 @@ namespace ExampleApp
 
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
 				jstring availabilityStr = env->NewStringUTF(meetingRoomModel.GetAvailability().c_str());
-				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
+				jstring iconStr = env->NewStringUTF(model.GetIconKey().c_str());
 				jstring imageUrlStr = env->NewStringUTF(meetingRoomModel.GetImageUrl().c_str());
 
 				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
@@ -428,13 +428,13 @@ namespace ExampleApp
 						displayPoiInfoMethod,
 						titleStr,
 						availabilityStr,
-						primaryTagStr,
+						iconStr,
 						imageUrlStr
 				);
 
 				env->DeleteLocalRef(titleStr);
 				env->DeleteLocalRef(availabilityStr);
-				env->DeleteLocalRef(primaryTagStr);
+				env->DeleteLocalRef(iconStr);
 				env->DeleteLocalRef(imageUrlStr);
 			}
 
