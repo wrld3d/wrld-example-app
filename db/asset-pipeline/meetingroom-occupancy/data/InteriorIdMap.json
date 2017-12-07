@@ -28,5 +28,15 @@
 	"locationId": "WPH01",
 	"interior_id": "westport_house",
 	"desk_pfx": "WPH"
+  },
+  {
+    "locationId": "US001",
+    "interior_id": "swallow_ny_731lex",
+    "desk_pfx": "731"
+  },
+  {
+    "locationId": "US002",
+    "interior_id": "swallow_ny_731lex",
+    "desk_pfx": "731"
   }
 ]
