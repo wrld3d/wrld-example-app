@@ -56,6 +56,7 @@ namespace ExampleAppWPF
         private Visibility m_detailsDividerVisibility;
 
         private int m_qrCodeMaxSize;
+        private bool m_webBrowserLoaded;
 
         public string PhoneText
         {
@@ -246,6 +247,9 @@ namespace ExampleAppWPF
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
             m_webBrowserSelected = false;
+            m_webBrowserLoaded = false;
+
+
             m_contentContainerLastScrollY = m_poiImageContainer.Height;
             m_webBrowserOriginalHeight = m_poiImageContainer.Height;
 
@@ -256,12 +260,16 @@ namespace ExampleAppWPF
 
         private void OnWebPageLoaded(object sender, NavigationEventArgs e)
         {
-            if(m_webBrowserSelected)
+            m_webBrowserLoaded = true;
+
+            if (m_webBrowserSelected)
             {
+                
                 string script = "document.body.style.overflow ='hidden'";
                 WebBrowser wb = (WebBrowser)sender;
                 wb.InvokeScript("execScript", new Object[] { script, "JavaScript" });
                 wb.Visibility = Visibility.Visible;
+                
             }
         }
 
@@ -370,6 +378,8 @@ namespace ExampleAppWPF
             m_poiImage.Visibility = Visibility.Collapsed;
             m_poiImageDivider.Visibility = Visibility.Visible;
 
+            m_webBrowserLoaded = false;
+
             m_contentContainer.ScrollToTop();
 
             if (eegeoResultModel.WebViewUrl != null)
@@ -383,6 +393,8 @@ namespace ExampleAppWPF
                 if (webViewUrlIsValid)
                 {
                     Uri url = new Uri(eegeoResultModel.WebViewUrl);
+                   
+
                     m_webBrowser.Source = url;
 
                     if (eegeoResultModel.WebViewHeight != 0)
@@ -411,6 +423,7 @@ namespace ExampleAppWPF
             {
                 HandleNoWebView(eegeoResultModel);
             }
+            
 
             if (!m_webBrowserSelected)
             {
@@ -425,7 +438,7 @@ namespace ExampleAppWPF
                     m_poiImageDivider.Visibility = Visibility.Collapsed;
                 }
             }
-
+            
             if (eegeoResultModel.Phone != null)
             {
                 PhoneText = eegeoResultModel.Phone;
@@ -547,9 +560,9 @@ namespace ExampleAppWPF
             }
 
             TagIcon = IconProvider.GetIconForTag(model.IconKey, m_isInKioskMode);
-
+           
             ShowAll();
-
+           
             base.DisplayCustomPoiInfo(modelObject);
         }
         
@@ -573,14 +586,19 @@ namespace ExampleAppWPF
             m_previewImageSpinner.Visibility = Visibility.Collapsed;
         }
 
+
+        
         protected override void OnHideAnimationCompleted(object s, EventArgs e)
         {
-            StopWebBrowser();
+             if (m_webBrowserLoaded)
+             {
+                 StopWebBrowser();
+             }
         }
-
+        
         private void StopWebBrowser()
         {
-            m_webBrowser.NavigateToString("about:blank");
+             m_webBrowser.NavigateToString("about:blank");
         }
     }
 }
