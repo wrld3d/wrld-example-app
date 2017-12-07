@@ -260,17 +260,24 @@ namespace ExampleAppWPF
 
         private void OnWebPageLoaded(object sender, NavigationEventArgs e)
         {
+
             m_webBrowserLoaded = true;
 
-            if (m_webBrowserSelected)
-            {
-                
-                string script = "document.body.style.overflow ='hidden'";
-                WebBrowser wb = (WebBrowser)sender;
-                wb.InvokeScript("execScript", new Object[] { script, "JavaScript" });
-                wb.Visibility = Visibility.Visible;
-                
-            }
+            WebBrowser wb = (WebBrowser)sender;
+           
+            dynamic doc = wb.Document;
+             var url = doc.url as string;
+             if (url != null && url.StartsWith("res://ieframe.dll"))
+             {
+                 wb.NavigateToString("<center>Failed to load web page.</center>");
+             }
+
+             else if(m_webBrowserSelected)
+             {
+                 string script = "document.body.style.overflow ='hidden'";
+                 wb.InvokeScript("execScript", new Object[] { script, "JavaScript" });
+                 wb.Visibility = Visibility.Visible;
+             }
         }
 
         // Validating urls here although the url's should be validated in the poi tool before reaching this.

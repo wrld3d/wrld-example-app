@@ -124,7 +124,22 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
-    	m_webView.setWebViewClient(new WebViewClient());
+        m_webView.setWebViewClient(new WebViewClient()
+        {
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
+            {
+                /*
+                 * A lot of the examples suggest something like this:
+                 * if(errorCode==404)
+                 * However this does not give the expected results, instead use the defined constants:
+                 * ERROR_HOST_LOOKUP
+                 * ERROR_FILE_NOT_FOUND
+                */
+
+                view.loadUrl("file:///android_asset/page_not_found.html");
+            }
+        });
         
         m_closeButton.setOnClickListener(this);
         m_togglePinnedButton.setOnClickListener(this);
