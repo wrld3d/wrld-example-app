@@ -766,6 +766,12 @@ const int DeletePinAlertViewTag = 2;
     }
 }
 
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    NSString *html = @"<center style=\"font-size:32pt\">Failed to load web page.</center>";
+    [webView loadHTMLString:html baseURL:nil];
+}
+
 - (void) createWebViewWithHTML:(CGRect)frame :(NSString*)url
 {
      if(!m_webPageLoaded)
