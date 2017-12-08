@@ -717,6 +717,12 @@
     <Thickness x:Key="ElevatorSliderMargin" Left="0" Top="0" Right="39" Bottom="13"/>
     <System:Double x:Key="ElevatorSliderMinHeight">496</System:Double>
 
+    <!-- Interior Streaming Dialog View -->
+    <ImageSource x:Key="InteriorStreamingDialogViewSpinnerImage">/Assets/streaming_dialog_spinner.png</ImageSource>
+    <ImageSource x:Key="InteriorStreamingDialogViewLoadedImage">/Assets/streaming_dialog_loaded.png</ImageSource>
+    <System:Double x:Key="InteriorStreamingDialogViewProgressImageWidth">94</System:Double>
+    <System:Double x:Key="InteriorStreamingDialogViewProgressImageHeight">93</System:Double>
+
     <!-- Simple Slider Control -->
     <System:Double x:Key="SliderThumbSize">102</System:Double>
     <System:Double x:Key="SliderThumbHalfSize">51</System:Double>
