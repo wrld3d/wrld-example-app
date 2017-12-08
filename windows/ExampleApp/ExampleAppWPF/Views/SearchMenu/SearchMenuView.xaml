@@ -43,8 +43,6 @@
                 <ControlTemplate TargetType="{x:Type local:SearchMenuView}">
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="ItemShutterOpen">
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0" To="0" Duration="0:0:0.0" BeginTime="0:0:0.0"/>
-
                             <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.0" Duration="{StaticResource shutterAnimDuration}" BeginTime="0:0:0.2">
                                 <DoubleAnimation.EasingFunction>
                                     <CubicEase EasingMode="EaseInOut"/>
@@ -72,6 +70,28 @@
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,0,0,0" />
                                 <SplineThicknessKeyFrame KeyTime="{StaticResource shutterAnimEndKeyTime}" Value="0,0,0,0" />
                                 <SplineThicknessKeyFrame KeyTime="{StaticResource itemCollapseEndKeyTime}" Value="{DynamicResource SearchMenuListItemStoryboardMargin}" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+
+                        <Storyboard x:Key="SearchResultsItemShutterOpen">
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.0" Duration="00:00:00.0"/>
+                        </Storyboard>
+
+                        <Storyboard x:Key="SearchResultsItemShutterClose">
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="0" Duration="00:00:00.0"/>
+                        </Storyboard>
+
+                        <Storyboard x:Key="SearchResultsSlideInNewItems">
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="{DynamicResource SearchMenuListItemStoryboardMargin}" />
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,0,0,0" />
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+
+                        <Storyboard x:Key="SearchResultsSlideOutOldItems">
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,0,0,0" />
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="{DynamicResource SearchMenuListItemStoryboardMargin}" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 

@@ -9,12 +9,11 @@ import json
 IMAGES_FOLDER = "images"
 
 
-# UK bounds
-MIN_LAT = 49.0
-MAX_LAT = 61.0
+MIN_LAT = -90.0
+MAX_LAT = 90.0
 
-MIN_LNG = -8.0
-MAX_LNG = 2.5
+MIN_LNG = -180.0
+MAX_LNG = 180.0
 
 MIN_FLOOR = 0
 
