@@ -1163,6 +1163,9 @@
       <Link>Assets\icon1_dir_veer_right.png</Link>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_not_found.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r

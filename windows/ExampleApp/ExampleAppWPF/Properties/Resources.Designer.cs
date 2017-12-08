@@ -19,7 +19,7 @@ namespace ExampleAppWPF.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -93,6 +93,34 @@ namespace ExampleAppWPF.Properties {
         internal static string InteriorsExplorerTutorialView_ExitDialogTitle {
             get {
                 return ResourceManager.GetString("InteriorsExplorerTutorialView_ExitDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;html&gt;
+        ///&lt;head&gt;
+        ///&lt;style type=&quot;text/css&quot;&gt;
+        ///h1 {
+        ///font-family: Open Sans;
+        ///font-size:48pt;
+        ///font-weight: bold;
+        ///}
+        ///p {
+        ///font-family: Open Sans;
+        ///font-size:32pt;
+        ///}
+        ///&lt;/style&gt;
+        ///&lt;/head&gt;
+        ///&lt;body&gt;
+        ///&lt;h1&gt;Sorry - we can&apos;t open that page&lt;/h1&gt;
+        ///&lt;p&gt;Please Check you are connected to the internet and try again&lt;/p&gt;
+        ///&lt;/body&gt;
+        ///&lt;/html&gt;  
+        ///.
+        /// </summary>
+        internal static string page_not_found {
+            get {
+                return ResourceManager.GetString("page_not_found", resourceCulture);
             }
         }
     }

@@ -269,7 +269,7 @@ namespace ExampleAppWPF
              var url = doc.url as string;
              if (url != null && url.StartsWith("res://ieframe.dll"))
              {
-                 wb.NavigateToString("<center>Failed to load web page.</center>");
+                wb.NavigateToString(Properties.Resources.page_not_found);
              }
 
              else if(m_webBrowserSelected)
