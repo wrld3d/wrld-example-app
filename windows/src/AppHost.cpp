@@ -642,6 +642,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
         m_pSearchMenuViewModule->GetSearchMenuView(),
+        app.GetSwallowSearchTags(),
         m_messageBus,
         *m_pWindowsFlurryMetricsService,
         m_pMyPinCreationViewModule->GetMyPinCreationInitiationView(),

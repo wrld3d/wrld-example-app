@@ -17,6 +17,7 @@ namespace ExampleApp
                 WindowsNativeState& nativeState,
                 ISearchResultPoiViewModel& searchResultPoiViewModel,
                 SearchMenu::View::ISearchMenuView& searchMenuView,
+                const ExampleApp::Search::SdkModel::SearchTags& swallowSearchTags,
                 ExampleAppMessaging::TMessageBus& messageBus,
                 Metrics::IMetricsService& metricsService,
                 MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
@@ -25,7 +26,7 @@ namespace ExampleApp
             )
             {
                 ASSERT_UI_THREAD
-                m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState, isInKioskMode);
+                m_pView = Eegeo_NEW(SearchResultPoiView)(nativeState, swallowSearchTags, isInKioskMode);
                 m_pController = Eegeo_NEW(DesktopSearchResultPoiController)(*m_pView, searchResultPoiViewModel, searchMenuView, messageBus, metricsService, pinCreationInitiationView, interiorsSelectionModel);
             }
 
