@@ -242,9 +242,13 @@ namespace ExampleAppWPF
 
             var itemShutterOpenStoryboard = ((Storyboard)Template.Resources["ItemShutterOpen"]).Clone();
             var itemShutterCloseStoryboard = ((Storyboard)Template.Resources["ItemShutterClose"]).Clone();
-
             var slideInItemStoryboard = ((Storyboard)Template.Resources["SlideInNewItems"]).Clone();
             var slideOutItemStoryboard = ((Storyboard)Template.Resources["SlideOutOldItems"]).Clone();
+
+            var searchResultsItemShutterOpenStoryboard = ((Storyboard)Template.Resources["SearchResultsItemShutterOpen"]).Clone();
+            var searchResultsItemShutterCloseStoryboard = ((Storyboard)Template.Resources["SearchResultsItemShutterClose"]).Clone();
+            var searchResultsSlideInItemStoryboard = ((Storyboard)Template.Resources["SearchResultsSlideInNewItems"]).Clone();
+            var searchResultsSlideOutItemStoryboard = ((Storyboard)Template.Resources["SearchResultsSlideOutOldItems"]).Clone();
 
             string searchAnimString = "SearchAnim";
 
@@ -286,7 +290,7 @@ namespace ExampleAppWPF
 
             double dropDownSeparatorHeight = (double)Application.Current.Resources["MenuSeparatorHeight"];
             m_adapter = new SearchMenuListAdapter(false, m_list, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SubMenuItemPanel", m_isInKioskMode, m_indexOfFirstDropDown, dropDownSeparatorHeight);
-            m_resultListAdapter = new MenuListAdapter(false, m_resultsList, slideInItemStoryboard, slideOutItemStoryboard, itemShutterOpenStoryboard, itemShutterCloseStoryboard, "SearchResultPanel", m_isInKioskMode);
+            m_resultListAdapter = new MenuListAdapter(false, m_resultsList, searchResultsSlideInItemStoryboard, searchResultsSlideOutItemStoryboard, searchResultsItemShutterOpenStoryboard, searchResultsItemShutterCloseStoryboard, "SearchResultPanel", m_isInKioskMode);
 
             m_scrollSpeed = (double) Application.Current.Resources["ScrollViewButtonScrollSpeed"];
 
