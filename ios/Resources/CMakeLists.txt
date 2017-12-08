@@ -1274,4 +1274,5 @@ set(resources ${resources}
         Resources/yelp_review_btn_light@2x.png
         Resources/yelp_review_btn_light@3x.png
         ExampleApp/Images.xcassets
+	Resources/page_not_found.html
 )

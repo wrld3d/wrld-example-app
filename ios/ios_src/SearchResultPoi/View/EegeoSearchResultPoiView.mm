@@ -768,7 +768,8 @@ const int DeletePinAlertViewTag = 2;
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSString *html = @"<center style=\"font-size:32pt\">Failed to load web page.</center>";
+    NSString* path = [[NSBundle mainBundle] pathForResource:@"page_not_found" ofType:@"html"];
+    NSString* html = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
     [webView loadHTMLString:html baseURL:nil];
 }
 
