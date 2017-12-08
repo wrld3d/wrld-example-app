@@ -45,19 +45,20 @@
 
                                 <Image x:Name="SpinnerImage"
                                        Source="{DynamicResource InteriorStreamingDialogViewSpinnerImage}"
-                                       Width="{DynamicResource InteriorStreamingDialogViewSpinnerSize}"
-                                       Height="{DynamicResource InteriorStreamingDialogViewSpinnerSize}"
+                                       Width="{DynamicResource InteriorStreamingDialogViewProgressImageWidth}"
+                                       Height="{DynamicResource InteriorStreamingDialogViewProgressImageHeight}"
                                        Style="{StaticResource RotatingAnim}"
                                        RenderTransformOrigin="0.5,0.5"
                                        Margin="30px 30px 30px 0"/>
 
                                 <Image x:Name="LoadedImage"
                                        Source="{DynamicResource InteriorStreamingDialogViewLoadedImage}"
-                                       Width="{DynamicResource InteriorStreamingDialogViewLoadedSize}"
-                                       Height="{DynamicResource InteriorStreamingDialogViewLoadedSize}"
+                                       Width="{DynamicResource InteriorStreamingDialogViewProgressImageWidth}"
+                                       Height="{DynamicResource InteriorStreamingDialogViewProgressImageHeight}"
                                        Margin="30px 30px 30px 0"/>
 
                                 <TextBlock Foreground="{StaticResource White}"
+                                           FontFamily="{DynamicResource PrimaryUIFont}"
                                            Height="45px"
                                            Text="Loading Indoor Map"
                                            FontSize="18pt"
@@ -70,6 +71,7 @@
                                            Stroke="{StaticResource White}"
                                            Margin="30px 0 30px 0"/>
                                 <TextBlock Foreground="{StaticResource White}"
+                                           FontFamily="{DynamicResource PrimaryUIFont}"
                                            Text="We're saving this interior to your device, so your next visit is much faster."
                                            FontSize="12pt"
                                            Margin="30px 15px 30px 30px"
