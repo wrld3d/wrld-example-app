@@ -174,5 +174,115 @@
 				"interior_floor": 2
 			}
 		]
+	},
+	{
+		"interior_id": "swallow_ny_731lex",
+		"floors":
+		[
+			{
+				"floorName": "LL2 - Lower Level 2",
+				"interior_floor": 0
+			},
+			{
+				"floorName": "LL1 - Lower Level 1",
+				"interior_floor": 1
+			},
+			{
+				"floorName": "03 - Third Floor",
+				"interior_floor": 2
+			},
+			{
+				"floorName": "04 - Fourth Floor",
+				"interior_floor": 3
+			},
+			{
+				"floorName": "05 - Fifth Floor",
+				"interior_floor": 4
+			},
+			{
+				"floorName": "06 - Sixth Floor",
+				"interior_floor": 5
+			},
+			{
+				"floorName": "07 - Seventh Floor",
+				"interior_floor": 6
+			},
+			{
+				"floorName": "08 - Eighth Floor",
+				"interior_floor": 7
+			},
+			{
+				"floorName": "09 - Ninth Floor",
+				"interior_floor": 8
+			},
+			{
+				"floorName": "10 - Tenth Floor",
+				"interior_floor": 9
+			},
+			{
+				"floorName": "14 - Fourteeth Floor",
+				"interior_floor": 10
+			},
+			{
+				"floorName": "15 - Fifthteenth Floor",
+				"interior_floor": 11
+			},
+			{
+				"floorName": "16 - Sixthteenth Floor",
+				"interior_floor": 12
+			},
+			{
+				"floorName": "17 - Seventeenth Floor",
+				"interior_floor": 13
+			},
+			{
+				"floorName": "18 - Eighteenth Floor",
+				"interior_floor": 14
+			},
+			{
+				"floorName": "19 - Nineteenth Floor",
+				"interior_floor": 15
+			},
+			{
+				"floorName": "20 - Twentieth Floor",
+				"interior_floor": 16
+			},
+			{
+				"floorName": "21 - Twenty First Floor",
+				"interior_floor": 17
+			},
+			{
+				"floorName": "22 - Twenty Second Floor",
+				"interior_floor": 18
+			},
+			{
+				"floorName": "23 - Twenty Third Floor",
+				"interior_floor": 19
+			},
+			{
+				"floorName": "24 - Twenty Fourth Floor",
+				"interior_floor": 20
+			},
+			{
+				"floorName": "25 - Twenty Fifth Floor",
+				"interior_floor": 21
+			},
+			{
+				"floorName": "26 - Twenty Sixth Floor",
+				"interior_floor": 22
+			},
+			{
+				"floorName": "27 - Twenty Seventh Floor",
+				"interior_floor": 23
+			},
+			{
+				"floorName": "28 - Twenty Eighth Floor",
+				"interior_floor": 24
+			},
+			{
+				"floorName": "29 - Twenty Ninth Floor",
+				"interior_floor": 25
+			}
+		]
 	}
 ]
