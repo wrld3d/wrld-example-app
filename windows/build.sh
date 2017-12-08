@@ -59,57 +59,9 @@ if [[ ( $environment != 'production' ) && ( $environment != 'staging' ) ]]; then
     exit 1
 fi
 
-
-
-if [ ! -z "${config_password}" ]; then
-	secret_key=$((python "./build-scripts/generate_key.py" ${config_password}) 2>&1)
-    sed_pattern="s#project_swallow_config.json#encrypted_config.json#g;s#APP_CONFIG_SECRET_HERE#${secret_key}#g"
-else
-	sed_pattern="s#project_swallow_config.json#encrypted_config.json#g"
-fi
-
-
 config_folder=windows/Resources/ApplicationConfigs
+sh build-scripts/encrypt_config.sh -e $environment -f $config_folder -p $config_password
 
-if [ $environment == 'production' ]; then
-	src_config_file=project_swallow_production_config.json
-else
-	src_config_file=project_swallow_config.json
-fi
-
-apiKeyFile=./src/ApiKey.h
-apiKeyFileTemp=./src/ApiKeyTemp.h
-
-git checkout $apiKeyFile
-sed -e ${sed_pattern} $apiKeyFile > $apiKeyFileTemp
-
-if [ $? -ne 0 ] ; then
-	echo "Failed to poke config file values into ApiKey file"  >&2
-	exit 1
-fi
-
-mv $apiKeyFileTemp $apiKeyFile
-
-dest_config_file=encrypted_config.json
-temp_config_folder=
-
-if [ ! -z "${secret_key}" ]; then
-
-	git checkout -- ${config_folder}
-	temp_config_folder=config_bak
-	rm -vr ${temp_config_folder}/
-	mv -v ${config_folder}/ ${temp_config_folder}/
-	mkdir ${config_folder}/
-	
-	python "./build-scripts/encrypt_config.py" -i ${temp_config_folder}/${src_config_file} -o ${config_folder}/${dest_config_file} -s ${secret_key}	
-
-	if [ $? -ne 0 ] ; then
-		echo "Failed to encrypt config file"  >&2
-		exit 1
-	fi
-else
-	cp -f ${config_folder}/${src_config_file} ${config_folder}/${dest_config_file}
-fi
 
 if [ ! -f windows/nuget.exe ]; then
 	curl -o windows/nuget.exe https://api.nuget.org/downloads/nuget.exe
