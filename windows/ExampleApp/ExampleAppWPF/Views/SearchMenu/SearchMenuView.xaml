@@ -74,24 +74,24 @@
                         </Storyboard>
 
                         <Storyboard x:Key="SearchResultsItemShutterOpen">
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="1.0" Duration="00:00:00.0"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1.0" To="1.0" Duration="00:00:00.1"/>
                         </Storyboard>
 
                         <Storyboard x:Key="SearchResultsItemShutterClose">
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" To="0" Duration="00:00:00.0"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0" To="0" Duration="00:00:00.1"/>
                         </Storyboard>
 
                         <Storyboard x:Key="SearchResultsSlideInNewItems">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="{DynamicResource SearchMenuListItemStoryboardMargin}" />
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,0,0,0" />
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.1" Value="0,0,0,0" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
                         <Storyboard x:Key="SearchResultsSlideOutOldItems">
                             <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin">
-                                <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="0,0,0,0" />
                                 <SplineThicknessKeyFrame KeyTime="00:00:00.0" Value="{DynamicResource SearchMenuListItemStoryboardMargin}" />
+                                <SplineThicknessKeyFrame KeyTime="00:00:00.1" Value="{DynamicResource SearchMenuListItemStoryboardMargin}" />
                             </ThicknessAnimationUsingKeyFrames>
                         </Storyboard>
 
