@@ -8,7 +8,7 @@ namespace ExampleAppWPF
     class InteriorStreamingDialogView : Control
     {
         private IntPtr m_nativeCallerPointer;
-        private MainWindow m_currentWindow;
+        private MainWindow m_mainWindow;
 
         private FrameworkElement m_mainContainer;
         private StackPanel m_interiorStreamingDialogView;
@@ -25,8 +25,8 @@ namespace ExampleAppWPF
         {
             m_nativeCallerPointer = nativeCallerPointer;
 
-            m_currentWindow = (MainWindow)Application.Current.MainWindow;
-            m_currentWindow.MainGrid.Children.Add(this);
+            m_mainWindow = (MainWindow)Application.Current.MainWindow;
+            m_mainWindow.MainGrid.Children.Add(this);
 
             Visibility = Visibility.Hidden;
         }
@@ -43,19 +43,20 @@ namespace ExampleAppWPF
 
         public void Destroy()
         {
-            m_currentWindow.MainGrid.Children.Remove(this);
+            m_mainWindow.MainGrid.Children.Remove(this);
         }
 
         public void OpenInteriorStreamingDialogView()
         {
+            m_mainWindow.DisableInput();
+            m_mainWindow.IsEnabled = false;
+
             Visibility = Visibility.Visible;
 
             m_spinnerImage.Visibility = Visibility.Visible;
             m_loadedImage.Visibility = Visibility.Collapsed;
 
             m_mainContainer.BeginAnimation(UIElement.OpacityProperty, FadeInAnimation());
-
-            m_currentWindow.DisableInput();
         }
 
         public void DismissInteriorStreamingDialogView()
@@ -65,7 +66,6 @@ namespace ExampleAppWPF
 
             m_mainContainer.BeginAnimation(UIElement.OpacityProperty, FadeOutAnimation());
 
-            m_currentWindow.EnableInput();
         }
 
         public DoubleAnimation FadeInAnimation()
@@ -81,6 +81,8 @@ namespace ExampleAppWPF
             fadeOutAnimation.Completed += (sender, eventArgs) =>
             {
                 Visibility = Visibility.Hidden;
+                m_mainWindow.IsEnabled = true;
+                m_mainWindow.EnableInput();
             };
 
             return fadeOutAnimation;
