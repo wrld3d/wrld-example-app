@@ -78,10 +78,19 @@
     <ImageSource x:Key="OptionsPanelClearCacheButtonOnImage">/Assets/buttonsmall_close_on.png</ImageSource>
     <System:Double x:Key="OptionsPanelClearCacheTextFontSize">14</System:Double>
     <Thickness x:Key="OptionsPanelClearCacheTextMargin" Left="6" Top="0" Right="0" Bottom="2"/>
-    <Visibility x:Key="OptionsPanelPlayTutorialsPanelVisibility">Visible</Visibility>
-    <Thickness x:Key="OptionsPanelPlayTutorialsPanelMargin" Left="0" Top="30" Right="0" Bottom="0"/>
-    <System:Double x:Key="OptionsPanelPlayTutorialsPanelHeight">48</System:Double>
-    <Thickness x:Key="OptionsPanelPlayTutorialsToggleMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <Visibility x:Key="OptionsPanelPlayTutorialsDefaultPanelVisibility">Collapsed</Visibility>
+    <Thickness x:Key="OptionsPanelPlayTutorialsDefaultPanelMargin" Left="0" Top="8" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelPlayTutorialsDefaultPanelHeight">30</System:Double>
+    <Thickness x:Key="OptionsPanelPlayTutorialsDefaultToggleMargin" Left="10" Top="0" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelPlayTutorialsDefaultButtonSize">20</System:Double>
+    <ImageSource x:Key="OptionsPanelPlayTutorialsDefaultButtonOffImage">/Assets/button_playtutorial_off.png</ImageSource>
+    <ImageSource x:Key="OptionsPanelPlayTutorialsDefaultButtonOnImage">/Assets/button_playtutorial_on.png</ImageSource>
+    <System:Double x:Key="OptionsPanelPlayTutorialsDefaultTextFontSize">14</System:Double>
+    <Thickness x:Key="OptionsPanelPlayTutorialsDefaultTextMargin" Left="6" Top="0" Right="0" Bottom="0"/>
+    <Visibility x:Key="OptionsPanelPlayTutorialsKioskPanelVisibility">Visible</Visibility>
+    <Thickness x:Key="OptionsPanelPlayTutorialsKioskPanelMargin" Left="0" Top="30" Right="0" Bottom="0"/>
+    <System:Double x:Key="OptionsPanelPlayTutorialsKioskPanelHeight">48</System:Double>
+    <Thickness x:Key="OptionsPanelPlayTutorialsKioskToggleMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <Visibility x:Key="OptionsPanelLowerCloseButtonVisibility">Collapsed</Visibility>
     <System:Double x:Key="OptionsPanelCloseButtonSize">54</System:Double>
     <ImageSource x:Key="OptionsPanelCloseButtonOffImage">/Assets/button_close_off@kiosk.png</ImageSource>

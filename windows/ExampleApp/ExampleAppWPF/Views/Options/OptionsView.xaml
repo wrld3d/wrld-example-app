@@ -129,6 +129,34 @@
         </Setter>
     </Style>
 
+    <Style x:Key="PlayTutorialStyle" TargetType="ToggleButton" x:Shared="false">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border Background="{StaticResource Transparent}">
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="{DynamicResource OptionsPanelPlayTutorialsDefaultButtonOnImage}" Width="20" Height="20"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="False">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Image Source="{DynamicResource OptionsPanelPlayTutorialsDefaultButtonOffImage}" Width="20" Height="20"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="Options_AdminButton" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
         <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
@@ -262,12 +290,29 @@
                                                 <TextBlock Name="OptionsViewClearCacheLabel" Text="Clear cached map data" FontSize="{DynamicResource OptionsPanelClearCacheTextFontSize}" Foreground="{StaticResource DarkGrey}" Margin="{DynamicResource OptionsPanelClearCacheTextMargin}" VerticalAlignment="Center" />
                                             </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal" Visibility="{DynamicResource OptionsPanelPlayTutorialsPanelVisibility}" Margin="{DynamicResource OptionsPanelPlayTutorialsPanelMargin}" Height="{DynamicResource OptionsPanelPlayTutorialsPanelHeight}">
+                                            <StackPanel Orientation="Horizontal"
+                                                        Visibility="{DynamicResource OptionsPanelPlayTutorialsDefaultPanelVisibility}"
+                                                        Margin="{DynamicResource OptionsPanelPlayTutorialsDefaultToggleMargin}"
+                                                        Height="{DynamicResource OptionsPanelPlayTutorialsDefaultPanelHeight}">
+                                                <ToggleButton Name="OptionsViewPlayTutorialbutton"
+                                                              Margin="{DynamicResource OptionsPanelPlayTutorialsDefaultButtonMargin}"
+                                                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsView}}, Path=PlayTutorialsAgainEnabled}"
+                                                              Style="{StaticResource PlayTutorialStyle}"
+                                                              VerticalAlignment="Center" />
+                                                <TextBlock Name="OptionsViewPlayTutorialLabel"
+                                                           Text="Play Tutorial Again"
+                                                           FontSize="{DynamicResource OptionsPanelPlayTutorialsDefaultTextFontSize}"
+                                                           Foreground="{StaticResource DarkGrey}"
+                                                           Margin="{DynamicResource OptionsPanelPlayTutorialsDefaultTextMargin}"
+                                                           VerticalAlignment="Center" />
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" Visibility="{DynamicResource OptionsPanelPlayTutorialsKioskPanelVisibility}" Margin="{DynamicResource OptionsPanelPlayTutorialsKioskPanelMargin}" Height="{DynamicResource OptionsPanelPlayTutorialsKioskPanelHeight}">
                                                 <ToggleButton x:Name="OptionsViewPlayTutorialsToggle"
                                                               Content="Play Tutorial Again"
                                                               Width="500"
-                                                              Height="{DynamicResource OptionsPanelPlayTutorialsPanelHeight}"
-                                                              Margin="{DynamicResource OptionsPanelPlayTutorialsToggleMargin}"
+                                                              Height="{DynamicResource OptionsPanelPlayTutorialsKioskPanelHeight}"
+                                                              Margin="{DynamicResource OptionsPanelPlayTutorialsKioskToggleMargin}"
                                                               VerticalAlignment="Center"
                                                               HorizontalAlignment="Left"
                                                               IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsView}}, Path=PlayTutorialsAgainEnabled}"

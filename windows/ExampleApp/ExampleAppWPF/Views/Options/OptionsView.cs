@@ -119,6 +119,9 @@ namespace ExampleAppWPF
             m_adminLoginButton = (Button)GetTemplateChild("OptionsViewAdminButton");
             m_adminLoginButton.Click += OnAdminLoginButtonClick;
 
+            var playTutorialLabel = (TextBlock)GetTemplateChild("OptionsViewPlayTutorialLabel");
+            playTutorialLabel.PreviewMouseLeftButtonDown += (s, e) => PlayTutorialsAgainEnabled = !PlayTutorialsAgainEnabled;
+
             m_mainContainer = (FrameworkElement)GetTemplateChild("MainContainer");
 
             m_mainContainer.MouseDown += OnContainerMouseDown;
