@@ -678,11 +678,12 @@ namespace ExampleAppWPF
 
         public void SetEditText(string text, bool isTag)
         {
-            if(!m_editText.IsFocused)
+            if(!m_editText.IsFocused || string.IsNullOrEmpty(m_editText.Text))
             {
                 byte[] bytes = Encoding.Default.GetBytes(text);
                 string encodedText = Encoding.UTF8.GetString(bytes);
                 m_editText.Text = encodedText;
+                m_editText.CaretIndex = encodedText.Length;
             }
             m_hasTagSearch = isTag;
         }
