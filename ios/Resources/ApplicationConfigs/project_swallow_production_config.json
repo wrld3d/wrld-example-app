@@ -95,25 +95,25 @@
   ],
   "wifi_restricted_buildings": [{
     "interior_id": "swallow_lon_38finsbury",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest", "78st", "bluejay"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_lon_citygatehouse",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest", "78st", "bluejay"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_lon_50finsbury",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest", "78st", "bluejay"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_lon_parkhouse",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest", "78st", "bluejay"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_lon_wallbrooksquare",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest", "78st", "bluejay"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_ny_731lex",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest", "78st", "bluejay"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_ny_78madison",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest", "78st", "bluejay"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }],
   "compass_camera_offset": {
     "offset": 0.4,
