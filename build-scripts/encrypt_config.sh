@@ -1,36 +1,54 @@
 #!/bin/sh
 
-usage() { echo "Usage: $0 -e <ENVIRONMENT> -f <CONFIG_FOLDER> -p <CONFIG_PASSWORD>" ; }
+usage() { echo "Usage: $0 -f <PLATFORM> -e <ENVIRONMENT>  -j <CONFIG_PASSWORD>" ;
+    echo "  -p -> platform, windows,ios or android (required)";
+    echo "  -e -> environment for deployment (staging or production)"
+    echo "  -j -> password used to derive configuration file encryption key";
+    1>&2;
+    exit 1;
+}
 
-while getopts "e:f:p:" o; do
+while getopts "p:e:j:" o; do
     case "${o}" in
-	e) 
-            environment=${OPTARG}
-            ;;
-	f)
-            config_folder=${OPTARG}
-       
-            ;;
     p)
-            config_password=${OPTARG}
-       
-            ;;
+        platform=${OPTARG}
+        ;;
+	e) 
+        environment=${OPTARG}
+        ;;
+
+    j)
+        config_password=${OPTARG}
+        ;;
    *)
-            usage
-            ;;
+        usage
+        ;;
     esac
 done
+
+
+if [ $platform == "ios" ]; then
+    config_folder=ios/Resources/ApplicationConfigs
+elif [ $platform == "android" ]; then
+    config_folder=android/assets/ApplicationConfigs
+elif [ $platform == "windows" ]; then
+    config_folder=windows/Resources/ApplicationConfigs
+else
+    usage
+fi
 
 if [ ! -z "${config_password}" ]; then
 	secret_key=$((python "./build-scripts/generate_key.py" ${config_password}) 2>&1)
     sed_pattern="s#project_swallow_config.json#encrypted_config.json#g;s#APP_CONFIG_SECRET_HERE#${secret_key}#g"
 else
+    echo "no password"
 	sed_pattern="s#project_swallow_config.json#encrypted_config.json#g"
 fi
 
 if [ $environment == 'production' ]; then
 	src_config_file=project_swallow_production_config.json
 else
+    echo "not production"
 	src_config_file=project_swallow_config.json
 fi
 
@@ -46,6 +64,15 @@ if [ $? -ne 0 ] ; then
 fi
 
 mv $apiKeyFileTemp $apiKeyFile
+
+if [ $platform == "ios" ]; then
+    pushd ios/Resources
+    sed -e 's#Resources/ApplicationConfigs/project_swallow_config.json#Resources/ApplicationConfigs/encrypted_config.json#' \
+    -e 's#Resources/ApplicationConfigs/project_swallow_production_config.json##' CMakeLists.txt > CMakeListsTemp.txt
+
+    mv CMakeListsTemp.txt CMakeLists.txt
+    popd
+fi
 
 dest_config_file=encrypted_config.json
 temp_config_folder=

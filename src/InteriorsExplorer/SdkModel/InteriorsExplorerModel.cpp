@@ -272,12 +272,12 @@ namespace ExampleApp
                 }
             }
             
-            void InteriorsExplorerModel::HideInteriorStreamingDialog()
+            void InteriorsExplorerModel::HideInteriorStreamingDialog(bool interiorLoaded)
             {
                 if (GetInteriorStreamingDialogVisibility())
                 {
                     m_interiorStreamingDialogVisibility = false;
-                    m_messageBus.Publish(InteriorsExplorerInteriorStreamingMessage(m_interiorStreamingDialogVisibility));
+                    m_messageBus.Publish(InteriorsExplorerInteriorStreamingMessage(m_interiorStreamingDialogVisibility, interiorLoaded));
                 }
             }
 

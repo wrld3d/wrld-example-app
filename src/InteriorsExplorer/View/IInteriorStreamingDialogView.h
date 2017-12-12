@@ -15,7 +15,7 @@ namespace ExampleApp
                 virtual ~IInteriorStreamingDialogView() { }
 
                 virtual void Show() = 0;
-                virtual void Hide() = 0;
+                virtual void Hide(bool interiorLoaded) = 0;
 
             };
         }

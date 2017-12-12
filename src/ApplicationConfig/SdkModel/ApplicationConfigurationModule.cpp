@@ -180,6 +180,7 @@ namespace ExampleApp
                 platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.ExpandedLookAtDeadZone = 0.2f;
                 platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.UseBoundsMaxDimension = true;
                 platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.UseLargeFloorGapForSmallFloorCount = false;
+                platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.FloorScrollingModeEnabled = false;
 
                 return platformConfig;
             }

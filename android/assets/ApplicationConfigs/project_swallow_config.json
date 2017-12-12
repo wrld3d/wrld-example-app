@@ -96,16 +96,16 @@
   ],
   "wifi_restricted_buildings": [{
     "interior_id": "swallow_lon_38finsbury",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest"]
   }, {
     "interior_id": "swallow_lon_citygatehouse",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest"]
   }, {
     "interior_id": "swallow_lon_50finsbury",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest"]
   }, {
     "interior_id": "swallow_lon_parkhouse",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest"]
   }],
   "compass_camera_offset": {
     "offset": 0.4,

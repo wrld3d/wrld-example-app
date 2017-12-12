@@ -64,8 +64,12 @@ namespace ExampleAppWPF
             m_spinnerImage.Visibility = Visibility.Collapsed;
             m_loadedImage.Visibility = Visibility.Visible;
 
-            m_mainContainer.BeginAnimation(UIElement.OpacityProperty, FadeOutAnimation());
+            m_mainContainer.BeginAnimation(UIElement.OpacityProperty, FadeOutAnimation(2000));
+        }
 
+        public void CancelInteriorStreamingDialogView()
+        {
+            m_mainContainer.BeginAnimation(UIElement.OpacityProperty, FadeOutAnimation(0));
         }
 
         public DoubleAnimation FadeInAnimation()
@@ -74,10 +78,10 @@ namespace ExampleAppWPF
             return fadeInAnimation;
         }
 
-        public DoubleAnimation FadeOutAnimation()
+        public DoubleAnimation FadeOutAnimation(int fadeOutDelay)
         {
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1.0f, 0.0f, TimeSpan.FromMilliseconds(500));
-            fadeOutAnimation.BeginTime = TimeSpan.FromMilliseconds(2000);
+            fadeOutAnimation.BeginTime = TimeSpan.FromMilliseconds(fadeOutDelay);
             fadeOutAnimation.Completed += (sender, eventArgs) =>
             {
                 Visibility = Visibility.Hidden;
