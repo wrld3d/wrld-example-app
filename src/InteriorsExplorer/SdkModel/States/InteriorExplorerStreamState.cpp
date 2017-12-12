@@ -61,8 +61,8 @@ namespace ExampleApp
                     {
                         m_hasFailed = true;
                         m_parentState.SetLastEntryAttemptSuccessful(false);
-                        m_parentState.ShowFailMessage();
                         m_parentState.SetSubState(AppModes::States::SdkModel::InteriorExplorerSubStates::Exit);
+                        m_parentState.ShowFailMessage();
                         return;
                     }
                     
@@ -76,11 +76,9 @@ namespace ExampleApp
                 
                 void InteriorExplorerStreamState::Exit(int nextState)
                 {
-                    m_interiorsExplorerModel.HideInteriorStreamingDialog();
+                    m_interiorsExplorerModel.HideInteriorStreamingDialog(m_parentState.GetLastEntryAttemptSuccessful());
                 }
-                
             }
-            
         }
     }
 }

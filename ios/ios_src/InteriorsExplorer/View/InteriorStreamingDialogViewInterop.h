@@ -21,7 +21,7 @@ namespace ExampleApp
                 }
                 
                 void Show();
-                void Hide();
+                void Hide(bool interiorLoaded);
 
                 
             private:

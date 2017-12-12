@@ -24,7 +24,7 @@ namespace ExampleApp
                 ~InteriorStreamingDialogView();
 
                 void Show();
-                void Hide();
+                void Hide(bool interiorLoaded);
             };
 
         }

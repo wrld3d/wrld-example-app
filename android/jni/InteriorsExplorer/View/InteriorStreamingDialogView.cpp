@@ -57,7 +57,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, show);
             }
 
-            void InteriorStreamingDialogView::Hide()
+            void InteriorStreamingDialogView::Hide(bool interiorLoaded)
             {
                 ASSERT_UI_THREAD
 

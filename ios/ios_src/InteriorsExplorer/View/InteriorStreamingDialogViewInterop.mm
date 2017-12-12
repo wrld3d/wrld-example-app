@@ -14,7 +14,7 @@ namespace ExampleApp
                 [m_pView show];
             }
             
-            void InteriorStreamingDialogViewInterop::Hide()
+            void InteriorStreamingDialogViewInterop::Hide(bool interiorLoaded)
             {
                 [m_pView hide];
             }

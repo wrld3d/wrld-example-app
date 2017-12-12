@@ -95,7 +95,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    m_streamingDialogView.Hide();
+                    m_streamingDialogView.Hide(message.GetInteriorLoaded());
                 }
             }
             

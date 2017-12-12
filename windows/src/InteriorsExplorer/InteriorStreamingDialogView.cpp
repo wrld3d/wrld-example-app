@@ -18,6 +18,7 @@ namespace ExampleApp
                 mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
                 mOpenInteriorStreamingDialogView.SetupMethod(m_uiViewClass, m_uiView, "OpenInteriorStreamingDialogView");
                 mDismissInteriorStreamingDialogView.SetupMethod(m_uiViewClass, m_uiView, "DismissInteriorStreamingDialogView");
+                mCancelInteriorStreamingDialogView.SetupMethod(m_uiViewClass, m_uiView, "CancelInteriorStreamingDialogView");
             }
 
             InteriorStreamingDialogView::~InteriorStreamingDialogView()
@@ -30,9 +31,16 @@ namespace ExampleApp
                 mOpenInteriorStreamingDialogView();
             }
 
-            void InteriorStreamingDialogView::Hide()
+            void InteriorStreamingDialogView::Hide(bool interiorLoaded)
             {
-                mDismissInteriorStreamingDialogView();
+                if (interiorLoaded)
+                {
+                    mDismissInteriorStreamingDialogView();
+                }
+                else
+                {
+                    mCancelInteriorStreamingDialogView();
+                }
             }
         }
     }
