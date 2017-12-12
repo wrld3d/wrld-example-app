@@ -59,9 +59,7 @@ if [[ ( $environment != 'production' ) && ( $environment != 'staging' ) ]]; then
     exit 1
 fi
 
-config_folder=windows/Resources/ApplicationConfigs
-sh build-scripts/encrypt_config.sh -e $environment -f $config_folder -p $config_password
-
+sh build-scripts/encrypt_config.sh -p windows -e $environment  -j $config_password
 
 if [ ! -f windows/nuget.exe ]; then
 	curl -o windows/nuget.exe https://api.nuget.org/downloads/nuget.exe

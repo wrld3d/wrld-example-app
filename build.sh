@@ -2,54 +2,68 @@
 
 allArguments=$@
 
-usage() { echo "Usage: $0 -p android|ios"; echo "  -p -> platform, ios or android (required)"; 1>&2; exit 1; }
+usage() { echo "Usage: $0 -p android|ios";
+    echo "  -p -> platform, ios or android (required)";
+    echo "  -e -> environment for deployment (staging or production)"
+    echo "  -j -> password used to derive configuration file encryption key";
+    1>&2;
+    exit 1;
+}
 
-while getopts "p:" o; do
+while getopts "p:e:j:" o; do
     case "${o}" in
         p)
-            p=${OPTARG}
-            if [ "$p" != "ios" ]; then
-               if [ "$p" != "android" ]; then
+            platform=${OPTARG}
+            if [ "$platform" != "ios" ]; then
+               if [ "$platform" != "android" ]; then
                  usage
                fi
             fi
+            ;;
+        e)
+            environment=${OPTARG}
+            ;;
+        j)
+            config_password=${OPTARG}
             ;;
         *)
             usage
             ;;
     esac
 done
+
 shift $((OPTIND-1))
 
-if [ -z "${p}" ]; then
+if [ -z "${platform}" ]; then
     usage
 fi
 
-if [ $p == "ios" ]; then
+if [ $platform == "ios" ]; then
     echo "Building iOS examples..."
     rm -rf "./ios/Include/eegeo"
     rm -rf "./ios/build"
-    ./update.platform.sh $allArguments
 
-    if [ $? -ne 0 ] ; then
-        exit $?
-    fi    
-    
-    pushd ios
-    ./build.sh $allArguments
-    resultcode=$?
-    popd
-elif [ $p == "android" ]; then
-    echo "Building Android examples..."
-    rm -rf "./android/libs/eegeo"
-    rm -rf "./android/obj"
-    rm -rf "./android/bin"
-    ./update.platform.sh $allArguments
+    ./update.platform.sh -p ios
 
     if [ $? -ne 0 ] ; then
         exit $?
     fi
-    
+
+    pushd ios
+    ./build.sh $allArguments
+    resultcode=$?
+    popd
+elif [ $platform == "android" ]; then
+    echo "Building Android examples..."
+    rm -rf "./android/libs/eegeo"
+    rm -rf "./android/obj"
+    rm -rf "./android/bin"
+    ./update.platform.sh -p android
+
+    if [ $? -ne 0 ] ; then
+        exit $?
+    fi
+
     pushd android
     ./build.sh $allArguments
     resultcode=$?
