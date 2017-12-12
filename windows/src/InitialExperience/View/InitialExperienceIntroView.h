@@ -20,7 +20,7 @@ namespace ExampleApp
             {
             public:
 
-                InitialExperienceIntroView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus);
+                InitialExperienceIntroView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus, bool isInKioskMode);
                 ~InitialExperienceIntroView();
 
                 void Show();
@@ -40,6 +40,7 @@ namespace ExampleApp
 
                 Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                bool m_isInKioskMode;
 
                 gcroot<System::Type^> m_uiViewClass;
                 gcroot<System::Object^> m_uiView;

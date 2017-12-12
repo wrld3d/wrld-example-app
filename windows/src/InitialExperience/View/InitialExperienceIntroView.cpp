@@ -14,9 +14,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            InitialExperienceIntroView::InitialExperienceIntroView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
+            InitialExperienceIntroView::InitialExperienceIntroView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus, bool isInKioskMode)
             : m_nativeState(nativeState)
             , m_messageBus(messageBus)
+            , m_isInKioskMode(isInKioskMode)
             {
                 ASSERT_UI_THREAD
 
@@ -40,7 +41,10 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                ShowExitIUX();
+                if(!m_isInKioskMode)
+                {
+                    ShowExitIUX();
+                }
             }
 
             void InitialExperienceIntroView::Dismiss()

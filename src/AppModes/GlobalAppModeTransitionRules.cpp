@@ -110,6 +110,7 @@ namespace ExampleApp
                 if (m_interiorSelectionModel.IsInteriorSelected())
                 {
                     m_interiorsExplorerModel.Exit();
+                    m_interiorSelectionModel.ClearSelection();
                 }
                 m_appModeModel.SetAppMode(SdkModel::AttractMode);
             }
