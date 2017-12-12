@@ -40,26 +40,14 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                /*AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
-
-                jmethodID showDialogMethod = env->GetMethodID(m_uiViewClass, "show", "()V");
-                env->CallVoidMethod(m_uiView, showDialogMethod);*/
-
-                m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(1.0f, true));
+                ShowExitIUX();
             }
 
             void InitialExperienceIntroView::Dismiss()
             {
                 ASSERT_UI_THREAD
 
-                /*AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
-
-                jmethodID dismissDialogMethod = env->GetMethodID(m_uiViewClass, "dismiss", "()V");
-                env->CallVoidMethod(m_uiView, dismissDialogMethod);*/
-
-                m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(0.0f, false));
+                DismissExitIUX();
             }
 
             void InitialExperienceIntroView::OnDismiss()

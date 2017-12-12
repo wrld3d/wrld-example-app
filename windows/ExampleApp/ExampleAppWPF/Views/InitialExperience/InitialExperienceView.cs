@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExampleApp;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -63,7 +64,7 @@ namespace ExampleAppWPF
             m_positionedMapModeDialog = new PositionedDialog(mapModeDialog, (x, y, w, h) =>
             {
                 ((TranslateTransform)mapModeDialog.RenderTransform).X = x - mapModeDialog.GetTooltipWidth() - DialogGap;
-                ((TranslateTransform)mapModeDialog.RenderTransform).Y = y + 2;
+                ((TranslateTransform)mapModeDialog.RenderTransform).Y = y - ((mapModeDialog.GetTooltipHeight() - h) / 2);
             });
 
             FlattenButtonView flattenButtonView = ViewHelpers.FindChildrenOfType<FlattenButtonView>(m_mainWindow.MainGrid.Children).Single();
@@ -76,7 +77,8 @@ namespace ExampleAppWPF
             m_positionedCreateReportDialog = new PositionedDialog(createReportDialog, (x, y, w, h) =>
             {
                 ((TranslateTransform)createReportDialog.RenderTransform).X = x + w + createReportDialog.ArrowPointHeight + DialogGap;
-                ((TranslateTransform)createReportDialog.RenderTransform).Y = y - (createReportDialog.GetTooltipHeight() - h) - 2;
+                double heightDiff = createReportDialog.GetTooltipHeight() - mapModeDialog.GetTooltipHeight();
+                ((TranslateTransform)createReportDialog.RenderTransform).Y = y - ((createReportDialog.GetTooltipHeight() + heightDiff - h) / 2);
             });
 
             MyPinCreationButtonView myPinCreationButtonView = ViewHelpers.FindChildrenOfType<MyPinCreationButtonView>(m_mainWindow.MainGrid.Children).Single();
@@ -127,6 +129,8 @@ namespace ExampleAppWPF
                     m_hideAnimationRunning = true;
                     m_hideAnimation.Seek(TimeSpan.Zero);
                     m_hideAnimation.Begin(this);
+
+                    InitialExperienceIntroCLIMethods.HandleClick(m_nativeCallerPointer);
                 }
             }
             else
