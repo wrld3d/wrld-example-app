@@ -30,12 +30,7 @@
 	"desk_pfx": "WPH"
   },
   {
-    "locationId": "US001",
-    "interior_id": "swallow_ny_731lex",
-    "desk_pfx": "731"
-  },
-  {
-    "locationId": "US002",
+    "locationId": "US047",
     "interior_id": "swallow_ny_731lex",
     "desk_pfx": "731"
   }

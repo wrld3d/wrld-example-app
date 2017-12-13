@@ -78,10 +78,10 @@ def process_room(meeting_room_json, feedconfig, interior_mapping, image_mapping,
         }
 
 
-def get_meeting_room_definitions(feedconfig, interior_mapping, image_mapping, space_id_to_wgs84, space_id_to_highlight_id):
+def get_meeting_room_definitions(region, site, feedconfig, interior_mapping, image_mapping, space_id_to_wgs84, space_id_to_highlight_id):
     transport = HmacTransport()
     client = Client(feedconfig.soap_service_wsdl_url, transport=transport)
-    response = client.service.GetMeetingSpaceDetails(feedconfig.soap_region)
+    response = client.service.GetMeetingSpaceDetails(region, site)
 
     if response is not None and response != "":
         meeting_room_list = {}
@@ -149,9 +149,11 @@ if __name__ == "__main__":
     image_mapping.populate_from_files("../generated")
 
     meeting_room_json = []
-    for meeting_room in get_meeting_room_definitions(feedconfig, interior_mapping, image_mapping, space_id_to_wgs84, space_id_to_highlight_id):
-        meeting_room_json.append(meeting_room)
-        print "Adding Room: {0}\n".format(meeting_room)
+    for region in feedconfig.soap_regions:
+        for site in feedconfig.soap_regions[region]:    
+            for meeting_room in get_meeting_room_definitions(region, site, feedconfig, interior_mapping, image_mapping, space_id_to_wgs84, space_id_to_highlight_id):
+                meeting_room_json.append(meeting_room)
+                print "Adding Room: {0}\n".format(meeting_room)
 
     delete_existing_meeting_room_pois(feedconfig, hotcold)
 

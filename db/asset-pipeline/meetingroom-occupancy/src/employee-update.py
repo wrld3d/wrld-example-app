@@ -27,10 +27,10 @@ def verify_employee(employee_json, desk_mapping, space_id_to_wgs84):
         raise Exception("Skipping Employee NOSPCID %s - %s(%s %s)" % (space_id,employee_tuple))
     return True
 
-def get_employee_definitions(site, feedconfig, desk_mapping, space_id_to_wgs84):
+def get_employee_definitions(region_code, site, feedconfig, desk_mapping, space_id_to_wgs84):
     transport = HmacTransport()
     client = Client(feedconfig.soap_service_wsdl_url, transport=transport)
-    response = client.service.GetEmployeeDetails(feedconfig.soap_region, site)
+    response = client.service.GetEmployeeDetails(region_code, site)
 
     if response is not None and response != "":
         employee_list = {}
@@ -144,10 +144,10 @@ if __name__ == "__main__":
     space_id_to_wgs84.populate_from_files("../generated")
 
     employees = []
-    sites = ["GB033", "GB025", "GB006", "GB032", "GB012"]
-    for site in sites:
-        for employee in get_employee_definitions(site, feedconfig, desk_mapping, space_id_to_wgs84):
-            employees.append(employee)
+    for region in feedconfig.soap_regions:
+        for site in feedconfig.soap_regions[region]:
+            for employee in get_employee_definitions(region, site, feedconfig, desk_mapping, space_id_to_wgs84):
+                employees.append(employee)
 
     departments = []
     for department in get_department_definitions(feedconfig, employees):

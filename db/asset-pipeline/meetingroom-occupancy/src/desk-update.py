@@ -46,10 +46,10 @@ def verify_desk(desk_json, interior_mapping, space_id_to_wgs84):
         raise Exception("Skipping Desk NOFLOOR %s(%s) in %s" % desk_tuple)
     return True
 
-def get_desk_definitions(site, feedconfig, interior_mapping, space_id_to_wgs84):
+def get_desk_definitions(region, site, feedconfig, interior_mapping, space_id_to_wgs84):
     transport = HmacTransport()
     client = Client(feedconfig.soap_service_wsdl_url, transport=transport)
-    response = client.service.GetDeskDetails(feedconfig.soap_region, site)
+    response = client.service.GetDeskDetails(region, site)
 
     if response is not None and response != "":
         desk_list = {}
@@ -162,10 +162,10 @@ if __name__ == "__main__":
     space_id_to_wgs84.populate_from_files("../generated")
 
     desks = []
-    sites = ["GB033", "GB025", "GB006", "GB032", "GB012"]
-    for site in sites:
-        for desk in get_desk_definitions(site, feedconfig, interior_mapping, space_id_to_wgs84):
-            desks.append(desk)
+    for region in feedconfig.soap_regions:
+        for site in feedconfig.soap_regions[region]:
+            for desk in get_desk_definitions(region, site, feedconfig, interior_mapping, space_id_to_wgs84):
+                desks.append(desk)
 
     desk_groups = []
     for desk_group in get_desk_groups(feedconfig, desks):
