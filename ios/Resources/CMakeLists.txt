@@ -65,8 +65,6 @@ set(resources ${resources}
         Resources/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
         Resources/EmbeddedTheme/London_London_roadDiffuse_repeat.pvr
         Resources/EmbeddedTheme/London_London_wallDiffuse.pvr
-        Resources/EmbeddedTheme/SanFrancisco_SanFran_roadDiffuse_repeat.pvr
-        Resources/EmbeddedTheme/SanFrancisco_SanFran_wallDiffuse.pvr
         Resources/EmbeddedTheme/SanFrancisco_TerrainTexture0.pvr
         Resources/EmbeddedTheme/SanFrancisco_TerrainTexture0_LOD.pvr
         Resources/EmbeddedTheme/SanFrancisco_TerrainTexture1.pvr
