@@ -326,7 +326,7 @@
     self.pTitleLabel.text = [NSString stringWithUTF8String:pModel->GetTitle().c_str()];
     
     [self.pCategoryIconContainer.subviews makeObjectsPerformSelector: @selector(removeFromSuperview)];
-    std::string tagIcon = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetPrimaryTag());
+    std::string tagIcon = ExampleApp::Helpers::IconResources::GetSmallIconForTag(pModel->GetIconKey());
     ExampleApp::Helpers::ImageHelpers::AddPngImageToParentView(self.pCategoryIconContainer, tagIcon, ExampleApp::Helpers::ImageHelpers::Centre);
     
     self.pAvailableDivider.hidden = true;
