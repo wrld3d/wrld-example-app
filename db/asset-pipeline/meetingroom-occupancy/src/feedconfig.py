@@ -24,7 +24,7 @@ class FeedConfig:
         self.__hmac_public_app_id = hmac_public_app_id
         self.__hmac_private_app_id = hmac_private_app_id
         self.__soap_service_wsdl_url = soap_service_wsdl_url
-        self.__soap_regions = self.__parse_soap_regions(soap_region)
+        self.__soap_regions = self.__parse_soap_regions(soap_regions)
         self.__debug = debug
         self.__cdn_base_path = cdn_base_path
         self.__additional_args = {}
