@@ -6,19 +6,18 @@
     android:background="@color/transparent">
 
     <LinearLayout
+        android:id="@+id/interior_streaming_dialog_view_container"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="28dp"
         android:layout_marginRight="28dp"
         android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/interior_streaming_dialog_view_container"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_margin="1dp"
             android:background="@color/gold"
             android:gravity="center"
