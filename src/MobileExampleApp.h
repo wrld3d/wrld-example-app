@@ -194,7 +194,8 @@ namespace ExampleApp
 		void CreateSQLiteModule(Eegeo::UI::NativeUIFactories& nativeUIFactories);
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                           const bool interiorsAffectedByFlattening);
+                                           const bool interiorsAffectedByFlattening,
+                                           const bool createBlueSphereViews);
 
         void DestroyApplicationModelModules();
 
