@@ -453,7 +453,8 @@ namespace ExampleApp
             *m_pNavigationService,
             m_pWorld->GetApiTokenService(),
             interiorsPresentationModule.GetInteriorSelectionModel(),
-            *m_pAppModeModel);
+            *m_pAppModeModel,
+            m_pFlattenButtonModule->GetFlattenButtonModel());
 
         if (applicationConfiguration.HasMapScene())
         {

@@ -4,6 +4,7 @@
 
 #include "DeepLinkModel.h"
 #include "ApplicationConfiguration.h"
+#include "IFlattenButtonModel.h"
 
 namespace ExampleApp
 {
@@ -14,11 +15,13 @@ namespace ExampleApp
             class DeepLinkController: private Eegeo::NonCopyable
             {
             public:
-                DeepLinkController(DeepLinkModel& deepLinkModel);
+                DeepLinkController(DeepLinkModel& deepLinkModel, FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel);
                 ~DeepLinkController();
                 void HandleDeepLinkOpen(const AppInterface::UrlData& data);
             private:
                 DeepLinkModel& m_deepLinkModel;
+                
+                FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
             };
         }
     }

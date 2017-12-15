@@ -13,6 +13,7 @@
 #include "AboutPageViewModel.h"
 #include "Location.h"
 #include "AppModes.h"
+#include "IFlattenButtonModel.h"
 
 namespace ExampleApp
 {
@@ -39,7 +40,8 @@ namespace ExampleApp
                     Eegeo::Location::NavigationService& navigationService,
                     Eegeo::Web::ApiTokenService& apiTokenService,
                     Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                    const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
+                    const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                    FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel);
 
                 ~DeepLinkModule();
                 DeepLinkController& GetDeepLinkController();
