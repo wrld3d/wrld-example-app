@@ -114,7 +114,7 @@ def get_desk_groups(feedconfig, desks):
 
     for desk in desks:
         desk_name = desk["title"]
-        desk_higlight_id = desk["user_data"]["entity_highlight"]
+        desk_higlight_id = desk["user_data"]["entity_highlight"][0]
         if "3QVS" in desk_name:
             desk_group_name = desk_name[:9].replace("3QVS-","")
 
