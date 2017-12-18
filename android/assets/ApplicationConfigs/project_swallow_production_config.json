@@ -116,6 +116,9 @@
   }, {
     "interior_id": "swallow_ny_78madison",
     "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
+  }, {
+    "interior_id": "swallow_ny_1015madison",
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }],
   "compass_camera_offset": {
     "offset": 0.4,
