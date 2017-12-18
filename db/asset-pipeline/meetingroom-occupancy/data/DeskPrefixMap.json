@@ -22,5 +22,9 @@
   {
 	"locationId": "WPH01",
 	"interior_id": "WPH"
+  },
+  {
+  	"locationId": "US047",
+  	"interior_id": "731-"
   }
 ]

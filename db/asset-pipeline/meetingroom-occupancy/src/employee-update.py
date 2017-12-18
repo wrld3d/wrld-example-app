@@ -52,6 +52,7 @@ def get_employee_definitions(region_code, site, feedconfig, desk_mapping, space_
                 
                 space_id = desk_mapping.get_space_id_for_employee(employee_uuid)
                 location = space_id_to_wgs84.get_lat_lon_for_spaceid(space_id)
+                highlight_id = "S{0}".format(space_id)
 
                 interior_id = desk_mapping.get_indoor_id_for_employee(employee_uuid)
                 floor_id = desk_mapping.get_floor_id_for_employee(employee_uuid)
@@ -72,6 +73,7 @@ def get_employee_definitions(region_code, site, feedconfig, desk_mapping, space_
                     {
                       "image_url":image_url,
                       "desk_code":desk_code,
+                      "entity_highlight":[highlight_id],
                       "office_location":"",
                       "working_group":employee_json["DeptDescription"],
                       "deptCode":employee_json["DeptCode"],
@@ -86,7 +88,7 @@ def get_department_definitions(feedconfig, employees):
     for employee in employees:
         department_code = employee["user_data"]["deptCode"]
         department_description = employee["user_data"]["working_group"]
-        desk_code = employee["user_data"]["desk_code"]
+        desk_code = employee["user_data"]["entity_highlight"][0]
         if not department_code in departments:
             departments[department_code] = {"description":department_description, "location":employee, "members":[]}
         departments[department_code]["members"].append(desk_code)
