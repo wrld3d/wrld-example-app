@@ -7,10 +7,12 @@
 #include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "ModalityChangedMessage.h"
-#include "Rendering.h"
 #include "IVisualMapService.h"
 #include "ILocationService.h"
 #include "InteriorsPositionConnectionMessage.h"
+#include "BlueSphereView.h"
+#include "BlueSphereAnchorView.h"
+
 
 namespace ExampleApp
 {
@@ -23,13 +25,13 @@ namespace ExampleApp
             public:
 
                 GpsMarkerController(GpsMarkerModel& model,
-                                    GpsMarkerView& view,
-                                    GpsMarkerAnchorView& anchorView,
                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                     Eegeo::Location::ILocationService& locationService,
                                     Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                     VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                    const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                    Eegeo::BlueSphere::BlueSphereView& blueSphereView,
+                                    Eegeo::BlueSphere::BlueSphereAnchorView& blueSphereAnchorView,
+                                    const bool createBlueSphereViews,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerController();
 
@@ -39,23 +41,22 @@ namespace ExampleApp
 
                 const static float DefaultUpdatePeriod;
                 int m_visibilityCount;
-                float m_viewTransitionParam;
-                int m_currentFloorIndex;
-
-                float m_screenPixelScale;
-                float m_screenOversampleScale;
+                int m_currentFloorIndex;;
 
                 GpsMarkerModel& m_model;
-                GpsMarkerView& m_view;
-                GpsMarkerAnchorView& m_anchorView;
+                Eegeo::BlueSphere::BlueSphereView& m_blueSphereView;
+                Eegeo::BlueSphere::BlueSphereAnchorView& m_blueSphereAnchorView;
 
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
-                Eegeo::Location::ILocationService& m_locationService;
-                
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
                 
+
                 bool m_isLocationServiceConnected;
+
+                bool m_createBlueSphereViews;
+
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback0<GpsMarkerController> m_floorSelectedCallback;
@@ -68,19 +69,12 @@ namespace ExampleApp
                 void OnModalityChangedMessage(const Modality::ModalityChangedMessage& message);
                 void OnVisibilityChangedMessage(const GpsMarkerVisibilityMessage& message);
                 void OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage& message);
+
                 void OnInteriorsPositionConnectionMessage(const InteriorsPosition::InteriorsPositionConnectionMessage& message);
                 
-                void UpdateTransition(bool isVisible, float dt);
                 
-                void CreateModelViewProjectionMatrix(Eegeo::m44& out_modelViewProjection,
-                                                     const Eegeo::dv3& location,
-                                                     const float heading,
-                                                     const Eegeo::v3& cameraRelativeLocation,
-                                                     const Eegeo::v3& scale,
-                                                     const Eegeo::Camera::RenderCamera& renderCamera,
-                                                     bool flipUpDirection);
+
                 void GetCurrentVisualMapTime(std::string& currentTime, std::string& currentWeather);
-                const bool IsMarkerVisible(Eegeo::dv3& currentLocationEcef);
             };
         }
     }

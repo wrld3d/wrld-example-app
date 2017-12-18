@@ -403,10 +403,13 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
 
+
         CreateSQLiteModule(nativeUIFactories);
         
-        CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening);
         
+        CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening, platformConfig.MapLayersConfig.BlueSphereConfig.CreateViews);
+
+
         namespace IntHighlights = InteriorsExplorer::SdkModel::Highlights;
         
         m_pHighlightColorMapper = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::HighlightColorMapper)(Eegeo::v4(0.0, 1.0, 0.0, 1.0));
@@ -554,7 +557,8 @@ namespace ExampleApp
         m_pSQLiteModule = Eegeo::Modules::SQLiteModule::Create(config, platformAbstractionModule, nativeUIFactories.AlertBoxFactory());
     }
     void MobileExampleApp::CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                                         const bool interiorsAffectedByFlattening)
+                                                         const bool interiorsAffectedByFlattening,
+                                                         const bool createBlueSphereViews)
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
         
@@ -663,16 +667,15 @@ namespace ExampleApp
                                                                              mapModule.GetEnvironmentFlatteningService());
         
         Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-        
-        m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetRenderingModule(),
-                                                                                         m_pWorld->GetSceneModelsModule().GetLocalSceneModelFactory(),
-                                                                                         m_platformAbstractions,
-                                                                                         m_pWorld->GetLocationService(),
+
+
+        m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetLocationService(),
+
                                                                                          m_pWorld->GetTerrainModelModule(),
                                                                                          m_pWorld->GetMapModule(),
                                                                                          interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                          m_pVisualMapModule->GetVisualMapService(),
-                                                                                         m_screenProperties,
+                                                                                         createBlueSphereViews,
                                                                                          m_messageBus);
 
         m_pSettingsMenuModule = Eegeo_NEW(ExampleApp::SettingsMenu::SdkModel::SettingsMenuModule)(m_identityProvider,

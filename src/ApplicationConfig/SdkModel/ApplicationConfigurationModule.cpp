@@ -147,6 +147,7 @@ namespace ExampleApp
                 platformConfig.CityThemesConfig.StreamedManifestUrl = appConfig.ThemeManifestURL();
                 platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = appConfig.EmbeddedThemeTexturePath();
 
+
                 if (appConfig.UseLabels())
                 {
                     platformConfig.OptionsConfig.EnableLabels = true;
@@ -182,6 +183,9 @@ namespace ExampleApp
                 platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.UseLargeFloorGapForSmallFloorCount = false;
                 platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.FloorScrollingModeEnabled = false;
 
+
+    
+                    platformConfig.MapLayersConfig.BlueSphereConfig.CreateViews = true;
                 return platformConfig;
             }
             
