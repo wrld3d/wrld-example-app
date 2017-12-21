@@ -19,8 +19,8 @@
   "yelp_oauth_token_secret": "hHIaImXUlORnIavm2nXV3NOufpA",
   "twitter_auth_code": "",
   "geonames_username": "eegeo_bloomberg_ios",
-  "coveragetree_manifest_url": "https://cdn1.eegeo.com/coverage-trees/vswallow-production/v1468/manifest.bin.gz",
-  "theme_manifest_url": "https://cdn-resources.eegeo.com/mobile-themes-new/v1009/default/ssl.manifest.bin.gz",
+  "coveragetree_manifest_url": "https://cdn1.eegeo.com/coverage-trees/vswallow-production/v1524/manifest.bin.gz",
+  "theme_manifest_url": "https://cdn-resources.eegeo.com/mobile-themes-new/v1047/default/ssl.manifest.bin.gz",
   "embedded_theme_texture_path": "EmbeddedTheme",
   "sqlite_db_url": "https://cdn1.eegeo.com/swallow-pois/pois_v95.db.gz",
   "eegeo_search_service_url": "https://app.wayfind.bloomberg.com/search/v1.1/",
@@ -95,22 +95,22 @@
   ],
   "wifi_restricted_buildings": [{
     "interior_id": "swallow_lon_38finsbury",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_lon_citygatehouse",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_lon_50finsbury",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_lon_parkhouse",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_lon_wallbrooksquare",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }, {
     "interior_id": "swallow_ny_731lex",
-    "allowed_ssids": ["eeGeo 2.4GHz", "eeGeo 5GHz", "bemp", "bguest"]
+    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
   }],
   "compass_camera_offset": {
     "offset": 0.4,
