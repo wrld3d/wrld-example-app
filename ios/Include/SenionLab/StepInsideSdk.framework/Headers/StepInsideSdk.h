@@ -26,6 +26,7 @@
 #import <StepInsideSdk/SSIApiKey.h>
 #import <StepInsideSdk/SSILocation.h>
 #import <StepInsideSdk/SSIHeading.h>
+#import <StepInsideSdk/SSIHeadingAvailability.h>
 #import <StepInsideSdk/SSIFloorId.h>
 #import <StepInsideSdk/SSILocationCoordinates.h>
 #import <StepInsideSdk/SSILocationAvailability.h>

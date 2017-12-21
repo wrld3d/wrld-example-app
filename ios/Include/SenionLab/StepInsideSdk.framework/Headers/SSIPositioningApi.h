@@ -9,6 +9,7 @@
 
 #import "SSILocationAvailability.h"
 #import "SSIMotionType.h"
+#import "SSIHeadingAvailability.h"
 
 @protocol SSIPositioningApiDelegate;
 @class SSILocation;
@@ -32,6 +33,13 @@
  May be nil before any heading has been determined.
  */
 @property (nullable, nonatomic, strong, readonly) SSIHeading *lastHeading;
+
+/**
+ The last known heading availability.
+ 
+ Defaults to `SSIHeadingAvailabilityNotAvailable`.
+ */
+@property (nonatomic, readonly) SSIHeadingAvailability lastHeadingAvailability;
 
 /**
  The last known location availability.
