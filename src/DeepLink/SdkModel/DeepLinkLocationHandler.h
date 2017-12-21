@@ -23,7 +23,7 @@ namespace ExampleApp
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<DeepLinkLocationHandler> m_failAlertHandler;
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
                 void OnFailAlertBoxDismissed();
-                constexpr static const char* URL_FORMAT_MESSAGE = "Please use deep link with format eegeo://location/lat/long[/distance/bearing]";
+                constexpr static const char* URL_FORMAT_MESSAGE = "Please use deep link with format bway://location/lat/long[/distance/bearing/indoorid/floorindex]";
             };
         }
     }
