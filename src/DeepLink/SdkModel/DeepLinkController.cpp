@@ -8,8 +8,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            DeepLinkController::DeepLinkController(DeepLinkModel& deepLinkModel)
+            DeepLinkController::DeepLinkController(DeepLinkModel& deepLinkModel,
+                                                   ExampleAppMessaging::TMessageBus& messageBus)
             :m_deepLinkModel(deepLinkModel)
+            ,m_messageBus(messageBus)
             {
             }
             
@@ -22,6 +24,7 @@ namespace ExampleApp
                 IDeepLinkHandler* handler = m_deepLinkModel.Get(std::string(data.host));
                 if(handler != NULL)
                 {
+                    m_messageBus.Publish(DeepLinkOpenedMessage());
                     handler->HandleDeepLink(data);
                 }
                 else

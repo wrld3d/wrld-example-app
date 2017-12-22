@@ -38,6 +38,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<OptionsController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
                 Eegeo::Helpers::TCallback1<OptionsController, bool> m_replayTutorialsToggled;
                 Eegeo::Helpers::TCallback1<OptionsController, bool> m_onReplayTutorialsModelChanged;
+                Eegeo::Helpers::TCallback1<OptionsController, const DeepLink::DeepLinkOpenedMessage&> m_deepLinkOpenedHandler;
 
                 void OnViewModelOpened();
 
@@ -58,6 +59,8 @@ namespace ExampleApp
                 void OnReplayTutorialsToggled(bool& replayTutorials);
 
                 void OnReplayTutorialsModelChanged(bool& replayTutorials);
+                
+                void OnDeepLinkOpenedMessage(const DeepLink::DeepLinkOpenedMessage& message);
             public:
                 OptionsController(IOptionsView& view,
                                   IOptionsViewModel& viewModel,

@@ -45,6 +45,7 @@
 #include "CompassIsRotatingStateChangedMessage.h"
 #include "InteriorsPositionConnectionMessage.h"
 #include "CameraTransitionControllerChangedMessage.h"
+#include "DeepLinkOpenedMessage.h"
 
 namespace ExampleApp
 {
@@ -92,6 +93,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassIsRotatingStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsPositionConnectionMessage>
             , public Eegeo::Messaging::CatalogBinding<CameraTransitions::CameraTransitionControllerChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<DeepLink::DeepLinkOpenedMessage>
             , private Eegeo::NonCopyable
         {
 

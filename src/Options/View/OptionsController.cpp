@@ -92,6 +92,11 @@ namespace ExampleApp
                 }
             }
             
+            void OptionsController::OnDeepLinkOpenedMessage(const DeepLink::DeepLinkOpenedMessage &message)
+            {
+                m_viewModel.Close();
+            }
+            
             OptionsController::OptionsController(IOptionsView& view,
                                                  IOptionsViewModel& viewModel,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
@@ -113,6 +118,7 @@ namespace ExampleApp
             , m_appModeChangedHandler(this, &OptionsController::OnAppModeChangedMessage)
             , m_replayTutorialsToggled(this, &OptionsController::OnReplayTutorialsToggled)
             , m_onReplayTutorialsModelChanged(this, &OptionsController::OnReplayTutorialsModelChanged)
+            , m_deepLinkOpenedHandler(this, &OptionsController::OnDeepLinkOpenedMessage)
             {
                 m_view.InsertCloseSelectedCallback(m_viewCloseSelected);
                 m_view.InsertStreamOverWifiOnlySelectionChangedCallback(m_viewStreamOverWifiOnlySelectionChanged);
@@ -131,10 +137,12 @@ namespace ExampleApp
                 m_initialExperienceIntroController.InsertReplayExitIUXChangedCallback(m_onReplayTutorialsModelChanged);
 
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
+                m_messageBus.SubscribeUi(m_deepLinkOpenedHandler);
             }
             
             OptionsController::~OptionsController()
             {
+                m_messageBus.UnsubscribeUi(m_deepLinkOpenedHandler);
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
 
                 m_initialExperienceIntroController.RemoveReplayExitIUXChangedCallback(m_onReplayTutorialsModelChanged);

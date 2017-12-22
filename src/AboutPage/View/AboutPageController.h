@@ -41,6 +41,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageSenionDataTypeMessage&> m_aboutPageSenionDataTypeMessage;
                 
                 Eegeo::Helpers::TCallback1<AboutPageController, const AboutPageSenionSettingsTypeMessage&> m_aboutPageSenionSettingsMessage;
+                
+                Eegeo::Helpers::TCallback1<AboutPageController, const DeepLink::DeepLinkOpenedMessage&> m_deepLinkOpenedHandler;
 
                 void OnOpen();
 
@@ -57,6 +59,8 @@ namespace ExampleApp
                 void OnAboutPageSenionSettingsMessageChanged(const AboutPage::AboutPageSenionSettingsTypeMessage& aboutPageSenionSettingsMessage);
 
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
+                
+                void OnDeepLinkOpenedMessage(const DeepLink::DeepLinkOpenedMessage& message);
             public:
                 AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel, Metrics::IMetricsService& metricsService, ExampleAppMessaging::TMessageBus& messageBus);
 

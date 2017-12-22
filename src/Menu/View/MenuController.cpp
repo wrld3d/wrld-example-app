@@ -293,6 +293,11 @@ namespace ExampleApp
                     
                 }
             }
+            
+            void MenuController::OnDeepLinkOpenedMessage(const DeepLink::DeepLinkOpenedMessage &message)
+            {
+                m_viewModel.Close();
+            }
 
             MenuController::MenuController(
                 IMenuModel& model,
@@ -316,6 +321,7 @@ namespace ExampleApp
                 , m_onOpenableStateChanged(this, &MenuController::OnOpenableStateChanged)
                 , m_onMenuSectionExpandedStateChanged(this, &MenuController::OnMenuSectionExpandeStateChanged)
                 , m_onAppModeChanged(this, &MenuController::OnAppModeChanged)
+                , m_onDeepLinkOpenedHandler(this, &MenuController::OnDeepLinkOpenedMessage)
                 , m_tryDragFunc(this, &MenuController::TryDrag)
                 , m_messageBus(messageBus)
                 , m_dragInProgress(false)
@@ -334,7 +340,8 @@ namespace ExampleApp
                 m_view.SetTryDragFunc(m_tryDragFunc);
 
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
-
+                m_messageBus.SubscribeUi(m_onDeepLinkOpenedHandler);
+                
                 if(m_viewModel.IsFullyOnScreen())
                 {
                     float value = m_viewModel.OpenState();
@@ -364,6 +371,7 @@ namespace ExampleApp
                     model.RemoveItemRemovedCallback(m_onItemRemovedCallback);
                 }
 
+                m_messageBus.UnsubscribeUi(m_onDeepLinkOpenedHandler);
                 m_messageBus.UnsubscribeUi(m_onAppModeChanged);
                 
                 m_view.ClearTryDragFunc();
