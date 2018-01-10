@@ -31,6 +31,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
+import android.view.View;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.Constants;
@@ -489,5 +490,11 @@ public class BackgroundThreadActivity extends MainActivity
                 NativeJniCalls.releaseNativeWindow(oldWindow);
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 }
