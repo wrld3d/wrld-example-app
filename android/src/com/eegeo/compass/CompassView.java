@@ -28,6 +28,7 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	private View m_compassDefault = null;
 	private View m_compassLocked = null;
 	private View m_compassUnlocked = null;
+	private boolean	m_unauthorizedGpsAlertShown = false;
 
 	private float m_yPosActive;
 	private float m_yPosInactive;
@@ -137,19 +138,23 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 
 	public void notifyGpsUnauthorized()
 	{
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(m_activity);
-		alertDialogBuilder.setTitle("Location Services disabled")
-				.setMessage("GPS Compass inaccessable: Location Services are not enabled for this application. You can change this in your device settings.")
-				.setCancelable(false)
-				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+		if (m_unauthorizedGpsAlertShown == false) {
+			m_unauthorizedGpsAlertShown = true;
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(m_activity);
+			alertDialogBuilder.setTitle("Location Services disabled")
+					.setMessage("GPS Compass inaccessable: Location Services are not enabled for this application. You can change this in your device settings.")
+					.setCancelable(false)
+					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
-		AlertDialog alert = alertDialogBuilder.create();
-		alert.show();
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							m_unauthorizedGpsAlertShown = false;
+							dialog.dismiss();
+						}
+					});
+			AlertDialog alert = alertDialogBuilder.create();
+			alert.show();
+		}
 	}
 
 	@Override
