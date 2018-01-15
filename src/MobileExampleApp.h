@@ -209,7 +209,7 @@ namespace ExampleApp
                                    const float screenOversampleScale);
         
         void InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories);
-        
+
         bool CanAcceptTouch() const;
 
     public:
@@ -414,7 +414,7 @@ namespace ExampleApp
         {
             return *m_pNavigationService;
         }
-        
+
         void OnPause();
 
         void OnResume();

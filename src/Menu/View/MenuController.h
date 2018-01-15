@@ -36,9 +36,10 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<MenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenableStateChanged;
                 Eegeo::Helpers::TCallback2<MenuController, IMenuSectionViewModel&, bool> m_onMenuSectionExpandedStateChanged;
                 Eegeo::Helpers::TCallback1<MenuController, const AppModes::AppModeChangedMessage&> m_onAppModeChanged;
+                Eegeo::Helpers::TCallback1<MenuController, const InteriorsExplorer::InteriorsExplorerStateChangedMessage& > m_onInteriorStateChangedCallback;
 
                 Eegeo::Helpers::TFunc0<MenuController, bool> m_tryDragFunc;
-                
+
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
             protected:
@@ -48,6 +49,7 @@ namespace ExampleApp
                 bool m_dragInProgress;
                 bool m_presentationDirty;
                 bool m_menuContentsChanged;
+                bool m_forceClose;
 
                 virtual void OnMenuSectionExpandeStateChanged(IMenuSectionViewModel& menuSectionViewModel, bool& expanded);
                 
@@ -84,6 +86,8 @@ namespace ExampleApp
                 virtual void OnItemSelected(int& sectionIndex, int& itemIndex);
 
                 virtual void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
+
+                virtual void OnInteriorStateChanged(const InteriorsExplorer::InteriorsExplorerStateChangedMessage& message);
 
             public:
                 MenuController(

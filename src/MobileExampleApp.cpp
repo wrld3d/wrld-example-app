@@ -1094,7 +1094,7 @@ namespace ExampleApp
         m_pCameraTransitionService->Update(dt);
         m_pAppCameraModule->GetController().Update(dt);
 
-        if(!eegeoWorld.Initialising() && m_initialisedApplicationViewState)
+        if (!eegeoWorld.Initialising() && m_initialisedApplicationViewState)
         {
             m_pAppModeModel->Update(dt);
         }
@@ -1372,7 +1372,8 @@ namespace ExampleApp
         {
             return;
         }
-        if(m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
+
+        if (m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
         {
             return;
         }
@@ -1497,11 +1498,12 @@ namespace ExampleApp
     {
         const bool worldIsInitialising = World().Initialising() && m_pLoadingScreen != NULL;
         const bool userInteractionEnabled = m_pUserInteractionModule->GetUserInteractionModel().IsEnabled();
+        const bool cameraTransitioning = m_pCameraTransitionService->IsTransitioning();
 
         InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
         const bool lockedCameraStepsCompleted = initialExperienceModel.LockedCameraStepsCompleted();
 
-        return !worldIsInitialising && lockedCameraStepsCompleted && userInteractionEnabled;
+        return !worldIsInitialising && lockedCameraStepsCompleted && userInteractionEnabled && !cameraTransitioning;
     }
 
     Automation::AutomatedScreenshotController* MobileExampleApp::AutomatedScreenshotController() const

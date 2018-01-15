@@ -148,6 +148,12 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
 
+                if (m_forceClose)
+                {
+                    m_viewModel.Close();
+                    return;
+                }
+
                 if(!m_viewModel.IsFullyOpen())
                 {
                     m_viewModel.Open();
@@ -170,6 +176,8 @@ namespace ExampleApp
             void MenuController::OnViewClosed()
             {
                 Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
+
+                m_forceClose = false;
 
                 if(!m_viewModel.IsFullyClosed())
                 {
@@ -302,6 +310,14 @@ namespace ExampleApp
                 }
             }
 
+            void MenuController::OnInteriorStateChanged(const InteriorsExplorer::InteriorsExplorerStateChangedMessage& message) {
+                if (!m_viewModel.IsFullyClosed())
+                {
+                    m_forceClose = true;
+                    m_viewModel.Close();
+                }
+            }
+
             MenuController::MenuController(
                 IMenuModel& model,
                 IMenuViewModel& viewModel,
@@ -325,11 +341,13 @@ namespace ExampleApp
                 , m_onOpenableStateChanged(this, &MenuController::OnOpenableStateChanged)
                 , m_onMenuSectionExpandedStateChanged(this, &MenuController::OnMenuSectionExpandeStateChanged)
                 , m_onAppModeChanged(this, &MenuController::OnAppModeChanged)
+                , m_onInteriorStateChangedCallback(this, & MenuController::OnInteriorStateChanged)
                 , m_tryDragFunc(this, &MenuController::TryDrag)
                 , m_messageBus(messageBus)
                 , m_dragInProgress(false)
                 , m_presentationDirty(false)
                 , m_menuContentsChanged(true)
+                , m_forceClose(false)
             {
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
@@ -344,6 +362,7 @@ namespace ExampleApp
                 m_view.SetTryDragFunc(m_tryDragFunc);
 
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
+                m_messageBus.SubscribeUi(m_onInteriorStateChangedCallback);
 
                 if(m_viewModel.IsFullyOnScreen())
                 {
@@ -375,6 +394,7 @@ namespace ExampleApp
                 }
 
                 m_messageBus.UnsubscribeUi(m_onAppModeChanged);
+                m_messageBus.UnsubscribeUi(m_onInteriorStateChangedCallback);
                 
                 m_view.ClearTryDragFunc();
                 m_view.RemoveOnViewOpened(m_onViewOpenedCallback);
