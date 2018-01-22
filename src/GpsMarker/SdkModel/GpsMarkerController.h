@@ -53,8 +53,6 @@ namespace ExampleApp
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
                 
 
-                bool m_isLocationServiceConnected;
-
                 bool m_createBlueSphereViews;
 
                 

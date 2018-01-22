@@ -35,10 +35,6 @@ namespace ExampleApp
             , m_messageBus(messageBus)
             , m_visibilityCount(1)
             , m_currentFloorIndex(0)
-
-            
-            , m_isLocationServiceConnected(false)
-
             , m_modalityChangedHandlerBinding(this, &GpsMarkerController::OnModalityChangedMessage)
             , m_visibilityChangedHandlerBinding(this, &GpsMarkerController::OnVisibilityChangedMessage)
             , m_interiorsPositionConnectionCallback(this, &GpsMarkerController::OnInteriorsPositionConnectionMessage)
@@ -54,9 +50,9 @@ namespace ExampleApp
                 if(m_createBlueSphereViews)
                 {
                     m_messageBus.SubscribeNative(m_modalityChangedHandlerBinding);
-                    m_messageBus.SubscribeNative(m_modalityChangedHandlerBinding);
                     m_messageBus.SubscribeNative(m_visibilityChangedHandlerBinding);
                     m_messageBus.SubscribeUi(m_interiorsExplorerStateChangedCallback);
+                    m_messageBus.SubscribeUi(m_interiorsPositionConnectionCallback);
                 }
 
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_floorSelectedCallback);
@@ -68,7 +64,7 @@ namespace ExampleApp
                 if(m_createBlueSphereViews)
                 {
                     m_messageBus.UnsubscribeUi(m_interiorsPositionConnectionCallback);
-                m_messageBus.UnsubscribeUi(m_interiorsExplorerStateChangedCallback);
+                    m_messageBus.UnsubscribeUi(m_interiorsExplorerStateChangedCallback);
                     m_messageBus.UnsubscribeNative(m_visibilityChangedHandlerBinding);
                     m_messageBus.UnsubscribeNative(m_modalityChangedHandlerBinding);
                 }
@@ -105,7 +101,7 @@ namespace ExampleApp
             
             void GpsMarkerController::OnInteriorsPositionConnectionMessage(const InteriorsPosition::InteriorsPositionConnectionMessage &message)
             {
-                m_isLocationServiceConnected = message.IsConnected();
+                m_blueSphereView.SetLocationServiceState(message.IsConnected());
             }
             
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
@@ -121,7 +117,7 @@ namespace ExampleApp
                 GetCurrentVisualMapTime(currentTime, currentWeather);
                 bool isFlattened = m_environmentFlatteningService.IsFlattened();
 
-               if(m_createBlueSphereViews)
+                if(m_createBlueSphereViews)
                 {
                     m_blueSphereView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
                     m_blueSphereAnchorView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
