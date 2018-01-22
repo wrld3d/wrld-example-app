@@ -95,6 +95,8 @@ namespace ExampleApp
                 
                 bool SenionLabLocationService::GetAltitude(double& altitude)
                 {
+                    altitude = 0;   // failsafe value
+
                     if(ShouldUseSenionData())
                     {
                         const Eegeo::Resources::Interiors::InteriorsModel* interiorModel = m_interiorInteractionModel.GetInteriorModel();
