@@ -16,6 +16,8 @@ set(currsources
   ../src/InteriorsExplorer/SdkModel/InteriorWorldPinSelectionHandler.h
   ../src/InteriorsExplorer/SdkModel/InteriorExplorerConnectionChangedObserver.cpp
   ../src/InteriorsExplorer/SdkModel/InteriorExplorerConnectionChangedObserver.h
+  ../src/InteriorsExplorer/SdkModel/InteriorExplorerConnectionController.cpp
+  ../src/InteriorsExplorer/SdkModel/InteriorExplorerConnectionController.h
   ../src/InteriorsExplorer/SdkModel/InteriorsExplorerFloorDraggedObserver.cpp
   ../src/InteriorsExplorer/SdkModel/InteriorsExplorerFloorDraggedObserver.h
   ../src/InteriorsExplorer/SdkModel/InteriorSelectionController.cpp

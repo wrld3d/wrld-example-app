@@ -16,6 +16,7 @@
 #include "InteriorsExplorerFloorDraggedObserver.h"
 #include "InteriorSelectionController.h"
 #include "InteriorExplorerConnectionChangedObserver.h"
+#include "InteriorExplorerConnectionController.h"
 
 namespace ExampleApp
 {
@@ -94,10 +95,13 @@ namespace ExampleApp
                                                                                                                     *m_pModel,
                                                                                                                     restrictedBuildingInformationService);
 
+                m_pInteriorExplorerConnectionController = Eegeo_NEW(InteriorExplorerConnectionController)(*m_pInteriorExplorerConnectionChangedObserver);
+
             }
             
             InteriorsExplorerModule::~InteriorsExplorerModule()
             {
+                Eegeo_DELETE m_pInteriorExplorerConnectionController;
                 Eegeo_DELETE m_pInteriorExplorerConnectionChangedObserver;
                 Eegeo_DELETE m_pUINotificationService;
                 Eegeo_DELETE m_pFloorDraggedObserver;
@@ -141,6 +145,7 @@ namespace ExampleApp
             {
                 m_pVisibilityUpdater->Update(dt);
                 m_pWorldPinController->Update(dt);
+                m_pInteriorExplorerConnectionController->Update(dt);
             }
             
             InteriorsExplorerModel& InteriorsExplorerModule::GetInteriorsExplorerModel() const

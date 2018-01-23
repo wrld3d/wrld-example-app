@@ -20,30 +20,21 @@ namespace ExampleApp
             class InteriorExplorerConnectionChangedObserver
             {
             public:
-
-                void OnWifiDisconnected();
-                void OnWifiInfoChange(std::string wifiSSID);
-                ~InteriorExplorerConnectionChangedObserver();
-                void HandleConnectionChanged(const bool &connected);
                 InteriorExplorerConnectionChangedObserver(Eegeo::Web::IConnectivityService& connectivityService,
                                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                           InteriorsExplorerModel& interiorExplorerModel,
                                                           ExampleApp::WifiInfo::IRestrictedBuildingService& restrictedBuildingInformationService);
+                ~InteriorExplorerConnectionChangedObserver();
 
+                void OnWifiDisconnected();
+                bool AuthorisedForCurrentInterior();
             
             private:
-                bool m_connectivityStatus;
-                InteriorsExplorerModel& m_interiorExplorerModel;
                 Eegeo::Web::IConnectivityService& m_connectivityService;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                InteriorsExplorerModel& m_interiorExplorerModel;
                 ExampleApp::WifiInfo::IRestrictedBuildingService& m_restrictedBuildingInformationService;
-                Eegeo::Helpers::TCallback1<InteriorExplorerConnectionChangedObserver, const bool&> m_connectionChangedCallback;
-
-
-
-            
             };
-        
         }
     }
 }

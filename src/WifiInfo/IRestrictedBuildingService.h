@@ -14,7 +14,8 @@ namespace ExampleApp
         public:
             
             virtual ~IRestrictedBuildingService() { };
-            
+
+            virtual bool IsRestrictedBuilding(std::string interior_id) = 0;
             virtual bool CanAccessBuildingWithCurrentNetwork(std::string interior_id) = 0;
             virtual void ShowAlertMessage() = 0;
 
