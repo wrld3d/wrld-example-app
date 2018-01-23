@@ -22,6 +22,7 @@
 #include "IConnectivityService.h"
 #include "IRestrictedBuildingService.h"
 #include "InteriorExplorerConnectionChangedObserver.h"
+#include "InteriorExplorerConnectionController.h"
 
 namespace ExampleApp
 {
@@ -94,6 +95,7 @@ namespace ExampleApp
                 InteriorsUINotificationService* m_pUINotificationService;
 
                 InteriorExplorerConnectionChangedObserver* m_pInteriorExplorerConnectionChangedObserver;
+                InteriorExplorerConnectionController* m_pInteriorExplorerConnectionController;
             };
         }
     }

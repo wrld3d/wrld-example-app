@@ -21,7 +21,8 @@ namespace ExampleApp
                                       Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                       Eegeo::Location::NavigationService& navigationService);
             ~RestrictedBuildingService();
-            
+
+            bool IsRestrictedBuilding(std::string interior_id);
             bool CanAccessBuildingWithCurrentNetwork(std::string interior_id);
             void ShowAlertMessage();
             void HandleAlertBoxDismissed();

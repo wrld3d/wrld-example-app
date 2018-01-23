@@ -29,7 +29,19 @@ namespace ExampleApp
         {
         
         }
-        
+
+        bool RestrictedBuildingService::IsRestrictedBuilding(std::string interior_id)
+        {
+            for(std::vector<ExampleApp::ApplicationConfig::RestrictedBuildingInfo*>::const_iterator it = m_restrictedBuildingsInfo.begin(); it != m_restrictedBuildingsInfo.end(); ++it)
+            {
+                if ((*it)->InteriorID().compare(interior_id) == 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         bool RestrictedBuildingService::CanAccessBuildingWithCurrentNetwork(std::string interior_id)
         {
             
