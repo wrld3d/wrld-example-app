@@ -31,13 +31,14 @@ class SenionLabBroadcastReceiver extends SLBroadcastReceiver
     }
 
     @Override
-    public void didUpdateLocation(SLCoordinate3D location, double v)
+    public void didUpdateLocation(SLCoordinate3D location, double horizontalAccuracyInMeters)
     {
         synchronized (m_updateLock)
         {
             SenionLabBroadcastReceiverJniMethods.DidUpdateLocation(m_nativeCallerPointer,
                                                                    location.getLatitude(),
                                                                    location.getLongitude(),
+                                                                   horizontalAccuracyInMeters,
                                                                    location.getFloorNr().intValue());
         }
     }

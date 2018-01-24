@@ -131,7 +131,7 @@ namespace ExampleApp
             {
                 m_view.SetFloorName(message.GetFloorName());
                 
-                if(m_viewModel.IsFullyOnScreen())
+                if(m_viewModel.IsOnScreen())
                 {
                     m_view.SetSelectedFloorIndex(message.GetFloorIndex());
                 }
@@ -166,8 +166,9 @@ namespace ExampleApp
                 m_currentlyShowingIntro = false;
             }
             
-            void InteriorsExplorerController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state)
+            void InteriorsExplorerController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel)
             {
+                ScreenControl::View::ApplyState(m_viewModel, m_view);
                 ScreenControl::View::Apply(m_viewModel, m_view);
             }
             

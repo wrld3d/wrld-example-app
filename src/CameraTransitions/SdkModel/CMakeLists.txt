@@ -17,6 +17,10 @@ set(currsources
   ../src/CameraTransitions/SdkModel/TransitionToInteriorStage.h
   ../src/CameraTransitions/SdkModel/TransitionToWorldPointStage.cpp
   ../src/CameraTransitions/SdkModel/TransitionToWorldPointStage.h
+  ../src/CameraTransitions/SdkModel/CameraTransitionOptions.h
+  ../src/CameraTransitions/SdkModel/CameraTransitionOptions.cpp
+  ../src/CameraTransitions/SdkModel/CameraTransitionOptionsBuilder.h
+  ../src/CameraTransitions/SdkModel/CameraTransitionOptionsBuilder.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\CameraTransitions\\SdkModel FILES ${currsources})

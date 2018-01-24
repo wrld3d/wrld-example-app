@@ -32,6 +32,10 @@ enum CompassViewState
     
     bool m_disabledStateHighlighted;
     float m_currentAngleRadians;
+    
+    CGFloat m_navWidgetBottomHeight;
+    
+    CompassPositionState m_positionState;
 }
 
 @end
@@ -49,6 +53,7 @@ enum CompassViewState
         m_screenHeight = height/pixelScale;
         
         m_compassViewState = Disabled;
+        m_positionState = CompassPositionStateDefault;
         
         //control positioning
         m_width = 80.f;
@@ -56,6 +61,8 @@ enum CompassViewState
         
         m_innerHeight = 80.0f/1.5f;
         m_innerWidth = 80.0f/1.5f;
+        
+        m_navWidgetBottomHeight = 0.0f;
         
         m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_innerHeight - (m_height - m_innerHeight)/2;
         m_yPosInactive = m_screenHeight + m_height;
@@ -361,6 +368,44 @@ enum CompassViewState
          self.pPoint.alpha = alpha;
      }];
 }
+
+- (BOOL) isValidPositionState:(ExampleApp::ScreenControl::View::TScreenControlViewState) state
+{
+    return (state == CompassPositionStateDefault || state == CompassPositionStateNavigation);
+}
+
+- (void) setPositionState:(CompassPositionState) state
+{
+    if(state != m_positionState){
+        m_positionState = state;
+        [self updateCompassPosition];
+    }
+}
+
+- (void) updateCompassPosition
+{
+    if(m_positionState == CompassPositionStateDefault)
+    {
+        m_yPosActive = m_yPosBase;
+    }
+    else
+    {
+        m_yPosActive = m_yPosBase - m_navWidgetBottomHeight;
+    }
+    [self animateToY: m_yPosActive];
+}
+
+- (void) setNavigationModeCompassPosition:(CGFloat) position
+{
+    if(position < m_screenHeight * 0.25f){
+        m_navWidgetBottomHeight = position;
+        if(m_positionState == CompassPositionStateNavigation)
+        {
+            [self updateCompassPosition];
+        }
+    }
+}
+
 
 @end
 

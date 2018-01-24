@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "IScreenControlViewModel.h"
 #include "Types.h"
 #include "Compass.h"
 #include "ICompassModule.h"
@@ -57,7 +58,7 @@ namespace ExampleApp
 
                 ICompassUpdateController& GetCompassUpdateController() const;
 
-                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
+                ScreenControl::View::IMultiStateScreenControlViewModel& GetScreenControlViewModel() const;
 
                 ICompassTouchController& GetTouchController();
             };

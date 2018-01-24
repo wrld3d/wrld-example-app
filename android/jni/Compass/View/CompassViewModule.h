@@ -7,6 +7,7 @@
 #include "Types.h"
 #include "Compass.h"
 #include "CompassViewIncludes.h"
+#include "INavWidgetView.h"
 #include "BidirectionalBus.h"
 
 namespace ExampleApp
@@ -25,10 +26,13 @@ namespace ExampleApp
                 CompassViewModule(
                     AndroidNativeState& nativeState,
                     ICompassViewModel& viewModel,
+                    Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navWidgetViewBottomHeightChangedCallbacks,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 
                 ~CompassViewModule();
+
+                ICompassView& GetCompassView();
             };
         }
     }

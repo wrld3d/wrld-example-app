@@ -24,8 +24,7 @@ namespace ExampleApp
                 SearchResultPoiOpenableControl m_openable;
 
             public:
-                SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity,
-                                         Reaction::View::IReactionControllerModel& reactionControllerModel);
+                SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity);
 
                 ~SearchResultPoiViewModel();
 
@@ -34,8 +33,6 @@ namespace ExampleApp
                 bool IsPinned() const;
                 
                 void ToggleIsPinned();
-
-                bool TryAcquireReactorControl();
 
                 bool IsOpen() const;
 

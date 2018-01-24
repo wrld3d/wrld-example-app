@@ -16,6 +16,7 @@
 
 @interface EegeoSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
+    BOOL m_showDirectionsButton;
 }
 @end
 
@@ -24,7 +25,7 @@ const int DeletePinAlertViewTag = 2;
 
 @implementation EegeoSearchResultPoiView
 
-- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;
+- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop showDirectionsButton: (BOOL) showDirectionsButton
 {
     self = [super init];
     
@@ -32,6 +33,8 @@ const int DeletePinAlertViewTag = 2;
     {
         m_pController = [UIViewController alloc];
         [m_pController setView:self];
+        
+        m_showDirectionsButton = showDirectionsButton;
         
         self->m_pRemovePinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
         self->m_pRemovePinHighlightButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") retain];
@@ -124,6 +127,22 @@ const int DeletePinAlertViewTag = 2;
         [self.pPinButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
         [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pDropPinContainer addSubview: self.pPinButton];
+        
+        self.pDirectionsContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDirectionsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pControlContainer addSubview:self.pDirectionsContainer];
+        [self.pDirectionsContainer setHidden: !m_showDirectionsButton];
+        
+        self.pDirectionsButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pDirectionsButton setTitle:@"   Directions" forState:UIControlStateNormal];
+        [self.pDirectionsButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBorderColor forState:UIControlStateHighlighted];
+        {
+            NSBundle* bundle = [NSBundle bundleWithIdentifier:@"com.wrld.WrldNav"];
+            UIImage* image = [UIImage imageNamed:@"start_icon" inBundle:bundle compatibleWithTraitCollection:nil];
+            [self.pDirectionsButton setDefaultStatesWithImages:image :image];
+        }
+        [self.pDirectionsButton addTarget:self action:@selector(handleDirectionsButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self.pDirectionsContainer addSubview: self.pDirectionsButton];
         
         self.pPreviewImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pPreviewImage.clipsToBounds = YES;
@@ -232,6 +251,12 @@ const int DeletePinAlertViewTag = 2;
     
     [self.pDropPinContainer removeFromSuperview];
     [self.pDropPinContainer release];
+    
+    [self.pDirectionsButton removeFromSuperview];
+    [self.pDirectionsButton release];
+    
+    [self.pDirectionsContainer removeFromSuperview];
+    [self.pDirectionsContainer release];
     
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
@@ -354,7 +379,7 @@ const int DeletePinAlertViewTag = 2;
     
     const float headlineHeight = 50.f;
     const float pinButtonSectionHeight = 64.f;
-    const float closeButtonSectionOffsetY = mainWindowHeight - 46.f;
+    const float closeButtonSectionOffsetY = mainWindowHeight - (m_showDirectionsButton ? 94.f : 44.f);
     const float contentSectionHeight = mainWindowHeight - (pinButtonSectionHeight + headlineHeight);
     
     const float topMargin = 15.f;
@@ -432,6 +457,16 @@ const int DeletePinAlertViewTag = 2;
     
     
     self.pPinButton.frame = CGRectMake(0.f,
+                                       0.f,
+                                       cardContainerWidth,
+                                       42.f);
+    
+    self.pDirectionsContainer.frame = CGRectMake(sideMargin,
+                                              closeButtonSectionOffsetY - bottomMargin + 50.f,
+                                              cardContainerWidth,
+                                              42.f);
+    
+    self.pDirectionsButton.frame = CGRectMake(0.f,
                                        0.f,
                                        cardContainerWidth,
                                        42.f);
@@ -1063,6 +1098,12 @@ const int DeletePinAlertViewTag = 2;
     {
         [self togglePinState];
     }
+}
+
+- (void) handleDirectionsButtonSelected
+{
+    m_pInterop->HandleCloseClicked();
+    m_pInterop->HandleDirectionsClicked(m_model);
 }
 
 - (void) togglePinState

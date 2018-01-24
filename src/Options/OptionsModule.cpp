@@ -11,12 +11,10 @@ namespace ExampleApp
     namespace Options
     {
         OptionsModule::OptionsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                     Reaction::View::IReactionControllerModel& reactionControllerModel,
                                      ExampleAppMessaging::TMessageBus& messageBus,
                                      Net::SdkModel::INetworkCapabilities& networkCapabilities)
         {
             m_pOptionsViewModel = Eegeo_NEW(View::OptionsViewModel)(identityProvider.GetNextIdentity(),
-                                                                    reactionControllerModel,
                                                                     networkCapabilities.StreamOverWifiOnly(),
                                                                     networkCapabilities.HttpCachingEnabled());
             

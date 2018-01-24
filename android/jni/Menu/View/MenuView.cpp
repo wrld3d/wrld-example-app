@@ -202,14 +202,14 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, animateToIntermediateOpenStateOnScreen, value);
             }
 
-            void MenuView::SetFullyOnScreen()
+            void MenuView::SetOnScreen()
             {
                 ASSERT_UI_THREAD
 
                         CallVoidVoidFunction("animateToClosedOnScreen");
             }
 
-            void MenuView::SetFullyOffScreen()
+            void MenuView::SetOffScreen()
             {
                 ASSERT_UI_THREAD
 

@@ -22,6 +22,21 @@ namespace
 }
 
 @implementation InteriorsExplorerView
+{
+    CGFloat* m_floorPanelTopBound;
+    CGFloat* m_floorPanelBottomBound;
+    
+    CGFloat m_defaultViewStateFloorPanelTopBound;
+    CGFloat m_defaultViewStateFloorPanelBottomBound;
+    
+    CGFloat m_navigationViewStateFloorPanelTopBound;
+    CGFloat m_navigationViewStateFloorPanelBottomBound;
+    
+    InteriorExplorerViewState m_viewState;
+    
+    BOOL m_onScreenIfSpaceAvailable;
+    BOOL m_hasEnoughScreenSpaceToAppear;
+}
 
 - (ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop*) getInterop
 {
@@ -48,6 +63,11 @@ namespace
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
         
+        m_onScreenIfSpaceAvailable = NO;
+        m_hasEnoughScreenSpaceToAppear = YES;
+        
+        m_viewState = InteriorExplorerViewStateDefault;
+        
         self.pTutorialView = &tutorialView;
         
         m_stateChangeAnimationTimeSeconds = 0.2f;
@@ -65,8 +85,16 @@ namespace
         const float upperMargin = isPhone ? 20.0f : 50.0f;
         m_inactiveDetailPaneYPosition = m_screenHeight;
         
+        m_defaultViewStateFloorPanelTopBound = m_screenHeight * 0.25f;
+        m_defaultViewStateFloorPanelBottomBound = m_screenHeight * 0.75f;
+        
+        m_navigationViewStateFloorPanelTopBound = m_screenHeight * 0.25f;
+        m_navigationViewStateFloorPanelBottomBound = m_screenHeight * 0.5f;
+        
+        m_floorPanelTopBound = &m_defaultViewStateFloorPanelTopBound;
+        m_floorPanelBottomBound = &m_defaultViewStateFloorPanelBottomBound;
 
-        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 110, 200)] autorelease];
+        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, *m_floorPanelBottomBound - *m_floorPanelTopBound, 110, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
         
         self.pFloorListArrowDown = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow3_down"]] autorelease];
@@ -283,7 +311,7 @@ namespace
     
 
     int floorCount = static_cast<int>(m_tableViewFloorNames.size());
-    float maxHeight = m_screenHeight*0.5f;
+    float maxHeight = *m_floorPanelBottomBound - *m_floorPanelTopBound;
     float verticalPadding = ((float)self.pFloorChangeButton.frame.size.height - m_floorDivisionHeight);
     float totalHeight = m_floorDivisionHeight * floorCount + verticalPadding;
     if(totalHeight > maxHeight)
@@ -291,9 +319,29 @@ namespace
         totalHeight = maxHeight;
     }
     
+    BOOL wasOnScreen = [self canBeOnScreen];
+    
+    if(maxHeight < m_screenHeight * 0.5f) {
+        m_hasEnoughScreenSpaceToAppear = NO;
+    }
+    else {
+        m_hasEnoughScreenSpaceToAppear = YES;
+    }
+    
+    BOOL canBeOnScreen = [self canBeOnScreen];
+    if(!wasOnScreen && canBeOnScreen)
+    {
+        [self animateOnScreen];
+    }
+    
+    if(wasOnScreen && !canBeOnScreen)
+    {
+        [self animateOffScreen];
+    }
+    
     CGRect floorPanelFrame = self.pFloorPanel.frame;
-    const float floorPanelVerticalCenterline = 0.54f;
-    floorPanelFrame.origin.y = m_screenHeight*floorPanelVerticalCenterline - totalHeight*0.5f;
+    const float floorPanelVerticalCenterline = (*m_floorPanelBottomBound + *m_floorPanelTopBound) * 0.54f;
+    floorPanelFrame.origin.y = floorPanelVerticalCenterline - totalHeight*0.5f;
     floorPanelFrame.size.height = totalHeight;
     self.pFloorPanel.frame = floorPanelFrame;
     self.pFloorListView.frame = CGRectMake(0, verticalPadding/2, floorPanelFrame.size.width, floorPanelFrame.size.height-(verticalPadding));
@@ -377,20 +425,32 @@ namespace
 
 - (void) setFullyOnScreen
 {
-    [self animateTo:1.0f
-       delaySeconds:0.8f];
+    m_onScreenIfSpaceAvailable = YES;
+    if([self canBeOnScreen]){
+        [self animateOnScreen];
+    }
 }
 
 - (void) setFullyOffScreen
 {
-    [self animateTo:0.0f
-       delaySeconds:0.0f];
+    m_onScreenIfSpaceAvailable = NO;
+    [self animateOffScreen];
 }
 
-- (void) setOnScreenStateToIntermediateValue:(float)onScreenState
+- (BOOL) canBeOnScreen
 {
-    onScreenState = roundf(onScreenState);
-    [self animateTo:onScreenState
+    return m_onScreenIfSpaceAvailable && m_hasEnoughScreenSpaceToAppear;
+}
+       
+- (void) animateOnScreen
+{
+    [self animateTo:1.0f
+       delaySeconds:0.8f];
+}
+       
+- (void) animateOffScreen
+{
+    [self animateTo:0.0f
        delaySeconds:0.0f];
 }
 
@@ -698,6 +758,40 @@ static NSString *CellIdentifier = @"floorCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return m_floorDivisionHeight;
+}
+
+- (BOOL) isValidState:(ExampleApp::ScreenControl::View::TScreenControlViewState) state
+{
+    return (state == InteriorExplorerViewStateDefault || state == InteriorExplorerViewStateNavigation);
+}
+
+- (void) setViewState:(InteriorExplorerViewState) state
+{
+    if(state != m_viewState)
+    {
+        m_viewState = state;
+        if(m_viewState == InteriorExplorerViewStateDefault)
+        {
+            m_floorPanelTopBound = &m_defaultViewStateFloorPanelTopBound;
+            m_floorPanelBottomBound = &m_defaultViewStateFloorPanelBottomBound;
+        }
+        else
+        {
+            m_floorPanelTopBound = &m_navigationViewStateFloorPanelTopBound;
+            m_floorPanelBottomBound = &m_navigationViewStateFloorPanelBottomBound;
+        }
+        [self refreshFloorViews];
+    }
+}
+
+- (void) setNavigationModeFloorPanelTopBound: (CGFloat) topBound
+{
+    m_navigationViewStateFloorPanelTopBound = topBound + m_halfButtonHeight;
+}
+
+- (void) setNavigationModeFloorPanelBottomBound: (CGFloat) bottomBound
+{
+    m_navigationViewStateFloorPanelBottomBound = m_screenHeight - bottomBound - m_halfButtonHeight;
 }
 
 

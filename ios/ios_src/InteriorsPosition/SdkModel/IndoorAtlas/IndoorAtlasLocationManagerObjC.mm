@@ -72,6 +72,7 @@ typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
     m_pIndoorAtlasLocationService->SetIsAuthorized(true);
     Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong(0, 0);
     m_pIndoorAtlasLocationService->SetLocation(latLong);
+    m_pIndoorAtlasLocationService->SetHorizontalAccuracyInMeters(0);
     
     [self.locationManager startUpdatingLocation];
 }
@@ -101,6 +102,7 @@ typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
     m_latitude = latLong.GetLatitudeInDegrees();
     m_longitude = latLong.GetLongitudeInDegrees();
     m_pIndoorAtlasLocationService->SetLocation(latLong);
+    m_pIndoorAtlasLocationService->SetHorizontalAccuracyInMeters([l horizontalAccuracy]);
     
     [self notifyUpdatedPosition];
 }

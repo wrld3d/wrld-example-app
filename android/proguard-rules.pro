@@ -60,3 +60,6 @@
 
 -keep class com.indooratlas.** { *; }
 -dontwarn com.indooratlas.**
+
+-keep class com.wrld.widgets.navigation.** { *; }
+-dontwarn com.wrld.widgets.navigation.**

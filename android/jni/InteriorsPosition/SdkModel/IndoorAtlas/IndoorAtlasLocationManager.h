@@ -35,7 +35,7 @@ namespace ExampleApp
                                                const std::map<int, std::string>& floorMap);
                     void StopUpdatingLocation();
 
-                    void DidUpdateLocation(const double latitude, const double longitude, const std::string& floorId);
+                    void DidUpdateLocation(const double latitude, const double longitude, const double accuracyInMeters, const std::string& floorId);
                     void SetIsAuthorized(const bool isAuthorized);
 
                     void OnDidUpdateLocation(const InteriorsLocationChangedMessage& message);

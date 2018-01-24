@@ -30,8 +30,7 @@ namespace ExampleApp
 
             public:
                 MenuViewModel(bool isInitiallyOnScreen,
-                              Eegeo::Helpers::TIdentity identity,
-                              Reaction::View::IReactionControllerModel& reactionControllerModel);
+                              Eegeo::Helpers::TIdentity identity);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;
 
@@ -39,41 +38,27 @@ namespace ExampleApp
 
                 void RemoveFromScreen();
 
-                void UpdateOnScreenState(float onScreenState);
+                void InsertOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
 
-                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                void RemoveOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
 
-                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                bool IsOffScreen() const;
 
-                bool IsFullyOffScreen() const;
+                bool IsOnScreen() const;
 
-                bool IsFullyOnScreen() const;
+                void Open();
 
-                float OnScreenState() const;
-                
-                bool IsAddedToScreen() const;
+                void Close();
 
-                bool HasReactorControl() const;
+                bool IsOpen() const;
 
-                bool TryAcquireReactorControl();
+                bool IsClosed() const;
 
-                void ReleaseReactorControl();
+                void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback1<OpenableControl::View::IOpenableControlViewModel&>& callback);
 
-                bool Open(bool acquireReactor = true);
-
-                bool Close(bool releaseReactor = true);
-
-                void UpdateOpenState(float openState);
-
-                void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>& callback);
-
-                void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>& callback);
-
-                bool IsFullyOpen() const;
-
-                bool IsFullyClosed() const;
-
-                float OpenState() const;
+                void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback1<OpenableControl::View::IOpenableControlViewModel&>& callback);
 
                 void AddSection(IMenuSectionViewModel& section);
                 void RemoveSection(IMenuSectionViewModel& section);
@@ -89,7 +74,6 @@ namespace ExampleApp
                 }
 
                 IMenuSectionViewModel& GetMenuSection(int index) const;
-
             };
         }
     }

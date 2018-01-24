@@ -13,7 +13,6 @@ namespace ExampleApp
         namespace View
         {
             SearchResultPoiModule::SearchResultPoiModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                                         Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                          MyPins::SdkModel::IMyPinsService& myPinsService,
                                                          Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                                          TagSearch::ISearchResultIconKeyMapper& searchResultIconKeyMapper,
@@ -24,8 +23,7 @@ namespace ExampleApp
                 m_pSearchResultPoiViewModel = Eegeo_NEW(DesktopSearchResultPoiViewModel)(identityProvider.GetNextIdentity(),
                                                                                   reactionControllerModel);
 #else
-                m_pSearchResultPoiViewModel = Eegeo_NEW(SearchResultPoiViewModel)(identityProvider.GetNextIdentity(),
-                    reactionControllerModel);
+                m_pSearchResultPoiViewModel = Eegeo_NEW(SearchResultPoiViewModel)(identityProvider.GetNextIdentity());
 #endif
                 
                 m_pSearchResultPoiMyPinService = Eegeo_NEW(SdkModel::SearchResultPoiMyPinService)(myPinsService,

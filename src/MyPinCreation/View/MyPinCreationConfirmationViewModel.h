@@ -22,8 +22,7 @@ namespace ExampleApp
             public:
 
                 MyPinCreationConfirmationViewModel(Eegeo::Helpers::TIdentity identity,
-                                                   bool isInitiallyOnScreen,
-                                                   Reaction::View::IReactionControllerModel& reactionControllerModel);
+                                                   bool isInitiallyOnScreen);
 
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;
@@ -32,19 +31,15 @@ namespace ExampleApp
 
                 void RemoveFromScreen();
 
-                void UpdateOnScreenState(float onScreenState);
+                void InsertOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
 
-                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                void RemoveOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
 
-                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                bool IsOffScreen() const;
 
-                bool IsFullyOffScreen() const;
-
-                bool IsFullyOnScreen() const;
-
-                float OnScreenState() const;
-                
-                bool IsAddedToScreen() const;
+                bool IsOnScreen() const;
 
                 ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel();
 
@@ -53,8 +48,6 @@ namespace ExampleApp
                 bool TryOpen();
 
                 void Close();
-
-                void TryReleaseReactorControl();
 
                 void Open();
 

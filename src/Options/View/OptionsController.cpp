@@ -14,13 +14,10 @@ namespace ExampleApp
         {
             void OptionsController::OnViewModelOpened()
             {
-                if (m_viewModel.TryAcquireReactorControl())
-                {
-                    m_view.Open();
+                m_view.Open();
 
-                    m_view.SetStreamOverWifiOnlySelected(m_viewModel.StreamOverWifiOnly());
-                    m_view.SetCacheEnabledSelected      (m_viewModel.CachingEnabled());
-                }
+                m_view.SetStreamOverWifiOnlySelected(m_viewModel.StreamOverWifiOnly());
+                m_view.SetCacheEnabledSelected      (m_viewModel.CachingEnabled());
             }
 
             void OptionsController::OnViewModelClosed()

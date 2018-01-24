@@ -29,6 +29,7 @@ namespace ExampleApp
                                           float newDistanceToInterest,
                                           const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                           int targetFloorIndex,
+                                          bool targetFloorIndexIsFloorId,
                                           bool transitionToNewHeading=false,
                                           float newHeadingRadians=0.0f,
                                           bool setDisntaceToInterest=true);
@@ -40,6 +41,8 @@ namespace ExampleApp
                 const bool StageHasFailed() const;
                 
             private:
+                
+                void UpdateFloorIndex();
                 
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
@@ -59,6 +62,7 @@ namespace ExampleApp
                 const bool m_transitionToNewHeading;
                 float m_targetHeadingDegrees;
                 int m_targetFloorIndex;
+                bool m_targetFloorIndexIsFloorId;
                 const bool m_alreadySelectedInterior;
             };
         }

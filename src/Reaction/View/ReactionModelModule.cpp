@@ -1,8 +1,8 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+#include "IReaction.h"
 #include "ReactionModelModule.h"
 #include "ReactionModel.h"
-#include "ReactionControllerModel.h"
 
 namespace ExampleApp
 {
@@ -10,12 +10,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            ReactionModelModule::ReactionModelModule(IReactionControllerModel& reactionControllerModel,
+            ReactionModelModule::ReactionModelModule(
                     const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
-                    const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors,
+                    const std::vector<IReaction*>& reactors,
                     Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction)
             {
-                m_pModel = Eegeo_NEW(ReactionModel)(reactionControllerModel, openables, reactors, menuIgnoredReaction);
+                m_pModel = Eegeo_NEW(ReactionModel)(openables, reactors, menuIgnoredReaction);
             }
 
             ReactionModelModule::~ReactionModelModule()

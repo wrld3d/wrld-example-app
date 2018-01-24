@@ -76,7 +76,7 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
     public void onLocationChanged(IALocation location)
     {
     	IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, true);
-    	IndoorAtlasLocationManagerJniMethods.DidUpdateLocation(m_nativeCallerPointer, location.getLatitude(), location.getLongitude(), m_floorPlanId);
+    	IndoorAtlasLocationManagerJniMethods.DidUpdateLocation(m_nativeCallerPointer, location.getLatitude(), location.getLongitude(), location.getAccuracy(), m_floorPlanId);
     }
     
     @Override

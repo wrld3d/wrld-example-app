@@ -7,6 +7,7 @@
 #include "CompassViewIncludes.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
+#include "IScreenControlView.h"
 
 namespace ExampleApp
 {
@@ -37,15 +38,17 @@ namespace ExampleApp
 
                 void SetOnScreenStateToIntermediateValue(float value);
 
-                void SetFullyOnScreen();
+                void SetOnScreen();
 
-                void SetFullyOffScreen();
+                void SetOffScreen();
                 
                 void SetRotationHighlight(bool shouldShowRotationHighlight);
 
                 void InsertCycledCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveCycledCallback(Eegeo::Helpers::ICallback0& callback);
+                
+                void SetState(ScreenControl::View::TScreenControlViewState state);
             };
         }
     }

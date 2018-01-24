@@ -7,6 +7,7 @@
 #include "ICallback.h"
 #include "CallbackCollection.h"
 #include "InteriorsExplorerTutorialView.h"
+#include "IScreenControlView.h"
 
 #include <vector>
 
@@ -48,12 +49,14 @@ namespace ExampleApp
                 void RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback);
                 
                 void SetOnScreenStateToIntermediateValue(float value);
-                void SetFullyOnScreen();
-                void SetFullyOffScreen();
+                void SetOnScreen();
+                void SetOffScreen();
                 
                 void SetTouchEnabled(bool enabled);
                 
                 void PlaySliderAnim();
+                
+                void SetState(ScreenControl::View::TScreenControlViewState state);
                 
             private:
                 

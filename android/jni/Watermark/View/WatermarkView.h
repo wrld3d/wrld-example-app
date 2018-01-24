@@ -29,9 +29,9 @@ namespace ExampleApp
 
                 void SetOnScreenStateToIntermediateValue(float value);
 
-                void SetFullyOnScreen();
+                void SetOnScreen();
 
-                void SetFullyOffScreen();
+                void SetOffScreen();
 
                 void OnSelected();
 

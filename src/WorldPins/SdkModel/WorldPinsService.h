@@ -58,6 +58,8 @@ namespace ExampleApp
                 
                 void RemovePin(WorldPinItemModel* pinItemModel);
 
+                void DeselectPin();
+                
                 void HighlightPin(WorldPinItemModel* pinItemModel,
                                     std::string labelStyleName = "selected_highlight");
                 

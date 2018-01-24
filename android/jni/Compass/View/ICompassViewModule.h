@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "ICompassView.h"
+
 namespace ExampleApp
 {
     namespace Compass
@@ -12,6 +14,8 @@ namespace ExampleApp
             {
             public:
                 virtual ~ICompassViewModule() { }
+
+                virtual ICompassView& GetCompassView() = 0;
             };
         }
     }

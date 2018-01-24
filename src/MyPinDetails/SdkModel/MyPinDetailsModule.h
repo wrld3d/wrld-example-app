@@ -7,7 +7,6 @@
 #include "IMyPinDetailsModule.h"
 #include "MyPinDetailsViewModel.h"
 #include "IIdentity.h"
-#include "Reaction.h"
 #include "BidirectionalBus.h"
 #include "MyPinDetailsViewRemovePinHandler.h"
 #include "SearchResultPoi.h"
@@ -29,7 +28,6 @@ namespace ExampleApp
 
             public:
                 MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                   Reaction::View::IReactionControllerModel& reactionControllerModel,
                                    MyPins::SdkModel::IMyPinsService& myPinsService,
                                    SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                    ExampleAppMessaging::TMessageBus& messageBus,

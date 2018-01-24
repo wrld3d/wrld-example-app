@@ -2,4 +2,9 @@
 <resources>
     <fraction name="poiCreationWidthPercentage">60%</fraction>
     <fraction name="poiCreationHeightPercentage">60%</fraction>
+
+    <item name="poiCreationLeftGuidePercentage" format="float" type="fraction">0.2</item>
+    <item name="poiCreationTopGuidePercentage" format="float" type="fraction">0.2</item>
+    <item name="poiCreationRightGuidePercentage" format="float" type="fraction">0.8</item>
+    <item name="poiCreationBottomGuidePercentage" format="float" type="fraction">0.8</item>
 </resources>

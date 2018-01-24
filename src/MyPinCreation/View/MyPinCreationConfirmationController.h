@@ -33,7 +33,7 @@ namespace ExampleApp
                 void OnOpened();
                 void OnDismissed();
                 void OnConfirmed();
-                void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
+                void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel);
 
                 IMyPinCreationConfirmationViewModel& m_viewModel;
                 IMyPinCreationConfirmationView& m_view;
@@ -43,7 +43,7 @@ namespace ExampleApp
                 bool m_appModeAllowsOpen;
                 bool m_userInteractionEnabled;
 
-                Eegeo::Helpers::TCallback2<MyPinCreationConfirmationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
+                Eegeo::Helpers::TCallback1<MyPinCreationConfirmationController, ScreenControl::View::IScreenControlViewModel&> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationConfirmationController> m_dismissedCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationConfirmationController> m_confirmedCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationConfirmationController> m_openedCallback;

@@ -13,6 +13,24 @@ def embed_frameworks(projectName):
             'guid': '266A140D20A4544B0078E39E',
             'embed_guid': '266A140E20A454600078E39E',
             'path_in_project': 'Include/WrldSearchWidget/WRLDSearchWidget.framework'
+        },
+        {
+        'name': 'WrldNav.framework',
+        'guid': '266A140D20A4544B0078E39F',
+        'embed_guid': '266A140E20A454600078E39F',
+        'path_in_project': 'Include/WrldSDK/WrldNav.framework'
+        },
+        {
+        'name': 'WrldNavWidget.framework',
+        'guid': '266A140D20A4544B0078E39D',
+        'embed_guid': '266A140E20A454600078E39D',
+        'path_in_project': 'Include/WrldSDK/WrldNavWidget.framework'
+        },
+        {
+        'name': 'WrldUtils.framework',
+        'guid': '266A140D20A4544B0078E39C',
+        'embed_guid': '266A140E20A454600078E39C',
+        'path_in_project': 'Include/WrldSDK/WrldUtils.framework'
         }
     ]
 

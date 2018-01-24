@@ -10,18 +10,21 @@ namespace ExampleApp
         {
             void Apply(IScreenControlViewModel& viewModel, IScreenControlView& view)
             {
-                if (viewModel.IsFullyOffScreen())
+                if (viewModel.IsOffScreen())
                 {
-                    view.SetFullyOffScreen();
+                    view.SetOffScreen();
                 }
-                else if (viewModel.IsFullyOnScreen())
+                else if (viewModel.IsOnScreen())
                 {
-                    view.SetFullyOnScreen();
+                    view.SetOnScreen();
                 }
-                else
-                {
-                    view.SetOnScreenStateToIntermediateValue(viewModel.OnScreenState());
-                }
+            }
+
+            void ApplyState(IMultiStateScreenControlViewModel &movableViewModel,
+                            IMultiStateScreenControlView &movableView)
+            {
+                movableView.SetState(
+                        movableViewModel.GetState());
             }
         }
     }

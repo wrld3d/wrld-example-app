@@ -6,6 +6,7 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
+import com.wrld.widgets.navigation.widget.WrldNavWidget;
 
 import android.Manifest;
 import android.app.Activity;
@@ -30,8 +31,10 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	private View m_compassUnlocked = null;
 	private boolean	m_unauthorizedGpsAlertShown = false;
 
+	private float m_defaultYPosActive;
 	private float m_yPosActive;
 	private float m_yPosInactive;
+    private float m_screenHeight;
 
 	private final long m_stateChangeAnimationTimeMilliseconds = 200;
 	private final long RotationHighlightAnimationMilliseconds = 200;
@@ -39,6 +42,19 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 
 	private final float CompassOuterShapeInactiveAlpha = 0.5f;
 	private final float CompassOuterShapeActiveAlpha = 1.0f;
+
+	private int m_navWidgetModeOffset = 0;
+
+	private enum CompassState {
+	    Default(0), Navigation(1);
+        private final int state;
+        CompassState(int state){
+            this.state = state;
+        }
+        public final int getState(){
+            return this.state;
+        }
+	};
 
 	public CompassView(MainActivity activity, long nativeCallerPointer)
 	{
@@ -62,6 +78,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		m_view = m_activity.getLayoutInflater().inflate(R.layout.compass_layout, uiRoot, false);
 		m_view.setOnClickListener(this);
 
+        m_screenHeight = uiRoot.getMeasuredHeight();
+
 		m_compassPoint = m_view.findViewById(R.id.compass_arrow_shape);
 		m_compassInner = (ImageView) m_view.findViewById(R.id.compass_inner_shape);
 		m_compassInner.setVisibility(View.GONE);
@@ -82,7 +100,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 				final float viewWidth = m_view.getWidth();
 				final float viewHeight = m_view.getHeight();
 
-				m_yPosActive = (screenHeight - viewWidth) - m_activity.dipAsPx(8.f);
+				m_defaultYPosActive = (screenHeight - viewWidth) - m_activity.dipAsPx(8.f);
+				m_yPosActive = m_defaultYPosActive;
 				m_yPosInactive = screenHeight + viewHeight;
 
 				m_view.setX((screenWidth * 0.5f) - (viewWidth * 0.5f));
@@ -190,6 +209,32 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		if (viewYPx != newYPx)
 		{
 			m_view.setY(newYPx);
+		}
+	}
+
+	public void setState(final int state)
+	{
+		CompassState compassState = rawStateToCompassState(state);
+		int offset = (compassState == CompassState.Default) ? 0 : m_navWidgetModeOffset;
+		m_yPosActive = m_defaultYPosActive - offset;
+		animateToActive();
+	}
+
+	private CompassState rawStateToCompassState(final int state)
+	{
+		if(CompassState.Navigation.getState() == state) {
+			return CompassState.Navigation;
+		}
+		if(CompassState.Default.getState() == state) {
+			return CompassState.Default;
+		}
+		throw new ClassCastException(state + " is not a valid CompassState");
+	}
+
+	public void setNavigationModeOffset(final int offset)
+	{
+		if(offset < m_screenHeight * 0.25f) {
+			m_navWidgetModeOffset = offset;
 		}
 	}
 

@@ -9,9 +9,13 @@ namespace ExampleApp
         class InteriorsLocationChangedMessage
         {
         public:
-            InteriorsLocationChangedMessage(const double latitude, const double longitude, const int floorNumber)
+            InteriorsLocationChangedMessage(const double latitude,
+                                            const double longitude,
+                                            const double horizontalAccuracyInMeters,
+                                            const int floorNumber)
             : m_latitude(latitude)
             , m_longitude(longitude)
+            , m_horizontalAccuracyInMeters(horizontalAccuracyInMeters)
             , m_floorNumber(floorNumber)
             {}
 
@@ -25,6 +29,11 @@ namespace ExampleApp
                 return m_longitude;
             }
 
+            const double HorizontalAccuracyInMeters() const
+            {
+                return m_horizontalAccuracyInMeters;
+            }
+
             const int FloorNumber() const
             {
                 return m_floorNumber;
@@ -33,6 +42,7 @@ namespace ExampleApp
         private:
             double m_latitude;
             double m_longitude;
+            double m_horizontalAccuracyInMeters;
             int m_floorNumber;
         };
     }

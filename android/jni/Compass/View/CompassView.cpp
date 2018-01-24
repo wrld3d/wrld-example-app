@@ -9,8 +9,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            CompassView::CompassView(AndroidNativeState& nativeState)
+            CompassView::CompassView(AndroidNativeState& nativeState,
+                                     Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navViewBottomHeightChangedCallbacks)
                 : m_nativeState(nativeState)
+                , m_navWidgetBottomHeightChangedCallback(this, &CompassView::SetNavigationModeOffset)
+                , m_navWidgetBottomHeightChangedCallbacks(navViewBottomHeightChangedCallbacks)
             {
                 ASSERT_UI_THREAD
 
@@ -32,12 +35,15 @@ namespace ExampleApp
                                    );
 
                 m_uiView = env->NewGlobalRef(instance);
+
+                m_navWidgetBottomHeightChangedCallbacks.AddCallback(m_navWidgetBottomHeightChangedCallback);
             }
 
             CompassView::~CompassView()
             {
                 ASSERT_UI_THREAD
 
+                m_navWidgetBottomHeightChangedCallbacks.RemoveCallback(m_navWidgetBottomHeightChangedCallback);
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
@@ -104,12 +110,12 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, animateToIntermediateOpenStateOnScreen, value);
             }
 
-            void CompassView::SetFullyOnScreen()
+            void CompassView::SetOnScreen()
             {
                 CallVoidMethod("animateToActive");
             }
 
-            void CompassView::SetFullyOffScreen()
+            void CompassView::SetOffScreen()
             {
                 CallVoidMethod("animateToInactive");;
             }
@@ -133,6 +139,29 @@ namespace ExampleApp
             void CompassView::RemoveCycledCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_callbacks.RemoveCallback(callback);
+            }
+
+            void CompassView::SetState(
+                    ScreenControl::View::TScreenControlViewState state)
+			{
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv *env = attached.envForThread;
+
+                jmethodID setState = env->GetMethodID(m_uiViewClass, "setState", "(I)V");
+                env->CallVoidMethod(m_uiView, setState, state);
+            }
+
+            void CompassView::SetNavigationModeOffset(NavRouting::View::INavWidgetView::THeight& offset)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv *env = attached.envForThread;
+
+                jmethodID setNavigationModeOffset = env->GetMethodID(m_uiViewClass, "setNavigationModeOffset", "(I)V");
+                env->CallVoidMethod(m_uiView, setNavigationModeOffset, offset);
             }
         }
     }

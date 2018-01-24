@@ -27,6 +27,7 @@ namespace ExampleApp
                                                float newDistanceToInterest,
                                                const Eegeo::Resources::Interiors::InteriorId &interiorId,
                                                int targetFloorIndex,
+                                               bool targetFloorIndexIsFloorId,
                                                bool jumpIfFar=true);
                 
                 void Start();
@@ -38,6 +39,7 @@ namespace ExampleApp
             private:
                 
                 bool ShouldJumpTo(Eegeo::dv3& newInterestPoint);
+                void UpdateFloorIndex();
                 
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
@@ -57,6 +59,7 @@ namespace ExampleApp
                 const float m_targetDistanceToInterest;
                 Eegeo::Resources::Interiors::InteriorId m_interiorId;
                 int m_targetFloorIndex;
+                bool m_targetFloorIndexIsFloorId;
                 bool m_jumpIfFar;
                 
                 bool m_failed;
