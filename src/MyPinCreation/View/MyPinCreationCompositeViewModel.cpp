@@ -4,6 +4,9 @@
 #include "IMyPinCreationInitiationViewModel.h"
 #include "IMyPinCreationConfirmationViewModel.h"
 #include "IMenuViewModel.h"
+#include "ISearchQueryPerformer.h"
+#include "WorldPinsVisibilityMessage.h"
+#include "GpsMarkerVisibilityMessage.h"
 #include "WorldPinVisibility.h"
 
 namespace ExampleApp
@@ -15,28 +18,30 @@ namespace ExampleApp
             MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
                     IMyPinCreationInitiationViewModel& initiationViewModel,
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                    ExampleApp::Menu::View::IMenuViewModel& menuViewModel,
+                    ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                    ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                     ScreenControl::View::IScreenControlViewModel& interiorControlViewModel)
                 : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage)
-                , m_menuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged)
+                , m_settingsMenuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged)
                 , m_messageBus(messageBus)
                 , m_initiationViewModel(initiationViewModel)
                 , m_confirmationViewModel(confirmationViewModel)
                 , m_interiorControlViewModel(interiorControlViewModel)
-                , m_menuViewModel(menuViewModel)
+                , m_searchMenuViewModel(searchMenuViewModel)
+                , m_settingsMenuViewModel(settingsMenuViewModel)
                 , m_showUiComponents(true)
                 , m_appModeChangedCallback(this, &MyPinCreationCompositeViewModel::OnAppModeChanged)
             {
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
                 m_messageBus.SubscribeUi(m_stateChangeHandler);
-                m_menuViewModel.InsertOnScreenStateChangedCallback(m_menuStateChangedCallback);
+                m_settingsMenuViewModel.InsertOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
             }
 
             MyPinCreationCompositeViewModel::~MyPinCreationCompositeViewModel()
             {
                 m_messageBus.UnsubscribeUi(m_appModeChangedCallback);
                 m_messageBus.UnsubscribeUi(m_stateChangeHandler);
-                m_menuViewModel.RemoveOnScreenStateChangedCallback(m_menuStateChangedCallback);
+                m_settingsMenuViewModel.RemoveOnScreenStateChangedCallback(m_settingsMenuStateChangedCallback);
             }
 
             void MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage(const ExampleApp::MyPinCreation::MyPinCreationStateChangedMessage &message)
@@ -49,7 +54,8 @@ namespace ExampleApp
                     {
                         m_initiationViewModel.AddToScreen();
                         m_interiorControlViewModel.AddToScreen();
-                        m_menuViewModel.AddToScreen();
+                        m_searchMenuViewModel.AddToScreen();
+                        m_settingsMenuViewModel.AddToScreen();
 
                         m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
                         m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
@@ -64,10 +70,12 @@ namespace ExampleApp
                     m_confirmationViewModel.AddToScreen();
                     m_initiationViewModel.RemoveFromScreen();
                     m_interiorControlViewModel.RemoveFromScreen();
-                    m_menuViewModel.RemoveFromScreen();
+                    m_searchMenuViewModel.RemoveFromScreen();
 
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
+
+                    m_settingsMenuViewModel.RemoveFromScreen();
                     break;
                 }
                 case Details:

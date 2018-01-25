@@ -13,6 +13,7 @@
 #include "Menu.h"
 #include "Options.h"
 #include "Reaction.h"
+#include "Search.h"
 #include "Types.h"
 
 namespace ExampleApp
@@ -24,22 +25,32 @@ namespace ExampleApp
             class SettingsMenuModule: public ISettingsMenuModule, private Eegeo::NonCopyable
             {
             private:
-                Menu::View::IMenuModel*        m_pAboutMenuModel;
+                Menu::View::IMenuModel* m_pModel;
+                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
+                Menu::View::IMenuViewModel* m_pViewModel;
+                std::vector<Menu::View::IMenuSectionViewModel*> m_sections;
+                Menu::View::IMenuModel* m_pAboutMenuModel;
                 Menu::View::IMenuOptionsModel* m_pAboutMenuOptionsModel;
-
-                Menu::View::IMenuModel*        m_pOptionsMenuModel;
+                Menu::View::IMenuModel* m_pOptionsMenuModel;
                 Menu::View::IMenuOptionsModel* m_pOptionsMenuOptionsModel;
 
             public:
-                SettingsMenuModule(Menu::View::IMenuViewModel&           menuViewModel,
+                SettingsMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
+                                   Reaction::View::IReactionControllerModel& reactionControllerModel,
                                    AboutPage::View::IAboutPageViewModel& aboutPageViewModel,
-                                   Options::View::IOptionsViewModel&     optionsViewModel);
+                                   Options::View::IOptionsViewModel& optionsViewModel);
 
                 ~SettingsMenuModule();
 
-                Menu::View::IMenuModel& GetOptionsMenuModel() const;
+                void AddMenuSection(const std::string& name,
+                                    Menu::View::IMenuModel& menuModel,
+                                    bool isExpandable);
                 
-                Menu::View::IMenuModel& GetAboutMenuModel() const;
+                Menu::View::IMenuModel& GetSettingsMenuModel() const;
+
+                Menu::View::IMenuOptionsModel& GetSettingsMenuOptionsModel() const;
+
+                Menu::View::IMenuViewModel& GetSettingsMenuViewModel() const;
             };
         }
     }

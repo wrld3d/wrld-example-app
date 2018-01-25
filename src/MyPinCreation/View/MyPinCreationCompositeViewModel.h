@@ -8,6 +8,7 @@
 #include "IMyPinCreationCompositeViewModel.h"
 #include "Menu.h"
 #include "ScreenControlViewModelBase.h"
+#include "Search.h"
 #include "BidirectionalBus.h"
 #include "MyPinCreationStateChangedMessage.h"
 
@@ -24,7 +25,8 @@ namespace ExampleApp
                 MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
                                                 IMyPinCreationInitiationViewModel& initiationViewModel,
                                                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                                                ExampleApp::Menu::View::IMenuViewModel& menuViewModel,
+                                                ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                                ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                                 ScreenControl::View::IScreenControlViewModel& interiorControlViewModel);
 
                 ~MyPinCreationCompositeViewModel();
@@ -35,13 +37,14 @@ namespace ExampleApp
 
             private:
                 Eegeo::Helpers::TCallback1<MyPinCreationCompositeViewModel, const MyPinCreationStateChangedMessage&> m_stateChangeHandler;
-                Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControl::View::IScreenControlViewModel&, float> m_menuStateChangedCallback;
+                Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControl::View::IScreenControlViewModel&, float> m_settingsMenuStateChangedCallback;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 IMyPinCreationInitiationViewModel& m_initiationViewModel;
                 IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
                 ScreenControl::View::IScreenControlViewModel& m_interiorControlViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_menuViewModel;
+                ExampleApp::Menu::View::IMenuViewModel& m_searchMenuViewModel;
+                ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
                 bool m_showUiComponents;
                 Eegeo::Helpers::TCallback1<MyPinCreationCompositeViewModel, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
 

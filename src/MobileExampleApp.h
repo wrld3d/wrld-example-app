@@ -199,8 +199,6 @@ namespace ExampleApp
 
         void DestroyApplicationModelModules();
 
-        void PopulateSearchMenu();
-
         void UpdateLoadingScreen(float dt);
 
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> GetOpenableControls() const;
