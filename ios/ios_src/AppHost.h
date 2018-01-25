@@ -20,7 +20,6 @@
 #include "InitialExperience.h"
 #include "iOSPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
-#include "SettingsMenuViewIncludes.h"
 #include "SearchMenuViewIncludes.h"
 #include "SearchResultSectionViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
@@ -117,7 +116,6 @@ private:
     Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
     ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceController* m_pInteriorsLocationServiceController;
     
-    ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
     ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
     ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;

@@ -22,7 +22,6 @@
 #include "AndroidUrlEncoder.h"
 #include "AndroidFileIO.h"
 #include "AndroidLocationService.h"
-#include "EegeoWorld.h"
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
 #include "MenuViewModule.h"
@@ -40,7 +39,6 @@
 #include "RegularTexturePageLayout.h"
 #include "PinsModule.h"
 #include "SearchResultRepository.h"
-#include "LatLongAltitude.h"
 #include "SearchResultPoiModule.h"
 #include "AndroidPlatformAbstractionModule.h"
 #include "FlattenButtonModule.h"
@@ -86,7 +84,6 @@
 #include "ConnectivityChangedViewMessage.h"
 #include "WebConnectivityValidator.h"
 #include "AndroidMenuReactionModel.h"
-#include "ApplicationConfigurationModule.h"
 #include "InteriorMetaDataModule.h"
 
 using namespace Eegeo::Android;
@@ -127,7 +124,6 @@ AppHost::AppHost(
     ,m_pInputProcessor(NULL)
     ,m_pAndroidPlatformAbstractionModule(NULL)
     ,m_pSearchMenuViewModule(NULL)
-	,m_pSettingsMenuViewModule(NULL)
 	,m_pSearchResultSectionViewModule(NULL)
     ,m_pModalBackgroundViewModule(NULL)
     ,m_pFlattenButtonViewModule(NULL)
@@ -530,18 +526,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
             app.TagSearchModule().GetTagSearchMenuOptionsModel(),
-            app.SettingsMenuModule().GetSettingsMenuViewModel(),
+            app.SearchMenuModule().GetSearchMenuViewModel(),
             m_messageBus,
             *m_pMenuReactionModel);
-
-    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
-    											"com/eegeo/settingsmenu/SettingsMenuView",
-    		                                     m_nativeState,
-    		                                     app.SettingsMenuModule().GetSettingsMenuModel(),
-    		                                     app.SettingsMenuModule().GetSettingsMenuViewModel(),
-												 m_pModalBackgroundViewModule->GetModalBackgroundView(),
-    		                                     m_messageBus
-    		                                 );
 
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
     		app.SearchMenuModule().GetSearchMenuViewModel(),
@@ -613,7 +600,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
 
     SetTouchExclusivity();
@@ -648,8 +634,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pAboutPageViewModule;
 
         Eegeo_DELETE m_pSearchResultPoiViewModule;
-
-        Eegeo_DELETE m_pSettingsMenuViewModule;
 
         Eegeo_DELETE m_pTagSearchViewModule;
 

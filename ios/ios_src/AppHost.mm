@@ -15,7 +15,6 @@
 #include "LoadingScreen.h"
 #include "PlatformConfig.h"
 #include "iOSPlatformConfigBuilder.h"
-#include "EegeoWorld.h"
 #include "JpegLoader.h"
 #include "iOSPlatformAbstractionModule.h"
 #include "ViewController.h"
@@ -315,12 +314,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
     
-    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(app.SettingsMenuModule().GetSettingsMenuModel(),
-                                                                                                  app.SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                                                                  screenProperties,
-                                                                                                  m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
-                                                                                                  m_messageBus);
-    
     m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(app.SearchMenuModule().GetSearchMenuModel(),
                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
                                                                                             app.SearchMenuModule().GetSearchSectionViewModel(),
@@ -331,7 +324,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 
     m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
             app.TagSearchModule().GetTagSearchMenuOptionsModel(),
-            app.SettingsMenuModule().GetSettingsMenuViewModel(),
+            app.SearchMenuModule().GetSearchMenuViewModel(),
             m_messageBus,
             *m_pMenuReactionModel);
     
@@ -418,7 +411,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
 
     // Menus & HUD layer.
-    [m_pView addSubview: &m_pSettingsMenuViewModule->GetSettingsMenuView()];
     [m_pView addSubview: &m_pSearchMenuViewModule->GetSearchMenuView()];
 
     // Pop-up layer.
@@ -438,7 +430,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
     
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
     
     SetTouchExclusivity();
@@ -462,7 +453,6 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
 
     // Menus & HUD layer.
-    [&m_pSettingsMenuViewModule->GetSettingsMenuView() removeFromSuperview];
     [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
 
     // Pop-up layer.
@@ -504,8 +494,6 @@ void AppHost::DestroyApplicationViewModules()
 
     Eegeo_DELETE m_pSearchMenuViewModule;
     
-    Eegeo_DELETE m_pSettingsMenuViewModule;
-
     Eegeo_DELETE m_pFlattenButtonViewModule;
     
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;

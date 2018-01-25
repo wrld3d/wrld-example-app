@@ -22,7 +22,6 @@
 #include "WindowsFileIO.h"
 #include "WindowsLocationService.h"
 #include "FixedIndoorLocationService.h"
-#include "EegeoWorld.h"
 #include "EnvironmentFlatteningService.h"
 #include "TtyHandler.h"
 #include "MenuViewModule.h"
@@ -38,7 +37,6 @@
 #include "RegularTexturePageLayout.h"
 #include "PinsModule.h"
 #include "SearchResultRepository.h"
-#include "LatLongAltitude.h"
 #include "SearchResultPoiModule.h"
 #include "WindowsPlatformAbstractionModule.h"
 #include "FlattenButtonModule.h"
@@ -46,7 +44,6 @@
 #include "SearchResultPoiViewModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
-#include "SettingsMenuViewModule.h"
 #include "SearchMenuViewModule.h"
 #include "CompassViewModule.h"
 #include "CompassModule.h"
@@ -80,8 +77,6 @@
 #include "ColorHelpers.h"
 #include "IHttpCache.h"
 #include "HttpCache.h"
-#include "SearchMenuViewModule.h"
-#include "SettingsMenuViewModule.h"
 #include "SearchResultSectionViewModule.h"
 #include "SearchResultSectionModule.h"
 #include "SearchResultPoiView.h"
@@ -90,7 +85,6 @@
 #include "IMyPinCreationInitiationViewModel.h"
 #include "WindowsApplicationConfigurationVersionProvider.h"
 #include "ModalityIgnoredReactionModel.h"
-#include "WindowsApplicationConfigurationVersionProvider.h"
 #include "IUserIdleService.h"
 #include "CurrentLocationService.h"
 #include "AttractModeOverlayView.h"
@@ -141,7 +135,6 @@ AppHost::AppHost(
     , m_WindowsNativeUIFactories(m_WindowsAlertBoxFactory, m_WindowsInputBoxFactory, m_WindowsKeyboardInputFactory)
     , m_pInputProcessor(NULL)
     , m_pWindowsPlatformAbstractionModule(NULL)
-    , m_pSettingsMenuViewModule(NULL)
     , m_pSearchMenuViewModule(NULL)
     , m_pSearchResultSectionViewModule(NULL)
     , m_pModalBackgroundViewModule(NULL)
@@ -605,20 +598,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
 	m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
 		app.TagSearchModule().GetTagSearchMenuOptionsModel(),
-		app.SettingsMenuModule().GetSettingsMenuViewModel(),
+		app.SearchMenuModule().GetSearchMenuViewModel(),
 		m_messageBus,
 		*m_pMenuReaction);
-
-    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
-        "ExampleAppWPF.SettingsMenuView",
-        m_nativeState,
-        app.SettingsMenuModule().GetSettingsMenuModel(),
-        app.SettingsMenuModule().GetSettingsMenuViewModel(),
-        m_pModalBackgroundViewModule->GetView(),
-        m_pSearchMenuViewModule->GetMenuView(),
-        m_messageBus,
-        app.GetApplicationConfiguration().IsInKioskMode()
-        );
     
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
         app.SearchMenuModule().GetSearchMenuViewModel(),
@@ -715,17 +697,17 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
 
-    Eegeo::Helpers::TIdentity settingsMenuIdentity = app.SearchResultPoiModule().GetObservableOpenableControl().GetIdentity();
-    Eegeo::Helpers::TIdentity searchMenuIdentity= app.SearchMenuModule().GetSearchMenuViewModel().GetIdentity();
-    
-    app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
-    app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
-    
-    app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
-    app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
+	Eegeo::Helpers::TIdentity settingsMenuIdentity = app.SearchResultPoiModule().GetObservableOpenableControl().GetIdentity();
+														 // settings? or SearchResultPoi?
+	Eegeo::Helpers::TIdentity searchMenuIdentity = app.SearchMenuModule().GetSearchMenuViewModel().GetIdentity();
+
+	app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
+	app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
+
+	app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
+	app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()
@@ -761,8 +743,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 			Eegeo_DELETE m_pTagSearchViewModule;
 
             Eegeo_DELETE m_pSearchMenuViewModule;
-
-            Eegeo_DELETE m_pSettingsMenuViewModule;
 
             Eegeo_DELETE m_pCompassViewModule;
 

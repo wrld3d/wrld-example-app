@@ -31,9 +31,8 @@ namespace ExampleApp
             public:
                 MyPinCreationModule(MyPins::SdkModel::IMyPinsService& myPinsService,
                                     Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                    ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                    ExampleApp::Menu::View::IMenuViewModel& menuViewModel,
                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                    ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                     ScreenControl::View::IScreenControlViewModel& interiorControlViewModel,
                                     ExampleAppMessaging::TMessageBus& messageBus,
