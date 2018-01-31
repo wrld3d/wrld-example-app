@@ -13,6 +13,8 @@
 
 @interface CustomTableView ()
 
+@property (nonatomic, retain) UIView* pBackgroundView;
+
 @end
 
 @implementation CustomTableView
@@ -47,6 +49,7 @@
     m_cellInset = cellInset;
     
     self.pBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height)];
+    self.pBackgroundView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
     [self addSubview:self.pBackgroundView];
     
     m_pAnimationController = NULL;

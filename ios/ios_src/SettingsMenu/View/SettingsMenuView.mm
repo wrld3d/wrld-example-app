@@ -161,7 +161,6 @@
         customTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         customTableView.bounces = NO;
         customTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        customTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     }
     
     [self addSubview: self.pDragTab];
