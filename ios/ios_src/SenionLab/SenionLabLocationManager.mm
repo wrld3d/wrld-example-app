@@ -131,7 +131,6 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     if(location != nil && [location.source isKindOfClass:[SSISenionLocationSource class]])
     {
         m_pSenionLabLocationService->SetIsAuthorized(true);
-        m_pSenionLabLocationService->SetIsConnected(true);
         
         Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude);
         m_pSenionLabLocationService->SetLocation(latLong);
