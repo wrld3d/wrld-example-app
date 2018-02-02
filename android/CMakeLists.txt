@@ -39,6 +39,7 @@ include_directories(
     libs/eegeo/platform/BuildingFootprints
     libs/eegeo/platform/BuildingHighlight
     libs/eegeo/platform/Camera
+    libs/eegeo/platform/Camera/MapCamera
     libs/eegeo/platform/Camera/GlobeCamera
     libs/eegeo/platform/Camera/SplinePlayback
     libs/eegeo/platform/Collision
