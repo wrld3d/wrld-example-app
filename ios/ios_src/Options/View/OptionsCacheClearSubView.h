@@ -17,19 +17,21 @@
 
 - (bool) isDisplayed;
 
-- (void) displayWarning:(UIView*)pConfirmedHandlerInstance :(SEL)confirmedHandler;
+- (void) displayWarningInView:(UIView*)view target:(id)pConfirmedHandlerInstance action:(SEL)confirmedHandler;
 
 - (void) conclude;
 
-@property (nonatomic, retain) UIView* pDarkBackgroundPanel;
-@property (nonatomic, retain) UIView* pOptionButtonsContainer;
+@property (nonatomic, retain) UIView* pHeaderView;
+@property (nonatomic, retain) UIView* pHeaderSeparator;
+
+@property (nonatomic, retain) UIButton* pCancelButton;
 @property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIButton* pConfirmButton;
-@property (nonatomic, retain) UIView* pControlContainer;
-@property (nonatomic, retain) UIView* pHeadlineContainer;
-@property (nonatomic, retain) UIView* pContentContainer;
+
 @property (nonatomic, retain) UILabel* pTitleLabel;
+@property (nonatomic, retain) UILabel* pWarningLabel;
 @property (nonatomic, retain) UILabel* pMessageContent;
+
 @property (nonatomic, retain) UIActivityIndicatorView* pSpinner;
 
 @end

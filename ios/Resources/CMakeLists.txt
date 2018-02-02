@@ -1,4 +1,22 @@
 set(resources ${resources}
+		Resources/CheckboxRound.png
+		Resources/CheckboxRound@2x.png
+		Resources/CheckboxRound@3x.png
+		Resources/CheckboxRoundYes.png
+		Resources/CheckboxRoundYes@2x.png
+		Resources/CheckboxRoundYes@3x.png
+		Resources/FullSwitchOff.png
+		Resources/FullSwitchOff@2x.png
+		Resources/FullSwitchOff@3x.png
+		Resources/FullSwitchOn.png
+		Resources/FullSwitchOn@2x.png
+		Resources/FullSwitchOn@3x.png
+		Resources/Close_Blue.png
+		Resources/Close_Blue@2x.png
+	    Resources/Close_Blue@3x.png
+	    Resources/LargeTick_Blue.png
+	    Resources/LargeTick_Blue@2x.png
+	    Resources/LargeTick_Blue@3x.png
         Resources/Alert_Tutorial_icon.png
         Resources/Alert_Tutorial_icon@2x.png
         Resources/Alert_Tutorial_icon@3x.png

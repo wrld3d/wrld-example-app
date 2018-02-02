@@ -31,19 +31,21 @@
 
 - (ExampleApp::AboutPage::View::AboutPageViewInterop*) getInterop;
 
-@property (nonatomic, retain) UIView* pControlContainer;
-@property (nonatomic, retain) UIView* pCloseButtonContainer;
 @property (nonatomic, retain) UIButton* pCloseButton;
-@property (nonatomic, retain) UIView* pHeadlineContainer;
+@property (nonatomic, retain) UIView* pHeaderView;
 @property (nonatomic, retain) UILabel* pTitleLabel;
-@property (nonatomic, retain) UIView* pContentContainer;
-@property (nonatomic, retain) UIScrollView* pLabelsContainer;
+@property (nonatomic, retain) UIView* pHeaderSeparator;
+
+
 @property (nonatomic, retain) UIImageView* pSwallowLogoImage;
 @property (nonatomic, retain) UILabel* pTextContent;
-@property (nonatomic, retain) UIView* pSeperator;
+@property (nonatomic, retain) UIView* pContentSeperator;
 @property (nonatomic, retain) UILabel* pDevelopedByLabel;
 @property (nonatomic, retain) UIImageView* pWrldLogoImage;
-@property (nonatomic, retain) UIButton* pWrldLogoButton;
-@property (nonatomic, retain) UILabel* pLegalLink;
+
+@property (nonatomic, retain) UIScrollView* pContentScrollView;
+@property (nonatomic, retain) UIView* pContentView;
+
+@property (nonatomic, retain) UIButton* pLegalLink;
 
 @end
