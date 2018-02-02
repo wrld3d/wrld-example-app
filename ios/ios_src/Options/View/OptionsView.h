@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 #include "Options.h"
 #include "AppRunner.h"
-#include "UILabelledCheckboxView.h"
+
 #include "OptionsCacheClearSubView.h"
 #include "CustomSwitch.h"
 
