@@ -23,7 +23,7 @@ namespace ExampleApp
                 , m_searchResultRepository(searchResultRepository)
                 , m_searchSectionViewModel(searchSectionViewModel)
                 , m_searchResultAddedCallback(this, &SelectFirstResultSearchService::OnSearchResultAdded)
-                , m_didTransition(false)
+                , m_didTransition(true)
                 {
                     m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
                 }
