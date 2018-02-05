@@ -16,6 +16,7 @@ set(currsources
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Search FILES ${currsources})
+include(../src/Search/SelectFirstResult/CMakeLists.txt)
 include(../src/Search/Combined/CMakeLists.txt)
 include(../src/Search/EegeoPois/CMakeLists.txt)
 include(../src/Search/GeoNames/CMakeLists.txt)

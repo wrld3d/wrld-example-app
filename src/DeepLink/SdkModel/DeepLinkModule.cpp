@@ -8,11 +8,14 @@
 #include "IWebLoadRequestFactory.h"
 #include "DeepLinkLocationHandler.h"
 #include "DeepLinkConfigHandler.h"
+#include "DeepLinkSearchHandler.h"
 #include "CoverageTrees.h"
 #include "CityThemes.h"
+#include "SelectFirstResultSearchService.h"
 
 namespace {
     const char * const LOCATION_PATH = "location";
+    const char * const SEARCH_PATH = "search";
     const char * const MYMAP_PATH = "mapscene";
     const bool CONFIG_DEEP_LINK_ENABLED = true;
 }
@@ -37,11 +40,14 @@ namespace ExampleApp
                                                                            Eegeo::Web::ApiTokenService& apiTokenService,
                                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                            const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel)
+                                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
+                                                                           Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& selectFirstResultSearchService)
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
                 DeepLinkLocationHandler* locationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
+                DeepLinkSearchHandler* searchHandler = Eegeo_NEW(DeepLinkSearchHandler)(selectFirstResultSearchService, alertBoxFactory);
                 m_pDeepLinkModel->AddRoute(LOCATION_PATH, locationHandler);
+                m_pDeepLinkModel->AddRoute(SEARCH_PATH, searchHandler);
 
                 if(CONFIG_DEEP_LINK_ENABLED)
                 {

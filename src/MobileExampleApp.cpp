@@ -68,6 +68,7 @@
 #include "AppModeModel.h"
 #include "ICompassViewModel.h"
 #include "CombinedSearchServiceModule.h"
+#include "SelectFirstResultSearchService.h"
 #include "GeoNamesSearchServiceModule.h"
 #include "EegeoSearchServiceModule.h"
 #include "SearchVendorNames.h"
@@ -454,7 +455,8 @@ namespace ExampleApp
             m_pWorld->GetApiTokenService(),
             interiorsPresentationModule.GetInteriorSelectionModel(),
             *m_pAppModeModel,
-            m_pFlattenButtonModule->GetFlattenButtonModel());
+            m_pFlattenButtonModule->GetFlattenButtonModel(),
+            *m_pSelectFirstResultSearchService);
 
         if (applicationConfiguration.HasMapScene())
         {
@@ -674,6 +676,7 @@ namespace ExampleApp
                                                                                             m_pSearchModule->GetSearchQueryPerformer(),
                                                                                             m_messageBus,
                                                                                             m_metricsService);
+        
 
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
@@ -839,6 +842,11 @@ namespace ExampleApp
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
         m_pSearchMenuModule->AddMenuSection("Find", m_pTagSearchModule->GetTagSearchMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
+        
+        
+        m_pSelectFirstResultSearchService = Eegeo_NEW(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService)(m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                          m_pSearchMenuModule->GetSearchSectionViewModel(),
+                                                                                          m_pSearchModule->GetSearchResultRepository());
 
         if(!m_applicationConfiguration.IsInKioskMode())
         {

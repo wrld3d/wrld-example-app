@@ -22,13 +22,13 @@ namespace ExampleApp
 
                 virtual const SearchQuery& GetPreviousSearchQuery() const = 0;
 
-                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch) = 0;
+                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const std::string& interiorId = "") = 0;
 
-                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, float radius) = 0;
+                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, float radius, const std::string& interiorId = "") = 0;
 
-                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, bool startAtGPSLocation=false) = 0;
+                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, bool startAtGPSLocation=false, const std::string& interiorId = "") = 0;
                 
-                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius, bool startAtGPSLocation=false) = 0;
+                virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius, bool startAtGPSLocation=false, const std::string& interiorId = "") = 0;
 
                 virtual void RemoveSearchQueryResults() = 0;
 

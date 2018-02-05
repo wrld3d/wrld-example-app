@@ -9,6 +9,8 @@ set(currsources
 ../src/DeepLink/SdkModel/DeepLinkModule.h
 ../src/DeepLink/SdkModel/DeepLinkLocationHandler.h
 ../src/DeepLink/SdkModel/DeepLinkLocationHandler.cpp
+../src/DeepLink/SdkModel/DeepLinkSearchHandler.h
+../src/DeepLink/SdkModel/DeepLinkSearchHandler.cpp
 ../src/DeepLink/SdkModel/DeepLinkConfigHandler.cpp
 ../src/DeepLink/SdkModel/DeepLinkConfigHandler.h
 ../src/DeepLink/SdkModel/IDeepLinkHandler.h

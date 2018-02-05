@@ -14,6 +14,7 @@
 #include "Location.h"
 #include "AppModes.h"
 #include "IFlattenButtonModel.h"
+#include "SelectFirstResultSearchService.h"
 
 namespace ExampleApp
 {
@@ -41,7 +42,8 @@ namespace ExampleApp
                     Eegeo::Web::ApiTokenService& apiTokenService,
                     Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                     const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
-                    FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel);
+                    FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
+                    Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& selectFirstResultSearchService);
 
                 ~DeepLinkModule();
                 DeepLinkController& GetDeepLinkController();
