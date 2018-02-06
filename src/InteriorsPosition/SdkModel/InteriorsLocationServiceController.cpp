@@ -57,7 +57,7 @@ namespace ExampleApp
                     int floorIndex = 0;
                     if(m_currentLocationService.GetFloorIndex(floorIndex) &&
                        currentVisibleFloorIndex != floorIndex &&
-                       m_interiorInteractionModel.GetInteriorModel() != nullptr)
+                       m_interiorInteractionModel.HasInteriorModel())
                     {
                         m_interiorInteractionModel.SetSelectedFloorIndex(floorIndex);
                     }
