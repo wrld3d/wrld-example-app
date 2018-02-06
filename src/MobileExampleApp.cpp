@@ -845,8 +845,8 @@ namespace ExampleApp
         
         
         m_pSelectFirstResultSearchService = Eegeo_NEW(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService)(m_pSearchModule->GetSearchQueryPerformer(),
-                                                                                          m_pSearchMenuModule->GetSearchSectionViewModel(),
-                                                                                          m_pSearchModule->GetSearchResultRepository());
+                                                                                          m_pSearchModule->GetSearchResultRepository(),
+                                                                                          m_messageBus);
 
         if(!m_applicationConfiguration.IsInKioskMode())
         {

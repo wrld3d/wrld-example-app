@@ -2,11 +2,10 @@
 
 #include "SelectFirstResultSearchService.h"
 #include "SearchQueryPerformer.h"
-#include "InteriorInteractionModel.h"
 #include "IMenuOption.h"
-#include "SearchResultModel.h"
 #include "ISearchResultRepository.h"
 #include "IMenuModel.h"
+#include "SearchResultItemModel.h"
 
 namespace ExampleApp
 {
@@ -17,13 +16,13 @@ namespace ExampleApp
             namespace SdkModel
             {
                 SelectFirstResultSearchService::SelectFirstResultSearchService(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                     Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                                     Search::SdkModel::ISearchResultRepository& searchResultRepository)
+                                                     Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                                     ExampleAppMessaging::TMessageBus& messageBus)
                 : m_searchQueryPerformer(searchQueryPerformer)
                 , m_searchResultRepository(searchResultRepository)
-                , m_searchSectionViewModel(searchSectionViewModel)
                 , m_searchResultAddedCallback(this, &SelectFirstResultSearchService::OnSearchResultAdded)
                 , m_didTransition(true)
+                , m_messageBus(messageBus)
                 {
                     m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
                 }
@@ -45,11 +44,14 @@ namespace ExampleApp
                 {
                     if(!m_didTransition)
                     {
-                        if(m_searchSectionViewModel.Size() > 0)
-                        {
-                            m_searchSectionViewModel.GetItemAtIndex(0).MenuOption().Select();
-                            m_didTransition = true;
-                        }
+                        m_didTransition = true;
+
+                        m_messageBus.Publish(SearchResultSection::SearchResultSectionItemSelectedMessage(pSearchResultModel->GetLocation().ToECEF(),
+                                                                                                         pSearchResultModel->IsInterior(),
+                                                                                                         pSearchResultModel->GetBuildingId(),
+                                                                                                         pSearchResultModel->GetFloor(),
+                                                                                                         0,
+                                                                                                         pSearchResultModel->GetIdentifier()));
                     }
                 }
             }

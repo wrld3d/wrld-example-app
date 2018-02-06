@@ -8,6 +8,7 @@
 #include "Search.h"
 #include "ICallback.h"
 #include "SearchMenu.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -22,8 +23,9 @@ namespace ExampleApp
                 public:
                     
                     SelectFirstResultSearchService(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                      Menu::View::IMenuSectionViewModel& searchSectionViewModel,
-                                      Search::SdkModel::ISearchResultRepository& searchResultRepository);
+                                      Search::SdkModel::ISearchResultRepository& searchResultRepository,
+                                      ExampleAppMessaging::TMessageBus& messageBus
+                    );
                     
                     ~SelectFirstResultSearchService();
                     
@@ -33,9 +35,9 @@ namespace ExampleApp
                     void OnSearchResultAdded(Search::SdkModel::SearchResultModel*& pSearchResultModel);
                     
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
-                    Menu::View::IMenuSectionViewModel& m_searchSectionViewModel;
                     Eegeo::Helpers::TCallback1<SelectFirstResultSearchService, Search::SdkModel::SearchResultModel*> m_searchResultAddedCallback;
                     Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
+                    ExampleAppMessaging::TMessageBus& m_messageBus;
                     
                     bool m_didTransition;
                 };
