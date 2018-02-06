@@ -22,6 +22,7 @@
 #include "IAnchoredLabel.h"
 #include "document.h"
 #include "IInteriorsHighlightService.h"
+#include "InteriorsHighlightColorChangeBatchOperation.h"
 
 namespace ExampleApp
 {
@@ -293,16 +294,12 @@ namespace ExampleApp
                     }
                     else
                     {
-                        for (auto const pHighlightRenderable : m_highlightRenderablesForInterior)
+                        const auto& operations = ColorChangeBatchOperation::BuildBatchOperations(m_highlightRenderablesForInterior, m_searchResultHighlightIdToColor);
+                        for (const auto& operation : operations)
                         {
-                            const std::string& renderableId = pHighlightRenderable->GetRenderableId();
-                        
-                            HighlightIdToColor::const_iterator iter = m_searchResultHighlightIdToColor.find(renderableId);
-                            const Eegeo::v4& highlightColor = (iter != m_searchResultHighlightIdToColor.end())
-                            ? iter->second
-                            : transparentHighlightColor;
-
-                            m_interiorsHighlightService.SetHighlight(pHighlightRenderable->GetInteriorId(), pHighlightRenderable->GetHighlightId(), highlightColor);
+                            m_interiorsHighlightService.SetHighlights(operation->GetInteriorId(),
+                                                                     operation->GetEntityIds(),
+                                                                     operation->GetHighlightColor());
                         }
                     }
                 }
