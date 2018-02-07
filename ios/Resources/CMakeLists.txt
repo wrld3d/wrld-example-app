@@ -1,4 +1,80 @@
 set(resources ${resources}
+		Resources/ButtonGallery.png
+		Resources/ButtonGallery@2x.png
+		Resources/ButtonGallery@3x.png
+		Resources/ButtonGallery_Down.png
+		Resources/ButtonGallery_Down@2x.png
+		Resources/ButtonGallery_Down@3x.png
+		Resources/ButtonPhoto.png
+		Resources/ButtonPhoto@2x.png
+		Resources/ButtonPhoto@3x.png
+		Resources/ButtonPhoto_Down.png
+		Resources/ButtonPhoto_Down@2x.png
+		Resources/ButtonPhoto_Down@3x.png
+		Resources/Checkbox.png
+		Resources/Checkbox@2x.png
+		Resources/Checkbox@3x.png
+		Resources/CheckboxCentre.png
+		Resources/CheckboxCentre@2x.png
+		Resources/CheckboxCentre@3x.png
+		Resources/CheckboxYes.png
+		Resources/CheckboxYes@2x.png
+		Resources/CheckboxYes@3x.png
+		Resources/Close_Blue.png
+		Resources/Close_Blue@2x.png
+	    Resources/Close_Blue@3x.png
+		Resources/Close_White.png
+		Resources/Close_White@2x.png
+		Resources/Close_White@3x.png
+		Resources/Compass.png
+		Resources/Compass@2x.png
+		Resources/Compass@3x.png
+		Resources/Compass_Down.png
+		Resources/Compass_Down@2x.png
+		Resources/Compass_Down@3x.png
+		Resources/CompassSurround_DarkBlue.png
+		Resources/CompassSurround_DarkBlue@2x.png
+		Resources/CompassSurround_DarkBlue@3x.png
+		Resources/CompassSurround_LightBlue.png
+		Resources/CompassSurround_LightBlue@2x.png
+		Resources/CompassSurround_LightBlue@3x.png
+		Resources/ElevatorButton.png
+		Resources/ElevatorButton@2x.png
+		Resources/ElevatorButton@3x.png
+		Resources/ElevatorButton_Down.png
+		Resources/ElevatorButton_Down@2x.png
+		Resources/ElevatorButton_Down@3x.png
+		Resources/ExitInteriorView_White.png
+		Resources/ExitInteriorView_White@2x.png
+		Resources/ExitInteriorView_White@3x.png
+		Resources/GoIndoors.png
+		Resources/GoIndoors@2x.png
+		Resources/GoIndoors@3x.png
+		Resources/GoIndoors_Down.png
+		Resources/GoIndoors_Down@2x.png
+		Resources/GoIndoors_Down@3x.png
+		Resources/LargeTick_Blue.png
+		Resources/LargeTick_Blue@2x.png
+		Resources/LargeTick_Blue@3x.png
+		Resources/LargeTick_White.png
+		Resources/LargeTick_White@2x.png
+		Resources/LargeTick_White@3x.png
+		Resources/NavMod_Active.png
+		Resources/NavMod_Active@2.png
+		Resources/NavMod_Active@2x.png
+		Resources/NavMod_Active@3x.png
+		Resources/NavMode.png
+		Resources/NavMode@2x.png
+		Resources/NavMode@3x.png
+		Resources/NavMode_Down.png
+		Resources/NavMode_Down@2x.png
+		Resources/NavMode_Down@3x.png
+		Resources/ShareIcon.png
+		Resources/ShareIcon@2x.png
+		Resources/ShareIcon@3x.png
+		Resources/SmallTick_White.png
+		Resources/SmallTick_White@2x.png
+		Resources/SmallTick_White@3x.png
 		Resources/CheckboxRound.png
 		Resources/CheckboxRound@2x.png
 		Resources/CheckboxRound@3x.png
@@ -11,12 +87,6 @@ set(resources ${resources}
 		Resources/FullSwitchOn.png
 		Resources/FullSwitchOn@2x.png
 		Resources/FullSwitchOn@3x.png
-		Resources/Close_Blue.png
-		Resources/Close_Blue@2x.png
-	    Resources/Close_Blue@3x.png
-	    Resources/LargeTick_Blue.png
-	    Resources/LargeTick_Blue@2x.png
-	    Resources/LargeTick_Blue@3x.png
         Resources/Alert_Tutorial_icon.png
         Resources/Alert_Tutorial_icon@2x.png
         Resources/Alert_Tutorial_icon@3x.png
@@ -83,7 +153,7 @@ set(resources ${resources}
         Resources/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
         Resources/EmbeddedTheme/London_London_roadDiffuse_repeat.pvr
         Resources/EmbeddedTheme/London_London_wallDiffuse.pvr
-	Resources/EmbeddedTheme/SanFrancisco_SanFran_roadDiffuse_repeat.pvr
+        Resources/EmbeddedTheme/SanFrancisco_SanFran_roadDiffuse_repeat.pvr
         Resources/EmbeddedTheme/SanFrancisco_SanFran_wallDiffuse.pvr
         Resources/EmbeddedTheme/SanFrancisco_TerrainTexture0.pvr
         Resources/EmbeddedTheme/SanFrancisco_TerrainTexture0_LOD.pvr

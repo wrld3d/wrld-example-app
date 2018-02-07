@@ -7,7 +7,7 @@
 #include "AppRunner.h"
 
 #include "OptionsCacheClearSubView.h"
-#include "CustomSwitch.h"
+#import "CustomSwitch.h"
 
 @class OptionsView;
 @class OptionsViewController;
