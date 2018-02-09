@@ -19,6 +19,7 @@ namespace ExampleAppWPF
         }
 
         private bool m_cacheEnabled;
+        private bool m_clearCacheSelected;
         private bool m_explicitlySettingValue;
         private bool m_playTutorialsAgainEnabled;
 
@@ -50,6 +51,27 @@ namespace ExampleAppWPF
             }
         }
 
+        public bool ClearCacheSelected
+        {
+            get
+            {
+                return m_clearCacheSelected;
+            }
+            set
+            {
+                if (value != m_clearCacheSelected)
+                {
+                    m_clearCacheSelected = value;
+                    OnPropertyChanged("ClearCacheSelected");
+
+                    if (!m_explicitlySettingValue)
+                    {
+                        OptionsViewCLIMethods.ClearCacheToggled(m_nativeCallerPointer);
+                    }
+                }
+            }
+        }
+
         public bool PlayTutorialsAgainEnabled
         {
             get
@@ -61,13 +83,12 @@ namespace ExampleAppWPF
                 if(value != m_playTutorialsAgainEnabled)
                 {
                     m_playTutorialsAgainEnabled = value;
+                    OnPropertyChanged("PlayTutorialsAgainEnabled");
 
                     if (!m_explicitlySettingValue)
                     {
-                        ReplayTutorials(m_playTutorialsAgainEnabled);
+                        OptionsViewCLIMethods.ReplayTutorials(m_nativeCallerPointer, m_playTutorialsAgainEnabled);
                     }
-
-                    OnPropertyChanged("PlayTutorialsAgainEnabled");
                 }
             }
         }
@@ -78,11 +99,7 @@ namespace ExampleAppWPF
         private bool m_isInKioskMode;
 
         private Button m_closeButton;
-        private ToggleButton m_streamOverWifiButton;
-        private ToggleButton m_dataCachingButton;
-        private Button m_clearCacheButton = null;
         protected FrameworkElement m_mainContainer;
-        private Button m_adminLoginButton;
         private AdminLoginView m_adminLoginView;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -99,28 +116,33 @@ namespace ExampleAppWPF
             m_currentWindow = (MainWindow)Application.Current.MainWindow;
             m_currentWindow.MainGrid.Children.Add(this);
 
+            DataContext = this;
+
             InitialiseAdminLoginView(adminPassword);
         }
 
         public override void OnApplyTemplate()
         {
-            m_closeButton = (Button)GetTemplateChild(m_isInKioskMode ? "OptionsViewCloseButtonKiosk" : "OptionsViewCloseButton");
+            m_closeButton = (Button)GetTemplateChild("OptionsViewCloseButton");
             m_closeButton.Click += OnCloseButtonClick;
 
-            m_dataCachingButton = (ToggleButton)GetTemplateChild("OptionsViewCacheEnabledTogglebutton");
+            var okButton = (Button)GetTemplateChild("OptionsViewOkButton");
+            okButton.Click += OnOkButtonClick;
+
             var dataCachingLabel = (TextBlock)GetTemplateChild("OptionsViewCacheEnabledLabel");
             dataCachingLabel.PreviewMouseLeftButtonDown += (s, e) => CacheEnabled = !CacheEnabled;
             
-            m_clearCacheButton = (Button)GetTemplateChild("OptionsViewClearCacheButton");
             var clearCacheLabel = (TextBlock)GetTemplateChild("OptionsViewClearCacheLabel");
-            clearCacheLabel.PreviewMouseLeftButtonDown += (s, e) => OnClearCacheButtonClick(s, e);
-            m_clearCacheButton.Click += OnClearCacheButtonClick;
-            
-            m_adminLoginButton = (Button)GetTemplateChild("OptionsViewAdminButton");
-            m_adminLoginButton.Click += OnAdminLoginButtonClick;
+            clearCacheLabel.PreviewMouseLeftButtonDown += (s, e) => ClearCacheSelected = !ClearCacheSelected;
 
             var playTutorialLabel = (TextBlock)GetTemplateChild("OptionsViewPlayTutorialLabel");
             playTutorialLabel.PreviewMouseLeftButtonDown += (s, e) => PlayTutorialsAgainEnabled = !PlayTutorialsAgainEnabled;
+
+            var adminLoginButton = (Button)GetTemplateChild("OptionsViewAdminButton");
+            adminLoginButton.Click += OnAdminLoginButtonClick;
+
+            var adminLoginLabel = (TextBlock)GetTemplateChild("OptionsViewAdminLabel");
+            adminLoginLabel.MouseDown += OnAdminLoginButtonClick;
 
             m_mainContainer = (FrameworkElement)GetTemplateChild("MainContainer");
 
@@ -132,13 +154,17 @@ namespace ExampleAppWPF
             e.Handled = true;
         }
 
-
         private void OnCloseButtonClick(object sender, RoutedEventArgs e)
         {
             OptionsViewCLIMethods.CloseButtonSelected(m_nativeCallerPointer);
         }
 
-        private void OnClearCacheButtonClick(object sender, RoutedEventArgs e)
+        private void OnOkButtonClick(object sender, RoutedEventArgs e)
+        {
+            OptionsViewCLIMethods.OkButtonSelected(m_nativeCallerPointer);
+        }
+
+        public void OpenClearCacheWarning()
         {
             BeginCacheClearCeremony();
         }
@@ -206,10 +232,22 @@ namespace ExampleAppWPF
             m_explicitlySettingValue = false;
         }
 
+        public bool IsClearCacheSelected()
+        {
+            return ClearCacheSelected;
+        }
+
+        public void SetClearCacheSelected(bool clearCacheSelected)
+        {
+            m_explicitlySettingValue = true;
+            ClearCacheSelected = clearCacheSelected;
+            m_explicitlySettingValue = false;
+        }
+
         private void BeginCacheClearCeremony()
         {
             m_cacheClearSubView = new OptionsCacheClearSubView();
-            m_cacheClearSubView.DisplayWarning(() => OptionsViewCLIMethods.ClearCacheSelected(m_nativeCallerPointer));
+            m_cacheClearSubView.DisplayWarning(() => OptionsViewCLIMethods.ClearCacheTriggered(m_nativeCallerPointer));
         }
 
         private void InitialiseAdminLoginView(string adminPassword)
@@ -218,11 +256,6 @@ namespace ExampleAppWPF
             m_adminLoginView.Visibility = Visibility.Collapsed;
             m_adminLoginView.OnHide += OnAdminLoginHide;
             m_currentWindow.MainGrid.Children.Add(m_adminLoginView);
-        }
-
-        private void ReplayTutorials(bool replayTutorials)
-        {
-            OptionsViewCLIMethods.ReplayTutorials(m_nativeCallerPointer, replayTutorials);
         }
     }
 }

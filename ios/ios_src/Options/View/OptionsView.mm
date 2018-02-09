@@ -281,6 +281,11 @@
     [self.pCacheEnabledSwitch setOn:isCacheEnabledSelected];
 }
 
+- (void) setClearCacheSelected:(bool)isClearCacheSelected
+{
+    [self.pClearCacheCheckbox setOn:isClearCacheSelected];
+}
+
 - (void) setReplayTutorialsSelected:(bool)isReplayTutorialsSelected
 {
     [self.pReplayTutorialsCheckbox setOn:isReplayTutorialsSelected];
@@ -294,6 +299,20 @@
 - (bool)isCacheEnabledSelected
 {
     return self.pCacheEnabledSwitch.isOn;
+}
+
+- (bool)isClearCacheSelected
+{
+    return self.pClearCacheCheckbox.isOn;
+}
+
+- (void)openClearCacheWarning
+{
+    Eegeo_ASSERT(![[self pOptionsCacheClearSubView] isDisplayed]);
+
+    [[self pOptionsCacheClearSubView] displayWarningInView:self.superview
+                                                    target:self
+                                                    action:@selector(clearCacheSelectionConfirmedHandler)];
 }
 
 - (void)concludeCacheClearCeremony
@@ -314,12 +333,7 @@
 
 - (void)cacheClearSelectionHandler
 {
-    Eegeo_ASSERT(![[self pOptionsCacheClearSubView] isDisplayed]);
-    
-    [[self pOptionsCacheClearSubView] displayWarningInView:self.superview
-                                                    target:self
-                                                    action:@selector(clearCacheSelectionConfirmedHandler)];
-    
+    m_pInterop->HandleClearCacheSelectionStateChanged();
 }
 
 - (void)replayTutorialsSelectionHandler
@@ -330,7 +344,7 @@
 
 - (void)clearCacheSelectionConfirmedHandler
 {
-    m_pInterop->HandleClearCacheSelected();
+    m_pInterop->HandleClearCacheTriggered();
 }
 
 - (ExampleApp::Options::View::OptionsViewInterop*)getInterop
@@ -384,7 +398,7 @@
 
 - (void)onTickButtonTapped
 {
-    m_pInterop->HandleCloseSelected();
+    m_pInterop->HandleOkSelected();
 }
 
 @end

@@ -186,6 +186,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CommonControls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DefaultStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -221,6 +225,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Strings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -228,6 +236,10 @@
     <Page Include="TransparentButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TransparentToggleButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AboutPage\AboutPageView.xaml">
       <SubType>Designer</SubType>
@@ -1730,6 +1742,24 @@
     <Resource Include="..\..\Resources\button_playtutorial_on.png">
       <Link>Assets\button_playtutorial_on.png</Link>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\radio_checkbox_off.png" />
+    <Resource Include="Assets\radio_checkbox_on.png" />
+    <Resource Include="Assets\slider_checkbox_off.png" />
+    <Resource Include="Assets\slider_checkbox_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\button_ok_off%40kiosk.png" />
+    <Resource Include="Assets\button_ok_off.png" />
+    <Resource Include="Assets\button_ok_on%40kiosk.png" />
+    <Resource Include="Assets\button_ok_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\admin_login_off.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\admin_login_on.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

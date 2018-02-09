@@ -70,6 +70,18 @@ namespace ExampleApp
                 return result;
             }
 
+            bool OptionsView::IsClearCacheSelected() const
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID isClearCacheSelected = env->GetMethodID(m_uiViewClass, "isClearCacheSelected", "()Z");
+                const bool result = env->CallBooleanMethod(m_uiView, isClearCacheSelected);
+                return result;
+            }
+
             void OptionsView::SetStreamOverWifiOnlySelected(bool isStreamOverWifiOnlySelected)
             {
                 ASSERT_UI_THREAD
@@ -92,6 +104,17 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, setCacheEnabledSelected, isCacheEnabledSelected);
             }
 
+            void OptionsView::SetClearCacheSelected(bool isClearCacheSelected)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID setClearCacheSelected = env->GetMethodID(m_uiViewClass, "setClearCacheSelected", "(Z)V");
+                env->CallVoidMethod(m_uiView, setClearCacheSelected, isClearCacheSelected);
+            }
+
             void OptionsView::SetReplayTutorialsSelected(bool isReplayTutorialsSelected)
             {
                 ASSERT_UI_THREAD
@@ -101,6 +124,17 @@ namespace ExampleApp
 
                 jmethodID setReplayTutorialsSelected = env->GetMethodID(m_uiViewClass, "setReplayTutorialsSelected", "(Z)V");
                 env->CallVoidMethod(m_uiView, setReplayTutorialsSelected, isReplayTutorialsSelected);
+            }
+
+            void OptionsView::OpenClearCacheWarning()
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID beginClearCacheCeremony = env->GetMethodID(m_uiViewClass, "openClearCacheWarning", "()V");
+                env->CallVoidMethod(m_uiView, beginClearCacheCeremony);
             }
 
             void OptionsView::Open()
@@ -143,6 +177,13 @@ namespace ExampleApp
                 m_closeCallbacks.ExecuteCallbacks();
             }
 
+            void OptionsView::HandleOkSelected()
+            {
+                ASSERT_UI_THREAD
+
+                m_okCallbacks.ExecuteCallbacks();
+            }
+
             void OptionsView::HandleStreamOverWifiOnlySelectionStateChanged()
             {
                 ASSERT_UI_THREAD
@@ -157,11 +198,18 @@ namespace ExampleApp
                 m_cacheEnabledCallbacks.ExecuteCallbacks();
             }
 
-            void OptionsView::HandleClearCacheSelected()
+            void OptionsView::HandleClearCacheSelectionStateChanged()
             {
                 ASSERT_UI_THREAD
 
                 m_clearCacheCallbacks.ExecuteCallbacks();
+            }
+
+            void OptionsView::HandleClearCacheTriggered()
+            {
+                ASSERT_UI_THREAD
+
+                m_clearCacheTriggeredCallbacks.ExecuteCallbacks();
             }
 
             void OptionsView::HandleReplayTutorialsToggled(bool enableTutorials)
@@ -183,6 +231,20 @@ namespace ExampleApp
                 m_closeCallbacks.RemoveCallback(callback);
             }
 
+            void OptionsView::InsertOkSelectedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_okCallbacks.AddCallback(callback);
+            }
+
+            void OptionsView::RemoveOkSelectedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_okCallbacks.RemoveCallback(callback);
+            }
+
             void OptionsView::InsertStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
@@ -197,32 +259,46 @@ namespace ExampleApp
                 m_wifiOnlyCallbacks.RemoveCallback(callback);
             }
 
-            void OptionsView::InsertCacheEnabledSelectionCallback(Eegeo::Helpers::ICallback0& callback)
+            void OptionsView::InsertCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
 
                 m_cacheEnabledCallbacks.AddCallback(callback);
             }
 
-            void OptionsView::RemoveCacheEnabledSelectionCallback(Eegeo::Helpers::ICallback0& callback)
+            void OptionsView::RemoveCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
 
                 m_cacheEnabledCallbacks.RemoveCallback(callback);
             }
 
-            void OptionsView::InsertClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback)
+            void OptionsView::InsertClearCacheSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
 
                 m_clearCacheCallbacks.AddCallback(callback);
             }
 
-            void OptionsView::RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback)
+            void OptionsView::RemoveClearCacheSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
 
                 m_clearCacheCallbacks.RemoveCallback(callback);
+            }
+
+            void OptionsView::InsertClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_clearCacheTriggeredCallbacks.AddCallback(callback);
+            }
+
+            void OptionsView::RemoveClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_clearCacheTriggeredCallbacks.RemoveCallback(callback);
             }
 
             void OptionsView::InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)

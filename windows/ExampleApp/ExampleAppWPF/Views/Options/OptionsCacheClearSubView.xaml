@@ -3,42 +3,83 @@
                     xmlns:local="clr-namespace:ExampleAppWPF">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Strings.xaml" />
         <ResourceDictionary Source="../../Colours.xaml" />
-        <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
+        <ResourceDictionary Source="../../CommonControls.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
     <Style TargetType="{x:Type local:OptionsCacheClearSubView}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:OptionsCacheClearSubView}">
-                    <Grid Background="#80000000" >
-                        <Grid Name="CacheClearCeremonyViewContainer" Width="550" Height="300" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0">
-                            <Grid Background="{StaticResource Gold}" VerticalAlignment="Stretch" >
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0" Name="CacheClearCeremonyViewHeader" Background="{StaticResource White}" Height="Auto" VerticalAlignment="Top">
-                                        <TextBlock Name="CacheClearCeremonyViewTitle" Height="40" Margin="10,5,5,0" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsCacheClearSubView}}, Path=Title}" Foreground="{StaticResource Gold}" FontSize="18"/>
-                                    </Grid>
-                                    <Grid Grid.Row="1" Background="{StaticResource White}">
-                                        <Grid>
-                                            <Border BorderBrush="{x:Null}" Margin="10,10,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="Auto">
-                                                <TextBlock Name="CacheClearCeremonyViewMessage" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:OptionsCacheClearSubView}}, Path=Content}" Foreground="{StaticResource DarkGrey}" FontSize="16"/>
-                                            </Border>
-                                            <ProgressBar Name="CacheClearCeremonyViewSpinner" Width="40" Height="40" Margin="5,5,5,5" VerticalAlignment="Bottom" IsIndeterminate="True" HorizontalAlignment="Center" Background="{StaticResource White}" Visibility="Hidden"/>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid Grid.Row="2" VerticalAlignment="Bottom" Name="CacheClearCeremonyViewFooter">
-                                        <Button Name="CacheClearCeremonyConfirmButton" Style="{StaticResource ConfirmPINbutton}" Width="60" Height="60" HorizontalAlignment="Left"/>
-                                        <Button Name="CacheClearCeremonyCloseButton" Style="{StaticResource CancelPINbutton}" Width="60" Height="60" HorizontalAlignment="Right"/>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
+                    <DockPanel Background="#80000000" >
+                        <Grid Name="CacheClearCeremonyViewContainer"
+                              Width="400" Height="600" VerticalAlignment="Center" HorizontalAlignment="Center"
+                              Background="{StaticResource White}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="70"/>
+                                <RowDefinition Height="2*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- title and close button -->
+                            <DockPanel Grid.Row="0"
+                                Height="50"
+                                Margin="20,3,16,0">
+                                <TextBlock
+                                       Foreground="{DynamicResource DarkSteelBlue}"
+                                       Text="{DynamicResource ClearCacheSubViewTitle}"
+                                       FontSize="20" FontFamily="{DynamicResource PrimaryUIFont}"
+                                       VerticalAlignment="Center"/>
+                                <Button Name="CacheClearCeremonyCloseButton" Style="{StaticResource Common_CloseButton}"
+                                        Width="36" Height="36"
+                                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                                        Visibility="Collapsed"/>
+                            </DockPanel>
+
+                            <!-- top separator + space -->
+                            <DockPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                                <Border HorizontalAlignment="Stretch" 
+                                        BorderBrush="{x:Null}" Height="1"
+                                        Margin="10,0,10,5"
+                                        Background="{DynamicResource DarkSteelBlue}"/>
+                            </DockPanel>
+
+                            <!-- messages -->
+                            <TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Foreground="{StaticResource EvenDarkerGrey}"
+                                Text="{Binding ContentBig}" FontSize="20" FontFamily="{DynamicResource PrimaryUIFont}"
+                                TextAlignment="Center"/>
+                            <TextBlock Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Foreground="{StaticResource DarkerGrey}"
+                                Width="250" TextWrapping="Wrap"
+                                Text="{Binding ContentSmall}" FontSize="14" FontFamily="{DynamicResource PrimaryUIFont}"
+                                TextAlignment="Center"/>
+
+                            <!-- Yes / No buttons and spinner -->
+                            <StackPanel Grid.Row="4" Orientation="Horizontal"
+                                        HorizontalAlignment="Center" VerticalAlignment="Top">
+                                <Button Name="CacheClearCeremonyConfirmButton"
+                                        Width="100" Height="40"
+                                        Margin="0,0,20,0"
+                                        Style="{StaticResource Common_FlatFullButton}"
+                                        Content="Yes"/>
+                                <Button Name="CacheClearCeremonyCancelButton"
+                                        Width="100" Height="40"
+                                        Margin="20,0,0,0"
+                                        Style="{StaticResource Common_FlatButton}"
+                                        Content="No"/>
+
+                                <Image Name="CacheClearCeremonyViewSpinner"
+                                       Source="{DynamicResource ClearCacheSubViewSpinnerImage}"
+                                       Stretch="None"
+                                       Style="{StaticResource Common_SpinnerImage}"
+                                       Visibility="Collapsed"/>
+                            </StackPanel>
                         </Grid>
-                    </Grid>
+                    </DockPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

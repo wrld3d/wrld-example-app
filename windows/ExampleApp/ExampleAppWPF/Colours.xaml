@@ -2,19 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ExampleAppWPF">
 
-    <SolidColorBrush x:Key="PrimaryBG_colour" Color="#1256B0"/>
-    <SolidColorBrush x:Key="PrimaryBG_Over_Colour" Color="#002B63"/>
-    <SolidColorBrush x:Key="PrimaryBG_Down_Colour" Color="#FFCDFC0D"/>
-    <SolidColorBrush x:Key="PrimaryIcon_colour" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="PrimaryIcon_Down_colour" Color="#002B63"/>
-    <SolidColorBrush x:Key="InputBoxBG_colour" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="InputTextColour" Color="#FF202020"/>
-    <SolidColorBrush x:Key="InputBoxIconBG_colour" Color="#FF6D6D6D"/>
-    <SolidColorBrush x:Key="InputBoxEmptyTextColour" Color="#808080"/>
-    <SolidColorBrush x:Key="ExpanderHeaderColour" Color="#FFE2E2E2"/>
-    <SolidColorBrush x:Key="POIdetailsColour" Color="#606060"/>
-    <SolidColorBrush x:Key="DarkButtonBG_colour" Color="#08408a"/>
-
     <SolidColorBrush x:Key="SubMenuItemDefaultColour" Color="#F2F2F2"/>
     <SolidColorBrush x:Key="SubMenuItemMouseOverColour" Color="#CCE4FF"/>
     <SolidColorBrush x:Key="SubMenuItemMouseDownColour" Color="#EDFCB0"/>
@@ -22,11 +9,17 @@
     <SolidColorBrush x:Key="SubMenuItemSubtitleColour" Color="#606060"/>
     <SolidColorBrush x:Key="AttractSubtitleColour" Color="#404040"/>
 
-    <SolidColorBrush x:Key="Gold" Color="#1256B0 "/>
+    <SolidColorBrush x:Key="Gold" Color="#1256B0 "/>    <!-- not anymore -->
     <SolidColorBrush x:Key="Olive" Color="#94a847 "/>
     <SolidColorBrush x:Key="White" Color="#ffffff "/>
+    <SolidColorBrush x:Key="WhiteSmoke" Color="#f0f0f0 "/>
+    <SolidColorBrush x:Key="DarkSteelBlue" Color="#2855aa" />
+    <SolidColorBrush x:Key="LightSteelBlue" Color="#cfe0fe" />
+    <SolidColorBrush x:Key="SlateBlue" Color="#6b8ecd" />
     <SolidColorBrush x:Key="Black" Color="#000000 "/>
     <SolidColorBrush x:Key="VeryDarkGrey" Color="#383838"/>
+    <SolidColorBrush x:Key="EvenDarkerGrey" Color="#505050"/>
+    <SolidColorBrush x:Key="DarkerGrey" Color="#707070 "/>
     <SolidColorBrush x:Key="DarkGrey" Color="#777777 "/>
     <SolidColorBrush x:Key="Grey" Color="#aaaaaa "/>
     <SolidColorBrush x:Key="LightGrey" Color="#CECECE"/>
@@ -35,6 +28,20 @@
     <SolidColorBrush x:Key="SubMenuSeparator" Color="#c6cecf "/>
     <SolidColorBrush x:Key="Transparent" Color="#00000000"/>
     <SolidColorBrush x:Key="Highlight" Color="#FF8DD8F8"/>
+
+    <SolidColorBrush x:Key="PrimaryBG_colour" Color="#1256B0"/>
+    <SolidColorBrush x:Key="PrimaryBG_Over_Colour" Color="#002B63"/>
+    <SolidColorBrush x:Key="PrimaryBG_Down_Colour" Color="{Binding Color, Source={StaticResource White}}"/>
+    <SolidColorBrush x:Key="PrimaryIcon_colour" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="PrimaryIcon_Down_colour" Color="#FF8080"/>
+    <!--Color="{Binding Color, Source={StaticResource DarkSteelBlue}}"/-->
+    <SolidColorBrush x:Key="InputBoxBG_colour" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="InputTextColour" Color="#FF202020"/>
+    <SolidColorBrush x:Key="InputBoxIconBG_colour" Color="#FF6D6D6D"/>
+    <SolidColorBrush x:Key="InputBoxEmptyTextColour" Color="#808080"/>
+    <SolidColorBrush x:Key="ExpanderHeaderColour" Color="#FFE2E2E2"/>
+    <SolidColorBrush x:Key="POIdetailsColour" Color="#606060"/>
+    <SolidColorBrush x:Key="DarkButtonBG_colour" Color="#08408a"/>
 
     <!-- Fonts -->
     <FontFamily x:Key="PrimaryUIFont">pack://application:,,,/Assets/#Open Sans</FontFamily>

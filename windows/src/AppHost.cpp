@@ -699,12 +699,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
 
-	Eegeo::Helpers::TIdentity settingsMenuIdentity = app.SearchResultPoiModule().GetObservableOpenableControl().GetIdentity();
-														 // settings? or SearchResultPoi?
+	Eegeo::Helpers::TIdentity searchResultsPoiIdentity = app.SearchResultPoiModule().GetObservableOpenableControl().GetIdentity();
 	Eegeo::Helpers::TIdentity searchMenuIdentity = app.SearchMenuModule().GetSearchMenuViewModel().GetIdentity();
 
-	app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
-	app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
+	app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(searchResultsPoiIdentity);
+	app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(searchResultsPoiIdentity);
 
 	app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
 	app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);

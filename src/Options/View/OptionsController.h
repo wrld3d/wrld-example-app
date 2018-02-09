@@ -21,6 +21,24 @@ namespace ExampleApp
             class OptionsController : private Eegeo::NonCopyable
             {
             private:
+                template<typename T>
+                class Change
+                {
+                    T m_oldValue;
+                    T m_newValue;
+                public:
+					Change(T safeDummyValue)	{ Init(safeDummyValue); }
+                    void Init(T initialValue)   { m_oldValue = m_newValue = initialValue; }
+                    T    GetValue()             { return m_newValue; }
+                    void SetValue(T value)      { m_newValue = value; }
+                    bool HasChanged()           { return m_newValue != m_oldValue; }
+                };
+
+                Change<bool> m_valueOfStreamOverWifiOnly;
+                Change<bool> m_valueOfCachingEnabled;
+                Change<bool> m_valueOfClearCacheSelected;
+                Change<bool> m_valueOfPlayTutorialAgainSelected;
+
                 IOptionsView& m_view;
                 IOptionsViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
@@ -32,9 +50,11 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelClosed;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelCacheClearCeremonyCompleted;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewCloseSelected;
+                Eegeo::Helpers::TCallback0<OptionsController> m_viewOkSelected;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewStreamOverWifiOnlySelectionChanged;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewCacheEnabledSelectionChanged;
-                Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheSelected;
+                Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheSelectionChanged;
+                Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheTriggered;
                 Eegeo::Helpers::TCallback1<OptionsController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
                 Eegeo::Helpers::TCallback1<OptionsController, bool> m_replayTutorialsToggled;
                 Eegeo::Helpers::TCallback1<OptionsController, bool> m_onReplayTutorialsModelChanged;
@@ -47,12 +67,16 @@ namespace ExampleApp
                 void OnViewModelCacheClearCeremonyCompleted();
 
                 void OnViewCloseSelected();
-                
+
+                void OnViewOkSelected();
+
                 void OnViewStreamOverWifiOnlySelectionChanged();
                 
                 void OnViewCacheEnabledSelectionChanged();
                 
-                void OnViewClearCacheSelected();
+                void OnViewClearCacheSelectionChanged();
+
+                void OnViewClearCacheTriggered();
 
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
 

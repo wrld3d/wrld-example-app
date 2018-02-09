@@ -34,14 +34,19 @@
 
 - (void) setCacheEnabledSelected:(bool)isCacheEnabledSelected;
 
+- (void) setClearCacheSelected:(bool)isclearCacheSelected;
+
 - (void) setReplayTutorialsSelected:(bool)isReplayTutorialsSelected;
 
 - (bool) isStreamOverWifiOnlySelected;
 
 - (bool) isCacheEnabledSelected;
 
-- (void) concludeCacheClearCeremony;
+- (bool) isClearCacheSelected;
 
+- (void) openClearCacheWarning;
+
+- (void) concludeCacheClearCeremony;
 
 
 @property (nonatomic, retain) UIButton* pCloseButton;

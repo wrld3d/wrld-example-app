@@ -4,13 +4,17 @@ package com.eegeo.options;
 
 public class OptionsViewJniMethods 
 {
-	 public static native void CloseButtonSelected(long nativeCallerPointer);
-	 
-	 public static native void StreamOverWifiToggled(long nativeCallerPointer);
-	 
-	 public static native void CachingEnabledToggled(long nativeCallerPointer);
-	 
-	 public static native void ClearCacheSelected(long nativeCallerPointer);
+	public static native void CloseButtonSelected(long nativeCallerPointer);
 
-	 public static native void PlayTutorialAgainToggled(long nativeCallerPointer, boolean enabled);
+	public static native void OkButtonSelected(long nativeCallerPointer);
+
+	public static native void StreamOverWifiToggled(long nativeCallerPointer);
+
+	public static native void CachingEnabledToggled(long nativeCallerPointer);
+
+	public static native void ClearCacheToggled(long nativeCallerPointer);
+
+	public static native void ClearCacheTriggered(long nativeCallerPointer);
+
+	public static native void PlayTutorialAgainToggled(long nativeCallerPointer, boolean enabled);
 }

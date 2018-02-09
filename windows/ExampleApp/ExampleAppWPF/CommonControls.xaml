@@ -1,0 +1,265 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ExampleAppWPF">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Colours.xaml" />
+        <ResourceDictionary Source="TransparentButtonStyle.xaml" />
+        <ResourceDictionary Source="TransparentToggleButtonStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ImageSource x:Key="Common_SliderToggleButtonOffImage">/Assets/slider_checkbox_off.png</ImageSource>
+    <ImageSource x:Key="Common_SliderToggleButtonOnImage">/Assets/slider_checkbox_on.png</ImageSource>
+    <ImageSource x:Key="Common_RadioToggleButtonOffImage">/Assets/radio_checkbox_off.png</ImageSource>
+    <ImageSource x:Key="Common_RadioToggleButtonOnImage">/Assets/radio_checkbox_on.png</ImageSource>
+    <ImageSource x:Key="Common_CloseButtonOffImage">/Assets/button_close_off.png</ImageSource>
+    <ImageSource x:Key="Common_CloseButtonOnImage">/Assets/button_close_on.png</ImageSource>
+    <ImageSource x:Key="Common_OkButtonOffImage">/Assets/button_ok_off.png</ImageSource>
+    <ImageSource x:Key="Common_OkButtonOnImage">/Assets/button_ok_on.png</ImageSource>
+
+    <SolidColorBrush x:Key="Common_CloseButtonOffColour"  Color="{Binding Color, Source={StaticResource White}}"/>
+    <SolidColorBrush x:Key="Common_CloseButtonOnColour"   Color="{Binding Color, Source={StaticResource LightSteelBlue}}"/>
+    <SolidColorBrush x:Key="Common_CloseButtonOverColour" Color="{Binding Color, Source={StaticResource WhiteSmoke}}"/>
+    <SolidColorBrush x:Key="Common_OkButtonOffColour"     Color="{Binding Color, Source={StaticResource WhiteSmoke}}"/>
+    <SolidColorBrush x:Key="Common_OkButtonOnColour"      Color="{Binding Color, Source={StaticResource LightSteelBlue}}"/>
+    <SolidColorBrush x:Key="Common_OkButtonOverColour"    Color="{Binding Color, Source={StaticResource White}}"/>
+
+    <Style x:Key="Common_CloseButton" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle2">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="rectangle1" Fill="{StaticResource Common_CloseButtonOffColour}" Margin="0"/>
+                        <Rectangle x:Name="rectangle" Fill="{StaticResource Common_CloseButtonOverColour}" Margin="0" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle2" Fill="{StaticResource Common_CloseButtonOnColour}" Margin="0" Visibility="Hidden"/>
+                        <Image x:Name="image" Source="{StaticResource Common_CloseButtonOffImage}"/>
+                        <Image x:Name="image1" Source="{StaticResource Common_CloseButtonOnImage}" Visibility="Hidden"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Common_OkButton" TargetType="{x:Type Button}">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle2">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="image1">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled"/>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="rectangle1" Fill="{StaticResource Common_OkButtonOffColour}" Margin="0"/>
+                        <Rectangle x:Name="rectangle" Fill="{StaticResource Common_OkButtonOverColour}" Margin="0" Visibility="Hidden"/>
+                        <Rectangle x:Name="rectangle2" Fill="{StaticResource Common_OkButtonOnColour}" Margin="0" Visibility="Hidden"/>
+                        <Image x:Name="image" Source="{StaticResource Common_OkButtonOffImage}"/>
+                        <Image x:Name="image1" Source="{StaticResource Common_OkButtonOnImage}" Visibility="Hidden"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Common_Slider_ToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource TransparentToggleButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Source="{StaticResource Common_SliderToggleButtonOnImage}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="False">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Source="{StaticResource Common_SliderToggleButtonOffImage}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="Common_Radio_ToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource TransparentToggleButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Source="{StaticResource Common_RadioToggleButtonOnImage}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="False">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Source="{StaticResource Common_RadioToggleButtonOffImage}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="Common_FlatButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsPressed" Value="False">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Border BorderBrush="{StaticResource DarkSteelBlue}" BorderThickness="1">
+                                <DockPanel Background="{StaticResource White}">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{TemplateBinding Content}" FontSize="18" FontFamily="{DynamicResource PrimaryUIFont}"
+                                           Foreground="{StaticResource DarkSteelBlue}"/>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Border BorderBrush="{StaticResource DarkSteelBlue}" BorderThickness="1">
+                                <DockPanel Background="{StaticResource LightSteelBlue}">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{TemplateBinding Content}" FontSize="18" FontFamily="{DynamicResource PrimaryUIFont}"
+                                           Foreground="{StaticResource DarkSteelBlue}"/>
+                                </DockPanel>
+                            </Border>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="Common_FlatFullButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsPressed" Value="False">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <DockPanel Background="{StaticResource DarkSteelBlue}">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{TemplateBinding Content}" FontSize="18" FontFamily="{DynamicResource PrimaryUIFont}"
+                                           Foreground="{StaticResource White}"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <DockPanel Background="{StaticResource LightSteelBlue}">
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{TemplateBinding Content}" FontSize="18" FontFamily="{DynamicResource PrimaryUIFont}"
+                                           Foreground="{StaticResource White}"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="Common_SpinnerImage" TargetType="{x:Type Image}">
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <RotateTransform x:Name="Common_SpinnerRotation" Angle="0"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="RenderTransformOrigin">
+            <Setter.Value>
+                <Point X="0.5" Y="0.5"/>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Visibility" Value="Visible">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.(RotateTransform.Angle)"
+                                             From="0.0" To="360.0" Duration="0:0:1"
+                                             RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
