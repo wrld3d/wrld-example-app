@@ -101,7 +101,7 @@ namespace ExampleApp
                 
                 const Eegeo::Markers::IMarker::IdType markerId = m_markerService.Create(markerCreateParams);
                 const WorldPinItemModel::WorldPinItemModelId pinId = markerId;
-                
+
                 m_pinsToIconKeys[pinId] = pinIconKey;
                 
                 Eegeo_ASSERT(m_pinsToSelectionHandlers.find(pinId) == m_pinsToSelectionHandlers.end(), "Attempting to add same pin ID %d twice.\n", pinId);
@@ -179,7 +179,7 @@ namespace ExampleApp
             {
                 if(pinItemModel != nullptr)
                 {
-                    bool pinAlreadySelected = m_selectedPinId == pinItemModel->Id();
+                    const bool pinAlreadySelected = m_selectedPinId == pinItemModel->Id();
 
                     UpdateLabelStyle(pinItemModel, "selected_default");
 
@@ -280,13 +280,18 @@ namespace ExampleApp
                     .Build();
 
                 const Eegeo::Markers::IMarker::IdType markerId = m_markerService.Create(markerCreateParams);
-                pinId = markerId;
+                const auto newPinId = markerId;
 
-                m_pinsToSelectionHandlers[pinId] = pSelectionHandler;
-                m_pinsToVisbilityChangedHandlers[pinId] = pVisibilityStateChangedHandler;
-                m_pinsToIconKeys[pinId] = iconKey;
+                Eegeo_ASSERT(m_pinsToSelectionHandlers.find(newPinId) == m_pinsToSelectionHandlers.end());
+                m_pinsToSelectionHandlers[newPinId] = pSelectionHandler;
 
-                pinItemModel->SetId(pinId);
+                Eegeo_ASSERT(m_pinsToVisbilityChangedHandlers.find(newPinId) == m_pinsToVisbilityChangedHandlers.end());
+                m_pinsToVisbilityChangedHandlers[newPinId] = pVisibilityStateChangedHandler;
+
+                Eegeo_ASSERT(m_pinsToIconKeys.find(newPinId) == m_pinsToIconKeys.end());
+                m_pinsToIconKeys[newPinId] = iconKey;
+
+                pinItemModel->SetId(newPinId);
             }
             
             void WorldPinsService::UpdatePinCategory(const WorldPinItemModel& pinItemModel, const std::string& iconKey)
