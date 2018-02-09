@@ -118,6 +118,7 @@ namespace ExampleApp
                 
                 std::map<WorldPinItemModel::WorldPinItemModelId, std::string> m_pinsToIconKeys;
 
+                // this is the long-lived identifier pulled from pin.GetIdentifier(), not the pin id
                 std::string m_selectedSearchResultId;
 
                 WorldPinItemModel* m_pSelectedPinHighlight;

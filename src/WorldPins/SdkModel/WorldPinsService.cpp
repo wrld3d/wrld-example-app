@@ -119,8 +119,18 @@ namespace ExampleApp
                                                                         visibilityMask,
                                                                         m_sdkModelDomainEventBus,
                                                                         identifier);
-            
+
                 m_worldPinsRepository.AddItem(model);
+
+                // Part of hacky fix for MPLY-9055
+                // if we've previously selected a search result, then clear the search results by
+                // re-searching, the pins will be removed then re-added. When a pin is added that
+                // represents the _same_ item that was previously selected, we want it to be
+                // highlighted
+                if(model->GetIdentifier() == m_selectedSearchResultId)
+                {
+                    AddHighlight(model);
+                }
 
                 return model;
             }
@@ -324,7 +334,9 @@ namespace ExampleApp
                     }
 
                     selectionHandler->SelectPin();
-                    ClearSelectedSearchResult();
+
+                    // Part of hacky fix for MPLY-9055
+                    //ClearSelectedSearchResult();
                 }
             }
             
