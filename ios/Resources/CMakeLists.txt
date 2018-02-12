@@ -1,4 +1,13 @@
 set(resources ${resources}
+		Resources/ReportPinIcon.png
+		Resources/ReportPinIcon@2x.png
+		Resources/ReportPinIcon@3x.png
+		Resources/BinButton.png
+		Resources/BinButton@2x.png
+		Resources/BinButton@3x.png
+		Resources/BinButton_Down.png
+		Resources/BinButton_Down@2x.png
+		Resources/BinButton_Down@3x.png
 		Resources/ButtonGallery.png
 		Resources/ButtonGallery@2x.png
 		Resources/ButtonGallery@3x.png
@@ -441,16 +450,6 @@ set(resources ${resources}
         Resources/button_playtutorial_on.png
         Resources/button_playtutorial_on@2x.png
         Resources/button_playtutorial_on@3x.png
-        Resources/button_remove_pin_off.png
-        Resources/button_remove_pin_off@0.75x.png
-        Resources/button_remove_pin_off@1.5x.png
-        Resources/button_remove_pin_off@2x.png
-        Resources/button_remove_pin_off@3x.png
-        Resources/button_remove_pin_on.png
-        Resources/button_remove_pin_on@0.75x.png
-        Resources/button_remove_pin_on@1.5x.png
-        Resources/button_remove_pin_on@2x.png
-        Resources/button_remove_pin_on@3x.png
         Resources/button_search_off.png
         Resources/button_search_off@2x.png
         Resources/button_search_off@3x.png
