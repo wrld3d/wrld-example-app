@@ -31,7 +31,6 @@
 #include "ViewControllerUpdater.h"
 #include "MenuViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
-#include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
@@ -143,7 +142,6 @@ private:
     Eegeo::Windows::WindowsPlatformAbstractionModule* m_pWindowsPlatformAbstractionModule;
     ExampleApp::SearchMenu::View::SearchMenuViewModule* m_pSearchMenuViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
-    ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
 	ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;

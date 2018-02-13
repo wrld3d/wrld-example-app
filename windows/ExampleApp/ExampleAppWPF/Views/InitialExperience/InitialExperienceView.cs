@@ -29,7 +29,6 @@ namespace ExampleAppWPF
 
         private readonly string MapModeDialogName = "MapModeDialog";
         private PositionedDialog m_positionedMapModeDialog;
-        private TutorialTooltipPositionTracker m_mapModePositionTracker;
 
         private readonly string CreateReportDialogName = "CreateReportDialog";
         private PositionedDialog m_positionedCreateReportDialog;
@@ -67,9 +66,6 @@ namespace ExampleAppWPF
                 ((TranslateTransform)mapModeDialog.RenderTransform).Y = y - ((mapModeDialog.GetTooltipHeight() - h) / 2);
             });
 
-            FlattenButtonView flattenButtonView = ViewHelpers.FindChildrenOfType<FlattenButtonView>(m_mainWindow.MainGrid.Children).Single();
-            m_mapModePositionTracker = new TutorialTooltipPositionTracker(m_mainWindow, flattenButtonView);
-            m_mapModePositionTracker.OnUpdateTransform += m_positionedMapModeDialog.DialogPosition;
             mapModeDialog.RenderTransformOrigin = new Point(0.0, 0.0);
             mapModeDialog.RenderTransform = new TranslateTransform();
 

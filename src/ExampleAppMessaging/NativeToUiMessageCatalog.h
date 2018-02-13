@@ -9,7 +9,6 @@
 #include "SearchQueryPerformedMessage.h"
 #include "SearchQueryRemovedMessage.h"
 #include "SearchQueryResultsRemovedMessage.h"
-#include "FlattenButtonModelStateChangedMessage.h"
 #include "SearchQueryResponseReceivedMessage.h"
 #include "CompassModeChangedMessage.h"
 #include "CompassHeadingUpdateMessage.h"
@@ -59,7 +58,6 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryPerformedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResultsRemovedMessage>
-            , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonModelStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResponseReceivedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassModeChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassHeadingUpdateMessage>

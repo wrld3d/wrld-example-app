@@ -8,7 +8,6 @@
         <ResourceDictionary Source="../TransparentButtonStyle.xaml" />
         <ResourceDictionary Source="../SimpleSlider.xaml" />
         <ResourceDictionary Source="../Views/Options/OptionsView.xaml" />
-        <ResourceDictionary Source="../Views/FlattenButton/FlattenButtonView.xaml" />
         <ResourceDictionary Source="../Views/Compass/CompassView.xaml" />
         <ResourceDictionary Source="../Views/AboutPage/AboutPageView.xaml" />
         <ResourceDictionary Source="../Views/MyPinCreationInitiation/MyPinCreationButtonView.xaml" />

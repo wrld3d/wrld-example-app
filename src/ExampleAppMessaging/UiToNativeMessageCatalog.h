@@ -9,7 +9,6 @@
 #include "TagSearchSelectedMessage.h"
 #include "PlaceJumpSelectedMessage.h"
 #include "ModalityChangedMessage.h"
-#include "FlattenButtonViewStateChangedMessage.h"
 #include "CompassViewCycledMessage.h"
 #include "SearchResultViewClearedMessage.h"
 #include "MyPinCreationViewStateChangedMessage.h"
@@ -51,7 +50,6 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<PlaceJumps::PlaceJumpSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<Modality::ModalityChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Modality::UpdateNativeModalBackgroundMessage>
-            , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonViewStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassViewCycledMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultViewClearedMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewStateChangedMessage>

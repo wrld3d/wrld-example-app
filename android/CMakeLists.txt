@@ -256,9 +256,6 @@ include_directories(
     ../src/DoubleTapIndoorInteraction/SdkModel
     ../src/ExampleAppMessaging
     ../src/FixedLocation
-    ../src/FlattenButton
-    ../src/FlattenButton/SdkModel
-    ../src/FlattenButton/View
     ../src/GpsMarker
     ../src/GpsMarker/SdkModel
     ../src/Helpers
@@ -395,8 +392,6 @@ include_directories(
     jni/ApplicationConfig/SdkModel
     jni/Compass
     jni/Compass/View
-    jni/FlattenButton
-    jni/FlattenButton/View
     jni/Helpers
     jni/InitialExperience
     jni/InitialExperience/Preload

@@ -41,8 +41,6 @@
 #include "SearchResultRepository.h"
 #include "SearchResultPoiModule.h"
 #include "AndroidPlatformAbstractionModule.h"
-#include "FlattenButtonModule.h"
-#include "FlattenButtonViewModule.h"
 #include "SearchResultPoiViewModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
@@ -126,7 +124,6 @@ AppHost::AppHost(
     ,m_pSearchMenuViewModule(NULL)
 	,m_pSearchResultSectionViewModule(NULL)
     ,m_pModalBackgroundViewModule(NULL)
-    ,m_pFlattenButtonViewModule(NULL)
     ,m_pMyPinCreationViewModule(NULL)
     ,m_pMyPinCreationDetailsViewModule(NULL)
     ,m_pMyPinDetailsViewModule(NULL)
@@ -482,13 +479,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     // 3d map view layer.
 
     // HUD behind modal background layer.
-    m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
-                                     m_nativeState,
-                                     app.FlattenButtonModule().GetFlattenButtonViewModel(),
-                                     m_messageBus,
-                                     *m_pAndroidFlurryMetricsService
-                                 );
-
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
                                      m_nativeState,
                                      app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
@@ -626,8 +616,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pInteriorsExplorerViewModule;
 
         Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
-
-        Eegeo_DELETE m_pFlattenButtonViewModule;
 
         Eegeo_DELETE m_pMyPinCreationViewModule;
 

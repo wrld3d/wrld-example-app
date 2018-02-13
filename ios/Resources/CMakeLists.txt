@@ -396,12 +396,6 @@ set(resources ${resources}
         Resources/button_exit_interior_on.png
         Resources/button_exit_interior_on@2x.png
         Resources/button_exit_interior_on@3x.png
-        Resources/button_flatten_off.png
-        Resources/button_flatten_off@2x.png
-        Resources/button_flatten_off@3x.png
-        Resources/button_flatten_on.png
-        Resources/button_flatten_on@2x.png
-        Resources/button_flatten_on@3x.png
         Resources/button_gallery_off.png
         Resources/button_gallery_off@2x.png
         Resources/button_gallery_off@3x.png
@@ -462,12 +456,6 @@ set(resources ${resources}
         Resources/button_settings_on.png
         Resources/button_settings_on@2x.png
         Resources/button_settings_on@3x.png
-        Resources/button_unflatten_off.png
-        Resources/button_unflatten_off@2x.png
-        Resources/button_unflatten_off@3x.png
-        Resources/button_unflatten_on.png
-        Resources/button_unflatten_on@2x.png
-        Resources/button_unflatten_on@3x.png
         Resources/character.pvr
         Resources/charactercisco.png
         Resources/charactercisco.pvr

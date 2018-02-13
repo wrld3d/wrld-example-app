@@ -39,8 +39,6 @@
 #include "SearchResultRepository.h"
 #include "SearchResultPoiModule.h"
 #include "WindowsPlatformAbstractionModule.h"
-#include "FlattenButtonModule.h"
-#include "FlattenButtonViewModule.h"
 #include "SearchResultPoiViewModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
@@ -138,7 +136,6 @@ AppHost::AppHost(
     , m_pSearchMenuViewModule(NULL)
     , m_pSearchResultSectionViewModule(NULL)
     , m_pModalBackgroundViewModule(NULL)
-    , m_pFlattenButtonViewModule(NULL)
     , m_pGpsMarkerTutorialViewModule(NULL)
     , m_pMyPinCreationViewModule(NULL)
     , m_pMyPinCreationDetailsViewModule(NULL)
@@ -165,13 +162,13 @@ AppHost::AppHost(
     , m_screenProperties(screenProperties)
 {
     ASSERT_NATIVE_THREAD
-         
+
 	Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
 
-    
+
     static LocationOverride locationOverride;
     locationOverride.latRadians = Eegeo::Math::Deg2Rad(51.512432);
     locationOverride.lonRadians = Eegeo::Math::Deg2Rad(-0.091633);
@@ -250,7 +247,7 @@ AppHost::AppHost(
         m_messageBus,
         m_sdkDomainEventBus,
         *m_pNetworkCapabilities,
-        *m_pWindowsFlurryMetricsService,        
+        *m_pWindowsFlurryMetricsService,
         *this,
         *m_pMenuReaction,
         *m_pUserIdleService);
@@ -551,13 +548,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     // 3d map view layer.
 
     // HUD behind modal background layer.
-    m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
-        m_nativeState,
-        app.FlattenButtonModule().GetFlattenButtonViewModel(),
-        m_messageBus,
-        *m_pWindowsFlurryMetricsService
-        );
-
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(
         m_nativeState,
         app.CompassModule().GetCompassViewModel(),
@@ -601,7 +591,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.SearchMenuModule().GetSearchMenuViewModel(),
 		m_messageBus,
 		*m_pMenuReaction);
-    
+
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
         app.SearchMenuModule().GetSearchMenuViewModel(),
         app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
@@ -726,8 +716,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
             Eegeo_DELETE m_pOptionsViewModule;
 
             Eegeo_DELETE m_pMyPinCreationDetailsViewModule;
-
-            Eegeo_DELETE m_pFlattenButtonViewModule;
 
             Eegeo_DELETE m_pMyPinCreationViewModule;
 

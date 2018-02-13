@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:System="clr-namespace:System;assembly=mscorlib" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
     mc:Ignorable="d">
 
     <ResourceDictionary.MergedDictionaries>
@@ -102,7 +102,7 @@
     <System:Double x:Key="DialogBoxButtonContainerHeight">60</System:Double>
     <System:Double x:Key="DialogBoxButtonWidth">185</System:Double>
     <System:Double x:Key="DialogBoxButtonGap">30</System:Double>
-    
+
     <!-- POI View -->
     <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOffImage">/Assets/button_remove_pin_off.png</ImageSource>
     <ImageSource x:Key="POIViewAddRemovePinButtonRemoveOnImage">/Assets/button_remove_pin_on.png</ImageSource>
@@ -112,7 +112,7 @@
     <Thickness x:Key="POIViewAddRemoveButtonMargin" Left="115" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="POIViewAddRemovePinButtonFontSize">28</System:Double>
     <Thickness x:Key="POIViewAddRemoveButtonTextMargin" Left="165" Top="-5" Right="0" Bottom="0"/>
-    
+
     <ImageSource x:Key="POIViewPlaceholderImage">/Assets/poi_placeholder@kiosk.png</ImageSource>
     <System:Double x:Key="POIViewPlaceholderImageGradientHeight">94</System:Double>
     <ImageSource x:Key="POIViewSpinnerImage">/Assets/search_results_spinner@kiosk.png</ImageSource>
@@ -190,12 +190,12 @@
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsPhoneMargin" Left="5" Top="15" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowPersonPOIViewLowerDetailsPhoneFontSize">26</System:Double>
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsPhoneTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
-    
+
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressMargin" Left="5" Top="15" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowPersonPOIViewLowerDetailsAddressFontSize">26</System:Double>
     <Thickness x:Key="SwallowPersonPOIViewLowerDetailsAddressTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
-    
+
     <Thickness x:Key="SwallowPOIViewDetailsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
 
     <Thickness x:Key="SwallowPersonPOIViewTagsMargin" Left="5" Top="0" Right="0" Bottom="0"/>
@@ -220,7 +220,7 @@
     <System:Double x:Key="SwallowFacilityPOIViewReviewsFontSize">26</System:Double>
     <Thickness x:Key="SwallowFacilityPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
 
-    <!-- Swallow Meeting Room POI View --> 
+    <!-- Swallow Meeting Room POI View -->
     <Thickness x:Key="SwallowMeetingRoomPOIViewTitleTextMargin" Left="15" Top="6" Right="0" Bottom="-10"/>
 
     <System:Double x:Key="SwallowMeetingRoomPOIViewButtonOccupancyWidth">240</System:Double>
@@ -239,16 +239,16 @@
 
     <Visibility x:Key="SwallowMeetingRoomPOIViewDetailsInnerDividerVisibility">Visible</Visibility>
     <Thickness x:Key="SwallowMeetingRoomPOIViewDetailsInnerDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
-    
+
     <System:Double x:Key="SwallowMeetingRoomPOIViewLowerDetailsContainerMaxHeight">280</System:Double>
     <Thickness x:Key="SwallowMeetingRoomPOIViewContentAvailabilityMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="SwallowMeetingRoomPOIViewContentAvailableButtonPadding" Left="0" Top="10" Right="0" Bottom="5"/>
     <Thickness x:Key="SwallowMeetingRoomPOIViewContentAvailableSoonButtonPadding" Left="0" Top="5" Right="0" Bottom="5"/>
     <Thickness x:Key="SwallowMeetingRoomPOIViewContentOccupiedButtonPadding" Left="0" Top="5" Right="0" Bottom="5"/>
-    
+
     <Visibility x:Key="SwallowMeetingRoomPOIViewDetailsDividerVisibility">Collapsed</Visibility>
     <Thickness x:Key="SwallowMeetingRoomPOIViewDetailsDividerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
-    
+
     <!-- Swallow Department POI View -->
 	<Thickness x:Key="SwallowDepartmentPOIViewTitleTextMargin" Left="25" Top="10" Right="0" Bottom="0"/>
 
@@ -259,7 +259,7 @@
     <Thickness x:Key="SwallowDepartmentPOIViewReviewsIconMargin" Left="0" Top="2" Right="0" Bottom="0"/>
     <System:Double x:Key="SwallowDepartmentPOIViewReviewsFontSize">26</System:Double>
     <Thickness x:Key="SwallowDepartmentPOIViewReviewsTextMargin" Left="40" Top="-4" Right="0" Bottom="0"/>
-    
+
     <!-- Eegeo POI View -->
     <System:Double x:Key="EegeoPOIViewContainerWidth">540</System:Double>
     <Thickness x:Key="EegeoPOIViewContainerMargin" Left="0" Top="20" Right="0" Bottom="20"/>
@@ -290,24 +290,24 @@
 
     <Thickness x:Key="EegeoPOIViewDetailsDividerMargin" Left="0" Top="6" Right="0" Bottom="15"/>
     <System:Double x:Key="EegeoPOIViewDetailsContainerMaxHeight">280</System:Double>
-    
+
     <Thickness x:Key="EegeoPOIViewDetailsPhoneMargin" Left="5" Top="0" Right="0" Bottom="15"/>
     <System:Double x:Key="EegeoPOIViewDetailsPhoneFontSize">26</System:Double>
     <Thickness x:Key="EegeoPOIViewDetailsPhoneTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
-    
+
     <Thickness x:Key="EegeoPOIViewDetailsAddressMargin" Left="5" Top="0" Right="0" Bottom="15"/>
     <Thickness x:Key="EegeoPOIViewDetailsAddressIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="EegeoPOIViewDetailsAddressFontSize">26</System:Double>
     <Thickness x:Key="EegeoPOIViewDetailsAddressTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
-    
+
     <Visibility x:Key="EegeoPOIViewDetailsWebLinksVisibility">Collapsed</Visibility>
-    
+
     <Thickness x:Key="EegeoPOIViewDetailsTagsDividerMargin" Left="0" Top="0" Right="0" Bottom="15"/>
     <Thickness x:Key="EegeoPOIViewDetailsTagsMargin" Left="5" Top="0" Right="0" Bottom="15"/>
     <Thickness x:Key="EegeoPOIViewDetailsTagsIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="EegeoPOIViewDetailsTagsFontSize">26</System:Double>
     <Thickness x:Key="EegeoPOIViewDetailsTagsTextMargin" Left="40" Top="0" Right="0" Bottom="0"/>
-    
+
     <Thickness x:Key="EegeoPOIViewDetailsReviewDividerMargin" Left="0" Top="0" Right="0" Bottom="15"/>
     <Thickness x:Key="EegeoPOIViewDetailsReviewMargin" Left="5" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="EegeoPOIViewDetailsReviewIconMargin" Left="0" Top="0" Right="0" Bottom="0"/>
@@ -342,7 +342,7 @@
     <System:Double x:Key="YelpPOIViewTitleFontSize">30</System:Double>
     <Thickness x:Key="YelpPOIViewTitleTextMargin" Left="15" Top="10" Right="0" Bottom="0"/>
     <Visibility x:Key="YelpPOIViewDetailsTitleDividerVisibility">Collapsed</Visibility>
-    
+
     <Thickness x:Key="YelpPOIViewContentContainerMargin" Left="0" Top="10" Right="0" Bottom="20"/>
     <ScrollBarVisibility x:Key="YelpPOIViewContentContainerScrollBarVisibility">Hidden</ScrollBarVisibility>
 
@@ -354,7 +354,7 @@
     <GridLength x:Key="YelpPOIViewDetailsColumn2Width">0</GridLength>
     <GridLength x:Key="YelpPOIViewDetailsRow0Height">380</GridLength>
     <GridLength x:Key="YelpPOIViewDetailsRow1Height">10</GridLength>
-    
+
     <Thickness x:Key="YelpPOIViewRatingContainerMargin" Left="0" Top="0" Right="0" Bottom="5"/>
     <Thickness x:Key="YelpPOIViewRatingImageMargin" Left="5" Top="5" Right="5" Bottom="5"/>
     <System:Double x:Key="YelpPOIViewRatingImageWidth">138</System:Double>
@@ -363,7 +363,7 @@
     <System:Double x:Key="YelpPOIViewRatingReviewCountHeight">20</System:Double>
     <Thickness x:Key="YelpPOIViewRatingReviewCountMargin" Left="3" Top="0" Right="0" Bottom="0"/>
     <System:Double x:Key="YelpPOIViewRatingReviewCountFontSize">16</System:Double>
-    
+
     <Thickness x:Key="YelpPOIViewVendorButtonMargin" Left="0" Top="0" Right="0" Bottom="-50"/>
     <Thickness x:Key="YelpPOIViewVendorButtonImageMargin" Left="5" Top="10" Right="5" Bottom="5"/>
     <ImageSource x:Key="YelpPOIViewVendorButtonImage">/Assets/yelp_reviews@kiosk.png</ImageSource>
@@ -455,9 +455,9 @@
     <Thickness x:Key="SettingsAnimCloseBackgroundRectMargin" Left="515" Top="0" Right="0" Bottom="0"/>
 
     <Thickness x:Key="SettingsBackgroundRectangleMargin" Left="515" Top="0" Right="0" Bottom="0"/>
-    
+
     <Thickness x:Key="SettingsMenuViewContainerMargin" Left="0" Top="50" Right="0" Bottom="0"/>
-    
+
     <ImageSource x:Key="ButtonSettingsOffImage">Assets/button_settings_off@kiosk.png</ImageSource>
     <ImageSource x:Key="ButtonSettingsOnImage">Assets/button_settings_on@kiosk.png</ImageSource>
 
@@ -539,16 +539,6 @@
     <System:Double x:Key="SearchResultsScrollButtonSize">48</System:Double>
     <ImageSource x:Key="SearchResultsScrollButtonOffImage">/Assets/search_results_scroll_button@kiosk.png</ImageSource>
     <ImageSource x:Key="SearchResultsScrollButtonDownImage">/Assets/search_results_scroll_button_down@kiosk.png</ImageSource>
-
-    <!-- Flatten Button -->
-    <ImageSource x:Key="FlattenButtonOffImage">Assets/button_flatten_off@kiosk.png</ImageSource>
-    <ImageSource x:Key="FlattenButtonOnImage">Assets/button_flatten_on@kiosk.png</ImageSource>
-    <ImageSource x:Key="FlattenButtonOffOverImage">Assets/button_flatten_off@kiosk.png</ImageSource>
-    <ImageSource x:Key="UnflattenButtonOffImage">Assets/button_unflatten_off@kiosk.png</ImageSource>
-    <ImageSource x:Key="UnflattenButtonOnImage">Assets/button_unflatten_off@kiosk.png</ImageSource>
-    <ImageSource x:Key="UnflattenButtonOnOverImage">Assets/button_unflatten_on_over@kiosk.png</ImageSource>
-    <System:Double x:Key="FlattenButtonSize">102</System:Double>
-    <System:Double x:Key="FlattenButtonMarginToCentre">52</System:Double>
 
     <!-- Compass -->
     <ImageSource x:Key="CompassNewImage">Assets/compass_new@kiosk.png</ImageSource>
@@ -703,7 +693,7 @@
 
     <!-- Text Button -->
     <System:Double x:Key="TextButtonFontSize">36</System:Double>
-    
+
     <!-- Elevator Control -->
     <Thickness x:Key="InteriorFloorLableMargin" Left="0" Top="50" Right="0" Bottom="0"/>
     <System:Double x:Key="ExitButtonSize">80</System:Double>

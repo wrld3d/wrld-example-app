@@ -25,8 +25,6 @@
 #include "SearchMenuViewModule.h"
 #include "SearchMenuView.h"
 #include "ModalBackgroundView.h"
-#include "FlattenButtonView.h"
-#include "FlattenButtonViewModule.h"
 #include "SearchResultPoiViewModule.h"
 #include "SearchResultPoiView.h"
 #include "SearchResultSectionModule.h"
@@ -339,12 +337,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                            m_messageBus,
                                                                                                            m_iOSFlurryMetricsService,
                                                                                                            app.GetSwallowSearchTags());
-
-    m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
-                                     app.FlattenButtonModule().GetFlattenButtonViewModel(),
-                                     screenProperties,
-                                     m_messageBus,
-                                     m_iOSFlurryMetricsService);
     
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
                            screenProperties,
@@ -400,7 +392,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pInitialExperienceIntroViewModule->GetIntroBackgroundView()];
 
     // HUD behind modal background layer.
-    [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
     [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
@@ -442,7 +433,6 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pInitialExperienceIntroViewModule->GetIntroBackgroundView() removeFromSuperview];
 
     // HUD behind modal background layer.
-    [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
     [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
@@ -493,8 +483,6 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pTagSearchViewModule;
 
     Eegeo_DELETE m_pSearchMenuViewModule;
-    
-    Eegeo_DELETE m_pFlattenButtonViewModule;
     
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;
 }
