@@ -318,6 +318,8 @@
     
      self.pBodyScrollView.contentSize = self.pBodyContainer.frame.size;
     
+    [self.pBodyScrollView setContentOffset:CGPointMake(0, -self.pBodyScrollView.contentInset.top) animated:NO];
+    
     //layout footer
     self.pFooterContainer.frame = CGRectMake(0.0,
                                              self.pBodyScrollView.frame.origin.y + self.pBodyScrollView.frame.size.height,
@@ -439,9 +441,7 @@
     [self setDefaultText];
     [self.pShareSwitch setOn:m_hasNetworkConnectivity];
     m_imageAttached = NO;
-    [self.pBodyScrollView setContentOffset:
-    CGPointMake(0, -self.pBodyScrollView.contentInset.top) animated:YES];
-    [self layoutSubviews];
+    [self setNeedsLayout];
 }
 
 - (void) setFullyActive
@@ -627,7 +627,6 @@
         return;
     }
     
-    
     UIImagePickerController *imagePicker = [[[UIImagePickerController alloc] init] autorelease];
     
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -684,8 +683,7 @@
 {
     self.pPoiImageView.image = image;
     
-    [self layoutSubviews];
-    //[self resizeImageViewToFit:image.size.width :image.size.height];
+    [self setNeedsLayout];
     
     m_imageAttached = YES;
     
@@ -693,6 +691,7 @@
     {
         [self.pPopover dismissPopoverAnimated: YES];
     }
+    
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
