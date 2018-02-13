@@ -5,6 +5,8 @@
 #include "DeepLinkModel.h"
 #include "ApplicationConfiguration.h"
 #include "IFlattenButtonModel.h"
+#include "DeepLinkQueryStringParser.h"
+
 
 namespace ExampleApp
 {
@@ -20,6 +22,7 @@ namespace ExampleApp
                 void HandleDeepLinkOpen(const AppInterface::UrlData& data);
             private:
                 DeepLinkModel& m_deepLinkModel;
+                DeepLinkQueryStringParser m_deeplinkQueryStringParser;
                 
                 FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
             };

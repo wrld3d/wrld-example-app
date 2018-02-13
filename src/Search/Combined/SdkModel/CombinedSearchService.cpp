@@ -71,7 +71,7 @@ namespace ExampleApp
                     const bool isTag = query.IsTag();
                     const bool canPerformTag = isTag && searchService.CanHandleTag(query.Query());
 
-                    if (isIndoor)
+                    if (isIndoor || !query.InteriorId().empty())
                     {
                         return false;
                     }
