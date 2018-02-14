@@ -27,7 +27,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_cacheEnabledCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_clearCacheCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_clearCacheTriggeredCallbacks;
-                Eegeo::Helpers::CallbackCollection1<bool> m_replayTutorialsToggledCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_replayTutorialsCallbacks;
 
             public:
                 OptionsView(AndroidNativeState& nativeState);
@@ -38,15 +38,9 @@ namespace ExampleApp
 
                 bool IsCacheEnabledSelected() const;
 
-                bool IsClearCacheSelected() const;
-
                 void SetStreamOverWifiOnlySelected(bool isStreamOverWifiOnlySelected);
 
                 void SetCacheEnabledSelected(bool isCacheEnabledSelected);
-
-                void SetClearCacheSelected(bool isClearCacheSelected);
-
-                void SetReplayTutorialsSelected(bool isReplayTutorialsSelected);
 
                 void OpenClearCacheWarning();
 
@@ -64,11 +58,11 @@ namespace ExampleApp
 
                 void HandleCacheEnabledSelectionStateChanged();
 
-                void HandleClearCacheSelectionStateChanged();
+                void HandleClearCacheSelected();
 
                 void HandleClearCacheTriggered();
 
-                void HandleReplayTutorialsToggled(bool enableTutorials);
+                void HandleReplayTutorialsSelected();
 
                 void InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -82,14 +76,14 @@ namespace ExampleApp
                 void InsertCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
 
-                void InsertClearCacheSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
-                void RemoveClearCacheSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
+                void InsertClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void InsertClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback);
 
-                void InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback);
-                void RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback);
+                void InsertReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback);
             };
         }
     }

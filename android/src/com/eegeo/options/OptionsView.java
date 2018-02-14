@@ -16,12 +16,12 @@ public class OptionsView
     private View m_view = null;
     private RelativeLayout m_uiRoot = null;
     private View m_closeButton = null;
-    private View m_okButton = null;
     private CompoundButton m_streamOverWifiButton = null;
     private CompoundButton m_dataCachingButton = null;
-    private CompoundButton m_clearCacheButton = null;
-    private CompoundButton m_playTutorialAgainButton = null;
+    private View m_clearCacheButton = null;
+    private View m_playTutorialAgainButton = null;
     private OptionsCacheClearSubView m_cacheClearSubView = null;
+    private OptionsMessage m_messageView = null;
 
     public OptionsView(MainActivity activity, long nativeCallerPointer)
     {
@@ -35,13 +35,6 @@ public class OptionsView
         m_closeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 OptionsViewJniMethods.CloseButtonSelected(m_nativeCallerPointer);
-            }
-        });
-
-        m_okButton = m_view.findViewById(R.id.options_view_ok_button);
-        m_okButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                OptionsViewJniMethods.OkButtonSelected(m_nativeCallerPointer);
             }
         });
 
@@ -77,6 +70,8 @@ public class OptionsView
     {
     	m_cacheClearSubView.concludeCeremony();
     	m_cacheClearSubView = null;
+
+        OptionsViewJniMethods.CloseButtonSelected(m_nativeCallerPointer);
     }
     
     public boolean isStreamOverWifiOnlySelected()
@@ -89,11 +84,6 @@ public class OptionsView
         return m_dataCachingButton.isChecked();
     }
 
-    public boolean isClearCacheSelected()
-    {
-        return m_clearCacheButton.isChecked();
-    }
-
     public void setStreamOverWifiOnlySelected(boolean streamOverWifiOnlySelected)
     {
     	m_streamOverWifiButton.setChecked(streamOverWifiOnlySelected);
@@ -102,16 +92,6 @@ public class OptionsView
     public void setCacheEnabledSelected(boolean cacheEnabledSelected)
     {
     	m_dataCachingButton.setChecked(cacheEnabledSelected);
-    }
-
-    public void setClearCacheSelected(boolean clearCacheSelected)
-    {
-        m_clearCacheButton.setChecked(clearCacheSelected);
-    }
-
-    public void setReplayTutorialsSelected(boolean replayTutorialsSelected)
-    {
-        m_playTutorialAgainButton.setChecked(replayTutorialsSelected);
     }
 
     public void openClearCacheWarning()
@@ -160,10 +140,10 @@ public class OptionsView
         View.OnClickListener clearCacheClickListener = new View.OnClickListener() {
             public void onClick(View arg0)
             {
-                OptionsViewJniMethods.ClearCacheToggled(m_nativeCallerPointer);
+                OptionsViewJniMethods.ClearCacheSelected(m_nativeCallerPointer);
             }
         };
-        m_clearCacheButton = (CompoundButton) m_view.findViewById(R.id.options_view_clear_cache_button);
+        m_clearCacheButton = (View) m_view.findViewById(R.id.options_view_clear_cache_button);
         m_clearCacheButton.setOnClickListener(clearCacheClickListener);
         TextView clearCacheLabel = (TextView) m_view.findViewById(R.id.options_view_clear_cache_label);
         clearCacheLabel.setOnClickListener(clearCacheClickListener);
@@ -174,12 +154,35 @@ public class OptionsView
         View.OnClickListener playTutorialAgainClickListener = new View.OnClickListener() {
             public void onClick(View arg0)
             {
-                OptionsViewJniMethods.PlayTutorialAgainToggled(m_nativeCallerPointer, m_playTutorialAgainButton.isChecked());
+                OptionsViewJniMethods.PlayTutorialAgainSelected(m_nativeCallerPointer);
+
+                ShowMessage(stringResource(R.string.options_view_replay_title),
+                            stringResource(R.string.options_view_replay_message));
             }
         };
-        m_playTutorialAgainButton = (CompoundButton) m_view.findViewById(R.id.options_view_playtutorial_togglebutton);
+        m_playTutorialAgainButton = (View) m_view.findViewById(R.id.options_view_playtutorial_button);
         m_playTutorialAgainButton.setOnClickListener(playTutorialAgainClickListener);
         TextView playTutorialAgainLabel = (TextView) m_view.findViewById(R.id.options_view_playtutorial_label);
         playTutorialAgainLabel.setOnClickListener(playTutorialAgainClickListener);
+    }
+
+    private void ShowMessage(String title, String message)
+    {
+        assert(m_messageView == null);
+        m_messageView = new OptionsMessage(m_activity, title, message,
+                new OptionsMessage.OnClose()
+                {
+                    public void call()
+                    {
+                        m_messageView = null;
+
+                        OptionsViewJniMethods.CloseButtonSelected(m_nativeCallerPointer);
+                    }
+                });
+    }
+
+    private String stringResource(int resourceId)
+    {
+        return m_activity.getResources().getString(resourceId);
     }
 }
