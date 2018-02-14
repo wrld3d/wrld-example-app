@@ -3,6 +3,7 @@
     <string name="legal_link"><a href='http://www.wrld3d.com/legal/'>Legal</a></string>
 
     <string name="about_page_title">About</string>
+    <string name="about_page_developer">Developed by Bloomberg L.P and</string>
 
     <string name="options_title">Options</string>
     <string name="options_view_stream_wifi_only_togglebutton_text">Stream over Wi-fi only</string>
