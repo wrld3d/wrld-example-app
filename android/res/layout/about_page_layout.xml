@@ -98,7 +98,7 @@
                         android:textColor="@color/darkgrey"
                         android:textSize="16sp"
                         android:layout_marginTop="25dp"
-                        android:text="Developed by Bloomberg L.P and" />
+                        android:text="@string/about_page_developer" />
 
                     <ImageView
                         android:id="@+id/about_page_wrld_logo"
