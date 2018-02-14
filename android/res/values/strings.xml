@@ -9,6 +9,9 @@
     <string name="options_view_cache_enabled_togglebutton_text">Enable data caching on device</string>
     <string name="options_view_clear_cache_button_text">Clear cached map data</string>
     <string name="options_view_playtutorial_button_text">Play tutorial again</string>
+    <string name="options_view_ok_button_text">OK</string>
+    <string name="options_view_replay_title">Replay Tutorials</string>
+    <string name="options_view_replay_message">The help panels will be visible again when you enter or leave a building.</string>
 
     <string name="cache_clear_title">Remove Stored Data</string>
     <string name="cache_clear_warning">Warning!</string>

@@ -14,7 +14,7 @@
 	<LinearLayout
 		android:orientation="vertical"
 		android:layout_width="320dp"
-		android:layout_height="560dp"
+		android:layout_height="250dp"
 		android:layout_gravity="center"
 		android:background="@color/white">
 
@@ -64,7 +64,7 @@
 				android:id="@+id/cache_clear_ceremony_view_container"
 				android:orientation="vertical"
 				android:layout_width="match_parent"
-				android:layout_height="496dp"
+				android:layout_height="186dp"
 				android:layout_gravity="center"
 				android:paddingTop="10dp"
 				android:background="@color/white">
@@ -74,7 +74,7 @@
 					android:layout_height="wrap_content"
 					android:layout_weight="0.45"
 					android:gravity="center_horizontal|bottom"
-					android:layout_marginBottom="15dp"
+					android:layout_marginBottom="5dp"
 					android:text="@string/cache_clear_warning"
 					android:textColor="@color/evendarkergrey"
 					android:textSize="20sp"/>
@@ -95,14 +95,14 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:layout_weight="0.55"
-					android:layout_margin="5dp"
+					android:layout_marginTop="5dp"
 					android:gravity="center_horizontal|top">
 
 					<Button
 						android:id="@+id/cache_clear_ceremony_confirm_button"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:layout_margin="25dp"
+						android:layout_margin="20dp"
 						android:paddingLeft="30dp"
 						android:paddingRight="30dp"
 						android:paddingTop="10dp"
@@ -115,7 +115,7 @@
 						android:id="@+id/cache_clear_ceremony_cancel_button"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:layout_margin="25dp"
+						android:layout_margin="20dp"
 						android:paddingLeft="30dp"
 						android:paddingRight="30dp"
 						android:paddingTop="10dp"
