@@ -21,6 +21,8 @@ set(currsources
   ../src/MyPinCreation/View/MyPinCreationInitiationViewModel.h
   ../src/MyPinCreation/View/MyPinCreationScreenControl.cpp
   ../src/MyPinCreation/View/MyPinCreationScreenControl.h
+  ../src/MyPinCreation/View/MyPinCreationMenuOption.cpp
+  ../src/MyPinCreation/View/MyPinCreationMenuOption.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\MyPinCreation\\View FILES ${currsources})

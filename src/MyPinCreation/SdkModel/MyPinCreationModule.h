@@ -49,7 +49,12 @@ namespace ExampleApp
                 ScreenControl::View::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const;
 
                 OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
-
+                
+                Menu::View::IMenuModel& GetMyPinCreationMenuModel() const
+                {
+                    return *m_pMyPinCreationMenuModel;
+                }
+                
             private:
 
                 MyPinCreationModel* m_pMyPinCreationModel;
@@ -59,6 +64,10 @@ namespace ExampleApp
                 MyPinCreationModelObserver* m_pMyPinCreationModelObserver;
                 MyPinCreationViewStateChangedHandler* m_pMyPinCreationViewStateChangedHandler;
                 MyPinCreationViewSavePinHandler* m_pMyPinCreationViewSavePinHandler;
+                
+                
+                Menu::View::IMenuModel* m_pMyPinCreationMenuModel;
+                Menu::View::IMenuOptionsModel* m_pMyPinCreationMenuOptionsModel;
             };
         }
     }

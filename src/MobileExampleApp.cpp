@@ -57,6 +57,7 @@
 #include "IEegeoErrorHandler.h"
 #include "OptionsMenuOption.h"
 #include "AboutPageMenuOption.h"
+#include "MyPinCreationMenuOption.h"
 #include "ImagePathHelpers.h"
 #include "InteriorsPresentationModule.h"
 #include "InteriorsModelModule.h"
@@ -925,6 +926,7 @@ namespace ExampleApp
 
         if(!m_applicationConfiguration.IsInKioskMode())
         {
+            m_pSearchMenuModule->AddMenuSection("Create Report", m_pMyPinCreationModule->GetMyPinCreationMenuModel(), false);
             m_pSearchMenuModule->AddMenuSection("My Location Reports", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         }
 

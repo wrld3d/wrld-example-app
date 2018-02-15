@@ -33,6 +33,11 @@
 #include "BatchedSpriteMaterial.h"
 #include "BatchedSpriteRenderable.h"
 
+#include "MyPinCreationMenuOption.h"
+#include "MyPinCreation.h"
+#include "MenuOptionsModel.h"
+#include "MenuModel.h"
+
 #include "RenderableFilters.h"
 
 namespace ExampleApp
@@ -72,10 +77,18 @@ namespace ExampleApp
                                                      *m_pMyPinCreationConfirmationViewModel,
                                                      menuViewModel,
                                                      interiorControlViewModel);
+                
+                
+                m_pMyPinCreationMenuModel        = Eegeo_NEW(Menu::View::MenuModel)();
+                m_pMyPinCreationMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMyPinCreationMenuModel);
+                m_pMyPinCreationMenuOptionsModel->AddItem("Create Pin", "Create Pin", "", "", Eegeo_NEW(View::MyPinCreationMenuOption)(menuViewModel,*m_pMyPinCreationConfirmationViewModel));
+                
             }
 
             MyPinCreationModule::~MyPinCreationModule()
             {
+                Eegeo_DELETE m_pMyPinCreationMenuOptionsModel;
+                Eegeo_DELETE m_pMyPinCreationMenuModel;
                 Eegeo_DELETE m_pMyPinCreationCompositeViewModel;
                 Eegeo_DELETE m_pMyPinCreationConfirmationViewModel;
                 Eegeo_DELETE m_pMyPinCreationInitiationViewModel;
