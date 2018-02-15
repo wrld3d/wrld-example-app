@@ -15,72 +15,51 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            DeepLinkQueryStringParser::DeepLinkQueryStringParser()
-            : m_hasMapScene(false)
-            , m_hasIndoorId(false)
-            , m_hasValidQueryString(false)
-            , m_mapsceneString("")
-            , m_indoorId("")
-            {
-            }
             
-            void DeepLinkQueryStringParser::ParseData(const std::string& query)
+            QueryData DeepLinkQueryStringParser::ParseData(const std::string& query) const
             {
                 std::stringstream ssquery(query);
                 std::string segment;
                 
+                std::string indoorId = "";
+                std::string mapscene = "";
+                std::string queryString = "";
+                bool hasIndoorId = false;
+                bool hasMapscene = false;
+                bool hasQuery = false;
+                bool parsedData = false;
+                    
                 while(std::getline(ssquery, segment, '&'))
                 {
                     if(segment.find("indoor_id") == 0)
                     {
-                        m_indoorId = segment.substr(segment.find("=") + 1);
-                        m_hasIndoorId = true;
-                        m_hasValidQueryString = true;
+                        indoorId = segment.substr(segment.find("=") + 1);
+                        hasIndoorId = true;
                     }
                     
                     if(segment.find("mapscene") == 0)
                     {
-                        m_mapsceneString = segment.substr(segment.find("=") + 1);
-                        m_hasMapScene = true;
-                        m_hasValidQueryString = true;
+                        mapscene = segment.substr(segment.find("=") + 1);
+                        hasMapscene = true;
                     }
+                    
+                    if(segment.find("query") == 0)
+                    {
+                        queryString = segment.substr(segment.find("=") + 1);
+                        hasQuery = true;
+                    }
+                    parsedData = true;
                 }
-            }
-            
-            AppInterface::UrlData DeepLinkQueryStringParser::GetSearchData(const AppInterface::UrlData& data)
-            {
-                AppInterface::UrlData searchData = data;
-                std::string path = searchData.path;
-                path.append("/" + m_indoorId);
-                searchData.path = path.c_str();
                 
-                return searchData;
+                return QueryData(queryString,
+                                 indoorId,
+                                 mapscene,
+                                 hasQuery,
+                                 hasIndoorId,
+                                 hasMapscene,
+                                 parsedData);
             }
-            
-            AppInterface::UrlData DeepLinkQueryStringParser::GetMapsceneData(const AppInterface::UrlData& data)
-            {
-                AppInterface::UrlData mapsceneData = data;
-                mapsceneData.host = "mapscene";
-                std::string path = "/" + m_mapsceneString;
-                mapsceneData.path = path.c_str();
-                
-                return mapsceneData;
-            }
-            
-            bool DeepLinkQueryStringParser::HasIndoorId()
-            {
-                return m_hasIndoorId;
-            }
-            
-            bool DeepLinkQueryStringParser::HasMapScene()
-            {
-                return m_hasMapScene;
-            }
-            
-            bool DeepLinkQueryStringParser::HasValidQueryString()
-            {
-                return m_hasValidQueryString;
-            }
+
         }
     }
 }

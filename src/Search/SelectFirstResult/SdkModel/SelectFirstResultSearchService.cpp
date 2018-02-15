@@ -22,6 +22,7 @@ namespace ExampleApp
                 , m_searchResultRepository(searchResultRepository)
                 , m_searchResultAddedCallback(this, &SelectFirstResultSearchService::OnSearchResultAdded)
                 , m_didTransition(true)
+                , m_deepLinkQuery("")
                 , m_messageBus(messageBus)
                 {
                     m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
@@ -32,12 +33,13 @@ namespace ExampleApp
                     m_searchResultRepository.RemoveItemAddedCallback(m_searchResultAddedCallback);
                 }
                 
-                void SelectFirstResultSearchService::HandleSearch(std::string& queryString, const std::string& interiorId)
+                void SelectFirstResultSearchService::PerformSearch(const std::string& queryString, const std::string& indoorMapId)
                 {
                     m_searchQueryPerformer.RemoveSearchQueryResults();
-                    m_searchQueryPerformer.PerformSearchQuery(queryString.c_str(), false, true, interiorId);
+                    m_searchQueryPerformer.PerformSearchQuery(queryString.c_str(), false, true, indoorMapId);
                     
                     m_didTransition = false;
+                    m_deepLinkQuery = queryString;
                 }
                 
                 void SelectFirstResultSearchService::OnSearchResultAdded(Search::SdkModel::SearchResultModel*& pSearchResultModel)
@@ -45,13 +47,16 @@ namespace ExampleApp
                     if(!m_didTransition)
                     {
                         m_didTransition = true;
-
-                        m_messageBus.Publish(SearchResultSection::SearchResultSectionItemSelectedMessage(pSearchResultModel->GetLocation().ToECEF(),
-                                                                                                         pSearchResultModel->IsInterior(),
-                                                                                                         pSearchResultModel->GetBuildingId(),
-                                                                                                         pSearchResultModel->GetFloor(),
-                                                                                                         0,
-                                                                                                         pSearchResultModel->GetIdentifier()));
+                        const std::string& query = m_searchQueryPerformer.GetPreviousSearchQuery().Query();
+                        if(query == m_deepLinkQuery) // This is a workaround for when the PerformSearch return no results to stop this selecting the next search they do.
+                        {
+                            m_messageBus.Publish(SearchResultSection::SearchResultSectionItemSelectedMessage(pSearchResultModel->GetLocation().ToECEF(),
+                                                                                                             pSearchResultModel->IsInterior(),
+                                                                                                             pSearchResultModel->GetBuildingId(),
+                                                                                                             pSearchResultModel->GetFloor(),
+                                                                                                             0,
+                                                                                                             pSearchResultModel->GetIdentifier()));
+                        }
                     }
                 }
             }

@@ -7,6 +7,9 @@
 #include "IAlertBoxFactory.h"
 #include "SelectFirstResultSearchService.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "DeepLinkQueryStringParser.h"
+#include "DeepLinkConfigHandler.h"
+#include "QueryData.h"
 
 namespace ExampleApp
 {
@@ -18,13 +21,16 @@ namespace ExampleApp
             {
             public:
                 DeepLinkSearchHandler(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& selectFirstResultSearchService,
-                                      Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
+                                      Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                      DeepLinkConfigHandler* deepLinkConfigHandlerOrNull);
                 
                 void HandleDeepLink(const AppInterface::UrlData& data);
                 
             private:
                 void OnFailAlertBoxDismissed();
+                void HandleMapscene(const AppInterface::UrlData& data, const QueryData& queryData);
                 
+                DeepLinkConfigHandler* m_pDeepLinkConfigHandlerOrNull;
                 Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& m_selectFirstResultSearchService;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<DeepLinkSearchHandler> m_failAlertHandler;
             };

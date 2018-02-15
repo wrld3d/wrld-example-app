@@ -59,6 +59,7 @@ namespace ExampleApp
             ,m_startupSearchTag("")
             ,m_startupSearchLocation(0, 0, 0)
             ,m_shouldPerformStartupSearch(false)
+            ,m_shouldDisableStartupSearch(false)
             ,m_startAtGPSLocation(false)
             ,m_startupSearchCameraTransitionCompleteCallback(this, &DeepLinkConfigHandler::HandleStartupSearchCameraTransitionComplete)
             {
@@ -76,14 +77,20 @@ namespace ExampleApp
             
             void DeepLinkConfigHandler::HandleDeepLink(const AppInterface::UrlData& data)
             {
-                const std::string url = GenerateConfigUrl(data);
+                LoadMapscene(data.path, false);
+            }
+            
+            void DeepLinkConfigHandler::LoadMapscene(const std::string& path, bool shouldDisableStartupSearch)
+            {
+                const std::string url = GenerateConfigUrl(path);
+                m_shouldDisableStartupSearch = shouldDisableStartupSearch;
                 Eegeo::Web::IWebLoadRequest* webRequest = m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_configRequestCompleteCallback).Build();
                 webRequest->Load();
             }
 
-            std::string DeepLinkConfigHandler::GenerateConfigUrl(const AppInterface::UrlData& data) const
+            std::string DeepLinkConfigHandler::GenerateConfigUrl(const std::string& path) const
             {
-                return CONFIG_FILES_HOME + data.path + "/manifest";
+                return CONFIG_FILES_HOME + path + "/manifest";
             }
             
             void DeepLinkConfigHandler::HandleNewCoverageTreeManifestLoaded(const Eegeo::Streaming::CoverageTrees::CoverageTreeManifest& manifest)
@@ -148,15 +155,19 @@ namespace ExampleApp
                         const std::string PerformStartUpSearch = "perform_start_up_search";
                         const bool mapsceneSpecifiesStartUpSearch = parser.HasKey(resultString, PerformStartUpSearch);
                         const bool shouldPerformStartUpSearch = mapsceneSpecifiesStartUpSearch && applicationConfig.ShouldPerformStartUpSearch();
-                        if (shouldPerformStartUpSearch)
+                        
+                        if(!m_shouldDisableStartupSearch)
                         {
-                            m_startupSearchTag = applicationConfig.StartUpSearchTag();
-                            m_startupSearchLocation = applicationConfig.InterestLocation();
-                            m_shouldPerformStartupSearch = true;
-                        }
-                        else
-                        {
-                            m_searchQueryPerformer.RemoveSearchQueryResults();
+                            if (shouldPerformStartUpSearch)
+                            {
+                                m_startupSearchTag = applicationConfig.StartUpSearchTag();
+                                m_startupSearchLocation = applicationConfig.InterestLocation();
+                                m_shouldPerformStartupSearch = true;
+                            }
+                            else
+                            {
+                                m_searchQueryPerformer.RemoveSearchQueryResults();
+                            }
                         }
                     }
                     else

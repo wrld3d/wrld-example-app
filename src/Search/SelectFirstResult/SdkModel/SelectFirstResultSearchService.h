@@ -29,7 +29,7 @@ namespace ExampleApp
                     
                     ~SelectFirstResultSearchService();
                     
-                    void HandleSearch(std::string& queryString, const std::string& interiorId = "");
+                    void PerformSearch(const std::string& queryString, const std::string& indoorMapId);
                     
                 private:
                     void OnSearchResultAdded(Search::SdkModel::SearchResultModel*& pSearchResultModel);
@@ -38,6 +38,7 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback1<SelectFirstResultSearchService, Search::SdkModel::SearchResultModel*> m_searchResultAddedCallback;
                     Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
+                    std::string m_deepLinkQuery;
                     
                     bool m_didTransition;
                 };

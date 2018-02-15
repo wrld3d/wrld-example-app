@@ -4,6 +4,7 @@
 
 #include <string>
 #include "AppInterface.h"
+#include "QueryData.h"
 
 namespace ExampleApp
 {
@@ -14,20 +15,10 @@ namespace ExampleApp
             class DeepLinkQueryStringParser
             {
             public:
-                DeepLinkQueryStringParser();
-                void ParseData(const std::string& query);
-                bool HasIndoorId();
-                bool HasMapScene();
-                bool HasValidQueryString();
-                AppInterface::UrlData GetSearchData(const AppInterface::UrlData& data);
-                AppInterface::UrlData GetMapsceneData(const AppInterface::UrlData& data);
+                QueryData ParseData(const std::string& query) const;
             private:
-                bool m_hasValidQueryString;
-                bool m_hasIndoorId;
-                bool m_hasMapScene;
-                std::string m_indoorId;
-                std::string m_mapsceneString;
             };
+            
         }
     }
 }

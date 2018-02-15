@@ -45,6 +45,7 @@ namespace ExampleApp
                                       const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
                 ~DeepLinkConfigHandler();
                 void HandleDeepLink(const AppInterface::UrlData& data);
+                void LoadMapscene(const std::string& path, bool shouldDisableStartupSearch); //get rid
             private:
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
                 Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
@@ -77,9 +78,10 @@ namespace ExampleApp
                 Eegeo::Space::LatLongAltitude m_startupSearchLocation;
                 bool m_startAtGPSLocation;
                 bool m_shouldPerformStartupSearch;
+                bool m_shouldDisableStartupSearch;
                 void HandleStartupSearchCameraTransitionComplete();
 
-                std::string GenerateConfigUrl(const AppInterface::UrlData& data) const;
+                std::string GenerateConfigUrl(const std::string& path) const;
                 void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
                 void OnFailAlertBoxDismissed();
             };

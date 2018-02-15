@@ -15,6 +15,8 @@
 #include "AppModes.h"
 #include "IFlattenButtonModel.h"
 #include "SelectFirstResultSearchService.h"
+#include "DeepLinkConfigHandler.h"
+#include "DeepLinkSearchHandler.h"
 
 namespace ExampleApp
 {
@@ -48,6 +50,8 @@ namespace ExampleApp
                 ~DeepLinkModule();
                 DeepLinkController& GetDeepLinkController();
             private:
+                DeepLinkSearchHandler* m_pDeepLinkSearchHandler;
+                DeepLinkConfigHandler* m_pDeepLinkConfigHandler;
                 DeepLinkModel* m_pDeepLinkModel;
                 DeepLinkController* m_pDeepLinkController;
             };

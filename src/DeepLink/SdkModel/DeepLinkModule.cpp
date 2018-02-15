@@ -7,8 +7,6 @@
 #include "IAlertBoxFactory.h"
 #include "IWebLoadRequestFactory.h"
 #include "DeepLinkLocationHandler.h"
-#include "DeepLinkConfigHandler.h"
-#include "DeepLinkSearchHandler.h"
 #include "CoverageTrees.h"
 #include "CityThemes.h"
 #include "SelectFirstResultSearchService.h"
@@ -45,13 +43,11 @@ namespace ExampleApp
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
                 DeepLinkLocationHandler* locationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
-                DeepLinkSearchHandler* searchHandler = Eegeo_NEW(DeepLinkSearchHandler)(selectFirstResultSearchService, alertBoxFactory);
                 m_pDeepLinkModel->AddRoute(LOCATION_PATH, locationHandler);
-                m_pDeepLinkModel->AddRoute(SEARCH_PATH, searchHandler);
 
                 if(CONFIG_DEEP_LINK_ENABLED)
                 {
-                    DeepLinkConfigHandler* configHandler= Eegeo_NEW(DeepLinkConfigHandler)(cameraTransitionController,
+                    m_pDeepLinkConfigHandler = Eegeo_NEW(DeepLinkConfigHandler)(cameraTransitionController,
                     webFactory,
                     alertBoxFactory,
                     defaultConfig,
@@ -67,14 +63,19 @@ namespace ExampleApp
                     interiorSelectionModel,
                     appModeModel);
 
-                    m_pDeepLinkModel->AddRoute(MYMAP_PATH, configHandler);
+                    m_pDeepLinkModel->AddRoute(MYMAP_PATH, m_pDeepLinkConfigHandler);
                 }
+                m_pDeepLinkSearchHandler = Eegeo_NEW(DeepLinkSearchHandler)(selectFirstResultSearchService, alertBoxFactory, m_pDeepLinkConfigHandler);
+                
+                m_pDeepLinkModel->AddRoute(SEARCH_PATH, m_pDeepLinkSearchHandler);
 
                 m_pDeepLinkController = Eegeo_NEW(DeepLinkController)(*m_pDeepLinkModel, flattenButtonModel);
             }
 
             ExampleApp::DeepLink::SdkModel::DeepLinkModule::~DeepLinkModule()
             {
+                Eegeo_DELETE(m_pDeepLinkSearchHandler);
+                Eegeo_DELETE(m_pDeepLinkConfigHandler);
                 Eegeo_DELETE(m_pDeepLinkModel);
                 Eegeo_DELETE(m_pDeepLinkController);
             }

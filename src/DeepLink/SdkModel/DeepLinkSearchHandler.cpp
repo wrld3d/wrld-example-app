@@ -3,16 +3,8 @@
 #include "DeepLinkSearchHandler.h"
 #include <vector>
 #include "StringHelpers.h"
-#include "LatLongAltitude.h"
-
-namespace
-{
-    std::string DEFAULT_INDOOR_ID = "";
-    
-    const size_t SEARCH_INDEX = 1;
-    const size_t INDOOR_INDEX = 2;
-    
-}
+#include "DeepLinkQueryStringParser.h"
+#include "QueryData.h"
 
 namespace ExampleApp
 {
@@ -21,28 +13,31 @@ namespace ExampleApp
         namespace SdkModel
         {
             DeepLinkSearchHandler::DeepLinkSearchHandler(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& selectFirstResultSearchService,
-                                                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+                                                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                                         DeepLinkConfigHandler* deepLinkConfigHandlerOrNull)
             : m_selectFirstResultSearchService(selectFirstResultSearchService)
             , m_failAlertHandler(this, &DeepLinkSearchHandler::OnFailAlertBoxDismissed)
+            , m_pDeepLinkConfigHandlerOrNull(deepLinkConfigHandlerOrNull)
             {
             }
             
             void DeepLinkSearchHandler::HandleDeepLink(const AppInterface::UrlData& data)
             {
-                std::vector<std::string> parts;
-                size_t numParts = Eegeo::Helpers::Split(data.path, '/', parts);
-                Eegeo::Space::LatLong latLon(0, 0);
-                
-                
-                std::string& queryString = parts.at(SEARCH_INDEX);
-                if(numParts > INDOOR_INDEX)
+                const QueryData& queryData = DeepLinkQueryStringParser().ParseData(data.query);
+                if(queryData.HasMapscene())
                 {
-                    std::string& indoorId = parts.at(INDOOR_INDEX);
-                    m_selectFirstResultSearchService.HandleSearch(queryString, indoorId);
+                    HandleMapscene(data, queryData);
                 }
-                else
+                
+                m_selectFirstResultSearchService.PerformSearch(queryData.GetQuery(), queryData.GetIndoorId());
+            }
+            
+            void DeepLinkSearchHandler::HandleMapscene(const AppInterface::UrlData& data, const QueryData& queryData)
+            {
+                if(m_pDeepLinkConfigHandlerOrNull != nullptr)
                 {
-                    m_selectFirstResultSearchService.HandleSearch(queryString);
+                    const std::string path = "/" + queryData.GetMapscene();
+                    m_pDeepLinkConfigHandlerOrNull->LoadMapscene(path, true);
                 }
             }
             
