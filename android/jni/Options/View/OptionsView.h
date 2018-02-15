@@ -52,8 +52,6 @@ namespace ExampleApp
 
                 void HandleCloseSelected();
 
-                void HandleOkSelected();
-
                 void HandleStreamOverWifiOnlySelectionStateChanged();
 
                 void HandleCacheEnabledSelectionStateChanged();
@@ -66,9 +64,6 @@ namespace ExampleApp
 
                 void InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
-
-                void InsertOkSelectedCallback(Eegeo::Helpers::ICallback0& callback);
-                void RemoveOkSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void InsertStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);

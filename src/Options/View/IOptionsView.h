@@ -31,9 +31,6 @@ namespace ExampleApp
                 virtual void InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
-                virtual void InsertOkSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-                virtual void RemoveOkSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-
                 virtual void InsertStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 

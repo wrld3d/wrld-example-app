@@ -10,10 +10,6 @@ extern "C"
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
 
-    JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_OkButtonSelected(
-        JNIEnv* jenv, jobject obj,
-        jlong nativeObjectPtr);
-
     JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_StreamOverWifiToggled(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
