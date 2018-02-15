@@ -143,13 +143,6 @@ namespace ExampleApp
                 m_closeCallbacks.ExecuteCallbacks();
             }
 
-            void OptionsView::HandleOkSelected()
-            {
-                ASSERT_UI_THREAD
-
-                m_okCallbacks.ExecuteCallbacks();
-            }
-
             void OptionsView::HandleStreamOverWifiOnlySelectionStateChanged()
             {
                 ASSERT_UI_THREAD
@@ -197,20 +190,6 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_closeCallbacks.RemoveCallback(callback);
-            }
-
-            void OptionsView::InsertOkSelectedCallback(Eegeo::Helpers::ICallback0& callback)
-            {
-                ASSERT_UI_THREAD
-
-                m_okCallbacks.AddCallback(callback);
-            }
-
-            void OptionsView::RemoveOkSelectedCallback(Eegeo::Helpers::ICallback0& callback)
-            {
-                ASSERT_UI_THREAD
-
-                m_okCallbacks.RemoveCallback(callback);
             }
 
             void OptionsView::InsertStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
