@@ -14,10 +14,10 @@ namespace ExampleApp
         {
             DeepLinkSearchHandler::DeepLinkSearchHandler(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& selectFirstResultSearchService,
                                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                                                         DeepLinkConfigHandler* deepLinkConfigHandlerOrNull)
+                                                         Mapscene::SdkModel::MapsceneLoader& mapsceneLoader)
             : m_selectFirstResultSearchService(selectFirstResultSearchService)
             , m_failAlertHandler(this, &DeepLinkSearchHandler::OnFailAlertBoxDismissed)
-            , m_pDeepLinkConfigHandlerOrNull(deepLinkConfigHandlerOrNull)
+            , m_mapsceneLoader(mapsceneLoader)
             {
             }
             
@@ -34,11 +34,8 @@ namespace ExampleApp
             
             void DeepLinkSearchHandler::HandleMapscene(const AppInterface::UrlData& data, const QueryData& queryData)
             {
-                if(m_pDeepLinkConfigHandlerOrNull != nullptr)
-                {
-                    const std::string path = "/" + queryData.GetMapscene();
-                    m_pDeepLinkConfigHandlerOrNull->LoadMapscene(path, true);
-                }
+                const std::string path = "/" + queryData.GetMapscene();
+                m_mapsceneLoader.LoadMapscene(path, true);
             }
             
             void DeepLinkSearchHandler::OnFailAlertBoxDismissed()

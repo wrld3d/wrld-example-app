@@ -10,6 +10,7 @@
 #include "DeepLinkQueryStringParser.h"
 #include "DeepLinkConfigHandler.h"
 #include "QueryData.h"
+#include "MapsceneLoader.h"
 
 namespace ExampleApp
 {
@@ -22,7 +23,7 @@ namespace ExampleApp
             public:
                 DeepLinkSearchHandler(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& selectFirstResultSearchService,
                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                                      DeepLinkConfigHandler* deepLinkConfigHandlerOrNull);
+                                      Mapscene::SdkModel::MapsceneLoader& mapsceneLoader);
                 
                 void HandleDeepLink(const AppInterface::UrlData& data);
                 
@@ -30,9 +31,9 @@ namespace ExampleApp
                 void OnFailAlertBoxDismissed();
                 void HandleMapscene(const AppInterface::UrlData& data, const QueryData& queryData);
                 
-                DeepLinkConfigHandler* m_pDeepLinkConfigHandlerOrNull;
                 Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& m_selectFirstResultSearchService;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<DeepLinkSearchHandler> m_failAlertHandler;
+                Mapscene::SdkModel::MapsceneLoader& m_mapsceneLoader;
             };
         }
     }

@@ -25,21 +25,10 @@ namespace ExampleApp
         namespace SdkModel
         {
             ExampleApp::DeepLink::SdkModel::DeepLinkModule::DeepLinkModule(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                                                           Eegeo::Web::IWebLoadRequestFactory& webFactory,
-                                                                           Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory, ApplicationConfig::ApplicationConfiguration& defaultConfig,
-                                                                           Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
-                                                                           Eegeo::Streaming::CoverageTrees::CoverageTreeManifestNotifier& manifestNotifier,
-                                                                           Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
-                                                                           Eegeo::Resources::CityThemes::ICityThemesService& cityThemeService,
-                                                                           Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
-                                                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                                           AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
-                                                                           Eegeo::Location::NavigationService& navigationService,
-                                                                           Eegeo::Web::ApiTokenService& apiTokenService,
-                                                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                           const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                                                           Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                                            FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
-                                                                           Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& selectFirstResultSearchService)
+                                                                           Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& selectFirstResultSearchService,
+                                                                           Mapscene::SdkModel::MapsceneLoader& mapsceneLoader)
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
                 DeepLinkLocationHandler* locationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
@@ -47,25 +36,10 @@ namespace ExampleApp
 
                 if(CONFIG_DEEP_LINK_ENABLED)
                 {
-                    m_pDeepLinkConfigHandler = Eegeo_NEW(DeepLinkConfigHandler)(cameraTransitionController,
-                    webFactory,
-                    alertBoxFactory,
-                    defaultConfig,
-                    manifestLoader,
-                    manifestNotifier,
-                    cityThemeLoader,
-                    cityThemeService,
-                    interiorMenuObserver,
-                    searchQueryPerformer,
-                    aboutPageViewModule,
-                    navigationService,
-                    apiTokenService,
-                    interiorSelectionModel,
-                    appModeModel);
-
+                    m_pDeepLinkConfigHandler = Eegeo_NEW(DeepLinkConfigHandler)(mapsceneLoader);
                     m_pDeepLinkModel->AddRoute(MYMAP_PATH, m_pDeepLinkConfigHandler);
                 }
-                m_pDeepLinkSearchHandler = Eegeo_NEW(DeepLinkSearchHandler)(selectFirstResultSearchService, alertBoxFactory, m_pDeepLinkConfigHandler);
+                m_pDeepLinkSearchHandler = Eegeo_NEW(DeepLinkSearchHandler)(selectFirstResultSearchService, alertBoxFactory, mapsceneLoader);
                 
                 m_pDeepLinkModel->AddRoute(SEARCH_PATH, m_pDeepLinkSearchHandler);
 

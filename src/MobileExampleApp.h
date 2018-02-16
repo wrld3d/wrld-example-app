@@ -92,6 +92,7 @@
 #include "InitialLocation.h"
 #include "AutomatedScreenshotController.h"
 #include "SelectFirstResultSearchService.h"
+#include "MapsceneModule.h"
 
 namespace ExampleApp
 {
@@ -164,6 +165,7 @@ namespace ExampleApp
         Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
         Surveys::SdkModel::SurveyTimer* m_pSurveyTimer;
         DeepLink::SdkModel::DeepLinkModule* m_pDeepLinkModule;
+        Mapscene::SdkModel::MapsceneModule* m_pMapsceneModule;
         InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
         InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper* m_pHighlightColorMapper;
         InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightVisibilityController;
@@ -398,6 +400,11 @@ namespace ExampleApp
         const GpsMarker::SdkModel::IGpsMarkerModule& GpsMarkerModule() const
         {
             return *m_pGpsMarkerModule;
+        }
+        
+        const Mapscene::SdkModel::MapsceneModule& GetMapsceneModule() const
+        {
+            return *m_pMapsceneModule;
         }
         
         // Exposed to allow view model creation in iOS code.
