@@ -12,7 +12,6 @@
 #include "RenderContext.h"
 #include "MathFunc.h"
 #include "MathsHelpers.h"
-#include "IMyPinCreationInitiationViewModel.h"
 #include "IMyPinCreationModel.h"
 #include "EarthConstants.h"
 #include "TerrainHeightProvider.h"

@@ -41,11 +41,10 @@ namespace ExampleApp
                 ~MyPinCreationModule();
 
                 IMyPinCreationModel& GetMyPinCreationModel() const;
-                View::IMyPinCreationInitiationViewModel& GetMyPinCreationInitiationViewModel() const;
                 View::IMyPinCreationConfirmationViewModel& GetMyPinCreationConfirmationViewModel() const;
                 View::IMyPinCreationCompositeViewModel& GetMyPinCreationCompositeViewModel() const;
 
-                ScreenControl::View::IScreenControlViewModel& GetInitiationScreenControlViewModel() const;
+                //ScreenControl::View::IScreenControlViewModel& GetInitiationScreenControlViewModel() const;
                 ScreenControl::View::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const;
 
                 OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
@@ -58,7 +57,7 @@ namespace ExampleApp
             private:
 
                 MyPinCreationModel* m_pMyPinCreationModel;
-                View::MyPinCreationInitiationViewModel* m_pMyPinCreationInitiationViewModel;
+               
                 View::MyPinCreationConfirmationViewModel* m_pMyPinCreationConfirmationViewModel;
                 View::MyPinCreationCompositeViewModel* m_pMyPinCreationCompositeViewModel;
                 MyPinCreationModelObserver* m_pMyPinCreationModelObserver;
