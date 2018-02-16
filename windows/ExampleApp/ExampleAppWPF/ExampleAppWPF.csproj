@@ -135,6 +135,7 @@
       <DependentUpon>MyPinCreationDetailsTutorialDialogBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
+    <Compile Include="Views\Options\OptionsMessage.cs" />
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListAdapter.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
@@ -309,6 +310,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Options\OptionsCacheClearSubView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Options\OptionsMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1707,8 +1712,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\radio_checkbox_off.png" />
-    <Resource Include="Assets\radio_checkbox_on.png" />
     <Resource Include="Assets\slider_checkbox_off.png" />
     <Resource Include="Assets\slider_checkbox_on.png" />
   </ItemGroup>
@@ -1719,10 +1722,8 @@
     <Resource Include="Assets\button_ok_on.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\admin_login_off.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\admin_login_on.png" />
+    <Resource Include="Assets\slider_checkbox_off_hover.png" />
+    <Resource Include="Assets\slider_checkbox_on_hover.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

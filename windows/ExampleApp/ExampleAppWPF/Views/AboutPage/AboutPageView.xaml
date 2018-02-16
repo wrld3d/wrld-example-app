@@ -15,17 +15,17 @@
                     <StackPanel Name="MainContainer"
                                 Background="{StaticResource White}">
 
-                        <!-- title and close button -->
-                        <DockPanel Height="{DynamicResource AboutPanelTitleHeight}"
-                                   Margin="{DynamicResource AboutPanelTitleMargin}">
+                        <!-- common title and close button -->
+                        <DockPanel Height="{DynamicResource CommonTopTitleHeight}"
+                                   Margin="{DynamicResource CommonTopTitleMargin}">
                             <TextBlock Name="Title"
                                        Foreground="{DynamicResource DarkSteelBlue}"
-                                       MaxWidth="{DynamicResource AboutPanelTitleMaxWidth}" TextTrimming="CharacterEllipsis"
+                                       MaxWidth="{DynamicResource CommonTopTitleMaxWidth}" TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"
                                        Text="{StaticResource AboutViewTitleText}"
-                                       FontSize="{DynamicResource AboutPanelTitleFontSize}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                       FontSize="{DynamicResource CommonTopTitleFontSize}" FontFamily="{DynamicResource PrimaryUIFont}"/>
                             <Button Name="CloseButton" Style="{StaticResource Common_CloseButton}"
-                                    Width="{DynamicResource AboutPanelCloseButtonSize}" Height="{DynamicResource AboutPanelCloseButtonSize}"
+                                    Width="{DynamicResource CommonTopCloseButtonSize}" Height="{DynamicResource AboutPanelCloseButtonSize}"
                                     HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </DockPanel>
 

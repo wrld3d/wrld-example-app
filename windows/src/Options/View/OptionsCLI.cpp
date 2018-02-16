@@ -12,12 +12,6 @@ namespace ExampleApp
 		pView->HandleCloseSelected();
 	}
 
-	void OptionsViewCLIMethods::OkButtonSelected(System::IntPtr nativeObjectPtr)
-	{
-		Options::View::OptionsView* pView = reinterpret_cast<Options::View::OptionsView*>(nativeObjectPtr.ToPointer());
-		pView->HandleOkSelected();
-	}
-
 	void OptionsViewCLIMethods::StreamOverWifiToggled(System::IntPtr nativeObjectPtr)
     {
         Options::View::OptionsView* pView = reinterpret_cast<Options::View::OptionsView*>(nativeObjectPtr.ToPointer());
@@ -30,10 +24,10 @@ namespace ExampleApp
         pView->HandleCacheEnabledSelectionStateChanged();
     }
 
-    void OptionsViewCLIMethods::ClearCacheToggled(System::IntPtr nativeObjectPtr)
+    void OptionsViewCLIMethods::ClearCacheSelected(System::IntPtr nativeObjectPtr)
     {
         Options::View::OptionsView* pView = reinterpret_cast<Options::View::OptionsView*>(nativeObjectPtr.ToPointer());
-        pView->HandleClearCacheSelectionStateChanged();
+        pView->HandleClearCacheSelected();
     }
 
 	void OptionsViewCLIMethods::ClearCacheTriggered(System::IntPtr nativeObjectPtr)
@@ -42,9 +36,9 @@ namespace ExampleApp
 		pView->HandleClearCacheTriggered();
 	}
 
-    void OptionsViewCLIMethods::ReplayTutorials(System::IntPtr nativeObjectPtr, System::Boolean enableTutorials)
+    void OptionsViewCLIMethods::ReplayTutorialsSelected(System::IntPtr nativeObjectPtr)
     {
         Options::View::OptionsView* pView = reinterpret_cast<Options::View::OptionsView*>(nativeObjectPtr.ToPointer());
-        pView->HandleReplayTutorialsToggled(enableTutorials);
+        pView->HandleReplayTutorialsSelected();
     }
 }

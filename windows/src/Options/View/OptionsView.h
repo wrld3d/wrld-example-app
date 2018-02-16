@@ -26,22 +26,18 @@ namespace ExampleApp
 
                 Helpers::ReflectionHelpers::Method<void> mDestroy;
                 Helpers::ReflectionHelpers::Method<void> mIsCacheEnabledSelected;
-				Helpers::ReflectionHelpers::Method<void> mIsClearCacheSelected;
 				Helpers::ReflectionHelpers::Method<void> mOpenOptions;
                 Helpers::ReflectionHelpers::Method<void> mCloseOptions;
 				Helpers::ReflectionHelpers::Method<void> mOpenClearCacheWarning;
 				Helpers::ReflectionHelpers::Method<void> mConcludeCacheClearCeremony;
                 Helpers::ReflectionHelpers::Method<bool> mSetCacheEnabledSelected;
-				Helpers::ReflectionHelpers::Method<bool> mSetClearCacheSelected;
-				Helpers::ReflectionHelpers::Method<bool> mSetReplayTutorialsSelected;
                 
 				Eegeo::Helpers::CallbackCollection0 m_closeCallbacks;
-				Eegeo::Helpers::CallbackCollection0 m_okCallbacks;
 				Eegeo::Helpers::CallbackCollection0 m_wifiOnlyCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_cacheEnabledCallbacks;
 				Eegeo::Helpers::CallbackCollection0 m_clearCacheCallbacks;
 				Eegeo::Helpers::CallbackCollection0 m_clearCacheTriggeredCallbacks;
-				Eegeo::Helpers::CallbackCollection1<bool> m_replayTutorialsCallbacks;
+				Eegeo::Helpers::CallbackCollection0 m_replayTutorialsCallbacks;
 
             public:
                 OptionsView(WindowsNativeState& nativeState, const std::string& adminPassword, bool isInKioskMode);
@@ -52,15 +48,9 @@ namespace ExampleApp
 
 				bool IsCacheEnabledSelected() const;
 
-				bool IsClearCacheSelected() const;
-
                 void SetStreamOverWifiOnlySelected(bool isStreamOverWifiOnlySelected);
 
 				void SetCacheEnabledSelected(bool isCacheEnabledSelected);
-
-				void SetClearCacheSelected(bool isClearCacheSelected);
-
-                void SetReplayTutorialsSelected(bool isReplayTutorialsSelected);
 
 				void Open();
 
@@ -72,23 +62,18 @@ namespace ExampleApp
 
 				void HandleCloseSelected();
 
-				void HandleOkSelected();
-
                 void HandleStreamOverWifiOnlySelectionStateChanged();
 
                 void HandleCacheEnabledSelectionStateChanged();
 
-				void HandleClearCacheSelectionStateChanged();
+				void HandleClearCacheSelected();
 
 				void HandleClearCacheTriggered();
 
-                void HandleReplayTutorialsToggled(bool enableTutorials);
+                void HandleReplayTutorialsSelected();
 
 				void InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 				void RemoveCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
-
-				void InsertOkSelectedCallback(Eegeo::Helpers::ICallback0& callback);
-				void RemoveOkSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void InsertStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -96,14 +81,14 @@ namespace ExampleApp
                 void InsertCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
 
-                void InsertClearCacheSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
-                void RemoveClearCacheSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
+                void InsertClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback);
 
 				void InsertClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback);
 				void RemoveClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback);
 
-                void InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback);
-                void RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback);
+                void InsertReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback);
             };
         }
     }

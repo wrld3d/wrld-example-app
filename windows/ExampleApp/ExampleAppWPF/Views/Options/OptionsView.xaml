@@ -9,54 +9,32 @@
         <ResourceDictionary Source="../../TransparentButtonStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="Options_AdminLoginButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentButtonStyle}">
-        <Style.Triggers>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="ContentTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <Image Source="{DynamicResource OptionsPanelAdminButtonOnImage}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="False">
-                <Setter Property="ContentTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <Image Source="{DynamicResource OptionsPanelAdminButtonOffImage}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <Style TargetType="{x:Type local:OptionsView}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:OptionsView}">
-                    <StackPanel Name="MainContainer" Orientation="Vertical" Width="{DynamicResource OptionsPanelWidth}"
+                    <StackPanel Name="MainContainer" Orientation="Vertical"
+                                Width="{DynamicResource OptionsPanelWidth}" Height="{DynamicResource OptionsPanelHeight}"
                                 HorizontalAlignment="Center" VerticalAlignment="Center" Background="{DynamicResource White}">
 
-                        <!-- title and close button -->
-                        <DockPanel Height="{DynamicResource OptionsPanelTitleHeight}"
-                                   Margin="{DynamicResource OptionsPanelTitleMargin}">
+                        <!-- common title and close button -->
+                        <DockPanel Height="{DynamicResource CommonTopTitleHeight}"
+                                   Margin="{DynamicResource CommonTopTitleMargin}">
                             <TextBlock Name="Title"
                                        Foreground="{DynamicResource DarkSteelBlue}"
-                                       MaxWidth="{DynamicResource OptionsPanelTitleMaxWidth}" TextTrimming="CharacterEllipsis"
+                                       MaxWidth="{DynamicResource CommonTopTitleMaxWidth}" TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"
                                        Text="{StaticResource OptionsViewTitleText}"
-                                       FontSize="{DynamicResource OptionsPanelTitleFontSize}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                       FontSize="{DynamicResource CommonTopTitleFontSize}" FontFamily="{DynamicResource PrimaryUIFont}"/>
                             <Button Name="OptionsViewCloseButton" Style="{StaticResource Common_CloseButton}"
-                                    Width="{DynamicResource OptionsPanelCloseButtonSize}" Height="{DynamicResource OptionsPanelCloseButtonSize}"
+                                    Width="{DynamicResource CommonTopCloseButtonSize}" Height="{DynamicResource CommonTopCloseButtonSize}"
                                     HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </DockPanel>
 
                         <!-- top separator -->
-                        <Border BorderBrush="{x:Null}" HorizontalAlignment="Stretch" Height="1"
-                                Margin="{DynamicResource OptionsPanelTopSeparatorMargin}"
-                                Background="{DynamicResource DarkSteelBlue}"/>
+                        <Separator HorizontalAlignment="Stretch"
+                                   Margin="{DynamicResource OptionsPanelTopSeparatorMargin}"
+                                   Background="{DynamicResource DarkSteelBlue}"/>
 
                         <!-- scrollable section with options -->
                         <ScrollViewer PanningMode="Both" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
@@ -93,63 +71,48 @@
                                            Foreground="{DynamicResource DarkerGrey}"
                                            HorizontalAlignment="Left" VerticalAlignment="Center"
                                            Visibility="{DynamicResource OptionsPanelNonKioskVisibility}"/>
-                                <ToggleButton Grid.Row="{DynamicResource OptionsPanelRow1Index}" Grid.Column="1"
-                                              Name="OptionsViewClearCacheToggleButton"
-                                              IsChecked="{Binding ClearCacheSelected}"
-                                              Width="{DynamicResource OptionsPanelClearCacheButtonSize}" Height="{DynamicResource OptionsPanelClearCacheButtonSize}"
-                                              Style="{StaticResource Common_Radio_ToggleButton}" VerticalAlignment="Center"
+                                <Button Grid.Row="{DynamicResource OptionsPanelRow1Index}" Grid.Column="1"
+                                              Name="OptionsViewClearCacheButton"
+                                              Width="{DynamicResource OptionsPanelClearCacheButtonWidth}" Height="{DynamicResource OptionsPanelClearCacheButtonHeight}"
+                                              Style="{StaticResource Common_FlatFullButton}" VerticalAlignment="Center"
+                                              Content="OK" FontSize="12"
                                               Padding="{DynamicResource OptionsPanelClearCacheButtonPadding}"
                                               Visibility="{DynamicResource OptionsPanelNonKioskVisibility}"/>
 
                                 <TextBlock Grid.Row="{DynamicResource OptionsPanelRow2Index}" Grid.Column="0"
-                                           Name="OptionsViewPlayTutorialLabel" Text="{StaticResource OptionsViewPlayTutorialText}"
+                                           Name="OptionsViewPlayTutorialsLabel" Text="{StaticResource OptionsViewPlayTutorialText}"
                                            FontSize="{DynamicResource OptionsPanelPlayTutorialsTextFontSize}"
                                            Foreground="{DynamicResource DarkerGrey}"
                                            HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                <ToggleButton Grid.Row="{DynamicResource OptionsPanelRow2Index}" Grid.Column="1"
-                                              Name="OptionsViewPlayTutorialbutton"
-                                              IsChecked="{Binding PlayTutorialsAgainEnabled}"
-                                              Width="{DynamicResource OptionsPanelPlayTutorialsButtonSize}" Height="{DynamicResource OptionsPanelPlayTutorialsButtonSize}"
-                                              Style="{StaticResource Common_Radio_ToggleButton}"
+                                <Button Grid.Row="{DynamicResource OptionsPanelRow2Index}" Grid.Column="1"
+                                              Name="OptionsViewPlayTutorialsButton"
+                                              Width="{DynamicResource OptionsPanelPlayTutorialsButtonWidth}" Height="{DynamicResource OptionsPanelPlayTutorialsButtonHeight}"
+                                              Style="{StaticResource Common_FlatFullButton}"
+                                              Content="OK" FontSize="12"
                                               Padding="{DynamicResource OptionsPanelPlayTutorialsButtonPadding}"
                                               VerticalAlignment="Center"/>
 
-                                <StackPanel Grid.Row="{DynamicResource OptionsPanelRow3Index}" Orientation="Horizontal"
-                                            Visibility="{DynamicResource OptionsPanelAdminLoginVisibility}">
+                                <!-- kiosk Admin -->
 
-                                    <!-- kiosk Admin -->
-                                    <Button Name="OptionsViewAdminButton"
-                                            Style="{StaticResource Options_AdminLoginButton}"
-                                            Width="{DynamicResource OptionsPanelAdminLoginButtonSize}" Height="{DynamicResource OptionsPanelAdminLoginButtonSize}"
-                                            VerticalAlignment="Center"/>
-                                    <TextBlock Name="OptionsViewAdminLabel"
-                                        Foreground="{DynamicResource DarkerGrey}"
-                                        MaxWidth="{DynamicResource OptionsPanelTitleMaxWidth}" TextTrimming="CharacterEllipsis"
-                                        Margin="10,0,0,0"
+                                <TextBlock Grid.Row="{DynamicResource OptionsPanelRow3Index}" Grid.Column="0"
+                                            Name="OptionsViewAdminLabel"
+                                            Foreground="{DynamicResource DarkerGrey}"
+                                            MaxWidth="{DynamicResource OptionsPanelTitleMaxWidth}" TextTrimming="CharacterEllipsis"
+                                            Margin="0,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Text="{StaticResource OptionsViewAdminLoginText}"
+                                            FontSize="{DynamicResource OptionsPanelAdminLoginTextFontSize}" FontFamily="{DynamicResource PrimaryUIFont}"
+                                            Visibility="{DynamicResource OptionsPanelAdminLoginVisibility}"/>
+                                <Button Grid.Row="{DynamicResource OptionsPanelRow3Index}" Grid.Column="1"
+                                        Name="OptionsViewAdminButton"
+                                        Width="{DynamicResource OptionsPanelAdminLoginButtonWidth}" Height="{DynamicResource OptionsPanelAdminLoginButtonHeight}"
+                                        Style="{StaticResource Common_FlatFullButton}"
+                                        Content="OK" FontSize="12"
                                         VerticalAlignment="Center"
-                                        Text="{StaticResource OptionsViewAdminLoginText}"
-                                        FontSize="{DynamicResource OptionsPanelAdminLoginTextFontSize}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                                        Visibility="{DynamicResource OptionsPanelAdminLoginVisibility}"/>
 
-                                </StackPanel>
                             </Grid>
                         </ScrollViewer>
-
-                        <!-- bottom separator -->
-                        <Border BorderBrush="{x:Null}" Height="1" HorizontalAlignment="Stretch"
-                                Margin="{DynamicResource OptionsPanelBottomSeparatorMargin}"
-                                Background="{DynamicResource DarkSteelBlue}"/>
-
-                        <DockPanel Height="{DynamicResource OptionsPanelBottomSectionHeight}"
-                                   Background="{DynamicResource WhiteSmoke}">
-
-                            <!-- Ok button -->
-                            <Button Name="OptionsViewOkButton"
-                                    Style="{StaticResource Common_OkButton}"
-                                    Width="{DynamicResource OptionsPanelOkButtonSize}" Height="{DynamicResource OptionsPanelOkButtonSize}"
-                                    Margin="{DynamicResource OptionsPanelOkButtonMargin}"
-                                    HorizontalAlignment="Right" VerticalAlignment="Center"/>
-
-                        </DockPanel>
 
                     </StackPanel>
                 </ControlTemplate>

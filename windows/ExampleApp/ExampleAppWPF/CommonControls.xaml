@@ -10,8 +10,8 @@
 
     <ImageSource x:Key="Common_SliderToggleButtonOffImage">/Assets/slider_checkbox_off.png</ImageSource>
     <ImageSource x:Key="Common_SliderToggleButtonOnImage">/Assets/slider_checkbox_on.png</ImageSource>
-    <ImageSource x:Key="Common_RadioToggleButtonOffImage">/Assets/radio_checkbox_off.png</ImageSource>
-    <ImageSource x:Key="Common_RadioToggleButtonOnImage">/Assets/radio_checkbox_on.png</ImageSource>
+    <ImageSource x:Key="Common_SliderToggleButtonOffHoverImage">/Assets/slider_checkbox_off_hover.png</ImageSource>
+    <ImageSource x:Key="Common_SliderToggleButtonOnHoverImage">/Assets/slider_checkbox_on_hover.png</ImageSource>
     <ImageSource x:Key="Common_CloseButtonOffImage">/Assets/button_close_off.png</ImageSource>
     <ImageSource x:Key="Common_CloseButtonOnImage">/Assets/button_close_on.png</ImageSource>
     <ImageSource x:Key="Common_OkButtonOffImage">/Assets/button_ok_off.png</ImageSource>
@@ -125,7 +125,23 @@
     </Style>
 
     <Style x:Key="Common_Slider_ToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource TransparentToggleButtonStyle}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Image Source="{StaticResource Common_SliderToggleButtonOffImage}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Source="{StaticResource Common_SliderToggleButtonOffHoverImage}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
             <Trigger Property="IsChecked" Value="True">
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
@@ -135,51 +151,49 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
-            <Trigger Property="IsChecked" Value="False">
-                <Setter Property="ContentTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <Image Source="{StaticResource Common_SliderToggleButtonOffImage}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="Common_Radio_ToggleButton" TargetType="{x:Type ToggleButton}" BasedOn="{StaticResource TransparentToggleButtonStyle}">
-        <Style.Triggers>
-            <Trigger Property="IsChecked" Value="True">
-                <Setter Property="ContentTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <Image Source="{StaticResource Common_RadioToggleButtonOnImage}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-            <Trigger Property="IsChecked" Value="False">
-                <Setter Property="ContentTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <Image Source="{StaticResource Common_RadioToggleButtonOffImage}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver" Value="True"/>
+                    <Condition Property="IsChecked" Value="True"/>
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <Image Source="{StaticResource Common_SliderToggleButtonOnHoverImage}" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
         </Style.Triggers>
     </Style>
 
     <Style x:Key="Common_FlatButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentButtonStyle}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border BorderBrush="{StaticResource DarkSteelBlue}" BorderThickness="1">
+                        <DockPanel Background="{StaticResource White}">
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{TemplateBinding Content}"
+                                           FontSize="{TemplateBinding Button.FontSize}" FontFamily="{DynamicResource PrimaryUIFont}"
+                                           Foreground="{StaticResource DarkSteelBlue}"/>
+                        </DockPanel>
+                    </Border>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
-            <Trigger Property="IsPressed" Value="False">
+            <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Border BorderBrush="{StaticResource DarkSteelBlue}" BorderThickness="1">
-                                <DockPanel Background="{StaticResource White}">
+                            <Border BorderBrush="{StaticResource MidSteelBlue}" BorderThickness="1">
+                                <DockPanel Background="{StaticResource LightSteelBlue}">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{TemplateBinding Content}" FontSize="18" FontFamily="{DynamicResource PrimaryUIFont}"
+                                           Text="{TemplateBinding Content}"
+                                           FontSize="{TemplateBinding Button.FontSize}" FontFamily="{DynamicResource PrimaryUIFont}"
                                            Foreground="{StaticResource DarkSteelBlue}"/>
                                 </DockPanel>
                             </Border>
@@ -194,7 +208,8 @@
                             <Border BorderBrush="{StaticResource DarkSteelBlue}" BorderThickness="1">
                                 <DockPanel Background="{StaticResource LightSteelBlue}">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{TemplateBinding Content}" FontSize="18" FontFamily="{DynamicResource PrimaryUIFont}"
+                                           Text="{TemplateBinding Content}"
+                                           FontSize="{TemplateBinding Button.FontSize}" FontFamily="{DynamicResource PrimaryUIFont}"
                                            Foreground="{StaticResource DarkSteelBlue}"/>
                                 </DockPanel>
                             </Border>
@@ -206,14 +221,27 @@
     </Style>
 
     <Style x:Key="Common_FlatFullButton" TargetType="{x:Type Button}" BasedOn="{StaticResource TransparentButtonStyle}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <DockPanel Background="{StaticResource DarkSteelBlue}">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Text="{TemplateBinding Content}"
+                                        FontSize="{TemplateBinding Button.FontSize}" FontFamily="{DynamicResource PrimaryUIFont}"
+                                        Foreground="{StaticResource White}"/>
+                    </DockPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
-            <Trigger Property="IsPressed" Value="False">
+            <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="ContentTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <DockPanel Background="{StaticResource DarkSteelBlue}">
+                            <DockPanel Background="{StaticResource MidSteelBlue}">
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{TemplateBinding Content}" FontSize="18" FontFamily="{DynamicResource PrimaryUIFont}"
+                                           Text="{TemplateBinding Content}"
+                                           FontSize="{TemplateBinding Button.FontSize}" FontFamily="{DynamicResource PrimaryUIFont}"
                                            Foreground="{StaticResource White}"/>
                             </DockPanel>
                         </DataTemplate>
@@ -226,7 +254,8 @@
                         <DataTemplate>
                             <DockPanel Background="{StaticResource LightSteelBlue}">
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{TemplateBinding Content}" FontSize="18" FontFamily="{DynamicResource PrimaryUIFont}"
+                                           Text="{TemplateBinding Content}"
+                                           FontSize="{TemplateBinding Button.FontSize}" FontFamily="{DynamicResource PrimaryUIFont}"
                                            Foreground="{StaticResource White}"/>
                             </DockPanel>
                         </DataTemplate>

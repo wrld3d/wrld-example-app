@@ -1,0 +1,58 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ExampleAppWPF">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../../Strings.xaml"/>
+        <ResourceDictionary Source="../../Colours.xaml"/>
+        <ResourceDictionary Source="../../CommonControls.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type local:OptionsMessage}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:OptionsMessage}">
+
+                    <DockPanel Width="{DynamicResource MessagePanelWidth}" Height="{DynamicResource MessagePanelHeight}"
+                                HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Background="{DynamicResource White}">
+
+                        <!-- common title and close button -->
+                        <DockPanel Height="{DynamicResource CommonTopTitleHeight}"
+                                    Margin="{DynamicResource CommonTopTitleMargin}"
+                                    DockPanel.Dock="Top">
+                            <TextBlock Name="MessageViewTitleTextBlock"
+                                        Text="{Binding Title, Mode=OneWay}"
+                                        Foreground="{DynamicResource DarkSteelBlue}"
+                                        MaxWidth="{DynamicResource CommonTopTitleMaxWidth}" TextTrimming="CharacterEllipsis"
+                                        VerticalAlignment="Center"
+                                        FontSize="{DynamicResource CommonTopTitleFontSize}" FontFamily="{DynamicResource PrimaryUIFont}"/>
+                            <Button Name="CloseButton"
+                                    Style="{StaticResource Common_CloseButton}"
+                                    Width="{DynamicResource CommonTopCloseButtonSize}" Height="{DynamicResource CommonTopCloseButtonSize}"
+                                    HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </DockPanel>
+
+                        <!-- top separator -->
+                        <Separator HorizontalAlignment="Stretch"
+                                    Margin="{DynamicResource MessagePanelTopSeparatorMargin}"
+                                    Background="{DynamicResource DarkSteelBlue}"
+                                    DockPanel.Dock="Top"/>
+
+                        <!-- message text -->
+                        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                    Margin="{DynamicResource MessagePanelBottomAreaMargin}">
+                            <TextBlock Name="MessageViewContentTextBlock"
+                                    Text="{Binding Message, Mode=OneWay}"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    TextWrapping="Wrap"
+                                    TextAlignment="Center" 
+                                    FontSize="13"/>
+                        </DockPanel>
+
+                    </DockPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
