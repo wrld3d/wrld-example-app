@@ -1268,10 +1268,7 @@ namespace ExampleApp
 
         m_pSearchMenuModule->GetSearchMenuViewModel().AddToScreen();
         m_pCompassModule->GetScreenControlViewModel().AddToScreen();
-<<<<<<< HEAD
-=======
-        //m_pMyPinCreationModule->GetInitiationScreenControlViewModel().AddToScreen();
->>>>>>> 86ac34078e19184b4e99933d9539e40cd126ccf7
+
     }
     
     void MobileExampleApp::UpdateLoadingScreen(float dt)
