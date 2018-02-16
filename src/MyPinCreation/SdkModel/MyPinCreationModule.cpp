@@ -18,7 +18,6 @@
 #include "CollisionMeshResourceRepository.h"
 
 #include "MyPinCreationModel.h"
-#include "MyPinCreationInitiationViewModel.h"
 #include "MyPinCreationConfirmationViewModel.h"
 #include "MyPinCreationCompositeViewModel.h"
 
@@ -64,16 +63,12 @@ namespace ExampleApp
 
                 m_pMyPinCreationViewSavePinHandler = Eegeo_NEW(MyPinCreationViewSavePinHandler)(*m_pMyPinCreationModel, messageBus);
 
-                m_pMyPinCreationInitiationViewModel = Eegeo_NEW(View::MyPinCreationInitiationViewModel)(identityProvider.GetNextIdentity(),
-                                                      false,
-                                                      messageBus);
 
                 m_pMyPinCreationConfirmationViewModel = Eegeo_NEW(View::MyPinCreationConfirmationViewModel)(identityProvider.GetNextIdentity(),
                                                         false,
                                                         reactionControllerModel);
 
                 m_pMyPinCreationCompositeViewModel = Eegeo_NEW(View::MyPinCreationCompositeViewModel)(messageBus,
-                                                     *m_pMyPinCreationInitiationViewModel,
                                                      *m_pMyPinCreationConfirmationViewModel,
                                                      menuViewModel,
                                                      interiorControlViewModel);
@@ -91,7 +86,6 @@ namespace ExampleApp
                 Eegeo_DELETE m_pMyPinCreationMenuModel;
                 Eegeo_DELETE m_pMyPinCreationCompositeViewModel;
                 Eegeo_DELETE m_pMyPinCreationConfirmationViewModel;
-                Eegeo_DELETE m_pMyPinCreationInitiationViewModel;
                 Eegeo_DELETE m_pMyPinCreationModel;
             }
 
@@ -100,10 +94,6 @@ namespace ExampleApp
                 return *m_pMyPinCreationModel;
             }
 
-            View::IMyPinCreationInitiationViewModel& MyPinCreationModule::GetMyPinCreationInitiationViewModel() const
-            {
-                return *m_pMyPinCreationInitiationViewModel;
-            }
 
             View::IMyPinCreationConfirmationViewModel& MyPinCreationModule::GetMyPinCreationConfirmationViewModel() const
             {
@@ -113,11 +103,6 @@ namespace ExampleApp
             View::IMyPinCreationCompositeViewModel& MyPinCreationModule::GetMyPinCreationCompositeViewModel() const
             {
                 return *m_pMyPinCreationCompositeViewModel;
-            }
-
-            ScreenControl::View::IScreenControlViewModel& MyPinCreationModule::GetInitiationScreenControlViewModel() const
-            {
-                return m_pMyPinCreationInitiationViewModel->GetScreenControlViewModel();
             }
 
             ScreenControl::View::IScreenControlViewModel& MyPinCreationModule::GetConfirmationScreenControlViewModel() const

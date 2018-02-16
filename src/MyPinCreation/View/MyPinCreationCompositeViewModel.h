@@ -22,7 +22,6 @@ namespace ExampleApp
             public:
 
                 MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
-                                                IMyPinCreationInitiationViewModel& initiationViewModel,
                                                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
                                                 ExampleApp::Menu::View::IMenuViewModel& menuViewModel,
                                                 ScreenControl::View::IScreenControlViewModel& interiorControlViewModel);
@@ -38,7 +37,6 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControl::View::IScreenControlViewModel&, float> m_menuStateChangedCallback;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                IMyPinCreationInitiationViewModel& m_initiationViewModel;
                 IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
                 ScreenControl::View::IScreenControlViewModel& m_interiorControlViewModel;
                 ExampleApp::Menu::View::IMenuViewModel& m_menuViewModel;

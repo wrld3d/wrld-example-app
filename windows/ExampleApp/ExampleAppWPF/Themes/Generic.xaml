@@ -10,7 +10,6 @@
         <ResourceDictionary Source="../Views/Options/OptionsView.xaml" />
         <ResourceDictionary Source="../Views/Compass/CompassView.xaml" />
         <ResourceDictionary Source="../Views/AboutPage/AboutPageView.xaml" />
-        <ResourceDictionary Source="../Views/MyPinCreationInitiation/MyPinCreationButtonView.xaml" />
         <ResourceDictionary Source="../Views/MyPinCreationConfirmation/MyPinCreationConfirmationView.xaml" />
         <ResourceDictionary Source="../Views/MyPinCreationDetails/MyPinCreationDetailsView.xaml" />
         <ResourceDictionary Source="../Views/MyPinCreationDetails/MyPinDetailsView.xaml" />

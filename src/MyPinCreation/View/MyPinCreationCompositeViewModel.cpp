@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "MyPinCreationCompositeViewModel.h"
-#include "IMyPinCreationInitiationViewModel.h"
 #include "IMyPinCreationConfirmationViewModel.h"
 #include "IMenuViewModel.h"
 #include "WorldPinVisibility.h"
@@ -13,14 +12,12 @@ namespace ExampleApp
         namespace View
         {
             MyPinCreationCompositeViewModel::MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
-                    IMyPinCreationInitiationViewModel& initiationViewModel,
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
                     ExampleApp::Menu::View::IMenuViewModel& menuViewModel,
                     ScreenControl::View::IScreenControlViewModel& interiorControlViewModel)
                 : m_stateChangeHandler(this, &MyPinCreationCompositeViewModel::OnPoiRingStateChangedMessage)
                 , m_menuStateChangedCallback(this, &MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged)
                 , m_messageBus(messageBus)
-                , m_initiationViewModel(initiationViewModel)
                 , m_confirmationViewModel(confirmationViewModel)
                 , m_interiorControlViewModel(interiorControlViewModel)
                 , m_menuViewModel(menuViewModel)
@@ -47,7 +44,6 @@ namespace ExampleApp
                 {
                     if (m_showUiComponents)
                     {
-                        m_initiationViewModel.AddToScreen();
                         m_interiorControlViewModel.AddToScreen();
                         m_menuViewModel.AddToScreen();
 
@@ -62,7 +58,6 @@ namespace ExampleApp
                 case Ring:
                 {
                     m_confirmationViewModel.AddToScreen();
-                    m_initiationViewModel.RemoveFromScreen();
                     m_interiorControlViewModel.RemoveFromScreen();
                     m_menuViewModel.RemoveFromScreen();
 
@@ -84,9 +79,10 @@ namespace ExampleApp
             }
 
             // TODO: Investigate if this is necessary
+			
             void MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& onScreenState)
             {
-                if (viewModel.IsFullyOnScreen())
+               /* if (viewModel.IsFullyOnScreen())
                 {
                     m_initiationViewModel.SetShouldOffsetViewButton(true);
                     m_initiationViewModel.AddToScreen();
@@ -98,8 +94,9 @@ namespace ExampleApp
                     {
                         m_initiationViewModel.AddToScreen();
                     }
-                }
+                }*/
             }
+			
 
             void MyPinCreationCompositeViewModel::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
             {

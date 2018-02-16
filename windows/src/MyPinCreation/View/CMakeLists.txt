@@ -4,8 +4,6 @@ set(currsources
   src/MyPinCreation/View/IMyPinCreationViewModule.h
   src/MyPinCreation/View/MyPinCreationConfirmationView.cpp
   src/MyPinCreation/View/MyPinCreationConfirmationView.h
-  src/MyPinCreation/View/MyPinCreationInitiationView.cpp
-  src/MyPinCreation/View/MyPinCreationInitiationView.h
   src/MyPinCreation/View/MyPinCreationViewCLI.cpp
   src/MyPinCreation/View/MyPinCreationViewCLI.h
   src/MyPinCreation/View/MyPinCreationViewIncludes.h
