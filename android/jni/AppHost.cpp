@@ -481,7 +481,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     // HUD behind modal background layer.
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
                                      m_nativeState,
-                                     app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                      app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                      app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                      m_messageBus,

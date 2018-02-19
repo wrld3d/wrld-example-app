@@ -9,7 +9,6 @@ namespace ExampleApp
         namespace View
         {
             class IMyPinCreationViewModule;
-            class MyPinCreationInitiationView;
             class MyPinCreationConfirmationView;
             class MyPinCreationViewModule;
         }

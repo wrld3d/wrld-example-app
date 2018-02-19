@@ -77,9 +77,6 @@ namespace ExampleAppWPF
                 ((TranslateTransform)createReportDialog.RenderTransform).Y = y - ((createReportDialog.GetTooltipHeight() + heightDiff - h) / 2);
             });
 
-            MyPinCreationButtonView myPinCreationButtonView = ViewHelpers.FindChildrenOfType<MyPinCreationButtonView>(m_mainWindow.MainGrid.Children).Single();
-            m_createReportPositionTracker = new TutorialTooltipPositionTracker(m_mainWindow, myPinCreationButtonView);
-            m_createReportPositionTracker.OnUpdateTransform += m_positionedCreateReportDialog.DialogPosition;
             createReportDialog.RenderTransformOrigin = new Point(0.0, 0.0);
             createReportDialog.RenderTransform = new TranslateTransform();
 
