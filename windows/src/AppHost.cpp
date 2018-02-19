@@ -646,7 +646,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         m_messageBus,
         app.GetApplicationConfiguration().IsInKioskMode(),
-        app.CameraTransitionController()
+        app.CameraTransitionController(),
+		app.CompassModule()
         );
 
 	m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(

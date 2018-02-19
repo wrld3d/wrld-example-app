@@ -361,7 +361,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                 app.MyPinDetailsModule().GetMyPinDetailsViewModel(),
                                 screenProperties);
     
-    m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(m_messageBus, app.CameraTransitionController());
+    m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(m_messageBus, app.CameraTransitionController(), app.CompassModule());
     
     
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(app.InteriorsExplorerModule().GetInteriorsExplorerModel(),

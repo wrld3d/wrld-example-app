@@ -7,6 +7,7 @@
 #include "WindowsNativeState.h"
 #include "BidirectionalBus.h"
 #include "CameraTransitions.h"
+#include "Compass.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,8 @@ namespace ExampleApp
                 InitialExperienceIntroViewModule(WindowsNativeState& nativeState,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                  bool isInKioskMode,
-                                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
+                                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+												 const Compass::SdkModel::ICompassModule& compassModule);
                 ~InitialExperienceIntroViewModule();
 
                 InitialExperienceIntroController& GetController() { return *m_pController; }
