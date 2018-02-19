@@ -20,7 +20,7 @@ public class NativeJniCalls
     public static native void revealApplicationUi(long nativePointer);
     public static native void handleApplicationUiCreatedOnNativeThread(long nativePointer);
     public static native void destroyApplicationUi();
-    public static native void handleUrlOpenEvent(String host, String path);
+    public static native void handleUrlOpenEvent(String host, String path, String query);
     public static native void setUpBreakpad(String filepath);
     public static native String getAppConfigurationPath();
 }

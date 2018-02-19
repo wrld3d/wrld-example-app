@@ -16,9 +16,13 @@ namespace ExampleApp
         namespace SdkModel
         {
             
-            QueryData DeepLinkQueryStringParser::ParseData(const std::string& query) const
+            QueryData DeepLinkQueryStringParser::ParseData(const AppInterface::UrlData& data) const
             {
-                std::stringstream ssquery(query);
+                std::stringstream ssquery;
+                if(data.query != NULL)
+                {
+                    ssquery.str(data.query);
+                }
                 std::string segment;
                 
                 std::string indoorId = "";

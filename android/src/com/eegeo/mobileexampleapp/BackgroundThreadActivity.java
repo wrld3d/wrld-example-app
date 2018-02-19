@@ -262,7 +262,7 @@ public class BackgroundThreadActivity extends MainActivity
 
                     if(m_deepLinkUrlData != null)
                     {
-                        NativeJniCalls.handleUrlOpenEvent(m_deepLinkUrlData.getHost(), m_deepLinkUrlData.getPath());
+                        NativeJniCalls.handleUrlOpenEvent(m_deepLinkUrlData.getHost(), m_deepLinkUrlData.getPath(), m_deepLinkUrlData.getEncodedQuery());
                         m_deepLinkUrlData = null;
                     }
 

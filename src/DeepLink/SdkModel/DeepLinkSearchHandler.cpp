@@ -23,13 +23,17 @@ namespace ExampleApp
             
             void DeepLinkSearchHandler::HandleDeepLink(const AppInterface::UrlData& data)
             {
-                const QueryData& queryData = DeepLinkQueryStringParser().ParseData(data.query);
+                const QueryData& queryData = DeepLinkQueryStringParser().ParseData(data);
                 if(queryData.HasMapscene())
                 {
                     HandleMapscene(data, queryData);
                 }
-                
-                m_selectFirstResultSearchService.PerformSearch(queryData.GetQuery(), queryData.GetIndoorId());
+
+                if(queryData.HasQuery())
+                {
+                    m_selectFirstResultSearchService.PerformSearch(queryData.GetQuery(),
+                                                                   queryData.GetIndoorId());
+                }
             }
             
             void DeepLinkSearchHandler::HandleMapscene(const AppInterface::UrlData& data, const QueryData& queryData)

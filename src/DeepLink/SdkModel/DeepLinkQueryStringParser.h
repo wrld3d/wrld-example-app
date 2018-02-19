@@ -15,7 +15,7 @@ namespace ExampleApp
             class DeepLinkQueryStringParser
             {
             public:
-                QueryData ParseData(const std::string& query) const;
+                QueryData ParseData(const AppInterface::UrlData& data) const;
             private:
             };
             
