@@ -17,12 +17,7 @@ namespace ExampleApp
 
         namespace View
         {
-            class IMyPinCreationInitiationViewModel;
-            class MyPinCreationInitiationViewModel;
-
-            class IMyPinCreationInitiationView;
-            class MyPinCreationInitiationController;
-
+            
             class IMyPinCreationConfirmationViewModel;
             class MyPinCreationConfirmationViewModel;
 

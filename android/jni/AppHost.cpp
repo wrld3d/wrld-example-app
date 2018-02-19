@@ -481,7 +481,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     // HUD behind modal background layer.
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
                                      m_nativeState,
-                                     app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
                                      app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                      app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                      m_messageBus,
@@ -562,7 +561,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(
 									m_nativeState,
 									m_messageBus,
-									app.CameraTransitionController()
+									app.CameraTransitionController(),
+                                    app.CompassModule()
 								);
 
     m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(

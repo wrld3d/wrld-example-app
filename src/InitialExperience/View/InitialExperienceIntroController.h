@@ -7,6 +7,7 @@
 #include "InitialExperience.h"
 #include "ShowInitialExperienceIntroMessage.h"
 #include "CameraTransitions.h"
+#include "Compass.h"
 #include <string>
 
 namespace ExampleApp
@@ -22,7 +23,9 @@ namespace ExampleApp
                 InitialExperienceIntroController(IInitialExperienceIntroView& view,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                  bool isInKioskMode,
-                                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
+                                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                 const Compass::SdkModel::ICompassModule& compassModule
+                                                 );
                 ~InitialExperienceIntroController();
 
                 void ReplayExitIUX(const bool enableExitIUX);
@@ -57,6 +60,8 @@ namespace ExampleApp
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
                 Eegeo::Helpers::TCallback1<InitialExperienceIntroController, const CameraTransitions::CameraTransitionControllerChangedMessage&>  m_transitionCompleteHandler;
                 void OnTransitionCompleteHandler(const CameraTransitions::CameraTransitionControllerChangedMessage& message);
+                
+                const Compass::SdkModel::ICompassModule& m_compassModule;
             
             };
         }

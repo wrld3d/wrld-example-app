@@ -7,7 +7,6 @@
 #include "IInteriorStreamingDialogView.h"
 #include "IMenuViewModel.h"
 #include "IScreenControlViewModel.h"
-#include "IMyPinCreationInitiationViewModel.h"
 #include "InteriorsExplorerFloorSelectionDraggedMessage.h"
 #include "ApplyScreenControl.h"
 #include "WorldPinVisibility.h"

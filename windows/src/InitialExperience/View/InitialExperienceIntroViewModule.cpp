@@ -13,10 +13,11 @@ namespace ExampleApp
             InitialExperienceIntroViewModule::InitialExperienceIntroViewModule(WindowsNativeState& nativeState,
                                                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                                                bool isInKioskMode,
-                                                                               CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController)
+                                                                               CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+																			   const Compass::SdkModel::ICompassModule& compassModule)
             {
                 m_pView = Eegeo_NEW(InitialExperienceIntroView)(nativeState, messageBus, isInKioskMode);
-                m_pController = Eegeo_NEW(InitialExperienceIntroController)(*m_pView, messageBus, isInKioskMode, cameraTransitionController);
+                m_pController = Eegeo_NEW(InitialExperienceIntroController)(*m_pView, messageBus, isInKioskMode, cameraTransitionController, compassModule);
             }
 
             InitialExperienceIntroViewModule::~InitialExperienceIntroViewModule()

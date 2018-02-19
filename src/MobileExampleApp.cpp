@@ -57,6 +57,7 @@
 #include "IEegeoErrorHandler.h"
 #include "OptionsMenuOption.h"
 #include "AboutPageMenuOption.h"
+#include "MyPinCreationMenuOption.h"
 #include "ImagePathHelpers.h"
 #include "InteriorsPresentationModule.h"
 #include "InteriorsModelModule.h"
@@ -925,6 +926,7 @@ namespace ExampleApp
 
         if(!m_applicationConfiguration.IsInKioskMode())
         {
+            m_pSearchMenuModule->AddMenuSection("Create Report", m_pMyPinCreationModule->GetMyPinCreationMenuModel(), false);
             m_pSearchMenuModule->AddMenuSection("My Location Reports", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         }
 
@@ -1076,7 +1078,6 @@ namespace ExampleApp
         std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> reactors;
         reactors.push_back(&SearchMenuModule().GetSearchMenuViewModel());
         reactors.push_back(&CompassModule().GetScreenControlViewModel());
-        reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
         reactors.push_back(&InteriorsExplorerModule().GetScreenControlViewModel());
         return reactors;
     }
@@ -1267,7 +1268,7 @@ namespace ExampleApp
 
         m_pSearchMenuModule->GetSearchMenuViewModel().AddToScreen();
         m_pCompassModule->GetScreenControlViewModel().AddToScreen();
-        m_pMyPinCreationModule->GetInitiationScreenControlViewModel().AddToScreen();
+
     }
     
     void MobileExampleApp::UpdateLoadingScreen(float dt)

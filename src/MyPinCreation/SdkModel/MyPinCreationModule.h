@@ -41,24 +41,32 @@ namespace ExampleApp
                 ~MyPinCreationModule();
 
                 IMyPinCreationModel& GetMyPinCreationModel() const;
-                View::IMyPinCreationInitiationViewModel& GetMyPinCreationInitiationViewModel() const;
                 View::IMyPinCreationConfirmationViewModel& GetMyPinCreationConfirmationViewModel() const;
                 View::IMyPinCreationCompositeViewModel& GetMyPinCreationCompositeViewModel() const;
 
-                ScreenControl::View::IScreenControlViewModel& GetInitiationScreenControlViewModel() const;
+                //ScreenControl::View::IScreenControlViewModel& GetInitiationScreenControlViewModel() const;
                 ScreenControl::View::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const;
 
                 OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
-
+                
+                Menu::View::IMenuModel& GetMyPinCreationMenuModel() const
+                {
+                    return *m_pMyPinCreationMenuModel;
+                }
+                
             private:
 
                 MyPinCreationModel* m_pMyPinCreationModel;
-                View::MyPinCreationInitiationViewModel* m_pMyPinCreationInitiationViewModel;
+               
                 View::MyPinCreationConfirmationViewModel* m_pMyPinCreationConfirmationViewModel;
                 View::MyPinCreationCompositeViewModel* m_pMyPinCreationCompositeViewModel;
                 MyPinCreationModelObserver* m_pMyPinCreationModelObserver;
                 MyPinCreationViewStateChangedHandler* m_pMyPinCreationViewStateChangedHandler;
                 MyPinCreationViewSavePinHandler* m_pMyPinCreationViewSavePinHandler;
+                
+                
+                Menu::View::IMenuModel* m_pMyPinCreationMenuModel;
+                Menu::View::IMenuOptionsModel* m_pMyPinCreationMenuOptionsModel;
             };
         }
     }

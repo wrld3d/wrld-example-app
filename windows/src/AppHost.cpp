@@ -80,7 +80,6 @@
 #include "SearchResultPoiView.h"
 #include "WindowsMenuReactionModel.h"
 #include "TagSearchViewModule.h"
-#include "IMyPinCreationInitiationViewModel.h"
 #include "WindowsApplicationConfigurationVersionProvider.h"
 #include "ModalityIgnoredReactionModel.h"
 #include "IUserIdleService.h"
@@ -557,7 +556,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
 	m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
 		m_nativeState,
-		app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
 		app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
 		app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
 		m_messageBus,
@@ -617,7 +615,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.GetSwallowSearchTags(),
         m_messageBus,
         *m_pWindowsFlurryMetricsService,
-        m_pMyPinCreationViewModule->GetMyPinCreationInitiationView(),
         app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
         app.GetApplicationConfiguration().IsInKioskMode()
         );
@@ -649,7 +646,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         m_messageBus,
         app.GetApplicationConfiguration().IsInKioskMode(),
-        app.CameraTransitionController()
+        app.CameraTransitionController(),
+		app.CompassModule()
         );
 
 	m_pInteriorsExplorerViewModule = Eegeo_NEW(ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewModule)(

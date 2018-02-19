@@ -305,10 +305,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MyPinCreationInitiation\MyPinCreationButtonView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Options\OptionsCacheClearSubView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -371,7 +367,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\MyPinCreationInitiation\MyPinCreationButtonView.cs" />
     <Compile Include="Views\MyPinCreationConfirmation\MyPinCreationConfirmationView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
