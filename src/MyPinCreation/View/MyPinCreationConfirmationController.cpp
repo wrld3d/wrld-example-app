@@ -23,6 +23,7 @@ namespace ExampleApp
                 , m_detailsViewModel(detailsViewModel)
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
+                , m_userInteractionEnabled(true)
                 , m_dismissedCallback(this, &MyPinCreationConfirmationController::OnDismissed)
                 , m_confirmedCallback(this, &MyPinCreationConfirmationController::OnConfirmed)
                 , m_openedCallback(this, &MyPinCreationConfirmationController::OnOpened)
@@ -43,6 +44,8 @@ namespace ExampleApp
 
             MyPinCreationConfirmationController::~MyPinCreationConfirmationController()
             {
+                m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
+                m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
                 m_view.RemoveConfirmedCallback(m_confirmedCallback);
                 m_view.RemoveDismissedCallback(m_dismissedCallback);
                 m_viewModel.RemoveOpenCallback(m_openedCallback);

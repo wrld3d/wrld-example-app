@@ -20,16 +20,12 @@ namespace ExampleApp
             class MyPinCreationViewModule : public IMyPinCreationViewModule, private Eegeo::NonCopyable
             {
             private:
-                MyPinCreationInitiationView* m_pInitiationView;
-                MyPinCreationInitiationController* m_pInitiationController;
-
                 MyPinCreationConfirmationView* m_pConfirmationView;
                 MyPinCreationConfirmationController* m_pConfirmationController;
 
             public:
                 MyPinCreationViewModule(
                     AndroidNativeState& nativeState,
-                    IMyPinCreationInitiationViewModel& initiationViewModel,
                     IMyPinCreationConfirmationViewModel& confirmationViewModel,
                     MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,

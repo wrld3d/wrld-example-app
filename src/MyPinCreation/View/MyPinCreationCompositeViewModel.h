@@ -30,11 +30,9 @@ namespace ExampleApp
 
                 void HandlePoiRingStateChanged(MyPinCreationStage& stage);
                 void OnPoiRingStateChangedMessage(const MyPinCreationStateChangedMessage& message);
-                void HandleSettingsMenuStateChanged(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState);
 
             private:
                 Eegeo::Helpers::TCallback1<MyPinCreationCompositeViewModel, const MyPinCreationStateChangedMessage&> m_stateChangeHandler;
-                Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControl::View::IScreenControlViewModel&, float> m_menuStateChangedCallback;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 IMyPinCreationConfirmationViewModel& m_confirmationViewModel;

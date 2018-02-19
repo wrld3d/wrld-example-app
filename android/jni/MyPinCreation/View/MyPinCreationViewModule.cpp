@@ -12,7 +12,6 @@ namespace ExampleApp
         {
             MyPinCreationViewModule::MyPinCreationViewModule(
                 AndroidNativeState& nativeState,
-                IMyPinCreationInitiationViewModel& initiationViewModel,
                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
                 MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& detailsViewModel,
                 ExampleAppMessaging::TMessageBus& messageBus,
