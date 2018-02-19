@@ -10,7 +10,6 @@
 #include "SearchResultModel.h"
 #include "IMetricsService.h"
 #include "SearchResultPoiController.h"
-#include "IMyPinCreationInitiationView.h"
 #include "InteriorSelectionModel.h"
 #include "ISearchMenuView.h"
 
@@ -22,9 +21,9 @@ namespace ExampleApp
         {
             class DesktopSearchResultPoiController : public SearchResultPoiController
             {
-                MyPinCreation::View::IMyPinCreationInitiationView& m_pinCreationInitiationView;
+               
 
-                Eegeo::Helpers::TCallback0<DesktopSearchResultPoiController> m_onPinCreationSelected;
+              //  Eegeo::Helpers::TCallback0<DesktopSearchResultPoiController> m_onPinCreationSelected;
                 void OnPinCreationSelectedOrSearchCleared();
 
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
@@ -44,7 +43,6 @@ namespace ExampleApp
                     SearchMenu::View::ISearchMenuView& searchMenuView,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService,
-                    MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
                     Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel);
 
                 virtual ~DesktopSearchResultPoiController();
