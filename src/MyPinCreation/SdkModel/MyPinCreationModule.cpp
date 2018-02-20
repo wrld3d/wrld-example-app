@@ -76,7 +76,7 @@ namespace ExampleApp
                 
                 m_pMyPinCreationMenuModel        = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMyPinCreationMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMyPinCreationMenuModel);
-                m_pMyPinCreationMenuOptionsModel->AddItem("Create Pin", "Create Pin", "", "", Eegeo_NEW(View::MyPinCreationMenuOption)(menuViewModel,*m_pMyPinCreationConfirmationViewModel));
+                m_pMyPinCreationMenuOptionsModel->AddItem("Report Fault", "Report Fault", "", "", Eegeo_NEW(View::MyPinCreationMenuOption)(menuViewModel,*m_pMyPinCreationConfirmationViewModel));
                 
             }
 

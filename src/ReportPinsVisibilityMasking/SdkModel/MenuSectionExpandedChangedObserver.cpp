@@ -34,7 +34,7 @@ namespace ExampleApp
             
             void MenuSectionExpandedChangedObserver::OnMenuSectionExpandedChangedMessage(const Menu::MenuSectionExpandedChangedMessage& message)
             {
-                if(message.MenuSectionName() == "My Location Reports")
+                if(message.MenuSectionName() == "My Fault Reports")
                 {
                     bool expanded = message.IsExpanded();
                     m_reportPinsExpandedChangedCallbacks.ExecuteCallbacks(expanded);
