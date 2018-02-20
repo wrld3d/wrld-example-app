@@ -34,15 +34,9 @@
 
 - (void) setCacheEnabledSelected:(bool)isCacheEnabledSelected;
 
-- (void) setClearCacheSelected:(bool)isclearCacheSelected;
-
-- (void) setReplayTutorialsSelected:(bool)isReplayTutorialsSelected;
-
 - (bool) isStreamOverWifiOnlySelected;
 
 - (bool) isCacheEnabledSelected;
-
-- (bool) isClearCacheSelected;
 
 - (void) openClearCacheWarning;
 
@@ -55,14 +49,13 @@
 
 
 @property (nonatomic, retain) UIView* pHeaderSeparator;
-@property (nonatomic, retain) UIView* pContentSeparator;
 
 
 
 @property (nonatomic, retain) CustomSwitch*  pWifiOnlySwitch;
 @property (nonatomic, retain) CustomSwitch* pCacheEnabledSwitch;
-@property (nonatomic, retain) CustomSwitch* pClearCacheCheckbox;
-@property (nonatomic, retain) CustomSwitch* pReplayTutorialsCheckbox;
+@property (nonatomic, retain) UIButton* pClearCacheButton;
+@property (nonatomic, retain) UIButton* pReplayTutorialsButton;
 
 @property (nonatomic, retain) UILabel*  pWifiOnlyLabel;
 @property (nonatomic, retain) UILabel*  pCacheEnabledLabel;
@@ -70,8 +63,6 @@
 @property (nonatomic, retain) UILabel*  pReplayTutorialsLabel;
 
 @property (nonatomic, retain) UIView* pContentContainer;
-
-@property (nonatomic, retain) UIButton* pTickButton;
 
 @property (nonatomic, retain) OptionsCacheClearSubView* pOptionsCacheClearSubView;
 

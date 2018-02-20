@@ -90,28 +90,17 @@
         [self.pContentContainer addSubview:self.pCacheEnabledSwitch];
         
         
-        onImage =  [UIImage imageNamed:@"CheckboxRoundYes"];
-        offImage = [UIImage imageNamed:@"CheckboxRound"];
+        self.pClearCacheButton = [[[UIButton alloc] init] autorelease];
+        [self.pClearCacheButton setTitle:@"OK" forState:UIControlStateNormal];
+        self.pClearCacheButton.backgroundColor = UIColor.blueColor;
+        [self.pClearCacheButton addTarget:self action:@selector(cacheClearSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
+        [self.pContentContainer addSubview:self.pClearCacheButton];
         
-        self.pClearCacheCheckbox = [[[CustomSwitch alloc] initWithOnImage:onImage offImage:offImage] autorelease];
-        [self.pClearCacheCheckbox addTarget:self action:@selector(cacheClearSelectionHandler) forControlEvents:UIControlEventValueChanged];
-        [self.pContentContainer addSubview:self.pClearCacheCheckbox];
-        
-        self.pReplayTutorialsCheckbox = [[[CustomSwitch alloc] initWithOnImage:onImage offImage:offImage] autorelease];
-        [self.pReplayTutorialsCheckbox addTarget:self action:@selector(replayTutorialsSelectionHandler) forControlEvents:UIControlEventValueChanged];
-        [self.pContentContainer addSubview:self.pReplayTutorialsCheckbox];
-        
-        self.pTickButton = [[UIButton alloc] init];
-        
-        self.pTickButton.backgroundColor = ExampleApp::Helpers::ColorPalette::TableSubCellColor;
-        UIImage *tick = [UIImage imageNamed:@"LargeTick_Blue"];
-        [self.pTickButton setImage:tick forState:UIControlStateNormal];
-        [self.pTickButton addTarget:self action:@selector(onTickButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.pTickButton];
-        
-        self.pContentSeparator = [[[UIView alloc] init] autorelease];
-        self.pContentSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
-        [self addSubview:self.pContentSeparator];
+        self.pReplayTutorialsButton = [[[UIButton alloc] init] autorelease];
+        [self.pReplayTutorialsButton addTarget:self action:@selector(replayTutorialsSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
+        self.pReplayTutorialsButton.backgroundColor = UIColor.blueColor;
+        [self.pReplayTutorialsButton setTitle:@"OK" forState:UIControlStateNormal];
+        [self.pContentContainer addSubview:self.pReplayTutorialsButton];
         
         self.pOptionsCacheClearSubView = [[[OptionsCacheClearSubView alloc] init] autorelease];
         
@@ -138,9 +127,6 @@
     [self.pHeaderSeparator removeFromSuperview];
     [self.pHeaderSeparator release];
     
-    [self.pContentSeparator removeFromSuperview];
-    [self.pContentSeparator release];
-    
     
     
     [self.pWifiOnlyLabel removeFromSuperview];
@@ -164,16 +150,13 @@
     [self.pCacheEnabledSwitch removeFromSuperview];
     [self.pCacheEnabledSwitch release];
     
-    [self.pClearCacheCheckbox removeFromSuperview];
-    [self.pClearCacheCheckbox release];
+    [self.pClearCacheButton removeFromSuperview];
+    [self.pClearCacheButton release];
     
-    [self.pReplayTutorialsCheckbox removeFromSuperview];
-    [self.pReplayTutorialsCheckbox release];
+    [self.pReplayTutorialsButton removeFromSuperview];
+    [self.pReplayTutorialsButton release];
     
    
-    
-    [self.pTickButton removeFromSuperview];
-    [self.pTickButton release];
     
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
@@ -257,18 +240,11 @@
     self.pCacheEnabledSwitch.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 1.0*rowHeight + switchOffestY, switchWidth, switchHeight);
     [self.pCacheEnabledSwitch layoutSubviews];
     
-    self.pClearCacheCheckbox.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 2.0*rowHeight + switchOffestY, switchWidth, switchHeight);
-    [self.pClearCacheCheckbox layoutSubviews];
+    self.pClearCacheButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 2.0*rowHeight + switchOffestY, switchWidth, switchHeight);
+    [self.pClearCacheButton layoutSubviews];
     
-    self.pReplayTutorialsCheckbox.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 3.0*rowHeight + switchOffestY, switchWidth, switchHeight);
-    [self.pReplayTutorialsCheckbox layoutSubviews];
-    
-    self.pContentSeparator.frame = CGRectMake(0.0 ,mainWindowHeight - tickHeight, mainWindowWidth, 1);
-    self.pTickButton.frame = CGRectMake(0.0 ,mainWindowHeight - tickHeight, mainWindowWidth, tickHeight);
-    self.pTickButton.imageView.frame = CGRectMake(mainWindowWidth-tickHeight,0.0,tickHeight,tickHeight);
-    self.pTickButton.imageEdgeInsets = UIEdgeInsetsMake(0.0, mainWindowWidth-tickHeight, 0.0, 0.0);
-    
-  
+    self.pReplayTutorialsButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 3.0*rowHeight + switchOffestY, switchWidth, switchHeight);
+    [self.pReplayTutorialsButton layoutSubviews];
 }
 
 - (void) setStreamOverWifiOnlySelected:(bool)isStreamOverWifiOnlySelected
@@ -281,16 +257,6 @@
     [self.pCacheEnabledSwitch setOn:isCacheEnabledSelected];
 }
 
-- (void) setClearCacheSelected:(bool)isClearCacheSelected
-{
-    [self.pClearCacheCheckbox setOn:isClearCacheSelected];
-}
-
-- (void) setReplayTutorialsSelected:(bool)isReplayTutorialsSelected
-{
-    [self.pReplayTutorialsCheckbox setOn:isReplayTutorialsSelected];
-}
-
 - (bool)isStreamOverWifiOnlySelected
 {
     return self.pWifiOnlySwitch.isOn;
@@ -299,11 +265,6 @@
 - (bool)isCacheEnabledSelected
 {
     return self.pCacheEnabledSwitch.isOn;
-}
-
-- (bool)isClearCacheSelected
-{
-    return self.pClearCacheCheckbox.isOn;
 }
 
 - (void)openClearCacheWarning
@@ -333,13 +294,12 @@
 
 - (void)cacheClearSelectionHandler
 {
-    m_pInterop->HandleClearCacheSelectionStateChanged();
+    m_pInterop->HandleClearCacheSelected();
 }
 
 - (void)replayTutorialsSelectionHandler
 {
-    bool isOn = self.pReplayTutorialsCheckbox.isOn;
-    m_pInterop->HandleReplayTutorialsToggled(isOn);
+    m_pInterop->HandleReplayTutorialsSelected();
 }
 
 - (void)clearCacheSelectionConfirmedHandler
@@ -394,11 +354,6 @@
 - (void)onCloseButtonTapped
 {
     m_pInterop->HandleCloseSelected();
-}
-
-- (void)onTickButtonTapped
-{
-    m_pInterop->HandleOkSelected();
 }
 
 @end
