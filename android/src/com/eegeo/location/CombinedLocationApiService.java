@@ -65,14 +65,18 @@ public class CombinedLocationApiService
             m_locationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS);
             m_locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         }
-        if(!m_googleApiClient.isConnected() && !m_googleApiClient.isConnecting())
-            m_googleApiClient.connect();
+        if(m_googleApiClient != null) {
+            if (!m_googleApiClient.isConnected() && !m_googleApiClient.isConnecting())
+                m_googleApiClient.connect();
+        }
     }
 
     private void startLocationUpdates()
     {
-        if(m_googleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(m_googleApiClient, m_locationRequest, this);
+        if(m_googleApiClient != null) {
+            if (m_googleApiClient.isConnected()) {
+                LocationServices.FusedLocationApi.requestLocationUpdates(m_googleApiClient, m_locationRequest, this);
+            }
         }
     }
 
@@ -98,16 +102,16 @@ public class CombinedLocationApiService
             buildGoogleApiClient();
         }
 
-        Log.v(TAG, "Connected to GoogleApiClient");
-        if(m_currentLocation == null)
-        {
-            m_currentLocation = LocationServices.FusedLocationApi.getLastLocation(m_googleApiClient);
-            if(this.m_fusedLocationUpdateListener != null && m_currentLocation != null)
-            {
-                this.m_fusedLocationUpdateListener.onFusedLocationChanged(m_currentLocation);
+        if(m_googleApiClient != null) {
+            Log.v(TAG, "Connected to GoogleApiClient");
+            if (m_currentLocation == null) {
+                m_currentLocation = LocationServices.FusedLocationApi.getLastLocation(m_googleApiClient);
+                if (this.m_fusedLocationUpdateListener != null && m_currentLocation != null) {
+                    this.m_fusedLocationUpdateListener.onFusedLocationChanged(m_currentLocation);
+                }
             }
+            startLocationUpdates();
         }
-        startLocationUpdates();
     }
 
     @Override
@@ -125,7 +129,10 @@ public class CombinedLocationApiService
     public void onConnectionSuspended(int cause)
     {
         Log.v(TAG, "Connection suspended");
-        m_googleApiClient.connect();
+
+        if(m_googleApiClient != null) {
+            m_googleApiClient.connect();
+        }
     }
 
     @Override
