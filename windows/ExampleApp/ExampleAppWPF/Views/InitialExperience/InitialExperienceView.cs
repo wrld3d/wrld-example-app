@@ -27,12 +27,6 @@ namespace ExampleAppWPF
 
         private MainWindow m_mainWindow;
 
-        private readonly string MapModeDialogName = "MapModeDialog";
-        private PositionedDialog m_positionedMapModeDialog;
-
-        private readonly string CreateReportDialogName = "CreateReportDialog";
-        private PositionedDialog m_positionedCreateReportDialog;
-        private TutorialTooltipPositionTracker m_createReportPositionTracker;
 
         private Storyboard m_showAnimation;
         private bool m_hideAnimationRunning;
@@ -58,28 +52,7 @@ namespace ExampleAppWPF
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            TutorialTooltipView mapModeDialog = (TutorialTooltipView)GetTemplateChild(MapModeDialogName);
-            m_positionedMapModeDialog = new PositionedDialog(mapModeDialog, (x, y, w, h) =>
-            {
-                ((TranslateTransform)mapModeDialog.RenderTransform).X = x - mapModeDialog.GetTooltipWidth() - DialogGap;
-                ((TranslateTransform)mapModeDialog.RenderTransform).Y = y - ((mapModeDialog.GetTooltipHeight() - h) / 2);
-            });
-
-            mapModeDialog.RenderTransformOrigin = new Point(0.0, 0.0);
-            mapModeDialog.RenderTransform = new TranslateTransform();
-
-            TutorialTooltipView createReportDialog = (TutorialTooltipView)GetTemplateChild(CreateReportDialogName);
-            m_positionedCreateReportDialog = new PositionedDialog(createReportDialog, (x, y, w, h) =>
-            {
-                ((TranslateTransform)createReportDialog.RenderTransform).X = x + w + createReportDialog.ArrowPointHeight + DialogGap;
-                double heightDiff = createReportDialog.GetTooltipHeight() - mapModeDialog.GetTooltipHeight();
-                ((TranslateTransform)createReportDialog.RenderTransform).Y = y - ((createReportDialog.GetTooltipHeight() + heightDiff - h) / 2);
-            });
-
-            createReportDialog.RenderTransformOrigin = new Point(0.0, 0.0);
-            createReportDialog.RenderTransform = new TranslateTransform();
-
+            
             m_showAnimation = (Storyboard)FindResource("ShowAnimation");
             m_hideAnimation = ((Storyboard)FindResource("HideAnimation")).Clone();
             m_hideAnimation.Completed += (o, e) =>
