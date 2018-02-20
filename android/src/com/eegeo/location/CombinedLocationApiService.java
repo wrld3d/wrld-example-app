@@ -66,8 +66,9 @@ public class CombinedLocationApiService
             m_locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         }
         if(m_googleApiClient != null) {
-            if (!m_googleApiClient.isConnected() && !m_googleApiClient.isConnecting())
+            if (!m_googleApiClient.isConnected() && !m_googleApiClient.isConnecting()) {
                 m_googleApiClient.connect();
+            }
         }
     }
 
