@@ -121,9 +121,9 @@
     const CGFloat boundsHeight = static_cast<float>(self.superview.bounds.size.height);
     const bool useFullScreenSize = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     const CGFloat boundsOccupyWidthMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f) * 0.6f);
-    const CGFloat boundsOccupyHeightMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f));
     const CGFloat mainWindowWidth = boundsWidth * boundsOccupyWidthMultiplier;
-    const CGFloat mainWindowHeight = boundsHeight * boundsOccupyHeightMultiplier;
+  
+    const CGFloat mainWindowHeight = 257;
     const CGFloat mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const CGFloat mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
     
@@ -156,7 +156,7 @@
     [self.pWarningLabel sizeToFit];
     CGFloat warningLableHeight = self.pWarningLabel.frame.size.height;
     self.pWarningLabel.frame = CGRectMake(innerMargin.left,
-                                          0.5*mainWindowHeight - 80.0,
+                                          headerHeight + outerMargin.bottom + innerMargin.top,
                                           innerMarginWidth,
                                           warningLableHeight);
     
@@ -192,7 +192,7 @@
     
     
     self.pSpinner.frame = CGRectMake(0.5*mainWindowWidth - 30.0,
-                                     0.5*mainWindowHeight - 100.0,
+                                     buttonY,
                                      60.0,
                                      60.0);
     
