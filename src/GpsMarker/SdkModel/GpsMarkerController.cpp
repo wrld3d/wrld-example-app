@@ -92,10 +92,10 @@ namespace ExampleApp
 
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
             {
-                m_model.UpdateGpsPosition(dt);
+                bool positionValid = m_model.UpdateGpsPosition(dt);
                 m_model.UpdateHeading(dt);
-                
-                m_model.SetEnabled(m_visibilityCount == 1);
+
+                m_model.SetEnabled(m_visibilityCount == 1 && positionValid);
 
                 std::string currentTime;
                 std::string currentWeather;
