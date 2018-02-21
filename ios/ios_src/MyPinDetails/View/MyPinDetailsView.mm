@@ -70,7 +70,7 @@
     [self.pHeaderView addSubview:self.pCloseButton];
     
     self.pHeaderSeparator = [[[UIView alloc] init] autorelease];
-    self.pHeaderSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::UiShadowColor;
+    self.pHeaderSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
     [self addSubview:self.pHeaderSeparator];
 }
 
@@ -89,7 +89,7 @@
     [self.pContentView addSubview:self.pPoiImageView];
     
     self.pContentSeperator = [[[UIView alloc] init] autorelease];
-    self.pContentSeperator.backgroundColor = ExampleApp::Helpers::ColorPalette::UiShadowColor;
+    self.pContentSeperator.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
     [self.pContentView addSubview:self.pContentSeperator];
     
     self.pDescriptionTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -201,6 +201,7 @@
     UIEdgeInsets outerMargin = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
     UIEdgeInsets innerMargin = UIEdgeInsetsMake(20.0, 20.0, 16.0, 16.0);
     
+    CGFloat outerMarginWidth = mainWindowWidth - outerMargin.left - outerMargin.right;
     CGFloat innerMarginWidth = mainWindowWidth - innerMargin.left - innerMargin.right;
     
     CGFloat headerHeight = 38;
@@ -216,7 +217,7 @@
     [self.pTitleLabel sizeToFit];
     self.pCloseButton.frame = CGRectMake(innerMarginWidth - headerHeight,0.0, headerHeight,headerHeight);
     
-    self.pHeaderSeparator.frame = CGRectMake(innerMargin.left, self.pHeaderView.frame.origin.y + self.pHeaderView.frame.size.height + outerMargin.top, innerMarginWidth,2.0);
+    self.pHeaderSeparator.frame = CGRectMake(outerMargin.left, self.pHeaderView.frame.origin.y + self.pHeaderView.frame.size.height + outerMargin.top, outerMarginWidth,1.0);
     
     CGFloat scrollViewyOffset = self.pHeaderSeparator.frame.origin.y + self.pHeaderSeparator.frame.size.height + outerMargin.top;
     CGFloat footerHeight = 66;
@@ -229,20 +230,22 @@
         aspectRatio = imageSize.height/imageSize.width;
     }
     
-    self.pPoiImageView.frame = CGRectMake(innerMargin.left,
+    self.pPoiImageView.frame = CGRectMake(outerMargin.left,
                                           0.0 ,
-                                          innerMarginWidth,
-                                          innerMarginWidth*aspectRatio);
+                                          outerMarginWidth,
+                                          outerMarginWidth*aspectRatio);
     
     contentHeight = outerMargin.top + self.pPoiImageView.frame.origin.y + self.pPoiImageView.frame.size.height;
     
-    self.pContentSeperator.frame = CGRectMake(innerMargin.left,
-                                             contentHeight,
-                                             innerMarginWidth,
-                                             2);
-    
-    contentHeight += 2;
-    contentHeight += outerMargin.top;
+    if(!self.pContentSeperator.hidden) {
+        self.pContentSeperator.frame = CGRectMake(outerMargin.left,
+                                                 contentHeight,
+                                                 outerMarginWidth,
+                                                 1);
+        
+        contentHeight += 2;
+        contentHeight += outerMargin.top;
+    }
     
     self.pDescriptionTitleLabel.frame = CGRectMake(innerMargin.left,
                                                   contentHeight,
@@ -321,11 +324,14 @@
         if(image) {
             m_hasImage = YES;
         }
+        
     }
     else {
         self.pPoiImageView.image = nil;
     }
-
+    
+    self.pContentSeperator.hidden = !m_hasImage;
+   
     [self setNeedsLayout];
     [self layoutIfNeeded];
 }

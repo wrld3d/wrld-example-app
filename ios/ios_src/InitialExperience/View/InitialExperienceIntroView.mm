@@ -104,33 +104,7 @@ namespace
         self.pCompassDialogDescription = [self createDialogDescription:useSmallScreen ? @"Locate me.\nLock rotation\nto compass." : @"Locate me.\nLock rotation to compass."];
         [self.pCompassDialogContent addSubview:self.pCompassDialogDescription];
         
-        self.pMapModeDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pMapModeDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self addSubview: self.pMapModeDialogContainer];
-        self.pMapModeDialogContent = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pMapModeDialogContent.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pMapModeDialogContainer addSubview:self.pMapModeDialogContent];
-        self.pMapModeDialogArrowOutline = [self createDialogArrowOutline: self.pMapModeDialogContent arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Right];
-        self.pMapModeDialogArrow = [self createDialogArrow: self.pMapModeDialogContent arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Right];
-        self.pMapModeDialogIcon = [self createDialogIcon:self.pMapModeDialogContent];
-        self.pMapModeDialogTitle = [self createDialogTitle:@"Map Mode"];
-        [self.pMapModeDialogContent addSubview:self.pMapModeDialogTitle];
-        self.pMapModeDialogDescription = [self createDialogDescription:@"Simple 2D View"];
-        [self.pMapModeDialogContent addSubview:self.pMapModeDialogDescription];
-        
-        self.pPinCreationDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pPinCreationDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self addSubview: self.pPinCreationDialogContainer];
-        self.pPinCreationDialogContent = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pPinCreationDialogContent.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pPinCreationDialogContainer addSubview:self.pPinCreationDialogContent];
-        self.pPinCreationDialogArrowOutline = [self createDialogArrowOutline: self.pPinCreationDialogContent arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Left];
-        self.pPinCreationDialogArrow = [self createDialogArrow: self.pPinCreationDialogContent arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Left];
-        self.pPinCreationDialogIcon = [self createDialogIcon:self.pPinCreationDialogContent];
-        self.pPinCreationDialogTitle = [self createDialogTitle:@"Create Report"];
-        [self.pPinCreationDialogContent addSubview:self.pPinCreationDialogTitle];
-        self.pPinCreationDialogDescription = [self createDialogDescription:@"Submit damage report\nor suggestions."];
-        [self.pPinCreationDialogContent addSubview:self.pPinCreationDialogDescription];
+
         
         m_awaitingInput = false;
         
@@ -213,22 +187,7 @@ namespace
     [m_tapGestureRecogniser release];
     
     Eegeo_DELETE m_pInterop;
-    
-    [self.pPinCreationDialogDescription removeFromSuperview];
-    [self.pPinCreationDialogDescription release];
-    [self.pPinCreationDialogTitle removeFromSuperview];
-    [self.pPinCreationDialogTitle release];
-    [self.pPinCreationDialogArrow removeFromSuperview];
-    [self.pPinCreationDialogArrow release];
-    [self.pPinCreationDialogArrowOutline removeFromSuperview];
-    [self.pPinCreationDialogArrowOutline release];
-    [self.pPinCreationDialogIcon removeFromSuperview];
-    [self.pPinCreationDialogIcon release];
-    [self.pPinCreationDialogContent removeFromSuperview];
-    [self.pPinCreationDialogContent release];
-    [self.pPinCreationDialogContainer removeFromSuperview];
-    [self.pPinCreationDialogContainer release];
-
+   
     [self.pCompassDialogDescription removeFromSuperview];
     [self.pCompassDialogDescription release];
     [self.pCompassDialogTitle removeFromSuperview];
@@ -243,22 +202,7 @@ namespace
     [self.pCompassDialogContent release];
     [self.pCompassDialogContainer removeFromSuperview];
     [self.pCompassDialogContainer release];
-    
-    [self.pMapModeDialogDescription removeFromSuperview];
-    [self.pMapModeDialogDescription release];
-    [self.pMapModeDialogTitle removeFromSuperview];
-    [self.pMapModeDialogTitle release];
-    [self.pMapModeDialogArrow removeFromSuperview];
-    [self.pMapModeDialogArrow release];
-    [self.pMapModeDialogArrowOutline removeFromSuperview];
-    [self.pMapModeDialogArrowOutline release];
-    [self.pMapModeDialogIcon removeFromSuperview];
-    [self.pMapModeDialogIcon release];
-    [self.pMapModeDialogContent removeFromSuperview];
-    [self.pMapModeDialogContent release];
-    [self.pMapModeDialogContainer removeFromSuperview];
-    [self.pMapModeDialogContainer release];
-    
+   
     [self.pSearchMenuDialogDescription removeFromSuperview];
     [self.pSearchMenuDialogDescription release];
     [self.pSearchMenuDialogTitle removeFromSuperview];
@@ -345,33 +289,6 @@ namespace
                     arrowEdge: ArrowEdge::Bottom
             arrowEdgeLocation: 0.5f];
     
-    [self layoutDialogSubview: self.pMapModeDialogContainer
-                      content: self.pMapModeDialogContent
-                         icon: self.pMapModeDialogIcon
-                        title: self.pMapModeDialogTitle
-                  description: self.pMapModeDialogDescription
-                        arrow: self.pMapModeDialogArrow
-                 arrowOutline: self.pMapModeDialogArrowOutline
-                            x: m_screenWidth/2 - (useSmallScreen ? 45 : 150)
-                            y: m_screenHeight - (useSmallScreen ? 92 : 10)
-              alignHorizontal: AlignHorizontal::Right
-                alignVertical: AlignVertical::Bottom
-                    arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Right
-            arrowEdgeLocation: useSmallScreen ? 0.6f : 0.65f];
-    
-    [self layoutDialogSubview: self.pPinCreationDialogContainer
-                      content: self.pPinCreationDialogContent
-                         icon: self.pPinCreationDialogIcon
-                        title: self.pPinCreationDialogTitle
-                  description: self.pPinCreationDialogDescription
-                        arrow: self.pPinCreationDialogArrow
-                 arrowOutline: self.pPinCreationDialogArrowOutline
-                            x: m_screenWidth/2 + (useSmallScreen ? 45 : 150)
-                            y: m_screenHeight - (useSmallScreen ? 92 : 10)
-              alignHorizontal: AlignHorizontal::Left
-                alignVertical: AlignVertical::Bottom
-                    arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Left
-            arrowEdgeLocation: useSmallScreen ? 0.315f : 0.7f];
 }
 
 - (BOOL) consumesTouch:(UITouch *)touch
@@ -388,8 +305,6 @@ namespace
     [self.pBannerBarContainer setCenter:CGPointMake(m_screenWidth/2 - m_screenWidth, m_screenHeight/2)];
     self.pSearchMenuDialogContainer.alpha = 0.0f;
     self.pCompassDialogContainer.alpha = 0.0f;
-    self.pMapModeDialogContainer.alpha = 0.0f;
-    self.pPinCreationDialogContainer.alpha = 0.0f;
     
     [UIView animateWithDuration:m_animationTimeSeconds
                           delay:0.0
@@ -410,14 +325,6 @@ namespace
                      completion:nil];
     
     [UIView animateWithDuration:stepAnimationTimeSeconds
-                          delay:stepAnimationTimeSeconds * 2
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         self.pMapModeDialogContainer.alpha = 1.0f;
-                     }
-                     completion:nil];
-    
-    [UIView animateWithDuration:stepAnimationTimeSeconds
                           delay:stepAnimationTimeSeconds * 3
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
@@ -425,15 +332,7 @@ namespace
                      }
                      completion:nil];
     
-    [UIView animateWithDuration:stepAnimationTimeSeconds
-                          delay:stepAnimationTimeSeconds * 4
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         self.pPinCreationDialogContainer.alpha = 1.0f;
-                     }
-                     completion:nil];
-
-    
+   
     [self setNeedsLayout];
     [self layoutIfNeeded];
 
@@ -446,8 +345,7 @@ namespace
     [self.pBannerBarContainer setCenter:CGPointMake(m_screenWidth/2, m_screenHeight/2)];
     self.pSearchMenuDialogContainer.alpha = 1.0f;
     self.pCompassDialogContainer.alpha = 1.0f;
-    self.pMapModeDialogContainer.alpha = 1.0f;
-    self.pPinCreationDialogContainer.alpha = 1.0f;
+    
     
     [UIView animateWithDuration:m_animationTimeSeconds
                           delay:0.0
@@ -474,13 +372,7 @@ namespace
                      }
                      completion:nil];
     
-    [UIView animateWithDuration:stepAnimationTimeSeconds
-                          delay:stepAnimationTimeSeconds * 2
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         self.pMapModeDialogContainer.alpha = 0.0f;
-                     }
-                     completion:nil];
+
     
     [UIView animateWithDuration:stepAnimationTimeSeconds
                           delay:stepAnimationTimeSeconds * 3
@@ -490,13 +382,6 @@ namespace
                      }
                      completion:nil];
     
-    [UIView animateWithDuration:stepAnimationTimeSeconds
-                          delay:stepAnimationTimeSeconds * 4
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         self.pPinCreationDialogContainer.alpha = 0.0f;
-                     }
-                     completion:nil];
 }
 
 - (void)_tapTabGesture:(UITapGestureRecognizer *)recognizer

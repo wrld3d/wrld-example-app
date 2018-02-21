@@ -58,7 +58,6 @@
 @property (nonatomic, retain) UIView* pContentSeparator;
 
 
-
 @property (nonatomic, retain) CustomSwitch*  pWifiOnlySwitch;
 @property (nonatomic, retain) CustomSwitch* pCacheEnabledSwitch;
 @property (nonatomic, retain) CustomSwitch* pClearCacheCheckbox;

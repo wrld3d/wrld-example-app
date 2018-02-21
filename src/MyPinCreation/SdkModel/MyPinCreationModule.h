@@ -44,7 +44,7 @@ namespace ExampleApp
                 View::IMyPinCreationConfirmationViewModel& GetMyPinCreationConfirmationViewModel() const;
                 View::IMyPinCreationCompositeViewModel& GetMyPinCreationCompositeViewModel() const;
 
-                //ScreenControl::View::IScreenControlViewModel& GetInitiationScreenControlViewModel() const;
+                
                 ScreenControl::View::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const;
 
                 OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;

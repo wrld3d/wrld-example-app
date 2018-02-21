@@ -926,8 +926,8 @@ namespace ExampleApp
 
         if(!m_applicationConfiguration.IsInKioskMode())
         {
-            m_pSearchMenuModule->AddMenuSection("Create Report", m_pMyPinCreationModule->GetMyPinCreationMenuModel(), false);
-            m_pSearchMenuModule->AddMenuSection("My Location Reports", m_pMyPinsModule->GetMyPinsMenuModel(), true);
+            m_pSearchMenuModule->AddMenuSection("Report Fault", m_pMyPinCreationModule->GetMyPinCreationMenuModel(), false);
+            m_pSearchMenuModule->AddMenuSection("My Fault Reports", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         }
 
         m_pSearchMenuModule->AddMenuSection("Discover", m_pTagSearchModule->GetTagSearchMenuModel(),  true);
