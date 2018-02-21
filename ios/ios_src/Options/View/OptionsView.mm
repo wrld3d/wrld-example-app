@@ -45,13 +45,11 @@
         [self.pCloseButton setImage:closeImage forState:UIControlStateNormal];
         [self.pCloseButton addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
        
-        
         [self.pHeaderView addSubview:self.pCloseButton];
         
         self.pHeaderSeparator = [[[UIView alloc] init] autorelease];
         self.pHeaderSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
         [self addSubview:self.pHeaderSeparator];
-        
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
@@ -89,20 +87,28 @@
         [self.pCacheEnabledSwitch addTarget:self action:@selector(cacheEnabledCheckboxSelectionHandler) forControlEvents:UIControlEventValueChanged];
         [self.pContentContainer addSubview:self.pCacheEnabledSwitch];
         
-        
         self.pClearCacheButton = [[[UIButton alloc] init] autorelease];
         [self.pClearCacheButton setTitle:@"OK" forState:UIControlStateNormal];
-        self.pClearCacheButton.backgroundColor = UIColor.blueColor;
+        [self.pClearCacheButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        self.pClearCacheButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
         [self.pClearCacheButton addTarget:self action:@selector(cacheClearSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
         [self.pContentContainer addSubview:self.pClearCacheButton];
         
         self.pReplayTutorialsButton = [[[UIButton alloc] init] autorelease];
         [self.pReplayTutorialsButton addTarget:self action:@selector(replayTutorialsSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
-        self.pReplayTutorialsButton.backgroundColor = UIColor.blueColor;
+        self.pReplayTutorialsButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
         [self.pReplayTutorialsButton setTitle:@"OK" forState:UIControlStateNormal];
+        [self.pReplayTutorialsButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [self.pContentContainer addSubview:self.pReplayTutorialsButton];
         
         self.pOptionsCacheClearSubView = [[[OptionsCacheClearSubView alloc] init] autorelease];
+        self.pReplayTutorialsMessage = [[[MessageView alloc] initWithFrame:self.bounds title:@"Replay Tutorials" message:@"The help panels will be visible again when you enter or leave a building."] autorelease];
+        self.pReplayTutorialsMessage.hidden = true;
+        [self addSubview:self.pReplayTutorialsMessage];
+        [self.pReplayTutorialsMessage addTarget:self
+                                         action:@selector(handleReplayMessageClosed)
+                               forControlEvents:UIControlEventTouchUpInside];
+        
         
         [self setTouchExclusivity:self];
         
@@ -122,12 +128,8 @@
     [self.pTitleLabel removeFromSuperview];
     [self.pTitleLabel release];
     
-    
-    
     [self.pHeaderSeparator removeFromSuperview];
     [self.pHeaderSeparator release];
-    
-    
     
     [self.pWifiOnlyLabel removeFromSuperview];
     [self.pWifiOnlyLabel release];
@@ -141,9 +143,6 @@
     [self.pReplayTutorialsLabel removeFromSuperview];
     [self.pReplayTutorialsLabel release];
     
-    
-    
-    
     [self.pWifiOnlySwitch removeFromSuperview];
     [self.pWifiOnlySwitch release];
     
@@ -156,15 +155,14 @@
     [self.pReplayTutorialsButton removeFromSuperview];
     [self.pReplayTutorialsButton release];
     
-   
-    
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
-    
     
     [self.pOptionsCacheClearSubView removeFromSuperview];
     [self.pOptionsCacheClearSubView release];
     
+    [self.pReplayTutorialsMessage removeFromSuperview];
+    [self.pReplayTutorialsMessage release];
     
     [self removeFromSuperview];
     [super dealloc];
@@ -175,10 +173,9 @@
 {
     self.alpha = 0.f;
     UIEdgeInsets outerMargin = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
-    UIEdgeInsets innerMargin = UIEdgeInsetsMake(20.0, 20.0, 16.0, 16.0);
-    
+    UIEdgeInsets innerMargin = UIEdgeInsetsMake(18,18,18,18);
+   
     CGFloat headerHeight = 37;
-    CGFloat tickHeight = 65;
     CGFloat rowHeight = 44;
     
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
@@ -187,7 +184,7 @@
     const float boundsOccupyWidthMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f) * 0.6f);
     const float mainWindowWidth = boundsWidth * boundsOccupyWidthMultiplier;
     const CGFloat contentHeight = 4*rowHeight + innerMargin.top + innerMargin.bottom;
-    const float mainWindowHeight = headerHeight + contentHeight + tickHeight + outerMargin.top;
+    const float mainWindowHeight = headerHeight + contentHeight;
     const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
     
@@ -195,6 +192,10 @@
                             mainWindowY,
                             mainWindowWidth,
                             mainWindowHeight);
+    
+    self.pReplayTutorialsMessage.frame = self.bounds;
+    [self.pReplayTutorialsMessage setNeedsLayout];
+    [self.pReplayTutorialsMessage layoutIfNeeded];
     
     CGFloat innerMarginWidth = mainWindowWidth - innerMargin.left - innerMargin.right;
     CGFloat outerMarginWidth = mainWindowWidth - outerMargin.left - outerMargin.right;
@@ -217,6 +218,8 @@
     CGFloat fontSize = 14.0;
     CGFloat switchWidth = 40;
     CGFloat switchHeight = rowHeight;
+    CGFloat buttonHeight = 20;
+    CGFloat buttonOffsetY = switchOffestY + 0.5*(switchHeight - buttonHeight);
     
     self.pWifiOnlyLabel.frame = CGRectMake(innerMargin.left,innerMargin.top + 0.0*rowHeight + labelOffestY, innerMarginWidth, fontSize);
     self.pWifiOnlyLabel.font = [UIFont systemFontOfSize:fontSize];
@@ -240,10 +243,10 @@
     self.pCacheEnabledSwitch.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 1.0*rowHeight + switchOffestY, switchWidth, switchHeight);
     [self.pCacheEnabledSwitch layoutSubviews];
     
-    self.pClearCacheButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 2.0*rowHeight + switchOffestY, switchWidth, switchHeight);
+    self.pClearCacheButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 2.0*rowHeight + buttonOffsetY, switchWidth, buttonHeight);
     [self.pClearCacheButton layoutSubviews];
     
-    self.pReplayTutorialsButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 3.0*rowHeight + switchOffestY, switchWidth, switchHeight);
+    self.pReplayTutorialsButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 3.0*rowHeight + buttonOffsetY, switchWidth, buttonHeight);
     [self.pReplayTutorialsButton layoutSubviews];
 }
 
@@ -300,6 +303,11 @@
 - (void)replayTutorialsSelectionHandler
 {
     m_pInterop->HandleReplayTutorialsSelected();
+    [self.pReplayTutorialsMessage show];
+}
+
+-(void) handleReplayMessageClosed {
+    m_pInterop->HandleCloseSelected();
 }
 
 - (void)clearCacheSelectionConfirmedHandler

@@ -5,7 +5,7 @@
 #import <UIKit/UIKit.h>
 #include "Options.h"
 #include "AppRunner.h"
-
+#include "MessageView.h"
 #include "OptionsCacheClearSubView.h"
 #import "CustomSwitch.h"
 
@@ -65,5 +65,7 @@
 @property (nonatomic, retain) UIView* pContentContainer;
 
 @property (nonatomic, retain) OptionsCacheClearSubView* pOptionsCacheClearSubView;
+@property (nonatomic, retain) MessageView* pReplayTutorialsMessage;
+
 
 @end
