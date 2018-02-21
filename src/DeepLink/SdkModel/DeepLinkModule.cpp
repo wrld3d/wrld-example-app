@@ -39,7 +39,7 @@ namespace ExampleApp
                     m_pDeepLinkConfigHandler = Eegeo_NEW(DeepLinkConfigHandler)(mapsceneLoader);
                     m_pDeepLinkModel->AddRoute(MYMAP_PATH, m_pDeepLinkConfigHandler);
                 }
-                m_pDeepLinkSearchHandler = Eegeo_NEW(DeepLinkSearchHandler)(selectFirstResultSearchService, alertBoxFactory, mapsceneLoader);
+                m_pDeepLinkSearchHandler = Eegeo_NEW(DeepLinkSearchHandler)(selectFirstResultSearchService, alertBoxFactory, mapsceneLoader, cameraTransitionController);
                 
                 m_pDeepLinkModel->AddRoute(SEARCH_PATH, m_pDeepLinkSearchHandler);
 
