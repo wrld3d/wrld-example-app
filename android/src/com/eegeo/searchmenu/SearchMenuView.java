@@ -17,6 +17,7 @@ import com.eegeo.menu.MenuView;
 import com.eegeo.ProjectSwallowApp.R;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.text.Editable;
@@ -41,6 +42,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.wrld.widgets.searchbox.WrldSearchWidget;
+
 public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener, TextWatcher {
     private final int m_indexOfFirstDropDown = 5;
 
@@ -48,6 +51,8 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     protected View m_progressSpinner = null;
     protected View m_anchorArrow = null;
     protected View m_searchMenuResultsSeparator = null;
+
+    protected WrldSearchWidget m_searchWidget;
 
     protected int m_totalHeightPx;
 
@@ -163,7 +168,11 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_searchResultsFade = (ImageView)m_view.findViewById(R.id.search_results_fade);
         m_searchResultsScrollButton = (Button)m_view.findViewById(R.id.search_results_scroll_button);
         m_searchResultsScrollable = false;
-        
+
+        m_searchWidget = (WrldSearchWidget)m_activity.getFragmentManager().findFragmentById(R.id.search_widget);
+        m_searchWidget.addSearchProvider(new MyTestSearchProvider());
+        m_searchWidget.doSearch("hotels", null);
+
         final MenuView scopedMenuView = this;
 
         m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 

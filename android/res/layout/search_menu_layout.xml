@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:eegeo="http://schemas.android.com/apk/res-auto"
     android:id="@+id/search_menu_view"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
@@ -9,9 +10,21 @@
     android:clipToPadding="false"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true" >
-    
+
+	<fragment android:name="com.wrld.widgets.searchbox.WrldSearchWidget"
+		android:id="@+id/search_widget"
+		android:layout_alignParentTop="true"
+		android:layout_width="300dp"
+		android:layout_height="wrap_content"
+		android:layout_margin="28dp"/>
+	<!--
+		eegeo:maxSuggestions="2"
+		eegeo:maxResults="4"
+	-->
+
     <LinearLayout
         android:id="@+id/search_menu_list_container"
+		android:layout_below="@+id/search_widget"
         android:layout_width="@dimen/search_results_bar_width"
         android:layout_height="wrap_content"
         android:orientation="vertical">

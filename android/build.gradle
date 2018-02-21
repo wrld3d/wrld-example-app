@@ -18,11 +18,12 @@ allprojects {
 
 android {
 	compileSdkVersion 25
-	buildToolsVersion "25.0.0"
+	buildToolsVersion "26.0.1"
 	defaultConfig {
 		applicationId "com.eegeo.ProjectSwallowApp"
-		minSdkVersion 19
+		minSdkVersion 21
 		targetSdkVersion 24
+		multiDexEnabled true
 		versionCode 1
 		versionName "1.0"
 		externalNativeBuild {
@@ -75,5 +76,7 @@ android {
 
 dependencies {
 	compile fileTree(include: ['*.jar'], dir: 'libs')
-	releaseCompile project(':wrld-android-widgets-release')
+	compile('com.android.support:multidex:1.0.1')
+	compile('com.android.support:appcompat-v7:25.3.0')
+	compile(project(':wrld-android-widgets-release'))
 }
