@@ -68,10 +68,9 @@ set(resources ${resources}
 		Resources/LargeTick_White.png
 		Resources/LargeTick_White@2x.png
 		Resources/LargeTick_White@3x.png
-		Resources/NavMod_Active.png
-		Resources/NavMod_Active@2.png
-		Resources/NavMod_Active@2x.png
-		Resources/NavMod_Active@3x.png
+		Resources/NavMode_Active.png
+		Resources/NavMode_Active@2x.png
+		Resources/NavMode_Active@3x.png
 		Resources/NavMode.png
 		Resources/NavMode@2x.png
 		Resources/NavMode@3x.png
