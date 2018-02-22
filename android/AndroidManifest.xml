@@ -5,9 +5,6 @@
         android:versionCode="1"
         android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="19"
-        android:targetSdkVersion="24"/>
-    
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -25,7 +22,7 @@
         android:required="false"/>
 
     <application android:name="android.support.multidex.MultiDexApplication"
-                 android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.NoTitleBar">
+                 android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.Light.NoTitleBar">
        
         <activity android:name="com.eegeo.ProjectSwallowApp.BackgroundThreadActivity"
                   android:label="BWAY"
