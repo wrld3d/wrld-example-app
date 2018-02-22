@@ -47,12 +47,11 @@ namespace ExampleApp
 					env->DeleteLocalRef(searchResultJni);
 				}
 
-				jmethodID setSearchSection = env->GetMethodID(m_uiViewClass, "setSearchSection", "(I[Ljava/lang/String;)V");
+				jmethodID onSearchCompleted = env->GetMethodID(m_uiViewClass, "onSearchCompleted", "([Ljava/lang/String;)V");
 
 				env->CallVoidMethod(
 						m_uiView,
-						setSearchSection,
-						searchResultCount,
+						onSearchCompleted,
 						searchResultArray);
 
 				env->DeleteLocalRef(searchResultArray);
