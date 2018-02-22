@@ -41,7 +41,6 @@ namespace ExampleAppWPF
         private Border m_poiImageDivider;
         private Grid m_previewImageSpinner;
         private WebBrowser m_webBrowser;
-        private bool m_webBrowserSelected;
         private double m_contentContainerLastScrollY;
         private double m_webBrowserOriginalHeight;
         private TextBlock m_subTitle;
@@ -56,7 +55,7 @@ namespace ExampleAppWPF
         private Visibility m_detailsDividerVisibility;
 
         private int m_qrCodeMaxSize;
-        private bool m_webBrowserLoaded;
+        private bool m_poiHasWebContent;
 
         public string PhoneText
         {
@@ -228,7 +227,6 @@ namespace ExampleAppWPF
             m_previewImageSpinner = (Grid)GetTemplateChild("PreviewImageSpinner");
 
             m_webBrowser = (WebBrowser)GetTemplateChild("WebBrowser");
-            m_webBrowser.LoadCompleted += (OnWebPageLoaded);
 
             m_subTitle = (TextBlock)GetTemplateChild("SubTitle");
 
@@ -246,9 +244,7 @@ namespace ExampleAppWPF
 
             var mainGrid = (Application.Current.MainWindow as MainWindow).MainGrid;
             var screenWidth = mainGrid.ActualWidth;
-            m_webBrowserSelected = false;
-            m_webBrowserLoaded = false;
-
+            m_poiHasWebContent = false;
 
             m_contentContainerLastScrollY = m_poiImageContainer.Height;
             m_webBrowserOriginalHeight = m_poiImageContainer.Height;
@@ -261,23 +257,21 @@ namespace ExampleAppWPF
         private void OnWebPageLoaded(object sender, NavigationEventArgs e)
         {
 
-            m_webBrowserLoaded = true;
-
             WebBrowser wb = (WebBrowser)sender;
            
             dynamic doc = wb.Document;
-             var url = doc.url as string;
-             if (url != null && url.StartsWith("res://ieframe.dll"))
-             {
+            var url = doc.url as string;
+            if (url != null && url.StartsWith("res://ieframe.dll"))
+            {
                 wb.NavigateToString(Properties.Resources.page_not_found);
-             }
+            }
 
-             else if(m_webBrowserSelected)
-             {
-                 string script = "document.body.style.overflow ='hidden'";
-                 wb.InvokeScript("execScript", new Object[] { script, "JavaScript" });
-                 wb.Visibility = Visibility.Visible;
-             }
+            else if (m_poiHasWebContent)
+            {
+                string script = "document.body.style.overflow ='hidden'";
+                wb.InvokeScript("execScript", new Object[] { script, "JavaScript" });
+                wb.Visibility = Visibility.Visible;
+            }
         }
 
         // Validating urls here although the url's should be validated in the poi tool before reaching this.
@@ -356,8 +350,9 @@ namespace ExampleAppWPF
 
         private void HandleNoWebView(EegeoResultModel eegeoResultModel)
         {
+            m_webBrowser.LoadCompleted -= (OnWebPageLoaded);
             m_webBrowser.Visibility = Visibility.Collapsed;
-            m_webBrowserSelected = false;
+            m_poiHasWebContent = false;
             StopWebBrowser();
 
             if (eegeoResultModel.ImageUrl != null)
@@ -377,31 +372,30 @@ namespace ExampleAppWPF
 
             EegeoResultModel eegeoResultModel = EegeoResultModel.FromResultModel(model);
             m_closing = false;
-            m_webBrowserSelected = false;
+
+            m_webBrowser.LoadCompleted -= (OnWebPageLoaded);
+
             m_titlesGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
             m_poiImageContainer.Height = m_imageContainerHeight;
-            bool webViewUrlIsValid = false;
             m_poiImageContainer.Visibility = Visibility.Visible;
             m_poiImage.Visibility = Visibility.Collapsed;
             m_poiImageDivider.Visibility = Visibility.Visible;
-
-            m_webBrowserLoaded = false;
 
             m_contentContainer.ScrollToTop();
 
             if (eegeoResultModel.WebViewUrl != null)
             {
-                m_webBrowser.Visibility = Visibility.Hidden;
-                m_webBrowserSelected = true;
                 Uri hyperlink;
-                webViewUrlIsValid = Uri.TryCreate(eegeoResultModel.WebViewUrl, UriKind.Absolute, out hyperlink)
+                bool webViewUrlIsValid = Uri.TryCreate(eegeoResultModel.WebViewUrl, UriKind.Absolute, out hyperlink)
                     && (hyperlink.Scheme == Uri.UriSchemeHttp || hyperlink.Scheme == Uri.UriSchemeHttps);
 
                 if (webViewUrlIsValid)
                 {
                     Uri url = new Uri(eegeoResultModel.WebViewUrl);
-                   
 
+                    m_poiHasWebContent = true;
+                    m_webBrowser.Visibility = Visibility.Hidden;
+                    m_webBrowser.LoadCompleted += (OnWebPageLoaded);
                     m_webBrowser.Source = url;
 
                     if (eegeoResultModel.WebViewHeight != 0)
@@ -432,10 +426,10 @@ namespace ExampleAppWPF
             }
             
 
-            if (!m_webBrowserSelected)
+            if (!m_poiHasWebContent)
             {
                 Uri uri;
-                if ((eegeoResultModel.ImageUrl != null || webViewUrlIsValid) && TryCreateWebLink(eegeoResultModel.ImageUrl, out uri))
+                if ((eegeoResultModel.ImageUrl != null) && TryCreateWebLink(eegeoResultModel.ImageUrl, out uri))
                 {
                     m_poiImageDivider.Visibility = Visibility.Visible;
                 }
@@ -575,7 +569,7 @@ namespace ExampleAppWPF
         
         public override void UpdateImageData(string url, bool hasImage, byte[] imgData)
         {
-            if (hasImage && !m_webBrowserSelected)
+            if (hasImage && !m_poiHasWebContent)
             {
                 var imageSource = LoadImageFromByteArray(imgData);
 
@@ -597,10 +591,7 @@ namespace ExampleAppWPF
         
         protected override void OnHideAnimationCompleted(object s, EventArgs e)
         {
-             if (m_webBrowserLoaded)
-             {
-                 StopWebBrowser();
-             }
+             StopWebBrowser();
         }
         
         private void StopWebBrowser()
