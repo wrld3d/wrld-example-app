@@ -1200,6 +1200,10 @@ namespace ExampleApp
             InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
             if(!initialExperienceModel.HasCompletedInitialExperience() && IsLoadingScreenComplete())
             {
+				if (m_applicationConfiguration.IsInKioskMode())
+				{
+					m_messageBus.Publish(ExampleApp::InitialExperience::InitialExperienceIntroDismissedMessage());
+				}
                 InitialExperience::SdkModel::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
                 initialExperienceController.Update(dt);
             }
