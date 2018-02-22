@@ -294,64 +294,68 @@
 				"interior_floor": 0
 			},
 			{
-				"floorName": "A - Lower Level 1",
+				"floorName": "B - Lower Level 2",
 				"interior_floor": 1
-			},
+			},			
 			{
-				"floorName": "08 - Eighth Floor",
+				"floorName": "A - Lower Level 1",
 				"interior_floor": 2
 			},
 			{
-				"floorName": "10 - Tenth Floor",
+				"floorName": "08 - Eighth Floor",
 				"interior_floor": 3
 			},
 			{
-				"floorName": "11 - Eleventh Floor",
+				"floorName": "10 - Tenth Floor",
 				"interior_floor": 4
 			},
 			{
-				"floorName": "12 - Twelfth Floor",
+				"floorName": "11 - Eleventh Floor",
 				"interior_floor": 5
 			},
 			{
-				"floorName": "13 - Thirteenth Floor",
+				"floorName": "12 - Twelfth Floor",
 				"interior_floor": 6
 			},
 			{
-				"floorName": "14 - Fourteenth Floor",
+				"floorName": "13 - Thirteenth Floor",
 				"interior_floor": 7
 			},
 			{
-				"floorName": "15 - Fifteenth Floor",
+				"floorName": "14 - Fourteenth Floor",
 				"interior_floor": 8
 			},
 			{
-				"floorName": "16 - Sixteenth Floor",
+				"floorName": "15 - Fifteenth Floor",
 				"interior_floor": 9
 			},
 			{
-				"floorName": "17 - Seventeenth Floor",
+				"floorName": "16 - Sixteenth Floor",
 				"interior_floor": 10
 			},
 			{
-				"floorName": "18 - Eighteenth Floor",
+				"floorName": "17 - Seventeenth Floor",
 				"interior_floor": 11
 			},
 			{
-				"floorName": "20 - Twentieth Floor",
+				"floorName": "18 - Eighteenth Floor",
 				"interior_floor": 12
 			},
 			{
-				"floorName": "21 - Twenty First Floor",
+				"floorName": "20 - Twentieth Floor",
 				"interior_floor": 13
 			},
 			{
-				"floorName": "22 - Twenty Second Floor",
+				"floorName": "21 - Twenty First Floor",
 				"interior_floor": 14
 			},
 			{
-				"floorName": "23 - Twenty Third Floor",
+				"floorName": "22 - Twenty Second Floor",
 				"interior_floor": 15
+			},
+			{
+				"floorName": "23 - Twenty Third Floor",
+				"interior_floor": 16
 			}
 		]
 	}
