@@ -21,26 +21,11 @@
     {
         self.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         
-        self.pHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pHeaderView = [[[HeaderView alloc] initWithWidth:200 title:@"Remove Stored Data"] autorelease];
         [self addSubview:self.pHeaderView];
+        self.pHeaderView.pTitleLabel.font = [UIFont systemFontOfSize:23.f];
         
-        self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
-        self.pTitleLabel.text = @"Remove Stored Data";
-        self.pTitleLabel.font = [UIFont systemFontOfSize:24.f];
-        [self.pHeaderView addSubview:self.pTitleLabel];
-        
-        self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        self.pCloseButton.imageView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        UIImage *closeImage = [UIImage imageNamed:@"Close_Blue"];
-        [self.pCloseButton setImage:closeImage forState:UIControlStateNormal];
-        [self.pCloseButton addTarget:self action:@selector(handleCloseClicked) forControlEvents:UIControlEventTouchUpInside];
-        [self.pHeaderView addSubview:self.pCloseButton];
-        
-        self.pHeaderSeparator = [[[UIView alloc] init] autorelease];
-        self.pHeaderSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
-        [self addSubview:self.pHeaderSeparator];
+       [self.pHeaderView addTarget:self action:@selector(handleCloseClicked) forControlEvents:UIControlEventTouchUpInside];
         
         self.pCancelButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pCancelButton setTitle:@"No" forState:UIControlStateNormal];
@@ -87,12 +72,6 @@
     [self.pHeaderView removeFromSuperview];
     [self.pHeaderView release];
     
-    [self.pHeaderSeparator removeFromSuperview];
-    [self.pHeaderSeparator release];
-    
-    [self.pCloseButton removeFromSuperview];
-    [self.pCloseButton release];
-    
     [self.pCancelButton removeFromSuperview];
     [self.pCancelButton release];
     
@@ -101,9 +80,6 @@
     
     [self.pSpinner removeFromSuperview];
     [self.pSpinner release];
-    
-    [self.pTitleLabel removeFromSuperview];
-    [self.pTitleLabel release];
     
     [self.pWarningLabel removeFromSuperview];
     [self.pWarningLabel release];
@@ -117,46 +93,22 @@
 
 - (void)layoutSubviews
 {
-    const CGFloat boundsWidth = static_cast<float>(self.superview.bounds.size.width);
-    const CGFloat boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const bool useFullScreenSize = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    const CGFloat boundsOccupyWidthMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f) * 0.6f);
-    const CGFloat mainWindowWidth = boundsWidth * boundsOccupyWidthMultiplier;
-  
-    const CGFloat mainWindowHeight = 257;
-    const CGFloat mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
-    const CGFloat mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
-    
-    self.frame = CGRectMake(mainWindowX,
-                            mainWindowY,
-                            mainWindowWidth,
-                            mainWindowHeight);
-    
-    UIEdgeInsets outerMargin = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
-    UIEdgeInsets innerMargin = UIEdgeInsetsMake(20.0, 20.0, 16.0, 16.0);
-    
-    
-    CGFloat innerMarginWidth = mainWindowWidth - innerMargin.left - innerMargin.right;
-    CGFloat outerMarginWidth = mainWindowWidth - outerMargin.left - outerMargin.right;
-    
-    
-    CGFloat headerHeight = 37;
    
-    self.pHeaderView.frame = CGRectMake(innerMargin.left, outerMargin.top, innerMarginWidth,headerHeight );
-    
-    CGFloat centeringOffsetY = 4.0;
-    self.pTitleLabel.font = [UIFont systemFontOfSize:24.f];
-    self.pTitleLabel.frame = CGRectMake(0.0,centeringOffsetY, innerMarginWidth - headerHeight,headerHeight);
-    [self.pTitleLabel sizeToFit];
-    self.pCloseButton.frame = CGRectMake(innerMarginWidth - headerHeight,0.0, headerHeight,headerHeight);
-    
-    self.pHeaderSeparator.frame = CGRectMake(outerMargin.left, self.pHeaderView.frame.origin.y + self.pHeaderView.frame.size.height + outerMargin.top, outerMarginWidth,1.0);
-    
+    CGFloat mainWindowWidth = self.frame.size.width;
+    CGFloat mainWindowHeight = self.frame.size.height;
+    self.pHeaderView.width = mainWindowWidth;
+    [self.pHeaderView layoutIfNeeded];
+    CGFloat seperatorMargin = self.pHeaderView.pHeaderSeparator.frame.origin.x;
+    UIEdgeInsets outerMargin = UIEdgeInsetsMake(seperatorMargin, seperatorMargin, seperatorMargin, seperatorMargin);
+    UIEdgeInsets innerMargin = UIEdgeInsetsMake(self.pHeaderView.margin,self.pHeaderView.margin,self.pHeaderView.margin,self.pHeaderView.margin);
+    CGFloat innerMarginWidth = mainWindowWidth - innerMargin.left - innerMargin.right;
+    CGFloat contentY = self.pHeaderView.frame.origin.y +  self.pHeaderView.frame.size.height;
+   
     self.pWarningLabel.font = [UIFont systemFontOfSize:24.0f];
     [self.pWarningLabel sizeToFit];
     CGFloat warningLableHeight = self.pWarningLabel.frame.size.height;
     self.pWarningLabel.frame = CGRectMake(innerMargin.left,
-                                          headerHeight + outerMargin.bottom + innerMargin.top,
+                                          contentY + outerMargin.bottom + innerMargin.top,
                                           innerMarginWidth,
                                           warningLableHeight);
     
@@ -247,7 +199,7 @@
 - (void) closeAsyncCacheClearDialog
 {
     self.pMessageContent.text = @"Map data deleted from device";
-    self.pCloseButton.hidden = NO;
+    self.pHeaderView.pCloseButton.hidden = NO;
     [self setSpinnerEnabled:NO];
 }
 
@@ -260,7 +212,7 @@
     m_confirmedHandler = nil;
     self.pConfirmButton.hidden = NO;
     self.pCancelButton.hidden = NO;
-    self.pCloseButton.hidden = YES;
+    self.pHeaderView.pCloseButton.hidden = YES;
     
     [self removeFromSuperview];
 }
@@ -293,7 +245,7 @@
 {
     self.pConfirmButton.hidden = YES;
     self.pCancelButton.hidden = YES;
-    self.pCloseButton.hidden = YES;
+    self.pHeaderView.pCloseButton.hidden = YES;
     
     const double minimumAsyncDelaySeconds = 3.0;
     m_cacheClearDialogMinimumEndTimeSeconds = [[NSDate date] timeIntervalSince1970] + minimumAsyncDelaySeconds;

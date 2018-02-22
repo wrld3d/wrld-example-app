@@ -27,29 +27,9 @@
         
         self.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         
-        self.pHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pHeaderView = [[[HeaderView alloc] initWithWidth:200 title:@"Options"] autorelease];
         [self addSubview:self.pHeaderView];
-        
-        self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
-        self.pTitleLabel.text = @"Options";
-        self.pTitleLabel.font = [UIFont systemFontOfSize:24.f];
-        [self.pHeaderView addSubview:self.pTitleLabel];
-        
-        self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        self.pCloseButton.imageView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        
-        UIImage *closeImage = [UIImage imageNamed:@"Close_Blue"];
-        
-        [self.pCloseButton setImage:closeImage forState:UIControlStateNormal];
-        [self.pCloseButton addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-       
-        [self.pHeaderView addSubview:self.pCloseButton];
-        
-        self.pHeaderSeparator = [[[UIView alloc] init] autorelease];
-        self.pHeaderSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
-        [self addSubview:self.pHeaderSeparator];
+        [self.pHeaderView addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
@@ -109,7 +89,6 @@
                                          action:@selector(handleReplayMessageClosed)
                                forControlEvents:UIControlEventTouchUpInside];
         
-        
         [self setTouchExclusivity:self];
         
     }
@@ -119,17 +98,9 @@
 
 - (void)dealloc
 {
-    [self.pCloseButton removeFromSuperview];
-    [self.pCloseButton release];
-
+    
     [self.pHeaderView removeFromSuperview];
     [self.pHeaderView release];
-   
-    [self.pTitleLabel removeFromSuperview];
-    [self.pTitleLabel release];
-    
-    [self.pHeaderSeparator removeFromSuperview];
-    [self.pHeaderSeparator release];
     
     [self.pWifiOnlyLabel removeFromSuperview];
     [self.pWifiOnlyLabel release];
@@ -172,10 +143,7 @@
 - (void)layoutSubviews
 {
     self.alpha = 0.f;
-    UIEdgeInsets outerMargin = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
-    UIEdgeInsets innerMargin = UIEdgeInsetsMake(18,18,18,18);
-   
-    CGFloat headerHeight = 37;
+
     CGFloat rowHeight = 44;
     
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
@@ -183,8 +151,17 @@
     const bool useFullScreenSize = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     const float boundsOccupyWidthMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f) * 0.6f);
     const float mainWindowWidth = boundsWidth * boundsOccupyWidthMultiplier;
+    
+    self.pHeaderView.width = mainWindowWidth;
+    [self.pHeaderView layoutIfNeeded];
+   
+    UIEdgeInsets innerMargin = UIEdgeInsetsMake(self.pHeaderView.margin,self.pHeaderView.margin,self.pHeaderView.margin,self.pHeaderView.margin);
+    CGFloat innerMarginWidth = mainWindowWidth - innerMargin.left - innerMargin.right;
+    CGFloat contentY = self.pHeaderView.frame.origin.y +  self.pHeaderView.frame.size.height;
+   
     const CGFloat contentHeight = 4*rowHeight + innerMargin.top + innerMargin.bottom;
-    const float mainWindowHeight = headerHeight + contentHeight;
+    const float mainWindowHeight = self.pHeaderView.frame.size.height + contentHeight;
+    
     const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
     
@@ -197,19 +174,9 @@
     [self.pReplayTutorialsMessage setNeedsLayout];
     [self.pReplayTutorialsMessage layoutIfNeeded];
     
-    CGFloat innerMarginWidth = mainWindowWidth - innerMargin.left - innerMargin.right;
-    CGFloat outerMarginWidth = mainWindowWidth - outerMargin.left - outerMargin.right;
-    
-    self.pHeaderView.frame = CGRectMake(innerMargin.left, outerMargin.top, innerMarginWidth,headerHeight );
-    
-    CGFloat centeringOffsetY = 4.0;
-    self.pTitleLabel.frame = CGRectMake(0.0,centeringOffsetY, innerMarginWidth - headerHeight,headerHeight);
-    [self.pTitleLabel sizeToFit];
-    self.pCloseButton.frame = CGRectMake(innerMarginWidth - headerHeight,0.0, headerHeight,headerHeight);
-    
-    self.pHeaderSeparator.frame = CGRectMake(outerMargin.left, self.pHeaderView.frame.origin.y + self.pHeaderView.frame.size.height + outerMargin.top, outerMarginWidth,1.0);
-    
-    CGFloat contentY = self.pHeaderSeparator.frame.origin.y +  self.pHeaderSeparator.frame.size.height;
+    self.pOptionsCacheClearSubView.frame = self.frame;
+    [self.pReplayTutorialsMessage setNeedsLayout];
+    [self.pReplayTutorialsMessage layoutIfNeeded];
     
     self.pContentContainer.frame  = CGRectMake(0.0,contentY , mainWindowWidth, contentHeight);
     
@@ -238,16 +205,16 @@
     [self.pReplayTutorialsLabel sizeToFit];
     
     self.pWifiOnlySwitch.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 0.0*rowHeight + switchOffestY, switchWidth, switchHeight);
-    [self.pWifiOnlySwitch layoutSubviews];
+    [self.pWifiOnlySwitch setNeedsLayout];
     
     self.pCacheEnabledSwitch.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 1.0*rowHeight + switchOffestY, switchWidth, switchHeight);
-    [self.pCacheEnabledSwitch layoutSubviews];
+    [self.pCacheEnabledSwitch setNeedsLayout];
     
     self.pClearCacheButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 2.0*rowHeight + buttonOffsetY, switchWidth, buttonHeight);
-    [self.pClearCacheButton layoutSubviews];
+    [self.pClearCacheButton setNeedsLayout];
     
     self.pReplayTutorialsButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 3.0*rowHeight + buttonOffsetY, switchWidth, buttonHeight);
-    [self.pReplayTutorialsButton layoutSubviews];
+    [self.pReplayTutorialsButton setNeedsLayout];
 }
 
 - (void) setStreamOverWifiOnlySelected:(bool)isStreamOverWifiOnlySelected

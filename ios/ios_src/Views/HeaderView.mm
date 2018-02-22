@@ -7,17 +7,12 @@
 
 #import "HeaderView.h"
 #import "UIColors.h"
-@interface HeaderView()
-@property (nonatomic,retain) UIButton *pCloseButton;
-@property (nonatomic, retain) UILabel* pTitleLabel;
-
-@end
 
 @implementation HeaderView
 
 const CGFloat topMargin = 8.0;
 const CGFloat height = 37;
-
+const CGFloat seperatorHieght = 1;
 
 -(instancetype) initWithWidth:(CGFloat)width title:(NSString*)title {
     self =  [super initWithFrame:CGRectMake(0.0,0.0,width,height + 1 + topMargin)];
@@ -62,7 +57,7 @@ const CGFloat height = 37;
     [super layoutSubviews];
     CGFloat centeringOffsetY = 4.0;
     
-    self.frame = CGRectMake(0.0,0.0,self.width,height + 1);
+    self.frame = CGRectMake(0.0,0.0,self.width,height + self.margin + seperatorHieght);
     
     self.pTitleLabel.frame = CGRectMake(self.margin,topMargin+centeringOffsetY, 0.0 ,self.bounds.size.height);
     [self.pTitleLabel sizeToFit];

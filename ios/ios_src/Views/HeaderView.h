@@ -14,5 +14,6 @@
 @property (nonatomic,readonly) CGFloat margin;
 @property (nonatomic,readonly) CGFloat seperatorMargin;
 @property (nonatomic, retain) UIView* pHeaderSeparator;
-
+@property (nonatomic,retain) UIButton* pCloseButton;
+@property (nonatomic, retain) UILabel* pTitleLabel;
 @end

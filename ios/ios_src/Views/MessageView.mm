@@ -57,6 +57,9 @@
 }
 
 -(void)show {
+    if(self.hidden){
+        self.alpha = 0.0;
+    }
     [UIView animateWithDuration:0.3 animations:^{
         self.alpha = 1.0;
         self.hidden = NO;

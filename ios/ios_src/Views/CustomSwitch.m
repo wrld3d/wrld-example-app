@@ -32,7 +32,7 @@
         self.button.selected = _isOn;
         self.selected = _isOn;
         
-        [self layoutSubviews];
+        [self setNeedsLayout];
     }
     
     return self;
