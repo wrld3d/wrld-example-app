@@ -24,7 +24,7 @@ namespace ExampleApp
                     
                     SelectFirstResultSearchService(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                       Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                                      ExampleAppMessaging::TMessageBus& messageBus
+                                                   Menu::View::IMenuModel& menuModel
                     );
                     
                     ~SelectFirstResultSearchService();
@@ -37,7 +37,7 @@ namespace ExampleApp
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     Eegeo::Helpers::TCallback1<SelectFirstResultSearchService, Search::SdkModel::SearchResultModel*> m_searchResultAddedCallback;
                     Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
-                    ExampleAppMessaging::TMessageBus& m_messageBus;
+                    Menu::View::IMenuModel& m_menuModel;
                     std::string m_deepLinkQuery;
                     
                     bool m_didTransition;
