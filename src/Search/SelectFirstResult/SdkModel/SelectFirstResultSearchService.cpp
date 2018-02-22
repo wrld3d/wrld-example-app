@@ -16,21 +16,19 @@ namespace ExampleApp
             namespace SdkModel
             {
                 SelectFirstResultSearchService::SelectFirstResultSearchService(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                     Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                                                     ExampleAppMessaging::TMessageBus& messageBus)
+                                                                               Menu::View::IMenuModel& menuModel)
                 : m_searchQueryPerformer(searchQueryPerformer)
-                , m_searchResultRepository(searchResultRepository)
-                , m_searchResultAddedCallback(this, &SelectFirstResultSearchService::OnSearchResultAdded)
+                , m_menuModel(menuModel)
+                , m_menuItemAddedCallback(this, &SelectFirstResultSearchService::OnSearchResultAdded)
                 , m_didTransition(true)
                 , m_deepLinkQuery("")
-                , m_messageBus(messageBus)
                 {
-                    m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
+                    m_menuModel.InsertItemAddedCallback(m_menuItemAddedCallback);
                 }
                 
                 SelectFirstResultSearchService::~SelectFirstResultSearchService()
                 {
-                    m_searchResultRepository.RemoveItemAddedCallback(m_searchResultAddedCallback);
+                    m_menuModel.RemoveItemAddedCallback(m_menuItemAddedCallback);
                 }
                 
                 void SelectFirstResultSearchService::PerformSearch(const std::string& queryString, const std::string& indoorMapId)
@@ -42,7 +40,7 @@ namespace ExampleApp
                     m_deepLinkQuery = queryString;
                 }
                 
-                void SelectFirstResultSearchService::OnSearchResultAdded(Search::SdkModel::SearchResultModel*& pSearchResultModel)
+                void SelectFirstResultSearchService::OnSearchResultAdded(Menu::View::MenuItemModel& item)
                 {
                     if(!m_didTransition)
                     {
@@ -50,12 +48,10 @@ namespace ExampleApp
                         const std::string& query = m_searchQueryPerformer.GetPreviousSearchQuery().Query();
                         if(query == m_deepLinkQuery) // This is a workaround for when the PerformSearch return no results to stop this selecting the next search they do.
                         {
-                            m_messageBus.Publish(SearchResultSection::SearchResultSectionItemSelectedMessage(pSearchResultModel->GetLocation().ToECEF(),
-                                                                                                             pSearchResultModel->IsInterior(),
-                                                                                                             pSearchResultModel->GetBuildingId(),
-                                                                                                             pSearchResultModel->GetFloor(),
-                                                                                                             0,
-                                                                                                             pSearchResultModel->GetIdentifier()));
+                            if(m_menuModel.GetItemCount() > 0)
+                            {
+                                m_menuModel.GetItemAtIndex(0).MenuOption().Select();
+                            }
                         }
                     }
                 }

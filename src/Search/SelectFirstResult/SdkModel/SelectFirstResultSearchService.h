@@ -23,8 +23,7 @@ namespace ExampleApp
                 public:
                     
                     SelectFirstResultSearchService(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                      Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                                      ExampleAppMessaging::TMessageBus& messageBus
+                                                   Menu::View::IMenuModel& menuModel
                     );
                     
                     ~SelectFirstResultSearchService();
@@ -32,12 +31,11 @@ namespace ExampleApp
                     void PerformSearch(const std::string& queryString, const std::string& indoorMapId);
                     
                 private:
-                    void OnSearchResultAdded(Search::SdkModel::SearchResultModel*& pSearchResultModel);
+                    void OnSearchResultAdded(Menu::View::MenuItemModel& item);
                     
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
-                    Eegeo::Helpers::TCallback1<SelectFirstResultSearchService, Search::SdkModel::SearchResultModel*> m_searchResultAddedCallback;
-                    Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
-                    ExampleAppMessaging::TMessageBus& m_messageBus;
+                    Eegeo::Helpers::TCallback1<SelectFirstResultSearchService, Menu::View::MenuItemModel> m_menuItemAddedCallback;
+                    Menu::View::IMenuModel& m_menuModel;
                     std::string m_deepLinkQuery;
                     
                     bool m_didTransition;
