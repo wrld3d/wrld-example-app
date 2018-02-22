@@ -26,5 +26,9 @@
   {
   	"locationId": "US047",
   	"interior_id": "731-"
+  },
+  {
+    "locationId": "US173",
+    "interior_id": "120-"
   }
 ]
