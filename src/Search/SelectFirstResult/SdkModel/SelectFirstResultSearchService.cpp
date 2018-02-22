@@ -16,21 +16,19 @@ namespace ExampleApp
             namespace SdkModel
             {
                 SelectFirstResultSearchService::SelectFirstResultSearchService(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                     Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                                                Menu::View::IMenuModel& menuModel)
                 : m_searchQueryPerformer(searchQueryPerformer)
-                , m_searchResultRepository(searchResultRepository)
                 , m_menuModel(menuModel)
-                , m_searchResultAddedCallback(this, &SelectFirstResultSearchService::OnSearchResultAdded)
+                , m_menuItemAddedCallback(this, &SelectFirstResultSearchService::OnSearchResultAdded)
                 , m_didTransition(true)
                 , m_deepLinkQuery("")
                 {
-                    m_searchResultRepository.InsertItemAddedCallback(m_searchResultAddedCallback);
+                    m_menuModel.InsertItemAddedCallback(m_menuItemAddedCallback);
                 }
                 
                 SelectFirstResultSearchService::~SelectFirstResultSearchService()
                 {
-                    m_searchResultRepository.RemoveItemAddedCallback(m_searchResultAddedCallback);
+                    m_menuModel.RemoveItemAddedCallback(m_menuItemAddedCallback);
                 }
                 
                 void SelectFirstResultSearchService::PerformSearch(const std::string& queryString, const std::string& indoorMapId)
@@ -42,7 +40,7 @@ namespace ExampleApp
                     m_deepLinkQuery = queryString;
                 }
                 
-                void SelectFirstResultSearchService::OnSearchResultAdded(Search::SdkModel::SearchResultModel*& pSearchResultModel)
+                void SelectFirstResultSearchService::OnSearchResultAdded(Menu::View::MenuItemModel& item)
                 {
                     if(!m_didTransition)
                     {
