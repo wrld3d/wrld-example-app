@@ -46,7 +46,7 @@
 #include "SdkModelDomainEventBus.h"
 #include "IEegeoErrorHandler.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
-#include "WindowsFlurryMetricsService.h"
+#include "DummyMetricsService.h"
 #include "Interiors.h"
 #include "InteriorsExplorerViewIncludes.h"
 #include "SearchMenuModule.h"
@@ -153,7 +153,7 @@ private:
     ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule; // TODO: Interface.
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
-    ExampleApp::Metrics::WindowsFlurryMetricsService* m_pWindowsFlurryMetricsService;
+    ExampleApp::Metrics::IMetricsService* m_pMetricsService;
 	ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReaction;
     ExampleApp::GpsMarkerTutorial::View::GpsMarkerTutorialViewModule* m_pGpsMarkerTutorialViewModule;

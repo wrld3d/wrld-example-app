@@ -3,18 +3,17 @@
 #pragma once
 
 #include "IMetricsService.h"
-#include "WindowsNativeState.h"
 
 namespace ExampleApp
 {
     namespace Metrics
     {
-        class WindowsFlurryMetricsService : public IMetricsService
+        class DummyMetricsService : public IMetricsService
         {
         public:
-            WindowsFlurryMetricsService(WindowsNativeState* pNativeState);
+            DummyMetricsService();
 
-            ~WindowsFlurryMetricsService();
+            ~DummyMetricsService();
 
             void BeginSession(const std::string& apiKey, const std::string& appVersion);
 
@@ -43,8 +42,6 @@ namespace ExampleApp
             bool IsEnabled() const;
 
         private:
-            WindowsNativeState* m_pNativeState;
-            //jclass m_flurryClass;
             bool m_enabled;
         };
     }

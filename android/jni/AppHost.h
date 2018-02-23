@@ -46,7 +46,7 @@
 #include "SdkModelDomainEventBus.h"
 #include "IEegeoErrorHandler.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
-#include "AndroidFlurryMetricsService.h"
+#include "DummyMetricsService.h"
 #include "ICallback.h"
 #include "UserInteraction.h"
 #include "IInteriorsExplorerViewModule.h"
@@ -136,7 +136,7 @@ private:
     ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule; // TODO: Interface.
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
-    ExampleApp::Metrics::AndroidFlurryMetricsService* m_pAndroidFlurryMetricsService;
+    ExampleApp::Metrics::IMetricsService* m_pMetricsService;
 
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
 

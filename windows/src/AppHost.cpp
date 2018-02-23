@@ -147,7 +147,7 @@ AppHost::AppHost(
     , m_requestedApplicationInitialiseViewState(false)
     , m_uiCreatedMessageReceivedOnNativeThread(false)
     , m_pViewControllerUpdaterModule(NULL)
-    , m_pWindowsFlurryMetricsService(NULL)
+    , m_pMetricsService(NULL)
     , m_pInitialExperienceIntroViewModule(NULL)
     , m_pInteriorsExplorerViewModule(NULL)
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
@@ -229,7 +229,7 @@ AppHost::AppHost(
         m_pWindowsPlatformAbstractionModule->GetHttpCache(),
         *m_pWindowsPersistentSettingsModel);
 
-    m_pWindowsFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::WindowsFlurryMetricsService)(&m_nativeState);
+    m_pMetricsService = Eegeo_NEW(ExampleApp::Metrics::DummyMetricsService)();
 
     m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(false, false);
 
@@ -246,7 +246,7 @@ AppHost::AppHost(
         m_messageBus,
         m_sdkDomainEventBus,
         *m_pNetworkCapabilities,
-        *m_pWindowsFlurryMetricsService,
+        *m_pMetricsService,
         *this,
         *m_pMenuReaction,
         *m_pUserIdleService);
@@ -305,8 +305,8 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
 
-    Eegeo_DELETE m_pWindowsFlurryMetricsService;
-    m_pWindowsFlurryMetricsService = NULL;
+    Eegeo_DELETE m_pMetricsService;
+    m_pMetricsService = NULL;
 
     Eegeo_DELETE m_pNetworkCapabilities;
     m_pNetworkCapabilities = NULL;
@@ -559,7 +559,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
 		app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
 		m_messageBus,
-		*m_pWindowsFlurryMetricsService,
+		*m_pMetricsService,
 		app.GetApplicationConfiguration().IsInKioskMode()
 		);
 
@@ -614,7 +614,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_pSearchMenuViewModule->GetSearchMenuView(),
         app.GetSwallowSearchTags(),
         m_messageBus,
-        *m_pWindowsFlurryMetricsService,
+        *m_pMetricsService,
         app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
         app.GetApplicationConfiguration().IsInKioskMode()
         );
@@ -622,7 +622,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
         m_nativeState,
         app.AboutPageModule().GetAboutPageViewModel(),
-        *m_pWindowsFlurryMetricsService,
+        *m_pMetricsService,
         m_messageBus
         );
 
@@ -631,7 +631,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
         m_messageBus,
-        *m_pWindowsFlurryMetricsService,
+        *m_pMetricsService,
 		app.GetApplicationConfiguration().IsInKioskMode()
         );
 
