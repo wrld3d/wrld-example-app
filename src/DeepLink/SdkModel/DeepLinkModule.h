@@ -8,6 +8,7 @@
 #include "SelectFirstResultSearchService.h"
 #include "DeepLinkConfigHandler.h"
 #include "DeepLinkSearchHandler.h"
+#include "DeepLinkLocationHandler.h"
 #include "MapsceneLoader.h"
 
 namespace ExampleApp
@@ -34,6 +35,7 @@ namespace ExampleApp
                 DeepLinkConfigHandler* m_pDeepLinkConfigHandler;
                 DeepLinkModel* m_pDeepLinkModel;
                 DeepLinkController* m_pDeepLinkController;
+                DeepLinkLocationHandler* m_pDeepLinkLocationHandler;
             };
         }
     }

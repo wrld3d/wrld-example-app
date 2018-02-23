@@ -27,10 +27,6 @@ namespace ExampleApp
 
             void DeepLinkModel::ClearRoutes()
             {
-                for(std::unordered_map<std::string, IDeepLinkHandler*>::iterator it = m_routes.begin(); it != m_routes.end(); ++it)
-                {
-                    Eegeo_DELETE(it->second);
-                }
                 m_routes.clear();
             }
 
