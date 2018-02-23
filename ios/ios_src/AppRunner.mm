@@ -9,7 +9,7 @@ AppRunner::AppRunner
     ViewController& viewController,
     UIView* pView,
     const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-    ExampleApp::Metrics::iOSFlurryMetricsService& metricsService
+    ExampleApp::Metrics::IMetricsService& metricsService
 )
     : m_viewController(viewController)
     , m_pView(pView)
