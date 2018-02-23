@@ -46,13 +46,13 @@ namespace ExampleAppWPF
             m_mainWindow.AddHandler(UIElement.TouchDownEvent, (RoutedEventHandler)OnMouseLeftButtonDown, true);
             m_mainWindow.MainGrid.Children.Add(this);
 
+            this.Loaded += InitialExperienceView_Loaded;
+
             DismissExitIUX();
         }
 
-        public override void OnApplyTemplate()
+        private void InitialExperienceView_Loaded(object sender, RoutedEventArgs ev)
         {
-            base.OnApplyTemplate();
-            
             m_showAnimation = (Storyboard)FindResource("ShowAnimation");
             m_hideAnimation = ((Storyboard)FindResource("HideAnimation")).Clone();
             m_hideAnimation.Completed += (o, e) =>
