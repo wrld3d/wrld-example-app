@@ -142,7 +142,7 @@ AppHost::AppHost(
     ,m_requestedApplicationInitialiseViewState(false)
     ,m_uiCreatedMessageReceivedOnNativeThread(false)
     ,m_pViewControllerUpdaterModule(NULL)
-	,m_pAndroidFlurryMetricsService(NULL)
+	,m_pMetricsService(NULL)
 	,m_pInitialExperienceIntroViewModule(NULL)
     ,m_pTagSearchViewModule(NULL)
 	,m_failAlertHandler(this, &AppHost::HandleStartupFailure)
@@ -201,7 +201,7 @@ AppHost::AppHost(
     		m_pAndroidPlatformAbstractionModule->GetHttpCache(),
     		m_androidPersistentSettingsModel);
 
-    m_pAndroidFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::AndroidFlurryMetricsService)(&m_nativeState);
+    m_pMetricsService = Eegeo_NEW(ExampleApp::Metrics::DummyMetricsService)();
 
     m_pMenuReactionModel = Eegeo_NEW(ExampleApp::Menu::View::AndroidMenuReactionModel)();
 
@@ -218,7 +218,7 @@ AppHost::AppHost(
                  m_messageBus,
                  m_sdkDomainEventBus,
                  *m_pNetworkCapabilities,
-                 *m_pAndroidFlurryMetricsService,
+                 *m_pMetricsService,
                  *this,
                  *m_pMenuReactionModel,
                  m_userIdleService);
@@ -270,8 +270,8 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
 
-    Eegeo_DELETE m_pAndroidFlurryMetricsService;
-    m_pAndroidFlurryMetricsService = NULL;
+    Eegeo_DELETE m_pMetricsService;
+    m_pMetricsService = NULL;
 
     Eegeo_DELETE m_pNetworkCapabilities;
     m_pNetworkCapabilities = NULL;
@@ -499,7 +499,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
                                      app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                      m_messageBus,
-                                     *m_pAndroidFlurryMetricsService
+                                     *m_pMetricsService
                                  );
 
 
@@ -557,13 +557,13 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                        app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                        app.GetSwallowSearchTags(),
                                        m_messageBus,
-                                       *m_pAndroidFlurryMetricsService
+                                       *m_pMetricsService
                                    );
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
                                  m_nativeState,
                                  app.AboutPageModule().GetAboutPageViewModel(),
-                                 *m_pAndroidFlurryMetricsService,
+                                 *m_pMetricsService,
                                  m_messageBus
                              );
 
@@ -572,7 +572,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                             m_nativeState,
                                             app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
                                             m_messageBus,
-                                            *m_pAndroidFlurryMetricsService
+                                            *m_pMetricsService
                                         );
 
     m_pMyPinDetailsViewModule = Eegeo_NEW(ExampleApp::MyPinDetails::View::MyPinDetailsViewModule)(

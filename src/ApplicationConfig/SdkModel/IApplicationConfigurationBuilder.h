@@ -39,8 +39,6 @@ namespace ExampleApp
                 
                 virtual IApplicationConfigurationBuilder& SetGoogleAnalyticsReferrerToken(const std::string& googleAnalyticsReferrerToken) = 0;
                 
-                virtual IApplicationConfigurationBuilder& SetFlurryAppKey(const std::string& flurryAppKey) = 0;
-                
                 virtual IApplicationConfigurationBuilder& SetYelpConsumerKey(const std::string& yelpConsumerKey) = 0;
                 
                 virtual IApplicationConfigurationBuilder& SetYelpConsumerSecret(const std::string& yelpConsumerSecret) = 0;

@@ -34,7 +34,6 @@ namespace ExampleApp
             , m_performStartupSearch(false)
             , m_startupSearchTag("")
             , m_googleAnalyticsReferrerToken("")
-            , m_flurryAppKey("")
             , m_yelpConsumerKey("")
             , m_yelpConsumerSecret("")
             , m_yelpOAuthToken("")
@@ -137,12 +136,6 @@ namespace ExampleApp
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetGoogleAnalyticsReferrerToken(const std::string& googleAnalyticsReferrerToken)
             {
                 m_googleAnalyticsReferrerToken = googleAnalyticsReferrerToken;
-                return *this;
-            }
-            
-            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetFlurryAppKey(const std::string& flurryAppKey)
-            {
-                m_flurryAppKey = flurryAppKey;
                 return *this;
             }
             
@@ -437,7 +430,6 @@ namespace ExampleApp
                                                 m_performStartupSearch,
                                                 m_startupSearchTag,
                                                 m_googleAnalyticsReferrerToken,
-                                                m_flurryAppKey,
                                                 m_yelpConsumerKey,
                                                 m_yelpConsumerSecret,
                                                 m_yelpOAuthToken,

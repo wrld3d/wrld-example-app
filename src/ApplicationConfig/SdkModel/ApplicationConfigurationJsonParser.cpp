@@ -35,7 +35,6 @@ namespace ExampleApp
                 const std::string ThemeManifestURL = "theme_manifest_url";
                 const std::string EmbeddedThemeTexturePath = "embedded_theme_texture_path";
                 const std::string GoogleAnalyticsReferrerToken = "google_analytics_referrer_token";
-                const std::string FlurryAppKey = "flurry_app_key";
                 const std::string YelpConsumerKey = "yelp_consumer_key";
                 const std::string YelpConsumerSecret = "yelp_consumer_secret";
                 const std::string YelpOAuthToken = "yelp_oauth_token";
@@ -251,7 +250,6 @@ namespace ExampleApp
                 m_builder.SetStartupSearchTag(ParseStringOrDefault(document, StartUpSearchTag, m_defaultConfig.StartUpSearchTag()));
                 
                 m_builder.SetGoogleAnalyticsReferrerToken(ParseStringOrDefault(document, GoogleAnalyticsReferrerToken, m_defaultConfig.GoogleAnalyticsReferrerToken()));
-                m_builder.SetFlurryAppKey(ParseStringOrDefault(document, FlurryAppKey, m_defaultConfig.FlurryAppKey()));
                 
                 m_builder.SetYelpConsumerKey(ParseStringOrDefault(document, YelpConsumerKey, m_defaultConfig.YelpConsumerKey()));
                 m_builder.SetYelpConsumerSecret(ParseStringOrDefault(document, YelpConsumerSecret, m_defaultConfig.YelpConsumerSecret()));

@@ -1,8 +1,8 @@
 set(headers ${headers} src/Metrics
 )
 set(currsources
-  src/Metrics/WindowsFlurryMetricsService.cpp
-  src/Metrics/WindowsFlurryMetricsService.h
+  src/Metrics/DummyMetricsService.cpp
+  src/Metrics/DummyMetricsService.h
 )
 
 set(sources ${sources} ${currsources})

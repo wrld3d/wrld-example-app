@@ -8,10 +8,10 @@ namespace ExampleApp
 {
     namespace Metrics
     {
-        class iOSFlurryMetricsService : public Metrics::IMetricsService
+        class DummyMetricsService : public Metrics::IMetricsService
         {
         public:
-            iOSFlurryMetricsService();
+            DummyMetricsService();
             
             void BeginSession(const std::string& apiKey, const std::string& appVersion);
             
