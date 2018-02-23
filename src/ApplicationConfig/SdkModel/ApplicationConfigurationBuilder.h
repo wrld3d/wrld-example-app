@@ -32,7 +32,6 @@ namespace ExampleApp
                 std::string m_startupSearchTag;
                 bool m_shouldStartFullscreen;
                 std::string m_googleAnalyticsReferrerToken;
-                std::string m_flurryAppKey;
                 std::string m_yelpConsumerKey;
                 std::string m_yelpConsumerSecret;
                 std::string m_yelpOAuthToken;
@@ -114,8 +113,6 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetStartupSearchTag(std::string startupSearchTag);
                 
                 IApplicationConfigurationBuilder& SetGoogleAnalyticsReferrerToken(const std::string& googleAnalyticsReferrerToken);
-                
-                IApplicationConfigurationBuilder& SetFlurryAppKey(const std::string& flurryAppKey);
                 
                 IApplicationConfigurationBuilder& SetYelpConsumerKey(const std::string& yelpConsumerKey);
                 

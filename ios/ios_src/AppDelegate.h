@@ -8,7 +8,7 @@ namespace ExampleApp
 {
     namespace Metrics
     {
-        class iOSFlurryMetricsService;
+        class DummyMetricsService;
     }
     
     namespace ApplicationConfig
@@ -23,7 +23,7 @@ namespace ExampleApp
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (nonatomic) ExampleApp::Metrics::iOSFlurryMetricsService* metricsService;
+@property (nonatomic) ExampleApp::Metrics::DummyMetricsService* metricsService;
 
 @property (nonatomic) ExampleApp::ApplicationConfig::ApplicationConfiguration* applicationConfiguration;
 

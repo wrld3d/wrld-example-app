@@ -41,7 +41,7 @@
 #include "SdkModelDomainEventBus.h"
 #include "IEegeoErrorHandler.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
-#include "iOSFlurryMetricsService.h"
+#include "DummyMetricsService.h"
 #include "Interiors.h"
 #include "InteriorsExplorerViewIncludes.h"
 #include "ImageStore.h"
@@ -71,7 +71,7 @@ public:
         UIView* pView,
         Eegeo::Rendering::ScreenProperties screenProperties,
         const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
-        ExampleApp::Metrics::iOSFlurryMetricsService& metricsService
+        ExampleApp::Metrics::IMetricsService& metricsService
     );
     ~AppHost();
 
@@ -136,20 +136,20 @@ private:
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::InitialExperience::View::IInitialExperienceIntroViewModule* m_pInitialExperienceIntroViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
-    ExampleApp::Metrics::iOSFlurryMetricsService& m_iOSFlurryMetricsService;
+    ExampleApp::Metrics::IMetricsService& m_metricsService;
     ExampleApp::InteriorsExplorer::View::IInteriorsExplorerViewModule* m_pInteriorsExplorerViewModule;
     ExampleApp::LinkOutObserver::LinkOutObserver* m_pLinkOutObserver;
     ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
-    
+
     ImageStore* m_pImageStore;
-    
+
     ExampleApp::MobileExampleApp* m_pApp;
     bool m_requestedApplicationInitialiseViewState;
 
     ExampleApp::ExampleAppMessaging::TMessageBus m_messageBus;
     ExampleApp::ExampleAppMessaging::TSdkModelDomainEventBus m_sdkModelDomainEventBus;
-    
+
     Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<AppHost> m_failAlertHandler;
     Eegeo::Helpers::TCallback1<AppHost, const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage&> m_userInteractionEnabledChangedHandler;
 

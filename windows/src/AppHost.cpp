@@ -157,7 +157,7 @@ AppHost::AppHost(
     , m_requestedApplicationInitialiseViewState(false)
     , m_uiCreatedMessageReceivedOnNativeThread(false)
     , m_pViewControllerUpdaterModule(NULL)
-    , m_pWindowsFlurryMetricsService(NULL)
+    , m_pMetricsService(NULL)
     , m_pInitialExperienceIntroViewModule(NULL)
     , m_pInteriorsExplorerViewModule(NULL)
     , m_failAlertHandler(this, &AppHost::HandleStartupFailure)
@@ -171,13 +171,13 @@ AppHost::AppHost(
     , m_screenProperties(screenProperties)
 {
     ASSERT_NATIVE_THREAD
-         
+
 	Eegeo_ASSERT(resourceBuildShareContext != EGL_NO_CONTEXT);
 
     Eegeo::TtyHandler::TtyEnabled = true;
     Eegeo::AssertHandler::BreakOnAssert = true;
 
-    
+
     static LocationOverride locationOverride;
     locationOverride.latRadians = Eegeo::Math::Deg2Rad(51.512432);
     locationOverride.lonRadians = Eegeo::Math::Deg2Rad(-0.091633);
@@ -239,7 +239,7 @@ AppHost::AppHost(
         m_pWindowsPlatformAbstractionModule->GetHttpCache(),
         *m_pWindowsPersistentSettingsModel);
 
-    m_pWindowsFlurryMetricsService = Eegeo_NEW(ExampleApp::Metrics::WindowsFlurryMetricsService)(&m_nativeState);
+    m_pMetricsService = Eegeo_NEW(ExampleApp::Metrics::DummyMetricsService)();
 
     m_pMenuReaction = Eegeo_NEW(ExampleApp::Menu::View::WindowsMenuReactionModel)(false, false);
 
@@ -256,7 +256,7 @@ AppHost::AppHost(
         m_messageBus,
         m_sdkDomainEventBus,
         *m_pNetworkCapabilities,
-        *m_pWindowsFlurryMetricsService,        
+        *m_pMetricsService,
         *this,
         *m_pMenuReaction,
         *m_pUserIdleService);
@@ -312,8 +312,8 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
 
-    Eegeo_DELETE m_pWindowsFlurryMetricsService;
-    m_pWindowsFlurryMetricsService = NULL;
+    Eegeo_DELETE m_pMetricsService;
+    m_pMetricsService = NULL;
 
     Eegeo_DELETE m_pNetworkCapabilities;
     m_pNetworkCapabilities = NULL;
@@ -574,7 +574,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 		app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
 		app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
 		m_messageBus,
-		*m_pWindowsFlurryMetricsService,
+		*m_pMetricsService,
 		app.GetApplicationConfiguration().IsInKioskMode()
 		);
 
@@ -615,7 +615,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_messageBus,
         app.GetApplicationConfiguration().IsInKioskMode()
         );
-    
+
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
         app.SearchMenuModule().GetSearchMenuViewModel(),
         app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
@@ -639,7 +639,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
         m_pSearchMenuViewModule->GetSearchMenuView(),
         m_messageBus,
-        *m_pWindowsFlurryMetricsService,
+        *m_pMetricsService,
         m_pMyPinCreationViewModule->GetMyPinCreationInitiationView(),
         app.World().GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
         app.GetApplicationConfiguration().IsInKioskMode()
@@ -648,7 +648,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
         m_nativeState,
         app.AboutPageModule().GetAboutPageViewModel(),
-        *m_pWindowsFlurryMetricsService,
+        *m_pMetricsService,
         m_messageBus
         );
 
@@ -657,7 +657,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
         m_nativeState,
         app.MyPinCreationDetailsModule().GetMyPinCreationDetailsViewModel(),
         m_messageBus,
-        *m_pWindowsFlurryMetricsService,
+        *m_pMetricsService,
 		app.GetApplicationConfiguration().IsInKioskMode()
         );
 
@@ -714,10 +714,10 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     Eegeo::Helpers::TIdentity settingsMenuIdentity = app.SearchResultPoiModule().GetObservableOpenableControl().GetIdentity();
     Eegeo::Helpers::TIdentity searchMenuIdentity= app.SearchMenuModule().GetSearchMenuViewModel().GetIdentity();
-    
+
     app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
     app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(settingsMenuIdentity);
-    
+
     app.ModalityIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
     app.ReactorIgnoredReactionModel().AddIgnoredMenuIdentity(searchMenuIdentity);
 }

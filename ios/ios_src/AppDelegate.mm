@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2014), All Rights Reserved
 
 #import "AppDelegate.h"
-#include "Flurry.h"
 #include "ViewController.h"
 
 #include "ApiKey.h"
@@ -9,7 +8,7 @@
 #include "iOSFileIO.h"
 #include "ApplicationConfigurationModule.h"
 #include "IApplicationConfigurationService.h"
-#include "iOSFlurryMetricsService.h"
+#include "DummyMetricsService.h"
 
 namespace
 {
@@ -47,13 +46,12 @@ namespace
 -(BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    _metricsService = Eegeo_NEW(ExampleApp::Metrics::iOSFlurryMetricsService)();
+    _metricsService = Eegeo_NEW(ExampleApp::Metrics::DummyMetricsService)();
     
     const ApplicationConfiguration& appConfig = LoadConfiguration();
     _applicationConfiguration = Eegeo_NEW(ApplicationConfiguration)(appConfig);
     
-    // Flurry metrics service must be started during didFinishLaunchingWithOptions (events not logged on >= iOS 8.0 if started later)
-    _metricsService->BeginSession(_applicationConfiguration->FlurryAppKey(), appConfig.CombinedVersionString());
+    _metricsService->BeginSession("", appConfig.CombinedVersionString());
     
     if(launchOptions[@"UIApplicationLaunchOptionsURLKey"])
     {

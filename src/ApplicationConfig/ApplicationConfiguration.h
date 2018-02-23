@@ -38,7 +38,6 @@ namespace ExampleApp
             bool m_shouldPerformStartUpSearch;
             std::string m_startUpSearchTag;
             std::string m_googleAnalyticsReferrerToken;
-            std::string m_flurryAppKey;
             std::string m_yelpConsumerKey;
             std::string m_yelpConsumerSecret;
             std::string m_yelpOAuthToken;
@@ -102,7 +101,6 @@ namespace ExampleApp
                                      bool performStartUpSearch,
                                      const std::string& startUpSearchTag,
                                      const std::string& googleAnalyticsReferrerToken,
-                                     const std::string& flurryAppKey,
                                      const std::string& yelpConsumerKey,
                                      const std::string& yelpConsumerSecret,
                                      const std::string& yelpOAuthToken,
@@ -177,8 +175,6 @@ namespace ExampleApp
             std::string GoogleAnalyticsReferrerToken() const;
 
             std::string TwitterAuthCode() const;
-            
-            std::string FlurryAppKey() const;
             
             std::string YelpConsumerKey() const;
             
