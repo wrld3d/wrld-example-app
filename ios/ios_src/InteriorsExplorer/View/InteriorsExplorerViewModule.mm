@@ -17,7 +17,8 @@ namespace ExampleApp
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
                                                                      const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                                      Eegeo::Helpers::IdentityProvider& identityProvider,
-                                                                     Eegeo::Location::NavigationService& navigationService)
+                                                                     Eegeo::Location::NavigationService& navigationService,
+                                                                     InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel)
             {
                 const float screenWidth = screenProperties.GetScreenWidth();
                 const float screenHeight = screenProperties.GetScreenHeight();
@@ -31,7 +32,8 @@ namespace ExampleApp
                                                                        *[m_pView getInterop],
                                                                        viewModel,
                                                                        messageBus,
-                                                                       navigationService);
+                                                                       navigationService,
+                                                                       initialExperienceModel);
             }
             
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()

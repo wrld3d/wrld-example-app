@@ -13,6 +13,7 @@
 #include <sstream>
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "NavigationService.h"
+#include "IInitialExperienceModel.h"
 
 namespace ExampleApp
 {
@@ -28,7 +29,8 @@ namespace ExampleApp
                                             IInteriorsExplorerView& view,
                                             InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
-                                            Eegeo::Location::NavigationService& navigationService);
+                                            Eegeo::Location::NavigationService& navigationService,
+                                            InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel);
                 
                 ~InteriorsExplorerController();
 
@@ -46,11 +48,14 @@ namespace ExampleApp
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state);
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 void OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage& message);
+                void TryShowTutorials();
                 
                 SdkModel::InteriorsExplorerModel& m_model;
                 IInteriorsExplorerView& m_view;
                 InteriorsExplorerViewModel& m_viewModel;
+                InitialExperience::SdkModel::IInitialExperienceModel& m_initialExperienceModel;
                 bool m_replayTutorials;
+                bool m_shouldShowTutorialsAfterWelcomeUX;
                 Eegeo::Helpers::CallbackCollection1<bool> m_replayTutorialsCallbacks;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerController> m_dismissedCallback;

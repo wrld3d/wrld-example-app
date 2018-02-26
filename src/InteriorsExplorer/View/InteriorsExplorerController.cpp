@@ -21,7 +21,8 @@ namespace ExampleApp
                                                                      IInteriorsExplorerView& view,
                                                                      InteriorsExplorerViewModel& viewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                                                     Eegeo::Location::NavigationService& navigationService)
+                                                                     Eegeo::Location::NavigationService& navigationService,
+                                                                     InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel)
             : m_model(model)
             , m_view(view)
             , m_viewModel(viewModel)
@@ -37,6 +38,8 @@ namespace ExampleApp
             , m_viewStateCallback(this, &InteriorsExplorerController::OnViewStateChangeScreenControl)
             , m_appModeChangedCallback(this, &InteriorsExplorerController::OnAppModeChanged)
             , m_interiorsUINotificationCallback(this, &InteriorsExplorerController::OnInteriorsUINotificationRequired)
+            , m_initialExperienceModel(initialExperienceModel)
+            , m_shouldShowTutorialsAfterWelcomeUX(false)
             {
                 m_messageBus.SubscribeUi(m_stateChangedCallback);
                 m_messageBus.SubscribeUi(m_floorSelectedCallback);
@@ -69,6 +72,8 @@ namespace ExampleApp
                 m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsMode::GpsModeOff);
                 m_messageBus.Publish(InteriorsExplorerExitMessage());
                 m_view.SetTouchEnabled(false);
+                m_shouldShowTutorialsAfterWelcomeUX = false;
+                
             }
             
             void InteriorsExplorerController::OnSelectFloor(int& selected)
@@ -79,6 +84,42 @@ namespace ExampleApp
             void InteriorsExplorerController::OnFloorSelectionDragged(float &dragParam)
             {
                 m_messageBus.Publish(InteriorsExplorerFloorSelectionDraggedMessage(dragParam));
+                
+                if(m_shouldShowTutorialsAfterWelcomeUX)
+                {
+                    m_shouldShowTutorialsAfterWelcomeUX = false;
+                    TryShowTutorials();
+                }
+            }
+            
+            void InteriorsExplorerController::TryShowTutorials()
+            {
+                const int maxTutorialViews = 2;
+                bool showExitTutorial = m_replayTutorials || m_model.GetInteriorExitTutorialViewedCount() < maxTutorialViews;
+                bool showChangeFloorTutorial = (m_replayTutorials || m_model.GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews) && m_view.GetCanShowChangeFloorTutorialDialog();
+                
+                if(showExitTutorial || showChangeFloorTutorial)
+                {
+                    if(m_initialExperienceModel.HasCompletedInitialExperience())
+                    {
+                        m_view.AddTutorialDialogs(showExitTutorial, showChangeFloorTutorial);
+                        
+                        if(showExitTutorial)
+                        {
+                            m_model.RecordHasViewedInteriorExitTutorial();
+                        }
+                        
+                        if(showChangeFloorTutorial)
+                        {
+                            m_model.RecordHasViewedInteriorChangeFloorTutorial();
+                        }
+                    }
+                    else
+                    {
+                        m_shouldShowTutorialsAfterWelcomeUX = true;
+                    }
+                    m_viewModel.AddToScreen();
+                }
             }
             
             void InteriorsExplorerController::OnFloorSelected(const InteriorsExplorerFloorSelectedMessage& message)
@@ -100,27 +141,8 @@ namespace ExampleApp
 
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
 
-					const int maxTutorialViews = 2;
-					bool showExitTutorial = m_replayTutorials || m_model.GetInteriorExitTutorialViewedCount() < maxTutorialViews;
-					bool showChangeFloorTutorial = (m_replayTutorials || m_model.GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews) && m_view.GetCanShowChangeFloorTutorialDialog();
-
-					if(showExitTutorial || showChangeFloorTutorial)
-					{
-						m_view.AddTutorialDialogs(showExitTutorial, showChangeFloorTutorial);
-
-						if(showExitTutorial)
-						{
-							m_model.RecordHasViewedInteriorExitTutorial();
-						}
-
-						if(showChangeFloorTutorial)
-						{
-							m_model.RecordHasViewedInteriorChangeFloorTutorial();
-						}
-					}
+                    TryShowTutorials();
                     ReplayTutorials(false);
-
-                    m_viewModel.AddToScreen();
                 }
                 else
                 {
