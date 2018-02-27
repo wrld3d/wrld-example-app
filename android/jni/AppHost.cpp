@@ -490,7 +490,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                      m_nativeState,
                                      app.FlattenButtonModule().GetFlattenButtonViewModel(),
                                      m_messageBus,
-                                     *m_pAndroidFlurryMetricsService
+                                     *m_pMetricsService
                                  );
 
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
