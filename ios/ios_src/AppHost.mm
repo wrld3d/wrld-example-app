@@ -418,8 +418,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                  m_messageBus,
                                                                                                                  screenProperties,
                                                                                                                  app.GetIdentityProvider(),
-                                                                                                                 app.GetNavigationService(),
-                                                                                                                 m_pInitialExperienceModule->GetInitialExperienceModel());
+                                                                                                                 app.GetNavigationService());
     
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
                                                                                    m_piOSPlatformAbstractionModule->GetiOSHttpCache(),

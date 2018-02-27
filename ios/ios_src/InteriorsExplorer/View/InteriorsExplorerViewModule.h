@@ -17,7 +17,6 @@
 #include "InteriorsExplorerTutorialView.h"
 #include "ScreenControlViewModelIncludes.h"
 #include "IInteriorsExplorerViewModule.h"
-#include "IInitialExperienceModel.h"
 #include "NavigationService.h"
 
 namespace ExampleApp
@@ -39,8 +38,7 @@ namespace ExampleApp
                                             ExampleAppMessaging::TMessageBus& messageBus,
                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
                                             Eegeo::Helpers::IdentityProvider& identityProvider,
-                                            Eegeo::Location::NavigationService& navigationService,
-                                            InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel);
+                                            Eegeo::Location::NavigationService& navigationService);
                 
                 ~InteriorsExplorerViewModule();
                 
