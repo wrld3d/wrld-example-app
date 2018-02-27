@@ -261,34 +261,38 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
             mediaScanIntent.setData(contentUri);
             m_activity.sendBroadcast(mediaScanIntent);
 
-            m_currentImageUri = contentUri;
-
-            try
+            if(isValidImageUri(contentUri.toString()))
             {
-                Bitmap bitmap = decodeImage();
-                m_poiImage.setImageBitmap(bitmap);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
+                m_currentImageUri = contentUri;
+                try
+                {
+                    Bitmap bitmap = decodeImage();
+                    m_poiImage.setImageBitmap(bitmap);
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
         else if(requestCode == PhotoIntentDispatcher.SELECT_PHOTO_FROM_GALLERY && resultCode == MainActivity.RESULT_OK)
         {
             Uri selectedUri = data.getData();
-            m_currentImageUri = selectedUri;
 
-            try
-            {
-                Bitmap bitmap = decodeImage();
-                if (bitmap != null)
+            if(isValidImageUri(selectedUri.toString())) {
+                m_currentImageUri = selectedUri;
+                try
                 {
-                    m_poiImage.setImageBitmap(bitmap);
+                    Bitmap bitmap = decodeImage();
+                    if (bitmap != null)
+                    {
+                        m_poiImage.setImageBitmap(bitmap);
+                    }
                 }
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -302,13 +306,10 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
     {
         final int idealSizePx = 512;
 
-        InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
 
-        Bitmap bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
-        is.close();
         int photoWidth = bmOptions.outWidth;
         int photoHeight = bmOptions.outHeight;
 
@@ -317,8 +318,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
-        is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
-        bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
+        InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
+        Bitmap bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
         is.close();
         if (bitmap == null)
         {
@@ -509,5 +510,10 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         builder.setMessage(context.getResources().getString(R.string.required_camera_permission_text))
                 .setPositiveButton(context.getResources().getString(R.string.ok_text), dialogClickListener)
                 .setNegativeButton(context.getResources().getString(R.string.cancel_text), dialogClickListener).show();
+    }
+
+    private boolean isValidImageUri(String imageUri)
+    {
+        return imageUri.matches("^((file://.*.jpg)|(content://.*/[0-9]+))$");
     }
 }
