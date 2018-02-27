@@ -95,6 +95,7 @@ include_directories(
     libs/eegeo/platform/Helpers
     libs/eegeo/platform/Helpers/DDS
     libs/eegeo/platform/Helpers/Jpeg
+    libs/eegeo/platform/Helpers/PNG
     libs/eegeo/platform/Icons
     libs/eegeo/platform/Input
     libs/eegeo/platform/Io
