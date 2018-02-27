@@ -25,7 +25,7 @@
     <uses-feature android:name="android.hardware.bluetooth_le"
         android:required="false"/>
 
-    <application android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.NoTitleBar">
+    <application android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.NoTitleBar" android:allowBackup="false">
        
         <activity android:name="com.eegeo.ProjectSwallowApp.BackgroundThreadActivity"
                   android:label="BWAY"
