@@ -30,6 +30,9 @@
 //  3. This notice may not be removed or altered from any source distribution.
 //
 
+//  Alterations have been made (see git history for changes)
+
+
 #import "UIImage+FX.h"
 
 
@@ -391,6 +394,7 @@
     //create alpha image
     NSInteger bytesPerRow = ((width + 3) / 4) * 4;
     uint8_t *data = (uint8_t *)malloc(bytesPerRow * height);
+    NSAssert(data != NULL, @"failed to calculate data size");
     CGContextRef context = CGBitmapContextCreate(data, width, height, 8, bytesPerRow, NULL, (CGBitmapInfo)kCGImageAlphaOnly);
     CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, width, height), self.CGImage);
     
