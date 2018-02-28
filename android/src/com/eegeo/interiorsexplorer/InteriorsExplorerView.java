@@ -458,32 +458,37 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 
     public void animateToActive()
     {
-    	m_isOnScreen = true;
-    	
-    	animateViewToY((int)m_topYPosActive);
+        boolean wasOnScreen = m_isOnScreen;
+        m_isOnScreen = true;
+
+        long updateDelay = 0;
+        if(!wasOnScreen)
+        {
+            updateDelay = m_stateChangeAnimationTimeMilliseconds + (m_isOnScreen ? m_stateChangeAnimationDelayMilliseconds : 0);
+        }
+
+        animateViewToY((int)m_topYPosActive);
         animateViewToX((int)m_leftXPosActiveBackButton, (int) m_leftXPosActiveFloorListContainer, m_isOnScreen);
         
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable()
-        {
-        	@Override
-        	public void run()
-        	{
-        		int[] rootViewPosition = {0, 0};
-        		m_uiRootView.getLocationInWindow(rootViewPosition);
-        		int[] backButtonPosition = {0, 0};
-        		m_backButton.getLocationInWindow(backButtonPosition);
-        		int[] floorButtonPosition = {0, 0};
-        		m_floorButton.getLocationInWindow(floorButtonPosition);
-        		m_tutorialView.setUIPositions(m_leftXPosActiveFloorListContainer + 14,
-												backButtonPosition[1] - rootViewPosition[1],
-												m_backButton.getHeight(),
-												floorButtonPosition[1] - rootViewPosition[1],
-												m_floorButton.getHeight(),
-												m_floorListAdapter.getCount() > 1);
-        		m_tutorialView.animateToActive(0);
-        	}
-        }, m_stateChangeAnimationTimeMilliseconds + (m_isOnScreen ? m_stateChangeAnimationDelayMilliseconds : 0));
+       final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int[] rootViewPosition = {0, 0};
+                m_uiRootView.getLocationInWindow(rootViewPosition);
+                int[] backButtonPosition = {0, 0};
+                m_backButton.getLocationInWindow(backButtonPosition);
+                int[] floorButtonPosition = {0, 0};
+                m_floorButton.getLocationInWindow(floorButtonPosition);
+                m_tutorialView.setUIPositions(m_leftXPosActiveFloorListContainer + 14,
+                                                backButtonPosition[1] - rootViewPosition[1],
+                                                m_backButton.getHeight(),
+                                                floorButtonPosition[1] - rootViewPosition[1],
+                                                m_floorButton.getHeight(),
+                                                m_floorListAdapter.getCount() > 1);
+             m_tutorialView.animateToActive(0);
+            }
+        }, updateDelay);
     }
 
     public void animateToInactive()
@@ -616,11 +621,32 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 			}
     	}
     }
+
+    private void resetUIPositions()
+    {
+        final Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                int[] rootViewPosition = {0, 0};
+                m_uiRootView.getLocationInWindow(rootViewPosition);
+                int[] backButtonPosition = {0, 0};
+                m_backButton.getLocationInWindow(backButtonPosition);
+                int[] floorButtonPosition = {0, 0};
+                m_floorButton.getLocationInWindow(floorButtonPosition);
+                m_tutorialView.setUIPositions(m_leftXPosActiveFloorListContainer + 14,
+                        backButtonPosition[1] - rootViewPosition[1],
+                        m_backButton.getHeight(),
+                        floorButtonPosition[1] - rootViewPosition[1],
+                        m_floorButton.getHeight(),
+                        m_floorListAdapter.getCount() > 1);
+            }});
+    }
     
     private void endScrollingUpdate()
     {
-    	m_isScrolling = false;
-    	
-    	m_scrollHandler.removeCallbacks(m_scrollingRunnable);
+        resetUIPositions();
+        m_isScrolling = false;
+        m_scrollHandler.removeCallbacks(m_scrollingRunnable);
     }
 }
