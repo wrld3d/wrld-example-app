@@ -13,6 +13,8 @@
 #include <sstream>
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "NavigationService.h"
+#include "InitialExperienceIntroDismissedMessage.h"
+#include "ShowInitialExperienceIntroMessage.h"
 
 namespace ExampleApp
 {
@@ -46,11 +48,16 @@ namespace ExampleApp
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state);
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 void OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage& message);
+                void TryShowTutorials();
+                void OnIntroDismissed(const InitialExperience::InitialExperienceIntroDismissedMessage& message);
+                void OnShowIntro(const InitialExperience::ShowInitialExperienceIntroMessage& message);
                 
                 SdkModel::InteriorsExplorerModel& m_model;
                 IInteriorsExplorerView& m_view;
                 InteriorsExplorerViewModel& m_viewModel;
                 bool m_replayTutorials;
+                bool m_shouldShowTutorialsAfterWelcomeUX;
+                bool m_currentlyShowingIntro;
                 Eegeo::Helpers::CallbackCollection1<bool> m_replayTutorialsCallbacks;
                 
                 Eegeo::Helpers::TCallback0<InteriorsExplorerController> m_dismissedCallback;
@@ -61,6 +68,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<InteriorsExplorerController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerUINotifyMessage&> m_interiorsUINotificationCallback;
+                Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InitialExperience::InitialExperienceIntroDismissedMessage&> m_dismissedMessageHandler;
+                Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InitialExperience::ShowInitialExperienceIntroMessage&> m_showIntroMessageHandler;
 
                 AppModes::SdkModel::AppMode m_appMode;
                 
