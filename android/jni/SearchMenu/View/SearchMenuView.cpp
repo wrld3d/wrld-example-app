@@ -47,12 +47,15 @@ namespace ExampleApp
 					env->DeleteLocalRef(searchResultJni);
 				}
 
+				/* not anymore
+				 *
 				jmethodID onSearchCompleted = env->GetMethodID(m_uiViewClass, "onSearchCompleted", "([Ljava/lang/String;)V");
 
 				env->CallVoidMethod(
 						m_uiView,
 						onSearchCompleted,
 						searchResultArray);
+				*/
 
 				env->DeleteLocalRef(searchResultArray);
             }

@@ -426,6 +426,7 @@ include_directories(
     jni/PersistentSettings
     jni/SearchMenu
     jni/SearchMenu/View
+    jni/SearchProviders
     jni/SearchResultPoi
     jni/SearchResultPoi/View
     jni/SearchResultSection

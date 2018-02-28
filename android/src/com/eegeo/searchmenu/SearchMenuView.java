@@ -42,8 +42,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.wrld.widgets.searchbox.WrldSearchWidget;
-
 public class SearchMenuView extends MenuView implements TextView.OnEditorActionListener, OnFocusChangeListener, TextWatcher {
     private final int m_indexOfFirstDropDown = 5;
 
@@ -51,9 +49,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
     protected View m_progressSpinner = null;
     protected View m_anchorArrow = null;
     protected View m_searchMenuResultsSeparator = null;
-
-    protected WrldSearchWidget m_searchWidget;
-    protected MyTestSearchProvider m_searchProvider;
 
     protected int m_totalHeightPx;
 
@@ -169,11 +164,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
         m_searchResultsFade = (ImageView)m_view.findViewById(R.id.search_results_fade);
         m_searchResultsScrollButton = (Button)m_view.findViewById(R.id.search_results_scroll_button);
         m_searchResultsScrollable = false;
-
-        m_searchProvider = new MyTestSearchProvider(m_nativeCallerPointer);
-
-        m_searchWidget = (WrldSearchWidget)m_activity.getFragmentManager().findFragmentById(R.id.search_widget);
-        m_searchWidget.addSearchProvider(m_searchProvider);
 
         final MenuView scopedMenuView = this;
 
@@ -464,11 +454,6 @@ public class SearchMenuView extends MenuView implements TextView.OnEditorActionL
                                    HashMap<String, List<String>> groupToChildrenMap)
     {   
     	m_expandableListAdapter.setData(groups, groupToChildrenMap);
-    }
-
-    public void onSearchCompleted(String[] searchResults)
-    {
-        m_searchProvider.onSearchCompleted(searchResults);
     }
 
     public void setSearchSection(final int resultCount,

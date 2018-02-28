@@ -1,6 +1,6 @@
-// Test implementation of the SearchProvider interface
+// Copyright WRLD Ltd (2018-), All Rights Reserved
 
-package com.eegeo.searchmenu;
+package com.eegeo.searchproviders;
 
 import com.eegeo.ProjectSwallowApp.R;
 import com.wrld.widgets.searchbox.model.SearchProvider;
@@ -14,13 +14,13 @@ import java.util.HashSet;
 import org.json.JSONObject;
 import android.util.Log;
 
-class MyTestSearchProvider implements SearchProvider
+public class MyTestSearchProvider implements SearchProvider
 {
 	private long										m_nativeCallerPointer;
 	private DefaultSearchResultViewFactory				m_resultFactory;
 	private HashSet<SearchProviderResultsReadyCallback>	m_callbacks;
 
-	MyTestSearchProvider(long nativeCallerPointer)
+	public MyTestSearchProvider(long nativeCallerPointer)
 	{
 		m_nativeCallerPointer = nativeCallerPointer;
 		m_resultFactory       = new DefaultSearchResultViewFactory(R.layout.search_result);
@@ -36,7 +36,7 @@ class MyTestSearchProvider implements SearchProvider
 	@Override
 	public void getSearchResults(String queryText, Object queryContext)
 	{
-		SearchMenuViewJniMethods.PerformSearchQuery(m_nativeCallerPointer, queryText);
+		SearchProvidersJniMethods.search(m_nativeCallerPointer, queryText);
 	}
 
 	public void onSearchCompleted(String[] searchResults)
@@ -82,7 +82,7 @@ class MyTestSearchProvider implements SearchProvider
 		{
 			try
 			{
-				JSONObject json = new JSONObject(results[i]);
+				JSONObject json = new JSONObject(results[i].equals("") ? "{}" : results[i]);
 
 				String title       = json.optString("name");
 				String description = json.optString("details");
@@ -92,6 +92,8 @@ class MyTestSearchProvider implements SearchProvider
 			catch(Exception exception)
 			{
 				Log.e("Eegeo", "MyTestSearchProvider: Failed to read json data object: " + exception.getMessage());
+
+				wrappedResults[i] = WrapResult("?", "");
 			}
 		}
 

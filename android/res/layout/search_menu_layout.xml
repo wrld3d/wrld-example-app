@@ -11,17 +11,6 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true" >
 
-	<fragment android:name="com.wrld.widgets.searchbox.WrldSearchWidget"
-		android:id="@+id/search_widget"
-		android:layout_alignParentTop="true"
-		android:layout_width="300dp"
-		android:layout_height="wrap_content"
-		android:layout_margin="28dp"/>
-	<!--
-		eegeo:maxSuggestions="2"
-		eegeo:maxResults="4"
-	-->
-
     <LinearLayout
         android:id="@+id/search_menu_list_container"
 		android:layout_below="@+id/search_widget"

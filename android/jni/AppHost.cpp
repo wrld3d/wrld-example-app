@@ -123,6 +123,7 @@ AppHost::AppHost(
     ,m_pAndroidPlatformAbstractionModule(NULL)
     ,m_pSearchMenuViewModule(NULL)
 	,m_pSearchResultSectionViewModule(NULL)
+    ,m_pSearchWidgetViewModule(NULL)
     ,m_pModalBackgroundViewModule(NULL)
     ,m_pMyPinCreationViewModule(NULL)
     ,m_pMyPinCreationDetailsViewModule(NULL)
@@ -513,6 +514,11 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                         m_messageBus
                                     );
 
+    m_pSearchWidgetViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetViewModule)(
+                                        m_nativeState,
+                                        m_messageBus
+                                    );
+
     m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
             app.TagSearchModule().GetTagSearchMenuOptionsModel(),
             app.SearchMenuModule().GetSearchMenuViewModel(),
@@ -624,6 +630,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pSearchResultPoiViewModule;
 
         Eegeo_DELETE m_pTagSearchViewModule;
+
+        Eegeo_DELETE m_pSearchWidgetViewModule;
 
         Eegeo_DELETE m_pSearchMenuViewModule;
 
