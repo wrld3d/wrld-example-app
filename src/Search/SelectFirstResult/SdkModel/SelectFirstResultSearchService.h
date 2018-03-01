@@ -23,7 +23,8 @@ namespace ExampleApp
                 public:
                     
                     SelectFirstResultSearchService(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                   Menu::View::IMenuModel& menuModel
+                                                   Menu::View::IMenuModel& menuModel,
+                                                   ExampleAppMessaging::TMessageBus& messageBus
                     );
                     
                     ~SelectFirstResultSearchService();
@@ -32,13 +33,16 @@ namespace ExampleApp
                     
                 private:
                     void OnSearchResultAdded(Menu::View::MenuItemModel& item);
+                    void OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message);
                     
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     Eegeo::Helpers::TCallback1<SelectFirstResultSearchService, Menu::View::MenuItemModel> m_menuItemAddedCallback;
+                    Eegeo::Helpers::TCallback1<SelectFirstResultSearchService, const Search::SearchQueryResponseReceivedMessage&> m_searchResultsHandler;
                     Menu::View::IMenuModel& m_menuModel;
-                    std::string m_deepLinkQuery;
+                    ExampleAppMessaging::TMessageBus& m_messageBus;
                     
-                    bool m_didTransition;
+                    bool m_performingAutoSelectSearch;
+                    bool m_shouldTranstion;
                 };
             }
         }
