@@ -28,7 +28,7 @@ namespace ExampleApp
 			m_onSearchCompleted = env->GetMethodID(
 					m_javaClass,
 					"onSearchCompleted",
-					"([Ljava/lang/String;)V");
+					"([Lcom/eegeo/searchproviders/MyTestSearchProvider$SearchResultInfo;)V");
 		}
 
 		MyTestSearchProvider::~MyTestSearchProvider()
@@ -62,17 +62,41 @@ namespace ExampleApp
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
 
-			jobjectArray javaResults = Helpers::JniHelper::LoadStringArrayLocalRef(
-					m_nativeState,
+			jclass javaClass = Helpers::JniHelper::LoadClassLocalRef(
+					m_nativeState, env,
+					"com/eegeo/searchproviders/MyTestSearchProvider$SearchResultInfo");
+
+			jfieldID fidName = env->GetFieldID(javaClass, "name",        "Ljava/lang/String;");
+			jfieldID fidDesc = env->GetFieldID(javaClass, "description", "Ljava/lang/String;");
+
+			jobjectArray javaArray = Helpers::JniHelper::LoadArrayLocalRef(
 					env,
-					searchResults);
+					javaClass,
+					"(Lcom/eegeo/searchproviders/MyTestSearchProvider;)V",
+					searchResults.size(),
+					m_javaInstance);
+
+			for (int i = 0; i < searchResults.size(); i++)
+			{
+				jobject arrayElement = env->GetObjectArrayElement(javaArray, i);
+
+				jobject name = env->NewStringUTF(searchResults[i].GetTitle()   .c_str());
+				jobject desc = env->NewStringUTF(searchResults[i].GetSubtitle().c_str());
+
+				env->SetObjectField(arrayElement, fidName, name);
+				env->SetObjectField(arrayElement, fidDesc, desc);
+
+				env->DeleteLocalRef(desc);
+				env->DeleteLocalRef(name);
+			}
 
 			env->CallVoidMethod(
 					m_javaInstance,
 					m_onSearchCompleted,
-					javaResults);
+					javaArray);
 
-			env->DeleteLocalRef(javaResults);
+			env->DeleteLocalRef(javaArray);
+			env->DeleteLocalRef(javaClass);
 		}
 
 		void MyTestSearchProvider::InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)

@@ -10,10 +10,7 @@ namespace ExampleApp
 											 JNIEnv* env,
 											 const std::string& javaClassName)
 		{
-			jstring strClassName = env->NewStringUTF(javaClassName.c_str());
-			jclass classLocalRef = nativeState.LoadClass(env, strClassName);
-			env->DeleteLocalRef(strClassName);
-
+			jclass classLocalRef = LoadClassLocalRef(nativeState, env, javaClassName);
 			jclass javaClass = static_cast<jclass>(env->NewGlobalRef(classLocalRef));
 			env->DeleteLocalRef(classLocalRef);
 
@@ -21,7 +18,7 @@ namespace ExampleApp
 		}
 
 		jobject JniHelper::LoadInstanceGlobalRef(JNIEnv* env,
-												 const std::string& javaConstructorSignature,
+												 const std::string& constructorSignature,
 												 jclass javaClass,
 												 ...)
 		{
@@ -29,7 +26,7 @@ namespace ExampleApp
 			va_start(constructor_args, javaClass);
 
 			jmethodID classConstructor = env->GetMethodID(javaClass, "<init>",
-														  javaConstructorSignature.c_str());
+														  constructorSignature.c_str());
 
 			jobject instance = env->NewObjectV(javaClass,
 											   classConstructor,
@@ -42,25 +39,40 @@ namespace ExampleApp
 			return javaInstance;
 		}
 
-		jobjectArray JniHelper::LoadStringArrayLocalRef(AndroidNativeState& nativeState,
-														JNIEnv* env,
-														const std::vector<std::string>& searchResults)
+		jclass JniHelper::LoadClassLocalRef(AndroidNativeState& nativeState,
+											JNIEnv* env,
+											const std::string& javaClassName)
 		{
-			jstring strClassName = env->NewStringUTF("java/lang/String");
-			jclass strClass = nativeState.LoadClass(env, strClassName);
+			jstring strClassName = env->NewStringUTF(javaClassName.c_str());
+			jclass javaClass = nativeState.LoadClass(env, strClassName);
 			env->DeleteLocalRef(strClassName);
 
-			jobjectArray searchResultArray = env->NewObjectArray(searchResults.size(), strClass, 0);
-			env->DeleteLocalRef(strClass);
+			return javaClass;
+		}
 
-			for (int i = 0; i < searchResults.size(); i++)
+		jobjectArray JniHelper::LoadArrayLocalRef(JNIEnv* env,
+												  jclass javaClass,
+												  const std::string& constructorSignature,
+												  int size,
+												  ...)
+		{
+			va_list constructor_args;
+			va_start(constructor_args, javaClass);
+
+			jmethodID classConstructor = env->GetMethodID(javaClass, "<init>",
+														  constructorSignature.c_str());
+
+			jobjectArray javaArray = env->NewObjectArray(size, javaClass, 0);
+
+			for (int i = 0; i < size; i++)
 			{
-				jstring javaString = env->NewStringUTF(searchResults[i].c_str());
-				env->SetObjectArrayElement(searchResultArray, i, javaString);
-				env->DeleteLocalRef(javaString);
+				jobject arrayElement = env->NewObjectV(javaClass, classConstructor, constructor_args);
+				env->SetObjectArrayElement(javaArray, i, arrayElement);
+				env->DeleteLocalRef(arrayElement);
 			}
 
-			return searchResultArray;
+			va_end(constructor_args);
+			return javaArray;
 		}
 	}
 }

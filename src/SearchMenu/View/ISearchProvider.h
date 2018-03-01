@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "SearchResultModel.h"
 #include "CallbackCollection.h"
 #include <vector>
 #include <string>
@@ -15,7 +16,7 @@ namespace ExampleApp
 			class ISearchProvider
 			{
 			public:
-				typedef std::vector<std::string> TSearchResults;
+				typedef std::vector<Search::SdkModel::SearchResultModel> TSearchResults;
 
 				virtual void InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
 				virtual void RemoveSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;

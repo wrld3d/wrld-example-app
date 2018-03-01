@@ -20,6 +20,12 @@ public class MyTestSearchProvider implements SearchProvider
 	private DefaultSearchResultViewFactory				m_resultFactory;
 	private HashSet<SearchProviderResultsReadyCallback>	m_callbacks;
 
+	public class SearchResultInfo
+	{
+		public String name;
+		public String description;
+	}
+
 	public MyTestSearchProvider(long nativeCallerPointer)
 	{
 		m_nativeCallerPointer = nativeCallerPointer;
@@ -39,7 +45,7 @@ public class MyTestSearchProvider implements SearchProvider
 		SearchProvidersJniMethods.search(m_nativeCallerPointer, queryText);
 	}
 
-	public void onSearchCompleted(String[] searchResults)
+	public void onSearchCompleted(SearchResultInfo[] searchResults)
 	{
 		executeCallbacks(WrapResults(searchResults), true);
 	}
@@ -74,28 +80,13 @@ public class MyTestSearchProvider implements SearchProvider
 			callback.onQueryCompleted(results, success);
 	}
 
-	private SearchResult[] WrapResults(String[] results)
+	private SearchResult[] WrapResults(SearchResultInfo[] results)
 	{
 		SearchResult[] wrappedResults = new SearchResult[results.length];
 
 		for (int i = 0; i < results.length; i++)
-		{
-			try
-			{
-				JSONObject json = new JSONObject(results[i].equals("") ? "{}" : results[i]);
-
-				String title       = json.optString("name");
-				String description = json.optString("details");
-
-				wrappedResults[i] = WrapResult(title, description);
-			}
-			catch(Exception exception)
-			{
-				Log.e("Eegeo", "MyTestSearchProvider: Failed to read json data object: " + exception.getMessage());
-
-				wrappedResults[i] = WrapResult("?", "");
-			}
-		}
+				wrappedResults[i] = WrapResult(results[i].name,
+											   results[i].description);
 
 		return wrappedResults;
 	}

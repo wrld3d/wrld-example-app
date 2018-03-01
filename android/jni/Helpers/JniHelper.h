@@ -4,7 +4,6 @@
 
 #include "AndroidNativeState.h"
 #include <cstdarg>
-#include <vector>
 #include <string>
 
 namespace ExampleApp
@@ -18,13 +17,18 @@ namespace ExampleApp
 											 JNIEnv* env,
 											 const std::string& javaClassName);
 			static jobject LoadInstanceGlobalRef(JNIEnv* env,
-												 const std::string& javaConstructorSignature,
+												 const std::string& constructorSignature,
 												 jclass javaClass,
 												 ...);	// constructor parameters
 
-			static jobjectArray LoadStringArrayLocalRef(AndroidNativeState& nativeState,
-														JNIEnv* env,
-														const std::vector<std::string>& searchResults);
+			static jclass LoadClassLocalRef(AndroidNativeState& nativeState,
+											JNIEnv* env,
+											const std::string& javaClassName);
+			static jobjectArray LoadArrayLocalRef(JNIEnv* env,
+												  jclass javaClass,
+												  const std::string& constructorSignature,
+												  int size,
+												  ...);
 		};
     }
 }

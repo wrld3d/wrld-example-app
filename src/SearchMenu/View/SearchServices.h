@@ -16,8 +16,6 @@ namespace ExampleApp
 			class SearchServices: private Eegeo::NonCopyable
 			{
 			private:
-				typedef std::vector<Search::SdkModel::SearchResultModel> TSdkSearchResults;
-
 				ISearchProvider& m_searchProvider;
 				ExampleAppMessaging::TMessageBus& m_messageBus;
 

@@ -34,14 +34,7 @@ namespace ExampleApp
 
             void SearchServices::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
-				const TSdkSearchResults& data = message.GetResults();
-
-				m_searchResults.clear();
-
-				for (TSdkSearchResults::const_iterator it = data.begin(); it != data.end(); it++)
-					m_searchResults.push_back(it->GetJsonData());
-
-				m_searchProvider.OnSearchResponseReceived(m_searchResults);
+				m_searchProvider.OnSearchResponseReceived(message.GetResults());
 			}
 		}
 	}
