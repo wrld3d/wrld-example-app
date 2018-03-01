@@ -8,25 +8,23 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.wrld.widgets.searchbox.WrldSearchWidget;
-import com.eegeo.searchproviders.MyTestSearchProvider;
+import com.wrld.widgets.searchbox.model.SearchProvider;
 
 public class SearchWidgetView
 {
     protected MainActivity m_activity;
-    protected MyTestSearchProvider m_searchProvider;
+    protected SearchProvider m_searchProvider;
     protected long m_nativeCallerPointer;
-    protected long m_providerNativeCallerPointer;
     protected View m_view;
 
     protected WrldSearchWidget m_searchWidget;
 
-    public SearchWidgetView(MainActivity activity, MyTestSearchProvider searchProvider,
-                            long nativeCallerPointer, long providerNativeCallerPointer)
+    public SearchWidgetView(MainActivity activity, long nativeCallerPointer,
+                            SearchProvider searchProvider)
     {
         m_activity = activity;
         m_searchProvider = searchProvider;
         m_nativeCallerPointer = nativeCallerPointer;
-        m_providerNativeCallerPointer = providerNativeCallerPointer;
 
         createView();
     }
@@ -39,10 +37,5 @@ public class SearchWidgetView
 
         m_searchWidget = (WrldSearchWidget) m_activity.getFragmentManager().findFragmentById(R.id.search_widget);
         m_searchWidget.addSearchProvider(m_searchProvider);
-    }
-
-    public void onSearchCompleted(String[] searchResults)
-    {
-        m_searchProvider.onSearchCompleted(searchResults);
     }
 }

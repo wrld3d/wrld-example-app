@@ -25,13 +25,12 @@ namespace ExampleApp
 				m_uiView = Helpers::JniHelper::LoadInstanceGlobalRef(
 						env,
 						"(Lcom/eegeo/entrypointinfrastructure/MainActivity;"
-						"Lcom/eegeo/searchproviders/MyTestSearchProvider;"
-						"JJ)V",
+						"J"
+						"Lcom/wrld/widgets/searchbox/model/SearchProvider;)V",
 						m_uiViewClass,
 						m_nativeState.activity,
-						searchProvider.GetJavaInstance(),
 						(jlong)this,
-						(jlong)&searchProvider);
+						searchProvider.GetJavaInstance());
             }
         }
     }
