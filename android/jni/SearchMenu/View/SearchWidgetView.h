@@ -6,6 +6,7 @@
 #include "MenuView.h"
 #include "ISearchWidgetView.h"
 #include "MyTestSearchProvider.h"
+#include "IMenuView.h"
 
 namespace ExampleApp
 {
@@ -23,7 +24,12 @@ namespace ExampleApp
             public:
                 SearchWidgetView(AndroidNativeState& nativeState,
                                  SearchProviders::MyTestSearchProvider& searchProvider);
+                void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged);
+
+                void InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback);
             };
+
         }
     }
 }

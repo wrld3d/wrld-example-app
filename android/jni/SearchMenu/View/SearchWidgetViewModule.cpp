@@ -26,6 +26,10 @@ namespace ExampleApp
 				m_pSearchWidgetView = Eegeo_NEW(SearchWidgetView)(
 						nativeState,
 						*m_pMyTestSearchProvider);
+				m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(
+						*m_pSearchWidgetView,
+						messageBus
+				);
 			}
 
 			SearchWidgetViewModule::~SearchWidgetViewModule()

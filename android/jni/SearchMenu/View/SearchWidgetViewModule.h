@@ -4,7 +4,8 @@
 
 #include "AndroidNativeState.h"
 #include "BidirectionalBus.h"
-#include "ISearchWidgetView.h"
+#include "SearchWidgetView.h"
+#include "SearchWidgetController.h"
 #include "MyTestSearchProvider.h"
 #include "SearchServices.h"
 
@@ -17,7 +18,8 @@ namespace ExampleApp
 			class SearchWidgetViewModule: private Eegeo::NonCopyable
 			{
 			private:
-				SearchMenu::View::ISearchWidgetView* m_pSearchWidgetView;
+				SearchMenu::View::SearchWidgetView* m_pSearchWidgetView;
+				SearchMenu::View::SearchWidgetController* m_pSearchWidgetController;
 
 				SearchProviders::MyTestSearchProvider* m_pMyTestSearchProvider;
 				SearchMenu::View::SearchServices* m_pSearchServices;

@@ -12,25 +12,39 @@ namespace ExampleApp
         {
 			SearchWidgetView::SearchWidgetView(AndroidNativeState& nativeState,
 											   SearchProviders::MyTestSearchProvider& searchProvider)
-			: m_nativeState(nativeState)
+			: m_nativeState(nativeState) {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv *env = attached.envForThread;
+
+                m_uiViewClass = Helpers::JniHelper::LoadClassGlobalRef(
+                        m_nativeState, env,
+                        "com/eegeo/searchmenu/SearchWidgetView");
+                m_uiView = Helpers::JniHelper::LoadInstanceGlobalRef(
+                        env,
+                        "(Lcom/eegeo/entrypointinfrastructure/MainActivity;"
+                                "J"
+                                "Lcom/wrld/widgets/searchbox/model/SearchProvider;)V",
+                        m_uiViewClass,
+                        m_nativeState.activity,
+                        (jlong) this,
+                        searchProvider.GetJavaInstance());
+            }
+
+            void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
             {
-				ASSERT_UI_THREAD
 
-				AndroidSafeNativeThreadAttachment attached(m_nativeState);
-				JNIEnv* env = attached.envForThread;
+            }
 
-				m_uiViewClass = Helpers::JniHelper::LoadClassGlobalRef(
-						m_nativeState, env,
-						"com/eegeo/searchmenu/SearchWidgetView");
-				m_uiView = Helpers::JniHelper::LoadInstanceGlobalRef(
-						env,
-						"(Lcom/eegeo/entrypointinfrastructure/MainActivity;"
-						"J"
-						"Lcom/wrld/widgets/searchbox/model/SearchProvider;)V",
-						m_uiViewClass,
-						m_nativeState.activity,
-						(jlong)this,
-						searchProvider.GetJavaInstance());
+            void SearchWidgetView::InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+
+            }
+
+            void SearchWidgetView::RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+
             }
         }
     }
