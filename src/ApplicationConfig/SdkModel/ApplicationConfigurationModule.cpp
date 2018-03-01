@@ -29,7 +29,6 @@ namespace ExampleApp
                     const std::string& buildNumber = applicationConfigurationVersionProvider.GetProductVersionString();
                     const std::string& combinedVersionString = productVersion + "." + buildNumber;
                     const std::string emptyGoogleAnalyticsReferrerToken;
-                    const std::string emptyFlurryApiKey;
                     const std::string emptyYelpConsumerKey;
                     const std::string emptyYelpConsumerSecret;
                     const std::string emptyYelpOAuthToken;
@@ -76,7 +75,6 @@ namespace ExampleApp
                         shouldPerformStartUpSearch,
                         startUpSearchTag,
                         emptyGoogleAnalyticsReferrerToken,
-                        emptyFlurryApiKey,
                         emptyYelpConsumerKey,
                         emptyYelpConsumerSecret,
                         emptyYelpOAuthToken,

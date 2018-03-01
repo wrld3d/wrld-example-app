@@ -13,7 +13,9 @@
     <SolidColorBrush x:Key="Olive" Color="#94a847 "/>
     <SolidColorBrush x:Key="White" Color="#ffffff "/>
     <SolidColorBrush x:Key="WhiteSmoke" Color="#f0f0f0 "/>
+    <SolidColorBrush x:Key="DarkerSteelBlue" Color="#12264c" />
     <SolidColorBrush x:Key="DarkSteelBlue" Color="#2855aa" />
+    <SolidColorBrush x:Key="MidSteelBlue" Color="#6b84b2" />
     <SolidColorBrush x:Key="LightSteelBlue" Color="#cfe0fe" />
     <SolidColorBrush x:Key="SlateBlue" Color="#6b8ecd" />
     <SolidColorBrush x:Key="Black" Color="#000000 "/>

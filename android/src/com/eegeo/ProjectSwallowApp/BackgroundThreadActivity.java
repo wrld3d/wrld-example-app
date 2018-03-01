@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.app.Activity;
 import android.content.Intent;
@@ -55,15 +56,15 @@ public class BackgroundThreadActivity extends MainActivity
         PackageInfo pInfo = null;
         try 
         {
-        	pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
         } 
         catch (NameNotFoundException e) 
         {
-        	e.printStackTrace();
+            Log.e(this.getClass().getName(), "Failed to retrieve package info", e);
         }
-        final String versionName = pInfo.versionName;
-        final int versionCode = pInfo.versionCode;
-        
+        final String versionName = pInfo != null? pInfo.versionName : "PACKAGE INFO NOT RETRIEVED";
+        final int versionCode = pInfo != null? pInfo.versionCode : 0;
+
         m_rotationInitialised = !setDisplayOrientationBasedOnDeviceProperties();
 
         setContentView(R.layout.activity_main);

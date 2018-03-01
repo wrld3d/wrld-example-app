@@ -308,7 +308,7 @@ namespace ExampleApp
             PanToUnlockThreshold = 0.0001f;
         }
 
-        m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
+        m_metricsService.BeginSession("", EEGEO_PLATFORM_VERSION_NUMBER);
         
         SetWebSettings(m_platformAbstractions.GetProxySettings(), m_platformAbstractions.GetSSLSettings(), applicationConfiguration);
         
@@ -1200,6 +1200,10 @@ namespace ExampleApp
             InitialExperience::SdkModel::IInitialExperienceModel& initialExperienceModel = m_initialExperienceModule.GetInitialExperienceModel();
             if(!initialExperienceModel.HasCompletedInitialExperience() && IsLoadingScreenComplete())
             {
+				if (m_applicationConfiguration.IsInKioskMode())
+				{
+					m_messageBus.Publish(ExampleApp::InitialExperience::InitialExperienceIntroDismissedMessage());
+				}
                 InitialExperience::SdkModel::IInitialExperienceController& initialExperienceController = m_initialExperienceModule.GetInitialExperienceController();
                 initialExperienceController.Update(dt);
             }

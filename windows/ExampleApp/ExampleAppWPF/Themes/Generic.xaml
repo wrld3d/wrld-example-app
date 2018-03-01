@@ -17,6 +17,7 @@
         <ResourceDictionary Source="../Views/SettingsMenu/SettingsMenuView.xaml" />
         <ResourceDictionary Source="../Views/SearchMenu/SearchMenuView.xaml" />
         <ResourceDictionary Source="../Views/Options/OptionsCacheClearSubView.xaml" />
+        <ResourceDictionary Source="../Views/Options/OptionsMessage.xaml" />
         <ResourceDictionary Source="../Views/SearchResultPoi/eeGeoSearchResultsPoiView.xaml" />
 		<ResourceDictionary Source="../Views/SearchResultPoi/GeoNamesSearchResultsPoiView.xaml" />
         <ResourceDictionary Source="../Views/SearchResultPoi/SwallowDepartmentSearchResultsPoiView.xaml" />
@@ -34,5 +35,4 @@
         <ResourceDictionary Source="../Views/InitialExperience/InitialExperienceView.xaml" />
         <ResourceDictionary Source="../Views/InteriorsExplorer/InteriorStreamingDialogView.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
 </ResourceDictionary>

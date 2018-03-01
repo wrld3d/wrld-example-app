@@ -31,7 +31,7 @@ public class NetworkChangeReceiverRegistrationService
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         filter.addAction(WifiManager.SUPPLICANT_CONNECTION_CHANGE_ACTION);
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        m_activity.registerReceiver(networkChangeReceiver, filter);
+        m_activity.registerReceiver(networkChangeReceiver, filter, "Manifest.permission.ACCESS_NETWORK_STAT", null);
     }
 
     void unregisterNetworkChangeReceiver(NetworkChangeReceiver networkChangeReceiver)

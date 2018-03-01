@@ -3,11 +3,16 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:local="clr-namespace:ExampleAppWPF">
 
+    <system:String x:Key="AboutViewTitleText">About</system:String>
+    <system:String x:Key="AboutViewDevelopersText">Developed by Bloomberg L.P and:</system:String>
+
     <system:String x:Key="OptionsViewTitleText">Options</system:String>
     <system:String x:Key="OptionsViewCacheEnabledText">Enable data caching on device</system:String>
     <system:String x:Key="OptionsViewClearCacheText">Clear cached map data</system:String>
     <system:String x:Key="OptionsViewPlayTutorialText">Play tutorial again</system:String>
     <system:String x:Key="OptionsViewAdminLoginText">Admin Login</system:String>
+    <system:String x:Key="OptionsViewReplayTitle">Replay Tutorials</system:String>
+    <system:String x:Key="OptionsViewReplayMessage">The help panels will be visible again when you enter or leave a building.</system:String>
 
     <system:String x:Key="ClearCacheSubViewTitle">Remove Stored Data</system:String>
     <system:String x:Key="ClearCacheSubViewConfirmMessageBig">Warning!</system:String>

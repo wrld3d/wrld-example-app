@@ -45,8 +45,30 @@
     <System:String x:Key="InteriorsCompassTutorialDialogNumber">2</System:String>
     <System:String x:Key="InteriorsElevatorTutorialDialogNumber">3</System:String>
 
+    <!-- Common top title area -->
+    <Thickness x:Key="CommonTopTitleMargin" Left="25" Top="5" Right="20" Bottom="5"/>
+    <System:Double x:Key="CommonTopTitleHeight">50</System:Double>
+    <System:Double x:Key="CommonTopTitleMaxWidth">350</System:Double>
+    <System:Double x:Key="CommonTopTitleFontSize">24</System:Double>
+    <System:Double x:Key="CommonTopCloseButtonSize">40</System:Double>
+
+    <!-- Message Panel -->
+    <Thickness x:Key="MessagePanelTopSeparatorMargin" Left="10" Top="0" Right="10" Bottom="0"/>
+
+    <System:Double x:Key="MessagePanelWidth">350</System:Double>
+    <System:Double x:Key="MessagePanelHeight">190</System:Double>
+    <Thickness x:Key="MessagePanelBottomAreaMargin" Left="30" Top="0" Right="30" Bottom="10"/>
+
+    <!-- About Panel -->
+    <Thickness x:Key="AboutPanelTopSeparatorMargin" Left="10" Top="0" Right="10" Bottom="0"/>
+
     <!-- Options Panel -->
-    <System:Double x:Key="OptionsPanelWidth">500</System:Double>
+    <Thickness x:Key="OptionsPanelTopSeparatorMargin" Left="10" Top="0" Right="10" Bottom="12"/>
+
+    <System:Double x:Key="OptionsPanelWidth">350</System:Double>
+    <System:Double x:Key="OptionsPanelHeight">190</System:Double>
+    <System:Double x:Key="CacheClearSubViewWidth">350</System:Double>
+    <System:Double x:Key="CacheClearSubViewHeight">250</System:Double>
     <GridLength x:Key="OptionsPanelRow0Height">50</GridLength>
     <GridLength x:Key="OptionsPanelRow1Height">50</GridLength>
     <GridLength x:Key="OptionsPanelRow2Height">0</GridLength>
@@ -57,34 +79,28 @@
     <System:Int32 x:Key="OptionsPanelRow1Index">3</System:Int32>
     <System:Int32 x:Key="OptionsPanelRow2Index">0</System:Int32>
     <System:Int32 x:Key="OptionsPanelRow3Index">1</System:Int32>
-    <Thickness x:Key="OptionsPanelTitleMargin" Left="20" Top="5" Right="20" Bottom="5"/>
     <Thickness x:Key="OptionsPanelOkButtonMargin" Left="0" Top="0" Right="20" Bottom="0"/>
-    <Thickness x:Key="OptionsPanelTopSeparatorMargin" Left="10" Top="0" Right="10" Bottom="15"/>
     <Thickness x:Key="OptionsPanelGridMargin" Left="25" Top="0" Right="14" Bottom="0"/>
     <Thickness x:Key="OptionsViewCacheEnabledButtonPadding" Left="0" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="OptionsPanelClearCacheButtonPadding" Left="0" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="OptionsPanelPlayTutorialsButtonPadding" Left="0" Top="0" Right="0" Bottom="0"/>
     <Thickness x:Key="OptionsPanelBottomSeparatorMargin" Left="0" Top="15" Right="0" Bottom="0"/>
-    <Thickness x:Key="OptionsPanelAdminLoginMargin" Left="20" Top="0" Right="20" Bottom="0"/>
-    <System:Double x:Key="OptionsPanelTitleHeight">50</System:Double>
-    <System:Double x:Key="OptionsPanelTitleMaxWidth">350</System:Double>
-    <System:Double x:Key="OptionsPanelTitleFontSize">24</System:Double>
-    <System:Double x:Key="OptionsPanelCloseButtonSize">40</System:Double>
     <System:Double x:Key="OptionsPanelOkButtonSize">50</System:Double>
     <System:Double x:Key="OptionsPanelCacheMapTextFontSize">14</System:Double>
     <System:Double x:Key="OptionsPanelCacheMapButtonSize">22</System:Double>
-    <System:Double x:Key="OptionsPanelClearCacheButtonSize">22</System:Double>
+    <System:Double x:Key="OptionsPanelClearCacheButtonWidth">36</System:Double>
+    <System:Double x:Key="OptionsPanelClearCacheButtonHeight">24</System:Double>
     <System:Double x:Key="OptionsPanelClearCacheTextFontSize">14</System:Double>
-    <System:Double x:Key="OptionsPanelPlayTutorialsButtonSize">22</System:Double>
+    <System:Double x:Key="OptionsPanelPlayTutorialsButtonWidth">36</System:Double>
+    <System:Double x:Key="OptionsPanelPlayTutorialsButtonHeight">24</System:Double>
     <System:Double x:Key="OptionsPanelPlayTutorialsTextFontSize">14</System:Double>
-    <System:Double x:Key="OptionsPanelAdminLoginButtonSize">30</System:Double>
+    <System:Double x:Key="OptionsPanelAdminLoginButtonWidth">36</System:Double>
+    <System:Double x:Key="OptionsPanelAdminLoginButtonHeight">24</System:Double>
     <System:Double x:Key="OptionsPanelAdminLoginTextFontSize">14</System:Double>
+    <System:Double x:Key="OptionsPanelUpperTitleFontSize">20</System:Double>
     <System:Double x:Key="OptionsPanelBottomSectionHeight">50</System:Double>
-    <System:Double x:Key="ClearCacheSubViewSpinnerSize">50</System:Double>
     <Visibility x:Key="OptionsPanelNonKioskVisibility">Collapsed</Visibility>
     <Visibility x:Key="OptionsPanelAdminLoginVisibility">Visible</Visibility>
-    <ImageSource x:Key="OptionsPanelAdminButtonOffImage">/Assets/admin_login_off.png</ImageSource>
-    <ImageSource x:Key="OptionsPanelAdminButtonOnImage">/Assets/admin_login_on.png</ImageSource>
     <ImageSource x:Key="ClearCacheSubViewSpinnerImage">/Assets/search_results_spinner@kiosk.png</ImageSource>
 
     <!-- Dialog Box -->

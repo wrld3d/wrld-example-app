@@ -12,15 +12,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:OptionsCacheClearSubView}">
-                    <DockPanel Background="#80000000" >
+                    <DockPanel Background="#80000000">
                         <Grid Name="CacheClearCeremonyViewContainer"
-                              Width="400" Height="600" VerticalAlignment="Center" HorizontalAlignment="Center"
+                              Width="{DynamicResource CacheClearSubViewWidth}" Height="{DynamicResource CacheClearSubViewHeight}"
+                              VerticalAlignment="Center" HorizontalAlignment="Center"
                               Background="{StaticResource White}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="1*"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="70"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="60"/>
                                 <RowDefinition Height="2*"/>
                             </Grid.RowDefinitions>
 
@@ -50,27 +51,29 @@
                             <!-- messages -->
                             <TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top"
                                 Foreground="{StaticResource EvenDarkerGrey}"
-                                Text="{Binding ContentBig}" FontSize="20" FontFamily="{DynamicResource PrimaryUIFont}"
+                                Text="{Binding ContentBig}" FontSize="18" FontFamily="{DynamicResource PrimaryUIFont}"
                                 TextAlignment="Center"/>
                             <TextBlock Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top"
                                 Foreground="{StaticResource DarkerGrey}"
                                 Width="250" TextWrapping="Wrap"
-                                Text="{Binding ContentSmall}" FontSize="14" FontFamily="{DynamicResource PrimaryUIFont}"
+                                Text="{Binding ContentSmall}" FontSize="13" FontFamily="{DynamicResource PrimaryUIFont}"
                                 TextAlignment="Center"/>
 
                             <!-- Yes / No buttons and spinner -->
                             <StackPanel Grid.Row="4" Orientation="Horizontal"
                                         HorizontalAlignment="Center" VerticalAlignment="Top">
                                 <Button Name="CacheClearCeremonyConfirmButton"
-                                        Width="100" Height="40"
-                                        Margin="0,0,20,0"
+                                        Width="80" Height="35"
+                                        Margin="0,0,15,0"
                                         Style="{StaticResource Common_FlatFullButton}"
-                                        Content="Yes"/>
+                                        Content="Yes"
+                                        FontSize="14"/>
                                 <Button Name="CacheClearCeremonyCancelButton"
-                                        Width="100" Height="40"
-                                        Margin="20,0,0,0"
+                                        Width="80" Height="35"
+                                        Margin="15,0,0,0"
                                         Style="{StaticResource Common_FlatButton}"
-                                        Content="No"/>
+                                        Content="No"
+                                        FontSize="14"/>
 
                                 <Image Name="CacheClearCeremonyViewSpinner"
                                        Source="{DynamicResource ClearCacheSubViewSpinnerImage}"

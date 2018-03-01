@@ -18,12 +18,9 @@ namespace ExampleApp
                 
                 virtual bool IsStreamOverWifiOnlySelected() const = 0;
                 virtual bool IsCacheEnabledSelected() const = 0;
-                virtual bool IsClearCacheSelected() const = 0;
 
                 virtual void SetStreamOverWifiOnlySelected(bool isStreamOverWifiOnlySelected) = 0;
                 virtual void SetCacheEnabledSelected(bool isCacheEnabledSelected) = 0;
-                virtual void SetClearCacheSelected(bool isClearCacheSelected) = 0;
-                virtual void SetReplayTutorialsSelected(bool isReplayTutorialsSelected) = 0;
 
                 virtual void OpenClearCacheWarning() = 0;
 
@@ -34,23 +31,20 @@ namespace ExampleApp
                 virtual void InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
-                virtual void InsertOkSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-                virtual void RemoveOkSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-
                 virtual void InsertStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 
                 virtual void InsertCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 
-                virtual void InsertClearCacheSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-                virtual void RemoveClearCacheSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void InsertClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
                 virtual void InsertClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
-                virtual void InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback) = 0;
-                virtual void RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback) = 0;
+                virtual void InsertReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

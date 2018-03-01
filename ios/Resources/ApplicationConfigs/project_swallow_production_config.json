@@ -12,15 +12,14 @@
   "start_up_search_tag": "",
   "eegeo_api_key": "3ceebbe9943e604ee4ac39b3977be5e1",
   "google_analytics_referrer_token": "eegeo_project_swallow_ios",
-  "flurry_app_key": "",
   "yelp_consumer_key": "aXHnLymi0iuvn6IY463zRw",
   "yelp_consumer_secret": "nrn5RH9CuKB3xvYPauru5YfgYaw",
   "yelp_oauth_token": "IG63d3ZdRXA0Ubz6fDiF2u6xa2HJI7BU",
   "yelp_oauth_token_secret": "hHIaImXUlORnIavm2nXV3NOufpA",
   "twitter_auth_code": "",
   "geonames_username": "eegeo_bloomberg_ios",
-  "coveragetree_manifest_url": "https://cdn1.eegeo.com/coverage-trees/vswallow-production/v1584/manifest.bin.gz",
-  "theme_manifest_url": "https://cdn-resources.eegeo.com/mobile-themes-new/v1084/default/ssl.manifest.bin.gz",
+  "coveragetree_manifest_url": "https://cdn1.eegeo.com/coverage-trees/vswallow-production/v1594/manifest.bin.gz",
+  "theme_manifest_url": "https://cdn-resources.eegeo.com/mobile-themes-new/v1089/default/ssl.manifest.bin.gz",
   "embedded_theme_texture_path": "EmbeddedTheme",
   "sqlite_db_url": "https://cdn1.eegeo.com/swallow-pois/pois_v95.db.gz",
   "eegeo_search_service_url": "https://app.wayfind.bloomberg.com/search/v1.1/",
@@ -182,33 +181,128 @@
         "tracked_floor_index": "23"
       }
       ]
+    }, {
+      "interior_id": "swallow_ny_120park",
+      "type": "Senion",
+      "config": [{
+        "api_key": "f6fb1221-c98a-4623-830a-56154dbf4f50",
+        "api_secret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
+      }],
+      "floor_mapping": [{
+        "building_floor_index": 0,
+        "tracked_floor_index": "20"
+      }, {
+        "building_floor_index": 1,
+        "tracked_floor_index": "19"
+      }, {
+        "building_floor_index": 2,
+        "tracked_floor_index": "18"
+      }, {
+        "building_floor_index": 3,
+        "tracked_floor_index": "1"
+      }, {
+        "building_floor_index": 4,
+        "tracked_floor_index": "2"
+      }, {
+        "building_floor_index": 5,
+        "tracked_floor_index": "0"
+      }, {
+        "building_floor_index": 6,
+        "tracked_floor_index": "3"
+      }, {
+        "building_floor_index": 7,
+        "tracked_floor_index": "4"
+      }, {
+        "building_floor_index": 8,
+        "tracked_floor_index": "5"
+      }, {
+        "building_floor_index": 9,
+        "tracked_floor_index": "6"
+      }, {
+        "building_floor_index": 10,
+        "tracked_floor_index": "7"
+      }, {
+        "building_floor_index": 11,
+        "tracked_floor_index": "8"
+      }, {
+        "building_floor_index": 12,
+        "tracked_floor_index": "9"
+      }, {
+        "building_floor_index": 13,
+        "tracked_floor_index": "10"
+      }, {
+        "building_floor_index": 14,
+        "tracked_floor_index": "11"
+      }, {
+        "building_floor_index": 15,
+        "tracked_floor_index": "12"
+      }, {
+        "building_floor_index": 16,
+        "tracked_floor_index": "13"
+      }, {
+        "building_floor_index": 17,
+        "tracked_floor_index": "14"
+      }, {
+        "building_floor_index": 18,
+        "tracked_floor_index": "15"
+      }, {
+        "building_floor_index": 19,
+        "tracked_floor_index": "16"
+      }, {
+        "building_floor_index": 20,
+        "tracked_floor_index": "17"
+      }
+      ]
+    },
+    {
+      "interior_id": "swallow_ny_78madison",
+      "type": "Senion",
+      "config": [{
+        "api_key": "1b7d5558-914a-48d5-9a30-c9fe09a5754a",
+        "api_secret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
+      }],
+      "floor_mapping": [{
+        "building_floor_index": 0,
+        "tracked_floor_index": "0"
+      }, {
+        "building_floor_index": 1,
+        "tracked_floor_index": "1"
+      }, {
+        "building_floor_index": 2,
+        "tracked_floor_index": "2"
+      }, {
+        "building_floor_index": 3,
+        "tracked_floor_index": "3"
+      }, {
+        "building_floor_index": 4,
+        "tracked_floor_index": "4"
+      }, {
+        "building_floor_index": 5,
+        "tracked_floor_index": "5"
+      }, {
+        "building_floor_index": 6,
+        "tracked_floor_index": "6"
+      }
+      ]
     }
   ],
   "wifi_restricted_buildings": [{
-    "interior_id": "swallow_lon_38finsbury",
-    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-  }, {
-    "interior_id": "swallow_lon_citygatehouse",
-    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-  }, {
-    "interior_id": "swallow_lon_50finsbury",
-    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-  }, {
-    "interior_id": "swallow_lon_parkhouse",
-    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-  }, {
-    "interior_id": "swallow_lon_wallbrooksquare",
-    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-  }, {
-    "interior_id": "swallow_ny_731lex",
-    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-  }, {
-    "interior_id": "swallow_ny_78madison",
-    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-  }, {
-    "interior_id": "swallow_ny_1015madison",
-    "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-  }],
+          "interior_id": "swallow_lon_wallbrooksquare",
+          "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
+          }, {
+          "interior_id": "swallow_ny_731lex",
+          "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
+          }, {
+          "interior_id": "swallow_ny_78madison",
+          "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
+          }, {
+          "interior_id": "swallow_ny_1015madison",
+          "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
+          }, {
+          "interior_id": "swallow_ny_120park",
+          "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
+          }
+],
   "compass_camera_offset": {
     "offset": 0.4,
     "offset_top_down": 0.25

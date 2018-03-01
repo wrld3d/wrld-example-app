@@ -16,13 +16,15 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STAT" />
     <uses-feature android:name="android.hardware.camera"
         android:required="true"/>
     <uses-feature android:name="android.hardware.bluetooth_le"
         android:required="false"/>
 
     <application android:name="android.support.multidex.MultiDexApplication"
-                 android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.Light.NoTitleBar">
+                 android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.Light.NoTitleBar" android:allowBackup="true">
+        <!-- temporary - remember to change allowBackup back to "false" ======================================================================= -->
        
         <activity android:name="com.eegeo.ProjectSwallowApp.BackgroundThreadActivity"
                   android:label="BWAY"

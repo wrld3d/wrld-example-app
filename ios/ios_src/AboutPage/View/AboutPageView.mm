@@ -24,31 +24,10 @@
 
         self.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         
-        self.pHeaderView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pHeaderView = [[[HeaderView alloc] initWithWidth:200 title:@"About"] autorelease];
         [self addSubview:self.pHeaderView];
         
-        self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
-        self.pTitleLabel.text = @"About";
-        
-        self.pTitleLabel.font = [UIFont systemFontOfSize:24.f];
-        [self.pHeaderView addSubview:self.pTitleLabel];
-        
-        self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        self.pCloseButton.imageView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-       
-        UIImage *closeImage = [UIImage imageNamed:@"Close_Blue"];
-        
-        [self.pCloseButton setImage:closeImage forState:UIControlStateNormal];
-       
-        [self.pCloseButton addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self.pHeaderView addSubview:self.pCloseButton];
-        
-        self.pHeaderSeparator = [[[UIView alloc] init] autorelease];
-        self.pHeaderSeparator.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
-        [self addSubview:self.pHeaderSeparator];
+        [self.pHeaderView addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         
         self.pContentScrollView = [[[UIScrollView alloc] init] autorelease];
         self.pContentScrollView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
@@ -99,16 +78,6 @@
 - (void)dealloc
 {
 
-    [self.pCloseButton removeFromSuperview];
-    [self.pCloseButton release];
-
-   
-    [self.pTitleLabel removeFromSuperview];
-    [self.pTitleLabel release];
-
-    [self.pHeaderSeparator removeFromSuperview];
-    [self.pHeaderSeparator release];
-    
     [self.pHeaderView removeFromSuperview];
     [self.pHeaderView release];
     
@@ -160,34 +129,20 @@
                             mainWindowWidth,
                             mainWindowHeight);
     
-    
-    UIEdgeInsets outerMargin = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
-    UIEdgeInsets innerMargin = UIEdgeInsetsMake(20.0, 20.0, 16.0, 16.0);
-    
-
+    self.pHeaderView.width = mainWindowWidth;
+    [self.pHeaderView layoutIfNeeded];
+    CGFloat seperatorMargin = self.pHeaderView.pHeaderSeparator.frame.origin.x;
+    UIEdgeInsets outerMargin = UIEdgeInsetsMake(seperatorMargin, seperatorMargin, seperatorMargin, seperatorMargin);
+    UIEdgeInsets innerMargin = UIEdgeInsetsMake(self.pHeaderView.margin,self.pHeaderView.margin,self.pHeaderView.margin,self.pHeaderView.margin);
     CGFloat innerMarginWidth = mainWindowWidth - innerMargin.left - innerMargin.right;
     CGFloat outerMarginWidth = mainWindowWidth - outerMargin.left - outerMargin.right;
-    
-  
-    CGFloat headerHeight = 37;
-   
-    self.pHeaderView.frame = CGRectMake(innerMargin.left, outerMargin.top, innerMarginWidth,headerHeight );
-    
-    CGFloat centeringOffsetY = 4.0;
-    self.pTitleLabel.frame = CGRectMake(0.0,centeringOffsetY, innerMarginWidth - headerHeight,headerHeight);
-    [self.pTitleLabel sizeToFit];
-    self.pCloseButton.frame = CGRectMake(innerMarginWidth - headerHeight,0.0, headerHeight,headerHeight);
-    
-    self.pHeaderSeparator.frame = CGRectMake(outerMargin.left, self.pHeaderView.frame.origin.y + self.pHeaderView.frame.size.height + outerMargin.top, outerMarginWidth,1.0);
-    
-    CGFloat scrollViewyOffset = self.pHeaderSeparator.frame.origin.y + self.pHeaderSeparator.frame.size.height + outerMargin.top;
-    
+    CGFloat contentY = self.pHeaderView.frame.origin.y +  self.pHeaderView.frame.size.height;
+
     self.pContentScrollView.frame = CGRectMake(0.0,
-                                               scrollViewyOffset,
+                                               contentY,
                                                mainWindowWidth,
-                                               mainWindowHeight - scrollViewyOffset);
+                                               mainWindowHeight - contentY);
     
-   
     self.pSwallowLogoImage.frame = CGRectMake(innerMargin.left,
                                               innerMargin.top,
                                               self.pSwallowLogoImage.image.size.width,
@@ -195,7 +150,6 @@
     
     const CGFloat textContentY =  self.pSwallowLogoImage.image.size.height + innerMargin.top + innerMargin.bottom;
    
-    
     self.pTextContent.frame = CGRectMake(innerMargin.left, textContentY, innerMarginWidth, 0.0);
     self.pTextContent.numberOfLines = 0;
     self.pTextContent.adjustsFontSizeToFitWidth = NO;

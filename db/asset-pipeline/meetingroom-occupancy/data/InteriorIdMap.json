@@ -33,5 +33,10 @@
     "locationId": "US047",
     "interior_id": "swallow_ny_731lex",
     "desk_pfx": "731"
+  },
+  {
+  	"locationId": "US173",
+  	"interior_id": "swallow_ny_120park",
+  	"desk_pfx": "120"
   }
 ]

@@ -10,10 +10,6 @@ extern "C"
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
 
-    JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_OkButtonSelected(
-        JNIEnv* jenv, jobject obj,
-        jlong nativeObjectPtr);
-
     JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_StreamOverWifiToggled(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
@@ -22,7 +18,7 @@ extern "C"
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
 
-    JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_ClearCacheToggled(
+    JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_ClearCacheSelected(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
 
@@ -30,8 +26,7 @@ extern "C"
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
 
-    JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_PlayTutorialAgainToggled(
+    JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_PlayTutorialAgainSelected(
         JNIEnv* jenv, jobject obj,
-        jlong nativeObjectPtr,
-        jboolean enableTutorials);
+        jlong nativeObjectPtr);
 }

@@ -7,10 +7,7 @@
 #include "CompassViewInterop.h"
 #include "CoreBluetooth/CoreBluetooth.h"
 
-static const float CompassOuterShapeInactiveAlpha = 0.5f;
-static const float CompassOuterShapeActiveAlpha = 1.0f;
-
-static const long RotationHighlightAnimationMilliseconds = 200;
+static const long RotationHighlightAnimationSeconds = 0.2;
 
 enum CompassViewState
 {
@@ -24,6 +21,7 @@ enum CompassViewState
     UIImage* m_pCompassDefaultImage;
     UIImage* m_pCompassDefaultHighlightImage;
     UIImage* m_CompassRingImage;
+    UIImage* m_CompassRingHighlightedImage;
     UIImage* m_pCompassLockedImage;
     UIImage* m_pCompassLockedHighlightedImage;
     UIImage* m_pCompassUnlockedImage;
@@ -74,13 +72,14 @@ namespace
         
         self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_innerWidth * 0.5f)), m_yPosInactive, m_width, m_height);
         
-        self->m_pCompassDefaultImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewLocate") retain];
-        self->m_pCompassDefaultHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewLocate_Down") retain];
-        self->m_CompassRingImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNew") retain];
-        self->m_pCompassLockedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewLocked") retain];
-        self->m_pCompassLockedHighlightedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewLocked_Down") retain];
-        self->m_pCompassUnlockedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewUnlocked") retain];
-        self->m_pCompassUnlockedHighlightedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassNewUnlocked_Down") retain];
+        self->m_pCompassDefaultImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"Compass") retain];
+        self->m_pCompassDefaultHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"Compass_Down") retain];
+        self->m_CompassRingImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassSurround_LightBlue") retain];
+        self->m_CompassRingHighlightedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"CompassSurround_DarkBlue") retain];
+        self->m_pCompassLockedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"NavMode") retain];
+        self->m_pCompassLockedHighlightedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"NavMode_Down") retain];
+        self->m_pCompassUnlockedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"NavMode_Active") retain];
+        self->m_pCompassUnlockedHighlightedImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"NavMode_Down") retain];
         
         //outer shape
         self.pOuterShape = [[[UIImageView alloc] initWithFrame:CGRectMake(0.f, 0.f, m_innerWidth, m_innerHeight)] autorelease];
@@ -112,7 +111,6 @@ namespace
         m_disabledStateHighlighted = false;
 
         m_currentAngleRadians = 0.0f;
-        self.pPoint.alpha = CompassOuterShapeInactiveAlpha;
     }
 
     return self;
@@ -151,6 +149,7 @@ namespace
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
+    
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint touchLocation = [touch locationInView:self];
     if(CGRectContainsPoint(self.bounds, touchLocation))
@@ -159,7 +158,7 @@ namespace
     }
     else
     {
-        [self setHighlighted:NO];
+       [self setHighlighted:NO];
     }
 }
 
@@ -387,13 +386,16 @@ namespace
 
 - (void) setRotationHighlight:(bool)shouldShowRotationHighlight
 {
-    const float alpha = shouldShowRotationHighlight
-        ? CompassOuterShapeInactiveAlpha
-        : CompassOuterShapeActiveAlpha;
-    [UIView animateWithDuration:RotationHighlightAnimationMilliseconds animations:^
-     {
-         self.pPoint.alpha = alpha;
-     }];
+    UIImage  *image= shouldShowRotationHighlight
+        ? m_CompassRingHighlightedImage
+        : m_CompassRingImage;
+    
+    [UIView transitionWithView:self.pPoint
+                      duration:RotationHighlightAnimationSeconds
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        self.pPoint.image = image;
+                    } completion:nil];
 }
 
 @end

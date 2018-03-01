@@ -12,9 +12,9 @@ public class OptionsViewJniMethods
 
 	public static native void CachingEnabledToggled(long nativeCallerPointer);
 
-	public static native void ClearCacheToggled(long nativeCallerPointer);
+	public static native void ClearCacheSelected(long nativeCallerPointer);
 
 	public static native void ClearCacheTriggered(long nativeCallerPointer);
 
-	public static native void PlayTutorialAgainToggled(long nativeCallerPointer, boolean enabled);
+	public static native void PlayTutorialAgainSelected(long nativeCallerPointer);
 }

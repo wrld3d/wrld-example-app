@@ -1,10 +1,8 @@
 ﻿using ExampleApp;
 using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace ExampleAppWPF
@@ -19,9 +17,7 @@ namespace ExampleAppWPF
         }
 
         private bool m_cacheEnabled;
-        private bool m_clearCacheSelected;
         private bool m_explicitlySettingValue;
-        private bool m_playTutorialsAgainEnabled;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -51,46 +47,9 @@ namespace ExampleAppWPF
             }
         }
 
-        public bool ClearCacheSelected
+        private static string StringResource(string name)
         {
-            get
-            {
-                return m_clearCacheSelected;
-            }
-            set
-            {
-                if (value != m_clearCacheSelected)
-                {
-                    m_clearCacheSelected = value;
-                    OnPropertyChanged("ClearCacheSelected");
-
-                    if (!m_explicitlySettingValue)
-                    {
-                        OptionsViewCLIMethods.ClearCacheToggled(m_nativeCallerPointer);
-                    }
-                }
-            }
-        }
-
-        public bool PlayTutorialsAgainEnabled
-        {
-            get
-            {
-                return m_playTutorialsAgainEnabled;
-            }
-            set
-            {
-                if(value != m_playTutorialsAgainEnabled)
-                {
-                    m_playTutorialsAgainEnabled = value;
-                    OnPropertyChanged("PlayTutorialsAgainEnabled");
-
-                    if (!m_explicitlySettingValue)
-                    {
-                        OptionsViewCLIMethods.ReplayTutorials(m_nativeCallerPointer, m_playTutorialsAgainEnabled);
-                    }
-                }
-            }
+            return (string)Application.Current.Resources[name];
         }
 
         protected IntPtr m_nativeCallerPointer;
@@ -105,6 +64,7 @@ namespace ExampleAppWPF
         public event PropertyChangedEventHandler PropertyChanged;
 
         private OptionsCacheClearSubView m_cacheClearSubView;
+        private OptionsMessage m_messageSubView;
 
         public OptionsView(IntPtr nativeCallerPointer, string adminPassword, bool isInKioskMode)
         {
@@ -123,20 +83,23 @@ namespace ExampleAppWPF
 
         public override void OnApplyTemplate()
         {
+            base.OnApplyTemplate();
+
             m_closeButton = (Button)GetTemplateChild("OptionsViewCloseButton");
             m_closeButton.Click += OnCloseButtonClick;
 
-            var okButton = (Button)GetTemplateChild("OptionsViewOkButton");
-            okButton.Click += OnOkButtonClick;
-
             var dataCachingLabel = (TextBlock)GetTemplateChild("OptionsViewCacheEnabledLabel");
             dataCachingLabel.PreviewMouseLeftButtonDown += (s, e) => CacheEnabled = !CacheEnabled;
-            
-            var clearCacheLabel = (TextBlock)GetTemplateChild("OptionsViewClearCacheLabel");
-            clearCacheLabel.PreviewMouseLeftButtonDown += (s, e) => ClearCacheSelected = !ClearCacheSelected;
 
-            var playTutorialLabel = (TextBlock)GetTemplateChild("OptionsViewPlayTutorialLabel");
-            playTutorialLabel.PreviewMouseLeftButtonDown += (s, e) => PlayTutorialsAgainEnabled = !PlayTutorialsAgainEnabled;
+            var clearCacheButton = (Button)   GetTemplateChild("OptionsViewClearCacheButton");
+            var clearCacheLabel  = (TextBlock)GetTemplateChild("OptionsViewClearCacheLabel");
+            clearCacheButton.Click    += OnClearCacheButtonClick;
+            clearCacheLabel.MouseDown += OnClearCacheButtonClick;
+
+            var playTutorialsButton = (Button)   GetTemplateChild("OptionsViewPlayTutorialsButton");
+            var playTutorialsLabel  = (TextBlock)GetTemplateChild("OptionsViewPlayTutorialsLabel");
+            playTutorialsButton.Click    += OnPlayTutorialsButtonClick;
+            playTutorialsLabel.MouseDown += OnPlayTutorialsButtonClick;
 
             var adminLoginButton = (Button)GetTemplateChild("OptionsViewAdminButton");
             adminLoginButton.Click += OnAdminLoginButtonClick;
@@ -159,11 +122,6 @@ namespace ExampleAppWPF
             OptionsViewCLIMethods.CloseButtonSelected(m_nativeCallerPointer);
         }
 
-        private void OnOkButtonClick(object sender, RoutedEventArgs e)
-        {
-            OptionsViewCLIMethods.OkButtonSelected(m_nativeCallerPointer);
-        }
-
         public void OpenClearCacheWarning()
         {
             BeginCacheClearCeremony();
@@ -173,7 +131,27 @@ namespace ExampleAppWPF
         {
             OptionsViewCLIMethods.CachingEnabledToggled(m_nativeCallerPointer);
         }
-        
+
+        private void OnClearCacheButtonClick(object sender, RoutedEventArgs e)
+        {
+            OptionsViewCLIMethods.ClearCacheSelected(m_nativeCallerPointer);
+        }
+
+        private void OnPlayTutorialsButtonClick(object sender, RoutedEventArgs e)
+        {
+            OptionsViewCLIMethods.ReplayTutorialsSelected(m_nativeCallerPointer);
+
+            m_messageSubView = new OptionsMessage(m_nativeCallerPointer,
+                                                  StringResource("OptionsViewReplayTitle"),
+                                                  StringResource("OptionsViewReplayMessage"));
+
+            m_messageSubView.ShowMessage(() => {
+                m_messageSubView = null;
+
+                OptionsViewCLIMethods.CloseButtonSelected(m_nativeCallerPointer);
+            });
+        }
+
         private void OnAdminLoginButtonClick(object sender, RoutedEventArgs e)
         {
             Visibility = Visibility.Collapsed;
@@ -207,19 +185,14 @@ namespace ExampleAppWPF
             m_currentWindow.EnableInput();
         }
 
-        public void SetReplayTutorialsSelected(bool replayTutorialsSelected)
-        {
-            m_explicitlySettingValue = true;
-            PlayTutorialsAgainEnabled = replayTutorialsSelected;
-            m_explicitlySettingValue = false;
-        }
-
         public void ConcludeCacheClearCeremony()
         {
             m_cacheClearSubView.ConcludeCeremony();
             m_cacheClearSubView = null;
+
+            OptionsViewCLIMethods.CloseButtonSelected(m_nativeCallerPointer);
         }
-        
+
         public bool IsCacheEnabledSelected()
         {
             return CacheEnabled;
@@ -229,18 +202,6 @@ namespace ExampleAppWPF
         {
             m_explicitlySettingValue = true;
             CacheEnabled = cacheEnabledSelected;
-            m_explicitlySettingValue = false;
-        }
-
-        public bool IsClearCacheSelected()
-        {
-            return ClearCacheSelected;
-        }
-
-        public void SetClearCacheSelected(bool clearCacheSelected)
-        {
-            m_explicitlySettingValue = true;
-            ClearCacheSelected = clearCacheSelected;
             m_explicitlySettingValue = false;
         }
 
