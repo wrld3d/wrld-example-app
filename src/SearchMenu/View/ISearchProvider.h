@@ -21,6 +21,9 @@ namespace ExampleApp
 				virtual void InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
 				virtual void RemoveSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
 
+				virtual void InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+				virtual void RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
 				virtual void OnSearchResponseReceived(const TSearchResults& searchResults) = 0;
 			};
 		}

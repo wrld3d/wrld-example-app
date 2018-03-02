@@ -20,6 +20,7 @@ namespace ExampleApp
 				ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 Eegeo::Helpers::TCallback1<SearchServices, const std::string&> m_onSearchCallback;
+				Eegeo::Helpers::TCallback0<SearchServices> m_onCancelCallback;
 				Eegeo::Helpers::TCallback1<SearchServices, const Search::SearchQueryResponseReceivedMessage&> m_responseReceivedHandler;
 
 				ISearchProvider::TSearchResults m_searchResults;
@@ -31,6 +32,7 @@ namespace ExampleApp
 
 			private:
 				void OnSearch(const std::string& searchQuery);
+				void OnCancel();
 				void OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message);
 			};
 		}

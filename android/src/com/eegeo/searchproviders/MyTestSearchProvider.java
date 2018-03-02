@@ -53,6 +53,10 @@ public class MyTestSearchProvider implements SearchProvider
 	@Override
 	public void cancelSearch()
 	{
+		// TO DO - cancel ongoing search within the native thread
+
+		SearchProvidersJniMethods.cancel(m_nativeCallerPointer);
+
 		executeCallbacks(new SearchResult[0], false);
 	}
 

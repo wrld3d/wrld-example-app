@@ -16,6 +16,7 @@ namespace ExampleApp
 			typedef SearchMenu::View::ISearchProvider::TSearchResults TSearchResults;
 
 			Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
+			Eegeo::Helpers::CallbackCollection0 m_searchCancelledCallbacks;
 
 			AndroidNativeState& m_nativeState;
 			jclass m_javaClass;
@@ -31,7 +32,11 @@ namespace ExampleApp
 			void InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
 			void RemoveSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
 
+			void InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback);
+			void RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback);
+
 			void PerformSearch(const std::string& searchQuery);
+			void CancelSearch();
 
 			void OnSearchResponseReceived(const TSearchResults& searchResults);
 		};
