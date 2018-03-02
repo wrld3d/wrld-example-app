@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.eegeo.menu.MenuViewJniMethods;
+import com.eegeo.tags.TagResources;
 import com.wrld.widgets.searchbox.WrldSearchWidget;
 import com.wrld.widgets.searchbox.model.MenuChild;
 import com.wrld.widgets.searchbox.model.MenuGroup;
@@ -99,11 +100,10 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback
                 String childJson = childJsons[childIndex];
                 String name = getFromJson(childJson, "name");
                 String iconName = getFromJson(childJson, "icon");
-
-                childIndex++;
-
-                MenuChild child = new MenuChild(name, iconName, indexPath, this);
+                int iconNumber = TagResources.getIconForResourceName(m_activity,iconName);
+                MenuChild child = new MenuChild(name,iconNumber, indexPath, this);
                 menuOption.addChild(child);
+                childIndex++;
             }
 
             childIndex++;
