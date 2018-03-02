@@ -37,14 +37,19 @@ namespace ExampleApp
 
             }
 
+            void SearchWidgetView::OnSearchResultsCleared()
+            {
+                m_searchClearedCallbacks.ExecuteCallbacks();
+            }
+
             void SearchWidgetView::InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-
+                m_searchClearedCallbacks.AddCallback(callback);
             }
 
             void SearchWidgetView::RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
             {
-
+                m_searchClearedCallbacks.RemoveCallback(callback);
             }
         }
     }

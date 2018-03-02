@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+// Copyright WRLD Ltd (2018-), All Rights Reserved
 
 package com.eegeo.searchmenu;
 
@@ -17,13 +17,17 @@ import com.wrld.widgets.searchbox.model.MenuGroup;
 import com.wrld.widgets.searchbox.model.MenuOption;
 import com.wrld.widgets.searchbox.model.OnMenuOptionSelectedCallback;
 import com.wrld.widgets.searchbox.model.SearchProvider;
+import com.wrld.widgets.searchbox.model.SearchQuery;
+import com.wrld.widgets.searchbox.model.SearchProviderQueryResult;
+import com.wrld.widgets.searchbox.model.SearchResult;
+import com.wrld.widgets.searchbox.model.SearchResultsListener;
 
 import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class SearchWidgetView implements OnMenuOptionSelectedCallback
+public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchResultsListener
 {
     protected MainActivity m_activity;
     protected SearchProvider m_searchProvider;
@@ -50,9 +54,24 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback
 
         m_searchWidget = (WrldSearchWidget) m_activity.getFragmentManager().findFragmentById(R.id.search_widget);
         m_searchWidget.addSearchProvider(m_searchProvider);
+
+        m_searchWidget.getSearchResultsModel().addResultListener(this);
     }
 
+    public void onSearchResultsRecieved(SearchQuery searchQuery, List<SearchProviderQueryResult> list)
+    {
+        // Not needed at the moment
+    }
 
+    public void onSearchResultsCleared()
+    {
+        SearchWidgetViewJniMethods.OnSearchResultsCleared(m_nativeCallerPointer);
+    }
+
+    public void onSearchResultsSelected(SearchResult searchResult)
+    {
+        // TO DO: on search result selection, move camera to selected result's marker
+    }
 
     public boolean onMenuOptionSelected(final String text, final Object context) {
         MenuIndexPath indexPath = (MenuIndexPath) context;

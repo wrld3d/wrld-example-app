@@ -19,14 +19,14 @@ namespace ExampleApp
                 ISearchWidgetView& m_view;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
-                Eegeo::Helpers::TCallback0<SearchWidgetController> m_onSearchClearedCallback;
+                Eegeo::Helpers::TCallback0<SearchWidgetController> m_onSearchResultsClearedCallback;
 
             public:
                 SearchWidgetController(ISearchWidgetView& view,
                                        ExampleAppMessaging::TMessageBus& messageBus);
                 ~SearchWidgetController();
 
-                void OnSearchCleared();
+                void OnSearchResultsCleared();
             };
         }
     }

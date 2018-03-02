@@ -14,19 +14,19 @@ namespace ExampleApp
                                                            ExampleAppMessaging::TMessageBus& messageBus)
             : m_view(view)
             , m_messageBus(messageBus)
-            , m_onSearchClearedCallback(this, &SearchWidgetController::OnSearchCleared)
+            , m_onSearchResultsClearedCallback(this, &SearchWidgetController::OnSearchResultsCleared)
             {
-                m_view.InsertSearchClearedCallback(m_onSearchClearedCallback);
+                m_view.InsertSearchClearedCallback(m_onSearchResultsClearedCallback);
             }
 
             SearchWidgetController::~SearchWidgetController()
             {
-                m_view.RemoveSearchClearedCallback(m_onSearchClearedCallback);
+                m_view.RemoveSearchClearedCallback(m_onSearchResultsClearedCallback);
             }
 
-            void SearchWidgetController::OnSearchCleared()
+            void SearchWidgetController::OnSearchResultsCleared()
             {
-
+                m_messageBus.Publish(SearchResultSection::SearchResultViewClearedMessage());
             }
         }
     }
