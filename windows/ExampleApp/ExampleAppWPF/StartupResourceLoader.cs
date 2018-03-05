@@ -34,7 +34,7 @@ namespace ExampleAppWPF
 
             LoadImage("arrow3_down.png");
 
-            ProgramDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "eeGeo_Ltd", System.Diagnostics.Process.GetCurrentProcess().ProcessName, "Resources");
+            ProgramDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "WRLD_Ltd", System.Diagnostics.Process.GetCurrentProcess().ProcessName, "Resources");
         }
 
         public static void Init()
