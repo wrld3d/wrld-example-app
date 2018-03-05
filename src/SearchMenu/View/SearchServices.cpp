@@ -1,6 +1,8 @@
 // Copyright WRLD Ltd (2018-), All Rights Reserved
 
 #include "SearchServices.h"
+#include "SwallowSearchConstants.h"
+#include "SwallowSearchParser.h"
 
 namespace ExampleApp
 {
@@ -42,7 +44,78 @@ namespace ExampleApp
 
             void SearchServices::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
-				m_searchProvider.OnSearchResponseReceived(message.GetResults());
+				const std::vector<TSdkSearchResult>& sdkResults = message.GetResults();
+
+				m_searchResults.clear();
+				m_searchResults.reserve(sdkResults.size());
+
+				for (std::vector<TSdkSearchResult>::const_iterator it = sdkResults.begin(); it !=  sdkResults.end(); it++)
+				{
+					if (!Search::Swallow::SearchConstants::ShouldShowTagAsSearchResult(it->GetPrimaryTag()))
+						continue;
+
+					std::string name = it->GetTitle();
+					std::string desc = it->GetSubtitle();
+					std::string icon = it->GetIconKey();
+
+					HandleSpecialCases(*it, desc, icon);
+
+					m_searchResults.push_back(SearchServicesResult(name, desc, icon));
+				}
+
+				m_searchProvider.OnSearchResponseReceived(m_searchResults);
+			}
+
+			void SearchServices::HandleSpecialCases(const TSdkSearchResult& sdkResult,
+													std::string& description, std::string& iconName)
+			{
+				namespace SearchConstants = Search::Swallow::SearchConstants;
+				namespace SwallowSdkModel = Search::Swallow::SdkModel;
+				namespace SearchParser    = Search::Swallow::SdkModel::SearchParser;
+
+				typedef SwallowSdkModel::SwallowMeetingRoomResultModel SwallowMeetingRoomResultModel;
+
+				std::string tag = sdkResult.GetPrimaryTag();
+
+				if (tag == SearchConstants::MEETING_ROOM_CATEGORY_NAME)
+				{
+					SwallowMeetingRoomResultModel newModel
+							= SearchParser::TransformToSwallowMeetingRoomResult(sdkResult);
+
+					description = newModel.GetOfficeLocation();
+					iconName    = GetMeetingRoomAvailablityIcon(newModel.GetAvailability());
+				}
+
+				else if (tag == SearchConstants::TRAINING_ROOM_CATEGORY_NAME)
+					description = SearchParser::TransformToSwallowTrainingRoomResult(sdkResult)
+								  .GetOfficeLocation();
+
+				else if (tag == SearchConstants::WORKING_GROUP_CATEGORY_NAME)
+					description = SearchParser::TransformToSwallowWorkingGroupResult(sdkResult)
+								  .GetOfficeLocation();
+
+				else if (tag == SearchConstants::FACILITY_CATEGORY_NAME)
+					description = SearchParser::TransformToSwallowFacilityResult(sdkResult)
+								  .GetOfficeLocation();
+			}
+
+			std::string SearchServices::GetMeetingRoomAvailablityIcon(std::string availability)
+			{
+				namespace SearchConstants = Search::Swallow::SearchConstants;
+
+				if (availability == SearchConstants::MEETING_ROOM_AVAILABLE)
+					return SearchConstants::MEETING_ROOM_ICON_AVAILABLE;
+
+				if (availability == SearchConstants::MEETING_ROOM_AVAILABLE_SOON)
+					return SearchConstants::MEETING_ROOM_ICON_AVAILABLE_SOON;
+
+				if (availability == SearchConstants::MEETING_ROOM_OCCUPIED)
+					return SearchConstants::MEETING_ROOM_ICON_OCCUPIED;
+
+				if (availability == SearchConstants::MEETING_ROOM_INACTIVE)
+					return SearchConstants::MEETING_ROOM_ICON_INACTIVE;
+
+				return "";
 			}
 		}
 	}

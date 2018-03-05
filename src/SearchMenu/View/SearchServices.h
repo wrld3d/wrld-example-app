@@ -3,9 +3,13 @@
 #pragma once
 
 #include "ISearchProvider.h"
+#include "SearchServicesResult.h"
+#include "SearchResultModel.h"
 #include "BidirectionalBus.h"
 #include "CallbackCollection.h"
 #include "SearchQueryResponseReceivedMessage.h"
+
+#include <vector>
 
 namespace ExampleApp
 {
@@ -23,6 +27,8 @@ namespace ExampleApp
 				Eegeo::Helpers::TCallback0<SearchServices> m_onCancelCallback;
 				Eegeo::Helpers::TCallback1<SearchServices, const Search::SearchQueryResponseReceivedMessage&> m_responseReceivedHandler;
 
+				typedef Search::SdkModel::SearchResultModel TSdkSearchResult;
+
 				ISearchProvider::TSearchResults m_searchResults;
 
 			public:
@@ -34,6 +40,11 @@ namespace ExampleApp
 				void OnSearch(const std::string& searchQuery);
 				void OnCancel();
 				void OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message);
+
+				void HandleSpecialCases(const TSdkSearchResult& sdkResult,
+										std::string& description, std::string& iconName);
+
+				static std::string GetMeetingRoomAvailablityIcon(std::string availability);
 			};
 		}
 	}

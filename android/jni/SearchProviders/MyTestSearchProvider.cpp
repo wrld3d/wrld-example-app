@@ -89,9 +89,9 @@ namespace ExampleApp
 			{
 				jobject arrayElement = env->GetObjectArrayElement(javaArray, i);
 
-				jobject name = env->NewStringUTF(searchResults[i].GetTitle   ().c_str());
-				jobject desc = env->NewStringUTF(searchResults[i].GetSubtitle().c_str());
-				jobject icon = env->NewStringUTF(searchResults[i].GetIconKey ().c_str());
+				jobject name = env->NewStringUTF(searchResults[i].GetName       ().c_str());
+				jobject desc = env->NewStringUTF(searchResults[i].GetDescription().c_str());
+				jobject icon = env->NewStringUTF(searchResults[i].GetIconName   ().c_str());
 
 				env->SetObjectField(arrayElement, fidName, name);
 				env->SetObjectField(arrayElement, fidDesc, desc);
