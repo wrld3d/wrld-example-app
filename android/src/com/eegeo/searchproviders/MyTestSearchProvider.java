@@ -2,46 +2,51 @@
 
 package com.eegeo.searchproviders;
 
-import com.eegeo.ProjectSwallowApp.R;
+import android.app.Activity;
+
+import com.wrld.widgets.R;
 import com.wrld.widgets.searchbox.model.SearchProvider;
 import com.wrld.widgets.searchbox.model.SearchProviderResultsReadyCallback;
 import com.wrld.widgets.searchbox.model.SearchResult;
 import com.wrld.widgets.searchbox.model.SearchResultPropertyString;
 import com.wrld.widgets.searchbox.model.DefaultSearchResult;
 import com.wrld.widgets.searchbox.view.ISearchResultViewFactory;
-import com.wrld.widgets.searchbox.view.DefaultSearchResultViewFactory;
+
 import java.util.HashSet;
-import org.json.JSONObject;
-import android.util.Log;
 
 public class MyTestSearchProvider implements SearchProvider
 {
 	private long										m_nativeCallerPointer;
-	private DefaultSearchResultViewFactory				m_resultFactory;
+	private SearchResultViewFactory						m_resultFactory;
 	private HashSet<SearchProviderResultsReadyCallback>	m_callbacks;
+	private String										m_lastQueryText;
 
 	public class SearchResultInfo
 	{
 		public String name;
 		public String description;
+		public String iconName;
 	}
 
-	public MyTestSearchProvider(long nativeCallerPointer)
+	public MyTestSearchProvider(long nativeCallerPointer, Activity activity)
 	{
 		m_nativeCallerPointer = nativeCallerPointer;
-		m_resultFactory       = new DefaultSearchResultViewFactory(R.layout.search_result);
+		m_resultFactory       = new SearchResultViewFactory(R.layout.search_result, activity);
 		m_callbacks           = new HashSet<SearchProviderResultsReadyCallback>();
+		m_lastQueryText       = "";
 	}
 
 	@Override
 	public String getTitle()
 	{
-		return "My Test Search Provider";
+		return m_lastQueryText;
 	}
 
 	@Override
 	public void getSearchResults(String queryText, Object queryContext)
 	{
+		m_lastQueryText = queryText;
+
 		SearchProvidersJniMethods.search(m_nativeCallerPointer, queryText);
 	}
 
@@ -89,17 +94,19 @@ public class MyTestSearchProvider implements SearchProvider
 		SearchResult[] wrappedResults = new SearchResult[results.length];
 
 		for (int i = 0; i < results.length; i++)
-				wrappedResults[i] = WrapResult(results[i].name,
-											   results[i].description);
+			wrappedResults[i] = WrapResult(results[i].name,
+										   results[i].description,
+										   results[i].iconName);
 
 		return wrappedResults;
 	}
 
-	private SearchResult WrapResult(String title, String description)
+	private SearchResult WrapResult(String title, String description, String iconName)
 	{
 		return new DefaultSearchResult(
 			title,
-			new SearchResultPropertyString("Description", description)
+			new SearchResultPropertyString("Description", description),
+			new SearchResultPropertyString("Icon",        iconName)
 		);
 	}
 }

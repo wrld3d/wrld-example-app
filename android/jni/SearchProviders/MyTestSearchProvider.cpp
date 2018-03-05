@@ -21,9 +21,10 @@ namespace ExampleApp
 					"com/eegeo/searchproviders/MyTestSearchProvider");
 			m_javaInstance = Helpers::JniHelper::LoadInstanceGlobalRef(
 					env,
-					"(J)V",
+					"(JLandroid/app/Activity;)V",
 					m_javaClass,
-					(jlong)this);
+					(jlong)this,
+					m_nativeState.activity);
 
 			m_onSearchCompleted = env->GetMethodID(
 					m_javaClass,
@@ -75,6 +76,7 @@ namespace ExampleApp
 
 			jfieldID fidName = env->GetFieldID(javaClass, "name",        "Ljava/lang/String;");
 			jfieldID fidDesc = env->GetFieldID(javaClass, "description", "Ljava/lang/String;");
+			jfieldID fidIcon = env->GetFieldID(javaClass, "iconName",    "Ljava/lang/String;");
 
 			jobjectArray javaArray = Helpers::JniHelper::LoadArrayLocalRef(
 					env,
@@ -87,12 +89,15 @@ namespace ExampleApp
 			{
 				jobject arrayElement = env->GetObjectArrayElement(javaArray, i);
 
-				jobject name = env->NewStringUTF(searchResults[i].GetTitle()   .c_str());
+				jobject name = env->NewStringUTF(searchResults[i].GetTitle   ().c_str());
 				jobject desc = env->NewStringUTF(searchResults[i].GetSubtitle().c_str());
+				jobject icon = env->NewStringUTF(searchResults[i].GetIconKey ().c_str());
 
 				env->SetObjectField(arrayElement, fidName, name);
 				env->SetObjectField(arrayElement, fidDesc, desc);
+				env->SetObjectField(arrayElement, fidIcon, icon);
 
+				env->DeleteLocalRef(icon);
 				env->DeleteLocalRef(desc);
 				env->DeleteLocalRef(name);
 			}
