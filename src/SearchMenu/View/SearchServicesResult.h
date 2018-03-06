@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "SearchResultModel.h"
+
 #include <string>
 
 namespace ExampleApp
@@ -12,19 +14,30 @@ namespace ExampleApp
 		{
 			class SearchServicesResult
 			{
+			public:
+				typedef Search::SdkModel::SearchResultModel TSdkSearchResult;
+
 			private:
 				std::string m_name;
 				std::string m_description;
 				std::string m_iconName;
 
-			public:
-				SearchServicesResult(std::string& name,
-									 std::string& description,
-									 std::string& iconName);
+				int m_originalIndex;
+				TSdkSearchResult m_sdkSearchResult;
 
-				const std::string& GetName()        const;
+			public:
+				SearchServicesResult(const std::string& name,
+									 const std::string& description,
+									 const std::string& iconName,
+									 int originalIndex,
+									 const TSdkSearchResult& sdkSearchResult);
+
+				const std::string& GetName() const;
 				const std::string& GetDescription() const;
-				const std::string& GetIconName()    const;
+				const std::string& GetIconName() const;
+
+				int GetOriginalIndex() const;
+				const TSdkSearchResult& GetSdkSearchResult() const;
 			};
 		}
 	}

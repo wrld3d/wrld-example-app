@@ -70,7 +70,11 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
 
     public void onSearchResultsSelected(SearchResult searchResult)
     {
-        // TO DO: on search result selection, move camera to selected result's marker
+        SearchWidgetResult widgetResult = (SearchWidgetResult)searchResult;
+
+        SearchWidgetViewJniMethods.OnSearchResultSelected(
+                m_nativeCallerPointer,
+                widgetResult.getIndex());
     }
 
     public boolean onMenuOptionSelected(final String text, final Object context) {

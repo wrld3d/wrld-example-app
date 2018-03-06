@@ -10,4 +10,10 @@ extern "C"
             JNIEnv* jenv, jobject obj,
             jlong nativeObjectPtr
         );
+
+    JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_OnSearchResultSelected(
+            JNIEnv* jenv, jobject obj,
+            jlong nativeObjectPtr,
+            jint index
+        );
 }

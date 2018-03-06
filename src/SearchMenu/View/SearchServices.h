@@ -36,11 +36,15 @@ namespace ExampleApp
 							   ExampleAppMessaging::TMessageBus& messageBus);
 				~SearchServices();
 
+				int GetResultOriginalIndexFromCurrentIndex(int index) const;
+				const SearchMenu::View::SearchServicesResult::TSdkSearchResult& GetSdkSearchResultByIndex(int index) const;
+
 			private:
 				void OnSearch(const std::string& searchQuery);
 				void OnCancel();
 				void OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message);
 
+				int CountResultsShown(const std::vector<TSdkSearchResult>& sdkResults);
 				void HandleSpecialCases(const TSdkSearchResult& sdkResult,
 										std::string& description, std::string& iconName);
 

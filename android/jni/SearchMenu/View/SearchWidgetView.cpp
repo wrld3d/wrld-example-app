@@ -12,7 +12,8 @@ namespace ExampleApp
         {
 			SearchWidgetView::SearchWidgetView(AndroidNativeState& nativeState,
 											   SearchProviders::MyTestSearchProvider& searchProvider)
-			: m_nativeState(nativeState) {
+			: m_nativeState(nativeState)
+            {
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -42,6 +43,11 @@ namespace ExampleApp
                 m_searchClearedCallbacks.ExecuteCallbacks();
             }
 
+            void SearchWidgetView::OnSearchResultSelected(int index)
+            {
+                m_resultSelectedCallbacks.ExecuteCallbacks(index);
+            }
+
             void SearchWidgetView::InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_searchClearedCallbacks.AddCallback(callback);
@@ -50,6 +56,16 @@ namespace ExampleApp
             void SearchWidgetView::RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_searchClearedCallbacks.RemoveCallback(callback);
+            }
+
+            void SearchWidgetView::InsertResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
+            {
+                m_resultSelectedCallbacks.AddCallback(callback);
+            }
+
+            void SearchWidgetView::RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
+            {
+                m_resultSelectedCallbacks.RemoveCallback(callback);
             }
         }
     }

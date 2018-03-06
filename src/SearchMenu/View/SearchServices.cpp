@@ -32,6 +32,16 @@ namespace ExampleApp
 				m_searchProvider.RemoveSearchPerformedCallback(m_onSearchCallback);
 			}
 
+			int SearchServices::GetResultOriginalIndexFromCurrentIndex(int index) const
+			{
+				return m_searchResults[index].GetOriginalIndex();
+			}
+
+			const SearchMenu::View::SearchServicesResult::TSdkSearchResult& SearchServices::GetSdkSearchResultByIndex(int index) const
+			{
+				return m_searchResults[index].GetSdkSearchResult();
+			}
+
             void SearchServices::OnSearch(const std::string& searchQuery)
             {
 				m_messageBus.Publish(SearchMenuPerformedSearchMessage(searchQuery, false, false));
@@ -47,9 +57,9 @@ namespace ExampleApp
 				const std::vector<TSdkSearchResult>& sdkResults = message.GetResults();
 
 				m_searchResults.clear();
-				m_searchResults.reserve(sdkResults.size());
+				m_searchResults.reserve(CountResultsShown(sdkResults));
 
-				for (std::vector<TSdkSearchResult>::const_iterator it = sdkResults.begin(); it !=  sdkResults.end(); it++)
+				for (std::vector<TSdkSearchResult>::const_iterator it = sdkResults.begin(); it != sdkResults.end(); it++)
 				{
 					if (!Search::Swallow::SearchConstants::ShouldShowTagAsSearchResult(it->GetPrimaryTag()))
 						continue;
@@ -60,10 +70,27 @@ namespace ExampleApp
 
 					HandleSpecialCases(*it, desc, icon);
 
-					m_searchResults.push_back(SearchServicesResult(name, desc, icon));
+					m_searchResults.push_back(SearchServicesResult(name, desc, icon,
+																   std::distance(sdkResults.begin(), it),
+																   *it));
 				}
 
 				m_searchProvider.OnSearchResponseReceived(m_searchResults);
+			}
+
+			int SearchServices::CountResultsShown(const std::vector<TSdkSearchResult>& sdkResults)
+			{
+				int resultsShown = 0;
+
+				for (std::vector<TSdkSearchResult>::const_iterator it = sdkResults.begin(); it != sdkResults.end(); it++)
+				{
+					if (Search::Swallow::SearchConstants::ShouldShowTagAsSearchResult(it->GetPrimaryTag()))
+					{
+						resultsShown++;
+					}
+				}
+
+				return resultsShown;
 			}
 
 			void SearchServices::HandleSpecialCases(const TSdkSearchResult& sdkResult,

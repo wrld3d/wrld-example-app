@@ -9,8 +9,9 @@ import com.wrld.widgets.searchbox.model.SearchProvider;
 import com.wrld.widgets.searchbox.model.SearchProviderResultsReadyCallback;
 import com.wrld.widgets.searchbox.model.SearchResult;
 import com.wrld.widgets.searchbox.model.SearchResultPropertyString;
-import com.wrld.widgets.searchbox.model.DefaultSearchResult;
 import com.wrld.widgets.searchbox.view.ISearchResultViewFactory;
+
+import com.eegeo.searchmenu.SearchWidgetResult;
 
 import java.util.HashSet;
 
@@ -94,19 +95,16 @@ public class MyTestSearchProvider implements SearchProvider
 		SearchResult[] wrappedResults = new SearchResult[results.length];
 
 		for (int i = 0; i < results.length; i++)
-			wrappedResults[i] = WrapResult(results[i].name,
+			wrappedResults[i] = WrapResult(i,
+										   results[i].name,
 										   results[i].description,
 										   results[i].iconName);
 
 		return wrappedResults;
 	}
 
-	private SearchResult WrapResult(String title, String description, String iconName)
+	private SearchResult WrapResult(int index, String title, String description, String iconName)
 	{
-		return new DefaultSearchResult(
-			title,
-			new SearchResultPropertyString("Description", description),
-			new SearchResultPropertyString("Icon",        iconName)
-		);
+		return new SearchWidgetResult(index, title, description, iconName);
 	}
 }

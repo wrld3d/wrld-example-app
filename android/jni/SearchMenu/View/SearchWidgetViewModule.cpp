@@ -28,7 +28,8 @@ namespace ExampleApp
 						*m_pMyTestSearchProvider);
 				m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(
 						*m_pSearchWidgetView,
-						messageBus
+						messageBus,
+						*m_pSearchServices
 				);
 			}
 
