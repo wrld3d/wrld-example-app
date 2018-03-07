@@ -58,10 +58,12 @@ set(ios_frameworks
   -framework CoreMotion
   -framework CoreBluetooth
   -framework IndoorAtlas
-  -framework StepInsideSdk")
+  -framework StepInsideSdk
+  -framework WrldSearchWidget
+")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
-set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab")
+set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab ${CMAKE_CURRENT_SOURCE_DIR}/Include/WrldSearchWidget")
 set(libs "${eegeo_sdk_libs} -lturbojpeg -lz -lcurl -luv")
 set(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 
