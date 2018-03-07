@@ -21,7 +21,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 	*	We recommend you run this step frequently to keep your SDK version up to date.
 3.  In the `ios` directory, run `mkdir build` to create a build directory.
 4.  In the `ios/build` directory, run `cmake -G Xcode ..` to generate a project file.
-5.  Still in the `ios/build` directory, run `python ../embedsenion.py` to set the embed framework build phases in the project file.
+5.  Still in the `ios/build` directory, run `python ../embed_frameworks.py` to set the embed framework build phases in the project file.
 6.  Open the `ProjectSwallowApp.xcodeproj` project file in Xcode.
 7.  Build and run the ProjectSwallowApp target.
 
