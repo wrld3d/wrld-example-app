@@ -71,7 +71,7 @@ namespace ExampleApp
 					HandleSpecialCases(*it, desc, icon);
 
 					m_searchResults.push_back(SearchServicesResult(name, desc, icon,
-																   std::distance(sdkResults.begin(), it),
+																   static_cast<int>(std::distance(sdkResults.begin(), it)),
 																   *it));
 				}
 
