@@ -9,6 +9,7 @@
 #include "RenderCamera.h"
 #include "SearchResultModel.h"
 #include "BidirectionalBus.h"
+#include "SearchQueryRefreshedMessage.h"
 #include "SearchQueryResultsRemovedMessage.h"
 #include "CameraState.h"
 #include "ICameraTransitionController.h"
@@ -112,6 +113,11 @@ namespace ExampleApp
                 SearchQuery searchQuery(query, isTag, tryInteriorSearch, location, radius);
                 m_previousQuery = searchQuery;
                 m_searchService.PerformLocationQuerySearch(searchQuery);
+            }
+
+            void SearchQueryPerformer::AskForQueryRefresh(const SearchQuery& query, bool useRadius)
+            {
+                m_messageBus.Publish(SearchQueryRefreshedMessage(query, useRadius));
             }
 
             void SearchQueryPerformer::RemoveSearchQueryResults()

@@ -30,6 +30,8 @@ namespace ExampleApp
                 
                 virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, bool shouldZoomToBuildingsView, const Eegeo::Space::LatLongAltitude& location, float radius) = 0;
 
+                virtual void AskForQueryRefresh(const SearchQuery& query, bool useRadius) = 0;
+
                 virtual void RemoveSearchQueryResults() = 0;
 
                 virtual void InsertOnSearchResultsClearedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

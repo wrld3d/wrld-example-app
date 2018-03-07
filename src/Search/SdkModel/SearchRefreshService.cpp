@@ -156,11 +156,11 @@ namespace ExampleApp
                     if (previousQuery.IsTag() && previousQuery.Query() == Search::Swallow::SearchConstants::OFFICE_CATEGORY_NAME)
                     {
                         // Bodged for Swallow Office category query.
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), false, currentLocation, previousQuery.Radius());
+                        m_searchQueryPerformer.AskForQueryRefresh(previousQuery, true);
                     }
                     else
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), false, currentLocation);
+                        m_searchQueryPerformer.AskForQueryRefresh(previousQuery, false);
                     }
 
                     if (m_interiorInteractionModel.HasInteriorModel())
