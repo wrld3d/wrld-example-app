@@ -115,9 +115,21 @@ namespace ExampleApp
                 m_searchService.PerformLocationQuerySearch(searchQuery);
             }
 
-            void SearchQueryPerformer::AskForQueryRefresh(const SearchQuery& query, bool useRadius)
+            void SearchQueryPerformer::AskForQueryRefresh(const SearchQuery& query,
+														  const Eegeo::Space::LatLongAltitude& location)
             {
-                m_messageBus.Publish(SearchQueryRefreshedMessage(query, useRadius));
+                m_messageBus.Publish(SearchQueryRefreshedMessage(query,
+                                                                 location,
+                                                                 GetSearchRadius(m_cameraController.GetRenderCamera())));
+            }
+
+            void SearchQueryPerformer::AskForQueryRefresh(const SearchQuery& query,
+														  const Eegeo::Space::LatLongAltitude& location,
+                                                          float radius)
+            {
+                m_messageBus.Publish(SearchQueryRefreshedMessage(query,
+                                                                 location,
+                                                                 radius));
             }
 
             void SearchQueryPerformer::RemoveSearchQueryResults()

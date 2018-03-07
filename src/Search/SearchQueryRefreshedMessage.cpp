@@ -6,21 +6,29 @@ namespace ExampleApp
 {
     namespace Search
     {
-        SearchQueryRefreshedMessage::SearchQueryRefreshedMessage(const SdkModel::SearchQuery& searchQuery,
-                                                                 bool useRadius)
-        : m_query(searchQuery)
-        , m_useRadius(useRadius)
-        {
-        }
+		SearchQueryRefreshedMessage::SearchQueryRefreshedMessage(const SdkModel::SearchQuery& searchQuery,
+																 const Eegeo::Space::LatLongAltitude& location,
+																 float radius)
+		: m_query(searchQuery)
+		, m_location(location)
+		, m_radius(radius)
+		{
+		}
 
-        const SdkModel::SearchQuery& SearchQueryRefreshedMessage::Query() const
+
+		const SdkModel::SearchQuery& SearchQueryRefreshedMessage::Query() const
         {
             return m_query;
         }
 
-        bool SearchQueryRefreshedMessage::UseRadius() const
-        {
-            return m_useRadius;
-        }
+		const Eegeo::Space::LatLongAltitude& SearchQueryRefreshedMessage::Location() const
+		{
+			return m_location;
+		}
+
+		float SearchQueryRefreshedMessage::Radius() const
+		{
+			return m_radius;
+		}
     }
 }
