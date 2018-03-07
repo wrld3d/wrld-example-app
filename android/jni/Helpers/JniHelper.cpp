@@ -57,7 +57,7 @@ namespace ExampleApp
 												  ...)
 		{
 			va_list constructor_args;
-			va_start(constructor_args, javaClass);
+			va_start(constructor_args, size);
 
 			jmethodID classConstructor = env->GetMethodID(javaClass, "<init>",
 														  constructorSignature.c_str());
