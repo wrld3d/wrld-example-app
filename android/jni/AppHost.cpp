@@ -121,7 +121,6 @@ AppHost::AppHost(
     ,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
     ,m_pInputProcessor(NULL)
     ,m_pAndroidPlatformAbstractionModule(NULL)
-    ,m_pSearchMenuViewModule(NULL)
 	,m_pSearchResultSectionViewModule(NULL)
     ,m_pSearchWidgetViewModule(NULL)
     ,m_pModalBackgroundViewModule(NULL)
@@ -502,17 +501,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                        m_messageBus
                                    );
 
-    m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(
-                                        "com/eegeo/searchmenu/SearchMenuView",
-                                        m_nativeState,
-                                        app.SearchMenuModule().GetSearchMenuModel(),
-                                        app.SearchMenuModule().GetSearchMenuViewModel(),
-										app.SearchMenuModule().GetSearchSectionViewModel(),
-                                        app.TagSearchModule().GetTagSearchRepository(),
-	                                    app.SearchMenuModule().GetSearchMenuOptionsModel(),
-										m_pModalBackgroundViewModule->GetModalBackgroundView(),
-                                        m_messageBus
-                                    );
 
     m_pSearchWidgetViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetViewModule)(
                                         m_nativeState,
@@ -597,7 +585,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
+
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchWidgetViewModule->GetSearchWidgetController());
 
     SetTouchExclusivity();
@@ -634,8 +622,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pTagSearchViewModule;
 
         Eegeo_DELETE m_pSearchWidgetViewModule;
-
-        Eegeo_DELETE m_pSearchMenuViewModule;
 
         Eegeo_DELETE m_pModalBackgroundViewModule;
 

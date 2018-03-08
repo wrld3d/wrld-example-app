@@ -123,7 +123,6 @@ private:
 
 
     Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;
-    ExampleApp::Menu::View::IMenuViewModule* m_pSearchMenuViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
     ExampleApp::SearchMenu::View::SearchWidgetViewModule* m_pSearchWidgetViewModule;
     ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;

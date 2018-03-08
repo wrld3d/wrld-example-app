@@ -41,7 +41,7 @@ namespace ExampleApp
                                        ExampleAppMessaging::TMessageBus& messageBus);
                 ~SearchWidgetController();
 
-               void OnSearchResultsCleared();
+                void OnSearchResultsCleared();
                 void OnSearchResultSelected(int& index);
                 void RefreshPresentation(bool forceRefresh);
                 virtual void UpdateUiThread(float dt);

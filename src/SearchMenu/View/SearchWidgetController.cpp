@@ -60,6 +60,7 @@ namespace ExampleApp
             {
 				m_view.RemoveResultSelectedCallback(m_onSearchResultSelectedCallback);
                 m_view.RemoveSearchClearedCallback(m_onSearchResultsClearedCallback);
+                m_view.RemoveOnItemSelected(m_onItemSelectedCallback);
             }
 
             void SearchWidgetController::OnSearchResultsCleared()

@@ -44,10 +44,11 @@ namespace ExampleApp
 			SearchWidgetViewModule::~SearchWidgetViewModule()
 			{
 				ASSERT_UI_THREAD
-
+				Eegeo_DELETE m_pSearchWidgetController;
 				Eegeo_DELETE m_pSearchWidgetView;
 				Eegeo_DELETE m_pSearchServices;
 				Eegeo_DELETE m_pMyTestSearchProvider;
+
 			}
 		}
 
