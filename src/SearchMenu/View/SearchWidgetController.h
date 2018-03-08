@@ -1,6 +1,4 @@
-//
-// Created by david.crooks on 01/03/2018.
-//
+// Copyright WRLD Ltd (2018-), All Rights Reserved
 
 #pragma once
 
@@ -8,6 +6,7 @@
 #include "CallbackCollection.h"
 #include "ISearchWidgetView.h"
 #include "SearchServices.h"
+#include "SearchQueryRefreshedMessage.h"
 
 namespace ExampleApp
 {
@@ -23,6 +22,8 @@ namespace ExampleApp
 
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onSearchResultsClearedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, int> m_onSearchResultSelectedCallback;
+				Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::SearchQueryRefreshedMessage&>
+																		m_onSearchQueryRefreshedHandler;
 
             public:
                 SearchWidgetController(ISearchWidgetView& view,
@@ -32,6 +33,8 @@ namespace ExampleApp
 
                 void OnSearchResultsCleared();
                 void OnSearchResultSelected(int& index);
+
+				void OnSearchQueryRefreshedMessage(const Search::SearchQueryRefreshedMessage& message);
             };
         }
     }

@@ -19,6 +19,31 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
     pSearch->PerformSearch(queryString);
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_searchRefresh(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jstring searchQuery,
+        jboolean isTag,
+        jboolean tryInterior,
+        jdouble latitude,
+        jdouble longitude,
+        jdouble altitude,
+        jfloat radius)
+{
+    ASSERT_UI_THREAD
+
+    const char* chars = jenv->GetStringUTFChars(searchQuery, 0);
+    std::string queryString = chars;
+    jenv->ReleaseStringUTFChars(searchQuery, chars);
+
+    ExampleApp::SearchProviders::MyTestSearchProvider* pSearch = reinterpret_cast<ExampleApp::SearchProviders::MyTestSearchProvider*>(nativeObjectPtr);
+
+    pSearch->PerformSearchRefresh(queryString,
+                                  (bool)isTag, (bool)tryInterior,
+                                  (double)latitude, (double)longitude, (double)altitude,
+                                  (float)radius);
+}
+
 JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_cancel(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr)

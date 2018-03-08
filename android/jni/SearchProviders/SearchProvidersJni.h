@@ -11,6 +11,17 @@ extern "C"
             jlong nativeObjectPtr,
             jstring searchQuery);
 
+    JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_searchRefresh(
+            JNIEnv* jenv, jobject obj,
+            jlong nativeObjectPtr,
+            jstring searchQuery,
+            jboolean isTag,
+            jboolean tryInterior,
+            jdouble latitude,
+            jdouble longitude,
+            jdouble altitude,
+            jfloat radius);
+
     JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_cancel(
             JNIEnv* jenv, jobject obj,
             jlong nativeObjectPtr);

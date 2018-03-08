@@ -31,11 +31,37 @@ namespace ExampleApp
                         m_nativeState.activity,
                         (jlong) this,
                         searchProvider.GetJavaInstance());
+
+                m_onSearchRefreshed = env->GetMethodID(m_uiViewClass,
+                                                       "onSearchRefreshed",
+                                                       "(Ljava/lang/String;ZZDDDF)V");
             }
 
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
             {
 
+            }
+
+            void SearchWidgetView::RefreshSearch(const std::string& query, const QueryContext& context)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jstring text = env->NewStringUTF(query.c_str());
+
+                env->CallVoidMethod(m_uiView,
+                                    m_onSearchRefreshed,
+                                    text,
+                                    (jboolean)context.GetIsTag(),
+                                    (jboolean)context.GetShouldTryInterior(),
+                                    (jdouble)context.GetLocation().GetLongitude(),
+                                    (jdouble)context.GetLocation().GetLatitude(),
+                                    (jdouble)context.GetLocation().GetAltitude(),
+                                    (jfloat)context.GetRadius());
+
+                env->DeleteLocalRef(text);
             }
 
             void SearchWidgetView::OnSearchResultsCleared()

@@ -56,6 +56,19 @@ namespace ExampleApp
 			m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
 		}
 
+		void MyTestSearchProvider::PerformSearchRefresh(
+				const std::string& searchQuery,
+				bool isTag, bool tryInterior,
+				double latitude, double longitude, double altitude,
+				float radius)
+		{
+			m_searchRefreshedCallbacks.ExecuteCallbacks(searchQuery,
+														SearchMenu::View::QueryContext(
+															isTag, tryInterior,
+															Eegeo::Space::LatLongAltitude(latitude, longitude, altitude),
+															radius));
+		}
+
 		void MyTestSearchProvider::CancelSearch()
 		{
 			ASSERT_UI_THREAD
@@ -123,6 +136,22 @@ namespace ExampleApp
 			ASSERT_UI_THREAD
 
 			m_searchPerformedCallbacks.RemoveCallback(callback);
+		}
+
+		void MyTestSearchProvider::InsertSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&,
+																							const SearchMenu::View::QueryContext&>& callback)
+		{
+			ASSERT_UI_THREAD
+
+			m_searchRefreshedCallbacks.AddCallback(callback);
+		}
+
+		void MyTestSearchProvider::RemoveSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&,
+																							const SearchMenu::View::QueryContext&>& callback)
+		{
+			ASSERT_UI_THREAD
+
+			m_searchRefreshedCallbacks.RemoveCallback(callback);
 		}
 
 		void MyTestSearchProvider::InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback)

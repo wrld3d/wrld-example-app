@@ -12,6 +12,7 @@ import com.wrld.widgets.searchbox.model.SearchResultPropertyString;
 import com.wrld.widgets.searchbox.view.ISearchResultViewFactory;
 
 import com.eegeo.searchmenu.SearchWidgetResult;
+import com.eegeo.searchproviders.QueryContext;
 
 import java.util.HashSet;
 
@@ -48,7 +49,22 @@ public class MyTestSearchProvider implements SearchProvider
 	{
 		m_lastQueryText = queryText;
 
-		SearchProvidersJniMethods.search(m_nativeCallerPointer, queryText);
+		if (queryContext == null)
+		{
+			SearchProvidersJniMethods.search(m_nativeCallerPointer, queryText);
+			return;
+		}
+
+		QueryContext context = (QueryContext)queryContext;
+
+		SearchProvidersJniMethods.searchRefresh(m_nativeCallerPointer,
+											    queryText,
+												context.GetIsTag(),
+												context.GetTryInterior(),
+												context.GetLatitude(),
+												context.GetLongitude(),
+												context.GetAltitude(),
+												context.GetRadius());
 	}
 
 	public void onSearchCompleted(SearchResultInfo[] searchResults)

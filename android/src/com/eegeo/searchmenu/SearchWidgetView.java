@@ -4,6 +4,7 @@ package com.eegeo.searchmenu;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.ProjectSwallowApp.R;
+import com.eegeo.searchproviders.QueryContext;
 
 import android.util.Log;
 import android.view.View;
@@ -75,6 +76,15 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
         SearchWidgetViewJniMethods.OnSearchResultSelected(
                 m_nativeCallerPointer,
                 widgetResult.getIndex());
+    }
+
+    public void onSearchRefreshed(String text, boolean isTag, boolean tryInterior,
+                                  double latitude, double longitude, double altitude,
+                                  float radius)
+    {
+        m_searchWidget.doSearch(text, new QueryContext(isTag, tryInterior,
+                                                       latitude, longitude, altitude,
+                                                       radius));
     }
 
     public boolean onMenuOptionSelected(final String text, final Object context) {

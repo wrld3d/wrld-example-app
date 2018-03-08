@@ -24,6 +24,7 @@ namespace ExampleApp
 				ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 Eegeo::Helpers::TCallback1<SearchServices, const std::string&> m_onSearchCallback;
+				Eegeo::Helpers::TCallback2<SearchServices, const std::string&, const QueryContext&> m_onSearchRefreshCallback;
 				Eegeo::Helpers::TCallback0<SearchServices> m_onCancelCallback;
 				Eegeo::Helpers::TCallback1<SearchServices, const Search::SearchQueryResponseReceivedMessage&> m_responseReceivedHandler;
 
@@ -41,7 +42,9 @@ namespace ExampleApp
 
 			private:
 				void OnSearch(const std::string& searchQuery);
+				void OnSearchRefresh(const std::string& searchQuery, const QueryContext& context);
 				void OnCancel();
+
 				void OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message);
 
 				int CountResultsShown(const std::vector<TSdkSearchResult>& sdkResults);
