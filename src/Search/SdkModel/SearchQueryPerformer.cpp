@@ -116,18 +116,22 @@ namespace ExampleApp
             }
 
             void SearchQueryPerformer::AskForQueryRefresh(const SearchQuery& query,
-														  const Eegeo::Space::LatLongAltitude& location)
+                                                          bool shouldZoomToBuildingsView,
+                                                          const Eegeo::Space::LatLongAltitude& location)
             {
                 m_messageBus.Publish(SearchQueryRefreshedMessage(query,
+                                                                 shouldZoomToBuildingsView,
                                                                  location,
                                                                  GetSearchRadius(m_cameraController.GetRenderCamera())));
             }
 
             void SearchQueryPerformer::AskForQueryRefresh(const SearchQuery& query,
-														  const Eegeo::Space::LatLongAltitude& location,
+                                                          bool shouldZoomToBuildingsView,
+                                                          const Eegeo::Space::LatLongAltitude& location,
                                                           float radius)
             {
                 m_messageBus.Publish(SearchQueryRefreshedMessage(query,
+                                                                 shouldZoomToBuildingsView,
                                                                  location,
                                                                  radius));
             }

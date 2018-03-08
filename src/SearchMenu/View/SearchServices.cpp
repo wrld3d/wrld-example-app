@@ -56,8 +56,8 @@ namespace ExampleApp
 				// TODO: new message that includes location and radius
 
 				m_messageBus.Publish(SearchMenuPerformedSearchMessage(searchQuery,
-																	  context.GetIsTag(),
-																	  context.GetShouldTryInterior()));
+																	  context.IsTag(),
+																	  context.ShouldTryInterior()));
 			}
 
 			void SearchServices::OnCancel()

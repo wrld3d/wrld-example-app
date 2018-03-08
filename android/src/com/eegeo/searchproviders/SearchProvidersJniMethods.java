@@ -6,7 +6,7 @@ public class SearchProvidersJniMethods
 {
     public static native void search(long nativeCallerPointer, String searchQuery);
     public static native void searchRefresh(long nativeCallerPointer, String searchQuery,
-                                            boolean isTag, boolean tryInterior,
+                                            boolean isTag, boolean tryInterior, boolean shouldZoomToBuildingsView,
                                             double latitude, double longitude, double altitude,
                                             float radius);
     public static native void cancel(long nativeCallerPointer);

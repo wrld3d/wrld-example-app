@@ -43,9 +43,7 @@ namespace ExampleApp
 
 			void PerformSearch(const std::string& searchQuery);
 			void PerformSearchRefresh(const std::string& searchQuery,
-									  bool isTag, bool tryInterior,
-									  double latitude, double longitude, double altitude,
-									  float radius);
+									  const SearchMenu::View::QueryContext& queryContext);
 			void CancelSearch();
 
 			void OnSearchResponseReceived(const TSearchResults& searchResults);

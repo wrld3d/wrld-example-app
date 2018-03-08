@@ -34,7 +34,7 @@ namespace ExampleApp
 
                 m_onSearchRefreshed = env->GetMethodID(m_uiViewClass,
                                                        "onSearchRefreshed",
-                                                       "(Ljava/lang/String;ZZDDDF)V");
+                                                       "(Ljava/lang/String;ZZZDDDF)V");
             }
 
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
@@ -143,12 +143,13 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView,
                                     m_onSearchRefreshed,
                                     text,
-                                    (jboolean)context.GetIsTag(),
-                                    (jboolean)context.GetShouldTryInterior(),
-                                    (jdouble)context.GetLocation().GetLongitude(),
-                                    (jdouble)context.GetLocation().GetLatitude(),
-                                    (jdouble)context.GetLocation().GetAltitude(),
-                                    (jfloat)context.GetRadius());
+                                    (jboolean)context.IsTag(),
+                                    (jboolean)context.ShouldTryInterior(),
+                                    (jboolean)context.ShouldZoomToBuildingsView(),
+                                    (jdouble)context.Location().GetLongitude(),
+                                    (jdouble)context.Location().GetLatitude(),
+                                    (jdouble)context.Location().GetAltitude(),
+                                    (jfloat)context.Radius());
 
                 env->DeleteLocalRef(text);
             }

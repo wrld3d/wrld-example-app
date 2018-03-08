@@ -8,29 +8,40 @@ namespace ExampleApp
 	{
 		namespace View
 		{
-			QueryContext::QueryContext(bool isTag, bool shouldTryInterior,
-															 const Eegeo::Space::LatLongAltitude& location,
-															 float radius)
+			QueryContext::QueryContext(bool isTag,
+									   bool shouldTryInterior,
+									   bool shouldZoomToBuildingsView,
+									   const Eegeo::Space::LatLongAltitude& location,
+									   float radius)
 			: m_isTag(isTag)
 			, m_shouldTryInterior(shouldTryInterior)
+			, m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
 			, m_location(location)
 			, m_radius(radius)
 			{
 			}
 
-			bool QueryContext::GetIsTag() const
+			bool QueryContext::IsTag() const
 			{
 				return m_isTag;
 			}
-			bool QueryContext::GetShouldTryInterior() const
+
+			bool QueryContext::ShouldTryInterior() const
 			{
 				return m_shouldTryInterior;
 			}
-			const Eegeo::Space::LatLongAltitude& QueryContext::GetLocation() const
+
+			bool QueryContext::ShouldZoomToBuildingsView() const
+			{
+				return m_shouldZoomToBuildingsView;
+			}
+
+			const Eegeo::Space::LatLongAltitude& QueryContext::Location() const
 			{
 				return m_location;
 			}
-			float QueryContext::GetRadius() const
+
+			float QueryContext::Radius() const
 			{
 				return m_radius;
 			}

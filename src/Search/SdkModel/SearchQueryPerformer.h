@@ -61,8 +61,8 @@ namespace ExampleApp
                 void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, bool shouldZoomToBuildingsView, const Eegeo::Space::LatLongAltitude& location);
                 void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, bool shouldZoomToBuildingsView, const Eegeo::Space::LatLongAltitude& location, float radius);
 
-				void AskForQueryRefresh(const SearchQuery& query, const Eegeo::Space::LatLongAltitude& location);
-				void AskForQueryRefresh(const SearchQuery& query, const Eegeo::Space::LatLongAltitude& location, float radius);
+				void AskForQueryRefresh(const SearchQuery& query, bool shouldZoomToBuildingsView, const Eegeo::Space::LatLongAltitude& location);
+				void AskForQueryRefresh(const SearchQuery& query, bool shouldZoomToBuildingsView, const Eegeo::Space::LatLongAltitude& location, float radius);
 
                 void RemoveSearchQueryResults();
 

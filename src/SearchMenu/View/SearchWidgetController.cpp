@@ -91,6 +91,7 @@ namespace ExampleApp
 
                 m_view.RefreshSearch(query.Query(), QueryContext(query.IsTag(),
                                                                  query.ShouldTryInteriorSearch(),
+                                                                 message.ShouldZoomToBuildingsView(),
                                                                  message.Location(),
                                                                  message.Radius()));
             }
