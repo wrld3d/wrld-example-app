@@ -8,7 +8,7 @@
 #include "SearchWidgetController.h"
 #include "MyTestSearchProvider.h"
 #include "SearchServices.h"
-
+#include "IMenuSectionsViewModel.h"
 namespace ExampleApp
 {
     namespace SearchMenu
@@ -27,9 +27,10 @@ namespace ExampleApp
 			public:
 				SearchWidgetViewModule(
 					AndroidNativeState& nativeState,
+					Menu::View::IMenuSectionsViewModel& viewModel,
 					ExampleAppMessaging::TMessageBus& messageBus
 				);
-
+				SearchWidgetController& GetSearchWidgetController() const;
 				~SearchWidgetViewModule();
 			};
     	}

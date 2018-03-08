@@ -39,7 +39,96 @@ namespace ExampleApp
 
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
             {
+                ASSERT_UI_THREAD
 
+                if (!contentsChanged)
+                {
+                    return;
+                }
+                const size_t numSections = sections.size();
+                size_t numItems = 0;
+                for(size_t i = 0; i < numSections; ++ i)
+                {
+                    const Menu::View::IMenuSectionViewModel& section = *(sections.at(i));
+                    numItems += section.GetTotalItemCount() + 1;
+                }
+
+                // m_currentSections = sections;
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jstring strClassName = env->NewStringUTF("java/lang/String");
+                jclass strClass = m_nativeState.LoadClass(env, strClassName);
+                env->DeleteLocalRef(strClassName);
+
+                jobjectArray groupNamesArray = env->NewObjectArray(numSections, strClass, 0);
+                jintArray groupSizesArray = env->NewIntArray(numSections);
+                jobjectArray childNamesArray = env->NewObjectArray(numItems, strClass, 0);
+                env->DeleteLocalRef(strClass);
+
+                size_t currentChildIndex = 0;
+                for(size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
+                {
+                    const Menu::View::IMenuSectionViewModel& section = *(sections.at(groupIndex));
+                    int totalItems = section.GetTotalItemCount();
+
+                    if (section.IsExpandable())
+                    {
+                        totalItems++;
+                    }
+
+                    for(size_t childIndex = 0; childIndex < totalItems; childIndex++)
+                    {
+                        int itemIndex = section.IsExpandable() ? childIndex-1 : childIndex;
+
+                        std::string jsonData = section.IsExpandable() && childIndex == 0
+                                               ? section.SerializeJson()
+                                               : section.GetItemAtIndex(itemIndex).SerializeJson();
+
+                        jstring jsonDataStr = env->NewStringUTF(jsonData.c_str());
+                        env->SetObjectArrayElement(childNamesArray, currentChildIndex, jsonDataStr);
+                        env->DeleteLocalRef(jsonDataStr);
+                        currentChildIndex++;
+                    }
+
+                    jstring groupNameJni = env->NewStringUTF(section.SerializeJson().c_str());
+                    env->SetObjectArrayElement(groupNamesArray, groupIndex, groupNameJni);
+                    env->DeleteLocalRef(groupNameJni);
+
+                    jint groupSize = (jint)(totalItems);
+                    env->SetIntArrayRegion(groupSizesArray, groupIndex, 1, &groupSize);
+                }
+
+                jmethodID populateData = env->GetMethodID(m_uiViewClass, "populateData", "(J[Ljava/lang/String;[I[Ljava/lang/String;)V");
+
+                env->CallVoidMethod(
+                        m_uiView,
+                        populateData,
+                        (jlong)(this),
+                        groupNamesArray,
+                        groupSizesArray,
+                        childNamesArray
+                );
+
+                env->DeleteLocalRef(groupNamesArray);
+                env->DeleteLocalRef(groupSizesArray);
+                env->DeleteLocalRef(childNamesArray);
+            }
+
+            void SearchWidgetView::HandleItemSelected(int sectionIndex, int itemIndex){
+                ASSERT_UI_THREAD
+                m_onItemSelectedCallbacks.ExecuteCallbacks(sectionIndex, itemIndex);
+            }
+
+            void SearchWidgetView::InsertOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback){
+                ASSERT_UI_THREAD
+                m_onItemSelectedCallbacks.AddCallback(callback);
+            }
+
+            void SearchWidgetView::RemoveOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback){
+                ASSERT_UI_THREAD
+                m_onItemSelectedCallbacks.RemoveCallback(callback);
             }
 
             void SearchWidgetView::RefreshSearch(const std::string& query, const QueryContext& context)

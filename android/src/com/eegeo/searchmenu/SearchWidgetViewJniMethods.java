@@ -6,4 +6,5 @@ public class SearchWidgetViewJniMethods
 {
 	public static native void OnSearchResultsCleared(long nativeCallerPointer);
 	public static native void OnSearchResultSelected(long nativeCallerPointer, int index);
+	public static native void SelectedItem(long nativeCallerPointer, int sectionIndex, int itemIndex);
 }
