@@ -146,8 +146,8 @@ namespace ExampleApp
                                     (jboolean)context.IsTag(),
                                     (jboolean)context.ShouldTryInterior(),
                                     (jboolean)context.ShouldZoomToBuildingsView(),
-                                    (jdouble)context.Location().GetLongitude(),
                                     (jdouble)context.Location().GetLatitude(),
+                                    (jdouble)context.Location().GetLongitude(),
                                     (jdouble)context.Location().GetAltitude(),
                                     (jfloat)context.Radius());
 
