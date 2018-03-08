@@ -24,6 +24,7 @@ namespace ExampleApp
 
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
+                Eegeo::Helpers::CallbackCollection2<int, int> m_onItemSelectedCallbacks;
 
             public:
                 SearchWidgetView(AndroidNativeState& nativeState,
@@ -39,6 +40,10 @@ namespace ExampleApp
 
                 void InsertResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
                 void RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
+
+                void HandleItemSelected(int sectionIndex, int itemIndex);
+                void InsertOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback);
+                void RemoveOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback);
             };
         }
     }

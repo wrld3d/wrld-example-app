@@ -16,4 +16,11 @@ extern "C"
             jlong nativeObjectPtr,
             jint index
         );
+
+    JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_SelectedItem(
+            JNIEnv* jenv, jobject obj,
+            jlong nativeObjectPtr,
+            jint sectionIndex,
+            jint itemIndex
+        );
 }

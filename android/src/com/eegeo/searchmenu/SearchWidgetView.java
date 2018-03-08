@@ -79,7 +79,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
 
     public boolean onMenuOptionSelected(final String text, final Object context) {
         MenuIndexPath indexPath = (MenuIndexPath) context;
-       //SeacrhWidgetJniMethods.SelectedItem(m_nativeCallerPointer, indexPath.m_section, indexPath.m_item);
+        SearchWidgetViewJniMethods.SelectedItem(m_nativeCallerPointer, indexPath.m_section, indexPath.m_item);
         return true;
     }
 
@@ -119,7 +119,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
             menuGroup.addOption(menuOption);
 
             for (int i = 1; i < sizeWithoutHeader; ++i) {
-                MenuIndexPath indexPath = new MenuIndexPath(groupIndex, i);
+                MenuIndexPath indexPath = new MenuIndexPath(optionIndex, i);
                 String childJson = childJsons[childIndex];
                 String name = getFromJson(childJson, "name");
                 String iconName = getFromJson(childJson, "icon");
@@ -132,8 +132,6 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
             childIndex++;
         }
 
-
-
         m_searchWidget.addMenuGroup(menuGroup);
 
     }
@@ -144,7 +142,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
             String name = json.getString(tag);
             return name;
         } catch (Exception e) {
-            Log.e("MenuView", String.format("Unable to parse %s from group JSON: %s", tag, e.toString()));
+            Log.e("SearchWidgetView", String.format("Unable to parse %s from group JSON: %s", tag, e.toString()));
             return null;
         }
     }

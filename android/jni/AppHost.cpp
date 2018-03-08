@@ -516,6 +516,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pSearchWidgetViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetViewModule)(
                                         m_nativeState,
+                                        app.SearchMenuModule().GetSearchMenuViewModel(),
                                         m_messageBus
                                     );
 
@@ -597,6 +598,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchWidgetViewModule->GetSearchWidgetController());
 
     SetTouchExclusivity();
 

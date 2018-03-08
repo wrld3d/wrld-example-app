@@ -24,3 +24,17 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_OnSe
     ExampleApp::SearchMenu::View::SearchWidgetView* pView = reinterpret_cast<ExampleApp::SearchMenu::View::SearchWidgetView*>(nativeObjectPtr);
     pView->OnSearchResultSelected((int)index);
 }
+
+
+JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_SelectedItem(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jint sectionIndex,
+        jint itemIndex)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::SearchMenu::View::SearchWidgetView* pView = reinterpret_cast<ExampleApp::SearchMenu::View::SearchWidgetView*>(nativeObjectPtr);
+        pView->HandleItemSelected(sectionIndex, itemIndex);
+}
+  

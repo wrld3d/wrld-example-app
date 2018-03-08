@@ -12,6 +12,7 @@ namespace ExampleApp
 		{
 			SearchWidgetViewModule::SearchWidgetViewModule(
 				AndroidNativeState& nativeState,
+                Menu::View::IMenuSectionsViewModel& viewModel,
 				ExampleAppMessaging::TMessageBus& messageBus
 			)
 			{
@@ -26,11 +27,18 @@ namespace ExampleApp
 				m_pSearchWidgetView = Eegeo_NEW(SearchWidgetView)(
 						nativeState,
 						*m_pMyTestSearchProvider);
+
 				m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(
 						*m_pSearchWidgetView,
-						messageBus,
-						*m_pSearchServices
-				);
+						*m_pSearchServices,
+						viewModel,
+						messageBus);
+			}
+
+			SearchWidgetController& SearchWidgetViewModule::GetSearchWidgetController() const{
+				ASSERT_UI_THREAD
+
+				return *m_pSearchWidgetController;
 			}
 
 			SearchWidgetViewModule::~SearchWidgetViewModule()

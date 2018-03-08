@@ -21,6 +21,9 @@ namespace ExampleApp
 
                 virtual void InsertResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
                 virtual void RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
+                virtual void HandleItemSelected(int sectionIndex, int itemIndex) = 0;
+                virtual void InsertOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback) = 0;
+                virtual void RemoveOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback) = 0;
             };
         }
     }
