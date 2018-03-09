@@ -6,7 +6,8 @@ import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
-
+import com.wrld.widgets.searchbox.WrldSearchWidget;
+import android.app.SearchManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -219,7 +220,14 @@ public class BackgroundThreadActivity extends MainActivity
     @Override
     public void onNewIntent(Intent intent) {
         m_deepLinkUrlData = intent.getData();
-
+        setIntent(intent);
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            if(query != null) {
+                WrldSearchWidget searchWidget = (WrldSearchWidget)getFragmentManager().findFragmentById(R.id.search_widget);
+                searchWidget.doSearch(query, null);
+            }
+        }
     }
 
     public void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer)
