@@ -53,11 +53,12 @@ namespace ExampleApp
 
 			void SearchServices::OnSearchRefresh(const std::string& searchQuery, const QueryContext& context)
 			{
-				// TODO: new message that includes location and radius
-
-				m_messageBus.Publish(SearchMenuPerformedSearchMessage(searchQuery,
-																	  context.GetIsTag(),
-																	  context.GetShouldTryInterior()));
+				m_messageBus.Publish(SearchMenuRefreshedSearchMessage(searchQuery,
+																	  context.IsTag(),
+																	  context.ShouldTryInterior(),
+																	  context.ShouldZoomToBuildingsView(),
+																	  context.Location(),
+																	  context.Radius()));
 			}
 
 			void SearchServices::OnCancel()

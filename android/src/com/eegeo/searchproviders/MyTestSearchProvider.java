@@ -59,12 +59,13 @@ public class MyTestSearchProvider implements SearchProvider
 
 		SearchProvidersJniMethods.searchRefresh(m_nativeCallerPointer,
 											    queryText,
-												context.GetIsTag(),
-												context.GetTryInterior(),
-												context.GetLatitude(),
-												context.GetLongitude(),
-												context.GetAltitude(),
-												context.GetRadius());
+												context.IsTag(),
+												context.TryInterior(),
+												context.ShouldZoomToBuildingsView(),
+												context.Latitude(),
+												context.Longitude(),
+												context.Altitude(),
+												context.Radius());
 	}
 
 	public void onSearchCompleted(SearchResultInfo[] searchResults)

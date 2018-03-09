@@ -14,18 +14,20 @@ namespace ExampleApp
 			{
 				bool m_isTag;
 				bool m_shouldTryInterior;
-				const Eegeo::Space::LatLongAltitude m_location;
+				bool m_shouldZoomToBuildingsView;
+				Eegeo::Space::LatLongAltitude m_location;
 				float m_radius;
 
 			public:
-				QueryContext(bool isTag, bool shouldTryInterior,
+				QueryContext(bool isTag, bool shouldTryInterior, bool shouldZoomToBuildingsView,
 							 const Eegeo::Space::LatLongAltitude& location,
 							 float radius);
 
-				bool GetIsTag() const;
-				bool GetShouldTryInterior() const;
-				const Eegeo::Space::LatLongAltitude& GetLocation() const;
-				float GetRadius() const;
+				bool IsTag() const;
+				bool ShouldTryInterior() const;
+				bool ShouldZoomToBuildingsView() const;
+				const Eegeo::Space::LatLongAltitude& Location() const;
+				float Radius() const;
 			};
 		}
 	}

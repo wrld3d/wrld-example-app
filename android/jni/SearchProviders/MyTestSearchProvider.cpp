@@ -56,17 +56,10 @@ namespace ExampleApp
 			m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
 		}
 
-		void MyTestSearchProvider::PerformSearchRefresh(
-				const std::string& searchQuery,
-				bool isTag, bool tryInterior,
-				double latitude, double longitude, double altitude,
-				float radius)
+		void MyTestSearchProvider::PerformSearchRefresh(const std::string& searchQuery,
+														const SearchMenu::View::QueryContext& queryContext)
 		{
-			m_searchRefreshedCallbacks.ExecuteCallbacks(searchQuery,
-														SearchMenu::View::QueryContext(
-															isTag, tryInterior,
-															Eegeo::Space::LatLongAltitude(latitude, longitude, altitude),
-															radius));
+			m_searchRefreshedCallbacks.ExecuteCallbacks(searchQuery, queryContext);
 		}
 
 		void MyTestSearchProvider::CancelSearch()
