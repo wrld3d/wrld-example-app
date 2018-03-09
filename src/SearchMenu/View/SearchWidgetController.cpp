@@ -59,6 +59,7 @@ namespace ExampleApp
 
             SearchWidgetController::~SearchWidgetController()
             {
+                m_messageBus.UnsubscribeUi(m_onAppModeChanged);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
 
 				m_view.RemoveResultSelectedCallback(m_onSearchResultSelectedCallback);
@@ -108,6 +109,10 @@ namespace ExampleApp
 
             void SearchWidgetController::OnItemSelected(int& sectionIndex, int& itemIndex){
                 Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(sectionIndex);
+
+                if(section.IsExpandable() && section.Size()==1)
+                    return;
+
                 const int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
                 section.GetItemAtIndex(index).MenuOption().Select();
             }
