@@ -32,8 +32,8 @@ namespace ExampleApp
                         (jlong) this,
                         searchProvider.GetJavaInstance());
 
-                m_onSearchRefreshed = env->GetMethodID(m_uiViewClass,
-                                                       "onSearchRefreshed",
+                m_onSearchPerformed = env->GetMethodID(m_uiViewClass,
+                                                       "onSearchPerformed",
                                                        "(Ljava/lang/String;ZZZDDDF)V");
             }
 
@@ -131,7 +131,7 @@ namespace ExampleApp
                 m_onItemSelectedCallbacks.RemoveCallback(callback);
             }
 
-            void SearchWidgetView::RefreshSearch(const std::string& query, const QueryContext& context)
+            void SearchWidgetView::PerformSearch(const std::string& query, const QueryContext& context)
             {
                 ASSERT_UI_THREAD
 
@@ -141,7 +141,7 @@ namespace ExampleApp
                 jstring text = env->NewStringUTF(query.c_str());
 
                 env->CallVoidMethod(m_uiView,
-                                    m_onSearchRefreshed,
+                                    m_onSearchPerformed,
                                     text,
                                     (jboolean)context.IsTag(),
                                     (jboolean)context.ShouldTryInterior(),

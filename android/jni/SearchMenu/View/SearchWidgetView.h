@@ -21,7 +21,7 @@ namespace ExampleApp
                 AndroidNativeState& m_nativeState;
                 jclass m_uiViewClass;
                 jobject m_uiView;
-                jmethodID m_onSearchRefreshed;
+                jmethodID m_onSearchPerformed;
 
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
@@ -33,7 +33,7 @@ namespace ExampleApp
 
                 void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged);
 
-                void RefreshSearch(const std::string& query, const QueryContext& context);
+                void PerformSearch(const std::string& query, const QueryContext& context);
 
                 void OnSearchResultsCleared();
                 void OnSearchResultSelected(int index);

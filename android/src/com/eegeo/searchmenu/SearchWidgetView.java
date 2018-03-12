@@ -78,7 +78,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
                 widgetResult.getIndex());
     }
 
-    public void onSearchRefreshed(String text, boolean isTag, boolean tryInterior, boolean shouldZoomToBuildingsView,
+    public void onSearchPerformed(String text, boolean isTag, boolean tryInterior, boolean shouldZoomToBuildingsView,
                                   double latitude, double longitude, double altitude,
                                   float radius)
     {

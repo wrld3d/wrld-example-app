@@ -99,7 +99,7 @@ namespace ExampleApp
             {
                 const Search::SdkModel::SearchQuery &query = message.Query();
 
-                m_view.RefreshSearch(query.Query(), QueryContext(query.IsTag(),
+                m_view.PerformSearch(query.Query(), QueryContext(query.IsTag(),
                                                                  query.ShouldTryInteriorSearch(),
                                                                  message.ShouldZoomToBuildingsView(),
                                                                  message.Location(),
