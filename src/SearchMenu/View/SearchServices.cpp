@@ -53,12 +53,12 @@ namespace ExampleApp
 
 			void SearchServices::OnSearchWithContext(const std::string& searchQuery, const QueryContext& context)
 			{
-				m_messageBus.Publish(SearchMenuRefreshedSearchMessage(searchQuery,
-																	  context.IsTag(),
-																	  context.ShouldTryInterior(),
-																	  context.ShouldZoomToBuildingsView(),
-																	  context.Location(),
-																	  context.Radius()));
+				m_messageBus.Publish(SearchMenuSearchWithContextMessage(searchQuery,
+																		context.IsTag(),
+																		context.ShouldTryInterior(),
+																		context.ShouldZoomToBuildingsView(),
+																		context.Location(),
+																		context.Radius()));
 			}
 
 			void SearchServices::OnCancel()

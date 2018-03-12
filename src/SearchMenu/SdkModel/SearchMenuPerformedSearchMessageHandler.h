@@ -6,7 +6,7 @@
 #include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "SearchMenuPerformedSearchMessage.h"
-#include "SearchMenuRefreshedSearchMessage.h"
+#include "SearchMenuSearchWithContextMessage.h"
 #include "ISearchQueryPerformer.h"
 #include "IMetricsService.h"
 
@@ -21,12 +21,12 @@ namespace ExampleApp
                 Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<SearchMenuPerformedSearchMessageHandler, const SearchMenuPerformedSearchMessage&> m_handlePerformedSearchMessageBinding;
-                Eegeo::Helpers::TCallback1<SearchMenuPerformedSearchMessageHandler, const SearchMenuRefreshedSearchMessage&> m_handleRefreshedSearchMessageBinding;
+                Eegeo::Helpers::TCallback1<SearchMenuPerformedSearchMessageHandler, const SearchMenuSearchWithContextMessage&> m_handleSearchWithContextMessageBinding;
 
                 Metrics::IMetricsService& m_metricsService;
                 
                 void OnPerformedSearchMessage(const SearchMenuPerformedSearchMessage& message);
-                void OnRefreshedSearchMessage(const SearchMenuRefreshedSearchMessage& message);
+                void OnSearchWithContextMessage(const SearchMenuSearchWithContextMessage& message);
 
             public:
                 SearchMenuPerformedSearchMessageHandler(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
