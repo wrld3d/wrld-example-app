@@ -34,7 +34,7 @@ namespace ExampleApp
 
                 m_onSearchPerformed = env->GetMethodID(m_uiViewClass,
                                                        "onSearchPerformed",
-                                                       "(Ljava/lang/String;ZZZDDDF)V");
+                                                       "(Ljava/lang/String;ZZZZDDDF)V");
             }
 
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
@@ -146,6 +146,7 @@ namespace ExampleApp
                                     (jboolean)context.IsTag(),
                                     (jboolean)context.ShouldTryInterior(),
                                     (jboolean)context.ShouldZoomToBuildingsView(),
+                                    (jboolean)context.UsesLocationAndRadius(),
                                     (jdouble)context.Location().GetLatitude(),
                                     (jdouble)context.Location().GetLongitude(),
                                     (jdouble)context.Location().GetAltitude(),

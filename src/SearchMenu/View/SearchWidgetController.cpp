@@ -126,8 +126,7 @@ namespace ExampleApp
 
 				std::string searchTag = it != m_tagMap.end() ? it->second : "";
 
-                // TO DO
-				//m_view.PerformSearch(searchTag, QueryContext(true, true, false));
+				m_view.PerformSearch(searchTag, QueryContext(true, true, false));
             }
 
             void SearchWidgetController::RefreshPresentation(bool forceRefresh)

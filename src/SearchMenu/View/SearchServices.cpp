@@ -53,12 +53,24 @@ namespace ExampleApp
 
 			void SearchServices::OnSearchWithContext(const std::string& searchQuery, const QueryContext& context)
 			{
-				m_messageBus.Publish(SearchMenuSearchWithContextMessage(searchQuery,
-																		context.IsTag(),
-																		context.ShouldTryInterior(),
-																		context.ShouldZoomToBuildingsView(),
-																		context.Location(),
-																		context.Radius()));
+				const Eegeo::Space::LatLongAltitude& location = context.Location();
+
+				if (context.UsesLocationAndRadius())
+				{
+					m_messageBus.Publish(SearchMenuSearchWithContextMessage(searchQuery,
+																			context.IsTag(),
+																			context.ShouldTryInterior(),
+																			context.ShouldZoomToBuildingsView(),
+																			context.Location(),
+																			context.Radius()));
+				}
+				else
+				{
+					m_messageBus.Publish(SearchMenuSearchWithContextMessage(searchQuery,
+																			context.IsTag(),
+																			context.ShouldTryInterior(),
+																			context.ShouldZoomToBuildingsView()));
+				}
 			}
 
 			void SearchServices::OnCancel()

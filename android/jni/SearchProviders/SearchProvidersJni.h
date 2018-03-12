@@ -18,6 +18,7 @@ extern "C"
             jboolean isTag,
             jboolean tryInterior,
             jboolean shouldZoomToBuildingsView,
+            jboolean usesLocationAndRadius,
             jdouble latitude,
             jdouble longitude,
             jdouble altitude,

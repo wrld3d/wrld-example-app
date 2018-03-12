@@ -38,8 +38,18 @@ namespace ExampleApp
             {
                 m_metricsService.SetEvent("Search-with-context", "Search string", message.SearchQuery().c_str());
                 m_searchQueryPerformer.RemoveSearchQueryResults();
-                m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsTag(), message.IsInterior(), message.ShouldZoomToBuildingsView(),
-                                                          message.Location(), message.Radius());
+
+				if (message.UsesLocationAndRadius())
+				{
+					m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsTag(), message.IsInterior(),
+															  message.ShouldZoomToBuildingsView(),
+															  message.Location(), message.Radius());
+				}
+				else
+				{
+					m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsTag(), message.IsInterior(),
+															  message.ShouldZoomToBuildingsView());
+				}
             }
         }
     }

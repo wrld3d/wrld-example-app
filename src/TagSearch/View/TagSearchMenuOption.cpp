@@ -34,7 +34,10 @@ namespace ExampleApp
                     m_menuViewModel.Close();
                 }
 
+                /*
+                 * Not anymore
                 m_messageBus.Publish(TagSearchSelectedMessage(m_model.SearchTag(), m_model.Interior()));
+                 */
             }
         }
     }
