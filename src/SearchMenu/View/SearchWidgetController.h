@@ -8,7 +8,10 @@
 #include "SearchServices.h"
 #include "SearchQueryRefreshedMessage.h"
 #include "IMenuSectionsViewModel.h"
+#include "TagSearchAddedMessage.h"
 #include "IUpdateableViewController.h"
+
+#include <map>
 
 namespace ExampleApp
 {
@@ -23,6 +26,9 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 				SearchServices& m_searchServices;
 
+				typedef std::map<std::string, std::string> TTagMap;
+				TTagMap m_tagMap;
+
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onSearchResultsClearedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, int> m_onSearchResultSelectedCallback;
 				Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::SearchQueryRefreshedMessage&>
@@ -32,6 +38,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<SearchWidgetController, int, int> m_onItemSelectedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemAddedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemRemovedCallback;
+				Eegeo::Helpers::TCallback1<SearchWidgetController, const TagSearch::TagSearchAddedMessage&> m_onTagSearchAddedHandler;
 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
                 bool m_menuContentsChanged;
@@ -54,6 +61,8 @@ namespace ExampleApp
             protected:
                 virtual void OnItemAdded(Menu::View::MenuItemModel& item);
                 virtual void OnItemRemoved(Menu::View::MenuItemModel& item);
+
+				void OnTagSearchAdded(const TagSearch::TagSearchAddedMessage& message);
             };
         }
     }

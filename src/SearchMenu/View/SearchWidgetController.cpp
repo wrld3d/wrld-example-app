@@ -31,12 +31,14 @@ namespace ExampleApp
             , m_onItemSelectedCallback(this, &SearchWidgetController::OnItemSelected)
             , m_onItemAddedCallback(this, &SearchWidgetController::OnItemAdded)
             , m_onItemRemovedCallback(this, &SearchWidgetController::OnItemRemoved)
+            , m_onTagSearchAddedHandler(this, &SearchWidgetController::OnTagSearchAdded)
             {
                 m_view.InsertSearchClearedCallback(m_onSearchResultsClearedCallback);
 				m_view.InsertResultSelectedCallback(m_onSearchResultSelectedCallback);
                 m_view.InsertOnItemSelected(m_onItemSelectedCallback);
 
                 m_messageBus.SubscribeUi(m_onSearchQueryRefreshedHandler);
+                m_messageBus.SubscribeUi(m_onTagSearchAddedHandler);
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
 
 
@@ -49,6 +51,16 @@ namespace ExampleApp
                 }
             }
 
+            SearchWidgetController::~SearchWidgetController()
+            {
+                m_messageBus.UnsubscribeUi(m_onTagSearchAddedHandler);
+                m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
+
+                m_view.RemoveResultSelectedCallback(m_onSearchResultSelectedCallback);
+                m_view.RemoveSearchClearedCallback(m_onSearchResultsClearedCallback);
+                m_view.RemoveOnItemSelected(m_onItemSelectedCallback);
+            }
+
             void SearchWidgetController::OnItemAdded(Menu::View::MenuItemModel& item) {
                 m_menuContentsChanged = true;
             }
@@ -57,13 +69,11 @@ namespace ExampleApp
                 m_menuContentsChanged = true;
             }
 
-            SearchWidgetController::~SearchWidgetController()
+            void SearchWidgetController::OnTagSearchAdded(const TagSearch::TagSearchAddedMessage& message)
             {
-                m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
+				const TagSearch::View::TagSearchModel& tagSearchModel = message.Model();
 
-				m_view.RemoveResultSelectedCallback(m_onSearchResultSelectedCallback);
-                m_view.RemoveSearchClearedCallback(m_onSearchResultsClearedCallback);
-                m_view.RemoveOnItemSelected(m_onItemSelectedCallback);
+				m_tagMap[tagSearchModel.Name()] = tagSearchModel.SearchTag();
             }
 
             void SearchWidgetController::OnSearchResultsCleared()
