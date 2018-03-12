@@ -53,6 +53,7 @@ namespace ExampleApp
 
             SearchWidgetController::~SearchWidgetController()
             {
+                m_messageBus.UnsubscribeUi(m_onAppModeChanged);
                 m_messageBus.UnsubscribeUi(m_onTagSearchAddedHandler);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
 
@@ -119,6 +120,10 @@ namespace ExampleApp
 
             void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex){
                 Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(sectionIndex);
+
+                if(section.IsExpandable() && section.Size()==1)
+                    return;
+
                 const int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
                 section.GetItemAtIndex(index).MenuOption().Select();
 

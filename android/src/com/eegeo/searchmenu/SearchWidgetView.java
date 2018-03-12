@@ -6,9 +6,13 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.searchproviders.QueryContext;
 
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
+
 
 import com.eegeo.menu.MenuViewJniMethods;
 import com.eegeo.tags.TagResources;
@@ -57,7 +61,13 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
         m_searchWidget.addSearchProvider(m_searchProvider);
 
         m_searchWidget.getSearchResultsModel().addResultListener(this);
+
+        SearchManager searchManager = (SearchManager) m_activity.getSystemService(Context.SEARCH_SERVICE);
+        SearchableInfo searchableInfo = searchManager.getSearchableInfo(m_activity.getComponentName());
+        m_searchWidget.setSearchableInfo(searchableInfo);
+
     }
+
 
     public void onSearchResultsRecieved(SearchQuery searchQuery, List<SearchProviderQueryResult> list)
     {

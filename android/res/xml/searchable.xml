@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="@string/basic_example_label"
+    android:hint="Search the WRLD"
+    android:searchMode="queryRewriteFromText"
+    android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
+    android:voicePromptText="What to show when recording"
+    >
+</searchable>

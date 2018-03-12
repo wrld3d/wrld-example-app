@@ -30,7 +30,7 @@
                   android:label="BWAY"
                   android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
                   android:windowSoftInputMode="adjustPan"
-              	  android:launchMode="singleTask"
+              	  android:launchMode="singleTop"
               	  android:hardwareAccelerated="true"
               	  android:resizeableActivity="false">
             <intent-filter>
@@ -45,6 +45,11 @@
 		        <data android:scheme="bway" android:host="location" />
 		        <data android:scheme="bway" android:host="mapscene" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
         </activity>
 
         <meta-data android:name="com.google.android.gms.version"
