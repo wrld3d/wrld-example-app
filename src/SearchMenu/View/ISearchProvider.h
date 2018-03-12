@@ -10,26 +10,28 @@
 
 namespace ExampleApp
 {
-	namespace SearchMenu
-	{
-		namespace View
-		{
-			class ISearchProvider
-			{
-			public:
-				typedef std::vector<SearchServicesResult> TSearchResults;
+    namespace SearchMenu
+    {
+        namespace View
+        {
+            class ISearchProvider
+            {
+            public:
+                virtual ~ISearchProvider() { }
 
-				virtual void InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
-				virtual void RemoveSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
+                typedef std::vector<SearchServicesResult> TSearchResults;
 
-				virtual void InsertSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const QueryContext&>& callback) = 0;
-				virtual void RemoveSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const QueryContext&>& callback) = 0;
+                virtual void InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
+                virtual void RemoveSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
 
-				virtual void InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-				virtual void RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void InsertSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&, const QueryContext&>& callback) = 0;
+                virtual void RemoveSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&, const QueryContext&>& callback) = 0;
 
-				virtual void OnSearchResponseReceived(const TSearchResults& searchResults) = 0;
-			};
-		}
-	}
+                virtual void InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void OnSearchResponseReceived(const TSearchResults& searchResults) = 0;
+            };
+        }
+    }
 }

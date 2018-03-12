@@ -74,8 +74,6 @@
 
 #import "UIView+TouchExclusivity.h"
 
-#import <WrldSearchWidget/WrldSearchWidget.h>
-
 using namespace Eegeo::iOS;
 
 namespace
@@ -320,21 +318,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                             m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                             m_messageBus);
 
-    CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ?
-    CGRectMake(20, 20, 375, CGRectGetHeight(m_pView.bounds) - 40) :   // ipad
-    CGRectMake(10, 10, CGRectGetWidth(m_pView.bounds) - 20, CGRectGetHeight(m_pView.bounds) - 20); // iphone
-    
-    WRLDSearchMenuModel* menuModel = [[WRLDSearchMenuModel alloc] init];
-    
-    WRLDSearchModel* searchModel = [[WRLDSearchModel alloc] init];
-    WRLDSearchWidgetViewController* searchWidgetViewController = [[WRLDSearchWidgetViewController alloc] initWithSearchModel:searchModel menuModel:menuModel];
-    
-    // TODO MOD: this cast is only required due to weird c++ objc++ inheritance interactions
-    // if we move this inside the searchWidgetViewController we should our inheritance chain back
-    UIViewController * uiViewController = (UIViewController*) &m_viewController;
-    [uiViewController addChildViewController:searchWidgetViewController];
-    searchWidgetViewController.view.frame = searchFrame;
-    
     m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
             app.TagSearchModule().GetTagSearchMenuOptionsModel(),
             app.SearchMenuModule().GetSearchMenuViewModel(),
@@ -411,8 +394,15 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 
     // Menus & HUD layer.
     [m_pView addSubview: &m_pSearchMenuViewModule->GetSearchMenuView()];
-    [&m_pSearchMenuViewModule->GetSearchMenuView() addSubview: searchWidgetViewController.view];
 
+    const ExampleApp::SearchMenu::View::SearchWidgetView* searchWidgetView = &m_pSearchMenuViewModule->GetSearchWidgetView();
+    [&m_pSearchMenuViewModule->GetSearchMenuView() addSubview: searchWidgetView->GetWidgetView()];
+
+    // TODO MOD: this cast is only required due to weird c++ objc++ inheritance interactions
+    // if we move this inside the searchWidgetViewController we should our inheritance chain back
+    UIViewController * uiViewController = (UIViewController*) &m_viewController;
+    [uiViewController addChildViewController:searchWidgetView->GetWidgetController()];
+    
     // Pop-up layer.
     [m_pView addSubview: &m_pSearchResultPoiViewModule->GetView()];
     [m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
@@ -452,6 +442,9 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
 
     // Menus & HUD layer.
+    const ExampleApp::SearchMenu::View::SearchWidgetView* searchWidgetView = &m_pSearchMenuViewModule->GetSearchWidgetView();
+    [searchWidgetView->GetWidgetView() removeFromSuperview];
+    [searchWidgetView->GetWidgetController() removeFromParentViewController];
     [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
 
     // Pop-up layer.
