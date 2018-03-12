@@ -35,7 +35,7 @@ namespace ExampleApp
 																		m_onSearchQueryRefreshedHandler;
 
                 Eegeo::Helpers::TCallback1<SearchWidgetController, const AppModes::AppModeChangedMessage&> m_onAppModeChanged;
-                Eegeo::Helpers::TCallback2<SearchWidgetController, int, int> m_onItemSelectedCallback;
+                Eegeo::Helpers::TCallback3<SearchWidgetController, const std::string&, int, int> m_onItemSelectedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemAddedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemRemovedCallback;
 				Eegeo::Helpers::TCallback1<SearchWidgetController, const TagSearch::TagSearchAddedMessage&> m_onTagSearchAddedHandler;
@@ -56,7 +56,7 @@ namespace ExampleApp
 
                 void RefreshPresentation(bool forceRefresh);
                 virtual void UpdateUiThread(float dt);
-                virtual void OnItemSelected(int& sectionIndex, int& itemIndex);
+                virtual void OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex);
 
             protected:
                 virtual void OnItemAdded(Menu::View::MenuItemModel& item);

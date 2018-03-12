@@ -117,10 +117,17 @@ namespace ExampleApp
 
             }
 
-            void SearchWidgetController::OnItemSelected(int& sectionIndex, int& itemIndex){
+            void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex){
                 Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(sectionIndex);
                 const int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
                 section.GetItemAtIndex(index).MenuOption().Select();
+
+				TTagMap::iterator it = m_tagMap.find(menuText);
+
+				std::string searchTag = it != m_tagMap.end() ? it->second : "";
+
+                // TO DO
+				//m_view.PerformSearch(searchTag, QueryContext(true, true, false));
             }
 
             void SearchWidgetController::RefreshPresentation(bool forceRefresh)

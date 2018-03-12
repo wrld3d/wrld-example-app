@@ -20,6 +20,7 @@ extern "C"
     JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_SelectedItem(
             JNIEnv* jenv, jobject obj,
             jlong nativeObjectPtr,
+            jstring text,
             jint sectionIndex,
             jint itemIndex
         );

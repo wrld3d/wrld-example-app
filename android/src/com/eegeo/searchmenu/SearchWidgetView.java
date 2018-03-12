@@ -89,7 +89,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
 
     public boolean onMenuOptionSelected(final String text, final Object context) {
         MenuIndexPath indexPath = (MenuIndexPath) context;
-        SearchWidgetViewJniMethods.SelectedItem(m_nativeCallerPointer, indexPath.m_section, indexPath.m_item);
+        SearchWidgetViewJniMethods.SelectedItem(m_nativeCallerPointer, text, indexPath.m_section, indexPath.m_item);
         return true;
     }
 

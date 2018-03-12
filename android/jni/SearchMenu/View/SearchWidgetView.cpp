@@ -116,17 +116,17 @@ namespace ExampleApp
                 env->DeleteLocalRef(childNamesArray);
             }
 
-            void SearchWidgetView::HandleItemSelected(int sectionIndex, int itemIndex){
+            void SearchWidgetView::HandleItemSelected(const std::string& menuText, int sectionIndex, int itemIndex){
                 ASSERT_UI_THREAD
-                m_onItemSelectedCallbacks.ExecuteCallbacks(sectionIndex, itemIndex);
+                m_onItemSelectedCallbacks.ExecuteCallbacks(menuText, sectionIndex, itemIndex);
             }
 
-            void SearchWidgetView::InsertOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback){
+            void SearchWidgetView::InsertOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback){
                 ASSERT_UI_THREAD
                 m_onItemSelectedCallbacks.AddCallback(callback);
             }
 
-            void SearchWidgetView::RemoveOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback){
+            void SearchWidgetView::RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback){
                 ASSERT_UI_THREAD
                 m_onItemSelectedCallbacks.RemoveCallback(callback);
             }

@@ -29,12 +29,17 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_OnSe
 JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_SelectedItem(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr,
+        jstring text,
         jint sectionIndex,
         jint itemIndex)
 {
     ASSERT_UI_THREAD
 
+    const char* chars = jenv->GetStringUTFChars(text, 0);
+    std::string menuText = chars;
+    jenv->ReleaseStringUTFChars(text, chars);
+
     ExampleApp::SearchMenu::View::SearchWidgetView* pView = reinterpret_cast<ExampleApp::SearchMenu::View::SearchWidgetView*>(nativeObjectPtr);
-        pView->HandleItemSelected(sectionIndex, itemIndex);
+        pView->HandleItemSelected(menuText, sectionIndex, itemIndex);
 }
   
