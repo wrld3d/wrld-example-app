@@ -56,10 +56,10 @@ namespace ExampleApp
 			m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
 		}
 
-		void MyTestSearchProvider::PerformSearchRefresh(const std::string& searchQuery,
-														const SearchMenu::View::QueryContext& queryContext)
+		void MyTestSearchProvider::PerformSearchWithContext(const std::string& searchQuery,
+															const SearchMenu::View::QueryContext& queryContext)
 		{
-			m_searchRefreshedCallbacks.ExecuteCallbacks(searchQuery, queryContext);
+			m_searchWithContextCallbacks.ExecuteCallbacks(searchQuery, queryContext);
 		}
 
 		void MyTestSearchProvider::CancelSearch()
@@ -131,20 +131,20 @@ namespace ExampleApp
 			m_searchPerformedCallbacks.RemoveCallback(callback);
 		}
 
-		void MyTestSearchProvider::InsertSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&,
-																							const SearchMenu::View::QueryContext&>& callback)
+		void MyTestSearchProvider::InsertSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&,
+																							  const SearchMenu::View::QueryContext&>& callback)
 		{
 			ASSERT_UI_THREAD
 
-			m_searchRefreshedCallbacks.AddCallback(callback);
+			m_searchWithContextCallbacks.AddCallback(callback);
 		}
 
-		void MyTestSearchProvider::RemoveSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&,
-																							const SearchMenu::View::QueryContext&>& callback)
+		void MyTestSearchProvider::RemoveSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&,
+																							  const SearchMenu::View::QueryContext&>& callback)
 		{
 			ASSERT_UI_THREAD
 
-			m_searchRefreshedCallbacks.RemoveCallback(callback);
+			m_searchWithContextCallbacks.RemoveCallback(callback);
 		}
 
 		void MyTestSearchProvider::InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback)

@@ -57,15 +57,15 @@ public class MyTestSearchProvider implements SearchProvider
 
 		QueryContext context = (QueryContext)queryContext;
 
-		SearchProvidersJniMethods.searchRefresh(m_nativeCallerPointer,
-											    queryText,
-												context.IsTag(),
-												context.TryInterior(),
-												context.ShouldZoomToBuildingsView(),
-												context.Latitude(),
-												context.Longitude(),
-												context.Altitude(),
-												context.Radius());
+		SearchProvidersJniMethods.searchWithContext(m_nativeCallerPointer,
+													queryText,
+													context.IsTag(),
+													context.TryInterior(),
+													context.ShouldZoomToBuildingsView(),
+													context.Latitude(),
+													context.Longitude(),
+													context.Altitude(),
+													context.Radius());
 	}
 
 	public void onSearchCompleted(SearchResultInfo[] searchResults)

@@ -16,7 +16,7 @@ namespace ExampleApp
 			typedef SearchMenu::View::ISearchProvider::TSearchResults TSearchResults;
 
 			Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
-			Eegeo::Helpers::CallbackCollection2<const std::string&, const SearchMenu::View::QueryContext&> m_searchRefreshedCallbacks;
+			Eegeo::Helpers::CallbackCollection2<const std::string&, const SearchMenu::View::QueryContext&> m_searchWithContextCallbacks;
 			Eegeo::Helpers::CallbackCollection0 m_searchCancelledCallbacks;
 
 			AndroidNativeState& m_nativeState;
@@ -33,17 +33,17 @@ namespace ExampleApp
 			void InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
 			void RemoveSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
 
-			void InsertSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&,
-																		  const SearchMenu::View::QueryContext&>& callback);
-			void RemoveSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&,
-																		  const SearchMenu::View::QueryContext&>& callback);
+			void InsertSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&,
+																			const SearchMenu::View::QueryContext&>& callback);
+			void RemoveSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&,
+																			const SearchMenu::View::QueryContext&>& callback);
 
 			void InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback);
 			void RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback);
 
 			void PerformSearch(const std::string& searchQuery);
-			void PerformSearchRefresh(const std::string& searchQuery,
-									  const SearchMenu::View::QueryContext& queryContext);
+			void PerformSearchWithContext(const std::string& searchQuery,
+										  const SearchMenu::View::QueryContext& queryContext);
 			void CancelSearch();
 
 			void OnSearchResponseReceived(const TSearchResults& searchResults);

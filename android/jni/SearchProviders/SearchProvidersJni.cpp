@@ -19,7 +19,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
     pSearch->PerformSearch(queryString);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_searchRefresh(
+JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_searchWithContext(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr,
         jstring searchQuery,
@@ -39,11 +39,11 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
 
     ExampleApp::SearchProviders::MyTestSearchProvider* pSearch = reinterpret_cast<ExampleApp::SearchProviders::MyTestSearchProvider*>(nativeObjectPtr);
 
-    pSearch->PerformSearchRefresh(queryString,
-                                  ExampleApp::SearchMenu::View::QueryContext(
-                                    isTag, tryInterior, shouldZoomToBuildingsView,
-                                    Eegeo::Space::LatLongAltitude(latitude, longitude, altitude),
-                                    radius));
+    pSearch->PerformSearchWithContext(queryString,
+                                      ExampleApp::SearchMenu::View::QueryContext(
+                                      isTag, tryInterior, shouldZoomToBuildingsView,
+                                      Eegeo::Space::LatLongAltitude(latitude, longitude, altitude),
+                                      radius));
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_cancel(

@@ -11,7 +11,7 @@ extern "C"
             jlong nativeObjectPtr,
             jstring searchQuery);
 
-    JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_searchRefresh(
+    JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_searchWithContext(
             JNIEnv* jenv, jobject obj,
             jlong nativeObjectPtr,
             jstring searchQuery,

@@ -16,12 +16,12 @@ namespace ExampleApp
 			: m_searchProvider(searchProvider)
 			, m_messageBus(messageBus)
 			, m_onSearchCallback(this, &SearchServices::OnSearch)
-			, m_onSearchRefreshCallback(this, &SearchServices::OnSearchRefresh)
+			, m_onSearchWithContextCallback(this, &SearchServices::OnSearchWithContext)
 			, m_onCancelCallback(this, &SearchServices::OnCancel)
 			, m_responseReceivedHandler(this, &SearchServices::OnSearchQueryResponseReceivedMessage)
 			{
 				m_searchProvider.InsertSearchPerformedCallback(m_onSearchCallback);
-				m_searchProvider.InsertSearchRefreshedCallback(m_onSearchRefreshCallback);
+				m_searchProvider.InsertSearchWithContextCallback(m_onSearchWithContextCallback);
 				m_searchProvider.InsertSearchCancelledCallback(m_onCancelCallback);
 
                 m_messageBus.SubscribeUi(m_responseReceivedHandler);
@@ -32,7 +32,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_responseReceivedHandler);
 
 				m_searchProvider.RemoveSearchCancelledCallback(m_onCancelCallback);
-				m_searchProvider.RemoveSearchRefreshedCallback(m_onSearchRefreshCallback);
+				m_searchProvider.RemoveSearchWithContextCallback(m_onSearchWithContextCallback);
 				m_searchProvider.RemoveSearchPerformedCallback(m_onSearchCallback);
 			}
 
@@ -51,7 +51,7 @@ namespace ExampleApp
 				m_messageBus.Publish(SearchMenuPerformedSearchMessage(searchQuery, false, false));
             }
 
-			void SearchServices::OnSearchRefresh(const std::string& searchQuery, const QueryContext& context)
+			void SearchServices::OnSearchWithContext(const std::string& searchQuery, const QueryContext& context)
 			{
 				m_messageBus.Publish(SearchMenuRefreshedSearchMessage(searchQuery,
 																	  context.IsTag(),
