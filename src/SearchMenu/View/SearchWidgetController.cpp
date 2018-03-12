@@ -121,11 +121,11 @@ namespace ExampleApp
             void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex){
                 Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(sectionIndex);
 
-                if(section.IsExpandable() && section.Size()==1)
-                    return;
-
-                const int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
-                section.GetItemAtIndex(index).MenuOption().Select();
+                if(!section.IsExpandable() || section.Size()!=1)
+				{
+					const int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
+					section.GetItemAtIndex(index).MenuOption().Select();
+				}
 
 				TTagMap::iterator it = m_tagMap.find(menuText);
 
