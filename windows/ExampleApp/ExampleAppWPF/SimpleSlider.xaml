@@ -68,8 +68,7 @@
     <ControlTemplate x:Key="Slider"  TargetType="Slider">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding MinWidth}"/>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="{DynamicResource SliderWidth}" MinWidth="{TemplateBinding MinWidth}"/>
             </Grid.ColumnDefinitions>
             <Track Grid.Column="0" x:Name="PART_Track"  >
                 
