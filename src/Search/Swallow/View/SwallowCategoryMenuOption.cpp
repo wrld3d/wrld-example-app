@@ -69,6 +69,8 @@ namespace ExampleApp
                     
                     bool shouldZoomToBuildingsView = true;
 
+                    /*
+                     * Not anymore
                     if (m_hasRadiusOverride)
                     {
                         m_messageBus.Publish(TagSearch::TagSearchSelectedMessage(m_category, m_interiorSearchAllowed, shouldZoomToBuildingsView, m_radiusOverride));
@@ -77,6 +79,7 @@ namespace ExampleApp
                     {
                         m_messageBus.Publish(TagSearch::TagSearchSelectedMessage(m_category, m_interiorSearchAllowed, shouldZoomToBuildingsView));
                     }
+                    */
                 }
             }
         }

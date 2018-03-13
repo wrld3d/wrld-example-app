@@ -45,7 +45,9 @@ namespace ExampleApp
                                               ExampleAppMessaging::TMessageBus& messageBus);
                     
                     ~SwallowCategoryMenuOption();
-                    
+
+                    const std::string& Category() const { return m_category; }
+
                     void Select();
                 };
             }

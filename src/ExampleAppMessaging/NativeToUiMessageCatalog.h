@@ -37,6 +37,7 @@
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "TagSearchAddedMessage.h"
 #include "TagSearchRemovedMessage.h"
+#include "TagSearchSwallowLoadedMessage.h"
 #include "VirtualKeyboardStateChangedMessage.h"
 #include "AboutPageIndoorPositionTypeMessage.h"
 #include "AttractModeStateChangedMessage.h"
@@ -54,6 +55,7 @@ namespace ExampleApp
         class NativeToUiMessageCatalog
             : public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchAddedMessage>
             , public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchRemovedMessage>
+			, public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchSwallowLoadedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultAddedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryPerformedMessage>

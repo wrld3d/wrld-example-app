@@ -75,11 +75,13 @@
 #include "SwallowPoiDbModule.h"
 #include "SwallowPoiDbWebLoader.h"
 #include "SQLiteModule.h"
+#include "SwallowCategoryMenuOption.h"
 #include "SwallowSearchServiceModule.h"
 #include "SwallowSearchMenuModule.h"
 #include "SwallowSearchConstants.h"
 #include "SwallowSearchTransitionPinController.h"
 #include "SwallowPoiDbServiceProvider.h"
+#include "TagSearchSwallowLoadedMessage.h"
 #include "YelpSearchConstants.h"
 #include "YelpSearchServiceModule.h"
 #include "AppCameraModule.h"
@@ -1303,11 +1305,34 @@ namespace ExampleApp
             
             AddTagSearchModels(m_applicationConfiguration, m_pTagSearchModule->GetTagSearchRepository());
 
+            // (belatedly) report swallow tags to the UI thread
+            LoadMenuTag(m_pSwallowSearchMenuModule->GetMeetingRoomsMenuModel());
+            LoadMenuTag(m_pSwallowSearchMenuModule->GetTrainingRoomsMenuModel());
+            LoadMenuTag(m_pSwallowSearchMenuModule->GetFacilitiesMenuModel());
+            LoadMenuTag(m_pSwallowSearchMenuModule->GetOfficesMenuModel());
+            LoadMenuTag(m_pSwallowSearchMenuModule->GetWorkingGroupsMenuModel());
+            LoadMenuTag(m_pSwallowSearchMenuModule->GetDeskGroupsMenuModel());
+
             if (m_applicationConfiguration.IsAttractModeEnabled())
             {
                 m_pAppModeModel->SetAppMode(AppModes::SdkModel::AttractMode);
             }
         }
+    }
+
+    void MobileExampleApp::LoadMenuTag(Menu::View::IMenuModel& menuModel)
+    {
+        Eegeo_ASSERT(menuModel.GetItemCount() > 0);
+
+        const auto& menuSection = menuModel.GetItemAtIndex(0);
+
+        auto* swallowOption = dynamic_cast<Search::Swallow::View::SwallowCategoryMenuOption*>(
+                &menuModel.GetItemAtIndex(0).MenuOption());
+
+        Eegeo_ASSERT(swallowOption != NULL);
+
+        m_messageBus.Publish(TagSearch::TagSearchSwallowLoadedMessage(menuSection.Name(),
+                                                                      swallowOption->Category()));
     }
     
     bool MobileExampleApp::IsRunning() const
