@@ -11,7 +11,6 @@ namespace ExampleApp
             SearchWidgetView::SearchWidgetView(SearchMenuView* view):
             m_pView(view)
             {
-                
                 WRLDSearchMenuModel* menuModel = [[WRLDSearchMenuModel alloc] init];
                 WRLDSearchModel* searchModel = [[WRLDSearchModel alloc] init];
                 
@@ -26,7 +25,6 @@ namespace ExampleApp
             
             SearchWidgetView::~SearchWidgetView()
             {
-                
             }
             
             UIViewController* SearchWidgetView::GetWidgetController() const
@@ -39,39 +37,36 @@ namespace ExampleApp
                 return (UIView*)m_pSearchWidgetViewController.view;
             }
             
-            void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
+            void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
             {
             }
             
-            void SearchWidgetView::HandleItemSelected(int sectionIndex, int itemIndex)
+            void PerformSearch(const std::string& query, const QueryContext& context)
             {
             }
             
-            void SearchWidgetView::InsertOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback)
+            void InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+            }
+            void RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
             {
             }
             
-            void SearchWidgetView::RemoveOnItemSelected(Eegeo::Helpers::ICallback2<int, int>& callback)
+            void InsertResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
+            {
+            }
+            void RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
             {
             }
             
-            void SearchWidgetView::RefreshSearch(const std::string& query, const QueryContext& context)
+            void HandleItemSelected(const std::string&, int sectionIndex, int itemIndex)
             {
             }
             
-            void SearchWidgetView::InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
+            void InsertOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback)
             {
             }
-            
-            void SearchWidgetView::RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
-            {
-            }
-            
-            void SearchWidgetView::InsertResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
-            {
-            }
-            
-            void SearchWidgetView::RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
+            void RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback)
             {
             }
         }
