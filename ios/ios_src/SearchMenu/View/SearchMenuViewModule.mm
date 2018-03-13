@@ -6,6 +6,7 @@
 #include "ScreenProperties.h"
 #include "SearchMenuView.h"
 #include "SearchMenuViewInterop.h"
+#include "DummySearchProvider.h"
 
 namespace ExampleApp
 {
@@ -40,10 +41,34 @@ namespace ExampleApp
                                                                 tagSearchRepository,
                                                                 modalBackgroundView,
                                                                 messageBus);
+
+                m_pSearchWidgetView = Eegeo_NEW(SearchWidgetView)(m_pView);
+
+                m_pDummySearchProvider = Eegeo_NEW(SearchProviders::DummySearchProvider)();
+
+                m_pSearchServices = Eegeo_NEW(SearchMenu::View::SearchServices)(*m_pDummySearchProvider,
+                                                                                messageBus);
+
+                m_pMenuSectionsViewModel = Eegeo_NEW(Menu::View::MenuSectionsViewModel)();
+
+                m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(*m_pSearchWidgetView,
+                                                                              *m_pSearchServices,
+                                                                              *m_pMenuSectionsViewModel,
+                                                                              messageBus);
             }
 
             SearchMenuViewModule::~SearchMenuViewModule()
             {
+                Eegeo_DELETE m_pSearchWidgetController;
+                
+                Eegeo_DELETE m_pMenuSectionsViewModel;
+                
+                Eegeo_DELETE m_pSearchServices;
+                
+                Eegeo_DELETE m_pDummySearchProvider;
+                
+                Eegeo_DELETE m_pSearchWidgetView;
+                
                 Eegeo_DELETE m_pController;
                 
                 [m_pView release];
@@ -59,6 +84,11 @@ namespace ExampleApp
             SearchMenuView& SearchMenuViewModule::GetSearchMenuView() const
             {
                 return *m_pView;
+            }
+
+            SearchWidgetView& SearchMenuViewModule::GetSearchWidgetView() const
+            {
+                return *m_pSearchWidgetView;
             }
         }
     }

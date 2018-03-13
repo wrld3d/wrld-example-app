@@ -28,8 +28,12 @@
 
 - (void) resignFocus;
 
-- (IBAction)menuButtonClicked:(id)menuButton;
+- (void)openMenu;
 
-- (IBAction)menuBackButtonClicked:(id)backButton;
+- (void)closeMenu;
+
+- (void)collapseMenu;
+
+- (void)expandMenuOptionAt:(NSUInteger)index;
 
 @end

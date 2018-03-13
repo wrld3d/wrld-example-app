@@ -22,5 +22,7 @@
 
 -(WRLDSearchQuery *) getSearchResultsForString:(NSString *) queryString;
 -(WRLDSearchQuery *) getSuggestionsForString:(NSString *) queryString;
+
+-(WRLDSearchQuery *) getSearchResultsForString:(NSString *) queryString withContext: (id<NSObject>) context;
 @end
 
