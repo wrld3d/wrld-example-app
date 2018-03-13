@@ -21,6 +21,9 @@ namespace ExampleApp
             void InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
             void RemoveSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
             
+            void InsertSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const SearchMenu::View::QueryContext&>& callback);
+            void RemoveSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const SearchMenu::View::QueryContext&>& callback);
+            
             void InsertSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&, const SearchMenu::View::QueryContext&>& callback);
             void RemoveSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&, const SearchMenu::View::QueryContext&>& callback);
             

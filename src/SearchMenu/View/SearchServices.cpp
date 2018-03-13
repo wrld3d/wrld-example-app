@@ -53,7 +53,6 @@ namespace ExampleApp
 
 			void SearchServices::OnSearchWithContext(const std::string& searchQuery, const QueryContext& context)
 			{
-				const Eegeo::Space::LatLongAltitude& location = context.Location();
 
 				if (context.UsesLocationAndRadius())
 				{

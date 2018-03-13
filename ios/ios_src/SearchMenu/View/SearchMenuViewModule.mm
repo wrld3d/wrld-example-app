@@ -6,6 +6,7 @@
 #include "ScreenProperties.h"
 #include "SearchMenuView.h"
 #include "SearchMenuViewInterop.h"
+#include "DummySearchProvider.h"
 
 namespace ExampleApp
 {

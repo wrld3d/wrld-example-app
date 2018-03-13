@@ -19,7 +19,6 @@ namespace ExampleApp
             {
                 TagSearchModel m_model;
                 Menu::View::IMenuViewModel& m_menuViewModel;
-                ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 const Menu::View::IMenuReactionModel& m_menuReaction;
 

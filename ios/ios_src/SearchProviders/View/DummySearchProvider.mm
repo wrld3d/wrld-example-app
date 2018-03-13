@@ -26,6 +26,14 @@ namespace ExampleApp
         {
         }
         
+        void DummySearchProvider::InsertSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const SearchMenu::View::QueryContext&>& callback)
+        {
+        }
+        
+        void DummySearchProvider::RemoveSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const SearchMenu::View::QueryContext&>& callback)
+        {
+        }
+        
         void DummySearchProvider::InsertSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&,
                                                                                             const SearchMenu::View::QueryContext&>& callback)
         {

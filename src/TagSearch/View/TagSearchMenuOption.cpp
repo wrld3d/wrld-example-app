@@ -17,7 +17,6 @@ namespace ExampleApp
                     const Menu::View::IMenuReactionModel& menuReaction)
                 : m_model(model)
                 , m_menuViewModel(menuViewModel)
-                , m_messageBus(messageBus)
                 , m_menuReaction(menuReaction)
             {
             }
