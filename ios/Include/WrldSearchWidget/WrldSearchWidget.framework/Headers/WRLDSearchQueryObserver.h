@@ -15,5 +15,8 @@ typedef void (^QueryEvent) (WRLDSearchQuery * query);
 - (void) addQueryCompletedEvent :(QueryEvent) event;
 - (void) removeQueryCompletedEvent :(QueryEvent) event;
 
+- (void) addQueryCancelledEvent :(QueryEvent) event;
+- (void) removeQueryCancelledEvent :(QueryEvent) event;
+
 @end
 

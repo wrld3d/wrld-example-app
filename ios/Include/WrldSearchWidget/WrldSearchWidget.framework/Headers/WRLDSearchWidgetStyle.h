@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, WRLDSearchWidgetStyleType)
     WRLDSearchWidgetStyleMenuGroupCollapsedColor,
     WRLDSearchWidgetStyleMenuGroupTextExpandedColor,
     WRLDSearchWidgetStyleMenuGroupTextCollapsedColor,
+    WRLDSearchWidgetStyleMenuGroupTextHoverColor,
     WRLDSearchWidgetStyleMenuHoverColor,
     WRLDSearchWidgetStyleMenuIconColor,
     WrldSearchWidgetNumberOfStyles
