@@ -68,7 +68,6 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
 
     }
 
-
     public void onSearchResultsRecieved(SearchQuery searchQuery, List<SearchProviderQueryResult> list)
     {
         // Not needed at the moment
@@ -93,15 +92,18 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
                                   double latitude, double longitude, double altitude,
                                   float radius)
     {
-        if (usesLocationAndRadius)
+        QueryContext context = usesLocationAndRadius ?
+                new QueryContext(isTag, tryInterior, shouldZoomToBuildingsView,
+                                 latitude, longitude, altitude, radius) :
+                new QueryContext(isTag, tryInterior, shouldZoomToBuildingsView);
+
+        if (isTag)
         {
-            m_searchWidget.doSearch(text, new QueryContext(isTag, tryInterior, shouldZoomToBuildingsView,
-                                    latitude, longitude, altitude,
-                                    radius));
+            m_searchWidget.doSearchWithDisplayText(text, "", context);
         }
         else
         {
-            m_searchWidget.doSearch(text, new QueryContext(isTag, tryInterior, shouldZoomToBuildingsView));
+            m_searchWidget.doSearch(text, context);
         }
     }
 
