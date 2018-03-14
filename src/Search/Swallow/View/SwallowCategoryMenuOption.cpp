@@ -19,11 +19,8 @@ namespace ExampleApp
                                                                      Menu::View::IMenuViewModel& menuViewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
-                , m_interiorSearchAllowed(interiorSearchAllowed)
                 , m_menuViewModel(menuViewModel)
                 , m_messageBus(messageBus)
-                , m_hasRadiusOverride(false)
-                , m_radiusOverride(0.f)
                 , m_inInteriorMode(false)
                 , m_closeMenuOnSelect(closeMenuOnSelect)
                 , m_appModeChangedHandler(this, &SwallowCategoryMenuOption::OnAppModeChangedMessage)
@@ -38,11 +35,8 @@ namespace ExampleApp
                                                                      float radius,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
-                , m_interiorSearchAllowed(interiorSearchAllowed)
                 , m_menuViewModel(menuViewModel)
                 , m_messageBus(messageBus)
-                , m_hasRadiusOverride(true)
-                , m_radiusOverride(radius)
                 , m_inInteriorMode(false)
                 , m_closeMenuOnSelect(closeMenuOnSelect)
                 , m_appModeChangedHandler(this, &SwallowCategoryMenuOption::OnAppModeChangedMessage)
@@ -66,11 +60,29 @@ namespace ExampleApp
                     {
                         m_menuViewModel.Close();
                     }
-                    
-                    bool shouldZoomToBuildingsView = true;
 
                     /*
                      * Not anymore
+                     *
+                     * .h:
+                        bool m_hasRadiusOverride;
+                        bool m_interiorSearchAllowed;
+                        float m_radiusOverride;
+                     *
+                     * constructor 1:
+                     *
+                        , m_interiorSearchAllowed(interiorSearchAllowed)
+                        , m_hasRadiusOverride(false)
+                        , m_radiusOverride(0.f)
+                     *
+                     * constructor 2:
+                     *
+                        , m_interiorSearchAllowed(interiorSearchAllowed)
+                        , m_hasRadiusOverride(true)
+                        , m_radiusOverride(radius)
+
+                    bool shouldZoomToBuildingsView = true;
+
                     if (m_hasRadiusOverride)
                     {
                         m_messageBus.Publish(TagSearch::TagSearchSelectedMessage(m_category, m_interiorSearchAllowed, shouldZoomToBuildingsView, m_radiusOverride));

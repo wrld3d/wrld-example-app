@@ -20,11 +20,8 @@ namespace ExampleApp
                 class SwallowCategoryMenuOption : public Menu::View::IMenuOption, private Eegeo::NonCopyable
                 {
                     std::string m_category;
-                    bool m_hasRadiusOverride;
-                    bool m_interiorSearchAllowed;
                     bool m_inInteriorMode;
                     bool m_closeMenuOnSelect;
-                    float m_radiusOverride;
                     Menu::View::IMenuViewModel& m_menuViewModel;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     Eegeo::Helpers::TCallback1<SwallowCategoryMenuOption, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
