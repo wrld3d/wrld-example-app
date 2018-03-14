@@ -26,7 +26,7 @@
   "mypins_web_service_url": "https://app.wayfind.bloomberg.com/reports/",
   "mypins_web_service_auth_token": "f475c578eb4592637314e4a05510993b",
   "web_proxy_enabled": true,
-  "web_proxy_ip_address": "webproxyeu.corp.bloomberg.com",
+  "web_proxy_ip_address": "proxy.bloomberg.com",
   "web_proxy_port": 81,
   "web_proxy_ignore_pattern": "wayfind.bloomberg.com",
   "ssl_enabled": false,
