@@ -395,6 +395,14 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     // Menus & HUD layer.
     [m_pView addSubview: &m_pSearchMenuViewModule->GetSearchMenuView()];
 
+    const ExampleApp::SearchMenu::View::SearchWidgetView* searchWidgetView = &m_pSearchMenuViewModule->GetSearchWidgetView();
+    [&m_pSearchMenuViewModule->GetSearchMenuView() addSubview: searchWidgetView->GetWidgetView()];
+
+    // TODO MOD: this cast is only required due to weird c++ objc++ inheritance interactions
+    // if we move this inside the searchWidgetViewController we should our inheritance chain back
+    UIViewController * uiViewController = (UIViewController*) &m_viewController;
+    [uiViewController addChildViewController:searchWidgetView->GetWidgetController()];
+    
     // Pop-up layer.
     [m_pView addSubview: &m_pSearchResultPoiViewModule->GetView()];
     [m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
@@ -434,6 +442,9 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
 
     // Menus & HUD layer.
+    const ExampleApp::SearchMenu::View::SearchWidgetView* searchWidgetView = &m_pSearchMenuViewModule->GetSearchWidgetView();
+    [searchWidgetView->GetWidgetView() removeFromSuperview];
+    [searchWidgetView->GetWidgetController() removeFromParentViewController];
     [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
 
     // Pop-up layer.

@@ -17,6 +17,7 @@ namespace ExampleApp
 			class ISearchProvider
 			{
 			public:
+				virtual ~ISearchProvider() { }
 				typedef std::vector<SearchServicesResult> TSearchResults;
 
 				virtual void InsertAutocompleteSuggestionsCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;

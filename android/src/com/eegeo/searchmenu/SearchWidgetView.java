@@ -70,7 +70,6 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
 
     }
 
-
     public void onSearchResultsRecieved(SearchQuery searchQuery, List<SearchProviderQueryResult> list)
     {
         // Not needed at the moment
@@ -90,21 +89,19 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
                 widgetResult.getIndex());
     }
 
-    public void onSearchPerformed(String text, boolean isTag, boolean tryInterior, boolean shouldZoomToBuildingsView,
+    public void onSearchPerformed(String queryText,
+                                  boolean isTag, String tagText,
+                                  boolean tryInterior, boolean shouldZoomToBuildingsView,
                                   boolean usesLocationAndRadius,
                                   double latitude, double longitude, double altitude,
                                   float radius)
     {
-        if (usesLocationAndRadius)
-        {
-            m_searchWidget.doSearch(text, new QueryContext(isTag, tryInterior, shouldZoomToBuildingsView,
-                                    latitude, longitude, altitude,
-                                    radius));
-        }
-        else
-        {
-            m_searchWidget.doSearch(text, new QueryContext(isTag, tryInterior, shouldZoomToBuildingsView));
-        }
+        QueryContext context = usesLocationAndRadius ?
+                new QueryContext(isTag, tagText, tryInterior, shouldZoomToBuildingsView,
+                                 latitude, longitude, altitude, radius) :
+                new QueryContext(isTag, tagText, tryInterior, shouldZoomToBuildingsView);
+
+        m_searchWidget.doSearch(queryText, context);
     }
 
     public boolean onMenuOptionSelected(final String text, final Object context) {

@@ -201,6 +201,8 @@ namespace ExampleApp
 
         void UpdateLoadingScreen(float dt);
 
+        void LoadMenuTag(Menu::View::IMenuModel& menuModel);
+
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> GetOpenableControls() const;
 
         std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> GetReactorControls() const;

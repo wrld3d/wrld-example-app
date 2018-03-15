@@ -32,13 +32,15 @@ namespace ExampleApp
             , m_onItemAddedCallback(this, &SearchWidgetController::OnItemAdded)
             , m_onItemRemovedCallback(this, &SearchWidgetController::OnItemRemoved)
             , m_onTagSearchAddedHandler(this, &SearchWidgetController::OnTagSearchAdded)
+			, m_onTagSearchSwallowLoadedHandler(this, &SearchWidgetController::OnTagSearchSwallowLoaded)
             {
                 m_view.InsertSearchClearedCallback(m_onSearchResultsClearedCallback);
 				m_view.InsertResultSelectedCallback(m_onSearchResultSelectedCallback);
                 m_view.InsertOnItemSelected(m_onItemSelectedCallback);
 
                 m_messageBus.SubscribeUi(m_onSearchQueryRefreshedHandler);
-                m_messageBus.SubscribeUi(m_onTagSearchAddedHandler);
+				m_messageBus.SubscribeUi(m_onTagSearchAddedHandler);
+				m_messageBus.SubscribeUi(m_onTagSearchSwallowLoadedHandler);
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
 
 
@@ -54,6 +56,7 @@ namespace ExampleApp
             SearchWidgetController::~SearchWidgetController()
             {
                 m_messageBus.UnsubscribeUi(m_onAppModeChanged);
+				m_messageBus.UnsubscribeUi(m_onTagSearchSwallowLoadedHandler);
                 m_messageBus.UnsubscribeUi(m_onTagSearchAddedHandler);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
 
@@ -74,8 +77,22 @@ namespace ExampleApp
             {
 				const TagSearch::View::TagSearchModel& tagSearchModel = message.Model();
 
-				m_tagMap[tagSearchModel.Name()] = tagSearchModel.SearchTag();
+				RememberTag(tagSearchModel.Name(), tagSearchModel.SearchTag());
             }
+
+			void SearchWidgetController::OnTagSearchSwallowLoaded(const TagSearch::TagSearchSwallowLoadedMessage& message)
+			{
+				RememberTag(message.Key(), message.Tag());
+			}
+
+			void SearchWidgetController::RememberTag(const std::string& key, const std::string& tag)
+			{
+				Eegeo_ASSERT(m_knownTags       .find(key) == m_knownTags       .end());
+				Eegeo_ASSERT(m_visibleTextOfTag.find(tag) == m_visibleTextOfTag.end());
+
+				m_knownTags       [key] = tag;
+				m_visibleTextOfTag[tag] = key;
+			}
 
             void SearchWidgetController::OnSearchResultsCleared()
             {
@@ -100,11 +117,26 @@ namespace ExampleApp
             {
                 const Search::SdkModel::SearchQuery &query = message.Query();
 
-                m_view.PerformSearch(query.Query(), QueryContext(query.IsTag(),
-                                                                 query.ShouldTryInteriorSearch(),
-                                                                 message.ShouldZoomToBuildingsView(),
-                                                                 message.Location(),
-                                                                 message.Radius()));
+				std::string visibleText = query.Query();
+				std::string tagText     = "";
+
+				if (query.IsTag())
+				{
+					TTagMap::iterator it = m_visibleTextOfTag.find(visibleText);
+
+					Eegeo_ASSERT(it != m_visibleTextOfTag.end());
+
+					tagText     = visibleText;
+					visibleText = it->second;
+				}
+
+                m_view.PerformSearch(visibleText,
+									 QueryContext(query.IsTag(),
+												  tagText,
+												  query.ShouldTryInteriorSearch(),
+												  message.ShouldZoomToBuildingsView(),
+												  message.Location(),
+												  message.Radius()));
             }
 
             void SearchWidgetController::UpdateUiThread(float dt)
@@ -127,11 +159,10 @@ namespace ExampleApp
 					section.GetItemAtIndex(index).MenuOption().Select();
 				}
 
-				TTagMap::iterator it = m_tagMap.find(menuText);
+				TTagMap::iterator it = m_knownTags.find(menuText);
 
-				std::string searchTag = it != m_tagMap.end() ? it->second : "";
-
-				m_view.PerformSearch(searchTag, QueryContext(true, true, false));
+				if (it != m_knownTags.end())
+					m_view.PerformSearch(menuText, QueryContext(true, it->second, true, false));
             }
 
             void SearchWidgetController::RefreshPresentation(bool forceRefresh)

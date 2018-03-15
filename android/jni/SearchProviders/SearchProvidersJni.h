@@ -16,6 +16,7 @@ extern "C"
             jlong nativeObjectPtr,
             jstring searchQuery,
             jboolean isTag,
+            jstring tagText,
             jboolean tryInterior,
             jboolean shouldZoomToBuildingsView,
             jboolean usesLocationAndRadius,

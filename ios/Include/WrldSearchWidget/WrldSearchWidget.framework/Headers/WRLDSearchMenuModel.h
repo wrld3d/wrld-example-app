@@ -11,13 +11,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString* title;
 
-- (void)setListener:(id<WRLDMenuChangedListener>)listener;
-
-- (NSMutableArray *)getGroups;
-
 - (void)addMenuGroup:(WRLDMenuGroup *)group;
 
 - (void)removeMenuGroup:(WRLDMenuGroup *)group;
+
+- (void)insertMenuGroup:(WRLDMenuGroup *)group
+                atIndex:(NSUInteger)index;
+
+- (void)removeMenuGroupAtIndex:(NSUInteger)index;
+
+- (void)removeAllGroups;
 
 @end
 

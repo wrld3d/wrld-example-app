@@ -63,6 +63,7 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 		SearchProvidersJniMethods.searchWithContext(m_nativeCallerPointer,
 													queryText,
 													context.IsTag(),
+													context.TagText(),
 													context.TryInterior(),
 													context.ShouldZoomToBuildingsView(),
 													context.UsesLocationAndRadius(),

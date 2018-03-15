@@ -8,41 +8,29 @@
 		<data>
 		ldR+f7bJ5XwyUXyRuIbcHx0WsOM=
 		</data>
-		<key>AutosuggestIcon.png</key>
-		<data>
-		PNGC814PTZR8Y2L9DZEwk7VUQaU=
-		</data>
-		<key>AutosuggestIcon@2x.png</key>
-		<data>
-		J1CB/wPMuxa8IYQ4WUdpRgEZHY0=
-		</data>
-		<key>AutosuggestIcon@3x.png</key>
-		<data>
-		zBV060Gux2BiIj46gij0Di5CA34=
-		</data>
 		<key>ExpanderWhite_Icon.png</key>
 		<data>
-		I7YuOKiEt9tBqbpBEnxIpVhzy5o=
+		hVmaVHDMUq+9KLd8z7HDdYFGiqY=
 		</data>
 		<key>ExpanderWhite_Icon@2x.png</key>
 		<data>
-		AehlkINRFgsmbzTDxjMToU8sx7Q=
+		qu+TXT3zrHpIllPsXHMpYoP+9S4=
 		</data>
 		<key>ExpanderWhite_Icon@3x.png</key>
 		<data>
-		sEmvPLD/yafKyJVZK4zPjLLHpcY=
+		Q+75ccmYsnP6UZSmXfDBkrYwZ2s=
 		</data>
 		<key>Expander_Icon.png</key>
 		<data>
-		X7q6MH2nAY6RoalbXE/Yr6Zzrd8=
+		PPXPUuOklu30NXODKA4OnHchQTU=
 		</data>
 		<key>Expander_Icon@2x.png</key>
 		<data>
-		yIE8pOu+DtzqU1EDHbCsM2fycko=
+		+dsBRpDiiCDh4tS2+JHDFbtbFVo=
 		</data>
 		<key>Expander_Icon@3x.png</key>
 		<data>
-		7dM4AzNLrz300dtc4uiIUBOr+ko=
+		jfm48H24YjQ2x9ADRDDQYbbaTqQ=
 		</data>
 		<key>Headers/WRLDBasicSearchResultModel.h</key>
 		<data>
@@ -54,15 +42,15 @@
 		</data>
 		<key>Headers/WRLDMenuGroup.h</key>
 		<data>
-		BTnRIa429a8KCXxeCWJrof6f/0Q=
+		aDx/gFu/x36set/LfGeQ0tjKV8c=
+		</data>
+		<key>Headers/WRLDMenuObserver.h</key>
+		<data>
+		Xrr7ufXqwf50znt0EoMigxy8l8Y=
 		</data>
 		<key>Headers/WRLDMenuOption.h</key>
 		<data>
 		hc0cdXTrFrL0D58EZYp94QGMM0w=
-		</data>
-		<key>Headers/WRLDMenuOptionSelectedObserver.h</key>
-		<data>
-		J+LVEYnLZ0Nrc4xOMV2ob7vkhJU=
 		</data>
 		<key>Headers/WRLDMockSearchProvider.h</key>
 		<data>
@@ -74,11 +62,11 @@
 		</data>
 		<key>Headers/WRLDSearchMenuModel.h</key>
 		<data>
-		Q21BSig66QH07eqLRCu+yca/kik=
+		ssFX8OxWTwvXfGt0kQXeB6cT/Q0=
 		</data>
 		<key>Headers/WRLDSearchModel.h</key>
 		<data>
-		JbMb3y5Pq30d2BfOetDAdVR0KfA=
+		mcGFQisH60c1ahi2hmjX3X6mfX4=
 		</data>
 		<key>Headers/WRLDSearchProvider.h</key>
 		<data>
@@ -90,15 +78,15 @@
 		</data>
 		<key>Headers/WRLDSearchQuery.h</key>
 		<data>
-		9u87sRJORy9XzBT1IQry7woXyDs=
+		VJQ+5BNYKSLq67/4wogyr2YWl2Q=
 		</data>
 		<key>Headers/WRLDSearchQueryObserver.h</key>
 		<data>
-		yJkf1BKI5LaWibwUMLUEwl7OevE=
+		N40sG7ku1WeQEbuNC6bsJj0jPMA=
 		</data>
 		<key>Headers/WRLDSearchRequest.h</key>
 		<data>
-		L3+6Q1uitFWw+WnfhY32A3WfVm0=
+		0V7lWf/KEb4CdxfQ+FzCxx1Xniw=
 		</data>
 		<key>Headers/WRLDSearchRequestFulfillerHandle.h</key>
 		<data>
@@ -122,11 +110,11 @@
 		</data>
 		<key>Headers/WRLDSearchWidgetStyle.h</key>
 		<data>
-		hNTjX0otb2I8HIGzcpJDQp2FQOY=
+		YlNnXE4kYG4AmL9Uhxjmm7dsbu8=
 		</data>
 		<key>Headers/WRLDSearchWidgetViewController.h</key>
 		<data>
-		7I9nbZTcw4AycrCY+ayL12ogrJ8=
+		Phi3g3dIONAxB29sJzORn47NgFA=
 		</data>
 		<key>Headers/WRLDSuggestionProvider.h</key>
 		<data>
@@ -138,59 +126,59 @@
 		</data>
 		<key>Headers/WrldSearchWidget.h</key>
 		<data>
-		fXZ7+vRubmxrS5y1R2dMnLfrT8w=
+		6Dxo+cVFqk1GPPwx8yS3lveA6qY=
 		</data>
 		<key>Info.plist</key>
 		<data>
 		gM9ImKbMPu8BJYR09HicBQdZdEk=
 		</data>
-		<key>MenuBack.png</key>
+		<key>Menu_Back_btn_Icon.png</key>
 		<data>
-		+Vq1XRa189zunbIF5l+pXG7vclM=
+		gDjXd00bH7b4XqC+FgnWI3otvtY=
 		</data>
-		<key>MenuBack@2x.png</key>
+		<key>Menu_Back_btn_Icon2.png</key>
 		<data>
-		AkDndSS425mr9IwJOynXXsI1Uzs=
+		PwH3pYAD3VbXHWQrmH8u6I/qMbM=
 		</data>
-		<key>MenuBack@3x.png</key>
+		<key>Menu_Back_btn_Icon2@2x.png</key>
 		<data>
-		JrH0Sw3W8OELLnB7RU3qxPk54Tk=
+		uAp/JDrZDo5uGQWZ/+F9QSnLXu8=
 		</data>
-		<key>MenuBack_Down.png</key>
+		<key>Menu_Back_btn_Icon2@3x.png</key>
 		<data>
-		5EnIaErklWyA0ZbwbzSVp8qMB88=
+		JrnvULEIXsfjHAqY4HsJS8+0C9w=
 		</data>
-		<key>MenuBack_Down@2x.png</key>
+		<key>Menu_Back_btn_Icon@2x.png</key>
 		<data>
-		PXbedue4CyPhrSWfQZEb06Luflg=
+		6LxQESb987VrBgh2T9GGnEb7TEI=
 		</data>
-		<key>MenuBack_Down@3x.png</key>
+		<key>Menu_Back_btn_Icon@3x.png</key>
 		<data>
-		e1gS11HHzCuHQ5k+O+3RDG6q1ew=
+		nj6GrakW7K110q3P/E2a8zqHPCk=
 		</data>
-		<key>MenuIcon.png</key>
+		<key>Menu_butn.png</key>
 		<data>
-		EtvlR4sqd6MSPanNGfCOHlSxlQU=
+		tvwhoCd1WGWaMXUd4htssCXDR0E=
 		</data>
-		<key>MenuIcon@2x.png</key>
+		<key>Menu_butn@2x.png</key>
 		<data>
-		2Onl8RDhIDSpph5NIx24E34REJY=
+		G+VwNmOXYKsudXR9W10KkW7zO28=
 		</data>
-		<key>MenuIcon@3x.png</key>
+		<key>Menu_butn@3x.png</key>
 		<data>
-		zZ1pgCmlC4ZtevkkEdbBK42to6Q=
+		jwGU4+NRvaQSNfcWXjdUaUO1bGg=
 		</data>
-		<key>MenuIcon_Down.png</key>
+		<key>Menu_butn_Pressed_Icon.png</key>
 		<data>
-		rQZaustHpSLKIoO/8aj92DDnLwg=
+		nOSy/agK0MpRaMng54toNcwo2o0=
 		</data>
-		<key>MenuIcon_Down@2x.png</key>
+		<key>Menu_butn_Pressed_Icon@2x.png</key>
 		<data>
-		1KrnGrBA5JeCs/TsMwSEOjBIQ0I=
+		D+AapN4cBsogzlvFp5qDwx/L+Bg=
 		</data>
-		<key>MenuIcon_Down@3x.png</key>
+		<key>Menu_butn_Pressed_Icon@3x.png</key>
 		<data>
-		wWqm9lumIAo+rEM2MKfrU1PgkZc=
+		3hMWwmiKA1ai0cvXGGJbrn8oLFw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -198,15 +186,15 @@
 		</data>
 		<key>MoreResults_Icon.png</key>
 		<data>
-		05ewc2VsvSqUqesY77GpavCOfIg=
+		qy2FY5DMejqad6jaaxkkaa0dClw=
 		</data>
 		<key>MoreResults_Icon@2x.png</key>
 		<data>
-		JJhoQTT9RaJlOfY5AlgmwJ1YWhM=
+		TbYltDrpjbqBAGhX23AxRxcbjKk=
 		</data>
 		<key>MoreResults_Icon@3x.png</key>
 		<data>
-		QlEdCtuDUowM7+MCz2Fu9cyvPM8=
+		3fEREK3ARR2mTLVFFMDSo51rc3c=
 		</data>
 		<key>NoResultsIcon.png</key>
 		<data>
@@ -220,77 +208,113 @@
 		<data>
 		+yksZcKQCX4z5O9GNzbxpF9tXcw=
 		</data>
+		<key>SearchResultPlaceholder2_Grey_Icon.png</key>
+		<data>
+		ORPF5eYP3526xSEae239AMLkDAg=
+		</data>
+		<key>SearchResultPlaceholder2_Grey_Icon@2x.png</key>
+		<data>
+		IN15D8jlDyknbVyJsq66fjKqMIU=
+		</data>
+		<key>SearchResultPlaceholder2_Grey_Icon@3x.png</key>
+		<data>
+		fxMjV3QnIyimSJ84vwbx+wGAnfE=
+		</data>
 		<key>SearchResultPlaceholder2_Icon.png</key>
 		<data>
-		TKOir47Q/910ix/YHv5Y7HR+ruI=
+		byVpS9ImPRgk5NwszMQ3WD1cNKQ=
 		</data>
 		<key>SearchResultPlaceholder2_Icon@2x.png</key>
 		<data>
-		1ZWLl8WCRvc6KYv5gMeWWD0ljBQ=
+		tTjlv6JAnWxbGcp7TrIXii2lI0c=
 		</data>
 		<key>SearchResultPlaceholder2_Icon@3x.png</key>
 		<data>
-		nueAZEoPw9QLQiluajKCdNUEI0c=
+		Z9WYKmJ7kwlXApWPhCg4fpKVLpE=
 		</data>
 		<key>SearchResultPlaceholder_Icon.png</key>
 		<data>
-		nyyME+dIDvXHGnVimf0LWsYuFhQ=
+		R47XEKgR10Fdfc86OaE3O1LFUZ8=
 		</data>
 		<key>SearchResultPlaceholder_Icon@2x.png</key>
 		<data>
-		KKZYvqOHtVicxGBNujuESaY1370=
+		mFzsSRqNSENWy6pEgwZ9WadKXsc=
 		</data>
 		<key>SearchResultPlaceholder_Icon@3x.png</key>
 		<data>
-		LepqfZ2d23u7ahdB5JF9xd53KeQ=
+		pvxoggJT85n8HuGaG94I9o1TF8Q=
+		</data>
+		<key>SmallBackArrowDarkBlue_Icon.png</key>
+		<data>
+		remo7z1Wfxw1pkSGDyaHKYIKkZc=
+		</data>
+		<key>SmallBackArrowDarkBlue_Icon@2x.png</key>
+		<data>
+		q5AZDEvv2Hbyg8ghVrczT+TRRac=
+		</data>
+		<key>SmallBackArrowDarkBlue_Icon@3x.png</key>
+		<data>
+		/ks6OcplvsX2A+lAYzrNZ8dT0ww=
+		</data>
+		<key>SmallBackArrowWhite_Icon.png</key>
+		<data>
+		a3hRxkvSozFfDl8I6qcmxu/U9ZQ=
+		</data>
+		<key>SmallBackArrowWhite_Icon@2x.png</key>
+		<data>
+		mD0oCmrYGiBUuvI3ugGg2zec0O8=
+		</data>
+		<key>SmallBackArrowWhite_Icon@3x.png</key>
+		<data>
+		p4ACLVWMSck/8R6itb+poRAG8LY=
 		</data>
 		<key>SmallBackArrow_Icon.png</key>
 		<data>
-		tLC7jIlmWk1Xc0FyPtebOpvDOeo=
+		KMmDZZ7ye9r6K5c93/Uh4hYymeU=
 		</data>
 		<key>SmallBackArrow_Icon@2x.png</key>
 		<data>
-		FlKe5mebP5ImBx4djI7/TcGSElU=
+		ByRiW3Xj1UwqGK2lMdmFX+Lg6EQ=
 		</data>
 		<key>SmallBackArrow_Icon@3x.png</key>
 		<data>
-		W1GcUA2Ds00QfWVco3ZrT+OQiv0=
+		LDE+tfJnGbh3B6Tt3wQZv2B26pw=
 		</data>
 		<key>WRLDMenuChildTableViewCell.nib</key>
 		<data>
-		FaAWujFrw6dAgf/9WkVaVnL11o8=
+		SkJA/t7/Do8JzCUaPGC52iDjm78=
 		</data>
 		<key>WRLDMenuGroupTitleTableViewCell.nib</key>
 		<data>
-		LCeBQy5HKwHudtMTIQwLydP9OVM=
+		rnEZgqhfkh5GB9ux7Cg/USyxc4I=
 		</data>
 		<key>WRLDMenuOptionTableViewCell.nib</key>
 		<data>
-		XGHBrXwwxvNiUlRCkia3+2jM38Y=
+		UxEgvpyECRumKAuDHUUH3hbgo6I=
 		</data>
 		<key>WRLDMoreResultsTableViewCell.nib</key>
 		<data>
-		Qr2jKwSMQzStlDxZwq2+YZoPIRs=
+		9/BPBoLyXugMJXXUIYA4D7D27vQ=
 		</data>
 		<key>WRLDSearchInProgressTableViewCell.nib</key>
 		<data>
-		XSrKKH+1KBQ1N8jOqQqkmb7ncMo=
+		kf9WAhvZqQ+W5nwDzLWa2ECngyc=
 		</data>
 		<key>WRLDSearchResultTableViewCell.nib</key>
 		<data>
-		e5Tu2BdRZzc7nXp3E8lIYjDW2aA=
+		nQ3dk2IItrdUujw95JEcaoFUdvc=
 		</data>
 		<key>WRLDSearchWidget.nib/objects-11.0+.nib</key>
 		<data>
-		OTWklPnO8ryw2FZva8PWodfIfwE=
+		IA2M1hXStyMIha5OItoTV6tyGmQ=
 		</data>
 		<key>WRLDSearchWidget.nib/runtime.nib</key>
 		<data>
-		oIuhtl68qoqTlMTjNxtdQCtDib0=
+		Baj09uEMgtJ8aThwxkDvwMuXxUY=
 		</data>
 		<key>WRLDSuggestionTableViewCell.nib</key>
 		<data>
-		gfMMOkYYI6kVcbIoPtBDtgKF8+0=
+		FCG7dLPACNlS1WX0HjQU4FlTWwA=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -306,103 +330,70 @@
 			GtvZEq4n0DhJH52xx+agB7gEPEofQjAJo1GwMlh1ZFM=
 			</data>
 		</dict>
-		<key>AutosuggestIcon.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			PNGC814PTZR8Y2L9DZEwk7VUQaU=
-			</data>
-			<key>hash2</key>
-			<data>
-			MgTJmuuLu7BhG10scV1in0yzmd9WoEa9V0TKgIMTB5g=
-			</data>
-		</dict>
-		<key>AutosuggestIcon@2x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			J1CB/wPMuxa8IYQ4WUdpRgEZHY0=
-			</data>
-			<key>hash2</key>
-			<data>
-			V9N/ItaaWPF/abH9SKUzorZlpV9ixRCHAFYZ6SwzHJ4=
-			</data>
-		</dict>
-		<key>AutosuggestIcon@3x.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			zBV060Gux2BiIj46gij0Di5CA34=
-			</data>
-			<key>hash2</key>
-			<data>
-			YMZzOt6fuaxRMFhLjyCl0L69eV1DY2pvKsL4j1cmYZk=
-			</data>
-		</dict>
 		<key>ExpanderWhite_Icon.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			I7YuOKiEt9tBqbpBEnxIpVhzy5o=
+			hVmaVHDMUq+9KLd8z7HDdYFGiqY=
 			</data>
 			<key>hash2</key>
 			<data>
-			gYXJj8hQO7L6XX7cQd+0J6xhXaVf71NMD1WxzW+ZkOU=
+			FkruQU7w7tbwgB2LnJtUAGhgIBwgvQcg2F552cBvZHA=
 			</data>
 		</dict>
 		<key>ExpanderWhite_Icon@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AehlkINRFgsmbzTDxjMToU8sx7Q=
+			qu+TXT3zrHpIllPsXHMpYoP+9S4=
 			</data>
 			<key>hash2</key>
 			<data>
-			blWw8A92ToM61JikYAT3jxnHSYiMXuxhBg2x4Mzp1Ik=
+			lZms9eU/fyFnICpNMBe+BvNcqVz0Wr/q58TXmI3MTTk=
 			</data>
 		</dict>
 		<key>ExpanderWhite_Icon@3x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			sEmvPLD/yafKyJVZK4zPjLLHpcY=
+			Q+75ccmYsnP6UZSmXfDBkrYwZ2s=
 			</data>
 			<key>hash2</key>
 			<data>
-			39ZGJnrPXyZZAQbf4huWgBhM0+/QvLb2JQZvvKdDDFg=
+			+lGv7f0f3wrbHIVK2CjRubeddo09RR/SZffquzMmnno=
 			</data>
 		</dict>
 		<key>Expander_Icon.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			X7q6MH2nAY6RoalbXE/Yr6Zzrd8=
+			PPXPUuOklu30NXODKA4OnHchQTU=
 			</data>
 			<key>hash2</key>
 			<data>
-			/g/JiKA5rK+qjZr9f+NTpckpypPIVMU02x+5Y2BcxHM=
+			8LH4IKmKKzIXz7dr2vMxusWNZYRKxW0fVEjjkq1lZog=
 			</data>
 		</dict>
 		<key>Expander_Icon@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			yIE8pOu+DtzqU1EDHbCsM2fycko=
+			+dsBRpDiiCDh4tS2+JHDFbtbFVo=
 			</data>
 			<key>hash2</key>
 			<data>
-			Pd+26HofQxM39u5sJ0UBFoKKvLZr2tOWBbdnMh0+GyE=
+			p5J6+4lBwa5sqjqQxHe+IYmVSZJ0yh3TgX/q0G6CYYc=
 			</data>
 		</dict>
 		<key>Expander_Icon@3x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7dM4AzNLrz300dtc4uiIUBOr+ko=
+			jfm48H24YjQ2x9ADRDDQYbbaTqQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ilk8WJfwAkXXlCPwssMEv4o39JOrfqiOLMKIA2MhZJY=
+			P7JAI+Cxlh5x9Lu6bg5FZWg44gNLlqRTVXllnbTFjTM=
 			</data>
 		</dict>
 		<key>Headers/WRLDBasicSearchResultModel.h</key>
@@ -431,11 +422,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			BTnRIa429a8KCXxeCWJrof6f/0Q=
+			aDx/gFu/x36set/LfGeQ0tjKV8c=
 			</data>
 			<key>hash2</key>
 			<data>
-			8CXMOk0S4I1oJQmAuq7PiOB1py2vupCgI6AtWyXL76w=
+			E3hb91y2/eWjpRdv5e0d/lCibtVZod423Tlqi9bMZa4=
+			</data>
+		</dict>
+		<key>Headers/WRLDMenuObserver.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			Xrr7ufXqwf50znt0EoMigxy8l8Y=
+			</data>
+			<key>hash2</key>
+			<data>
+			26yYfl633BVYa4OhxVK21TLX8CVtpSRkZ70/D2+rTWo=
 			</data>
 		</dict>
 		<key>Headers/WRLDMenuOption.h</key>
@@ -447,17 +449,6 @@
 			<key>hash2</key>
 			<data>
 			wqQ6Rkxk++5b/1TzT1dvhyfEDtYxgDXpxZAfohB05Sc=
-			</data>
-		</dict>
-		<key>Headers/WRLDMenuOptionSelectedObserver.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			J+LVEYnLZ0Nrc4xOMV2ob7vkhJU=
-			</data>
-			<key>hash2</key>
-			<data>
-			GnlWsxi+rf42UhdI0Zj84y0FyXyoMiGilpXicrBEPiM=
 			</data>
 		</dict>
 		<key>Headers/WRLDMockSearchProvider.h</key>
@@ -486,22 +477,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Q21BSig66QH07eqLRCu+yca/kik=
+			ssFX8OxWTwvXfGt0kQXeB6cT/Q0=
 			</data>
 			<key>hash2</key>
 			<data>
-			mbFDwS2WkhJBfiP/89RtbjkdR1ua4ty3XGSPzQNcpdw=
+			dqmC4p7Guhm0mxVSdrjoBv0jFE5MgG2oeT3rQCW0gX8=
 			</data>
 		</dict>
 		<key>Headers/WRLDSearchModel.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			JbMb3y5Pq30d2BfOetDAdVR0KfA=
+			mcGFQisH60c1ahi2hmjX3X6mfX4=
 			</data>
 			<key>hash2</key>
 			<data>
-			UMHjGCBX/O6IdtZj30KJJKNz6N+t4cLfxkBdCSkzGcw=
+			3/w+x8vx7sxxcS+pow886J6zuzla785QswnhtKw3xuw=
 			</data>
 		</dict>
 		<key>Headers/WRLDSearchProvider.h</key>
@@ -530,33 +521,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			9u87sRJORy9XzBT1IQry7woXyDs=
+			VJQ+5BNYKSLq67/4wogyr2YWl2Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZgZYGuAmJ8asCh5yqnKAlKfBVA85KUPjMy9tcU4BO+c=
+			Or/kDmH41foGLSqXzutj2zTmu6qMWxWNLgRviiQ/pFE=
 			</data>
 		</dict>
 		<key>Headers/WRLDSearchQueryObserver.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			yJkf1BKI5LaWibwUMLUEwl7OevE=
+			N40sG7ku1WeQEbuNC6bsJj0jPMA=
 			</data>
 			<key>hash2</key>
 			<data>
-			Xjwe57wyP3JvfHf5By4oELmy2png6PjF9v1ByAYsXQQ=
+			VujTIi8R+vPMscwePbPyV72mk1duQiFoCFS6BoVC1xI=
 			</data>
 		</dict>
 		<key>Headers/WRLDSearchRequest.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			L3+6Q1uitFWw+WnfhY32A3WfVm0=
+			0V7lWf/KEb4CdxfQ+FzCxx1Xniw=
 			</data>
 			<key>hash2</key>
 			<data>
-			mI8FcQr2F+lw6hEtjNiJiCZZ0f3qLhLag6Q9oyqablM=
+			iJnr/onCGaD9WCxT6UX3DBxcoEi4hs0FjVfBkUlJG6o=
 			</data>
 		</dict>
 		<key>Headers/WRLDSearchRequestFulfillerHandle.h</key>
@@ -618,22 +609,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			hNTjX0otb2I8HIGzcpJDQp2FQOY=
+			YlNnXE4kYG4AmL9Uhxjmm7dsbu8=
 			</data>
 			<key>hash2</key>
 			<data>
-			y5bS+/wSTOdhYz2qUYxMszaJv+jqsBpuAzWeq8ldYN4=
+			Bqk0G+XlWRnDPB2bVETpHwWr1tzCnR8uecBQt98PY0k=
 			</data>
 		</dict>
 		<key>Headers/WRLDSearchWidgetViewController.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7I9nbZTcw4AycrCY+ayL12ogrJ8=
+			Phi3g3dIONAxB29sJzORn47NgFA=
 			</data>
 			<key>hash2</key>
 			<data>
-			i2BbpvLZJDK9gegfkNUJGWFWLOGDMZ1Q9Vs9xY4WFes=
+			hhCvL2ApEBHRUdxIruR3xOYe1WHqQC5wua21A+KUjCU=
 			</data>
 		</dict>
 		<key>Headers/WRLDSuggestionProvider.h</key>
@@ -662,143 +653,143 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			fXZ7+vRubmxrS5y1R2dMnLfrT8w=
+			6Dxo+cVFqk1GPPwx8yS3lveA6qY=
 			</data>
 			<key>hash2</key>
 			<data>
-			U8oZPInPe3Yh5xikWDYQVyRGlnRXQWoNPtjrdvr2izY=
+			IlmKFtvvARIFVPxfpSDQ1aB3c+XHS1OxP9nlrM6lTJo=
 			</data>
 		</dict>
-		<key>MenuBack.png</key>
+		<key>Menu_Back_btn_Icon.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			+Vq1XRa189zunbIF5l+pXG7vclM=
+			gDjXd00bH7b4XqC+FgnWI3otvtY=
 			</data>
 			<key>hash2</key>
 			<data>
-			+HEB5tBYST5i5xQUqvFlwrrqMXmZAus4W5WFeisOYpc=
+			bvnbz6GIRtu8B1XH4MGVN9mZTCRRL4vi+9jhQ65zfvc=
 			</data>
 		</dict>
-		<key>MenuBack@2x.png</key>
+		<key>Menu_Back_btn_Icon2.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AkDndSS425mr9IwJOynXXsI1Uzs=
+			PwH3pYAD3VbXHWQrmH8u6I/qMbM=
 			</data>
 			<key>hash2</key>
 			<data>
-			UadqCCQDjQCswTKcQi9gZqmYkjF2pyvpZZ/efyTf6Qg=
+			HFp68BXYhEooDj9kKTihyaWmb4rPGvydScgcWJPpyLc=
 			</data>
 		</dict>
-		<key>MenuBack@3x.png</key>
+		<key>Menu_Back_btn_Icon2@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			JrH0Sw3W8OELLnB7RU3qxPk54Tk=
+			uAp/JDrZDo5uGQWZ/+F9QSnLXu8=
 			</data>
 			<key>hash2</key>
 			<data>
-			fxUYu5fKOifELjcuEHrlLhZuEDqF0voWmW/V8MTkozo=
+			hEwIx+cyNJQmH9s32nBJPqeZ1yj049PORUQ4zlGk4ws=
 			</data>
 		</dict>
-		<key>MenuBack_Down.png</key>
+		<key>Menu_Back_btn_Icon2@3x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5EnIaErklWyA0ZbwbzSVp8qMB88=
+			JrnvULEIXsfjHAqY4HsJS8+0C9w=
 			</data>
 			<key>hash2</key>
 			<data>
-			hjOj3b/q0l9OdXndMzT7qmju1O4PgM9soOWMdLO6gok=
+			LKXIT7tZI4/48jb+GGLGdebF/nCV1iDIkc1dD5lCz4Y=
 			</data>
 		</dict>
-		<key>MenuBack_Down@2x.png</key>
+		<key>Menu_Back_btn_Icon@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			PXbedue4CyPhrSWfQZEb06Luflg=
+			6LxQESb987VrBgh2T9GGnEb7TEI=
 			</data>
 			<key>hash2</key>
 			<data>
-			Txh+X/fyUa0XeTs1coWBt9BWuQQQ9Kt1rtjBOKlx5Hg=
+			heGviG8YeKven8lzWlTzMblZL8qrO7Ey9dUhz9z8VS4=
 			</data>
 		</dict>
-		<key>MenuBack_Down@3x.png</key>
+		<key>Menu_Back_btn_Icon@3x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			e1gS11HHzCuHQ5k+O+3RDG6q1ew=
+			nj6GrakW7K110q3P/E2a8zqHPCk=
 			</data>
 			<key>hash2</key>
 			<data>
-			UDtreT5RCtpOtROtHk7x0Bo3ZmOEb2jc4u7/affVFns=
+			MagPJ9zSdwHjijnHG3VJeq6NvGymE2iC0A3FcNstvsA=
 			</data>
 		</dict>
-		<key>MenuIcon.png</key>
+		<key>Menu_butn.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			EtvlR4sqd6MSPanNGfCOHlSxlQU=
+			tvwhoCd1WGWaMXUd4htssCXDR0E=
 			</data>
 			<key>hash2</key>
 			<data>
-			MkjAHzH1x3B22jTxomb+w6q876SEOpzPZ2XtZHIfUhU=
+			p3EFE1pSys3c/O9jTIkf9s5y+sEtQBf5taKMUlqTXdg=
 			</data>
 		</dict>
-		<key>MenuIcon@2x.png</key>
+		<key>Menu_butn@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2Onl8RDhIDSpph5NIx24E34REJY=
+			G+VwNmOXYKsudXR9W10KkW7zO28=
 			</data>
 			<key>hash2</key>
 			<data>
-			YwJR2YskGmuP816N1YX31sM7tTrWSVWgZoorwJRwK6E=
+			QA2kYodjzl1u9U9xuvnmsfGQJ2vds3RK6N910rW2ANk=
 			</data>
 		</dict>
-		<key>MenuIcon@3x.png</key>
+		<key>Menu_butn@3x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zZ1pgCmlC4ZtevkkEdbBK42to6Q=
+			jwGU4+NRvaQSNfcWXjdUaUO1bGg=
 			</data>
 			<key>hash2</key>
 			<data>
-			gRrM7n3fjS2o4ht++/N7LFVcnxiL5kBoN48Nrw9gGTk=
+			tL1RmAgjaufbZG89Hcs4hhCADtkmlGcsmYqdb+KpEXk=
 			</data>
 		</dict>
-		<key>MenuIcon_Down.png</key>
+		<key>Menu_butn_Pressed_Icon.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			rQZaustHpSLKIoO/8aj92DDnLwg=
+			nOSy/agK0MpRaMng54toNcwo2o0=
 			</data>
 			<key>hash2</key>
 			<data>
-			9qi9HOU1sorfENhV6pvLOBB+bqL0p4B6zKmjHDj7duw=
+			bpiJ7RRZyWZaycYESazEuHga08UN4lrJVY/R90f77Go=
 			</data>
 		</dict>
-		<key>MenuIcon_Down@2x.png</key>
+		<key>Menu_butn_Pressed_Icon@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			1KrnGrBA5JeCs/TsMwSEOjBIQ0I=
+			D+AapN4cBsogzlvFp5qDwx/L+Bg=
 			</data>
 			<key>hash2</key>
 			<data>
-			8anaNeipW0VrCLB++dbuj9T+Angat1/uDDPIG5oDSO8=
+			dHNd6JZl+mxn6SQcv5RmRdhDZQT9tbgocDR9yYBnqro=
 			</data>
 		</dict>
-		<key>MenuIcon_Down@3x.png</key>
+		<key>Menu_butn_Pressed_Icon@3x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wWqm9lumIAo+rEM2MKfrU1PgkZc=
+			3hMWwmiKA1ai0cvXGGJbrn8oLFw=
 			</data>
 			<key>hash2</key>
 			<data>
-			WhnDuhhmWpGE+7S+qk87RkNMzYFkazyJcSUmNrlk0No=
+			KCHK/Ebp22ylZhCN431kBAjqzrydkp75gBOVQloxdGA=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -816,33 +807,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			05ewc2VsvSqUqesY77GpavCOfIg=
+			qy2FY5DMejqad6jaaxkkaa0dClw=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZOKojB8cIkek+ZcTVKVjW2D0mSWANCH4dWMjp8gSf0o=
+			HkDK+8CWMQeiIFsnTj12xASR+F4MFnSh6izyqUW/o6I=
 			</data>
 		</dict>
 		<key>MoreResults_Icon@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			JJhoQTT9RaJlOfY5AlgmwJ1YWhM=
+			TbYltDrpjbqBAGhX23AxRxcbjKk=
 			</data>
 			<key>hash2</key>
 			<data>
-			5+aMHLBFhRYAWui1bGFpeaDDraPy4IkDdPFRiZtcE9s=
+			4J6pkxc6ZGLHd4i+mGs5WAbN/P6gDKlMlmJEgdaFDVk=
 			</data>
 		</dict>
 		<key>MoreResults_Icon@3x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			QlEdCtuDUowM7+MCz2Fu9cyvPM8=
+			3fEREK3ARR2mTLVFFMDSo51rc3c=
 			</data>
 			<key>hash2</key>
 			<data>
-			e3Ve/Y7NPF6zFUqtAFHQUfyNq8BPpoZrPk+LfBI/IJc=
+			AVX4SjskpwBkzf6OvovRIkHJOtorgqJe+Go0kMnOWAk=
 			</data>
 		</dict>
 		<key>NoResultsIcon.png</key>
@@ -878,202 +869,301 @@
 			IOnF3ClBSpiChcFKfdqnM7cC8Z3kCug6/mZ6w3Pmk08=
 			</data>
 		</dict>
+		<key>SearchResultPlaceholder2_Grey_Icon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ORPF5eYP3526xSEae239AMLkDAg=
+			</data>
+			<key>hash2</key>
+			<data>
+			JZpM7YBpjFi1WEReY2ulBJ/+nue3jrswaZNmqqJWXpU=
+			</data>
+		</dict>
+		<key>SearchResultPlaceholder2_Grey_Icon@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			IN15D8jlDyknbVyJsq66fjKqMIU=
+			</data>
+			<key>hash2</key>
+			<data>
+			q/Py5V6o/y8vhETCtlxmh6/uru7wSckhWTFq52pm5uw=
+			</data>
+		</dict>
+		<key>SearchResultPlaceholder2_Grey_Icon@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			fxMjV3QnIyimSJ84vwbx+wGAnfE=
+			</data>
+			<key>hash2</key>
+			<data>
+			kQbX+lgYB9f0a6TPMCmOsjMW0vtB0pRbXpn7AiLOxxk=
+			</data>
+		</dict>
 		<key>SearchResultPlaceholder2_Icon.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			TKOir47Q/910ix/YHv5Y7HR+ruI=
+			byVpS9ImPRgk5NwszMQ3WD1cNKQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			LnJTfHCyxztdWa1YVGbpG1DMucYIArKSdQk0YITyyQ8=
+			iqPgPT0Fiktq2nGw17trvdIo+z/AihPwxkMgelwJcaQ=
 			</data>
 		</dict>
 		<key>SearchResultPlaceholder2_Icon@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			1ZWLl8WCRvc6KYv5gMeWWD0ljBQ=
+			tTjlv6JAnWxbGcp7TrIXii2lI0c=
 			</data>
 			<key>hash2</key>
 			<data>
-			oyd5bwKrOtu0toemjHo3NZc6cGVVDgzPviLGeB+7uvs=
+			xe/TYywgVhnIbdd0UU7fxXgZK6KQvFVWBwS3AXw2cTc=
 			</data>
 		</dict>
 		<key>SearchResultPlaceholder2_Icon@3x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			nueAZEoPw9QLQiluajKCdNUEI0c=
+			Z9WYKmJ7kwlXApWPhCg4fpKVLpE=
 			</data>
 			<key>hash2</key>
 			<data>
-			pmBsXFgBSeUmov5dnAQqrTvvawpW8s4Hn8KdX+yNkas=
+			7EMoqGfu30Br1WKmFi3zmTqObSQmM4glFSAgWrhOVvQ=
 			</data>
 		</dict>
 		<key>SearchResultPlaceholder_Icon.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			nyyME+dIDvXHGnVimf0LWsYuFhQ=
+			R47XEKgR10Fdfc86OaE3O1LFUZ8=
 			</data>
 			<key>hash2</key>
 			<data>
-			VUHsRMYmpNJu5CvY0RonOjjxq8SviPp/jkrVk1teClQ=
+			+7BwGZw9/v3bim/RD3NLpSH5hI2RbwNu60x4T8tMyjE=
 			</data>
 		</dict>
 		<key>SearchResultPlaceholder_Icon@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KKZYvqOHtVicxGBNujuESaY1370=
+			mFzsSRqNSENWy6pEgwZ9WadKXsc=
 			</data>
 			<key>hash2</key>
 			<data>
-			/SKng8unLifFhF7Vg/eAPvqkYzjT2un3KP1YiGvFnqE=
+			jE4v9yFtnJdujP+kZARfk3gg7JA4BcA9AwaJeaqckwE=
 			</data>
 		</dict>
 		<key>SearchResultPlaceholder_Icon@3x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			LepqfZ2d23u7ahdB5JF9xd53KeQ=
+			pvxoggJT85n8HuGaG94I9o1TF8Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			TsLFH5Y8vChjqQeVEh7uLgT4Y2WC7z4I14cw/b8EzDs=
+			5UBTzW1u16U9HyZSSLnMrqxwQ8mMaVUICJuWGj896BM=
+			</data>
+		</dict>
+		<key>SmallBackArrowDarkBlue_Icon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			remo7z1Wfxw1pkSGDyaHKYIKkZc=
+			</data>
+			<key>hash2</key>
+			<data>
+			H557kXwd3zlmRFI1IDzOpWW2d2xWuk6PeO661Cg2wkw=
+			</data>
+		</dict>
+		<key>SmallBackArrowDarkBlue_Icon@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			q5AZDEvv2Hbyg8ghVrczT+TRRac=
+			</data>
+			<key>hash2</key>
+			<data>
+			XJFT8fWXLqQ3u3KpiOnG7myjA28LtS4hbQupztdR5B4=
+			</data>
+		</dict>
+		<key>SmallBackArrowDarkBlue_Icon@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			/ks6OcplvsX2A+lAYzrNZ8dT0ww=
+			</data>
+			<key>hash2</key>
+			<data>
+			q452B+7GGrQAhysX/rLTVHLZ8f0UNirq1QVi7p0TnMk=
+			</data>
+		</dict>
+		<key>SmallBackArrowWhite_Icon.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			a3hRxkvSozFfDl8I6qcmxu/U9ZQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			nITOLR6ofULNLRJDorTEYKSRadb451BJebwNR7kg9lk=
+			</data>
+		</dict>
+		<key>SmallBackArrowWhite_Icon@2x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			mD0oCmrYGiBUuvI3ugGg2zec0O8=
+			</data>
+			<key>hash2</key>
+			<data>
+			gTqJZMNtvIbeVPa9dUGiF5IGnIZ74hvVOSqQQ6IwFHc=
+			</data>
+		</dict>
+		<key>SmallBackArrowWhite_Icon@3x.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			p4ACLVWMSck/8R6itb+poRAG8LY=
+			</data>
+			<key>hash2</key>
+			<data>
+			cpARLi07x3lkWVlvChgXrkxWoAP1eiW4yy2tzoPkmvU=
 			</data>
 		</dict>
 		<key>SmallBackArrow_Icon.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			tLC7jIlmWk1Xc0FyPtebOpvDOeo=
+			KMmDZZ7ye9r6K5c93/Uh4hYymeU=
 			</data>
 			<key>hash2</key>
 			<data>
-			92aIpC3yJfz2G/EAvv6Oq5qqsPel69uQAA3mDBXkNUY=
+			xqam4mCdAdfoiDUwFchkjwhXpYd8tjtUvQhO4uVOazU=
 			</data>
 		</dict>
 		<key>SmallBackArrow_Icon@2x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FlKe5mebP5ImBx4djI7/TcGSElU=
+			ByRiW3Xj1UwqGK2lMdmFX+Lg6EQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			++qrAUkedUqLW3ftJOxIMo/icwE/yZ+0VRlaBk1uv5Q=
+			lv+ivFsz81hecl0r0OQpMmtE6UYzuh8rfUAlTvEqZe8=
 			</data>
 		</dict>
 		<key>SmallBackArrow_Icon@3x.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			W1GcUA2Ds00QfWVco3ZrT+OQiv0=
+			LDE+tfJnGbh3B6Tt3wQZv2B26pw=
 			</data>
 			<key>hash2</key>
 			<data>
-			xCWNeurfR2qyw/iN49iqdEEBfSB9trmdkTdMdBNwy5E=
+			9R7WU2VGhLZdkEyouw+OfCeGD7j8KK2NmhUgbS7CWQc=
 			</data>
 		</dict>
 		<key>WRLDMenuChildTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FaAWujFrw6dAgf/9WkVaVnL11o8=
+			SkJA/t7/Do8JzCUaPGC52iDjm78=
 			</data>
 			<key>hash2</key>
 			<data>
-			mqg8U/X0QQNHrswB7gGTYeh/1JnLMGMYrfE9JIfyY2E=
+			NV7d9pqcYdY6MW9zthf2x/Ba6n9KIJyC1k+SgH+MRHk=
 			</data>
 		</dict>
 		<key>WRLDMenuGroupTitleTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			LCeBQy5HKwHudtMTIQwLydP9OVM=
+			rnEZgqhfkh5GB9ux7Cg/USyxc4I=
 			</data>
 			<key>hash2</key>
 			<data>
-			RBFEqhHqlquRuklz88M1ZMGOltkUlebiqXw9B7XCy3U=
+			L+wtdMjenW1eUM84Gxbzr8jFBlHO+it7x2aM6SOxGlQ=
 			</data>
 		</dict>
 		<key>WRLDMenuOptionTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			XGHBrXwwxvNiUlRCkia3+2jM38Y=
+			UxEgvpyECRumKAuDHUUH3hbgo6I=
 			</data>
 			<key>hash2</key>
 			<data>
-			wWrhgr1UGNoYEX0Pgo0IXIsta0z9I/DMKCDieSIPyeg=
+			Ylx/JCVXOCdy7Nbaz6/kfGrxR2Esvha0hCn5BcBOaIQ=
 			</data>
 		</dict>
 		<key>WRLDMoreResultsTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Qr2jKwSMQzStlDxZwq2+YZoPIRs=
+			9/BPBoLyXugMJXXUIYA4D7D27vQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			nWfSx88D/o18GYE9S07O75J0aFTlKG42xHdo7CZ5oDY=
+			bb6pd5xc632KQ20PzBRBfqUOboqoUhIZG5Ow35owrwg=
 			</data>
 		</dict>
 		<key>WRLDSearchInProgressTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			XSrKKH+1KBQ1N8jOqQqkmb7ncMo=
+			kf9WAhvZqQ+W5nwDzLWa2ECngyc=
 			</data>
 			<key>hash2</key>
 			<data>
-			+LhokaEst74ro9/KvJ2684JAgoYben2i0Pgigetkwk4=
+			sUE/g1caCwsV+KTnMn1WaGNm32ZU8kpqxEG1b0wzOXI=
 			</data>
 		</dict>
 		<key>WRLDSearchResultTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			e5Tu2BdRZzc7nXp3E8lIYjDW2aA=
+			nQ3dk2IItrdUujw95JEcaoFUdvc=
 			</data>
 			<key>hash2</key>
 			<data>
-			FniKYV1YdQ2Ib/NHNKFLqLF80NBSZFi/kRzkfbacHUI=
+			oWNeE15ro7CsWU9xCqwpfP/I87/Hh5BgUfvSDHRPf6U=
 			</data>
 		</dict>
 		<key>WRLDSearchWidget.nib/objects-11.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			OTWklPnO8ryw2FZva8PWodfIfwE=
+			IA2M1hXStyMIha5OItoTV6tyGmQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			BUiAGqukwZmsMHKp01b1PwCUiBkwuJLqwSrqFpsi92M=
+			hFUla/3Os7zaJrfxFfR9wERJVSa66ChtPD+JEzoUY1g=
 			</data>
 		</dict>
 		<key>WRLDSearchWidget.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			oIuhtl68qoqTlMTjNxtdQCtDib0=
+			Baj09uEMgtJ8aThwxkDvwMuXxUY=
 			</data>
 			<key>hash2</key>
 			<data>
-			Kq/vZnz7NHgOd6imgg/w+/Lkx9Op6FXRxMkIwKljN5w=
+			A93yvnU1IgdBwWOMwVjKiZ9tdbze8+HrZ0xQiYbeeq0=
 			</data>
 		</dict>
 		<key>WRLDSuggestionTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gfMMOkYYI6kVcbIoPtBDtgKF8+0=
+			FCG7dLPACNlS1WX0HjQU4FlTWwA=
 			</data>
 			<key>hash2</key>
 			<data>
-			D3CTGkDrci4iFqjrkenxAmbW9+GSFhUlKg8bEToutyY=
+			TjNJTll1RRPSfOHxJ9xYWw9ZvVD1Vdo9GZw/mfeltmw=
 			</data>
 		</dict>
 	</dict>

@@ -13,7 +13,14 @@
 #include "Rendering.h"
 #include "SearchMenuController.h"
 #include "SearchResultsTableDataProvider.h"
+#include "ViewController.h"
 #include "Types.h"
+#include "SearchServices.h"
+#include "SearchProvider.h"
+#include "WidgetSearchProvider.h"
+#include "SearchWidgetController.h"
+#include "SearchWidgetView.h"
+#include "MenuSectionsViewModel.h"
 
 namespace ExampleApp
 {
@@ -29,6 +36,13 @@ namespace ExampleApp
                 CustomTableDataProvider* m_pDataProvider;
                 SearchResultsTableDataProvider* m_pSearchResultsDataProvider;
                 
+                SearchWidgetController* m_pSearchWidgetController;
+                SearchMenu::View::SearchServices* m_pSearchServices;
+                SearchProviders::SearchProvider* m_pSearchProvider;
+                SearchWidgetView* m_pSearchWidgetView;
+                Menu::View::MenuSectionsViewModel* m_pMenuSectionsViewModel;
+                WidgetSearchProvider* m_pWrldSearchProvider;
+
             public:
                 SearchMenuViewModule(Menu::View::IMenuModel& searchMenuModel,
                                      Menu::View::IMenuViewModel& searchMenuViewModel,
@@ -43,6 +57,8 @@ namespace ExampleApp
                 Menu::View::MenuController& GetMenuController() const;
                 
                 SearchMenuView& GetSearchMenuView() const;
+
+                SearchWidgetView& GetSearchWidgetView() const;
             };
         }
     }

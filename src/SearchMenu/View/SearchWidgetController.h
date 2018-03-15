@@ -9,6 +9,7 @@
 #include "SearchQueryRefreshedMessage.h"
 #include "IMenuSectionsViewModel.h"
 #include "TagSearchAddedMessage.h"
+#include "TagSearchSwallowLoadedMessage.h"
 #include "IUpdateableViewController.h"
 
 #include <map>
@@ -27,7 +28,8 @@ namespace ExampleApp
 				SearchServices& m_searchServices;
 
 				typedef std::map<std::string, std::string> TTagMap;
-				TTagMap m_tagMap;
+				TTagMap m_knownTags;
+				TTagMap m_visibleTextOfTag;
 
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onSearchResultsClearedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, int> m_onSearchResultSelectedCallback;
@@ -38,7 +40,9 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback3<SearchWidgetController, const std::string&, int, int> m_onItemSelectedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemAddedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemRemovedCallback;
+
 				Eegeo::Helpers::TCallback1<SearchWidgetController, const TagSearch::TagSearchAddedMessage&> m_onTagSearchAddedHandler;
+				Eegeo::Helpers::TCallback1<SearchWidgetController, const TagSearch::TagSearchSwallowLoadedMessage&> m_onTagSearchSwallowLoadedHandler;
 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
                 bool m_menuContentsChanged;
@@ -63,6 +67,8 @@ namespace ExampleApp
                 virtual void OnItemRemoved(Menu::View::MenuItemModel& item);
 
 				void OnTagSearchAdded(const TagSearch::TagSearchAddedMessage& message);
+				void OnTagSearchSwallowLoaded(const TagSearch::TagSearchSwallowLoadedMessage& message);
+				void RememberTag(const std::string& key, const std::string& tag);
             };
         }
     }
