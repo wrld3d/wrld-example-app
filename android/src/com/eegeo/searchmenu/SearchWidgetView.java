@@ -87,24 +87,19 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
                 widgetResult.getIndex());
     }
 
-    public void onSearchPerformed(String text, boolean isTag, boolean tryInterior, boolean shouldZoomToBuildingsView,
+    public void onSearchPerformed(String queryText,
+                                  boolean isTag, String tagText,
+                                  boolean tryInterior, boolean shouldZoomToBuildingsView,
                                   boolean usesLocationAndRadius,
                                   double latitude, double longitude, double altitude,
                                   float radius)
     {
         QueryContext context = usesLocationAndRadius ?
-                new QueryContext(isTag, tryInterior, shouldZoomToBuildingsView,
+                new QueryContext(isTag, tagText, tryInterior, shouldZoomToBuildingsView,
                                  latitude, longitude, altitude, radius) :
-                new QueryContext(isTag, tryInterior, shouldZoomToBuildingsView);
+                new QueryContext(isTag, tagText, tryInterior, shouldZoomToBuildingsView);
 
-        if (isTag)
-        {
-            m_searchWidget.doSearchWithDisplayText(text, "", context);
-        }
-        else
-        {
-            m_searchWidget.doSearch(text, context);
-        }
+        m_searchWidget.doSearch(queryText, context);
     }
 
     public boolean onMenuOptionSelected(final String text, final Object context) {

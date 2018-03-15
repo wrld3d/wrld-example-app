@@ -4,6 +4,8 @@
 
 #include "LatLongAltitude.h"
 
+#include <string>
+
 namespace ExampleApp
 {
     namespace SearchMenu
@@ -13,6 +15,7 @@ namespace ExampleApp
 			class QueryContext
 			{
 				bool m_isTag;
+				std::string m_tagText;
 				bool m_shouldTryInterior;
 				bool m_shouldZoomToBuildingsView;
 				bool m_usesLocationAndRadius;
@@ -20,13 +23,16 @@ namespace ExampleApp
 				float m_radius;
 
 			public:
-				QueryContext(bool isTag, bool shouldTryInterior, bool shouldZoomToBuildingsView);
+				QueryContext(bool isTag, const std::string& tagText,
+							 bool shouldTryInterior, bool shouldZoomToBuildingsView);
 
-				QueryContext(bool isTag, bool shouldTryInterior, bool shouldZoomToBuildingsView,
+				QueryContext(bool isTag, const std::string& tagText,
+							 bool shouldTryInterior, bool shouldZoomToBuildingsView,
 							 const Eegeo::Space::LatLongAltitude& location,
 							 float radius);
 
 				bool IsTag() const;
+				const std::string& TagText() const;
 				bool ShouldTryInterior() const;
 				bool ShouldZoomToBuildingsView() const;
 				bool UsesLocationAndRadius() const;

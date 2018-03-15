@@ -87,9 +87,11 @@ namespace ExampleApp
 
 			void SearchWidgetController::RememberTag(const std::string& key, const std::string& tag)
 			{
-				Eegeo_ASSERT(m_knownTags.find(key) == m_knownTags.end());
+				Eegeo_ASSERT(m_knownTags       .find(key) == m_knownTags       .end());
+				Eegeo_ASSERT(m_visibleTextOfTag.find(tag) == m_visibleTextOfTag.end());
 
-				m_knownTags[key] = tag;
+				m_knownTags       [key] = tag;
+				m_visibleTextOfTag[tag] = key;
 			}
 
             void SearchWidgetController::OnSearchResultsCleared()
@@ -115,11 +117,26 @@ namespace ExampleApp
             {
                 const Search::SdkModel::SearchQuery &query = message.Query();
 
-                m_view.PerformSearch(query.Query(), QueryContext(query.IsTag(),
-                                                                 query.ShouldTryInteriorSearch(),
-                                                                 message.ShouldZoomToBuildingsView(),
-                                                                 message.Location(),
-                                                                 message.Radius()));
+				std::string visibleText = query.Query();
+				std::string tagText     = "";
+
+				if (query.IsTag())
+				{
+					TTagMap::iterator it = m_visibleTextOfTag.find(visibleText);
+
+					Eegeo_ASSERT(it != m_visibleTextOfTag.end());
+
+					tagText     = visibleText;
+					visibleText = it->second;
+				}
+
+                m_view.PerformSearch(visibleText,
+									 QueryContext(query.IsTag(),
+												  tagText,
+												  query.ShouldTryInteriorSearch(),
+												  message.ShouldZoomToBuildingsView(),
+												  message.Location(),
+												  message.Radius()));
             }
 
             void SearchWidgetController::UpdateUiThread(float dt)
@@ -145,7 +162,7 @@ namespace ExampleApp
 				TTagMap::iterator it = m_knownTags.find(menuText);
 
 				if (it != m_knownTags.end())
-					m_view.PerformSearch(it->second, QueryContext(true, true, false));
+					m_view.PerformSearch(menuText, QueryContext(true, it->second, true, false));
             }
 
             void SearchWidgetController::RefreshPresentation(bool forceRefresh)
