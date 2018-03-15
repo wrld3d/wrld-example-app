@@ -421,7 +421,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
     
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
-    
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetSearchWidgetController());
+
     SetTouchExclusivity();
 }
 

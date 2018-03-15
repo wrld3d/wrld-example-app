@@ -59,6 +59,8 @@ namespace ExampleApp
                 SearchMenuView& GetSearchMenuView() const;
 
                 SearchWidgetView& GetSearchWidgetView() const;
+
+                SearchWidgetController& GetSearchWidgetController() const;
             };
         }
     }
