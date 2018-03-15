@@ -1326,9 +1326,8 @@ namespace ExampleApp
 
         const auto& menuSection = menuModel.GetItemAtIndex(0);
 
-        auto* swallowOption = dynamic_cast<Search::Swallow::View::SwallowCategoryMenuOption*>(
+        auto* swallowOption = reinterpret_cast<Search::Swallow::View::SwallowCategoryMenuOption*>(
                 &menuModel.GetItemAtIndex(0).MenuOption());
-
         Eegeo_ASSERT(swallowOption != NULL);
 
         m_messageBus.Publish(TagSearch::TagSearchSwallowLoadedMessage(menuSection.Name(),
