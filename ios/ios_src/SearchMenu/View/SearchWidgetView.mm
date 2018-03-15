@@ -8,13 +8,21 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchWidgetView::SearchWidgetView(SearchMenuView* view):
+            SearchWidgetView::SearchWidgetView(SearchMenuView* view,
+                                               id<WRLDSearchProvider> searchProvider,
+                                               id<WRLDSuggestionProvider> suggestionProvider):
             m_pView(view)
             {
-                WRLDSearchMenuModel* menuModel = [[WRLDSearchMenuModel alloc] init];
-                WRLDSearchModel* searchModel = [[WRLDSearchModel alloc] init];
+                m_pSearchModel = [[WRLDSearchModel alloc] init];
+                m_pSearchProviderHandle = [m_pSearchModel addSearchProvider: searchProvider];
+                m_pSuggestionProviderHandle = [m_pSearchModel addSuggestionProvider: suggestionProvider];
                 
-                m_pSearchWidgetViewController = [[WRLDSearchWidgetViewController alloc] initWithSearchModel:searchModel menuModel:menuModel];
+                WRLDSearchMenuModel* menuModel = [[WRLDSearchMenuModel alloc] init];
+                
+                m_pSearchWidgetViewController = [[WRLDSearchWidgetViewController alloc] initWithSearchModel:m_pSearchModel menuModel:menuModel];
+                
+                [m_pSearchWidgetViewController displaySearchProvider: m_pSearchProviderHandle];
+                [m_pSearchWidgetViewController displaySuggestionProvider: m_pSuggestionProviderHandle];
                 
                 CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ?
                 CGRectMake(20, 20, 375, CGRectGetHeight(m_pView.bounds) - 40) :   // ipad

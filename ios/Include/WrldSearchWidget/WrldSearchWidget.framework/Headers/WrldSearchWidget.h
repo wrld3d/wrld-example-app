@@ -29,4 +29,4 @@ FOUNDATION_EXPORT const unsigned char WrldSearchWidgetVersionString[];
 #import "WRLDMenuGroup.h"
 #import "WRLDMenuOption.h"
 #import "WRLDMenuChild.h"
-#import "WRLDMenuOptionSelectedObserver.h"
+#import "WRLDMenuObserver.h"
