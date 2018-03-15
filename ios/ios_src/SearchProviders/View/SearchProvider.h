@@ -18,6 +18,7 @@ namespace ExampleApp
             Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
             Eegeo::Helpers::CallbackCollection2<const std::string&, const SearchMenu::View::QueryContext&> m_searchWithContextCallbacks;
             Eegeo::Helpers::CallbackCollection0 m_searchCancelledCallbacks;
+            WRLDSearchRequest* m_pCurrentRequest;
 
         public:
             SearchProvider();
@@ -29,13 +30,12 @@ namespace ExampleApp
             void InsertSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const SearchMenu::View::QueryContext&>& callback);
             void RemoveSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const SearchMenu::View::QueryContext&>& callback);
 
-            void InsertSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&, const SearchMenu::View::QueryContext&>& callback);
-            void RemoveSearchRefreshedCallback(Eegeo::Helpers::ICallback2<const std::string&, const SearchMenu::View::QueryContext&>& callback);
-
             void InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback);
             void RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback);
 
             void OnSearchResponseReceived(const TSearchResults& searchResults);
+
+            void PeformSearch(WRLDSearchRequest* searchRequest);
         };
     }
 }
