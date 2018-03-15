@@ -18,9 +18,14 @@ namespace ExampleApp
             private:
                 SearchMenuView* m_pView;
                 WRLDSearchWidgetViewController* m_pSearchWidgetViewController;
+                WRLDSearchModel* m_pSearchModel;
+                WRLDSearchProviderHandle* m_pSearchProviderHandle;
+                WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
                 
             public:
-                SearchWidgetView(SearchMenuView* view);
+                SearchWidgetView(SearchMenuView* view,
+                                 id<WRLDSearchProvider> searchProvider,
+                                 id<WRLDSuggestionProvider> suggestionProvider);
                 ~SearchWidgetView();
                 
                 UIViewController* GetWidgetController() const;
