@@ -31,7 +31,7 @@ namespace ExampleApp
                                                                            Mapscene::SdkModel::MapsceneLoader& mapsceneLoader)
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
-                DeepLinkLocationHandler* m_pDeepLinkLocationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
+                m_pDeepLinkLocationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
                 m_pDeepLinkModel->AddRoute(LOCATION_PATH, m_pDeepLinkLocationHandler);
 
                 if(CONFIG_DEEP_LINK_ENABLED)
