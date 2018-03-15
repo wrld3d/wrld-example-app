@@ -49,6 +49,7 @@ namespace ExampleApp
             bool m_isKioskTouchInputEnabled;
             bool m_isInKioskMode;
             bool m_useJapaneseFont;
+            bool m_useChineseFont;
 
             SdkModel::ApplicationFixedIndoorLocation m_fixedIndoorLocation;
             
@@ -108,6 +109,7 @@ namespace ExampleApp
 				const bool isKioskTouchInputEnabled,
 				const bool isInKioskMode,
 				bool useJapaneseFont,
+                bool useChineseFont,
 				const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfo,
 				const SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation,
 				const std::vector<Eegeo::Space::LatLongAltitude>& attractModeTargetSplinePoints,
@@ -186,6 +188,8 @@ namespace ExampleApp
             bool IsInKioskMode() const;
             
             bool UseJapaneseFont() const;
+
+            bool UseChineseFont() const;
             
             const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo>& InteriorTrackingInfo() const;
 
