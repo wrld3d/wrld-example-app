@@ -1,5 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+#include <Search/EegeoPois/SdkModel/EegeoJsonParser.h>
 #include "MobileExampleApp.h"
 #include "ApiKey.h"
 #include "GlobeCameraTouchController.h"
@@ -156,6 +157,8 @@
 #include "document.h"
 #include "InteriorMetaDataModule.h"
 #include "CoverageTreeModule.h"
+#include "AutocompleteSuggestionQueryPerformer.h"
+#include "IEegeoParser.h"
 
 namespace ExampleApp
 {
@@ -246,6 +249,7 @@ namespace ExampleApp
     , m_pCameraTransitionController(NULL)
     , m_pSettingsMenuModule(NULL)
     , m_pSearchMenuModule(NULL)
+    , m_pSuggestionsQueryPerformer(NULL)
     , m_pSearchResultSectionModule(NULL)
     , m_pModalityModule(NULL)
     , m_pTagSearchModule(NULL)
@@ -598,20 +602,21 @@ namespace ExampleApp
         const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "search_tags.json");
         m_swallowSearchTags = Search::SdkModel::CreateSearchTagsFromFile(m_platformAbstractions.GetFileIO(), "swallow_search_tags.json");
         const auto& handledTags = Search::Swallow::SearchConstants::GetAllTags();
-        
-        if(useEegeoPois)
-        {
-            m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
-                                                                                                                               m_platformAbstractions.GetUrlEncoder(),
-                                                                                                                               m_networkCapabilities,
-                                                                                                                               searchTags,
-                                                                                                                               m_swallowSearchTags,
-                                                                                                                               handledTags,
-                                                                                                                               m_applicationConfiguration.EegeoSearchServiceUrl(),
-                                                                                                                               m_pWorld->GetApiTokenModel(),
-                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
+
+
+        Search::EegeoPois::SdkModel::EegeoSearchServiceModule* eegeoSearchServicModule = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                                                                         m_platformAbstractions.GetUrlEncoder(),
+                                                                                                                                                         m_networkCapabilities,
+                                                                                                                                                         searchTags,
+                                                                                                                                                         m_swallowSearchTags,
+                                                                                                                                                         handledTags,
+                                                                                                                                                         m_applicationConfiguration.EegeoSearchServiceUrl(),
+                                                                                                                                                         m_pWorld->GetApiTokenModel(),
+                                                                                                                                                         world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
+        if(useEegeoPois) {
+            m_searchServiceModules[Search::EegeoVendorName] = eegeoSearchServicModule;
         }
-        
+
         m_pTransitionPoiSearchServiceModule = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                                                                m_platformAbstractions.GetUrlEncoder(),
                                                                                                                m_networkCapabilities,
@@ -690,10 +695,20 @@ namespace ExampleApp
                                                                                                       m_platformAbstractions.GetConnectivityService(),
                                                                                                       m_pWorld->GetNativeUIFactories(),
                                                                                                       *m_pNavigationService);
-        
+
+        m_pSuggestionsQueryPerformer  = Eegeo_NEW(ExampleApp::Search::SdkModel::AutocompleteSuggestionQueryPerformer)(m_pAppCameraModule->GetController(),
+                                                                                                                      m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                                      eegeoSearchServicModule->GetEegeoParser(),
+                                                                                                                      m_applicationConfiguration.EegeoSearchServiceUrl(),
+                                                                                                                      m_pWorld->GetApiTokenModel(),
+                                                                                                                      m_platformAbstractions.GetUrlEncoder(),
+                                                                                                                      m_messageBus);
+
+
         m_pSearchMenuModule = Eegeo_NEW(ExampleApp::SearchMenu::SdkModel::SearchMenuModule)(m_identityProvider,
                                                                                             m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                             m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                            *m_pSuggestionsQueryPerformer,
                                                                                             m_messageBus,
                                                                                             m_metricsService);
         
@@ -1000,6 +1015,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pMyPinCreationModule;
         
         Eegeo_DELETE m_pSearchMenuModule;
+
+        Eegeo_DELETE m_pSuggestionsQueryPerformer;
         
         Eegeo_DELETE m_pSearchResultSectionModule;
         
@@ -1027,6 +1044,7 @@ namespace ExampleApp
         Eegeo_DELETE m_pInteriorsExplorerModule;
         
         Eegeo_DELETE m_pSearchModule;
+
         
         Eegeo_DELETE m_pSwallowSearchServiceModule;
 

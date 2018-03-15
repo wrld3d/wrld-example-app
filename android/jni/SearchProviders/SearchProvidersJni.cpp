@@ -65,3 +65,18 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
     ExampleApp::SearchProviders::MyTestSearchProvider* pSearch = reinterpret_cast<ExampleApp::SearchProviders::MyTestSearchProvider*>(nativeObjectPtr);
     pSearch->CancelSearch();
 }
+
+JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_autocompleteSuggestions(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jstring searchQuery)
+{
+    ASSERT_UI_THREAD
+
+    const char* chars = jenv->GetStringUTFChars(searchQuery, 0);
+    std::string queryString = chars;
+    jenv->ReleaseStringUTFChars(searchQuery, chars);
+
+    ExampleApp::SearchProviders::MyTestSearchProvider* pSearch = reinterpret_cast<ExampleApp::SearchProviders::MyTestSearchProvider*>(nativeObjectPtr);
+    pSearch->PerformAutocompleteSuggestions(queryString);
+}

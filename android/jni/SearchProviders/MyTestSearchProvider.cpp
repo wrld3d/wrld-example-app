@@ -30,6 +30,11 @@ namespace ExampleApp
 					m_javaClass,
 					"onSearchCompleted",
 					"([Lcom/eegeo/searchproviders/MyTestSearchProvider$SearchResultInfo;)V");
+
+			m_onAutocompleteSuggestionsCompleted = env->GetMethodID(
+					m_javaClass,
+					"onSuggestionCompleted",
+					"([Lcom/eegeo/searchproviders/MyTestSearchProvider$SearchResultInfo;)V");
 		}
 
 		MyTestSearchProvider::~MyTestSearchProvider()
@@ -62,6 +67,10 @@ namespace ExampleApp
 			m_searchWithContextCallbacks.ExecuteCallbacks(searchQuery, queryContext);
 		}
 
+		void MyTestSearchProvider::PerformAutocompleteSuggestions(const std::string& searchQuery){
+			m_autocompleteSuggestionsCallbacks.ExecuteCallbacks(searchQuery);
+		}
+
 		void MyTestSearchProvider::CancelSearch()
 		{
 			ASSERT_UI_THREAD
@@ -69,7 +78,18 @@ namespace ExampleApp
 			m_searchCancelledCallbacks.ExecuteCallbacks();
 		}
 
+		void MyTestSearchProvider::OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults)
+		{
+			ResponceRecieved(searchResults,m_onAutocompleteSuggestionsCompleted);
+		}
+
 		void MyTestSearchProvider::OnSearchResponseReceived(const TSearchResults& searchResults)
+		{
+			ResponceRecieved(searchResults,m_onSearchCompleted);
+		}
+
+
+		void MyTestSearchProvider::ResponceRecieved(const TSearchResults& searchResults,jmethodID methodId)
 		{
 			ASSERT_UI_THREAD
 
@@ -110,11 +130,26 @@ namespace ExampleApp
 
 			env->CallVoidMethod(
 					m_javaInstance,
-					m_onSearchCompleted,
+					methodId,
 					javaArray);
 
 			env->DeleteLocalRef(javaArray);
 			env->DeleteLocalRef(javaClass);
+		}
+
+
+		void MyTestSearchProvider::InsertAutocompleteSuggestionsCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+		{
+			ASSERT_UI_THREAD
+
+			m_autocompleteSuggestionsCallbacks.AddCallback(callback);
+		}
+
+		void MyTestSearchProvider::RemoveAutocompleteSuggestionsCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+		{
+			ASSERT_UI_THREAD
+
+			m_autocompleteSuggestionsCallbacks.RemoveCallback(callback);
 		}
 
 		void MyTestSearchProvider::InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)

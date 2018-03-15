@@ -19,6 +19,7 @@ namespace ExampleApp
                 , m_where(where)
                 , m_radius(radius)
             {
+
             }
 
             SearchQuery::~SearchQuery()

@@ -9,6 +9,7 @@ import com.wrld.widgets.searchbox.model.SearchProvider;
 import com.wrld.widgets.searchbox.model.SearchProviderResultsReadyCallback;
 import com.wrld.widgets.searchbox.model.SearchResult;
 import com.wrld.widgets.searchbox.model.SearchResultPropertyString;
+import com.wrld.widgets.searchbox.model.SuggestionProvider;
 import com.wrld.widgets.searchbox.view.ISearchResultViewFactory;
 
 import com.eegeo.searchmenu.SearchWidgetResult;
@@ -16,11 +17,12 @@ import com.eegeo.searchproviders.QueryContext;
 
 import java.util.HashSet;
 
-public class MyTestSearchProvider implements SearchProvider
+public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 {
 	private long										m_nativeCallerPointer;
 	private SearchResultViewFactory						m_resultFactory;
 	private HashSet<SearchProviderResultsReadyCallback>	m_callbacks;
+	private HashSet<SearchProviderResultsReadyCallback>	m_suggestion_callbacks;
 	private String										m_lastQueryText;
 
 	public class SearchResultInfo
@@ -35,6 +37,7 @@ public class MyTestSearchProvider implements SearchProvider
 		m_nativeCallerPointer = nativeCallerPointer;
 		m_resultFactory       = new SearchResultViewFactory(R.layout.search_result, activity);
 		m_callbacks           = new HashSet<SearchProviderResultsReadyCallback>();
+		m_suggestion_callbacks = new HashSet<SearchProviderResultsReadyCallback>();
 		m_lastQueryText       = "";
 	}
 
@@ -124,5 +127,42 @@ public class MyTestSearchProvider implements SearchProvider
 	private SearchResult WrapResult(int index, String title, String description, String iconName)
 	{
 		return new SearchWidgetResult(index, title, description, iconName);
+	}
+
+	public void onSuggestionCompleted(SearchResultInfo[] searchResults){
+		executeSuggestionCallbacks(WrapResults(searchResults),true);
+	}
+
+	private void executeSuggestionCallbacks(SearchResult[] results, boolean success)
+	{
+		for (SearchProviderResultsReadyCallback callback : m_suggestion_callbacks)
+			callback.onQueryCompleted(results, success);
+	}
+
+	public String getSuggestionTitleFormatting(){
+		return "WRLD places \'%s\'";
+	}
+
+	public void getSuggestions(String queryText, Object queryContext){
+		SearchProvidersJniMethods.autocompleteSuggestions(m_nativeCallerPointer, queryText);
+	}
+
+	public void cancelSuggestions(){
+		// TO DO - cancel ongoing autocomplete suggestions within the native thread
+		//SearchProvidersJniMethods.cancelSuggestions(m_nativeCallerPointer);
+		executeSuggestionCallbacks(new SearchResult[0],false);
+	}
+
+	public void addSuggestionsReceivedCallback(SearchProviderResultsReadyCallback resultReadyCallback){
+		m_suggestion_callbacks.add(resultReadyCallback);
+	}
+
+	public void removeSuggestionsReceivedCallback(SearchProviderResultsReadyCallback resultReadyCallback){
+		m_suggestion_callbacks.remove(resultReadyCallback);
+	}
+
+	public ISearchResultViewFactory getSuggestionViewFactory(){
+
+		return m_resultFactory;
 	}
 }

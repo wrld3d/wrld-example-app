@@ -4,6 +4,7 @@ package com.eegeo.searchmenu;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.ProjectSwallowApp.R;
+import com.eegeo.searchproviders.MyTestSearchProvider;
 import com.eegeo.searchproviders.QueryContext;
 
 import android.app.SearchManager;
@@ -35,14 +36,14 @@ import java.util.List;
 public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchResultsListener
 {
     protected MainActivity m_activity;
-    protected SearchProvider m_searchProvider;
+    protected MyTestSearchProvider m_searchProvider;
     protected long m_nativeCallerPointer;
     protected View m_view;
 
     protected WrldSearchWidget m_searchWidget;
 
     public SearchWidgetView(MainActivity activity, long nativeCallerPointer,
-                            SearchProvider searchProvider)
+                            MyTestSearchProvider searchProvider)
     {
         m_activity = activity;
         m_searchProvider = searchProvider;
@@ -59,6 +60,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
 
         m_searchWidget = (WrldSearchWidget) m_activity.getFragmentManager().findFragmentById(R.id.search_widget);
         m_searchWidget.addSearchProvider(m_searchProvider);
+        m_searchWidget.addSuggestionProvider(m_searchProvider);
 
         m_searchWidget.getSearchResultsModel().addResultListener(this);
 

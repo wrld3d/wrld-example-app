@@ -26,7 +26,7 @@ namespace ExampleApp
                         env,
                         "(Lcom/eegeo/entrypointinfrastructure/MainActivity;"
                                 "J"
-                                "Lcom/wrld/widgets/searchbox/model/SearchProvider;)V",
+                                "Lcom/eegeo/searchproviders/MyTestSearchProvider;)V",
                         m_uiViewClass,
                         m_nativeState.activity,
                         (jlong) this,
