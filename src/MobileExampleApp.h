@@ -112,6 +112,7 @@ namespace ExampleApp
         bool m_initialisedApplicationViewState;
         bool m_setMetricsLocation;
         float m_pinDiameter;
+        bool m_requiresTransitionToInitialGPSLocation;
         
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
         CameraTransitions::SdkModel::CameraTransitionService* m_pCameraTransitionService;
@@ -426,7 +427,9 @@ namespace ExampleApp
         {
             return *m_pNavigationService;
         }
-        
+
+        bool TryMoveToGPSLocation();
+
         void OnPause();
 
         void OnResume();
