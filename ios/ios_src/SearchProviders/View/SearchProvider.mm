@@ -53,8 +53,18 @@ namespace ExampleApp
         {
             m_searchCancelledCallbacks.RemoveCallback(callback);
         }
-        
+
         void SearchProvider::OnSearchResponseReceived(const TSearchResults& searchResults)
+        {
+            UpdateResults(searchResults, m_pCurrentRequest);
+        }
+
+        void SearchProvider::OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults)
+        {
+            UpdateResults(searchResults, m_pCurrentSuggestion);
+        }
+
+        void SearchProvider::UpdateResults(const TSearchResults& searchResults, WRLDSearchRequest* searchRequest)
         {
             WRLDMutableSearchResultsCollection* widgetSearchResults = [[WRLDMutableSearchResultsCollection alloc] init];
             
@@ -69,19 +79,21 @@ namespace ExampleApp
                 [widgetSearchResults addObject: widgetSearchResult];
             }
             
-            
-            [m_pCurrentRequest didComplete:YES withResults:widgetSearchResults];
-        }
-        
-        void SearchProvider::OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults)
-        {
+            [searchRequest didComplete:YES withResults:widgetSearchResults];
         }
 
         void SearchProvider::PeformSearch(WRLDSearchRequest* searchRequest)
         {
             m_pCurrentRequest = searchRequest;
-            std::string searchQuery = [m_pCurrentRequest.queryString cStringUsingEncoding: NSASCIIStringEncoding];
+            std::string searchQuery = [m_pCurrentRequest.queryString cStringUsingEncoding: NSUTF8StringEncoding];
             m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
+        }
+
+        void SearchProvider::PeformAutocompleteSuggestions(WRLDSearchRequest* searchRequest)
+        {
+            m_pCurrentSuggestion = searchRequest;
+            std::string searchQuery = [m_pCurrentSuggestion.queryString cStringUsingEncoding: NSUTF8StringEncoding];
+            m_autocompleteSuggestionsCallbacks.ExecuteCallbacks(searchQuery);
         }
     }
 }
