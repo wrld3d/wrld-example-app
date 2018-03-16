@@ -14,23 +14,14 @@ namespace ExampleApp
         {
         }
 
-        void SearchProvider::OnSearchResponseReceived(const TSearchResults& searchResults)
+        void SearchProvider::InsertAutocompleteSuggestionsCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
         {
-            WRLDMutableSearchResultsCollection* widgetSearchResults = [[WRLDMutableSearchResultsCollection alloc] init];
-            
-            for(TSearchResults::const_iterator it = searchResults.begin(); it != searchResults.end(); ++it)
-            {
-                WRLDBasicSearchResultModel* widgetSearchResult = [[WRLDBasicSearchResultModel alloc] init];
-                
-                widgetSearchResult.title = [NSString stringWithUTF8String:it->GetName().c_str()];
-                widgetSearchResult.subTitle = [NSString stringWithUTF8String:it->GetDescription().c_str()];
-                widgetSearchResult.iconKey = [NSString stringWithUTF8String:it->GetIconName().c_str()];
-                
-                [widgetSearchResults addObject: widgetSearchResult];
-            }
-            
+            m_autocompleteSuggestionsCallbacks.AddCallback(callback);
+        }
 
-            [m_pCurrentRequest didComplete:YES withResults:widgetSearchResults];
+        void SearchProvider::RemoveAutocompleteSuggestionsCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+        {
+            m_autocompleteSuggestionsCallbacks.RemoveCallback(callback);
         }
 
         void SearchProvider::InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
@@ -61,6 +52,29 @@ namespace ExampleApp
         void SearchProvider::RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback)
         {
             m_searchCancelledCallbacks.RemoveCallback(callback);
+        }
+        
+        void SearchProvider::OnSearchResponseReceived(const TSearchResults& searchResults)
+        {
+            WRLDMutableSearchResultsCollection* widgetSearchResults = [[WRLDMutableSearchResultsCollection alloc] init];
+            
+            for(TSearchResults::const_iterator it = searchResults.begin(); it != searchResults.end(); ++it)
+            {
+                WRLDBasicSearchResultModel* widgetSearchResult = [[WRLDBasicSearchResultModel alloc] init];
+                
+                widgetSearchResult.title = [NSString stringWithUTF8String:it->GetName().c_str()];
+                widgetSearchResult.subTitle = [NSString stringWithUTF8String:it->GetDescription().c_str()];
+                widgetSearchResult.iconKey = [NSString stringWithUTF8String:it->GetIconName().c_str()];
+                
+                [widgetSearchResults addObject: widgetSearchResult];
+            }
+            
+            
+            [m_pCurrentRequest didComplete:YES withResults:widgetSearchResults];
+        }
+        
+        void SearchProvider::OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults)
+        {
         }
 
         void SearchProvider::PeformSearch(WRLDSearchRequest* searchRequest)

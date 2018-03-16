@@ -20,7 +20,6 @@ namespace ExampleApp {
                 ExampleApp::AppCamera::SdkModel::IAppCameraController& m_cameraController;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 std::string m_responseString;
-                bool m_isSuccess;
                 Eegeo::Web::TWebLoadRequestCompletionCallback<AutocompleteSuggestionQueryPerformer> m_webRequestCompleteCallback;
                 Eegeo::Web::IWebLoadRequest* m_pWebLoadRequest;
                 Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
