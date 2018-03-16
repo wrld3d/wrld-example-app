@@ -1148,7 +1148,7 @@ namespace ExampleApp
         if (gotGPSLocation)
         {
             const float heading = Eegeo::Math::Deg2Rad(m_applicationConfiguration.OrientationDegrees());
-            m_pCameraTransitionController->StartTransitionTo(gpsLocation.ToECEF(), m_applicationConfiguration.DistanceToInterestMetres(), heading, m_applicationConfiguration.IndoorId(), m_applicationConfiguration.FloorIndex());
+            m_pCameraTransitionController->StartTransitionTo(gpsLocation.ToECEF(), m_applicationConfiguration.DistanceToInterestMetres(), heading);
             m_requiresTransitionToInitialGPSLocation = false;
         }
 
