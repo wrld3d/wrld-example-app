@@ -302,6 +302,7 @@ namespace ExampleApp
     , m_userIdleService(userIdleService)
     , m_pGlobalAppModeTransitionRules(NULL)
     , m_pDeepLinkModule(NULL)
+    , m_requiresTransitionToInitialGPSLocation(false)
     {
         if (m_applicationConfiguration.IsInKioskMode())
         {
@@ -461,11 +462,6 @@ namespace ExampleApp
         
         m_pLoadingScreen = CreateLoadingScreen(screenProperties, m_pWorld->GetRenderingModule(), m_pWorld->GetPlatformAbstractionModule());
         
-        if(m_applicationConfiguration.TryStartAtGpsLocation())
-        {
-            m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
-        }
-        
         m_pGlobalAppModeTransitionRules = Eegeo_NEW(AppModes::GlobalAppModeTransitionRules)(m_pAppCameraModule->GetController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsExplorerModel(),
                                                                                             interiorsPresentationModule.GetInteriorSelectionModel(),
@@ -482,7 +478,11 @@ namespace ExampleApp
         
         m_pUserInteractionModule = Eegeo_NEW(UserInteraction::SdkModel::UserInteractionModule)(m_pAppCameraModule->GetController(), *m_pCameraTransitionService, m_pInteriorsExplorerModule->GetInteriorsExplorerUserInteractionModel(), m_messageBus);
         
-        if (!applicationConfiguration.TryStartAtGpsLocation())
+        if (applicationConfiguration.TryStartAtGpsLocation()){
+            // NB this is not the same behaviour as WEA for this flag
+            m_requiresTransitionToInitialGPSLocation = !TryMoveToGPSLocation();
+        }
+        else
         {
             const float heading = Eegeo::Math::Deg2Rad(applicationConfiguration.OrientationDegrees());
             m_pCameraTransitionController->StartTransitionTo(location.ToECEF(), m_applicationConfiguration.DistanceToInterestMetres(), heading, m_applicationConfiguration.IndoorId(), applicationConfiguration.FloorIndex());
@@ -1139,9 +1139,28 @@ namespace ExampleApp
         Eegeo::EegeoWorld& eegeoWorld = World();
         eegeoWorld.OnResume();
     }
-    
+
+    bool MobileExampleApp::TryMoveToGPSLocation()
+    {
+        Eegeo::Space::LatLong gpsLocation(0.0,0.0);
+        bool gotGPSLocation = m_pWorld->GetLocationService().GetLocation(gpsLocation);
+
+        if (gotGPSLocation)
+        {
+            const float heading = Eegeo::Math::Deg2Rad(m_applicationConfiguration.OrientationDegrees());
+            m_pCameraTransitionController->StartTransitionTo(gpsLocation.ToECEF(), m_applicationConfiguration.DistanceToInterestMetres(), heading, m_applicationConfiguration.IndoorId(), m_applicationConfiguration.FloorIndex());
+            m_requiresTransitionToInitialGPSLocation = false;
+        }
+
+        return gotGPSLocation;
+    }
+
     void MobileExampleApp::Update(float dt)
     {
+        if (m_requiresTransitionToInitialGPSLocation){
+            TryMoveToGPSLocation();
+        }
+       
         Eegeo::EegeoWorld& eegeoWorld(World());
         
         m_pCurrentTouchController = &m_pAppCameraModule->GetController().GetTouchController();
