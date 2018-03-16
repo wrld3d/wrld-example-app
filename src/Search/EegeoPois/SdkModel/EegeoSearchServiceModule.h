@@ -56,7 +56,7 @@ namespace ExampleApp
                     ~EegeoSearchServiceModule();
                     
                     Search::SdkModel::ISearchService& GetSearchService() const;
-
+                    IEegeoParser& GetEegeoParser() const;
                     std::vector<TagSearch::View::TagSearchModel> GetTagSearchModels() const;
                 };
             }

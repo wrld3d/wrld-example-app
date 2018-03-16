@@ -32,6 +32,9 @@ set(currsources
   ../src/Search/SdkModel/SearchTagsFactory.h
   ../src/Search/SdkModel/SearchTagsFactory.cpp
   ../src/Search/SdkModel/SerializeSearchResultModelToJson.cpp
+  ../src/Search/SdkModel/AutocompleteSuggestionQueryPerformer.cpp
+  ../src/Search/SdkModel/AutocompleteSuggestionQueryPerformer.h
+  ../src/Search/SdkModel/IAutocompleteSuggestionQueryPerformer.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Search\\SdkModel FILES ${currsources})

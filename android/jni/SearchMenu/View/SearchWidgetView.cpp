@@ -26,7 +26,7 @@ namespace ExampleApp
                         env,
                         "(Lcom/eegeo/entrypointinfrastructure/MainActivity;"
                                 "J"
-                                "Lcom/wrld/widgets/searchbox/model/SearchProvider;)V",
+                                "Lcom/eegeo/searchproviders/MyTestSearchProvider;)V",
                         m_uiViewClass,
                         m_nativeState.activity,
                         (jlong) this,
@@ -34,7 +34,7 @@ namespace ExampleApp
 
                 m_onSearchPerformed = env->GetMethodID(m_uiViewClass,
                                                        "onSearchPerformed",
-                                                       "(Ljava/lang/String;ZZZZDDDF)V");
+                                                       "(Ljava/lang/String;ZLjava/lang/String;ZZZDDDF)V");
             }
 
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
@@ -138,12 +138,14 @@ namespace ExampleApp
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
-                jstring text = env->NewStringUTF(query.c_str());
+                jstring queryText = env->NewStringUTF(query.c_str());
+                jstring tagText   = env->NewStringUTF(context.TagText().c_str());
 
                 env->CallVoidMethod(m_uiView,
                                     m_onSearchPerformed,
-                                    text,
+                                    queryText,
                                     (jboolean)context.IsTag(),
+                                    tagText,
                                     (jboolean)context.ShouldTryInterior(),
                                     (jboolean)context.ShouldZoomToBuildingsView(),
                                     (jboolean)context.UsesLocationAndRadius(),
@@ -152,7 +154,8 @@ namespace ExampleApp
                                     (jdouble)context.Location().GetAltitude(),
                                     (jfloat)context.Radius());
 
-                env->DeleteLocalRef(text);
+                env->DeleteLocalRef(tagText);
+                env->DeleteLocalRef(queryText);
             }
 
             void SearchWidgetView::OnSearchResultsCleared()

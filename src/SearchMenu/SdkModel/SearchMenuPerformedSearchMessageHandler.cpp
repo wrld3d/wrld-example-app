@@ -9,20 +9,25 @@ namespace ExampleApp
         namespace SdkModel
         {
             SearchMenuPerformedSearchMessageHandler::SearchMenuPerformedSearchMessageHandler(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                                                                             Search::SdkModel::IAutocompleteSuggestionQueryPerformer& autocompleteSuggestionQueryPerformer,
                                                                                              ExampleAppMessaging::TMessageBus& messageBus,
                                                                                              Metrics::IMetricsService& metricsService)
             : m_searchQueryPerformer(searchQueryPerformer)
+            , m_autocompleteSuggestionsQueryPerformer(autocompleteSuggestionQueryPerformer)
             , m_messageBus(messageBus)
             , m_metricsService(metricsService)
             , m_handlePerformedSearchMessageBinding(this, &SearchMenuPerformedSearchMessageHandler::OnPerformedSearchMessage)
             , m_handleSearchWithContextMessageBinding(this, &SearchMenuPerformedSearchMessageHandler::OnSearchWithContextMessage)
+            , m_handleAutocompleteSuggestionsMessageBinding(this, &SearchMenuPerformedSearchMessageHandler::OnAutocompleteSuggestionsMessage)
             {
                 m_messageBus.SubscribeNative(m_handlePerformedSearchMessageBinding);
                 m_messageBus.SubscribeNative(m_handleSearchWithContextMessageBinding);
+                m_messageBus.SubscribeNative(m_handleAutocompleteSuggestionsMessageBinding);
             }
 
             SearchMenuPerformedSearchMessageHandler::~SearchMenuPerformedSearchMessageHandler()
             {
+                m_messageBus.UnsubscribeNative(m_handleAutocompleteSuggestionsMessageBinding);
                 m_messageBus.UnsubscribeNative(m_handleSearchWithContextMessageBinding);
                 m_messageBus.UnsubscribeNative(m_handlePerformedSearchMessageBinding);
             }
@@ -50,6 +55,10 @@ namespace ExampleApp
 					m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsTag(), message.IsInterior(),
 															  message.ShouldZoomToBuildingsView());
 				}
+            }
+
+            void SearchMenuPerformedSearchMessageHandler::OnAutocompleteSuggestionsMessage(const AutocompleteSuggestionsMessage& message){
+                m_autocompleteSuggestionsQueryPerformer.PerformSuggestionsQuery(message.SearchQuery());
             }
         }
     }

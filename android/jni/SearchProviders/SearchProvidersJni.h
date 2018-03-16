@@ -16,6 +16,7 @@ extern "C"
             jlong nativeObjectPtr,
             jstring searchQuery,
             jboolean isTag,
+            jstring tagText,
             jboolean tryInterior,
             jboolean shouldZoomToBuildingsView,
             jboolean usesLocationAndRadius,
@@ -27,4 +28,10 @@ extern "C"
     JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_cancel(
             JNIEnv* jenv, jobject obj,
             jlong nativeObjectPtr);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_autocompleteSuggestions(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jstring searchQuery);
+
 }

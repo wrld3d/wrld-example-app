@@ -7,7 +7,9 @@
 #include "ICallback.h"
 #include "SearchMenuPerformedSearchMessage.h"
 #include "SearchMenuSearchWithContextMessage.h"
+#include "AutocompleteSuggestionsMessage.h"
 #include "ISearchQueryPerformer.h"
+#include "IAutocompleteSuggestionQueryPerformer.h"
 #include "IMetricsService.h"
 
 namespace ExampleApp
@@ -19,17 +21,20 @@ namespace ExampleApp
             class SearchMenuPerformedSearchMessageHandler : private Eegeo::NonCopyable
             {
                 Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
+                Search::SdkModel::IAutocompleteSuggestionQueryPerformer& m_autocompleteSuggestionsQueryPerformer;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<SearchMenuPerformedSearchMessageHandler, const SearchMenuPerformedSearchMessage&> m_handlePerformedSearchMessageBinding;
                 Eegeo::Helpers::TCallback1<SearchMenuPerformedSearchMessageHandler, const SearchMenuSearchWithContextMessage&> m_handleSearchWithContextMessageBinding;
+                Eegeo::Helpers::TCallback1<SearchMenuPerformedSearchMessageHandler, const AutocompleteSuggestionsMessage&> m_handleAutocompleteSuggestionsMessageBinding;
 
                 Metrics::IMetricsService& m_metricsService;
                 
                 void OnPerformedSearchMessage(const SearchMenuPerformedSearchMessage& message);
                 void OnSearchWithContextMessage(const SearchMenuSearchWithContextMessage& message);
-
+                void OnAutocompleteSuggestionsMessage(const AutocompleteSuggestionsMessage& message);
             public:
                 SearchMenuPerformedSearchMessageHandler(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                                        Search::SdkModel::IAutocompleteSuggestionQueryPerformer& autocompleteSuggestionsQueryPerformer,
                                                         ExampleAppMessaging::TMessageBus& messageBus,
                                                         Metrics::IMetricsService& metricsService);
                 

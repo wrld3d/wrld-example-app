@@ -28,7 +28,8 @@ namespace ExampleApp
 				SearchServices& m_searchServices;
 
 				typedef std::map<std::string, std::string> TTagMap;
-				std::map<std::string, std::string> m_knownTags;
+				TTagMap m_knownTags;
+				TTagMap m_visibleTextOfTag;
 
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onSearchResultsClearedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, int> m_onSearchResultSelectedCallback;

@@ -14,7 +14,7 @@ namespace ExampleApp
 		{
 		private:
 			typedef SearchMenu::View::ISearchProvider::TSearchResults TSearchResults;
-
+			Eegeo::Helpers::CallbackCollection1<const std::string&> m_autocompleteSuggestionsCallbacks;
 			Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
 			Eegeo::Helpers::CallbackCollection2<const std::string&, const SearchMenu::View::QueryContext&> m_searchWithContextCallbacks;
 			Eegeo::Helpers::CallbackCollection0 m_searchCancelledCallbacks;
@@ -23,12 +23,15 @@ namespace ExampleApp
 			jclass m_javaClass;
 			jobject m_javaInstance;
 			jmethodID m_onSearchCompleted;
-
+			jmethodID m_onAutocompleteSuggestionsCompleted;
 		public:
 			MyTestSearchProvider(AndroidNativeState& nativeState);
 			~MyTestSearchProvider();
 
 			jobject GetJavaInstance();
+
+			void InsertAutocompleteSuggestionsCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
+			void RemoveAutocompleteSuggestionsCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
 
 			void InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
 			void RemoveSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
@@ -41,12 +44,15 @@ namespace ExampleApp
 			void InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback);
 			void RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback);
 
+			void PerformAutocompleteSuggestions(const std::string& searchQuery);
 			void PerformSearch(const std::string& searchQuery);
 			void PerformSearchWithContext(const std::string& searchQuery,
 										  const SearchMenu::View::QueryContext& queryContext);
 			void CancelSearch();
 
 			void OnSearchResponseReceived(const TSearchResults& searchResults);
+			void OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults);
+			void ResponceRecieved(const TSearchResults& searchResults,jmethodID methodId);
 		};
     }
 }

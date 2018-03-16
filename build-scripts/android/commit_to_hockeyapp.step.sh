@@ -45,7 +45,7 @@ echo
 apitoken='b93a76258d944864816b7f89a4bd83b6'
 
 # Full path where the app file is located.
-filepath=$pathToProjectDir/bin/NativeActivity.apk
+filepath=$pathToProjectDir/build/outputs/apk/NativeActivity.apk
 
 script_dir=`dirname $0`
 . ./$script_dir/is_windows.sh

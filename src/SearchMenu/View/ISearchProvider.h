@@ -10,28 +10,31 @@
 
 namespace ExampleApp
 {
-    namespace SearchMenu
-    {
-        namespace View
-        {
-            class ISearchProvider
-            {
-            public:
-                virtual ~ISearchProvider() { }
+	namespace SearchMenu
+	{
+		namespace View
+		{
+			class ISearchProvider
+			{
+			public:
+				virtual ~ISearchProvider() { }
+				typedef std::vector<SearchServicesResult> TSearchResults;
 
-                typedef std::vector<SearchServicesResult> TSearchResults;
+				virtual void InsertAutocompleteSuggestionsCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
+				virtual void RemoveAutocompleteSuggestionsCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
 
-                virtual void InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
-                virtual void RemoveSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
+				virtual void InsertSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
+				virtual void RemoveSearchPerformedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
 
-                virtual void InsertSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const QueryContext&>& callback) = 0;
-                virtual void RemoveSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const QueryContext&>& callback) = 0;
+				virtual void InsertSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const QueryContext&>& callback) = 0;
+				virtual void RemoveSearchWithContextCallback(Eegeo::Helpers::ICallback2<const std::string&, const QueryContext&>& callback) = 0;
 
-                virtual void InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-                virtual void RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+				virtual void InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+				virtual void RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
-                virtual void OnSearchResponseReceived(const TSearchResults& searchResults) = 0;
-            };
-        }
-    }
+				virtual void OnSearchResponseReceived(const TSearchResults& searchResults) = 0;
+				virtual void OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults) = 0;
+			};
+		}
+	}
 }

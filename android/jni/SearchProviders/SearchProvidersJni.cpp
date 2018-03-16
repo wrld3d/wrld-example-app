@@ -24,6 +24,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
         jlong nativeObjectPtr,
         jstring searchQuery,
         jboolean isTag,
+        jstring tagText,
         jboolean tryInterior,
         jboolean shouldZoomToBuildingsView,
         jboolean usesLocationAndRadius,
@@ -38,13 +39,17 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
     std::string queryString = chars;
     jenv->ReleaseStringUTFChars(searchQuery, chars);
 
+    chars = jenv->GetStringUTFChars(tagText, 0);
+    std::string tagString = chars;
+    jenv->ReleaseStringUTFChars(tagText, chars);
+
     ExampleApp::SearchProviders::MyTestSearchProvider* pSearch = reinterpret_cast<ExampleApp::SearchProviders::MyTestSearchProvider*>(nativeObjectPtr);
 
     if (usesLocationAndRadius)
     {
         pSearch->PerformSearchWithContext(queryString,
                                           ExampleApp::SearchMenu::View::QueryContext(
-                                            isTag, tryInterior, shouldZoomToBuildingsView,
+                                            isTag, tagString, tryInterior, shouldZoomToBuildingsView,
                                             Eegeo::Space::LatLongAltitude(latitude, longitude, altitude),
                                             radius));
     }
@@ -52,7 +57,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
     {
         pSearch->PerformSearchWithContext(queryString,
                                           ExampleApp::SearchMenu::View::QueryContext(
-                                                  isTag, tryInterior, shouldZoomToBuildingsView));
+                                                  isTag, tagString, tryInterior, shouldZoomToBuildingsView));
     }
 }
 
@@ -64,4 +69,19 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
 
     ExampleApp::SearchProviders::MyTestSearchProvider* pSearch = reinterpret_cast<ExampleApp::SearchProviders::MyTestSearchProvider*>(nativeObjectPtr);
     pSearch->CancelSearch();
+}
+
+JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_autocompleteSuggestions(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jstring searchQuery)
+{
+    ASSERT_UI_THREAD
+
+    const char* chars = jenv->GetStringUTFChars(searchQuery, 0);
+    std::string queryString = chars;
+    jenv->ReleaseStringUTFChars(searchQuery, chars);
+
+    ExampleApp::SearchProviders::MyTestSearchProvider* pSearch = reinterpret_cast<ExampleApp::SearchProviders::MyTestSearchProvider*>(nativeObjectPtr);
+    pSearch->PerformAutocompleteSuggestions(queryString);
 }
