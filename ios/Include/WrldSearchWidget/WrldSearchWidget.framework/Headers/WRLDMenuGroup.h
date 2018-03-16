@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDMenuGroup : NSObject
 
-@property (nonatomic, assign) NSString* _Nullable title;
+@property (nonatomic, strong) NSString* _Nullable title;
 
 - (instancetype)initWithTitle:(nullable NSString *)title;
 
