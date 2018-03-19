@@ -87,7 +87,7 @@ namespace ExampleApp
 
 			void SearchServices::OnCancel()
 			{
-				// TO DO - cancel ongoing search
+				m_messageBus.Publish(SearchResultSection::SearchResultViewClearedMessage());
 			}
 
 			void SearchServices::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)

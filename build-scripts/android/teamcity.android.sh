@@ -30,7 +30,8 @@ fi
 
 cp $manifest.poked $manifest
 
-sh "./build-scripts/android/compile_android.step.sh" $pathToProjectDir $shouldKeepLibs
+# This is no longer needed due to gradle build
+#sh "./build-scripts/android/compile_android.step.sh" $pathToProjectDir $shouldKeepLibs
 
 if [ $? -ne 0 ] ; then
   git checkout $file_to_poke
@@ -39,7 +40,7 @@ fi
 
 git checkout $file_to_poke
 
-sh "./build-scripts/android/create_apk_file.step.sh" $pathToProjectDir $pathToReleaseKey $apiVersion
+sh "./build-scripts/android/create_apk_file_gradle.step.sh" $pathToProjectDir $pathToReleaseKey 1 $version $apiVersion
 if [ $? -ne 0 ] ; then
   exit 1
 fi
