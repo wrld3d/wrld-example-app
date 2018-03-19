@@ -29,9 +29,6 @@ ios/XcodeBuild/
 .gradle
 **/.externalNativeBuild
 *.iml
-gradlew
-gradlew.*
-**/gradle
 **/local.properties
 db/asset-pipeline/meetingroom-occupancy/generated/
 db/asset-pipeline/meetingroom-occupancy/packages/
