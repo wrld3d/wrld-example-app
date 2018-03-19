@@ -1,8 +1,7 @@
+// Copyright WRLD Ltd (2018-), All Rights Reserved
 package com.eegeo.searchmenu;
 
-/**
- * Created by david.crooks on 27/02/2018.
- */
+
 
 public class MenuIndexPath {
 
