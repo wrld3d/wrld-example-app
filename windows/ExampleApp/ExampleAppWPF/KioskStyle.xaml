@@ -740,7 +740,8 @@
     <System:Int32 x:Key="SliderTickbarLabelFontSize">22</System:Int32>
     <Thickness x:Key="SliderTrackLineMargin" Left="0" Top="50" Right="0" Bottom="50"/>
     <System:Double x:Key="SliderTrackMinWidth">102</System:Double>
-
+    <GridLength x:Key="SliderWidth">Auto</GridLength>
+    
     <System:Double x:Key="ScrollViewButtonScrollSpeed">40</System:Double>
 
     <SolidColorBrush x:Key="PrimaryBG_colour" Color="#FF1256B0"/>
