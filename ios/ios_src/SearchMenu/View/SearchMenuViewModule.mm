@@ -95,6 +95,11 @@ namespace ExampleApp
             {
                 return *m_pSearchWidgetView;
             }
+
+            SearchWidgetController& SearchMenuViewModule::GetSearchWidgetController() const
+            {
+                return *m_pSearchWidgetController;
+            }
         }
     }
 }
