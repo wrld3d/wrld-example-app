@@ -65,6 +65,14 @@ namespace ExampleApp
             {
             }
             
+            void SearchWidgetView::SetFullyOnScreenOpen()
+            {
+            }
+            
+            void SearchWidgetView::SetFullyOnScreenClosed()
+            {
+            }
+            
             void SearchWidgetView::PerformSearch(const std::string& query, const QueryContext& context)
             {
             }
@@ -102,6 +110,18 @@ namespace ExampleApp
             void SearchWidgetView::RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback)
             {
                 m_onItemSelectedCallbacks.RemoveCallback(callback);
+            }
+            
+            void SearchWidgetView::SetOnScreenStateToIntermediateValue(float value)
+            {
+            }
+            
+            void SearchWidgetView::SetFullyOnScreen()
+            {
+            }
+            
+            void SearchWidgetView::SetFullyOffScreen()
+            {
             }
         }
     }
