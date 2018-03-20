@@ -158,6 +158,52 @@ namespace ExampleApp
                 env->DeleteLocalRef(queryText);
             }
 
+            void SearchWidgetView::CallVoidVoidFunction(const char* func)
+            {
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID jmethod = env->GetMethodID(m_uiViewClass, func, "()V");
+                env->CallVoidMethod(m_uiView, jmethod);
+            }
+
+            void SearchWidgetView::SetFullyOnScreenOpen()
+            {
+                ASSERT_UI_THREAD
+                CallVoidVoidFunction("animateToOpenOnScreen");
+            }
+
+            void SearchWidgetView::SetFullyOnScreenClosed()
+            {
+                ASSERT_UI_THREAD
+
+                CallVoidVoidFunction("animateToClosedOnScreen");
+            }
+
+            void SearchWidgetView::SetOnScreenStateToIntermediateValue(float value)
+            {
+                ASSERT_UI_THREAD
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+                jmethodID animateToIntermediateOpenStateOnScreen = env->GetMethodID(m_uiViewClass, "animateToIntermediateOnScreenState", "(F)V");
+                env->CallVoidMethod(m_uiView, animateToIntermediateOpenStateOnScreen, value);
+            }
+
+            void SearchWidgetView::SetFullyOnScreen()
+            {
+                ASSERT_UI_THREAD
+
+                CallVoidVoidFunction("animateToClosedOnScreen");
+            }
+
+            void SearchWidgetView::SetFullyOffScreen()
+            {
+                ASSERT_UI_THREAD
+
+                CallVoidVoidFunction("animateOffScreen");
+            }
+
+
             void SearchWidgetView::OnSearchResultsCleared()
             {
                 m_searchClearedCallbacks.ExecuteCallbacks();

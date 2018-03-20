@@ -12,7 +12,7 @@ namespace ExampleApp
 		{
 			SearchWidgetViewModule::SearchWidgetViewModule(
 				AndroidNativeState& nativeState,
-                Menu::View::IMenuSectionsViewModel& viewModel,
+                Menu::View::IMenuViewModel& viewModel,
 				ExampleAppMessaging::TMessageBus& messageBus
 			)
 			{
@@ -31,7 +31,7 @@ namespace ExampleApp
 				m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(
 						*m_pSearchWidgetView,
 						*m_pSearchServices,
-						viewModel,
+                        viewModel,
 						messageBus);
 			}
 

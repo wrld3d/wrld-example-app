@@ -14,15 +14,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-
-import com.eegeo.menu.MenuViewJniMethods;
 import com.eegeo.tags.TagResources;
+import com.eegeo.ui.IAnimatedView;
+import com.eegeo.ui.IViewAnimator;
+import com.eegeo.ui.ViewAnimator;
 import com.wrld.widgets.searchbox.WrldSearchWidget;
 import com.wrld.widgets.searchbox.model.MenuChild;
 import com.wrld.widgets.searchbox.model.MenuGroup;
 import com.wrld.widgets.searchbox.model.MenuOption;
 import com.wrld.widgets.searchbox.model.OnMenuOptionSelectedCallback;
-import com.wrld.widgets.searchbox.model.SearchProvider;
 import com.wrld.widgets.searchbox.model.SearchQuery;
 import com.wrld.widgets.searchbox.model.SearchProviderQueryResult;
 import com.wrld.widgets.searchbox.model.SearchResult;
@@ -33,14 +33,16 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.List;
 
-public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchResultsListener
+public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchResultsListener, IAnimatedView
 {
     protected MainActivity m_activity;
     protected MyTestSearchProvider m_searchProvider;
     protected long m_nativeCallerPointer;
     protected View m_view;
-
+    private IViewAnimator m_viewAnimator;
     protected WrldSearchWidget m_searchWidget;
+
+    private final long m_stateChangeAnimationTimeMilliseconds = 200;
 
     public SearchWidgetView(MainActivity activity, long nativeCallerPointer,
                             MyTestSearchProvider searchProvider)
@@ -57,6 +59,9 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
         final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.search_widget_view_layout, uiRoot, false);
         uiRoot.addView(m_view);
+
+        m_viewAnimator = new ViewAnimator(this, m_view);
+        m_viewAnimator.registerLayoutChangeListener();
 
         m_searchWidget = (WrldSearchWidget) m_activity.getFragmentManager().findFragmentById(R.id.search_widget);
         m_searchWidget.addSearchProvider(m_searchProvider);
@@ -173,4 +178,46 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
             return null;
         }
     }
+
+    public void ViewLayoutChanged()
+    {
+        final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
+
+        final float viewHeight = m_view.getHeight();
+
+        float y = m_view.getY();
+
+        float inactiveY = - viewHeight;
+
+        m_viewAnimator.setActivePos(y);
+        m_viewAnimator.setInactivePos(inactiveY);
+
+        m_view.setY(inactiveY);
+    }
+
+    public void animateToClosedOnScreen()
+    {
+        m_viewAnimator.animateToActive(m_stateChangeAnimationTimeMilliseconds);
+    }
+
+    public void animateToOpenOnScreen()
+    {
+        m_viewAnimator.animateToActive(m_stateChangeAnimationTimeMilliseconds);
+    }
+
+    public void animateOffScreen()
+    {
+        m_viewAnimator.animateToInactive(m_stateChangeAnimationTimeMilliseconds);
+    }
+
+    public void animateToIntermediateOnScreenState(final float onScreenState)
+    {
+        m_viewAnimator.animateToOnScreenState(onScreenState);
+    }
+
+    public void animateToIntermediateOpenState(final float openState)
+    {
+        m_viewAnimator.animateToOnScreenState(openState);
+    }
+
 }

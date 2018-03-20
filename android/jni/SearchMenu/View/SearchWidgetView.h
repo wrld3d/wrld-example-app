@@ -27,11 +27,23 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection3<const std::string&, int, int> m_onItemSelectedCallbacks;
 
+                void CallVoidVoidFunction(const char* func);
+
             public:
                 SearchWidgetView(AndroidNativeState& nativeState,
                                  SearchProviders::MyTestSearchProvider& searchProvider);
 
                 void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged);
+
+                void SetFullyOnScreenOpen();
+
+                void SetFullyOnScreenClosed();
+
+                void SetOnScreenStateToIntermediateValue(float value);
+
+                void SetFullyOnScreen();
+
+                void SetFullyOffScreen();
 
                 void PerformSearch(const std::string& query, const QueryContext& context);
 

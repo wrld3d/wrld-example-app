@@ -27,7 +27,7 @@ namespace ExampleApp
 			public:
 				SearchWidgetViewModule(
 					AndroidNativeState& nativeState,
-					Menu::View::IMenuSectionsViewModel& viewModel,
+					Menu::View::IMenuViewModel& viewModel,
 					ExampleAppMessaging::TMessageBus& messageBus
 				);
 				SearchWidgetController& GetSearchWidgetController() const;

@@ -7,10 +7,13 @@
 #include "ISearchWidgetView.h"
 #include "SearchServices.h"
 #include "SearchQueryRefreshedMessage.h"
+#include "IMenuViewModel.h"
 #include "IMenuSectionsViewModel.h"
 #include "TagSearchAddedMessage.h"
 #include "TagSearchSwallowLoadedMessage.h"
 #include "IUpdateableViewController.h"
+#include "IOpenableControlViewModel.h"
+#include "IScreenControlViewModel.h"
 
 #include <map>
 
@@ -23,7 +26,7 @@ namespace ExampleApp
             class SearchWidgetController:  public ViewControllerUpdater::View::IUpdateableViewController {
             private:
                 ISearchWidgetView& m_view;
-                Menu::View::IMenuSectionsViewModel& m_viewModel;
+                Menu::View::IMenuViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 				SearchServices& m_searchServices;
 
@@ -35,6 +38,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchWidgetController, int> m_onSearchResultSelectedCallback;
 				Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::SearchQueryRefreshedMessage&>
 																		m_onSearchQueryRefreshedHandler;
+                Eegeo::Helpers::TCallback2<SearchWidgetController, ScreenControl::View::IScreenControlViewModel&, float> m_onScreenStateChanged;
+                Eegeo::Helpers::TCallback2<SearchWidgetController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenableStateChanged;
 
                 Eegeo::Helpers::TCallback1<SearchWidgetController, const AppModes::AppModeChangedMessage&> m_onAppModeChanged;
                 Eegeo::Helpers::TCallback3<SearchWidgetController, const std::string&, int, int> m_onItemSelectedCallback;
@@ -48,9 +53,11 @@ namespace ExampleApp
                 bool m_menuContentsChanged;
 
             public:
+                //
                 SearchWidgetController(ISearchWidgetView& view,
                                         SearchServices& searchServices,
-                                       Menu::View::IMenuSectionsViewModel& viewModel,
+                                       Menu::View::IMenuViewModel& viewModel,
+                                     //  Menu::View::IMenuSectionsViewModel& menuSectionsViewModel,
                                        ExampleAppMessaging::TMessageBus& messageBus);
                 ~SearchWidgetController();
 
@@ -63,6 +70,8 @@ namespace ExampleApp
                 virtual void OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex);
 
             protected:
+                void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state);
+                void OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
                 virtual void OnItemAdded(Menu::View::MenuItemModel& item);
                 virtual void OnItemRemoved(Menu::View::MenuItemModel& item);
 

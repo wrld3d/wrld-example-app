@@ -17,7 +17,7 @@ namespace ExampleApp
         {
             SearchWidgetController::SearchWidgetController(ISearchWidgetView& view,
                                                            SearchServices& searchServices,
-                                                           Menu::View::IMenuSectionsViewModel& viewModel,
+                                                           Menu::View::IMenuViewModel& viewModel,
                                                            ExampleAppMessaging::TMessageBus& messageBus)
             : m_view(view)
             , m_viewModel(viewModel)
@@ -33,16 +33,19 @@ namespace ExampleApp
             , m_onItemRemovedCallback(this, &SearchWidgetController::OnItemRemoved)
             , m_onTagSearchAddedHandler(this, &SearchWidgetController::OnTagSearchAdded)
 			, m_onTagSearchSwallowLoadedHandler(this, &SearchWidgetController::OnTagSearchSwallowLoaded)
+            , m_onScreenStateChanged(this, &SearchWidgetController::OnScreenControlStateChanged)
+            , m_onOpenableStateChanged(this, &SearchWidgetController::OnOpenableStateChanged)
             {
                 m_view.InsertSearchClearedCallback(m_onSearchResultsClearedCallback);
 				m_view.InsertResultSelectedCallback(m_onSearchResultSelectedCallback);
                 m_view.InsertOnItemSelected(m_onItemSelectedCallback);
+                m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
+                m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
 
                 m_messageBus.SubscribeUi(m_onSearchQueryRefreshedHandler);
 				m_messageBus.SubscribeUi(m_onTagSearchAddedHandler);
 				m_messageBus.SubscribeUi(m_onTagSearchSwallowLoadedHandler);
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
-
 
                 for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
                 {
@@ -147,7 +150,6 @@ namespace ExampleApp
             void SearchWidgetController::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
             {
                 RefreshPresentation(true);
-
             }
 
             void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex){
@@ -182,6 +184,45 @@ namespace ExampleApp
                 {
                     m_view.UpdateMenuSectionViews(sections, m_menuContentsChanged);
                     m_menuContentsChanged = false;
+                }
+            }
+
+            void SearchWidgetController::OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state)
+            {
+                if(m_viewModel.IsAddedToScreen())
+                {
+                    if (m_viewModel.IsFullyClosed())
+                    {
+                        m_view.SetFullyOnScreenClosed();
+                    }
+                    else if (m_viewModel.IsFullyOpen())
+                    {
+                        m_view.SetFullyOnScreenOpen();
+                    }
+                    else
+                    {
+                        m_view.SetOnScreenStateToIntermediateValue(state);
+                    }
+                }
+                else
+                {
+                    m_view.SetFullyOffScreen();
+                }
+            }
+
+            void SearchWidgetController::OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& state)
+            {
+                if (m_viewModel.IsFullyOnScreen())
+                {
+                    m_view.SetFullyOnScreenClosed();
+                }
+                else if (m_viewModel.IsFullyOffScreen())
+                {
+                    m_view.SetFullyOffScreen();
+                }
+                else
+                {
+                    m_view.SetOnScreenStateToIntermediateValue(state);
                 }
             }
         }
