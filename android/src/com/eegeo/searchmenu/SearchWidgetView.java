@@ -210,11 +210,15 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
 
     public void animateOffScreen()
     {
+        m_searchWidget.hideSearchResults();
+        m_searchWidget.closeMenu();
         m_viewAnimator.animateToInactive(m_stateChangeAnimationTimeMilliseconds);
     }
 
     public void animateToIntermediateOnScreenState(final float onScreenState)
     {
+        m_searchWidget.hideSearchResults();
+        m_searchWidget.closeMenu();
         m_viewAnimator.animateToOnScreenState(onScreenState);
     }
 
