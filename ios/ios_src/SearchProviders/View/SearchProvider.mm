@@ -1,6 +1,7 @@
 // Copyright WRLD Ltd (2018-), All Rights Reserved
 
 #include "SearchProvider.h"
+#include "WidgetSearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -68,13 +69,14 @@ namespace ExampleApp
         {
             WRLDMutableSearchResultsCollection* widgetSearchResults = [[WRLDMutableSearchResultsCollection alloc] init];
             
-            for(TSearchResults::const_iterator it = searchResults.begin(); it != searchResults.end(); ++it)
+            for(int i = 0; i < searchResults.size(); i++)
             {
-                WRLDBasicSearchResultModel* widgetSearchResult = [[WRLDBasicSearchResultModel alloc] init];
+                WidgetSearchResultModel* widgetSearchResult = [[WidgetSearchResultModel alloc] init];
                 
-                widgetSearchResult.title = [NSString stringWithUTF8String:it->GetName().c_str()];
-                widgetSearchResult.subTitle = [NSString stringWithUTF8String:it->GetDescription().c_str()];
-                widgetSearchResult.iconKey = [NSString stringWithUTF8String:it->GetIconName().c_str()];
+                widgetSearchResult.title = [NSString stringWithUTF8String:searchResults.at(i).GetName().c_str()];
+                widgetSearchResult.subTitle = [NSString stringWithUTF8String:searchResults.at(i).GetDescription().c_str()];
+                widgetSearchResult.iconKey = [NSString stringWithUTF8String:searchResults.at(i).GetIconName().c_str()];
+                widgetSearchResult.index = (NSInteger) i;
                 
                 [widgetSearchResults addObject: widgetSearchResult];
             }
