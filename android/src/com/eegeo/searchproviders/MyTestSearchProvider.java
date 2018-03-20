@@ -10,6 +10,7 @@ import com.wrld.widgets.searchbox.model.SearchProviderResultsReadyCallback;
 import com.wrld.widgets.searchbox.model.SearchResult;
 import com.wrld.widgets.searchbox.model.SearchResultPropertyString;
 import com.wrld.widgets.searchbox.model.SuggestionProvider;
+import com.wrld.widgets.searchbox.view.DefaultSuggestionViewFactory;
 import com.wrld.widgets.searchbox.view.ISearchResultViewFactory;
 
 import com.eegeo.searchmenu.SearchWidgetResult;
@@ -21,6 +22,7 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 {
 	private long										m_nativeCallerPointer;
 	private SearchResultViewFactory						m_resultFactory;
+	private ISearchResultViewFactory					m_suggestionResultFactory;
 	private HashSet<SearchProviderResultsReadyCallback>	m_callbacks;
 	private HashSet<SearchProviderResultsReadyCallback>	m_suggestion_callbacks;
 	private String										m_lastQueryText;
@@ -36,6 +38,7 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 	{
 		m_nativeCallerPointer = nativeCallerPointer;
 		m_resultFactory       = new SearchResultViewFactory(R.layout.search_result, activity);
+		m_suggestionResultFactory = new DefaultSuggestionViewFactory(R.layout.search_suggestion);
 		m_callbacks           = new HashSet<SearchProviderResultsReadyCallback>();
 		m_suggestion_callbacks = new HashSet<SearchProviderResultsReadyCallback>();
 		m_lastQueryText       = "";
@@ -164,7 +167,6 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 	}
 
 	public ISearchResultViewFactory getSuggestionViewFactory(){
-
-		return m_resultFactory;
+		return m_suggestionResultFactory;
 	}
 }
