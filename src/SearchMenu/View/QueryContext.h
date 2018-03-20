@@ -14,6 +14,7 @@ namespace ExampleApp
 		{
 			class QueryContext
 			{
+				bool m_clearPreviousResults;
 				bool m_isTag;
 				std::string m_tagText;
 				bool m_shouldTryInterior;
@@ -23,14 +24,17 @@ namespace ExampleApp
 				float m_radius;
 
 			public:
-				QueryContext(bool isTag, const std::string& tagText,
+				QueryContext(bool clearPreviousResults,
+							 bool isTag, const std::string& tagText,
 							 bool shouldTryInterior, bool shouldZoomToBuildingsView);
 
-				QueryContext(bool isTag, const std::string& tagText,
+				QueryContext(bool clearPreviousResults,
+							 bool isTag, const std::string& tagText,
 							 bool shouldTryInterior, bool shouldZoomToBuildingsView,
 							 const Eegeo::Space::LatLongAltitude& location,
 							 float radius);
 
+				bool ClearPreviousResults() const;
 				bool IsTag() const;
 				const std::string& TagText() const;
 				bool ShouldTryInterior() const;

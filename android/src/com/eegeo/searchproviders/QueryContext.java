@@ -4,6 +4,7 @@ package com.eegeo.searchproviders;
 
 public class QueryContext
 {
+	private boolean m_clearPreviousResults;
 	private boolean m_isTag;
 	private String  m_tagText;
 	private boolean m_tryInterior;
@@ -14,9 +15,11 @@ public class QueryContext
 	private double  m_altitude;
 	private float   m_radius;
 
-	public QueryContext(boolean isTag, String tagText,
+	public QueryContext(boolean clearPreviousResults,
+						boolean isTag, String tagText,
 						boolean tryInterior, boolean shouldZoomToBuildingsView)
 	{
+		m_clearPreviousResults      = clearPreviousResults;
 		m_isTag                     = isTag;
 		m_tagText                   = tagText;
 		m_tryInterior               = tryInterior;
@@ -29,11 +32,13 @@ public class QueryContext
 		m_radius                    = 0;
 	}
 
-	public QueryContext(boolean isTag, String tagText,
+	public QueryContext(boolean clearPreviousResults,
+						boolean isTag, String tagText,
 						boolean tryInterior, boolean shouldZoomToBuildingsView,
 						double latitude, double longitude, double altitude,
 						float radius)
 	{
+		m_clearPreviousResults      = clearPreviousResults;
 		m_isTag                     = isTag;
 		m_tagText                   = tagText;
 		m_tryInterior               = tryInterior;
@@ -46,6 +51,7 @@ public class QueryContext
 		m_radius                    = radius;
 	}
 
+	public boolean ClearPreviousResults()      { return m_clearPreviousResults; }
 	public boolean IsTag()                     { return m_isTag; }
 	public String TagText()                    { return m_tagText; }
 	public boolean TryInterior()               { return m_tryInterior; }
