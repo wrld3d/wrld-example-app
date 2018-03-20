@@ -46,7 +46,9 @@ namespace ExampleApp
 				const View::QueryContext& context = message.QueryContext();
 
 				if (context.ClearPreviousResults())
-                	m_searchQueryPerformer.RemoveSearchQueryResults();
+				{
+					m_searchQueryPerformer.RemoveSearchQueryResults();
+				}
 
 				if (context.UsesLocationAndRadius())
 				{
