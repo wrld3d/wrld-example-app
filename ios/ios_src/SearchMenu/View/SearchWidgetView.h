@@ -4,6 +4,7 @@
 
 #include "ISearchWidgetView.h"
 #include "SearchMenuView.h"
+#include "WidgetSearchResultModel.h"
 
 #import <WrldSearchWidget/WrldSearchWidget.h>
 
@@ -22,6 +23,10 @@ namespace ExampleApp
                 WRLDSearchProviderHandle* m_pSearchProviderHandle;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
                 
+                Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
+                Eegeo::Helpers::CallbackCollection3<const std::string&, int, int> m_onItemSelectedCallbacks;
+                
             public:
                 SearchWidgetView(SearchMenuView* view,
                                  id<WRLDSearchProvider> searchProvider,
@@ -30,6 +35,8 @@ namespace ExampleApp
                 
                 UIViewController* GetWidgetController() const;
                 UIView* GetWidgetView() const;
+                
+                void OnSearchResultSelected(int index);
                 
                 void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged);
                 
@@ -41,7 +48,7 @@ namespace ExampleApp
                 void InsertResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
                 void RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
                 
-                void HandleItemSelected(const std::string&, int sectionIndex, int itemIndex);
+                void HandleItemSelected(const std::string& menuText, int sectionIndex, int itemIndex);
                 
                 void InsertOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback);
                 void RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback);

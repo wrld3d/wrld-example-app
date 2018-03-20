@@ -5,6 +5,7 @@
 #include "Menu.h"
 #include "SearchMenuViewIncludes.h"
 #include "SearchWidgetView.h"
+#include "SearchWidgetController.h"
 
 namespace ExampleApp
 {
@@ -22,6 +23,8 @@ namespace ExampleApp
                 virtual SearchMenuView& GetSearchMenuView() const = 0;
                 
                 virtual SearchWidgetView& GetSearchWidgetView() const = 0;
+                
+                virtual SearchWidgetController& GetSearchWidgetController() const = 0;
             };
         }
     }

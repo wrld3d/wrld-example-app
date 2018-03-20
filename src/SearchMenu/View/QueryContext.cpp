@@ -8,11 +8,13 @@ namespace ExampleApp
 	{
 		namespace View
 		{
-			QueryContext::QueryContext(bool isTag,
+			QueryContext::QueryContext(bool clearPreviousResults,
+									   bool isTag,
 									   const std::string& tagText,
 									   bool shouldTryInterior,
 									   bool shouldZoomToBuildingsView)
-			: m_isTag(isTag)
+			: m_clearPreviousResults(clearPreviousResults)
+			, m_isTag(isTag)
 			, m_tagText(tagText)
 			, m_shouldTryInterior(shouldTryInterior)
 			, m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
@@ -22,13 +24,15 @@ namespace ExampleApp
 			{
 			}
 
-			QueryContext::QueryContext(bool isTag,
+			QueryContext::QueryContext(bool clearPreviousResults,
+									   bool isTag,
 									   const std::string& tagText,
 									   bool shouldTryInterior,
 									   bool shouldZoomToBuildingsView,
 									   const Eegeo::Space::LatLongAltitude& location,
 									   float radius)
-			: m_isTag(isTag)
+			: m_clearPreviousResults(clearPreviousResults)
+			, m_isTag(isTag)
 			, m_tagText(tagText)
 			, m_shouldTryInterior(shouldTryInterior)
 			, m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
@@ -36,6 +40,11 @@ namespace ExampleApp
 			, m_location(location)
 			, m_radius(radius)
 			{
+			}
+
+			bool QueryContext::ClearPreviousResults() const
+			{
+				return m_clearPreviousResults;
 			}
 
 			bool QueryContext::IsTag() const

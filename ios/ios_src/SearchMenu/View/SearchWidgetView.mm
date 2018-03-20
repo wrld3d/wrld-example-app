@@ -24,6 +24,17 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController displaySearchProvider: m_pSearchProviderHandle];
                 [m_pSearchWidgetViewController displaySuggestionProvider: m_pSuggestionProviderHandle];
                 
+                void (^onResultSelection) (id<WRLDSearchResultModel>) = ^(id<WRLDSearchResultModel> selectedResultModel)
+                {
+                    WidgetSearchResultModel* selectedResultModelWithIndex = (WidgetSearchResultModel*) selectedResultModel;
+                    if (selectedResultModelWithIndex != nil)
+                    {
+                        this->OnSearchResultSelected(selectedResultModelWithIndex.index);
+                    }
+                };
+                
+                [[m_pSearchWidgetViewController searchSelectionObserver] addResultSelectedEvent:onResultSelection];
+                
                 CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ?
                 CGRectMake(20, 20, 375, CGRectGetHeight(m_pView.bounds) - 40) :   // ipad
                 CGRectMake(10, 10, CGRectGetWidth(m_pView.bounds) - 20, CGRectGetHeight(m_pView.bounds) - 20); // iphone
@@ -45,6 +56,11 @@ namespace ExampleApp
                 return (UIView*)m_pSearchWidgetViewController.view;
             }
             
+            void SearchWidgetView::OnSearchResultSelected(int index)
+            {
+                m_resultSelectedCallbacks.ExecuteCallbacks(index);
+            }
+            
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
             {
             }
@@ -55,29 +71,37 @@ namespace ExampleApp
             
             void SearchWidgetView::InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
             {
+                m_searchClearedCallbacks.AddCallback(callback);
             }
+            
             void SearchWidgetView::RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
             {
+                m_searchClearedCallbacks.RemoveCallback(callback);
             }
             
             void SearchWidgetView::InsertResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
             {
+                m_resultSelectedCallbacks.AddCallback(callback);
             }
             
             void SearchWidgetView::RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
             {
+                m_resultSelectedCallbacks.RemoveCallback(callback);
             }
             
-            void SearchWidgetView::HandleItemSelected(const std::string&, int sectionIndex, int itemIndex)
+            void SearchWidgetView::HandleItemSelected(const std::string& menuText, int sectionIndex, int itemIndex)
             {
+                m_onItemSelectedCallbacks.ExecuteCallbacks(menuText, sectionIndex, itemIndex);
             }
             
             void SearchWidgetView::InsertOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback)
             {
+                m_onItemSelectedCallbacks.AddCallback(callback);
             }
             
             void SearchWidgetView::RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback)
             {
+                m_onItemSelectedCallbacks.RemoveCallback(callback);
             }
         }
     }

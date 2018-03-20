@@ -29,6 +29,7 @@
 
 - (void)getSuggestions:(WRLDSearchRequest *)query
 {
+    m_pSearchProvider->PeformAutocompleteSuggestions(query);
 }
 
 @synthesize moreResultsName;

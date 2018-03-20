@@ -15,6 +15,7 @@ extern "C"
             JNIEnv* jenv, jobject obj,
             jlong nativeObjectPtr,
             jstring searchQuery,
+            jboolean clearPreviousResults,
             jboolean isTag,
             jstring tagText,
             jboolean tryInterior,

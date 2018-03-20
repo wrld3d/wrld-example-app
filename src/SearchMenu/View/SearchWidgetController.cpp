@@ -134,7 +134,8 @@ namespace ExampleApp
 				}
 
                 m_view.PerformSearch(visibleText,
-									 QueryContext(query.IsTag(),
+									 QueryContext(false,
+												  query.IsTag(),
 												  tagText,
 												  query.ShouldTryInteriorSearch(),
 												  message.ShouldZoomToBuildingsView(),
@@ -164,7 +165,7 @@ namespace ExampleApp
 				TTagMap::iterator it = m_knownTags.find(menuText);
 
 				if (it != m_knownTags.end())
-					m_view.PerformSearch(menuText, QueryContext(true, it->second, true, false));
+					m_view.PerformSearch(menuText, QueryContext(true, true, it->second, true, false));
             }
 
             void SearchWidgetController::RefreshPresentation(bool forceRefresh)

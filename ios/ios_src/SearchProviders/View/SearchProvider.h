@@ -20,6 +20,7 @@ namespace ExampleApp
             Eegeo::Helpers::CallbackCollection2<const std::string&, const SearchMenu::View::QueryContext&> m_searchWithContextCallbacks;
             Eegeo::Helpers::CallbackCollection0 m_searchCancelledCallbacks;
             WRLDSearchRequest* m_pCurrentRequest;
+            WRLDSearchRequest* m_pCurrentSuggestion;
 
         public:
             SearchProvider();
@@ -40,7 +41,10 @@ namespace ExampleApp
             void OnSearchResponseReceived(const TSearchResults& searchResults);
             void OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults);
 
+            void UpdateResults(const TSearchResults& searchResults, WRLDSearchRequest* searchRequest);
+
             void PeformSearch(WRLDSearchRequest* searchRequest);
+            void PeformAutocompleteSuggestions(WRLDSearchRequest* searchRequest);
         };
     }
 }

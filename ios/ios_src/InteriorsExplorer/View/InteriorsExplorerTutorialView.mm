@@ -294,14 +294,6 @@ namespace
     self.pExitDialogContainer.alpha = 0.0f;
     
     self.pChangeFloorDialogContainer.alpha = 0.0f;
-    if(m_showChangeFloorDialog)
-    {
-        [self.pChangeFloorDialogContainer setHidden:NO];
-    }
-    else
-    {
-        [self.pChangeFloorDialogContainer setHidden:YES];
-    }
     
     [UIView animateWithDuration:m_animationTimeSeconds
                           delay:m_animationTimeSeconds * 0.8f

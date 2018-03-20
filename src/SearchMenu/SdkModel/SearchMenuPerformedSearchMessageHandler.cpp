@@ -42,18 +42,24 @@ namespace ExampleApp
             void SearchMenuPerformedSearchMessageHandler::OnSearchWithContextMessage(const SearchMenuSearchWithContextMessage& message)
             {
                 m_metricsService.SetEvent("Search-with-context", "Search string", message.SearchQuery().c_str());
-                m_searchQueryPerformer.RemoveSearchQueryResults();
 
-				if (message.UsesLocationAndRadius())
+				const View::QueryContext& context = message.QueryContext();
+
+				if (context.ClearPreviousResults())
 				{
-					m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsTag(), message.IsInterior(),
-															  message.ShouldZoomToBuildingsView(),
-															  message.Location(), message.Radius());
+					m_searchQueryPerformer.RemoveSearchQueryResults();
+				}
+
+				if (context.UsesLocationAndRadius())
+				{
+					m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
+															  context.ShouldZoomToBuildingsView(),
+															  context.Location(), context.Radius());
 				}
 				else
 				{
-					m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsTag(), message.IsInterior(),
-															  message.ShouldZoomToBuildingsView());
+					m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
+															  context.ShouldZoomToBuildingsView());
 				}
             }
 
