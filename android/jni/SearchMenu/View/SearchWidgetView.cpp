@@ -34,7 +34,7 @@ namespace ExampleApp
 
                 m_onSearchPerformed = env->GetMethodID(m_uiViewClass,
                                                        "onSearchPerformed",
-                                                       "(Ljava/lang/String;ZLjava/lang/String;ZZZDDDF)V");
+                                                       "(Ljava/lang/String;ZZLjava/lang/String;ZZZDDDF)V");
             }
 
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
@@ -144,6 +144,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView,
                                     m_onSearchPerformed,
                                     queryText,
+                                    (jboolean)context.ClearPreviousResults(),
                                     (jboolean)context.IsTag(),
                                     tagText,
                                     (jboolean)context.ShouldTryInterior(),

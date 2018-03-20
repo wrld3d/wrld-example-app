@@ -23,6 +23,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr,
         jstring searchQuery,
+        jboolean clearPreviousResults,
         jboolean isTag,
         jstring tagText,
         jboolean tryInterior,
@@ -49,6 +50,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
     {
         pSearch->PerformSearchWithContext(queryString,
                                           ExampleApp::SearchMenu::View::QueryContext(
+                                            clearPreviousResults,
                                             isTag, tagString, tryInterior, shouldZoomToBuildingsView,
                                             Eegeo::Space::LatLongAltitude(latitude, longitude, altitude),
                                             radius));
@@ -57,7 +59,8 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
     {
         pSearch->PerformSearchWithContext(queryString,
                                           ExampleApp::SearchMenu::View::QueryContext(
-                                                  isTag, tagString, tryInterior, shouldZoomToBuildingsView));
+                                            clearPreviousResults,
+                                            isTag, tagString, tryInterior, shouldZoomToBuildingsView));
     }
 }
 

@@ -367,6 +367,7 @@ def get_office_location_from_interior_and_floor(interior_id, floor_id):
     interior_ids_to_names["swallow_lon_parkhouse"] = "Park House"
     interior_ids_to_names["swallow_lon_wallbrooksquare"] = "Bloomberg London"
     interior_ids_to_names["swallow_ny_731lex"] = "731 Lexington"
+    interior_ids_to_names["swallow_ny_120park"] = "120 Park"
 
     interior_floor_to_name = {}
     interior_floor_to_name["swallow_lon_38finsbury"] = ["Lower Ground Floor", "Ground Floor", "1st Floor", "2nd Floor", "3rd Floor", "4th Floor", "5th Floor", "6th Floor"]
@@ -375,6 +376,7 @@ def get_office_location_from_interior_and_floor(interior_id, floor_id):
     interior_floor_to_name["swallow_lon_parkhouse"] = ["3rd Floor", "4th Floor", "5th Floor"]
     interior_floor_to_name["swallow_lon_wallbrooksquare"] = ["B4", "B3", "B2", "B1", "Ground Floor", "1st Floor", "2nd Floor", "3rd Floor", "4th Floor", "5th Floor", "6th Floor", "7th Floor", "8th Floor"]
     interior_floor_to_name["swallow_ny_731lex"] = ["LL2", "LL1", "03", "04", "05", "06", "07", "08", "09", "10", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29"]
+    interior_floor_to_name["swallow_ny_120park"] = ["LLC","LLB","LLA","Lobby", "Mezzanine", "8th Floor", "9th Floor", "10th Floor", "11th Floor", "12th Floor", "13th Floor", "14th Floor", "15th Floor", "16th Floor", "17th Floor", "18th Floor", "19th Floor", "20th Floor", "21st Floor", "22nd Floor", "23rd Floor"]
 
     return interior_floor_to_name[interior_id][floor_id] + ", " + interior_ids_to_names[interior_id];
 

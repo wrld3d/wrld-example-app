@@ -67,27 +67,12 @@ namespace ExampleApp
 			{
 				std::string effectiveQuery = context.IsTag() ? context.TagText() : searchQuery;
 
-				if (context.UsesLocationAndRadius())
-				{
-					m_messageBus.Publish(SearchMenuSearchWithContextMessage(effectiveQuery,
-																			context.IsTag(),
-																			context.ShouldTryInterior(),
-																			context.ShouldZoomToBuildingsView(),
-																			context.Location(),
-																			context.Radius()));
-				}
-				else
-				{
-					m_messageBus.Publish(SearchMenuSearchWithContextMessage(effectiveQuery,
-																			context.IsTag(),
-																			context.ShouldTryInterior(),
-																			context.ShouldZoomToBuildingsView()));
-				}
+				m_messageBus.Publish(SearchMenuSearchWithContextMessage(effectiveQuery, context));
 			}
 
 			void SearchServices::OnCancel()
 			{
-				// TO DO - cancel ongoing search
+				m_messageBus.Publish(SearchResultSection::SearchResultViewClearedMessage());
 			}
 
 			void SearchServices::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
