@@ -1368,7 +1368,10 @@ namespace ExampleApp
         Eegeo_ASSERT(swallowOption != NULL);
 
         m_messageBus.Publish(TagSearch::TagSearchSwallowLoadedMessage(menuSection.Name(),
-                                                                      swallowOption->Category()));
+                                                                      swallowOption->Category(),
+                                                                      swallowOption->InteriorSearchAllowed(),
+                                                                      swallowOption->HasRadiusOverride(),
+                                                                      swallowOption->RadiusOverride()));
     }
     
     bool MobileExampleApp::IsRunning() const

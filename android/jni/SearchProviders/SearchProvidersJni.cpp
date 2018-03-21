@@ -28,10 +28,11 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
         jstring tagText,
         jboolean tryInterior,
         jboolean shouldZoomToBuildingsView,
-        jboolean usesLocationAndRadius,
+        jboolean usesLocation,
         jdouble latitude,
         jdouble longitude,
         jdouble altitude,
+        jboolean usesRadius,
         jfloat radius)
 {
     ASSERT_UI_THREAD
@@ -46,7 +47,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
 
     ExampleApp::SearchProviders::MyTestSearchProvider* pSearch = reinterpret_cast<ExampleApp::SearchProviders::MyTestSearchProvider*>(nativeObjectPtr);
 
-    if (usesLocationAndRadius)
+    if (usesLocation)
     {
         pSearch->PerformSearchWithContext(queryString,
                                           ExampleApp::SearchMenu::View::QueryContext(
@@ -55,12 +56,20 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
                                             Eegeo::Space::LatLongAltitude(latitude, longitude, altitude),
                                             radius));
     }
-    else
+    else if (usesRadius)
     {
         pSearch->PerformSearchWithContext(queryString,
                                           ExampleApp::SearchMenu::View::QueryContext(
                                             clearPreviousResults,
-                                            isTag, tagString, tryInterior, shouldZoomToBuildingsView));
+                                            isTag, tagString, tryInterior, shouldZoomToBuildingsView,
+                                            radius));
+    }
+    else
+    {
+        pSearch->PerformSearchWithContext(queryString,
+                                          ExampleApp::SearchMenu::View::QueryContext(
+                                                  clearPreviousResults,
+                                                  isTag, tagString, tryInterior, shouldZoomToBuildingsView));
     }
 }
 

@@ -69,7 +69,8 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         createView();
     }
 
-    protected void createView() {
+    protected void createView()
+    {
         final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.search_widget_view_layout, uiRoot, false);
         uiRoot.addView(m_view);
@@ -120,13 +121,20 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
                                   boolean clearPreviousResults,
                                   boolean isTag, String tagText,
                                   boolean tryInterior, boolean shouldZoomToBuildingsView,
-                                  boolean usesLocationAndRadius,
+                                  boolean usesLocation,
                                   double latitude, double longitude, double altitude,
-                                  float radius) {
-        QueryContext context = usesLocationAndRadius ?
+                                  boolean usesRadius,
+                                  float radius)
+    {
+        QueryContext context =
+            usesLocation ?
                 new QueryContext(clearPreviousResults,
-                        isTag, tagText, tryInterior, shouldZoomToBuildingsView,
-                        latitude, longitude, altitude, radius) :
+                                 isTag, tagText, tryInterior, shouldZoomToBuildingsView,
+                                 latitude, longitude, altitude, radius) :
+            usesRadius ?
+                new QueryContext(clearPreviousResults,
+                                 isTag, tagText, tryInterior, shouldZoomToBuildingsView,
+                                 radius) :
                 new QueryContext(clearPreviousResults,
                         isTag, tagText, tryInterior, shouldZoomToBuildingsView);
 
@@ -135,6 +143,11 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
 
     public boolean onMenuOptionSelected(final String text, final Object context) {
         MenuIndexPath indexPath = (MenuIndexPath) context;
+
+        //TODO replace this line with clear when the api point is exposed
+        m_searchWidget.showSearchResults();
+        //m_searchWidget.getSearchResultsModel().clear();
+
         SearchWidgetViewJniMethods.SelectedItem(m_nativeCallerPointer, text, indexPath.m_section, indexPath.m_item);
         return true;
     }

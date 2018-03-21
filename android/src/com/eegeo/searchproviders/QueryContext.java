@@ -9,10 +9,13 @@ public class QueryContext
 	private String  m_tagText;
 	private boolean m_tryInterior;
 	private boolean m_shouldZoomToBuildingsView;
-	private boolean m_usesLocationAndRadius;
+
+	private boolean m_usesLocation;
 	private double  m_latitude;
 	private double  m_longitude;
 	private double  m_altitude;
+
+	private boolean m_usesRadius;
 	private float   m_radius;
 
 	public QueryContext(boolean clearPreviousResults,
@@ -25,11 +28,33 @@ public class QueryContext
 		m_tryInterior               = tryInterior;
 		m_shouldZoomToBuildingsView = shouldZoomToBuildingsView;
 
-		m_usesLocationAndRadius     = false;
+		m_usesLocation              = false;
 		m_latitude                  = 0;
 		m_longitude                 = 0;
 		m_altitude                  = 0;
+
+		m_usesRadius                = false;
 		m_radius                    = 0;
+	}
+
+	public QueryContext(boolean clearPreviousResults,
+						boolean isTag, String tagText,
+						boolean tryInterior, boolean shouldZoomToBuildingsView,
+						float radius)
+	{
+		m_clearPreviousResults      = clearPreviousResults;
+		m_isTag                     = isTag;
+		m_tagText                   = tagText;
+		m_tryInterior               = tryInterior;
+		m_shouldZoomToBuildingsView = shouldZoomToBuildingsView;
+
+		m_usesLocation              = false;
+		m_latitude                  = 0;
+		m_longitude                 = 0;
+		m_altitude                  = 0;
+
+		m_usesRadius                = true;
+		m_radius                    = radius;
 	}
 
 	public QueryContext(boolean clearPreviousResults,
@@ -44,10 +69,12 @@ public class QueryContext
 		m_tryInterior               = tryInterior;
 		m_shouldZoomToBuildingsView = shouldZoomToBuildingsView;
 
-		m_usesLocationAndRadius     = true;
+		m_usesLocation              = true;
 		m_latitude                  = latitude;
 		m_longitude                 = longitude;
 		m_altitude                  = altitude;
+
+		m_usesRadius                = true;
 		m_radius                    = radius;
 	}
 
@@ -57,9 +84,11 @@ public class QueryContext
 	public boolean TryInterior()               { return m_tryInterior; }
 	public boolean ShouldZoomToBuildingsView() { return m_shouldZoomToBuildingsView; }
 
-	public boolean UsesLocationAndRadius()     { return m_usesLocationAndRadius; }
+	public boolean UsesLocation()              { return m_usesLocation; }
 	public double Latitude()                   { return m_latitude; }
 	public double Longitude()                  { return m_longitude; }
 	public double Altitude()                   { return m_altitude; }
+
+	public boolean UsesRadius()                { return m_usesRadius; }
 	public float Radius()                      { return m_radius; }
 }

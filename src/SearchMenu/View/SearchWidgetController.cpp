@@ -31,12 +31,11 @@ namespace ExampleApp
             , m_onItemSelectedCallback(this, &SearchWidgetController::OnItemSelected)
             , m_onItemAddedCallback(this, &SearchWidgetController::OnItemAdded)
             , m_onItemRemovedCallback(this, &SearchWidgetController::OnItemRemoved)
-            , m_onTagSearchAddedHandler(this, &SearchWidgetController::OnTagSearchAdded)
-			, m_onTagSearchSwallowLoadedHandler(this, &SearchWidgetController::OnTagSearchSwallowLoaded)
             , m_onScreenStateChanged(this, &SearchWidgetController::OnScreenControlStateChanged)
             , m_onOpenableStateChanged(this, &SearchWidgetController::OnOpenableStateChanged)
-                    , m_onViewOpenedCallback(this, &SearchWidgetController::OnViewOpened)
-                    , m_onViewClosedCallback(this, &SearchWidgetController::OnViewClosed)
+            , m_onViewOpenedCallback(this, &SearchWidgetController::OnViewOpened)
+            , m_onViewClosedCallback(this, &SearchWidgetController::OnViewClosed)
+			, m_tagCollection(m_messageBus)
             {
                 m_view.InsertSearchClearedCallback(m_onSearchResultsClearedCallback);
 				m_view.InsertResultSelectedCallback(m_onSearchResultSelectedCallback);
@@ -48,8 +47,6 @@ namespace ExampleApp
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
 
                 m_messageBus.SubscribeUi(m_onSearchQueryRefreshedHandler);
-				m_messageBus.SubscribeUi(m_onTagSearchAddedHandler);
-				m_messageBus.SubscribeUi(m_onTagSearchSwallowLoadedHandler);
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
 
                 for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
@@ -64,8 +61,6 @@ namespace ExampleApp
             SearchWidgetController::~SearchWidgetController()
             {
                 m_messageBus.UnsubscribeUi(m_onAppModeChanged);
-				m_messageBus.UnsubscribeUi(m_onTagSearchSwallowLoadedHandler);
-                m_messageBus.UnsubscribeUi(m_onTagSearchAddedHandler);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
 
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChanged);
@@ -85,27 +80,6 @@ namespace ExampleApp
             void SearchWidgetController::OnItemRemoved(Menu::View::MenuItemModel& item){
                 m_menuContentsChanged = true;
             }
-
-            void SearchWidgetController::OnTagSearchAdded(const TagSearch::TagSearchAddedMessage& message)
-            {
-				const TagSearch::View::TagSearchModel& tagSearchModel = message.Model();
-
-				RememberTag(tagSearchModel.Name(), tagSearchModel.SearchTag());
-            }
-
-			void SearchWidgetController::OnTagSearchSwallowLoaded(const TagSearch::TagSearchSwallowLoadedMessage& message)
-			{
-				RememberTag(message.Key(), message.Tag());
-			}
-
-			void SearchWidgetController::RememberTag(const std::string& key, const std::string& tag)
-			{
-				Eegeo_ASSERT(m_knownTags       .find(key) == m_knownTags       .end());
-				Eegeo_ASSERT(m_visibleTextOfTag.find(tag) == m_visibleTextOfTag.end());
-
-				m_knownTags       [key] = tag;
-				m_visibleTextOfTag[tag] = key;
-			}
 
             void SearchWidgetController::OnSearchResultsCleared()
             {
@@ -132,15 +106,18 @@ namespace ExampleApp
 
 				std::string visibleText = query.Query();
 				std::string tagText     = "";
+				float       radius      = message.Radius();
 
 				if (query.IsTag())
 				{
-					TTagMap::iterator it = m_visibleTextOfTag.find(visibleText);
+					tagText = visibleText;
 
-					Eegeo_ASSERT(it != m_visibleTextOfTag.end());
+					const TagCollection::TagInfo& tagInfo = m_tagCollection.GetInfoByTag(tagText);
 
-					tagText     = visibleText;
-					visibleText = it->second;
+					visibleText = tagInfo.VisibleText();
+
+					if (tagInfo.HasRadiusOverride())
+						radius = tagInfo.RadiusOverride();
 				}
 
                 m_view.PerformSearch(visibleText,
@@ -150,7 +127,7 @@ namespace ExampleApp
 												  query.ShouldTryInteriorSearch(),
 												  message.ShouldZoomToBuildingsView(),
 												  message.Location(),
-												  message.Radius()));
+												  radius));
             }
 
             void SearchWidgetController::UpdateUiThread(float dt)
@@ -172,10 +149,24 @@ namespace ExampleApp
 					section.GetItemAtIndex(index).MenuOption().Select();
 				}
 
-				TTagMap::iterator it = m_knownTags.find(menuText);
+				if (m_tagCollection.HasTag(menuText))
+				{
+					TagCollection::TagInfo tagInfo = m_tagCollection.GetInfoByText(menuText);
 
-				if (it != m_knownTags.end())
-					m_view.PerformSearch(menuText, QueryContext(true, true, it->second, true, false));
+					if (tagInfo.HasRadiusOverride())
+					{
+						m_view.PerformSearch(menuText,
+											 QueryContext(true, true, tagInfo.Tag(),
+														  tagInfo.ShouldTryInterior(), true,
+														  tagInfo.RadiusOverride()));
+					}
+					else
+					{
+						m_view.PerformSearch(menuText,
+											 QueryContext(true, true, tagInfo.Tag(),
+														  tagInfo.ShouldTryInterior(), true));
+					}
+				}
             }
 
             void SearchWidgetController::RefreshPresentation(bool forceRefresh)

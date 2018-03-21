@@ -18,9 +18,28 @@ namespace ExampleApp
 			, m_tagText(tagText)
 			, m_shouldTryInterior(shouldTryInterior)
 			, m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
-			, m_usesLocationAndRadius(false)
+			, m_usesLocation(false)
 			, m_location(0, 0, 0)
+			, m_usesRadius(false)
 			, m_radius(0)
+			{
+			}
+
+			QueryContext::QueryContext(bool clearPreviousResults,
+									   bool isTag,
+									   const std::string& tagText,
+									   bool shouldTryInterior,
+									   bool shouldZoomToBuildingsView,
+									   float radius)
+			: m_clearPreviousResults(clearPreviousResults)
+			, m_isTag(isTag)
+			, m_tagText(tagText)
+			, m_shouldTryInterior(shouldTryInterior)
+			, m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
+			, m_usesLocation(false)
+			, m_location(0, 0, 0)
+			, m_usesRadius(true)
+			, m_radius(radius)
 			{
 			}
 
@@ -36,8 +55,9 @@ namespace ExampleApp
 			, m_tagText(tagText)
 			, m_shouldTryInterior(shouldTryInterior)
 			, m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
-			, m_usesLocationAndRadius(true)
+			, m_usesLocation(true)
 			, m_location(location)
+			, m_usesRadius(true)
 			, m_radius(radius)
 			{
 			}
@@ -67,14 +87,19 @@ namespace ExampleApp
 				return m_shouldZoomToBuildingsView;
 			}
 
-			bool QueryContext::UsesLocationAndRadius() const
+			bool QueryContext::UsesLocation() const
 			{
-				return m_usesLocationAndRadius;
+				return m_usesLocation;
 			}
 
 			const Eegeo::Space::LatLongAltitude& QueryContext::Location() const
 			{
 				return m_location;
+			}
+
+			bool QueryContext::UsesRadius() const
+			{
+				return m_usesRadius;
 			}
 
 			float QueryContext::Radius() const

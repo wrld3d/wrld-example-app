@@ -25,7 +25,6 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 	private ISearchResultViewFactory					m_suggestionResultFactory;
 	private HashSet<SearchProviderResultsReadyCallback>	m_callbacks;
 	private HashSet<SearchProviderResultsReadyCallback>	m_suggestion_callbacks;
-	private String										m_lastQueryText;
 
 	public class SearchResultInfo
 	{
@@ -41,20 +40,17 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 		m_suggestionResultFactory = new DefaultSuggestionViewFactory(R.layout.search_suggestion);
 		m_callbacks           = new HashSet<SearchProviderResultsReadyCallback>();
 		m_suggestion_callbacks = new HashSet<SearchProviderResultsReadyCallback>();
-		m_lastQueryText       = "";
 	}
 
 	@Override
 	public String getTitle()
 	{
-		return m_lastQueryText;
+		return "search";
 	}
 
 	@Override
 	public void getSearchResults(String queryText, Object queryContext)
 	{
-		m_lastQueryText = queryText;
-
 		if (queryContext == null)
 		{
 			SearchProvidersJniMethods.search(m_nativeCallerPointer, queryText);
@@ -70,10 +66,11 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 													context.TagText(),
 													context.TryInterior(),
 													context.ShouldZoomToBuildingsView(),
-													context.UsesLocationAndRadius(),
+													context.UsesLocation(),
 													context.Latitude(),
 													context.Longitude(),
 													context.Altitude(),
+													context.UsesRadius(),
 													context.Radius());
 	}
 

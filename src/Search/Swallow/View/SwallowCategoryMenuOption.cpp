@@ -19,6 +19,9 @@ namespace ExampleApp
                                                                      Menu::View::IMenuViewModel& menuViewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
+                , m_interiorSearchAllowed(interiorSearchAllowed)
+                , m_hasRadiusOverride(false)
+                , m_radiusOverride(0.f)
                 , m_menuViewModel(menuViewModel)
                 , m_messageBus(messageBus)
                 , m_inInteriorMode(false)
@@ -35,6 +38,9 @@ namespace ExampleApp
                                                                      float radius,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
+                , m_interiorSearchAllowed(interiorSearchAllowed)
+                , m_hasRadiusOverride(true)
+                , m_radiusOverride(radius)
                 , m_menuViewModel(menuViewModel)
                 , m_messageBus(messageBus)
                 , m_inInteriorMode(false)
@@ -64,23 +70,6 @@ namespace ExampleApp
                     /*
                      * Not anymore
                      *
-                     * .h:
-                        bool m_hasRadiusOverride;
-                        bool m_interiorSearchAllowed;
-                        float m_radiusOverride;
-                     *
-                     * constructor 1:
-                     *
-                        , m_interiorSearchAllowed(interiorSearchAllowed)
-                        , m_hasRadiusOverride(false)
-                        , m_radiusOverride(0.f)
-                     *
-                     * constructor 2:
-                     *
-                        , m_interiorSearchAllowed(interiorSearchAllowed)
-                        , m_hasRadiusOverride(true)
-                        , m_radiusOverride(radius)
-
                     bool shouldZoomToBuildingsView = true;
 
                     if (m_hasRadiusOverride)

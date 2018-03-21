@@ -40,7 +40,6 @@ namespace ExampleApp
                 SearchMenu::View::SearchServices* m_pSearchServices;
                 SearchProviders::SearchProvider* m_pSearchProvider;
                 SearchWidgetView* m_pSearchWidgetView;
-                Menu::View::MenuSectionsViewModel* m_pMenuSectionsViewModel;
                 WidgetSearchProvider* m_pWrldSearchProvider;
 
             public:

@@ -40,6 +40,9 @@ namespace ExampleApp
                 
                 void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged);
                 
+                void SetFullyOnScreenOpen();
+                void SetFullyOnScreenClosed();
+                
                 void PerformSearch(const std::string& query, const QueryContext& context);
                 
                 void InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -52,6 +55,10 @@ namespace ExampleApp
                 
                 void InsertOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback);
                 void RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback);
+                
+                void SetOnScreenStateToIntermediateValue(float value);
+                void SetFullyOnScreen();
+                void SetFullyOffScreen();
             };
         }
     }
