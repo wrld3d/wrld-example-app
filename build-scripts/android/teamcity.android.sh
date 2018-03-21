@@ -1,15 +1,12 @@
 #!/bin/sh
 
-version=$1
+versionName=$1
 buildUrl=$2
 githubUrl=$3
 pathToProjectDir=${4}
-pathToReleaseKey=${5:-./release-key.keystore}
-hockeyAppIdentifier=${6:-62a47548d62a577300d5949f3f858683}
-shouldKeepLibs=${7:-1}
-apiVersion=$8
-environment=${9:staging}
-config_password=$10
+hockeyAppIdentifier=${5:-62a47548d62a577300d5949f3f858683}
+environment=${6:staging}
+config_password=$7
 
 if [[ ( $environment != 'production' ) && ( $environment != 'staging' ) ]]; then
   echo "invalid environment '$environment'. Must be one of [staging|production]"
@@ -18,29 +15,7 @@ fi
 
 sh build-scripts/encrypt_config.sh -p android -e $environment -j $config_password
 
-#poke the version in the manifest
-manifest=$pathToProjectDir/AndroidManifest.xml
-cp $pathToProjectDir/AndroidManifest.xml $manifest.bak
-python "./build-scripts/android/poke_manifest_version.py" $manifest 1 $version > $manifest.poked
-
-if [ $? -ne 0 ] ; then
-  cp $manifest.bak $manifest
-  exit 1
-fi
-
-cp $manifest.poked $manifest
-
-# This is no longer needed due to gradle build
-#sh "./build-scripts/android/compile_android.step.sh" $pathToProjectDir $shouldKeepLibs
-
-if [ $? -ne 0 ] ; then
-  git checkout $file_to_poke
-  exit 1
-fi
-
-git checkout $file_to_poke
-
-sh "./build-scripts/android/create_apk_file_gradle.step.sh" $pathToProjectDir $pathToReleaseKey 1 $version $apiVersion
+sh "./build-scripts/android/create_apk_file_gradle.step.sh" $pathToProjectDir  1 $versionName 
 if [ $? -ne 0 ] ; then
   exit 1
 fi
@@ -49,10 +24,6 @@ sh "./build-scripts/android/commit_to_hockeyapp.step.sh" $pathToProjectDir $buil
 if [ $? -ne 0 ] ; then
   exit 1
 fi
-
-cp $manifest.bak $manifest
-rm $manifest.xml.bak
-rm $manifest.poked
 
 echo
 echo "BUILD SUCCEEDED"
