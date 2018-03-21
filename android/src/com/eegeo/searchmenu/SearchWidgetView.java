@@ -138,22 +138,22 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
 
         m_searchWidget.clearMenu();
 
-        MenuGroup menuGroup = new MenuGroup("Show me the closest...");
+        MenuGroup menuGroup = null;
 
         List<String> options = Arrays.asList(optionNames);
         int childIndex = 1;
 
         int[] groupSizes = {5, 2, 1, 2};
         int numberOfGroups = 4;
-        int groupIndex = 0;
-        int maxOptionIndexForGroup = groupSizes[0];
+        int groupIndex = -1;
+        int maxOptionIndexForGroup = 0;
 
         for (int optionIndex = 0; optionIndex < options.size(); optionIndex++) {
             if (optionIndex == maxOptionIndexForGroup && groupIndex < numberOfGroups - 1) {
                 groupIndex++;
                 maxOptionIndexForGroup += groupSizes[groupIndex];
-                m_searchWidget.addMenuGroup(menuGroup);
                 menuGroup = new MenuGroup();
+                m_searchWidget.addMenuGroup(menuGroup);
             }
 
             int sizeWithoutHeader = optionSizes[optionIndex] - 1;
