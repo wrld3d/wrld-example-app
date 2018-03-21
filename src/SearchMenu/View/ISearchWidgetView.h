@@ -34,6 +34,12 @@ namespace ExampleApp
 
                 virtual void InsertOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback) = 0;
                 virtual void RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback) = 0;
+
+                virtual void InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

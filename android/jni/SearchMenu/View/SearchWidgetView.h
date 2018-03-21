@@ -26,6 +26,8 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection3<const std::string&, int, int> m_onItemSelectedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
 
                 void CallVoidVoidFunction(const char* func);
 
@@ -57,9 +59,17 @@ namespace ExampleApp
                 void RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
 
                 void HandleItemSelected(const std::string& menuText, int sectionIndex, int itemIndex);
+                void HandleViewOpenCompleted();
+                void HandleViewCloseCompleted();
 
                 void InsertOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback);
                 void RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback);
+
+                void InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback);
+                void RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback);
+
+                void InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback);
+                void RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback);
             };
         }
     }

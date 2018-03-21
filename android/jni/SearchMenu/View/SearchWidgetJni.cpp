@@ -42,4 +42,23 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_Sele
     ExampleApp::SearchMenu::View::SearchWidgetView* pView = reinterpret_cast<ExampleApp::SearchMenu::View::SearchWidgetView*>(nativeObjectPtr);
         pView->HandleItemSelected(menuText, sectionIndex, itemIndex);
 }
-  
+
+JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_ViewPushesControlsOffscreen(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::SearchMenu::View::SearchWidgetView* pView = reinterpret_cast<ExampleApp::SearchMenu::View::SearchWidgetView*>(nativeObjectPtr);
+    pView->HandleViewOpenCompleted();
+}
+
+JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_ViewAllowsControlsOnscreen(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::SearchMenu::View::SearchWidgetView* pView = reinterpret_cast<ExampleApp::SearchMenu::View::SearchWidgetView*>(nativeObjectPtr);
+    pView->HandleViewCloseCompleted();
+}
