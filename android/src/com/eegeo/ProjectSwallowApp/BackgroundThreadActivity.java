@@ -6,11 +6,15 @@ import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
+import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -87,6 +91,9 @@ public class BackgroundThreadActivity extends MainActivity
         m_threadedRunner = new ThreadedUpdateRunner(false);
         m_updater = new Thread(m_threadedRunner);
         m_updater.start();
+
+        ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
+                RuntimePermissionDispatcher.GPS_PERMISSION_REQUEST_CODE);
 
         m_threadedRunner.blockUntilThreadStartedRunning();
 
