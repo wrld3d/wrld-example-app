@@ -177,9 +177,6 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
 
             childIndex++;
         }
-
-        m_searchWidget.addMenuGroup(menuGroup);
-
     }
 
     private String getFromJson(String jsonString, String tag) {
