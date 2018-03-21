@@ -54,19 +54,15 @@ namespace ExampleApp
                 m_pSearchServices = Eegeo_NEW(SearchMenu::View::SearchServices)(*m_pSearchProvider,
                                                                                 messageBus);
                 
-                m_pMenuSectionsViewModel = Eegeo_NEW(Menu::View::MenuSectionsViewModel)();
-                
                 m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(*m_pSearchWidgetView,
                                                                               *m_pSearchServices,
-                                                                              *m_pMenuSectionsViewModel,
+                                                                              searchMenuViewModel,
                                                                               messageBus);
             }
 
             SearchMenuViewModule::~SearchMenuViewModule()
             {
                 Eegeo_DELETE m_pSearchWidgetController;
-                
-                Eegeo_DELETE m_pMenuSectionsViewModel;
                 
                 Eegeo_DELETE m_pSearchServices;
                 
