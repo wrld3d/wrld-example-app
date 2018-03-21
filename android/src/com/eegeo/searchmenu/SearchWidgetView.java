@@ -52,7 +52,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     private IViewAnimator m_viewAnimator;
     protected WrldSearchWidget m_searchWidget;
 
-    private boolean m_searchResultsAreVisible = false;
+    private boolean m_searchResultsAreVisible = true;
     private boolean m_menuIsOpen = false;
     private boolean m_searchTextboxIsInFocus = false;
     private boolean m_hasSearchResults = false;
