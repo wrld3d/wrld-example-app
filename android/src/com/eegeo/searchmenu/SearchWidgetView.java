@@ -98,14 +98,20 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback, SearchRes
                                   boolean clearPreviousResults,
                                   boolean isTag, String tagText,
                                   boolean tryInterior, boolean shouldZoomToBuildingsView,
-                                  boolean usesLocationAndRadius,
+                                  boolean usesLocation,
                                   double latitude, double longitude, double altitude,
+                                  boolean usesRadius,
                                   float radius)
     {
-        QueryContext context = usesLocationAndRadius ?
+        QueryContext context =
+            usesLocation ?
                 new QueryContext(clearPreviousResults,
                                  isTag, tagText, tryInterior, shouldZoomToBuildingsView,
                                  latitude, longitude, altitude, radius) :
+            usesRadius ?
+                new QueryContext(clearPreviousResults,
+                                 isTag, tagText, tryInterior, shouldZoomToBuildingsView,
+                                 radius) :
                 new QueryContext(clearPreviousResults,
                                  isTag, tagText, tryInterior, shouldZoomToBuildingsView);
 

@@ -10,8 +10,9 @@ public class SearchProvidersJniMethods
                                                 boolean clearPreviousResults,
                                                 boolean isTag, String tagText,
                                                 boolean tryInterior, boolean shouldZoomToBuildingsView,
-                                                boolean usesLocationAndRadius,
+                                                boolean usesLocation,
                                                 double latitude, double longitude, double altitude,
+                                                boolean usesRadius,
                                                 float radius);
     public static native void cancel(long nativeCallerPointer);
 

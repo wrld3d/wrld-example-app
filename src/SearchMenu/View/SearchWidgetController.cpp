@@ -96,7 +96,7 @@ namespace ExampleApp
 
 				std::string visibleText = query.Query();
 				std::string tagText     = "";
-				float       radius      = message.Radius();
+				float radius            = message.Radius();
 
 				if (query.IsTag())
 				{
@@ -147,13 +147,13 @@ namespace ExampleApp
 					{
 						m_view.PerformSearch(menuText,
 											 QueryContext(true, true, tagInfo.Tag(),
-														  true, false));
+														  false, true, tagInfo.RadiusOverride()));
 					}
 					else
 					{
 						m_view.PerformSearch(menuText,
 											 QueryContext(true, true, tagInfo.Tag(),
-														  true, false));
+														  true, true));
 					}
 				}
             }

@@ -70,10 +70,11 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 													context.TagText(),
 													context.TryInterior(),
 													context.ShouldZoomToBuildingsView(),
-													context.UsesLocationAndRadius(),
+													context.UsesLocation(),
 													context.Latitude(),
 													context.Longitude(),
 													context.Altitude(),
+													context.UsesRadius(),
 													context.Radius());
 	}
 

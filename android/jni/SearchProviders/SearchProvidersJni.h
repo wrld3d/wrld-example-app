@@ -20,10 +20,11 @@ extern "C"
             jstring tagText,
             jboolean tryInterior,
             jboolean shouldZoomToBuildingsView,
-            jboolean usesLocationAndRadius,
+            jboolean usesLocation,
             jdouble latitude,
             jdouble longitude,
             jdouble altitude,
+            jboolean usesRadius,
             jfloat radius);
 
     JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_cancel(

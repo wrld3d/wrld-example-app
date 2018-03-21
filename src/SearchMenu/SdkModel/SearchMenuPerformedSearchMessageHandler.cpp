@@ -50,16 +50,34 @@ namespace ExampleApp
 					m_searchQueryPerformer.RemoveSearchQueryResults();
 				}
 
-				if (context.UsesLocationAndRadius())
+				if (context.UsesRadius())
 				{
-					m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
-															  context.ShouldZoomToBuildingsView(),
-															  context.Location(), context.Radius());
+					if (context.UsesLocation())
+					{
+						m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
+																  context.ShouldZoomToBuildingsView(),
+																  context.Location(), context.Radius());
+					}
+					else
+					{
+						m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
+																  context.ShouldZoomToBuildingsView(),
+																  context.Radius());
+					}
 				}
 				else
 				{
-					m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
-															  context.ShouldZoomToBuildingsView());
+					if (context.UsesLocation())
+					{
+						m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
+																  context.ShouldZoomToBuildingsView(),
+																  context.Location());
+					}
+					else
+					{
+						m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
+																  context.ShouldZoomToBuildingsView());
+					}
 				}
             }
 
