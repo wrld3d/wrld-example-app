@@ -33,11 +33,16 @@ namespace ExampleApp
             , m_onItemRemovedCallback(this, &SearchWidgetController::OnItemRemoved)
             , m_onScreenStateChanged(this, &SearchWidgetController::OnScreenControlStateChanged)
             , m_onOpenableStateChanged(this, &SearchWidgetController::OnOpenableStateChanged)
+            , m_onViewOpenedCallback(this, &SearchWidgetController::OnViewOpened)
+            , m_onViewClosedCallback(this, &SearchWidgetController::OnViewClosed)
 			, m_tagCollection(m_messageBus)
             {
                 m_view.InsertSearchClearedCallback(m_onSearchResultsClearedCallback);
 				m_view.InsertResultSelectedCallback(m_onSearchResultSelectedCallback);
                 m_view.InsertOnItemSelected(m_onItemSelectedCallback);
+                m_view.InsertOnViewClosed(m_onViewClosedCallback);
+                m_view.InsertOnViewOpened(m_onViewOpenedCallback);
+
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
 
@@ -58,6 +63,11 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_onAppModeChanged);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
 
+                m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChanged);
+                m_viewModel.RemoveOpenStateChangedCallback(m_onOpenableStateChanged);
+
+                m_view.RemoveOnViewOpened(m_onViewOpenedCallback);
+                m_view.RemoveOnViewClosed(m_onViewClosedCallback);
                 m_view.RemoveResultSelectedCallback(m_onSearchResultSelectedCallback);
                 m_view.RemoveSearchClearedCallback(m_onSearchResultsClearedCallback);
                 m_view.RemoveOnItemSelected(m_onItemSelectedCallback);
@@ -215,6 +225,34 @@ namespace ExampleApp
                 else
                 {
                     m_view.SetOnScreenStateToIntermediateValue(state);
+                }
+            }
+
+            void SearchWidgetController::OnViewOpened()
+            {
+
+                if(!m_viewModel.IsFullyOpen())
+                {
+                    m_viewModel.Open();
+                }
+
+                if(m_viewModel.HasReactorControl())
+                {
+                    m_viewModel.ReleaseReactorControl();
+                }
+            }
+
+            void SearchWidgetController::OnViewClosed()
+            {
+
+                if(!m_viewModel.IsFullyClosed())
+                {
+                    m_viewModel.Close();
+                }
+
+                if(m_viewModel.HasReactorControl())
+                {
+                    m_viewModel.ReleaseReactorControl();
                 }
             }
         }

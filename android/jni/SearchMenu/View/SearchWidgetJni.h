@@ -24,4 +24,12 @@ extern "C"
             jint sectionIndex,
             jint itemIndex
         );
+
+    JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_ViewPushesControlsOffscreen(
+            JNIEnv* jenv, jobject obj,
+            jlong nativeObjectPtr);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_ViewAllowsControlsOnscreen(
+            JNIEnv* jenv, jobject obj,
+            jlong nativeObjectPtr);
 }

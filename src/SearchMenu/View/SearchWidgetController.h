@@ -29,6 +29,12 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 				SearchServices& m_searchServices;
 
+				typedef std::map<std::string, std::string> TTagMap;
+				TTagMap m_knownTags;
+				TTagMap m_visibleTextOfTag;
+
+                Eegeo::Helpers::TCallback0<SearchWidgetController> m_onViewOpenedCallback;
+                Eegeo::Helpers::TCallback0<SearchWidgetController> m_onViewClosedCallback;
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onSearchResultsClearedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, int> m_onSearchResultSelectedCallback;
 				Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::SearchQueryRefreshedMessage&>
@@ -47,14 +53,13 @@ namespace ExampleApp
 				TagCollection m_tagCollection;
 
             public:
-                //
                 SearchWidgetController(ISearchWidgetView& view,
                                         SearchServices& searchServices,
                                        Menu::View::IMenuViewModel& viewModel,
-                                     //  Menu::View::IMenuSectionsViewModel& menuSectionsViewModel,
                                        ExampleAppMessaging::TMessageBus& messageBus);
                 ~SearchWidgetController();
-
+                void OnViewOpened();
+                void OnViewClosed();
                 void OnSearchResultsCleared();
                 void OnSearchResultSelected(int& index);
 				void OnSearchQueryRefreshedMessage(const Search::SearchQueryRefreshedMessage& message);

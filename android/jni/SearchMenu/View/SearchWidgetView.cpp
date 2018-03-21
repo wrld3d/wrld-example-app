@@ -205,6 +205,20 @@ namespace ExampleApp
                 CallVoidVoidFunction("animateOffScreen");
             }
 
+            void SearchWidgetView::HandleViewOpenCompleted()
+            {
+                ASSERT_UI_THREAD
+
+                m_onViewOpenedCallbacks.ExecuteCallbacks();
+            }
+
+            void SearchWidgetView::HandleViewCloseCompleted()
+            {
+                ASSERT_UI_THREAD
+
+                m_onViewClosedCallbacks.ExecuteCallbacks();
+            }
+
 
             void SearchWidgetView::OnSearchResultsCleared()
             {
@@ -235,6 +249,35 @@ namespace ExampleApp
             {
                 m_resultSelectedCallbacks.RemoveCallback(callback);
             }
+
+            void SearchWidgetView::InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_onViewOpenedCallbacks.AddCallback(callback);
+            }
+
+            void SearchWidgetView::RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_onViewOpenedCallbacks.RemoveCallback(callback);
+            }
+
+            void SearchWidgetView::InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_onViewClosedCallbacks.AddCallback(callback);
+            }
+
+            void SearchWidgetView::RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_onViewClosedCallbacks.RemoveCallback(callback);
+            }
+
         }
     }
 }
