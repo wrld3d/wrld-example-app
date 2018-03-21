@@ -147,13 +147,14 @@ namespace ExampleApp
 					{
 						m_view.PerformSearch(menuText,
 											 QueryContext(true, true, tagInfo.Tag(),
-														  false, true, tagInfo.RadiusOverride()));
+														  tagInfo.ShouldTryInterior(), true,
+														  tagInfo.RadiusOverride()));
 					}
 					else
 					{
 						m_view.PerformSearch(menuText,
 											 QueryContext(true, true, tagInfo.Tag(),
-														  true, true));
+														  tagInfo.ShouldTryInterior(), true));
 					}
 				}
             }

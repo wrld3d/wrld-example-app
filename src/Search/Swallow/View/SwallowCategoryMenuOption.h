@@ -47,6 +47,7 @@ namespace ExampleApp
                     ~SwallowCategoryMenuOption();
 
                     const std::string& Category() const { return m_category; }
+                    bool InteriorSearchAllowed()  const { return m_interiorSearchAllowed; }
                     bool HasRadiusOverride()      const { return m_hasRadiusOverride; }
                     float RadiusOverride()        const { return m_radiusOverride; }
 

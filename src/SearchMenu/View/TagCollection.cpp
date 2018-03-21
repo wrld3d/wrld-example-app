@@ -29,21 +29,26 @@ namespace ExampleApp
 			{
 				const TagSearch::View::TagSearchModel& tagSearchModel = message.Model();
 
-				RememberTag(tagSearchModel.Name(), tagSearchModel.SearchTag(), false, 0);
+				RememberTag(tagSearchModel.Name(), tagSearchModel.SearchTag(),
+							tagSearchModel.Interior(),
+							false, 0);
 			}
 
 			void TagCollection::OnTagSearchSwallowLoaded(const TagSearch::TagSearchSwallowLoadedMessage& message)
 			{
-				RememberTag(message.Key(), message.Tag(), message.HasRadiusOverride(), message.RadiusOverride());
+				RememberTag(message.Key(), message.Tag(),
+							message.ShouldTryInterior(),
+							message.HasRadiusOverride(), message.RadiusOverride());
 			}
 
 			void TagCollection::RememberTag(const std::string& text, const std::string& tag,
-													 bool hasRadiusOverride, float radiusOverride)
+											bool shouldTryInterior,
+											bool hasRadiusOverride, float radiusOverride)
 			{
 				Eegeo_ASSERT(m_tagsByText.find(text) == m_tagsByText.end());
 				Eegeo_ASSERT(m_tagsByTag .find(tag)  == m_tagsByTag .end());
 
-				m_tagStorage.push_back(TagInfo(tag, text, hasRadiusOverride, radiusOverride));
+				m_tagStorage.push_back(TagInfo(tag, text, shouldTryInterior, hasRadiusOverride, radiusOverride));
 
 				int last = m_tagStorage.size() - 1;
 

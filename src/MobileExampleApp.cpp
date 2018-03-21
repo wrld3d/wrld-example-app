@@ -1369,6 +1369,7 @@ namespace ExampleApp
 
         m_messageBus.Publish(TagSearch::TagSearchSwallowLoadedMessage(menuSection.Name(),
                                                                       swallowOption->Category(),
+                                                                      swallowOption->InteriorSearchAllowed(),
                                                                       swallowOption->HasRadiusOverride(),
                                                                       swallowOption->RadiusOverride()));
     }
