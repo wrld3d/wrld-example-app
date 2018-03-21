@@ -96,7 +96,7 @@ namespace ExampleApp
 
 				std::string visibleText = query.Query();
 				std::string tagText     = "";
-				float radius            = message.Radius();
+				float       radius      = message.Radius();
 
 				if (query.IsTag())
 				{
