@@ -1,7 +1,5 @@
 // Copyright WRLD Ltd (2018-), All Rights Reserved
 
-#pragma once
-
 #include "TagCollection.h"
 
 namespace ExampleApp
