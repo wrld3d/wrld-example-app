@@ -185,7 +185,7 @@ namespace ExampleApp
                     
                     if (previousQuery.IsTag())
                     {
-                        m_searchQueryPerformer.PerformSearchQuery(previousQuery.Query(), previousQuery.IsTag(), previousQuery.ShouldTryInteriorSearch(), false);
+                        m_searchQueryPerformer.AskForQueryRefresh(previousQuery, false);
                         m_secondsSincePreviousRefresh = 0.f;
                     }
                 }
