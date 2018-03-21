@@ -17,6 +17,8 @@ set(currsources
   ../src/SearchMenu/View/SearchServices.h
   ../src/SearchMenu/View/SearchWidgetController.cpp
   ../src/SearchMenu/View/SearchWidgetController.h
+  ../src/SearchMenu/View/TagCollection.cpp
+  ../src/SearchMenu/View/TagCollection.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\SearchMenu\\View FILES ${currsources})
