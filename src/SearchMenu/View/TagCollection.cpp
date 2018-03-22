@@ -48,7 +48,7 @@ namespace ExampleApp
 
 				m_tagStorage.push_back(TagInfo(tag, text, shouldTryInterior, hasRadiusOverride, radiusOverride));
 
-				int last = m_tagStorage.size() - 1;
+				int last = (int)m_tagStorage.size() - 1;
 
 				m_tagsByText[text] = last;
 				m_tagsByTag [tag]  = last;

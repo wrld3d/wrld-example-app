@@ -5,6 +5,7 @@
 #include "ISearchWidgetView.h"
 #include "SearchMenuView.h"
 #include "WidgetSearchResultModel.h"
+#include "IMenuView.h"
 
 #import <WrldSearchWidget/WrldSearchWidget.h>
 
@@ -20,6 +21,7 @@ namespace ExampleApp
                 SearchMenuView* m_pView;
                 WRLDSearchWidgetViewController* m_pSearchWidgetViewController;
                 WRLDSearchModel* m_pSearchModel;
+                WRLDSearchMenuModel* m_pMenuModel;
                 WRLDSearchProviderHandle* m_pSearchProviderHandle;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
                 
@@ -67,6 +69,20 @@ namespace ExampleApp
                 void SetOnScreenStateToIntermediateValue(float value);
                 void SetFullyOnScreen();
                 void SetFullyOffScreen();
+                
+                void CloseMenu();
+            private:
+                void AddMenuSectionToGroup(WRLDMenuGroup* group,
+                                           const Menu::View::IMenuSectionViewModel& section,
+                                           int sectionIndex);
+                
+                WRLDMenuOption* AddMenuOption(WRLDMenuGroup* group,
+                                              NSString* nsName,
+                                              int sectionIndex);
+                
+                void AddMenuChildren(WRLDMenuOption* option,
+                                     const Menu::View::IMenuSectionViewModel& section,
+                                     int sectionIndex);
             };
         }
     }
