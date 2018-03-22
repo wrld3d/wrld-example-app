@@ -147,14 +147,9 @@ namespace ExampleApp
                 RefreshPresentation(true);
             }
 
-            void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex){
+            void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex)
+            {
                 Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(sectionIndex);
-
-                if(!section.IsExpandable() || section.Size()!=1)
-				{
-					const int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
-					section.GetItemAtIndex(index).MenuOption().Select();
-				}
 
 				if (m_tagCollection.HasTag(menuText))
 				{
@@ -174,6 +169,11 @@ namespace ExampleApp
 														  tagInfo.ShouldTryInterior(), true));
 					}
 				}
+                else if(!section.IsExpandable() || section.GetTotalItemCount()>0)
+                {
+                    section.GetItemAtIndex(itemIndex).MenuOption().Select();
+                }
+
             }
 
             void SearchWidgetController::RefreshPresentation(bool forceRefresh)
@@ -200,13 +200,9 @@ namespace ExampleApp
             {
                 if(m_viewModel.IsAddedToScreen())
                 {
-                    if (m_viewModel.IsFullyClosed())
+                    if (m_viewModel.IsFullyClosed() || m_viewModel.IsFullyOpen())
                     {
-                        m_view.SetFullyOnScreenClosed();
-                    }
-                    else if (m_viewModel.IsFullyOpen())
-                    {
-                        m_view.SetFullyOnScreenOpen();
+                        m_view.SetFullyOnScreen();
                     }
                     else
                     {
@@ -223,7 +219,7 @@ namespace ExampleApp
             {
                 if (m_viewModel.IsFullyOnScreen())
                 {
-                    m_view.SetFullyOnScreenClosed();
+                    m_view.SetFullyOnScreen();
                 }
                 else if (m_viewModel.IsFullyOffScreen())
                 {

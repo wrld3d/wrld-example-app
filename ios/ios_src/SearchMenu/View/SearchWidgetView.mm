@@ -3,6 +3,8 @@
 #include "SearchWidgetView.h"
 #include "WidgetSearchResultTableViewCell.h"
 
+#include "SwallowSectionOption.h"
+#include "SwallowSectionChild.h"
 namespace ExampleApp
 {
     namespace SearchMenu
@@ -15,12 +17,11 @@ namespace ExampleApp
             m_pView(view)
             {
                 m_pSearchModel = [[WRLDSearchModel alloc] init];
+                m_pMenuModel = [[WRLDSearchMenuModel alloc] init];
                 m_pSearchProviderHandle = [m_pSearchModel addSearchProvider: searchProvider];
                 m_pSuggestionProviderHandle = [m_pSearchModel addSuggestionProvider: suggestionProvider];
                 
-                WRLDSearchMenuModel* menuModel = [[WRLDSearchMenuModel alloc] init];
-                
-                m_pSearchWidgetViewController = [[WRLDSearchWidgetViewController alloc] initWithSearchModel:m_pSearchModel menuModel:menuModel];
+                m_pSearchWidgetViewController = [[WRLDSearchWidgetViewController alloc] initWithSearchModel:m_pSearchModel menuModel: m_pMenuModel];
                 
                 [m_pSearchWidgetViewController displaySearchProvider: m_pSearchProviderHandle];
                 [m_pSearchWidgetViewController displaySuggestionProvider: m_pSuggestionProviderHandle];
@@ -30,8 +31,10 @@ namespace ExampleApp
                     WidgetSearchResultModel* selectedResultModelWithIndex = (WidgetSearchResultModel*) selectedResultModel;
                     if (selectedResultModelWithIndex != nil)
                     {
-                        this->OnSearchResultSelected(selectedResultModelWithIndex.index);
+                        this->OnSearchResultSelected((int)selectedResultModelWithIndex.index);
                     }
+                    
+                    [m_pSearchWidgetViewController resignFocus];
                 };
                 
                 [[m_pSearchWidgetViewController searchSelectionObserver] addResultSelectedEvent:onResultSelection];
@@ -69,6 +72,35 @@ namespace ExampleApp
             
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
             {
+                if (!contentsChanged)
+                {
+                    return;
+                }
+                const size_t numSections = sections.size();
+                [m_pMenuModel removeAllGroups];
+                bool first = true;
+                const int numGroups = 4;
+                int groupSizes[numGroups] = {5, 2, 1, 2};
+                for (int sectionIndex = 0, g = 0; g < numGroups; g++)
+                {
+                    WRLDMenuGroup* group = [[WRLDMenuGroup alloc] init];
+                    [m_pMenuModel addMenuGroup:group];
+                    
+                    if (first)
+                    {
+                        first = false;
+                        AddMenuOption(group, @"Show me the closest...", sectionIndex);
+                    }
+                    while (--groupSizes[g] >= 0)
+                    {
+                        if (sectionIndex >= numSections)
+                        {
+                            return;
+                        }
+                        AddMenuSectionToGroup(group, *sections[sectionIndex], sectionIndex);
+                        sectionIndex++;
+                    }
+                }
             }
             
             void SearchWidgetView::SetFullyOnScreenOpen()
@@ -81,6 +113,20 @@ namespace ExampleApp
             
             void SearchWidgetView::PerformSearch(const std::string& query, const QueryContext& context)
             {
+            }
+            
+            void SearchWidgetView::AddMenuSectionToGroup(WRLDMenuGroup* group,
+                                                         const Menu::View::IMenuSectionViewModel& section,
+                                                         int sectionIndex)
+            {
+                NSString* nsName = [NSString stringWithCString:section.Name().c_str()
+                                                      encoding:[NSString defaultCStringEncoding]];
+                
+                WRLDMenuOption* option = AddMenuOption(group, nsName, sectionIndex);
+                if (section.IsExpandable())
+                {
+                    AddMenuChildren(option, section, sectionIndex);
+                }
             }
             
             void SearchWidgetView::InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback)
@@ -144,9 +190,47 @@ namespace ExampleApp
             
             void SearchWidgetView::SetFullyOnScreen()
             {
+                
+            }
+            
+            WRLDMenuOption* SearchWidgetView::AddMenuOption(WRLDMenuGroup* group,
+                                                            NSString* nsName,
+                                                            int sectionIndex)
+            {
+                WRLDMenuOption* option = [[SwallowSectionOption alloc] initWithText:nsName section:sectionIndex];
+                
+                [group addOption:option];
+                
+                return option;
+            }
+            
+            void SearchWidgetView::AddMenuChildren(WRLDMenuOption* option,
+                                                   const Menu::View::IMenuSectionViewModel& section,
+                                                   int sectionIndex)
+            {
+                for (int childIndex = 0; childIndex < section.GetTotalItemCount(); childIndex++)
+                {
+                    const Menu::View::MenuItemModel& sectionChild = section.GetItemAtIndex(childIndex);
+                    
+                    NSString* nsChildName = [NSString stringWithCString:sectionChild.Name().c_str()
+                                                               encoding:[NSString defaultCStringEncoding]];
+                    NSString* nsChildIcon = [NSString stringWithCString:sectionChild.Icon().c_str()
+                                                               encoding:[NSString defaultCStringEncoding]];
+                    
+                    WRLDMenuChild* child = [[SwallowSectionChild alloc] initWithText:nsChildName
+                                                                                icon:nsChildIcon
+                                                                             section:sectionIndex
+                                                                               child:(childIndex + 1)];
+                    
+                    [option addChild:child];
+                }
             }
             
             void SearchWidgetView::SetFullyOffScreen()
+            {
+            }
+            
+            void SearchWidgetView::CloseMenu()
             {
             }
         }

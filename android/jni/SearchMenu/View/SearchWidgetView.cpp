@@ -53,8 +53,6 @@ namespace ExampleApp
                     numItems += section.GetTotalItemCount() + 1;
                 }
 
-                // m_currentSections = sections;
-
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
@@ -169,19 +167,6 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, jmethod);
             }
 
-            void SearchWidgetView::SetFullyOnScreenOpen()
-            {
-                ASSERT_UI_THREAD
-                CallVoidVoidFunction("animateToOpenOnScreen");
-            }
-
-            void SearchWidgetView::SetFullyOnScreenClosed()
-            {
-                ASSERT_UI_THREAD
-
-                CallVoidVoidFunction("animateToClosedOnScreen");
-            }
-
             void SearchWidgetView::SetOnScreenStateToIntermediateValue(float value)
             {
                 ASSERT_UI_THREAD
@@ -195,7 +180,7 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                CallVoidVoidFunction("animateToClosedOnScreen");
+                CallVoidVoidFunction("animateOnScreen");
             }
 
             void SearchWidgetView::SetFullyOffScreen()
