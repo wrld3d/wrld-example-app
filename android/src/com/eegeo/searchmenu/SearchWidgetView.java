@@ -229,11 +229,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         m_view.setY(inactiveY);
     }
 
-    public void animateToClosedOnScreen() {
-        m_viewAnimator.animateToActive(m_stateChangeAnimationTimeMilliseconds);
-    }
-
-    public void animateToOpenOnScreen() {
+    public void animateOnScreen() {
         m_viewAnimator.animateToActive(m_stateChangeAnimationTimeMilliseconds);
     }
 
@@ -247,10 +243,6 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         m_searchWidget.hideSearchResults();
         m_searchWidget.closeMenu();
         m_viewAnimator.animateToOnScreenState(onScreenState);
-    }
-
-    public void animateToIntermediateOpenState(final float openState) {
-        m_viewAnimator.animateToOnScreenState(openState);
     }
 
     public void closeMenu() {

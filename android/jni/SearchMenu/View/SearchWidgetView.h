@@ -37,10 +37,6 @@ namespace ExampleApp
 
                 void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged);
 
-                void SetFullyOnScreenOpen();
-
-                void SetFullyOnScreenClosed();
-
                 void SetOnScreenStateToIntermediateValue(float value);
 
                 void SetFullyOnScreen();

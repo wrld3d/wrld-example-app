@@ -198,13 +198,9 @@ namespace ExampleApp
             {
                 if(m_viewModel.IsAddedToScreen())
                 {
-                    if (m_viewModel.IsFullyClosed())
+                    if (m_viewModel.IsFullyClosed() || m_viewModel.IsFullyOpen())
                     {
-                        m_view.SetFullyOnScreenClosed();
-                    }
-                    else if (m_viewModel.IsFullyOpen())
-                    {
-                        m_view.SetFullyOnScreenOpen();
+                        m_view.SetFullyOnScreen();
                     }
                     else
                     {
@@ -221,7 +217,7 @@ namespace ExampleApp
             {
                 if (m_viewModel.IsFullyOnScreen())
                 {
-                    m_view.SetFullyOnScreenClosed();
+                    m_view.SetFullyOnScreen();
                 }
                 else if (m_viewModel.IsFullyOffScreen())
                 {
