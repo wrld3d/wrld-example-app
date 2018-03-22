@@ -103,6 +103,7 @@
     if(!m_isAnimating && [self isVisible])
     {
         m_pInterop->HandleViewTapped();
+        m_pInterop->HandleTouchOnView();    // temp test
     }
 }
 
