@@ -35,7 +35,7 @@ namespace ExampleApp
             , m_onItemRemovedCallback(this, &SearchWidgetController::OnItemRemoved)
             , m_onScreenStateChanged(this, &SearchWidgetController::OnScreenControlStateChanged)
             , m_onOpenableStateChanged(this, &SearchWidgetController::OnOpenableStateChanged)
-			, m_onModalBackgroundTappedCallback(this, &SearchWidgetController::OnModalBackgroundTapped)
+			, m_onModalBackgroundTouchCallback(this, &SearchWidgetController::OnModalBackgroundTouch)
             , m_onViewOpenedCallback(this, &SearchWidgetController::OnViewOpened)
             , m_onViewClosedCallback(this, &SearchWidgetController::OnViewClosed)
 			, m_tagCollection(m_messageBus)
@@ -48,7 +48,8 @@ namespace ExampleApp
 
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
-				m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
+
+				m_modalBackgroundView.InsertTouchCallback(m_onModalBackgroundTouchCallback);
 
                 m_messageBus.SubscribeUi(m_onSearchQueryRefreshedHandler);
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
@@ -67,7 +68,8 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_onAppModeChanged);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
 
-				m_modalBackgroundView.RemoveTappedCallback(m_onModalBackgroundTappedCallback);
+				m_modalBackgroundView.RemoveTouchCallback(m_onModalBackgroundTouchCallback);
+
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChanged);
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenableStateChanged);
 
@@ -261,8 +263,10 @@ namespace ExampleApp
                 }
             }
 
-			void SearchWidgetController::OnModalBackgroundTapped()
+			void SearchWidgetController::OnModalBackgroundTouch()
 			{
+				// the modal background goes away after the first touch, so no need to throttle
+
 				m_view.CloseMenu();
 			}
         }

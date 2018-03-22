@@ -3,12 +3,13 @@
 package com.eegeo.modalbackground;
 
 import android.view.View;
+import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
 import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 
-public class ModalBackgroundView implements View.OnClickListener
+public class ModalBackgroundView implements View.OnClickListener, View.OnTouchListener
 {
     private MainActivity m_activity = null;
     private View m_view = null;
@@ -24,7 +25,8 @@ public class ModalBackgroundView implements View.OnClickListener
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.modal_background_layout, uiRoot, false);
 		m_view.setOnClickListener(this);
-      
+		m_view.setOnTouchListener(this);
+
         m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
         {
 			@Override
@@ -67,4 +69,12 @@ public class ModalBackgroundView implements View.OnClickListener
     {
     	ModalBackgroundViewJniMethods.HandleViewTapped(m_nativeCallerPointer);
     }
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event)
+	{
+		ModalBackgroundViewJniMethods.HandleTouchOnView(m_nativeCallerPointer);
+
+		return false;
+	}
 }
