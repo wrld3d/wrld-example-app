@@ -140,14 +140,9 @@ namespace ExampleApp
                 RefreshPresentation(true);
             }
 
-            void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex){
+            void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex)
+            {
                 Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(sectionIndex);
-
-                if(!section.IsExpandable() || section.Size()!=1)
-				{
-					const int index = section.IsExpandable() ? itemIndex - 1 : itemIndex;
-					section.GetItemAtIndex(index).MenuOption().Select();
-				}
 
 				if (m_tagCollection.HasTag(menuText))
 				{
@@ -167,6 +162,11 @@ namespace ExampleApp
 														  tagInfo.ShouldTryInterior(), true));
 					}
 				}
+                else if(!section.IsExpandable() || section.GetTotalItemCount()>0)
+                {
+                    section.GetItemAtIndex(itemIndex).MenuOption().Select();
+                }
+
             }
 
             void SearchWidgetController::RefreshPresentation(bool forceRefresh)

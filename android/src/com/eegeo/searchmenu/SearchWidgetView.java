@@ -163,7 +163,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         MenuGroup menuGroup = null;
 
         List<String> options = Arrays.asList(optionNames);
-        int childIndex = 1;
+        int jsonChildIndex = 0;
 
         int[] groupSizes = {5, 2, 1, 2};
         int numberOfGroups = 4;
@@ -171,6 +171,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         int maxOptionIndexForGroup = 0;
 
         for (int optionIndex = 0; optionIndex < options.size(); optionIndex++) {
+
             if (optionIndex == maxOptionIndexForGroup && groupIndex < numberOfGroups - 1) {
                 groupIndex++;
                 maxOptionIndexForGroup += groupSizes[groupIndex];
@@ -178,7 +179,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
                 m_searchWidget.addMenuGroup(menuGroup);
             }
 
-            int sizeWithoutHeader = optionSizes[optionIndex] - 1;
+            int optionSizeWithoutHeader = optionSizes[optionIndex]-1;
 
             String optionName = getFromJson(optionNames[optionIndex], "name");
             MenuIndexPath optionIndexPath = new MenuIndexPath(optionIndex, 0);
@@ -186,18 +187,19 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
 
             menuGroup.addOption(menuOption);
 
-            for (int i = 1; i < sizeWithoutHeader; ++i) {
-                MenuIndexPath indexPath = new MenuIndexPath(optionIndex, i);
-                String childJson = childJsons[childIndex];
+            jsonChildIndex++;
+
+            for (int childIndex = 0; childIndex < optionSizeWithoutHeader; ++childIndex) {
+                MenuIndexPath indexPath = new MenuIndexPath(optionIndex, childIndex);
+                String childJson = childJsons[jsonChildIndex];
                 String name = getFromJson(childJson, "name");
                 String iconName = getFromJson(childJson, "icon");
                 int iconNumber = TagResources.getIconForResourceName(m_activity, iconName);
                 MenuChild child = new MenuChild(name, iconNumber, indexPath, this);
                 menuOption.addChild(child);
-                childIndex++;
+                jsonChildIndex++;
             }
 
-            childIndex++;
         }
     }
 

@@ -53,8 +53,6 @@ namespace ExampleApp
                     numItems += section.GetTotalItemCount() + 1;
                 }
 
-                // m_currentSections = sections;
-
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
