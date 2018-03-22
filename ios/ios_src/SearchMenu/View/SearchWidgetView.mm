@@ -33,6 +33,8 @@ namespace ExampleApp
                     {
                         this->OnSearchResultSelected((int)selectedResultModelWithIndex.index);
                     }
+                    
+                    [m_pSearchWidgetViewController resignFocus];
                 };
                 
                 [[m_pSearchWidgetViewController searchSelectionObserver] addResultSelectedEvent:onResultSelection];
