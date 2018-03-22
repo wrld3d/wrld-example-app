@@ -8,7 +8,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDMenuGroup : NSObject
 
-@property (nonatomic, strong) NSString* _Nullable title;
+@property (nonatomic, nullable, copy) NSString* title;
 
 - (instancetype)initWithTitle:(nullable NSString *)title;
 
@@ -16,6 +16,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)addOption:(NSString *)text
           context:(nullable NSObject *)context;
+
+- (void)removeOption:(WRLDMenuOption *)option;
+
+- (void)insertOption:(WRLDMenuOption *)option
+             atIndex:(NSUInteger)index;
+
+- (void)removeOptionAtIndex:(NSUInteger)index;
+
+- (void)removeAllOptions;
 
 @end
 
