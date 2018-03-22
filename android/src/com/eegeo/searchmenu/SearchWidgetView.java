@@ -251,6 +251,11 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         m_viewAnimator.animateToOnScreenState(openState);
     }
 
+    public void closeMenu() {
+        m_searchWidget.hideSearchResults();
+        m_searchWidget.closeMenu();
+    }
+
     private void pushControlsOfScreenIfNeeded(){
 
         boolean hasVisibleSearchResults = m_searchResultsAreVisible && (m_hasSearchResults || m_searchInProgress);

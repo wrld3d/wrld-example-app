@@ -47,6 +47,8 @@ namespace ExampleApp
 
                 void SetFullyOffScreen();
 
+                void CloseMenu();
+
                 void PerformSearch(const std::string& query, const QueryContext& context);
 
                 void OnSearchResultsCleared();
