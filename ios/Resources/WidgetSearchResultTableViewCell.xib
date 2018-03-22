@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WidgetSearchResultTableViewCell"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="WidgetSearchResultTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bp4-DC-QCd">
+                    <rect key="frame" x="50" y="14" width="325" height="18"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="18" id="Wgw-cY-TdA"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCm-Cd-22r">
+                    <rect key="frame" x="50" y="32" width="325" height="14"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="14" id="3kK-WB-wOR"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NTX-HF-Zq7" userLabel="Icon Space">
+                    <rect key="frame" x="0.0" y="0.0" width="50" height="64"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BinButton.png" translatesAutoresizingMaskIntoConstraints="NO" id="6e4-p5-u9f">
+                            <rect key="frame" x="9" y="14" width="32" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="32" id="1Ww-ec-uoi"/>
+                                <constraint firstAttribute="height" constant="32" id="Jkm-Od-1Ct"/>
+                                <constraint firstAttribute="width" secondItem="6e4-p5-u9f" secondAttribute="height" multiplier="1:1" id="rxY-sK-ysO"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="I06-8B-CU8"/>
+                        <constraint firstItem="6e4-p5-u9f" firstAttribute="centerX" secondItem="NTX-HF-Zq7" secondAttribute="centerX" id="NhG-Zh-qgw"/>
+                        <constraint firstItem="6e4-p5-u9f" firstAttribute="centerY" secondItem="NTX-HF-Zq7" secondAttribute="centerY" constant="-2" id="aHS-ai-1ym"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="NTX-HF-Zq7" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="BfU-Fa-Rbp"/>
+                <constraint firstItem="bp4-DC-QCd" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="centerY" id="HNc-d3-gA5"/>
+                <constraint firstItem="DCm-Cd-22r" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="centerY" id="KT1-I0-MnQ"/>
+                <constraint firstItem="NTX-HF-Zq7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Lso-Pf-hRU"/>
+                <constraint firstItem="bp4-DC-QCd" firstAttribute="leading" secondItem="NTX-HF-Zq7" secondAttribute="trailing" id="Zg4-2o-vLC"/>
+                <constraint firstItem="NTX-HF-Zq7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dHp-WU-x1b"/>
+                <constraint firstItem="DCm-Cd-22r" firstAttribute="leading" secondItem="NTX-HF-Zq7" secondAttribute="trailing" id="eVf-zX-jFh"/>
+                <constraint firstItem="DCm-Cd-22r" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="tEf-Vr-Yhs"/>
+                <constraint firstItem="bp4-DC-QCd" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="tGY-nf-wtO"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="descriptionLabel" destination="DCm-Cd-22r" id="fyy-7V-7HN"/>
+                <outlet property="iconImageView" destination="6e4-p5-u9f" id="gSu-6X-2pA"/>
+                <outlet property="titleLabel" destination="bp4-DC-QCd" id="Tkb-qa-tUK"/>
+            </connections>
+            <point key="canvasLocation" x="35.5" y="58"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="BinButton.png" width="64" height="64"/>
+    </resources>
+</document>

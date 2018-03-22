@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchWidgetView.h"
+#include "WidgetSearchResultTableViewCell.h"
 
 namespace ExampleApp
 {
@@ -40,6 +41,11 @@ namespace ExampleApp
                 CGRectMake(10, 10, CGRectGetWidth(m_pView.bounds) - 20, CGRectGetHeight(m_pView.bounds) - 20); // iphone
                 
                 m_pSearchWidgetViewController.view.frame = searchFrame;
+                
+                NSBundle* resourceBundle = [NSBundle bundleForClass:[WidgetSearchResultTableViewCell class]];
+                UINib* nib = [UINib nibWithNibName: @"WidgetSearchResultTableViewCell" bundle:resourceBundle];
+                
+                [m_pSearchWidgetViewController registerNib:nib forUseWithResultsTableCellIdentifier:@"WidgetSearchResultTableViewCell"];
             }
             
             SearchWidgetView::~SearchWidgetView()
@@ -110,6 +116,26 @@ namespace ExampleApp
             void SearchWidgetView::RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback)
             {
                 m_onItemSelectedCallbacks.RemoveCallback(callback);
+            }
+            
+            void SearchWidgetView::InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_onViewOpenedCallbacks.AddCallback(callback);
+            }
+            
+            void SearchWidgetView::RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_onViewOpenedCallbacks.RemoveCallback(callback);
+            }
+            
+            void SearchWidgetView::InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_onViewClosedCallbacks.AddCallback(callback);
+            }
+            
+            void SearchWidgetView::RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_onViewClosedCallbacks.RemoveCallback(callback);
             }
             
             void SearchWidgetView::SetOnScreenStateToIntermediateValue(float value)

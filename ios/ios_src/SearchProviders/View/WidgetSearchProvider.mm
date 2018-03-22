@@ -15,7 +15,7 @@
         m_pSearchProvider = searchProvider;
         
         moreResultsName = @"Bloomberg";
-        cellIdentifier = nil;
+        cellIdentifier = @"WidgetSearchResultTableViewCell";
         cellHeight = 64;
     }
     
