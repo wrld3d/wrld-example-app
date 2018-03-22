@@ -17,9 +17,11 @@ namespace ExampleApp
         {
             SearchWidgetController::SearchWidgetController(ISearchWidgetView& view,
                                                            SearchServices& searchServices,
+														   Modality::View::IModalBackgroundView& modalBackgroundView,
                                                            Menu::View::IMenuViewModel& viewModel,
                                                            ExampleAppMessaging::TMessageBus& messageBus)
             : m_view(view)
+			, m_modalBackgroundView(modalBackgroundView)
             , m_viewModel(viewModel)
             , m_messageBus(messageBus)
             , m_searchServices(searchServices)
@@ -33,6 +35,7 @@ namespace ExampleApp
             , m_onItemRemovedCallback(this, &SearchWidgetController::OnItemRemoved)
             , m_onScreenStateChanged(this, &SearchWidgetController::OnScreenControlStateChanged)
             , m_onOpenableStateChanged(this, &SearchWidgetController::OnOpenableStateChanged)
+			, m_onModalBackgroundTappedCallback(this, &SearchWidgetController::OnModalBackgroundTapped)
             , m_onViewOpenedCallback(this, &SearchWidgetController::OnViewOpened)
             , m_onViewClosedCallback(this, &SearchWidgetController::OnViewClosed)
 			, m_tagCollection(m_messageBus)
@@ -45,6 +48,7 @@ namespace ExampleApp
 
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
+				m_modalBackgroundView.InsertTappedCallback(m_onModalBackgroundTappedCallback);
 
                 m_messageBus.SubscribeUi(m_onSearchQueryRefreshedHandler);
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
@@ -63,6 +67,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_onAppModeChanged);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
 
+				m_modalBackgroundView.RemoveTappedCallback(m_onModalBackgroundTappedCallback);
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChanged);
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenableStateChanged);
 
@@ -255,6 +260,11 @@ namespace ExampleApp
                     m_viewModel.ReleaseReactorControl();
                 }
             }
+
+			void SearchWidgetController::OnModalBackgroundTapped()
+			{
+				m_view.CloseMenu();
+			}
         }
     }
 }

@@ -6,11 +6,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WRLDMenuChild : NSObject
 
-@property (nonatomic, copy) NSString* text;
+@property (nonatomic, copy, readonly) NSString* text;
 
-@property (nonatomic, copy) NSString* _Nullable icon;
+@property (nonatomic, copy, readonly) NSString* _Nullable icon;
 
-@property (nonatomic, copy) NSObject* _Nullable context;
+@property (nonatomic, copy, readonly) NSObject* _Nullable context;
 
 - (instancetype)initWithText:(NSString *)text
                         icon:(nullable NSString *)icon

@@ -21,6 +21,7 @@ namespace ExampleApp
 
                 virtual void SetFullyOnScreenOpen() = 0;
                 virtual void SetFullyOnScreenClosed() = 0;
+                virtual void CloseMenu() = 0;
 
                 virtual void PerformSearch(const std::string& query, const QueryContext& context) = 0;
 

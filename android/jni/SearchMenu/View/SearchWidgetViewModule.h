@@ -9,6 +9,8 @@
 #include "MyTestSearchProvider.h"
 #include "SearchServices.h"
 #include "IMenuSectionsViewModel.h"
+#include "Modality.h"
+
 namespace ExampleApp
 {
     namespace SearchMenu
@@ -27,6 +29,7 @@ namespace ExampleApp
 			public:
 				SearchWidgetViewModule(
 					AndroidNativeState& nativeState,
+					Modality::View::IModalBackgroundView& modalBackgroundView,
 					Menu::View::IMenuViewModel& viewModel,
 					ExampleAppMessaging::TMessageBus& messageBus
 				);

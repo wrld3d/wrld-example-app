@@ -52,7 +52,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     private IViewAnimator m_viewAnimator;
     protected WrldSearchWidget m_searchWidget;
 
-    private boolean m_searchResultsAreVisible = false;
+    private boolean m_searchResultsAreVisible = true;
     private boolean m_menuIsOpen = false;
     private boolean m_searchTextboxIsInFocus = false;
     private boolean m_hasSearchResults = false;
@@ -251,6 +251,11 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
 
     public void animateToIntermediateOpenState(final float openState) {
         m_viewAnimator.animateToOnScreenState(openState);
+    }
+
+    public void closeMenu() {
+        m_searchWidget.hideSearchResults();
+        m_searchWidget.closeMenu();
     }
 
     private void pushControlsOfScreenIfNeeded(){

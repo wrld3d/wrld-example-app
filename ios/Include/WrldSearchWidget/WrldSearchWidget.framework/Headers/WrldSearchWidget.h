@@ -30,3 +30,6 @@ FOUNDATION_EXPORT const unsigned char WrldSearchWidgetVersionString[];
 #import "WRLDMenuOption.h"
 #import "WRLDMenuChild.h"
 #import "WRLDMenuObserver.h"
+#import "WRLDAsyncImageLoadResponse.h"
+#import "WRLDUrlImageLoader.h"
+#import "WRLDLabelTextHighlighter.h"

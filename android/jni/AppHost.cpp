@@ -504,6 +504,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pSearchWidgetViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetViewModule)(
                                         m_nativeState,
+                                        m_pModalBackgroundViewModule->GetModalBackgroundView(),
                                         app.SearchMenuModule().GetSearchMenuViewModel(),
                                         m_messageBus
                                     );

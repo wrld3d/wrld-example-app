@@ -12,6 +12,7 @@
 #include "IUpdateableViewController.h"
 #include "IOpenableControlViewModel.h"
 #include "IScreenControlViewModel.h"
+#include "IModalBackgroundView.h"
 #include "TagCollection.h"
 
 #include <map>
@@ -25,6 +26,7 @@ namespace ExampleApp
             class SearchWidgetController:  public ViewControllerUpdater::View::IUpdateableViewController {
             private:
                 ISearchWidgetView& m_view;
+				Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 Menu::View::IMenuViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 				SearchServices& m_searchServices;
@@ -41,6 +43,7 @@ namespace ExampleApp
 																		m_onSearchQueryRefreshedHandler;
                 Eegeo::Helpers::TCallback2<SearchWidgetController, ScreenControl::View::IScreenControlViewModel&, float> m_onScreenStateChanged;
                 Eegeo::Helpers::TCallback2<SearchWidgetController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenableStateChanged;
+				Eegeo::Helpers::TCallback0<SearchWidgetController> m_onModalBackgroundTappedCallback;
 
                 Eegeo::Helpers::TCallback1<SearchWidgetController, const AppModes::AppModeChangedMessage&> m_onAppModeChanged;
                 Eegeo::Helpers::TCallback3<SearchWidgetController, const std::string&, int, int> m_onItemSelectedCallback;
@@ -54,7 +57,8 @@ namespace ExampleApp
 
             public:
                 SearchWidgetController(ISearchWidgetView& view,
-                                        SearchServices& searchServices,
+                                       SearchServices& searchServices,
+									   Modality::View::IModalBackgroundView& modalBackgroundView,
                                        Menu::View::IMenuViewModel& viewModel,
                                        ExampleAppMessaging::TMessageBus& messageBus);
                 ~SearchWidgetController();
@@ -71,6 +75,7 @@ namespace ExampleApp
             protected:
                 void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state);
                 void OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
+				void OnModalBackgroundTapped();
                 virtual void OnItemAdded(Menu::View::MenuItemModel& item);
                 virtual void OnItemRemoved(Menu::View::MenuItemModel& item);
             };

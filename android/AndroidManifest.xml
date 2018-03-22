@@ -23,8 +23,7 @@
         android:required="false"/>
 
     <application android:name="android.support.multidex.MultiDexApplication"
-                 android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.Light.NoTitleBar" android:allowBackup="true">
-        <!-- temporary - remember to change allowBackup back to "false" ======================================================================= -->
+                 android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:allowBackup="false">
        
         <activity android:name="com.eegeo.ProjectSwallowApp.BackgroundThreadActivity"
                   android:label="BWAY"

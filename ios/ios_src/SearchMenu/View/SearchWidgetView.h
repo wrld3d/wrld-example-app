@@ -5,6 +5,7 @@
 #include "ISearchWidgetView.h"
 #include "SearchMenuView.h"
 #include "WidgetSearchResultModel.h"
+#include "IMenuView.h"
 
 #import <WrldSearchWidget/WrldSearchWidget.h>
 
@@ -20,12 +21,15 @@ namespace ExampleApp
                 SearchMenuView* m_pView;
                 WRLDSearchWidgetViewController* m_pSearchWidgetViewController;
                 WRLDSearchModel* m_pSearchModel;
+                WRLDSearchMenuModel* m_pMenuModel;
                 WRLDSearchProviderHandle* m_pSearchProviderHandle;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
                 
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection3<const std::string&, int, int> m_onItemSelectedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
                 
             public:
                 SearchWidgetView(SearchMenuView* view,
@@ -56,9 +60,29 @@ namespace ExampleApp
                 void InsertOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback);
                 void RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback);
                 
+                void InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback);
+                void RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback);
+                
+                void InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback);
+                void RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback);
+                
                 void SetOnScreenStateToIntermediateValue(float value);
                 void SetFullyOnScreen();
                 void SetFullyOffScreen();
+                
+                void CloseMenu();
+            private:
+                void AddMenuSectionToGroup(WRLDMenuGroup* group,
+                                           const Menu::View::IMenuSectionViewModel& section,
+                                           int sectionIndex);
+                
+                WRLDMenuOption* AddMenuOption(WRLDMenuGroup* group,
+                                              NSString* nsName,
+                                              int sectionIndex);
+                
+                void AddMenuChildren(WRLDMenuOption* option,
+                                     const Menu::View::IMenuSectionViewModel& section,
+                                     int sectionIndex);
             };
         }
     }

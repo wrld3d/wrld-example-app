@@ -56,6 +56,7 @@ namespace ExampleApp
                 
                 m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(*m_pSearchWidgetView,
                                                                               *m_pSearchServices,
+                                                                              modalBackgroundView,
                                                                               searchMenuViewModel,
                                                                               messageBus);
             }

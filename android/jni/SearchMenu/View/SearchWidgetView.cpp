@@ -203,6 +203,13 @@ namespace ExampleApp
                 CallVoidVoidFunction("animateOffScreen");
             }
 
+            void SearchWidgetView::CloseMenu()
+            {
+                ASSERT_UI_THREAD
+
+                CallVoidVoidFunction("closeMenu");
+            }
+
             void SearchWidgetView::HandleViewOpenCompleted()
             {
                 ASSERT_UI_THREAD

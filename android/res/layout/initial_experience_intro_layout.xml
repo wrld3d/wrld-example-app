@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/menu_button_margin"
+        android:layout_marginLeft="45dp"
         android:layout_marginTop="73dp">
 
         <include layout="@layout/initial_experience_intro_dialog_layout"
