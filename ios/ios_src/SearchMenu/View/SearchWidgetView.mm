@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "SearchWidgetView.h"
+#include "WidgetSearchResultTableViewCell.h"
 
 namespace ExampleApp
 {
@@ -40,6 +41,11 @@ namespace ExampleApp
                 CGRectMake(10, 10, CGRectGetWidth(m_pView.bounds) - 20, CGRectGetHeight(m_pView.bounds) - 20); // iphone
                 
                 m_pSearchWidgetViewController.view.frame = searchFrame;
+                
+                NSBundle* resourceBundle = [NSBundle bundleForClass:[WidgetSearchResultTableViewCell class]];
+                UINib* nib = [UINib nibWithNibName: @"WidgetSearchResultTableViewCell" bundle:resourceBundle];
+                
+                [m_pSearchWidgetViewController registerNib:nib forUseWithResultsTableCellIdentifier:@"WidgetSearchResultTableViewCell"];
             }
             
             SearchWidgetView::~SearchWidgetView()
