@@ -118,6 +118,26 @@ namespace ExampleApp
                 m_onItemSelectedCallbacks.RemoveCallback(callback);
             }
             
+            void SearchWidgetView::InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_onViewOpenedCallbacks.AddCallback(callback);
+            }
+            
+            void SearchWidgetView::RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_onViewOpenedCallbacks.RemoveCallback(callback);
+            }
+            
+            void SearchWidgetView::InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_onViewClosedCallbacks.AddCallback(callback);
+            }
+            
+            void SearchWidgetView::RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_onViewClosedCallbacks.RemoveCallback(callback);
+            }
+            
             void SearchWidgetView::SetOnScreenStateToIntermediateValue(float value)
             {
             }
