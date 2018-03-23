@@ -38,6 +38,21 @@ namespace ExampleApp
             {
                 m_tappedCallbacks.ExecuteCallbacks();
             }
+            
+            void ModalBackgroundViewInterop::InsertTouchCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_touchCallbacks.AddCallback(callback);
+            }
+            
+            void ModalBackgroundViewInterop::RemoveTouchCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_touchCallbacks.RemoveCallback(callback);
+            }
+            
+            void ModalBackgroundViewInterop::ModalBackgroundViewInterop::HandleViewTouch()
+            {
+                m_touchCallbacks.ExecuteCallbacks();
+            }
         }
     }
 }
