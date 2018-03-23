@@ -9,6 +9,7 @@ import com.eegeo.entrypointinfrastructure.NativeJniCalls;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 
 import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -91,8 +92,11 @@ public class BackgroundThreadActivity extends MainActivity
         m_updater = new Thread(m_threadedRunner);
         m_updater.start();
 
-        ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
-                RuntimePermissionDispatcher.GPS_PERMISSION_REQUEST_CODE);
+        if (Build.VERSION.SDK_INT < 27) {
+            // On android 8.1 this request has a side effect of turning off SSID permission.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    RuntimePermissionDispatcher.GPS_PERMISSION_REQUEST_CODE);
+        }
 
         m_threadedRunner.blockUntilThreadStartedRunning();
 
