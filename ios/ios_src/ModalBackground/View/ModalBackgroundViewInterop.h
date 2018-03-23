@@ -33,7 +33,7 @@ namespace ExampleApp
                 void RemoveTouchCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void HandleViewTapped();
-                void HandleTouchOnView();
+                void HandleViewTouch();
 
             private:
 

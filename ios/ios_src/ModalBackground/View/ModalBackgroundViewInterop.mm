@@ -49,7 +49,7 @@ namespace ExampleApp
                 m_tappedCallbacks.ExecuteCallbacks();
             }
 
-            void ModalBackgroundViewInterop::HandleTouchOnView()
+            void ModalBackgroundViewInterop::HandleViewTouch()
             {
                 m_touchCallbacks.ExecuteCallbacks();
             }
