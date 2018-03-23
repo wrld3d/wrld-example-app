@@ -2,7 +2,8 @@
 
 #include "SearchWidgetView.h"
 #include "WidgetSearchResultTableViewCell.h"
-
+#include "IMenuView.h"
+#include "SearchMenuView.h"
 #include "SwallowSectionOption.h"
 #include "SwallowSectionChild.h"
 namespace ExampleApp
@@ -11,10 +12,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchWidgetView::SearchWidgetView(SearchMenuView* view,
+            SearchWidgetView::SearchWidgetView(
                                                id<WRLDSearchProvider> searchProvider,
-                                               id<WRLDSuggestionProvider> suggestionProvider):
-            m_pView(view)
+                                               id<WRLDSuggestionProvider> suggestionProvider)
+            
             {
                 m_pSearchModel = [[WRLDSearchModel alloc] init];
                 m_pMenuModel = [[WRLDSearchMenuModel alloc] init];
@@ -39,9 +40,17 @@ namespace ExampleApp
                 
                 [[m_pSearchWidgetViewController searchSelectionObserver] addResultSelectedEvent:onResultSelection];
                 
+                CGRect screenRect = [[UIScreen mainScreen] bounds];
+                CGFloat screenWidth = screenRect.size.width;
+                CGFloat iphoneMargin = 10;
+                CGFloat iPadMargin = 20;
+                CGFloat heightIphone = screenRect.size.height - 2*iphoneMargin;
+                CGFloat heightIpad = screenRect.size.height - 2*iPadMargin;
+                
+                
                 CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ?
-                CGRectMake(20, 20, 375, CGRectGetHeight(m_pView.bounds) - 40) :   // ipad
-                CGRectMake(10, 10, CGRectGetWidth(m_pView.bounds) - 20, CGRectGetHeight(m_pView.bounds) - 20); // iphone
+                CGRectMake(20, 20, 375, heightIpad) :   // ipad
+                CGRectMake(iphoneMargin, iphoneMargin, screenWidth - 2*iphoneMargin, heightIphone); // iphone
                 
                 m_pSearchWidgetViewController.view.frame = searchFrame;
                 
@@ -84,7 +93,7 @@ namespace ExampleApp
                 for (int sectionIndex = 0, g = 0; g < numGroups; g++)
                 {
                     WRLDMenuGroup* group = [[WRLDMenuGroup alloc] init];
-                    [m_pMenuModel addMenuGroup:group];
+                    
                     
                     if (first)
                     {
@@ -100,6 +109,7 @@ namespace ExampleApp
                         AddMenuSectionToGroup(group, *sections[sectionIndex], sectionIndex);
                         sectionIndex++;
                     }
+                    [m_pMenuModel addMenuGroup:group];
                 }
             }
             
@@ -228,10 +238,12 @@ namespace ExampleApp
             
             void SearchWidgetView::SetFullyOffScreen()
             {
+                
             }
             
             void SearchWidgetView::CloseMenu()
             {
+                
             }
         }
     }

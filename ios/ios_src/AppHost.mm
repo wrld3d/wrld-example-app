@@ -22,7 +22,7 @@
 #include "SettingsMenuViewModule.h"
 #include "SettingsMenuView.h"
 #include "ISearchMenuModule.h"
-#include "SearchMenuViewModule.h"
+#include "SearchWidgetViewModule.h"
 #include "SearchMenuView.h"
 #include "ModalBackgroundView.h"
 #include "SearchResultPoiViewModule.h"
@@ -310,13 +310,11 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
     
-    m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(app.SearchMenuModule().GetSearchMenuModel(),
+    m_pSearchWidgetViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetViewModule)(m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
                                                                                             app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                            app.SearchMenuModule().GetSearchSectionViewModel(),
-                                                                                            screenProperties,
-                                                                                            app.TagSearchModule().GetTagSearchRepository(),
-                                                                                            m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
-                                                                                            m_messageBus);
+                                                                                               m_messageBus);
+    
+   
 
     m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
             app.TagSearchModule().GetTagSearchMenuOptionsModel(),
@@ -393,11 +391,10 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
 
     // Menus & HUD layer.
-    [m_pView addSubview: &m_pSearchMenuViewModule->GetSearchMenuView()];
-
-    const ExampleApp::SearchMenu::View::SearchWidgetView* searchWidgetView = &m_pSearchMenuViewModule->GetSearchWidgetView();
-    [&m_pSearchMenuViewModule->GetSearchMenuView() addSubview: searchWidgetView->GetWidgetView()];
-
+    const ExampleApp::SearchMenu::View::SearchWidgetView* searchWidgetView = &m_pSearchWidgetViewModule->GetSearchWidgetView();
+    [m_pView addSubview:searchWidgetView->GetWidgetView()];
+    
+    
     // TODO MOD: this cast is only required due to weird c++ objc++ inheritance interactions
     // if we move this inside the searchWidgetViewController we should our inheritance chain back
     UIViewController * uiViewController = (UIViewController*) &m_viewController;
@@ -420,8 +417,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
     
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetSearchWidgetController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchWidgetViewModule->GetSearchWidgetController());
 
     SetTouchExclusivity();
 }
@@ -443,10 +439,9 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
 
     // Menus & HUD layer.
-    const ExampleApp::SearchMenu::View::SearchWidgetView* searchWidgetView = &m_pSearchMenuViewModule->GetSearchWidgetView();
+    const ExampleApp::SearchMenu::View::SearchWidgetView* searchWidgetView = &m_pSearchWidgetViewModule->GetSearchWidgetView();
     [searchWidgetView->GetWidgetView() removeFromSuperview];
     [searchWidgetView->GetWidgetController() removeFromParentViewController];
-    [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
 
     // Pop-up layer.
     
@@ -485,7 +480,7 @@ void AppHost::DestroyApplicationViewModules()
 
     Eegeo_DELETE m_pTagSearchViewModule;
 
-    Eegeo_DELETE m_pSearchMenuViewModule;
+    Eegeo_DELETE m_pSearchWidgetViewModule;
     
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;
 }

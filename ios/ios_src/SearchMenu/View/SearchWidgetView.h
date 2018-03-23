@@ -3,7 +3,6 @@
 #pragma once
 
 #include "ISearchWidgetView.h"
-#include "SearchMenuView.h"
 #include "WidgetSearchResultModel.h"
 #include "IMenuView.h"
 
@@ -18,7 +17,6 @@ namespace ExampleApp
             class SearchWidgetView : public SearchMenu::View::ISearchWidgetView
             {
             private:
-                SearchMenuView* m_pView;
                 WRLDSearchWidgetViewController* m_pSearchWidgetViewController;
                 WRLDSearchModel* m_pSearchModel;
                 WRLDSearchMenuModel* m_pMenuModel;
@@ -32,7 +30,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
                 
             public:
-                SearchWidgetView(SearchMenuView* view,
+                SearchWidgetView(
                                  id<WRLDSearchProvider> searchProvider,
                                  id<WRLDSuggestionProvider> suggestionProvider);
                 ~SearchWidgetView();

@@ -47,8 +47,7 @@ namespace ExampleApp
                 
                 m_pWrldSearchProvider = [[WidgetSearchProvider alloc] initWithSearchProvider: m_pSearchProvider];
                 
-                m_pSearchWidgetView = Eegeo_NEW(SearchWidgetView)(m_pView,
-                                                                  m_pWrldSearchProvider,
+                m_pSearchWidgetView = Eegeo_NEW(SearchWidgetView)(m_pWrldSearchProvider,
                                                                   m_pWrldSearchProvider);
                 
                 m_pSearchServices = Eegeo_NEW(SearchMenu::View::SearchServices)(*m_pSearchProvider,
