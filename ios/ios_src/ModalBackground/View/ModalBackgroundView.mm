@@ -103,8 +103,14 @@
     if(!m_isAnimating && [self isVisible])
     {
         m_pInterop->HandleViewTapped();
-        m_pInterop->HandleViewTouch();    // temp test
     }
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:event
+{
+    m_pInterop->HandleViewTouch();
+    
+    [super touchesBegan:touches withEvent:event];
 }
 
 - (BOOL)isVisible
