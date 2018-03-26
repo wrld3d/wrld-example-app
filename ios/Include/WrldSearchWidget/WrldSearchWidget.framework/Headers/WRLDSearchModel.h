@@ -13,6 +13,7 @@
 @interface WRLDSearchModel : NSObject
 @property (readonly) WRLDSearchQueryObserver * searchObserver;
 @property (readonly) WRLDSearchQueryObserver * suggestionObserver;
+@property (nonatomic, readonly) BOOL isSearchQueryInFlight;
 
 -(WRLDSearchProviderHandle *) addSearchProvider :(id<WRLDSearchProvider>) searchProvider;
 -(void) removeSearchProvider :(WRLDSearchProviderHandle *) searchProviderHandle;

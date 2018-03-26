@@ -74,7 +74,7 @@
 		</data>
 		<key>Headers/WRLDSearchModel.h</key>
 		<data>
-		mcGFQisH60c1ahi2hmjX3X6mfX4=
+		IyNVq0TuRZy8rpneQZEjKimNJAc=
 		</data>
 		<key>Headers/WRLDSearchProvider.h</key>
 		<data>
@@ -122,7 +122,7 @@
 		</data>
 		<key>Headers/WRLDSearchWidgetViewController.h</key>
 		<data>
-		pa/ynxXgpgIj7w9erBDeVxvlRis=
+		eiucwrgmXzbf9L3komqG0PVAaIw=
 		</data>
 		<key>Headers/WRLDSuggestionProvider.h</key>
 		<data>
@@ -294,39 +294,39 @@
 		</data>
 		<key>WRLDMenuChildTableViewCell.nib</key>
 		<data>
-		GqB1n5T9zTohQf3Fe/IQ4+KCSj0=
+		ovpri//WAGD21awckh1G2bf6qrc=
 		</data>
 		<key>WRLDMenuGroupTitleTableViewCell.nib</key>
 		<data>
-		mMn3HUKTLW+qVhXB6rtjooai9mQ=
+		PWlbb2H26xboT1c8iYTprS/gnlQ=
 		</data>
 		<key>WRLDMenuOptionTableViewCell.nib</key>
 		<data>
-		qyjOdLXkaTvkMCGEflmR2NVZ5so=
+		yFKt9ojc6wkEVzVSplAFfzhxEDk=
 		</data>
 		<key>WRLDMoreResultsTableViewCell.nib</key>
 		<data>
-		58nSCIu359Dt027gUO7jBUnQqVw=
+		XOu/+KeJnUJW9QAm6M9NMMjuZkc=
 		</data>
 		<key>WRLDSearchInProgressTableViewCell.nib</key>
 		<data>
-		P5nLN+rBmNYnm4hURBc9u4WjALg=
+		oKmWm0kZDZhs8QYmNmejiO4RJaA=
 		</data>
 		<key>WRLDSearchResultTableViewCell.nib</key>
 		<data>
-		2LibO8oLJpwmXV3BIG9ABHokulk=
+		aw7nhnt5e++WmO85u5w2AiI0H7Y=
 		</data>
 		<key>WRLDSearchWidget.nib/objects-11.0+.nib</key>
 		<data>
-		dKTltSQYSKuttBg3V31zHlBuoi4=
+		pKBwbJq9Du2TqAClrv0uS7pT778=
 		</data>
 		<key>WRLDSearchWidget.nib/runtime.nib</key>
 		<data>
-		cyWxd6EytR3pIrOkjhMnvMx3rv0=
+		shj5VM8B56WY8P+RkL/g/4QfmPs=
 		</data>
 		<key>WRLDSuggestionTableViewCell.nib</key>
 		<data>
-		o6Swk/DmQFmgVz2QI+ovVJU6W0g=
+		UQQBDUQCWL0zDlgC8piEQfRkQCg=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -522,11 +522,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			mcGFQisH60c1ahi2hmjX3X6mfX4=
+			IyNVq0TuRZy8rpneQZEjKimNJAc=
 			</data>
 			<key>hash2</key>
 			<data>
-			3/w+x8vx7sxxcS+pow886J6zuzla785QswnhtKw3xuw=
+			OFq8GYoo21IO2Sy1ZHRbCb9imTn5BSTlCv4wFLSqxfc=
 			</data>
 		</dict>
 		<key>Headers/WRLDSearchProvider.h</key>
@@ -654,11 +654,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			pa/ynxXgpgIj7w9erBDeVxvlRis=
+			eiucwrgmXzbf9L3komqG0PVAaIw=
 			</data>
 			<key>hash2</key>
 			<data>
-			wzUA92ITA89AmSP6QGIjR7PdJeVJyHSm0e8DnHbRwLs=
+			7Fb7KXpv47qDtmNGmJXNzCCm0rkw79b50GrPgJBneZ0=
 			</data>
 		</dict>
 		<key>Headers/WRLDSuggestionProvider.h</key>
@@ -1116,99 +1116,99 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			GqB1n5T9zTohQf3Fe/IQ4+KCSj0=
+			ovpri//WAGD21awckh1G2bf6qrc=
 			</data>
 			<key>hash2</key>
 			<data>
-			cHtUOlvSozamaCCjLsZ2InJJLp8Y1hNXqf0oXi0XS9o=
+			ltxIyDyj7a45xLa6utBHS7RXRn6nuQ/3LccA6yKxo20=
 			</data>
 		</dict>
 		<key>WRLDMenuGroupTitleTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			mMn3HUKTLW+qVhXB6rtjooai9mQ=
+			PWlbb2H26xboT1c8iYTprS/gnlQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			VagRSeVXLnCdA6WZoz4C05ifXkb4/HqU3aTyiEmmrQY=
+			GF75jDAPq+cnNnNqyq2/A1IDP86GTr+Sycnihof5zlE=
 			</data>
 		</dict>
 		<key>WRLDMenuOptionTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			qyjOdLXkaTvkMCGEflmR2NVZ5so=
+			yFKt9ojc6wkEVzVSplAFfzhxEDk=
 			</data>
 			<key>hash2</key>
 			<data>
-			0XHofjX2HiMwFLsAjXk+urZtZKQ2X0U8MkPXauyRBEY=
+			xXhfHvONd+oaeADPtWf7Vqj/L/oP8+VTTq4PkGThqhU=
 			</data>
 		</dict>
 		<key>WRLDMoreResultsTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			58nSCIu359Dt027gUO7jBUnQqVw=
+			XOu/+KeJnUJW9QAm6M9NMMjuZkc=
 			</data>
 			<key>hash2</key>
 			<data>
-			EmdFwh+RtS+QoGkuOi4Uiygmxu8zNw29Vwid/h6rnVM=
+			6mpxrzQjh7KNioj45QyCI7qLVSkzkdiLeAxgogJvbOg=
 			</data>
 		</dict>
 		<key>WRLDSearchInProgressTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			P5nLN+rBmNYnm4hURBc9u4WjALg=
+			oKmWm0kZDZhs8QYmNmejiO4RJaA=
 			</data>
 			<key>hash2</key>
 			<data>
-			8TaS6YJIPhDo3Drg5WJGRK3SERnJQff6ny3xBOJ0Plc=
+			XHAd8zV2BJtGCTdoNaR6gu0OnBpCVqpdsanZbOSCmQE=
 			</data>
 		</dict>
 		<key>WRLDSearchResultTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2LibO8oLJpwmXV3BIG9ABHokulk=
+			aw7nhnt5e++WmO85u5w2AiI0H7Y=
 			</data>
 			<key>hash2</key>
 			<data>
-			2JO4yyX+NVY+Ewts3l0gCzlcccOZselr7aB0IUb9d9Y=
+			m7B/sBVdODAUWQn500YsgEuM2pR3kFIwrPXyDa9IBbk=
 			</data>
 		</dict>
 		<key>WRLDSearchWidget.nib/objects-11.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dKTltSQYSKuttBg3V31zHlBuoi4=
+			pKBwbJq9Du2TqAClrv0uS7pT778=
 			</data>
 			<key>hash2</key>
 			<data>
-			oUbtul3x2zY2z4IlVrF2uUeYxe7nR+a1llLTzrX+RzE=
+			8WDHZe+0GTVbTDwd7W3eUxJReMNBZSATpj+4Vfrjzq0=
 			</data>
 		</dict>
 		<key>WRLDSearchWidget.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cyWxd6EytR3pIrOkjhMnvMx3rv0=
+			shj5VM8B56WY8P+RkL/g/4QfmPs=
 			</data>
 			<key>hash2</key>
 			<data>
-			K9y/qE+tDZD0VrkBSb5tjnXeBktAFN3CB8m7atu4slY=
+			rBeBmQc3qT6+DDMAsLasouOFFwDv9tcs8cDadP0ypvc=
 			</data>
 		</dict>
 		<key>WRLDSuggestionTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			o6Swk/DmQFmgVz2QI+ovVJU6W0g=
+			UQQBDUQCWL0zDlgC8piEQfRkQCg=
 			</data>
 			<key>hash2</key>
 			<data>
-			qcX7Nb5mpucDZnn82F6ISImB3l4anBhWxX/fq6xOud4=
+			vQZ5xqSXiU3OU3WKgOLZZ3TRaYnynsQSZB4zA26AAfA=
 			</data>
 		</dict>
 	</dict>
