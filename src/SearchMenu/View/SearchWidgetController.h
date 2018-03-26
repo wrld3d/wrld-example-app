@@ -50,7 +50,6 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemAddedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemRemovedCallback;
 
-                void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
                 bool m_menuContentsChanged;
 
 				TagCollection m_tagCollection;
@@ -62,22 +61,27 @@ namespace ExampleApp
                                        Menu::View::IMenuViewModel& viewModel,
                                        ExampleAppMessaging::TMessageBus& messageBus);
                 ~SearchWidgetController();
-                void OnViewOpened();
-                void OnViewClosed();
-                void OnSearchResultsCleared();
-                void OnSearchResultSelected(int& index);
-				void OnSearchQueryRefreshedMessage(const Search::SearchQueryRefreshedMessage& message);
-
-                void RefreshPresentation(bool forceRefresh);
-                virtual void UpdateUiThread(float dt);
-                virtual void OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex);
 
             protected:
-                void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state);
+				void SetGroupStart(Menu::View::IMenuSectionViewModel& section);
+
+				void OnItemAdded(Menu::View::MenuItemModel& item);
+				void OnItemRemoved(Menu::View::MenuItemModel& item);
+
+				void OnSearchResultsCleared();
+				void OnSearchResultSelected(int& index);
+				void OnSearchQueryRefreshedMessage(const Search::SearchQueryRefreshedMessage& message);
+
+				virtual void UpdateUiThread(float dt);
+				void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
+				void RefreshPresentation(bool forceRefresh, bool modeChangedToInterior);
+
+				void OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex);
+				void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state);
                 void OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
+				void OnViewOpened();
+				void OnViewClosed();
 				void OnModalBackgroundTouch();
-                virtual void OnItemAdded(Menu::View::MenuItemModel& item);
-                virtual void OnItemRemoved(Menu::View::MenuItemModel& item);
             };
         }
     }

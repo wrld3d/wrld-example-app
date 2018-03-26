@@ -87,8 +87,16 @@ namespace ExampleApp
                 }
                 const size_t numSections = sections.size();
                 [m_pMenuModel removeAllGroups];
-                const int numGroups = 4;
-                int groupSizes[numGroups] = {5, 2, 1, 2};
+                int numGroups = 4;
+                int groupSizes[4] = {5, 2, 1, 2};
+                
+                // temp patch until this method gets rewritten (a few hours from now)
+                if (numSections == 9)   // Discover section missing
+                {
+                    numGroups = 3;
+                    groupSizes[2] = 2;
+                }
+
                 for (int sectionIndex = 0, g = 0; g < numGroups; g++)
                 {
                     WRLDMenuGroup* group = [[WRLDMenuGroup alloc] init];

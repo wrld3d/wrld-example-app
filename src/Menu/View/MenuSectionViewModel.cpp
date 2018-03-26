@@ -16,12 +16,13 @@ namespace ExampleApp
                 , m_menuModel(menuModel)
                 , m_isExpandable(isExpandable)
                 , m_expanded(false)
+                , m_groupStart(false)
             {
             }
 
             std::string MenuSectionViewModel::SerializeJson() const
             {
-                return SerialiseMenuItemToJson(*this);
+                return SerialiseMenuSectionToJson(*this);
             }
 
             size_t MenuSectionViewModel::Size() const
@@ -70,7 +71,12 @@ namespace ExampleApp
                     m_expandedChangedCallbacks.ExecuteCallbacks(*this, m_expanded);
                 }
             }
-            
+
+            void MenuSectionViewModel::SetGroupStart(bool groupStart)
+            {
+                m_groupStart = groupStart;
+            }
+
             void MenuSectionViewModel::InsertExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback)
             {
                 m_expandedChangedCallbacks.AddCallback(callback);

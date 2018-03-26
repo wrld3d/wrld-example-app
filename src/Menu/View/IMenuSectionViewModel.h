@@ -34,12 +34,13 @@ namespace ExampleApp
                 virtual MenuItemModel GetItemAtIndex(int index) const = 0;
 
                 virtual bool IsExpanded() const = 0;
-                
+
                 virtual bool IsExpandable() const = 0;
 
                 virtual void Expand() = 0;
                 virtual void Contract() = 0;
-                
+                virtual void SetGroupStart(bool groupStart) = 0;
+
                 virtual void InsertExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback) = 0;
                 virtual void RemoveExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback) = 0;
             };

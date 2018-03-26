@@ -57,6 +57,7 @@ namespace ExampleApp
                 for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
                 {
                     Menu::View::IMenuSectionViewModel& section(m_viewModel.GetMenuSection(static_cast<int>(i)));
+					SetGroupStart(section);
                     Menu::View::IMenuModel& menuModel = section.GetModel();
                     menuModel.InsertItemAddedCallback(m_onItemAddedCallback);
                     menuModel.InsertItemRemovedCallback(m_onItemRemovedCallback);
@@ -65,6 +66,14 @@ namespace ExampleApp
 
             SearchWidgetController::~SearchWidgetController()
             {
+				for(int i = static_cast<int>(m_viewModel.SectionsCount()); --i >= 0;)
+				{
+					Menu::View::IMenuSectionViewModel& section(m_viewModel.GetMenuSection(i));
+					Menu::View::IMenuModel& menuModel = section.GetModel();
+					menuModel.RemoveItemAddedCallback(m_onItemAddedCallback);
+					menuModel.RemoveItemRemovedCallback(m_onItemRemovedCallback);
+				}
+
                 m_messageBus.UnsubscribeUi(m_onAppModeChanged);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
 
@@ -78,6 +87,17 @@ namespace ExampleApp
                 m_view.RemoveResultSelectedCallback(m_onSearchResultSelectedCallback);
                 m_view.RemoveSearchClearedCallback(m_onSearchResultsClearedCallback);
                 m_view.RemoveOnItemSelected(m_onItemSelectedCallback);
+			}
+
+			void SearchWidgetController::SetGroupStart(Menu::View::IMenuSectionViewModel& section)
+			{
+				if (section.Name() == "Meeting Rooms" ||
+					section.Name() == "Report Fault"  ||
+					section.Name() == "Discover"      ||
+					section.Name() == "Options")
+				{
+					section.SetGroupStart(true);
+				}
             }
 
             void SearchWidgetController::OnItemAdded(Menu::View::MenuItemModel& item) {
@@ -139,12 +159,14 @@ namespace ExampleApp
 
             void SearchWidgetController::UpdateUiThread(float dt)
             {
-                RefreshPresentation(true);
+				RefreshPresentation(true, false);
             }
 
             void SearchWidgetController::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
             {
-                RefreshPresentation(true);
+				m_menuContentsChanged = true;
+
+                RefreshPresentation(true, message.GetAppMode() == AppModes::SdkModel::AppMode::InteriorMode);
             }
 
             void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex)
@@ -176,7 +198,7 @@ namespace ExampleApp
 
             }
 
-            void SearchWidgetController::RefreshPresentation(bool forceRefresh)
+            void SearchWidgetController::RefreshPresentation(bool forceRefresh, bool modeChangedToInterior)
             {
 
                const size_t numSections = m_viewModel.SectionsCount();
@@ -186,7 +208,11 @@ namespace ExampleApp
                 for(size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
                 {
                     Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(static_cast<int>(groupIndex));
-                    sections.push_back(&section);
+
+					if (section.Name() != "Discover" || !modeChangedToInterior)
+					{
+						sections.push_back(&section);
+					}
                 }
 
                 if(forceRefresh)

@@ -179,16 +179,13 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         List<String> options = Arrays.asList(optionNames);
         int jsonChildIndex = 0;
 
-        int[] groupSizes = {5, 2, 1, 2};
-        int numberOfGroups = 4;
-        int groupIndex = -1;
         int maxOptionIndexForGroup = 0;
 
-        for (int optionIndex = 0; optionIndex < options.size(); optionIndex++) {
+        for (int optionIndex = 0; optionIndex < options.size(); optionIndex++)
+        {
+            String optionStartsGroup = getFromJson(optionNames[optionIndex], "groupStart");
 
-            if (optionIndex == maxOptionIndexForGroup && groupIndex < numberOfGroups - 1) {
-                groupIndex++;
-                maxOptionIndexForGroup += groupSizes[groupIndex];
+            if (optionIndex == 0 || optionStartsGroup.equals("Y")) {
                 menuGroup = new MenuGroup();
                 m_searchWidget.addMenuGroup(menuGroup);
             }
