@@ -87,19 +87,12 @@ namespace ExampleApp
                 }
                 const size_t numSections = sections.size();
                 [m_pMenuModel removeAllGroups];
-                bool first = true;
                 const int numGroups = 4;
                 int groupSizes[numGroups] = {5, 2, 1, 2};
                 for (int sectionIndex = 0, g = 0; g < numGroups; g++)
                 {
                     WRLDMenuGroup* group = [[WRLDMenuGroup alloc] init];
-                    
-                    
-                    if (first)
-                    {
-                        first = false;
-                        AddMenuOption(group, @"Show me the closest...", sectionIndex);
-                    }
+
                     while (--groupSizes[g] >= 0)
                     {
                         if (sectionIndex >= numSections)
