@@ -35,6 +35,7 @@ import com.wrld.widgets.searchbox.view.SearchResultsViewListener;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.List;
 
 public class SearchWidgetView implements OnMenuOptionSelectedCallback,
@@ -57,6 +58,10 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     private boolean m_searchTextboxIsInFocus = false;
     private boolean m_hasSearchResults = false;
     private boolean m_searchInProgress = false;
+
+    private Hashtable<String, MenuOption> m_menuOptions
+            = new Hashtable<String, MenuOption>();
+    private boolean m_hasPopulatedData = false;
 
     private final long m_stateChangeAnimationTimeMilliseconds = 200;
 
@@ -152,11 +157,20 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         return true;
     }
 
+
+
     public void populateData(
             final long nativeCallerPointer,
             final String[] optionNames,
             final int[] optionSizes,
             final String[] childJsons) {
+
+        if(m_hasPopulatedData==true){
+            updateData(optionNames,optionSizes,childJsons);
+            return;
+        }
+
+        m_hasPopulatedData = true;
 
         m_searchWidget.clearMenu();
 
@@ -183,25 +197,66 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
 
             String optionName = getFromJson(optionNames[optionIndex], "name");
             MenuIndexPath optionIndexPath = new MenuIndexPath(optionIndex, 0);
+
             MenuOption menuOption = new MenuOption(optionName, optionIndexPath, this);
+            m_menuOptions.put(optionName,menuOption);
+
 
             menuGroup.addOption(menuOption);
 
             jsonChildIndex++;
 
             for (int childIndex = 0; childIndex < optionSizeWithoutHeader; ++childIndex) {
-                MenuIndexPath indexPath = new MenuIndexPath(optionIndex, childIndex);
                 String childJson = childJsons[jsonChildIndex];
-                String name = getFromJson(childJson, "name");
-                String iconName = getFromJson(childJson, "icon");
-                int iconNumber = TagResources.getIconForResourceName(m_activity, iconName);
-                MenuChild child = new MenuChild(name, iconNumber, indexPath, this);
-                menuOption.addChild(child);
+                addChildToMenuOption(childIndex,optionIndex,childJson,menuOption);
+                jsonChildIndex++;
+            }
+        }
+    }
+
+    public void updateData(
+            final String[] optionNames,
+            final int[] optionSizes,
+            final String[] childJsons){
+
+        List<String> options = Arrays.asList(optionNames);
+        int jsonChildIndex = 0;
+
+        for (int optionIndex = 0; optionIndex < options.size(); optionIndex++) {
+
+            int optionSizeWithoutHeader = optionSizes[optionIndex]-1;
+
+            String optionName = getFromJson(optionNames[optionIndex], "name");
+            MenuIndexPath optionIndexPath = new MenuIndexPath(optionIndex, 0);
+
+            MenuOption menuOption = m_menuOptions.get(optionName);
+
+            jsonChildIndex++;
+
+            if(menuOption == null) {
+                menuOption = new MenuOption(optionName, optionIndexPath, this);
+                m_menuOptions.put(optionName,menuOption);
+            }
+
+            menuOption.removeAllChildren();
+            for (int childIndex = 0; childIndex < optionSizeWithoutHeader; ++childIndex) {
+                String childJson = childJsons[jsonChildIndex];
+                addChildToMenuOption(childIndex,optionIndex,childJson,menuOption);
                 jsonChildIndex++;
             }
 
         }
     }
+
+    private void addChildToMenuOption(int childIndex, int optionIndex,String childJson, MenuOption menuOption){
+        MenuIndexPath indexPath = new MenuIndexPath(optionIndex, childIndex);
+        String name = getFromJson(childJson, "name");
+        String iconName = getFromJson(childJson, "icon");
+        int iconNumber = TagResources.getIconForResourceName(m_activity, iconName);
+        MenuChild child = new MenuChild(name, iconNumber, indexPath, this);
+        menuOption.addChild(child);
+    }
+
 
     private String getFromJson(String jsonString, String tag) {
         try {
