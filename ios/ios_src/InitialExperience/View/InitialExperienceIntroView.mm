@@ -268,12 +268,12 @@ namespace
                   description: self.pSearchMenuDialogDescription
                         arrow: self.pSearchMenuDialogArrow
                  arrowOutline: self.pSearchMenuDialogArrowOutline
-                            x: useSmallScreen ? 30 : 425
-                            y: useSmallScreen ? 90 : 20
+                            x: useSmallScreen ? 10 : 425
+                            y: useSmallScreen ? 75 : 20
               alignHorizontal: AlignHorizontal::Left
                 alignVertical: AlignVertical::Top
                     arrowEdge: useSmallScreen ? ArrowEdge::Top : ArrowEdge::Left
-            arrowEdgeLocation: useSmallScreen ? 0.21f : 0.25f];
+            arrowEdgeLocation: useSmallScreen ? 0.17f : 0.25f];
     
     [self layoutDialogSubview: self.pCompassDialogContainer
                       content: self.pCompassDialogContent
