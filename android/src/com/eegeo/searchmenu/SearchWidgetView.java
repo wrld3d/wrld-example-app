@@ -61,6 +61,10 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
 
     private Hashtable<String, MenuOption> m_menuOptions
             = new Hashtable<String, MenuOption>();
+
+    private Hashtable<String, MenuGroup> m_menuGroups
+            = new Hashtable<String, MenuGroup>();
+
     private boolean m_hasPopulatedData = false;
 
     private final long m_stateChangeAnimationTimeMilliseconds = 200;
@@ -179,25 +183,23 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         List<String> options = Arrays.asList(optionNames);
         int jsonChildIndex = 0;
 
-        int maxOptionIndexForGroup = 0;
-
         for (int optionIndex = 0; optionIndex < options.size(); optionIndex++)
         {
             String optionStartsGroup = getFromJson(optionNames[optionIndex], "groupStart");
+            String optionName = getFromJson(optionNames[optionIndex], "name");
 
             if (optionIndex == 0 || optionStartsGroup.equals("Y")) {
                 menuGroup = new MenuGroup();
                 m_searchWidget.addMenuGroup(menuGroup);
+                m_menuGroups.put(optionName,menuGroup);
             }
 
             int optionSizeWithoutHeader = optionSizes[optionIndex]-1;
 
-            String optionName = getFromJson(optionNames[optionIndex], "name");
             MenuIndexPath optionIndexPath = new MenuIndexPath(optionIndex, 0);
 
             MenuOption menuOption = new MenuOption(optionName, optionIndexPath, this);
             m_menuOptions.put(optionName,menuOption);
-
 
             menuGroup.addOption(menuOption);
 
@@ -211,10 +213,47 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         }
     }
 
+
+    public void updateDiscoverGroup(final String[] optionNames,
+                        final int[] optionSizes){
+        List<String> optionNamesList = Arrays.asList(optionNames);
+
+        String groupName =  "Discover";
+
+        boolean shouldShowDiscover = false;
+
+        for (int optionIndex = 0; optionIndex < optionNamesList.size(); optionIndex++) {
+            String optionStartsGroup = getFromJson(optionNames[optionIndex], "groupStart");
+
+            if (optionIndex == 0 || optionStartsGroup.equals("Y")) {
+                String optionName = getFromJson(optionNames[optionIndex], "name");
+
+                if(optionName.equals(groupName)){
+                    MenuGroup group = m_menuGroups.get(optionName);
+                    List<MenuOption> groupOptions = group.getOptions();
+
+                    if(groupOptions.isEmpty()){
+                       MenuOption firstOption =  m_menuOptions.get( groupName);
+                       group.addOption(firstOption);
+                    }
+
+                    shouldShowDiscover  = true;
+                }
+            }
+        }
+
+        if(!shouldShowDiscover){
+            MenuGroup discoverGroup = m_menuGroups.get(groupName);
+            discoverGroup.removeAllOptions();
+        }
+    }
+
     public void updateData(
             final String[] optionNames,
             final int[] optionSizes,
             final String[] childJsons){
+
+        updateDiscoverGroup(optionNames, optionSizes);
 
         List<String> options = Arrays.asList(optionNames);
         int jsonChildIndex = 0;
