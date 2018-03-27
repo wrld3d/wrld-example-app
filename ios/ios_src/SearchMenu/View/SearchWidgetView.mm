@@ -14,8 +14,13 @@ namespace ExampleApp
         {
             SearchWidgetView::SearchWidgetView(
                                                id<WRLDSearchProvider> searchProvider,
-                                               id<WRLDSuggestionProvider> suggestionProvider)
+                                               id<WRLDSuggestionProvider> suggestionProvider):
             
+            m_menuIsOpen(false)
+            , m_searchResultsAreVisible(true)
+            , m_searchTextboxIsInFocus(false)
+            , m_hasSearchResults(false)
+            , m_searchInProgress(false)
             {
                 m_pSearchModel = [[WRLDSearchModel alloc] init];
                 m_pMenuModel = [[WRLDSearchMenuModel alloc] init];
@@ -44,16 +49,23 @@ namespace ExampleApp
                 CGFloat screenWidth = screenRect.size.width;
                 CGFloat iphoneMargin = 10;
                 CGFloat iPadMargin = 20;
+                CGFloat iPadWidgetWidth = 375;
                 CGFloat heightIphone = screenRect.size.height - 2*iphoneMargin;
                 CGFloat heightIpad = screenRect.size.height - 2*iPadMargin;
                 
+                m_widgetAnimationOffset = -100;
                 
                 CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ?
-                CGRectMake(20, 20, 375, heightIpad) :   // ipad
+                CGRectMake(iPadMargin, iPadMargin,  iPadWidgetWidth , heightIpad) :   // ipad
                 CGRectMake(iphoneMargin, iphoneMargin, screenWidth - 2*iphoneMargin, heightIphone); // iphone
                 
-                m_pSearchWidgetViewController.view.frame = searchFrame;
+                UIView *widget = m_pSearchWidgetViewController.view;
                 
+                widget.frame = searchFrame;
+                
+                CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0,m_widgetAnimationOffset);
+                widget.transform = transform;
+               
                 NSBundle* resourceBundle = [NSBundle bundleForClass:[WidgetSearchResultTableViewCell class]];
                 UINib* nib = [UINib nibWithNibName: @"WidgetSearchResultTableViewCell" bundle:resourceBundle];
                 
@@ -83,9 +95,9 @@ namespace ExampleApp
             {
                 const size_t numSections = sections.size();
                 [m_pMenuModel removeAllGroups];
-
+                
                 WRLDMenuGroup* group = NULL;
-
+                
                 for (int sectionIndex = 0; sectionIndex < numSections; sectionIndex++)
                 {
                     if (sectionIndex == 0 || sections[sectionIndex]->IsGroupStart())
@@ -94,17 +106,9 @@ namespace ExampleApp
                         
                         [m_pMenuModel addMenuGroup:group];
                     }
-
+                    
                     AddMenuSectionToGroup(group, *sections[sectionIndex], sectionIndex);
                 }
-            }
-            
-            void SearchWidgetView::SetFullyOnScreenOpen()
-            {
-            }
-            
-            void SearchWidgetView::SetFullyOnScreenClosed()
-            {
             }
             
             void SearchWidgetView::PerformSearch(const std::string& query, const QueryContext& context)
@@ -160,6 +164,32 @@ namespace ExampleApp
                 m_onItemSelectedCallbacks.RemoveCallback(callback);
             }
             
+            void SearchWidgetView::pushControlsOfScreenIfNeeded(){
+                
+              bool hasVisibleSearchResults = m_searchResultsAreVisible && (m_hasSearchResults || m_searchInProgress);
+                
+               bool shouldTakeFocus = m_searchTextboxIsInFocus ||hasVisibleSearchResults || m_menuIsOpen;
+               
+                if( shouldTakeFocus )
+                {
+                    HandleViewOpenCompleted();
+                }
+                else
+                {
+                    HandleViewCloseCompleted();
+                }
+            }
+            
+            void SearchWidgetView::HandleViewOpenCompleted()
+            {
+                m_onViewOpenedCallbacks.ExecuteCallbacks();
+            }
+            
+            void SearchWidgetView::HandleViewCloseCompleted()
+            {
+                m_onViewClosedCallbacks.ExecuteCallbacks();
+            }
+            
             void SearchWidgetView::InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback)
             {
                 m_onViewOpenedCallbacks.AddCallback(callback);
@@ -182,11 +212,31 @@ namespace ExampleApp
             
             void SearchWidgetView::SetOnScreenStateToIntermediateValue(float value)
             {
+                UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
+                CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0,m_widgetAnimationOffset*value);
+                
+                [UIView animateWithDuration:0.3 animations:^{
+                    widget.transform = transform;
+                }];
             }
             
             void SearchWidgetView::SetFullyOnScreen()
             {
+                UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
                 
+                [UIView animateWithDuration:0.3 animations:^{
+                    widget.transform = CGAffineTransformIdentity;
+                }];
+            }
+            
+            void SearchWidgetView::SetFullyOffScreen()
+            {
+                UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
+                CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0,m_widgetAnimationOffset);
+                
+                [UIView animateWithDuration:0.3 animations:^{
+                    widget.transform = transform;
+                }];
             }
             
             WRLDMenuOption* SearchWidgetView::AddMenuOption(WRLDMenuGroup* group,
@@ -222,10 +272,7 @@ namespace ExampleApp
                 }
             }
             
-            void SearchWidgetView::SetFullyOffScreen()
-            {
-                
-            }
+           
             
             void SearchWidgetView::CloseMenu()
             {

@@ -29,6 +29,13 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
                 
+                bool m_searchResultsAreVisible;
+                bool m_menuIsOpen;
+                bool m_searchTextboxIsInFocus;
+                bool m_hasSearchResults;
+                bool m_searchInProgress;
+                
+                CGFloat m_widgetAnimationOffset;
             public:
                 SearchWidgetView(
                                  id<WRLDSearchProvider> searchProvider,
@@ -57,6 +64,10 @@ namespace ExampleApp
                 
                 void InsertOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback);
                 void RemoveOnItemSelected(Eegeo::Helpers::ICallback3<const std::string&, int, int>& callback);
+                
+                void pushControlsOfScreenIfNeeded();
+                void HandleViewOpenCompleted();
+                void HandleViewCloseCompleted();
                 
                 void InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback);
                 void RemoveOnViewOpened(Eegeo::Helpers::ICallback0& callback);
