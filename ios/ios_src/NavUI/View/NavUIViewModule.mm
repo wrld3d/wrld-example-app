@@ -9,6 +9,8 @@
 
 #include "SearchResultPoiViewInterop.h"
 
+#include "iOSLocationService.h"
+
 //Wrld Example App fudges the propagation of touch events so to prevent our touch events getting
 //passed down to the Map we need to extend our common widget with a consumesTouch selector.
 @interface WrldNavWidgetBase(ExampleApp)
@@ -34,11 +36,14 @@ namespace ExampleApp
                 WrldNavWidgetBase* view{nullptr};
                 
                 ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop;
+                Eegeo::iOS::iOSLocationService* iOSLocationService;
                 
                 Eegeo::Helpers::TCallback1<Private, Search::SdkModel::SearchResultModel> directionsClickedCallbackObj;
                 
-                Private(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop_):
+                Private(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop_,
+                        Eegeo::iOS::iOSLocationService* iOSLocationService_):
                     searchResultsPoiViewInterop(searchResultsPoiViewInterop_),
+                    iOSLocationService(iOSLocationService_),
                     directionsClickedCallbackObj(this, &Private::directionsClickedCallback)
                 {
                     searchResultsPoiViewInterop->InsertDirectionsCallback(directionsClickedCallbackObj);
@@ -82,13 +87,23 @@ namespace ExampleApp
                 
                 void setStartLocationToCurrentLocation()
                 {
+                    Eegeo::Space::LatLong latLong(0.0, 0.0);
+                    if(!iOSLocationService->GetLocation(latLong))
+                    {
+                        [model setStartLocation:nil];
+                        return;
+                    }
+                    
                     WRLDNavLocation* location = [[WRLDNavLocation alloc] init];
                     
                     [location setName: @"Current location"];
-                    [location setLatLon: CLLocationCoordinate2DMake(0.0, 0.0)];
+                    [location setLatLon: CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees())];
                     [location setIndoorID: nil];
                     [location setFloorID: 0];
                     [model setStartLocation:location];
+                    
+                    NSLog(@"TDP lon %f", [location latLon].longitude);
+                    NSLog(@"TDP lat %f", [location latLon].latitude);
                 }
                 
                 void modelSet() override
@@ -120,8 +135,10 @@ namespace ExampleApp
                 }
             };
             
-            NavUIViewModule::NavUIViewModule(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop):
-              d(new Private(searchResultsPoiViewInterop))
+            NavUIViewModule::NavUIViewModule(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop,
+                                             Eegeo::iOS::iOSLocationService* iOSLocationService):
+              d(new Private(searchResultsPoiViewInterop,
+                            iOSLocationService))
             {
                 d->model = [[JourneysModel alloc] init];                
                 d->setNavModel(d->model);

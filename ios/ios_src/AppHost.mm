@@ -441,7 +441,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
             &m_pSearchResultPoiViewModule->GetView();
         ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultPoiViewInterop =
             (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)[(id)searchResultPoiViewContainer getInterop];
-        m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavUI::View::NavUIViewModule)(searchResultPoiViewInterop);
+        m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavUI::View::NavUIViewModule)(searchResultPoiViewInterop,
+                                                                                 m_piOSLocationService);
     }
     
     // 3d map view layer.

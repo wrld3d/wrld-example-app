@@ -4,6 +4,14 @@
 
 #include "Types.h"
 
+namespace Eegeo
+{
+    namespace iOS
+    {
+        class iOSLocationService;
+    }
+}
+
 namespace ExampleApp
 {
     namespace SearchResultPoi
@@ -20,7 +28,8 @@ namespace ExampleApp
             class NavUIViewModule: private Eegeo::NonCopyable
             {
             public:
-                NavUIViewModule(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop);
+                NavUIViewModule(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop,
+                                Eegeo::iOS::iOSLocationService* iOSLocationService);
 
                 ~NavUIViewModule();
 
