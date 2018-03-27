@@ -35,7 +35,7 @@ namespace ExampleApp
                 SearchWidgetView(AndroidNativeState& nativeState,
                                  SearchProviders::MyTestSearchProvider& searchProvider);
 
-                void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged);
+                void UpdateMenuSectionViews(Menu::View::TSections& sections);
 
                 void SetOnScreenStateToIntermediateValue(float value);
 

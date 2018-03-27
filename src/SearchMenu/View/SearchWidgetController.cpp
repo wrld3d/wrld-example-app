@@ -159,14 +159,14 @@ namespace ExampleApp
 
             void SearchWidgetController::UpdateUiThread(float dt)
             {
-				RefreshPresentation(true, false);
+				RefreshPresentation(false);
             }
 
             void SearchWidgetController::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
             {
 				m_menuContentsChanged = true;
 
-                RefreshPresentation(true, message.GetAppMode() == AppModes::SdkModel::AppMode::InteriorMode);
+                RefreshPresentation(message.GetAppMode() == AppModes::SdkModel::AppMode::InteriorMode);
             }
 
             void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex)
@@ -198,10 +198,15 @@ namespace ExampleApp
 
             }
 
-            void SearchWidgetController::RefreshPresentation(bool forceRefresh, bool modeChangedToInterior)
+            void SearchWidgetController::RefreshPresentation(bool modeChangedToInterior)
             {
+                if (!m_menuContentsChanged)
+                {
+                    return;
+                }
+                m_menuContentsChanged = false;
 
-               const size_t numSections = m_viewModel.SectionsCount();
+                const size_t numSections = m_viewModel.SectionsCount();
                 Menu::View::TSections sections;
                 sections.reserve(numSections);
 
@@ -215,11 +220,7 @@ namespace ExampleApp
 					}
                 }
 
-                if(forceRefresh)
-                {
-                    m_view.UpdateMenuSectionViews(sections, m_menuContentsChanged);
-                    m_menuContentsChanged = false;
-                }
+                m_view.UpdateMenuSectionViews(sections);
             }
 
             void SearchWidgetController::OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state)

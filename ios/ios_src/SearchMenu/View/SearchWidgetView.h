@@ -40,7 +40,7 @@ namespace ExampleApp
                 
                 void OnSearchResultSelected(int index);
                 
-                void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged);
+                void UpdateMenuSectionViews(Menu::View::TSections& sections);
                 
                 void SetFullyOnScreenOpen();
                 void SetFullyOnScreenClosed();

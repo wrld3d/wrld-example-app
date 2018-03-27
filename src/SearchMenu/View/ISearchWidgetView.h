@@ -17,7 +17,7 @@ namespace ExampleApp
             public:
                 virtual ~ISearchWidgetView() { }
 
-                virtual void UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged) = 0;
+                virtual void UpdateMenuSectionViews(Menu::View::TSections& sections) = 0;
 
                 virtual void CloseMenu() = 0;
 

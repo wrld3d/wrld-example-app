@@ -74,7 +74,7 @@ namespace ExampleApp
 
 				virtual void UpdateUiThread(float dt);
 				void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
-				void RefreshPresentation(bool forceRefresh, bool modeChangedToInterior);
+				void RefreshPresentation(bool modeChangedToInterior);
 
 				void OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex);
 				void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state);

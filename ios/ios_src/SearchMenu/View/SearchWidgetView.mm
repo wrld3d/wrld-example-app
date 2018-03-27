@@ -79,38 +79,23 @@ namespace ExampleApp
                 m_resultSelectedCallbacks.ExecuteCallbacks(index);
             }
             
-            void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
+            void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections)
             {
-                if (!contentsChanged)
-                {
-                    return;
-                }
                 const size_t numSections = sections.size();
                 [m_pMenuModel removeAllGroups];
-                int numGroups = 4;
-                int groupSizes[4] = {5, 2, 1, 2};
-                
-                // temp patch until this method gets rewritten (a few hours from now)
-                if (numSections == 9)   // Discover section missing
-                {
-                    numGroups = 3;
-                    groupSizes[2] = 2;
-                }
 
-                for (int sectionIndex = 0, g = 0; g < numGroups; g++)
-                {
-                    WRLDMenuGroup* group = [[WRLDMenuGroup alloc] init];
+                WRLDMenuGroup* group = NULL;
 
-                    while (--groupSizes[g] >= 0)
+                for (int sectionIndex = 0; sectionIndex < numSections; sectionIndex++)
+                {
+                    if (sectionIndex == 0 || sections[sectionIndex]->IsGroupStart())
                     {
-                        if (sectionIndex >= numSections)
-                        {
-                            return;
-                        }
-                        AddMenuSectionToGroup(group, *sections[sectionIndex], sectionIndex);
-                        sectionIndex++;
+                        group = [[WRLDMenuGroup alloc] init];
+                        
+                        [m_pMenuModel addMenuGroup:group];
                     }
-                    [m_pMenuModel addMenuGroup:group];
+
+                    AddMenuSectionToGroup(group, *sections[sectionIndex], sectionIndex);
                 }
             }
             

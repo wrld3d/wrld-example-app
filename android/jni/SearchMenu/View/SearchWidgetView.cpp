@@ -37,14 +37,10 @@ namespace ExampleApp
                                                        "(Ljava/lang/String;ZZLjava/lang/String;ZZZDDDZF)V");
             }
 
-            void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections, bool contentsChanged)
+            void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections)
             {
                 ASSERT_UI_THREAD
 
-                if (!contentsChanged)
-                {
-                    return;
-                }
                 const size_t numSections = sections.size();
                 size_t numItems = 0;
                 for(size_t i = 0; i < numSections; ++ i)
