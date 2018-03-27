@@ -252,7 +252,11 @@ namespace ExampleApp
 
             void SearchWidgetView::SetOnScreenStateToIntermediateValue(float value)
             {
+                [m_pSearchWidgetViewController hideResultsView];
+                [m_pSearchWidgetViewController closeMenu];
                 UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
+               
+                
                 CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0,m_widgetAnimationOffset*value);
 
                 [UIView animateWithDuration:0.3 animations:^{
@@ -263,7 +267,7 @@ namespace ExampleApp
             void SearchWidgetView::SetFullyOnScreen()
             {
                 UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
-
+                
                 [UIView animateWithDuration:0.3 animations:^{
                     widget.transform = CGAffineTransformIdentity;
                 }];
@@ -271,7 +275,10 @@ namespace ExampleApp
 
             void SearchWidgetView::SetFullyOffScreen()
             {
+                [m_pSearchWidgetViewController hideResultsView];
+                [m_pSearchWidgetViewController closeMenu];
                 UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
+                
                 CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0,m_widgetAnimationOffset);
 
                 [UIView animateWithDuration:0.3 animations:^{
