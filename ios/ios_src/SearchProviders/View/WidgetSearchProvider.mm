@@ -24,12 +24,12 @@
 
 - (void)searchFor:(WRLDSearchRequest *)query
 {
-    m_pSearchProvider->PeformSearch(query);
+    m_pSearchProvider->PerformSearch(query);
 }
 
 - (void)getSuggestions:(WRLDSearchRequest *)query
 {
-    m_pSearchProvider->PeformAutocompleteSuggestions(query);
+    m_pSearchProvider->PerformAutocompleteSuggestions(query);
 }
 
 @synthesize moreResultsName;

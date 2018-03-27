@@ -2,6 +2,7 @@
 
 #include "SearchProvider.h"
 #include "WidgetSearchResultModel.h"
+#include "WidgetQueryContext.h"
 
 namespace ExampleApp
 {
@@ -84,14 +85,36 @@ namespace ExampleApp
             [searchRequest didComplete:YES withResults:widgetSearchResults];
         }
 
-        void SearchProvider::PeformSearch(WRLDSearchRequest* searchRequest)
+        void SearchProvider::PerformSearch(WRLDSearchRequest* searchRequest)
         {
             m_pCurrentRequest = searchRequest;
             std::string searchQuery = [m_pCurrentRequest.queryString cStringUsingEncoding: NSUTF8StringEncoding];
-            m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
+            
+            WidgetQueryContext* widgetQueryContext = (WidgetQueryContext*) m_pCurrentRequest.queryContext;
+            
+            if (widgetQueryContext)
+            {
+                std::string tagText = [widgetQueryContext.tagText cStringUsingEncoding: NSUTF8StringEncoding];
+                const Eegeo::Space::LatLongAltitude& location = Eegeo::Space::LatLongAltitude(widgetQueryContext.latitude, widgetQueryContext.longtitude, widgetQueryContext.altitude);
+                
+                const SearchMenu::View::QueryContext& queryContext =
+                    SearchMenu::View::QueryContext(widgetQueryContext.clearPreviousResults,
+                                                   widgetQueryContext.isTag,
+                                                   tagText,
+                                                   widgetQueryContext.shouldTryInterior,
+                                                   widgetQueryContext.shouldZoomToBuildingsView,
+                                                   location,
+                                                   widgetQueryContext.radius);
+                
+                m_searchWithContextCallbacks.ExecuteCallbacks(searchQuery, queryContext);
+            }
+            else
+            {
+                m_searchPerformedCallbacks.ExecuteCallbacks(searchQuery);
+            }
         }
 
-        void SearchProvider::PeformAutocompleteSuggestions(WRLDSearchRequest* searchRequest)
+        void SearchProvider::PerformAutocompleteSuggestions(WRLDSearchRequest* searchRequest)
         {
             m_pCurrentSuggestion = searchRequest;
             std::string searchQuery = [m_pCurrentSuggestion.queryString cStringUsingEncoding: NSUTF8StringEncoding];

@@ -43,8 +43,8 @@ namespace ExampleApp
 
             void UpdateResults(const TSearchResults& searchResults, WRLDSearchRequest* searchRequest);
 
-            void PeformSearch(WRLDSearchRequest* searchRequest);
-            void PeformAutocompleteSuggestions(WRLDSearchRequest* searchRequest);
+            void PerformSearch(WRLDSearchRequest* searchRequest);
+            void PerformAutocompleteSuggestions(WRLDSearchRequest* searchRequest);
         };
     }
 }

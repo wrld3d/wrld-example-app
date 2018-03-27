@@ -20,10 +20,10 @@ set(currsources
   ios_src/SearchMenu/View/SearchResultsTableDataProvider.h
   ios_src/SearchMenu/View/SearchResultsTableDataProvider.mm
   ios_src/SearchMenu/View/SearchResultsTableScrollDelegate.h
+  ios_src/SearchMenu/View/SearchWidgetMenuContext.mm
+  ios_src/SearchMenu/View/SearchWidgetMenuContext.h
   ios_src/SearchMenu/View/SearchWidgetView.mm
   ios_src/SearchMenu/View/SearchWidgetView.h
-  ios_src/SearchMenu/View/SwallowSectionChild.h
-  ios_src/SearchMenu/View/SwallowSectionOption.h
   ios_src/SearchMenu/View/WidgetSearchResultTableViewCell.mm
   ios_src/SearchMenu/View/WidgetSearchResultTableViewCell.h
   ios_src/SearchMenu/View/ISearchWidgetViewModule.h
