@@ -125,6 +125,17 @@ const int DeletePinAlertViewTag = 2;
         [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pDropPinContainer addSubview: self.pPinButton];
         
+        self.pDirectionsContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        self.pDirectionsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        [self.pControlContainer addSubview:self.pDirectionsContainer];
+        
+        self.pDirectionsButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
+        [self.pDirectionsButton setTitle:@"Directions" forState:UIControlStateNormal];
+        [self.pDirectionsButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBorderColor forState:UIControlStateHighlighted];
+        [self.pDirectionsButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
+        [self.pDirectionsButton addTarget:self action:@selector(handleDirectionsButtonSelected) forControlEvents:UIControlEventTouchUpInside];
+        [self.pDirectionsContainer addSubview: self.pDirectionsButton];
+        
         self.pPreviewImage = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pPreviewImage.clipsToBounds = YES;
         [self.pPreviewImageContainer addSubview: self.pPreviewImage];
@@ -231,6 +242,12 @@ const int DeletePinAlertViewTag = 2;
     
     [self.pDropPinContainer removeFromSuperview];
     [self.pDropPinContainer release];
+    
+    [self.pDirectionsButton removeFromSuperview];
+    [self.pDirectionsButton release];
+    
+    [self.pDirectionsContainer removeFromSuperview];
+    [self.pDirectionsContainer release];
     
     [self.pControlContainer removeFromSuperview];
     [self.pControlContainer release];
@@ -353,7 +370,7 @@ const int DeletePinAlertViewTag = 2;
     
     const float headlineHeight = 50.f;
     const float pinButtonSectionHeight = 64.f;
-    const float closeButtonSectionOffsetY = mainWindowHeight - 46.f;
+    const float closeButtonSectionOffsetY = mainWindowHeight - 94.f;
     const float contentSectionHeight = mainWindowHeight - (pinButtonSectionHeight + headlineHeight);
     
     const float topMargin = 15.f;
@@ -431,6 +448,16 @@ const int DeletePinAlertViewTag = 2;
     
     
     self.pPinButton.frame = CGRectMake(0.f,
+                                       0.f,
+                                       cardContainerWidth,
+                                       42.f);
+    
+    self.pDirectionsContainer.frame = CGRectMake(sideMargin,
+                                              closeButtonSectionOffsetY - bottomMargin + 50.f,
+                                              cardContainerWidth,
+                                              42.f);
+    
+    self.pDirectionsButton.frame = CGRectMake(0.f,
                                        0.f,
                                        cardContainerWidth,
                                        42.f);
@@ -1045,6 +1072,12 @@ const int DeletePinAlertViewTag = 2;
     {
         [self togglePinState];
     }
+}
+
+- (void) handleDirectionsButtonSelected
+{
+    m_pInterop->HandleDirectionsClicked(m_model);
+    m_pInterop->HandleCloseClicked();
 }
 
 - (void) togglePinState

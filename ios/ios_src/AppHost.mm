@@ -81,6 +81,9 @@
 #include "InteriorMetaDataRepository.h"
 #include "InteriorMetaDataModule.h"
 #include "iOSAutomatedScreenshotController.h"
+#include "NavUIViewModule.h"
+#include "SearchResultPoiViewContainer.h"
+
 
 #import "UIView+TouchExclusivity.h"
 
@@ -432,6 +435,15 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                  *m_pURLRequestHandler,
                                                                                  m_pApp->GetApplicationConfiguration().TimerSurveyUrl());
     
+    
+    {
+        SearchResultPoiViewContainer *searchResultPoiViewContainer =
+            &m_pSearchResultPoiViewModule->GetView();
+        ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultPoiViewInterop =
+            (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)[(id)searchResultPoiViewContainer getInterop];
+        m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavUI::View::NavUIViewModule)(searchResultPoiViewInterop);
+    }
+    
     // 3d map view layer.
     
     // Initial Experience background
@@ -458,6 +470,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pOptionsViewModule->GetOptionsView()];
     [m_pView addSubview: &m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView()];
     [m_pView addSubview: &m_pMyPinDetailsViewModule->GetMyPinDetailsView()];
+    [m_pView addSubview: &m_pNavUIViewModule->GetNavUIView()];
     
     // Interior tutorial layer
     [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetTutorialView()];
@@ -501,6 +514,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pSearchResultPoiViewModule->GetView() removeFromSuperview];
     [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
+    [&m_pNavUIViewModule->GetNavUIView() removeFromSuperview];
     
     
     // Initial experience layer
@@ -521,6 +535,8 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pMyPinCreationConfirmationViewModule;
     
     Eegeo_DELETE m_pAboutPageViewModule;
+    
+    Eegeo_DELETE m_pNavUIViewModule;
 
     Eegeo_DELETE m_pCompassViewModule;
 
