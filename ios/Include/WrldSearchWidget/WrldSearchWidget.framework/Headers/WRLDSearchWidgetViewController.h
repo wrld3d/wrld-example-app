@@ -8,6 +8,7 @@
 @class WRLDSuggestionProviderHandle;
 @class WRLDSearchResultSelectedObserver;
 @class WRLDMenuObserver;
+@class WRLDSearchWidgetObserver;
 @class WRLDSearchWidgetStyle;
 
 @interface WRLDSearchWidgetViewController : UIViewController <UISearchBarDelegate>
@@ -15,10 +16,12 @@
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver * searchSelectionObserver;
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver * suggestionSelectionObserver;
 @property (nonatomic, readonly) WRLDMenuObserver * menuObserver;
+@property (nonatomic, readonly) WRLDSearchWidgetObserver * observer;
 @property (nonatomic, readonly) WRLDSearchWidgetStyle * style;
 @property (nonatomic, readonly) BOOL searchBarIsFirstResponder;
 @property (nonatomic, readonly) BOOL isMenuOpen;
 @property (nonatomic, readonly) BOOL isResultsViewVisible;
+@property (nonatomic, readonly) BOOL hasFocus;
 
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel;
 
@@ -44,5 +47,9 @@
 - (void)collapseMenu;
 
 - (void)expandMenuOptionAt:(NSUInteger)index;
+
+- (void)enableVoiceSearch:(NSString*)promptText;
+
+- (void)disableVoiceSearch;
 
 @end

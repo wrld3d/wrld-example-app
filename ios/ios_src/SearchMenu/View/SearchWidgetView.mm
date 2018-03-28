@@ -92,7 +92,7 @@ namespace ExampleApp
                     }
                 };
 
-
+                [m_pSearchWidgetViewController enableVoiceSearch:@"Search BWAY"];
                 
                 m_menuGroups = [[NSMutableDictionary alloc] init];
                 m_menuOptions = [[NSMutableDictionary alloc] init];
