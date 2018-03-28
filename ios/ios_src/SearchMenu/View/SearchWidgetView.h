@@ -35,6 +35,10 @@ namespace ExampleApp
                 
                 bool m_hasPopulatedData;
                 
+                void (^m_onResultSelection) (id<WRLDSearchResultModel>);
+                void (^m_onMenuSelection) (NSObject*);
+                void (^m_onQueryCancelled) (WRLDSearchQuery *query);
+
                 bool m_searchResultsAreVisible;
                 bool m_menuIsOpen;
                 bool m_searchTextboxIsInFocus;
