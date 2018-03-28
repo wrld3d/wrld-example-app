@@ -45,6 +45,10 @@
 	<string>$(PRODUCT_NAME) would like to increase indoor location accuracy using your device's bluetooth.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>If you allow access to your location the app can display your position in the map.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>If you allow access to the Speech Recognition feature you can search using your voice</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>If you allow access to the Microphone you can search using your voice</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string></string>
 	<key>NSCameraUsageDescription</key>

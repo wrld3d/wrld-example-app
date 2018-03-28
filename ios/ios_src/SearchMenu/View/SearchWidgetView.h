@@ -29,10 +29,21 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection3<const std::string&, int, int> m_onItemSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
-
+                
+                NSMutableDictionary *m_menuGroups;
+                NSMutableDictionary *m_menuOptions;
+                
+                bool m_hasPopulatedData;
+                
                 void (^m_onResultSelection) (id<WRLDSearchResultModel>);
                 void (^m_onMenuSelection) (NSObject*);
                 void (^m_onQueryCancelled) (WRLDSearchQuery *query);
+                void (^m_onQueryEvent) (WRLDSearchQuery *query);
+                void (^m_onFocusEvent) ();
+                void (^m_onMenuEvent) (BOOL);
+                
+                void AddEventListeners();
+                void RemoveEventListeners();
 
                 bool m_searchResultsAreVisible;
                 bool m_menuIsOpen;
@@ -43,6 +54,8 @@ namespace ExampleApp
                 CGFloat m_widgetAnimationOffset;
 
                 TagCollection m_tagCollection;
+                void UpdateDiscoverGroup(Menu::View::TSections& sections);
+                void PopulateMenuData(Menu::View::TSections& sections);
             public:
                 SearchWidgetView(id<WRLDSearchProvider> searchProvider,
                                  id<WRLDSuggestionProvider> suggestionProvider,
