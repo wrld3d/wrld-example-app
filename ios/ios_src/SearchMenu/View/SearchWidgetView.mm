@@ -16,12 +16,13 @@ namespace ExampleApp
             SearchWidgetView::SearchWidgetView(id<WRLDSearchProvider> searchProvider,
                                                id<WRLDSuggestionProvider> suggestionProvider,
                                                ExampleAppMessaging::TMessageBus& messageBus)
-            :m_tagCollection(messageBus)
+            : m_tagCollection(messageBus)
             , m_menuIsOpen(false)
             , m_searchResultsAreVisible(true)
             , m_searchTextboxIsInFocus(false)
             , m_hasSearchResults(false)
             , m_searchInProgress(false)
+            , m_hasPopulatedData(false)
             {
                 m_pSearchModel = [[WRLDSearchModel alloc] init];
                 m_pMenuModel = [[WRLDSearchMenuModel alloc] init];
@@ -32,7 +33,7 @@ namespace ExampleApp
 
                 [m_pSearchWidgetViewController displaySearchProvider: m_pSearchProviderHandle];
                 [m_pSearchWidgetViewController displaySuggestionProvider: m_pSuggestionProviderHandle];
-
+                
                 void (^onResultSelection) (id<WRLDSearchResultModel>) = ^(id<WRLDSearchResultModel> selectedResultModel)
                 {
                     WidgetSearchResultModel* selectedResultModelWithIndex = (WidgetSearchResultModel*) selectedResultModel;
@@ -92,10 +93,18 @@ namespace ExampleApp
                 };
 
                 [[m_pSearchWidgetViewController menuObserver] addOptionSelectedEvent:onMenuSelection];
+                
+                m_menuGroups = [[NSMutableDictionary alloc] init];
+                m_menuOptions = [[NSMutableDictionary alloc] init];
+
             }
 
             SearchWidgetView::~SearchWidgetView()
             {
+                [m_menuOptions release];
+                [m_menuGroups release];
+                [m_pMenuModel release];
+                [m_pSearchModel release];
             }
 
             UIViewController* SearchWidgetView::GetWidgetController() const
@@ -115,24 +124,85 @@ namespace ExampleApp
 
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections)
             {
+                if(m_hasPopulatedData != true){
+                    PopulateMenuData(sections);
+                    m_hasPopulatedData = true;
+                    return;
+                }
+                UpdateDiscoverGroup(sections);
+                
                 const size_t numSections = sections.size();
-                [m_pMenuModel removeAllGroups];
-
+                
+                for (int sectionIndex = 0; sectionIndex < numSections; sectionIndex++)
+                {
+                    Menu::View::IMenuSectionViewModel& section = *sections[sectionIndex];
+                    
+                    NSString* nsName = [NSString stringWithUTF8String:section.Name().c_str()];
+                    
+                    WRLDMenuOption* option = m_menuOptions[nsName];
+                    [option removeAllChildren];
+                    
+                    if (section.IsExpandable())
+                    {
+                        AddMenuChildren(option, section, sectionIndex);
+                    }
+                }
+            }
+            
+            void SearchWidgetView::UpdateDiscoverGroup(Menu::View::TSections& sections){
+                NSString *groupName = @"Discover";
+                WRLDMenuGroup *group = m_menuGroups[groupName];
+                
+                BOOL shouldShowDiscover = false;
+                
+                const size_t numSections = sections.size();
+                
+                for (int sectionIndex = 0; sectionIndex < numSections; sectionIndex++)
+                {
+                    if (sectionIndex == 0 || sections[sectionIndex]->IsGroupStart())
+                    {
+                        Menu::View::IMenuSectionViewModel& section = *sections[sectionIndex];
+                        NSString* optionName = [NSString stringWithUTF8String:section.Name().c_str()];
+                        if([optionName isEqualToString:groupName]){
+                            WRLDMenuOption *option = m_menuOptions[optionName];
+                            //TODO: when widget is updated so that it's possible, check if group has options rather than removing option.
+                            [group removeOption:option];
+                            [group addOption:option];
+                            shouldShowDiscover = true;
+                        }
+                    }
+                }
+                
+                if(shouldShowDiscover != true){
+                    [group removeAllOptions];
+                }
+                
+            }
+            
+            void SearchWidgetView::PopulateMenuData(Menu::View::TSections& sections){
+                const size_t numSections = sections.size();
+                
                 WRLDMenuGroup* group = NULL;
-
+                
                 for (int sectionIndex = 0; sectionIndex < numSections; sectionIndex++)
                 {
                     if (sectionIndex == 0 || sections[sectionIndex]->IsGroupStart())
                     {
                         group = [[WRLDMenuGroup alloc] init];
-
+                        
                         [m_pMenuModel addMenuGroup:group];
+                        
+                        Menu::View::IMenuSectionViewModel& section = *sections[sectionIndex];
+                       NSString* nsName = [NSString stringWithUTF8String:section.Name().c_str()];
+                        
+                       [m_menuGroups setObject:group forKey:nsName];
                     }
-
+                    
                     AddMenuSectionToGroup(group, *sections[sectionIndex], sectionIndex);
                 }
+                
             }
-
+            
             void SearchWidgetView::PerformSearch(const std::string& query, const QueryContext& context)
             {
                 NSString* queryString = [NSString stringWithUTF8String:query.c_str()];
@@ -300,6 +370,7 @@ namespace ExampleApp
                                                                           context:widgetMenuContext];
 
                 [group addOption:menuOption];
+                [m_menuOptions setObject:menuOption forKey:nsName];
 
                 return menuOption;
             }
@@ -339,7 +410,8 @@ namespace ExampleApp
 
             void SearchWidgetView::CloseMenu()
             {
-
+                [m_pSearchWidgetViewController hideResultsView];
+                [m_pSearchWidgetViewController closeMenu];
             }
         }
     }
