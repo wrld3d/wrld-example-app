@@ -14,6 +14,13 @@ namespace Eegeo
 
 namespace ExampleApp
 {
+    namespace OpenableControl
+    {
+        namespace View
+        {
+            class IOpenableControlViewModel;
+        }
+    }
     namespace SearchResultPoi
     {
         namespace View
@@ -29,7 +36,8 @@ namespace ExampleApp
             {
             public:
                 NavUIViewModule(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop,
-                                Eegeo::iOS::iOSLocationService* iOSLocationService);
+                                Eegeo::iOS::iOSLocationService* iOSLocationService,
+                                ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable);
 
                 ~NavUIViewModule();
 

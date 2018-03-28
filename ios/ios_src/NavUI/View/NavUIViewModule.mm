@@ -11,6 +11,8 @@
 
 #include "iOSLocationService.h"
 
+#include "IOpenableControlViewModel.h"
+
 //Wrld Example App fudges the propagation of touch events so to prevent our touch events getting
 //passed down to the Map we need to extend our common widget with a consumesTouch selector.
 @interface WrldNavWidgetBase(ExampleApp)
@@ -40,11 +42,15 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::TCallback1<Private, Search::SdkModel::SearchResultModel> directionsClickedCallbackObj;
                 
+                ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable;
+                
                 Private(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop_,
-                        Eegeo::iOS::iOSLocationService* iOSLocationService_):
+                        Eegeo::iOS::iOSLocationService* iOSLocationService_,
+                        ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable_):
                     searchResultsPoiViewInterop(searchResultsPoiViewInterop_),
                     iOSLocationService(iOSLocationService_),
-                    directionsClickedCallbackObj(this, &Private::directionsClickedCallback)
+                    directionsClickedCallbackObj(this, &Private::directionsClickedCallback),
+                    openable(openable_)
                 {
                     searchResultsPoiViewInterop->InsertDirectionsCallback(directionsClickedCallbackObj);
                 }
@@ -82,6 +88,16 @@ namespace ExampleApp
                     
                     [model setEndLocation:location];
                     setStartLocationToCurrentLocation();
+                    
+                    if(!openable.Open(true))
+                    {
+                        if(openable.IsFullyOpen())
+                        {
+                            openable.Close();
+                        }
+                        return;
+                    }
+                    
                     [model sendNavEvent:@"combinedWidgetAnimateIn"];
                 }
                 
@@ -101,25 +117,16 @@ namespace ExampleApp
                     [location setIndoorID: nil];
                     [location setFloorID: 0];
                     [model setStartLocation:location];
-                    
-                    NSLog(@"TDP lon %f", [location latLon].longitude);
-                    NSLog(@"TDP lat %f", [location latLon].latitude);
                 }
                 
-                void modelSet() override
-                {
-                    NSLog(@"TDP modelSet");
-                }
-                
-                void changeReceived(const std::string& keyPath) override
-                {
-                    NSLog(@"TDP changeReceived");
-                }
+                //void modelSet() override {}
+                //void changeReceived(const std::string& keyPath) override {}
                 
                 void eventReceived(const std::string& key) override
                 {
                     if(key == "closeSetupJourneyClicked")
                     {
+                        openable.Close();
                         [navModel() sendNavEvent:@"combinedWidgetAnimateOut"];
                     }
                     
@@ -136,9 +143,11 @@ namespace ExampleApp
             };
             
             NavUIViewModule::NavUIViewModule(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop,
-                                             Eegeo::iOS::iOSLocationService* iOSLocationService):
+                                             Eegeo::iOS::iOSLocationService* iOSLocationService,
+                                             ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable):
               d(new Private(searchResultsPoiViewInterop,
-                            iOSLocationService))
+                            iOSLocationService,
+                            openable))
             {
                 d->model = [[JourneysModel alloc] init];                
                 d->setNavModel(d->model);
@@ -151,7 +160,7 @@ namespace ExampleApp
                 [d->view setViewVisibilityWithAnimate:false hideViews:true];
                 
                 [d->view setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-                [[d->view observer] setJourneysModel:d->model]; 
+                [[d->view observer] setJourneysModel:d->model];
             }
 
             NavUIViewModule::~NavUIViewModule()

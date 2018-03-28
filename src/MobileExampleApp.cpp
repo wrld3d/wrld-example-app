@@ -217,6 +217,7 @@ namespace ExampleApp
     , m_pCameraTransitionController(NULL)
     , m_pSettingsMenuModule(NULL)
     , m_pSearchMenuModule(NULL)
+    , m_pNavUIModule(NULL)
     , m_pSearchResultSectionModule(NULL)
     , m_pModalityModule(NULL)
     , m_pTagSearchModule(NULL)
@@ -685,7 +686,9 @@ namespace ExampleApp
                                                                                             m_messageBus,
                                                                                             m_metricsService);
         
-
+        m_pNavUIModule = Eegeo_NEW(ExampleApp::NavUI::View::NavUIModule)(m_identityProvider,
+                                                                         m_pReactionControllerModule->GetReactionControllerModel());
+  
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
         m_pSearchResultSectionModule = Eegeo_NEW(SearchResultSection::SdkModel::SearchResultSectionModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
@@ -954,8 +957,10 @@ namespace ExampleApp
         Eegeo_DELETE m_pPoiRingModule;
 
         Eegeo_DELETE m_pMyPinCreationModule;
-
+        
         Eegeo_DELETE m_pSearchMenuModule;
+        
+        Eegeo_DELETE m_pNavUIModule;
 
         Eegeo_DELETE m_pSearchResultSectionModule;
 
@@ -1024,6 +1029,7 @@ namespace ExampleApp
         openables.push_back(&MyPinDetailsModule().GetObservableOpenableControl());
         openables.push_back(&MyPinCreationModule().GetObservableOpenableControl());
         openables.push_back(&OptionsModule().GetObservableOpenableControl());
+        openables.push_back(&NavUIModule().GetObservableOpenableControl());
         return openables;
     }
 

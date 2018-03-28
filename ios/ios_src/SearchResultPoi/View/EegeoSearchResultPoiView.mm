@@ -130,9 +130,13 @@ const int DeletePinAlertViewTag = 2;
         [self.pControlContainer addSubview:self.pDirectionsContainer];
         
         self.pDirectionsButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pDirectionsButton setTitle:@"Directions" forState:UIControlStateNormal];
+        [self.pDirectionsButton setTitle:@"   Directions" forState:UIControlStateNormal];
         [self.pDirectionsButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBorderColor forState:UIControlStateHighlighted];
-        [self.pDirectionsButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
+        {
+            NSBundle* bundle = [NSBundle bundleWithIdentifier:@"com.wrld.WrldJourneys"];
+            UIImage* image = [UIImage imageNamed:@"start_icon" inBundle:bundle compatibleWithTraitCollection:nil];
+            [self.pDirectionsButton setDefaultStatesWithImages:image :image];
+        }
         [self.pDirectionsButton addTarget:self action:@selector(handleDirectionsButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pDirectionsContainer addSubview: self.pDirectionsButton];
         
@@ -1076,8 +1080,8 @@ const int DeletePinAlertViewTag = 2;
 
 - (void) handleDirectionsButtonSelected
 {
-    m_pInterop->HandleDirectionsClicked(m_model);
     m_pInterop->HandleCloseClicked();
+    m_pInterop->HandleDirectionsClicked(m_model);
 }
 
 - (void) togglePinState

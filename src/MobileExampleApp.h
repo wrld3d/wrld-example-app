@@ -93,6 +93,7 @@
 #include "AutomatedScreenshotController.h"
 #include "SelectFirstResultSearchService.h"
 #include "MapsceneModule.h"
+#include "NavUIModule.h"
 
 namespace ExampleApp
 {
@@ -123,6 +124,7 @@ namespace ExampleApp
         Eegeo::Helpers::IdentityProvider m_identityProvider;
         ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule* m_pSettingsMenuModule;
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
+        NavUI::View::NavUIModule* m_pNavUIModule;
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
@@ -275,6 +277,11 @@ namespace ExampleApp
         const SearchMenu::SdkModel::ISearchMenuModule& SearchMenuModule() const
         {
             return *m_pSearchMenuModule;
+        }
+        
+        const ExampleApp::NavUI::View::NavUIModule& NavUIModule() const
+        {
+            return *m_pNavUIModule;
         }
         
         const SearchResultSection::SdkModel::ISearchResultSectionModule& SearchResultSectionModule() const
