@@ -38,6 +38,12 @@ namespace ExampleApp
                 void (^m_onResultSelection) (id<WRLDSearchResultModel>);
                 void (^m_onMenuSelection) (NSObject*);
                 void (^m_onQueryCancelled) (WRLDSearchQuery *query);
+                void (^m_onQueryEvent) (WRLDSearchQuery *query);
+                void (^m_onFocusEvent) ();
+                void (^m_onMenuEvent) (BOOL);
+                
+                void AddEventListeners();
+                void RemoveEventListeners();
 
                 bool m_searchResultsAreVisible;
                 bool m_menuIsOpen;

@@ -34,18 +34,7 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController displaySearchProvider: m_pSearchProviderHandle];
                 [m_pSearchWidgetViewController displaySuggestionProvider: m_pSuggestionProviderHandle];
 
-                m_onResultSelection = ^(id<WRLDSearchResultModel> selectedResultModel)
-                {
-                    WidgetSearchResultModel* selectedResultModelWithIndex = (WidgetSearchResultModel*) selectedResultModel;
-                    if (selectedResultModelWithIndex != nil)
-                    {
-                        this->OnSearchResultSelected((int)selectedResultModelWithIndex.index);
-                    }
-
-                    [m_pSearchWidgetViewController resignFocus];
-                };
-
-                [[m_pSearchWidgetViewController searchSelectionObserver] addResultSelectedEvent:m_onResultSelection];
+               
 
                 CGRect screenRect = [[UIScreen mainScreen] bounds];
                 CGFloat screenWidth = screenRect.size.width;
@@ -73,6 +62,52 @@ namespace ExampleApp
 
                 [m_pSearchWidgetViewController registerNib:nib forUseWithResultsTableCellIdentifier:@"WidgetSearchResultTableViewCell"];
 
+                [m_pSearchWidgetViewController enableVoiceSearch:@"Search BWAY"];
+
+                m_menuGroups = [[NSMutableDictionary alloc] init];
+                m_menuOptions = [[NSMutableDictionary alloc] init];
+                
+                AddEventListeners();
+            }
+            
+            
+            SearchWidgetView::~SearchWidgetView()
+            {
+                [m_menuOptions release];
+                [m_menuGroups release];
+                [m_pMenuModel release];
+                [m_pSearchModel release];
+
+                RemoveEventListeners();
+            }
+            
+            void SearchWidgetView::AddEventListeners(){
+                
+                m_onResultSelection = ^(id<WRLDSearchResultModel> selectedResultModel)
+                {
+                    WidgetSearchResultModel* selectedResultModelWithIndex = (WidgetSearchResultModel*) selectedResultModel;
+                    if (selectedResultModelWithIndex != nil)
+                    {
+                        this->OnSearchResultSelected((int)selectedResultModelWithIndex.index);
+                    }
+                    
+                    [m_pSearchWidgetViewController resignFocus];
+                };
+                
+                [m_pSearchWidgetViewController.searchSelectionObserver addResultSelectedEvent:m_onResultSelection];
+                
+                m_onFocusEvent = ^{
+                    this->pushControlsOfScreenIfNeeded();
+                };
+                
+                [m_pSearchWidgetViewController.observer addResignedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetViewController.observer addGainedFocusEvent:m_onFocusEvent];
+               
+                
+                m_onMenuEvent = ^(BOOL opened){
+                    this->pushControlsOfScreenIfNeeded();
+                };
+                
                 m_onMenuSelection = ^(NSObject* selectedOptionContext)
                 {
                     SearchWidgetMenuContext* widgetMenuContext = (SearchWidgetMenuContext*) selectedOptionContext;
@@ -81,9 +116,9 @@ namespace ExampleApp
                         const std::string menuText = [widgetMenuContext.menuText cStringUsingEncoding: NSUTF8StringEncoding];
                         int sectionIndex = (int) widgetMenuContext.sectionIndex;
                         int itemIndex = (int) widgetMenuContext.itemIndex;
-
+                        
                         this->HandleItemSelected(menuText, sectionIndex, itemIndex);
-
+                        
                         if (m_tagCollection.HasTag(menuText))
                         {
                             [m_pSearchWidgetViewController closeMenu];
@@ -95,32 +130,41 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController enableVoiceSearch:@"Search BWAY"];
                 [m_pSearchWidgetViewController setSearchBarPlaceholder:@"Search Bloomberg"];
                 
-                m_menuGroups = [[NSMutableDictionary alloc] init];
-                m_menuOptions = [[NSMutableDictionary alloc] init];
-
-
-                [[m_pSearchWidgetViewController menuObserver] addOptionSelectedEvent:m_onMenuSelection];
-
+                [m_pSearchWidgetViewController.menuObserver addOptionSelectedEvent:m_onMenuSelection];
+               
+                [m_pSearchWidgetViewController.menuObserver addOpenedEvent:m_onMenuEvent];
+                [m_pSearchWidgetViewController.menuObserver addClosedEvent:m_onMenuEvent];
+                
+                m_onQueryEvent =^(WRLDSearchQuery *query){
+                    this->pushControlsOfScreenIfNeeded();
+                };
+                
                 m_onQueryCancelled = ^(WRLDSearchQuery *query)
                 {
                     m_searchClearedCallbacks.ExecuteCallbacks();
                 };
-
-                [[m_pSearchModel searchObserver] addQueryCancelledEvent:m_onQueryCancelled];
-
+                
+                [m_pSearchModel.searchObserver addQueryStartingEvent:m_onQueryEvent];
+                [m_pSearchModel.searchObserver addQueryCompletedEvent:m_onQueryEvent];
+                [m_pSearchModel.searchObserver addQueryCancelledEvent:m_onQueryEvent];
+                [m_pSearchModel.searchObserver addQueryCancelledEvent:m_onQueryCancelled];
+                
             }
-
-            SearchWidgetView::~SearchWidgetView()
-            {
-
-                [m_menuOptions release];
-                [m_menuGroups release];
-                [m_pMenuModel release];
-                [m_pSearchModel release];
-
-                [[m_pSearchModel searchObserver] removeQueryCancelledEvent:m_onQueryCancelled];
-                [[m_pSearchWidgetViewController menuObserver] removeOptionSelectedEvent:m_onMenuSelection];
-                [[m_pSearchWidgetViewController searchSelectionObserver] removeResultSelectedEvent:m_onResultSelection];
+            
+            void SearchWidgetView::RemoveEventListeners(){
+                [m_pSearchModel.searchObserver removeQueryStartingEvent:m_onQueryEvent];
+                [m_pSearchModel.searchObserver removeQueryCompletedEvent:m_onQueryEvent];
+                [m_pSearchModel.searchObserver removeQueryCancelledEvent:m_onQueryEvent];
+                [m_pSearchModel.searchObserver removeQueryCancelledEvent:m_onQueryCancelled];
+                
+                [m_pSearchWidgetViewController.searchSelectionObserver removeResultSelectedEvent:m_onResultSelection];
+                
+                [m_pSearchWidgetViewController.observer removeGainedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetViewController.observer removeResignedFocusEvent:m_onFocusEvent];
+                
+                [m_pSearchWidgetViewController.menuObserver removeClosedEvent:m_onMenuEvent];
+                [m_pSearchWidgetViewController.menuObserver removeOpenedEvent:m_onMenuEvent];
+                [m_pSearchWidgetViewController.menuObserver removeOptionSelectedEvent:m_onMenuSelection];
             }
 
             UIViewController* SearchWidgetView::GetWidgetController() const
@@ -291,10 +335,10 @@ namespace ExampleApp
             }
 
             void SearchWidgetView::pushControlsOfScreenIfNeeded(){
-
-              bool hasVisibleSearchResults = m_searchResultsAreVisible && (m_hasSearchResults || m_searchInProgress);
-
-               bool shouldTakeFocus = m_searchTextboxIsInFocus ||hasVisibleSearchResults || m_menuIsOpen;
+              
+                bool hasVisibleSearchResults = m_searchResultsAreVisible && (m_hasSearchResults || m_pSearchModel.isSearchQueryInFlight);
+              
+                bool shouldTakeFocus = m_pSearchWidgetViewController.searchBarIsFirstResponder || hasVisibleSearchResults || m_pSearchWidgetViewController.isMenuOpen;
 
                 if( shouldTakeFocus )
                 {
