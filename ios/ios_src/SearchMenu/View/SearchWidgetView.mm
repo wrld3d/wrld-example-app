@@ -33,7 +33,7 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController displaySearchProvider: m_pSearchProviderHandle];
                 [m_pSearchWidgetViewController displaySuggestionProvider: m_pSuggestionProviderHandle];
 
-                void (^onResultSelection) (id<WRLDSearchResultModel>) = ^(id<WRLDSearchResultModel> selectedResultModel)
+                m_onResultSelection = ^(id<WRLDSearchResultModel> selectedResultModel)
                 {
                     WidgetSearchResultModel* selectedResultModelWithIndex = (WidgetSearchResultModel*) selectedResultModel;
                     if (selectedResultModelWithIndex != nil)
@@ -44,7 +44,7 @@ namespace ExampleApp
                     [m_pSearchWidgetViewController resignFocus];
                 };
 
-                [[m_pSearchWidgetViewController searchSelectionObserver] addResultSelectedEvent:onResultSelection];
+                [[m_pSearchWidgetViewController searchSelectionObserver] addResultSelectedEvent:m_onResultSelection];
 
                 CGRect screenRect = [[UIScreen mainScreen] bounds];
                 CGFloat screenWidth = screenRect.size.width;
@@ -72,7 +72,7 @@ namespace ExampleApp
 
                 [m_pSearchWidgetViewController registerNib:nib forUseWithResultsTableCellIdentifier:@"WidgetSearchResultTableViewCell"];
 
-                void (^onMenuSelection) (NSObject*) = ^(NSObject* selectedOptionContext)
+                m_onMenuSelection = ^(NSObject* selectedOptionContext)
                 {
                     SearchWidgetMenuContext* widgetMenuContext = (SearchWidgetMenuContext*) selectedOptionContext;
                     if (widgetMenuContext != nil)
@@ -91,11 +91,21 @@ namespace ExampleApp
                     }
                 };
 
-                [[m_pSearchWidgetViewController menuObserver] addOptionSelectedEvent:onMenuSelection];
+                [[m_pSearchWidgetViewController menuObserver] addOptionSelectedEvent:m_onMenuSelection];
+
+                m_onQueryCancelled = ^(WRLDSearchQuery *query)
+                {
+                    m_searchClearedCallbacks.ExecuteCallbacks();
+                };
+
+                [[m_pSearchModel searchObserver] addQueryCancelledEvent:m_onQueryCancelled];
             }
 
             SearchWidgetView::~SearchWidgetView()
             {
+                [[m_pSearchModel searchObserver] removeQueryCancelledEvent:m_onQueryCancelled];
+                [[m_pSearchWidgetViewController menuObserver] removeOptionSelectedEvent:m_onMenuSelection];
+                [[m_pSearchWidgetViewController searchSelectionObserver] removeResultSelectedEvent:m_onResultSelection];
             }
 
             UIViewController* SearchWidgetView::GetWidgetController() const
@@ -334,8 +344,6 @@ namespace ExampleApp
                     }
                 }
             }
-
-
 
             void SearchWidgetView::CloseMenu()
             {

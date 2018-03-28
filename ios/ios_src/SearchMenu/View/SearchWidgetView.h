@@ -30,6 +30,10 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
 
+                void (^m_onResultSelection) (id<WRLDSearchResultModel>);
+                void (^m_onMenuSelection) (NSObject*);
+                void (^m_onQueryCancelled) (WRLDSearchQuery *query);
+
                 bool m_searchResultsAreVisible;
                 bool m_menuIsOpen;
                 bool m_searchTextboxIsInFocus;
@@ -95,6 +99,8 @@ namespace ExampleApp
                 void AddMenuChildren(WRLDMenuOption* option,
                                      const Menu::View::IMenuSectionViewModel& section,
                                      int sectionIndex);
+                
+                void OnResultSelection(id<WRLDSearchResultModel> selectedResultModel);
             };
         }
     }
