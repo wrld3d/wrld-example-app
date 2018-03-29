@@ -16,11 +16,7 @@ namespace ExampleApp
                                                id<WRLDSuggestionProvider> suggestionProvider,
                                                ExampleAppMessaging::TMessageBus& messageBus)
             : m_tagCollection(messageBus)
-            , m_menuIsOpen(false)
-            , m_searchResultsAreVisible(true)
-            , m_searchTextboxIsInFocus(false)
             , m_hasSearchResults(false)
-            , m_searchInProgress(false)
             , m_hasPopulatedData(false)
             {
                 m_pSearchModel = [[WRLDSearchModel alloc] init];
@@ -259,7 +255,6 @@ namespace ExampleApp
                     
                     AddMenuSectionToGroup(group, *sections[sectionIndex], sectionIndex);
                 }
-                
             }
             
             void SearchWidgetView::PerformSearch(const std::string& query, const QueryContext& context)
@@ -385,7 +380,6 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController closeMenu];
                 UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
                
-                
                 CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0,m_widgetAnimationOffset*value);
 
                 [UIView animateWithDuration:0.3 animations:^{
@@ -459,7 +453,6 @@ namespace ExampleApp
                         WRLDMenuChild* child = [[WRLDMenuChild alloc] initWithText:nsChildName
                                                                               icon:nsChildIcon
                                                                            context:widgetMenuChildContex];
-
                         [option addChild:child];
                     }
                 }

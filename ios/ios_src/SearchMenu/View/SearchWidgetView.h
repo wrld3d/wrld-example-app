@@ -44,12 +44,8 @@ namespace ExampleApp
                 void AddEventListeners();
                 void RemoveEventListeners();
 
-                bool m_searchResultsAreVisible;
-                bool m_menuIsOpen;
-                bool m_searchTextboxIsInFocus;
                 bool m_hasSearchResults;
-                bool m_searchInProgress;
-
+                
                 CGFloat m_widgetAnimationOffset;
 
                 TagCollection m_tagCollection;
