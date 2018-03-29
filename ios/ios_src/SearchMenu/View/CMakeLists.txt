@@ -24,6 +24,8 @@ set(currsources
   ios_src/SearchMenu/View/SearchWidgetMenuContext.h
   ios_src/SearchMenu/View/SearchWidgetView.mm
   ios_src/SearchMenu/View/SearchWidgetView.h
+  ios_src/SearchMenu/View/SearchWidgetContainerView.mm
+  ios_src/SearchMenu/View/SearchWidgetContainerView.h
   ios_src/SearchMenu/View/WidgetSearchResultTableViewCell.mm
   ios_src/SearchMenu/View/WidgetSearchResultTableViewCell.h
   ios_src/SearchMenu/View/ISearchWidgetViewModule.h

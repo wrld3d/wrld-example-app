@@ -4,7 +4,7 @@
 
 #include "Menu.h"
 #include "SearchMenuViewIncludes.h"
-#include "SearchWidgetView.h"
+#include "SearchWidgetContainerView.h"
 #include "SearchWidgetController.h"
 
 namespace ExampleApp

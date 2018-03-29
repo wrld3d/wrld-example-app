@@ -19,7 +19,7 @@
 #include "SearchProvider.h"
 #include "WidgetSearchProvider.h"
 #include "SearchWidgetController.h"
-#include "SearchWidgetView.h"
+#include "SearchWidgetContainerView.h"
 #include "MenuSectionsViewModel.h"
 
 namespace ExampleApp

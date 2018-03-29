@@ -1,6 +1,6 @@
 #pragma once
 
-@class SearchWidgetView;
+@class SearchWidgetContainerView;
 
 namespace ExampleApp
 {
@@ -13,4 +13,3 @@ namespace ExampleApp
         }
     }
 }
-
