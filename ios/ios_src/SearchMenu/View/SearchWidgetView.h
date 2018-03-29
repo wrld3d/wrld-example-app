@@ -4,7 +4,6 @@
 
 #include "ISearchWidgetView.h"
 #include "WidgetSearchResultModel.h"
-#include "IMenuView.h"
 #include "TagCollection.h"
 
 #import <WrldSearchWidget/WrldSearchWidget.h>

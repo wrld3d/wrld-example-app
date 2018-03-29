@@ -2,10 +2,9 @@
 
 #include "SearchWidgetView.h"
 #include "WidgetSearchResultTableViewCell.h"
-#include "IMenuView.h"
-#include "SearchMenuView.h"
 #include "SearchWidgetMenuContext.h"
 #include "WidgetQueryContext.h"
+#include "MenuItemModel.h"
 
 namespace ExampleApp
 {
@@ -336,7 +335,7 @@ namespace ExampleApp
 
             void SearchWidgetView::pushControlsOfScreenIfNeeded(){
               
-                bool hasVisibleSearchResults = m_searchResultsAreVisible && (m_hasSearchResults || m_pSearchModel.isSearchQueryInFlight);
+                bool hasVisibleSearchResults = m_pSearchWidgetViewController.isResultsViewVisible && (m_hasSearchResults || m_pSearchModel.isSearchQueryInFlight);
               
                 bool shouldTakeFocus = m_pSearchWidgetViewController.searchBarIsFirstResponder || hasVisibleSearchResults || m_pSearchWidgetViewController.isMenuOpen;
 
