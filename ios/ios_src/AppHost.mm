@@ -83,7 +83,7 @@
 #include "iOSAutomatedScreenshotController.h"
 #include "NavUIViewModule.h"
 #include "SearchResultPoiViewContainer.h"
-
+#include "NavRoutingModule.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -212,6 +212,9 @@ AppHost::AppHost(
         m_piOSAutomatedScreenshotController = Eegeo_NEW(ExampleApp::Automation::SdkModel::iOSAutomatedScreenshotController)(m_screenshotService, *screenshotController);
     }
     
+    Eegeo::Modules::RoutesModule& routesModule = m_pApp->World().GetRoutesModule();
+    m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(routesModule.GetRouteService(), routesModule.GetRoutingWebservice());
+    
     CreateApplicationViewModules(screenProperties);
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
@@ -234,6 +237,9 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
 
+    Eegeo_DELETE m_pNavRoutingModule;
+    m_pNavRoutingModule = NULL;
+    
     DestroyApplicationViewModules();
     
     Eegeo_DELETE(m_piOSAutomatedScreenshotController);
@@ -443,7 +449,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
             (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)[(id)searchResultPoiViewContainer getInterop];
         m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavUI::View::NavUIViewModule)(searchResultPoiViewInterop,
                                                                                  m_piOSLocationService,
-                                                                                 app.NavUIModule().GetObservableOpenableControl());
+                                                                                 app.NavUIModule().GetObservableOpenableControl(),
+                                                                                 m_pNavRoutingModule->GetRouteDrawingController(),
+                                                                                 m_pNavRoutingModule->GetRoutingServiceController());
     }
     
     // 3d map view layer.

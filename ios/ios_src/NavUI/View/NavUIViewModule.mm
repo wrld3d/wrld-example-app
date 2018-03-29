@@ -13,6 +13,8 @@
 
 #include "IOpenableControlViewModel.h"
 
+#include "NavUIViewRouteUpdateHandler.h"
+
 //Wrld Example App fudges the propagation of touch events so to prevent our touch events getting
 //passed down to the Map we need to extend our common widget with a consumesTouch selector.
 @interface WrldNavWidgetBase(ExampleApp)
@@ -37,6 +39,8 @@ namespace ExampleApp
                 JourneysModel* model{nullptr};
                 WrldNavWidgetBase* view{nullptr};
                 
+                NavUIViewRouteUpdateHandler* m_pNavUIViewRouteUpdateHandler;
+                
                 ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop;
                 Eegeo::iOS::iOSLocationService* iOSLocationService;
                 
@@ -53,11 +57,17 @@ namespace ExampleApp
                     openable(openable_)
                 {
                     searchResultsPoiViewInterop->InsertDirectionsCallback(directionsClickedCallbackObj);
+                    
+                    registerObserver("startLocation");
+                    registerObserver("endLocation");
+                    registerObserver("routeDirections");
                 }
                 
                 ~Private()
                 {
                     searchResultsPoiViewInterop->RemoveDirectionsCallback(directionsClickedCallbackObj);
+                    Eegeo_DELETE m_pNavUIViewRouteUpdateHandler;
+                    
                     [view release];
                     [model release];
                 }
@@ -71,7 +81,7 @@ namespace ExampleApp
                                                           encoding:[NSString defaultCStringEncoding]]];
                     
                     const Eegeo::Space::LatLong& ll =  searchResultModel.GetLocation();
-                    [location setLatLon: CLLocationCoordinate2DMake(ll.GetLatitude(), ll.GetLongitude())];
+                    [location setLatLon: CLLocationCoordinate2DMake(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees())];
                     
                     if(searchResultModel.IsInterior())
                     {
@@ -120,13 +130,26 @@ namespace ExampleApp
                 }
                 
                 //void modelSet() override {}
-                //void changeReceived(const std::string& keyPath) override {}
+                
+                void changeReceived(const std::string& keyPath) override
+                {
+                    if((keyPath == "startLocation") ||
+                       (keyPath == "endLocation"))
+                    {
+                        m_pNavUIViewRouteUpdateHandler->UpdateRoute();
+                    }
+                    else if(keyPath == "routeDirections" && model.routeDirections == nil)
+                    {
+                        m_pNavUIViewRouteUpdateHandler->ClearRoute();
+                    }
+                }
                 
                 void eventReceived(const std::string& key) override
                 {
                     if(key == "closeSetupJourneyClicked")
                     {
                         openable.Close();
+                        m_pNavUIViewRouteUpdateHandler->ClearRoute();
                         [navModel() sendNavEvent:@"combinedWidgetAnimateOut"];
                     }
                     
@@ -144,13 +167,19 @@ namespace ExampleApp
             
             NavUIViewModule::NavUIViewModule(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop,
                                              Eegeo::iOS::iOSLocationService* iOSLocationService,
-                                             ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable):
+                                             ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
+                                             ExampleApp::NavRouting::SdkModel::NavRouteDrawingController& routeDrawingController,
+                                             ExampleApp::NavRouting::SdkModel::NavRoutingServiceController& routingServiceController):
               d(new Private(searchResultsPoiViewInterop,
                             iOSLocationService,
                             openable))
             {
                 d->model = [[JourneysModel alloc] init];                
                 d->setNavModel(d->model);
+                
+                d->m_pNavUIViewRouteUpdateHandler = Eegeo_NEW(NavUIViewRouteUpdateHandler)(d->model,
+                                                                                           routeDrawingController,
+                                                                                           routingServiceController);
                 
                 if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                     d->view = [[WrldNavWidgetTablet alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];

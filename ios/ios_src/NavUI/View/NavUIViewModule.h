@@ -3,6 +3,8 @@
 #pragma once
 
 #include "Types.h"
+#include "NavRouteDrawingController.h"
+#include "NavRoutingServiceController.h"
 
 namespace Eegeo
 {
@@ -37,7 +39,9 @@ namespace ExampleApp
             public:
                 NavUIViewModule(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop,
                                 Eegeo::iOS::iOSLocationService* iOSLocationService,
-                                ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable);
+                                ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
+                                ExampleApp::NavRouting::SdkModel::NavRouteDrawingController& routeDrawingController,
+                                ExampleApp::NavRouting::SdkModel::NavRoutingServiceController& routingServiceController);
 
                 ~NavUIViewModule();
 
