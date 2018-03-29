@@ -46,7 +46,10 @@
 	<!--  Scrolling content -->
 	<ScrollView
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:scrollbarThumbVertical="@color/scrollbars"
+		android:scrollbarSize="@dimen/scrollbars_width"
+		android:scrollbarFadeDuration="0">
 
 		<GridLayout
 			android:layout_width="match_parent"
