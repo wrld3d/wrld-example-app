@@ -6,6 +6,8 @@
 #include "SearchQuery.h"
 #include "AutocompleteSuggestionsMessage.h"
 
+#include <algorithm>
+
 namespace ExampleApp
 {
     namespace SearchMenu
@@ -97,6 +99,8 @@ namespace ExampleApp
 																   static_cast<int>(std::distance(sdkResults.begin(), it)),
 																   *it));
 				}
+
+				std::stable_sort(m_searchResults.begin(), m_searchResults.end());
 
 				m_searchProvider.OnSearchResponseReceived(m_searchResults);
 			}

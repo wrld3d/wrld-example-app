@@ -52,4 +52,6 @@
 
 - (void)disableVoiceSearch;
 
+- (void)setSearchBarPlaceholder:(NSString*)placeholder;
+
 @end

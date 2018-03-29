@@ -5,6 +5,7 @@
 #include "SearchResultModel.h"
 
 #include <string>
+#include <map>
 
 namespace ExampleApp
 {
@@ -18,12 +19,21 @@ namespace ExampleApp
 				typedef Search::SdkModel::SearchResultModel TSdkSearchResult;
 
 			private:
+				static struct SortOrder
+				{
+					std::map<std::string, int> translate;
+
+					SortOrder();
+				}
+				s_sortOrder;
+
 				std::string m_name;
 				std::string m_description;
 				std::string m_iconName;
 
 				int m_originalIndex;
 				TSdkSearchResult m_sdkSearchResult;
+				int m_vendorOrder;
 
 			public:
 				SearchServicesResult(const std::string& name,
@@ -38,6 +48,8 @@ namespace ExampleApp
 
 				int GetOriginalIndex() const;
 				const TSdkSearchResult& GetSdkSearchResult() const;
+
+				bool operator< (const SearchServicesResult& other) const;
 			};
 		}
 	}

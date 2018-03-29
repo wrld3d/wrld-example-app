@@ -38,7 +38,7 @@ namespace ExampleApp
 
                 CGRect screenRect = [[UIScreen mainScreen] bounds];
                 CGFloat screenWidth = screenRect.size.width;
-                CGFloat iphoneMargin = 10;
+                CGFloat iphoneMargin = 20;
                 CGFloat iPadMargin = 20;
                 CGFloat iPadWidgetWidth = 375;
                 CGFloat heightIphone = screenRect.size.height - 2*iphoneMargin;
@@ -126,6 +126,9 @@ namespace ExampleApp
                         }
                     }
                 };
+
+                [m_pSearchWidgetViewController enableVoiceSearch:@"Search BWAY"];
+                [m_pSearchWidgetViewController setSearchBarPlaceholder:@"Search Bloomberg"];
                 
                 [m_pSearchWidgetViewController.menuObserver addOptionSelectedEvent:m_onMenuSelection];
                
