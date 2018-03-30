@@ -66,15 +66,15 @@ if [ $resultcode -ne 0 ]; then
     exit $resultcode
 fi
 
-(cd $projectPath && xcodebuild -target ProjectSwallowApp -arch "i386" -sdk "iphonesimulator")
-resultcode=$?
+#(cd $projectPath && xcodebuild -target ProjectSwallowApp -arch "i386" -sdk "iphonesimulator")
+#resultcode=$?
 
-echo
-if [ $resultcode = 0 ] ; then
-  echo "COMPILE XCODE PROJECT SUCCEEDED"
-else
-  echo "COMPILE XCODE PROJECT FAILED"
-fi
-echo
+#echo
+#if [ $resultcode = 0 ] ; then
+#  echo "COMPILE XCODE PROJECT SUCCEEDED"
+#else
+#  echo "COMPILE XCODE PROJECT FAILED"
+#fi
+#echo
 
 exit $resultcode
