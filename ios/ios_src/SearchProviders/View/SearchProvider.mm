@@ -95,17 +95,32 @@ namespace ExampleApp
             if (widgetQueryContext)
             {
                 std::string tagText = [widgetQueryContext.tagText cStringUsingEncoding: NSUTF8StringEncoding];
-                const Eegeo::Space::LatLongAltitude& location = Eegeo::Space::LatLongAltitude(widgetQueryContext.latitude, widgetQueryContext.longtitude, widgetQueryContext.altitude);
-                
+                const Eegeo::Space::LatLongAltitude& location = Eegeo::Space::LatLongAltitude(widgetQueryContext.latitude,
+                                                                                              widgetQueryContext.longtitude,
+                                                                                              widgetQueryContext.altitude);
+
                 const SearchMenu::View::QueryContext& queryContext =
-                    SearchMenu::View::QueryContext(widgetQueryContext.clearPreviousResults,
-                                                   widgetQueryContext.isTag,
-                                                   tagText,
-                                                   widgetQueryContext.shouldTryInterior,
-                                                   widgetQueryContext.shouldZoomToBuildingsView,
-                                                   location,
-                                                   widgetQueryContext.radius);
-                
+                    (widgetQueryContext.usesLocation ?
+                        SearchMenu::View::QueryContext(widgetQueryContext.clearPreviousResults,
+                                                       widgetQueryContext.isTag,
+                                                       tagText,
+                                                       widgetQueryContext.shouldTryInterior,
+                                                       widgetQueryContext.shouldZoomToBuildingsView,
+                                                       location,
+                                                       widgetQueryContext.radius) :
+                     widgetQueryContext.usesRadius ?
+                        SearchMenu::View::QueryContext(widgetQueryContext.clearPreviousResults,
+                                                       widgetQueryContext.isTag,
+                                                       tagText,
+                                                       widgetQueryContext.shouldTryInterior,
+                                                       widgetQueryContext.shouldZoomToBuildingsView,
+                                                       widgetQueryContext.radius) :
+                        SearchMenu::View::QueryContext(widgetQueryContext.clearPreviousResults,
+                                                       widgetQueryContext.isTag,
+                                                       tagText,
+                                                       widgetQueryContext.shouldTryInterior,
+                                                       widgetQueryContext.shouldZoomToBuildingsView));
+
                 m_searchWithContextCallbacks.ExecuteCallbacks(searchQuery, queryContext);
             }
             else
