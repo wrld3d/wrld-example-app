@@ -88,56 +88,62 @@ namespace ExampleApp
             
             WRLDNavRoute* GetDirections(const Eegeo::Routes::Webservice::RouteData& route)
             {
-                return nil;
-//                NSMutableArray<WRLDNavDirection*> *directionsArray = [[NSMutableArray alloc] init];
-//
-//                for (auto& section: route.Sections)
-//                {
-//                    int count = static_cast<int>(section.Steps.size());
-//                    for (int i=0; i<count; i++)
-//                    {
-//                        auto& step = section.Steps[i];
-//                        auto& directions = step.Directions;
+                NSMutableArray<WRLDNavDirection*> *directionsArray = [[NSMutableArray alloc] init];
+
+                for (auto& section: route.Sections)
+                {
+                    int count = static_cast<int>(section.Steps.size());
+                    for (int i=0; i<count; i++)
+                    {
+                        auto& step = section.Steps[i];
+                        auto& directions = step.Directions;
                         
-//                        NSString *currentInstruction = GetCurrentInstructionFromType(directions.Type, directions.Modifier);
-//                        NSString *nextInstruction = @"Arrived at destination.";
-//
-//                        if ((i+1)<count)
-//                        {
-//                            auto& nextStep = section.Steps[i+1];
-//                            auto& nextDirections = nextStep.Directions;
-//
-//                            nextInstruction = [NSString stringWithFormat: @"Then %@",
-//                                               GetCurrentInstructionFromType(nextDirections.Type, nextDirections.Modifier, false)];
-//                        }
-//
-//                        int pathCount = static_cast<int>(step.Path.size());
-//                        CLLocationCoordinate2D* path = new CLLocationCoordinate2D[pathCount];
-//
-//                        for (int i=0; i<pathCount; i++)
-//                        {
-//                            const Eegeo::Space::LatLong& pathLatLong = step.Path[i];
-//                            path[i] = CLLocationCoordinate2DMake(pathLatLong.GetLatitudeInDegrees(), pathLatLong.GetLongitudeInDegrees());
-//                        }
+                        NSString *currentInstruction = GetCurrentInstructionFromType(directions.Type, directions.Modifier);
+                        NSString *nextInstruction = @"Arrived at destination.";
+
+                        if ((i+1)<count)
+                        {
+                            auto& nextStep = section.Steps[i+1];
+                            auto& nextDirections = nextStep.Directions;
+
+                            nextInstruction = [NSString stringWithFormat: @"Then %@",
+                                               GetCurrentInstructionFromType(nextDirections.Type, nextDirections.Modifier, false)];
+                        }
+
+                        int pathCount = static_cast<int>(step.Path.size());
+                        NSMutableArray<NSValue *>* path = [[NSMutableArray<NSValue *> alloc] init];
+
+                        for (int i=0; i<pathCount; i++)
+                        {
+                            const Eegeo::Space::LatLong& pathLatLong = step.Path[i];
+                            CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(pathLatLong.GetLatitudeInDegrees(), pathLatLong.GetLongitudeInDegrees());
+                            [path addObject:[NSValue valueWithBytes:&coord objCType:@encode(CLLocationCoordinate2D)]];
+                        }
                         
-//                        NSString *indoorId = [NSString stringWithCString: step.IndoorId.c_str() encoding:NSUTF8StringEncoding];
+                        NSString *indoorId = nil;
+                        if(step.IsIndoors)
+                        {
+                            indoorId = [NSString stringWithCString: step.IndoorId.c_str() encoding:NSUTF8StringEncoding];
+                        }
                         
-//                        WRLDNavDirection* direction = [[WRLDNavDirection alloc] initDirectionWithName:currentInstruction
-//                                                                                                 icon:GetIconNameFromType(directions.Type, directions.Modifier)
-//                                                                                          instruction:currentInstruction
-//                                                                                      thenInstruction:nextInstruction
-//                                                                                                 path:path
-//                                                                                            pathCount:pathCount
-//                                                                                            isIndoors:static_cast<BOOL>(step.IsIndoors)
-//                                                                                          indoorMapID:indoorId
-//                                                                                              floorId:step.IndoorFloorId];
-//                        [directionsArray addObject:direction];
-//                    }
-//                }
+                        
+                        WRLDNavDirection* direction =
+                        [[WRLDNavDirection alloc]initWithName:currentInstruction
+                                                         icon:GetIconNameFromType(directions.Type, directions.Modifier)
+                                                  instruction:currentInstruction
+                                              thenInstruction:nextInstruction
+                                                         path:path
+                                                     indoorID:indoorId
+                                                      floorID:step.IndoorFloorId];
+                        [directionsArray addObject:direction];
+                    }
+                }
                 
-//                WRLDNavRoute *routeDirections = [[WRLDNavRoute alloc] initWithEstimatedDuration:route.Duration
-//                                                                                     directions:[directionsArray copy]];
-//                return routeDirections;
+                WRLDNavRoute *routeDirections =
+                [[WRLDNavRoute alloc] initWithEstimatedRouteDuration:route.Duration
+                                                          directions:[directionsArray copy]];
+                
+                return routeDirections;
             }
             
             void UpdateDirectionsFromRoute(const Eegeo::Routes::Webservice::RouteData& route, WRLDNavModel* navModel)
