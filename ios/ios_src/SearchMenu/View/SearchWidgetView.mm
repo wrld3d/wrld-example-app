@@ -80,13 +80,20 @@ namespace ExampleApp
                 
                 m_onResultSelection = ^(id<WRLDSearchResultModel> selectedResultModel)
                 {
+                    /*
+                     MB NOTE: If a UIView is currently firstResponder, then disabling userInteraction on the
+                         view Hierarchy (which selecting a result does via starting a transition) will cause the
+                         previous firstResponder to reassume control when userInteraction is enabled (as the transition ends).  To prevent this, the firstResponder must resign control BEFORE
+                         we disable userInteraction.
+                     */
+                    [m_pSearchWidgetViewController resignFocus];
+                    
                     WidgetSearchResultModel* selectedResultModelWithIndex = (WidgetSearchResultModel*) selectedResultModel;
                     if (selectedResultModelWithIndex != nil)
                     {
                         this->OnSearchResultSelected((int)selectedResultModelWithIndex.index);
                     }
                     
-                    [m_pSearchWidgetViewController resignFocus];
                 };
                 
                 [m_pSearchWidgetViewController.searchSelectionObserver addResultSelectedEvent:m_onResultSelection];
@@ -95,8 +102,8 @@ namespace ExampleApp
                     this->pushControlsOfScreenIfNeeded();
                 };
                 
-                [m_pSearchWidgetViewController.observer addResignedFocusEvent:m_onFocusEvent];
-                [m_pSearchWidgetViewController.observer addGainedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetViewController.observer addSearchbarResignedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetViewController.observer addSearchbarGainedFocusEvent:m_onFocusEvent];
                
                 
                 m_onMenuEvent = ^(BOOL opened){
@@ -154,8 +161,8 @@ namespace ExampleApp
                 
                 [m_pSearchWidgetViewController.searchSelectionObserver removeResultSelectedEvent:m_onResultSelection];
                 
-                [m_pSearchWidgetViewController.observer removeGainedFocusEvent:m_onFocusEvent];
-                [m_pSearchWidgetViewController.observer removeResignedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetViewController.observer removeSearchbarGainedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetViewController.observer removeSearchbarResignedFocusEvent:m_onFocusEvent];
                 
                 [m_pSearchWidgetViewController.menuObserver removeClosedEvent:m_onMenuEvent];
                 [m_pSearchWidgetViewController.menuObserver removeOpenedEvent:m_onMenuEvent];
@@ -330,10 +337,12 @@ namespace ExampleApp
 
             void SearchWidgetView::pushControlsOfScreenIfNeeded(){
               
+                // TODO: Add search results visibility observer event, Has search results event.
                 bool hasVisibleSearchResults = m_pSearchWidgetViewController.isResultsViewVisible && (m_hasSearchResults || m_pSearchModel.isSearchQueryInFlight);
-              
-                bool shouldTakeFocus = m_pSearchWidgetViewController.searchBarIsFirstResponder || hasVisibleSearchResults || m_pSearchWidgetViewController.isMenuOpen;
 
+              
+                bool shouldTakeFocus = m_pSearchWidgetViewController.searchbarHasFocus || hasVisibleSearchResults || m_pSearchWidgetViewController.isMenuOpen;
+                
                 if( shouldTakeFocus )
                 {
                     HandleViewOpenCompleted();

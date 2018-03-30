@@ -2,16 +2,16 @@
 
 #include <Foundation/Foundation.h>
 
-typedef void (^FocusEvent) (void);
+typedef void (^SearchbarFocusEvent) (void);
 
 @interface WRLDSearchWidgetObserver : NSObject
 
-- (void)addGainedFocusEvent:(FocusEvent)event;
+- (void)addSearchbarGainedFocusEvent:(SearchbarFocusEvent)event;
 
-- (void)removeGainedFocusEvent:(FocusEvent)event;
+- (void)removeSearchbarGainedFocusEvent:(SearchbarFocusEvent)event;
 
-- (void)addResignedFocusEvent:(FocusEvent)event;
+- (void)addSearchbarResignedFocusEvent:(SearchbarFocusEvent)event;
 
-- (void)removeResignedFocusEvent:(FocusEvent)event;
+- (void)removeSearchbarResignedFocusEvent:(SearchbarFocusEvent)event;
 
 @end
