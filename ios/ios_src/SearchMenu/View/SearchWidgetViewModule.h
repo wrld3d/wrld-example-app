@@ -13,6 +13,7 @@
 #include "SearchProvider.h"
 #include "WidgetSearchProvider.h"
 #include "SearchWidgetController.h"
+#include "SearchWidgetContainerView.h"
 
 namespace ExampleApp
 {
@@ -25,7 +26,7 @@ namespace ExampleApp
             private:
                 WidgetSearchProvider* m_pWrldSearchProvider;
                 SearchWidgetController* m_pSearchWidgetController;
-                SearchWidgetView* m_pSearchWidgetView;
+                SearchWidgetContainerView* m_pView;
                 
                 SearchMenu::View::SearchServices* m_pSearchServices;
                 SearchProviders::SearchProvider* m_pSearchProvider;
@@ -38,8 +39,9 @@ namespace ExampleApp
                 
                 ~SearchWidgetViewModule();
                 
-                SearchWidgetView& GetSearchWidgetView() const;
+                SearchWidgetContainerView& GetSearchWidgetView() const;
                 SearchWidgetController& GetSearchWidgetController() const;
+                UIViewController& GetSearchWidgetUIViewController() const;
             };
         }
     }

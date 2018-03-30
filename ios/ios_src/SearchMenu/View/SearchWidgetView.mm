@@ -2,10 +2,9 @@
 
 #include "SearchWidgetView.h"
 #include "WidgetSearchResultTableViewCell.h"
-#include "IMenuView.h"
-#include "SearchMenuView.h"
 #include "SearchWidgetMenuContext.h"
 #include "WidgetQueryContext.h"
+#include "MenuItemModel.h"
 
 namespace ExampleApp
 {
@@ -17,11 +16,7 @@ namespace ExampleApp
                                                id<WRLDSuggestionProvider> suggestionProvider,
                                                ExampleAppMessaging::TMessageBus& messageBus)
             : m_tagCollection(messageBus)
-            , m_menuIsOpen(false)
-            , m_searchResultsAreVisible(true)
-            , m_searchTextboxIsInFocus(false)
             , m_hasSearchResults(false)
-            , m_searchInProgress(false)
             , m_hasPopulatedData(false)
             {
                 m_pSearchModel = [[WRLDSearchModel alloc] init];
@@ -38,7 +33,7 @@ namespace ExampleApp
 
                 CGRect screenRect = [[UIScreen mainScreen] bounds];
                 CGFloat screenWidth = screenRect.size.width;
-                CGFloat iphoneMargin = 10;
+                CGFloat iphoneMargin = 20;
                 CGFloat iPadMargin = 20;
                 CGFloat iPadWidgetWidth = 375;
                 CGFloat heightIphone = screenRect.size.height - 2*iphoneMargin;
@@ -267,7 +262,6 @@ namespace ExampleApp
                     
                     AddMenuSectionToGroup(group, *sections[sectionIndex], sectionIndex);
                 }
-                
             }
             
             void SearchWidgetView::PerformSearch(const std::string& query, const QueryContext& context)
@@ -344,8 +338,8 @@ namespace ExampleApp
             void SearchWidgetView::pushControlsOfScreenIfNeeded(){
               
                 // TODO: Add search results visibility observer event, Has search results event.
-                m_searchResultsAreVisible = m_pSearchWidgetViewController.isResultsViewVisible;
-                bool hasVisibleSearchResults = m_searchResultsAreVisible && (m_hasSearchResults || m_pSearchModel.isSearchQueryInFlight);
+                bool hasVisibleSearchResults = m_pSearchWidgetViewController.isResultsViewVisible && (m_hasSearchResults || m_pSearchModel.isSearchQueryInFlight);
+
               
                 bool shouldTakeFocus = m_pSearchWidgetViewController.searchbarHasFocus || hasVisibleSearchResults || m_pSearchWidgetViewController.isMenuOpen;
                 
@@ -395,7 +389,6 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController closeMenu];
                 UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
                
-                
                 CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0,m_widgetAnimationOffset*value);
 
                 [UIView animateWithDuration:0.3 animations:^{
@@ -469,7 +462,6 @@ namespace ExampleApp
                         WRLDMenuChild* child = [[WRLDMenuChild alloc] initWithText:nsChildName
                                                                               icon:nsChildIcon
                                                                            context:widgetMenuChildContex];
-
                         [option addChild:child];
                     }
                 }

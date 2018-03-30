@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="10dp"
     android:id="@+id/search_widget_view_layout">
 
     <fragment android:name="com.wrld.widgets.searchbox.WrldSearchWidget"

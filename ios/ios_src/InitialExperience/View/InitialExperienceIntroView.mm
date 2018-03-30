@@ -268,8 +268,8 @@ namespace
                   description: self.pSearchMenuDialogDescription
                         arrow: self.pSearchMenuDialogArrow
                  arrowOutline: self.pSearchMenuDialogArrowOutline
-                            x: useSmallScreen ? 10 : 425
-                            y: useSmallScreen ? 75 : 20
+                            x: useSmallScreen ? 20 : 425
+                            y: useSmallScreen ? 80 : 20
               alignHorizontal: AlignHorizontal::Left
                 alignVertical: AlignVertical::Top
                     arrowEdge: useSmallScreen ? ArrowEdge::Top : ArrowEdge::Left

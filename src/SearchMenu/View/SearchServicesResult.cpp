@@ -1,6 +1,7 @@
 // Copyright WRLD Ltd (2018-), All Rights Reserved
 
 #include "SearchServicesResult.h"
+#include "SearchVendorNames.h"
 
 namespace ExampleApp
 {
@@ -18,8 +19,18 @@ namespace ExampleApp
 			, m_iconName(iconName)
 			, m_originalIndex(originalIndex)
 			, m_sdkSearchResult(sdkSearchResult)
+			, m_vendorOrder(s_sortOrder.translate[sdkSearchResult.GetVendor()])
 			{
-            }
+			}
+
+			struct SearchServicesResult::SortOrder SearchServicesResult::s_sortOrder;
+
+			SearchServicesResult::SortOrder::SortOrder()
+			{
+				translate[Search::EegeoVendorName   ] = 1;
+				translate[Search::YelpVendorName    ] = 2;
+				translate[Search::GeoNamesVendorName] = 3;
+			}
 
 			const std::string& SearchServicesResult::GetName() const
             {
@@ -44,6 +55,11 @@ namespace ExampleApp
 			const SearchServicesResult::TSdkSearchResult& SearchServicesResult::GetSdkSearchResult() const
 			{
 				return m_sdkSearchResult;
+			}
+
+			bool SearchServicesResult::operator< (const SearchServicesResult& other) const
+			{
+				return m_vendorOrder < other.m_vendorOrder;
 			}
 		}
 	}

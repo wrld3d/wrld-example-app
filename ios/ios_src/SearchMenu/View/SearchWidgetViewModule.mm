@@ -18,14 +18,15 @@ namespace ExampleApp
                 
                 m_pWrldSearchProvider = [[WidgetSearchProvider alloc] initWithSearchProvider: m_pSearchProvider];
                 
-                m_pSearchWidgetView = Eegeo_NEW(SearchWidgetView)(m_pWrldSearchProvider,
-                                                                  m_pWrldSearchProvider,
-                                                                  messageBus);
+                
+                
+                m_pView = [[SearchWidgetContainerView alloc] initWithSearchProvider:m_pWrldSearchProvider
+                                                                messageBus:messageBus];
                 
                 m_pSearchServices = Eegeo_NEW(SearchMenu::View::SearchServices)(*m_pSearchProvider,
                                                                                 messageBus);
                 
-                m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(*m_pSearchWidgetView,
+                m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(*[m_pView getInterop],
                                                                               *m_pSearchServices,
                                                                               modalBackgroundView,
                                                                               viewModel,
@@ -36,9 +37,14 @@ namespace ExampleApp
                 return *m_pSearchWidgetController;
             }
             
-            SearchWidgetView& SearchWidgetViewModule::GetSearchWidgetView() const
+            SearchWidgetContainerView& SearchWidgetViewModule::GetSearchWidgetView() const
             {
-                return *m_pSearchWidgetView;
+                return *m_pView;
+            }
+            
+            UIViewController& SearchWidgetViewModule::GetSearchWidgetUIViewController() const
+            {
+                return *[m_pView getInterop]->GetWidgetController();
             }
             
             SearchWidgetViewModule::~SearchWidgetViewModule()
@@ -47,7 +53,7 @@ namespace ExampleApp
                 
                 Eegeo_DELETE m_pSearchServices;
                 
-                Eegeo_DELETE m_pSearchWidgetView;
+                [m_pView release];
                 
                 Eegeo_DELETE m_pSearchProvider;
             }

@@ -51,19 +51,22 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:background="@color/white">
 
             <!--  Scrolling icontent -->
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="450dp">
+                android:layout_height="450dp"
+                android:scrollbarThumbVertical="@color/scrollbars"
+                android:scrollbarSize="@dimen/scrollbars_width"
+                android:scrollbarFadeDuration="0">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:orientation="vertical"
                     android:clickable="false">
 

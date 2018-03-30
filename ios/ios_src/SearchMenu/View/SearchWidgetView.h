@@ -4,7 +4,6 @@
 
 #include "ISearchWidgetView.h"
 #include "WidgetSearchResultModel.h"
-#include "IMenuView.h"
 #include "TagCollection.h"
 
 #import <WrldSearchWidget/WrldSearchWidget.h>
@@ -45,12 +44,8 @@ namespace ExampleApp
                 void AddEventListeners();
                 void RemoveEventListeners();
 
-                bool m_searchResultsAreVisible;
-                bool m_menuIsOpen;
-                bool m_searchTextboxIsInFocus;
                 bool m_hasSearchResults;
-                bool m_searchInProgress;
-
+                
                 CGFloat m_widgetAnimationOffset;
 
                 TagCollection m_tagCollection;

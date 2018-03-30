@@ -77,13 +77,16 @@
                 android:layout_below="@+id/my_pin_details_view_header_separator"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:padding="5dp">
+                android:scrollbarThumbVertical="@color/scrollbars"
+                android:scrollbarSize="@dimen/scrollbars_width"
+                android:scrollbarFadeDuration="0">
 
                 <!--line separator-->
                 <LinearLayout
                     android:id="@+id/my_pin_details_view_scroll_section_content"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
+                    android:padding="5dp"
                     android:orientation="vertical">
 
                     <ImageView
