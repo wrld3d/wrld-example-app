@@ -70,9 +70,8 @@ set(ios_frameworks
   -framework IndoorAtlas
   -framework SLIndoorLocation
   -framework HockeySDK
-  -framework WrldJourneys
-  -framework WrldJourneysSearch
-  -framework WrldJourneysWidget
+  -framework WrldNav
+  -framework WrldNavWidget
   -framework WrldUtils")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")

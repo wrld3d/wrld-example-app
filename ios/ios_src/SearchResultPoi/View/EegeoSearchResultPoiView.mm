@@ -133,7 +133,7 @@ const int DeletePinAlertViewTag = 2;
         [self.pDirectionsButton setTitle:@"   Directions" forState:UIControlStateNormal];
         [self.pDirectionsButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBorderColor forState:UIControlStateHighlighted];
         {
-            NSBundle* bundle = [NSBundle bundleWithIdentifier:@"com.wrld.WrldJourneys"];
+            NSBundle* bundle = [NSBundle bundleWithIdentifier:@"com.wrld.WrldNav"];
             UIImage* image = [UIImage imageNamed:@"start_icon" inBundle:bundle compatibleWithTraitCollection:nil];
             [self.pDirectionsButton setDefaultStatesWithImages:image :image];
         }

@@ -86,73 +86,73 @@ namespace ExampleApp
                 return [NSString stringWithFormat: @"%@_%@", type, modifier];
             }
             
-            WRLDJourneyRouteDirections* GetDirections(const Eegeo::Routes::Webservice::RouteData& route)
+            WRLDNavRoute* GetDirections(const Eegeo::Routes::Webservice::RouteData& route)
             {
-                NSMutableArray<Direction*> *directionsArray = [[NSMutableArray alloc] init];
+                return nil;
+//                NSMutableArray<WRLDNavDirection*> *directionsArray = [[NSMutableArray alloc] init];
+//
+//                for (auto& section: route.Sections)
+//                {
+//                    int count = static_cast<int>(section.Steps.size());
+//                    for (int i=0; i<count; i++)
+//                    {
+//                        auto& step = section.Steps[i];
+//                        auto& directions = step.Directions;
+                        
+//                        NSString *currentInstruction = GetCurrentInstructionFromType(directions.Type, directions.Modifier);
+//                        NSString *nextInstruction = @"Arrived at destination.";
+//
+//                        if ((i+1)<count)
+//                        {
+//                            auto& nextStep = section.Steps[i+1];
+//                            auto& nextDirections = nextStep.Directions;
+//
+//                            nextInstruction = [NSString stringWithFormat: @"Then %@",
+//                                               GetCurrentInstructionFromType(nextDirections.Type, nextDirections.Modifier, false)];
+//                        }
+//
+//                        int pathCount = static_cast<int>(step.Path.size());
+//                        CLLocationCoordinate2D* path = new CLLocationCoordinate2D[pathCount];
+//
+//                        for (int i=0; i<pathCount; i++)
+//                        {
+//                            const Eegeo::Space::LatLong& pathLatLong = step.Path[i];
+//                            path[i] = CLLocationCoordinate2DMake(pathLatLong.GetLatitudeInDegrees(), pathLatLong.GetLongitudeInDegrees());
+//                        }
+                        
+//                        NSString *indoorId = [NSString stringWithCString: step.IndoorId.c_str() encoding:NSUTF8StringEncoding];
+                        
+//                        WRLDNavDirection* direction = [[WRLDNavDirection alloc] initDirectionWithName:currentInstruction
+//                                                                                                 icon:GetIconNameFromType(directions.Type, directions.Modifier)
+//                                                                                          instruction:currentInstruction
+//                                                                                      thenInstruction:nextInstruction
+//                                                                                                 path:path
+//                                                                                            pathCount:pathCount
+//                                                                                            isIndoors:static_cast<BOOL>(step.IsIndoors)
+//                                                                                          indoorMapID:indoorId
+//                                                                                              floorId:step.IndoorFloorId];
+//                        [directionsArray addObject:direction];
+//                    }
+//                }
                 
-                for (auto& section: route.Sections)
-                {
-                    int count = static_cast<int>(section.Steps.size());
-                    for (int i=0; i<count; i++)
-                    {
-                        auto& step = section.Steps[i];
-                        auto& directions = step.Directions;
-                        
-                        NSString *currentInstruction = GetCurrentInstructionFromType(directions.Type, directions.Modifier);
-                        NSString *nextInstruction = @"Arrived at destination.";
-                        
-                        if ((i+1)<count)
-                        {
-                            auto& nextStep = section.Steps[i+1];
-                            auto& nextDirections = nextStep.Directions;
-                            
-                            nextInstruction = [NSString stringWithFormat: @"Then %@",
-                                               GetCurrentInstructionFromType(nextDirections.Type, nextDirections.Modifier, false)];
-                        }
-                        
-                        int pathCount = static_cast<int>(step.Path.size());
-                        CLLocationCoordinate2D* path = new CLLocationCoordinate2D[pathCount];
-                        
-                        for (int i=0; i<pathCount; i++)
-                        {
-                            const Eegeo::Space::LatLong& pathLatLong = step.Path[i];
-                            path[i] = CLLocationCoordinate2DMake(pathLatLong.GetLatitudeInDegrees(), pathLatLong.GetLongitudeInDegrees());
-                        }
-                        
-                        NSString *indoorId = [NSString stringWithCString: step.IndoorId.c_str() encoding:NSUTF8StringEncoding];
-                        
-                        Direction* direction = [[Direction alloc] initDirectionWithName:currentInstruction
-                                                                                   icon:GetIconNameFromType(directions.Type, directions.Modifier)
-                                                                            instruction:currentInstruction
-                                                                        thenInstruction:nextInstruction
-                                                                                   path:path
-                                                                              pathCount:pathCount
-                                                                              isIndoors:static_cast<BOOL>(step.IsIndoors)
-                                                                            indoorMapID:indoorId
-                                                                                floorId:step.IndoorFloorId];
-                        [directionsArray addObject:direction];
-                    }
-                }
-                
-                WRLDJourneyRouteDirections *routeDirections = [[WRLDJourneyRouteDirections alloc] initWithEstimatedDuration:route.Duration
-                                                                                                                 directions:[directionsArray copy]];
-                return routeDirections;
+//                WRLDNavRoute *routeDirections = [[WRLDNavRoute alloc] initWithEstimatedDuration:route.Duration
+//                                                                                     directions:[directionsArray copy]];
+//                return routeDirections;
             }
             
-            void UpdateDirectionsFromRoute(const Eegeo::Routes::Webservice::RouteData& route, JourneysModel* journeysModel)
+            void UpdateDirectionsFromRoute(const Eegeo::Routes::Webservice::RouteData& route, WRLDNavModel* navModel)
             {
-                WRLDJourneyRouteDirections* routeDirections = GetDirections(route);
+                WRLDNavRoute* navRoute = GetDirections(route);
                 
-                journeysModel.routeDirections = routeDirections;
-                journeysModel.estimatedJourneyDuration = routeDirections.estimatedRouteDuration;
-                journeysModel.remainingJourneyDuration = routeDirections.estimatedRouteDuration;
-                journeysModel.navMode = ([[routeDirections directions] count]>0) ? JourneyNavModeReady : JourneyNavModeNotReady;
+                navModel.route = navRoute;
+                navModel.remainingRouteDuration = navRoute.estimatedRouteDuration;
+                navModel.navMode = ([[navRoute directions] count]>0) ? WRLDNavModeReady : WRLDNavModeNotReady;
             }
             
-            NavUIViewRouteUpdateHandler::NavUIViewRouteUpdateHandler(JourneysModel* journeysModel,
+            NavUIViewRouteUpdateHandler::NavUIViewRouteUpdateHandler(WRLDNavModel* navModel,
                                                                      NavRouteDrawingController& routeDrawingController,
                                                                      NavRoutingServiceController& routingServiceController)
-            : m_journeysModel(journeysModel)
+            : m_navModel(navModel)
             , m_routeDrawingController(routeDrawingController)
             , m_routingServiceController(routingServiceController)
             , m_routesReceivedCallback(this, &NavUIViewRouteUpdateHandler::OnRoutingQueryCompleted)
@@ -167,11 +167,11 @@ namespace ExampleApp
             
             void NavUIViewRouteUpdateHandler::UpdateRoute()
             {
-                m_journeysModel.routeDirections = nil;
-                m_journeysModel.navMode = JourneyNavModeNotReady;
+                m_navModel.route = nil;
+                m_navModel.navMode = WRLDNavModeNotReady;
                 
-                WRLDNavLocation *startLocation = m_journeysModel.startLocation;
-                WRLDNavLocation *endLocation = m_journeysModel.endLocation;
+                WRLDNavLocation *startLocation = m_navModel.startLocation;
+                WRLDNavLocation *endLocation = m_navModel.endLocation;
                 
                 if (startLocation!=nil && endLocation!=nil)
                 {
@@ -194,7 +194,7 @@ namespace ExampleApp
             void NavUIViewRouteUpdateHandler::OnRoutingQueryCompleted(const std::vector<Eegeo::Routes::Webservice::RouteData>& results)
             {
                 //Only using first route for now
-                UpdateDirectionsFromRoute(results[0], m_journeysModel);
+                UpdateDirectionsFromRoute(results[0], m_navModel);
                 
                 m_routeDrawingController.DrawRoute(results[0]);
             }

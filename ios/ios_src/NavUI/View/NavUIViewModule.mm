@@ -2,10 +2,8 @@
 
 #include "NavUIViewModule.h"
 
-#include "WrldJourneysWidget/WrldJourneysWidget.h"
-#include "WrldJourneys/WRLDNavModelObserverCpp.h"
-
-#include "WrldJourneysWidget/WrldJourneysWidget-Swift.h"
+#include "WrldNav/WrldNav.h"
+#include "WrldNavWidget/WrldNavWidget.h"
 
 #include "SearchResultPoiViewInterop.h"
 
@@ -17,11 +15,11 @@
 
 //Wrld Example App fudges the propagation of touch events so to prevent our touch events getting
 //passed down to the Map we need to extend our common widget with a consumesTouch selector.
-@interface WrldNavWidgetBase(ExampleApp)
+@interface WRLDNavWidgetBase(ExampleApp)
 - (BOOL)consumesTouch:(UITouch *)touch;
 @end
 
-@implementation WrldNavWidgetBase(ExampleApp)
+@implementation WRLDNavWidgetBase(ExampleApp)
 - (BOOL)consumesTouch:(UITouch *)touch
 {
     return [self pointInside:[touch locationInView:self] withEvent:nil];
@@ -36,8 +34,8 @@ namespace ExampleApp
         {
             struct NavUIViewModule::Private : public WRLDNavModelObserverCpp
             {
-                JourneysModel* model{nullptr};
-                WrldNavWidgetBase* view{nullptr};
+                WRLDNavModel* model{nullptr};
+                WRLDNavWidgetBase* view{nullptr};
                 
                 NavUIViewRouteUpdateHandler* m_pNavUIViewRouteUpdateHandler;
                 
@@ -75,25 +73,25 @@ namespace ExampleApp
                 //Called when the 'Directions' button on the POI card is clicked
                 void directionsClickedCallback(Search::SdkModel::SearchResultModel& searchResultModel)
                 {
-                    WRLDNavLocation* location = [[WRLDNavLocation alloc] init];
-                    
-                    [location setName: [NSString stringWithCString:searchResultModel.GetTitle().c_str()
-                                                          encoding:[NSString defaultCStringEncoding]]];
-                    
+                    WRLDNavLocation* location;
                     const Eegeo::Space::LatLong& ll =  searchResultModel.GetLocation();
-                    [location setLatLon: CLLocationCoordinate2DMake(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees())];
-                    
                     if(searchResultModel.IsInterior())
                     {
                         const Eegeo::Resources::Interiors::InteriorId& interior = searchResultModel.GetBuildingId();
-                        [location setIndoorID: [NSString stringWithCString:interior.Value().c_str()
-                                                                  encoding:[NSString defaultCStringEncoding]]];
-                        [location setFloorID: searchResultModel.GetFloor()];
+                        location = [[WRLDNavLocation alloc] initWithName:[NSString stringWithCString:searchResultModel.GetTitle().c_str()
+                                                                                            encoding:[NSString defaultCStringEncoding]]
+                                                                  latLon:CLLocationCoordinate2DMake(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees())
+                                                                indoorID:[NSString stringWithCString:interior.Value().c_str()
+                                                                                            encoding:[NSString defaultCStringEncoding]]
+                                                                 floorID:searchResultModel.GetFloor()];
                     }
                     else
                     {
-                        [location setIndoorID: nil];
-                        [location setFloorID: 0];
+                        location = [[WRLDNavLocation alloc] initWithName:[NSString stringWithCString:searchResultModel.GetTitle().c_str()
+                                                                                            encoding:[NSString defaultCStringEncoding]]
+                                                                  latLon:CLLocationCoordinate2DMake(ll.GetLatitudeInDegrees(), ll.GetLongitudeInDegrees())
+                                                                indoorID:nil
+                                                                 floorID:0];
                     }
                     
                     [model setEndLocation:location];
@@ -120,12 +118,12 @@ namespace ExampleApp
                         return;
                     }
                     
-                    WRLDNavLocation* location = [[WRLDNavLocation alloc] init];
-                    
-                    [location setName: @"Current location"];
-                    [location setLatLon: CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees())];
-                    [location setIndoorID: nil];
-                    [location setFloorID: 0];
+                    WRLDNavLocation* location =
+                    [[WRLDNavLocation alloc] initWithName:@"Current location"
+                                                   latLon:CLLocationCoordinate2DMake(latLong.GetLatitudeInDegrees(), latLong.GetLongitudeInDegrees())
+                                                 indoorID:nil
+                                                  floorID:0];
+
                     [model setStartLocation:location];
                 }
                 
@@ -138,7 +136,7 @@ namespace ExampleApp
                     {
                         m_pNavUIViewRouteUpdateHandler->UpdateRoute();
                     }
-                    else if(keyPath == "routeDirections" && model.routeDirections == nil)
+                    else if(keyPath == "route" && model.route == nil)
                     {
                         m_pNavUIViewRouteUpdateHandler->ClearRoute();
                     }
@@ -174,7 +172,7 @@ namespace ExampleApp
                             iOSLocationService,
                             openable))
             {
-                d->model = [[JourneysModel alloc] init];                
+                d->model = [[WRLDNavModel alloc] init];
                 d->setNavModel(d->model);
                 
                 d->m_pNavUIViewRouteUpdateHandler = Eegeo_NEW(NavUIViewRouteUpdateHandler)(d->model,
@@ -182,14 +180,14 @@ namespace ExampleApp
                                                                                            routingServiceController);
                 
                 if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-                    d->view = [[WrldNavWidgetTablet alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+                    d->view = [[WRLDNavWidgetTablet alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
                 else
-                    d->view = [[WrldNavWidgetPhone alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+                    d->view = [[WRLDNavWidgetPhone alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
                 
                 [d->view setViewVisibilityWithAnimate:false hideViews:true];
                 
                 [d->view setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-                [[d->view observer] setJourneysModel:d->model];
+                [[d->view observer] setNavModel:d->model];
             }
 
             NavUIViewModule::~NavUIViewModule()

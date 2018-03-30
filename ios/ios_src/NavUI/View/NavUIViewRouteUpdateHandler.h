@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "WrldJourneys/JourneysModel.h"
+#include "WrldNav/WrldNav.h"
 
 #include "Types.h"
 #include "NavRouting.h"
@@ -22,7 +22,7 @@ namespace ExampleApp
             class NavUIViewRouteUpdateHandler: private Eegeo::NonCopyable
             {
             public:
-                NavUIViewRouteUpdateHandler(JourneysModel* journeysModel,
+                NavUIViewRouteUpdateHandler(WRLDNavModel* navModel,
                                             NavRouteDrawingController& routeDrawingController,
                                             NavRoutingServiceController& routingServiceController);
                 
@@ -34,7 +34,7 @@ namespace ExampleApp
             private:
                 void OnRoutingQueryCompleted(const std::vector<Eegeo::Routes::Webservice::RouteData>& results);
                 
-                JourneysModel* m_journeysModel;
+                WRLDNavModel* m_navModel;
                 NavRouteDrawingController& m_routeDrawingController;
                 NavRoutingServiceController& m_routingServiceController;
                 
