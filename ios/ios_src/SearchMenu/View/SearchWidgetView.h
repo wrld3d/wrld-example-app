@@ -37,6 +37,7 @@ namespace ExampleApp
                 
                 void (^m_onResultSelection) (id<WRLDSearchResultModel>);
                 void (^m_onMenuSelection) (NSObject*);
+                void (^m_onResultsCleared) ();
                 void (^m_onQueryCancelled) (WRLDSearchQuery *query);
                 void (^m_onQueryEvent) (WRLDSearchQuery *query);
                 void (^m_onFocusEvent) ();
