@@ -4,6 +4,8 @@
 
 typedef void (^SearchbarFocusEvent) (void);
 
+typedef void (^Event) (void);
+
 @interface WRLDSearchWidgetObserver : NSObject
 
 - (void)addSearchbarGainedFocusEvent:(SearchbarFocusEvent)event;
@@ -14,4 +16,21 @@ typedef void (^SearchbarFocusEvent) (void);
 
 - (void)removeSearchbarResignedFocusEvent:(SearchbarFocusEvent)event;
 
+- (void)addSearchResultsReceivedEvent:(Event)event;
+
+- (void)removeSearchResultsReceivedEvent:(Event)event;
+
+- (void)addSearchResultsClearedEvent:(Event)event;
+
+- (void)removeSearchResultsClearedEvent:(Event)event;
+
+- (void)addSearchResultsShowingEvent:(Event)event;
+
+- (void)removeSearchResultsShowingEvent:(Event)event;
+
+- (void)addSearchResultsHiddenEvent:(Event)event;
+
+- (void)removeSearchResultsHiddenEvent:(Event)event;
+
 @end
+

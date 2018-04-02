@@ -22,6 +22,7 @@ namespace ExampleApp
                 WRLDSearchMenuModel* m_pMenuModel;
                 WRLDSearchProviderHandle* m_pSearchProviderHandle;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
+                WRLDSpeechHandler* m_pSpeechHandler;
 
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
@@ -59,6 +60,7 @@ namespace ExampleApp
 
                 UIViewController* GetWidgetController() const;
                 UIView* GetWidgetView() const;
+                UIView* GetSpeechHandlerView() const;
 
                 void OnSearchResultSelected(int index);
 

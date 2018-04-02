@@ -1,9 +1,3 @@
-//
-//  SearchWidgetView.m
-//  ProjectSwallowApp
-//
-//  Created by David Crooks on 28/03/2018.
-//
 
 #include "TagCollection.h"
 #import "SearchWidgetContainerView.h"
@@ -27,8 +21,10 @@
         
         self.frame = [UIScreen mainScreen].bounds;
         self.widget = m_pInterop->GetWidgetView();
+        self.speechWidget = m_pInterop->GetSpeechHandlerView();
         
         [self addSubview:self.widget];
+        [self addSubview:self.speechWidget];
         
     }
     return self;
@@ -39,11 +35,13 @@
 }
 
 - (BOOL) consumesTouch:(UITouch *)touch{
-    return [self.widget pointInside:[touch locationInView:self.widget] withEvent:nil];
+    return [self.widget pointInside:[touch locationInView:self.widget] withEvent:nil] ||
+           [self.speechWidget pointInside:[touch locationInView:self.speechWidget] withEvent:nil];
 }
 
 -(BOOL) pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    return [self.widget pointInside:[self convertPoint:point toView:self.widget] withEvent:event];
+    return  [self.widget pointInside:[self convertPoint:point toView:self.widget] withEvent:event] ||
+            [self.speechWidget pointInside:[self convertPoint:point toView:self.speechWidget] withEvent:event];
 }
 
 @end

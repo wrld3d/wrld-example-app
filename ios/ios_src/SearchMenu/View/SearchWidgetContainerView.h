@@ -1,9 +1,4 @@
-//
-//  SearchWidgetView.h
-//  ProjectSwallowApp
-//
-//  Created by David Crooks on 28/03/2018.
-//
+
 #pragma once
 
 #import <UIKit/UIKit.h>
@@ -17,5 +12,6 @@
 - (ExampleApp::SearchMenu::View::SearchWidgetView*) getInterop;
 - (BOOL) consumesTouch:(UITouch *)touch;
 @property (nonatomic, retain) UIView *widget;
+@property (nonatomic, retain) UIView *speechWidget;
 
 @end

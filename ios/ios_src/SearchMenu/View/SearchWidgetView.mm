@@ -57,10 +57,14 @@ namespace ExampleApp
 
                 [m_pSearchWidgetViewController registerNib:nib forUseWithResultsTableCellIdentifier:@"WidgetSearchResultTableViewCell"];
 
-                [m_pSearchWidgetViewController enableVoiceSearch:@"Search BWAY"];
-
                 m_menuGroups = [[NSMutableDictionary alloc] init];
                 m_menuOptions = [[NSMutableDictionary alloc] init];
+                
+                [m_pSearchWidgetViewController setSearchBarPlaceholder:@"Search Bloomberg"];
+                
+                m_pSpeechHandler = [[WRLDSpeechHandler alloc] initWithFrame: [UIScreen mainScreen].bounds];
+                [m_pSpeechHandler setPrompt:@"Search Bloomberg"];
+                [m_pSearchWidgetViewController enableVoiceSearch:m_pSpeechHandler];
                 
                 AddEventListeners();
             }
@@ -68,12 +72,16 @@ namespace ExampleApp
             
             SearchWidgetView::~SearchWidgetView()
             {
+                RemoveEventListeners();
+                
+                [m_pSearchWidgetViewController disableVoiceSearch];
+                
+                [m_pSpeechHandler release];
                 [m_menuOptions release];
                 [m_menuGroups release];
                 [m_pMenuModel release];
                 [m_pSearchModel release];
 
-                RemoveEventListeners();
             }
             
             void SearchWidgetView::AddEventListeners(){
@@ -129,8 +137,6 @@ namespace ExampleApp
                     }
                 };
 
-                [m_pSearchWidgetViewController enableVoiceSearch:@"Search BWAY"];
-                [m_pSearchWidgetViewController setSearchBarPlaceholder:@"Search Bloomberg"];
                 
                 [m_pSearchWidgetViewController.menuObserver addOptionSelectedEvent:m_onMenuSelection];
                
@@ -177,6 +183,11 @@ namespace ExampleApp
             UIView* SearchWidgetView::GetWidgetView() const
             {
                 return (UIView*)m_pSearchWidgetViewController.view;
+            }
+            
+            UIView* SearchWidgetView::GetSpeechHandlerView() const
+            {
+                return (UIView*)m_pSpeechHandler;
             }
 
             void SearchWidgetView::OnSearchResultSelected(int index)
