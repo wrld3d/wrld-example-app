@@ -147,11 +147,17 @@ namespace ExampleApp
                     this->pushControlsOfScreenIfNeeded();
                 };
                 
+                m_onResultsCleared = ^()
+                {
+                    m_searchClearedCallbacks.ExecuteCallbacks();
+                };
                 m_onQueryCancelled = ^(WRLDSearchQuery *query)
                 {
                     m_searchClearedCallbacks.ExecuteCallbacks();
                 };
                 
+                [m_pSearchWidgetViewController.observer addSearchResultsClearedEvent:m_onResultsCleared];
+
                 [m_pSearchModel.searchObserver addQueryStartingEvent:m_onQueryEvent];
                 [m_pSearchModel.searchObserver addQueryCompletedEvent:m_onQueryEvent];
                 [m_pSearchModel.searchObserver addQueryCancelledEvent:m_onQueryEvent];
@@ -160,19 +166,21 @@ namespace ExampleApp
             }
             
             void SearchWidgetView::RemoveEventListeners(){
-                [m_pSearchModel.searchObserver removeQueryStartingEvent:m_onQueryEvent];
-                [m_pSearchModel.searchObserver removeQueryCompletedEvent:m_onQueryEvent];
-                [m_pSearchModel.searchObserver removeQueryCancelledEvent:m_onQueryEvent];
                 [m_pSearchModel.searchObserver removeQueryCancelledEvent:m_onQueryCancelled];
-                
-                [m_pSearchWidgetViewController.searchSelectionObserver removeResultSelectedEvent:m_onResultSelection];
-                
-                [m_pSearchWidgetViewController.observer removeSearchbarGainedFocusEvent:m_onFocusEvent];
-                [m_pSearchWidgetViewController.observer removeSearchbarResignedFocusEvent:m_onFocusEvent];
-                
+                [m_pSearchModel.searchObserver removeQueryCancelledEvent:m_onQueryEvent];
+                [m_pSearchModel.searchObserver removeQueryCompletedEvent:m_onQueryEvent];
+                [m_pSearchModel.searchObserver removeQueryStartingEvent:m_onQueryEvent];
+
+                [m_pSearchWidgetViewController.observer addSearchResultsClearedEvent:m_onResultsCleared];
+
                 [m_pSearchWidgetViewController.menuObserver removeClosedEvent:m_onMenuEvent];
                 [m_pSearchWidgetViewController.menuObserver removeOpenedEvent:m_onMenuEvent];
                 [m_pSearchWidgetViewController.menuObserver removeOptionSelectedEvent:m_onMenuSelection];
+
+                [m_pSearchWidgetViewController.observer removeSearchbarGainedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetViewController.observer removeSearchbarResignedFocusEvent:m_onFocusEvent];
+
+                [m_pSearchWidgetViewController.searchSelectionObserver removeResultSelectedEvent:m_onResultSelection];
             }
 
             UIViewController* SearchWidgetView::GetWidgetController() const
