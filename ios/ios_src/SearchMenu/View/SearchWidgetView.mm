@@ -149,14 +149,20 @@ namespace ExampleApp
                 
                 m_onResultsCleared = ^()
                 {
-                    m_searchClearedCallbacks.ExecuteCallbacks();
+                    OnClearResults();
                 };
                 m_onQueryCancelled = ^(WRLDSearchQuery *query)
                 {
-                    m_searchClearedCallbacks.ExecuteCallbacks();
+                    OnClearResults();
+                };
+                
+                m_onResultsReceived = ^()
+                {
+                    OnSearchResultsReceived();
                 };
                 
                 [m_pSearchWidgetViewController.observer addSearchResultsClearedEvent:m_onResultsCleared];
+                [m_pSearchWidgetViewController.observer addSearchResultsReceivedEvent:m_onResultsReceived];
 
                 [m_pSearchModel.searchObserver addQueryStartingEvent:m_onQueryEvent];
                 [m_pSearchModel.searchObserver addQueryCompletedEvent:m_onQueryEvent];
@@ -171,7 +177,8 @@ namespace ExampleApp
                 [m_pSearchModel.searchObserver removeQueryCompletedEvent:m_onQueryEvent];
                 [m_pSearchModel.searchObserver removeQueryStartingEvent:m_onQueryEvent];
 
-                [m_pSearchWidgetViewController.observer addSearchResultsClearedEvent:m_onResultsCleared];
+                [m_pSearchWidgetViewController.observer removeSearchResultsReceivedEvent:m_onResultsReceived];
+                [m_pSearchWidgetViewController.observer removeSearchResultsClearedEvent:m_onResultsCleared];
 
                 [m_pSearchWidgetViewController.menuObserver removeClosedEvent:m_onMenuEvent];
                 [m_pSearchWidgetViewController.menuObserver removeOpenedEvent:m_onMenuEvent];
@@ -181,6 +188,17 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController.observer removeSearchbarResignedFocusEvent:m_onFocusEvent];
 
                 [m_pSearchWidgetViewController.searchSelectionObserver removeResultSelectedEvent:m_onResultSelection];
+            }
+            
+            void SearchWidgetView::OnSearchResultsReceived()
+            {
+                m_hasSearchResults = true;
+            }
+            
+            void SearchWidgetView::OnClearResults()
+            {
+                m_searchClearedCallbacks.ExecuteCallbacks();
+                m_hasSearchResults = false;
             }
 
             UIViewController* SearchWidgetView::GetWidgetController() const
