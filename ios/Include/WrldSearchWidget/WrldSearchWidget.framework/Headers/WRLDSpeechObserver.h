@@ -4,7 +4,7 @@
 
 typedef void (^VoiceAuthorizedEvent) (BOOL authorized);
 
-typedef void (^VoiceEvent)();
+typedef void (^VoiceEvent) (void);
 
 typedef void (^VoiceRecordedEvent)(NSString* transcript);
 
