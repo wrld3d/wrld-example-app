@@ -37,7 +37,7 @@ if [ $? -ne 0 ] ; then
   exit 1
 fi
 
-sh "build-scripts/ios/commit_to_hockeyapp.step.sh" $teamcityBuildUrl $githubCommitUrl $pathToProjectDir $ipaName $hockeyAppIdentifier
+sh "build-scripts/ios/commit_to_hockeyapp.step.sh" $teamcityBuildUrl $githubCommitUrl $pathToProjectDir $xcodeTargetName $hockeyAppIdentifier
 if [ $? -ne 0 ] ; then
 exit 1
 fi
