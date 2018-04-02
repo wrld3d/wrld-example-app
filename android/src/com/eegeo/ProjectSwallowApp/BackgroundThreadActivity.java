@@ -8,10 +8,16 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
 import com.wrld.widgets.searchbox.WrldSearchWidget;
 import android.app.SearchManager;
+import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
+
+import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -53,13 +59,13 @@ public class BackgroundThreadActivity extends MainActivity
             finish();
             return;
         }
-        
+
         PackageInfo pInfo = null;
-        try 
+        try
         {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-        } 
-        catch (NameNotFoundException e) 
+        }
+        catch (NameNotFoundException e)
         {
             Log.e(this.getClass().getName(), "Failed to retrieve package info", e);
         }
@@ -89,6 +95,12 @@ public class BackgroundThreadActivity extends MainActivity
         m_updater = new Thread(m_threadedRunner);
         m_updater.start();
 
+        if (Build.VERSION.SDK_INT < 27) {
+            // On android 8.1 this request has a side effect of turning off SSID permission.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    RuntimePermissionDispatcher.GPS_PERMISSION_REQUEST_CODE);
+        }
+
         m_threadedRunner.blockUntilThreadStartedRunning();
 
         runOnNativeThread(new Runnable()
@@ -96,7 +108,7 @@ public class BackgroundThreadActivity extends MainActivity
             public void run()
             {
                 m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi, density, versionName, versionCode);
-                
+
                 if(m_nativeAppWindowPtr == 0)
                 {
                     throw new RuntimeException("Failed to start native code.");
@@ -258,7 +270,7 @@ public class BackgroundThreadActivity extends MainActivity
         super.onConfigurationChanged(newConfiguration);
         m_rotationInitialised = true;
     }
-    
+
     private boolean setDisplayOrientationBasedOnDeviceProperties()
     {
         DisplayMetrics displayMetrics = new DisplayMetrics();

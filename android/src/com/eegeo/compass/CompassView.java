@@ -34,6 +34,7 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	private View m_compassDefault = null;
 	private View m_compassLocked = null;
 	private View m_compassUnlocked = null;
+	private boolean m_requestedLocationForCompass = false;
 
 	private final long m_stateChangeAnimationTimeMilliseconds = 200;
 	private final long RotationHighlightAnimationMilliseconds = 200;
@@ -158,6 +159,10 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
     	{
     		CompassViewJniMethods.HandleClick(m_nativeCallerPointer);
     	}
+        else
+		{
+			m_requestedLocationForCompass = true;
+		}
     }
 
     private void createBitMap(Paint.Style style) 
@@ -190,12 +195,16 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-		if (requestCode != RuntimePermissionDispatcher.GPS_PERMISSION_REQUEST_CODE)
+		if (requestCode != RuntimePermissionDispatcher.GPS_PERMISSION_REQUEST_CODE) {
 			return;
+		}
+		if (!m_requestedLocationForCompass) {
+			return;
+		}
 		// If request is cancelled, the result arrays are empty.
 		if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 			CompassViewJniMethods.HandleClick(m_nativeCallerPointer);
-		} else {
+        } else {
 			// If any of the permission is denied, we can't use the camera
 			// properly, so we will show the dialog with agree or cancel dialog
 			showPermissionRequiredDialog(m_activity);
