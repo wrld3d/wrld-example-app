@@ -10,6 +10,8 @@ productVersion=$3
 pathToProjectDir=$4
 archivePath=$5
 
+readonly developmentTeamId="77LF7Y24G3"
+
 
 if [ -z "$targetName" ]; then
         echo
@@ -60,7 +62,7 @@ else
 fi
 
 # Archive the xcode project.
-(cd $pathToProjectDir && xcodebuild archive -target $targetName -scheme "$targetName" -configuration Release -archivePath "$archivePath"  ONLY_ACTIVE_ARCH='NO' PRODUCT_NAME="$productName" PRODUCT_VERSION="$productVersion" CODE_SIGN_IDENTITY="iPhone Distribution: eeGeo Ltd")
+(cd $pathToProjectDir && xcodebuild archive -target $targetName -scheme "$targetName" -configuration Release -archivePath "$archivePath"  ONLY_ACTIVE_ARCH='NO' PRODUCT_NAME="$productName" PRODUCT_VERSION="$productVersion" CODE_SIGN_IDENTITY="iPhone Developer" DEVELOPMENT_TEAM="$developmentTeamId" -allowProvisioningUpdates)
 resultcode=$?
 
 # Output the result of the operation.
