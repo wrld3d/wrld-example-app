@@ -385,34 +385,34 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     //MenuViewListener:
 
     @Override
-    public void onClosed() {
+    public void onMenuClosed() {
         m_menuIsOpen = false;
         pushControlsOfScreenIfNeeded();
     }
 
     @Override
-    public void onOpened() {
+    public void onMenuOpened() {
         m_menuIsOpen = true;
         pushControlsOfScreenIfNeeded();
     }
 
     @Override
-    public void onChildSelected(MenuChild menuChild) {
+    public void onMenuChildSelected(MenuChild menuChild) {
 
     }
 
     @Override
-    public void onOptionExpanded(MenuOption menuOption) {
+    public void onMenuOptionExpanded(MenuOption menuOption) {
 
     }
 
     @Override
-    public void onOptionCollapsed(MenuOption menuOption) {
+    public void onMenuOptionCollapsed(MenuOption menuOption) {
 
     }
 
     @Override
-    public void onOptionSelected(MenuOption menuOption) {
+    public void onMenuOptionSelected(MenuOption menuOption) {
 
     }
 
