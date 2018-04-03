@@ -29,7 +29,6 @@
 #include "InitialExperience.h"
 #include "AndroidPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
-#include "MenuViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
 #include "CompassViewIncludes.h"

@@ -3,8 +3,6 @@
 #pragma once
 
 #include "AndroidNativeState.h"
-#include "IMenuView.h"
-#include "MenuView.h"
 #include "ISearchWidgetView.h"
 #include "MyTestSearchProvider.h"
 #include "CallbackCollection.h"

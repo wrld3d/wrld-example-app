@@ -3,6 +3,8 @@
 #include "SearchWidgetView.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "JniHelper.h"
+#include "MenuItemModel.h"
+
 
 namespace ExampleApp
 {

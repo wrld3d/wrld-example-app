@@ -408,7 +408,6 @@ include_directories(
     jni/InteriorsPosition/View/SenionLab
     jni/Menu
     jni/Menu/SdkModel
-    jni/Menu/View
     jni/Metrics
     jni/ModalBackground
     jni/ModalBackground/SdkModel
@@ -432,8 +431,6 @@ include_directories(
     jni/SearchResultPoi/View
     jni/SearchResultSection
     jni/SearchResultSection/View
-    jni/SettingsMenu
-    jni/SettingsMenu/View
     jni/TagSearch
     jni/TagSearch/View
     jni/WorldPins
