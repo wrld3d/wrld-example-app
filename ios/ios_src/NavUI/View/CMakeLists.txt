@@ -7,6 +7,8 @@ set(currsources
   ios_src/NavUI/View/NavUIViewModule.mm
   ios_src/NavUI/View/NavUIViewRouteUpdateHandler.h
   ios_src/NavUI/View/NavUIViewRouteUpdateHandler.mm
+  ios_src/NavUI/View/NavUIViewRouteDrawingHandler.h
+  ios_src/NavUI/View/NavUIViewRouteDrawingHandler.mm
   ios_src/NavUI/View/CMakeLists.txt
 )
 set(sources ${sources} ${currsources})

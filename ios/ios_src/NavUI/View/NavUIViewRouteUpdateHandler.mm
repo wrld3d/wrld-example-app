@@ -134,7 +134,8 @@ namespace ExampleApp
                                               thenInstruction:nextInstruction
                                                          path:path
                                                      indoorID:indoorId
-                                                      floorID:step.IndoorFloorId];
+                                                      floorID:step.IndoorFloorId
+                                                 isMultiFloor:step.IsMultiFloor];
                         [directionsArray addObject:direction];
                     }
                 }
@@ -156,10 +157,8 @@ namespace ExampleApp
             }
             
             NavUIViewRouteUpdateHandler::NavUIViewRouteUpdateHandler(WRLDNavModel* navModel,
-                                                                     NavRouteDrawingController& routeDrawingController,
                                                                      NavRoutingServiceController& routingServiceController)
             : m_navModel(navModel)
-            , m_routeDrawingController(routeDrawingController)
             , m_routingServiceController(routingServiceController)
             , m_routesReceivedCallback(this, &NavUIViewRouteUpdateHandler::OnRoutingQueryCompleted)
             {
@@ -192,17 +191,10 @@ namespace ExampleApp
                 }
             }
             
-            void NavUIViewRouteUpdateHandler::ClearRoute()
-            {
-                m_routeDrawingController.ClearRoute();
-            }
-            
             void NavUIViewRouteUpdateHandler::OnRoutingQueryCompleted(const std::vector<Eegeo::Routes::Webservice::RouteData>& results)
             {
                 //Only using first route for now
                 UpdateDirectionsFromRoute(results[0], m_navModel);
-                
-                m_routeDrawingController.DrawRoute(results[0]);
             }
         }
     }

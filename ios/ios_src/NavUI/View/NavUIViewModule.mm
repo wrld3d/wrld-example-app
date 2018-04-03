@@ -13,6 +13,8 @@
 
 #include "NavUIViewRouteUpdateHandler.h"
 
+#include "NavUIViewRouteDrawingHandler.h"
+
 //Wrld Example App fudges the propagation of touch events so to prevent our touch events getting
 //passed down to the Map we need to extend our common widget with a consumesTouch selector.
 @interface WRLDNavWidgetBase(ExampleApp)
@@ -38,6 +40,7 @@ namespace ExampleApp
                 WRLDNavWidgetBase* view{nullptr};
                 
                 NavUIViewRouteUpdateHandler* m_pNavUIViewRouteUpdateHandler;
+                NavUIViewRouteDrawingHandler* m_pNavUIViewRouteDrawingHandler;
                 
                 ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* searchResultsPoiViewInterop;
                 Eegeo::iOS::iOSLocationService* iOSLocationService;
@@ -58,12 +61,13 @@ namespace ExampleApp
                     
                     registerObserver("startLocation");
                     registerObserver("endLocation");
-                    registerObserver("routeDirections");
                 }
                 
                 ~Private()
                 {
                     searchResultsPoiViewInterop->RemoveDirectionsCallback(directionsClickedCallbackObj);
+                    
+                    [m_pNavUIViewRouteDrawingHandler release];
                     Eegeo_DELETE m_pNavUIViewRouteUpdateHandler;
                     
                     [view release];
@@ -136,10 +140,6 @@ namespace ExampleApp
                     {
                         m_pNavUIViewRouteUpdateHandler->UpdateRoute();
                     }
-                    else if(keyPath == "route" && model.route == nil)
-                    {
-                        m_pNavUIViewRouteUpdateHandler->ClearRoute();
-                    }
                 }
                 
                 void eventReceived(const std::string& key) override
@@ -147,7 +147,7 @@ namespace ExampleApp
                     if(key == "closeSetupJourneyClicked")
                     {
                         openable.Close();
-                        m_pNavUIViewRouteUpdateHandler->ClearRoute();
+                        model.route = nil;
                         [navModel() sendNavEvent:@"combinedWidgetAnimateOut"];
                     }
                     
@@ -176,8 +176,9 @@ namespace ExampleApp
                 d->setNavModel(d->model);
                 
                 d->m_pNavUIViewRouteUpdateHandler = Eegeo_NEW(NavUIViewRouteUpdateHandler)(d->model,
-                                                                                           routeDrawingController,
                                                                                            routingServiceController);
+                
+                d->m_pNavUIViewRouteDrawingHandler = [[NavUIViewRouteDrawingHandler alloc] initWithDrawingController:(&routeDrawingController) journeyModel:d->model];
                 
                 if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                     d->view = [[WRLDNavWidgetTablet alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];

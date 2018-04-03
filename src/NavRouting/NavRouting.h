@@ -13,6 +13,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            struct NavRouteDrawingVertexData;
+            
             class NavRoutingModule;
             class NavRouteDrawingController;
             class NavRoutingServiceController;

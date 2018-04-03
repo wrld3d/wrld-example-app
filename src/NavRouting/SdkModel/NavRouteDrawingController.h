@@ -7,6 +7,9 @@
 #include "RouteService.h"
 #include "RouteData.h"
 #include "IdentityRouteThicknessPolicy.h"
+#include "NavRouteDrawingVertexData.h"
+
+#include <vector>
 
 namespace ExampleApp
 {
@@ -21,7 +24,7 @@ namespace ExampleApp
 
                 ~NavRouteDrawingController();
                 
-                void DrawRoute(const Eegeo::Routes::Webservice::RouteData& routeData);
+                void DrawRoute(const std::vector<NavRouteDrawingVertexData>& vertsData);
                 
                 void ClearRoute();
                 

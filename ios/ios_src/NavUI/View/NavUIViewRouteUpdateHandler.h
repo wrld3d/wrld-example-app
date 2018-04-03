@@ -23,19 +23,16 @@ namespace ExampleApp
             {
             public:
                 NavUIViewRouteUpdateHandler(WRLDNavModel* navModel,
-                                            NavRouteDrawingController& routeDrawingController,
                                             NavRoutingServiceController& routingServiceController);
                 
                 ~NavUIViewRouteUpdateHandler();
                 
                 void UpdateRoute();
-                void ClearRoute();
                 
             private:
                 void OnRoutingQueryCompleted(const std::vector<Eegeo::Routes::Webservice::RouteData>& results);
                 
                 WRLDNavModel* m_navModel;
-                NavRouteDrawingController& m_routeDrawingController;
                 NavRoutingServiceController& m_routingServiceController;
                 
                 Eegeo::Helpers::TCallback1<NavUIViewRouteUpdateHandler, const std::vector<Eegeo::Routes::Webservice::RouteData>> m_routesReceivedCallback;

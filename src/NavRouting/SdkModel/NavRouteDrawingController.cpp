@@ -13,62 +13,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            struct VertexDto
+            std::vector<Eegeo::Routes::RouteVertex> BuildRoute(const std::vector<NavRouteDrawingVertexData>& verts)
             {
-                VertexDto(double latitudeDegrees, double longitudeDegrees, const std::string& indoorMapId, int indoorMapFloorId, bool multiFloor)
-                : m_latitudeDegrees(latitudeDegrees)
-                , m_longitudeDegrees(longitudeDegrees)
-                , m_indoorMapId(indoorMapId)
-                , m_indoorMapFloorId(indoorMapFloorId)
-                , m_multiFloor(multiFloor)
-                {
-                }
-                
-                bool operator != (const VertexDto& rhs) const
-                {
-                    return m_latitudeDegrees != rhs.m_latitudeDegrees ||
-                    m_longitudeDegrees != rhs.m_longitudeDegrees ||
-                    m_indoorMapId != rhs.m_indoorMapId ||
-                    m_indoorMapFloorId != rhs.m_indoorMapFloorId ||
-                    m_multiFloor != rhs.m_multiFloor;
-                }
-                
-                bool operator == (const VertexDto& rhs) const
-                {
-                    return !(*this != rhs);
-                }
-                
-                double GetLatitudeDegrees() const { return m_latitudeDegrees; }
-                double GetLongitudeDegrees() const { return m_longitudeDegrees; }
-                const std::string& GetIndoorMapId() const { return m_indoorMapId; }
-                int GetIndoorMapFloorId() const { return m_indoorMapFloorId; }
-                bool IsMultiFloor() const { return m_multiFloor; }
-            private:
-                double m_latitudeDegrees;
-                double m_longitudeDegrees;
-                std::string m_indoorMapId;
-                int m_indoorMapFloorId;
-                bool m_multiFloor;
-            };
-            
-            std::vector<Eegeo::Routes::RouteVertex> BuildRoute(const Eegeo::Routes::Webservice::RouteData& route)
-            {
-                std::vector<VertexDto> verts;
-                
-                for (auto& section: route.Sections)
-                {
-                    for (auto& step: section.Steps)
-                    {
-                        for (auto& latLng: step.Path)
-                        {
-                            verts.emplace_back(latLng.GetLatitudeInDegrees(), latLng.GetLongitudeInDegrees(), step.IndoorId, step.IndoorFloorId, step.IsMultiFloor);
-                        }
-                    }
-                }
-                
-                verts.erase(std::unique(verts.begin(), verts.end()), verts.end());
-                
-                
                 const Eegeo::v4 color(1, 0, 0, 0.8f);
                 float halfWidth = 5.f;
                 float velocity = 20.f;
@@ -102,9 +48,9 @@ namespace ExampleApp
                 ClearRoute();
             }
             
-            void NavRouteDrawingController::DrawRoute(const Eegeo::Routes::Webservice::RouteData& routeData)
+            void NavRouteDrawingController::DrawRoute(const std::vector<NavRouteDrawingVertexData>& verts)
             {
-                std::vector<Eegeo::Routes::RouteVertex> points = BuildRoute(routeData);
+                std::vector<Eegeo::Routes::RouteVertex> points = BuildRoute(verts);
                 
                 Eegeo::Routes::Style::RouteStyle routeStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone, Eegeo::Rendering::LayerIds::BeforeWorldTranslucency);
                 
