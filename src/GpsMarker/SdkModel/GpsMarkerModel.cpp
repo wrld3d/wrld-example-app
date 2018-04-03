@@ -15,8 +15,10 @@ namespace ExampleApp
         {
 
             GpsMarkerModel::GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
+										   Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                            Eegeo::BlueSphere::BlueSphereModel& blueSphereModel)
             : m_locationService(locationService)
+			, m_interiorInteractionModel(interiorInteractionModel)
             , m_currentLocationEcef(Eegeo::dv3::Zero())
             , m_currentHeadingRadians(0)
             , m_currentHeadingVelocity(0)
@@ -64,14 +66,16 @@ namespace ExampleApp
                 }
                 
                 Eegeo::Space::LatLong coord = Eegeo::Space::LatLong::FromECEF(m_currentLocationEcef);
-                int floorIndex;
+                int floorIndex, floorId;
                 m_locationService.GetFloorIndex(floorIndex);
                 const Eegeo::Resources::Interiors::InteriorId& interiorId = m_locationService.GetInteriorId();
                 
                 m_blueSphereModel.SetCoordinate(coord);
-                m_blueSphereModel.SetIndoorMap(interiorId.Value(), floorIndex);
 
-                return true;
+				if (FloorIndexToId(floorIndex, floorId))
+					m_blueSphereModel.SetIndoorMap(interiorId.Value(), floorId);
+
+				return true;
             }
             
             void GpsMarkerModel::UpdateHeading(float dt)
@@ -121,6 +125,17 @@ namespace ExampleApp
             {
                 return m_blueSphereModel.IsLocationIndoors();
             }
-        }
+
+			bool GpsMarkerModel::FloorIndexToId(int floorIndex, int& floorId)
+			{
+				const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel = m_interiorInteractionModel.GetInteriorModel();
+
+				if (interiorsModel == NULL)
+					return false;
+
+				floorId = interiorsModel->GetFloorAtIndex(floorIndex).GetFloorNumber();
+				return true;
+			}
+		}
     }
 }

@@ -21,7 +21,7 @@ namespace ExampleApp
                                              const bool createBlueSphereViews,
                                              ExampleAppMessaging::TMessageBus& messageBus)
             {
-                m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, mapModule.GetBlueSphereModule().GetBlueSphereModel());
+                m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, interiorInteractionModel, mapModule.GetBlueSphereModule().GetBlueSphereModel());
 
                 m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel,
                                                                interiorInteractionModel,
