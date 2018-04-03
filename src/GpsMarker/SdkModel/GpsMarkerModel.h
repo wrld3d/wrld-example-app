@@ -17,6 +17,7 @@ namespace ExampleApp
             {
             public:
                 GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
+							   Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                Eegeo::BlueSphere::BlueSphereModel& blueSphereModel);
                 ~GpsMarkerModel();
 
@@ -34,13 +35,16 @@ namespace ExampleApp
                 
             private:
                 Eegeo::Location::ILocationService& m_locationService;
+				Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::BlueSphere::BlueSphereModel& m_blueSphereModel;
                 
                 Eegeo::dv3 m_currentLocationEcef;
                 
                 float m_currentHeadingRadians;
                 float m_currentHeadingVelocity;
-            };
+
+				bool FloorIndexToId(int floorIndex, int& floorId);
+			};
         }
     }
 }
