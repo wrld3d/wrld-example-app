@@ -6,6 +6,8 @@
 #include "MathsHelpers.h"
 #include "PointOnMapBuilder.h"
 #include "CoordinateConversion.h"
+#include "InteriorsModel.h"
+#include "InteriorsFloorModel.h"
 
 namespace ExampleApp
 {
