@@ -331,10 +331,14 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
     {
         final int idealSizePx = 512;
 
+        InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
+        bmOptions.inPreferredConfig = Bitmap.Config.RGB_565;
 
+        Bitmap bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
+        is.close();
         int photoWidth = bmOptions.outWidth;
         int photoHeight = bmOptions.outHeight;
 
@@ -343,8 +347,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
-        InputStream is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
-        Bitmap bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
+        is = m_activity.getContentResolver().openInputStream(m_currentImageUri);
+        bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
         is.close();
         if (bitmap == null)
         {
