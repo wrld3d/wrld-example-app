@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 
 /**
- This enum represent the location availability from `SSIPositioningApi`.
+ This enum represent the heading availability from `SSIPositioningApi`.
  */
 typedef NS_ENUM(NSInteger, SSIHeadingAvailability) {
     

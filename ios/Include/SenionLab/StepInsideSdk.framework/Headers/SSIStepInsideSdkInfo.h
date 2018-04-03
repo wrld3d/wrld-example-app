@@ -24,7 +24,7 @@
 /**
  The version of the SDK.
  */
-@property (nonnull, nonatomic, strong, readonly) NSString *sdkVersion;
+@property (class, nonnull, nonatomic, strong, readonly) NSString *sdkVersion;
 
 @end
 

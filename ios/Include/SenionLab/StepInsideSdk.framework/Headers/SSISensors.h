@@ -24,7 +24,7 @@
 /**
  Checks if BLE is enabled on the device.
  */
-@property (readonly) BOOL isBleEnabled;
+@property (class, readonly) BOOL isBleEnabled;
 
 /**
  Displays the system prompt requesting the user for "When In Use" Core Location authorization.
