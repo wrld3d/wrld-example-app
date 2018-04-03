@@ -6,6 +6,7 @@
 #include "ILocationService.h"
 #include "VectorMath.h"
 #include "BlueSphereModel.h"
+#include "InteriorInteractionModel.h"
 
 namespace ExampleApp
 {
