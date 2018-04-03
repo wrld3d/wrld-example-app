@@ -16,6 +16,14 @@ typedef void (^Event) (void);
 
 - (void)removeSearchbarResignedFocusEvent:(SearchbarFocusEvent)event;
 
+- (void)addSearchWidgetGainedFocusEvent:(Event)event;
+
+- (void)removeSearchWidgetGainedFocusEvent:(Event)event;
+
+- (void)addSearchWidgetResignedFocusEvent:(Event)event;
+
+- (void)removeSearchWidgetResignedFocusEvent:(Event)event;
+
 - (void)addSearchResultsReceivedEvent:(Event)event;
 
 - (void)removeSearchResultsReceivedEvent:(Event)event;
