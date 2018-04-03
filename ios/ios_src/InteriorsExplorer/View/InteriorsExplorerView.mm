@@ -18,6 +18,7 @@
 namespace
 {
     float iPhoneDismissButtonMargin = 28.f;
+    float offScreenDismissButtonXPos;
 }
 
 @implementation InteriorsExplorerView
@@ -125,6 +126,7 @@ namespace
         UIView* dismissButtonParent = self;
         self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(dismissButtonBackgroundColor)] autorelease];
         self.pDismissButtonBackground.frame = CGRectMake(dismissButtonX, dismissButtonY, buttonSize, buttonSize);
+        offScreenDismissButtonXPos = dismissButtonX;
         self.pDismissButtonBackground.userInteractionEnabled = YES;
         [dismissButtonParent addSubview:self.pDismissButtonBackground];
         
@@ -646,7 +648,7 @@ namespace
     
     const bool showChangeFloorDialog = floorCount > 1;
     const CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
-    [self.pTutorialView repositionTutorialDialogs:dismissButtonFrame.origin.x
+    [self.pTutorialView repositionTutorialDialogs:offScreenDismissButtonXPos
                                                  :dismissButtonFrame.origin.y
                                                  :dismissButtonFrame.size.height
                                                  :self.pFloorPanel.frame.origin.y + self.pFloorChangeButton.frame.origin.y

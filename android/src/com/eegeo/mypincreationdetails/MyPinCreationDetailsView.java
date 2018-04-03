@@ -282,6 +282,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
+		bmOptions.inPreferredConfig = Bitmap.Config.RGB_565;
 
         Bitmap bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
         is.close();

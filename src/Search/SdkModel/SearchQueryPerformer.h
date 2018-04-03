@@ -47,10 +47,10 @@ namespace ExampleApp
                     return m_previousQuery;
                 }
 
-                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch);
-                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, float radius);
-                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, bool startAtGPSLocation=false);
-                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius, bool startAtGPSLocation=false);
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const std::string& interiorId = "");
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, float radius, const std::string& interiorId = "");
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, bool startAtGPSLocation=false, const std::string& interiorId = "");
+                void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius, bool startAtGPSLocation=false, const std::string& interiorId = "");
 
                 void RemoveSearchQueryResults();
 

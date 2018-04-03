@@ -392,7 +392,6 @@
         customTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         customTableView.bounces = NO;
         customTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        customTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     }
     
     self.pSearchResultsTableView = [[[CustomTableView alloc] initWithFrame:CGRectMake(tableX, tableY, tableWidth, tableHeight)
@@ -406,7 +405,6 @@
     self.pSearchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.pSearchResultsTableView.bounces = NO;
     self.pSearchResultsTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.pSearchResultsTableView.pBackgroundView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
     
     [self addSubview: self.pDragTab];
     [self addSubview: self.pTitleContainer];

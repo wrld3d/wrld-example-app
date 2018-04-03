@@ -54,9 +54,11 @@
 
 		        <data android:scheme="wrld" android:host="location" />
 		        <data android:scheme="wrld" android:host="mapscene" />
+                <data android:scheme="wrld" android:host="search" />
 
 		        <data android:scheme="eegeo" android:host="location" />
 		        <data android:scheme="eegeo" android:host="mapscene" />
+                <data android:scheme="eegeo" android:host="search" />
             </intent-filter>
         </activity>
         

@@ -3,20 +3,7 @@
 #pragma once
 
 #include "IDeepLinkHandler.h"
-#include "Web.h"
-#include "CameraTransitions.h"
-#include "ApplicationConfiguration.h"
-#include "WebLoadRequestCompletionCallback.h"
-#include "ISingleOptionAlertBoxDismissedHandler.h"
-#include "CoverageTrees.h"
-#include "CityThemes.h"
-#include "InteriorMenuObserver.h"
-#include "ISearchQueryPerformer.h"
-#include "AboutPageViewModel.h"
-#include "IAlertBoxFactory.h"
-#include "Location.h"
-#include "ICallback.h"
-#include "AppModes.h"
+#include "MapsceneLoader.h"
 
 namespace ExampleApp
 {
@@ -24,67 +11,14 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            // TODO: This needs factoring out to a MapScene service in C++ SDK
             class DeepLinkConfigHandler: public IDeepLinkHandler, private Eegeo::NonCopyable
             {
             public:
-                DeepLinkConfigHandler(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                      Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
-                                      Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                                      ExampleApp::ApplicationConfig::ApplicationConfiguration& defaultConfig,
-                                      Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& manifestLoader,
-                                      Eegeo::Streaming::CoverageTrees::CoverageTreeManifestNotifier& manifestNotifier,
-                                      Eegeo::Resources::CityThemes::CityThemeLoader& cityThemeLoader,
-                                      Eegeo::Resources::CityThemes::ICityThemesService& cityThemeService,
-                                      Search::SdkModel::InteriorMenuObserver& interiorMenuObserver,
-                                      Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                      AboutPage::View::IAboutPageViewModel& aboutPageViewModule,
-                                      Eegeo::Location::NavigationService& navigationService,
-                                      Eegeo::Web::ApiTokenService& apiTokenService,
-                                      Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                      const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
-                ~DeepLinkConfigHandler();
+                DeepLinkConfigHandler(Mapscene::SdkModel::MapsceneLoader& mapsceneLoader);
                 void HandleDeepLink(const AppInterface::UrlData& data);
             private:
-                CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
-                Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
-                Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
-                ApplicationConfig::ApplicationConfiguration& m_defaultConfig;
-                Eegeo::Web::TWebLoadRequestCompletionCallback<DeepLinkConfigHandler> m_configRequestCompleteCallback;
-                Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<DeepLinkConfigHandler> m_failAlertHandler;
-                Eegeo::Streaming::CoverageTrees::ICoverageTreeManifestLoader& m_manifestLoader;
-                Eegeo::Streaming::CoverageTrees::CoverageTreeManifestNotifier& m_manifestNotifier;
-                Eegeo::Resources::CityThemes::CityThemeLoader& m_cityThemeLoader;
-                Eegeo::Resources::CityThemes::ICityThemesService& m_cityThemeService;
-                Search::SdkModel::InteriorMenuObserver& m_interiorMenuObserver;
-                Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
-                AboutPage::View::IAboutPageViewModel& m_aboutPageViewModule;
-                Eegeo::Location::NavigationService& m_navigationService;
-                Eegeo::Web::ApiTokenService& m_apiTokenService;
-                std::string m_previouslyLoadedCoverageTreeUrl;
-                std::string m_previouslyLoadedThemeManifestUrl;
-                Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                const ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
-                
-                Eegeo::Helpers::TCallback1<DeepLinkConfigHandler, const Eegeo::Streaming::CoverageTrees::CoverageTreeManifest> m_newManifestCallback;
-                void HandleNewCoverageTreeManifestLoaded(const Eegeo::Streaming::CoverageTrees::CoverageTreeManifest& manifest);
-            
-                Eegeo::Helpers::TCallback0<DeepLinkConfigHandler> m_newThemeDataCallback;
-                void HandleNewThemeManifestLoaded();
-
-                Eegeo::Helpers::TCallback0<DeepLinkConfigHandler> m_startupSearchCameraTransitionCompleteCallback;
-                std::string m_startupSearchTag;
-                Eegeo::Space::LatLongAltitude m_startupSearchLocation;
-                bool m_startAtGPSLocation;
-                bool m_shouldPerformStartupSearch;
-                void HandleStartupSearchCameraTransitionComplete();
-
-                std::string GenerateConfigUrl(const AppInterface::UrlData& data) const;
-                void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
-                void OnFailAlertBoxDismissed();
+                Mapscene::SdkModel::MapsceneLoader& m_mapsceneLoader;
             };
-        
-            const std::string CONFIG_FILES_HOME = "http://mapscene.eegeo.com";
         }
     }
 }

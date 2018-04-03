@@ -44,6 +44,7 @@ namespace ExampleApp
                 const std::string IsInKioskMode = "is_in_kiosk_mode";
                 const std::string StartAppInFullscreen = "start_app_in_fullscreen";
                 const std::string UseJapaneseFont = "use_japanese_font";
+                const std::string UseChineseFont = "use_chinese_font";
                 const std::string IndoorTrackedBuildings = "indoor_tracked_buildings";
                 const std::string InteriorId = "interior_id";
                 const std::string Type = "type";
@@ -294,6 +295,7 @@ namespace ExampleApp
                 bool isInKioskMode = ParseBoolOrDefault(document, IsInKioskMode, m_defaultConfig.IsInKioskMode());
                 bool startFullscreen = ParseBoolOrDefault(document, StartAppInFullscreen, m_defaultConfig.ShouldStartFullscreen());
                 bool useJapaneseFont = ParseBoolOrDefault(document, UseJapaneseFont, m_defaultConfig.UseJapaneseFont());
+                bool useChineseFont = ParseBoolOrDefault(document, UseChineseFont, m_defaultConfig.UseChineseFont());
 
                 std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfoList;
                 if(document.HasMember(IndoorTrackedBuildings.c_str()) && !document[IndoorTrackedBuildings.c_str()].IsNull())
@@ -367,6 +369,7 @@ namespace ExampleApp
                     isKioskTouchInputEnabled,
                     isInKioskMode,
                     useJapaneseFont,
+                    useChineseFont,
                     interiorTrackingInfoList,
                     fixedIndoorLocation,
                     attractModeTargetSplinePoints,

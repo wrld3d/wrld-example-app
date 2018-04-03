@@ -12,12 +12,14 @@ namespace ExampleApp
                                      bool isTag,
                                      bool tryInteriorSearch,
                                      const Eegeo::Space::LatLongAltitude& where,
-                                     float radius)
+                                     float radius,
+                                     const std::string& interiorId)
                 : m_query(query)
                 , m_isTag(isTag)
                 , m_tryInteriorSearch(tryInteriorSearch)
                 , m_where(where)
                 , m_radius(radius)
+                , m_interiorId(interiorId)
             {
             }
 
@@ -49,6 +51,11 @@ namespace ExampleApp
             const Eegeo::Space::LatLongAltitude& SearchQuery::Location() const
             {
                 return m_where;
+            }
+            
+            const std::string& SearchQuery::InteriorId() const
+            {
+                return m_interiorId;
             }
         }
     }

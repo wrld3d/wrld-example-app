@@ -160,6 +160,7 @@ public class BackgroundThreadActivity extends MainActivity
     protected void onResume()
     {
         super.onResume();
+        updateSystemNavigation();
     	if(hasValidHockeyAppId())
     	{
     		registerCrashLogging();
@@ -261,7 +262,7 @@ public class BackgroundThreadActivity extends MainActivity
 
                     if(m_deepLinkUrlData != null)
                     {
-                        NativeJniCalls.handleUrlOpenEvent(m_deepLinkUrlData.getHost(), m_deepLinkUrlData.getPath());
+                        NativeJniCalls.handleUrlOpenEvent(m_deepLinkUrlData.getHost(), m_deepLinkUrlData.getPath(), m_deepLinkUrlData.getEncodedQuery());
                         m_deepLinkUrlData = null;
                     }
 
@@ -495,6 +496,14 @@ public class BackgroundThreadActivity extends MainActivity
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
+        updateSystemNavigation();
+    }
+
+    private void updateSystemNavigation()
+    {
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN |
+                                                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                                                         View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                                                         View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 }

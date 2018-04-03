@@ -91,6 +91,8 @@
 #include "SurveyTimer.h"
 #include "InitialLocation.h"
 #include "AutomatedScreenshotController.h"
+#include "SelectFirstResultSearchService.h"
+#include "MapsceneModule.h"
 
 namespace ExampleApp
 {
@@ -156,12 +158,14 @@ namespace ExampleApp
         Net::SdkModel::INetworkCapabilities& m_networkCapabilities;
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
         Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
+        Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService* m_pSelectFirstResultSearchService;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
         Surveys::SdkModel::ISurveyModule* m_pSurveyModule;
         Surveys::SdkModel::SurveyTimer* m_pSurveyTimer;
         DeepLink::SdkModel::DeepLinkModule* m_pDeepLinkModule;
+        Mapscene::SdkModel::MapsceneModule* m_pMapsceneModule;
         InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
         InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper* m_pHighlightColorMapper;
         InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightVisibilityController;
@@ -396,6 +400,11 @@ namespace ExampleApp
         const GpsMarker::SdkModel::IGpsMarkerModule& GpsMarkerModule() const
         {
             return *m_pGpsMarkerModule;
+        }
+        
+        const Mapscene::SdkModel::MapsceneModule& GetMapsceneModule() const
+        {
+            return *m_pMapsceneModule;
         }
         
         // Exposed to allow view model creation in iOS code.

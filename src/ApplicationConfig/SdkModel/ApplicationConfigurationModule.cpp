@@ -43,6 +43,7 @@ namespace ExampleApp
                     const bool isKioskTouchInputEnabled = false;
                     const bool isInKioskMode = false;
                     const bool useJapaneseFont = false;
+                    const bool useChineseFont = false;
                     
                     const bool shouldPerformStartUpSearch = false;
                     const std::string startUpSearchTag = "";
@@ -100,6 +101,7 @@ namespace ExampleApp
                         isKioskTouchInputEnabled,
                         isInKioskMode,
                         useJapaneseFont,
+                        useChineseFont,
                         interiorTrackingInfo,
                         fixedIndoorLocation,
                         attractModeTargetSplinePoints,
@@ -116,6 +118,27 @@ namespace ExampleApp
                         outdoorSearchMenuItems,
                         overrideIndoorSearchMenuItems);
                 }
+
+                const std::string defaultFontFilename = "opensans_semibold_sdf.fnt";
+                const std::string japanFontFilename = "IPAexGothic_sdf.fnt";
+                const std::string chinaFontFilename = "notosans_sdf_china_region.fnt";
+
+                std::string BuildEnvironmentFontFilename(const ApplicationConfiguration& appConfig)
+                {
+                    if (appConfig.UseJapaneseFont())
+                    {
+                        return japanFontFilename;
+                    }
+                    else if (appConfig.UseChineseFont())
+                    {
+                        return chinaFontFilename;
+                    }
+                    else
+                    {
+                        return defaultFontFilename;
+                    }
+                }
+
             }
             
             ApplicationConfig::ApplicationConfiguration LoadAppConfig(Eegeo::Helpers::IFileIO& fileIO,
@@ -139,8 +162,7 @@ namespace ExampleApp
                 platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = appConfig.EmbeddedThemeTexturePath();
 
                 platformConfig.OptionsConfig.EnableLabels = true;
-                const std::string& defaultFontFilename = "opensans_semibold_sdf.fnt";
-                const std::string& environmentFontFilename = appConfig.UseJapaneseFont() ? "IPAexGothic_sdf.fnt" : defaultFontFilename;
+                const std::string& environmentFontFilename = BuildEnvironmentFontFilename(appConfig);
                 
                 platformConfig.MapLayersConfig.FontsModuleConfig.EnvironmentFontFilename = environmentFontFilename;
                 platformConfig.MapLayersConfig.Interiors.UseLegacyLabels = false;

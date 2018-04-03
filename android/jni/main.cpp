@@ -181,14 +181,24 @@ JNIEXPORT jlong JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_s
 JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_handleUrlOpenEvent(
     JNIEnv* jenv, jobject obj,
 	jstring host,
-	jstring path)
+	jstring path,
+    jstring query)
 {
     const char* nativeHost = jenv->GetStringUTFChars(host, JNI_FALSE);
     const char* nativePath = jenv->GetStringUTFChars(path, JNI_FALSE);
-    const AppInterface::UrlData data = {nativeHost, nativePath};
+    const char* nativeQuery = NULL;
+    if(query != NULL)
+    {
+        nativeQuery = jenv->GetStringUTFChars(query, JNI_FALSE);
+    }
+    const AppInterface::UrlData data = {nativeHost, nativePath, nativeQuery};
     g_pAppRunner->HandleUrlOpenEvent(data);
     jenv->ReleaseStringUTFChars(host, nativeHost);
     jenv->ReleaseStringUTFChars(path, nativePath);
+    if(query != NULL)
+    {
+        jenv->ReleaseStringUTFChars(query, nativeQuery);
+    }
 }
 
 JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_EegeoSurfaceView_processNativePointerDown(JNIEnv* jenv, jobject obj,

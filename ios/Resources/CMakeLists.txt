@@ -1190,6 +1190,9 @@ set(resources ${resources}
         Resources/micello_logo@3x.png
         Resources/opensans_semibold_sdf.fnt
         Resources/opensans_semibold_sdf_0.png
+        Resources/notosans_sdf_china_region.fnt
+        Resources/notosans_sdf_china_region_0.png
+        Resources/notosans_sdf_china_region_1.png
         Resources/place_pin_background.png
         Resources/place_pin_background@2x.png
         Resources/place_pin_background@3x.png

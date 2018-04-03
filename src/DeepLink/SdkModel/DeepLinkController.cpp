@@ -2,6 +2,7 @@
 
 #include "DeepLinkController.h"
 
+
 namespace ExampleApp
 {
     namespace DeepLink
@@ -28,11 +29,7 @@ namespace ExampleApp
                 IDeepLinkHandler* handler = m_deepLinkModel.Get(std::string(data.host));
                 if(handler != NULL)
                 {
-                    handler->HandleDeepLink(data);
-                }
-                else
-                {
-                    Eegeo_TTY("Attempt to route unknown deeplink URL: %s",data.host);
+                     handler->HandleDeepLink(data);
                 }
             }
         }

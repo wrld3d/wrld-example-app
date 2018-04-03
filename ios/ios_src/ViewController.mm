@@ -96,6 +96,7 @@ using namespace Eegeo::iOS;
             AppInterface::UrlData data;
             data.host = [appDelegate.launchUrl.host UTF8String];
             data.path = [appDelegate.launchUrl.path UTF8String];
+            data.query = [appDelegate.launchUrl.query UTF8String];
             m_pAppRunner->HandleUrlOpen(data);
         }
     }

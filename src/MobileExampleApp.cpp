@@ -68,6 +68,7 @@
 #include "AppModeModel.h"
 #include "ICompassViewModel.h"
 #include "CombinedSearchServiceModule.h"
+#include "SelectFirstResultSearchService.h"
 #include "GeoNamesSearchServiceModule.h"
 #include "EegeoSearchServiceModule.h"
 #include "SearchVendorNames.h"
@@ -127,6 +128,7 @@
 #include "IScreenshotService.h"
 #include "InteriorHighlightsModule.h"
 #include "IInteriorsHighlightService.h"
+#include "MapsceneModule.h"
 
 namespace ExampleApp
 {
@@ -234,6 +236,7 @@ namespace ExampleApp
     , m_pGpsMarkerModule(NULL)
     , m_pWorldAreaLoaderModule(NULL)
     , m_pAboutPageModule(NULL)
+    , m_pMapsceneModule(NULL)
     , m_initialExperienceModule(initialExperienceModule)
     , m_messageBus(messageBus)
     , m_sdkDomainEventBus(sdkModelDomainEventBus)
@@ -437,24 +440,29 @@ namespace ExampleApp
             const float heading = Eegeo::Math::Deg2Rad(applicationConfiguration.OrientationDegrees());
             m_pCameraTransitionController->StartTransitionTo(location.ToECEF(), m_applicationConfiguration.DistanceToInterestMetres(), heading, m_applicationConfiguration.IndoorId(), applicationConfiguration.FloorIndex());
         }
+        
+        m_pMapsceneModule = Eegeo_NEW(Mapscene::SdkModel::MapsceneModule)(*m_pCameraTransitionController,
+                                                                          m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                          m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
+                                                                          m_applicationConfiguration,
+                                                                          m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader(),
+                                                                          m_pWorld->GetMapModule().GetCoverageTreeModule().CoverageTreeManifestNotifier(),
+                                                                          m_pWorld->GetMapModule().GetCityThemesModule().GetCityThemeLoader(),
+                                                                          m_pWorld->GetMapModule().GetCityThemesModule().GetCityThemesService(),
+                                                                          m_pSearchModule->GetInteriorMenuObserver(),
+                                                                          m_pSearchModule->GetSearchQueryPerformer(),
+                                                                          m_pAboutPageModule->GetAboutPageViewModel(),
+                                                                          *m_pNavigationService,
+                                                                          m_pWorld->GetApiTokenService(),
+                                                                          interiorsPresentationModule.GetInteriorSelectionModel(),
+                                                                          *m_pAppModeModel);
 
         m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(
             *m_pCameraTransitionController,
-            m_platformAbstractions.GetWebLoadRequestFactory(),
             m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
-            m_applicationConfiguration,
-            m_pWorld->GetMapModule().GetCoverageTreeModule().GetCoverageTreeLoader(),
-            m_pWorld->GetMapModule().GetCoverageTreeModule().CoverageTreeManifestNotifier(),
-            m_pWorld->GetMapModule().GetCityThemesModule().GetCityThemeLoader(),
-            m_pWorld->GetMapModule().GetCityThemesModule().GetCityThemesService(),
-            m_pSearchModule->GetInteriorMenuObserver(),
-            m_pSearchModule->GetSearchQueryPerformer(),
-            m_pAboutPageModule->GetAboutPageViewModel(),
-            *m_pNavigationService,
-            m_pWorld->GetApiTokenService(),
-            interiorsPresentationModule.GetInteriorSelectionModel(),
-            *m_pAppModeModel,
-            m_pFlattenButtonModule->GetFlattenButtonModel());
+            m_pFlattenButtonModule->GetFlattenButtonModel(),
+            *m_pSelectFirstResultSearchService,
+            m_pMapsceneModule->GetMapsceneLoader());
 
         if (applicationConfiguration.HasMapScene())
         {
@@ -475,6 +483,8 @@ namespace ExampleApp
         m_pAppModeModel->DestroyStateMachine();
 
         Eegeo_DELETE m_pDeepLinkModule;
+        
+        Eegeo_DELETE m_pMapsceneModule;
 
         Eegeo_DELETE m_pUserInteractionModule;
 
@@ -674,6 +684,7 @@ namespace ExampleApp
                                                                                             m_pSearchModule->GetSearchQueryPerformer(),
                                                                                             m_messageBus,
                                                                                             m_metricsService);
+        
 
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
@@ -839,6 +850,12 @@ namespace ExampleApp
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
         m_pSearchMenuModule->AddMenuSection("Find", m_pTagSearchModule->GetTagSearchMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Locations", m_pPlaceJumpsModule->GetPlaceJumpsMenuModel(), true);
+        
+        
+        m_pSelectFirstResultSearchService = Eegeo_NEW(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService)(m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                                           m_pSearchResultSectionModule->GetSearchResultSectionModel(),
+                                                                                                                           m_messageBus
+                                                                                                                           );
 
         if(!m_applicationConfiguration.IsInKioskMode())
         {

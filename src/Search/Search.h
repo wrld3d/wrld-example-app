@@ -24,6 +24,7 @@ namespace ExampleApp
             class ISearchResultRepository;
             class SearchResultModel;
             class IdentitySearchCallbackData;
+            class SelectFirstResultSearchService;
         }
     }
 }

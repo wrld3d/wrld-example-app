@@ -44,20 +44,35 @@ namespace ExampleApp
                     const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel = m_interiorInteractionModel.GetInteriorModel();
                     if (m_interiorInteractionModel.HasInteriorModel() && query.IsTag() && query.ShouldTryInteriorSearch())
                     {
+                        const Eegeo::Resources::Interiors::InteriorId interiorId(!query.InteriorId().empty() ? query.InteriorId() : interiorsModel->GetId());
+                        
+                        if(!query.InteriorId().empty())
+                        {
+                            interiorId.Value() = query.InteriorId();
+                        }
+                        
                         return Eegeo_NEW(EegeoInteriorSearchQuery)(m_webRequestFactory,
                                                                    m_urlEncoder,
                                                                    lowerCaseSearchQuery,
                                                                    m_serviceUrl,
                                                                    m_apiTokenModel,
-                                                                   interiorsModel->GetId(),
+                                                                   interiorId,
                                                                    m_interiorInteractionModel.GetSelectedFloorIndex(),
                                                                    completionCallback);
                     }
                     else
                     {
-                        const Eegeo::Resources::Interiors::InteriorId interiorId(interiorsModel != nullptr
-                            ? interiorsModel->GetId()
-                            : Eegeo::Resources::Interiors::InteriorId::NullId());
+                        Eegeo::Resources::Interiors::InteriorId interiorId(Eegeo::Resources::Interiors::InteriorId::NullId());
+                        
+                        if (!query.InteriorId().empty())
+                        {
+                            interiorId = query.InteriorId();
+                        }
+                        else if (interiorsModel != nullptr)
+                        {
+                            interiorId = interiorsModel->GetId();
+                        }
+
                         return Eegeo_NEW(EegeoSearchQuery)(m_webRequestFactory,
                                                            m_urlEncoder,
                                                            lowerCaseSearchQuery,
