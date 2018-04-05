@@ -31,9 +31,11 @@
 - (instancetype)initWithSearchModel:(WRLDSearchModel *)searchModel
                           menuModel:(WRLDSearchMenuModel *)menuModel;
 
--(void) displaySearchProvider :(WRLDSearchProviderHandle*) searchProvider;
--(void) displaySuggestionProvider :(WRLDSuggestionProviderHandle*) suggestionProvider;
--(void) registerNib: (UINib *) nib forUseWithResultsTableCellIdentifier: (NSString *) cellIdentifier;
+- (void) displaySearchProvider :(WRLDSearchProviderHandle*) searchProvider;
+- (void) stopDisplayingSearchProvider :(WRLDSearchProviderHandle*) searchProvider;
+- (void) displaySuggestionProvider :(WRLDSuggestionProviderHandle*) suggestionProvider;
+- (void) stopDisplayingSuggestionProvider :(WRLDSuggestionProviderHandle*) suggestionProvider;
+- (void) registerNib: (UINib *) nib forUseWithResultsTableCellIdentifier: (NSString *) cellIdentifier;
 
 - (void) clearSearch;
 
@@ -43,18 +45,18 @@
 
 - (void) resignFocus;
 
-- (void)openMenu;
+- (void) openMenu;
 
-- (void)closeMenu;
+- (void) closeMenu;
 
-- (void)collapseMenu;
+- (void) collapseMenu;
 
-- (void)expandMenuOptionAt:(NSUInteger)index;
+- (void) expandMenuOptionAt:(NSUInteger)index;
 
-- (void)enableVoiceSearch:(WRLDSpeechHandler*)speechHandler;
+- (void) enableVoiceSearch:(WRLDSpeechHandler*)speechHandler;
 
-- (void)disableVoiceSearch;
+- (void) disableVoiceSearch;
 
-- (void)setSearchBarPlaceholder:(NSString*)placeholder;
+- (void) setSearchBarPlaceholder:(NSString*)placeholder;
 
 @end
