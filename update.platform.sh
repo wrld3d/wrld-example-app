@@ -67,7 +67,7 @@ fi
 echo "Updating $p platform..."
 rm -f ./$destPackageName
 rm -rf $includeDestination
-
+echo "$downloadUrl"
 curl $downloadUrl > ./$destPackageName
 
 statuscode=$?
