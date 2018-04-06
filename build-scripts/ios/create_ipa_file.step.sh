@@ -58,7 +58,7 @@ fi
 
 # Export ipa re-signed with enterprise provisioningProfile
 # TODO: This method is depricated - should use an exportOptionsPlist but currently that option doesn't work (see http://github.com/fastlane/gym/issues/89 for more info)
-(cd $pathToProjectDir && xcodeBuild -exportArchive  -exportOptionsPlist exportOptions.plist -allowProvisioningUpdates -archivePath "$archivePath" -exportPath .)
+(cd $pathToProjectDir && xcodeBuild -exportArchive -exportFormat ipa -exportProvisioningProfile "$provisioningProfile" -archivePath "$archivePath" -exportPath "$ipaName")
 if [ $? -ne 0 ]; then
     echo "Failed to export IPA."
     exit 1
