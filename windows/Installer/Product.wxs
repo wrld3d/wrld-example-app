@@ -67,6 +67,9 @@
       <Directory Id="ProgramMenuFolder">
         <Directory Id="STARTMENUPROGRAMFOLDER" Name="BWAY"/>
       </Directory>
+
+      <!-- Desktop shortcut path -->
+      <Directory Id="DesktopFolder" Name="Desktop"/>
     </Directory>
 
     <!-- Define directory contents and sources -->
@@ -2497,14 +2500,29 @@
       </Component>
     </DirectoryRef>
 
+    <!-- Desktop definitions-->
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="DesktopApplicationShortcuts" Guid="{6832DE09-53A5-4C70-AF91-435B1D6D0A2C}">
+
+        <!-- Application Shortcut -->
+        <Shortcut Id="ApplicationDesktopShortcut"
+                  Name="BWAY"
+                  Target="[#mainapplication.exe]"
+                  WorkingDirectory="INSTALLFOLDER"/>
+
+        <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\eeGeo\ProjectSwallow" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
 
     <!-- Define application -->
     <Feature Id="MainApplication" Title="BWAY" Level="1">
       <ComponentGroupRef Id="MainApplication" />
       <ComponentGroupRef Id="MainApplicationResources" />
 
-      <!-- Start menu shortcuts -->
+      <!-- Shortcuts -->
       <ComponentRef Id="ApplicationShortcuts" />
+      <ComponentRef Id="DesktopApplicationShortcuts" />
     </Feature>
 
     <InstallExecuteSequence>
