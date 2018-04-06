@@ -38,7 +38,6 @@ public class SearchResultViewFactory implements ISearchResultViewFactory
 
         private View m_divider;
         private View m_separator;
-        private View m_shadow;
 
         @Override
         public void initialise(View view)
@@ -49,7 +48,6 @@ public class SearchResultViewFactory implements ISearchResultViewFactory
 
             m_divider   = view.findViewById(R.id.search_result_divider);
             m_separator = view.findViewById(R.id.search_result_top_seperator);
-            m_shadow    = view.findViewById(R.id.search_result_shadow);
         }
 
         @Override
@@ -67,7 +65,6 @@ public class SearchResultViewFactory implements ISearchResultViewFactory
 
             m_divider  .setVisibility(lastResultInSet  ? View.GONE    : View.VISIBLE);
             m_separator.setVisibility(firstResultInSet ? View.VISIBLE : View.GONE);
-            m_shadow   .setVisibility(firstResultInSet ? View.VISIBLE : View.GONE);
         }
     }
 
