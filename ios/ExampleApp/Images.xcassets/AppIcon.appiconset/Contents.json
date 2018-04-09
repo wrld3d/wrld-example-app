@@ -142,12 +142,6 @@
       "idiom" : "ios-marketing",
       "filename" : "iTunesArtwork.png",
       "scale" : "1x"
-    },
-    {
-      "size" : "83.5x83.5",
-      "idiom" : "ipad",
-      "unassigned" : true,
-      "scale" : "2x"
     }
   ],
   "info" : {

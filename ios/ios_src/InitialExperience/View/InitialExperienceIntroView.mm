@@ -5,6 +5,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "UIHelpers.h"
+#include "ViewController.h"
 
 @implementation InitialExperienceIntroView
 
@@ -244,9 +245,13 @@ namespace
 
 - (void) layoutSubviews
 {
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    ViewController *rootViewController = (ViewController *)window.rootViewController;
+    UIEdgeInsets safeInsets = [rootViewController safeInsets];
+    
     m_screenWidth = self.superview.bounds.size.width;
-    m_screenHeight = self.superview.bounds.size.height;
-    [self setFrame:CGRectMake(0, 0, m_screenWidth, m_screenHeight)];
+    m_screenHeight = self.superview.bounds.size.height - safeInsets.bottom - safeInsets.top;
+    [self setFrame:CGRectMake(0, safeInsets.top, m_screenWidth, m_screenHeight)];
     [self.pBackgroundContainer setFrame:CGRectMake(0, 0, m_screenWidth, m_screenHeight)];
     
     const bool useSmallScreen = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
@@ -269,7 +274,7 @@ namespace
                         arrow: self.pSearchMenuDialogArrow
                  arrowOutline: self.pSearchMenuDialogArrowOutline
                             x: useSmallScreen ? 20 : 425
-                            y: useSmallScreen ? 80 : 20
+                            y: useSmallScreen ? 60 : 0
               alignHorizontal: AlignHorizontal::Left
                 alignVertical: AlignVertical::Top
                     arrowEdge: useSmallScreen ? ArrowEdge::Top : ArrowEdge::Left

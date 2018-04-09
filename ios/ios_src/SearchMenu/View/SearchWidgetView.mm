@@ -5,6 +5,7 @@
 #include "SearchWidgetMenuContext.h"
 #include "WidgetQueryContext.h"
 #include "MenuItemModel.h"
+#include "ViewController.h"
 
 namespace ExampleApp
 {
@@ -29,22 +30,29 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController displaySearchProvider: m_pSearchProviderHandle];
                 [m_pSearchWidgetViewController displaySuggestionProvider: m_pSuggestionProviderHandle];
 
-               
-
-                CGRect screenRect = [[UIScreen mainScreen] bounds];
+                UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+                ViewController *rootViewController = (ViewController *)window.rootViewController;
+                UIEdgeInsets safeInsets = [rootViewController safeInsets];
+                
+                CGRect screenRect = rootViewController.view.bounds;
+                
                 CGFloat screenWidth = screenRect.size.width;
                 CGFloat iphoneMargin = 20;
                 CGFloat iPadMargin = 20;
+                CGFloat iPhoneWidgetWidth = screenWidth - 2*iphoneMargin;
                 CGFloat iPadWidgetWidth = 375;
+                
                 CGFloat heightIphone = screenRect.size.height - 2*iphoneMargin;
                 CGFloat heightIpad = screenRect.size.height - 2*iPadMargin;
 
-                m_widgetAnimationOffset = -100;
-
-                CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ?
-                CGRectMake(iPadMargin, iPadMargin,  iPadWidgetWidth , heightIpad) :   // ipad
-                CGRectMake(iphoneMargin, iphoneMargin, screenWidth - 2*iphoneMargin, heightIphone); // iphone
-
+                CGRect iPadFrame = CGRectMake(iPadMargin, safeInsets.top,  iPadWidgetWidth , heightIpad) ;
+                CGRect iPhoneFrame = CGRectMake(iphoneMargin, safeInsets.top, iPhoneWidgetWidth , heightIphone);
+            
+                CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ? iPadFrame : iPhoneFrame;
+                
+                CGFloat searchBoxHeight = 50;
+                m_widgetAnimationOffset = - searchFrame.origin.y - searchBoxHeight;
+                
                 UIView *widget = m_pSearchWidgetViewController.view;
 
                 widget.frame = searchFrame;
