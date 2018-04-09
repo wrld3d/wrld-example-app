@@ -1,6 +1,6 @@
 #!/bin/bash
 
-usage() { echo "Usage: $0 -p android|ios|windows [-c]"; echo "  -p -> platform, ios, android or windows (required)"; 1>&2; exit 1; }
+usage() { echo "Usage: $0 -p android|ios|windows [-c]"; echo "  -p -> platform, ios, android or windows (required), -v -> {teamcitybuildnumber} (optional)"; 1>&2; exit 1; }
 
 baseUrl="http://s3.amazonaws.com/eegeo-static/"
 srcPackageName="INVALID"
@@ -8,23 +8,28 @@ destPackageName="./sdk.package.tar.gz"
 includeDestination="INVALID"
 sdkDestination="INVALID"
 
-while getopts "p:" o; do
+while getopts "p:v:" o; do
     case "${o}" in
         p)
-            p=${OPTARG}
-            if [ "$p" != "ios" ]; then
-               if [ "$p" != "android" ]; then
-	          if [ "$p" != "windows" ]; then
-                     usage
-		  fi
-               fi
+          p=${OPTARG}
+          if [ "$p" != "ios" ]; then
+            if [ "$p" != "android" ]; then
+              if [ "$p" != "windows" ]; then
+                  usage
+              fi
             fi
-            ;;
+          fi
+        ;;
+        v)
+          v=${OPTARG}
+          echo "sdk version set to v${v}"
+        ;;
         *)
-            usage
-            ;;
+          usage
+        ;;
     esac
 done
+
 shift $((OPTIND-1))
 
 if [ -z "${p}" ]; then
@@ -52,14 +57,22 @@ else
    srcPackageName="$srcPackageName.cpp11.tar.gz"
 fi
 
+downloadUrl="${baseUrl}wrldsdk/v${v}/${srcPackageName}"
+
+if [ -z "${v}" ]; then
+   echo "using latest version of SDK"
+   downloadUrl="${baseUrl}${srcPackageName}"
+fi
+
 echo "Updating $p platform..."
 rm -f ./$destPackageName
 rm -rf $includeDestination
-curl $baseUrl$srcPackageName > ./$destPackageName
+echo "$downloadUrl"
+curl $downloadUrl > ./$destPackageName
 
 statuscode=$?
 if [ $statuscode -ne 0 ] ; then
-    echo "Failed to download sdk package ${baseUrl}${srcPackageName}" >&2
+    echo "Failed to download sdk package ${downloadUrl}" >&2
     exit $statuscode
 fi    
 
