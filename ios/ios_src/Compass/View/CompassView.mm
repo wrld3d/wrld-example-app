@@ -246,7 +246,7 @@ namespace
 - (void) notifyGpsUnauthorized
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Services disabled"
-                                                    message:@"GPS Compass inaccessable: Location Services are not enabled for this application. You can change this in your device settings."
+                                                    message:@"GPS Compass inaccessible: Location Services are not enabled for this application. You can change this in your device settings."
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
