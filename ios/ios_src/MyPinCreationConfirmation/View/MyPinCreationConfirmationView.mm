@@ -4,7 +4,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "MyPinCreationConfirmationViewInterop.h"
-
+#include "ViewController.h"
 #import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
 
@@ -26,18 +26,21 @@
 
         m_pInterop = new ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewInterop(self);
         
+        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+        ViewController *viewController = (ViewController *)window.rootViewController;
+        UIEdgeInsets safeInsets = [viewController safeInsets];
+        
         UIEdgeInsets margin =  UIEdgeInsetsMake(16, 16, 16, 16);
         CGFloat maxContainerWidth = 400;
         const float containerWidth = MIN( m_screenWidth - margin.left - margin.right, maxContainerWidth );
         const float containerHeight = 40.f;
         
-        m_offscreen_offset = containerHeight + margin.bottom;
-        
-        
         self.frame = CGRectMake(0.5*(m_screenWidth  - containerWidth),
-                                m_screenHeight - containerHeight - margin.bottom,
+                                m_screenHeight - containerHeight - margin.bottom - safeInsets.bottom,
                                 containerWidth,
                                 containerHeight);
+        
+        m_offscreen_offset = m_screenHeight - self.frame.origin.y;
         const float buttonSize = containerHeight;
 
         // cancel button

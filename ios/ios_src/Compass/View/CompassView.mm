@@ -6,6 +6,7 @@
 #include "ImageHelpers.h"
 #include "CompassViewInterop.h"
 #include "CoreBluetooth/CoreBluetooth.h"
+#include "ViewController.h"
 
 static const long RotationHighlightAnimationSeconds = 0.2;
 
@@ -60,6 +61,10 @@ namespace
         
         m_pSenionLabLocationService = pSenionLabLocationService;
         
+        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+        ViewController *viewController = (ViewController *)window.rootViewController;
+        UIEdgeInsets safeInsets = [viewController safeInsets];
+        
         //control positioning
         m_width = 80.f;
         m_height = 80.f;
@@ -67,7 +72,7 @@ namespace
         m_innerHeight = 80.0f/1.5f;
         m_innerWidth = 80.0f/1.5f;
         
-        m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_innerHeight - (m_height - m_innerHeight)/2;
+        m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_innerHeight - (m_height - m_innerHeight)/2 - safeInsets.bottom;
         m_yPosInactive = m_screenHeight + m_height;
         
         self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_innerWidth * 0.5f)), m_yPosInactive, m_width, m_height);

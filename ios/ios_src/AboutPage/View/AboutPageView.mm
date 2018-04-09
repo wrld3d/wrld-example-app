@@ -7,7 +7,7 @@
 #include "IconResources.h"
 #include "AboutPageViewInterop.h"
 #include "UIHelpers.h"
-
+#include "ViewController.h"
 #import "UIButton+DefaultStates.h"
 
 @implementation AboutPageView
@@ -81,7 +81,6 @@
     [self.pHeaderView removeFromSuperview];
     [self.pHeaderView release];
     
-
     [self.pSwallowLogoImage removeFromSuperview];
     [self.pSwallowLogoImage release];
 
@@ -100,7 +99,6 @@
     [self.pLegalLink removeFromSuperview];
     [self.pLegalLink release];
 
-    
     [self.pContentView removeFromSuperview];
     [self.pContentView release];
     
@@ -114,34 +112,23 @@
 
 - (void)layoutSubviews
 {
-    const CGFloat boundsWidth = static_cast<float>(self.superview.bounds.size.width);
-    const CGFloat boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const bool useFullScreenSize = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    const CGFloat boundsOccupyWidthMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f) * 0.6f);
-    const CGFloat boundsOccupyHeightMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f));
-    const CGFloat mainWindowWidth = boundsWidth * boundsOccupyWidthMultiplier;
-    const CGFloat mainWindowHeight = boundsHeight * boundsOccupyHeightMultiplier;
-    const CGFloat mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
-    const CGFloat mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    ViewController *viewController = (ViewController *)window.rootViewController;
+    self.frame = [viewController largePopoverFrame];
     
-    self.frame = CGRectMake(mainWindowX,
-                            mainWindowY,
-                            mainWindowWidth,
-                            mainWindowHeight);
-    
-    self.pHeaderView.width = mainWindowWidth;
+    self.pHeaderView.width = self.frame.size.width;
     [self.pHeaderView layoutIfNeeded];
     CGFloat seperatorMargin = self.pHeaderView.pHeaderSeparator.frame.origin.x;
     UIEdgeInsets outerMargin = UIEdgeInsetsMake(seperatorMargin, seperatorMargin, seperatorMargin, seperatorMargin);
     UIEdgeInsets innerMargin = UIEdgeInsetsMake(self.pHeaderView.margin,self.pHeaderView.margin,self.pHeaderView.margin,self.pHeaderView.margin);
-    CGFloat innerMarginWidth = mainWindowWidth - innerMargin.left - innerMargin.right;
-    CGFloat outerMarginWidth = mainWindowWidth - outerMargin.left - outerMargin.right;
+    CGFloat innerMarginWidth = self.frame.size.width - innerMargin.left - innerMargin.right;
+    CGFloat outerMarginWidth = self.frame.size.width - outerMargin.left - outerMargin.right;
     CGFloat contentY = self.pHeaderView.frame.origin.y +  self.pHeaderView.frame.size.height;
 
     self.pContentScrollView.frame = CGRectMake(0.0,
                                                contentY,
-                                               mainWindowWidth,
-                                               mainWindowHeight - contentY);
+                                               self.frame.size.width,
+                                               self.frame.size.height - contentY);
     
     self.pSwallowLogoImage.frame = CGRectMake(innerMargin.left,
                                               innerMargin.top,
@@ -183,7 +170,7 @@
   
     CGFloat contentHeight = self.pLegalLink.frame.origin.y + self.pLegalLink.frame.size.height + innerMargin.bottom;
     
-    self.pContentView.frame = CGRectMake(0.0, 0.0,mainWindowWidth,contentHeight);
+    self.pContentView.frame = CGRectMake(0.0, 0.0,self.frame.size.width,contentHeight);
     
     self.pContentScrollView.contentSize = self.pContentView.frame.size;
     

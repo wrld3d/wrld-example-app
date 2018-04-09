@@ -23,7 +23,8 @@ include(Resources/CMakeLists.txt)
 
 set(storyboards
     ExampleApp/en.lproj/MainStoryboard_iPad.storyboard
-    ExampleApp/en.lproj/MainStoryboard_iPhone.storyboard)
+    ExampleApp/en.lproj/MainStoryboard_iPhone.storyboard
+    "ExampleApp/en.lproj/Launch Screen.storyboard")
 
 # plist settings
 set(EEGEO_PLIST_BUNDLE_EXECUTABLE "\${EXECUTABLE_NAME}")
@@ -104,7 +105,6 @@ set_xcode_property (${executable_name} ENABLE_BITCODE "No")
 set_xcode_property (${executable_name} INSTALL_PATH "/Applications")
 
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
-set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage")
 set_xcode_property (${executable_name} COMBINE_HIDPI_IMAGES "No")
 
 set_xcode_property(${executable_name} GCC_PRECOMPILE_PREFIX_HEADER "YES")

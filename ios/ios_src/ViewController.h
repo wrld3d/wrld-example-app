@@ -6,11 +6,17 @@
 #import <GLKit/GLKit.h>
 #include "AppRunner.h"
 
+
+
+
 @interface ViewController : GLKViewController <UIGestureRecognizerDelegate>
 {
     CFTimeInterval m_previousTimestamp;
     AppRunner* m_pAppRunner;
 }
+
+- (UIEdgeInsets) safeInsets;
+-(CGRect) largePopoverFrame;
 
 @property (nonatomic, retain) UIView* pBackingView;
 

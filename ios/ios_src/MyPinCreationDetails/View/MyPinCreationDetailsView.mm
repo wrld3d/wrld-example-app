@@ -8,6 +8,7 @@
 #import "UIView+TouchExclusivity.h"
 #import <QuartzCore/QuartzCore.h>
 #import <AVFoundation/AVFoundation.h>
+#import "ViewController.h"
 
 @implementation MyPinCreationDetailsView
 
@@ -216,29 +217,17 @@
 
 - (void)layoutSubviews
 {
-    
-    const CGFloat boundsWidth = static_cast<float>(self.superview.bounds.size.width);
-    const CGFloat boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const bool useFullScreenSize = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
-    const CGFloat boundsOccupyWidthMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f) * 0.6f);
-    const CGFloat boundsOccupyHeightMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f));
-    const CGFloat mainWindowWidth = boundsWidth * boundsOccupyWidthMultiplier;
-    const CGFloat mainWindowHeight = boundsHeight * boundsOccupyHeightMultiplier;
-    const CGFloat mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
-    const CGFloat mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
-    
-    self.frame = CGRectMake(mainWindowX,
-                            mainWindowY,
-                            mainWindowWidth,
-                            mainWindowHeight);
-    
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    ViewController *viewController = (ViewController *)window.rootViewController;
+   
+    self.frame = [viewController largePopoverFrame];
     
     UIEdgeInsets outerMargin = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
     UIEdgeInsets innerMargin = UIEdgeInsetsMake(16.0, 16.0, 16.0, 16.0);
     
     
-    CGFloat innerMarginWidth = mainWindowWidth - innerMargin.left - innerMargin.right;
-    CGFloat outerMarginWidth = mainWindowWidth - outerMargin.left - outerMargin.right;
+    CGFloat innerMarginWidth = self.frame.size.width - innerMargin.left - innerMargin.right;
+    CGFloat outerMarginWidth = self.frame.size.width - outerMargin.left - outerMargin.right;
     
     
     //layout header
@@ -260,8 +249,8 @@
     //layout body
     self.pBodyScrollView.frame = CGRectMake(0.0,
                                                scrollViewyOffset,
-                                               mainWindowWidth,
-                                               mainWindowHeight - scrollViewyOffset - footerHeight);
+                                               self.frame.size.width,
+                                               self.frame.size.height - scrollViewyOffset - footerHeight);
     
     const float poiDescriptionBoxHeight = 120.f;
    
@@ -298,7 +287,7 @@
     
     
     CGFloat switchWidth = 40;
-    self.pShareSwitch.frame = CGRectMake(mainWindowWidth - innerMargin.right - outerMargin.right - switchWidth,
+    self.pShareSwitch.frame = CGRectMake(self.frame.size.width - innerMargin.right - outerMargin.right - switchWidth,
                                       shareOffset,
                                       switchWidth,
                                       shareImageSize.height);
@@ -313,7 +302,7 @@
     
     self.pBodyContainer.frame = CGRectMake(0.0,
                                            0.0,
-                                           mainWindowWidth,
+                                           self.frame.size.width,
                                            self.pShareLabel.frame.origin.y + self.pShareLabel.frame.size.height + innerMargin.top);
     
      self.pBodyScrollView.contentSize = self.pBodyContainer.frame.size;
@@ -323,16 +312,16 @@
     //layout footer
     self.pFooterContainer.frame = CGRectMake(0.0,
                                              self.pBodyScrollView.frame.origin.y + self.pBodyScrollView.frame.size.height,
-                                             mainWindowWidth,
+                                             self.frame.size.width,
                                              footerHeight);
     
     
     
-    self.pContentSeperator.frame = CGRectMake(0.0,0.0,mainWindowWidth,1.0);
+    self.pContentSeperator.frame = CGRectMake(0.0,0.0,self.frame.size.width,1.0);
     
     
     CGFloat buttonHeight = self.pFooterContainer.frame.size.height - 1;
-    CGFloat buttonWidth = mainWindowWidth/3.0;
+    CGFloat buttonWidth = self.frame.size.width/3.0;
     
     self.pCameraButton.frame = CGRectMake(0.0, 1, buttonWidth, buttonHeight);
     
