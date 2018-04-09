@@ -14,7 +14,7 @@ mkdir $projectPath
 
 targetName="INVALID"
 
-while getopts "p:e:j:" o; do
+while getopts "p:e:j:v:" o; do
     case "${o}" in
         p)
         platform=${OPTARG}
@@ -29,6 +29,8 @@ while getopts "p:e:j:" o; do
         ;;
     j)
         config_password=${OPTARG}
+        ;;
+    v)
         ;;
     *)
         usage

@@ -7,6 +7,10 @@
 
 @interface WRLDSpeechHandler : UIView <SFSpeechRecognizerDelegate>
 
+    -(void) authorize;
+    -(void) startRecording;
+    -(void) cancelRecording;
+
     -(void) setPrompt:(NSString*)promptText;
 
     @property (readonly) BOOL isRecording;

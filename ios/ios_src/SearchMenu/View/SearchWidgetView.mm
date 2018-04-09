@@ -118,13 +118,8 @@ namespace ExampleApp
                     this->pushControlsOfScreenIfNeeded();
                 };
                 
-                [m_pSearchWidgetViewController.observer addSearchbarResignedFocusEvent:m_onFocusEvent];
-                [m_pSearchWidgetViewController.observer addSearchbarGainedFocusEvent:m_onFocusEvent];
-               
-                
-                m_onMenuEvent = ^(BOOL opened){
-                    this->pushControlsOfScreenIfNeeded();
-                };
+                [m_pSearchWidgetViewController.observer addSearchWidgetGainedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetViewController.observer addSearchWidgetResignedFocusEvent:m_onFocusEvent];
                 
                 m_onMenuSelection = ^(NSObject* selectedOptionContext)
                 {
@@ -144,16 +139,8 @@ namespace ExampleApp
                         }
                     }
                 };
-
                 
                 [m_pSearchWidgetViewController.menuObserver addOptionSelectedEvent:m_onMenuSelection];
-               
-                [m_pSearchWidgetViewController.menuObserver addOpenedEvent:m_onMenuEvent];
-                [m_pSearchWidgetViewController.menuObserver addClosedEvent:m_onMenuEvent];
-                
-                m_onQueryEvent =^(WRLDSearchQuery *query){
-                    this->pushControlsOfScreenIfNeeded();
-                };
                 
                 m_onResultsCleared = ^()
                 {
@@ -172,28 +159,20 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController.observer addSearchResultsClearedEvent:m_onResultsCleared];
                 [m_pSearchWidgetViewController.observer addSearchResultsReceivedEvent:m_onResultsReceived];
 
-                [m_pSearchModel.searchObserver addQueryStartingEvent:m_onQueryEvent];
-                [m_pSearchModel.searchObserver addQueryCompletedEvent:m_onQueryEvent];
-                [m_pSearchModel.searchObserver addQueryCancelledEvent:m_onQueryEvent];
                 [m_pSearchModel.searchObserver addQueryCancelledEvent:m_onQueryCancelled];
                 
             }
             
             void SearchWidgetView::RemoveEventListeners(){
                 [m_pSearchModel.searchObserver removeQueryCancelledEvent:m_onQueryCancelled];
-                [m_pSearchModel.searchObserver removeQueryCancelledEvent:m_onQueryEvent];
-                [m_pSearchModel.searchObserver removeQueryCompletedEvent:m_onQueryEvent];
-                [m_pSearchModel.searchObserver removeQueryStartingEvent:m_onQueryEvent];
 
                 [m_pSearchWidgetViewController.observer removeSearchResultsReceivedEvent:m_onResultsReceived];
                 [m_pSearchWidgetViewController.observer removeSearchResultsClearedEvent:m_onResultsCleared];
 
-                [m_pSearchWidgetViewController.menuObserver removeClosedEvent:m_onMenuEvent];
-                [m_pSearchWidgetViewController.menuObserver removeOpenedEvent:m_onMenuEvent];
                 [m_pSearchWidgetViewController.menuObserver removeOptionSelectedEvent:m_onMenuSelection];
 
-                [m_pSearchWidgetViewController.observer removeSearchbarGainedFocusEvent:m_onFocusEvent];
-                [m_pSearchWidgetViewController.observer removeSearchbarResignedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetViewController.observer removeSearchWidgetGainedFocusEvent :m_onFocusEvent];
+                [m_pSearchWidgetViewController.observer removeSearchWidgetResignedFocusEvent:m_onFocusEvent];
 
                 [m_pSearchWidgetViewController.searchSelectionObserver removeResultSelectedEvent:m_onResultSelection];
             }
@@ -382,11 +361,7 @@ namespace ExampleApp
 
             void SearchWidgetView::pushControlsOfScreenIfNeeded(){
               
-                // TODO: Add search results visibility observer event, Has search results event.
-                bool hasVisibleSearchResults = m_pSearchWidgetViewController.isResultsViewVisible && (m_hasSearchResults || m_pSearchModel.isSearchQueryInFlight);
-
-              
-                bool shouldTakeFocus = m_pSearchWidgetViewController.searchbarHasFocus || hasVisibleSearchResults || m_pSearchWidgetViewController.isMenuOpen;
+                bool shouldTakeFocus = m_pSearchWidgetViewController.hasFocus;
                 
                 if( shouldTakeFocus )
                 {

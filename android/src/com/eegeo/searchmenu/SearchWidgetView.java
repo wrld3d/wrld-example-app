@@ -106,10 +106,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     }
 
     public void onSearchResultsRecieved(SearchQuery searchQuery, List<SearchProviderQueryResult> list) {
-        if (!list.isEmpty())
-        {
-            setHasSearchResults(true);
-        }
+        setHasSearchResults(true);
     }
 
     public void onSearchResultsCleared() {
@@ -339,6 +336,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     public void closeMenu() {
         m_searchWidget.hideSearchResults();
         m_searchWidget.closeMenu();
+        m_view.clearFocus();
     }
 
     private void pushControlsOfScreenIfNeeded(){

@@ -85,12 +85,12 @@
     m_isAnimating = true;
     
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
-     animations:^
-    {
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^ {
         self.alpha = alpha;
     }
-    completion:^(BOOL finished)
-    {
+                     completion:^(BOOL finished) {
         if(finished)
         {
             m_isAnimating = false;
