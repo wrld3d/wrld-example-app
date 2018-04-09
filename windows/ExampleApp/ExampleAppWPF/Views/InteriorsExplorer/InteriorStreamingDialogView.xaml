@@ -72,7 +72,7 @@
                                            Margin="30px 0 30px 0"/>
                                 <TextBlock Foreground="{StaticResource White}"
                                            FontFamily="{DynamicResource PrimaryUIFont}"
-                                           Text="We're saving this interior to your device, so your next visit is much faster."
+                                           Text="We're saving this indoor map to your device, so your next visit is much faster."
                                            FontSize="12pt"
                                            Margin="30px 15px 30px 30px"
                                            HorizontalAlignment="Center"
