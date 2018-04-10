@@ -19,10 +19,6 @@
     
     float m_screenWidth;
     float m_screenHeight;
-    float m_pixelScale;
-    
-    float m_inactiveFloorListXPosition;
-    float m_inactiveDetailPaneYPosition;
     
     float m_onScreenParam;
     float m_stateChangeAnimationTimeSeconds;
@@ -64,8 +60,6 @@
 - (void) setFullyOffScreen;
 
 - (void) setOnScreenStateToIntermediateValue:(float)openState;
-
-- (void) animateTo:(float)t delaySeconds:(float)delaySeconds;
 
 - (void) setTouchEnabled:(BOOL)enabled;
 
