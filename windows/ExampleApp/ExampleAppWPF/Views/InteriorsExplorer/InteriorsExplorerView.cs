@@ -195,7 +195,10 @@ namespace ExampleAppWPF
             m_floorSlider.Maximum = (m_moreFloorsThanShown ? MAX_VISIBLE_FLOORS : FloorCount) - 1;
 			SetSelectedFloor(currentlySelectedFloorIndex);
 
-			m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden;
+            SetFloorSelectionDrag(m_floorSlider.Value);
+            m_secondsSinceSliderTagsChange = 0;
+
+            m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden;
         }
 
         public void UpdateView(float dt)
