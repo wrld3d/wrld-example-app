@@ -22,21 +22,27 @@ allprojects {
 
 def getVersionCodeFromProjectProperty = { ->
     def code = project.hasProperty('versionCode') ? versionCode.toInteger() : 1
-    logger.lifecycle("VersionCode is set to $code")
+    logger.lifecycle("versionCode is set to $code")
     return code
 }
 
 def getVersionNameFromProjectProperty = { ->
     def name = project.hasProperty('versionName') ? versionName : "1.0"
-    logger.lifecycle("VersionName is set to $name")
+    logger.lifecycle("versionName is set to $name")
     return name
+}
+
+def getApplicationIdFromProjectProperty = { ->
+    def applicationId = project.hasProperty('applicationId') ? applicationId : "com.eegeo.mobileexampleapp"
+    logger.lifecycle("applicationId is set to $applicationId")
+    return applicationId
 }
 
 android {
     compileSdkVersion 25
 
     defaultConfig {
-        applicationId "com.eegeo.mobileexampleapp"
+        applicationId getApplicationIdFromProjectProperty()
         minSdkVersion 19
         targetSdkVersion 24
         multiDexEnabled true
