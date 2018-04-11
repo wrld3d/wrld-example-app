@@ -1,33 +1,54 @@
 apply plugin: 'com.android.application'
 
 buildscript {
-	repositories {
-		jcenter()
-	}
+    repositories {
+        jcenter()
+        google()
+    }
 
-	dependencies {
-		classpath 'com.android.tools.build:gradle:2.3.2'
-	}
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.1'
+    }
 }
 
 allprojects {
-	repositories {
-		jcenter()
-	}
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com'
+        }
+    }
+}
+
+def getVersionCodeFromProjectProperty = { ->
+    def code = project.hasProperty('versionCode') ? versionCode.toInteger() : 1
+    logger.lifecycle("versionCode is set to $code")
+    return code
+}
+
+def getVersionNameFromProjectProperty = { ->
+    def name = project.hasProperty('versionName') ? versionName : "1.0"
+    logger.lifecycle("versionName is set to $name")
+    return name
+}
+
+def getApplicationIdFromProjectProperty = { ->
+    def applicationId = project.hasProperty('applicationId') ? applicationId : "com.eegeo.mobileexampleapp"
+    logger.lifecycle("applicationId is set to $applicationId")
+    return applicationId
 }
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.eegeo.mobileexampleapp"
+        applicationId getApplicationIdFromProjectProperty()
         minSdkVersion 19
         targetSdkVersion 24
         multiDexEnabled true
-        versionCode 1
-        versionName "1.0"
-		
+        versionCode getVersionCodeFromProjectProperty()
+        versionName getVersionNameFromProjectProperty()
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         externalNativeBuild {
@@ -80,6 +101,8 @@ android {
         }
     }
 
+    flavorDimensions "default"
+
     productFlavors {
         normal {}
 
@@ -100,16 +123,28 @@ android {
     }
 }
 
+if (project.hasProperty("external.signing")) {
+
+    def signingGradle = project.property("external.signing") + ".gradle"
+    if (new File(signingGradle).exists()) {
+        logger.lifecycle("applying signing properties from " + signingGradle)
+        apply from: signingGradle
+    }
+    else {
+        throw new InvalidUserDataException('Project parameter external.signing supplied but gradle file does not exist at path relative to project: ' + signingGradlePath)
+    }
+} else {
+    logger.lifecycle("no external.signing property supplied." )
+}
+
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    // compile 'com.android.support:appcompat-v7:25.2.0'
-    // compile 'com.android.support:support-core-utils:25.2.0'
-    compile 'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:multidex:1.0.1'
 
-    androidTestCompile 'tools.fastlane:screengrab:1.0.2'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
+    androidTestImplementation 'tools.fastlane:screengrab:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:0.5'
+    androidTestImplementation 'com.android.support.test:rules:0.5'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
 }
