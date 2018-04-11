@@ -36,7 +36,8 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<bool> mSetTouchEnabled;
                 Helpers::ReflectionHelpers::Method<bool> mSetFloorPanelEnabled;
                 Helpers::ReflectionHelpers::Method<void> mDestroy;
-                Helpers::ReflectionHelpers::Method<void> mPlaySliderAnim;
+				Helpers::ReflectionHelpers::Method<void> mPlaySliderAnim;
+				Helpers::ReflectionHelpers::Method<float> mUpdateView;
 				Helpers::ReflectionHelpers::Method<bool,bool> mAddTutorialDialogs;
 				Helpers::ReflectionHelpers::Method<void> mRemoveTutorialDialogs;
 				Helpers::ReflectionHelpers::Method<void> mGetCanShowChangeFloorTutorialDialog;
@@ -89,6 +90,8 @@ namespace ExampleApp
                 void RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback);
 
                 void PlaySliderAnim();
+
+				void UpdateView(float dt);
             };
         }
     }

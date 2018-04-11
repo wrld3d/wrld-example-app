@@ -165,6 +165,11 @@ namespace ExampleApp
                 m_view.PlaySliderAnim();
             }
 
+			void InteriorsExplorerController::UpdateUiThread(float deltaSeconds)
+			{
+				m_view.UpdateView(deltaSeconds);
+			}
+
             void InteriorsExplorerController::ReplayTutorials(const bool enableTutorials)
             {
                 m_replayTutorials = enableTutorials;

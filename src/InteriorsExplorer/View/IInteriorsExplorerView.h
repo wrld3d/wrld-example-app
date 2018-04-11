@@ -42,6 +42,8 @@ namespace ExampleApp
                 virtual void SetTouchEnabled(bool enabled) = 0;
 
                 virtual void PlaySliderAnim() = 0;
+
+				virtual void UpdateView(float deltaSeconds) = 0;
             };
         }
     }

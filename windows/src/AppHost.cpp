@@ -99,6 +99,7 @@
 #include "GpsMarkerTutorialViewModule.h"
 #include "GpsMarkerModule.h"
 #include "InteriorsPositionConnectionMessage.h"
+#include "InteriorsExplorerController.h"
 
 using namespace Eegeo::Windows;
 using namespace Eegeo::Windows::Input;
@@ -716,7 +717,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
     viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
+	viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
+	viewControllerUpdaterModel.AddUpdateableObject(m_pInteriorsExplorerViewModule->GetController());
 
     Eegeo::Helpers::TIdentity settingsMenuIdentity = app.SearchResultPoiModule().GetObservableOpenableControl().GetIdentity();
     Eegeo::Helpers::TIdentity searchMenuIdentity= app.SearchMenuModule().GetSearchMenuViewModel().GetIdentity();

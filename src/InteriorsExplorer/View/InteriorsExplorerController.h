@@ -14,6 +14,7 @@
 #include <sstream>
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "NavigationService.h"
+#include "IUpdateableViewController.h"
 
 namespace ExampleApp
 {
@@ -21,7 +22,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class InteriorsExplorerController
+            class InteriorsExplorerController : public ViewControllerUpdater::View::IUpdateableViewController
             {
             public:
                 
@@ -49,7 +50,8 @@ namespace ExampleApp
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state);
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 void OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage& message);
-                
+				void UpdateUiThread(float deltaSeconds);
+
                 SdkModel::InteriorsExplorerModel& m_model;
                 IInteriorsExplorerView& m_view;
                 InteriorsExplorerViewModel& m_viewModel;

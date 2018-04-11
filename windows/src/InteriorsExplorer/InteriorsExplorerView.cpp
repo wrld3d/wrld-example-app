@@ -28,6 +28,7 @@ namespace ExampleApp
                 mSetFloorPanelEnabled.SetupMethod(m_uiViewClass, m_uiView, "SetFloorPanelEnabled");
                 mDestroy.SetupMethod(m_uiViewClass, m_uiView, "Destroy");
                 mPlaySliderAnim.SetupMethod(m_uiViewClass, m_uiView, "PlaySliderShakeAnim");
+				mUpdateView.SetupMethod(m_uiViewClass, m_uiView, "UpdateView");
 				mAddTutorialDialogs.SetupMethod(m_uiViewClass, m_uiView, "AddTutorialDialogs");
 				mRemoveTutorialDialogs.SetupMethod(m_uiViewClass, m_uiView, "RemoveTutorialDialogs");
 				mGetCanShowChangeFloorTutorialDialog.SetupMethod(m_uiViewClass, m_uiView, "GetCanShowChangeFloorTutorialDialog");
@@ -149,6 +150,11 @@ namespace ExampleApp
             {
                 mPlaySliderAnim();
             }
+
+			void InteriorsExplorerView::UpdateView(float dt)
+			{
+				mUpdateView(dt);
+			}
 
             InteriorsExplorerView::~InteriorsExplorerView()
             {

@@ -37,6 +37,12 @@ namespace ExampleAppWPF
         private bool m_shakingAnimationInProgress = false;
         private bool m_sliderAnimationInProgress = false;
         private string[] m_floorShortNames = new string[] {};
+        private bool m_moreFloorsThanShown = false;
+        private int m_currentVisibleFloorBase = 0;
+        private float m_secondsSinceSliderTagsChange = 0;
+
+        private const int MAX_VISIBLE_FLOORS = 15;
+        private const float SLIDER_THROTTLE = 0.1f; // seconds
 
         private int FloorCount { get { return m_floorShortNames.Length; } }
         private bool FloorSelectionEnabled { get { return FloorCount > 1; } }
@@ -176,18 +182,27 @@ namespace ExampleAppWPF
         public void UpdateFloors(string[] floorShortNames, int currentlySelectedFloorIndex)
         {
             System.Diagnostics.Debug.Assert(floorShortNames != null, "floorShortNames cannot be null");
+
+            m_moreFloorsThanShown = floorShortNames.Length > MAX_VISIBLE_FLOORS;
+            m_currentVisibleFloorBase = 0;
+
             m_floorShortNames = floorShortNames;
 
-            m_sliderTickBar.TickLabels = string.Join(",", floorShortNames);
+            SetSliderTags();
 
 			m_selectedFloorIndex = currentlySelectedFloorIndex;
-
             m_floorSlider.Minimum = 0;
-            m_floorSlider.Maximum = FloorCount - 1;
+            m_floorSlider.Maximum = (m_moreFloorsThanShown ? MAX_VISIBLE_FLOORS : FloorCount) - 1;
 			SetSelectedFloor(currentlySelectedFloorIndex);
 
 			m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden;
         }
+
+        public void UpdateView(float dt)
+        {
+            UpdateFloorLabels(dt);
+        }
+
         public void SetFloorName(string name)
         {
             if (m_floorName != null)
@@ -202,7 +217,7 @@ namespace ExampleAppWPF
 
             if (!m_dragInProgress)
             {
-                m_floorSlider.Value = m_selectedFloorIndex;
+                m_floorSlider.Value = m_selectedFloorIndex - m_currentVisibleFloorBase;
                 UpdateFloorSliderTagFromValue();
 
 				Point dismissButtonPosition = m_dismissButton.TransformToAncestor(Application.Current.MainWindow).Transform(new Point());
@@ -339,10 +354,10 @@ namespace ExampleAppWPF
         {
             m_dragInProgress = false;
 
-            var floorIndex = (int)Math.Round(m_floorSlider.Value);
-            m_floorSlider.Value = floorIndex;
+            var sliderIndex = (int)Math.Round(m_floorSlider.Value);
+            m_floorSlider.Value = sliderIndex;
 
-            InteriorsExplorerCLIMethods.SelectFloor(m_nativeCallerPointer, floorIndex);
+            InteriorsExplorerCLIMethods.SelectFloor(m_nativeCallerPointer, sliderIndex + m_currentVisibleFloorBase);
         }
 
         private void OnSliderValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -355,16 +370,52 @@ namespace ExampleAppWPF
 
         private void SetFloorSelectionDrag(double sliderValue)
         {
-            double dragParam = Math.Min(1.0, sliderValue / m_floorSlider.Maximum);
+            double dragParam = Math.Min(1.0, (sliderValue + m_currentVisibleFloorBase) / (FloorCount - 1));
             InteriorsExplorerCLIMethods.SetFloorSelectionDrag(m_nativeCallerPointer, dragParam);
             UpdateFloorSliderTagFromValue();
         }
 
         private void UpdateFloorSliderTagFromValue()
         {
-            var floorIndex = (int)Math.Round(m_floorSlider.Value);
+            var floorIndex = (int)Math.Round(m_floorSlider.Value) + m_currentVisibleFloorBase;
             m_floorSlider.Tag = m_floorShortNames[floorIndex];
+        }
 
+        private void UpdateFloorLabels(float dt)
+        {
+            if (!m_moreFloorsThanShown)
+            {
+                return;
+            }
+
+            m_secondsSinceSliderTagsChange += dt;
+
+            if (m_secondsSinceSliderTagsChange < SLIDER_THROTTLE)
+            {
+                return;
+            }
+            m_secondsSinceSliderTagsChange = 0;
+
+            if (m_currentVisibleFloorBase > 0 && m_floorSlider.Value < 1.0)
+            {
+                m_currentVisibleFloorBase--;
+                SetSliderTags();
+            }
+
+            if (m_currentVisibleFloorBase < FloorCount - MAX_VISIBLE_FLOORS && m_floorSlider.Value > MAX_VISIBLE_FLOORS - 2.0)
+            {
+                m_currentVisibleFloorBase++;
+                SetSliderTags();
+            }
+        }
+
+        private void SetSliderTags()
+        {
+            string[] floorNames = m_floorShortNames.Skip(m_currentVisibleFloorBase).Take(MAX_VISIBLE_FLOORS).ToArray();
+
+            m_sliderTickBar.TickLabels = string.Join(",", floorNames);
+
+            SetFloorSelectionDrag(m_floorSlider.Value);
         }
     }
 }
