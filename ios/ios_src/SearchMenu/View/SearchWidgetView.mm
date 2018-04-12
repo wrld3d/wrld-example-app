@@ -313,7 +313,7 @@ namespace ExampleApp
 
             void SearchWidgetView::ClearSearchResults()
             {
-                // TO DO - waiting for API
+                // add here when/if the widget API allows it, if needed
             }
 
             void SearchWidgetView::AddMenuSectionToGroup(WRLDMenuGroup* group,
