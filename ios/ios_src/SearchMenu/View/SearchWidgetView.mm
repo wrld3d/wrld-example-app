@@ -311,6 +311,11 @@ namespace ExampleApp
                 [m_pSearchModel getSearchResultsForString:queryString withContext:widgetQueryContext];
             }
 
+            void SearchWidgetView::ClearSearchResults()
+            {
+                // TO DO - waiting for API
+            }
+
             void SearchWidgetView::AddMenuSectionToGroup(WRLDMenuGroup* group,
                                                          const Menu::View::IMenuSectionViewModel& section,
                                                          int sectionIndex)
