@@ -195,7 +195,7 @@ namespace ExampleAppWPF
             m_floorSlider.Maximum = (m_moreFloorsThanShown ? MAX_VISIBLE_FLOORS : FloorCount) - 1;
 			SetSelectedFloor(currentlySelectedFloorIndex);
 
-            SetFloorSelectionDrag(m_floorSlider.Value);
+            SettleOnFloor();
             m_secondsSinceSliderTagsChange = 0;
 
             m_floorPanel.Visibility = FloorSelectionEnabled ? Visibility.Visible : Visibility.Hidden;
@@ -357,6 +357,11 @@ namespace ExampleAppWPF
         {
             m_dragInProgress = false;
 
+            SettleOnFloor();
+        }
+
+        private void SettleOnFloor()
+        {
             var sliderIndex = (int)Math.Round(m_floorSlider.Value);
             m_floorSlider.Value = sliderIndex;
 
