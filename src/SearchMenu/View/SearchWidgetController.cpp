@@ -175,6 +175,8 @@ namespace ExampleApp
 
 				if (m_tagCollection.HasTag(menuText))
 				{
+					m_view.ClearSearchResults();
+
 					TagCollection::TagInfo tagInfo = m_tagCollection.GetInfoByText(menuText);
 
 					if (tagInfo.HasRadiusOverride())

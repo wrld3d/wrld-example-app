@@ -20,6 +20,7 @@ namespace ExampleApp
                 jclass m_uiViewClass;
                 jobject m_uiView;
                 jmethodID m_onSearchPerformed;
+                jmethodID m_clearSearchResults;
 
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
@@ -44,6 +45,8 @@ namespace ExampleApp
                 void CloseMenu();
 
                 void PerformSearch(const std::string& query, const QueryContext& context);
+
+                void ClearSearchResults();
 
                 void OnSearchResultsCleared();
                 void OnSearchResultSelected(int index);

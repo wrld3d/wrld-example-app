@@ -37,6 +37,8 @@ namespace ExampleApp
                 m_onSearchPerformed = env->GetMethodID(m_uiViewClass,
                                                        "onSearchPerformed",
                                                        "(Ljava/lang/String;ZZLjava/lang/String;ZZZDDDZF)V");
+
+                m_clearSearchResults = env->GetMethodID(m_uiViewClass, "clearSearchResults", "()V");
             }
 
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections)
@@ -154,6 +156,16 @@ namespace ExampleApp
 
                 env->DeleteLocalRef(tagText);
                 env->DeleteLocalRef(queryText);
+            }
+
+            void SearchWidgetView::ClearSearchResults()
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                env->CallVoidMethod(m_uiView, m_clearSearchResults);
             }
 
             void SearchWidgetView::CallVoidVoidFunction(const char* func)
