@@ -117,7 +117,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
 
     public void clearSearchResults()
     {
-        // TO DO: waiting for API point
+        m_searchWidget.clearSearch();
     }
 
     public void onSearchResultsSelected(SearchResult searchResult) {
@@ -156,7 +156,6 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         MenuIndexPath indexPath = (MenuIndexPath) context;
 
         m_searchWidget.showSearchResults();
-        m_searchWidget.clearSearch();
 
         SearchWidgetViewJniMethods.SelectedItem(m_nativeCallerPointer, text, indexPath.m_section, indexPath.m_item);
         return true;
