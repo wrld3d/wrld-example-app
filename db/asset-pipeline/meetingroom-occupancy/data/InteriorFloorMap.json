@@ -381,31 +381,31 @@
 		[
 			{
 				"floorName": "78madison-level-LL",
-				"interior_floor": 1
+				"interior_floor": 0
 			},
 			{
 				"floorName": "78madison-level-1",
-				"interior_floor": 2
+				"interior_floor": 1
 			},
 			{
 				"floorName": "78madison-level-2",
-				"interior_floor": 3
+				"interior_floor": 2
 			},
 			{
 				"floorName": "78madison-level-3",
-				"interior_floor": 4
+				"interior_floor": 3
 			},
 			{
 				"floorName": "78madison-level-4",
-				"interior_floor": 5
+				"interior_floor": 4
 			},
 			{
 				"floorName": "78madison-level-5",
-				"interior_floor": 6
+				"interior_floor": 5
 			},
 			{
 				"floorName": "78madison-level-6",
-				"interior_floor": 7
+				"interior_floor": 6
 			}
     ]
   },
