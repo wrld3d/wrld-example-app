@@ -37,21 +37,28 @@ namespace ExampleApp
                     std::vector<std::string> GetEntityIdsFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult)
                     {
                         rapidjson::Document json;
-                        std::string highlightedEntityId = "";
+                        std::vector<std::string> entities;
                         
-                        if (!json.Parse<0>(selectedSearchResult.GetJsonData().c_str()).HasParseError() && json.HasMember("entity_highlight"))
+                        if (!json.Parse<0>(selectedSearchResult.GetJsonData().c_str()).HasParseError())
                         {
-                            std::vector<std::string> entities;
-                            const rapidjson::Value& entity_highlight = json["entity_highlight"];
-                            assert(entity_highlight.IsArray());
-                            
-                            for (int i  = 0; i < entity_highlight.Size(); i++)
+                            if( json.HasMember("highlight")  )
                             {
-                                entities.push_back(entity_highlight[i].GetString());
+                                entities.push_back(json["highlight"].GetString());
                             }
-                            return entities;
+                            
+                            if(  json.HasMember("entity_highlight")  )
+                            {
+                                const rapidjson::Value& entity_highlight = json["entity_highlight"];
+                                assert(entity_highlight.IsArray());
+                                
+                                for (int i  = 0; i < entity_highlight.Size(); i++)
+                                {
+                                    entities.push_back(entity_highlight[i].GetString());
+                                }
+                            }
                         }
-                        return std::vector<std::string>();
+                        
+                        return entities;
                     }
                     
                     struct IsInteriorInstancePresentForId
@@ -186,11 +193,18 @@ namespace ExampleApp
 
                         if (m_interiorInteractionModel.HasInteriorModel())
                         {
-                        Eegeo::v4 highlightColor = m_highlightColorMapper.GetColor(selectedSearchResult, "entity_highlight_color");
+
+                            std::vector<Eegeo::v4> highlightColors = m_highlightColorMapper.GetColors(selectedSearchResult);
+                                                                                                   
                             const std::string& interiorId = m_interiorInteractionModel.GetInteriorModel()->GetId().Value();
+                            
+                            bool isFirstId = true;
+                            
                             for (const auto& entityId : filteredEntityIds)
                             {
+                                Eegeo::v4 highlightColor = isFirstId ? highlightColors.front() : highlightColors.back();
                                 m_interiorsHighlightService.SetHighlight(interiorId, entityId, highlightColor);
+                                isFirstId = false;
                             }
                         }
                     }
