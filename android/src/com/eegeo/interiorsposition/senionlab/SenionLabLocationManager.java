@@ -83,7 +83,7 @@ public class SenionLabLocationManager
 
         m_stepInsideSdkManager.initialize();
 
-        m_stepInsideSdkManager.attachHighPerformanceMode(m_activity, attachCallback);
+        m_stepInsideSdkManager.attachForeground(m_activity, attachCallback);
     }
 
     public void stopUpdatingLocation()
