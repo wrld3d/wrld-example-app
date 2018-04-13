@@ -118,6 +118,8 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     public void clearSearchResults()
     {
         m_searchWidget.clearSearch();
+
+        m_searchWidget.showSearchResults(); // state to "shown", for the next time a search is done
     }
 
     public void onSearchResultsSelected(SearchResult searchResult) {
@@ -154,8 +156,6 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
 
     public boolean onMenuOptionSelected(final String text, final Object context) {
         MenuIndexPath indexPath = (MenuIndexPath) context;
-
-        m_searchWidget.showSearchResults();
 
         SearchWidgetViewJniMethods.SelectedItem(m_nativeCallerPointer, text, indexPath.m_section, indexPath.m_item);
         return true;
