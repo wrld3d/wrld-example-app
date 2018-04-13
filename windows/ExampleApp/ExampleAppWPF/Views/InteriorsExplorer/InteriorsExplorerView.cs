@@ -42,7 +42,7 @@ namespace ExampleAppWPF
         private float m_secondsSinceSliderTagsChange = 0;
 
         private const int MAX_VISIBLE_FLOORS = 15;
-        private const float SLIDER_THROTTLE = 0.1f; // seconds
+        private const float SLIDER_THROTTLE = 0.2f; // seconds
 
         private int FloorCount { get { return m_floorShortNames.Length; } }
         private bool FloorSelectionEnabled { get { return FloorCount > 1; } }
@@ -203,7 +203,10 @@ namespace ExampleAppWPF
 
         public void UpdateView(float dt)
         {
-            UpdateFloorLabels(dt);
+            if (m_dragInProgress)
+            {
+                UpdateFloorLabels(dt);
+            }
         }
 
         public void SetFloorName(string name)
@@ -408,12 +411,14 @@ namespace ExampleAppWPF
             {
                 m_currentVisibleFloorBase--;
                 SetSliderTags();
+                SetFloorSelectionDrag(m_floorSlider.Value);
             }
 
             if (m_currentVisibleFloorBase < FloorCount - MAX_VISIBLE_FLOORS && m_floorSlider.Value > MAX_VISIBLE_FLOORS - 2.0)
             {
                 m_currentVisibleFloorBase++;
                 SetSliderTags();
+                SetFloorSelectionDrag(m_floorSlider.Value);
             }
         }
 
@@ -422,8 +427,6 @@ namespace ExampleAppWPF
             string[] floorNames = m_floorShortNames.Skip(m_currentVisibleFloorBase).Take(MAX_VISIBLE_FLOORS).ToArray();
 
             m_sliderTickBar.TickLabels = string.Join(",", floorNames);
-
-            SetFloorSelectionDrag(m_floorSlider.Value);
         }
     }
 }
