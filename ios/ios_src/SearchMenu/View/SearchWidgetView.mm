@@ -132,9 +132,9 @@ namespace ExampleApp
                         
                         this->HandleItemSelected(menuText, sectionIndex, itemIndex);
                         
+                        [m_pSearchWidgetViewController closeMenu];
                         if (m_tagCollection.HasTag(menuText))
                         {
-                            [m_pSearchWidgetViewController closeMenu];
                             [m_pSearchWidgetViewController showResultsView];
                         }
                     }
