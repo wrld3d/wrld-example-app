@@ -51,6 +51,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemRemovedCallback;
 
                 bool m_menuContentsChanged;
+				bool m_inInteriorMode;
 
 				TagCollection m_tagCollection;
 
@@ -74,7 +75,7 @@ namespace ExampleApp
 
 				virtual void UpdateUiThread(float dt);
 				void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
-				void RefreshPresentation(bool modeChangedToInterior);
+				void RefreshPresentation();
 
 				void OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex);
 				void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state);
