@@ -39,7 +39,7 @@
 #include "InteriorsLocationChangedMessage.h"
 #include "InteriorsHeadingChangedMessage.h"
 #include "InteriorsLocationMapKeyChangedMessage.h"
-#include "InteriorsLocationConnectionChangedMessage.h"
+#include "InteriorsLocationAvailabilityChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -81,7 +81,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsHeadingChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationAuthorizationChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationMapKeyChangedMessage>
-            , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationConnectionChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationAvailabilityChangedMessage>
             , private Eegeo::NonCopyable
         {
 

@@ -14,7 +14,7 @@
 #include "InteriorsLocationChangedMessage.h"
 #include "InteriorsHeadingChangedMessage.h"
 #include "InteriorsLocationMapKeyChangedMessage.h"
-#include "InteriorsLocationConnectionChangedMessage.h"
+#include "InteriorsLocationAvailabilityChangedMessage.h"
 #include "ISenionLabLocationManager.h"
 #include "SenionLabLocationService.h"
 
@@ -48,7 +48,7 @@ namespace ExampleApp
                     void OnDidUpdateHeading(const InteriorsHeadingChangedMessage& message);
                     void OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message);
                     void OnSetInteriorIdFromMapKey(const InteriorsLocationMapKeyChangedMessage& message);
-                    void OnSetIsConnected(const InteriorsLocationConnectionChangedMessage& message);
+                    void OnSetIsLocationAvailable(const InteriorsLocationAvailabilityChangedMessage& message);
 
                     void OnResume();
                     void OnPause();
@@ -67,7 +67,7 @@ namespace ExampleApp
                     Eegeo::Helpers::TCallback1<SenionLabLocationManager, const InteriorsHeadingChangedMessage&> m_onDidUpdateHeadingCallback;
                     Eegeo::Helpers::TCallback1<SenionLabLocationManager, const InteriorsLocationAuthorizationChangedMessage&> m_onSetIsAuthorized;
                     Eegeo::Helpers::TCallback1<SenionLabLocationManager, const InteriorsLocationMapKeyChangedMessage&> m_onSetInteriorIdFromMapKey;
-                    Eegeo::Helpers::TCallback1<SenionLabLocationManager, const InteriorsLocationConnectionChangedMessage&> m_onSetIsConnected;
+                    Eegeo::Helpers::TCallback1<SenionLabLocationManager, const InteriorsLocationAvailabilityChangedMessage&> m_onSetIsLocationAvailable;
                     jclass m_locationManagerClass;
                     jobject m_locationManagerInstance;
                     std::map<std::string, std::map<int, std::vector<std::string> > > m_floorMaps;

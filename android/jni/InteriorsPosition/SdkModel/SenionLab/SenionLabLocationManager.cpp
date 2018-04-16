@@ -32,7 +32,7 @@ namespace ExampleApp
                 , m_onDidUpdateHeadingCallback(this, &SenionLabLocationManager::OnDidUpdateHeading)
                 , m_onSetIsAuthorized(this, &SenionLabLocationManager::OnSetIsAuthorized)
                 , m_onSetInteriorIdFromMapKey(this, &SenionLabLocationManager::OnSetInteriorIdFromMapKey)
-                , m_onSetIsConnected(this, &SenionLabLocationManager::OnSetIsConnected)
+                , m_onSetIsLocationAvailable(this, &SenionLabLocationManager::OnSetIsLocationAvailable)
                 , m_isActive(false)
                 {
                     ASSERT_NATIVE_THREAD
@@ -41,7 +41,7 @@ namespace ExampleApp
                     m_messageBus.SubscribeNative(m_onDidUpdateHeadingCallback);
                     m_messageBus.SubscribeNative(m_onSetIsAuthorized);
                     m_messageBus.SubscribeNative(m_onSetInteriorIdFromMapKey);
-                    m_messageBus.SubscribeNative(m_onSetIsConnected);
+                    m_messageBus.SubscribeNative(m_onSetIsLocationAvailable);
 
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
@@ -64,7 +64,7 @@ namespace ExampleApp
                 {
                     ASSERT_NATIVE_THREAD
 
-                    m_messageBus.UnsubscribeNative(m_onSetIsConnected);
+                    m_messageBus.UnsubscribeNative(m_onSetIsLocationAvailable);
                     m_messageBus.UnsubscribeNative(m_onSetInteriorIdFromMapKey);
                     m_messageBus.UnsubscribeNative(m_onSetIsAuthorized);
                     m_messageBus.UnsubscribeNative(m_onDidUpdateHeadingCallback);
@@ -145,11 +145,11 @@ namespace ExampleApp
                     }
                 }
 
-                void SenionLabLocationManager::OnSetIsConnected(const InteriorsLocationConnectionChangedMessage& message)
+                void SenionLabLocationManager::OnSetIsLocationAvailable(const InteriorsLocationAvailabilityChangedMessage& message)
                 {
-                	m_senionLabLocationService.SetIsConnected(message.IsConnected());
+                	m_senionLabLocationService.SetIsLocationAvailable(message.IsLocationAvailable());
 
-                	if(message.IsConnected())
+                	if(message.IsLocationAvailable())
                 	{
                 		m_messageBus.Publish(ExampleApp::AboutPage::AboutPageIndoorPositionTypeMessage("\nIndoor positioning type: Senion"));
                 	}
