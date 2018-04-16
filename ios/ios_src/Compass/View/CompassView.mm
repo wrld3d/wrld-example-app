@@ -184,7 +184,7 @@ namespace
         
         // We're using the GetIsConnected function to avoid a disconnect from displaying this popup when the BlueSphere
         // still shows as connected as Senion can still push position updates after Bluetooth is disabled
-        if(m_compassViewState == Disabled && bluetoothIsDisabled && !m_pSenionLabLocationService->GetIsConnected())
+        if(m_compassViewState == Disabled && bluetoothIsDisabled && !m_pSenionLabLocationService->GetIsLocationAvailable())
         {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please turn on Bluetooth in Settings and in Control Center to show your location."
                                                             message:@""
