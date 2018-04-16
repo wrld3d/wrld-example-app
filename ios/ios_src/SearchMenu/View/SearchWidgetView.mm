@@ -30,8 +30,7 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController displaySearchProvider: m_pSearchProviderHandle];
                 [m_pSearchWidgetViewController displaySuggestionProvider: m_pSuggestionProviderHandle];
 
-                UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-                ViewController *rootViewController = (ViewController *)window.rootViewController;
+                UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
                 UIEdgeInsets safeInsets = [rootViewController safeInsets];
                 
                 CGRect screenRect = rootViewController.view.bounds;

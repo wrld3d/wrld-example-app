@@ -217,9 +217,7 @@
 
 - (void)layoutSubviews
 {
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    ViewController *viewController = (ViewController *)window.rootViewController;
-   
+    UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
     self.frame = [viewController largePopoverFrame];
     
     UIEdgeInsets outerMargin = UIEdgeInsetsMake(8.0, 8.0, 8.0, 8.0);
