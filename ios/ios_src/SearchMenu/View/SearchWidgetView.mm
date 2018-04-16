@@ -30,8 +30,7 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController displaySearchProvider: m_pSearchProviderHandle];
                 [m_pSearchWidgetViewController displaySuggestionProvider: m_pSuggestionProviderHandle];
 
-                UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-                ViewController *rootViewController = (ViewController *)window.rootViewController;
+                UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
                 UIEdgeInsets safeInsets = [rootViewController safeInsets];
                 
                 CGRect screenRect = rootViewController.view.bounds;
@@ -132,9 +131,9 @@ namespace ExampleApp
                         
                         this->HandleItemSelected(menuText, sectionIndex, itemIndex);
                         
+                        [m_pSearchWidgetViewController closeMenu];
                         if (m_tagCollection.HasTag(menuText))
                         {
-                            [m_pSearchWidgetViewController closeMenu];
                             [m_pSearchWidgetViewController showResultsView];
                         }
                     }

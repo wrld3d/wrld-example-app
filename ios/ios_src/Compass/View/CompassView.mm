@@ -61,8 +61,8 @@ namespace
         
         m_pSenionLabLocationService = pSenionLabLocationService;
         
-        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-        ViewController *viewController = (ViewController *)window.rootViewController;
+       
+        UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
         UIEdgeInsets safeInsets = [viewController safeInsets];
         
         //control positioning
