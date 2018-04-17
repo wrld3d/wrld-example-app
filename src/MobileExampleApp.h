@@ -82,7 +82,6 @@
 #include "IMenuIgnoredReactionModel.h"
 #include "DoubleTapIndoorInteraction.h"		
 #include "IRayCaster.h"
-#include "InteriorsEntityIdHighlightVisibilityController.h"
 #include "DeepLink.h"
 #include "YelpCategoryMapperUpdater.h"
 #include "IUserIdleService.h"
@@ -93,6 +92,7 @@
 #include "AutomatedScreenshotController.h"
 #include "SelectFirstResultSearchService.h"
 #include "MapsceneModule.h"
+#include "InteriorEntityHighlightController.h"
 
 namespace ExampleApp
 {
@@ -166,9 +166,8 @@ namespace ExampleApp
         Surveys::SdkModel::SurveyTimer* m_pSurveyTimer;
         DeepLink::SdkModel::DeepLinkModule* m_pDeepLinkModule;
         Mapscene::SdkModel::MapsceneModule* m_pMapsceneModule;
-        InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController* m_pInteriorsHighlightVisibilityController;
+        InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController* m_pInteriorsHighlightVisibilityController;
         InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper* m_pHighlightColorMapper;
-        InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController* m_pInteriorsEntityIdHighlightVisibilityController;
         ExampleApp::InitialLocation::SdkModel::IInitialLocationModel* m_pInitialLocationModel;
         
         Search::Yelp::SdkModel::YelpCategoryMapperUpdater m_yelpCategoryMapperUpdater;
