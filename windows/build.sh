@@ -25,7 +25,7 @@ while getopts "n:e:v:i:p:" o; do
             environment=${OPTARG}
             ;;
     	v)
-            fileVersion=${OPTARG}
+            semanticVersion=${OPTARG}
             ;;
     	i)
             informationalVersion=${OPTARG}
@@ -46,11 +46,13 @@ if [ ! -z "${productName}" ]; then
 	
 fi
 
-if [ ! -z "${fileVersion}" ]; then
-    sed -i "s/string\s*FileVersion\s*=\s*@\"[^\"]*\"/string FileVersion = @\"$fileVersion\"/g" windows/ExampleApp/ExampleAppWPF/Properties/VersionInfo.cs
+if [ ! -z "${semanticVersion}" ]; then
+    sed -i "2s/.*/#define SEMANTIC_VERSION \"$semanticVersion\" /"  windows/src/SemanticVersion.h
+    
 fi
 
 if [ ! -z "${informationalVersion}" ]; then
+    sed -i "s/string\s*FileVersion\s*=\s*@\"[^\"]*\"/string FileVersion = @\"$informationalVersion\"/g" windows/ExampleApp/ExampleAppWPF/Properties/VersionInfo.cs
     sed -i "s/string\s*InformationalFileVersion\s*=\s*@\"[^\"]*\"/string InformationalFileVersion = @\"$informationalVersion\"/g" windows/ExampleApp/ExampleAppWPF/Properties/VersionInfo.cs
 fi
 

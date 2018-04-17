@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
 
 #include "WindowsApplicationConfigurationVersionProvider.h"
-
 #include <vector>
 
 
@@ -51,19 +50,11 @@ namespace ExampleApp
 
             WindowsApplicationConfigurationVersionProvider::WindowsApplicationConfigurationVersionProvider()
             {
-                VS_FIXEDFILEINFO fixedFileInfo;
-                bool success = TryGetFixedFileInfo(fixedFileInfo);
-                Eegeo_ASSERT(success, "failed to get app version information");
+				std::string semanticVersion = SEMANTIC_VERSION;
 
-                std::stringstream version;
-                version << HIWORD(fixedFileInfo.dwFileVersionMS) << "." << LOWORD(fixedFileInfo.dwFileVersionMS) << "."
-                    << HIWORD(fixedFileInfo.dwFileVersionLS) << "." << LOWORD(fixedFileInfo.dwFileVersionLS);
-                m_productVersion = version.str();
+				m_productVersion = semanticVersion;
 
-                std::stringstream buildNumber;
-                buildNumber << HIWORD(fixedFileInfo.dwFileVersionLS);
-
-                m_buildNumber = buildNumber.str();
+				m_buildNumber = semanticVersion.substr(semanticVersion.find("+")+1, semanticVersion.length());
             }
 
             std::string WindowsApplicationConfigurationVersionProvider::GetProductVersionString() const

@@ -4,6 +4,7 @@
 
 #include "IApplicationConfigurationVersionProvider.h"
 #include "Types.h"
+#include "SemanticVersion.h"
 
 
 namespace ExampleApp

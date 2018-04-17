@@ -12,6 +12,7 @@ set(currsources
   src/GlDisplayService.h
   src/main.cpp
   src/main.h
+  src/SemanticVersion.h
 )
 
 set(precompiled_header_clr_result WindowsClrPch_$(Configuration)_$(Platform).pch)
