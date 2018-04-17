@@ -206,6 +206,7 @@ const int DeletePinAlertViewTag = 2;
         self.pWebView = [[[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pWebView.scalesPageToFit = YES;
         self.pWebView.delegate = self;
+        self.pWebView.scrollView.delegate = self;
         
         [self setTouchExclusivity: self];
         
@@ -1122,6 +1123,10 @@ const int DeletePinAlertViewTag = 2;
     {
         self.pFadeContainer.hidden = NO;
     }
+}
+
+- (UIView *)viewForZoomingInScrollView: (UIScrollView *)scrollView {
+    return nil;
 }
 
 @end
