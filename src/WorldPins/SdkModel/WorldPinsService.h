@@ -83,6 +83,7 @@ namespace ExampleApp
                 WorldPinItemModel::WorldPinItemModelId GetWorldPinItemModelIdForMarkerId(Eegeo::Markers::IMarker::IdType markerId) const;
                 
                 void OnMenuItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message);
+                void OnSearchResultCleared(const SearchResultSection::SearchResultViewClearedMessage& message);
                 
                 void ClearSelectedSearchResult();
                 
@@ -106,6 +107,7 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::TCallback1<WorldPinsService, const WorldPinHiddenStateChangedMessage&> m_worldPinHiddenStateChangedMessageBinding;
                 Eegeo::Helpers::TCallback1<WorldPinsService, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_onSearchResultSelected;
+                Eegeo::Helpers::TCallback1<WorldPinsService, const SearchResultSection::SearchResultViewClearedMessage&> m_onSearchResultCleared;
 
                 typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*> TPinToSelectionHandlerMap;
                 typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinVisibilityStateChangedHandler*> TPinToVisiblityHandlerMap;

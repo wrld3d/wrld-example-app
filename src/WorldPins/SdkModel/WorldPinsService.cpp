@@ -36,6 +36,7 @@ namespace ExampleApp
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_worldPinHiddenStateChangedMessageBinding(this, &WorldPinsService::OnWorldPinHiddenStateChanged)
             , m_onSearchResultSelected(this, &WorldPinsService::OnMenuItemSelected)
+            , m_onSearchResultCleared(this, &WorldPinsService::OnSearchResultCleared)
             , m_messageBus(messageBus)
             , m_navigationService(navigationService)
             , m_pSelectedPinHighlight(nullptr)
@@ -45,10 +46,12 @@ namespace ExampleApp
             {
                 m_sdkModelDomainEventBus.Subscribe(m_worldPinHiddenStateChangedMessageBinding);
                 m_messageBus.SubscribeNative(m_onSearchResultSelected);
+                m_messageBus.SubscribeNative(m_onSearchResultCleared);
             }
             
             WorldPinsService::~WorldPinsService()
             {
+                m_messageBus.UnsubscribeNative(m_onSearchResultCleared);
                 m_messageBus.UnsubscribeNative(m_onSearchResultSelected);
                 m_sdkModelDomainEventBus.Unsubscribe(m_worldPinHiddenStateChangedMessageBinding);
             }
@@ -450,6 +453,11 @@ namespace ExampleApp
                 
                     AddHighlight(pWorldPinItemModel);
                 }
+            }
+            
+            void WorldPinsService::OnSearchResultCleared(const SearchResultSection::SearchResultViewClearedMessage& message)
+            {
+                ClearSelectedSearchResult();
             }
             
             void WorldPinsService::ClearSelectedSearchResult()
