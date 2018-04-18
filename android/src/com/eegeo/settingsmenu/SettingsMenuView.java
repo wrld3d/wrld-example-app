@@ -72,6 +72,9 @@ public class SettingsMenuView extends MenuView
         m_expandableListOnClickListener = new MenuExpandableListOnClickListener(m_activity, m_nativeCallerPointer, this);
         m_list.setOnChildClickListener(m_expandableListOnClickListener);
         m_list.setOnGroupClickListener(m_expandableListOnClickListener);
+
+        // TODO Remove completely
+        m_view.setVisibility(View.INVISIBLE);
     }
     
     @Override

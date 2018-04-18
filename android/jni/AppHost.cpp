@@ -553,15 +553,15 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
             app.TagSearchModule().GetTagSearchMenuOptionsModel(),
-            app.SettingsMenuModule().GetSettingsMenuViewModel(),
+            app.SearchMenuModule().GetSearchMenuViewModel(),
             m_messageBus,
             *m_pMenuReactionModel);
 
     m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
     											"com/eegeo/settingsmenu/SettingsMenuView",
     		                                     m_nativeState,
-    		                                     app.SettingsMenuModule().GetSettingsMenuModel(),
-    		                                     app.SettingsMenuModule().GetSettingsMenuViewModel(),
+    		                                     app.SearchMenuModule().GetSearchMenuModel(),
+    		                                     app.SearchMenuModule().GetSearchMenuViewModel(),
 												 m_pModalBackgroundViewModule->GetModalBackgroundView(),
     		                                     m_messageBus
     		                                 );

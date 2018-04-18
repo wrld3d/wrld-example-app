@@ -7,6 +7,7 @@
 #include "ScreenControlViewModelIncludes.h"
 #include "VectorMathDecl.h"
 #include "IOpenableControlViewModel.h"
+#include "Menu.h"
 
 namespace ExampleApp
 {
@@ -28,6 +29,8 @@ namespace ExampleApp
                 virtual ScreenControl::View::IScreenControlViewModel& GetConfirmationScreenControlViewModel() const = 0;
 
                 virtual OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const = 0;
+
+                virtual Menu::View::IMenuModel& GetMyPinCreationMenuModel() const = 0;
             };
         }
     }

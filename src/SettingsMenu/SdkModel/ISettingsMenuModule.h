@@ -15,15 +15,9 @@ namespace ExampleApp
             public:
                 virtual ~ISettingsMenuModule() { }
 
-                virtual void AddMenuSection(const std::string& name,
-                                            Menu::View::IMenuModel& menuModel,
-                                            bool isExpandable) = 0;
-                
-                virtual Menu::View::IMenuModel& GetSettingsMenuModel() const = 0;
+                virtual Menu::View::IMenuModel& GetOptionsMenuModel() const = 0;
 
-                virtual Menu::View::IMenuOptionsModel& GetSettingsMenuOptionsModel() const = 0;
-
-                virtual Menu::View::IMenuViewModel& GetSettingsMenuViewModel() const = 0;
+                virtual Menu::View::IMenuModel& GetAboutMenuModel() const = 0;
             };
         }
     }
