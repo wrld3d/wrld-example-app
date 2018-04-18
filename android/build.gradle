@@ -60,7 +60,7 @@ android {
             }
 
             ndk {
-                abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
+                abiFilters "armeabi-v7a"
             }
         }
     }
@@ -141,6 +141,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:multidex:1.0.1'
+
+    //compile 'com.android.support:appcompat-v7:25.3.0'
+    compile project(':wrld-android-widgets-release')
 
     androidTestImplementation 'tools.fastlane:screengrab:1.0.2'
     androidTestImplementation 'com.android.support.test:runner:0.5'

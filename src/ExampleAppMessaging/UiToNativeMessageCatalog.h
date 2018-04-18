@@ -5,6 +5,8 @@
 #include "Types.h"
 #include "CatalogBinding.h"
 #include "SearchMenuPerformedSearchMessage.h"
+#include "SearchMenuSearchWithContextMessage.h"
+#include "AutocompleteSuggestionsMessage.h"
 #include "SearchResultSectionItemSelectedMessage.h"
 #include "TagSearchSelectedMessage.h"
 #include "WeatherSelectedMessage.h"
@@ -43,6 +45,8 @@ namespace ExampleApp
     {
         class UiToNativeMessageCatalog
             : public Eegeo::Messaging::CatalogBinding<SearchMenu::SearchMenuPerformedSearchMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchMenu::SearchMenuSearchWithContextMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchMenu::AutocompleteSuggestionsMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultSectionItemSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<WeatherMenu::WeatherSelectedMessage>

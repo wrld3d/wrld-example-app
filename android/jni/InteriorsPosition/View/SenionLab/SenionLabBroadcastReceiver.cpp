@@ -75,7 +75,6 @@ namespace ExampleApp
                 void SenionLabBroadcastReceiver::DidUpdateLocation(const double latitude, const double longitude, const int floorNumber)
                 {
                     ASSERT_UI_THREAD
-                    Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(latitude, longitude));
                     m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, floorNumber));
                 }
 

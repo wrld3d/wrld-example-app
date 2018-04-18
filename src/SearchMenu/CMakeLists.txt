@@ -1,10 +1,14 @@
 set(headers ${headers} ../src/SearchMenu
 )
 set(currsources
+  ../src/SearchMenu/AutocompleteSuggestionsMessage.cpp
+  ../src/SearchMenu/AutocompleteSuggestionsMessage.h
   ../src/SearchMenu/CMakeLists.txt
   ../src/SearchMenu/SearchMenu.h
   ../src/SearchMenu/SearchMenuPerformedSearchMessage.cpp
   ../src/SearchMenu/SearchMenuPerformedSearchMessage.h
+  ../src/SearchMenu/SearchMenuSearchWithContextMessage.cpp
+  ../src/SearchMenu/SearchMenuSearchWithContextMessage.h
   ../src/SearchMenu/OpenSearchMenuMessage.cpp
   ../src/SearchMenu/OpenSearchMenuMessage.h
 )

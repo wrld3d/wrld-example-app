@@ -23,6 +23,7 @@
 #include "IWeatherMenuModule.h"
 #include "SettingsMenuModule.h"
 #include "SearchMenuModule.h"
+#include "AutocompleteSuggestionQueryPerformer.h"
 #include "CompassUpdateController.h"
 #include "CameraTransitionController.h"
 #include "WorldAreaLoaderModule.h"
@@ -547,17 +548,20 @@ namespace ExampleApp
         const auto& searchTags = Search::SdkModel::CreateSearchTagsFromFile(
                                                                             m_platformAbstractions.GetFileIO(), "search_tags.json");
 
+        Search::EegeoPois::SdkModel::EegeoSearchServiceModule* eegeoSearchServiceModule = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(
+                m_platformAbstractions.GetWebLoadRequestFactory(),
+                m_platformAbstractions.GetUrlEncoder(),
+                m_networkCapabilities,
+                searchTags,
+                m_applicationConfiguration.EegeoSearchServiceUrl(),
+                m_pWorld->GetApiTokenModel(),
+                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel()
+        );
+
         const bool useEegeoPois = true;
         if(useEegeoPois)
         {
-            m_searchServiceModules[Search::EegeoVendorName] = Eegeo_NEW(Search::EegeoPois::SdkModel::EegeoSearchServiceModule)(
-                                                                                                                               m_platformAbstractions.GetWebLoadRequestFactory(),
-                                                                                                                               m_platformAbstractions.GetUrlEncoder(),
-                                                                                                                               m_networkCapabilities,
-                                                                                                                               searchTags,
-                                                                                                                               m_applicationConfiguration.EegeoSearchServiceUrl(),
-                                                                                                                               m_pWorld->GetApiTokenModel(),
-                                                                                                                               world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
+            m_searchServiceModules[Search::EegeoVendorName] = eegeoSearchServiceModule;
         }
 
         const bool useYelpSearch = true;
@@ -679,9 +683,18 @@ namespace ExampleApp
                                                                             world.GetPlatformAbstractionModule().GetWebLoadRequestFactory(),
                                                                             m_messageBus);
 
+        m_pSuggestionsQueryPerformer  = Eegeo_NEW(ExampleApp::Search::SdkModel::AutocompleteSuggestionQueryPerformer)(m_pAppCameraModule->GetController(),
+                                                                                                                      m_platformAbstractions.GetWebLoadRequestFactory(),
+                                                                                                                      eegeoSearchServiceModule->GetEegeoParser(),
+                                                                                                                      m_applicationConfiguration.EegeoSearchServiceUrl(),
+                                                                                                                      m_pWorld->GetApiTokenModel(),
+                                                                                                                      m_platformAbstractions.GetUrlEncoder(),
+                                                                                                                      m_messageBus);
+
         m_pSearchMenuModule = Eegeo_NEW(ExampleApp::SearchMenu::SdkModel::SearchMenuModule)(m_identityProvider,
                                                                                             m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                             m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                            *m_pSuggestionsQueryPerformer,
                                                                                             m_messageBus,
                                                                                             m_metricsService);
         

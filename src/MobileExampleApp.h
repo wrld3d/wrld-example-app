@@ -35,6 +35,7 @@
 #include "AboutPageModule.h"
 #include "SearchModule.h"
 #include "SearchResultOnMapModule.h"
+#include "IAutocompleteSuggestionQueryPerformer.h"
 #include "WorldPinsModule.h"
 #include "RegularTexturePageLayout.h"
 #include "PinsModule.h"
@@ -159,6 +160,7 @@ namespace ExampleApp
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
         Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
         Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService* m_pSelectFirstResultSearchService;
+        Search::SdkModel::IAutocompleteSuggestionQueryPerformer* m_pSuggestionsQueryPerformer;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
