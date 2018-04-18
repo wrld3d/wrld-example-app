@@ -31,6 +31,7 @@ namespace ExampleApp
             , m_indoorId("")
             , m_floorIndex(0)
             , m_tryStartAtGpsLocation(false)
+            , m_tryStartAtGpsTimeout(0.0)
             , m_performStartupSearch(false)
             , m_startupSearchTag("")
             , m_googleAnalyticsReferrerToken("")
@@ -118,6 +119,12 @@ namespace ExampleApp
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetTryStartAtGpsLocation(bool tryStartAtGpsLocation)
             {
                 m_tryStartAtGpsLocation = tryStartAtGpsLocation;
+                return *this;
+            }
+            
+            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetTryStartAtGpsTimeout(const double tryStartAtGpsTimeout)
+            {
+                m_tryStartAtGpsTimeout = tryStartAtGpsTimeout;
                 return *this;
             }
             
@@ -426,6 +433,7 @@ namespace ExampleApp
                                                 m_indoorId,
                                                 m_floorIndex,
                                                 m_tryStartAtGpsLocation,
+                                                m_tryStartAtGpsTimeout,
                                                 m_shouldStartFullscreen,
                                                 m_performStartupSearch,
                                                 m_startupSearchTag,

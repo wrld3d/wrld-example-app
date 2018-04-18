@@ -90,6 +90,7 @@
 #include "IUserIdleService.h"
 #include "GlobalAppModeTransitionRules.h"
 #include "CameraSplinePlaybackController.h"
+#include "Timer.h"
 
 namespace ExampleApp
 {
@@ -112,6 +113,7 @@ namespace ExampleApp
         float m_pinDiameter;
         bool m_requiresTransitionToInitialGPSLocation;
         
+        Eegeo::Helpers::Timer* m_pTimer;
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
         CameraTransitions::SdkModel::CameraTransitionService* m_pCameraTransitionService;
 

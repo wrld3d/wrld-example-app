@@ -318,7 +318,8 @@ namespace ExampleApp
         m_metricsService.BeginSession("", EEGEO_PLATFORM_VERSION_NUMBER);
         
         SetWebSettings(m_platformAbstractions.GetProxySettings(), m_platformAbstractions.GetSSLSettings(), applicationConfiguration);
-        
+        m_pTimer = Eegeo_NEW(Eegeo::Helpers::Timer);
+    
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(applicationConfiguration.EegeoApiKey(),
                                                 m_platformAbstractions,
                                                 jpegLoader,
@@ -517,6 +518,7 @@ namespace ExampleApp
 
 		m_pAppModeModel->DestroyStateMachine();
         
+        Eegeo_DELETE m_pTimer;
         Eegeo_DELETE m_pDeepLinkModule;
         
         Eegeo_DELETE m_pUserInteractionModule;
@@ -1164,9 +1166,16 @@ namespace ExampleApp
     {
         Eegeo::Space::LatLong gpsLocation(0.0,0.0);
         bool gotGPSLocation = m_pWorld->GetLocationService().GetLocation(gpsLocation);
-
+        
         if (gotGPSLocation)
         {
+            if(m_pTimer->IsRunning()){
+                double timeInSeconds = m_pTimer->Total() / 1000.0;
+                if (timeInSeconds > m_applicationConfiguration.TryStartAtGpsTimeout()) {
+                    m_requiresTransitionToInitialGPSLocation = false;
+                    return false;
+                }
+            }
             const float heading = Eegeo::Math::Deg2Rad(m_applicationConfiguration.OrientationDegrees());
             m_pCameraTransitionController->StartTransitionTo(gpsLocation.ToECEF(), m_applicationConfiguration.DistanceToInterestMetres(), heading);
             m_requiresTransitionToInitialGPSLocation = false;
@@ -1180,13 +1189,13 @@ namespace ExampleApp
         if (m_requiresTransitionToInitialGPSLocation){
             TryMoveToGPSLocation();
         }
-       
+
         Eegeo::EegeoWorld& eegeoWorld(World());
-        
+    
         m_pCurrentTouchController = &m_pAppCameraModule->GetController().GetTouchController();
         
         eegeoWorld.EarlyUpdate(dt);
-        
+      
         m_pNavigationService->Update(dt);
         
         m_pCameraTransitionService->Update(dt);
@@ -1311,7 +1320,7 @@ namespace ExampleApp
 
         m_pSearchMenuModule->GetSearchMenuViewModel().AddToScreen();
         m_pCompassModule->GetScreenControlViewModel().AddToScreen();
-
+        m_pTimer->Start();
     }
     
     void MobileExampleApp::UpdateLoadingScreen(float dt)

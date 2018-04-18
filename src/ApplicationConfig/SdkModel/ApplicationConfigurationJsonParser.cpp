@@ -28,6 +28,7 @@ namespace ExampleApp
                 const std::string StartLocationIndoorId = "start_location_indoor_id";
                 const std::string StartLocationFloorIndex = "start_location_floor_index";
                 const std::string TryStartAtGpsLocation = "try_start_at_gps_location";
+                const std::string StartAtGPSLocationTimeout = "start_at_gps_location_timeout";
                 const std::string PerformStartUpSearch = "perform_start_up_search";
                 const std::string StartUpSearchTag = "start_up_search_tag";
                 const std::string EegeoApiKey = "eegeo_api_key";
@@ -245,6 +246,7 @@ namespace ExampleApp
                 m_builder.SetStartOrientationAboutInterestPoint(static_cast<float>(ParseDoubleOrDefault(document, StartLocationOrientationDegrees, m_defaultConfig.OrientationDegrees())));
 
                 m_builder.SetTryStartAtGpsLocation(ParseBoolOrDefault(document, TryStartAtGpsLocation, m_defaultConfig.TryStartAtGpsLocation()));
+                m_builder.SetTryStartAtGpsTimeout(ParseDoubleOrDefault(document, StartAtGPSLocationTimeout, m_defaultConfig.TryStartAtGpsTimeout()));
                 
                 m_builder.SetPerformStartupSearch(ParseBoolOrDefault(document, PerformStartUpSearch, m_defaultConfig.ShouldPerformStartUpSearch()));
                 m_builder.SetStartupSearchTag(ParseStringOrDefault(document, StartUpSearchTag, m_defaultConfig.StartUpSearchTag()));

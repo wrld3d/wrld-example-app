@@ -45,6 +45,7 @@ namespace ExampleApp
                     const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfo;
                     
                     const bool tryStartAtGpsLocation = false;
+                    const double tryStartAtGPSTimeout = 5.0;
                     const bool shouldStartFullscreen = false;
                     const bool isKioskTouchInputEnabled = false;
                     const bool isInKioskMode = false;
@@ -71,6 +72,7 @@ namespace ExampleApp
                         startLocationIndoorId,
                         startLocationFloorIndex,
                         tryStartAtGpsLocation,
+                        tryStartAtGPSTimeout,
                         shouldStartFullscreen,
                         shouldPerformStartUpSearch,
                         startUpSearchTag,

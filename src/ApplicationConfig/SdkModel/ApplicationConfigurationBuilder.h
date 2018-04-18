@@ -28,6 +28,7 @@ namespace ExampleApp
                 std::string m_indoorId;
                 int m_floorIndex;
                 bool m_tryStartAtGpsLocation;
+                double m_tryStartAtGpsTimeout;
                 bool m_performStartupSearch;
                 std::string m_startupSearchTag;
                 bool m_shouldStartFullscreen;
@@ -109,6 +110,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetFloorIndex(const int floorIndex);
                 
                 IApplicationConfigurationBuilder& SetTryStartAtGpsLocation(bool tryStartAtGpsLocation);
+                
+                IApplicationConfigurationBuilder& SetTryStartAtGpsTimeout(const double tryStartAtGpsTimeout);
                 
                 IApplicationConfigurationBuilder& SetPerformStartupSearch(bool performStartupSearch);
                 

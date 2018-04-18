@@ -14,6 +14,7 @@ namespace ExampleApp
                                                            const std::string& indoorId,
                                                            const int floorIndex,
                                                            bool tryStartAtGpsLocation,
+                                                           const double tryStartAtGpsTimeout,
                                                            bool startFullscreen,
                                                            bool performStartUpSearch,
                                                            const std::string& startUpSearchTag,
@@ -74,6 +75,7 @@ namespace ExampleApp
         , m_indoorId(indoorId)
         , m_floorIndex(floorIndex)
         , m_tryStartAtGpsLocation(tryStartAtGpsLocation)
+        , m_tryStartAtGpsTimeout(tryStartAtGpsTimeout)
         , m_shouldStartFullscreen(startFullscreen)
         , m_shouldPerformStartUpSearch(performStartUpSearch)
         , m_startUpSearchTag(startUpSearchTag)
@@ -196,6 +198,11 @@ namespace ExampleApp
         bool ApplicationConfiguration::TryStartAtGpsLocation() const
         {
             return m_tryStartAtGpsLocation;
+        }
+        
+        double ApplicationConfiguration::TryStartAtGpsTimeout() const
+        {
+            return m_tryStartAtGpsTimeout;
         }
         
         bool ApplicationConfiguration::ShouldPerformStartUpSearch() const
