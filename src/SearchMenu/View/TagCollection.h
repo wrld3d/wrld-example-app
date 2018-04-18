@@ -5,6 +5,7 @@
 #include "BidirectionalBus.h"
 #include "CallbackCollection.h"
 #include "TagSearchAddedMessage.h"
+#include "TagSearchRemovedMessage.h"
 //#include "TagSearchS_S_SLoadedMessage.h"
 
 #include <string>
@@ -22,6 +23,9 @@ namespace ExampleApp
 			public:
 				class TagInfo
 				{
+					friend class TagCollection;
+
+					int m_freeChain;
 					std::string m_tag;
 					std::string m_visibleText;
 					bool m_shouldTryInterior;
@@ -31,7 +35,8 @@ namespace ExampleApp
 					TagInfo(const std::string& tag, const std::string& visibleText,
 							bool shouldTryInterior,
 							bool hasRadiusOverride, float radiusOverride)
-							: m_tag(tag)
+							: m_freeChain(FREE_LIST_END)
+							, m_tag(tag)
 							, m_visibleText(visibleText)
 							, m_shouldTryInterior(shouldTryInterior)
 							, m_hasRadiusOverride(hasRadiusOverride)
@@ -55,14 +60,20 @@ namespace ExampleApp
 				TTagInfoMap m_tagsByText;
 				TTagTextMap m_tagsByTag;
 
+				int m_freeStorage;
+				static const int FREE_LIST_END = -1;
+
 				Eegeo::Helpers::TCallback1<TagCollection, const TagSearch::TagSearchAddedMessage&> m_onTagSearchAddedHandler;
+				Eegeo::Helpers::TCallback1<TagCollection, const TagSearch::TagSearchRemovedMessage&> m_onTagSearchRemovedHandler;
 				//Eegeo::Helpers::TCallback1<TagCollection, const TagSearch::TagSearchS_S_SLoadedMessage&> m_onTagSearchS_S_SLoadedHandler;
 
 				void OnTagSearchAdded(const TagSearch::TagSearchAddedMessage& message);
+				void OnTagSearchRemoved(const TagSearch::TagSearchRemovedMessage& message);
 				//void OnTagSearchS_S_SLoaded(const TagSearch::TagSearchS_S_SLoadedMessage& message);
-				void RememberTag(const std::string& text, const std::string& tag,
-								 bool shouldTryInterior,
-								 bool hasRadiusOverride, float radiusOverride);
+				void AddTag(const std::string& text, const std::string& tag,
+				            bool shouldTryInterior,
+				            bool hasRadiusOverride, float radiusOverride);
+				void RemoveTag(const std::string& text, const std::string& tag);
 
 			public:
 				TagCollection(ExampleAppMessaging::TMessageBus& messageBus);

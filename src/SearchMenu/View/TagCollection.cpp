@@ -11,15 +11,19 @@ namespace ExampleApp
 			TagCollection::TagCollection(ExampleAppMessaging::TMessageBus& messageBus)
 			: m_messageBus(messageBus)
 			, m_onTagSearchAddedHandler(this, &TagCollection::OnTagSearchAdded)
+			, m_onTagSearchRemovedHandler(this, &TagCollection::OnTagSearchRemoved)
 			//, m_onTagSearchS_S_SLoadedHandler(this, &TagCollection::OnTagSearchS_S_SLoaded)
+			, m_freeStorage(FREE_LIST_END)
 			{
 				m_messageBus.SubscribeUi(m_onTagSearchAddedHandler);
+				m_messageBus.SubscribeUi(m_onTagSearchRemovedHandler);
 				//m_messageBus.SubscribeUi(m_onTagSearchS_S_SLoadedHandler);
 			}
 
 			TagCollection::~TagCollection()
 			{
 				//m_messageBus.UnsubscribeUi(m_onTagSearchS_S_SLoadedHandler);
+				m_messageBus.UnsubscribeUi(m_onTagSearchRemovedHandler);
 				m_messageBus.UnsubscribeUi(m_onTagSearchAddedHandler);
 			}
 
@@ -27,9 +31,16 @@ namespace ExampleApp
 			{
 				const TagSearch::View::TagSearchModel& tagSearchModel = message.Model();
 
-				RememberTag(tagSearchModel.Name(), tagSearchModel.SearchTag(),
-							tagSearchModel.Interior(),
-							false, 0);
+				AddTag(tagSearchModel.Name(), tagSearchModel.SearchTag(),
+				       tagSearchModel.Interior(),
+				       false, 0);
+			}
+
+			void TagCollection::OnTagSearchRemoved(const TagSearch::TagSearchRemovedMessage& message)
+			{
+				const TagSearch::View::TagSearchModel& tagSearchModel = message.Model();
+
+				RemoveTag(tagSearchModel.Name(), tagSearchModel.SearchTag());
 			}
 
 			/*
@@ -41,31 +52,50 @@ namespace ExampleApp
 			}
 			 */
 
-			void TagCollection::RememberTag(const std::string& text, const std::string& tag,
-											bool shouldTryInterior,
-											bool hasRadiusOverride, float radiusOverride)
+			void TagCollection::AddTag(const std::string& text, const std::string& tag,
+			                           bool shouldTryInterior,
+			                           bool hasRadiusOverride, float radiusOverride)
 			{
-				if (m_tagsByText.find(text) != m_tagsByText.end())
+				Eegeo_ASSERT(m_tagsByText.find(text) == m_tagsByText.end());
+				Eegeo_ASSERT(m_tagsByTag .find(tag)  == m_tagsByTag .end());
+
+				TagInfo info(tag, text, shouldTryInterior, hasRadiusOverride, radiusOverride);
+				int     pos;
+
+				if (m_freeStorage == FREE_LIST_END)
 				{
-					// TODO
-					return;
-					//Eegeo_ASSERT(m_tagsByTag.find(tag) != m_tagsByTag.end()
-					//			 && m_tagsByText[text] == m_tagsByTag[tag]);
+					pos = (int)m_tagStorage.size();
+
+					m_tagStorage.push_back(info);
 				}
-				if (m_tagsByTag.find(tag) != m_tagsByTag.end())
+				else
 				{
-					// TODO
-					return;
-					//Eegeo_ASSERT(m_tagsByText.find(text) != m_tagsByText.end()
-					//			 && m_tagsByText[text] == m_tagsByTag[tag]);
+					pos = m_freeStorage;
+
+					TagInfo* storagePlace = &m_tagStorage[m_freeStorage];
+
+					m_freeStorage = storagePlace->m_freeChain;
+					*storagePlace = info;
 				}
 
-				m_tagStorage.push_back(TagInfo(tag, text, shouldTryInterior, hasRadiusOverride, radiusOverride));
+				m_tagsByText[text] = pos;
+				m_tagsByTag [tag]  = pos;
+			}
 
-				int last = (int)m_tagStorage.size() - 1;
+			void TagCollection::RemoveTag(const std::string& text, const std::string& tag)
+			{
+				Eegeo_ASSERT(m_tagsByText.find(text) != m_tagsByText.end());
+				Eegeo_ASSERT(m_tagsByTag .find(tag)  != m_tagsByTag .end());
 
-				m_tagsByText[text] = last;
-				m_tagsByTag [tag]  = last;
+				Eegeo_ASSERT(m_tagsByText[text] == m_tagsByTag[tag]);
+
+				int index = m_tagsByText[text];
+
+				m_tagStorage[index].m_freeChain = m_freeStorage;
+				m_freeStorage = index;
+
+				m_tagsByText.erase(text);
+				m_tagsByTag .erase(tag);
 			}
 
 			bool TagCollection::HasTag(const std::string& text)
