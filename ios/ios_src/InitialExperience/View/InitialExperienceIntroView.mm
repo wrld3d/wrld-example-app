@@ -245,9 +245,8 @@ namespace
 
 - (void) layoutSubviews
 {
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    ViewController *rootViewController = (ViewController *)window.rootViewController;
-    UIEdgeInsets safeInsets = [rootViewController safeInsets];
+    UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    UIEdgeInsets safeInsets = [viewController safeInsets];
     
     m_screenWidth = self.superview.bounds.size.width;
     m_screenHeight = self.superview.bounds.size.height - safeInsets.bottom - safeInsets.top;

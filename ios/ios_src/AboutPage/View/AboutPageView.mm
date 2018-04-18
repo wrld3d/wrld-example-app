@@ -112,9 +112,9 @@
 
 - (void)layoutSubviews
 {
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    ViewController *viewController = (ViewController *)window.rootViewController;
+    UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
     self.frame = [viewController largePopoverFrame];
+    
     
     self.pHeaderView.width = self.frame.size.width;
     [self.pHeaderView layoutIfNeeded];

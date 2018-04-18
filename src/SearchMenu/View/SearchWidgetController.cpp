@@ -29,6 +29,7 @@ namespace ExampleApp
             , m_onSearchResultSelectedCallback(this, &SearchWidgetController::OnSearchResultSelected)
             , m_onSearchQueryRefreshedHandler(this, &SearchWidgetController::OnSearchQueryRefreshedMessage)
             , m_menuContentsChanged(true)
+			, m_inInteriorMode(false)
             , m_onAppModeChanged(this, &SearchWidgetController::OnAppModeChanged)
             , m_onItemSelectedCallback(this, &SearchWidgetController::OnItemSelected)
             , m_onItemAddedCallback(this, &SearchWidgetController::OnItemAdded)
@@ -159,14 +160,15 @@ namespace ExampleApp
 
             void SearchWidgetController::UpdateUiThread(float dt)
             {
-				RefreshPresentation(false);
+				RefreshPresentation();
             }
 
             void SearchWidgetController::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
             {
 				m_menuContentsChanged = true;
+				m_inInteriorMode = message.GetAppMode() == AppModes::SdkModel::AppMode::InteriorMode;
 
-                RefreshPresentation(message.GetAppMode() == AppModes::SdkModel::AppMode::InteriorMode);
+                RefreshPresentation();
             }
 
             void SearchWidgetController::OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex)
@@ -175,6 +177,8 @@ namespace ExampleApp
 
 				if (m_tagCollection.HasTag(menuText))
 				{
+					m_view.ClearSearchResults();
+
 					TagCollection::TagInfo tagInfo = m_tagCollection.GetInfoByText(menuText);
 
 					if (tagInfo.HasRadiusOverride())
@@ -198,7 +202,7 @@ namespace ExampleApp
 
             }
 
-            void SearchWidgetController::RefreshPresentation(bool modeChangedToInterior)
+            void SearchWidgetController::RefreshPresentation()
             {
                 if (!m_menuContentsChanged)
                 {
@@ -214,7 +218,7 @@ namespace ExampleApp
                 {
                     Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(static_cast<int>(groupIndex));
 
-					if (section.Name() != "Discover" || !modeChangedToInterior)
+					if (section.Name() != "Discover" || !m_inInteriorMode)
 					{
 						sections.push_back(&section);
 					}

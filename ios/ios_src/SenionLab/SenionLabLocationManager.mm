@@ -193,7 +193,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
              );
             //*/
             
-            m_pSenionLabLocationService->SetIsConnected(false);
+            m_pSenionLabLocationService->SetIsLocationAvailable(false);
             m_messageBus->Publish(ExampleApp::AboutPage::AboutPageIndoorPositionTypeMessage("\nIndoor positioning type: GPS"));
         }
         if(locationAvailability == SSILocationAvailabilityAvailable)
@@ -207,7 +207,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
              );
             //*/
             
-            m_pSenionLabLocationService->SetIsConnected(true);
+            m_pSenionLabLocationService->SetIsLocationAvailable(true);
             m_messageBus->Publish(ExampleApp::AboutPage::AboutPageIndoorPositionTypeMessage("\nIndoor positioning type: Senion"));
         }
     }
@@ -253,8 +253,6 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
             m_pSenionLabLocationService->SetIsAuthorized(false);
             break;
     }
-
-    m_pSenionLabLocationService->SetIsConnected(false);
 }
 
 -(int) getFloorIndexFromSenionFloorIndex: (std::string) senionFloorIndex senionMapKey: (std::string) senionMapKey

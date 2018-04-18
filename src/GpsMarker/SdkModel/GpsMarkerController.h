@@ -48,6 +48,7 @@ namespace ExampleApp
                 Eegeo::BlueSphere::BlueSphereAnchorView& m_blueSphereAnchorView;
 
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                Eegeo::Location::ILocationService& m_locationService;
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
                 
                 VisualMap::SdkModel::IVisualMapService& m_visualMapService;
@@ -71,7 +72,7 @@ namespace ExampleApp
                 void OnInteriorsPositionConnectionMessage(const InteriorsPosition::InteriorsPositionConnectionMessage& message);
                 
                 
-
+                bool insideOpenInterior();
                 void GetCurrentVisualMapTime(std::string& currentTime, std::string& currentWeather);
             };
         }

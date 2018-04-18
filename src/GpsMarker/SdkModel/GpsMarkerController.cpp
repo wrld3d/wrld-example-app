@@ -31,6 +31,7 @@ namespace ExampleApp
                                                      ExampleAppMessaging::TMessageBus& messageBus)
             : m_model(model)
             , m_interiorInteractionModel(interiorInteractionModel)
+            , m_locationService(locationService)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
             , m_visibilityCount(1)
@@ -109,8 +110,9 @@ namespace ExampleApp
                 bool positionValid = m_model.UpdateGpsPosition(dt);
                 m_model.UpdateHeading(dt);
                 
-                m_model.SetEnabled(m_visibilityCount == 1 && positionValid);
-
+                m_model.SetEnabled(m_visibilityCount == 1
+                                   && positionValid
+                                   && (!m_interiorInteractionModel.HasInteriorModel() || insideOpenInterior()));
 
                 std::string currentTime;
                 std::string currentWeather;
@@ -123,6 +125,14 @@ namespace ExampleApp
                     m_blueSphereAnchorView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
                 }
 
+            }
+            
+            bool GpsMarkerController::insideOpenInterior()
+            {
+                Eegeo::Resources::Interiors::InteriorId interiorCurrentlyLocated = m_locationService.GetInteriorId();
+                Eegeo::Resources::Interiors::InteriorId interiorCurrentlyOpen = m_interiorInteractionModel.GetInteriorModel()->GetId();
+                
+                return interiorCurrentlyLocated == interiorCurrentlyOpen;
             }
             
             void GpsMarkerController::GetCurrentVisualMapTime(std::string& currentTime, std::string& currentWeather)

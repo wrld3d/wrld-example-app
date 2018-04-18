@@ -62,7 +62,7 @@
 		</data>
 		<key>Headers/WRLDMockSearchProvider.h</key>
 		<data>
-		5sRwempXY+tujk25XHCtFEKcv1M=
+		59okD76hmCHpUbm2vMLK7NrTxVA=
 		</data>
 		<key>Headers/WRLDPositionedSearchResultModel.h</key>
 		<data>
@@ -154,7 +154,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		fgMeP+3P8QOIsAas1qITjTHb2KE=
+		BqRe0pBEFLfsmc7D2wDCEPcyfTg=
 		</data>
 		<key>Large_Mic.png</key>
 		<data>
@@ -330,39 +330,39 @@
 		</data>
 		<key>WRLDMenuChildTableViewCell.nib</key>
 		<data>
-		813RvH+IgrQedGJdTGYqA3V8GnA=
+		glbZdu8LTxf1nolA4AiJeTx5mZs=
 		</data>
 		<key>WRLDMenuGroupTitleTableViewCell.nib</key>
 		<data>
-		sB1dzQLn5acIXChmGDtlIYMfCI4=
+		CRvAEti9P2cjwOWXiZE6jhpcsrE=
 		</data>
 		<key>WRLDMenuOptionTableViewCell.nib</key>
 		<data>
-		TdRmxwC59+W8kZxfYJhAJdWKbRs=
+		qeg8KGaQm2g1VK1OWnxDIey4MwM=
 		</data>
 		<key>WRLDMicrophoneOverlay.nib</key>
 		<data>
-		r2WDY98nxUCpol9eLi3Wbz+I4uk=
+		krZGMrzTYgq9e9MZ40j6/FkCqp8=
 		</data>
 		<key>WRLDMoreResultsTableViewCell.nib</key>
 		<data>
-		PkETFK/TWtM0qYyyAMx7N9fFIJg=
+		NFO330ErukzvpTm55vrpE6bPess=
 		</data>
 		<key>WRLDSearchResultTableViewCell.nib</key>
 		<data>
-		kY6p53ggb9PtRH7jgc+w5Erts4c=
+		CPkelcKvQWkdABk4WLaX+LJ3F00=
 		</data>
 		<key>WRLDSearchWidget.nib/objects-11.0+.nib</key>
 		<data>
-		+Efzd4ACtT5mvknui7evnOSfx5A=
+		edAppKtvu8Qzt9Rh5BeGxpKrUOQ=
 		</data>
 		<key>WRLDSearchWidget.nib/runtime.nib</key>
 		<data>
-		M9HQpbwhOspFt0MAoAzHXst9++Q=
+		ZMXB8fZJZ3tWstBzM3Nejw1au9s=
 		</data>
 		<key>WRLDSuggestionTableViewCell.nib</key>
 		<data>
-		9ep9laTSFZaFmToYKIYpOkxKaRE=
+		WhXlk5IuesHJHZo48AvMvLaotfA=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -525,11 +525,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			5sRwempXY+tujk25XHCtFEKcv1M=
+			59okD76hmCHpUbm2vMLK7NrTxVA=
 			</data>
 			<key>hash2</key>
 			<data>
-			Dux7/UPkfhc+r+TJb0PfxEPq5qE2j/WEiQ0cj29RaY4=
+			Y7aBB0Kn85zacVQ4LHhQujmgZ5+apoknfdScSO9j4jE=
 			</data>
 		</dict>
 		<key>Headers/WRLDPositionedSearchResultModel.h</key>
@@ -1251,99 +1251,99 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			813RvH+IgrQedGJdTGYqA3V8GnA=
+			glbZdu8LTxf1nolA4AiJeTx5mZs=
 			</data>
 			<key>hash2</key>
 			<data>
-			EnCDAaM4haDj6tvZoW2tVxlMohF6O2hDTGtUfNcR0x0=
+			APQdnvyaD1lAj+vdu5lk8J5V0pWyqgf3TJpEvHmBrMI=
 			</data>
 		</dict>
 		<key>WRLDMenuGroupTitleTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			sB1dzQLn5acIXChmGDtlIYMfCI4=
+			CRvAEti9P2cjwOWXiZE6jhpcsrE=
 			</data>
 			<key>hash2</key>
 			<data>
-			aU9Fe5iRPVPUUObuCfDlmkPhQ4+2KzGjHCIcME/vLC0=
+			zCoW2RDwl6ZXnZuL2DSCcDSubem/QzLrsCN+9cvfgQI=
 			</data>
 		</dict>
 		<key>WRLDMenuOptionTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			TdRmxwC59+W8kZxfYJhAJdWKbRs=
+			qeg8KGaQm2g1VK1OWnxDIey4MwM=
 			</data>
 			<key>hash2</key>
 			<data>
-			xq/pHvrBMirXWOHtUtXFED1zYrOpDVXrmM1gtv2UrS0=
+			owuxQpGp9HWt6deGGzKUjyhYclHjv8Ei4OgKOs5TjoA=
 			</data>
 		</dict>
 		<key>WRLDMicrophoneOverlay.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			r2WDY98nxUCpol9eLi3Wbz+I4uk=
+			krZGMrzTYgq9e9MZ40j6/FkCqp8=
 			</data>
 			<key>hash2</key>
 			<data>
-			/mYf/c7Hdw8KZ3APLThmPQjyLc3wiEiq0zoSj54aVVY=
+			Gs2ftTyLUJPZQ4bxe+BwrIJ+62iuU5cJyBG7TO7qxA8=
 			</data>
 		</dict>
 		<key>WRLDMoreResultsTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			PkETFK/TWtM0qYyyAMx7N9fFIJg=
+			NFO330ErukzvpTm55vrpE6bPess=
 			</data>
 			<key>hash2</key>
 			<data>
-			hRyXu0WmvdpenFwXgVu1lu6CYPblV8nQlniwnRa1LFo=
+			h2kvfqyrs1BgOdtBx1lT3z2u666Wt7u9Rh0B9n5lzZo=
 			</data>
 		</dict>
 		<key>WRLDSearchResultTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			kY6p53ggb9PtRH7jgc+w5Erts4c=
+			CPkelcKvQWkdABk4WLaX+LJ3F00=
 			</data>
 			<key>hash2</key>
 			<data>
-			MgQYEJiAg/qh9/Lb9jvj95je3MedI+22NtGxIydMFzU=
+			QHLf4kULI/TetJfmhGlpOZCKJSzU1c1mmRqKagRmYPo=
 			</data>
 		</dict>
 		<key>WRLDSearchWidget.nib/objects-11.0+.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			+Efzd4ACtT5mvknui7evnOSfx5A=
+			edAppKtvu8Qzt9Rh5BeGxpKrUOQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			zItMWOwj0p0qr3neShJStxyPYpgOrHZJUhymsg9SuOg=
+			/YTK/SfytS9pp70om/DAiAwOVqfOQf6QBsVfFi89Yzc=
 			</data>
 		</dict>
 		<key>WRLDSearchWidget.nib/runtime.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			M9HQpbwhOspFt0MAoAzHXst9++Q=
+			ZMXB8fZJZ3tWstBzM3Nejw1au9s=
 			</data>
 			<key>hash2</key>
 			<data>
-			yFQsKNv0fGn80KVccWuP3IehPeYETggnVO8qH27K1+w=
+			uq/q0JG+6d1w4OHMqwF5NS5jcrEwIB0qXHBJkL3fdDQ=
 			</data>
 		</dict>
 		<key>WRLDSuggestionTableViewCell.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9ep9laTSFZaFmToYKIYpOkxKaRE=
+			WhXlk5IuesHJHZo48AvMvLaotfA=
 			</data>
 			<key>hash2</key>
 			<data>
-			GSVsv7WUOqPJFqba9wr0aBdH/5QWDdZBYqNgUVv4Cjw=
+			YlQ22qJbPGiHIMkiRMjP70FgPlwX5J7jjaUMUEQ3Fj0=
 			</data>
 		</dict>
 	</dict>

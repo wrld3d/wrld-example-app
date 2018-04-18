@@ -429,7 +429,7 @@ def collect_desks(xls_book, sheet_index, first_data_row_number, column_name_row,
                     "spaceId": space_id,
                     "floor": interior_floor_dict[interior_id][floor_id].split(" ")[0],
                     "floorName": interior_floor_dict[interior_id][floor_id],
-                    "name": v[column_names.index("desk")].split("-")[-1],
+                    "name": ("-").join(v[column_names.index("desk")].split("-")[2:]),
                     "assignedPersonUuid": int(v[column_names.index("assigned_uuid")])
                 }
             )

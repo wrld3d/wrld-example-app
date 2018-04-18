@@ -26,8 +26,7 @@
 
         m_pInterop = new ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewInterop(self);
         
-        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-        ViewController *viewController = (ViewController *)window.rootViewController;
+        UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
         UIEdgeInsets safeInsets = [viewController safeInsets];
         
         UIEdgeInsets margin =  UIEdgeInsetsMake(16, 16, 16, 16);

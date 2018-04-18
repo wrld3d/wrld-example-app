@@ -173,8 +173,7 @@
 
 - (void) layoutSubviews
 {
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    ViewController *viewController = (ViewController *)window.rootViewController;
+    UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
     self.frame = [viewController largePopoverFrame];
     
     CGFloat mainWindowWidth = self.frame.size.width;

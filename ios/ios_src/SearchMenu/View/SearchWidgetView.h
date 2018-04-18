@@ -71,6 +71,8 @@ namespace ExampleApp
 
                 void PerformSearch(const std::string& query, const QueryContext& context);
 
+                void ClearSearchResults();
+
                 void InsertSearchClearedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveSearchClearedCallback(Eegeo::Helpers::ICallback0& callback);
 
