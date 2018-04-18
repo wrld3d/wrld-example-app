@@ -26,6 +26,7 @@ namespace ExampleApp
             
             void SearchMenuPerformedSearchMessageHandler::OnPerformedSearchMessage(const SearchMenuPerformedSearchMessage& message)
             {
+                m_searchQueryPerformer.RemoveSearchQueryResults();
                 m_metricsService.SetEvent("Search", "Search string", message.SearchQuery().c_str());
                 m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsTag(), message.IsInterior());
             }
