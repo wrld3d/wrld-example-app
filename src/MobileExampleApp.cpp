@@ -218,6 +218,7 @@ namespace ExampleApp
     , m_initialisedApplicationViewState(false)
     , m_pCameraTransitionController(NULL)
     , m_pSettingsMenuModule(NULL)
+    , m_pAboutPageMenuModule(NULL)
     , m_pSearchMenuModule(NULL)
     , m_pSearchResultSectionModule(NULL)
     , m_pModalityModule(NULL)
@@ -990,6 +991,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pMapModeModule;
 
         Eegeo_DELETE m_pTagSearchModule;
+
+        Eegeo_DELETE m_pAboutPageMenuModule;
 
         Eegeo_DELETE m_pSettingsMenuModule;
 
