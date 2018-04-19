@@ -130,6 +130,7 @@
 #include "InteriorHighlightsModule.h"
 #include "IInteriorsHighlightService.h"
 #include "MapsceneModule.h"
+#include "AboutPageMenuModule.h"
 
 namespace ExampleApp
 {
@@ -653,8 +654,10 @@ namespace ExampleApp
 
 
         m_pSettingsMenuModule = Eegeo_NEW(ExampleApp::SettingsMenu::SdkModel::SettingsMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
-                                                                                                  m_pAboutPageModule->GetAboutPageViewModel(),
                                                                                                   m_pOptionsModule->GetOptionsViewModel());
+
+        m_pAboutPageMenuModule = Eegeo_NEW(AboutPage::SdkModel::AboutPageMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
+                                                                                     m_pAboutPageModule->GetAboutPageViewModel());
 
         m_pPlaceJumpsModule = Eegeo_NEW(PlaceJumps::SdkModel::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
                                                                                 CameraTransitionController(),
@@ -871,7 +874,7 @@ namespace ExampleApp
         }
 
         m_pSearchMenuModule->AddMenuSection("Options", m_pSettingsMenuModule->GetOptionsMenuModel(), false);
-        m_pSearchMenuModule->AddMenuSection("About",  m_pSettingsMenuModule->GetAboutMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("About",  m_pAboutPageMenuModule->GetAboutPageMenuModel(), false);
         m_pSearchMenuModule->AddMenuSection("Weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
 
         m_pSelectFirstResultSearchService = Eegeo_NEW(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService)(m_pSearchModule->GetSearchQueryPerformer(),

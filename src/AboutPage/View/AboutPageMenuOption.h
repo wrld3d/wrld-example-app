@@ -10,7 +10,7 @@
 
 namespace ExampleApp
 {
-    namespace SettingsMenu
+    namespace AboutPage
     {
         namespace View
         {

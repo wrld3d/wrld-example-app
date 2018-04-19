@@ -6,16 +6,16 @@
 
 namespace ExampleApp
 {
-    namespace SettingsMenu
+    namespace AboutPage
     {
         namespace SdkModel
         {
-            class ISettingsMenuModule
+            class IAboutPageMenuModule
             {
             public:
-                virtual ~ISettingsMenuModule() { }
+                virtual ~IAboutPageMenuModule() { }
 
-                virtual Menu::View::IMenuModel& GetOptionsMenuModel() const = 0;
+                virtual Menu::View::IMenuModel& GetAboutPageMenuModel() const = 0;
             };
         }
     }
