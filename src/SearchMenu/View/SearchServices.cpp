@@ -1,8 +1,6 @@
 // Copyright WRLD Ltd (2018-), All Rights Reserved
 
 #include "SearchServices.h"
-//#include "S_S_SSearchConstants.h"
-//#include "S_S_SSearchParser.h"
 #include "SearchQuery.h"
 #include "AutocompleteSuggestionsMessage.h"
 
@@ -89,8 +87,6 @@ namespace ExampleApp
 					std::string name = it->GetTitle();
 					std::string desc = it->GetSubtitle();
 					std::string icon = it->GetIconKey();
-
-					//HandleSpecialCases(*it, desc, icon);
 
 					m_searchResults.push_back(SearchServicesResult(name, desc, icon,
 																   static_cast<int>(std::distance(sdkResults.begin(), it)),

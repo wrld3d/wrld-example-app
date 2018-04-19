@@ -100,6 +100,14 @@ namespace ExampleApp
                 m_searchService.PerformLocationQuerySearch(searchQuery);
             }
 
+            void SearchQueryPerformer::AskForQueryRefresh(const SearchQuery& query,
+                                                          const Eegeo::Space::LatLongAltitude& location)
+            {
+                m_messageBus.Publish(SearchQueryRefreshedMessage(query,
+                                                                 location,
+                                                                 GetSearchRadius(m_cameraController)));
+            }
+
             void SearchQueryPerformer::RemoveSearchQueryResults()
             {
                 m_hasQuery = false;

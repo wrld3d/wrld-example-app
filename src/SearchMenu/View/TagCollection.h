@@ -28,25 +28,18 @@ namespace ExampleApp
 					std::string m_tag;
 					std::string m_visibleText;
 					bool m_shouldTryInterior;
-					bool m_hasRadiusOverride;
-					float m_radiusOverride;
 				public:
 					TagInfo(const std::string& tag, const std::string& visibleText,
-							bool shouldTryInterior,
-							bool hasRadiusOverride, float radiusOverride)
+							bool shouldTryInterior)
 							: m_freeChain(FREE_LIST_END)
 							, m_tag(tag)
 							, m_visibleText(visibleText)
 							, m_shouldTryInterior(shouldTryInterior)
-							, m_hasRadiusOverride(hasRadiusOverride)
-							, m_radiusOverride(radiusOverride)
 					{
 					}
 					const std::string& Tag()         const { return m_tag; }
 					const std::string& VisibleText() const { return m_visibleText; }
 					bool ShouldTryInterior()         const { return m_shouldTryInterior; }
-					bool HasRadiusOverride()         const { return m_hasRadiusOverride; }
-					float RadiusOverride()           const { return m_radiusOverride; }
 				};
 
 			private:
@@ -68,8 +61,7 @@ namespace ExampleApp
 				void OnTagSearchAdded(const TagSearch::TagSearchAddedMessage& message);
 				void OnTagSearchRemoved(const TagSearch::TagSearchRemovedMessage& message);
 				void AddTag(const std::string& text, const std::string& tag,
-				            bool shouldTryInterior,
-				            bool hasRadiusOverride, float radiusOverride);
+				            bool shouldTryInterior);
 				void RemoveTag(const std::string& text, const std::string& tag);
 
 			public:

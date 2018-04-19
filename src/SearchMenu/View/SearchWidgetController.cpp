@@ -132,7 +132,6 @@ namespace ExampleApp
 
 				std::string visibleText = query.Query();
 				std::string tagText     = "";
-				float       radius      = message.Radius();
 
 				if (query.IsTag())
 				{
@@ -141,9 +140,6 @@ namespace ExampleApp
 					const TagCollection::TagInfo& tagInfo = m_tagCollection.GetInfoByTag(tagText);
 
 					visibleText = tagInfo.VisibleText();
-
-					if (tagInfo.HasRadiusOverride())
-						radius = tagInfo.RadiusOverride();
 				}
 
                 m_view.PerformSearch(visibleText,
@@ -152,7 +148,7 @@ namespace ExampleApp
 												  tagText,
 												  query.ShouldTryInteriorSearch(),
 												  message.Location(),
-												  radius));
+												  message.Radius()));
             }
 
             void SearchWidgetController::UpdateUiThread(float dt)
@@ -178,25 +174,14 @@ namespace ExampleApp
 
 					TagCollection::TagInfo tagInfo = m_tagCollection.GetInfoByText(menuText);
 
-					if (tagInfo.HasRadiusOverride())
-					{
-						m_view.PerformSearch(menuText,
-											 QueryContext(true, true, tagInfo.Tag(),
-														  tagInfo.ShouldTryInterior(),
-														  tagInfo.RadiusOverride()));
-					}
-					else
-					{
-						m_view.PerformSearch(menuText,
-											 QueryContext(true, true, tagInfo.Tag(),
-														  tagInfo.ShouldTryInterior()));
-					}
+					m_view.PerformSearch(menuText,
+										 QueryContext(true, true, tagInfo.Tag(),
+													  tagInfo.ShouldTryInterior()));
 				}
                 else if(!section.IsExpandable() || section.GetTotalItemCount()>0)
                 {
                     section.GetItemAtIndex(itemIndex).MenuOption().Select();
                 }
-
             }
 
             void SearchWidgetController::RefreshPresentation()

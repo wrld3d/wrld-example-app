@@ -11,7 +11,6 @@
 #include "AutocompleteSuggestionsReceivedMessage.h"
 #include <vector>
 
-
 namespace ExampleApp
 {
     namespace SearchMenu
@@ -51,11 +50,6 @@ namespace ExampleApp
 				void OnAutocompleteSuggestions(const std::string& searchQuery);
 				void OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message);
 				void OnAutocompleteSuggestionsResponseReceivedMessage(const Search::AutocompleteSuggestionsReceivedMessage& message);
-
-				void HandleSpecialCases(const TSdkSearchResult& sdkResult,
-										std::string& description, std::string& iconName);
-
-				static std::string GetMeetingRoomAvailablityIcon(std::string availability);
 			};
 		}
 	}

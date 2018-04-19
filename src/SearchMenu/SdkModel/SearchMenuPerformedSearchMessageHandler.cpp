@@ -36,7 +36,7 @@ namespace ExampleApp
             {
                 m_metricsService.SetEvent("Search", "Search string", message.SearchQuery().c_str());
                 m_searchQueryPerformer.RemoveSearchQueryResults();
-                m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsTag(), message.IsInterior());//, message.ShouldZoomToBuildingsView());
+                m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), message.IsTag(), message.IsInterior());
             }
 
             void SearchMenuPerformedSearchMessageHandler::OnSearchWithContextMessage(const SearchMenuSearchWithContextMessage& message)
@@ -50,19 +50,16 @@ namespace ExampleApp
 					m_searchQueryPerformer.RemoveSearchQueryResults();
 				}
 
-				/*
 				if (context.UsesRadius())
 				{
 					if (context.UsesLocation())
 					{
 						m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
-																  context.ShouldZoomToBuildingsView(),
 																  context.Location(), context.Radius());
 					}
 					else
 					{
 						m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
-																  context.ShouldZoomToBuildingsView(),
 																  context.Radius());
 					}
 				}
@@ -71,16 +68,13 @@ namespace ExampleApp
 					if (context.UsesLocation())
 					{
 						m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
-																  context.ShouldZoomToBuildingsView(),
 																  context.Location());
 					}
 					else
 					{
-						m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior(),
-																  context.ShouldZoomToBuildingsView());
+						m_searchQueryPerformer.PerformSearchQuery(message.SearchQuery(), context.IsTag(), context.ShouldTryInterior());
 					}
 				}
-				 */
             }
 
             void SearchMenuPerformedSearchMessageHandler::OnAutocompleteSuggestionsMessage(const AutocompleteSuggestionsMessage& message){

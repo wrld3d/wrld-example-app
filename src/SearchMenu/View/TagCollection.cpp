@@ -29,8 +29,7 @@ namespace ExampleApp
 				const TagSearch::View::TagSearchModel& tagSearchModel = message.Model();
 
 				AddTag(tagSearchModel.Name(), tagSearchModel.SearchTag(),
-				       tagSearchModel.Interior(),
-				       false, 0);
+				       tagSearchModel.Interior());
 			}
 
 			void TagCollection::OnTagSearchRemoved(const TagSearch::TagSearchRemovedMessage& message)
@@ -41,13 +40,12 @@ namespace ExampleApp
 			}
 
 			void TagCollection::AddTag(const std::string& text, const std::string& tag,
-			                           bool shouldTryInterior,
-			                           bool hasRadiusOverride, float radiusOverride)
+			                           bool shouldTryInterior)
 			{
 				Eegeo_ASSERT(m_tagsByText.find(text) == m_tagsByText.end());
 				Eegeo_ASSERT(m_tagsByTag .find(tag)  == m_tagsByTag .end());
 
-				TagInfo info(tag, text, shouldTryInterior, hasRadiusOverride, radiusOverride);
+				TagInfo info(tag, text, shouldTryInterior);
 				int     pos;
 
 				if (m_freeStorage == FREE_LIST_END)
