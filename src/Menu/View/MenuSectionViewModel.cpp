@@ -22,7 +22,7 @@ namespace ExampleApp
 
             std::string MenuSectionViewModel::SerializeJson() const
             {
-                return SerialiseMenuItemToJson(*this);
+                return SerialiseMenuSectionToJson(*this);
             }
 
             size_t MenuSectionViewModel::Size() const

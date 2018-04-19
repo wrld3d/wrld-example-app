@@ -93,6 +93,7 @@ namespace ExampleApp
 			void SearchWidgetController::SetGroupStart(Menu::View::IMenuSectionViewModel& section)
 			{
 				if (section.Name() == "Find" ||
+					section.Name() == "Drop Pin" ||
 					section.Name() == "Options")
 				{
 					section.SetGroupStart(true);
