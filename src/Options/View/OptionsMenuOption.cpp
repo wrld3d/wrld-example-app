@@ -7,7 +7,7 @@
 
 namespace ExampleApp
 {
-    namespace SettingsMenu
+    namespace Options
     {
         namespace View
         {
@@ -16,14 +16,14 @@ namespace ExampleApp
             : m_containerMenu(containerMenu)
             , m_optionsViewModel(optionsViewModel)
             {
-                
+
             }
-            
+
             OptionsMenuOption::~OptionsMenuOption()
             {
-                
+
             }
-            
+
             void OptionsMenuOption::Select()
             {
                 m_containerMenu.Close();

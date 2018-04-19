@@ -10,7 +10,7 @@
 
 namespace ExampleApp
 {
-    namespace SettingsMenu
+    namespace Options
     {
         namespace View
         {
@@ -18,13 +18,13 @@ namespace ExampleApp
             {
                 Menu::View::IMenuViewModel& m_containerMenu;
                 Options::View::IOptionsViewModel& m_optionsViewModel;
-                
+
             public:
                 OptionsMenuOption(Menu::View::IMenuViewModel& containerMenu,
                                   Options::View::IOptionsViewModel& optionsViewModel);
-                
+
                 ~OptionsMenuOption();
-                
+
                 void Select();
             };
         }

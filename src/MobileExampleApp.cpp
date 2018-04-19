@@ -131,6 +131,7 @@
 #include "IInteriorsHighlightService.h"
 #include "MapsceneModule.h"
 #include "AboutPageMenuModule.h"
+#include "OptionsMenuModule.h"
 
 namespace ExampleApp
 {
@@ -219,6 +220,7 @@ namespace ExampleApp
     , m_pCameraTransitionController(NULL)
     , m_pSettingsMenuModule(NULL)
     , m_pAboutPageMenuModule(NULL)
+    , m_pOptionsMenuModule(NULL)
     , m_pSearchMenuModule(NULL)
     , m_pSearchResultSectionModule(NULL)
     , m_pModalityModule(NULL)
@@ -654,11 +656,13 @@ namespace ExampleApp
                                                                                             m_metricsService);
 
 
-        m_pSettingsMenuModule = Eegeo_NEW(ExampleApp::SettingsMenu::SdkModel::SettingsMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
-                                                                                                  m_pOptionsModule->GetOptionsViewModel());
+        m_pSettingsMenuModule = Eegeo_NEW(ExampleApp::SettingsMenu::SdkModel::SettingsMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel());
 
         m_pAboutPageMenuModule = Eegeo_NEW(AboutPage::SdkModel::AboutPageMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
                                                                                      m_pAboutPageModule->GetAboutPageViewModel());
+
+        m_pOptionsMenuModule = Eegeo_NEW(Options::SdkModel::OptionsMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
+                                                                                 m_pOptionsModule->GetOptionsViewModel());
 
         m_pPlaceJumpsModule = Eegeo_NEW(PlaceJumps::SdkModel::PlaceJumpsModule)(m_platformAbstractions.GetFileIO(),
                                                                                 CameraTransitionController(),
@@ -874,7 +878,7 @@ namespace ExampleApp
             m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         }
 
-        m_pSearchMenuModule->AddMenuSection("Options", m_pSettingsMenuModule->GetOptionsMenuModel(), false);
+        m_pSearchMenuModule->AddMenuSection("Options", m_pOptionsMenuModule->GetOptionsMenuModel(), false);
         m_pSearchMenuModule->AddMenuSection("About",  m_pAboutPageMenuModule->GetAboutPageMenuModel(), false);
         m_pSearchMenuModule->AddMenuSection("Weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
 
@@ -991,6 +995,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pMapModeModule;
 
         Eegeo_DELETE m_pTagSearchModule;
+
+        Eegeo_DELETE m_pOptionsMenuModule;
 
         Eegeo_DELETE m_pAboutPageMenuModule;
 

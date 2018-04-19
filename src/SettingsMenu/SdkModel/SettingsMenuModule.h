@@ -11,7 +11,6 @@
 #include "IMetricsService.h"
 #include "ISettingsMenuModule.h"
 #include "Menu.h"
-#include "Options.h"
 #include "Reaction.h"
 #include "Search.h"
 #include "Types.h"
@@ -26,16 +25,11 @@ namespace ExampleApp
             class SettingsMenuModule: public ISettingsMenuModule, private Eegeo::NonCopyable
             {
             private:
-                Menu::View::IMenuModel* m_pOptionsMenuModel;
-                Menu::View::IMenuOptionsModel* m_pOptionsMenuOptionsModel;
 
             public:
-                SettingsMenuModule(Menu::View::IMenuViewModel& menuViewModel,
-                                   Options::View::IOptionsViewModel& optionsViewModel);
+                SettingsMenuModule(Menu::View::IMenuViewModel& menuViewModel);
 
                 ~SettingsMenuModule();
-
-                Menu::View::IMenuModel& GetOptionsMenuModel() const;
             };
         }
     }

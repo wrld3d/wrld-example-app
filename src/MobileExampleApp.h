@@ -95,6 +95,7 @@
 #include "SelectFirstResultSearchService.h"
 #include "MapsceneModule.h"
 #include "IAboutPageMenuModule.h"
+#include "IOptionsMenuModule.h"
 
 namespace ExampleApp
 {
@@ -125,6 +126,7 @@ namespace ExampleApp
         Eegeo::Helpers::IdentityProvider m_identityProvider;
         ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule* m_pSettingsMenuModule;
         AboutPage::SdkModel::IAboutPageMenuModule* m_pAboutPageMenuModule;
+        Options::SdkModel:: IOptionsMenuModule* m_pOptionsMenuModule;
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
