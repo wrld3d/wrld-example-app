@@ -36,7 +36,7 @@ namespace ExampleApp
 
                 m_onSearchPerformed = env->GetMethodID(m_uiViewClass,
                                                        "onSearchPerformed",
-                                                       "(Ljava/lang/String;ZZLjava/lang/String;ZZZDDDZF)V");
+                                                       "(Ljava/lang/String;ZZLjava/lang/String;ZZDDDZF)V");
 
                 m_clearSearchResults = env->GetMethodID(m_uiViewClass, "clearSearchResults", "()V");
             }
@@ -146,7 +146,6 @@ namespace ExampleApp
                                     (jboolean)context.IsTag(),
                                     tagText,
                                     (jboolean)context.ShouldTryInterior(),
-                                    (jboolean)context.ShouldZoomToBuildingsView(),
                                     (jboolean)context.UsesLocation(),
                                     (jdouble)context.Location().GetLatitude(),
                                     (jdouble)context.Location().GetLongitude(),

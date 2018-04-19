@@ -11,13 +11,11 @@ namespace ExampleApp
 			QueryContext::QueryContext(bool clearPreviousResults,
 									   bool isTag,
 									   const std::string& tagText,
-									   bool shouldTryInterior,
-									   bool shouldZoomToBuildingsView)
+									   bool shouldTryInterior)
 			: m_clearPreviousResults(clearPreviousResults)
 			, m_isTag(isTag)
 			, m_tagText(tagText)
 			, m_shouldTryInterior(shouldTryInterior)
-			, m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
 			, m_usesLocation(false)
 			, m_location(0, 0, 0)
 			, m_usesRadius(false)
@@ -29,13 +27,11 @@ namespace ExampleApp
 									   bool isTag,
 									   const std::string& tagText,
 									   bool shouldTryInterior,
-									   bool shouldZoomToBuildingsView,
 									   float radius)
 			: m_clearPreviousResults(clearPreviousResults)
 			, m_isTag(isTag)
 			, m_tagText(tagText)
 			, m_shouldTryInterior(shouldTryInterior)
-			, m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
 			, m_usesLocation(false)
 			, m_location(0, 0, 0)
 			, m_usesRadius(true)
@@ -47,14 +43,12 @@ namespace ExampleApp
 									   bool isTag,
 									   const std::string& tagText,
 									   bool shouldTryInterior,
-									   bool shouldZoomToBuildingsView,
 									   const Eegeo::Space::LatLongAltitude& location,
 									   float radius)
 			: m_clearPreviousResults(clearPreviousResults)
 			, m_isTag(isTag)
 			, m_tagText(tagText)
 			, m_shouldTryInterior(shouldTryInterior)
-			, m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
 			, m_usesLocation(true)
 			, m_location(location)
 			, m_usesRadius(true)
@@ -80,11 +74,6 @@ namespace ExampleApp
 			bool QueryContext::ShouldTryInterior() const
 			{
 				return m_shouldTryInterior;
-			}
-
-			bool QueryContext::ShouldZoomToBuildingsView() const
-			{
-				return m_shouldZoomToBuildingsView;
 			}
 
 			bool QueryContext::UsesLocation() const

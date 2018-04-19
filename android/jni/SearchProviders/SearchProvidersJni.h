@@ -19,7 +19,6 @@ extern "C"
             jboolean isTag,
             jstring tagText,
             jboolean tryInterior,
-            jboolean shouldZoomToBuildingsView,
             jboolean usesLocation,
             jdouble latitude,
             jdouble longitude,

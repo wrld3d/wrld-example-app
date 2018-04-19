@@ -7,11 +7,9 @@ namespace ExampleApp
     namespace Search
     {
 		SearchQueryRefreshedMessage::SearchQueryRefreshedMessage(const SdkModel::SearchQuery& searchQuery,
-																 bool shouldZoomToBuildingsView,
 																 const Eegeo::Space::LatLongAltitude& location,
 																 float radius)
 		: m_query(searchQuery)
-		, m_shouldZoomToBuildingsView(shouldZoomToBuildingsView)
 		, m_location(location)
 		, m_radius(radius)
 		{
@@ -21,11 +19,6 @@ namespace ExampleApp
         {
             return m_query;
         }
-
-		bool SearchQueryRefreshedMessage::ShouldZoomToBuildingsView() const
-		{
-			return m_shouldZoomToBuildingsView;
-		}
 
 		const Eegeo::Space::LatLongAltitude& SearchQueryRefreshedMessage::Location() const
 		{

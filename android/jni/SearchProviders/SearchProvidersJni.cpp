@@ -27,7 +27,6 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
         jboolean isTag,
         jstring tagText,
         jboolean tryInterior,
-        jboolean shouldZoomToBuildingsView,
         jboolean usesLocation,
         jdouble latitude,
         jdouble longitude,
@@ -52,7 +51,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
         pSearch->PerformSearchWithContext(queryString,
                                           ExampleApp::SearchMenu::View::QueryContext(
                                             clearPreviousResults,
-                                            isTag, tagString, tryInterior, shouldZoomToBuildingsView,
+                                            isTag, tagString, tryInterior,
                                             Eegeo::Space::LatLongAltitude(latitude, longitude, altitude),
                                             radius));
     }
@@ -61,7 +60,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
         pSearch->PerformSearchWithContext(queryString,
                                           ExampleApp::SearchMenu::View::QueryContext(
                                             clearPreviousResults,
-                                            isTag, tagString, tryInterior, shouldZoomToBuildingsView,
+                                            isTag, tagString, tryInterior,
                                             radius));
     }
     else
@@ -69,7 +68,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchproviders_SearchProvidersJniMethods_
         pSearch->PerformSearchWithContext(queryString,
                                           ExampleApp::SearchMenu::View::QueryContext(
                                                   clearPreviousResults,
-                                                  isTag, tagString, tryInterior, shouldZoomToBuildingsView));
+                                                  isTag, tagString, tryInterior));
     }
 }
 

@@ -12,17 +12,14 @@ namespace ExampleApp
 			: m_messageBus(messageBus)
 			, m_onTagSearchAddedHandler(this, &TagCollection::OnTagSearchAdded)
 			, m_onTagSearchRemovedHandler(this, &TagCollection::OnTagSearchRemoved)
-			//, m_onTagSearchS_S_SLoadedHandler(this, &TagCollection::OnTagSearchS_S_SLoaded)
 			, m_freeStorage(FREE_LIST_END)
 			{
 				m_messageBus.SubscribeUi(m_onTagSearchAddedHandler);
 				m_messageBus.SubscribeUi(m_onTagSearchRemovedHandler);
-				//m_messageBus.SubscribeUi(m_onTagSearchS_S_SLoadedHandler);
 			}
 
 			TagCollection::~TagCollection()
 			{
-				//m_messageBus.UnsubscribeUi(m_onTagSearchS_S_SLoadedHandler);
 				m_messageBus.UnsubscribeUi(m_onTagSearchRemovedHandler);
 				m_messageBus.UnsubscribeUi(m_onTagSearchAddedHandler);
 			}
@@ -42,15 +39,6 @@ namespace ExampleApp
 
 				RemoveTag(tagSearchModel.Name(), tagSearchModel.SearchTag());
 			}
-
-			/*
-			void TagCollection::OnTagSearchS_S_SLoaded(const TagSearch::TagSearchS_S_SLoadedMessage& message)
-			{
-				RememberTag(message.Key(), message.Tag(),
-							message.ShouldTryInterior(),
-							message.HasRadiusOverride(), message.RadiusOverride());
-			}
-			 */
 
 			void TagCollection::AddTag(const std::string& text, const std::string& tag,
 			                           bool shouldTryInterior,

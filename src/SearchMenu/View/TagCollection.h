@@ -6,7 +6,6 @@
 #include "CallbackCollection.h"
 #include "TagSearchAddedMessage.h"
 #include "TagSearchRemovedMessage.h"
-//#include "TagSearchS_S_SLoadedMessage.h"
 
 #include <string>
 #include <vector>
@@ -65,11 +64,9 @@ namespace ExampleApp
 
 				Eegeo::Helpers::TCallback1<TagCollection, const TagSearch::TagSearchAddedMessage&> m_onTagSearchAddedHandler;
 				Eegeo::Helpers::TCallback1<TagCollection, const TagSearch::TagSearchRemovedMessage&> m_onTagSearchRemovedHandler;
-				//Eegeo::Helpers::TCallback1<TagCollection, const TagSearch::TagSearchS_S_SLoadedMessage&> m_onTagSearchS_S_SLoadedHandler;
 
 				void OnTagSearchAdded(const TagSearch::TagSearchAddedMessage& message);
 				void OnTagSearchRemoved(const TagSearch::TagSearchRemovedMessage& message);
-				//void OnTagSearchS_S_SLoaded(const TagSearch::TagSearchS_S_SLoadedMessage& message);
 				void AddTag(const std::string& text, const std::string& tag,
 				            bool shouldTryInterior,
 				            bool hasRadiusOverride, float radiusOverride);

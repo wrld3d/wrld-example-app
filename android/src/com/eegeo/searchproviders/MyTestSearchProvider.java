@@ -65,7 +65,6 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 													context.IsTag(),
 													context.TagText(),
 													context.TryInterior(),
-													context.ShouldZoomToBuildingsView(),
 													context.UsesLocation(),
 													context.Latitude(),
 													context.Longitude(),

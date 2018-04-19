@@ -18,7 +18,6 @@ namespace ExampleApp
 				bool m_isTag;
 				std::string m_tagText;
 				bool m_shouldTryInterior;
-				bool m_shouldZoomToBuildingsView;
 				bool m_usesLocation;
 				Eegeo::Space::LatLongAltitude m_location;
 				bool m_usesRadius;
@@ -27,16 +26,16 @@ namespace ExampleApp
 			public:
 				QueryContext(bool clearPreviousResults,
 							 bool isTag, const std::string& tagText,
-							 bool shouldTryInterior, bool shouldZoomToBuildingsView);
+							 bool shouldTryInterior);
 
 				QueryContext(bool clearPreviousResults,
 							 bool isTag, const std::string& tagText,
-							 bool shouldTryInterior, bool shouldZoomToBuildingsView,
+							 bool shouldTryInterior,
 							 float radius);
 
 				QueryContext(bool clearPreviousResults,
 							 bool isTag, const std::string& tagText,
-							 bool shouldTryInterior, bool shouldZoomToBuildingsView,
+							 bool shouldTryInterior,
 							 const Eegeo::Space::LatLongAltitude& location,
 							 float radius);
 
@@ -44,7 +43,6 @@ namespace ExampleApp
 				bool IsTag() const;
 				const std::string& TagText() const;
 				bool ShouldTryInterior() const;
-				bool ShouldZoomToBuildingsView() const;
 				bool UsesLocation() const;
 				const Eegeo::Space::LatLongAltitude& Location() const;
 				bool UsesRadius() const;

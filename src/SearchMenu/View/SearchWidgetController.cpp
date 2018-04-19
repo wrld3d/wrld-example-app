@@ -151,7 +151,6 @@ namespace ExampleApp
 												  query.IsTag(),
 												  tagText,
 												  query.ShouldTryInteriorSearch(),
-												  message.ShouldZoomToBuildingsView(),
 												  message.Location(),
 												  radius));
             }
@@ -183,14 +182,14 @@ namespace ExampleApp
 					{
 						m_view.PerformSearch(menuText,
 											 QueryContext(true, true, tagInfo.Tag(),
-														  tagInfo.ShouldTryInterior(), true,
+														  tagInfo.ShouldTryInterior(),
 														  tagInfo.RadiusOverride()));
 					}
 					else
 					{
 						m_view.PerformSearch(menuText,
 											 QueryContext(true, true, tagInfo.Tag(),
-														  tagInfo.ShouldTryInterior(), true));
+														  tagInfo.ShouldTryInterior()));
 					}
 				}
                 else if(!section.IsExpandable() || section.GetTotalItemCount()>0)

@@ -9,7 +9,7 @@ public class SearchProvidersJniMethods
     public static native void searchWithContext(long nativeCallerPointer, String searchQuery,
                                                 boolean clearPreviousResults,
                                                 boolean isTag, String tagText,
-                                                boolean tryInterior, boolean shouldZoomToBuildingsView,
+                                                boolean tryInterior,
                                                 boolean usesLocation,
                                                 double latitude, double longitude, double altitude,
                                                 boolean usesRadius,

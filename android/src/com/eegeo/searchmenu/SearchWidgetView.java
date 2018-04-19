@@ -133,7 +133,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     public void onSearchPerformed(String queryText,
                                   boolean clearPreviousResults,
                                   boolean isTag, String tagText,
-                                  boolean tryInterior, boolean shouldZoomToBuildingsView,
+                                  boolean tryInterior,
                                   boolean usesLocation,
                                   double latitude, double longitude, double altitude,
                                   boolean usesRadius,
@@ -142,14 +142,14 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         QueryContext context =
             usesLocation ?
                 new QueryContext(clearPreviousResults,
-                                 isTag, tagText, tryInterior, shouldZoomToBuildingsView,
+                                 isTag, tagText, tryInterior,
                                  latitude, longitude, altitude, radius) :
             usesRadius ?
                 new QueryContext(clearPreviousResults,
-                                 isTag, tagText, tryInterior, shouldZoomToBuildingsView,
+                                 isTag, tagText, tryInterior,
                                  radius) :
                 new QueryContext(clearPreviousResults,
-                        isTag, tagText, tryInterior, shouldZoomToBuildingsView);
+                        isTag, tagText, tryInterior);
 
         m_searchWidget.doSearch(queryText, context);
     }
