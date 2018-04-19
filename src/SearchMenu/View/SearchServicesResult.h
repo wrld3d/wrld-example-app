@@ -19,13 +19,13 @@ namespace ExampleApp
 				typedef Search::SdkModel::SearchResultModel TSdkSearchResult;
 
 			private:
-				static struct SortOrder
+				struct SortOrder
 				{
 					std::map<std::string, int> translate;
 
 					SortOrder();
-				}
-				m_sortOrder;
+				};
+				static SortOrder m_sortOrder;
 
 				std::string m_name;
 				std::string m_description;
