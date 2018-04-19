@@ -19,11 +19,11 @@ namespace ExampleApp
 			, m_iconName(iconName)
 			, m_originalIndex(originalIndex)
 			, m_sdkSearchResult(sdkSearchResult)
-			, m_vendorOrder(s_sortOrder.translate[sdkSearchResult.GetVendor()])
+			, m_vendorOrder(m_sortOrder.translate[sdkSearchResult.GetVendor()])
 			{
 			}
 
-			struct SearchServicesResult::SortOrder SearchServicesResult::s_sortOrder;
+			struct SearchServicesResult::SortOrder SearchServicesResult::m_sortOrder;
 
 			SearchServicesResult::SortOrder::SortOrder()
 			{

@@ -25,7 +25,7 @@ namespace ExampleApp
 
 					SortOrder();
 				}
-				s_sortOrder;
+				m_sortOrder;
 
 				std::string m_name;
 				std::string m_description;
