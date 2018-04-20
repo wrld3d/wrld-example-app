@@ -3,6 +3,7 @@
 package com.eegeo.searchproviders;
 
 import android.app.Activity;
+import android.support.v4.content.res.ResourcesCompat;
 
 import com.wrld.widgets.R;
 import com.wrld.widgets.searchbox.model.SearchProvider;
@@ -15,6 +16,7 @@ import com.wrld.widgets.searchbox.view.ISearchResultViewFactory;
 
 import com.eegeo.searchmenu.SearchWidgetResult;
 import com.eegeo.searchproviders.QueryContext;
+import com.wrld.widgets.searchbox.view.TextHighlighter;
 
 import java.util.HashSet;
 
@@ -37,7 +39,8 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 	{
 		m_nativeCallerPointer = nativeCallerPointer;
 		m_resultFactory       = new SearchResultViewFactory(R.layout.search_result, activity);
-		m_suggestionResultFactory = new DefaultSuggestionViewFactory(R.layout.search_suggestion);
+		int textHighlightColor = ResourcesCompat.getColor(activity.getResources(), R.color.search_widget_text_primary, null);
+		m_suggestionResultFactory = new DefaultSuggestionViewFactory(R.layout.search_suggestion, new TextHighlighter(textHighlightColor));
 		m_callbacks           = new HashSet<SearchProviderResultsReadyCallback>();
 		m_suggestion_callbacks = new HashSet<SearchProviderResultsReadyCallback>();
 	}
