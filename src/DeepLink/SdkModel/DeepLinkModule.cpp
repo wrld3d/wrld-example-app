@@ -34,7 +34,8 @@ namespace ExampleApp
                                                                            Eegeo::Location::NavigationService& navigationService,
                                                                            Eegeo::Web::ApiTokenService& apiTokenService,
                                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                           const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel)
+                                                                           const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                                                           ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pDeepLinkModel = Eegeo_NEW(DeepLinkModel)();
                 DeepLinkLocationHandler* locationHandler = Eegeo_NEW(DeepLinkLocationHandler)(cameraTransitionController, alertBoxFactory);
@@ -59,7 +60,8 @@ namespace ExampleApp
                     m_pDeepLinkModel->AddRoute(MYMAP_PATH, configHandler);
                 }
 
-                m_pDeepLinkController = Eegeo_NEW(DeepLinkController)(*m_pDeepLinkModel);
+                m_pDeepLinkController = Eegeo_NEW(DeepLinkController)(*m_pDeepLinkModel,
+                                                                      messageBus);
             }
 
             ExampleApp::DeepLink::SdkModel::DeepLinkModule::~DeepLinkModule()

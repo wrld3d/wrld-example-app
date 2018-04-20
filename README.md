@@ -26,20 +26,8 @@ Much of the application code is shared between platforms, reducing duplication a
 The iOS and Windows projects are generated using CMake to avoid having to deal with merge conflicts in project files. The Android project does not make use of this, as Eclipse utlitises workspaces rather than single project files. 
 
 **To get started with the example app (iOS):**
-> Requirements:  
-\- [Xcode](https://developer.apple.com/xcode/) (version tested: 7.2)  
-\- [CMake](https://cmake.org/) (>= 3.1.1)
 
-1. Clone the repo: **git clone git@github.com:eegeo/mobile-example-app.git**.
-2. Get the latest iOS SDK by running **sh ./update.platform -p ios** from the repo root.
-3. Within the ios directory, create a build directory for your project
-4. Navigate to your build directory and generate the project with CMake: `cmake -G Xcode ..`  
-This is an 'out of source' build - all of the objects and binaries will be built inside of this directory. The `..` denotes that we're generating from source in the parent (in this case 'ios') directory.
-5. Open the ExampleApp.xcodeproj that CMake has generated
-6. Obtain an [eeGeo API key](https://www.eegeo.com/developers/apikeys) and add it to the [ApiKey file](https://github.com/eegeo/mobile-example-app/blob/master/src/ApiKey.h#L10).
-7. Build and run project
-
-To build at the command line, run **./build.sh -p ios** from the repository root.
+See [Getting Started on iOS.](./ios/README.md)
 
 **To get started with the example app (Android):**
 > Requirements:  

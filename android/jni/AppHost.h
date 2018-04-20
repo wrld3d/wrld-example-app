@@ -29,9 +29,7 @@
 #include "InitialExperience.h"
 #include "AndroidPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
-#include "MenuViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
-#include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
@@ -44,6 +42,7 @@
 #include "OptionsViewIncludes.h"
 #include "NetIncludes.h"
 #include "Search.h"
+#include "SearchWidgetViewModule.h"
 #include "SdkModelDomainEventBus.h"
 #include "IEegeoErrorHandler.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
@@ -123,12 +122,10 @@ private:
 
 
     Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;
-    ExampleApp::Menu::View::IMenuViewModule* m_pSettingsMenuViewModule;
-    ExampleApp::Menu::View::IMenuViewModule* m_pSearchMenuViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
+    ExampleApp::SearchMenu::View::SearchWidgetViewModule* m_pSearchWidgetViewModule;
     ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
-    ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
     ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;

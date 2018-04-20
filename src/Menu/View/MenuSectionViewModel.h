@@ -21,7 +21,7 @@ namespace ExampleApp
             public:
 
                 MenuSectionViewModel(const std::string& name, const std::string& icon, IMenuModel& menuModel, bool isExpandable);
-                
+
                 IMenuModel& GetModel() const
                 {
                     return m_menuModel;
@@ -60,9 +60,15 @@ namespace ExampleApp
                     return m_isExpandable;
                 }
 
+                bool IsGroupStart() const
+                {
+                    return m_groupStart;
+                }
+
                 void Expand();
                 void Contract();
-                
+                void SetGroupStart(bool groupStart);
+
                 void InsertExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback);
                 void RemoveExpandedChangedCallback(Eegeo::Helpers::ICallback2<IMenuSectionViewModel&, bool>& callback);
 
@@ -74,7 +80,8 @@ namespace ExampleApp
                 IMenuModel& m_menuModel;
                 const bool m_isExpandable;
                 bool m_expanded;
-                
+                bool m_groupStart;
+
                 Eegeo::Helpers::CallbackCollection2<IMenuSectionViewModel&, bool> m_expandedChangedCallbacks;
             };
         }

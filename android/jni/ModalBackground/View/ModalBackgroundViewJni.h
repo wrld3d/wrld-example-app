@@ -9,4 +9,8 @@ extern "C"
     JNIEXPORT void JNICALL Java_com_eegeo_modalbackground_ModalBackgroundViewJniMethods_HandleViewTapped(
             JNIEnv* jenv, jobject obj,
             jlong nativeObjectPtr);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_modalbackground_ModalBackgroundViewJniMethods_HandleTouchOnView(
+            JNIEnv* jenv, jobject obj,
+            jlong nativeObjectPtr);
 }

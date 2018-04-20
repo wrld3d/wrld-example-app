@@ -28,6 +28,7 @@ public class PersonSearchResultPoiView implements View.OnClickListener
     private View m_categoriesDivider = null;
     private ImageView m_categoriesIcon = null;
     private TextView m_categoriesView = null;
+    private ImageView m_descriptionIcon = null;
     private TextView m_jobTitleView = null;
     private TextView m_workingGroupView = null;
     private TextView m_locationView = null;
@@ -57,6 +58,7 @@ public class PersonSearchResultPoiView implements View.OnClickListener
         m_categoriesDivider = m_view.findViewById(R.id.search_result_poi_view_categories_divider);
         m_categoriesIcon = (ImageView) m_view.findViewById(R.id.search_result_poi_view_categories_icon);
         m_categoriesView = (TextView) m_view.findViewById(R.id.search_result_poi_view_categories);
+        m_descriptionIcon = (ImageView) m_view.findViewById(R.id.search_result_poi_view_description_icon);
         m_jobTitleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_job_title);
         m_workingGroupView = (TextView)m_view.findViewById(R.id.search_result_poi_view_working_group);
         m_locationView = (TextView)m_view.findViewById(R.id.search_result_poi_view_location);
@@ -107,11 +109,14 @@ public class PersonSearchResultPoiView implements View.OnClickListener
             }
             m_categoriesView.setText(output);
         }
+
+        m_descriptionIcon.setVisibility(View.GONE);
         
         if(!jobTitle.equals(""))
         {
             m_jobTitleView.setVisibility(View.VISIBLE);
             m_jobTitleView.setText(jobTitle);
+            m_descriptionIcon.setVisibility(View.VISIBLE);
         }
         else
         {
@@ -122,6 +127,7 @@ public class PersonSearchResultPoiView implements View.OnClickListener
         {
             m_workingGroupView.setVisibility(View.VISIBLE);
             m_workingGroupView.setText(workingGroup);
+            m_descriptionIcon.setVisibility(View.VISIBLE);
         }
         else
         {
@@ -132,6 +138,7 @@ public class PersonSearchResultPoiView implements View.OnClickListener
         {
             m_locationView.setVisibility(View.VISIBLE);
             m_locationView.setText(location);
+            m_descriptionIcon.setVisibility(View.VISIBLE);
         }
         else
         {
@@ -142,6 +149,7 @@ public class PersonSearchResultPoiView implements View.OnClickListener
         {
             m_deskView.setVisibility(View.VISIBLE);
             m_deskView.setText(deskCode);
+            m_descriptionIcon.setVisibility(View.VISIBLE);
         }
         else
         {

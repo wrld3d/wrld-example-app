@@ -7,10 +7,11 @@
 #include "SearchResultAddedMessage.h"
 #include "SearchResultRemovedMessage.h"
 #include "SearchQueryPerformedMessage.h"
+#include "SearchQueryRefreshedMessage.h"
 #include "SearchQueryRemovedMessage.h"
 #include "SearchQueryResultsRemovedMessage.h"
-#include "FlattenButtonModelStateChangedMessage.h"
 #include "SearchQueryResponseReceivedMessage.h"
+#include "AutocompleteSuggestionsReceivedMessage.h"
 #include "CompassModeChangedMessage.h"
 #include "CompassHeadingUpdateMessage.h"
 #include "CompassModeUnauthorizedMessage.h"
@@ -37,6 +38,7 @@
 #include "InteriorsExplorerUINotifyMessage.h"
 #include "TagSearchAddedMessage.h"
 #include "TagSearchRemovedMessage.h"
+#include "TagSearchSwallowLoadedMessage.h"
 #include "VirtualKeyboardStateChangedMessage.h"
 #include "AboutPageIndoorPositionTypeMessage.h"
 #include "AttractModeStateChangedMessage.h"
@@ -44,6 +46,8 @@
 #include "AboutPageSenionSettingsTypeMessage.h"
 #include "CompassIsRotatingStateChangedMessage.h"
 #include "InteriorsPositionConnectionMessage.h"
+#include "CameraTransitionControllerChangedMessage.h"
+#include "DeepLinkOpenedMessage.h"
 
 namespace ExampleApp
 {
@@ -52,13 +56,15 @@ namespace ExampleApp
         class NativeToUiMessageCatalog
             : public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchAddedMessage>
             , public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchRemovedMessage>
+			, public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchSwallowLoadedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultAddedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryPerformedMessage>
+			, public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRefreshedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResultsRemovedMessage>
-            , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonModelStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResponseReceivedMessage>
+			, public Eegeo::Messaging::CatalogBinding<Search::AutocompleteSuggestionsReceivedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassModeChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassHeadingUpdateMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassModeUnauthorizedMessage>
@@ -90,6 +96,8 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<AboutPage::AboutPageSenionSettingsTypeMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassIsRotatingStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsPositionConnectionMessage>
+            , public Eegeo::Messaging::CatalogBinding<CameraTransitions::CameraTransitionControllerChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<DeepLink::DeepLinkOpenedMessage>
             , private Eegeo::NonCopyable
         {
 

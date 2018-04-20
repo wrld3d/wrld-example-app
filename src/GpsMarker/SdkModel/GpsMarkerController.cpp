@@ -2,20 +2,15 @@
 
 #include "GpsMarkerController.h"
 #include "GpsMarkerModel.h"
-#include "GpsMarkerView.h"
-#include "GpsMarkerAnchorView.h"
 #include "EnvironmentFlatteningService.h"
 #include "CameraHelpers.h"
-#include "EcefTangentBasis.h"
-#include "MathsHelpers.h"
-#include "TransformHelpers.h"
 #include "VisualMapState.h"
-#include "ScaleHelpers.h"
 #include "ScreenProperties.h"
 #include "EarthConstants.h"
 #include "InteriorsModel.h"
 #include "InteriorInteractionModel.h"
 #include "InteriorsModel.h"
+#include "BlueSphereConfiguration.h"
 
 namespace ExampleApp
 {
@@ -26,49 +21,55 @@ namespace ExampleApp
             const float GpsMarkerController::DefaultUpdatePeriod = 2.f;
 
             GpsMarkerController::GpsMarkerController(GpsMarkerModel& model,
-                                                     GpsMarkerView& view,
-                                                     GpsMarkerAnchorView& anchorView,
                                                      Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                      Eegeo::Location::ILocationService& locationService,
                                                      Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                      VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                                     const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                     Eegeo::BlueSphere::BlueSphereView& blueSphereView,
+                                                     Eegeo::BlueSphere::BlueSphereAnchorView& blueSphereAnchorView,
+                                                     const bool createBlueSphereViews,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
             : m_model(model)
-            , m_view(view)
-            , m_anchorView(anchorView)
             , m_interiorInteractionModel(interiorInteractionModel)
             , m_locationService(locationService)
-            , m_environmentFlatteningService(environmentFlatteningService)
             , m_visualMapService(visualMapService)
             , m_messageBus(messageBus)
             , m_visibilityCount(1)
-            , m_viewTransitionParam(0)
             , m_currentFloorIndex(0)
-            , m_screenPixelScale(screenProperties.GetPixelScale())
-            , m_screenOversampleScale(screenProperties.GetOversampleScale())
-            , m_isLocationServiceConnected(false)
             , m_modalityChangedHandlerBinding(this, &GpsMarkerController::OnModalityChangedMessage)
             , m_visibilityChangedHandlerBinding(this, &GpsMarkerController::OnVisibilityChangedMessage)
             , m_interiorsPositionConnectionCallback(this, &GpsMarkerController::OnInteriorsPositionConnectionMessage)
             , m_interiorsExplorerStateChangedCallback(this, &GpsMarkerController::OnInteriorsExplorerStateChangedMessage)
             , m_floorSelectedCallback(this, &GpsMarkerController::OnFloorSelected)
+            , m_blueSphereView(blueSphereView)
+            , m_blueSphereAnchorView(blueSphereAnchorView)
+            , m_environmentFlatteningService(environmentFlatteningService)
+            , m_createBlueSphereViews(createBlueSphereViews)
             {
-                m_messageBus.SubscribeNative(m_modalityChangedHandlerBinding);
-                m_messageBus.SubscribeNative(m_visibilityChangedHandlerBinding);
-                m_messageBus.SubscribeUi(m_interiorsExplorerStateChangedCallback);
-                m_messageBus.SubscribeUi(m_interiorsPositionConnectionCallback);
+
+                
+                if(m_createBlueSphereViews)
+                {
+                    m_messageBus.SubscribeNative(m_modalityChangedHandlerBinding);
+                    m_messageBus.SubscribeNative(m_visibilityChangedHandlerBinding);
+                    m_messageBus.SubscribeUi(m_interiorsExplorerStateChangedCallback);
+                    m_messageBus.SubscribeUi(m_interiorsPositionConnectionCallback);
+                }
+
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_floorSelectedCallback);
-                m_view.SetVisible(false);
-                m_anchorView.SetVisible(false);
             }
 
             GpsMarkerController::~GpsMarkerController()
             {
-                m_messageBus.UnsubscribeUi(m_interiorsPositionConnectionCallback);
-                m_messageBus.UnsubscribeUi(m_interiorsExplorerStateChangedCallback);
-                m_messageBus.UnsubscribeNative(m_visibilityChangedHandlerBinding);
-                m_messageBus.UnsubscribeNative(m_modalityChangedHandlerBinding);
+
+                if(m_createBlueSphereViews)
+                {
+                    m_messageBus.UnsubscribeUi(m_interiorsPositionConnectionCallback);
+                    m_messageBus.UnsubscribeUi(m_interiorsExplorerStateChangedCallback);
+                    m_messageBus.UnsubscribeNative(m_visibilityChangedHandlerBinding);
+                    m_messageBus.UnsubscribeNative(m_modalityChangedHandlerBinding);
+                }
+
                 m_interiorInteractionModel.UnregisterInteractionStateChangedCallback(m_floorSelectedCallback);
             }
 
@@ -80,151 +81,58 @@ namespace ExampleApp
             void GpsMarkerController::OnModalityChangedMessage(const Modality::ModalityChangedMessage &message)
             {
                 float scale = 1.0f - message.Modality();
-                m_view.SetScale(scale);
-                m_anchorView.SetScale(scale);
+                m_blueSphereView.SetScale(scale);
+                m_blueSphereAnchorView.SetScale(scale);
             }
 
             void GpsMarkerController::OnVisibilityChangedMessage(const ExampleApp::GpsMarker::GpsMarkerVisibilityMessage &message)
             {
                 m_visibilityCount += message.ShouldSetVisible() ? 1 : -1;
                 Eegeo_ASSERT(m_visibilityCount <= 1, "Gps Marker sent visibility message to make visible before visibility message to be made invisible");
-                m_view.SetVisible(m_visibilityCount == 1);
-                m_anchorView.SetVisible(m_visibilityCount == 1);
+                m_blueSphereView.SetVisible(m_visibilityCount == 1);
+                m_blueSphereAnchorView.SetVisible(m_visibilityCount == 1);
             }
 
             void GpsMarkerController::OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage &message)
             {
                 m_currentFloorIndex = message.GetSelectedFloorIndex();
-                m_view.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
-                m_anchorView.UpdateMarkerRenderingLayer(message.IsInteriorVisible());
+                m_blueSphereView.UpdateBlueSphereRenderingLayer(message.IsInteriorVisible());
+                m_blueSphereAnchorView.UpdateBlueSphereRenderingLayer(message.IsInteriorVisible());
             }
             
             void GpsMarkerController::OnInteriorsPositionConnectionMessage(const InteriorsPosition::InteriorsPositionConnectionMessage &message)
             {
-                m_isLocationServiceConnected = message.IsConnected();
+                m_blueSphereView.SetLocationServiceState(message.IsConnected());
             }
             
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
             {
-                m_model.UpdateGpsPosition(dt);
+                bool positionValid = m_model.UpdateGpsPosition(dt);
                 m_model.UpdateHeading(dt);
-                Eegeo::dv3 currentLocationEcef = m_model.GetCurrentLocationEcef();
+                
+                m_model.SetEnabled(m_visibilityCount == 1
+                                   && positionValid
+                                   && (!m_interiorInteractionModel.HasInteriorModel() || insideOpenInterior()));
 
-                bool isVisible = IsMarkerVisible(currentLocationEcef);
-
-                m_view.SetVisible(isVisible);
-                m_anchorView.SetVisible(isVisible);
-                
-                UpdateTransition(isVisible, dt);
-                
-                m_view.SetTransitionValue(m_viewTransitionParam);
-                m_view.Update(dt);
-                m_anchorView.SetTransitionValue(m_viewTransitionParam);
-                m_anchorView.Update(dt);
-                
-                if(!Eegeo::dv3::IsFinite(currentLocationEcef) || currentLocationEcef.LengthSq() == 0)
-                {
-                    return;
-                }
-                
-                float currentScale = m_environmentFlatteningService.GetCurrentScale();
-                if(m_model.IsLocationIndoors())
-                {
-                    currentScale = 1;
-                }
-                Eegeo::dv3 scaledPoint = m_environmentFlatteningService.GetScaledPointEcef(currentLocationEcef, currentScale);
-
-                Eegeo::v3 markerUp = scaledPoint.Norm().ToSingle();
-                
-				const float scale = Eegeo::Helpers::ScaleHelpers::ComputeModelScaleForScreenWithPixelScaling(renderCamera, scaledPoint, m_screenPixelScale, m_screenOversampleScale) * 4.25f;
-                Eegeo::v3 markerScale = Eegeo::v3(scale, scale, scale);
-                
-                const Eegeo::dv3& ecefCameraPosition = renderCamera.GetEcefLocation();
-                Eegeo::v3 cameraRelativeModelOrigin = (scaledPoint - ecefCameraPosition).ToSingle();
-                
-                Eegeo::m44 modelViewProjectionSphere;
-                CreateModelViewProjectionMatrix(modelViewProjectionSphere,
-                                                scaledPoint,
-                                                225,
-                                                cameraRelativeModelOrigin + markerUp * m_model.GetSphereHeightAboveMarker() * m_viewTransitionParam,
-                                                markerScale * m_viewTransitionParam,
-                                                renderCamera,
-                                                true);
-                Eegeo::m44 modelViewProjectionArrow;
-                CreateModelViewProjectionMatrix(modelViewProjectionArrow,
-                                                scaledPoint,
-                                                m_model.GetSmoothedHeadingDegrees(),
-                                                cameraRelativeModelOrigin + markerUp * m_model.GetSphereHeightAboveMarker() * m_viewTransitionParam,
-                                                markerScale * m_viewTransitionParam,
-                                                renderCamera,
-                                                true);
-                m_view.SetMarkerTransform(modelViewProjectionSphere, modelViewProjectionArrow);
-                
-                float scaleAnchor = 0.1f;
-                float scaleAnchorCylinder = 0.15f;
-                Eegeo::m44 modelViewProjectionAnchorSphere;
-                CreateModelViewProjectionMatrix(modelViewProjectionAnchorSphere,
-                                                scaledPoint,
-                                                0,
-                                                cameraRelativeModelOrigin + markerUp * m_model.GetAnchorCyclinerHeightAboveMarker(),
-                                                Eegeo::v3(scaleAnchor, scaleAnchor, scaleAnchor) * m_viewTransitionParam,
-                                                renderCamera,
-                                                false);
-                
-                Eegeo::m44 modelViewProjectionAnchorCylinder;
-                CreateModelViewProjectionMatrix(modelViewProjectionAnchorCylinder,
-                                                scaledPoint,
-                                                0,
-                                                cameraRelativeModelOrigin + markerUp * m_model.GetAnchorCyclinerHeightAboveMarker(),
-                                                Eegeo::v3(scaleAnchor, scaleAnchorCylinder, scaleAnchor) * m_viewTransitionParam,
-                                                renderCamera,
-                                                false);
-                m_anchorView.SetMarkerTransform(modelViewProjectionAnchorSphere, modelViewProjectionAnchorCylinder);
-                
                 std::string currentTime;
                 std::string currentWeather;
                 GetCurrentVisualMapTime(currentTime, currentWeather);
                 bool isFlattened = m_environmentFlatteningService.IsFlattened();
-                m_view.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1, m_isLocationServiceConnected);
-                m_anchorView.SetMarkerStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
+
+                if(m_createBlueSphereViews)
+                {
+                    m_blueSphereView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
+                    m_blueSphereAnchorView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
+                }
+
             }
             
-            void GpsMarkerController::UpdateTransition(bool isVisible, float dt)
+            bool GpsMarkerController::insideOpenInterior()
             {
-                if(isVisible && m_viewTransitionParam < 1.0f)
-                {
-                    m_viewTransitionParam += dt * 4.0f;
-                }
-                else if(!isVisible && m_viewTransitionParam > 0.0f)
-                {
-                    m_viewTransitionParam -= dt * 4.0f;
-                }
-                m_viewTransitionParam = Eegeo::Math::Clamp01(m_viewTransitionParam);
-            }
-            
-            void GpsMarkerController::CreateModelViewProjectionMatrix(Eegeo::m44& out_modelViewProjection,
-                                                                      const Eegeo::dv3& location,
-                                                                      const float heading,
-                                                                      const Eegeo::v3& cameraRelativeLocation,
-                                                                      const Eegeo::v3& scale,
-                                                                      const Eegeo::Camera::RenderCamera& renderCamera,
-                                                                      bool flipUpDirection)
-            {
-                Eegeo::Space::EcefTangentBasis cameraInterestBasis;
-                Eegeo::Camera::CameraHelpers::EcefTangentBasisFromPointAndHeading(location,
-                                                                                  heading,
-                                                                                  cameraInterestBasis);
+                Eegeo::Resources::Interiors::InteriorId interiorCurrentlyLocated = m_locationService.GetInteriorId();
+                Eegeo::Resources::Interiors::InteriorId interiorCurrentlyOpen = m_interiorInteractionModel.GetInteriorModel()->GetId();
                 
-                Eegeo::m33 basisOrientation;
-                basisOrientation.SetFromBasis(-cameraInterestBasis.GetRight(), cameraInterestBasis.GetUp() * (flipUpDirection ? -1 : 1), cameraInterestBasis.GetForward());
-                
-                Eegeo::m44 model = Eegeo::m44::CreateScale(scale);
-                Eegeo::m44::Mul(model, basisOrientation.ToM44(), model);
-                model.SetRow(3, Eegeo::v4(cameraRelativeLocation, 1));
-                
-                Eegeo::m44 viewProjection = renderCamera.GetViewProjectionMatrix();
-                
-                Eegeo::m44::Mul(out_modelViewProjection, viewProjection, model);
+                return interiorCurrentlyLocated == interiorCurrentlyOpen;
             }
             
             void GpsMarkerController::GetCurrentVisualMapTime(std::string& currentTime, std::string& currentWeather)
@@ -235,34 +143,6 @@ namespace ExampleApp
                 
                 currentTime = state.substr(0, index);
                 currentWeather = state.substr(index);
-            }
-
-            const bool GpsMarkerController::IsMarkerVisible(Eegeo::dv3& currentLocationEcef)
-            {
-                bool isVisible = false;
-                if(currentLocationEcef.LengthSq() != 0 && m_visibilityCount == 1 && m_model.IsAuthorized())
-                {
-                    if(m_model.IsLocationIndoors())
-                    {
-                        if(m_currentFloorIndex == m_model.GetCurrentFloorIndex())
-                            isVisible = true;
-                    }
-                    else
-                    {
-                        isVisible = true;
-                    }
-                }
-
-                if (m_interiorInteractionModel.GetInteriorModel() != NULL)
-                {
-                    bool selectedBuildingWithIps = m_interiorInteractionModel.GetInteriorModel()->GetId() == m_locationService.GetInteriorId();
-                    if (!selectedBuildingWithIps)
-                    {
-                        isVisible = false;
-                    }
-                }
-
-                return isVisible;
             }
         }
     }

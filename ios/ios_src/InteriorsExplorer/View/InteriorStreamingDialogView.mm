@@ -140,7 +140,7 @@
     const float descriptionPadding = 4.0f;
     const float descriptionUpperPadding = 8.0f;
     self.pDescriptionLabel.font = [UIFont systemFontOfSize:16.0f];
-    self.pDescriptionLabel.text = @"We're saving this interior to your device, so your next visit is much faster.";
+    self.pDescriptionLabel.text = @"We're saving this indoor map to your device, so your next visit is much faster.";
     self.pDescriptionLabel.numberOfLines = 0;
     self.pDescriptionLabel.frame = CGRectMake(descriptionLabelX+descriptionPadding,
                                              descriptionLabelY+descriptionPadding+descriptionUpperPadding,

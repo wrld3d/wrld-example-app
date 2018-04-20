@@ -7,7 +7,6 @@
 #include "IInteriorStreamingDialogView.h"
 #include "IMenuViewModel.h"
 #include "IScreenControlViewModel.h"
-#include "IMyPinCreationInitiationViewModel.h"
 #include "InteriorsExplorerFloorSelectionDraggedMessage.h"
 #include "ApplyScreenControl.h"
 #include "WorldPinVisibility.h"
@@ -40,6 +39,10 @@ namespace ExampleApp
             , m_viewStateCallback(this, &InteriorsExplorerController::OnViewStateChangeScreenControl)
             , m_appModeChangedCallback(this, &InteriorsExplorerController::OnAppModeChanged)
             , m_interiorsUINotificationCallback(this, &InteriorsExplorerController::OnInteriorsUINotificationRequired)
+            , m_shouldShowTutorialsAfterWelcomeUX(false)
+            , m_dismissedMessageHandler(this, &InteriorsExplorerController::OnIntroDismissed)
+            , m_showIntroMessageHandler(this, &InteriorsExplorerController::OnShowIntro)
+            , m_currentlyShowingIntro(false)
             , m_interiorStreamingCallback(this, &InteriorsExplorerController::OnInteriorStreaming)
             {
                 m_messageBus.SubscribeUi(m_stateChangedCallback);
@@ -47,6 +50,8 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_interiorStreamingCallback);
                 m_messageBus.SubscribeUi(m_appModeChangedCallback);
                 m_messageBus.SubscribeUi(m_interiorsUINotificationCallback);
+                m_messageBus.SubscribeNative(m_dismissedMessageHandler);
+                m_messageBus.SubscribeUi(m_showIntroMessageHandler);
                 
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
                 
@@ -63,6 +68,8 @@ namespace ExampleApp
                 
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_viewStateCallback);
                 
+                m_messageBus.UnsubscribeUi(m_showIntroMessageHandler);
+                m_messageBus.UnsubscribeNative(m_dismissedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_interiorsUINotificationCallback);
                 m_messageBus.UnsubscribeUi(m_stateChangedCallback);
                 m_messageBus.UnsubscribeUi(m_interiorStreamingCallback);
@@ -85,6 +92,13 @@ namespace ExampleApp
             void InteriorsExplorerController::OnFloorSelectionDragged(float &dragParam)
             {
                 m_messageBus.Publish(InteriorsExplorerFloorSelectionDraggedMessage(dragParam));
+                
+                if(m_shouldShowTutorialsAfterWelcomeUX)
+                {
+                    m_shouldShowTutorialsAfterWelcomeUX = false;
+                    TryShowTutorials();
+                    m_viewModel.AddToScreen();
+                }
             }
             
             void InteriorsExplorerController::OnInteriorStreaming(const InteriorsExplorerInteriorStreamingMessage& message)
@@ -95,7 +109,36 @@ namespace ExampleApp
                 }
                 else
                 {
-                    m_streamingDialogView.Hide();
+                    m_streamingDialogView.Hide(message.GetInteriorLoaded());
+                }
+            }
+
+			void InteriorsExplorerController::TryShowTutorials()
+            {
+                const int maxTutorialViews = 2;
+                bool showExitTutorial = m_replayTutorials || m_model.GetInteriorExitTutorialViewedCount() < maxTutorialViews;
+                bool showChangeFloorTutorial = (m_replayTutorials || m_model.GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews) && m_view.GetCanShowChangeFloorTutorialDialog();
+                
+                if(showExitTutorial || showChangeFloorTutorial)
+                {
+                    if(!m_currentlyShowingIntro)
+                    {
+                        m_view.AddTutorialDialogs(showExitTutorial, showChangeFloorTutorial);
+                        
+                        if(showExitTutorial)
+                        {
+                            m_model.RecordHasViewedInteriorExitTutorial();
+                        }
+                        
+                        if(showChangeFloorTutorial)
+                        {
+                            m_model.RecordHasViewedInteriorChangeFloorTutorial();
+                        }
+                    }
+                    else
+                    {
+                        m_shouldShowTutorialsAfterWelcomeUX = true;
+                    }
                 }
             }
             
@@ -118,32 +161,24 @@ namespace ExampleApp
 
                     OnFloorSelected(InteriorsExplorerFloorSelectedMessage(message.GetSelectedFloorIndex(), message.GetSelectedFloorName()));
 
-					const int maxTutorialViews = 2;
-					bool showExitTutorial = m_replayTutorials || m_model.GetInteriorExitTutorialViewedCount() < maxTutorialViews;
-					bool showChangeFloorTutorial = (m_replayTutorials || m_model.GetInteriorChangeFloorTutorialViewedCount() < maxTutorialViews) && m_view.GetCanShowChangeFloorTutorialDialog();
-
-					if(showExitTutorial || showChangeFloorTutorial)
-					{
-						m_view.AddTutorialDialogs(showExitTutorial, showChangeFloorTutorial);
-
-						if(showExitTutorial)
-						{
-							m_model.RecordHasViewedInteriorExitTutorial();
-						}
-
-						if(showChangeFloorTutorial)
-						{
-							m_model.RecordHasViewedInteriorChangeFloorTutorial();
-						}
-					}
+                    TryShowTutorials();
                     ReplayTutorials(false);
-
                     m_viewModel.AddToScreen();
                 }
                 else
                 {
                     m_viewModel.RemoveFromScreen();
                 }
+            }
+            
+            void InteriorsExplorerController::OnShowIntro(const InitialExperience::ShowInitialExperienceIntroMessage& message)
+            {
+                m_currentlyShowingIntro = true;
+            }
+            
+            void InteriorsExplorerController::OnIntroDismissed(const InitialExperience::InitialExperienceIntroDismissedMessage& message)
+            {
+                m_currentlyShowingIntro = false;
             }
             
             void InteriorsExplorerController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state)

@@ -27,12 +27,12 @@ def get_meeting_room_poi_dict(filename):
     return meeting_room_poi_dict
 
 
-def get_updated_meeting_room_poi_json(feedconfig, meeting_room_poi_dict):
+def get_updated_meeting_room_poi_json(region, site, feedconfig, meeting_room_poi_dict):
     availability_states = ["available", "occupied", "available_soon"]
 
     transport = HmacTransport()
     client = Client(feedconfig.soap_service_wsdl_url, transport=transport)
-    response = client.service.GetMeetingSpaceOccupancyDetails(feedconfig.soap_region)
+    response = client.service.GetMeetingSpaceOccupancyDetails(region, site)
 
     if response is not None and response != "":
         meeting_room_list_json = {}
@@ -110,7 +110,9 @@ if __name__ == "__main__":
     meeting_room_poi_dict = get_meeting_room_poi_dict("../generated/MeetingRoomPoiData.json")
 
     meeting_room_json = []
-    for meeting_room in get_updated_meeting_room_poi_json(feedconfig, meeting_room_poi_dict):
-        meeting_room_json.append(meeting_room)
+    for region in feedconfig.soap_regions:
+        for site in feedconfig.soap_regions[region]:  
+            for meeting_room in get_updated_meeting_room_poi_json(region, site, feedconfig, meeting_room_poi_dict):
+                meeting_room_json.append(meeting_room)
 
     update_meeting_room_pois(meeting_room_json, feedconfig, hotcold)

@@ -4,6 +4,7 @@
 
 #include "DeepLinkModel.h"
 #include "ApplicationConfiguration.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -14,11 +15,14 @@ namespace ExampleApp
             class DeepLinkController
             {
             public:
-                DeepLinkController(DeepLinkModel& deepLinkModel);
+                DeepLinkController(DeepLinkModel& deepLinkModel,
+                                   ExampleAppMessaging::TMessageBus& messageBus);
                 ~DeepLinkController();
                 void HandleDeepLinkOpen(const AppInterface::UrlData& data);
             private:
                 DeepLinkModel& m_deepLinkModel;
+                
+                ExampleAppMessaging::TMessageBus& m_messageBus;
             };
         }
     }

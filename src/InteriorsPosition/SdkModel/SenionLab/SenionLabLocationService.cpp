@@ -30,7 +30,7 @@ namespace ExampleApp
                 , m_latLong(Eegeo::Space::LatLong::FromDegrees(0, 0))
                 , m_floorIndex(-1)
                 , m_interiorId(Eegeo::Resources::Interiors::InteriorId::NullId())
-                , m_isConnected(false)
+                , m_isLocationAvailable(false)
                 , m_headingDegrees(0.0)
                 , m_disconnectTime(timeBeforeDisconnect)
                 , m_messageBus(messageBus)
@@ -95,6 +95,8 @@ namespace ExampleApp
                 
                 bool SenionLabLocationService::GetAltitude(double& altitude)
                 {
+                    altitude = 0;   // failsafe value
+
                     if(ShouldUseSenionData())
                     {
                         const Eegeo::Resources::Interiors::InteriorsModel* interiorModel = m_interiorInteractionModel.GetInteriorModel();
@@ -152,9 +154,9 @@ namespace ExampleApp
                     return m_defaultLocationService.GetHeadingDegrees(headingDegrees);
                 }
                 
-                bool SenionLabLocationService::GetIsConnected()
+                bool SenionLabLocationService::GetIsLocationAvailable()
                 {
-                    return m_isConnected;
+                    return m_isLocationAvailable;
                 }
                 
                 void SenionLabLocationService::StopListening()
@@ -186,17 +188,17 @@ namespace ExampleApp
                     m_interiorId = interiorId;
                 }
                 
-                void SenionLabLocationService::SetIsConnected(bool isConnected)
+                void SenionLabLocationService::SetIsLocationAvailable(bool isLocationAvailable)
                 {
-                    if(m_isConnected != isConnected)
+                    if(m_isLocationAvailable != isLocationAvailable)
                     {
-                        InteriorsPositionConnectionMessage message(isConnected);
+                        InteriorsPositionConnectionMessage message(isLocationAvailable);
                         m_messageBus.Publish(message);
                     }
                     
-                    m_isConnected = isConnected;
+                    m_isLocationAvailable = isLocationAvailable;
                     
-                    if(m_isConnected)
+                    if(m_isLocationAvailable)
                     {
                         m_disconnectTime = 0.0f;
                     }
@@ -204,7 +206,7 @@ namespace ExampleApp
                 
                 void SenionLabLocationService::Update(float dt)
                 {
-                    if(!m_isConnected && m_disconnectTime < timeBeforeDisconnect)
+                    if(!m_isLocationAvailable && m_disconnectTime < timeBeforeDisconnect)
                     {
                         m_disconnectTime += dt;
                     }
@@ -212,7 +214,7 @@ namespace ExampleApp
                 
                 bool SenionLabLocationService::ShouldUseSenionData() const
                 {
-                    if(m_isConnected || m_disconnectTime < timeBeforeDisconnect)
+                    if(m_isLocationAvailable || m_disconnectTime < timeBeforeDisconnect)
                     {
                         return true;
                     }

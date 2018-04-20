@@ -42,11 +42,17 @@ import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 import android.Manifest;
 import android.app.Activity;
 
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.ViewGroup;
+import android.view.ViewGroup.MarginLayoutParams;
+
 public class MyPinCreationDetailsView implements View.OnClickListener, IActivityIntentResultHandler, IRuntimePermissionResultHandler
 {
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
-    protected RelativeLayout m_view = null;
+    protected ViewGroup m_mainGroup = null;
+    protected View m_view = null;
     protected View m_closeButton = null;
     protected View m_takePhotoButton = null;
     protected View m_selectFromGalleryButton = null;
@@ -66,6 +72,19 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 
     private final int JPEG_QUALITY = 90;
     private final String TERMS_AND_CONDITIONS_LINK = "http://eegeo.com/tos";
+
+    private class ScreenDimensions
+    {
+        DisplayMetrics m_metrics;
+
+        ScreenDimensions(Activity activity)
+        {
+            m_metrics = activity.getResources().getDisplayMetrics();
+        }
+
+        float getWidth ()   { return m_metrics.widthPixels;  }
+        float getHeight()   { return m_metrics.heightPixels; }
+    }
 
     public MyPinCreationDetailsView(MainActivity activity, long nativeCallerPointer)
     {
@@ -90,8 +109,9 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
     private void createView()
     {
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-        m_view = (RelativeLayout)m_activity.getLayoutInflater().inflate(R.layout.poi_creation_details_layout, uiRoot, false);
+        m_view = (View)m_activity.getLayoutInflater().inflate(R.layout.poi_creation_details_layout, uiRoot, false);
 
+        m_mainGroup = (ViewGroup)m_view.findViewById(R.id.poi_creation_details_main);
         m_closeButton = (View)m_view.findViewById(R.id.poi_creation_details_button_close);
         m_closeButton.setOnClickListener(this);
         m_submitButton = (View)m_view.findViewById(R.id.poi_creation_details_button_submit);
@@ -104,6 +124,11 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         m_title = (EditText)m_view.findViewById(R.id.poi_creation_details_title_edit_text);
         m_description = (EditText)m_view.findViewById(R.id.poi_creation_details_description);
         m_shouldShareButton = (ToggleButton)m_view.findViewById(R.id.poi_creation_details_share_togglebutton);
+
+        ScreenDimensions dims = new ScreenDimensions(m_activity);
+        MarginLayoutParams margins = (MarginLayoutParams)m_mainGroup.getLayoutParams();
+        margins.leftMargin = margins.rightMargin  = (int)Math.round(dims.getWidth()  * 0.05);
+        margins.topMargin  = margins.bottomMargin = (int)Math.round(dims.getHeight() * 0.05);
 
         m_shouldShareButton.setOnCheckedChangeListener(new OnCheckedChangeListener()
         {
@@ -259,36 +284,40 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             Uri contentUri = m_activity.getPhotoIntentDispatcher().getCurrentPhotoPath();
             mediaScanIntent.setData(contentUri);
-            m_activity.sendBroadcast(mediaScanIntent);
+            m_activity.sendBroadcast(mediaScanIntent, "Manifest.permission.READ_EXTERNAL_STORAGE");
 
-            m_currentImageUri = contentUri;
-
-            try
+            if(isValidImageUri(contentUri.toString()))
             {
-                Bitmap bitmap = decodeImage();
-                m_poiImage.setImageBitmap(bitmap);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
+                m_currentImageUri = contentUri;
+                try
+                {
+                    Bitmap bitmap = decodeImage();
+                    m_poiImage.setImageBitmap(bitmap);
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
         else if(requestCode == PhotoIntentDispatcher.SELECT_PHOTO_FROM_GALLERY && resultCode == MainActivity.RESULT_OK)
         {
             Uri selectedUri = data.getData();
-            m_currentImageUri = selectedUri;
 
-            try
-            {
-                Bitmap bitmap = decodeImage();
-                if (bitmap != null)
+            if(isValidImageUri(selectedUri.toString())) {
+                m_currentImageUri = selectedUri;
+                try
                 {
-                    m_poiImage.setImageBitmap(bitmap);
+                    Bitmap bitmap = decodeImage();
+                    if (bitmap != null)
+                    {
+                        m_poiImage.setImageBitmap(bitmap);
+                    }
                 }
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -306,6 +335,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
+        bmOptions.inPreferredConfig = Bitmap.Config.RGB_565;
 
         Bitmap bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
         is.close();
@@ -509,5 +539,10 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         builder.setMessage(context.getResources().getString(R.string.required_camera_permission_text))
                 .setPositiveButton(context.getResources().getString(R.string.ok_text), dialogClickListener)
                 .setNegativeButton(context.getResources().getString(R.string.cancel_text), dialogClickListener).show();
+    }
+
+    private boolean isValidImageUri(String imageUri)
+    {
+        return imageUri.matches("^((file://.*.jpg)|(content://.*/[0-9]+))$");
     }
 }

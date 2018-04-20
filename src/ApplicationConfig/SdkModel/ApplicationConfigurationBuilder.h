@@ -28,6 +28,7 @@ namespace ExampleApp
                 std::string m_indoorId;
                 int m_floorIndex;
                 bool m_tryStartAtGpsLocation;
+                double m_tryStartAtGpsTimeout;
                 bool m_performStartupSearch;
                 std::string m_startupSearchTag;
                 bool m_shouldStartFullscreen;
@@ -87,6 +88,8 @@ namespace ExampleApp
                 bool m_compassCameraDampingEnabled;
 
                 std::vector<std::vector<std::string>> m_customKeyboardLayout;
+
+                std::string m_outdoorSearchMenuItemJson;
                 
             public:
                 ApplicationConfigurationBuilder(const IApplicationConfigurationCipher& applicationConfigurationEncryption,
@@ -107,6 +110,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetFloorIndex(const int floorIndex);
                 
                 IApplicationConfigurationBuilder& SetTryStartAtGpsLocation(bool tryStartAtGpsLocation);
+                
+                IApplicationConfigurationBuilder& SetTryStartAtGpsTimeout(const double tryStartAtGpsTimeout);
                 
                 IApplicationConfigurationBuilder& SetPerformStartupSearch(bool performStartupSearch);
                 
@@ -189,6 +194,8 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetCompassCameraOffset(const float compassCameraOffset);
                 IApplicationConfigurationBuilder& SetCompassCameraOffsetTopDown(const float compassCameraOffsetTopDown);
                 IApplicationConfigurationBuilder& SetCompassCameraDampingEnabled(const bool compassCameraDampingEnabled);
+
+                IApplicationConfigurationBuilder& SetOutdoorSearchMenuItemJson(const std::string& outdoorSearchMenuItemJson);
                 
                 std::string Decrypt(const std::string& message) const;
 

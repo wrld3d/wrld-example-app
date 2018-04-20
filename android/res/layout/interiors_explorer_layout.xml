@@ -10,7 +10,8 @@
     android:id="@+id/top_panel"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:visibility="invisible" >
         <TextView
             android:id="@+id/floor_name"
             android:layout_width="200dp"
@@ -44,7 +45,7 @@
             android:src="@drawable/button_exit_interior_states">
         </ImageView>
 
-	<include android:layout_marginTop="15dp"  android:layout_below="@+id/back_button" android:layout_width="70dp"  android:layout_height="150dp"  layout="@layout/interiors_floor_list_container_layout"/>
+	<include android:layout_marginTop="15dp"  android:layout_below="@+id/back_button" android:layout_width="100dp"  android:layout_height="150dp"  layout="@layout/interiors_floor_list_container_layout"/>
 	</RelativeLayout>
 
 </RelativeLayout>

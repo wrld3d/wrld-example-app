@@ -23,7 +23,8 @@ include(Resources/CMakeLists.txt)
 
 set(storyboards
     ExampleApp/en.lproj/MainStoryboard_iPad.storyboard
-    ExampleApp/en.lproj/MainStoryboard_iPhone.storyboard)
+    ExampleApp/en.lproj/MainStoryboard_iPhone.storyboard
+    "ExampleApp/en.lproj/Launch Screen.storyboard")
 
 # plist settings
 set(EEGEO_PLIST_BUNDLE_EXECUTABLE "\${EXECUTABLE_NAME}")
@@ -58,10 +59,13 @@ set(ios_frameworks
   -framework CoreMotion
   -framework CoreBluetooth
   -framework IndoorAtlas
-  -framework StepInsideSdk")
+  -framework StepInsideSdk
+  -framework WrldSearchWidget
+")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
-set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab")
+set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab ${CMAKE_CURRENT_SOURCE_DIR}/Include/WrldSearchWidget")
+
 set(libs "${eegeo_sdk_libs} -lturbojpeg -lz -lcurl -luv")
 set(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 
@@ -95,14 +99,13 @@ set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=Release]
 
 set_xcode_property (${executable_name} GCC_TREAT_WARNINGS_AS_ERRORS "YES")
 set_xcode_property (${executable_name} CODE_SIGN_IDENTITY "iPhone Developer")
-set_xcode_property (${executable_name} DEVELOPMENT_TEAM "")
+set_xcode_property (${executable_name} DEVELOPMENT_TEAM "QBCVJ28BRW")
 set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "8.0")
 set_xcode_property (${executable_name} TARGETED_DEVICE_FAMILY "1,2")
 set_xcode_property (${executable_name} ENABLE_BITCODE "No")
 set_xcode_property (${executable_name} INSTALL_PATH "/Applications")
 
 set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon")
-set_xcode_property (${executable_name} ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage")
 set_xcode_property (${executable_name} COMBINE_HIDPI_IMAGES "No")
 
 set_xcode_property(${executable_name} GCC_PRECOMPILE_PREFIX_HEADER "YES")

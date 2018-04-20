@@ -60,7 +60,7 @@ if [ $resultcode -ne 0 ]; then
     exit $resultcode
 fi
 
-(cd $projectPath && python ../embedsenion.py)
+(cd $projectPath && python ../embed_frameworks.py)
 
 resultcode=$?
 if [ $resultcode -ne 0 ]; then

@@ -49,8 +49,7 @@ namespace ExampleApp
                                            ExampleAppMessaging::TMessageBus& messageBus,
                                            Eegeo::Location::NavigationService& navigationService,
                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                           VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel)
+                                           VisualMap::SdkModel::IVisualMapService& visualMapService)
                 : m_appModeModel(appModeModel)
                 , m_cameraController(cameraController)
                 , m_cameraSplinePlaybackController(cameraSplinePlaybackController)
@@ -75,7 +74,6 @@ namespace ExampleApp
                 , m_userIdleService(userIdleService)
                 , m_searchQueryPerformer(searchQueryPerformer)
                 , m_visualMapService(visualMapService)
-                , m_flattenButtonModel(flattenButtonModel)
                 {
                     std::for_each(cameraPositionSplinePoints.begin(), cameraPositionSplinePoints.end(),
                                   [this](const Eegeo::Space::LatLongAltitude& p) { m_cameraPositionSpline.AddPoint(p.ToECEF()); });
@@ -98,7 +96,6 @@ namespace ExampleApp
 
                 void AttractState::Enter(int previousState)
                 {
-                    m_flattenButtonModel.Unflatten();
                     m_visualMapService.SetVisualMapState("Summer", "DayDefault", false);
                     m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));

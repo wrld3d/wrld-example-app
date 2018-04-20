@@ -45,6 +45,7 @@ namespace ExampleApp
                     const std::map<std::string, SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfo;
                     
                     const bool tryStartAtGpsLocation = false;
+                    const double tryStartAtGPSTimeout = 5.0;
                     const bool shouldStartFullscreen = false;
                     const bool isKioskTouchInputEnabled = false;
                     const bool isInKioskMode = false;
@@ -71,6 +72,7 @@ namespace ExampleApp
                         startLocationIndoorId,
                         startLocationFloorIndex,
                         tryStartAtGpsLocation,
+                        tryStartAtGPSTimeout,
                         shouldStartFullscreen,
                         shouldPerformStartUpSearch,
                         startUpSearchTag,
@@ -120,7 +122,8 @@ namespace ExampleApp
                         customKeyboardLayout,
                         0.0f,
                         0.0f,
-                        false);
+                        false,
+                        "");
                 }
             }
             
@@ -143,6 +146,7 @@ namespace ExampleApp
                 platformConfig.CoverageTreeConfig.ManifestUrl = appConfig.CoverageTreeManifestURL();
                 platformConfig.CityThemesConfig.StreamedManifestUrl = appConfig.ThemeManifestURL();
                 platformConfig.CityThemesConfig.EmbeddedThemeTexturePath = appConfig.EmbeddedThemeTexturePath();
+
 
                 if (appConfig.UseLabels())
                 {
@@ -178,7 +182,7 @@ namespace ExampleApp
                 platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.UseBoundsMaxDimension = true;
                 platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.UseLargeFloorGapForSmallFloorCount = false;
                 platformConfig.MapLayersConfig.Interiors.FloorAnimatorConfiguration.FloorScrollingModeEnabled = false;
-
+                platformConfig.MapLayersConfig.BlueSphereConfig.CreateViews = true;
                 return platformConfig;
             }
             

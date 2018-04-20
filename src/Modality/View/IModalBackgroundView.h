@@ -21,6 +21,8 @@ namespace ExampleApp
                 
                 virtual void InsertTappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveTappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+				virtual void InsertTouchCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+				virtual void RemoveTouchCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

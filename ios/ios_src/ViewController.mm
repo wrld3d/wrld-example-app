@@ -171,6 +171,4 @@ using namespace Eegeo::iOS;
     return (m_pAppRunner == NULL) ? true : m_pAppRunner->ShouldAutoRotateToInterfaceOrientation(interfaceOrientation);
 }
 
-
-
 @end

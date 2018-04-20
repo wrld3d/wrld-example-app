@@ -7,7 +7,7 @@
 #include "ISearchResultPoiView.h"
 #include "WindowsNativeState.h"
 #include "CallbackCollection.h"
-
+#include "SearchTags.h"
 #include "ReflectionHelpers.h"
 
 namespace ExampleApp
@@ -52,7 +52,7 @@ namespace ExampleApp
                 bool m_isAnyPoiOpen;
 
             public:
-                SearchResultPoiView(WindowsNativeState& nativeState, bool isInKioskMode);
+                SearchResultPoiView(WindowsNativeState& nativeState, const ExampleApp::Search::SdkModel::SearchTags& swallowSearchTags, bool isInKioskMode);
 
                 ~SearchResultPoiView();
 

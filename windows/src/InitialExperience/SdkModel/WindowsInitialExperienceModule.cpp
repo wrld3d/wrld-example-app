@@ -34,9 +34,10 @@ namespace ExampleApp
             {
                 std::vector<IInitialExperienceStep*> steps;
 
-				// TODO: Recreate MEA initial experience steps for windows...
-
 				m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
+                
+                IInitialExperienceStep* pIntroStep = Eegeo_NEW(InitialExperienceIntroStep)(m_messageBus, GetPersistentSettings());
+                steps.push_back(pIntroStep);
 
                 return steps;
             }

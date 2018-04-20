@@ -28,5 +28,30 @@
 	"locationId": "WPH01",
 	"interior_id": "westport_house",
 	"desk_pfx": "WPH"
+  },
+  {
+    "locationId": "US047",
+    "interior_id": "swallow_ny_731lex",
+    "desk_pfx": "731"
+  },
+  {
+  	"locationId": "US173",
+  	"interior_id": "swallow_ny_120park",
+  	"desk_pfx": "120"
+  },
+  {
+  	"locationId": "OTH005",
+  	"interior_id": "swallow_ny_78madison",
+  	"desk_pfx": "78-"
+  },
+  {
+  	"locationId": "OTH022",
+  	"interior_id": "swallow_ny_1015madison",
+  	"desk_pfx": "1015-"
+  },
+  {
+  	"locationId": "US919",
+  	"interior_id": "swallow_ny_919third",
+  	"desk_pfx": "919-"
   }
 ]

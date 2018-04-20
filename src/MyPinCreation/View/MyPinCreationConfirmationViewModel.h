@@ -55,10 +55,14 @@ namespace ExampleApp
                 void Close();
 
                 void TryReleaseReactorControl();
-
+                void Open();
+                void InsertOpenCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveOpenCallback(Eegeo::Helpers::ICallback0& callback);
+                
             private:
                 MyPinCreationScreenControl m_screenControl;
                 MyPinCreationConfirmationOpenableControl m_openable;
+                Eegeo::Helpers::CallbackCollection0 m_openCallbacks;
             };
         }
     }

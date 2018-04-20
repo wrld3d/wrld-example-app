@@ -46,10 +46,10 @@ def verify_desk(desk_json, interior_mapping, space_id_to_wgs84):
         raise Exception("Skipping Desk NOFLOOR %s(%s) in %s" % desk_tuple)
     return True
 
-def get_desk_definitions(site, feedconfig, interior_mapping, space_id_to_wgs84):
+def get_desk_definitions(region, site, feedconfig, interior_mapping, space_id_to_wgs84):
     transport = HmacTransport()
     client = Client(feedconfig.soap_service_wsdl_url, transport=transport)
-    response = client.service.GetDeskDetails(feedconfig.soap_region, site)
+    response = client.service.GetDeskDetails(region, site)
 
     if response is not None and response != "":
         desk_list = {}
@@ -66,6 +66,7 @@ def get_desk_definitions(site, feedconfig, interior_mapping, space_id_to_wgs84):
                     continue
                 location_id = desk_json["locationId"]
                 space_id = desk_json["spaceId"]
+                highlight_id = "S{0}".format(space_id)
                 interior_id = interior_mapping.get_interior_from_location(location_id)
                 floor_name = desk_json["floorName"]
                 floor_id = interior_mapping.get_interior_floor_id(interior_id, floor_name)
@@ -87,6 +88,7 @@ def get_desk_definitions(site, feedconfig, interior_mapping, space_id_to_wgs84):
                             "image_url": image,
                             "availability": "available",
                             "space_id": space_id,
+                            "entity_highlight": [highlight_id],
                             "floor_name": floor_name,
                             "assigned_person": assigned_person,
                         }
@@ -94,6 +96,7 @@ def get_desk_definitions(site, feedconfig, interior_mapping, space_id_to_wgs84):
 
 def get_desk_groups(feedconfig, desks):
     desk_groups = {}
+    desk_group_data = {}
 
     desk_highlight_colors = {
         "A": [0.0, 255.0, 0.0, 255.0],
@@ -111,6 +114,7 @@ def get_desk_groups(feedconfig, desks):
 
     for desk in desks:
         desk_name = desk["title"]
+        desk_higlight_id = desk["user_data"]["entity_highlight"][0]
         if "3QVS" in desk_name:
             desk_group_name = desk_name[:9].replace("3QVS-","")
 
@@ -120,6 +124,7 @@ def get_desk_groups(feedconfig, desks):
             highlight_color_group = desk_group if desk_highlight_colors.has_key(desk_group) else "A"
 
             if desk_group_name not in desk_groups:
+                desk_group_data[desk_group_name] = [sys.maxint, -sys.maxint - 1]
                 desk_groups[desk_group_name] = {
                     "title": desk_group_name,
                     "subtitle": "",
@@ -135,18 +140,19 @@ def get_desk_groups(feedconfig, desks):
                             "entity_highlight_color":desk_highlight_colors[highlight_color_group]
                         }}
 
-            desk_groups[desk_group_name]["user_data"]["desks"].append(desk_name)
-
-    for desk_group in desk_groups.keys():
-        min_desk_id = sys.maxint
-        max_desk_id = -sys.maxint - 1
-        for desk_name in desk_groups[desk_group]["user_data"]["desks"]:
+            min_desk_id = desk_group_data[desk_group_name][0]
+            max_desk_id = desk_group_data[desk_group_name][1]
             desk_id = int(desk_name[9:])
             if desk_id < min_desk_id:
                 min_desk_id = desk_id
             elif desk_id > max_desk_id:
-                 max_desk_id = desk_id
-        desk_groups[desk_group]["title"] = "{0}{1}-{2}".format(desk_groups[desk_group]["title"], min_desk_id, max_desk_id)
+                max_desk_id = desk_id
+            desk_group_data[desk_group_name][0] = min_desk_id
+            desk_group_data[desk_group_name][1] = max_desk_id
+            desk_groups[desk_group_name]["title"] = "{0}{1}-{2}".format(desk_group_name, min_desk_id, max_desk_id)                
+            desk_groups[desk_group_name]["user_data"]["desks"].append(desk_higlight_id)
+
+    for desk_group in desk_groups.keys():
         yield desk_groups[desk_group]
 
 def save_desk_json(desks, filename):
@@ -162,10 +168,10 @@ if __name__ == "__main__":
     space_id_to_wgs84.populate_from_files("../generated")
 
     desks = []
-    sites = ["GB033", "GB025", "GB006", "GB032", "GB012"]
-    for site in sites:
-        for desk in get_desk_definitions(site, feedconfig, interior_mapping, space_id_to_wgs84):
-            desks.append(desk)
+    for region in feedconfig.soap_regions:
+        for site in feedconfig.soap_regions[region]:
+            for desk in get_desk_definitions(region, site, feedconfig, interior_mapping, space_id_to_wgs84):
+                desks.append(desk)
 
     desk_groups = []
     for desk_group in get_desk_groups(feedconfig, desks):

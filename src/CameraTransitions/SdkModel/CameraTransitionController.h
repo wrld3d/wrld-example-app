@@ -114,6 +114,8 @@ namespace ExampleApp
                                                            bool jumpIfFar=true);
                 
                 void StartQueuedTransition();
+
+                void NotifyTransitionChanged();
                 
                 Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& m_cameraController;
                 Eegeo::Resources::Interiors::InteriorsCameraController& m_interiorsCameraController;
@@ -126,6 +128,7 @@ namespace ExampleApp
                 const Eegeo::Resources::Interiors::InteriorTransitionModel& m_interiorTransitionModel;
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
                 Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
+                ExampleApp::ExampleAppMessaging::TMessageBus& m_messageBus;
                
                 Eegeo::Resources::Interiors::InteriorId m_defaultInteriorId;
                 bool m_isTransitioning;

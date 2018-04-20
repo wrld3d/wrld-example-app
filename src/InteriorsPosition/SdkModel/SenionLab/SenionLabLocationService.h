@@ -33,14 +33,14 @@ namespace ExampleApp
                     bool GetHorizontalAccuracy(double& accuracy);
                     bool GetHeadingDegrees(double& headingDegrees);
                     void StopListening();
-                    bool GetIsConnected();
+                    bool GetIsLocationAvailable();
                     
                     void SetIsAuthorized(bool isAuthorized);
                     void SetLocation(Eegeo::Space::LatLong& latLong);
                     void SetHeadingDegrees(double headingDegrees);
                     void SetFloorIndex(int floorIndex);
                     void SetInteriorId(const Eegeo::Resources::Interiors::InteriorId& interiorId);
-                    void SetIsConnected(bool isConnected);
+                    void SetIsLocationAvailable(bool isLocationAvailable);
                     
                     void Update(float dt);
                     
@@ -56,7 +56,7 @@ namespace ExampleApp
                     double m_headingDegrees;
                     int m_floorIndex;
                     Eegeo::Resources::Interiors::InteriorId m_interiorId;
-                    bool m_isConnected;
+                    bool m_isLocationAvailable;
                     
                     float m_disconnectTime;
                     

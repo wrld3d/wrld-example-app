@@ -70,6 +70,11 @@ namespace ExampleApp
                     }
                 }
             }
+            
+            void AboutPageController::OnDeepLinkOpenedMessage(const DeepLink::DeepLinkOpenedMessage &message)
+            {
+                m_viewModel.Close();
+            }
 
             AboutPageController::AboutPageController(IAboutPageView& view, IAboutPageViewModel& viewModel, Metrics::IMetricsService& metricsService, ExampleAppMessaging::TMessageBus& messageBus)
                 : m_view(view)
@@ -84,6 +89,7 @@ namespace ExampleApp
                 , m_aboutPageSenionDataTypeMessage(this, &AboutPageController::OnAboutPageSenionDataTypeMessageChanged)
                 , m_aboutPageSenionSettingsMessage(this, &AboutPageController::OnAboutPageSenionSettingsMessageChanged)
                 , m_appModeChangedHandler(this, &AboutPageController::OnAppModeChangedMessage)
+                , m_deepLinkOpenedHandler(this, &AboutPageController::OnDeepLinkOpenedMessage)
             {
                 m_view.InsertCloseTappedCallback(m_viewCloseTapped);
                 m_viewModel.InsertClosedCallback(m_viewClosed);
@@ -93,10 +99,12 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_aboutPageSenionDataTypeMessage);
                 m_messageBus.SubscribeUi(m_aboutPageSenionSettingsMessage);
                 m_messageBus.SubscribeUi(m_appModeChangedHandler);
+                m_messageBus.SubscribeUi(m_deepLinkOpenedHandler);
             }
 
             AboutPageController::~AboutPageController()
             {
+                m_messageBus.UnsubscribeUi(m_deepLinkOpenedHandler);
                 m_messageBus.UnsubscribeUi(m_appModeChangedHandler);
                 m_messageBus.UnsubscribeUi(m_aboutPageSenionSettingsMessage);
                 m_messageBus.UnsubscribeUi(m_aboutPageSenionDataTypeMessage);

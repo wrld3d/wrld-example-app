@@ -15,6 +15,7 @@ namespace ExampleApp
             }
             
             class ISearchQueryPerformer;
+            class IAutocompleteSuggestionQueryPerformer;
             class ISearchRefreshService;
             class ISearchResultParser;
             class ISearchModule;

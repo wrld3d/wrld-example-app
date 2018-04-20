@@ -17,12 +17,28 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiView::SearchResultPoiView(AndroidNativeState& nativeState)
+            namespace
+            {
+                std::string personReadableTag;
+            }
+
+            SearchResultPoiView::SearchResultPoiView(AndroidNativeState& nativeState, const ExampleApp::Search::SdkModel::SearchTags& swallowSearchTags)
                 : m_nativeState(nativeState)
             	, m_uiViewClass(NULL)
                 , m_uiView(NULL)
             {
                 ASSERT_UI_THREAD
+
+                personReadableTag = swallowSearchTags.defaultReadableTag;
+                const std::vector<ExampleApp::Search::SdkModel::SearchTag>& tags = swallowSearchTags.tags;
+                for(int i = 0; i < tags.size(); ++i)
+                {
+                    if(tags[i].tag == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                    {
+                        personReadableTag = tags[i].readableTag;
+                        break;
+                    }
+                }
             }
 
             SearchResultPoiView::~SearchResultPoiView()
@@ -50,6 +66,10 @@ namespace ExampleApp
                 {
                 	CreateAndShowPersonSearchResultPoiView(model);
                 }
+				else if(vendor == Search::EegeoVendorName && primaryTag == ExampleApp::Search::Swallow::SearchConstants::DESK_CATEGORY_NAME)
+				{
+					CreateAndShowPersonSearchResultPoiView(model);
+				}
                  else if(vendor == Search::EegeoVendorName
                          && (primaryTag == ExampleApp::Search::Swallow::SearchConstants::MEETING_ROOM_CATEGORY_NAME
                              || primaryTag == ExampleApp::Search::Swallow::SearchConstants::TRAINING_ROOM_CATEGORY_NAME))
@@ -343,7 +363,17 @@ namespace ExampleApp
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
-                jobjectArray humanReadableTagsArray = CreateJavaArray(model.GetHumanReadableTags());
+                const std::vector<std::string>& tagVector = m_model.GetTags();
+                std::vector<std::string> tagReadableVector = m_model.GetHumanReadableTags();
+                for(int i = 0; i < tagVector.size(); ++i)
+                {
+                    if(tagVector[i] == ExampleApp::Search::Swallow::SearchConstants::DESK_CATEGORY_NAME)
+                    {
+                        tagReadableVector[i] = personReadableTag;
+                    }
+                }
+
+                jobjectArray humanReadableTagsArray = CreateJavaArray(tagReadableVector);
 
 				jstring nameStr = env->NewStringUTF(personModel.GetName().c_str());
 				jstring jobTitleStr = env->NewStringUTF(personModel.GetJobTitle().c_str());
@@ -389,7 +419,7 @@ namespace ExampleApp
 
 				jstring titleStr = env->NewStringUTF(model.GetTitle().c_str());
 				jstring availabilityStr = env->NewStringUTF(meetingRoomModel.GetAvailability().c_str());
-				jstring primaryTagStr = env->NewStringUTF(model.GetPrimaryTag().c_str());
+				jstring iconStr = env->NewStringUTF(model.GetIconKey().c_str());
 				jstring imageUrlStr = env->NewStringUTF(meetingRoomModel.GetImageUrl().c_str());
 
 				jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
@@ -398,13 +428,13 @@ namespace ExampleApp
 						displayPoiInfoMethod,
 						titleStr,
 						availabilityStr,
-						primaryTagStr,
+						iconStr,
 						imageUrlStr
 				);
 
 				env->DeleteLocalRef(titleStr);
 				env->DeleteLocalRef(availabilityStr);
-				env->DeleteLocalRef(primaryTagStr);
+				env->DeleteLocalRef(iconStr);
 				env->DeleteLocalRef(imageUrlStr);
 			}
 

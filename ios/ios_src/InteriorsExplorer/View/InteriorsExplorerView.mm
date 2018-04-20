@@ -17,6 +17,7 @@
 namespace
 {
     float iPhoneDismissButtonMargin = 28.f;
+    float offScreenDismissButtonXPos;
 }
 
 @implementation InteriorsExplorerView
@@ -42,7 +43,6 @@ namespace
     {
         const bool isPhone = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
         
-        m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
         
@@ -57,14 +57,11 @@ namespace
                                 m_screenWidth,
                                 m_screenHeight);
         
-        
-        m_inactiveFloorListXPosition = m_screenWidth;
-        
         const float upperMargin = isPhone ? 20.0f : 50.0f;
-        m_inactiveDetailPaneYPosition = m_screenHeight;
         
-
-        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_inactiveFloorListXPosition, m_screenHeight/2.0f, 110, 200)] autorelease];
+        
+        CGFloat floorPanelWidth = 150;
+        self.pFloorPanel = [[[UIView alloc] initWithFrame:CGRectMake(m_screenWidth - floorPanelWidth , m_screenHeight/2.0f, floorPanelWidth, 200)] autorelease];
         [self addSubview:self.pFloorPanel];
         
         self.pFloorListArrowDown = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow3_down"]] autorelease];
@@ -73,7 +70,7 @@ namespace
         [self.pFloorPanel addSubview:self.pFloorListArrowDown];
         [self.pFloorPanel addSubview:self.pFloorListArrowUp];
         
-        self.pFloorListView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 0, 110, 200) style:UITableViewStylePlain] autorelease];
+        self.pFloorListView = [[[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.pFloorPanel.frame.size.width, self.pFloorPanel.frame.size.height) style:UITableViewStylePlain] autorelease];
         self.pFloorListView.delegate = self;
         self.pFloorListView.dataSource = self;
         self.pFloorListView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -90,7 +87,6 @@ namespace
         ImmediatePanGestureRecognizer* buttonDrag = [[ImmediatePanGestureRecognizer alloc] initWithTarget:self action:@selector(dragButton:)];
         [self.pFloorChangeButton addGestureRecognizer:buttonDrag];
         [buttonDrag release];
-
         
         [self.pFloorPanel addSubview:self.pFloorChangeButton];
         
@@ -119,11 +115,12 @@ namespace
         
         UIColor* dismissButtonBackgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         
-        const float dismissButtonX = m_inactiveFloorListXPosition;
+        const float dismissButtonX = m_screenWidth - iPhoneDismissButtonMargin - buttonSize;
         const float dismissButtonY = self.pFloorPanel.frame.origin.y - 10.0f;
         UIView* dismissButtonParent = self;
         self.pDismissButtonBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(dismissButtonBackgroundColor)] autorelease];
         self.pDismissButtonBackground.frame = CGRectMake(dismissButtonX, dismissButtonY, buttonSize, buttonSize);
+        offScreenDismissButtonXPos = dismissButtonX;
         self.pDismissButtonBackground.userInteractionEnabled = YES;
         [dismissButtonParent addSubview:self.pDismissButtonBackground];
         
@@ -138,7 +135,6 @@ namespace
         self.pDetailsPanelBackground = [[[UIImageView alloc] initWithImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(detailsPanelBackgroundColor)] autorelease];
         self.pDetailsPanelBackground.frame = CGRectMake(0, 0, labelLength, detailsPanelHeight);
         self.pDetailsPanelBackground.alpha = 0.5f;
-                
         [self.pDetailsPanel addSubview:self.pDetailsPanelBackground];
         
         const float textPadding = 14.f;
@@ -148,7 +144,6 @@ namespace
         self.pFloorNameLabel.textAlignment = NSTextAlignmentCenter;
         [self.pDetailsPanel addSubview:self.pFloorNameLabel];
                 
-        
         [self addSubview:self.pDetailsPanel];
         
         self.pDetailsPanel.alpha = 0.0f;
@@ -165,7 +160,8 @@ namespace
         
         [self hideFloorLabels];
         [self setHidden:YES];
-        [self setArrowState:NO :NO];
+        [self setArrowStateShowUp:NO
+                         showDown:NO];
     }
     
     return self;
@@ -173,13 +169,11 @@ namespace
 
 - (void)layoutSubviews
 {
-    CGFloat panelHeight = self.pFloorPanel.frame.size.height;
-    
-    CGRect floorButtonFrame = self.pFloorChangeButton.frame;
-    self.pFloorChangeButton.frame = CGRectMake(self.pFloorPanel.frame.size.width*0.5f - floorButtonFrame.size.width*0.5f,
-                                               panelHeight - floorButtonFrame.size.height,
-                                               floorButtonFrame.size.width,
-                                               floorButtonFrame.size.height);
+    self.pFloorChangeButton.center = [self centerlineInView:self.pFloorChangeButton.superview];
+}
+
+-(CGPoint) centerlineInView:(UIView *)view {
+    return [view convertPoint:self.pDismissButton.center fromView:self.pDismissButton.superview];
 }
 
 - (void)dealloc
@@ -232,8 +226,6 @@ namespace
     CGPoint touchLocation = point;
     CGPoint floorPanelLocation = [self convertPoint:touchLocation toView:self.pFloorPanel];
     if (CGRectContainsPoint(self.pFloorChangeButton.frame, floorPanelLocation) && m_floorSelectionEnabled)
-        return YES;
-    if (CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation))
         return YES;
     if (CGRectContainsPoint(self.pDismissButtonBackground.frame, touchLocation))
         return YES;
@@ -314,15 +306,16 @@ namespace
     
     const CGFloat arrowWidth=20.0f;
     const CGFloat arrowHeight=verticalPadding*0.5f;
-    self.pFloorListArrowUp.frame = CGRectMake(self.pFloorPanel.frame.size.width/2 - arrowWidth/2, self.pFloorListView.frame.origin.y-arrowHeight, arrowWidth, arrowHeight);
-    self.pFloorListArrowDown.frame = CGRectMake(self.pFloorPanel.frame.size.width/2 - arrowWidth/2, self.pFloorListView.frame.origin.y+self.pFloorListView.frame.size.height, arrowWidth, arrowHeight);
+    CGFloat centerlineX = [self centerlineInView:self.pFloorListArrowUp.superview].x;
+    self.pFloorListArrowUp.frame = CGRectMake(centerlineX - arrowWidth/2, self.pFloorListView.frame.origin.y-arrowHeight, arrowWidth, arrowHeight);
+    self.pFloorListArrowDown.frame = CGRectMake(centerlineX - arrowWidth/2, self.pFloorListView.frame.origin.y+self.pFloorListView.frame.size.height, arrowWidth, arrowHeight);
     
     [self refreshArrowState];
 }
 
 - (void) playSliderShakeAnim
 {
-    CGFloat xPos = [self GetXPositionForFloorPanelAt:1.0];
+    CGFloat xPos = self.pFloorPanel.frame.origin.x;
     
     CGFloat posLeft = xPos - 5.0f;
     CGFloat posRight = xPos + 10.0f;
@@ -364,78 +357,42 @@ namespace
     self.pFloorOnButtonLabel.text = [NSString stringWithCString:m_tableViewFloorNames.at(nameIndex).c_str() encoding:NSUTF8StringEncoding];
 }
 
-- (float) GetXPositionForFloorPanelAt:(float)t
-{
-    float openX = iPhoneDismissButtonMargin + (0.5f * self.pDismissButtonBackground.frame.size.width + 0.5f * self.pFloorPanel.frame.size.width);
-    return m_screenWidth - t * openX;
-}
-
-- (float) GetXPositionForDismissButtonAt:(float)t
-{
-    return m_screenWidth - t * (iPhoneDismissButtonMargin + self.pDismissButtonBackground.frame.size.width);
-}
-
 - (void) setFullyOnScreen
 {
-    [self animateTo:1.0f
-       delaySeconds:0.8f];
+    self.hidden = NO;
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
+                          delay:0.8f
+                        options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                            self.transform  = CGAffineTransformIdentity;
+                        }
+                     completion:^(BOOL completed){
+                         [self.pTutorialView animateTo:1.0];
+                         
+                     }];
+    
+    
 }
 
 - (void) setFullyOffScreen
 {
-    [self animateTo:0.0f
-       delaySeconds:0.0f];
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds animations:^{
+        self.transform  = CGAffineTransformMakeTranslation(self.pFloorListView.frame.size.width, 0.0);
+    } completion:^(BOOL completed){
+        self.hidden = false;
+        [self.pTutorialView animateTo:0.0];
+    }];
+    
 }
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
-    onScreenState = roundf(onScreenState);
-    [self animateTo:onScreenState
-       delaySeconds:0.0f];
+    if(onScreenState>0.5){
+        [self setFullyOnScreen];
+    }else {
+        [self setFullyOffScreen];
+    }
 }
 
-- (void) animateTo:(float)t delaySeconds:(float)delaySeconds
-{
-    CGRect floorFrame = self.pFloorPanel.frame;
-    floorFrame.origin.x = [self GetXPositionForFloorPanelAt:t];
-    
-    CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
-    
-    dismissButtonFrame.origin.x = [self GetXPositionForDismissButtonAt:t];
-    
-    
-    if(t > 0.f)
-    {
-        self.hidden = false;
-    }
-    
-    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
-                          delay:0.0f
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^
-     {
-         self.pDetailsPanel.alpha = t;
-     }
-                     completion:^(BOOL finished)
-     {
-         self.hidden = (t == 0.0f);
-         m_onScreenParam = t;
-     }
-     ];
-    
-    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
-                          delay:delaySeconds
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^
-     {
-         self.pFloorPanel.frame = floorFrame;
-         self.pDismissButtonBackground.frame = dismissButtonFrame;
-     }
-                     completion:^(BOOL FINISHED)
-     {
-         [self.pTutorialView animateTo:t];
-     }];
-}
 
 - (void) setTouchEnabled:(BOOL)enabled
 {
@@ -452,14 +409,14 @@ namespace
 
 - (void) refreshArrowState
 {
-    [self setArrowState:self.pFloorListView.contentOffset.y>0
-                       :self.pFloorListView.contentOffset.y<self.pFloorListView.contentSize.height-self.pFloorListView.bounds.size.height];
+    [self setArrowStateShowUp:self.pFloorListView.contentOffset.y>0
+                     showDown:self.pFloorListView.contentOffset.y<self.pFloorListView.contentSize.height-self.pFloorListView.bounds.size.height];
 }
 
-- (void) setArrowState:(BOOL)showUp :(BOOL)showDown
+- (void) setArrowStateShowUp:(BOOL)up showDown:(BOOL)down
 {
-    self.pFloorListArrowUp.hidden = !showUp;
-    self.pFloorListArrowDown.hidden = !showDown;
+    self.pFloorListArrowUp.hidden = !up;
+    self.pFloorListArrowDown.hidden = !down;
 }
 
 - (void) step
@@ -645,12 +602,15 @@ namespace
     }
     
     const bool showChangeFloorDialog = floorCount > 1;
-    const CGRect dismissButtonFrame = self.pDismissButtonBackground.frame;
-    [self.pTutorialView repositionTutorialDialogs:dismissButtonFrame.origin.x
-                                                 :dismissButtonFrame.origin.y
-                                                 :dismissButtonFrame.size.height
-                                                 :self.pFloorPanel.frame.origin.y + self.pFloorChangeButton.frame.origin.y
-                                                 :self.pFloorChangeButton.frame.size.height
+    
+    const CGRect dismissButtonRect = self.pDismissButtonBackground.frame;
+    const CGRect floorChangeButtonRect = [self.pTutorialView convertRect:self.pFloorChangeButton.frame fromView:self.pFloorChangeButton.superview];
+    
+    [self.pTutorialView repositionTutorialDialogs:dismissButtonRect.origin.x
+                                                 :dismissButtonRect.origin.y
+                                                 :dismissButtonRect.size.height
+                                                 :floorChangeButtonRect.origin.y
+                                                 :floorChangeButtonRect.size.height
                                                  :showChangeFloorDialog];
 }
 
@@ -663,9 +623,8 @@ static NSString *CellIdentifier = @"floorCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    const float divisionWidth = 30;
-    const float divisionLabelWidth = 25;
-    const float divisionLabelSpacing = 15;
+    const float dividerWidth = 30;
+    const float labelSpacing = 15;
     
     int floorIndex = static_cast<int>(indexPath.row);
     int floorCount = static_cast<int>(m_tableViewFloorNames.size());
@@ -673,12 +632,15 @@ static NSString *CellIdentifier = @"floorCell";
     InteriorsExplorerFloorItemView *cell = (InteriorsExplorerFloorItemView*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil)
     {
-        cell = [[[InteriorsExplorerFloorItemView alloc] initWithParams:divisionLabelWidth
-                                                                      :divisionLabelSpacing
-                                                                      :divisionWidth
-                                                                      :m_floorDivisionHeight
-                                                                      :m_pixelScale
-                                                                      :CellIdentifier] autorelease];
+        CGRect frame = CGRectMake(0.0, 0.0, tableView.frame.size.width, m_floorDivisionHeight);
+        
+        CGPoint centerline = [self centerlineInView:tableView];
+        
+        cell = [[[InteriorsExplorerFloorItemView alloc] initWithFrame:frame
+                                                              spacing:labelSpacing
+                                                         dividerWidth:dividerWidth
+                                                              centerX:centerline.x
+                                                      reuseIdentifier:CellIdentifier] autorelease];
         
         cell.selectionStyle = UITableViewCellSelectionStyleGray;
         

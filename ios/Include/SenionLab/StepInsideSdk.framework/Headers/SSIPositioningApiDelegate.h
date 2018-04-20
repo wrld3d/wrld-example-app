@@ -9,6 +9,7 @@
 
 #import "SSILocationAvailability.h"
 #import "SSIMotionType.h"
+#import "SSIHeadingAvailability.h"
 
 @class SSIPositioningApi;
 @class SSILocation;
@@ -39,6 +40,15 @@
  @param heading The heading.
  */
 - (void)positioningApi:(nonnull SSIPositioningApi *)positioningApi didUpdateHeading:(nonnull SSIHeading *)heading;
+
+@optional
+/**
+ This method is called whenever a new heading availability has been determined.
+ 
+ @param positioningApi The instance that generated the event.
+ @param headingAvailability The heading availability.
+ */
+- (void)positioningApi:(nonnull SSIPositioningApi *)positioningApi didUpdateHeadingAvailability:(SSIHeadingAvailability)headingAvailability;
 
 @optional
 /**

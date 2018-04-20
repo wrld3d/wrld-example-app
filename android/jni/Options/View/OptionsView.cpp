@@ -92,15 +92,15 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, setCacheEnabledSelected, isCacheEnabledSelected);
             }
 
-            void OptionsView::SetReplayTutorialsSelected(bool isReplayTutorialsSelected)
+            void OptionsView::OpenClearCacheWarning()
             {
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
-                jmethodID setReplayTutorialsSelected = env->GetMethodID(m_uiViewClass, "setReplayTutorialsSelected", "(Z)V");
-                env->CallVoidMethod(m_uiView, setReplayTutorialsSelected, isReplayTutorialsSelected);
+                jmethodID beginClearCacheCeremony = env->GetMethodID(m_uiViewClass, "openClearCacheWarning", "()V");
+                env->CallVoidMethod(m_uiView, beginClearCacheCeremony);
             }
 
             void OptionsView::Open()
@@ -164,6 +164,20 @@ namespace ExampleApp
                 m_clearCacheCallbacks.ExecuteCallbacks();
             }
 
+            void OptionsView::HandleClearCacheTriggered()
+            {
+                ASSERT_UI_THREAD
+
+                m_clearCacheTriggeredCallbacks.ExecuteCallbacks();
+            }
+
+            void OptionsView::HandleReplayTutorialsSelected()
+            {
+                ASSERT_UI_THREAD
+
+                m_replayTutorialsCallbacks.ExecuteCallbacks();
+            }
+
             void OptionsView::InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
@@ -192,14 +206,14 @@ namespace ExampleApp
                 m_wifiOnlyCallbacks.RemoveCallback(callback);
             }
 
-            void OptionsView::InsertCacheEnabledSelectionCallback(Eegeo::Helpers::ICallback0& callback)
+            void OptionsView::InsertCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
 
                 m_cacheEnabledCallbacks.AddCallback(callback);
             }
 
-            void OptionsView::RemoveCacheEnabledSelectionCallback(Eegeo::Helpers::ICallback0& callback)
+            void OptionsView::RemoveCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
 
@@ -220,18 +234,32 @@ namespace ExampleApp
                 m_clearCacheCallbacks.RemoveCallback(callback);
             }
 
-            void OptionsView::InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            void OptionsView::InsertClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
 
-                m_replayTutorialsToggledCallbacks.AddCallback(callback);
+                m_clearCacheTriggeredCallbacks.AddCallback(callback);
             }
 
-            void OptionsView::RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback) 
+            void OptionsView::RemoveClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
 
-                m_replayTutorialsToggledCallbacks.RemoveCallback(callback);
+                m_clearCacheTriggeredCallbacks.RemoveCallback(callback);
+            }
+
+            void OptionsView::InsertReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_replayTutorialsCallbacks.AddCallback(callback);
+            }
+
+            void OptionsView::RemoveReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_replayTutorialsCallbacks.RemoveCallback(callback);
             }
         }
     }

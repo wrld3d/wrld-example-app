@@ -8,7 +8,7 @@
 #include "InteriorsLocationChangedMessage.h"
 #include "InteriorsHeadingChangedMessage.h"
 #include "InteriorsLocationMapKeyChangedMessage.h"
-#include "InteriorsLocationConnectionChangedMessage.h"
+#include "InteriorsLocationAvailabilityChangedMessage.h"
 #include "SenionLabLocationService.h"
 #include "SenionLabBroadcastReceiver.h"
 #include "SenionLabLocationManager.h"
@@ -103,7 +103,7 @@ namespace ExampleApp
                 void SenionLabBroadcastReceiver::SetIsConnected(const bool isConnected)
                 {
                 	ASSERT_UI_THREAD
-					m_messageBus.Publish(InteriorsLocationConnectionChangedMessage(isConnected));
+					m_messageBus.Publish(InteriorsLocationAvailabilityChangedMessage(isConnected));
                 }
             }
         }

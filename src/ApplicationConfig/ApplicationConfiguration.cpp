@@ -14,6 +14,7 @@ namespace ExampleApp
                                                            const std::string& indoorId,
                                                            const int floorIndex,
                                                            bool tryStartAtGpsLocation,
+                                                           const double tryStartAtGpsTimeout,
                                                            bool startFullscreen,
                                                            bool performStartUpSearch,
                                                            const std::string& startUpSearchTag,
@@ -63,7 +64,8 @@ namespace ExampleApp
                                                            const std::vector<std::vector<std::string>>& customKeyboardLayout,
                                                            const float compassCameraOffset,
                                                            const float compassCameraOffsetTopDown,
-                                                           const bool compassCameraDampingEnabled)
+                                                           const bool compassCameraDampingEnabled,
+                                                           const std::string& outdoorSearchMenuItemJson)
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
         , m_embeddedThemeTexturePath(embeddedThemeTexturePath)
@@ -73,6 +75,7 @@ namespace ExampleApp
         , m_indoorId(indoorId)
         , m_floorIndex(floorIndex)
         , m_tryStartAtGpsLocation(tryStartAtGpsLocation)
+        , m_tryStartAtGpsTimeout(tryStartAtGpsTimeout)
         , m_shouldStartFullscreen(startFullscreen)
         , m_shouldPerformStartUpSearch(performStartUpSearch)
         , m_startUpSearchTag(startUpSearchTag)
@@ -122,6 +125,7 @@ namespace ExampleApp
         , m_compassCameraOffset(compassCameraOffset)
         , m_compassCameraOffsetTopDown(compassCameraOffsetTopDown)
         , m_compassCameraDampingEnabled(compassCameraDampingEnabled)
+        , m_outdoorSearchMenuItemJson(outdoorSearchMenuItemJson)
         {
             
         }
@@ -194,6 +198,11 @@ namespace ExampleApp
         bool ApplicationConfiguration::TryStartAtGpsLocation() const
         {
             return m_tryStartAtGpsLocation;
+        }
+        
+        double ApplicationConfiguration::TryStartAtGpsTimeout() const
+        {
+            return m_tryStartAtGpsTimeout;
         }
         
         bool ApplicationConfiguration::ShouldPerformStartUpSearch() const
@@ -416,5 +425,10 @@ namespace ExampleApp
 		{
 			return m_customKeyboardLayout;
 		}
+
+        const std::string& ApplicationConfiguration::OutdoorSearchMenuItemJson() const
+        {
+            return m_outdoorSearchMenuItemJson;
+        }
     }
 }

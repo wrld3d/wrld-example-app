@@ -91,11 +91,8 @@ namespace ExampleApp
                 }
             }
 
-            std::vector<TagSearch::View::TagSearchModel> CreateTagSearchModelsFromFile(
-                                                                                       Eegeo::Helpers::IFileIO& fileIO, const std::string& fileName, const std::string& jsonAttributeName)
+            std::vector<TagSearch::View::TagSearchModel> CreateTagSearchModelsFromFile(const std::string& json, const std::string& jsonAttributeName)
             {
-                const std::string& json = Helpers::FileHelpers::GetFileContentsAsString(fileIO, fileName);
-
                 std::vector<ExampleApp::TagSearch::View::TagSearchModel> result;
                 ParseJson(json, result, jsonAttributeName);
                 return result;

@@ -8,6 +8,7 @@
   "start_location_indoor_id": "",
   "start_location_floor_index": 0,
   "try_start_at_gps_location": true,
+  "start_at_gps_location_timeout": 5.0,
   "perform_start_up_search": false,
   "start_up_search_tag": "",
   "eegeo_api_key": "3ceebbe9943e604ee4ac39b3977be5e1",
@@ -18,12 +19,12 @@
   "yelp_oauth_token_secret": "hHIaImXUlORnIavm2nXV3NOufpA",
   "twitter_auth_code": "",
   "geonames_username": "eegeo_bloomberg_ios",
-  "coveragetree_manifest_url": "https://cdn1.eegeo.com/coverage-trees/vswallow/v1628/manifest.bin.gz",
-  "theme_manifest_url": "https://cdn-resources.eegeo.com/mobile-themes-new/v1108/default/ssl.manifest.bin.gz",
+  "coveragetree_manifest_url": "https://cdn1.eegeo.com/coverage-trees/vswallow/v1664/manifest.bin.gz",
+  "theme_manifest_url": "https://cdn-resources.eegeo.com/mobile-themes-new/v1111/default/ssl.manifest.bin.gz",
   "embedded_theme_texture_path": "EmbeddedTheme",
   "sqlite_db_url": "https://cdn1.eegeo.com/swallow-pois/pois_v160.db.gz",
-  "eegeo_search_service_url": "https://swallowapp.dundee.kimbleoperations.com/search/v1.1/",
-  "mypins_web_service_url": "https://swallowapp.dundee.kimbleoperations.com/reports/",
+  "eegeo_search_service_url": "https://appdev.wayfind.bloomberg.com/search/v1.1/",
+  "mypins_web_service_url": "https://appdev.wayfind.bloomberg.com/reports/",
   "mypins_web_service_auth_token": "f475c578eb4592637314e4a05510993b",
   "web_proxy_enabled": false,
   "web_proxy_ip_address": "",
@@ -288,24 +289,6 @@
       ]
     }
   ],
-    "wifi_restricted_buildings": [{
-          "interior_id": "swallow_lon_wallbrooksquare",
-          "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-          }, {
-          "interior_id": "swallow_ny_731lex",
-          "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-          }, {
-          "interior_id": "swallow_ny_78madison",
-          "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-          }, {
-          "interior_id": "swallow_ny_1015madison",
-          "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-          }, {
-          "interior_id": "swallow_ny_120park",
-          "allowed_ssids": ["WRLD 2.4GHz", "WRLD 5GHz", "bemp", "bguest", "78st", "bluejay"]
-          }
-]
-    ,
   "compass_camera_offset": {
     "offset": 0.4,
     "offset_top_down": 0.25

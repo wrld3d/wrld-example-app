@@ -5,6 +5,8 @@
 #include "MathFunc.h"
 #include "ConfigSections.h"
 #include "StringHelpers.h"
+#include "stringbuffer.h"
+#include "writer.h"
 
 namespace ExampleApp
 {
@@ -26,6 +28,7 @@ namespace ExampleApp
                 const std::string StartLocationIndoorId = "start_location_indoor_id";
                 const std::string StartLocationFloorIndex = "start_location_floor_index";
                 const std::string TryStartAtGpsLocation = "try_start_at_gps_location";
+                const std::string StartAtGPSLocationTimeout = "start_at_gps_location_timeout";
                 const std::string PerformStartUpSearch = "perform_start_up_search";
                 const std::string StartUpSearchTag = "start_up_search_tag";
                 const std::string EegeoApiKey = "eegeo_api_key";
@@ -83,6 +86,7 @@ namespace ExampleApp
                 const std::string FixedIndoorLocation = "fixed_indoor_location";
                 const std::string OptionsAdminPassword = "options_admin_password";
                 const std::string CustomKeyboardLayout = "custom_keyboard_layout";
+                const std::string OutdoorSearchMenuItems = "outdoor_search_menu_items";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -242,6 +246,7 @@ namespace ExampleApp
                 m_builder.SetStartOrientationAboutInterestPoint(static_cast<float>(ParseDoubleOrDefault(document, StartLocationOrientationDegrees, m_defaultConfig.OrientationDegrees())));
 
                 m_builder.SetTryStartAtGpsLocation(ParseBoolOrDefault(document, TryStartAtGpsLocation, m_defaultConfig.TryStartAtGpsLocation()));
+                m_builder.SetTryStartAtGpsTimeout(ParseDoubleOrDefault(document, StartAtGPSLocationTimeout, m_defaultConfig.TryStartAtGpsTimeout()));
                 
                 m_builder.SetPerformStartupSearch(ParseBoolOrDefault(document, PerformStartUpSearch, m_defaultConfig.ShouldPerformStartUpSearch()));
                 m_builder.SetStartupSearchTag(ParseStringOrDefault(document, StartUpSearchTag, m_defaultConfig.StartUpSearchTag()));
@@ -398,6 +403,17 @@ namespace ExampleApp
                 if (document.HasMember(CompassCameraDampingEnabled.c_str()) && !document[CompassCameraDampingEnabled.c_str()].IsNull())
                 {
                     m_builder.SetCompassCameraDampingEnabled(document[CompassCameraDampingEnabled.c_str()].GetBool());
+                }
+
+                if (document.HasMember(OutdoorSearchMenuItems.c_str()) && !document[OutdoorSearchMenuItems.c_str()].IsNull())
+                {
+                    rapidjson::StringBuffer buffer;
+                    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+                    if(document[OutdoorSearchMenuItems.c_str()].Accept(writer))
+                    {
+                        std::string json = "{\"" + OutdoorSearchMenuItems + "\":" + std::string(buffer.GetString()) + "}";
+                        m_builder.SetOutdoorSearchMenuItemJson(json);
+                    }
                 }
                 
                 return m_builder.Build();

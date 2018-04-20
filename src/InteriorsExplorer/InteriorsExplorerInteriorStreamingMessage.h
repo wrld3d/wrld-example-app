@@ -10,14 +10,23 @@ namespace ExampleApp
         {
         public:
             InteriorsExplorerInteriorStreamingMessage(bool interiorStreaming)
-            : m_interiorStreaming(interiorStreaming)
+                : m_interiorStreaming(interiorStreaming)
+                , m_interiorLoaded(false)
             {
             }
-            
+
+            InteriorsExplorerInteriorStreamingMessage(bool interiorStreaming, bool interiorLoaded)
+                : m_interiorStreaming(interiorStreaming)
+                , m_interiorLoaded(interiorLoaded)
+            {
+            }
+
             const bool GetInteriorStreaming() const { return m_interiorStreaming; }
+            const bool GetInteriorLoaded() const { return m_interiorLoaded; }
             
         private:
             bool m_interiorStreaming;
+            bool m_interiorLoaded;
         };
     }
 }

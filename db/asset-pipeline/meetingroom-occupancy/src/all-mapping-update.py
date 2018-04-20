@@ -9,12 +9,11 @@ import json
 IMAGES_FOLDER = "images"
 
 
-# UK bounds
-MIN_LAT = 49.0
-MAX_LAT = 61.0
+MIN_LAT = -90.0
+MAX_LAT = 90.0
 
-MIN_LNG = -8.0
-MAX_LNG = 2.5
+MIN_LNG = -180.0
+MAX_LNG = 180.0
 
 MIN_FLOOR = 0
 
@@ -430,7 +429,7 @@ def collect_desks(xls_book, sheet_index, first_data_row_number, column_name_row,
                     "spaceId": space_id,
                     "floor": interior_floor_dict[interior_id][floor_id].split(" ")[0],
                     "floorName": interior_floor_dict[interior_id][floor_id],
-                    "name": v[column_names.index("desk")].split("-")[-1],
+                    "name": ("-").join(v[column_names.index("desk")].split("-")[2:]),
                     "assignedPersonUuid": int(v[column_names.index("assigned_uuid")])
                 }
             )

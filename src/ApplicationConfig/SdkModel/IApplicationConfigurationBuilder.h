@@ -33,6 +33,8 @@ namespace ExampleApp
                 
                 virtual IApplicationConfigurationBuilder& SetTryStartAtGpsLocation(bool tryStartAtGpsLocation) = 0;
                 
+                virtual IApplicationConfigurationBuilder& SetTryStartAtGpsTimeout(const double tryStartAtGpsTimeout) = 0;
+                
                 virtual IApplicationConfigurationBuilder& SetPerformStartupSearch(bool performStartupSearch) = 0;
                 
                 virtual IApplicationConfigurationBuilder& SetStartupSearchTag(std::string startupSearchTag) = 0;
@@ -119,6 +121,8 @@ namespace ExampleApp
                 virtual IApplicationConfigurationBuilder& SetCompassCameraOffset(const float compassCameraOffset) = 0;
                 virtual IApplicationConfigurationBuilder& SetCompassCameraOffsetTopDown(const float compassCameraOffsetTopDown) = 0;
                 virtual IApplicationConfigurationBuilder& SetCompassCameraDampingEnabled(const bool compassCameraDampingEnabled) = 0;
+
+                virtual IApplicationConfigurationBuilder& SetOutdoorSearchMenuItemJson(const std::string& outdoorSearchMenuItemJson) = 0;
             };
         }
     }

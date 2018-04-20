@@ -26,7 +26,6 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 InteriorsExplorer::View::InteriorsExplorerController& m_interiorsExplorerController;
                 InitialExperience::View::InitialExperienceIntroController& m_initialExperienceIntroController;
-                int m_tutorialsReplayedCount;
 
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelOpened;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewModelClosed;
@@ -35,9 +34,10 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewStreamOverWifiOnlySelectionChanged;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewCacheEnabledSelectionChanged;
                 Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheSelected;
+                Eegeo::Helpers::TCallback0<OptionsController> m_viewClearCacheTriggered;
+                Eegeo::Helpers::TCallback0<OptionsController> m_replayTutorialsSelected;
                 Eegeo::Helpers::TCallback1<OptionsController, const AppModes::AppModeChangedMessage&> m_appModeChangedHandler;
-                Eegeo::Helpers::TCallback1<OptionsController, bool> m_replayTutorialsToggled;
-                Eegeo::Helpers::TCallback1<OptionsController, bool> m_onReplayTutorialsModelChanged;
+                Eegeo::Helpers::TCallback1<OptionsController, const DeepLink::DeepLinkOpenedMessage&> m_deepLinkOpenedHandler;
 
                 void OnViewModelOpened();
 
@@ -46,18 +46,20 @@ namespace ExampleApp
                 void OnViewModelCacheClearCeremonyCompleted();
 
                 void OnViewCloseSelected();
-                
+
                 void OnViewStreamOverWifiOnlySelectionChanged();
                 
                 void OnViewCacheEnabledSelectionChanged();
                 
                 void OnViewClearCacheSelected();
 
+                void OnViewClearCacheTriggered();
+
+                void OnReplayTutorialsSelected();
+
                 void OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message);
 
-                void OnReplayTutorialsToggled(bool& replayTutorials);
-
-                void OnReplayTutorialsModelChanged(bool& replayTutorials);
+                void OnDeepLinkOpenedMessage(const DeepLink::DeepLinkOpenedMessage& message);
             public:
                 OptionsController(IOptionsView& view,
                                   IOptionsViewModel& viewModel,

@@ -11,10 +11,11 @@ namespace ExampleAppWPF
         private Action m_confirmationCallback = null;
         private bool m_isDisplayed = false;
         private Button m_confirmButton;
+        private Button m_cancelButton;
         private Button m_closeButton;
-        private ProgressBar m_spinner;
-        private string m_title;
-        private string m_content;
+        private Image m_spinner;
+        private string m_contentBig;
+        private string m_contentSmall;
         private long m_cacheClearDialogMinimumEndTimeMilliseconds;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -24,9 +25,14 @@ namespace ExampleAppWPF
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public string Title { get { return m_title; } set { m_title = value; OnPropertyChanged("Title"); } }
+        public string ContentBig { get { return m_contentBig; } set { m_contentBig = value; OnPropertyChanged("ContentBig"); } }
 
-        public string Content { get { return m_content; } set { m_content = value; OnPropertyChanged("Content"); } }
+        public string ContentSmall { get { return m_contentSmall; } set { m_contentSmall = value; OnPropertyChanged("ContentSmall"); } }
+
+        private static string StringResource(string name)
+        {
+            return (string)Application.Current.Resources[name];
+        }
 
         static OptionsCacheClearSubView()
         {
@@ -38,6 +44,8 @@ namespace ExampleAppWPF
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
             mainWindow.MainGrid.Children.Add(this);
 
+            DataContext = this;
+
             ResetState();
         }
 
@@ -46,16 +54,21 @@ namespace ExampleAppWPF
             base.OnApplyTemplate();
 
             m_confirmButton = (Button)GetTemplateChild("CacheClearCeremonyConfirmButton");
+            m_cancelButton = (Button)GetTemplateChild("CacheClearCeremonyCancelButton");
             m_closeButton = (Button)GetTemplateChild("CacheClearCeremonyCloseButton");
-            m_spinner = (ProgressBar)GetTemplateChild("CacheClearCeremonyViewSpinner");
+            m_spinner = (Image)GetTemplateChild("CacheClearCeremonyViewSpinner");
             
             MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
-            m_confirmButton.Click += (s, e) => HandleConfirmClicked();
-            m_closeButton.Click += (s, e) =>
+
+            RoutedEventHandler closeHandler = (s, e) =>
             {
                 ResetState();
                 mainWindow.MainGrid.Children.Remove(this);
             };
+
+            m_closeButton.Click += closeHandler;
+            m_cancelButton.Click += closeHandler;
+            m_confirmButton.Click += (s, e) => HandleConfirmClicked();
         }
 
 
@@ -70,8 +83,8 @@ namespace ExampleAppWPF
 
             Visibility = Visibility.Visible;
 
-            Title = "Warning";
-            Content = "Are you sure you want to remove all stored data?";
+            ContentBig   = StringResource("ClearCacheSubViewConfirmMessageBig");
+            ContentSmall = StringResource("ClearCacheSubViewConfirmMessageSmall");
         }
 
         public void ConcludeCeremony()
@@ -96,7 +109,9 @@ namespace ExampleAppWPF
     
         private void CloseAsyncCacheClearDialog()
         {
-            Content = "Map data deleted from device";
+            ContentBig   = "";
+            ContentSmall = StringResource("ClearCacheSubViewDoneMessageSmall");
+
             m_closeButton.Visibility = Visibility.Visible;
             m_spinner.Visibility = Visibility.Hidden;
         }
@@ -113,10 +128,13 @@ namespace ExampleAppWPF
             Debug.Assert(m_isDisplayed);
 
             m_confirmButton.Visibility = Visibility.Collapsed;
+            m_cancelButton.Visibility = Visibility.Collapsed;
             m_closeButton.Visibility = Visibility.Collapsed;
             m_spinner.Visibility = Visibility.Visible;
-            Title = "Remove Stored Data";
-            Content = "Please wait, this may take a while...";
+
+            ContentBig   = "";
+            ContentSmall = StringResource("ClearCacheSubViewWorkingMessageSmall");
+
             m_cacheClearDialogMinimumEndTimeMilliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond + 3000;
 
             m_confirmationCallback();

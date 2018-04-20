@@ -6,6 +6,7 @@ set(currsources
   ../src/TagSearch/TagSearchRemovedMessage.h
   ../src/TagSearch/TagSearchSelectedMessage.cpp
   ../src/TagSearch/TagSearchSelectedMessage.h
+  ../src/TagSearch/TagSearchSwallowLoadedMessage.h
   ../src/TagSearch/CMakeLists.txt
   ../src/TagSearch/ISearchResultIconKeyMapper.h
   ../src/TagSearch/SearchResultIconKeyMapper.cpp

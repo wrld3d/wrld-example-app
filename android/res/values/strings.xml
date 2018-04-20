@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="legal_link"><a href='http://www.wrld3d.com/legal/'>Legal</a></string>
-    
-    <string name="about_page_title">About this app...</string>
-    
+    <string name="basic_example_label">search</string>
+    <string name="about_page_title">About</string>
+    <string name="about_page_developer">Developed by Bloomberg L.P and</string>
+    <string name="searchbox_query_hint">Search Bloomberg</string>
     <string name="options_title">Options</string>
     <string name="options_view_stream_wifi_only_togglebutton_text">Stream over Wi-fi only</string>
     <string name="options_view_cache_enabled_togglebutton_text">Enable data caching on device</string>
     <string name="options_view_clear_cache_button_text">Clear cached map data</string>
-    
+    <string name="options_view_playtutorial_button_text">Play tutorial again</string>
+    <string name="options_view_ok_button_text">OK</string>
+    <string name="options_view_replay_title">Replay Tutorials</string>
+    <string name="options_view_replay_message">The help panels will be visible again when you enter or leave an indoor map.</string>
+
+    <string name="cache_clear_title">Remove Stored Data</string>
+    <string name="cache_clear_warning">Warning!</string>
+    <string name="cache_clear_confirm">Are you sure you want to remove all stored data?</string>
+    <string name="cache_clear_working">Please wait, this may take a while...</string>
+    <string name="cache_clear_done">Map data deleted from device.</string>
+
     <string name="header_address">Address</string>
     <string name="header_phone">Phone</string>
     <string name="header_web">Web</string>
@@ -19,15 +30,15 @@
     <string name="header_tags">Tags</string>
     <string name="header_reviews">Reviews</string>
     <string name="header_availability">Availability</string>
-    
+
     <string name="content_desc_compass_lock">This icon represents that the compass is now locked to the device\'s heading.</string>
     <string name="content_desc_tag_icon">This icon represents a specific place of interest tag</string>
-    
+
     <string name="icon_me">Drag or tap this tab to open the User Options menu</string>
     <string name="icon_search">Drag or tap this tab to open the Search and Environment menu</string>
-    
+
     <string name="eegeo_logo">Eegeo company logo</string>
-    
+
     <string name="pin_confirmation_title">Drag the marker to place your report</string>
     <string name="poi_creation_details_terms_conditions">(Terms &amp; Conditions)</string>
     <string name="poi_creation_details_share">Share</string>
@@ -35,25 +46,25 @@
     <string name="poi_creation_details_description_hint">Tell us about your report...</string>
     <string name="poi_creation_details_image">The current image representing your Point of Interest.</string>
     <string name="my_pin_details_icon">Icon for My Report details dialog box</string>
-    
+
     <string name="placeholder">Lorem ipsum dolor sit amet.</string>
     <string name="settings_header">Settings</string>
     <string name="required_camera_permission_text">Please provide access to both Camera and Storage permissions for this functionality to work.</string>
     <string name="required_location_permission_text">Please provide access to Location permission for this functionality to work.</string>
+
     <string name="ok_text">Ok</string>
     <string name="cancel_text">Cancel</string>
+    <string name="yes_text">Yes</string>
+    <string name="no_text">No</string>
 
     <string name="pin_default_title">Untitled Report</string>
-    
+
     <string name="initial_ux_welcome_title">Welcome</string>
     <string name="initial_ux_search_dialog_title">Search</string>
     <string name="initial_ux_search_dialog_description">Find people, groups,\ndepts, meeting rooms...</string>
     <string name="initial_ux_compass_dialog_title">Compass</string>
     <string name="initial_ux_compass_dialog_description">Locate me.\nLock rotation to\ncompass.</string>
-    <string name="initial_ux_mapmode_dialog_title">Map Mode</string>
-    <string name="initial_ux_mapmode_dialog_description">Simple 2D View</string>
-    <string name="initial_ux_pincreation_dialog_title">Create Report</string>
-    <string name="initial_ux_pincreation_dialog_description">Submit damage\nreport or suggestions.</string>
+
 
     <string name="search_closest_label">Show me the closest...</string>
 </resources>

@@ -4,14 +4,12 @@
     xmlns:local="clr-namespace:ExampleAppWPF">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../Colours.xaml" />        
+        <ResourceDictionary Source="../Colours.xaml" />
         <ResourceDictionary Source="../TransparentButtonStyle.xaml" />
         <ResourceDictionary Source="../SimpleSlider.xaml" />
         <ResourceDictionary Source="../Views/Options/OptionsView.xaml" />
-        <ResourceDictionary Source="../Views/FlattenButton/FlattenButtonView.xaml" />
         <ResourceDictionary Source="../Views/Compass/CompassView.xaml" />
         <ResourceDictionary Source="../Views/AboutPage/AboutPageView.xaml" />
-        <ResourceDictionary Source="../Views/MyPinCreationInitiation/MyPinCreationButtonView.xaml" />
         <ResourceDictionary Source="../Views/MyPinCreationConfirmation/MyPinCreationConfirmationView.xaml" />
         <ResourceDictionary Source="../Views/MyPinCreationDetails/MyPinCreationDetailsView.xaml" />
         <ResourceDictionary Source="../Views/MyPinCreationDetails/MyPinDetailsView.xaml" />
@@ -19,6 +17,7 @@
         <ResourceDictionary Source="../Views/SettingsMenu/SettingsMenuView.xaml" />
         <ResourceDictionary Source="../Views/SearchMenu/SearchMenuView.xaml" />
         <ResourceDictionary Source="../Views/Options/OptionsCacheClearSubView.xaml" />
+        <ResourceDictionary Source="../Views/Options/OptionsMessage.xaml" />
         <ResourceDictionary Source="../Views/SearchResultPoi/eeGeoSearchResultsPoiView.xaml" />
 		<ResourceDictionary Source="../Views/SearchResultPoi/GeoNamesSearchResultsPoiView.xaml" />
         <ResourceDictionary Source="../Views/SearchResultPoi/SwallowDepartmentSearchResultsPoiView.xaml" />
@@ -34,6 +33,6 @@
         <ResourceDictionary Source="../Views/AdminLogin/AdminLogin.xaml" />
         <ResourceDictionary Source="../Views/GpsMarkerTutorial/GpsMarkerTutorialView.xaml" />
         <ResourceDictionary Source="../Views/InitialExperience/InitialExperienceView.xaml" />
+        <ResourceDictionary Source="../Views/InteriorsExplorer/InteriorStreamingDialogView.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
 </ResourceDictionary>

@@ -21,7 +21,7 @@ namespace ExampleApp
             {
             	m_pView = Eegeo_NEW(InteriorsExplorerView)(nativeState);
 
-                m_pStreamingDialogView = Eegeo_NEW(InteriorStreamingDialogView);
+                m_pStreamingDialogView = Eegeo_NEW(InteriorStreamingDialogView)(nativeState);
 
             	m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
             														   *m_pView,

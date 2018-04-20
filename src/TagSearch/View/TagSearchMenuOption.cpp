@@ -17,7 +17,6 @@ namespace ExampleApp
                     const Menu::View::IMenuReactionModel& menuReaction)
                 : m_model(model)
                 , m_menuViewModel(menuViewModel)
-                , m_messageBus(messageBus)
                 , m_menuReaction(menuReaction)
             {
             }
@@ -34,7 +33,10 @@ namespace ExampleApp
                     m_menuViewModel.Close();
                 }
 
+                /*
+                 * Not anymore
                 m_messageBus.Publish(TagSearchSelectedMessage(m_model.SearchTag(), m_model.Interior()));
+                 */
             }
         }
     }

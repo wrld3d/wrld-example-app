@@ -29,14 +29,18 @@ namespace ExampleApp
                 
                 void InsertTappedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveTappedCallback(Eegeo::Helpers::ICallback0& callback);
-                
+                void InsertTouchCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveTouchCallback(Eegeo::Helpers::ICallback0& callback);
+
                 void HandleViewTapped();
+                void HandleViewTouch();
 
             private:
 
                 ModalBackgroundView* m_pView;
                 
                 Eegeo::Helpers::CallbackCollection0 m_tappedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_touchCallbacks;
             };
         }
     }

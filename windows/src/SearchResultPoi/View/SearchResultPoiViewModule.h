@@ -10,8 +10,8 @@
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
 #include "DesktopSearchResultPoiController.h"
-#include "IMyPinCreationInitiationView.h"
 #include "InteriorSelectionModel.h"
+#include "SearchTags.h"
 
 namespace ExampleApp
 {
@@ -30,9 +30,9 @@ namespace ExampleApp
                     WindowsNativeState& nativeState,
                     ISearchResultPoiViewModel& searchResultPoiViewModel,
                     SearchMenu::View::ISearchMenuView& searchMenuView,
+                    const ExampleApp::Search::SdkModel::SearchTags& swallowSearchTags,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService,
-                    MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
                     Eegeo::Resources::Interiors::InteriorSelectionModel& interiorsSelectionModel,
 					bool isInKioskMode
                 );

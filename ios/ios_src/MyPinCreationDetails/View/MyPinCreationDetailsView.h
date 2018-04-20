@@ -4,8 +4,10 @@
 
 #import <UIKit/UIKit.h>
 #include "MyPinCreationDetailsViewInterop.h"
-
+#include "CustomSwitch.h"
 @class MyPinCreationDetailsView;
+
+
 
 @interface MyPinCreationDetailsView : UIView <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIPopoverControllerDelegate>
 {
@@ -18,12 +20,9 @@
     float m_maxImageWidth;
 
     BOOL m_usePopover;
-    float m_popoverX;
-    float m_popoverY;
 
     float m_controlContainerWidth;
     float m_controlContainerHeight;
-    float m_yCursor;
     float m_scrollBoxPadding;
 
     float m_scrollContentBottomMargin;
@@ -52,33 +51,36 @@
 
 - (void) addDoneToolBarToKeyboard:(UITextView *)textView;
 
-- (void) resizeImageViewToFit:(CGFloat)sourceImageWidth :(CGFloat)sourceImageHeight;
 
 - (void) setHasNetworkConnectivity:(BOOL) hasNetworkConnectivity
     :(BOOL) shouldVerifyShareSettings;
 
-@property (nonatomic, retain) UIView* pControlContainer;
 
-@property (nonatomic, retain) UIView* pTitleContainer;
-@property (nonatomic, retain) UIImageView* pTitleImage;
+
+@property (nonatomic, retain) UIView* pHeaderView;
 @property (nonatomic, retain) UITextField* pTitleText;
+@property (nonatomic, retain) UIButton* pCloseButton;
+@property (nonatomic, retain) UIView* pHeaderSeparator;
+
 
 @property (nonatomic, retain) UIView* pBodyContainer;
 @property (nonatomic, retain) UIScrollView* pBodyScrollView;
+
 @property (nonatomic, retain) UITextView* pPoiDescriptionBox;
 @property (nonatomic, retain) UILabel* pDescriptionPlaceholder;
-@property (nonatomic, retain) UIImage* pPlaceholderImage;
-@property (nonatomic, retain) UIImageView* pPoiImage;
-@property (nonatomic, retain) UIButton* pCheckbox;
+@property (nonatomic, retain) UIImageView* pPoiImageView;
+@property (nonatomic, retain) CustomSwitch* pShareSwitch;
 @property (nonatomic, retain) UILabel* pShareLabel;
-@property (nonatomic, retain) UILabel* pTermsLabel;
+@property (nonatomic, retain) UIImageView* pShareImageView;
+@property (nonatomic, retain) UIButton* pTermsButton;
 
+@property (nonatomic, retain) UIView* pContentSeperator;
 @property (nonatomic, retain) UIView* pFooterContainer;
-@property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIButton* pCameraButton;
 @property (nonatomic, retain) UIButton* pGalleryButton;
 @property (nonatomic, retain) UIButton* pConfirmButton;
 
+@property (nonatomic, retain) UIImage* pPlaceholderImage;
 @property (nonatomic, retain) UIPopoverController* pPopover;
 
 @end

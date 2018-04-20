@@ -17,19 +17,6 @@ if [[ ( $environment != 'production' ) && ( $environment != 'staging' ) ]]; then
   exit 1
 fi
 
-if [ $environment == 'production' ]; then
-  apiKeyFile=./src/ApiKey.h
-  apiKeyFileTemp=./src/ApiKeyTemp.h
-  git checkout $apiKeyFile
-  sed -e "s/project_swallow_config.json/project_swallow_production_config.json/g" $apiKeyFile > $apiKeyFileTemp
-
-  if [ $? -ne 0 ] ; then
-    echo "Failed to poke config file value into ApiKey file"  >&2
-    exit 1
-  fi
-
-  mv $apiKeyFileTemp $apiKeyFile
-fi
 
 rm -rf $pathToProjectDir"/build"
 

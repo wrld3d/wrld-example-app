@@ -5,7 +5,7 @@
 #include "ICallback.h"
 #include "ILocationService.h"
 #include "VectorMath.h"
-#include "Terrain.h"
+#include "BlueSphereModel.h"
 
 namespace ExampleApp
 {
@@ -16,32 +16,26 @@ namespace ExampleApp
             class GpsMarkerModel
             {
             public:
-                
                 GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
-                               Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& terrainHeightProvider);
+                               Eegeo::BlueSphere::BlueSphereModel& blueSphereModel);
                 ~GpsMarkerModel();
 
                 bool UpdateGpsPosition(float dt);
                 
-                bool HasLocation() const { return m_hasLocation; }
                 const Eegeo::dv3& GetCurrentLocationEcef() const { return m_currentLocationEcef; }
-                bool IsLocationIndoors() const { return m_locationService.IsIndoors(); }
-                bool IsAuthorized() const { return m_locationService.GetIsAuthorized(); }
                 
                 void UpdateHeading(float dt);
-                const double GetSmoothedHeadingDegrees() const;
                 
-                int GetCurrentFloorIndex() const;
+                void SetEnabled(bool enabled);
 
-                const float GetSphereHeightAboveMarker() const;
-                const float GetAnchorCyclinerHeightAboveMarker() const;
+                const float GetSphereHeightAboveBase() const;
+
+                bool IsLocationIndoors() const;
                 
             private:
-                
                 Eegeo::Location::ILocationService& m_locationService;
-                Eegeo::Resources::Terrain::Heights::TerrainHeightProvider& m_terrainHeightProvider;
+                Eegeo::BlueSphere::BlueSphereModel& m_blueSphereModel;
                 
-                bool m_hasLocation;
                 Eegeo::dv3 m_currentLocationEcef;
                 
                 float m_currentHeadingRadians;

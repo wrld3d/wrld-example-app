@@ -30,19 +30,17 @@ def verify_meeting_room(meeting_room_json, interior_mapping, space_id_to_wgs84):
         raise Exception("Skipping Room NOFLOOR %s(%s) in %s" % room_tuple)
     return True
 
-def process_room(meeting_room_json, feedconfig, interior_mapping, image_mapping, space_id_to_wgs84, space_id_to_highlight_id):
+def process_room(meeting_room_json, feedconfig, interior_mapping, image_mapping, space_id_to_wgs84):
     location_id = meeting_room_json["locationId"]
     space_id = meeting_room_json["spaceId"]
     interior_id = interior_mapping.get_interior_from_location(location_id)
     floor_name = meeting_room_json["floorName"]
     floor_id = interior_mapping.get_interior_floor_id(interior_id, floor_name)
     location = space_id_to_wgs84.get_lat_lon_for_spaceid(space_id)
-    highlight_id = meeting_room_json["name"]
+    highlight_id = "S{0}".format(space_id)
     space_class_id = -1
     if "spaceClassId" in meeting_room_json:
         space_class_id = meeting_room_json["spaceClassId"]
-    if space_id_to_highlight_id.contains_highlight_id(space_id):
-        highlight_id = space_id_to_highlight_id.get_highlight_id_for_spaceid(space_id)
     else:
         raise Exception("Unable to find highlight for {0},{1}".format(space_id, meeting_room_json["name"]))
     image_url = "{0}/images/{1}".format(feedconfig.cdn_base_path, "placeholder.jpg")
@@ -78,10 +76,10 @@ def process_room(meeting_room_json, feedconfig, interior_mapping, image_mapping,
         }
 
 
-def get_meeting_room_definitions(feedconfig, interior_mapping, image_mapping, space_id_to_wgs84, space_id_to_highlight_id):
+def get_meeting_room_definitions(region, site, feedconfig, interior_mapping, image_mapping, space_id_to_wgs84):
     transport = HmacTransport()
     client = Client(feedconfig.soap_service_wsdl_url, transport=transport)
-    response = client.service.GetMeetingSpaceDetails(feedconfig.soap_region)
+    response = client.service.GetMeetingSpaceDetails(region, site)
 
     if response is not None and response != "":
         meeting_room_list = {}
@@ -96,7 +94,7 @@ def get_meeting_room_definitions(feedconfig, interior_mapping, image_mapping, sp
                 except Exception, e:
                     print e
                     continue
-                yield process_room(meeting_room_json, feedconfig, interior_mapping, image_mapping, space_id_to_wgs84, space_id_to_highlight_id)
+                yield process_room(meeting_room_json, feedconfig, interior_mapping, image_mapping, space_id_to_wgs84)
 
 def delete_existing_meeting_room_pois(feedconfig, hotcold):
     url = "{0}/pois/?token={1}".format(hotcold.cold, feedconfig.wrld_dev_auth_token)
@@ -143,15 +141,15 @@ if __name__ == "__main__":
     interior_mapping.populate_from_files("../data")
     space_id_to_wgs84 = SpaceIdToWGS84()
     space_id_to_wgs84.populate_from_files("../generated")
-    space_id_to_highlight_id = SpaceIdToHighlightId()
-    space_id_to_highlight_id.populate_from_files("../generated")
     image_mapping = SpaceIdToImage()
     image_mapping.populate_from_files("../generated")
 
     meeting_room_json = []
-    for meeting_room in get_meeting_room_definitions(feedconfig, interior_mapping, image_mapping, space_id_to_wgs84, space_id_to_highlight_id):
-        meeting_room_json.append(meeting_room)
-        print "Adding Room: {0}\n".format(meeting_room)
+    for region in feedconfig.soap_regions:
+        for site in feedconfig.soap_regions[region]:    
+            for meeting_room in get_meeting_room_definitions(region, site, feedconfig, interior_mapping, image_mapping, space_id_to_wgs84):
+                meeting_room_json.append(meeting_room)
+                print "Adding Room: {0}\n".format(meeting_room)
 
     delete_existing_meeting_room_pois(feedconfig, hotcold)
 

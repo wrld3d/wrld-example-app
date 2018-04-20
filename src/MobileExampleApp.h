@@ -17,7 +17,6 @@
 #include "SearchResultSection.h"
 #include "SearchMenu.h"
 #include "Modality.h"
-#include "FlattenButton.h"
 #include "Search.h"
 #include "WorldPins.h"
 #include "SearchResultOnMap.h"
@@ -42,7 +41,6 @@
 #include "ReactionModelModule.h"
 #include "ReactionControllerModule.h"
 #include "SearchResultPoiModule.h"
-#include "FlattenButtonModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
 #include "CompassModule.h"
@@ -92,6 +90,7 @@
 #include "IUserIdleService.h"
 #include "GlobalAppModeTransitionRules.h"
 #include "CameraSplinePlaybackController.h"
+#include "Timer.h"
 
 namespace ExampleApp
 {
@@ -114,6 +113,7 @@ namespace ExampleApp
         float m_pinDiameter;
         bool m_requiresTransitionToInitialGPSLocation;
         
+        Eegeo::Helpers::Timer* m_pTimer;
         CameraTransitions::SdkModel::ICameraTransitionController* m_pCameraTransitionController;
         CameraTransitions::SdkModel::CameraTransitionService* m_pCameraTransitionService;
 
@@ -127,7 +127,6 @@ namespace ExampleApp
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
         ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;
-        ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule* m_pFlattenButtonModule;
         Search::SdkModel::ISearchModule* m_pSearchModule;
         Eegeo::Pins::PinsModule* m_pPinsModule;
         ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping* m_pWorldPinsIconMapping;
@@ -159,6 +158,7 @@ namespace ExampleApp
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
         Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
         Search::SdkModel::ISearchServiceModule* m_pTransitionPoiSearchServiceModule;
+        Search::SdkModel::IAutocompleteSuggestionQueryPerformer* m_pSuggestionsQueryPerformer;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
         Eegeo::Modules::SQLiteModule* m_pSQLiteModule;
@@ -195,11 +195,16 @@ namespace ExampleApp
 		void CreateSQLiteModule(Eegeo::UI::NativeUIFactories& nativeUIFactories);
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
-                                           const bool interiorsAffectedByFlattening);
+                                           const bool interiorsAffectedByFlattening,
+                                           const bool createBlueSphereViews);
 
         void DestroyApplicationModelModules();
 
+        void PopulateSearchMenu();
+
         void UpdateLoadingScreen(float dt);
+
+        void LoadMenuTag(Menu::View::IMenuModel& menuModel);
 
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> GetOpenableControls() const;
 
@@ -299,11 +304,6 @@ namespace ExampleApp
         const ExampleApp::Modality::View::IModalityModule& ModalityModule() const
         {
             return *m_pModalityModule;
-        }
-
-        const ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule& FlattenButtonModule() const
-        {
-            return *m_pFlattenButtonModule;
         }
 
         const Search::SdkModel::ISearchModule& SearchModule() const
