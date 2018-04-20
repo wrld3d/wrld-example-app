@@ -110,7 +110,6 @@
 #include "TagSearchModelFactory.h"
 #include "SearchTagsFactory.h"
 #include "ITagSearchRepository.h"
-#include "InteriorsHighlightVisibilityController.h"
 #include "Colors.h"
 #include "HighlightColorMapper.h"
 #include "DeepLinkModule.h"
@@ -154,7 +153,6 @@ namespace ExampleApp
             loadingScreenConfig.screenHeight = screenProperties.GetScreenHeight();
             loadingScreenConfig.screenOversampleScaling = screenProperties.GetOversampleScale();
             loadingScreenConfig.loadingBarOffset = Eegeo::v2(0.5f, 0.1f);
-
             Eegeo::Rendering::LoadingScreen* loadingScreen = Eegeo::Rendering::LoadingScreen::Create(
                                                                                                      Helpers::ImageHelpers::GetImageNameForDevice("SplashScreen", ".png"),
                                                                                                      loadingScreenConfig,
@@ -272,7 +270,6 @@ namespace ExampleApp
     , m_pInteriorsHighlightVisibilityController(NULL)
     , m_pInitialLocationModel(NULL)
     , m_pHighlightColorMapper(NULL)
-    , m_pInteriorsEntityIdHighlightVisibilityController(NULL)
     , m_pDeepLinkModule(NULL)
     , m_userIdleService(userIdleService)
     , m_pGlobalAppModeTransitionRules(NULL)
@@ -375,7 +372,7 @@ namespace ExampleApp
         Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& highlightService =
             m_pWorld->GetInteriorHighlightsModule().GetHighlightService();
         
-        m_pInteriorsHighlightVisibilityController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsHighlightVisibilityController)(
+        m_pInteriorsHighlightVisibilityController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController)(
                                                                                                                      mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
                                                                                                                      mapModule.GetInteriorsModelModule().GetInteriorsCellResourceObserver(),
                                                                                                                      m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
@@ -389,15 +386,6 @@ namespace ExampleApp
                                                                                                                      highlightService);
         
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
-
-        m_pInteriorsEntityIdHighlightVisibilityController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorsEntityIdHighlightVisibilityController)(
-                interiorsPresentationModule.GetInteriorInteractionModel(),
-                highlightService,
-                m_pSearchModule->GetSearchQueryPerformer(),
-                m_pSearchModule->GetSearchResultRepository(),
-                m_messageBus,
-                interiorsModelModule.GetInteriorsInstanceRepository(),
-                *m_pHighlightColorMapper);
 
         m_pCameraTransitionController = Eegeo_NEW(ExampleApp::CameraTransitions::SdkModel::CameraTransitionController)(*m_pGlobeCameraController,
                                                                                                                        m_pInteriorsExplorerModule->GetInteriorsCameraController(),
@@ -445,7 +433,7 @@ namespace ExampleApp
             const float heading = Eegeo::Math::Deg2Rad(applicationConfiguration.OrientationDegrees());
             m_pCameraTransitionController->StartTransitionTo(location.ToECEF(), m_applicationConfiguration.DistanceToInterestMetres(), heading, m_applicationConfiguration.IndoorId(), applicationConfiguration.FloorIndex());
         }
-        
+       
         m_pMapsceneModule = Eegeo_NEW(Mapscene::SdkModel::MapsceneModule)(*m_pCameraTransitionController,
                                                                           m_platformAbstractions.GetWebLoadRequestFactory(),
                                                                           m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
@@ -498,7 +486,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pStreamingVolume;
 
         Eegeo_DELETE m_pInteriorsHighlightVisibilityController;
-        Eegeo_DELETE m_pInteriorsEntityIdHighlightVisibilityController;
         Eegeo_DELETE m_pHighlightColorMapper;
         DestroyApplicationModelModules();
         Eegeo_DELETE m_pRayCaster;
