@@ -20,9 +20,7 @@
 #include "InitialExperience.h"
 #include "iOSPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
-#include "SettingsMenuViewIncludes.h"
-#include "SearchMenuViewIncludes.h"
-#include "SearchResultSectionViewIncludes.h"
+#include "SearchWidgetViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
 #include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
@@ -52,7 +50,6 @@
 #include "URLRequestHandler.h"
 #include "SurveyViewIncludes.h"
 #include "IMenuReactionModel.h"
-#include "TagSearchViewIncludes.h"
 #include "IndoorAtlasLocationModule.h"
 #include "SenionLabLocationModule.h"
 #include "CurrentLocationService.h"
@@ -122,12 +119,9 @@ private:
     Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
     ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule* m_pInteriorsLocationServiceModule;
     
-    ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
-    ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
-    ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
-    ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
+    ExampleApp::SearchMenu::View::ISearchWidgetViewModule* m_pSearchWidgetViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
