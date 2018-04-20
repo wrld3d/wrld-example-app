@@ -29,6 +29,7 @@
     bool m_htmlLoaded;
     bool m_webPageLoaded;
     bool m_webPageHeightSpecified;
+    CGFloat m_webViewHeight;
     
     UIImage* m_pRemovePinButtonBackgroundImage;
     UIImage* m_pRemovePinHighlightButtonBackgroundImage;

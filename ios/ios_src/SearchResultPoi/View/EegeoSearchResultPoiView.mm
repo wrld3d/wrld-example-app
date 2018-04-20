@@ -513,16 +513,24 @@ const int DeletePinAlertViewTag = 2;
     
     if(!m_eegeoModel.GetCustomViewUrl().empty())
     {
-        NSString *errorMessage = [NSString stringWithCString:m_eegeoModel.GetCustomViewUrl().c_str()
+        NSString *url = [NSString stringWithCString:m_eegeoModel.GetCustomViewUrl().c_str()
                                                     encoding:[NSString defaultCStringEncoding]];
-        int webViewHeight = cardContainerWidth;
+        
+        CGFloat provisionalWebViewHeight = cardContainerWidth;
+        
         if(m_eegeoModel.GetCustomViewHeight() != -1)
         {
             m_webPageHeightSpecified = true;
-            webViewHeight = m_eegeoModel.GetCustomViewHeight();
+            provisionalWebViewHeight = m_eegeoModel.GetCustomViewHeight();
         }
-        [self createWebViewWithHTML:CGRectMake(0, currentLabelY, cardContainerWidth, webViewHeight):errorMessage ];
-        currentLabelY += self.pWebView.frame.size.height + headerMargin;
+        
+        [self createWebViewWithURL:url offsetY:currentLabelY width:cardContainerWidth height:provisionalWebViewHeight];
+        
+        CGAffineTransform transform = self.pWebView.transform;
+        self.pWebView.transform = transform;
+        
+        currentLabelY += m_webViewHeight + headerMargin;
+        
         self.pPreviewImage.frame = CGRectMake(0, 0, 0, 0);
     }
     else if(!m_eegeoModel.GetImageUrl().empty())
@@ -757,11 +765,15 @@ const int DeletePinAlertViewTag = 2;
         frame.size.height = 1;
         self.pWebView.frame = frame;
         CGSize fittingSize = [self.pWebView sizeThatFits:CGSizeZero];
-        float minHeight = 300.f;
-        float newHeight = std::max((float)fittingSize.height, minHeight);
-        frame.size.height = newHeight;
+        CGFloat scale = frame.size.width/fittingSize.width;
+        CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
+        frame.size = fittingSize;
+        self.pWebView.layer.anchorPoint = CGPointMake(0.0f, 0.0f);
         self.pWebView.frame = frame;
-        self.pWebView.scalesPageToFit = YES;
+        self.pWebView.transform = transform;
+        m_webViewHeight = fittingSize.height*scale;
+        
+        self.pWebView.scrollView.scrollEnabled = NO;
         
         [self performDynamicContentLayout];
     }
@@ -774,15 +786,20 @@ const int DeletePinAlertViewTag = 2;
     [webView loadHTMLString:html baseURL:nil];
 }
 
-- (void) createWebViewWithHTML:(CGRect)frame :(NSString*)url
+- (void) createWebViewWithURL: (NSString*) url
+                      offsetY: (CGFloat) y
+                        width: (CGFloat) width
+                       height: (CGFloat) height
 {
      if(!m_webPageLoaded)
      {
-        self.pWebView.frame = frame;
+        self.pWebView.frame = CGRectMake(0.0,y,width,height);
 
         [self.pWebView setBackgroundColor:[UIColor clearColor]];
-
+        
         [self.pWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+         
+        m_webViewHeight = height;
         
         [self.pLabelsContainer addSubview:self.pWebView];
      }
@@ -1128,5 +1145,4 @@ const int DeletePinAlertViewTag = 2;
 - (UIView *)viewForZoomingInScrollView: (UIScrollView *)scrollView {
     return nil;
 }
-
 @end
