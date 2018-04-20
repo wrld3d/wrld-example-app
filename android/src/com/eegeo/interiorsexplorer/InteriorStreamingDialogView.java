@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.eegeo.ProjectSwallowApp.R;
@@ -20,6 +21,7 @@ public class InteriorStreamingDialogView
 
     private View m_view = null;
     private RelativeLayout m_uiRoot = null;
+    private LinearLayout m_dialogViewContainer = null;
     private ImageView m_streamingDialogSpinner = null;
     private ImageView m_streamingDialogLoaded = null;
 
@@ -36,11 +38,17 @@ public class InteriorStreamingDialogView
         m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
 
         m_view = m_activity.getLayoutInflater().inflate(R.layout.interior_streaming_dialog_layout, m_uiRoot, false);
+        m_dialogViewContainer = (LinearLayout)m_view.findViewById(R.id.interior_streaming_dialog_view_container);
         m_streamingDialogSpinner = (ImageView)m_view.findViewById(R.id.streaming_dialog_spinner);
         m_streamingDialogLoaded = (ImageView)m_view.findViewById(R.id.streaming_dialog_loaded);
 
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
+
+        if (!m_activity.getResources().getBoolean(R.bool.isPhone))
+        {
+            m_dialogViewContainer.getLayoutParams().width = 638;
+        }
 
         ViewCompat.setTranslationZ(m_view, 1.0f);
     }

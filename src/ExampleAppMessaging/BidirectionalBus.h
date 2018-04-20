@@ -9,6 +9,13 @@
 #include "NativeToUiMessageCatalog.h"
 #include "UiToNativeMessageCatalog.h"
 
+//#define LOG_PUBLISH
+// Eegeo_TTY is not thread-safe - use during debugging at your own risk, always disable it for production
+
+#ifdef LOG_PUBLISH
+#include <typeinfo>
+#endif
+
 namespace ExampleApp
 {
     namespace ExampleAppMessaging
@@ -34,6 +41,9 @@ namespace ExampleApp
             template <typename TMessage>
             void Publish(const TMessage& message)
             {
+#ifdef LOG_PUBLISH
+				Eegeo_TTY("BidirectionalBus::Publish %s\n", typeid(TMessage).name());
+#endif
                 m_dispatchToUiQueue.TryEnqueue(message);
                 m_dispatchToNativeQueue.TryEnqueue(message);
 #ifndef EEGEO_DROID

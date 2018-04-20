@@ -24,9 +24,9 @@ namespace ExampleApp
                 mIsCacheEnabledSelected.SetupMethod(m_uiViewClass, m_uiView, "IsCacheEnabledSelected");
                 mOpenOptions.SetupMethod(m_uiViewClass, m_uiView, "OpenOptions");
                 mCloseOptions.SetupMethod(m_uiViewClass, m_uiView, "CloseOptions");
+				mOpenClearCacheWarning.SetupMethod(m_uiViewClass, m_uiView, "OpenClearCacheWarning");
                 mConcludeCacheClearCeremony.SetupMethod(m_uiViewClass, m_uiView, "ConcludeCacheClearCeremony");
-                mSetCacheEnabledSelected.SetupMethod(m_uiViewClass, m_uiView, "SetCacheEnabledSelected");
-                mSetReplayTutorialsSelected.SetupMethod(m_uiViewClass, m_uiView, "SetReplayTutorialsSelected");
+				mSetCacheEnabledSelected.SetupMethod(m_uiViewClass, m_uiView, "SetCacheEnabledSelected");
             }
 
             OptionsView::~OptionsView()
@@ -54,14 +54,9 @@ namespace ExampleApp
                 mSetCacheEnabledSelected(isCacheEnabledSelected);
             }
 
-            void OptionsView::SetReplayTutorialsSelected(bool isReplayTutorialsSelected)
-            {
-                mSetReplayTutorialsSelected(isReplayTutorialsSelected);
-            }
-
-            void OptionsView::Open()
-            {
-                mOpenOptions();
+			void OptionsView::Open()
+			{
+				mOpenOptions();
             }
 
             void OptionsView::Close()
@@ -69,15 +64,20 @@ namespace ExampleApp
                 mCloseOptions();
             }
 
+			void OptionsView::OpenClearCacheWarning()
+			{
+				mOpenClearCacheWarning();
+			}
+
             void OptionsView::ConcludeCacheClearCeremony()
             {
                 mConcludeCacheClearCeremony();
             }
 
-            void OptionsView::HandleCloseSelected()
-            {
-                m_closeCallbacks.ExecuteCallbacks();
-            }
+			void OptionsView::HandleCloseSelected()
+			{
+				m_closeCallbacks.ExecuteCallbacks();
+			}
 
             void OptionsView::HandleStreamOverWifiOnlySelectionStateChanged()
             {
@@ -89,14 +89,19 @@ namespace ExampleApp
                 m_cacheEnabledCallbacks.ExecuteCallbacks();
             }
 
-            void OptionsView::HandleClearCacheSelected()
-            {
-                m_clearCacheCallbacks.ExecuteCallbacks();
-            }
+			void OptionsView::HandleClearCacheSelected()
+			{
+				m_clearCacheCallbacks.ExecuteCallbacks();
+			}
 
-            void OptionsView::HandleReplayTutorialsToggled(bool enableTutorials)
+			void OptionsView::HandleClearCacheTriggered()
+			{
+				m_clearCacheTriggeredCallbacks.ExecuteCallbacks();
+			}
+
+            void OptionsView::HandleReplayTutorialsSelected()
             {
-                m_replayTutorialsCallbacks.ExecuteCallbacks(enableTutorials);
+                m_replayTutorialsCallbacks.ExecuteCallbacks();
             }
 
             void OptionsView::InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback)
@@ -119,12 +124,12 @@ namespace ExampleApp
                 m_wifiOnlyCallbacks.RemoveCallback(callback);
             }
 
-            void OptionsView::InsertCacheEnabledSelectionCallback(Eegeo::Helpers::ICallback0& callback)
+            void OptionsView::InsertCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_cacheEnabledCallbacks.AddCallback(callback);
             }
 
-            void OptionsView::RemoveCacheEnabledSelectionCallback(Eegeo::Helpers::ICallback0& callback)
+            void OptionsView::RemoveCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_cacheEnabledCallbacks.RemoveCallback(callback);
             }
@@ -139,12 +144,22 @@ namespace ExampleApp
                 m_clearCacheCallbacks.RemoveCallback(callback);
             }
 
-            void OptionsView::InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+			void OptionsView::InsertClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback)
+			{
+				m_clearCacheTriggeredCallbacks.AddCallback(callback);
+			}
+
+			void OptionsView::RemoveClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback)
+			{
+				m_clearCacheTriggeredCallbacks.RemoveCallback(callback);
+			}
+
+            void OptionsView::InsertReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_replayTutorialsCallbacks.AddCallback(callback);
             }
 
-            void OptionsView::RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback)
+            void OptionsView::RemoveReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_replayTutorialsCallbacks.RemoveCallback(callback);
             }

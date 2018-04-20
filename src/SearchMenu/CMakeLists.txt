@@ -5,6 +5,10 @@ set(currsources
   ../src/SearchMenu/SearchMenu.h
   ../src/SearchMenu/SearchMenuPerformedSearchMessage.cpp
   ../src/SearchMenu/SearchMenuPerformedSearchMessage.h
+  ../src/SearchMenu/SearchMenuSearchWithContextMessage.cpp
+  ../src/SearchMenu/SearchMenuSearchWithContextMessage.h
+  ../src/SearchMenu/AutocompleteSuggestionsMessage.cpp
+  ../src/SearchMenu/AutocompleteSuggestionsMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\SearchMenu FILES ${currsources})

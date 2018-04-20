@@ -36,6 +36,7 @@ namespace ExampleApp
             , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
             , m_worldPinHiddenStateChangedMessageBinding(this, &WorldPinsService::OnWorldPinHiddenStateChanged)
             , m_onSearchResultSelected(this, &WorldPinsService::OnMenuItemSelected)
+            , m_onSearchResultCleared(this, &WorldPinsService::OnSearchResultCleared)
             , m_messageBus(messageBus)
             , m_navigationService(navigationService)
             , m_pSelectedPinHighlight(nullptr)
@@ -45,10 +46,12 @@ namespace ExampleApp
             {
                 m_sdkModelDomainEventBus.Subscribe(m_worldPinHiddenStateChangedMessageBinding);
                 m_messageBus.SubscribeNative(m_onSearchResultSelected);
+                m_messageBus.SubscribeNative(m_onSearchResultCleared);
             }
             
             WorldPinsService::~WorldPinsService()
             {
+                m_messageBus.UnsubscribeNative(m_onSearchResultCleared);
                 m_messageBus.UnsubscribeNative(m_onSearchResultSelected);
                 m_sdkModelDomainEventBus.Unsubscribe(m_worldPinHiddenStateChangedMessageBinding);
             }
@@ -101,7 +104,7 @@ namespace ExampleApp
                 
                 const Eegeo::Markers::IMarker::IdType markerId = m_markerService.Create(markerCreateParams);
                 const WorldPinItemModel::WorldPinItemModelId pinId = markerId;
-                
+
                 m_pinsToIconKeys[pinId] = pinIconKey;
                 
                 Eegeo_ASSERT(m_pinsToSelectionHandlers.find(pinId) == m_pinsToSelectionHandlers.end(), "Attempting to add same pin ID %d twice.\n", pinId);
@@ -119,8 +122,18 @@ namespace ExampleApp
                                                                         visibilityMask,
                                                                         m_sdkModelDomainEventBus,
                                                                         identifier);
-            
+
                 m_worldPinsRepository.AddItem(model);
+
+                // Part of hacky fix for MPLY-9055
+                // if we've previously selected a search result, then clear the search results by
+                // re-searching, the pins will be removed then re-added. When a pin is added that
+                // represents the _same_ item that was previously selected, we want it to be
+                // highlighted
+                if(model->GetIdentifier() == m_selectedSearchResultId)
+                {
+                    AddHighlight(model);
+                }
 
                 return model;
             }
@@ -169,7 +182,7 @@ namespace ExampleApp
             {
                 if(pinItemModel != nullptr)
                 {
-                    bool pinAlreadySelected = m_selectedPinId == pinItemModel->Id();
+                    const bool pinAlreadySelected = m_selectedPinId == pinItemModel->Id();
 
                     UpdateLabelStyle(pinItemModel, "selected_default");
 
@@ -270,13 +283,18 @@ namespace ExampleApp
                     .Build();
 
                 const Eegeo::Markers::IMarker::IdType markerId = m_markerService.Create(markerCreateParams);
-                pinId = markerId;
+                const auto newPinId = markerId;
 
-                m_pinsToSelectionHandlers[pinId] = pSelectionHandler;
-                m_pinsToVisbilityChangedHandlers[pinId] = pVisibilityStateChangedHandler;
-                m_pinsToIconKeys[pinId] = iconKey;
+                Eegeo_ASSERT(m_pinsToSelectionHandlers.find(newPinId) == m_pinsToSelectionHandlers.end());
+                m_pinsToSelectionHandlers[newPinId] = pSelectionHandler;
 
-                pinItemModel->SetId(pinId);
+                Eegeo_ASSERT(m_pinsToVisbilityChangedHandlers.find(newPinId) == m_pinsToVisbilityChangedHandlers.end());
+                m_pinsToVisbilityChangedHandlers[newPinId] = pVisibilityStateChangedHandler;
+
+                Eegeo_ASSERT(m_pinsToIconKeys.find(newPinId) == m_pinsToIconKeys.end());
+                m_pinsToIconKeys[newPinId] = iconKey;
+
+                pinItemModel->SetId(newPinId);
             }
             
             void WorldPinsService::UpdatePinCategory(const WorldPinItemModel& pinItemModel, const std::string& iconKey)
@@ -324,7 +342,9 @@ namespace ExampleApp
                     }
 
                     selectionHandler->SelectPin();
-                    ClearSelectedSearchResult();
+
+                    // Part of hacky fix for MPLY-9055
+                    //ClearSelectedSearchResult();
                 }
             }
             
@@ -433,6 +453,11 @@ namespace ExampleApp
                 
                     AddHighlight(pWorldPinItemModel);
                 }
+            }
+            
+            void WorldPinsService::OnSearchResultCleared(const SearchResultSection::SearchResultViewClearedMessage& message)
+            {
+                ClearSelectedSearchResult();
             }
             
             void WorldPinsService::ClearSelectedSearchResult()

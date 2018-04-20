@@ -89,8 +89,8 @@ class PythonSoapService(spyne.Service):
 
         return header, hmac_signature_message, is_valid_key
 
-    @spyne.rpc(Unicode, _returns=Unicode)
-    def GetMeetingSpaceDetails(ctx, regionCode):
+    @spyne.rpc(Unicode, Unicode, _returns=Unicode)
+    def GetMeetingSpaceDetails(ctx, regionCode, locationId):
         header, body, is_valid_key = PythonSoapService.__get_http_head_body(ctx)
         if not is_valid_key:
             return json.dumps({"result": "invalid key"})
@@ -101,8 +101,8 @@ class PythonSoapService(spyne.Service):
 
         return json.dumps({"result": {"message": "", "rCode": 0}, "meetingSpaceDetails": []})
 
-    @spyne.rpc(Unicode, _returns=Unicode)
-    def GetMeetingSpaceOccupancyDetails(ctx, regionCode):
+    @spyne.rpc(Unicode, Unicode, _returns=Unicode)
+    def GetMeetingSpaceOccupancyDetails(ctx, regionCode, locationId):
         header, body, is_valid_key = PythonSoapService.__get_http_head_body(ctx)
         if not is_valid_key:
             return json.dumps({"result": "invalid key"})

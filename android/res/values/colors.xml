@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="gold">#1256be</color>
+    <color name="gold">#1256be</color> <!-- not really -->
     <color name="olive">#94a847</color>
     <color name="white">#ffffff</color>
+    <color name="whitesmoke">#f0f0f0</color>
+	<color name="darkersteelblue">#12264c</color>
+	<color name="darksteelblue">#2855aa</color>
+	<color name="lightsteelblue">#cfe0fe</color>
+    <color name="slateblue">#6b8ecd</color>
     <color name="black">#000000</color>
+	<color name="evendarkergrey">#606060</color>
+	<color name="darkergrey">#707070</color>
     <color name="darkgrey">#777777</color>
     <color name="grey">#aaaaaa</color>
     <color name="lightgrey">#cccccc</color>
@@ -30,6 +37,6 @@
 	<color name="table_sub_cell_text">#777777</color>
 	<color name="table_cell_highlight">#CCCCCC</color>
 	<color name="menu_header_separator">#002B63</color>
-	
 	<color name="initial_ux_intro_banner_outline">#80FFFFFF</color>
+	<color name="scrollbars">#1256B0</color>
 </resources>

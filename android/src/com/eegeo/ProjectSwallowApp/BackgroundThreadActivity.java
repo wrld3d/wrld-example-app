@@ -6,6 +6,8 @@ import com.eegeo.ProjectSwallowApp.R;
 import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
+import com.wrld.widgets.searchbox.WrldSearchWidget;
+import android.app.SearchManager;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 
 import android.Manifest;
@@ -17,6 +19,7 @@ import android.os.SystemClock;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.app.Activity;
 import android.content.Intent;
@@ -56,19 +59,19 @@ public class BackgroundThreadActivity extends MainActivity
             finish();
             return;
         }
-        
+
         PackageInfo pInfo = null;
-        try 
+        try
         {
-        	pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-        } 
-        catch (NameNotFoundException e) 
-        {
-        	e.printStackTrace();
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
         }
-        final String versionName = pInfo.versionName;
-        final int versionCode = pInfo.versionCode;
-        
+        catch (NameNotFoundException e)
+        {
+            Log.e(this.getClass().getName(), "Failed to retrieve package info", e);
+        }
+        final String versionName = pInfo != null? pInfo.versionName : "PACKAGE INFO NOT RETRIEVED";
+        final int versionCode = pInfo != null? pInfo.versionCode : 0;
+
         m_rotationInitialised = !setDisplayOrientationBasedOnDeviceProperties();
 
         setContentView(R.layout.activity_main);
@@ -105,7 +108,7 @@ public class BackgroundThreadActivity extends MainActivity
             public void run()
             {
                 m_nativeAppWindowPtr = NativeJniCalls.createNativeCode(activity, getAssets(), dpi, density, versionName, versionCode);
-                
+
                 if(m_nativeAppWindowPtr == 0)
                 {
                     throw new RuntimeException("Failed to start native code.");
@@ -229,7 +232,14 @@ public class BackgroundThreadActivity extends MainActivity
     @Override
     public void onNewIntent(Intent intent) {
         m_deepLinkUrlData = intent.getData();
-
+        setIntent(intent);
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            if(query != null) {
+                WrldSearchWidget searchWidget = (WrldSearchWidget)getFragmentManager().findFragmentById(R.id.search_widget);
+                searchWidget.doSearch(query, null);
+            }
+        }
     }
 
     public void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer)
@@ -260,7 +270,7 @@ public class BackgroundThreadActivity extends MainActivity
         super.onConfigurationChanged(newConfiguration);
         m_rotationInitialised = true;
     }
-    
+
     private boolean setDisplayOrientationBasedOnDeviceProperties()
     {
         DisplayMetrics displayMetrics = new DisplayMetrics();

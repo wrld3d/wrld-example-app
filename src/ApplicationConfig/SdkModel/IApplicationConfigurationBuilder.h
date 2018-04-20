@@ -33,6 +33,8 @@ namespace ExampleApp
                 
                 virtual IApplicationConfigurationBuilder& SetTryStartAtGpsLocation(bool tryStartAtGpsLocation) = 0;
                 
+                virtual IApplicationConfigurationBuilder& SetTryStartAtGpsTimeout(const double tryStartAtGpsTimeout) = 0;
+                
                 virtual IApplicationConfigurationBuilder& SetPerformStartupSearch(bool performStartupSearch) = 0;
                 
                 virtual IApplicationConfigurationBuilder& SetStartupSearchTag(std::string startupSearchTag) = 0;

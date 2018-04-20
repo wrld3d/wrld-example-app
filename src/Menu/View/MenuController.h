@@ -35,6 +35,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<MenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenableStateChanged;
                 Eegeo::Helpers::TCallback2<MenuController, IMenuSectionViewModel&, bool> m_onMenuSectionExpandedStateChanged;
                 Eegeo::Helpers::TCallback1<MenuController, const AppModes::AppModeChangedMessage&> m_onAppModeChanged;
+                Eegeo::Helpers::TCallback1<MenuController, const DeepLink::DeepLinkOpenedMessage&> m_onDeepLinkOpenedHandler;
 
                 Eegeo::Helpers::TFunc0<MenuController, bool> m_tryDragFunc;
                 
@@ -81,6 +82,8 @@ namespace ExampleApp
                 virtual void OnItemSelected(int& sectionIndex, int& itemIndex);
 
                 virtual void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
+                
+                virtual void OnDeepLinkOpenedMessage(const DeepLink::DeepLinkOpenedMessage& message);
 
             public:
                 MenuController(

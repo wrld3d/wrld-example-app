@@ -22,8 +22,11 @@ extern "C"
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
 
-    JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_PlayTutorialAgainToggled(
+    JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_ClearCacheTriggered(
         JNIEnv* jenv, jobject obj,
-        jlong nativeObjectPtr,
-        jboolean enableTutorials);
+        jlong nativeObjectPtr);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_PlayTutorialAgainSelected(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr);
 }

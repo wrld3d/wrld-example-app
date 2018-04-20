@@ -7,6 +7,7 @@
 #include "AndroidNativeState.h"
 #include "BidirectionalBus.h"
 #include "CameraTransitions.h"
+#include "Compass.h"
 
 namespace ExampleApp
 {
@@ -19,7 +20,8 @@ namespace ExampleApp
 			public:
 				InitialExperienceIntroViewModule(AndroidNativeState& nativeState,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
+                                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+												 const Compass::SdkModel::ICompassModule& compassModule);
 				~InitialExperienceIntroViewModule();
 
 				InitialExperienceIntroController& GetController() { return *m_pController; }

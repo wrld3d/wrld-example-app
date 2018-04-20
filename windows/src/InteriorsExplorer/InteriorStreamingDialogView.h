@@ -22,13 +22,14 @@ namespace ExampleApp
                 Helpers::ReflectionHelpers::Method<void> mDestroy;
                 Helpers::ReflectionHelpers::Method<void> mOpenInteriorStreamingDialogView;
                 Helpers::ReflectionHelpers::Method<void> mDismissInteriorStreamingDialogView;
+                Helpers::ReflectionHelpers::Method<void> mCancelInteriorStreamingDialogView;
 
             public:
                 InteriorStreamingDialogView(WindowsNativeState& nativeState);
                 ~InteriorStreamingDialogView();
 
                 void Show();
-                void Hide();
+                void Hide(bool interiorLoaded);
             };
         }
     }

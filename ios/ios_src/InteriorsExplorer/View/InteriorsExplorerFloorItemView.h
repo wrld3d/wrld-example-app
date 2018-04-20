@@ -14,7 +14,11 @@
     
 }
 
-- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(float)pixelScale :(NSString*)reuseIdentifier;
+- (id)initWithFrame:(CGRect)frame
+            spacing:(CGFloat)labelSpacing
+       dividerWidth:(CGFloat)dividerWidth
+            centerX:(CGFloat)x
+    reuseIdentifier:(NSString*)reuseId;
 
 - (void) setFloor :(NSString*)floorName :(BOOL)isTop :(BOOL)isBottom;
 

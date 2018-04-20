@@ -25,81 +25,72 @@
         self.alpha = 0.f;
         m_stateChangeAnimationTimeSeconds = 0.2f;
         
-        const CGFloat buttonSize = 20.0;
-
-        self.pControlContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pControlContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self addSubview: self.pControlContainer];
-
-        self.pCloseButtonContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButtonContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self.pControlContainer addSubview: self.pCloseButtonContainer];
-
-        self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
-        [self.pCloseButton addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-        [self.pCloseButtonContainer addSubview: self.pCloseButton];
-
+        self.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
+        
+        self.pHeaderView = [[[HeaderView alloc] initWithWidth:200 title:@"Options"] autorelease];
+        [self addSubview:self.pHeaderView];
+        [self.pHeaderView addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+        
         self.pContentContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pContentContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pControlContainer addSubview: self.pContentContainer];
-
-        self.pOptionsContainer = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pOptionsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pContentContainer addSubview: self.pOptionsContainer];
-
-        self.pHeadlineContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pHeadlineContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pControlContainer addSubview: self.pHeadlineContainer];
-
-        self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
-        [self.pHeadlineContainer addSubview: self.pTitleLabel];
+        [self addSubview: self.pContentContainer];
         
-        self.pWifiOnlyCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:buttonSize
-                                                                                :"button_checkbox_off"
-                                                                                :"button_checkbox_on"
-                                                                                :"Stream over Wi-fi only"
-                                                                                :false
-                                                                                :self
-                                                                                :@selector(wifiCheckboxSelectionHandler)] autorelease];
-
-        [self.pOptionsContainer addSubview: self.pWifiOnlyCheckbox];
+        self.pWifiOnlyLabel = [[[UILabel alloc] init] autorelease];
+        self.pWifiOnlyLabel.text = @"Stream over Wi-fi only";
+        self.pWifiOnlyLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
+        [self.pContentContainer addSubview:self.pWifiOnlyLabel];
         
-        self.pCacheEnabledCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:buttonSize
-                                                                                    :"button_checkbox_off"
-                                                                                    :"button_checkbox_on"
-                                                                                    :"Enable data caching on device"
-                                                                                    :false
-                                                                                    :self
-                                                                                    :@selector(cacheCheckboxSelectionHandler)] autorelease];
-
-        [self.pOptionsContainer addSubview: self.pCacheEnabledCheckbox];
+        self.pCacheEnabledLabel = [[[UILabel alloc] init] autorelease];
+        self.pCacheEnabledLabel.text = @"Enable data caching on device";
+        self.pCacheEnabledLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
+        [self.pContentContainer addSubview: self.pCacheEnabledLabel];
         
+        self.pClearCacheLabel = [[[UILabel alloc] init] autorelease];
+        self.pClearCacheLabel.text = @"Clear cached map data";
+        self.pClearCacheLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
+        [self.pContentContainer addSubview:self.pClearCacheLabel];
         
-        self.pClearCacheCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:buttonSize
-                                                                                    :"button_clear_cache_off"
-                                                                                    :"button_clear_cache_on"
-                                                                                    :"Clear cached map data"
-                                                                                    :false
-                                                                                    :self
-                                                                                    :@selector(cacheClearSelectionHandler)] autorelease];
+        self.pReplayTutorialsLabel = [[[UILabel alloc] init] autorelease];
+        self.pReplayTutorialsLabel.text = @"Play tutorial again";
+        self.pReplayTutorialsLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
+        [self.pContentContainer addSubview:self.pReplayTutorialsLabel];
         
-        [self.pOptionsContainer addSubview: self.pClearCacheCheckbox];
+        UIImage *onImage =   [UIImage imageNamed:@"FullSwitchOn"];
+        UIImage *offImage =  [UIImage imageNamed:@"FullSwitchOff"];
+       
+        self.pWifiOnlySwitch = [[[CustomSwitch alloc] initWithOnImage:onImage offImage:offImage] autorelease];
+        [self.pWifiOnlySwitch addTarget:self action:@selector(wifiCheckboxSelectionHandler) forControlEvents:UIControlEventValueChanged];
+        [self.pContentContainer addSubview:self.pWifiOnlySwitch];
         
-        self.pReplayTutorialsCheckbox = [[[UILabelledCheckboxView alloc] initWithParams:buttonSize
-                                                                                       :"button_playtutorial_off"
-                                                                                       :"button_playtutorial_on"
-                                                                                       :"Play tutorial again"
-                                                                                       :false
-                                                                                       :self
-                                                                                       :@selector(replayTutorialsSelectionHandler)] autorelease];
+        self.pCacheEnabledSwitch = [[[CustomSwitch alloc] initWithOnImage:onImage offImage:offImage] autorelease];
         
-        [self.pOptionsContainer addSubview: self.pReplayTutorialsCheckbox];
+        [self.pCacheEnabledSwitch addTarget:self action:@selector(cacheEnabledCheckboxSelectionHandler) forControlEvents:UIControlEventValueChanged];
+        [self.pContentContainer addSubview:self.pCacheEnabledSwitch];
+        
+        self.pClearCacheButton = [[[UIButton alloc] init] autorelease];
+        [self.pClearCacheButton setTitle:@"OK" forState:UIControlStateNormal];
+        [self.pClearCacheButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        self.pClearCacheButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
+        [self.pClearCacheButton addTarget:self action:@selector(cacheClearSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
+        [self.pContentContainer addSubview:self.pClearCacheButton];
+        
+        self.pReplayTutorialsButton = [[[UIButton alloc] init] autorelease];
+        [self.pReplayTutorialsButton addTarget:self action:@selector(replayTutorialsSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
+        self.pReplayTutorialsButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
+        [self.pReplayTutorialsButton setTitle:@"OK" forState:UIControlStateNormal];
+        [self.pReplayTutorialsButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [self.pContentContainer addSubview:self.pReplayTutorialsButton];
+        
+        self.pOptionsCacheClearSubView = [[[OptionsCacheClearSubView alloc] init] autorelease];
+        self.pReplayTutorialsMessage = [[[MessageView alloc] initWithFrame:self.bounds title:@"Replay Tutorials" message:@"The help panels will be visible again when you enter or leave a building."] autorelease];
+        self.pReplayTutorialsMessage.hidden = true;
+        [self addSubview:self.pReplayTutorialsMessage];
+        [self.pReplayTutorialsMessage addTarget:self
+                                         action:@selector(handleReplayMessageClosed)
+                               forControlEvents:UIControlEventTouchUpInside];
         
         [self setTouchExclusivity:self];
         
-        self.pOptionsCacheClearSubView = [[[OptionsCacheClearSubView alloc] init] autorelease];
     }
 
     return self;
@@ -107,45 +98,43 @@
 
 - (void)dealloc
 {
-    [self.pCloseButton removeFromSuperview];
-    [self.pCloseButton release];
-
-    [self.pCloseButtonContainer removeFromSuperview];
-    [self.pCloseButtonContainer release];
-
-    [self.pControlContainer removeFromSuperview];
-    [self.pControlContainer release];
-
-    [self.pHeadlineContainer removeFromSuperview];
-    [self.pHeadlineContainer release];
     
-    [self.pReplayTutorialsCheckbox removeFromSuperview];
-    [self.pReplayTutorialsCheckbox release];
+    [self.pHeaderView removeFromSuperview];
+    [self.pHeaderView release];
+    
+    [self.pWifiOnlyLabel removeFromSuperview];
+    [self.pWifiOnlyLabel release];
+    
+    [self.pCacheEnabledLabel removeFromSuperview];
+    [self.pCacheEnabledLabel release];
     
     [self.pClearCacheLabel removeFromSuperview];
     [self.pClearCacheLabel release];
     
-    [self.pClearCacheCheckbox removeFromSuperview];
-    [self.pClearCacheCheckbox release];
+    [self.pReplayTutorialsLabel removeFromSuperview];
+    [self.pReplayTutorialsLabel release];
     
-    [self.pCacheEnabledCheckbox removeFromSuperview];
-    [self.pCacheEnabledCheckbox release];
+    [self.pWifiOnlySwitch removeFromSuperview];
+    [self.pWifiOnlySwitch release];
     
-    [self.pWifiOnlyCheckbox removeFromSuperview];
-    [self.pWifiOnlyCheckbox release];
+    [self.pCacheEnabledSwitch removeFromSuperview];
+    [self.pCacheEnabledSwitch release];
     
-    [self.pOptionsContainer removeFromSuperview];
-    [self.pOptionsContainer release];
-
+    [self.pClearCacheButton removeFromSuperview];
+    [self.pClearCacheButton release];
+    
+    [self.pReplayTutorialsButton removeFromSuperview];
+    [self.pReplayTutorialsButton release];
+    
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
-
-    [self.pTitleLabel removeFromSuperview];
-    [self.pTitleLabel release];
     
     [self.pOptionsCacheClearSubView removeFromSuperview];
     [self.pOptionsCacheClearSubView release];
-
+    
+    [self.pReplayTutorialsMessage removeFromSuperview];
+    [self.pReplayTutorialsMessage release];
+    
     [self removeFromSuperview];
     [super dealloc];
     Eegeo_DELETE m_pInterop;
@@ -155,126 +144,112 @@
 {
     self.alpha = 0.f;
 
+    CGFloat rowHeight = 44;
+    
     const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
     const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
     const bool useFullScreenSize = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
     const float boundsOccupyWidthMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f) * 0.6f);
-    const float boundsOccupyHeightMultiplier = useFullScreenSize ? 0.9f : ((2.f/3.f));
     const float mainWindowWidth = boundsWidth * boundsOccupyWidthMultiplier;
-    const float mainWindowHeight = boundsHeight * boundsOccupyHeightMultiplier;
+    
+    self.pHeaderView.width = mainWindowWidth;
+    [self.pHeaderView layoutIfNeeded];
+   
+    UIEdgeInsets innerMargin = UIEdgeInsetsMake(self.pHeaderView.margin,self.pHeaderView.margin,self.pHeaderView.margin,self.pHeaderView.margin);
+    CGFloat innerMarginWidth = mainWindowWidth - innerMargin.left - innerMargin.right;
+    CGFloat contentY = self.pHeaderView.frame.origin.y +  self.pHeaderView.frame.size.height;
+   
+    const CGFloat contentHeight = 4*rowHeight + innerMargin.top + innerMargin.bottom;
+    const float mainWindowHeight = self.pHeaderView.frame.size.height + contentHeight;
+    
     const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
     const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
-
+    
     self.frame = CGRectMake(mainWindowX,
                             mainWindowY,
                             mainWindowWidth,
                             mainWindowHeight);
-
-    self.pControlContainer.frame = CGRectMake(0.f,
-                                   0.f,
-                                   mainWindowWidth,
-                                   mainWindowHeight);
-
-    const float headlineHeight = 50.f;
-    const float headlineMargin = 10.f;
-    const float closeButtonSectionHeight = 64.f;
-    const float headlineOffsetY = 10.f;
-    const float closeButtonSectionOffsetY = mainWindowHeight - closeButtonSectionHeight;
-    const float contentSectionOffsetY = headlineOffsetY + headlineHeight;
-    const float contentSectionHeight = mainWindowHeight - (closeButtonSectionHeight + contentSectionOffsetY);
-
-    self.pHeadlineContainer.frame = CGRectMake(0.f,
-                                    headlineOffsetY,
-                                    mainWindowWidth,
-                                    headlineHeight);
-
-    self.pContentContainer.frame = CGRectMake(0.f,
-                                   contentSectionOffsetY,
-                                   mainWindowWidth,
-                                   contentSectionHeight);
-
-    const float labelsSectionOffsetX = 8.f;
-    const float labelsSectionWidth = mainWindowWidth - (2.f * labelsSectionOffsetX);
     
-    self.pOptionsContainer.frame = CGRectMake(labelsSectionOffsetX,
-                                              0.f,
-                                              labelsSectionWidth,
-                                              contentSectionHeight);
-
-    self.pCloseButtonContainer.frame = CGRectMake(0.f,
-                                       closeButtonSectionOffsetY,
-                                       mainWindowWidth,
-                                       closeButtonSectionHeight);
-
-    self.pCloseButton.frame = CGRectMake(mainWindowWidth - closeButtonSectionHeight,
-                                         0.f,
-                                         closeButtonSectionHeight,
-                                         closeButtonSectionHeight);
-
-    const float headlineWidth = mainWindowWidth - headlineMargin;
-
-    self.pTitleLabel.frame = CGRectMake(headlineMargin,
-                                        0.f,
-                                        headlineWidth,
-                                        headlineHeight);
-    self.pTitleLabel.font = [UIFont systemFontOfSize:18.0f];
-
-    self.pTitleLabel.text = @"Options";
-
-    const float optionsContentY = 20.f;
-    const float optionsDeltaY = 40.f;
+    self.pReplayTutorialsMessage.frame = self.bounds;
+    [self.pReplayTutorialsMessage setNeedsLayout];
+    [self.pReplayTutorialsMessage layoutIfNeeded];
     
-    CGRect wifiCheckboxFrame = self.pWifiOnlyCheckbox.frame;
-    wifiCheckboxFrame.origin.y = optionsContentY + (optionsDeltaY * 0);
-    self.pWifiOnlyCheckbox.frame = wifiCheckboxFrame;
+    self.pOptionsCacheClearSubView.frame = self.frame;
+    [self.pReplayTutorialsMessage setNeedsLayout];
+    [self.pReplayTutorialsMessage layoutIfNeeded];
     
-    CGRect cacheEnabledCheckboxFrame = self.pCacheEnabledCheckbox.frame;
-    cacheEnabledCheckboxFrame.origin.y = optionsContentY + (optionsDeltaY * 1);
-    self.pCacheEnabledCheckbox.frame = cacheEnabledCheckboxFrame;
+    self.pContentContainer.frame  = CGRectMake(0.0,contentY , mainWindowWidth, contentHeight);
     
-    CGRect clearCacheButtonFrame = self.pClearCacheCheckbox.frame;
-    clearCacheButtonFrame.origin.y = optionsContentY + (optionsDeltaY * 2);
-    self.pClearCacheCheckbox.frame = clearCacheButtonFrame;
+    CGFloat labelOffestY = 6.0;
+    CGFloat switchOffestY = -8.0;
+    CGFloat fontSize = 14.0;
+    CGFloat switchWidth = 40;
+    CGFloat switchHeight = rowHeight;
+    CGFloat buttonHeight = 20;
+    CGFloat buttonOffsetY = switchOffestY + 0.5*(switchHeight - buttonHeight);
     
-    CGRect clearCacheLabelFrame = self.pClearCacheLabel.frame;
-    clearCacheLabelFrame.origin.x = clearCacheButtonFrame.origin.x + clearCacheButtonFrame.size.width + 5.0;
-    clearCacheLabelFrame.origin.y = clearCacheButtonFrame.origin.y + ((clearCacheButtonFrame.size.height / 2.0) - (clearCacheLabelFrame.size.height / 2.0));
-    self.pClearCacheLabel.frame = clearCacheLabelFrame;
+    self.pWifiOnlyLabel.frame = CGRectMake(innerMargin.left,innerMargin.top + 0.0*rowHeight + labelOffestY, innerMarginWidth, fontSize);
+    self.pWifiOnlyLabel.font = [UIFont systemFontOfSize:fontSize];
+    [self.pWifiOnlyLabel sizeToFit];
     
-    CGRect replayTutorialsCheckboxFrame = self.pReplayTutorialsCheckbox.frame;
-    replayTutorialsCheckboxFrame.origin.y = optionsContentY + (optionsDeltaY * 3);
-    self.pReplayTutorialsCheckbox.frame = replayTutorialsCheckboxFrame;
+    self.pCacheEnabledLabel.frame = CGRectMake(innerMargin.left,innerMargin.top + 1.0*rowHeight + labelOffestY, innerMarginWidth, fontSize);
+    self.pCacheEnabledLabel.font = [UIFont systemFontOfSize:fontSize];
+    [self.pCacheEnabledLabel sizeToFit];
+    
+    self.pClearCacheLabel.frame = CGRectMake(innerMargin.left,innerMargin.top + 2.0*rowHeight + labelOffestY, innerMarginWidth, fontSize);
+    self.pClearCacheLabel.font = [UIFont systemFontOfSize:fontSize];
+    [self.pClearCacheLabel sizeToFit];
+    
+    self.pReplayTutorialsLabel.frame = CGRectMake(innerMargin.left,innerMargin.top + 3.0*rowHeight + labelOffestY, innerMarginWidth, fontSize);
+    self.pReplayTutorialsLabel.font = [UIFont systemFontOfSize:fontSize];
+    [self.pReplayTutorialsLabel sizeToFit];
+    
+    self.pWifiOnlySwitch.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 0.0*rowHeight + switchOffestY, switchWidth, switchHeight);
+    [self.pWifiOnlySwitch setNeedsLayout];
+    
+    self.pCacheEnabledSwitch.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 1.0*rowHeight + switchOffestY, switchWidth, switchHeight);
+    [self.pCacheEnabledSwitch setNeedsLayout];
+    
+    self.pClearCacheButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 2.0*rowHeight + buttonOffsetY, switchWidth, buttonHeight);
+    [self.pClearCacheButton setNeedsLayout];
+    
+    self.pReplayTutorialsButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 3.0*rowHeight + buttonOffsetY, switchWidth, buttonHeight);
+    [self.pReplayTutorialsButton setNeedsLayout];
 }
 
 - (void) setStreamOverWifiOnlySelected:(bool)isStreamOverWifiOnlySelected
 {
-    [self.pWifiOnlyCheckbox setVisualSelectionState:isStreamOverWifiOnlySelected];
+    [self.pWifiOnlySwitch setOn:isStreamOverWifiOnlySelected];
 }
 
 - (void) setCacheEnabledSelected:(bool)isCacheEnabledSelected
 {
-    [self.pCacheEnabledCheckbox setVisualSelectionState:isCacheEnabledSelected];
-}
-
-- (void) setReplayTutorialsSelected:(bool)isReplayTutorialsSelected
-{
-    [self.pReplayTutorialsCheckbox setVisualSelectionState:isReplayTutorialsSelected];
+    [self.pCacheEnabledSwitch setOn:isCacheEnabledSelected];
 }
 
 - (bool)isStreamOverWifiOnlySelected
 {
-    return [self.pWifiOnlyCheckbox isSelected];
+    return self.pWifiOnlySwitch.isOn;
 }
 
 - (bool)isCacheEnabledSelected
 {
-    return [self.pCacheEnabledCheckbox isSelected];
+    return self.pCacheEnabledSwitch.isOn;
+}
+
+- (void)openClearCacheWarning
+{
+    Eegeo_ASSERT(![[self pOptionsCacheClearSubView] isDisplayed]);
+
+    [[self pOptionsCacheClearSubView] displayWarningInView:self.superview
+                                                    target:self
+                                                    action:@selector(clearCacheSelectionConfirmedHandler)];
 }
 
 - (void)concludeCacheClearCeremony
 {
-    Eegeo_ASSERT([[self pOptionsCacheClearSubView] isDisplayed]);
-    [[self pOptionsCacheClearSubView] conclude];
+   Eegeo_ASSERT([[self pOptionsCacheClearSubView] isDisplayed]);
+   [[self pOptionsCacheClearSubView] conclude];
 }
 
 - (void)wifiCheckboxSelectionHandler
@@ -282,26 +257,29 @@
     m_pInterop->HandleStreamOverWifiOnlySelectionStateChanged();
 }
 
-- (void)cacheCheckboxSelectionHandler
+- (void)cacheEnabledCheckboxSelectionHandler
 {
     m_pInterop->HandleCacheEnabledSelectionStateChanged();
 }
 
 - (void)cacheClearSelectionHandler
 {
-    Eegeo_ASSERT(![[self pOptionsCacheClearSubView] isDisplayed]);
-    [[self pOptionsCacheClearSubView] displayWarning:self:@selector(clearCacheSelectionConfirmedHandler)];
+    m_pInterop->HandleClearCacheSelected();
 }
 
 - (void)replayTutorialsSelectionHandler
 {
-    bool isSelected = self.pReplayTutorialsCheckbox.isSelected;
-    m_pInterop->HandleReplayTutorialsToggled(isSelected);
+    m_pInterop->HandleReplayTutorialsSelected();
+    [self.pReplayTutorialsMessage show];
+}
+
+-(void) handleReplayMessageClosed {
+    m_pInterop->HandleCloseSelected();
 }
 
 - (void)clearCacheSelectionConfirmedHandler
 {
-    m_pInterop->HandleClearCacheSelected();
+    m_pInterop->HandleClearCacheTriggered();
 }
 
 - (ExampleApp::Options::View::OptionsViewInterop*)getInterop

@@ -14,9 +14,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            InitialExperienceIntroView::InitialExperienceIntroView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
+            InitialExperienceIntroView::InitialExperienceIntroView(WindowsNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus, bool isInKioskMode)
             : m_nativeState(nativeState)
             , m_messageBus(messageBus)
+            , m_isInKioskMode(isInKioskMode)
             {
                 ASSERT_UI_THREAD
 
@@ -40,26 +41,17 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
 
-                /*AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
-
-                jmethodID showDialogMethod = env->GetMethodID(m_uiViewClass, "show", "()V");
-                env->CallVoidMethod(m_uiView, showDialogMethod);*/
-
-                m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(1.0f, true));
+                if(!m_isInKioskMode)
+                {
+                    ShowExitIUX();
+                }
             }
 
             void InitialExperienceIntroView::Dismiss()
             {
                 ASSERT_UI_THREAD
 
-                /*AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                JNIEnv* env = attached.envForThread;
-
-                jmethodID dismissDialogMethod = env->GetMethodID(m_uiViewClass, "dismiss", "()V");
-                env->CallVoidMethod(m_uiView, dismissDialogMethod);*/
-
-                m_messageBus.Publish(Modality::UpdateNativeModalBackgroundMessage(0.0f, false));
+                DismissExitIUX();
             }
 
             void InitialExperienceIntroView::OnDismiss()

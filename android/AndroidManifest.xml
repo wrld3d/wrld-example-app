@@ -5,9 +5,6 @@
         android:versionCode="1"
         android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="19"
-        android:targetSdkVersion="24"/>
-    
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -19,18 +16,20 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STAT" />
     <uses-feature android:name="android.hardware.camera"
         android:required="true"/>
     <uses-feature android:name="android.hardware.bluetooth_le"
         android:required="false"/>
 
-    <application android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.NoTitleBar">
+    <application android:name="android.support.multidex.MultiDexApplication"
+                 android:icon="@mipmap/icon" android:label="BWAY" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:allowBackup="false">
        
         <activity android:name="com.eegeo.ProjectSwallowApp.BackgroundThreadActivity"
                   android:label="BWAY"
                   android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
                   android:windowSoftInputMode="adjustPan"
-              	  android:launchMode="singleTask"
+              	  android:launchMode="singleTop"
               	  android:hardwareAccelerated="true"
               	  android:resizeableActivity="false">
             <intent-filter>
@@ -45,6 +44,11 @@
 		        <data android:scheme="bway" android:host="location" />
 		        <data android:scheme="bway" android:host="mapscene" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
         </activity>
 
         <meta-data android:name="com.google.android.gms.version"

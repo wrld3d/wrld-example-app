@@ -41,6 +41,8 @@ def get_picture_batch_call(feedconfig, ids):
 def gather_picture_batch(feedconfig, ids):
     transport = HmacTransport()
     client = Client(feedconfig.soap_service_wsdl_url, transport=transport)
+    if len(ids) == 0:
+        return
     response = get_picture_batch_call(feedconfig, ids)
 
     if response is not None and response != "":
@@ -132,8 +134,8 @@ if __name__ == "__main__":
     pictures = []
     existing_pictures = build_picture_filter()
     for picture in gather_picture_ids(feedconfig, existing_pictures):
-        pictures.append(picture)
-        print pictures
+        if picture > 0:
+           pictures.append(picture)
         i += 1
         if i > 29:
            j = 0

@@ -135,6 +135,7 @@
       <DependentUpon>MyPinCreationDetailsTutorialDialogBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Options\OptionsCacheClearSubView.cs" />
+    <Compile Include="Views\Options\OptionsMessage.cs" />
     <Compile Include="Views\Options\OptionsView.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListAdapter.cs" />
     <Compile Include="Views\SearchMenu\SearchMenuListItem.cs" />
@@ -186,6 +187,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CommonControls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DefaultStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -212,7 +217,6 @@
     </Compile>
     <Compile Include="Views\Compass\CompassView.cs" />
     <Compile Include="ConversionHelpers.cs" />
-    <Compile Include="Views\FlattenButton\FlattenButtonView.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -221,6 +225,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Strings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -228,6 +236,10 @@
     <Page Include="TransparentButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TransparentToggleButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AboutPage\AboutPageView.xaml">
       <SubType>Designer</SubType>
@@ -242,10 +254,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Compass\CompassView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FlattenButton\FlattenButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -297,11 +305,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MyPinCreationInitiation\MyPinCreationButtonView.xaml">
+    <Page Include="Views\Options\OptionsCacheClearSubView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Options\OptionsCacheClearSubView.xaml">
+    <Page Include="Views\Options\OptionsMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -359,7 +367,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\MyPinCreationInitiation\MyPinCreationButtonView.cs" />
     <Compile Include="Views\MyPinCreationConfirmation\MyPinCreationConfirmationView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -606,24 +613,6 @@
     <Resource Include="..\..\Resources\button_create_poi_over.png">
       <Link>Assets\button_create_poi_over.png</Link>
     </Resource>
-    <Resource Include="..\..\Resources\button_flatten_off.png">
-      <Link>Assets\button_flatten_off.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_flatten_on.png">
-      <Link>Assets\button_flatten_on.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_flatten_off_over.png">
-      <Link>Assets\button_flatten_off_over.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_unflatten_off.png">
-      <Link>Assets\button_unflatten_off.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_unflatten_on.png">
-      <Link>Assets\button_unflatten_on.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_unflatten_on_over.png">
-      <Link>Assets\button_unflatten_on_over.png</Link>
-    </Resource>
     <Resource Include="..\..\Resources\button_search_off.png">
       <Link>Assets\button_search_off.png</Link>
     </Resource>
@@ -773,20 +762,6 @@
   <ItemGroup>
     <Resource Include="..\..\Resources\exit_blue_x_button.png">
       <Link>Assets\exit_blue_x_button.png</Link>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="..\..\Resources\button_flatten_off%40kiosk.png">
-      <Link>Assets\button_flatten_off%40kiosk.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_flatten_on%40kiosk.png">
-      <Link>Assets\button_flatten_on%40kiosk.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_unflatten_off%40kiosk.png">
-      <Link>Assets\button_unflatten_off%40kiosk.png</Link>
-    </Resource>
-    <Resource Include="..\..\Resources\button_unflatten_on_over%40kiosk.png">
-      <Link>Assets\button_unflatten_on_over%40kiosk.png</Link>
     </Resource>
   </ItemGroup>
   <ItemGroup>
@@ -1723,6 +1698,28 @@
   <ItemGroup>
     <Resource Include="Assets\streaming_dialog_loaded.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\..\Resources\button_playtutorial_off.png">
+      <Link>Assets\button_playtutorial_off.png</Link>
+    </Resource>
+    <Resource Include="..\..\Resources\button_playtutorial_on.png">
+      <Link>Assets\button_playtutorial_on.png</Link>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\slider_checkbox_off.png" />
+    <Resource Include="Assets\slider_checkbox_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\button_ok_off%40kiosk.png" />
+    <Resource Include="Assets\button_ok_off.png" />
+    <Resource Include="Assets\button_ok_on%40kiosk.png" />
+    <Resource Include="Assets\button_ok_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\slider_checkbox_off_hover.png" />
+    <Resource Include="Assets\slider_checkbox_on_hover.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\..\Resources" "$(TargetDir)Resources" /e /y /i /r /d
@@ -1741,7 +1738,7 @@ if $(ConfigurationName) == Debug (
   <Target Name="distclean" DependsOnTargets="Clean">
     <RemoveDir Directories="$(OutputPath)" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

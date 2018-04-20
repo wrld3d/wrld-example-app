@@ -20,10 +20,10 @@ namespace ExampleApp
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
                 , m_interiorSearchAllowed(interiorSearchAllowed)
-                , m_menuViewModel(menuViewModel)
-                , m_messageBus(messageBus)
                 , m_hasRadiusOverride(false)
                 , m_radiusOverride(0.f)
+                , m_menuViewModel(menuViewModel)
+                , m_messageBus(messageBus)
                 , m_inInteriorMode(false)
                 , m_closeMenuOnSelect(closeMenuOnSelect)
                 , m_appModeChangedHandler(this, &SwallowCategoryMenuOption::OnAppModeChangedMessage)
@@ -39,10 +39,10 @@ namespace ExampleApp
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_category(category)
                 , m_interiorSearchAllowed(interiorSearchAllowed)
-                , m_menuViewModel(menuViewModel)
-                , m_messageBus(messageBus)
                 , m_hasRadiusOverride(true)
                 , m_radiusOverride(radius)
+                , m_menuViewModel(menuViewModel)
+                , m_messageBus(messageBus)
                 , m_inInteriorMode(false)
                 , m_closeMenuOnSelect(closeMenuOnSelect)
                 , m_appModeChangedHandler(this, &SwallowCategoryMenuOption::OnAppModeChangedMessage)
@@ -66,7 +66,10 @@ namespace ExampleApp
                     {
                         m_menuViewModel.Close();
                     }
-                    
+
+                    /*
+                     * Not anymore
+                     *
                     bool shouldZoomToBuildingsView = true;
 
                     if (m_hasRadiusOverride)
@@ -77,6 +80,7 @@ namespace ExampleApp
                     {
                         m_messageBus.Publish(TagSearch::TagSearchSelectedMessage(m_category, m_interiorSearchAllowed, shouldZoomToBuildingsView));
                     }
+                    */
                 }
             }
         }

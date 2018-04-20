@@ -40,6 +40,8 @@ namespace Eegeo
 
         bool FixedIndoorLocationService::GetAltitude(double& altitude)
         {
+            altitude = 0;   // failsafe value
+
             const Eegeo::Resources::Interiors::InteriorsModel* pInteriorsModel = m_interiorInteractionModel.GetInteriorModel();
             if (pInteriorsModel != nullptr)
             {

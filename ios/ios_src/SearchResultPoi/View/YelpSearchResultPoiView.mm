@@ -12,12 +12,13 @@
 #include "App.h"
 #include "UIHelpers.h"
 #include "YelpParsingHelpers.h"
-
+#include "ViewController.h"
 #import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
 
 @interface YelpSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
+    
 }
 @end
 
@@ -298,18 +299,11 @@ namespace
 
 - (void) layoutSubviews
 {
-    const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
-    const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const float boundsOccupyMultiplier = 0.9f;
-    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
-    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;
-    const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
-    const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
+    UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    self.frame = [viewController largePopoverFrame];
     
-    self.frame = CGRectMake(mainWindowX,
-                            mainWindowY,
-                            mainWindowWidth,
-                            mainWindowHeight);
+    CGFloat mainWindowWidth = self.frame.size.width;
+    CGFloat mainWindowHeight = self.frame.size.height;
     
     self.pControlContainer.frame = CGRectMake(0.f,
                                               0.f,

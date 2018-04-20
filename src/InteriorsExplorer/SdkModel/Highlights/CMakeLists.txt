@@ -7,6 +7,8 @@ set(currsources
   ../src/InteriorsExplorer/SdkModel/Highlights/InteriorsHighlightVisibilityController.h
   ../src/InteriorsExplorer/SdkModel/Highlights/InteriorsEntityIdHighlightVisibilityController.cpp
   ../src/InteriorsExplorer/SdkModel/Highlights/InteriorsEntityIdHighlightVisibilityController.h
+  ../src/InteriorsExplorer/SdkModel/Highlights/InteriorsHighlightColorChangeBatchOperation.cpp
+  ../src/InteriorsExplorer/SdkModel/Highlights/InteriorsHighlightColorChangeBatchOperation.h
   ../src/InteriorsExplorer/SdkModel/Highlights/IHighlightColorMapper.h
   ../src/InteriorsExplorer/SdkModel/Highlights/HighlightColorMapper.cpp
   ../src/InteriorsExplorer/SdkModel/Highlights/HighlightColorMapper.h

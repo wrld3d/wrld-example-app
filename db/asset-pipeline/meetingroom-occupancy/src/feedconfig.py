@@ -13,7 +13,7 @@ class FeedConfig:
                  hmac_public_app_id="",
                  hmac_private_app_id="",
                  soap_service_wsdl_url="",
-                 soap_region="EMEA",
+                 soap_regions="EMEA=GB033",
                  debug=False,
                  cdn_base_path=""
                 ):
@@ -24,10 +24,19 @@ class FeedConfig:
         self.__hmac_public_app_id = hmac_public_app_id
         self.__hmac_private_app_id = hmac_private_app_id
         self.__soap_service_wsdl_url = soap_service_wsdl_url
-        self.__soap_region = soap_region
+        self.__soap_regions = self.__parse_soap_regions(soap_regions)
         self.__debug = debug
         self.__cdn_base_path = cdn_base_path
         self.__additional_args = {}
+
+    def __parse_soap_regions(self, soap_region):
+        regions = {}
+        for r in soap_region.split(":"):
+            splits = r.split("=")
+            region_name = splits[0].replace("-", " ")
+            location_codes = splits[1].split(",")
+            regions[region_name] = location_codes
+        return regions
 
     @property
     def poi_service_a_base_path(self):
@@ -62,8 +71,8 @@ class FeedConfig:
         return self.__debug
 
     @property
-    def soap_region(self):
-        return self.__soap_region
+    def soap_regions(self):
+        return self.__soap_regions
 
     @property
     def cdn_base_path(self):
@@ -111,7 +120,7 @@ class FeedConfig:
             elif opt in {"--private_app_id"}:
                 self.__hmac_private_app_id = arg                
             elif opt in {"--region_code"}:
-                self.__soap_region = arg
+                self.__soap_regions = self.__parse_soap_regions(arg)
             elif opt in {"--debug"}:
                 self.__debug = arg
             elif opt in ("--cdn_base_url"):
@@ -156,7 +165,7 @@ class FeedConfig:
             self.__hmac_public_app_id = json["hmac_public_app_id"]
             self.__hmac_private_app_id = json["hmac_private_app_id"]
             self.__soap_service_wsdl_url = json["soap_service_wsdl_url"]
-            self.__soap_region = json["soap_region"]
+            self.__soap_regions = self.__parse_soap_regions(json["soap_region"])
             self.__debug = json["debug"]
             self.__cdn_base_path = json["cdn_base_path"]
 

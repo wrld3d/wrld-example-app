@@ -27,10 +27,10 @@ def verify_employee(employee_json, desk_mapping, space_id_to_wgs84):
         raise Exception("Skipping Employee NOSPCID %s - %s(%s %s)" % (space_id,employee_tuple))
     return True
 
-def get_employee_definitions(site, feedconfig, desk_mapping, space_id_to_wgs84):
+def get_employee_definitions(region_code, site, feedconfig, desk_mapping, space_id_to_wgs84):
     transport = HmacTransport()
     client = Client(feedconfig.soap_service_wsdl_url, transport=transport)
-    response = client.service.GetEmployeeDetails(feedconfig.soap_region, site)
+    response = client.service.GetEmployeeDetails(region_code, site)
 
     if response is not None and response != "":
         employee_list = {}
@@ -52,6 +52,7 @@ def get_employee_definitions(site, feedconfig, desk_mapping, space_id_to_wgs84):
                 
                 space_id = desk_mapping.get_space_id_for_employee(employee_uuid)
                 location = space_id_to_wgs84.get_lat_lon_for_spaceid(space_id)
+                highlight_id = "S{0}".format(space_id)
 
                 interior_id = desk_mapping.get_indoor_id_for_employee(employee_uuid)
                 floor_id = desk_mapping.get_floor_id_for_employee(employee_uuid)
@@ -72,6 +73,7 @@ def get_employee_definitions(site, feedconfig, desk_mapping, space_id_to_wgs84):
                     {
                       "image_url":image_url,
                       "desk_code":desk_code,
+                      "entity_highlight":[highlight_id],
                       "office_location":"",
                       "working_group":employee_json["DeptDescription"],
                       "deptCode":employee_json["DeptCode"],
@@ -86,7 +88,7 @@ def get_department_definitions(feedconfig, employees):
     for employee in employees:
         department_code = employee["user_data"]["deptCode"]
         department_description = employee["user_data"]["working_group"]
-        desk_code = employee["user_data"]["desk_code"]
+        desk_code = employee["user_data"]["entity_highlight"][0]
         if not department_code in departments:
             departments[department_code] = {"description":department_description, "location":employee, "members":[]}
         departments[department_code]["members"].append(desk_code)
@@ -144,10 +146,10 @@ if __name__ == "__main__":
     space_id_to_wgs84.populate_from_files("../generated")
 
     employees = []
-    sites = ["GB033", "GB025", "GB006", "GB032", "GB012"]
-    for site in sites:
-        for employee in get_employee_definitions(site, feedconfig, desk_mapping, space_id_to_wgs84):
-            employees.append(employee)
+    for region in feedconfig.soap_regions:
+        for site in feedconfig.soap_regions[region]:
+            for employee in get_employee_definitions(region, site, feedconfig, desk_mapping, space_id_to_wgs84):
+                employees.append(employee)
 
     departments = []
     for department in get_department_definitions(feedconfig, employees):

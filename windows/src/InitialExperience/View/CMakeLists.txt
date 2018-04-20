@@ -1,8 +1,8 @@
 set(headers ${headers} src/InitialExperience/View
 )
 set(currsources
-  src/InitialExperience/View/InitialExperienceIntroJni.cpp
-  src/InitialExperience/View/InitialExperienceIntroJni.h
+  src/InitialExperience/View/InitialExperienceIntroCLI.cpp
+  src/InitialExperience/View/InitialExperienceIntroCLI.h
   src/InitialExperience/View/InitialExperienceIntroView.cpp
   src/InitialExperience/View/InitialExperienceIntroView.h
   src/InitialExperience/View/InitialExperienceIntroViewModule.cpp

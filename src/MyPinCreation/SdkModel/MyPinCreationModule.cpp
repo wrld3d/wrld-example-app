@@ -18,7 +18,6 @@
 #include "CollisionMeshResourceRepository.h"
 
 #include "MyPinCreationModel.h"
-#include "MyPinCreationInitiationViewModel.h"
 #include "MyPinCreationConfirmationViewModel.h"
 #include "MyPinCreationCompositeViewModel.h"
 
@@ -33,6 +32,11 @@
 #include "BatchedSpriteMaterial.h"
 #include "BatchedSpriteRenderable.h"
 
+#include "MyPinCreationMenuOption.h"
+#include "MyPinCreation.h"
+#include "MenuOptionsModel.h"
+#include "MenuModel.h"
+
 #include "RenderableFilters.h"
 
 namespace ExampleApp
@@ -43,9 +47,8 @@ namespace ExampleApp
         {
             MyPinCreationModule::MyPinCreationModule(MyPins::SdkModel::IMyPinsService& myPinsService,
                     Eegeo::Helpers::IIdentityProvider& identityProvider,
-                    ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                    ExampleApp::Menu::View::IMenuViewModel& menuViewModel,
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                    ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
                     ScreenControl::View::IScreenControlViewModel& interiorControlViewModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
@@ -60,27 +63,29 @@ namespace ExampleApp
 
                 m_pMyPinCreationViewSavePinHandler = Eegeo_NEW(MyPinCreationViewSavePinHandler)(*m_pMyPinCreationModel, messageBus);
 
-                m_pMyPinCreationInitiationViewModel = Eegeo_NEW(View::MyPinCreationInitiationViewModel)(identityProvider.GetNextIdentity(),
-                                                      false,
-                                                      messageBus);
 
                 m_pMyPinCreationConfirmationViewModel = Eegeo_NEW(View::MyPinCreationConfirmationViewModel)(identityProvider.GetNextIdentity(),
                                                         false,
                                                         reactionControllerModel);
 
                 m_pMyPinCreationCompositeViewModel = Eegeo_NEW(View::MyPinCreationCompositeViewModel)(messageBus,
-                                                     *m_pMyPinCreationInitiationViewModel,
                                                      *m_pMyPinCreationConfirmationViewModel,
-                                                     searchMenuViewModel,
-                                                     settingsMenuViewModel,
+                                                     menuViewModel,
                                                      interiorControlViewModel);
+                
+                
+                m_pMyPinCreationMenuModel        = Eegeo_NEW(Menu::View::MenuModel)();
+                m_pMyPinCreationMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMyPinCreationMenuModel);
+                m_pMyPinCreationMenuOptionsModel->AddItem("Report Fault", "Report Fault", "", "", Eegeo_NEW(View::MyPinCreationMenuOption)(menuViewModel,*m_pMyPinCreationConfirmationViewModel));
+                
             }
 
             MyPinCreationModule::~MyPinCreationModule()
             {
+                Eegeo_DELETE m_pMyPinCreationMenuOptionsModel;
+                Eegeo_DELETE m_pMyPinCreationMenuModel;
                 Eegeo_DELETE m_pMyPinCreationCompositeViewModel;
                 Eegeo_DELETE m_pMyPinCreationConfirmationViewModel;
-                Eegeo_DELETE m_pMyPinCreationInitiationViewModel;
                 Eegeo_DELETE m_pMyPinCreationModel;
             }
 
@@ -89,10 +94,6 @@ namespace ExampleApp
                 return *m_pMyPinCreationModel;
             }
 
-            View::IMyPinCreationInitiationViewModel& MyPinCreationModule::GetMyPinCreationInitiationViewModel() const
-            {
-                return *m_pMyPinCreationInitiationViewModel;
-            }
 
             View::IMyPinCreationConfirmationViewModel& MyPinCreationModule::GetMyPinCreationConfirmationViewModel() const
             {
@@ -102,11 +103,6 @@ namespace ExampleApp
             View::IMyPinCreationCompositeViewModel& MyPinCreationModule::GetMyPinCreationCompositeViewModel() const
             {
                 return *m_pMyPinCreationCompositeViewModel;
-            }
-
-            ScreenControl::View::IScreenControlViewModel& MyPinCreationModule::GetInitiationScreenControlViewModel() const
-            {
-                return m_pMyPinCreationInitiationViewModel->GetScreenControlViewModel();
             }
 
             ScreenControl::View::IScreenControlViewModel& MyPinCreationModule::GetConfirmationScreenControlViewModel() const

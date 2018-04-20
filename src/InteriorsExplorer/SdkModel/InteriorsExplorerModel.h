@@ -52,7 +52,7 @@ namespace ExampleApp
                 
                 bool GetInteriorStreamingDialogVisibility();
                 void ShowInteriorStreamingDialog();
-                void HideInteriorStreamingDialog();
+                void HideInteriorStreamingDialog(bool interiorLoaded);
                 
                 void InsertInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveInteriorExplorerEnteredCallback(Eegeo::Helpers::ICallback0& callback);

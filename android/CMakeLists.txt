@@ -257,9 +257,6 @@ include_directories(
     ../src/DoubleTapIndoorInteraction/SdkModel
     ../src/ExampleAppMessaging
     ../src/FixedLocation
-    ../src/FlattenButton
-    ../src/FlattenButton/SdkModel
-    ../src/FlattenButton/View
     ../src/GpsMarker
     ../src/GpsMarker/SdkModel
     ../src/Helpers
@@ -396,8 +393,6 @@ include_directories(
     jni/ApplicationConfig/SdkModel
     jni/Compass
     jni/Compass/View
-    jni/FlattenButton
-    jni/FlattenButton/View
     jni/Helpers
     jni/InitialExperience
     jni/InitialExperience/Preload
@@ -413,7 +408,6 @@ include_directories(
     jni/InteriorsPosition/View/SenionLab
     jni/Menu
     jni/Menu/SdkModel
-    jni/Menu/View
     jni/Metrics
     jni/ModalBackground
     jni/ModalBackground/SdkModel
@@ -432,12 +426,11 @@ include_directories(
     jni/PersistentSettings
     jni/SearchMenu
     jni/SearchMenu/View
+    jni/SearchProviders
     jni/SearchResultPoi
     jni/SearchResultPoi/View
     jni/SearchResultSection
     jni/SearchResultSection/View
-    jni/SettingsMenu
-    jni/SettingsMenu/View
     jni/TagSearch
     jni/TagSearch/View
     jni/WorldPins

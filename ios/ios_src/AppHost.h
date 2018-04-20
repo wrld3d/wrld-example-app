@@ -20,15 +20,12 @@
 #include "InitialExperience.h"
 #include "iOSPersistentSettingsModel.h"
 #include "ViewControllerUpdater.h"
-#include "SettingsMenuViewIncludes.h"
-#include "SearchMenuViewIncludes.h"
+#include "SearchWidgetViewIncludes.h"
 #include "SearchResultSectionViewIncludes.h"
 #include "ModalBackgroundViewIncludes.h"
-#include "FlattenButtonViewIncludes.h"
 #include "SearchResultPoiViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
-#include "MyPinCreationInitiationViewIncludes.h"
 #include "MyPinCreationConfirmationViewIncludes.h"
 #include "MyPinCreationDetailsViewIncludes.h"
 #include "BidirectionalBus.h"
@@ -117,19 +114,17 @@ private:
     Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
     ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceController* m_pInteriorsLocationServiceController;
     
-    ExampleApp::SettingsMenu::View::ISettingsMenuViewModule* m_pSettingsMenuViewModule;
-    ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
+    //ExampleApp::SearchMenu::View::ISearchMenuViewModule* m_pSearchMenuViewModule;
+    ExampleApp::SearchMenu::View::ISearchWidgetViewModule* m_pSearchWidgetViewModule;
     ExampleApp::SearchResultSection::View::ISearchResultSectionViewModule* m_pSearchResultSectionViewModule;
     ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
-    ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModule* m_pSearchResultPoiViewModule;
     ExampleApp::Compass::View::ICompassViewModule* m_pCompassViewModule;
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModule* m_pViewControllerUpdaterModule;
     ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
     ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule* m_pInitialExperienceModule;
     ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
-    ExampleApp::MyPinCreation::View::IMyPinCreationInitiationViewModule* m_pMyPinCreationInitiationViewModule;
     ExampleApp::MyPinCreation::View::IMyPinCreationConfirmationViewModule* m_pMyPinCreationConfirmationViewModule;
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;

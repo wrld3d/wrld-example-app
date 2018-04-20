@@ -131,7 +131,6 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     if(location != nil && [location.source isKindOfClass:[SSISenionLocationSource class]])
     {
         m_pSenionLabLocationService->SetIsAuthorized(true);
-        m_pSenionLabLocationService->SetIsConnected(true);
         
         Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude);
         m_pSenionLabLocationService->SetLocation(latLong);
@@ -194,7 +193,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
              );
             //*/
             
-            m_pSenionLabLocationService->SetIsConnected(false);
+            m_pSenionLabLocationService->SetIsLocationAvailable(false);
             m_messageBus->Publish(ExampleApp::AboutPage::AboutPageIndoorPositionTypeMessage("\nIndoor positioning type: GPS"));
         }
         if(locationAvailability == SSILocationAvailabilityAvailable)
@@ -208,7 +207,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
              );
             //*/
             
-            m_pSenionLabLocationService->SetIsConnected(true);
+            m_pSenionLabLocationService->SetIsLocationAvailable(true);
             m_messageBus->Publish(ExampleApp::AboutPage::AboutPageIndoorPositionTypeMessage("\nIndoor positioning type: Senion"));
         }
     }
@@ -254,8 +253,6 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
             m_pSenionLabLocationService->SetIsAuthorized(false);
             break;
     }
-
-    m_pSenionLabLocationService->SetIsConnected(false);
 }
 
 -(int) getFloorIndexFromSenionFloorIndex: (std::string) senionFloorIndex senionMapKey: (std::string) senionMapKey

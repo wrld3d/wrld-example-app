@@ -21,7 +21,6 @@
 #include "SwallowWorkingGroupSearchResultPoiView.h"
 #include "SwallowFacilitySearchResultPoiView.h"
 #include "SwallowDepartmentSearchResultPoiView.h"
-#include "EegeoSearchResultPoiView.h"
 #include "SwallowSearchConstants.h"
 
 @interface SearchResultPoiViewContainer()<UIGestureRecognizerDelegate>

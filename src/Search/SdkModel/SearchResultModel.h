@@ -55,7 +55,7 @@ namespace ExampleApp
                                   int64_t searchResultCreationTimeStamp);
                 
                 SearchResultModel();
-                
+
                 ~SearchResultModel();
                 
                 int GetVersion() const;

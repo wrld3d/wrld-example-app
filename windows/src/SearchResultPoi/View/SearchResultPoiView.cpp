@@ -7,6 +7,7 @@
 #include "SearchResultModelCLI.h"
 #include "ReflectionHelpers.h"
 #include "SwallowSearchConstants.h"
+#include "SwallowSearchParser.h"
 
 using namespace ExampleApp::Helpers::ReflectionHelpers;
 
@@ -31,13 +32,26 @@ namespace ExampleApp
                     "ExampleAppWPF.GeoNamesSearchResultsPoiView",
                     "ExampleAppWPF.SwallowDepartmentSearchResultsPoiView"
                 };
+
+                std::string personReadableTag;
             }
 
-            SearchResultPoiView::SearchResultPoiView(WindowsNativeState& nativeState, bool isInKioskMode)
+            SearchResultPoiView::SearchResultPoiView(WindowsNativeState& nativeState, const ExampleApp::Search::SdkModel::SearchTags& swallowSearchTags, bool isInKioskMode)
                 : m_nativeState(nativeState)
                 , m_currentVendor(-1)
                 , m_isAnyPoiOpen(false)
             {
+                personReadableTag = swallowSearchTags.defaultReadableTag;
+                const std::vector<ExampleApp::Search::SdkModel::SearchTag>& tags = swallowSearchTags.tags;
+                for(int i = 0; i < tags.size(); ++i)
+                {
+                    if(tags[i].tag == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                    {
+                        personReadableTag = tags[i].readableTag;
+                        break;
+                    }
+                }
+
                 for (int i = 0; i < SearchVendors::Num; ++i)
                 {
                     m_uiViewClass[i] = GetTypeFromEntryAssembly(Helpers::ReflectionHelpers::ConvertUTF8ToManagedString(VendorViewClassNames[i]));
@@ -74,6 +88,38 @@ namespace ExampleApp
                 
                 if(m_currentVendor != -1)
                 {
+                    if (m_model.GetPrimaryTag() == ExampleApp::Search::Swallow::SearchConstants::DESK_CATEGORY_NAME)
+                    {
+                        const std::vector<std::string>& tagVector = m_model.GetTags();
+                        std::vector<std::string> tagReadableVector = m_model.GetHumanReadableTags();
+
+                        for(int i = 0; i < tagVector.size(); ++i)
+                        {
+                            if(tagVector[i] == ExampleApp::Search::Swallow::SearchConstants::DESK_CATEGORY_NAME)
+                            {
+                                tagReadableVector[i] = personReadableTag;
+                            }
+                        }
+
+                        ExampleApp::Search::Swallow::SdkModel::SwallowPersonResultModel personModel = ExampleApp::Search::Swallow::SdkModel::SearchParser::TransformToSwallowPersonResult(m_model);
+
+                        m_model = Search::SdkModel::SearchResultModel(m_model.CurrentVersion,
+                            m_model.GetIdentifier(),
+                            personModel.GetName(),
+                            personModel.GetJobTitle(),
+                            m_model.GetLocation(),
+                            m_model.GetHeightAboveTerrainMetres(),
+                            m_model.IsInterior(),
+                            m_model.GetBuildingId(),
+                            m_model.GetFloor(),
+                            tagVector,
+                            tagReadableVector,
+                            ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME,
+                            m_model.GetVendor(),
+                            m_model.GetJsonData(),
+                            m_model.GetCreationTimestamp());
+                    }
+
 				    DisplayPoiInfo[m_currentVendor](gcnew SearchResultModelCLI(m_model));
 
                     m_isAnyPoiOpen = true;
@@ -172,7 +218,8 @@ namespace ExampleApp
                 {
                     m_currentVendor = SearchVendors::GeoNames;
                 }
-				else if (vendor == ExampleApp::Search::EegeoVendorName && category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+				else if (vendor == ExampleApp::Search::EegeoVendorName && (category == ExampleApp::Search::Swallow::SearchConstants::PERSON_CATEGORY_NAME)
+                    || category == ExampleApp::Search::Swallow::SearchConstants::DESK_CATEGORY_NAME)
 				{
                     m_currentVendor = SearchVendors::SwallowPerson;
 				}

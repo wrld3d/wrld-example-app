@@ -7,15 +7,16 @@
     <LinearLayout
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
 
         <ImageView
             android:id="@+id/poi_creation_confirmation_close_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/button_pressed_colour_change"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_pin_confirmation_color_states"
             android:clickable="true"
-            android:src="@drawable/button_pin_close_states" />
+            android:src="@drawable/button_close_on" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -23,7 +24,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
                 android:background="@color/white"
                 android:clickable="true"
@@ -37,11 +38,11 @@
 
         <ImageView
             android:id="@+id/poi_creation_confirmation_ok_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/button_pressed_colour_change"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_pin_confirmation_color_states"
             android:clickable="true"
-            android:src="@drawable/button_pin_ok_states" />
+            android:src="@drawable/button_ok_on" />
     </LinearLayout>
 
 </RelativeLayout>

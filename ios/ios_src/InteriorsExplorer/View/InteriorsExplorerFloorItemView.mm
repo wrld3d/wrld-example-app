@@ -4,23 +4,27 @@
 
 @implementation InteriorsExplorerFloorItemView
 
-- (id) initWithParams:(float)labelWidth :(float)labelSpacing :(float)divisionWidth :(float)height :(float)pixelScale :(NSString*)reuseId
+
+- (id) initWithFrame:(CGRect)frame
+             spacing:(CGFloat)labelSpacing
+        dividerWidth:(CGFloat)dividerWidth
+             centerX:(CGFloat)centerlineX
+     reuseIdentifier:(NSString*)reuseId;
 {
     if (self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseId])
     {
-        self.backgroundColor=[UIColor clearColor];
+        self.frame = frame;
+        CGFloat height = frame.size.height;
         
-        self.frame = CGRectMake(0, 0, labelWidth+divisionWidth+labelSpacing, height);
+        self.backgroundColor=[UIColor clearColor];
         
         UIBezierPath* linePath = [UIBezierPath bezierPath];
         UIBezierPath* topPath = [UIBezierPath bezierPath];
         UIBezierPath* bottomPath = [UIBezierPath bezierPath];
         
         // Horizontal centerline.
-        [linePath moveToPoint:CGPointMake(labelWidth+labelSpacing, height*0.5f)];
-        [linePath addLineToPoint:CGPointMake(labelWidth+labelSpacing+divisionWidth, height*0.5f)];
-        
-        float centerlineX = labelWidth + labelSpacing + 0.5f * divisionWidth;
+        [linePath moveToPoint:CGPointMake(centerlineX - 0.5*dividerWidth, height*0.5f)];
+        [linePath addLineToPoint:CGPointMake(centerlineX + 0.5*dividerWidth, height*0.5f)];
         
         [topPath moveToPoint:CGPointMake(centerlineX, 0.0f)];
         [topPath addLineToPoint:CGPointMake(centerlineX, height*0.5f)];
@@ -44,16 +48,13 @@
         self.pBottomDivisionShape.lineWidth = 1.0f;
         
         [self.layer addSublayer:self.pDivisionShape];
-        
+        CGFloat labelWidth = centerlineX - labelSpacing - 0.5*dividerWidth;
         self.pFloorNameLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, labelWidth, height)] autorelease];
         self.pFloorNameLabel.lineBreakMode = NSLineBreakByClipping;
         self.pFloorNameLabel.adjustsFontSizeToFitWidth = NO;
         self.pFloorNameLabel.textColor = [UIColor whiteColor];
         self.pFloorNameLabel.textAlignment = NSTextAlignmentRight;
-        //[self.pFloorNameLabel sizeToFit];
-        CGRect f = self.pFloorNameLabel.frame;
-        f.size.height = height;
-        self.pFloorNameLabel.frame = f;
+     
         [self addSubview:self.pFloorNameLabel];
         
         self.userInteractionEnabled = false;
@@ -66,7 +67,7 @@
 - (void)setFloor :(NSString*)floorName :(BOOL)isTop :(BOOL)isBottom
 {
     self.pFloorNameLabel.text = floorName;
-
+  
     [self.pTopDivisionShape removeFromSuperlayer];
     [self.pBottomDivisionShape removeFromSuperlayer];
     

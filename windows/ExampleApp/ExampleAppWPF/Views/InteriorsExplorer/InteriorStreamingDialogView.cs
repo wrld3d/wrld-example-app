@@ -8,7 +8,7 @@ namespace ExampleAppWPF
     class InteriorStreamingDialogView : Control
     {
         private IntPtr m_nativeCallerPointer;
-        private MainWindow m_currentWindow;
+        private MainWindow m_mainWindow;
 
         private FrameworkElement m_mainContainer;
         private StackPanel m_interiorStreamingDialogView;
@@ -25,8 +25,8 @@ namespace ExampleAppWPF
         {
             m_nativeCallerPointer = nativeCallerPointer;
 
-            m_currentWindow = (MainWindow)Application.Current.MainWindow;
-            m_currentWindow.MainGrid.Children.Add(this);
+            m_mainWindow = (MainWindow)Application.Current.MainWindow;
+            m_mainWindow.MainGrid.Children.Add(this);
 
             Visibility = Visibility.Hidden;
         }
@@ -43,19 +43,20 @@ namespace ExampleAppWPF
 
         public void Destroy()
         {
-            m_currentWindow.MainGrid.Children.Remove(this);
+            m_mainWindow.MainGrid.Children.Remove(this);
         }
 
         public void OpenInteriorStreamingDialogView()
         {
+            m_mainWindow.DisableInput();
+            m_mainWindow.IsEnabled = false;
+
             Visibility = Visibility.Visible;
 
             m_spinnerImage.Visibility = Visibility.Visible;
             m_loadedImage.Visibility = Visibility.Collapsed;
 
             m_mainContainer.BeginAnimation(UIElement.OpacityProperty, FadeInAnimation());
-
-            m_currentWindow.DisableInput();
         }
 
         public void DismissInteriorStreamingDialogView()
@@ -63,9 +64,12 @@ namespace ExampleAppWPF
             m_spinnerImage.Visibility = Visibility.Collapsed;
             m_loadedImage.Visibility = Visibility.Visible;
 
-            m_mainContainer.BeginAnimation(UIElement.OpacityProperty, FadeOutAnimation());
+            m_mainContainer.BeginAnimation(UIElement.OpacityProperty, FadeOutAnimation(2000));
+        }
 
-            m_currentWindow.EnableInput();
+        public void CancelInteriorStreamingDialogView()
+        {
+            m_mainContainer.BeginAnimation(UIElement.OpacityProperty, FadeOutAnimation(0));
         }
 
         public DoubleAnimation FadeInAnimation()
@@ -74,13 +78,15 @@ namespace ExampleAppWPF
             return fadeInAnimation;
         }
 
-        public DoubleAnimation FadeOutAnimation()
+        public DoubleAnimation FadeOutAnimation(int fadeOutDelay)
         {
             DoubleAnimation fadeOutAnimation = new DoubleAnimation(1.0f, 0.0f, TimeSpan.FromMilliseconds(500));
-            fadeOutAnimation.BeginTime = TimeSpan.FromMilliseconds(2000);
+            fadeOutAnimation.BeginTime = TimeSpan.FromMilliseconds(fadeOutDelay);
             fadeOutAnimation.Completed += (sender, eventArgs) =>
             {
                 Visibility = Visibility.Hidden;
+                m_mainWindow.IsEnabled = true;
+                m_mainWindow.EnableInput();
             };
 
             return fadeOutAnimation;

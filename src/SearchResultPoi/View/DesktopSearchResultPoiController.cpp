@@ -19,22 +19,18 @@ namespace ExampleApp
                                                                                SearchMenu::View::ISearchMenuView& searchMenuView,
                                                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                                                Metrics::IMetricsService& metricsService,
-                                                                               MyPinCreation::View::IMyPinCreationInitiationView& pinCreationInitiationView,
                                                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel):
                 SearchResultPoiController(view,
                                           viewModel,
                                           messageBus,
                                           metricsService)
-                , m_pinCreationInitiationView(pinCreationInitiationView)
-                , m_onPinCreationSelected(this, &DesktopSearchResultPoiController::OnPinCreationSelectedOrSearchCleared)
                 , m_interiorChangedCallback(this, &DesktopSearchResultPoiController::OnInteriorSelectionChanged)
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_searchMenuView(searchMenuView)
                 , m_searchClearedCallback(this, &DesktopSearchResultPoiController::OnPinCreationSelectedOrSearchCleared)
                 , m_appModeChangedHandler(this, &DesktopSearchResultPoiController::OnAppModeChangedMessage)
             {
-                m_pinCreationInitiationView.InsertSelectedCallback(m_onPinCreationSelected);
-                
+               
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorChangedCallback);
 
                 m_searchMenuView.InsertSearchClearedCallback(m_searchClearedCallback);
@@ -50,7 +46,6 @@ namespace ExampleApp
 
                 m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorChangedCallback);
 
-                m_pinCreationInitiationView.RemoveSelectedCallback(m_onPinCreationSelected);
             }
 
             void DesktopSearchResultPoiController::OnInteriorSelectionChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId)
@@ -72,7 +67,7 @@ namespace ExampleApp
                     viewModel.Close();
                 }
             }
-
+			
             void DesktopSearchResultPoiController::OnViewOpened()
             {
                 const Search::SdkModel::SearchResultModel& searchResultModel = GetViewModel().GetSearchResultModel();

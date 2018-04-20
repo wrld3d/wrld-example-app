@@ -1,6 +1,12 @@
 #!/bin/sh
 
-usage() { echo "Usage: $0 -p ios"; echo "  -p -> platform, ios or android (required)"; 1>&2; exit 1; }
+usage() { echo "Usage: $0 -p ios";
+    echo "  -p -> platform, ios ";
+    echo "  -e -> environment for deployment (staging or production)"
+    echo "  -j -> password used to derive configuration file encryption key";
+    1>&2;
+    exit 1;
+}
 
 projectPath=$(pwd)/XcodeBuild/
 rm -rf $projectPath
@@ -8,26 +14,45 @@ mkdir $projectPath
 
 targetName="INVALID"
 
-while getopts "p:" o; do
+while getopts "p:e:j:v:" o; do
     case "${o}" in
         p)
-            p=${OPTARG}
-            if [ "$p" != "ios" ]; then
-               usage
+        platform=${OPTARG}
+        if [ "$platform" != "ios" ]; then
+            if [ "$platform" != "android" ]; then
+                usage
             fi
-            ;;
-        *)
-            usage
-            ;;
+        fi
+        ;;
+    e)
+        environment=${OPTARG}
+        ;;
+    j)
+        config_password=${OPTARG}
+        ;;
+    v)
+        ;;
+    *)
+        usage
+        ;;
     esac
 done
+
 shift $((OPTIND-1))
 
-if [ -z "${p}" ]; then
+if [ -z "${platform}" ]; then
     usage
 fi
 
+
+pushd ..
+    sh build-scripts/encrypt_config.sh -p $platform -e $environment -j $config_password
+popd
+
+
 (cd $projectPath && cmake -G Xcode ..)
+
+
 
 resultcode=$?
 if [ $resultcode -ne 0 ]; then
@@ -35,7 +60,7 @@ if [ $resultcode -ne 0 ]; then
     exit $resultcode
 fi
 
-(cd $projectPath && python ../embedsenion.py)
+(cd $projectPath && python ../embed_frameworks.py)
 
 resultcode=$?
 if [ $resultcode -ne 0 ]; then
@@ -43,15 +68,15 @@ if [ $resultcode -ne 0 ]; then
     exit $resultcode
 fi
 
-(cd $projectPath && xcodebuild -target ProjectSwallowApp -arch "i386" -sdk "iphonesimulator")
-resultcode=$?
+#(cd $projectPath && xcodebuild -target ProjectSwallowApp -arch "i386" -sdk "iphonesimulator")
+#resultcode=$?
 
-echo
-if [ $resultcode = 0 ] ; then
-  echo "COMPILE XCODE PROJECT SUCCEEDED"
-else
-  echo "COMPILE XCODE PROJECT FAILED"
-fi
-echo
+#echo
+#if [ $resultcode = 0 ] ; then
+#  echo "COMPILE XCODE PROJECT SUCCEEDED"
+#else
+#  echo "COMPILE XCODE PROJECT FAILED"
+#fi
+#echo
 
 exit $resultcode
