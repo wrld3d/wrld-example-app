@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.os.Handler;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IBackButtonListener;
@@ -344,22 +345,39 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         
         if(!customViewUrl.equals(""))
         {
-        	m_webView.loadUrl(customViewUrl);
-
-            final int defaultViewHeight = 256;
-            final int viewHeight = (customViewHeight != -1) ? customViewHeight : defaultViewHeight;
-            
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) m_webView.getLayoutParams();
-            params.height = m_activity.dipAsPx(viewHeight);
-            m_webView.setLayoutParams(params);
-
+            m_webView.getSettings().setUseWideViewPort(true);
             m_webView.getSettings().setLoadWithOverviewMode(true);
-        	m_webView.getSettings().setUseWideViewPort(true);
+            m_webView.loadUrl(customViewUrl);
+
+            if(customViewHeight != -1) {
+                final int viewHeight = customViewHeight;
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) m_webView.getLayoutParams();
+                params.height = m_activity.dipAsPx(viewHeight);
+                m_webView.setLayoutParams(params);
+            }
+
+            m_webView.setWebViewClient(new WebViewClient() {
+                public void onPageFinished(WebView view, String url) {
+                    boolean didZoom = m_webView.zoomOut();
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            m_webView.zoomOut();
+                        }
+                    }, 300);
+
+                }
+            });
+
         	m_poiImageViewContainer.setVisibility(View.GONE);
         	m_webViewContainer.setVisibility(View.VISIBLE);
         	m_poiImageHeader.setVisibility(View.VISIBLE);
         }
     }
+
+
     
     public void handleButtonLink(View view)
     {
