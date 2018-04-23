@@ -39,7 +39,6 @@
 #include "ISearchMenuModule.h"
 #include "ISearchResultPoiModule.h"
 #include "ISearchResultSectionModule.h"
-#include "ISettingsMenuModule.h"
 #include "ITagSearchModule.h"
 #include "IViewControllerUpdaterModel.h"
 #include "IWatermarkModule.h"
@@ -59,7 +58,6 @@
 #include "SearchMenuViewModule.h"
 #include "SearchResultPoiViewModule.h"
 #include "SearchResultSectionViewModule.h"
-#include "SettingsMenuViewModule.h"
 #include "TagSearchViewModule.h"
 #include "TtyHandler.h"
 #include "UserInteractionEnabledChangedMessage.h"
@@ -107,7 +105,6 @@ AppHost::AppHost(
     ,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
     ,m_pInputProcessor(NULL)
     ,m_pAndroidPlatformAbstractionModule(NULL)
-    ,m_pSettingsMenuViewModule(NULL)
     ,m_pSearchResultSectionViewModule(NULL)
     ,m_pSearchWidgetViewModule(NULL)
     ,m_pModalBackgroundViewModule(NULL)
@@ -557,15 +554,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
             m_messageBus,
             *m_pMenuReactionModel);
 
-    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
-    											"com/eegeo/settingsmenu/SettingsMenuView",
-    		                                     m_nativeState,
-    		                                     app.SearchMenuModule().GetSearchMenuModel(),
-    		                                     app.SearchMenuModule().GetSearchMenuViewModel(),
-												 m_pModalBackgroundViewModule->GetModalBackgroundView(),
-    		                                     m_messageBus
-    		                                 );
-
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
     		app.SearchMenuModule().GetSearchMenuViewModel(),
     				    app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
@@ -636,7 +624,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
 	viewControllerUpdaterModel.AddUpdateableObject(m_pSearchWidgetViewModule->GetSearchWidgetController());
 
     SetTouchExclusivity();
@@ -673,8 +660,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pSearchResultPoiViewModule;
 
         Eegeo_DELETE m_pSearchResultSectionViewModule;
-
-        Eegeo_DELETE m_pSettingsMenuViewModule;
 
         Eegeo_DELETE m_pTagSearchViewModule;
 
