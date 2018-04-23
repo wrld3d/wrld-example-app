@@ -106,6 +106,13 @@
     }
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:event
+{
+    m_pInterop->HandleTouchOnView();
+    
+    [super touchesBegan:touches withEvent:event];
+}
+
 - (BOOL)isVisible
 {
     return self.alpha > 0.0f;
