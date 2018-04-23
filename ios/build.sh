@@ -2,7 +2,7 @@
 
 usage() { echo "Usage: $0 -p ios";
     echo "  -p -> platform, ios ";
-    echo "  -e -> environment for deployment (staging or production)"
+    echo "  -e -> environment for deployment (staging, production or release)"
     echo "  -j -> password used to derive configuration file encryption key";
     1>&2;
     exit 1;
