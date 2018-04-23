@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +15,7 @@ import android.net.Uri;
 import android.text.util.Linkify;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -504,6 +506,8 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         m_view.setEnabled(false);
         m_togglePinnedButton.setOnClickListener(null);
 
+        dismissKeyboard();
+
         SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
     }
 	
@@ -591,5 +595,11 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
             return true;
         }
         return false;
+    }
+
+    private void dismissKeyboard()
+    {
+        InputMethodManager inputMethodManager = (InputMethodManager)m_view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(m_view.getWindowToken(), 0);
     }
 }
