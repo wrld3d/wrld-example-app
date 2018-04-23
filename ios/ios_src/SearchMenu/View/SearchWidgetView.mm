@@ -64,8 +64,8 @@ namespace ExampleApp
 
                 [m_pSearchWidgetViewController registerNib:nib forUseWithResultsTableCellIdentifier:@"WidgetSearchResultTableViewCell"];
 
-                m_menuGroups = [[NSMutableDictionary alloc] init];
-                m_menuOptions = [[NSMutableDictionary alloc] init];
+                m_pMenuGroups = [[NSMutableDictionary alloc] init];
+                m_pMenuOptions = [[NSMutableDictionary alloc] init];
                 
                 m_pSpeechHandler = [[WRLDSpeechHandler alloc] initWithFrame: [UIScreen mainScreen].bounds];
                 [m_pSearchWidgetViewController enableVoiceSearch:m_pSpeechHandler];
@@ -81,8 +81,8 @@ namespace ExampleApp
                 [m_pSearchWidgetViewController disableVoiceSearch];
                 
                 [m_pSpeechHandler release];
-                [m_menuOptions release];
-                [m_menuGroups release];
+                [m_pMenuOptions release];
+                [m_pMenuGroups release];
                 [m_pMenuModel release];
                 [m_pSearchModel release];
 
@@ -221,7 +221,7 @@ namespace ExampleApp
                     
                     NSString* nsName = [NSString stringWithUTF8String:section.Name().c_str()];
                     
-                    WRLDMenuOption* option = m_menuOptions[nsName];
+                    WRLDMenuOption* option = m_pMenuOptions[nsName];
                     [option removeAllChildren];
                     
                     if (section.IsExpandable())
@@ -233,7 +233,7 @@ namespace ExampleApp
             
             void SearchWidgetView::UpdateDiscoverGroup(Menu::View::TSections& sections){
                 NSString *groupName = @"Discover";
-                WRLDMenuGroup *group = m_menuGroups[groupName];
+                WRLDMenuGroup *group = m_pMenuGroups[groupName];
                 
                 BOOL shouldShowDiscover = false;
                 
@@ -246,7 +246,7 @@ namespace ExampleApp
                         Menu::View::IMenuSectionViewModel& section = *sections[sectionIndex];
                         NSString* optionName = [NSString stringWithUTF8String:section.Name().c_str()];
                         if([optionName isEqualToString:groupName]){
-                            WRLDMenuOption *option = m_menuOptions[optionName];
+                            WRLDMenuOption *option = m_pMenuOptions[optionName];
                             //TODO: when widget is updated so that it's possible, check if group has options rather than removing option.
                             [group removeOption:option];
                             [group addOption:option];
@@ -277,7 +277,7 @@ namespace ExampleApp
                         Menu::View::IMenuSectionViewModel& section = *sections[sectionIndex];
                        NSString* nsName = [NSString stringWithUTF8String:section.Name().c_str()];
                         
-                       [m_menuGroups setObject:group forKey:nsName];
+                       [m_pMenuGroups setObject:group forKey:nsName];
                     }
                     
                     AddMenuSectionToGroup(group, *sections[sectionIndex], sectionIndex);
@@ -452,7 +452,7 @@ namespace ExampleApp
                                                                           context:widgetMenuContext];
 
                 [group addOption:menuOption];
-                [m_menuOptions setObject:menuOption forKey:nsName];
+                [m_pMenuOptions setObject:menuOption forKey:nsName];
 
                 return menuOption;
             }

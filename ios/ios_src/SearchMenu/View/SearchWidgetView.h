@@ -30,8 +30,8 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
                 
-                NSMutableDictionary *m_menuGroups;
-                NSMutableDictionary *m_menuOptions;
+                NSMutableDictionary* m_pMenuGroups;
+                NSMutableDictionary* m_pMenuOptions;
                 
                 bool m_hasPopulatedData;
                 
