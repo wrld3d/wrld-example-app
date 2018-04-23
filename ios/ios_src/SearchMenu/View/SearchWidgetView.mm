@@ -67,10 +67,7 @@ namespace ExampleApp
                 m_menuGroups = [[NSMutableDictionary alloc] init];
                 m_menuOptions = [[NSMutableDictionary alloc] init];
                 
-                [m_pSearchWidgetViewController setSearchBarPlaceholder:@"Search Bloomberg"];
-                
                 m_pSpeechHandler = [[WRLDSpeechHandler alloc] initWithFrame: [UIScreen mainScreen].bounds];
-                [m_pSpeechHandler setPrompt:@"Search Bloomberg"];
                 [m_pSearchWidgetViewController enableVoiceSearch:m_pSpeechHandler];
                 
                 AddEventListeners();
