@@ -21,7 +21,6 @@
 #include "InteriorsGpsCameraControllerFactory.h"
 #include "ITextureFileLoader.h"
 #include "IWeatherMenuModule.h"
-#include "SettingsMenuModule.h"
 #include "SearchMenuModule.h"
 #include "AutocompleteSuggestionQueryPerformer.h"
 #include "CompassUpdateController.h"
@@ -216,7 +215,6 @@ namespace ExampleApp
     , m_pinDiameter(28.f)
     , m_initialisedApplicationViewState(false)
     , m_pCameraTransitionController(NULL)
-    , m_pSettingsMenuModule(NULL)
     , m_pAboutPageMenuModule(NULL)
     , m_pOptionsMenuModule(NULL)
     , m_pSearchMenuModule(NULL)
@@ -642,9 +640,6 @@ namespace ExampleApp
                                                                                             m_messageBus,
                                                                                             m_metricsService);
 
-
-        m_pSettingsMenuModule = Eegeo_NEW(ExampleApp::SettingsMenu::SdkModel::SettingsMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel());
-
         m_pAboutPageMenuModule = Eegeo_NEW(AboutPage::SdkModel::AboutPageMenuModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
                                                                                      m_pAboutPageModule->GetAboutPageViewModel());
 
@@ -797,7 +792,6 @@ namespace ExampleApp
                                                                                                      m_identityProvider,
                                                                                                      m_pSearchMenuModule->GetSearchMenuViewModel(),
                                                                                                      m_pSearchModule->GetSearchQueryPerformer(),
-                                                                                                     m_pSearchMenuModule->GetSearchMenuViewModel(),
                                                                                                      m_pSearchModule->GetSearchRefreshService(),
                                                                                                      m_pInteriorsExplorerModule->GetScreenControlViewModel(),
                                                                                                      mapModule.GetLabelsModule().GetDebugLabelLayerFilterModel(),
@@ -986,8 +980,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pOptionsMenuModule;
 
         Eegeo_DELETE m_pAboutPageMenuModule;
-
-        Eegeo_DELETE m_pSettingsMenuModule;
 
         Eegeo_DELETE m_pSurveyModule;
 

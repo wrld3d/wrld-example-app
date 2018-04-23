@@ -10,7 +10,6 @@
 #include "BidirectionalBus.h"
 #include "IIdentity.h"
 #include "IMetricsService.h"
-#include "ISettingsMenuModule.h"
 #include "Menu.h"
 #include "Reaction.h"
 #include "Search.h"
