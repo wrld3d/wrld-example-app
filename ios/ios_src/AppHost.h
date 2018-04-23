@@ -50,6 +50,7 @@
 #include "URLRequestHandler.h"
 #include "SurveyViewIncludes.h"
 #include "IMenuReactionModel.h"
+#include "TagSearchViewIncludes.h"
 #include "IndoorAtlasLocationModule.h"
 #include "SenionLabLocationModule.h"
 #include "CurrentLocationService.h"
@@ -118,7 +119,8 @@ private:
     ExampleApp::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
     Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
     ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule* m_pInteriorsLocationServiceModule;
-    
+
+    ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
     ExampleApp::ModalBackground::View::IModalBackgroundViewModule* m_pModalBackgroundViewModule;
     ExampleApp::FlattenButton::View::IFlattenButtonViewModule* m_pFlattenButtonViewModule;
     ExampleApp::SearchMenu::View::ISearchWidgetViewModule* m_pSearchWidgetViewModule;

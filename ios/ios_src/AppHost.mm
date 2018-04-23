@@ -111,6 +111,7 @@ AppHost::AppHost(
     ,m_pLinkOutObserver(NULL)
     ,m_pURLRequestHandler(NULL)
     ,m_pMenuReactionModel(NULL)
+    ,m_pTagSearchViewModule(NULL)
     ,m_screenshotService(m_pView)
     ,m_piOSAutomatedScreenshotController(NULL)
 {
@@ -340,7 +341,13 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                          m_iOSFlurryMetricsService);
 
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
-    
+
+    m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
+            app.TagSearchModule().GetTagSearchMenuOptionsModel(),
+            app.SearchMenuModule().GetSearchMenuViewModel(),
+            m_messageBus,
+            *m_pMenuReactionModel);
+
     m_pSearchWidgetViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetViewModule)(m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
          app.SearchMenuModule().GetSearchMenuViewModel(),
          m_messageBus);
@@ -506,6 +513,8 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pSearchResultPoiViewModule;
 
     Eegeo_DELETE m_pModalBackgroundViewModule;
+
+    Eegeo_DELETE m_pTagSearchViewModule;
 
     Eegeo_DELETE m_pFlattenButtonViewModule;
 
