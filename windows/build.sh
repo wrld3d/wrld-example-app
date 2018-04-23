@@ -4,12 +4,12 @@ usage()
 { 
 	echo "Usage: $0 [-n <PRODUCT_NAME> -e <ENVIRONMENT> -v <FILE_VERSION> -i <INFORMATIONAL_VERSION>] -p <CONFIG_PASSWORD>]"; 
 	echo "  -n -> the product name of the app"; 
-    echo "  -e -> environment for deployment (staging or production)"
 	echo "  -v -> file version of executable"; 
 	echo "  -i -> informational version of executable"; 
 	echo "  -p -> password used to derive configuration file encryption key"; 
 	1>&2; 
 	exit 1; 
+    echo "  -e -> environment for deployment (staging, production or release)"
 }
 
 projectPath=$(pwd)/windows/WinBuild/
@@ -56,8 +56,8 @@ if [ ! -z "${informationalVersion}" ]; then
     sed -i "s/string\s*InformationalFileVersion\s*=\s*@\"[^\"]*\"/string InformationalFileVersion = @\"$informationalVersion\"/g" windows/ExampleApp/ExampleAppWPF/Properties/VersionInfo.cs
 fi
 
-if [[ ( $environment != 'production' ) && ( $environment != 'staging' ) ]]; then
-    echo "invalid environment '$environment'. Must be one of [staging|production]"
+if [[ ( $environment != 'release' ) && ( $environment != 'production' ) && ( $environment != 'staging' ) ]]; then
+    echo "invalid environment '$environment'. Must be one of [staging|production|release]"
     exit 1
 fi
 
