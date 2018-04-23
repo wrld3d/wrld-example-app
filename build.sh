@@ -4,7 +4,7 @@ allArguments=$@
 
 usage() { echo "Usage: $0 -p android|ios";
     echo "  -p -> platform, ios or android (required)";
-    echo "  -e -> environment for deployment (staging or production)"
+    echo "  -e -> environment for deployment (staging, production or release)"
     echo "  -j -> password used to derive configuration file encryption key";
     echo "  -v -> {teamcitybuildnumber} used to choose which version of wrldsdk to use(optional)"
     1>&2;

@@ -12,8 +12,8 @@ provisioningProfile=$9
 
 # This script executes all the steps to produce an iOS app.
 
-if [[ ( $environment != 'production' ) && ( $environment != 'staging' ) ]]; then
-  echo "invalid environment '$environment'. Must be one of [staging|production]"
+if [[ ( $environment != 'staging' ) && ( $environment != 'production' ) && ( $environment != 'release' ) ]]; then
+  echo "invalid environment '$environment'. Must be one of [staging|production|release]"
   exit 1
 fi
 

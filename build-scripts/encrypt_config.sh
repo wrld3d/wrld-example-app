@@ -2,7 +2,7 @@
 
 usage() { echo "Usage: $0 -f <PLATFORM> -e <ENVIRONMENT>  -j <CONFIG_PASSWORD>" ;
     echo "  -p -> platform, windows,ios or android (required)";
-    echo "  -e -> environment for deployment (staging or production)"
+    echo "  -e -> environment for deployment (staging, production or release)"
     echo "  -j -> password used to derive configuration file encryption key";
     1>&2;
     exit 1;
@@ -45,10 +45,10 @@ else
 	sed_pattern="s#project_swallow_config.json#encrypted_config.json#g"
 fi
 
-if [ $environment == 'production' ]; then
+if [[ ($environment == 'production') || ($environment == 'release') ]]; then
 	src_config_file=project_swallow_production_config.json
 else
-    echo "not production"
+    echo "not production or release"
 	src_config_file=project_swallow_config.json
 fi
 

@@ -8,8 +8,8 @@ hockeyAppIdentifier=${5:-62a47548d62a577300d5949f3f858683}
 environment=${6:staging}
 config_password=$7
 
-if [[ ( $environment != 'production' ) && ( $environment != 'staging' ) ]]; then
-  echo "invalid environment '$environment'. Must be one of [staging|production]"
+if [[ ( $environment != 'staging' ) && ( $environment != 'production' ) && ( $environment != 'release' ) ]]; then
+  echo "invalid environment '$environment'. Must be one of [staging|production|release]"
   exit 1
 fi
 
