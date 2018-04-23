@@ -12,5 +12,5 @@ set(currsources
   ios_src/SearchProviders/View/WidgetSearchResultModel.h
 )
 set(sources ${sources} ${currsources})
-source_group(\\ios_src\\SearchMenu\\View FILES ${currsources})
+source_group(\\ios_src\\SearchProviders\\View FILES ${currsources})
 endif(${IOS})
