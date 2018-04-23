@@ -1,4 +1,5 @@
 set(resources ${resources}
+	Resources/WidgetSearchResultTableViewCell.xib
         Resources/Alert_Tutorial_icon.png
         Resources/Alert_Tutorial_icon@2x.png
         Resources/Alert_Tutorial_icon@3x.png
