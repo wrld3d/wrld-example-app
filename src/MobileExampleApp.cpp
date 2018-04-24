@@ -222,7 +222,6 @@ namespace ExampleApp
     , m_pModalityModule(NULL)
     , m_pTagSearchModule(NULL)
     , m_pMapModeModule(NULL)
-    , m_pFlattenButtonModule(NULL)
     , m_pSearchModule(NULL)
     , m_pPinsModule(NULL)
     , m_pWorldPinsModule(NULL)
@@ -451,7 +450,6 @@ namespace ExampleApp
         m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(
             *m_pCameraTransitionController,
             m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
-            m_pFlattenButtonModule->GetFlattenButtonModel(),
             *m_pSelectFirstResultSearchService,
             m_pMapsceneModule->GetMapsceneLoader());
 
@@ -656,11 +654,6 @@ namespace ExampleApp
         m_pTagSearchModule = &m_pSearchModule->GetTagSearchModule();
 
         m_pMapModeModule = Eegeo_NEW(MapMode::SdkModel::MapModeModule)(m_pVisualMapModule->GetVisualMapService());
-
-        m_pFlattenButtonModule = Eegeo_NEW(ExampleApp::FlattenButton::SdkModel::FlattenButtonModule)(m_pMapModeModule->GetMapModeModel(),
-                                                                                                     m_identityProvider,
-                                                                                                     m_messageBus);
-
 
         InitialisePinsModules(mapModule, world, interiorsAffectedByFlattening, m_screenProperties.GetOversampleScale());
 
@@ -884,7 +877,6 @@ namespace ExampleApp
                                                                                                     m_pPlaceJumpsModule->GetPlaceJumpController(),
                                                                                                     m_pWeatherMenuModule->GetWeatherController(),
                                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
-                                                                                                    m_pFlattenButtonModule->GetFlattenButtonModel(),
                                                                                                     m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
                                                                                                     m_pInteriorsExplorerModule->GetInteriorsCameraController(),
@@ -926,8 +918,7 @@ namespace ExampleApp
                                                                               m_screenProperties,
                                                                               m_messageBus,
                                                                               *m_pNavigationService,
-                                                                              m_pSearchModule->GetSearchQueryPerformer(),
-                                                                              m_pFlattenButtonModule->GetFlattenButtonModel());
+                                                                              m_pSearchModule->GetSearchQueryPerformer());
 
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules), AppModes::SdkModel::WorldMode, m_pGlobalAppModeTransitionRules);
         
@@ -970,8 +961,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pSearchResultPoiModule;
 
         Eegeo_DELETE m_pPlaceJumpsModule;
-
-        Eegeo_DELETE m_pFlattenButtonModule;
 
         Eegeo_DELETE m_pMapModeModule;
 
@@ -1038,7 +1027,6 @@ namespace ExampleApp
     {
         std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> reactors;
         reactors.push_back(&SearchMenuModule().GetSearchMenuViewModel());
-        reactors.push_back(&FlattenButtonModule().GetScreenControlViewModel());
         reactors.push_back(&CompassModule().GetScreenControlViewModel());
         reactors.push_back(&MyPinCreationModule().GetInitiationScreenControlViewModel());
         reactors.push_back(&WatermarkModule().GetScreenControlViewModel());
@@ -1230,7 +1218,6 @@ namespace ExampleApp
 
         m_pSearchMenuModule->GetSearchMenuViewModel().AddToScreen();
         m_pSearchMenuModule->GetSearchMenuViewModel().AddToScreen();
-        m_pFlattenButtonModule->GetScreenControlViewModel().AddToScreen();
         m_pCompassModule->GetScreenControlViewModel().AddToScreen();
         m_pMyPinCreationModule->GetInitiationScreenControlViewModel().AddToScreen();
         m_pWatermarkModule->GetWatermarkViewModel().AddToScreen();

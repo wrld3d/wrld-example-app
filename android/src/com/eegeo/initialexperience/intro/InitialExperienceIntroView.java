@@ -32,7 +32,6 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
 	private RelativeLayout m_bannerInner;
 	private ViewGroup m_searchMenuDialog;
 	private ViewGroup m_compassDialog;
-	private ViewGroup m_mapmodeDialog;
 	private ViewGroup m_pinCreationDialog;
 	private View m_view;
 	private TextView m_welcomeIntroText;
@@ -62,7 +61,6 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
 		m_bannerInner = (RelativeLayout)m_view.findViewById(R.id.welcome_intro_banner_inner);
         m_searchMenuDialog = (ViewGroup)m_view.findViewById(R.id.initial_ux_search_menu_dialog);
         m_compassDialog = (ViewGroup)m_view.findViewById(R.id.initial_ux_compass_dialog);
-        m_mapmodeDialog = (ViewGroup)m_view.findViewById(R.id.initial_ux_mapmode_dialog);
         m_pinCreationDialog = (ViewGroup)m_view.findViewById(R.id.initial_ux_pin_creation_dialog);
 		m_welcomeIntroText = (TextView)m_view.findViewById(R.id.welcome_intro_text);
 		m_welcomeIntroDescription = (TextView)m_view.findViewById(R.id.welcome_intro_description);
@@ -74,9 +72,6 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
         setDialogText(m_compassDialog,
                       resources.getString(R.string.initial_ux_compass_dialog_title),
                       resources.getString(R.string.initial_ux_compass_dialog_description));
-        setDialogText(m_mapmodeDialog,
-                      resources.getString(R.string.initial_ux_mapmode_dialog_title),
-                      resources.getString(R.string.initial_ux_mapmode_dialog_description));
         setDialogText(m_pinCreationDialog,
                       resources.getString(R.string.initial_ux_pincreation_dialog_title),
                       resources.getString(R.string.initial_ux_pincreation_dialog_description));
@@ -143,8 +138,6 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
     	
     	Animation searchDialogAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*1);
     	m_searchMenuDialog.startAnimation(searchDialogAnim);
-    	Animation mapModeAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*2);
-    	m_mapmodeDialog.startAnimation(mapModeAnim);
     	Animation compassAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*3);
     	m_compassDialog.startAnimation(compassAnim);
     	Animation pinCreateAnim = createDialogAnimation(0.0f, 1.0f, m_animationDuration/4, (m_animationDuration/4)*4);
@@ -163,8 +156,6 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
     	
     	Animation searchDialogAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*1);
     	m_searchMenuDialog.startAnimation(searchDialogAnim);
-    	Animation mapModeAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*2);
-    	m_mapmodeDialog.startAnimation(mapModeAnim);
     	Animation compassAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*3);
     	m_compassDialog.startAnimation(compassAnim);
     	Animation pinCreateAnim = createDialogAnimation(1.0f, 0.0f, m_animationDuration/4, (m_animationDuration/4)*4);

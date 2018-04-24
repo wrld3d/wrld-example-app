@@ -16,7 +16,6 @@
 #include "SearchResultSection.h"
 #include "SearchMenu.h"
 #include "Modality.h"
-#include "FlattenButton.h"
 #include "Search.h"
 #include "WorldPins.h"
 #include "SearchResultOnMap.h"
@@ -43,7 +42,6 @@
 #include "ReactionModelModule.h"
 #include "ReactionControllerModule.h"
 #include "SearchResultPoiModule.h"
-#include "FlattenButtonModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
 #include "WeatherMenuModule.h"
@@ -130,7 +128,6 @@ namespace ExampleApp
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
         ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;
-        ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule* m_pFlattenButtonModule;
         Search::SdkModel::ISearchModule* m_pSearchModule;
         Eegeo::Pins::PinsModule* m_pPinsModule;
         ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping* m_pWorldPinsIconMapping;
@@ -283,11 +280,6 @@ namespace ExampleApp
         const ExampleApp::Modality::View::IModalityModule& ModalityModule() const
         {
             return *m_pModalityModule;
-        }
-
-        const ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule& FlattenButtonModule() const
-        {
-            return *m_pFlattenButtonModule;
         }
 
         const Search::SdkModel::ISearchModule& SearchModule() const
