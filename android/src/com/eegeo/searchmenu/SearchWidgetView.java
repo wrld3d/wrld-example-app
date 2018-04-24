@@ -213,48 +213,10 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         }
     }
 
-
-    public void updateDiscoverGroup(final String[] optionNames,
-                        final int[] optionSizes){
-        List<String> optionNamesList = Arrays.asList(optionNames);
-
-        String groupName =  "Discover";
-
-        boolean shouldShowDiscover = false;
-
-        for (int optionIndex = 0; optionIndex < optionNamesList.size(); optionIndex++) {
-            String optionStartsGroup = getFromJson(optionNames[optionIndex], "groupStart");
-
-            if (optionIndex == 0 || optionStartsGroup != null && optionStartsGroup.equals("Y")) {
-                String optionName = getFromJson(optionNames[optionIndex], "name");
-
-                if(optionName.equals(groupName)){
-                    MenuGroup group = m_menuGroups.get(optionName);
-                    List<MenuOption> groupOptions = group.getOptions();
-
-                    if(groupOptions.isEmpty()){
-                       MenuOption firstOption =  m_menuOptions.get( groupName);
-                       group.addOption(firstOption);
-                    }
-
-                    shouldShowDiscover  = true;
-                }
-            }
-        }
-
-        if(!shouldShowDiscover){
-            MenuGroup discoverGroup = m_menuGroups.get(groupName);
-            if (discoverGroup != null)
-                discoverGroup.removeAllOptions();
-        }
-    }
-
     public void updateData(
             final String[] optionNames,
             final int[] optionSizes,
             final String[] childJsons){
-
-        updateDiscoverGroup(optionNames, optionSizes);
 
         List<String> options = Arrays.asList(optionNames);
         int jsonChildIndex = 0;
