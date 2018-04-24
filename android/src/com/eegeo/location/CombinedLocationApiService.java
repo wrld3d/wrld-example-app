@@ -104,7 +104,6 @@ public class CombinedLocationApiService
     @Override
     public void onLocationChanged(Location location)
     {
-        Log.v(TAG, "onLocationChanged , " + location.getLatitude() + " : " + location.getLongitude());
         m_currentLocation = location;
         if(this.m_fusedLocationUpdateListener != null)
         {

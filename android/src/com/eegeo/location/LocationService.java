@@ -251,7 +251,6 @@ class LocationService
                     if (isBetterLocation(location, LocationService.bestLocation))
                     {
                         LocationService.bestLocation = location;
-                        Log.v("Location", "best updated from onLocationChanged : " + location.getLatitude() + " , " + location.getLongitude());
                     }
                 }
 
