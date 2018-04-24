@@ -37,8 +37,6 @@
 #include "AboutPageViewModule.h"
 #include "AboutPageView.h"
 #include "TagSearchModule.h"
-#include "MyPinCreationInitiationViewModule.h"
-#include "MyPinCreationInitiationView.h"
 #include "MyPinCreationConfirmationViewModule.h"
 #include "MyPinCreationConfirmationView.h"
 #include "IMyPinCreationModule.h"
@@ -365,12 +363,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), m_iOSFlurryMetricsService, m_messageBus);
 
-    m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule)(m_messageBus,
-                                           app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-                                           app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
-                                           screenProperties,
-                                           m_iOSFlurryMetricsService);
-
     m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule)(m_messageBus,
             app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
             app.MyPinCreationModule().GetMyPinCreationCompositeViewModel(),
@@ -420,7 +412,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pWatermarkViewModule->GetWatermarkView()];
     [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
-    [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
     [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetView()];
 
@@ -467,7 +458,6 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
     [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
-    [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
     [&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
 
