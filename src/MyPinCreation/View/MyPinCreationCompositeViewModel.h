@@ -26,8 +26,7 @@ namespace ExampleApp
                 MyPinCreationCompositeViewModel(ExampleAppMessaging::TMessageBus& messageBus,
                                                 IMyPinCreationInitiationViewModel& initiationViewModel,
                                                 IMyPinCreationConfirmationViewModel& confirmationViewModel,
-                                                ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
-                                                ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
+                                                ExampleApp::Menu::View::IMenuViewModel& menuViewModel,
                                                 ScreenControl::View::IScreenControlViewModel& interiorControlViewModel,
                                                 ExampleApp::Watermark::View::IWatermarkViewModel& watermarkViewModel);
 
@@ -39,14 +38,13 @@ namespace ExampleApp
 
             private:
                 Eegeo::Helpers::TCallback1<MyPinCreationCompositeViewModel, const MyPinCreationStateChangedMessage&> m_stateChangeHandler;
-                Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControl::View::IScreenControlViewModel&, float> m_settingsMenuStateChangedCallback;
+                Eegeo::Helpers::TCallback2<MyPinCreationCompositeViewModel, ScreenControl::View::IScreenControlViewModel&, float> m_menuStateChangedCallback;
 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 IMyPinCreationInitiationViewModel& m_initiationViewModel;
                 IMyPinCreationConfirmationViewModel& m_confirmationViewModel;
                 ScreenControl::View::IScreenControlViewModel& m_interiorControlViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_searchMenuViewModel;
-                ExampleApp::Menu::View::IMenuViewModel& m_settingsMenuViewModel;
+                ExampleApp::Menu::View::IMenuViewModel& m_menuViewModel;
                 bool m_showUiComponents;
                 Eegeo::Helpers::TCallback1<MyPinCreationCompositeViewModel, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 ExampleApp::Watermark::View::IWatermarkViewModel& m_watermarkViewModel;

@@ -13,7 +13,6 @@
 #include "SearchResultOnMap.h"
 #include "NavigationService.h"
 #include "IPlatformAbstractionModule.h"
-#include "SettingsMenu.h"
 #include "SearchResultSection.h"
 #include "SearchMenu.h"
 #include "Modality.h"
@@ -124,7 +123,6 @@ namespace ExampleApp
         ExampleApp::Metrics::IMetricsService& m_metricsService;
         
         Eegeo::Helpers::IdentityProvider m_identityProvider;
-        ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule* m_pSettingsMenuModule;
         AboutPage::SdkModel::IAboutPageMenuModule* m_pAboutPageMenuModule;
         Options::SdkModel:: IOptionsMenuModule* m_pOptionsMenuModule;
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
@@ -272,11 +270,6 @@ namespace ExampleApp
             return *m_pReactorIgnoredReactionModel;
         }
         
-        const ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule& SettingsMenuModule() const
-        {
-            return *m_pSettingsMenuModule;
-        }
-
         const SearchMenu::SdkModel::ISearchMenuModule& SearchMenuModule() const
         {
             return *m_pSearchMenuModule;
