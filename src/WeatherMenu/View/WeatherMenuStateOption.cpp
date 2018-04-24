@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "WeatherMenuStateOption.h"
-#include "FlattenButtonViewStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -27,7 +26,6 @@ namespace ExampleApp
                 
                 if (m_appModeModel.GetAppMode() == AppModes::SdkModel::WorldMode)
                 {
-                    m_messageBus.Publish(FlattenButton::FlattenButtonViewStateChangedMessage(false));
                     m_messageBus.Publish(WeatherSelectedMessage(m_weatherStateModel));
                 }
 
