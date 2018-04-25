@@ -29,8 +29,8 @@
   "web_proxy_enabled": false,
   "web_proxy_ip_address": "",
   "web_proxy_port": 0,
-  "ssl_enabled": true,
-  "ssl_ignore_pattern": "",
+  "ssl_enabled": false,
+  "ssl_ignore_pattern": "wayfind.bloomberg.com",
   "use_labels": true,
   "indoor_tracked_buildings": [{
       "interior_id": "westport_house",
