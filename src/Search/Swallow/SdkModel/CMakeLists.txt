@@ -18,8 +18,6 @@ set(currsources
   ../src/Search/Swallow/SdkModel/SwallowPersonResultModel.h
   ../src/Search/Swallow/SdkModel/SwallowSearchMenuModule.cpp
   ../src/Search/Swallow/SdkModel/SwallowSearchMenuModule.h
-  ../src/Search/Swallow/SdkModel/SwallowSearchService.cpp
-  ../src/Search/Swallow/SdkModel/SwallowSearchService.h
   ../src/Search/Swallow/SdkModel/SwallowSearchServiceModule.cpp
   ../src/Search/Swallow/SdkModel/SwallowSearchServiceModule.h
   ../src/Search/Swallow/SdkModel/SwallowSearchTransitionPinController.cpp

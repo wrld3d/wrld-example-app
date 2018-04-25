@@ -4,8 +4,8 @@
 
 #include "SwallowOfficeResultMenuOptionSelectedMessageHandler.h"
 #include "SwallowSearchConstants.h"
-#include "SwallowSearchService.h"
 #include "SwallowSearchTransitionPinController.h"
+#include "ISearchService.h"
 #include "ISearchQueryPerformer.h"
 #include "INetworkCapabilities.h"
 
