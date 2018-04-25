@@ -40,7 +40,6 @@ namespace ExampleApp
                 const std::string YelpOAuthToken = "yelp_oauth_token";
                 const std::string YelpOAuthTokenSecret = "yelp_oauth_token_secret";
                 const std::string GeoNamesUserName = "geonames_username";
-                const std::string SqliteDbUrl = "sqlite_db_url";
                 const std::string EegeoSearchServiceUrl = "eegeo_search_service_url";
                 const std::string MyPinsWebServiceUrl = "mypins_web_service_url";
                 const std::string MyPinsWebServiceAuthToken = "mypins_web_service_auth_token";
@@ -260,9 +259,7 @@ namespace ExampleApp
                 
                 m_builder.SetCoverageTreeManifestURL(ParseStringOrDefault(document, CoverageTreeManifestURL, m_defaultConfig.CoverageTreeManifestURL()));
                 m_builder.SetThemeManifestURL(ParseStringOrDefault(document, ThemeManifestURL, m_defaultConfig.ThemeManifestURL()));
-                
-                m_builder.SetSqliteDbUrl(ParseStringOrDefault(document, SqliteDbUrl, m_defaultConfig.SqliteDbUrl()));
-                
+
                 m_builder.SetSearchServiceUrl(ParseStringOrDefault(document, EegeoSearchServiceUrl, m_defaultConfig.EegeoSearchServiceUrl()));
                 
                 m_builder.SetMyPinsWebServiceUrl(ParseStringOrDefault(document, MyPinsWebServiceUrl, m_defaultConfig.MyPinsWebServiceUrl()));
