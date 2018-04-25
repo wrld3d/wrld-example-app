@@ -94,6 +94,11 @@ public class OptionsView
     	m_dataCachingButton.setChecked(cacheEnabledSelected);
     }
 
+    private void ToggleButton(CompoundButton button)
+    {
+        button.setChecked(!button.isChecked());
+    }
+
     public void openClearCacheWarning()
     {
         assert(m_cacheClearSubView == null);
@@ -108,33 +113,42 @@ public class OptionsView
 
     private void configureStreamOverWifiOption()
     {
-        View.OnClickListener streamOverWifiClickListener = new View.OnClickListener() {
+        m_streamOverWifiButton = (CompoundButton) m_view.findViewById(R.id.options_view_stream_wifi_only_togglebutton);
+        m_streamOverWifiButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0)
             {
                 OptionsViewJniMethods.StreamOverWifiToggled(m_nativeCallerPointer);
             }
-        };
-        
-        m_streamOverWifiButton = (CompoundButton) m_view.findViewById(R.id.options_view_stream_wifi_only_togglebutton);
-        m_streamOverWifiButton.setOnClickListener(streamOverWifiClickListener);
+        });
         TextView streamOverWifiLabel = (TextView) m_view.findViewById(R.id.options_view_stream_wifi_only_label);
-        streamOverWifiLabel.setOnClickListener(streamOverWifiClickListener);
+        streamOverWifiLabel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0)
+            {
+                ToggleButton(m_streamOverWifiButton);
+                OptionsViewJniMethods.StreamOverWifiToggled(m_nativeCallerPointer);
+            }
+        });
     }
     
     private void configureDataCachingOption()
     {
-        View.OnClickListener dataCachingButtonClickListener = new View.OnClickListener() {
+        m_dataCachingButton = (CompoundButton) m_view.findViewById(R.id.options_view_cache_enabled_togglebutton);
+        m_dataCachingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0)
             {
                 OptionsViewJniMethods.CachingEnabledToggled(m_nativeCallerPointer);
             }
-        };
-        m_dataCachingButton = (CompoundButton) m_view.findViewById(R.id.options_view_cache_enabled_togglebutton);
-        m_dataCachingButton.setOnClickListener(dataCachingButtonClickListener);
+        });
         TextView cacheEnabledLabel = (TextView) m_view.findViewById(R.id.options_view_cache_enabled_label);
-        cacheEnabledLabel.setOnClickListener(dataCachingButtonClickListener);
+        cacheEnabledLabel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0)
+            {
+                ToggleButton(m_dataCachingButton);
+                OptionsViewJniMethods.CachingEnabledToggled(m_nativeCallerPointer);
+            }
+        });
     }
-    
+
     private void configureClearCacheOption()
     {
         View.OnClickListener clearCacheClickListener = new View.OnClickListener() {
