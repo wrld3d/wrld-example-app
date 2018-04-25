@@ -13,7 +13,6 @@ namespace ExampleApp
             {
                 class ISwallowSearchMenuModule;
                 class SwallowSearchServiceModule;
-                class SwallowSearchService;
                 class SwallowOfficeResultMenuOptionSelectedMessageHandler;
                 class SwallowSearchTransitionPinController;
                 class SwallowMeetingRoomResultModel;
