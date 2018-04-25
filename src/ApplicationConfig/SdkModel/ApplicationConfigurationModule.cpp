@@ -84,7 +84,6 @@ namespace ExampleApp
                         emptyGeoNamesUserName,
                         Eegeo::Config::CoverageTreeManifestUrlDefault,
                         Eegeo::Config::CityThemesManifestUrlDefault,
-                        "",
                         eegeoSearchServiceUrl,
                         emptyMyPinsWebServiceUrl,
                         emptyMyPinsWebServiceAuthToken,

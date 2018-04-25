@@ -187,13 +187,7 @@ namespace ExampleApp
                 m_themeManifestURL = themeManifestURL;
                 return *this;
             }
-            
-            IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSqliteDbUrl(const std::string& SqliteDbUrl)
-            {
-                m_sqliteDbUrl = SqliteDbUrl;
-                return *this;
-            }
-            
+
             IApplicationConfigurationBuilder& ApplicationConfigurationBuilder::SetSearchServiceUrl(const std::string& eegeoSearchServiceUrl)
             {
                 m_eegeoSearchServiceUrl = eegeoSearchServiceUrl;
@@ -445,7 +439,6 @@ namespace ExampleApp
                                                 m_geoNamesUserName,
                                                 m_coverageTreeManifestURL,
                                                 m_themeManifestURL,
-                                                m_sqliteDbUrl,
                                                 m_eegeoSearchServiceUrl,
                                                 m_myPinsWebServiceUrl,
                                                 m_myPinsWebServiceAuthToken,
