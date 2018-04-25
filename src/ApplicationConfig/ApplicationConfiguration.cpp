@@ -26,7 +26,6 @@ namespace ExampleApp
                                                            const std::string& geoNamesUserName,
                                                            const std::string& coverageTreeManifestURL,
                                                            const std::string& themeManifestURL,
-                                                           const std::string& sqliteDbUrl,
                                                            const std::string& eegeoSearchServiceUrl,
                                                            const std::string& myPinsWebServiceUrl,
                                                            const std::string& myPinsWebServiceAuthToken,
@@ -87,7 +86,6 @@ namespace ExampleApp
         , m_geoNamesUserName(geoNamesUserName)
         , m_coverageTreeManifestURL(coverageTreeManifestURL)
         , m_themeManifestURL(themeManifestURL)
-        , m_sqliteDbUrl(sqliteDbUrl)
         , m_eegeoSearchServiceUrl(eegeoSearchServiceUrl)
         , m_myPinsWebServiceUrl(myPinsWebServiceUrl)
         , m_myPinsWebServiceAuthToken(myPinsWebServiceAuthToken)
@@ -244,12 +242,7 @@ namespace ExampleApp
         {
             return m_geoNamesUserName;
         }
-        
-        std::string ApplicationConfiguration::SqliteDbUrl() const
-        {
-            return m_sqliteDbUrl;
-        }
-        
+
         std::string ApplicationConfiguration::EegeoSearchServiceUrl() const
         {
             return m_eegeoSearchServiceUrl;

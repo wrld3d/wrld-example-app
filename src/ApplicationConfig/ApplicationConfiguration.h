@@ -45,7 +45,6 @@ namespace ExampleApp
             std::string m_yelpOAuthTokenSecret;
             std::string m_geoNamesUserName;
             std::string m_twitterAuthCode;
-            std::string m_sqliteDbUrl;
             std::string m_eegeoSearchServiceUrl;
             std::string m_myPinsWebServiceUrl;
             std::string m_myPinsWebServiceAuthToken;
@@ -112,7 +111,6 @@ namespace ExampleApp
                                      const std::string& geoNamesUserName,
                                      const std::string& coverageTreeManifestURL,
                                      const std::string& themeManifestURL,
-                                     const std::string& sqliteDbUrl,
                                      const std::string& eegeoSearchServiceUrl,
                                      const std::string& myPinsWebServiceUrl,
                                      const std::string& myPinsWebServiceAuthToken,
@@ -196,9 +194,7 @@ namespace ExampleApp
             std::string CoverageTreeManifestURL() const;
             
             std::string ThemeManifestURL() const;
-            
-            std::string SqliteDbUrl() const;
-            
+
             std::string EegeoSearchServiceUrl() const;
             
             std::string MyPinsWebServiceUrl() const;

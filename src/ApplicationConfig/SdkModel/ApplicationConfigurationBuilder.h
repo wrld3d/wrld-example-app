@@ -40,7 +40,6 @@ namespace ExampleApp
                 std::string m_geoNamesUserName;
                 std::string m_coverageTreeManifestURL;
                 std::string m_themeManifestURL;
-                std::string m_sqliteDbUrl;
                 std::string m_eegeoSearchServiceUrl;
                 std::string m_myPinsWebServiceUrl;
                 std::string m_myPinsWebServiceAuthToken;
@@ -132,9 +131,7 @@ namespace ExampleApp
                 IApplicationConfigurationBuilder& SetCoverageTreeManifestURL(const std::string& coverageTreeManifestUrl);
                 
                 IApplicationConfigurationBuilder& SetThemeManifestURL(const std::string& themesManifestUrl);
-                
-                IApplicationConfigurationBuilder& SetSqliteDbUrl(const std::string& SqliteDbUrl);
-                
+
                 IApplicationConfigurationBuilder& SetSearchServiceUrl(const std::string& eegeoSearchServiceUrl);
                 
                 IApplicationConfigurationBuilder& SetMyPinsWebServiceUrl(const std::string& myPinsWebServiceUrl);

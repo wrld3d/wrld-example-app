@@ -54,9 +54,7 @@ namespace ExampleApp
                 virtual IApplicationConfigurationBuilder& SetCoverageTreeManifestURL(const std::string& coverageTreeManifestUrl) = 0;
                 
                 virtual IApplicationConfigurationBuilder& SetThemeManifestURL(const std::string& themesManifestUrl) = 0;
-                
-                virtual IApplicationConfigurationBuilder& SetSqliteDbUrl(const std::string& SqliteDbUrl) = 0;
-                
+
                 virtual IApplicationConfigurationBuilder& SetSearchServiceUrl(const std::string& searchServiceUrl) = 0;
                 
                 virtual IApplicationConfigurationBuilder& SetMyPinsWebServiceUrl(const std::string& myPinsWebServiceUrl) = 0;
