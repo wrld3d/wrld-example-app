@@ -70,7 +70,6 @@
 #include "InteriorsEntitiesPins.h"
 #include "MapMode.h"
 #include "AppModes.h"
-#include "SwallowPoiDb.h"
 #include "SwallowSearch.h"
 #include "IAppCameraModule.h"
 #include "CameraTransitionService.h"
@@ -160,8 +159,6 @@ namespace ExampleApp
         Search::SdkModel::ISearchServiceModule* m_pTransitionPoiSearchServiceModule;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         InteriorsEntitiesPins::SdkModel::IInteriorsEntitiesPinsModule* m_pInteriorsEntitiesPinsModule;
-        Eegeo::Modules::SQLiteModule* m_pSQLiteModule;
-        SwallowPoiDb::ISwallowPoiDbModule* m_pSwallowPoiDbModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         Social::TwitterFeed::ITwitterFeedModule* m_pTwitterFeedModule;
         ReportPinsVisibilityMasking::SdkModel::ReportPinsVisibilityMaskingModule* m_pReportPinsVisibilityMaskingModule;
@@ -190,8 +187,6 @@ namespace ExampleApp
         const bool m_useIndoorEntryMarkerLabels;
         
         ExampleApp::WifiInfo::IRestrictedBuildingService* m_pRestrictedBuildingInfoService;
-        
-		void CreateSQLiteModule(Eegeo::UI::NativeUIFactories& nativeUIFactories);
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening);

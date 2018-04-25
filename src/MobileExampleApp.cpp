@@ -71,14 +71,11 @@
 #include "GeoNamesSearchServiceModule.h"
 #include "EegeoSearchServiceModule.h"
 #include "SearchVendorNames.h"
-#include "SwallowPoiDbModule.h"
-#include "SwallowPoiDbWebLoader.h"
-#include "SQLiteModule.h"
+#include "SwallowCategoryMenuOption.h"
 #include "SwallowSearchServiceModule.h"
 #include "SwallowSearchMenuModule.h"
 #include "SwallowSearchConstants.h"
 #include "SwallowSearchTransitionPinController.h"
-#include "SwallowPoiDbServiceProvider.h"
 #include "YelpSearchConstants.h"
 #include "YelpSearchServiceModule.h"
 #include "AppCameraModule.h"
@@ -290,8 +287,6 @@ namespace ExampleApp
     , m_pVisualMapModule(NULL)
     , m_pConnectivityChangedObserver(NULL)
     , m_toursPinDiameter(48.f)
-    , m_pSQLiteModule(NULL)
-    , m_pSwallowPoiDbModule(NULL)
     , m_menuReaction(menuReaction)
     , m_pModalityIgnoredReactionModel(NULL)
     , m_pReactorIgnoredReactionModel(NULL)
@@ -403,11 +398,9 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
 
-        CreateSQLiteModule(nativeUIFactories);
-        
         CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening);
-        
-        namespace IntHighlights = InteriorsExplorer::SdkModel::Highlights;
+
+		namespace IntHighlights = InteriorsExplorer::SdkModel::Highlights;
         
         m_pHighlightColorMapper = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::HighlightColorMapper)(Eegeo::v4(0.0, 1.0, 0.0, 1.0));
         
@@ -525,8 +518,6 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pRayCaster;
 
-        Eegeo_DELETE m_pSQLiteModule;
-
         Eegeo_DELETE m_pCameraTransitionService;
         Eegeo_DELETE m_pCameraTransitionController;
         Eegeo_DELETE m_pDoubleTapIndoorInteractionController;
@@ -542,26 +533,13 @@ namespace ExampleApp
         
         Eegeo_DELETE m_pWorld;
     }
-    
-    void MobileExampleApp::CreateSQLiteModule(Eegeo::UI::NativeUIFactories& nativeUIFactories)
-    {
-        Eegeo_ASSERT(m_pSQLiteModule == NULL);
-        
-        Eegeo::Modules::IPlatformAbstractionModule& platformAbstractionModule = m_platformAbstractions;
-        
-        const Eegeo::Modules::SQLiteModuleConfig& config = Eegeo::Modules::SQLiteModuleConfig::CreateDefault();
-        
-        m_pSQLiteModule = Eegeo::Modules::SQLiteModule::Create(config, platformAbstractionModule, nativeUIFactories.AlertBoxFactory());
-    }
+
     void MobileExampleApp::CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                                          const bool interiorsAffectedByFlattening)
     {
         Eegeo::EegeoWorld& world = *m_pWorld;
         
         Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
-        
-        Eegeo_ASSERT(m_pSwallowPoiDbModule == NULL);
-        Eegeo_ASSERT(m_pSQLiteModule != NULL);
 
         m_pReactorIgnoredReactionModel = Eegeo_NEW(Menu::View::ReactorIgnoredReactionModel)();
         m_pModalityIgnoredReactionModel = Eegeo_NEW(Menu::View::ModalityIgnoredReactionModel)();
@@ -1052,8 +1030,6 @@ namespace ExampleApp
         
         
         Eegeo_DELETE m_pReactionControllerModule;
-        
-        Eegeo_DELETE m_pSwallowPoiDbModule;
     }
     
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const
