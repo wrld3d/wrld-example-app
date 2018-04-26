@@ -51,7 +51,7 @@ fi
 
 
 # API_TOKEN, from https://rink.hockeyapp.net/manage/auth_tokens
-apitoken='b93a76258d944864816b7f89a4bd83b6'
+apitoken='2878c61cb5874b61ab99927a541c9da3'
 
 # Full path where the app file is located.
 filepath=$pathToProjectDir"/$ipaName.ipa"
