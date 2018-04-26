@@ -42,7 +42,7 @@ echo
 
 
 # API_TOKEN, from https://rink.hockeyapp.net/manage/auth_tokens
-apitoken='b93a76258d944864816b7f89a4bd83b6'
+apitoken='4174f6b1eee948a0a0780a012e184a49'
 
 # Full path where the app file is located.
 filepath=$pathToProjectDir/bin/NativeActivity.apk
