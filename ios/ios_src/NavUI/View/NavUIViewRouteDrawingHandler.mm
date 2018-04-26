@@ -23,8 +23,10 @@
         m_pDrawingController = drawingController;
         m_navModel = navModel;
         
-        m_navModelObserver = [[WRLDNavModelObserver alloc] initWithDelegate:self];
+        m_navModelObserver = [[WRLDNavModelObserver alloc] init];
+        [m_navModelObserver setDelegate:self];
         [m_navModelObserver registerObserver:@"route"];
+        [m_navModelObserver registerObserver:@"currentDirection"];
         
         [m_navModelObserver setNavModel:m_navModel];
         
@@ -53,15 +55,26 @@
         {
             [self drawRoute:m_navModel.route];
         }
+        return;
+    }
+    
+    if([keyPath isEqual:@"currentDirection"])
+    {
+        if (m_navModel.currentDirection>0)
+        {
+            m_pDrawingController->SetRouteColor(static_cast<int>(m_navModel.currentDirection-1), Eegeo::v4(0, 0, 1, 0.8));
+        }
+        m_pDrawingController->SetRouteColor(static_cast<int>(m_navModel.currentDirection), Eegeo::v4(0, 1, 0, 0.8));
     }
 }
 
 - (void)drawRoute:(WRLDNavRoute*)route
 {
-    std::vector<ExampleApp::NavRouting::SdkModel::NavRouteDrawingVertexData> verts;
-    
+    int directionId = 0;
     for (WRLDNavDirection *direction in route.directions)
     {
+        std::vector<ExampleApp::NavRouting::SdkModel::NavRouteDrawingVertexData> verts;
+        
         if (direction.path.count < 2)
         {
             continue;
@@ -80,11 +93,11 @@
             
             verts.emplace_back(latLng.latitude, latLng.longitude, indoorID, static_cast<int>(direction.floorID), static_cast<bool>(direction.isMultiFloor));
         }
+        
+        verts.erase(std::unique(verts.begin(), verts.end()), verts.end());
+        m_pDrawingController->AddRoute(directionId, verts, Eegeo::v4(1, 0, 0, 0.8));
+        directionId++;
     }
-
-    verts.erase(std::unique(verts.begin(), verts.end()), verts.end());
-    
-    m_pDrawingController->DrawRoute(verts);
 }
 
 @end

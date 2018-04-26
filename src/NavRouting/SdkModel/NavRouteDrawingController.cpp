@@ -2,7 +2,7 @@
 
 #include "NavRouteDrawingController.h"
 
-#include "VectorMath.h"
+#include "Route.h"
 #include "RouteBuilder.h"
 #include "RouteStyle.h"
 #include "RouteVertex.h"
@@ -13,12 +13,8 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            std::vector<Eegeo::Routes::RouteVertex> BuildRoute(const std::vector<NavRouteDrawingVertexData>& verts)
+            std::vector<Eegeo::Routes::RouteVertex> BuildRoutePoints(const std::vector<NavRouteDrawingVertexData>& verts, Eegeo::v4 color, float halfWidth, float velocity)
             {
-                const Eegeo::v4 color(1, 0, 0, 0.8f);
-                float halfWidth = 5.f;
-                float velocity = 20.f;
-                
                 Eegeo::Routes::RouteBuilder builder;
                 builder.Start(color, halfWidth, velocity, Eegeo::Routes::Pedestrian);
                 
@@ -38,9 +34,10 @@ namespace ExampleApp
             }
             
             NavRouteDrawingController::NavRouteDrawingController(Eegeo::Routes::RouteService& routeService)
-            :m_routeService(routeService)
+            : m_routeService(routeService)
+            , m_halfWidth(5.f)
+            , m_velocity(20.f)
             {
-                m_pRoute = NULL;
             }
 
             NavRouteDrawingController::~NavRouteDrawingController()
@@ -48,28 +45,59 @@ namespace ExampleApp
                 ClearRoute();
             }
             
-            void NavRouteDrawingController::DrawRoute(const std::vector<NavRouteDrawingVertexData>& verts)
+            void NavRouteDrawingController::AddRoute(int routeStep, const std::vector<NavRouteDrawingVertexData>& vertsData, Eegeo::v4 color)
             {
-                std::vector<Eegeo::Routes::RouteVertex> points = BuildRoute(verts);
+                std::vector<Eegeo::Routes::RouteVertex> points = BuildRoutePoints(vertsData, color, m_halfWidth, m_velocity);
                 
-                Eegeo::Routes::Style::RouteStyle routeStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone, Eegeo::Rendering::LayerIds::BeforeWorldTranslucency);
-                
-                m_pRoute = m_routeService.CreateRoute(points, routeStyle, false);
-                
+                Eegeo::Routes::Route* route = BuildRoute(points);
+                m_routes[routeStep] = route;
             }
             
             void NavRouteDrawingController::ClearRoute()
             {
-                if (m_pRoute!=NULL)
+                for(const auto& routeIt : m_routes)
                 {
-                    m_routeService.DestroyRoute(m_pRoute);
-                    m_pRoute = NULL;
+                    m_routeService.DestroyRoute(routeIt.second);
+                }
+                
+                m_routes.clear();
+            }
+            
+            void NavRouteDrawingController::SetRouteColor(int routeStep, Eegeo::v4 color)
+            {
+                if (m_routes.find(routeStep)!=m_routes.end())
+                {
+                    Eegeo::Routes::Route* oldRoute = m_routes[routeStep];
+                    
+                    const std::vector<Eegeo::Routes::RouteVertex>& oldPoints = oldRoute->GetPoints();
+                    
+                    std::vector<Eegeo::Routes::RouteVertex> newPoints;
+                    newPoints.reserve(oldPoints.size());
+                    
+                    for (const auto& vert: oldPoints)
+                    {
+                        newPoints.emplace_back(vert.GetLocation(),
+                                               vert.GetIndoorMapId(),
+                                               vert.GetIndoorMapFloorId(),
+                                               color,
+                                               vert.GetHalfWidth(),
+                                               vert.GetSpeed(),
+                                               vert.GetRouteVertexClassification(),
+                                               vert.GetDistanceFromStartInMetres(),
+                                               vert.GetRouteParam());
+                    }
+                    
+                    m_routeService.DestroyRoute(oldRoute);
+                    Eegeo::Routes::Route* newRoute = BuildRoute(newPoints);
+                    m_routes[routeStep] = newRoute;
                 }
             }
             
-            void NavRouteDrawingController::SetCurrentStep(int stepIndex)
+            Eegeo::Routes::Route* NavRouteDrawingController::BuildRoute(const std::vector<Eegeo::Routes::RouteVertex>& points)
             {
-                //TODO implement highlighting of current step
+                Eegeo::Routes::Style::RouteStyle routeStyle(&m_routeThicknessPolicy, Eegeo::Routes::Style::RouteStyle::DebugStyleNone, Eegeo::Rendering::LayerIds::BeforeWorldTranslucency);
+                
+                return m_routeService.CreateRoute(points, routeStyle, false);
             }
         }
     }

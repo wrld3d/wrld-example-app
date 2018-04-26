@@ -110,7 +110,7 @@ namespace ExampleApp
                         return;
                     }
                     
-                    [model sendNavEvent:@"combinedWidgetAnimateIn"];
+                    [model sendNavEvent:WRLDNavEventWidgetAnimateIn];
                 }
                 
                 void setStartLocationToCurrentLocation()
@@ -142,23 +142,30 @@ namespace ExampleApp
                     }
                 }
                 
-                void eventReceived(const std::string& key) override
+                void eventReceived(WRLDNavEvent key) override
                 {
-                    if(key == "closeSetupJourneyClicked")
+                    if(key == WRLDNavEventCloseSetupJourneyClicked)
                     {
                         openable.Close();
                         model.route = nil;
-                        [navModel() sendNavEvent:@"combinedWidgetAnimateOut"];
+                        [navModel() sendNavEvent:WRLDNavEventWidgetAnimateOut];
                     }
                     
-                    else if(key == "selectStartLocationClicked")
+                    else if(key == WRLDNavEventSelectStartLocationClicked)
                     {
                         NSLog(@"TDP eventReceived selectStartLocationClicked");
                     }
                     
-                    else if(key == "selectEndLocationClicked")
+                    else if(key == WRLDNavEventSelectEndLocationClicked)
                     {
                         NSLog(@"TDP eventReceived selectStartLocationClicked");
+                    }
+                    
+                    else if(key == WRLDNavEventStartEndButtonClicked)
+                    {
+                        NSLog(@"TDP eventReceived startEndButtonClicked");
+                        
+                        model.navMode = model.navMode == WRLDNavModeActive ?  WRLDNavModeReady : WRLDNavModeActive;
                     }
                 }
             };

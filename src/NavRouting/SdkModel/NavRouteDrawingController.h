@@ -5,11 +5,12 @@
 #include "Types.h"
 #include "Routes.h"
 #include "RouteService.h"
-#include "RouteData.h"
 #include "IdentityRouteThicknessPolicy.h"
 #include "NavRouteDrawingVertexData.h"
+#include "VectorMath.h"
 
 #include <vector>
+#include <unordered_map>
 
 namespace ExampleApp
 {
@@ -24,16 +25,21 @@ namespace ExampleApp
 
                 ~NavRouteDrawingController();
                 
-                void DrawRoute(const std::vector<NavRouteDrawingVertexData>& vertsData);
+                void AddRoute(int routeStep, const std::vector<NavRouteDrawingVertexData>& vertsData, Eegeo::v4 color);
                 
                 void ClearRoute();
                 
-                void SetCurrentStep(int stepIndex);
+                void SetRouteColor(int routeStep, Eegeo::v4 color);
                 
             private:
+                Eegeo::Routes::Route* BuildRoute(const std::vector<Eegeo::Routes::RouteVertex>& points);
+                
                 Eegeo::Routes::RouteService& m_routeService;
-                Eegeo::Routes::Route* m_pRoute;
+                std::unordered_map<int, Eegeo::Routes::Route*> m_routes;
                 Eegeo::Routes::Style::Thickness::IdentityRouteThicknessPolicy m_routeThicknessPolicy;
+                
+                float m_halfWidth;
+                float m_velocity;
             };
         }
     }
