@@ -6,9 +6,17 @@
 -dontobfuscate
 -dontpreverify
 
-# Disable all optimizations via filter
--optimizationpasses 1
--optimizations "!*"
+# Disable all optimizations that aren't required for logging removal
+-optimizations code/removal/advanced,!*
+
+# Permit deletion of verbose, debug and informational logging methods
+# Keep warning and error logging methods
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+}
 
 # Keep public methods on public classes
 -keep public class com.eegeo.entrypointinfrastructure.** {public *;}
