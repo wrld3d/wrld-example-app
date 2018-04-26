@@ -404,12 +404,14 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
 
     @Override
     public void onMenuOptionExpanded(MenuOption menuOption) {
-
+        boolean expanded = true;
+        SearchWidgetViewJniMethods.OptionExpandedStateChanged(m_nativeCallerPointer, expanded, menuOption.getText());
     }
 
     @Override
     public void onMenuOptionCollapsed(MenuOption menuOption) {
-
+        boolean expanded = false;
+        SearchWidgetViewJniMethods.OptionExpandedStateChanged(m_nativeCallerPointer, expanded, menuOption.getText());
     }
 
     @Override

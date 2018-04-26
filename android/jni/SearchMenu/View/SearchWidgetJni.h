@@ -25,6 +25,13 @@ extern "C"
             jint itemIndex
         );
 
+    JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_OptionExpandedStateChanged(
+            JNIEnv* jenv, jobject obj,
+            jlong nativeObjectPtr,
+            jboolean open,
+            jstring optionName
+        );
+
     JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_ViewPushesControlsOffscreen(
             JNIEnv* jenv, jobject obj,
             jlong nativeObjectPtr);

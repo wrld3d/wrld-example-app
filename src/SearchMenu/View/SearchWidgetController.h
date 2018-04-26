@@ -49,6 +49,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback3<SearchWidgetController, const std::string&, int, int> m_onItemSelectedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemAddedCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, Menu::View::MenuItemModel> m_onItemRemovedCallback;
+                Eegeo::Helpers::TCallback2<SearchWidgetController, bool , const std::string& > m_onOptionExpandedStateChangedCallback;
 
                 bool m_menuContentsChanged;
 				bool m_inInteriorMode;
@@ -83,6 +84,7 @@ namespace ExampleApp
 				void OnViewOpened();
 				void OnViewClosed();
 				void OnModalBackgroundTouch();
+                void OnOptionExpandedStateChanged(bool& expanded, const std::string& optionName);
             };
         }
     }
