@@ -1,10 +1,14 @@
 -verbose
 
-# Skip all steps performed by ProGuard
+# Skip unwanted steps performed by ProGuard
 -dontshrink
--dontoptimize
+# -dontoptimize
 -dontobfuscate
 -dontpreverify
+
+# Disable all optimizations via filter
+-optimizationpasses 1
+-optimizations "!*"
 
 # Keep public methods on public classes
 -keep public class com.eegeo.entrypointinfrastructure.** {public *;}
@@ -13,9 +17,9 @@
 -keep public class org.scribe.services.DatatypeConverterEncoder { public *; }
 -keep public class com.senion.stepinside.sdk.** { public *; }
 
-# Hide "________: can't find referenced class ________"
+# Ignore "________: can't find referenced class ________"
 -dontwarn com.google.android.gms.**
--dontwarn com.senion.stepinside.sdk.internal**
+-dontwarn com.senion.stepinside.sdk.internal.**
 -dontwarn org.scribe.services.DatatypeConverterEncoder
 
 # Hide "duplicate definition of library class [________]"
