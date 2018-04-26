@@ -43,6 +43,23 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_Sele
         pView->HandleItemSelected(menuText, sectionIndex, itemIndex);
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_OptionExpandedStateChanged(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jboolean open,
+        jstring optionName
+)
+{
+    ASSERT_UI_THREAD
+
+    const char* chars = jenv->GetStringUTFChars(optionName, 0);
+    std::string name = chars;
+    jenv->ReleaseStringUTFChars(optionName, chars);
+
+    ExampleApp::SearchMenu::View::SearchWidgetView* pView = reinterpret_cast<ExampleApp::SearchMenu::View::SearchWidgetView*>(nativeObjectPtr);
+    pView->OptionExpandedStateChanged(open,name);
+}
+
 JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_ViewPushesControlsOffscreen(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr)

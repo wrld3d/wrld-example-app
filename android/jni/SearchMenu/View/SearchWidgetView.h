@@ -27,6 +27,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection3<const std::string&, int, int> m_onItemSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
+                Eegeo::Helpers::CallbackCollection2<bool,const std::string&> m_onOptionExpandedStateChangedCallbacks;
 
                 void CallVoidVoidFunction(const char* func);
 
@@ -69,6 +70,10 @@ namespace ExampleApp
 
                 void InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback);
                 void RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback);
+
+                void OptionExpandedStateChanged(bool open,const std::string& optionName);
+                void InsertOptionExpandedStateChanged(Eegeo::Helpers::ICallback2<bool, const std::string&>& callback);
+                void RemoveOptionExpandedStateChanged(Eegeo::Helpers::ICallback2<bool, const std::string&>& callback);
             };
         }
     }

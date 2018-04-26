@@ -26,6 +26,7 @@ namespace ExampleApp
 
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
+                Eegeo::Helpers::CallbackCollection2<bool,const std::string&> m_onOptionExpandedStateChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection3<const std::string&, int, int> m_onItemSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
@@ -41,6 +42,9 @@ namespace ExampleApp
                 void (^m_onResultsCleared) ();
                 void (^m_onQueryCancelled) (WRLDSearchQuery *query);
                 void (^m_onFocusEvent) ();
+                void (^m_onOptionExpanded) (NSObject* optionContext, BOOL fromInteraction);
+                void (^m_onOptionCollapsed) (NSObject* optionContext, BOOL fromInteraction);
+                void OptionExpandedStateChanged(bool open,NSString *optionName);
                 
                 void AddEventListeners();
                 void RemoveEventListeners();
@@ -93,6 +97,9 @@ namespace ExampleApp
 
                 void InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback);
                 void RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback);
+                
+                void InsertOptionExpandedStateChanged(Eegeo::Helpers::ICallback2<bool, const std::string&>& callback);
+                void RemoveOptionExpandedStateChanged(Eegeo::Helpers::ICallback2<bool, const std::string&>& callback);
 
                 void SetOnScreenStateToIntermediateValue(float value);
                 void SetFullyOnScreen();

@@ -8,6 +8,7 @@
 #include "IMenuOption.h"
 #include "MenuItemModel.h"
 #include "IMenuModel.h"
+#include "MenuSectionExpandedChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,7 @@ namespace ExampleApp
             , m_onItemSelectedCallback(this, &SearchWidgetController::OnItemSelected)
             , m_onItemAddedCallback(this, &SearchWidgetController::OnItemAdded)
             , m_onItemRemovedCallback(this, &SearchWidgetController::OnItemRemoved)
+            , m_onOptionExpandedStateChangedCallback(this, &SearchWidgetController::OnOptionExpandedStateChanged)
             , m_onScreenStateChanged(this, &SearchWidgetController::OnScreenControlStateChanged)
             , m_onOpenableStateChanged(this, &SearchWidgetController::OnOpenableStateChanged)
 			, m_onModalBackgroundTouchCallback(this, &SearchWidgetController::OnModalBackgroundTouch)
@@ -46,7 +48,8 @@ namespace ExampleApp
                 m_view.InsertOnItemSelected(m_onItemSelectedCallback);
                 m_view.InsertOnViewClosed(m_onViewClosedCallback);
                 m_view.InsertOnViewOpened(m_onViewOpenedCallback);
-
+                m_view.InsertOptionExpandedStateChanged(m_onOptionExpandedStateChangedCallback);
+                
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
 
@@ -83,6 +86,7 @@ namespace ExampleApp
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChanged);
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenableStateChanged);
 
+                m_view.RemoveOptionExpandedStateChanged(m_onOptionExpandedStateChangedCallback);
                 m_view.RemoveOnViewOpened(m_onViewOpenedCallback);
                 m_view.RemoveOnViewClosed(m_onViewClosedCallback);
                 m_view.RemoveResultSelectedCallback(m_onSearchResultSelectedCallback);
@@ -293,9 +297,13 @@ namespace ExampleApp
 			void SearchWidgetController::OnModalBackgroundTouch()
 			{
 				// the modal background goes away after the first touch, so no need to throttle
-
 				m_view.CloseMenu();
 			}
+            
+            void SearchWidgetController::OnOptionExpandedStateChanged(bool& expanded, const std::string& name)
+            {
+                m_messageBus.Publish(Menu::MenuSectionExpandedChangedMessage(name, expanded));
+            }
         }
     }
 }
