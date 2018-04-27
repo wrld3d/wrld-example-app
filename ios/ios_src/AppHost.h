@@ -25,7 +25,6 @@
 #include "SearchResultPoiViewIncludes.h"
 #include "CompassViewIncludes.h"
 #include "AboutPageViewIncludes.h"
-#include "MyPinCreationInitiationViewIncludes.h"
 #include "MyPinCreationConfirmationViewIncludes.h"
 #include "MyPinCreationDetailsViewIncludes.h"
 #include "BidirectionalBus.h"
@@ -128,7 +127,6 @@ private:
     ExampleApp::PersistentSettings::iOSPersistentSettingsModel m_iOSPersistentSettingsModel;
     ExampleApp::InitialExperience::SdkModel::IInitialExperienceModule* m_pInitialExperienceModule;
     ExampleApp::AboutPage::View::IAboutPageViewModule* m_pAboutPageViewModule;
-    ExampleApp::MyPinCreation::View::IMyPinCreationInitiationViewModule* m_pMyPinCreationInitiationViewModule;
     ExampleApp::MyPinCreation::View::IMyPinCreationConfirmationViewModule* m_pMyPinCreationConfirmationViewModule;
     ExampleApp::MyPinCreationDetails::View::IMyPinCreationDetailsViewModule* m_pMyPinCreationDetailsViewModule;
     ExampleApp::MyPinDetails::View::IMyPinDetailsViewModule* m_pMyPinDetailsViewModule;
