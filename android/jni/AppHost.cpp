@@ -23,10 +23,8 @@
 #include "EegeoWorld.h"
 #include "EffectHandler.h"
 #include "EGL/egl.h"
-#include "FlattenButtonViewModule.h"
 #include "IAboutPageModule.h"
 #include "ICompassModule.h"
-#include "IFlattenButtonModule.h"
 #include "IInteriorsExplorerModule.h"
 #include "IModalityModule.h"
 #include "IMyPinCreationDetailsModule.h"
@@ -108,7 +106,6 @@ AppHost::AppHost(
     ,m_pSearchResultSectionViewModule(NULL)
     ,m_pSearchWidgetViewModule(NULL)
     ,m_pModalBackgroundViewModule(NULL)
-    ,m_pFlattenButtonViewModule(NULL)
     ,m_pMyPinCreationViewModule(NULL)
     ,m_pMyPinCreationDetailsViewModule(NULL)
     ,m_pMyPinDetailsViewModule(NULL)
@@ -511,13 +508,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     // 3d map view layer.
 
     // HUD behind modal background layer.
-    m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
-                                     m_nativeState,
-                                     app.FlattenButtonModule().GetFlattenButtonViewModel(),
-                                     m_messageBus,
-                                     *m_pAndroidFlurryMetricsService
-                                 );
-
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
                                      m_nativeState,
                                      app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
@@ -670,8 +660,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pCompassViewModule;
 
         Eegeo_DELETE m_pMyPinCreationViewModule;
-
-        Eegeo_DELETE m_pFlattenButtonViewModule;
 
         Eegeo_DELETE m_pWatermarkViewModule;
     }

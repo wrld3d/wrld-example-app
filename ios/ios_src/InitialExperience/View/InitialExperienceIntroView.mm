@@ -111,20 +111,6 @@ namespace
         self.pCompassDialogDescription = [self createDialogDescription:useSmallScreen ? @"Locate me.\nLock rotation\nto compass." : @"Locate me.\nLock rotation to compass."];
         [self.pCompassDialogContent addSubview:self.pCompassDialogDescription];
         
-        self.pMapModeDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pMapModeDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
-        [self addSubview: self.pMapModeDialogContainer];
-        self.pMapModeDialogContent = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
-        self.pMapModeDialogContent.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        [self.pMapModeDialogContainer addSubview:self.pMapModeDialogContent];
-        self.pMapModeDialogArrowOutline = [self createDialogArrowOutline: self.pMapModeDialogContent arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Right];
-        self.pMapModeDialogArrow = [self createDialogArrow: self.pMapModeDialogContent arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Right];
-        self.pMapModeDialogIcon = [self createDialogIcon:self.pMapModeDialogContent];
-        self.pMapModeDialogTitle = [self createDialogTitle:@"Map Mode"];
-        [self.pMapModeDialogContent addSubview:self.pMapModeDialogTitle];
-        self.pMapModeDialogDescription = [self createDialogDescription:@"Simple 2D View."];
-        [self.pMapModeDialogContent addSubview:self.pMapModeDialogDescription];
-        
         self.pPinCreationDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
         self.pPinCreationDialogContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBorderColor;
         [self addSubview: self.pPinCreationDialogContainer];
@@ -253,21 +239,6 @@ namespace
     [self.pCompassDialogContainer removeFromSuperview];
     [self.pCompassDialogContainer release];
     
-    [self.pMapModeDialogDescription removeFromSuperview];
-    [self.pMapModeDialogDescription release];
-    [self.pMapModeDialogTitle removeFromSuperview];
-    [self.pMapModeDialogTitle release];
-    [self.pMapModeDialogArrow removeFromSuperview];
-    [self.pMapModeDialogArrow release];
-    [self.pMapModeDialogArrowOutline removeFromSuperview];
-    [self.pMapModeDialogArrowOutline release];
-    [self.pMapModeDialogIcon removeFromSuperview];
-    [self.pMapModeDialogIcon release];
-    [self.pMapModeDialogContent removeFromSuperview];
-    [self.pMapModeDialogContent release];
-    [self.pMapModeDialogContainer removeFromSuperview];
-    [self.pMapModeDialogContainer release];
-    
     [self.pSearchMenuDialogDescription removeFromSuperview];
     [self.pSearchMenuDialogDescription release];
     [self.pSearchMenuDialogTitle removeFromSuperview];
@@ -362,20 +333,6 @@ namespace
                     arrowEdge: ArrowEdge::Bottom
             arrowEdgeLocation: 0.5f];
     
-    [self layoutDialogSubview: self.pMapModeDialogContainer
-                      content: self.pMapModeDialogContent
-                         icon: self.pMapModeDialogIcon
-                        title: self.pMapModeDialogTitle
-                  description: self.pMapModeDialogDescription
-                        arrow: self.pMapModeDialogArrow
-                 arrowOutline: self.pMapModeDialogArrowOutline
-                            x: m_screenWidth/2 - (useSmallScreen ? 45 : 150)
-                            y: m_screenHeight - (useSmallScreen ? 92 : 10)
-              alignHorizontal: AlignHorizontal::Right
-                alignVertical: AlignVertical::Bottom
-                    arrowEdge: useSmallScreen ? ArrowEdge::Bottom : ArrowEdge::Right
-            arrowEdgeLocation: useSmallScreen ? 0.6f : 0.65f];
-    
     [self layoutDialogSubview: self.pPinCreationDialogContainer
                       content: self.pPinCreationDialogContent
                          icon: self.pPinCreationDialogIcon
@@ -405,7 +362,6 @@ namespace
     [self.pBannerBarContainer setCenter:CGPointMake(m_screenWidth/2 - m_screenWidth, m_screenHeight/2)];
     self.pSearchMenuDialogContainer.alpha = 0.0f;
     self.pCompassDialogContainer.alpha = 0.0f;
-    self.pMapModeDialogContainer.alpha = 0.0f;
     self.pPinCreationDialogContainer.alpha = 0.0f;
     
     [UIView animateWithDuration:m_animationTimeSeconds
@@ -423,14 +379,6 @@ namespace
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.pSearchMenuDialogContainer.alpha = 1.0f;
-                     }
-                     completion:nil];
-    
-    [UIView animateWithDuration:stepAnimationTimeSeconds
-                          delay:stepAnimationTimeSeconds * 2
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         self.pMapModeDialogContainer.alpha = 1.0f;
                      }
                      completion:nil];
     
@@ -463,7 +411,6 @@ namespace
     [self.pBannerBarContainer setCenter:CGPointMake(m_screenWidth/2, m_screenHeight/2)];
     self.pSearchMenuDialogContainer.alpha = 1.0f;
     self.pCompassDialogContainer.alpha = 1.0f;
-    self.pMapModeDialogContainer.alpha = 1.0f;
     self.pPinCreationDialogContainer.alpha = 1.0f;
     
     [UIView animateWithDuration:m_animationTimeSeconds
@@ -488,14 +435,6 @@ namespace
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          self.pSearchMenuDialogContainer.alpha = 0.0f;
-                     }
-                     completion:nil];
-    
-    [UIView animateWithDuration:stepAnimationTimeSeconds
-                          delay:stepAnimationTimeSeconds * 2
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         self.pMapModeDialogContainer.alpha = 0.0f;
                      }
                      completion:nil];
     

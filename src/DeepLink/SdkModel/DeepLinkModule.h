@@ -4,7 +4,6 @@
 #include "DeepLink.h"
 #include "CameraTransitions.h"
 #include "IAlertBoxFactory.h"
-#include "IFlattenButtonModel.h"
 #include "SelectFirstResultSearchService.h"
 #include "DeepLinkConfigHandler.h"
 #include "DeepLinkSearchHandler.h"
@@ -24,7 +23,6 @@ namespace ExampleApp
                 DeepLinkModule(
                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                    FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
                     Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& selectFirstResultSearchService,
                     Mapscene::SdkModel::MapsceneLoader& mapsceneLoader);
 

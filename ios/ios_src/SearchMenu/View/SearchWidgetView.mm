@@ -211,7 +211,6 @@ namespace ExampleApp
                     m_hasPopulatedData = true;
                     return;
                 }
-                UpdateDiscoverGroup(sections);
                 
                 const size_t numSections = sections.size();
                 
@@ -229,36 +228,6 @@ namespace ExampleApp
                         AddMenuChildren(option, section, sectionIndex);
                     }
                 }
-            }
-            
-            void SearchWidgetView::UpdateDiscoverGroup(Menu::View::TSections& sections){
-                NSString *groupName = @"Discover";
-                WRLDMenuGroup *group = m_pMenuGroups[groupName];
-                
-                BOOL shouldShowDiscover = false;
-                
-                const size_t numSections = sections.size();
-                
-                for (int sectionIndex = 0; sectionIndex < numSections; sectionIndex++)
-                {
-                    if (sectionIndex == 0 || sections[sectionIndex]->IsGroupStart())
-                    {
-                        Menu::View::IMenuSectionViewModel& section = *sections[sectionIndex];
-                        NSString* optionName = [NSString stringWithUTF8String:section.Name().c_str()];
-                        if([optionName isEqualToString:groupName]){
-                            WRLDMenuOption *option = m_pMenuOptions[optionName];
-                            //TODO: when widget is updated so that it's possible, check if group has options rather than removing option.
-                            [group removeOption:option];
-                            [group addOption:option];
-                            shouldShowDiscover = true;
-                        }
-                    }
-                }
-                
-                if(shouldShowDiscover != true){
-                    [group removeAllOptions];
-                }
-                
             }
             
             void SearchWidgetView::PopulateMenuData(Menu::View::TSections& sections){
