@@ -46,6 +46,7 @@ namespace ExampleApp
                 , m_identifier(identifier)
             {
                 Eegeo_ASSERT(m_pSelectionHandler != NULL, "WorldPinItemModel must be provided with a non-null selection handler.")
+                m_sdkModelDomainEventBus.Publish(WorldPinHiddenStateChangedMessage(*this));
             }
 
             WorldPinItemModel::~WorldPinItemModel()
@@ -92,7 +93,7 @@ namespace ExampleApp
             {
                 return !IsHidden() && !IsVisible();
             }
-
+            
             void WorldPinItemModel::Hide()
             {
                 if(m_transitionState != StableHidden)

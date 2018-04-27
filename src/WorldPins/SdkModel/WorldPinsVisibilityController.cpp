@@ -167,8 +167,6 @@ namespace ExampleApp
                 {
                     Hide();
                 }
-                
-                m_visibilityMask = worldPinsVisibilityMessage.VisibilityMask();
             }
         }
     }
