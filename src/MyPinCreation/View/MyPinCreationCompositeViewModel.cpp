@@ -44,7 +44,7 @@ namespace ExampleApp
                         m_interiorControlViewModel.AddToScreen();
                         m_menuViewModel.AddToScreen();
 
-                        m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
+                        m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
                         m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
                     }
 
@@ -58,7 +58,7 @@ namespace ExampleApp
                     m_interiorControlViewModel.RemoveFromScreen();
                     m_menuViewModel.RemoveFromScreen();
 
-                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
+                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
                     break;
                 }
