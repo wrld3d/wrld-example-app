@@ -107,6 +107,17 @@ AppHost::AppHost(
     ,m_pMenuReactionModel(NULL)
     ,m_pTagSearchViewModule(NULL)
 {
+    NSString* libraryDirectoryPath = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory,
+                                                                         NSUserDomainMask,
+                                                                         YES)[0];
+    
+    NSString* documentDirectoryPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                          NSUserDomainMask,
+                                                                          YES)[0];
+    
+    DisableICloudBackup(libraryDirectoryPath);
+    DisableICloudBackup(documentDirectoryPath);
+    
     previousTimestamp = CFAbsoluteTimeGetCurrent();
     
     Eegeo::TtyHandler::TtyEnabled = true;
@@ -538,4 +549,25 @@ void AppHost::HandleUrlOpen(const AppInterface::UrlData &data)
 void AppHost::RequestLocationPermission()
 {
     m_pAppLocationDelegate->RequestPermission();
+}
+
+void AppHost::DisableICloudBackup(NSString* directoryPath)
+{
+    NSURL* URL= [NSURL fileURLWithPath: directoryPath];
+    BOOL directoryExists = [[NSFileManager defaultManager] fileExistsAtPath: [URL path]];
+    
+    Eegeo_ASSERT(directoryExists,
+                 "Error excluding %s from backup: %s\n",
+                 [[URL lastPathComponent] UTF8String],
+                 "Unable to locate directory");
+    
+    NSError *error = nil;
+    BOOL excludedFromBackup = [URL setResourceValue: [NSNumber numberWithBool: YES]
+                                             forKey: NSURLIsExcludedFromBackupKey
+                                              error: &error];
+    
+    Eegeo_ASSERT(excludedFromBackup,
+                 "Error excluding %s from backup: %s\n",
+                 [[URL lastPathComponent] UTF8String],
+                 [[error localizedDescription] UTF8String]);
 }

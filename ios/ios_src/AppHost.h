@@ -157,5 +157,7 @@ private:
     
     void HandleStartupFailure();
     void HandleUserInteractionEnabledChanged(const ExampleApp::UserInteraction::UserInteractionEnabledChangedMessage& message);
+    
+    void DisableICloudBackup(NSString* filePath);
 };
 
