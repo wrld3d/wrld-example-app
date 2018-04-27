@@ -75,11 +75,6 @@
     self.alpha = openState;
 }
 
-- (BOOL)consumesTouch:(UITouch *)touch
-{
-    return [self isVisible];
-}
-
 - (void) animateToAlpha:(float)alpha
 {
     m_isAnimating = true;
@@ -96,6 +91,18 @@
             m_isAnimating = false;
         }
     }];
+}
+
+-(UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if([self isVisible])
+    {
+        return self;
+    }
+    else
+    {
+        return nil;
+    }
 }
 
 - (void)tapGesture:(UITapGestureRecognizer *)recognizer
