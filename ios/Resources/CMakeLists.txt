@@ -12,6 +12,9 @@ set(resources ${resources}
         Resources/Arrow@2x.png
         Resources/Arrow@3x.png
         Resources/CMakeLists.txt
+	    Resources/Close_Blue.png
+	    Resources/Close_Blue@2x.png
+	    Resources/Close_Blue@3x.png
         Resources/CompassNew.png
         Resources/CompassNew@0.75x.png
         Resources/CompassNew@1.5x.png
@@ -112,6 +115,12 @@ set(resources ${resources}
         Resources/EmbeddedTheme/SanFrancisco_trees_top_01.pvr
         Resources/EmbeddedTheme/SanFrancisco_water_normalmap.pvr
         Resources/EmbeddedTheme/SanFrancisco_water_reflectionmap.pvr
+	    Resources/FullSwitchOff.png
+	    Resources/FullSwitchOff@2x.png
+	    Resources/FullSwitchOff@3x.png
+	    Resources/FullSwitchOn.png
+	    Resources/FullSwitchOn@2x.png
+	    Resources/FullSwitchOn@3x.png
         Resources/Geosphere_01.pod
         Resources/IPAexGothic_sdf.fnt
         Resources/IPAexGothic_sdf_0.png
