@@ -41,6 +41,9 @@ namespace ExampleApp
 
                 virtual void InsertOnViewClosed(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback) = 0;
+                
+                virtual void InsertOptionExpandedStateChanged(Eegeo::Helpers::ICallback2<bool, const std::string&>& callback) = 0;
+                virtual void RemoveOptionExpandedStateChanged(Eegeo::Helpers::ICallback2<bool, const std::string&>& callback) = 0;
             };
         }
     }

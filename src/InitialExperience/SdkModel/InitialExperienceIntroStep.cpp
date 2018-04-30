@@ -41,7 +41,7 @@ namespace ExampleApp
 
                 if(HasCompleted())
                 {
-                	m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
+                	m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
                 }
             }
             
@@ -76,7 +76,7 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(!HasCompleted(), "Cannot perform InitialExperienceDialogStep, has already completed.\n");
                 m_persistentSettings.SetValue(InitialExperienceModel_HasCompletedIntro, true);
-                m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
+                m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
             }
             
             void InitialExperienceIntroStep::OnIntroDismissed(const InitialExperienceIntroDismissedMessage& message)

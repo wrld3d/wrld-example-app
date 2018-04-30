@@ -9,22 +9,16 @@ namespace ExampleApp
         class WorldPinsVisibilityMessage
         {
         public:
-            WorldPinsVisibilityMessage(int visibilityMask);
+            WorldPinsVisibilityMessage(bool pinsVisible);
 
             const bool ShouldSetVisible() const
             {
-                return m_setVisible;
+                return m_pinsVisible;
             }
-            
-            const int VisibilityMask() const
-            {
-                return m_visibilityMask;
-            }
-
+  
         private:
-            bool m_setVisible;
+            bool m_pinsVisible;
             
-            int m_visibilityMask;
         };
     }
 }

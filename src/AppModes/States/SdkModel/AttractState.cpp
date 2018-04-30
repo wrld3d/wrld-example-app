@@ -97,7 +97,7 @@ namespace ExampleApp
                 void AttractState::Enter(int previousState)
                 {
                     m_visualMapService.SetVisualMapState("Summer", "DayDefault", false);
-                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::None));
+                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(false));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(false));
 
                     const AttractMode::SdkModel::States::State initialState = AttractMode::SdkModel::States::State::EnterState;
@@ -122,7 +122,7 @@ namespace ExampleApp
                 {
                     m_subStateMachine.StopStateMachine();
 
-                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(WorldPins::SdkModel::WorldPinVisibility::All));
+                    m_messageBus.Publish(WorldPins::WorldPinsVisibilityMessage(true));
                     m_messageBus.Publish(GpsMarker::GpsMarkerVisibilityMessage(true));
 
                     m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);

@@ -280,6 +280,21 @@ namespace ExampleApp
                 m_onViewClosedCallbacks.RemoveCallback(callback);
             }
 
+            void SearchWidgetView::OptionExpandedStateChanged(bool expanded, const std::string& optionName)
+            {
+                m_onOptionExpandedStateChangedCallbacks.ExecuteCallbacks(expanded,optionName);
+            }
+
+            void SearchWidgetView::InsertOptionExpandedStateChanged(Eegeo::Helpers::ICallback2<bool, const std::string&>& callback)
+            {
+                m_onOptionExpandedStateChangedCallbacks.AddCallback(callback);
+            }
+
+            void SearchWidgetView::RemoveOptionExpandedStateChanged(Eegeo::Helpers::ICallback2<bool, const std::string&>& callback)
+            {
+                m_onOptionExpandedStateChangedCallbacks.RemoveCallback(callback);
+            }
+
         }
     }
 }

@@ -141,6 +141,24 @@ namespace ExampleApp
                 
                 [m_pSearchWidgetViewController.menuObserver addOptionSelectedEvent:m_onMenuSelection];
                 
+                m_onOptionExpanded = ^(NSObject* optionContext, BOOL fromInteraction){
+                    if([optionContext isKindOfClass:[SearchWidgetMenuContext class]]){
+                        SearchWidgetMenuContext* context = (SearchWidgetMenuContext*)optionContext;
+                        OptionExpandedStateChanged(true,context.menuText);
+                    }
+                };
+                
+                m_onOptionCollapsed = ^(NSObject* optionContext, BOOL fromInteraction){
+                    if([optionContext isKindOfClass:[SearchWidgetMenuContext class]])
+                    {
+                        SearchWidgetMenuContext* context = (SearchWidgetMenuContext*)optionContext;
+                        OptionExpandedStateChanged(false,context.menuText);
+                    }
+                };
+                
+                [m_pSearchWidgetViewController.menuObserver addOptionExpandedEvent:m_onOptionExpanded];
+                [m_pSearchWidgetViewController.menuObserver addOptionCollapsedEvent:m_onOptionCollapsed];
+                
                 m_onResultsCleared = ^()
                 {
                     OnClearResults();
@@ -160,6 +178,11 @@ namespace ExampleApp
 
                 [m_pSearchModel.searchObserver addQueryCancelledEvent:m_onQueryCancelled];
                 
+            }
+            
+            void SearchWidgetView::OptionExpandedStateChanged(bool expanded,NSString *optionName) {
+                const std::string name = [optionName cStringUsingEncoding: NSUTF8StringEncoding];
+                m_onOptionExpandedStateChangedCallbacks.ExecuteCallbacks(expanded, name);
             }
             
             void SearchWidgetView::RemoveEventListeners(){
@@ -214,6 +237,7 @@ namespace ExampleApp
                     m_hasPopulatedData = true;
                     return;
                 }
+                
                 UpdateDiscoverGroup(sections);
                 
                 const size_t numSections = sections.size();
@@ -278,9 +302,9 @@ namespace ExampleApp
                         [m_pMenuModel addMenuGroup:group];
                         
                         Menu::View::IMenuSectionViewModel& section = *sections[sectionIndex];
-                       NSString* nsName = [NSString stringWithUTF8String:section.Name().c_str()];
+                        NSString* nsName = [NSString stringWithUTF8String:section.Name().c_str()];
                         
-                       [m_menuGroups setObject:group forKey:nsName];
+                        [m_menuGroups setObject:group forKey:nsName];
                     }
                     
                     AddMenuSectionToGroup(group, *sections[sectionIndex], sectionIndex);
@@ -406,7 +430,17 @@ namespace ExampleApp
             {
                 m_onViewClosedCallbacks.RemoveCallback(callback);
             }
-
+            
+            void SearchWidgetView::InsertOptionExpandedStateChanged(Eegeo::Helpers::ICallback2<bool,const std::string&>& callback)
+            {
+                m_onOptionExpandedStateChangedCallbacks.AddCallback(callback);
+            }
+            
+            void SearchWidgetView::RemoveOptionExpandedStateChanged(Eegeo::Helpers::ICallback2<bool,const std::string&>& callback)
+            {
+                m_onOptionExpandedStateChangedCallbacks.RemoveCallback(callback);
+            }
+            
             void SearchWidgetView::SetOnScreenStateToIntermediateValue(float value)
             {
                 [m_pSearchWidgetViewController hideResultsView];
