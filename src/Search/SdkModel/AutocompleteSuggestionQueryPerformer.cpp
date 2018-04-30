@@ -52,7 +52,6 @@ namespace ExampleApp {
 
                 std::string encodedQuery;
                 m_urlEncoder.UrlEncode(query, encodedQuery);
-                encodedQuery = query;
 
                 urlstream << m_serviceUrl << "autocomplete?s=" << encodedQuery;
                 urlstream << "&lat=" << std::setprecision(8) << location.GetLatitudeInDegrees();
