@@ -5,6 +5,7 @@
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "AppHost.h"
 #include "AboutPageViewModel.h"
+#import <objc/runtime.h>
 
 template <typename T>
 class FailureHandler
@@ -52,6 +53,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
         m_failureHandlerWrapper = new FailureHandlerType(self);
         m_failAlertHandler = new Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<FailureHandler<SenionLabLocationManager>>(m_failureHandlerWrapper, &FailureHandlerType::HandleFailure);
         m_messageBus = messageBus;
+        [self disableUploadBeaconList];
     }
     
     return self;
@@ -102,6 +104,40 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     m_pSenionLabLocationService->SetLocation(latLong);
     m_pSenionLabLocationService->SetInteriorId(Eegeo::Resources::Interiors::InteriorId::NullId());
     m_pSenionLabLocationService->SetIsAuthorized(true);
+}
+
+- (void) disableUploadBeaconList {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        //Strategy is to replace the method that does the uploading with our own using method swizzeling.
+        // get self class, we use it later for the replaceMethod, we need it to set up the class of
+        // the funciton that we are going to redirect.
+        Class cclass = [self class];
+        
+        Class SLObserverBeaconDataTask = objc_getClass("SLObservedBeaconDataTask");
+        if (SLObserverBeaconDataTask == 0) {
+            return;
+        }
+        
+        SEL replacedSelector = @selector(uploadBeaconServerDataList:);
+        Method replacedMethod = class_getInstanceMethod(cclass, replacedSelector);
+        
+        unsigned int methodCount = 0;
+        Method *methodList = class_copyMethodList(SLObserverBeaconDataTask, &methodCount);
+        for (int i = 0; i < methodCount; i++){
+            Method method_obj = methodList[i];
+            SEL selector = method_getName(method_obj);
+            const char * method = sel_getName(selector);
+            // we check on the methods that is the function that we want to hook.
+            if (strcmp("uploadBeaconServerDataList:completion:", method) == 0){
+                class_replaceMethod(SLObserverBeaconDataTask, selector, method_getImplementation(replacedMethod), method_getTypeEncoding(method_obj));
+            }
+        }
+    });
+}
+
+- (void)uploadBeaconServerDataList:(id)completion {
+    //empty implementation to prevent upload of private data to senion services
 }
 
 -(void) StopUpdatingLocation
