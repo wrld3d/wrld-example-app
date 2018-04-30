@@ -10,8 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
+import com.eegeo.entrypointinfrastructure.MainActivity;
 
 public class OptionsCacheClearSubView 
 {
@@ -21,13 +21,20 @@ public class OptionsCacheClearSubView
     private Runnable m_confirmationCallback = null;
     private boolean m_isDisplayed = false;
     private View m_confirmButton = null;
-    private View m_closeButton = null;
-    private ProgressBar m_spinner = null;
-    private TextView m_title = null;
-    private TextView m_content = null;
+	private View m_cancelButton = null;
+	private View m_closeButton = null;
+	private View m_container_confirm = null;
+	private View m_container_progress = null;
+	private View m_spinner = null;
+	private TextView m_content = null;
     private Timer m_timer = new Timer();
     private long m_cacheClearDialogMinimumEndTimeMilliseconds;
-    
+
+    private enum Containers
+	{
+		CONFIRMATION, PROGRESS, DONE
+	}
+
     public OptionsCacheClearSubView(MainActivity activity)
     {
     	m_activity = activity;
@@ -36,10 +43,12 @@ public class OptionsCacheClearSubView
         m_uiRoot.addView(m_view);
         
         m_confirmButton = m_view.findViewById(R.id.cache_clear_ceremony_confirm_button);
-        m_closeButton = m_view.findViewById(R.id.cache_clear_ceremony_close_button);
-        m_spinner = (ProgressBar) m_view.findViewById(R.id.cache_clear_ceremony_view_spinner);
-        m_title = (TextView) m_view.findViewById(R.id.cache_clear_ceremony_view_title);
-        m_content = (TextView) m_view.findViewById(R.id.cache_clear_ceremony_view_message);
+		m_cancelButton = m_view.findViewById(R.id.cache_clear_ceremony_cancel_button);
+		m_closeButton = m_view.findViewById(R.id.cache_clear_ceremony_close_button);
+		m_container_confirm = m_view.findViewById(R.id.cache_clear_ceremony_view_container);
+		m_container_progress = m_view.findViewById(R.id.cache_clear_ceremony_progress_container);
+		m_spinner = m_view.findViewById(R.id.cache_clear_ceremony_progress_spinner);
+        m_content = (TextView) m_view.findViewById(R.id.cache_clear_ceremony_progress_message);
 
         m_confirmButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
@@ -47,18 +56,31 @@ public class OptionsCacheClearSubView
 			}
 		});
 
-        m_closeButton.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener closeListener = new View.OnClickListener() {
 			public void onClick(View arg0) {
-		        resetState();
-		        m_uiRoot.removeView(m_view);
+				resetState();
+				m_uiRoot.removeView(m_view);
 			}
-		});
-        
+		};
+
+		m_cancelButton.setOnClickListener(closeListener);
+		m_closeButton.setOnClickListener(closeListener);
+
+		setContainer(Containers.CONFIRMATION);
+
         m_activity.recursiveDisableSplitMotionEvents((ViewGroup)m_view);
         
         resetState();
     }
-    
+
+	private void resetState()
+	{
+		m_isDisplayed = false;
+		m_confirmationCallback = null;
+
+		m_view.setVisibility(View.GONE);
+	}
+
     public void displayWarning(Runnable confirmationCallback)
     {
     	assert(confirmationCallback != null);
@@ -69,9 +91,6 @@ public class OptionsCacheClearSubView
     	m_confirmationCallback = confirmationCallback;
 
         m_view.setVisibility(View.VISIBLE);
-
-        m_title.setText("Warning");
-        m_content.setText("Are you sure you want to remove all stored data?");
     }
     
     public void concludeCeremony()
@@ -98,33 +117,45 @@ public class OptionsCacheClearSubView
         	}, remainingIntervalUntilEndTimeMilliseconds);
         }
     }
-    
+
     private void closeAsyncCacheClearDialog()
     {
-        m_content.setText("Map data deleted from device");
-        m_closeButton.setVisibility(View.VISIBLE);
-        m_spinner.setVisibility(View.INVISIBLE);
-    }
-    
-    private void resetState()
-    {   
-        m_isDisplayed = false;
-        m_confirmationCallback = null;
-        m_spinner.setVisibility(View.INVISIBLE);
-        m_confirmButton.setVisibility(View.VISIBLE);
-        m_closeButton.setVisibility(View.VISIBLE);
-        m_view.setVisibility(View.GONE);
-    }
-    
+    	setContainer(Containers.DONE);
+	}
+
+	private void setContainer(Containers container)
+	{
+		switch (container)
+		{
+			case CONFIRMATION:
+				m_closeButton       .setVisibility(View.INVISIBLE);
+				m_container_confirm .setVisibility(View.VISIBLE);
+				m_container_progress.setVisibility(View.INVISIBLE);
+				break;
+			case PROGRESS:
+				m_closeButton       .setVisibility(View.INVISIBLE);
+				m_container_confirm .setVisibility(View.INVISIBLE);
+				m_container_progress.setVisibility(View.VISIBLE);
+
+				m_spinner.setVisibility(View.VISIBLE);
+				m_content.setText(R.string.cache_clear_working);
+				break;
+			case DONE:
+				m_closeButton       .setVisibility(View.VISIBLE);
+				m_container_confirm .setVisibility(View.INVISIBLE);
+				m_container_progress.setVisibility(View.VISIBLE);
+
+				m_spinner.setVisibility(View.INVISIBLE);
+				m_content.setText(R.string.cache_clear_done);
+				break;
+		}
+	}
+
     private void handleConfirmClicked()
     {
     	assert(m_isDisplayed);
-    	
-        m_confirmButton.setVisibility(View.GONE);
-        m_closeButton.setVisibility(View.GONE);
-        m_spinner.setVisibility(View.VISIBLE);
-        m_title.setText("Remove Stored Data");
-        m_content.setText("Please wait, this may take a while...");
+
+		setContainer(Containers.PROGRESS);
 
         final long minimumAsyncDelayMilliseconds = 3000;
         m_cacheClearDialogMinimumEndTimeMilliseconds = SystemClock.elapsedRealtime() + minimumAsyncDelayMilliseconds;
