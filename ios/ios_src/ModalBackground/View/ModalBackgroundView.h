@@ -21,8 +21,6 @@
 
 - (ExampleApp::ModalBackground::View::ModalBackgroundViewInterop*) getInterop;
 
-- (BOOL) consumesTouch:(UITouch *)touch;
-
 - (void) setFullyActive;
 
 - (void) setFullyInactive;
