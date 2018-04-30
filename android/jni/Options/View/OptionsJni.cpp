@@ -18,6 +18,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_StreamOverWi
     JNIEnv* jenv, jobject obj,
     jlong nativeObjectPtr)
 {
+    
     ASSERT_UI_THREAD
 
     ExampleApp::Options::View::OptionsView* pView = reinterpret_cast<ExampleApp::Options::View::OptionsView*>(nativeObjectPtr);
@@ -42,5 +43,25 @@ JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_ClearCacheSe
 
     ExampleApp::Options::View::OptionsView* pView = reinterpret_cast<ExampleApp::Options::View::OptionsView*>(nativeObjectPtr);
     pView->HandleClearCacheSelected();
+}
+
+JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_ClearCacheTriggered(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::Options::View::OptionsView* pView = reinterpret_cast<ExampleApp::Options::View::OptionsView*>(nativeObjectPtr);
+    pView->HandleClearCacheTriggered();
+}
+
+JNIEXPORT void JNICALL Java_com_eegeo_options_OptionsViewJniMethods_PlayTutorialAgainSelected(
+    JNIEnv* jenv, jobject obj,
+    jlong nativeObjectPtr)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::Options::View::OptionsView* pView = reinterpret_cast<ExampleApp::Options::View::OptionsView*>(nativeObjectPtr);
+    pView->HandleReplayTutorialsSelected();
 }
 
