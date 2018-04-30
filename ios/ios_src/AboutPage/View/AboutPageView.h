@@ -5,6 +5,8 @@
 #import <UIKit/UIKit.h>
 #include "AboutPage.h"
 #include "AppRunner.h"
+#import "HeaderView.h"
+#include "ViewController.h"
 
 @class AboutPageView;
 @class AboutPageViewController;
@@ -31,20 +33,18 @@
 
 - (ExampleApp::AboutPage::View::AboutPageViewInterop*) getInterop;
 
-@property (nonatomic, retain) UIView* pCloseButtonContainer;
-@property (nonatomic, retain) UIButton* pCloseButton;
-@property (nonatomic, retain) UIView* pControlContainer;
-@property (nonatomic, retain) UIView* pHeadlineContainer;
-@property (nonatomic, retain) UIView* pContentContainer;
-@property (nonatomic, retain) UIScrollView* pLabelsContainer;
-@property (nonatomic, retain) UIImageView* pLogoImage;
-@property (nonatomic, retain) UIButton* pLogoButton;;
-@property (nonatomic, retain) UILabel* pTitleLabel;
-@property (nonatomic, retain) UILabel* pDevelopedByLabel;
+@property (nonatomic, retain) HeaderView* pHeaderView;
+
 @property (nonatomic, retain) UILabel* pTextContent;
-@property (nonatomic, retain) UILabel* pPrivacyLink;
-@property (nonatomic, retain) UILabel* pEulaLink;
-@property (nonatomic, retain) UILabel* pLegalLink;
-@property (nonatomic, retain) UILabel* pTeamLink;
+@property (nonatomic, retain) UIView* pContentSeperator;
+@property (nonatomic, retain) UILabel* pDevelopedByLabel;
+@property (nonatomic, retain) UIImageView* pWrldLogoImage;
+@property (nonatomic, retain) UIScrollView* pContentScrollView;
+@property (nonatomic, retain) UIView* pContentView;
+
+@property (nonatomic, retain) UIButton* pLegalLink;
+@property (nonatomic, retain) UIButton* pPrivacyLink;
+@property (nonatomic, retain) UIButton* pEulaLink;
+@property (nonatomic, retain) UIButton* pTeamLink;
 
 @end
