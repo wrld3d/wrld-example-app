@@ -21,5 +21,15 @@ namespace ExampleApp
             
             typedef Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Routes::Webservice::RouteData>> RoutesReceivedCallback;
         }
+
+        namespace View
+        {
+            class INavWidgetView;
+            class INavWidgetViewModel;
+            class NavUIModule;
+            class NavWidgetController;
+            class NavWidgetOpenableControl;
+            class NavWidgetViewModel;
+        }
     }
 }

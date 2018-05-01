@@ -2,6 +2,7 @@
 
 #include "SearchResultPoiController.h"
 #include "SearchResultPoiViewOpenedMessage.h"
+#include "SearchResultPoiDirectionsButtonClickedMessage.h"
 #include "SearchJsonParser.h"
 
 namespace ExampleApp
@@ -52,6 +53,11 @@ namespace ExampleApp
                 m_viewModel.ToggleIsPinned();
                 m_messageBus.Publish(SearchResultPoiPinToggledMessage(searchResultModel));
             }
+
+            void SearchResultPoiController::OnDirectionsButtonClicked()
+            {
+                m_messageBus.Publish(SearchResultPoiDirectionsButtonClickedMessage());
+            }
             
             void SearchResultPoiController::OnSearchResultImageLoaded(const SearchResultPoiViewImageDownloadCompletedMessage& message)
             {
@@ -93,11 +99,13 @@ namespace ExampleApp
                 , m_viewClosedCallback(this, &SearchResultPoiController::OnViewClosed)
                 , m_closeButtonCallback(this, &SearchResultPoiController::OnCloseButtonClicked)
                 , m_togglePinnedCallback(this, &SearchResultPoiController::OnPinToggledButtonClicked)
+                , m_directionsButtonCallback(this, &SearchResultPoiController::OnDirectionsButtonClicked)
                 , m_imageLoadedHandlerBinding(this, &SearchResultPoiController::OnSearchResultImageLoaded)
                 , m_closePoiMessageHandler(this, &SearchResultPoiController::OnClosePoiMessageRecieved)
             {
                 m_view.InsertClosedCallback(m_closeButtonCallback);
                 m_view.InsertTogglePinnedCallback(m_togglePinnedCallback);
+                m_view.InsertDirectionsCallback(m_directionsButtonCallback);
                 m_viewModel.InsertOpenedCallback(m_viewOpenedCallback);
                 m_viewModel.InsertClosedCallback(m_viewClosedCallback);
                 m_messageBus.SubscribeUi(m_imageLoadedHandlerBinding);
@@ -110,6 +118,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_imageLoadedHandlerBinding);
                 m_viewModel.RemoveClosedCallback(m_viewClosedCallback);
                 m_viewModel.RemoveOpenedCallback(m_viewOpenedCallback);
+                m_view.RemoveDirectionsCallback(m_directionsButtonCallback);
                 m_view.RemoveTogglePinnedCallback(m_togglePinnedCallback);
                 m_view.RemoveClosedCallback(m_closeButtonCallback);
             }

@@ -32,6 +32,9 @@ namespace ExampleApp
                 
                 virtual void InsertTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback) = 0;
                 virtual void RemoveTogglePinnedCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback) = 0;
+
+                virtual void InsertDirectionsCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveDirectionsCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

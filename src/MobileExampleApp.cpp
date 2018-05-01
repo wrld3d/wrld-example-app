@@ -686,8 +686,8 @@ namespace ExampleApp
                                                                                             m_messageBus,
                                                                                             m_metricsService);
         
-        m_pNavUIModule = Eegeo_NEW(ExampleApp::NavUI::View::NavUIModule)(m_identityProvider,
-                                                                         m_pReactionControllerModule->GetReactionControllerModel());
+        m_pNavUIModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavUIModule)(m_identityProvider,
+															                  m_pReactionControllerModule->GetReactionControllerModel());
   
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 

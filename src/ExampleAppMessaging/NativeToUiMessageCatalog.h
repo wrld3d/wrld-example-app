@@ -53,6 +53,7 @@
 #include "SelectMenuItemMessage.h"
 #include "ClosePoiMessage.h"
 #include "OpenSearchMenuSectionMessage.h"
+#include "SearchResultPoiDirectionsButtonClickedMessage.h"
 
 namespace ExampleApp
 {
@@ -83,6 +84,7 @@ namespace ExampleApp
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::ShowInitialExperienceIntroMessage>
             , public Eegeo::Messaging::CatalogBinding<Options::CompletedCacheClearMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewImageDownloadCompletedMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::SetWatermarkVisibilityMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkModelChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkAlignmentStateChangedMessage>

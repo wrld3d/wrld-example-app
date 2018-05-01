@@ -351,7 +351,7 @@
 			android:layout_marginLeft="9dp"
 			android:layout_marginBottom="-1dp"
 			android:layout_above="@+id/footer_line"
-			android:layout_alignBottom="@+id/search_menu_item_list"
+			android:layout_alignBottom="@+id/footer_line"
 			android:scaleType="fitXY"
 			android:src="@drawable/search_results_fade">
 	    </ImageView>
@@ -360,7 +360,7 @@
 	        android:id="@+id/footer_line"
 	        android:layout_width="fill_parent"
 	        android:layout_height="1dp"
-	        android:layout_above="@+id/search_result_poi_view_toggle_pinned_button"
+	        android:layout_above="@+id/search_result_poi_bottom_buttons"
 	        android:layout_marginLeft="10dp"
 			android:layout_marginRight="10dp"
 			android:layout_marginBottom="10dp"
@@ -368,39 +368,75 @@
 		
 	    <!--  Bottom bar with close button -->
 
-        <RelativeLayout
-            android:id="@+id/search_result_poi_view_toggle_pinned_button"
-            android:layout_width="fill_parent"
-            android:layout_height="62dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:paddingBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/button_pressed_colour_change" >
-         	
-            <TextView
-	                android:id="@+id/drop_pin_text"
-	                android:layout_width="fill_parent"
-	                android:layout_height="38dp"
-	                android:layout_marginTop="2dp"
-	                android:padding="5dp"
-	                android:paddingLeft="3dp"
-	                android:textColor="@drawable/pin_text_stats"
-	                android:textSize="21dp"
-	                android:text="Drop Pin" 
-	                android:gravity="center"/>
+		<LinearLayout
+			android:id="@+id/search_result_poi_bottom_buttons"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_above="@+id/footer_space"
+			android:orientation="vertical">
 
-			<include
-			    android:id="@+id/search_result_poi_view_toggle_pinned_buttonn"
-			    android:layout_width="42dp"
-			    android:layout_height="42dp"
-			    android:layout_alignParentLeft="true"
-			    android:layout_alignTop="@+id/drop_pin_text"
-			    android:layout_marginLeft="43dp"
-			    layout="@layout/toggle_pinned_control" />
-         </RelativeLayout>
-         
+			<RelativeLayout
+				android:id="@+id/search_result_poi_view_toggle_pinned_button"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_marginTop="10dp"
+				android:gravity="center_vertical"
+				android:background="@drawable/button_pressed_colour_change" >
+
+				<TextView
+					android:id="@+id/drop_pin_text"
+					android:layout_width="fill_parent"
+					android:layout_height="38dp"
+					android:padding="5dp"
+					android:textColor="@drawable/pin_text_stats"
+					android:textSize="21sp"
+					android:text="Drop Pin"
+					android:gravity="center"/>
+
+				<include
+					android:id="@+id/search_result_poi_view_toggle_pinned_buttonn"
+					android:layout_width="42dp"
+					android:layout_height="42dp"
+					android:layout_alignParentStart="true"
+					android:layout_alignTop="@+id/drop_pin_text"
+					android:layout_marginStart="43dp"
+					layout="@layout/toggle_pinned_control" />
+			</RelativeLayout>
+
+			<RelativeLayout
+				android:id="@+id/search_result_poi_view_directions_button"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_marginTop="10dp"
+				android:gravity="center_vertical"
+				android:background="@drawable/button_pressed_colour_change" >
+
+				<TextView
+					android:id="@+id/direction_text"
+					android:layout_width="fill_parent"
+					android:layout_height="38dp"
+					android:layout_marginTop="2dp"
+					android:padding="5dp"
+					android:textColor="@drawable/pin_text_stats"
+					android:textSize="21sp"
+					android:text="Directions"
+					android:gravity="center"/>
+
+				<ImageView
+					android:id="@+id/search_result_poi_view_directions_button_icon"
+					android:layout_width="42dp"
+					android:layout_height="42dp"
+					android:layout_alignParentStart="true"
+					android:layout_alignTop="@+id/direction_text"
+					android:layout_marginStart="43dp"
+					android:src="@drawable/start_nav_icon"/>
+			</RelativeLayout>
+		</LinearLayout>
+
          <RelativeLayout
             android:id="@+id/footer_space"
             android:layout_width="fill_parent"

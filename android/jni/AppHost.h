@@ -66,6 +66,7 @@
 #include "AndroidAutomatedScreenshotController.h"
 #include "AndroidScreenshotService.h"
 #include "SurfaceScreenshotService.h"
+#include "INavWidgetViewModule.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -147,6 +148,7 @@ private:
     ExampleApp::Options::View::IOptionsViewModule* m_pOptionsViewModule;
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     ExampleApp::Watermark::View::IWatermarkViewModule* m_pWatermarkViewModule;
+    ExampleApp::NavRouting::View::INavWidgetViewModule* m_pNavWidgetViewModule;
     ExampleApp::Net::SdkModel::INetworkCapabilities* m_pNetworkCapabilities;
     ExampleApp::Metrics::AndroidFlurryMetricsService* m_pAndroidFlurryMetricsService;
 

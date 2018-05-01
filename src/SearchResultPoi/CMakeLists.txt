@@ -10,6 +10,7 @@ set(currsources
   ../src/SearchResultPoi/SearchResultPoiViewOpenedMessage.cpp
   ../src/SearchResultPoi/SearchResultPoiViewOpenedMessage.h
   ../src/SearchResultPoi/SearchResultPoiViewClosedMessage.h
+  ../src/SearchResultPoi/SearchResultPoiDirectionsButtonClickedMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\SearchResultPoi FILES ${currsources})

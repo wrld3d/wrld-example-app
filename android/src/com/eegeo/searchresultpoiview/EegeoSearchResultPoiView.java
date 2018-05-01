@@ -38,6 +38,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
     private View m_searchResultPoiViewContainer = null;
     private View m_closeButton = null;
     private View m_togglePinnedButton = null;
+    private View m_directionsButton = null;
     private TextView m_titleView = null;
     private TextView m_subtitleView = null;
     private TextView m_addressView = null;
@@ -90,6 +91,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         m_closeButton = m_view.findViewById(R.id.search_result_poi_view_close_button);
         m_togglePinnedButton = m_view.findViewById(R.id.search_result_poi_view_toggle_pinned_button);
         m_togglePinnedWrapper = new TintablePinToggleButton(m_togglePinnedButton);
+        m_directionsButton = m_view.findViewById(R.id.search_result_poi_view_directions_button);
         m_titleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_title);
         m_subtitleView = (TextView)m_view.findViewById(R.id.search_result_poi_view_subtitle);
         m_addressView = (TextView)m_view.findViewById(R.id.search_result_poi_view_address);
@@ -143,6 +145,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         
         m_closeButton.setOnClickListener(this);
         m_togglePinnedButton.setOnClickListener(this);
+        m_directionsButton.setOnClickListener(this);
         m_facebookUrl.setOnClickListener(this);
         m_twitterUrl.setOnClickListener(this);
         m_email.setOnClickListener(this);
@@ -404,6 +407,10 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         {
 			handleTogglePinnedClicked();
         }
+        else if(view == m_directionsButton)
+        {
+            handleDirectionsClicked();
+        }
         else if(view == m_facebookUrl || view == m_twitterUrl)
         {
         	handleButtonLink(view);
@@ -485,6 +492,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
     {
         m_view.setEnabled(false);
         m_togglePinnedButton.setOnClickListener(null);
+        m_directionsButton.setOnClickListener(null);
 
         SearchResultPoiViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
     }
@@ -525,6 +533,13 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
             m_togglePinnedWrapper.setPinToggleState(true);
             m_dropPinText.setText(m_pinTextPressed);
     	}
+    }
+
+    private void handleDirectionsClicked()
+    {
+        handleCloseClicked();
+        SearchResultPoiViewJniMethods.DirectionsButtonClicked(m_nativeCallerPointer);
+        m_handlingClick = false;
     }
 	
 	private void showRemovePinDialog()

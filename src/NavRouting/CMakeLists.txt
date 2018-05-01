@@ -7,3 +7,4 @@ set(currsources
 set(sources ${sources} ${currsources})
 source_group(\\src\\NavRouting FILES ${currsources})
 include(../src/NavRouting/SdkModel/CMakeLists.txt)
+include(../src/NavRouting/View/CMakeLists.txt)

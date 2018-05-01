@@ -2,6 +2,7 @@
 
 #include "NavUIModule.h"
 #include "OpenableControlViewModelBase.h"
+#include "NavWidgetViewModel.h"
 
 namespace
 {
@@ -27,7 +28,7 @@ namespace
 
 namespace ExampleApp
 {
-    namespace NavUI
+    namespace NavRouting
     {
         namespace View
         {
@@ -47,17 +48,24 @@ namespace ExampleApp
                                      Reaction::View::IReactionControllerModel& reactionControllerModel):
                 d(new Private(identityProvider, reactionControllerModel))
             {
-
+                m_pNavWidgetViewModel = Eegeo_NEW(NavWidgetViewModel)(identityProvider.GetNextIdentity(),
+                                                                       reactionControllerModel);
             }
 
             NavUIModule::~NavUIModule()
             {
+                Eegeo_DELETE m_pNavWidgetViewModel;
                 delete d;
             }
 
             OpenableControl::View::IOpenableControlViewModel& NavUIModule::GetObservableOpenableControl() const
             {
-                return d->openable;
+                return m_pNavWidgetViewModel->GetOpenableControl();
+            }
+
+            INavWidgetViewModel& NavUIModule::GetNavWidgetViewModel() const
+            {
+                return *m_pNavWidgetViewModel;
             }
         }
     }

@@ -43,6 +43,7 @@
 #include "ITagSearchModule.h"
 #include "IViewControllerUpdaterModel.h"
 #include "IWatermarkModule.h"
+#include "INavWidgetViewModule.h"
 #include "jni.h"
 #include "JpegLoader.h"
 #include "MenuController.h"
@@ -65,6 +66,7 @@
 #include "UserInteractionEnabledChangedMessage.h"
 #include "ViewControllerUpdaterModule.h"
 #include "WatermarkViewModule.h"
+#include "NavWidgetViewModule.h"
 #include "WebConnectivityValidator.h"
 #include "SurveyViewModule.h"
 #include "SenionLabBroadcastReceiver.h"
@@ -117,6 +119,7 @@ AppHost::AppHost(
     ,m_pMyPinDetailsViewModule(NULL)
     ,m_pSearchResultPoiViewModule(NULL)
     ,m_pCompassViewModule(NULL)
+    ,m_pNavWidgetViewModule(NULL)
     ,m_pApp(NULL)
     ,m_androidPersistentSettingsModel(nativeState)
     ,m_createdUIModules(false)
@@ -579,6 +582,12 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     					*m_pMenuReactionModel,
     		            app.SearchResultPoiModule().GetSearchResultPoiViewModel());
 
+    // Widget layer
+    m_pNavWidgetViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(
+                                    m_nativeState,
+                                    app.NavUIModule().GetNavWidgetViewModel(),
+                                    m_messageBus);
+
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
                                        m_nativeState,
@@ -694,6 +703,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pFlattenButtonViewModule;
 
         Eegeo_DELETE m_pWatermarkViewModule;
+
+        Eegeo_DELETE m_pNavWidgetViewModule;
     }
     m_createdUIModules = false;
 }

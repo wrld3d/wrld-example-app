@@ -124,7 +124,7 @@ namespace ExampleApp
         Eegeo::Helpers::IdentityProvider m_identityProvider;
         ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule* m_pSettingsMenuModule;
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
-        NavUI::View::NavUIModule* m_pNavUIModule;
+        ExampleApp::NavRouting::View::NavUIModule* m_pNavUIModule;
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
@@ -279,7 +279,7 @@ namespace ExampleApp
             return *m_pSearchMenuModule;
         }
         
-        const ExampleApp::NavUI::View::NavUIModule& NavUIModule() const
+        const ExampleApp::NavRouting::View::NavUIModule& NavUIModule() const
         {
             return *m_pNavUIModule;
         }

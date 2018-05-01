@@ -6,10 +6,11 @@
 #include "IOpenableControlViewModel.h"
 #include "IIdentity.h"
 #include "Reaction.h"
+#include "INavWidgetViewModel.h"
 
 namespace ExampleApp
 {
-    namespace NavUI
+    namespace NavRouting
     {
         namespace View
         {
@@ -22,10 +23,14 @@ namespace ExampleApp
                 ~NavUIModule();
 
                 OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
+
+                INavWidgetViewModel& GetNavWidgetViewModel() const;
                 
             private:
                 struct Private;
                 Private* d;
+
+                INavWidgetViewModel* m_pNavWidgetViewModel;
             };
         }
     }

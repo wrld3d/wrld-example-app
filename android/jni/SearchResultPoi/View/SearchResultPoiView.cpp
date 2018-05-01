@@ -145,6 +145,27 @@ namespace ExampleApp
                 m_togglePinClickedCallbacks.ExecuteCallbacks(m_model);
             }
 
+			void SearchResultPoiView::InsertDirectionsCallback(Eegeo::Helpers::ICallback0& callback)
+			{
+				ASSERT_UI_THREAD
+
+				m_directionsCallbacks.AddCallback(callback);
+			}
+
+			void SearchResultPoiView::RemoveDirectionsCallback(Eegeo::Helpers::ICallback0& callback)
+			{
+				ASSERT_UI_THREAD
+
+				m_directionsCallbacks.RemoveCallback(callback);
+			}
+
+			void SearchResultPoiView::HandleDirectionsClicked()
+			{
+				ASSERT_UI_THREAD
+
+				m_directionsCallbacks.ExecuteCallbacks();
+			}
+
             void SearchResultPoiView::CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
             {
             	const std::string viewClass = "com/eegeo/searchresultpoiview/YelpSearchResultPoiView";
