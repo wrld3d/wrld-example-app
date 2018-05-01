@@ -1,9 +1,5 @@
-//
-//  MessageView.h
-//  ProjectSwallowApp
-//
-//  Created by David Crooks on 21/02/2018.
-//
+// Copyright eeGeo Ltd (2012-2018), All Rights Reserved
+
 #pragma once
 #import <UIKit/UIKit.h>
 #import "HeaderView.h"

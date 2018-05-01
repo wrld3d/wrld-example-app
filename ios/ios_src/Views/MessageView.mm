@@ -1,9 +1,5 @@
-//
-//  MessageView.m
-//  ProjectSwallowApp
-//
-//  Created by David Crooks on 21/02/2018.
-//
+// Copyright eeGeo Ltd (2012-2018), All Rights Reserved
+
 #import "UIColors.h"
 #import "HeaderView.h"
 #import "MessageView.h"
