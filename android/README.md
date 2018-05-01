@@ -18,7 +18,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 ## Requirements
 
-- [Android Studio](https://developer.android.com/studio/index.html).
+- [Android Studio](https://developer.android.com/studio/).
 - [Senion SDK](https://senion.com/)
 
 ## Setup
@@ -40,7 +40,7 @@ First, download the latest WRLD Android SDK by running the following command in 
 ## Speeding up build times
 
 By default, the project is compiled for three different architectures: **armeabi**, **armeabi-v7a**, and **arm64-v8a**.
-If you do not need all of these, or you wish to quickly test on a single architecture, you can remove some of them from [build.gradle](/android/build.gradle#L42).
+If you do not need all of these, or you wish to quickly test on a single architecture, you can remove some of them from [build.gradle](/android/build.gradle#L63).
     -   For example: `abiFilters "armeabi"`
 
 ## Troubleshooting

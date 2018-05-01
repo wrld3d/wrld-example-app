@@ -26,7 +26,7 @@ This example app showcases the [WRLD SDK](http://www.wrld3d.com/), a cross-platf
 * Compatibility with iOS, Android, Windows, and OS X
 * Continuous deployment, meaning you get the latest features as they're developed
 
-Download our app, [WRLD](https://www.wrld3d.com/app/), on Google Play or the App Store to see what the WRLD SDK can do. Or [read on](#getting-started) to build the app yourself.
+Download our app, [WRLD](https://www.wrld3d.com/3d-maps/wrld-mobile-app ), on Google Play or the App Store to see what the WRLD SDK can do. Or [read on](#getting-started) to build the app yourself.
 
 ## Support
 
@@ -41,7 +41,7 @@ The WRLD SDK is distributed as a C++ static library with headers. Most of this e
 This section will walk you through the process of getting up and running quickly on each platform.
 
 1.  Clone this repo: `git clone https://github.com/wrld3d/wrld-example-app`
-2.  Obtain a [WRLD API key](https://www.wrld3d.com/developers/apikeys) and place it in the configuration file for the platform you are building:
+2.  Obtain a [WRLD API key](https://accounts.wrld3d.com/users/edit#apikeys) and place it in the configuration file for the platform you are building:
     * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L3).
     * [Android app config](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L3).
     * [Windows app config (deprecated)](https://github.com/wrld3d/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L3).
@@ -55,7 +55,7 @@ Platform                                                   | Languages         |
 
 ### WRLD API Key 
 
-In order to use the WRLD 3D Maps SDK, you must sign up for a free developer account at https://www.wrld3d.com/developers. After signing up, you'll be able to create an [API key](https://www.wrld3d.com/developers/apikeys) for your apps. 
+In order to use the WRLD 3D Maps SDK, you must sign up for a free developer account at https://www.wrld3d.com/developers. After signing up, you'll be able to create an [API key](https://accounts.wrld3d.com/users/edit#apikeys) for your apps. 
 
 To run this example app, you must place the API key in the application configuration file for each of the platforms you are building, specifying the value of "EegeoApiKey":
 * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L3).
@@ -67,13 +67,13 @@ To run this example app, you must place the API key in the application configura
 This app uses third-party search service providers to allow users to search for places like caf&eacute;s, restaurants, and bars and have the results show up on the map. To enable this, you will to supply the credentials for those services.
 
 1.  Obtain [Yelp credentials](https://www.yelp.com/developers) to enable Yelp search results in the app. Place them in the application config file appropriate for the platform you are building:
-    * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L12-L15).
-    * [Android app config](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L12-L15).
-    * [Windows app config (deprecated)](https://github.com/wrld3d/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L12-L15).
+    * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L18-L21).
+    * [Android app config](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L18-L21).
+    * [Windows app config (deprecated)](https://github.com/wrld3d/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L18-L21).
 2.  Obtain a [GeoNames username](http://www.geonames.org/login) to enable GeoNames search results in the app. Place it in the application config file appropriate for the platform you are building:
-    * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L16).
-    * [Android app config](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L16).
-    * [Windows app config (deprecated)](https://github.com/wrld3d/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L16).
+    * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L22).
+    * [Android app config](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L22).
+    * [Windows app config (deprecated)](https://github.com/wrld3d/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L22).
 
 ## Features
 
@@ -81,7 +81,7 @@ The [WRLD Example App](https://github.com/wrld3d/wrld-example-app) demonstrates 
 
 ![WRLD Example App features](http://cdn2.eegeo.com/wp-content/uploads/2017/04/FeatureExamples.jpg)
 
-See [here](https://www.wrld3d.com/features/) to learn more about what the WRLD SDK has to offer.
+See [here](https://www.wrld3d.com/3d-maps/) to learn more about what the WRLD SDK has to offer.
 
 ## SDK Documentation
 
