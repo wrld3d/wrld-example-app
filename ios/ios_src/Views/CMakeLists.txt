@@ -13,6 +13,8 @@ set(currsources
   ios_src/Views/CustomSwitch.m
   ios_src/Views/HeaderView.h
   ios_src/Views/HeaderView.mm
+  ios_src/Views/MessageView.h
+  ios_src/Views/MessageView.mm
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\Views FILES ${currsources})

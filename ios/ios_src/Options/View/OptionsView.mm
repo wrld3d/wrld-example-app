@@ -50,6 +50,13 @@
         self.pClearCacheLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         [self.pContentContainer addSubview:self.pClearCacheLabel];
         
+        self.pReplayTutorialsLabel = [[[UILabel alloc] init] autorelease];
+        self.pReplayTutorialsLabel.text = @"Play tutorial again";
+        self.pReplayTutorialsLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
+        [self.pContentContainer addSubview:self.pReplayTutorialsLabel];
+        
+        
+        
         UIImage *onImage =   [UIImage imageNamed:@"FullSwitchOn"];
         UIImage *offImage =  [UIImage imageNamed:@"FullSwitchOff"];
         
@@ -69,7 +76,21 @@
         [self.pClearCacheButton addTarget:self action:@selector(cacheClearSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
         [self.pContentContainer addSubview:self.pClearCacheButton];
         
+        self.pReplayTutorialsButton = [[[UIButton alloc] init] autorelease];
+        [self.pReplayTutorialsButton addTarget:self action:@selector(replayTutorialsSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
+        self.pReplayTutorialsButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
+        [self.pReplayTutorialsButton setTitle:@"OK" forState:UIControlStateNormal];
+        [self.pReplayTutorialsButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
+        [self.pContentContainer addSubview:self.pReplayTutorialsButton];
+        
         self.pOptionsCacheClearSubView = [[[OptionsCacheClearSubView alloc] init] autorelease];
+        
+        self.pReplayTutorialsMessage = [[[MessageView alloc] initWithFrame:self.bounds title:@"Replay Tutorials" message:@"The help panels will be visible again when you enter or leave a building."] autorelease];
+        self.pReplayTutorialsMessage.hidden = true;
+        [self addSubview:self.pReplayTutorialsMessage];
+        [self.pReplayTutorialsMessage addTarget:self
+                                         action:@selector(handleReplayMessageClosed)
+                               forControlEvents:UIControlEventTouchUpInside];
        
         [self setTouchExclusivity:self];
     }
@@ -79,7 +100,6 @@
 
 - (void)dealloc
 {
-    
     [self.pHeaderView removeFromSuperview];
     [self.pHeaderView release];
     
@@ -92,7 +112,8 @@
     [self.pClearCacheLabel removeFromSuperview];
     [self.pClearCacheLabel release];
     
-    
+    [self.pReplayTutorialsLabel removeFromSuperview];
+    [self.pReplayTutorialsLabel release];
     
     [self.pWifiOnlySwitch removeFromSuperview];
     [self.pWifiOnlySwitch release];
@@ -103,8 +124,8 @@
     [self.pClearCacheButton removeFromSuperview];
     [self.pClearCacheButton release];
     
-   //[self.pReplayTutorialsButton removeFromSuperview];
-   //[self.pReplayTutorialsButton release];
+    [self.pReplayTutorialsButton removeFromSuperview];
+    [self.pReplayTutorialsButton release];
     
     [self.pContentContainer removeFromSuperview];
     [self.pContentContainer release];
@@ -112,8 +133,12 @@
     [self.pOptionsCacheClearSubView removeFromSuperview];
     [self.pOptionsCacheClearSubView release];
     
+    [self.pReplayTutorialsMessage removeFromSuperview];
+    [self.pReplayTutorialsMessage release];
+    
     [self removeFromSuperview];
     [super dealloc];
+    
     Eegeo_DELETE m_pInterop;
 }
 
@@ -147,7 +172,9 @@
                             mainWindowWidth,
                             mainWindowHeight);
     
-    
+    self.pReplayTutorialsMessage.frame = self.bounds;
+    [self.pReplayTutorialsMessage setNeedsLayout];
+    [self.pReplayTutorialsMessage layoutIfNeeded];
     
     self.pOptionsCacheClearSubView.frame = self.frame;
     
@@ -170,9 +197,15 @@
     self.pCacheEnabledLabel.font = [UIFont systemFontOfSize:fontSize];
     [self.pCacheEnabledLabel sizeToFit];
     
+    
+    
     self.pClearCacheLabel.frame = CGRectMake(innerMargin.left,innerMargin.top + 2.0*rowHeight + labelOffestY, innerMarginWidth, fontSize);
     self.pClearCacheLabel.font = [UIFont systemFontOfSize:fontSize];
     [self.pClearCacheLabel sizeToFit];
+    
+    self.pReplayTutorialsLabel.frame = CGRectMake(innerMargin.left,innerMargin.top + 3.0*rowHeight + labelOffestY, innerMarginWidth, fontSize);
+    self.pReplayTutorialsLabel.font = [UIFont systemFontOfSize:fontSize];
+    [self.pReplayTutorialsLabel sizeToFit];
     
     self.pWifiOnlySwitch.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 0.0*rowHeight + switchOffestY, switchWidth, switchHeight);
     [self.pWifiOnlySwitch setNeedsLayout];
@@ -182,9 +215,11 @@
     
     self.pClearCacheButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 2.0*rowHeight + buttonOffsetY, switchWidth, buttonHeight);
     [self.pClearCacheButton setNeedsLayout];
+    
+    self.pReplayTutorialsButton.frame = CGRectMake(mainWindowWidth - switchWidth - innerMargin.right,innerMargin.top + 3.0*rowHeight + buttonOffsetY, switchWidth, buttonHeight);
+    [self.pReplayTutorialsButton setNeedsLayout];
    
 }
-
 - (void) setStreamOverWifiOnlySelected:(bool)isStreamOverWifiOnlySelected
 {
     [self.pWifiOnlySwitch setOn:isStreamOverWifiOnlySelected];
@@ -192,23 +227,26 @@
 
 - (void) setCacheEnabledSelected:(bool)isCacheEnabledSelected
 {
-     [self.pCacheEnabledSwitch setOn:isCacheEnabledSelected];
-}
-
-- (void) setReplayTutorialsSelected:(bool)isReplayTutorialsSelected
-{
-    // To be implemented in the future.
-    // Currently only implented in windows.
+    [self.pCacheEnabledSwitch setOn:isCacheEnabledSelected];
 }
 
 - (bool)isStreamOverWifiOnlySelected
 {
-   return self.pWifiOnlySwitch.isOn;
+    return self.pWifiOnlySwitch.isOn;
 }
 
 - (bool)isCacheEnabledSelected
 {
-   return self.pCacheEnabledSwitch.isOn;
+    return self.pCacheEnabledSwitch.isOn;
+}
+
+- (void)openClearCacheWarning
+{
+    Eegeo_ASSERT(![[self pOptionsCacheClearSubView] isDisplayed]);
+    
+    [[self pOptionsCacheClearSubView] displayWarningInView:self.superview
+                                                    target:self
+                                                    action:@selector(clearCacheSelectionConfirmedHandler)];
 }
 
 - (void)concludeCacheClearCeremony
@@ -229,14 +267,24 @@
 
 - (void)cacheClearSelectionHandler
 {
-    Eegeo_ASSERT(![[self pOptionsCacheClearSubView] isDisplayed]);
-    [[self pOptionsCacheClearSubView] displayWarning:self:@selector(clearCacheSelectionConfirmedHandler)];
+    m_pInterop->HandleClearCacheSelected();
+}
+
+- (void)replayTutorialsSelectionHandler
+{
+    m_pInterop->HandleReplayTutorialsSelected();
+    [self.pReplayTutorialsMessage show];
+}
+
+-(void) handleReplayMessageClosed {
+    m_pInterop->HandleCloseSelected();
 }
 
 - (void)clearCacheSelectionConfirmedHandler
 {
-    m_pInterop->HandleClearCacheSelected();
+    m_pInterop->HandleClearCacheTriggered();
 }
+
 
 - (ExampleApp::Options::View::OptionsViewInterop*)getInterop
 {
