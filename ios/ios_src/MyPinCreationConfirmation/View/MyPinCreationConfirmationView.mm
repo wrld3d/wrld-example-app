@@ -66,7 +66,7 @@
                                                                          containerHeight - textPadding)] autorelease];
         
         self.pTitleBarText.font = [UIFont systemFontOfSize:13.0f];
-        self.pTitleBarText.text = @"Drag the marker to place your report";
+        self.pTitleBarText.text = @"Drag the marker to place your pin";
         self.pTitleBarText.textAlignment = NSTextAlignmentCenter;
         self.pTitleBarText.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
         

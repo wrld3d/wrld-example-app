@@ -416,9 +416,9 @@
 
 -(void) setDefaultText {
     self.pTitleText.text = @"";
-    self.pTitleText.placeholder = @"Name Of Error";
+    self.pTitleText.placeholder = @"Name your pin...";
     self.pPoiDescriptionBox.text = @"";
-    self.pDescriptionPlaceholder.text = @"Description of error";
+    self.pDescriptionPlaceholder.text = @"Tell us about your pin...";
 }
 
 - (void) resetView

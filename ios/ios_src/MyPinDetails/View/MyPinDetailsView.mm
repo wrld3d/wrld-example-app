@@ -384,8 +384,8 @@
 
 - (void) onRemovePinButtonPressed
 {
-    NSString* alertTitle = @"Remove Report";
-    NSString* alertMessage = @"Are you sure you want to remove this report?";
+    NSString* alertTitle = @"Remove Pin";
+    NSString* alertMessage = @"Are you sure you want to remove this pin?";
     NSString* keepButtonText = @"No, keep it";
     NSString* deleteButtonText = @"Yes, delete it";
 
