@@ -1,5 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
+
 #pragma once
 
 #include "Types.h"
@@ -22,8 +24,9 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_wifiOnlyCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_cacheEnabledCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_clearCacheCallbacks;
-                Eegeo::Helpers::CallbackCollection1<bool> m_replayTutorialsToggledCallbacks;
-
+                Eegeo::Helpers::CallbackCollection0 m_clearCacheTriggeredCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_replayTutorialsCallbacks;
+                
             public:
                 OptionsViewInterop(OptionsView* pView);
                 
@@ -35,38 +38,47 @@ namespace ExampleApp
                 
                 void SetCacheEnabledSelected(bool isCacheEnabledSelected);
                 
-                void SetReplayTutorialsSelected(bool isReplayTutorialsSelected);
-
                 void Open();
-
+                
                 void Close();
+                
+                void OpenClearCacheWarning();
                 
                 void ConcludeCacheClearCeremony();
                 
                 void HandleCloseSelected();
+                
+                void HandleOkSelected();
                 
                 void HandleStreamOverWifiOnlySelectionStateChanged();
                 
                 void HandleCacheEnabledSelectionStateChanged();
                 
                 void HandleClearCacheSelected();
-
+                
+                void HandleClearCacheTriggered();
+                
+                void HandleReplayTutorialsSelected();
+                
                 void InsertCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveCloseSelectedCallback(Eegeo::Helpers::ICallback0& callback);
                 
                 void InsertStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveStreamOverWifiOnlySelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 
-                void InsertCacheEnabledSelectionCallback(Eegeo::Helpers::ICallback0& callback);
-                void RemoveCacheEnabledSelectionCallback(Eegeo::Helpers::ICallback0& callback);
+                void InsertCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveCacheEnabledSelectionChangedCallback(Eegeo::Helpers::ICallback0& callback);
                 
                 void InsertClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveClearCacheSelectedCallback(Eegeo::Helpers::ICallback0& callback);
-
-                void InsertReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback);
-                void RemoveReplayTutorialsToggledCallback(Eegeo::Helpers::ICallback1<bool>& callback);
+                
+                void InsertClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveClearCacheTriggeredCallback(Eegeo::Helpers::ICallback0& callback);
+                
+                void InsertReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveReplayTutorialsSelectedCallback(Eegeo::Helpers::ICallback0& callback);
             };
         }
     }
-
+    
 }

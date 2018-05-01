@@ -9,7 +9,7 @@
 #include "OptionsCacheClearSubView.h"
 #import "CustomSwitch.h"
 #import "HeaderView.h"
-
+#include "MessageView.h"
 
 @class OptionsView;
 @class OptionsViewController;
@@ -19,7 +19,6 @@
     ExampleApp::Options::View::OptionsViewInterop* m_pInterop;
     float m_stateChangeAnimationTimeSeconds;
 }
-
 - (id) initView;
 
 - (BOOL) consumesTouch:(UITouch *)touch;
@@ -36,11 +35,11 @@
 
 - (void) setCacheEnabledSelected:(bool)isCacheEnabledSelected;
 
-- (void) setReplayTutorialsSelected:(bool)isReplayTutorialsSelected;
-
 - (bool) isStreamOverWifiOnlySelected;
 
 - (bool) isCacheEnabledSelected;
+
+- (void) openClearCacheWarning;
 
 - (void) concludeCacheClearCeremony;
 
@@ -49,14 +48,15 @@
 @property (nonatomic, retain) CustomSwitch*  pWifiOnlySwitch;
 @property (nonatomic, retain) CustomSwitch* pCacheEnabledSwitch;
 @property (nonatomic, retain) UIButton* pClearCacheButton;
+@property (nonatomic, retain) UIButton* pReplayTutorialsButton;
 
 @property (nonatomic, retain) UILabel*  pWifiOnlyLabel;
 @property (nonatomic, retain) UILabel*  pCacheEnabledLabel;
 @property (nonatomic, retain) UILabel*  pClearCacheLabel;
-
+@property (nonatomic, retain) UILabel*  pReplayTutorialsLabel;
 
 @property (nonatomic, retain) UIView* pContentContainer;
 
 @property (nonatomic, retain) OptionsCacheClearSubView* pOptionsCacheClearSubView;
-
+@property (nonatomic, retain) MessageView* pReplayTutorialsMessage;
 @end
