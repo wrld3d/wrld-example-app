@@ -8,6 +8,7 @@ namespace ExampleApp
     {
         namespace ColorPalette
         {
+            UIColor* UISeparatorColor =  [[UIColor alloc] initWithRed:40.f/255.f green:85.f/255.f blue:170.f/255.f alpha:1.f];
             UIColor* UiBackgroundColor = [[UIColor alloc] initWithRed:1.f green:1.f blue:1.f alpha:1.f];
             UIColor* UiBorderColor = [[UIColor alloc] initWithRed:18.f/255.f green:86.f/255.f blue:176.f/255.f alpha:1.f];
             

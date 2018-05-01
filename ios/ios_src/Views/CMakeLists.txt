@@ -9,6 +9,10 @@ set(currsources
   ios_src/Views/UILabelledCheckboxView.mm
   ios_src/Views/UIView+TouchExclusivity.h
   ios_src/Views/UIView+TouchExclusivity.m
+  ios_src/Views/CustomSwitch.h
+  ios_src/Views/CustomSwitch.m
+  ios_src/Views/HeaderView.h
+  ios_src/Views/HeaderView.mm
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\Views FILES ${currsources})

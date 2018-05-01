@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="basic_example_label">search</string>
+    
     <string name="eula_link"><a href='http://www.wrld3d.com/terms-of-service'>EULA</a></string>
     <string name="privacy_link"><a href='http://www.wrld3d.com/privacy'>Privacy Policy</a></string>
     <string name="legal_link"><a href='http://www.wrld3d.com/legal'>Legal</a></string>

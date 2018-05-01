@@ -7,6 +7,9 @@
 #include "AppRunner.h"
 #include "UILabelledCheckboxView.h"
 #include "OptionsCacheClearSubView.h"
+#import "CustomSwitch.h"
+#import "HeaderView.h"
+
 
 @class OptionsView;
 @class OptionsViewController;
@@ -41,17 +44,19 @@
 
 - (void) concludeCacheClearCeremony;
 
-@property (nonatomic, retain) UIView* pCloseButtonContainer;
-@property (nonatomic, retain) UIButton* pCloseButton;
-@property (nonatomic, retain) UIView* pControlContainer;
-@property (nonatomic, retain) UIView* pHeadlineContainer;
+@property (nonatomic, retain) HeaderView* pHeaderView;
+
+@property (nonatomic, retain) CustomSwitch*  pWifiOnlySwitch;
+@property (nonatomic, retain) CustomSwitch* pCacheEnabledSwitch;
+@property (nonatomic, retain) UIButton* pClearCacheButton;
+
+@property (nonatomic, retain) UILabel*  pWifiOnlyLabel;
+@property (nonatomic, retain) UILabel*  pCacheEnabledLabel;
+@property (nonatomic, retain) UILabel*  pClearCacheLabel;
+
+
 @property (nonatomic, retain) UIView* pContentContainer;
-@property (nonatomic, retain) UIScrollView* pOptionsContainer;
-@property (nonatomic, retain) UILabel* pTitleLabel;
-@property (nonatomic, retain) UILabelledCheckboxView* pWifiOnlyCheckbox;
-@property (nonatomic, retain) UILabelledCheckboxView* pCacheEnabledCheckbox;
-@property (nonatomic, retain) UILabelledCheckboxView* pClearCacheCheckbox;
-@property (nonatomic, retain) UILabel* pClearCacheLabel;
+
 @property (nonatomic, retain) OptionsCacheClearSubView* pOptionsCacheClearSubView;
 
 @end
