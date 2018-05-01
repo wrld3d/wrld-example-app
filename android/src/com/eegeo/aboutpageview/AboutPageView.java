@@ -2,8 +2,11 @@
 
 package com.eegeo.aboutpageview;
 
-import android.support.v4.content.ContextCompat;
 import android.text.method.LinkMovementMethod;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextPaint;
+import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -42,7 +45,7 @@ public class AboutPageView implements View.OnClickListener
         m_legalLink = (TextView)m_view.findViewById(R.id.about_page_view_legal_link);
         m_teamLink = (TextView)m_view.findViewById(R.id.about_page_view_team_link);
         m_logoImage = (ImageView)m_view.findViewById(R.id.about_page_wrld_logo);
-        
+
         RelativeLayout.LayoutParams layoutParams = (LayoutParams) m_view.getLayoutParams();
         if (m_activity.getResources().getBoolean(R.bool.isPhone)) 
         {
@@ -72,6 +75,44 @@ public class AboutPageView implements View.OnClickListener
         m_privacyLink.setMovementMethod(LinkMovementMethod.getInstance());
         m_legalLink.setMovementMethod(LinkMovementMethod.getInstance());
         m_teamLink.setMovementMethod(LinkMovementMethod.getInstance());
+
+        RemoveUnderlineFromLink(m_eulaLink);
+        RemoveUnderlineFromLink(m_privacyLink);
+        RemoveUnderlineFromLink(m_legalLink);
+        RemoveUnderlineFromLink(m_teamLink);
+    }
+
+    private class URLSpanWithoutUnderline extends URLSpan
+    {
+        public URLSpanWithoutUnderline(String url)
+        {
+            super(url);
+        }
+
+        public void updateDrawState(TextPaint drawState)
+        {
+            super.updateDrawState(drawState);
+
+            drawState.setUnderlineText(false);
+        }
+    }
+
+    private void RemoveUnderlineFromLink(TextView text)
+    {
+        Spannable spannable = new SpannableString(text.getText());
+        URLSpan[] spans     = spannable.getSpans(0, text.length(), URLSpan.class);
+
+        for (URLSpan span : spans)
+        {
+            int start = spannable.getSpanStart(span);
+            int end   = spannable.getSpanEnd  (span);
+
+            spannable.removeSpan(span);
+
+            spannable.setSpan(new URLSpanWithoutUnderline(span.getURL()), start, end, 0);
+        }
+
+        text.setText(spannable);
     }
 
     public void destroy()
