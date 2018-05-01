@@ -14,6 +14,12 @@ Before you begin, ensure you have completed the initial steps as described in th
 - [CMake](https://cmake.org/) (>= 3.1.1)
 - [Git for Windows (MinGW shell)](https://git-for-windows.github.io/)
 
+## Depreciation
+
+- Windows is no longer supported for the WRLD example app.
+- The last stable windows build is stored in a branch.
+- Use `git checkout windows-deprecated` to move to the deprecated windows branch before attempting the steps in **Setup**.
+
 ## Setup
 
 1.  Open a Git Bash (MinGW) terminal for the following commands.
