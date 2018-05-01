@@ -41,7 +41,7 @@ public class AboutPageView implements View.OnClickListener
         m_privacyLink = (TextView)m_view.findViewById(R.id.about_page_view_privacy_link);
         m_legalLink = (TextView)m_view.findViewById(R.id.about_page_view_legal_link);
         m_teamLink = (TextView)m_view.findViewById(R.id.about_page_view_team_link);
-        m_logoImage = (ImageView)m_view.findViewById(R.id.about_page_eegeo_logo);
+        m_logoImage = (ImageView)m_view.findViewById(R.id.about_page_wrld_logo);
         
         RelativeLayout.LayoutParams layoutParams = (LayoutParams) m_view.getLayoutParams();
         if (m_activity.getResources().getBoolean(R.bool.isPhone)) 
