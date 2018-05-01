@@ -1,5 +1,14 @@
 set(resources ${resources}
-	Resources/WidgetSearchResultTableViewCell.xib
+	    Resources/WidgetSearchResultTableViewCell.xib
+        Resources/ReportPinIcon.png
+        Resources/ReportPinIcon@2x.png
+        Resources/ReportPinIcon@3x.png
+        Resources/BinButton.png
+        Resources/BinButton@2x.png
+        Resources/BinButton@3x.png
+        Resources/BinButton_Down.png
+        Resources/BinButton_Down@2x.png
+        Resources/BinButton_Down@3x.png
         Resources/Alert_Tutorial_icon.png
         Resources/Alert_Tutorial_icon@2x.png
         Resources/Alert_Tutorial_icon@3x.png
