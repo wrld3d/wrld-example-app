@@ -102,15 +102,7 @@
                         android:contentDescription="Wrld Logo"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/wrld_logo_about" />
-	                
-	                <TextView
-	                    android:id="@+id/about_page_view_about_text"
-	                    android:layout_width="fill_parent"
-	                    android:layout_height="wrap_content"
-	                    android:textColor="@color/darkgrey"
-	                    android:textSize="16dp"
-						android:layout_marginTop="10dp" />
-	                
+
 	                <TextView
 	                    android:id="@+id/about_page_view_about_text_eula_link"
 	                    android:layout_width="fill_parent"
