@@ -17,6 +17,8 @@ set(currsources
   ../src/Search/SearchVendorNames.h
   ../src/Search/SearchQueryResultsRemovedMessage.cpp
   ../src/Search/SearchQueryResultsRemovedMessage.h
+  ../src/Search/DeepLinkedSearchQueryRequestMessage.cpp
+  ../src/Search/DeepLinkedSearchQueryRequestMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Search FILES ${currsources})
