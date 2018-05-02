@@ -54,7 +54,7 @@ namespace ExampleApp
                 m_messageBus.Publish(SearchResultPoiPinToggledMessage(searchResultModel));
             }
 
-            void SearchResultPoiController::OnDirectionsButtonClicked()
+            void SearchResultPoiController::OnDirectionsButtonClicked(Search::SdkModel::SearchResultModel& searchResultModel)
             {
                 m_messageBus.Publish(SearchResultPoiDirectionsButtonClickedMessage());
             }
