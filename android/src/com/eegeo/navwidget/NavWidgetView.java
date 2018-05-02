@@ -2,9 +2,7 @@
 
 package com.eegeo.navwidget;
 
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
@@ -13,10 +11,11 @@ import com.eegeo.mobileexampleapp.R;
 import com.wrld.widgets.navigation.model.WrldNavEvent;
 import com.wrld.widgets.navigation.model.WrldNavMode;
 import com.wrld.widgets.navigation.model.WrldNavModel;
+import com.wrld.widgets.navigation.model.WrldNavModelObserver;
 import com.wrld.widgets.navigation.model.WrldNavModelObserverListener;
 import com.wrld.widgets.navigation.widget.WrldNavWidget;
 
-public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverListener, View.OnClickListener
+public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverListener
 {
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
@@ -24,6 +23,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     private RelativeLayout m_uiRoot = null;
 
     private WrldNavWidget m_navWidget = null;
+    private WrldNavModelObserver m_observer;
 
     //Test model
     private WrldNavModel m_model;
@@ -39,13 +39,14 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_uiRoot.addView(m_view);
         m_activity.addBackButtonPressedListener(this);
 
-        Button btn = (Button) m_view.findViewById(R.id.test_button);
-        btn.setOnClickListener(this);
+        m_model = new WrldNavModel();
 
-//        m_model = new WrldNavModel();
-//
-//        m_navWidget = (WrldNavWidget) m_view.findViewById(R.id.wrld_nav_widget_view);
-//        m_navWidget.getObserver().setNavModel(m_model);
+        m_navWidget = (WrldNavWidget) m_view.findViewById(R.id.wrld_nav_widget_view);
+        m_navWidget.getObserver().setNavModel(m_model);
+
+        m_observer = new WrldNavModelObserver();
+        m_observer.setListener(this);
+        m_observer.setNavModel(m_model);
     }
 
     private void handleCloseClicked()
@@ -105,11 +106,5 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         {
             handleCloseClicked();
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-        Log.i("test tag", "click");
-        handleCloseClicked();
     }
 }

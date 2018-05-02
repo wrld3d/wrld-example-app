@@ -18,6 +18,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore.Images;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -46,7 +47,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 {
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
-    protected RelativeLayout m_view = null;
+    protected ConstraintLayout m_view = null;
     protected View m_closeButton = null;
     protected View m_takePhotoButton = null;
     protected View m_selectFromGalleryButton = null;
@@ -89,7 +90,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
     private void createView()
     {
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-        m_view = (RelativeLayout)m_activity.getLayoutInflater().inflate(R.layout.poi_creation_details_layout, uiRoot, false);
+        m_view = (ConstraintLayout)m_activity.getLayoutInflater().inflate(R.layout.poi_creation_details_layout, uiRoot, false);
 
         m_closeButton = (View)m_view.findViewById(R.id.poi_creation_details_button_close);
         m_closeButton.setOnClickListener(this);

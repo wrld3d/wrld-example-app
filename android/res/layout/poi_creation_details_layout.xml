@@ -1,18 +1,49 @@
-<android.support.percent.PercentRelativeLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/poi_creation_details_main"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_centerInParent="true"
     android:layout_margin="5dp" >
     
+    <android.support.constraint.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/left_guideline"
+        app:layout_constraintGuide_percent="@fraction/poiCreationLeftGuidePercentage"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/right_guideline"
+        app:layout_constraintGuide_percent="@fraction/poiCreationRightGuidePercentage"
+        android:orientation="vertical"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/top_guideline"
+        app:layout_constraintGuide_percent="@fraction/poiCreationTopGuidePercentage"
+        android:orientation="horizontal"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/bottom_guideline"
+        app:layout_constraintGuide_percent="@fraction/poiCreationBottomGuidePercentage"
+        android:orientation="horizontal"/>
+
     <RelativeLayout
-        android:layout_width="fill_parent"
         android:layout_centerInParent="true"
-        app:layout_heightPercent="@fraction/poiCreationHeightPercentage"
-        app:layout_widthPercent="@fraction/poiCreationWidthPercentage">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/left_guideline"
+        app:layout_constraintRight_toRightOf="@+id/right_guideline"
+        app:layout_constraintTop_toTopOf="@+id/top_guideline"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_guideline" >
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -233,4 +264,4 @@
         <!-- end footer -->
         
     </RelativeLayout>
-</android.support.percent.PercentRelativeLayout>
+</android.support.constraint.ConstraintLayout>
