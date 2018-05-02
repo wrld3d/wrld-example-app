@@ -36,7 +36,7 @@
                   android:label="WRLD"
                   android:configChanges="orientation|keyboardHidden|screenSize|fontScale"
                   android:windowSoftInputMode="adjustPan"
-              	  android:launchMode="singleTop"
+              	  android:launchMode="singleTask"
               	  android:hardwareAccelerated="true"
               	  android:resizeableActivity="false"
               	  android:supportsPictureInPicture="false">

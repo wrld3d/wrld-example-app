@@ -11,6 +11,7 @@
 #include "BidirectionalBus.h"
 #include "SearchQueryResultsRemovedMessage.h"
 #include "CameraState.h"
+#include "SearchQueryResultsRemovedMessage.h"
 
 namespace
 {
@@ -106,6 +107,14 @@ namespace ExampleApp
                 m_messageBus.Publish(SearchQueryRefreshedMessage(query,
                                                                  location,
                                                                  GetSearchRadius(m_cameraController)));
+            }
+            
+            void SearchQueryPerformer::AskForDeepLinkQuery(const std::string& query,const std::string& interiorId)
+            {
+                Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
+                const float radius = GetSearchRadius(m_cameraController);
+                SearchQuery searchQuery(query, false, true, location, radius, interiorId);
+                m_messageBus.Publish(DeepLinkedSearchQueryRequestMessage(searchQuery));
             }
 
             void SearchQueryPerformer::RemoveSearchQueryResults()

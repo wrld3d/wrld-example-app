@@ -28,6 +28,8 @@ namespace ExampleApp
             , m_onSearchResultsClearedCallback(this, &SearchWidgetController::OnSearchResultsCleared)
             , m_onSearchResultSelectedCallback(this, &SearchWidgetController::OnSearchResultSelected)
             , m_onSearchQueryRefreshedHandler(this, &SearchWidgetController::OnSearchQueryRefreshedMessage)
+            , m_onSearchQueryResultsLoadedHandler(this, &SearchWidgetController::OnSearchResultsLoaded)
+            , m_deepLinkRequestedHandler(this, &SearchWidgetController::OnSearchDeepLinkRequestedMessage)
             , m_menuContentsChanged(true)
 			, m_inInteriorMode(false)
             , m_onAppModeChanged(this, &SearchWidgetController::OnAppModeChanged)
@@ -40,6 +42,7 @@ namespace ExampleApp
             , m_onViewOpenedCallback(this, &SearchWidgetController::OnViewOpened)
             , m_onViewClosedCallback(this, &SearchWidgetController::OnViewClosed)
 			, m_tagCollection(m_messageBus)
+            , m_shouldSelectFirstResult(false)
             {
                 m_view.InsertSearchClearedCallback(m_onSearchResultsClearedCallback);
 				m_view.InsertResultSelectedCallback(m_onSearchResultSelectedCallback);
@@ -53,6 +56,9 @@ namespace ExampleApp
 				m_modalBackgroundView.InsertTouchCallback(m_onModalBackgroundTouchCallback);
 
                 m_messageBus.SubscribeUi(m_onSearchQueryRefreshedHandler);
+                
+                m_messageBus.SubscribeUi(m_onSearchQueryResultsLoadedHandler);
+                m_messageBus.SubscribeUi(m_deepLinkRequestedHandler);
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
 
                 for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
@@ -77,6 +83,8 @@ namespace ExampleApp
 
                 m_messageBus.UnsubscribeUi(m_onAppModeChanged);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
+                m_messageBus.UnsubscribeUi(m_onSearchQueryResultsLoadedHandler);
+                m_messageBus.UnsubscribeUi(m_deepLinkRequestedHandler);
 
 				m_modalBackgroundView.RemoveTouchCallback(m_onModalBackgroundTouchCallback);
 
@@ -118,7 +126,6 @@ namespace ExampleApp
                 const SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_searchServices.GetSdkSearchResultByIndex(index);
 
                 m_messageBus.Publish(SearchResultSection::SearchResultSectionItemSelectedMessage(
-                    //sdkSearchResult.GetIdentifier(),
                     sdkSearchResult.GetLocation().ToECEF(),
                     sdkSearchResult.IsInterior(),
                     sdkSearchResult.GetBuildingId(),
@@ -126,7 +133,16 @@ namespace ExampleApp
                     m_searchServices.GetResultOriginalIndexFromCurrentIndex(index),
                     sdkSearchResult.GetIdentifier()));
             }
-
+            
+            void SearchWidgetController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
+            {
+                if (m_shouldSelectFirstResult && message.GetResults().size() > 0){
+                    int val = 0;
+                    OnSearchResultSelected(val);
+                    m_shouldSelectFirstResult = false;
+                }
+            }
+            
             void SearchWidgetController::OnSearchQueryRefreshedMessage(const Search::SearchQueryRefreshedMessage& message)
             {
                 const Search::SdkModel::SearchQuery &query = message.Query();
@@ -144,14 +160,30 @@ namespace ExampleApp
 				}
 
                 m_view.PerformSearch(visibleText,
-									 QueryContext(false,
-												  query.IsTag(),
-												  tagText,
-												  query.ShouldTryInteriorSearch(),
-												  message.Location(),
-												  message.Radius()));
+                                     QueryContext(false,
+                                                  query.IsTag(),
+                                                  tagText,
+                                                  query.ShouldTryInteriorSearch(),
+                                                  message.Location(),
+                                                  message.Radius()));
             }
-
+           
+            void SearchWidgetController::OnSearchDeepLinkRequestedMessage(const Search::DeepLinkedSearchQueryRequestMessage& message)
+            {
+                auto query = message.Query();
+                auto clearPreviousResults = false;
+                auto tagText = "";
+                
+                auto queryContext = QueryContext(clearPreviousResults,
+                                                 query.IsTag(),
+                                                 tagText,
+                                                 query.ShouldTryInteriorSearch(),
+                                                 query.Location(),
+                                                 query.Radius());
+                m_shouldSelectFirstResult = true;
+                m_view.PerformSearch(query.Query(),queryContext);
+            }
+            
             void SearchWidgetController::UpdateUiThread(float dt)
             {
 				RefreshPresentation();
@@ -247,7 +279,6 @@ namespace ExampleApp
 
             void SearchWidgetController::OnViewOpened()
             {
-
                 if(!m_viewModel.IsFullyOpen())
                 {
                     m_viewModel.Open();
