@@ -1,5 +1,14 @@
 set(resources ${resources}
-	Resources/WidgetSearchResultTableViewCell.xib
+	    Resources/WidgetSearchResultTableViewCell.xib
+        Resources/ReportPinIcon.png
+        Resources/ReportPinIcon@2x.png
+        Resources/ReportPinIcon@3x.png
+        Resources/BinButton.png
+        Resources/BinButton@2x.png
+        Resources/BinButton@3x.png
+        Resources/BinButton_Down.png
+        Resources/BinButton_Down@2x.png
+        Resources/BinButton_Down@3x.png
         Resources/Alert_Tutorial_icon.png
         Resources/Alert_Tutorial_icon@2x.png
         Resources/Alert_Tutorial_icon@3x.png
@@ -57,6 +66,27 @@ set(resources ${resources}
         Resources/CompassNewUnlocked_Down@2x.png
         Resources/CompassNewUnlocked_Down@3x.png
         Resources/CompassNewUnlocked_Down@4x.png
+        Resources/ButtonGallery.png
+        Resources/ButtonGallery@2x.png
+        Resources/ButtonGallery@3x.png
+        Resources/ButtonGallery_Down.png
+        Resources/ButtonGallery_Down@2x.png
+        Resources/ButtonGallery_Down@3x.png
+        Resources/ButtonPhoto.png
+        Resources/ButtonPhoto@2x.png
+        Resources/ButtonPhoto@3x.png
+        Resources/ButtonPhoto_Down.png
+        Resources/ButtonPhoto_Down@2x.png
+        Resources/ButtonPhoto_Down@3x.png
+        Resources/LargeTick_Blue.png
+        Resources/LargeTick_Blue@2x.png
+        Resources/LargeTick_Blue@3x.png
+        Resources/LargeTick_White.png
+        Resources/LargeTick_White@2x.png
+        Resources/LargeTick_White@3x.png
+        Resources/ShareIcon.png
+        Resources/ShareIcon@2x.png
+        Resources/ShareIcon@3x.png
         Resources/EmbeddedTheme
         Resources/EmbeddedTheme/Default_water_reflection_cube_map_cubemap.pvr
         Resources/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
