@@ -145,14 +145,14 @@ namespace ExampleApp
                 m_togglePinClickedCallbacks.ExecuteCallbacks(m_model);
             }
 
-			void SearchResultPoiView::InsertDirectionsCallback(Eegeo::Helpers::ICallback0& callback)
+			void SearchResultPoiView::InsertDirectionsCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback)
 			{
 				ASSERT_UI_THREAD
 
 				m_directionsCallbacks.AddCallback(callback);
 			}
 
-			void SearchResultPoiView::RemoveDirectionsCallback(Eegeo::Helpers::ICallback0& callback)
+			void SearchResultPoiView::RemoveDirectionsCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback)
 			{
 				ASSERT_UI_THREAD
 
@@ -163,7 +163,7 @@ namespace ExampleApp
 			{
 				ASSERT_UI_THREAD
 
-				m_directionsCallbacks.ExecuteCallbacks();
+				m_directionsCallbacks.ExecuteCallbacks(m_model);
 			}
 
             void SearchResultPoiView::CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)

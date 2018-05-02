@@ -21,7 +21,7 @@ namespace ExampleApp
                 AndroidNativeState& m_nativeState;
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_togglePinClickedCallbacks;
-                Eegeo::Helpers::CallbackCollection0 m_directionsCallbacks;
+                Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_directionsCallbacks;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
@@ -54,9 +54,9 @@ namespace ExampleApp
 
                 void HandlePinToggleClicked();
 
-                void InsertDirectionsCallback(Eegeo::Helpers::ICallback0& callback);
+                void InsertDirectionsCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback);
 
-                void RemoveDirectionsCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveDirectionsCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback);
 
                 void HandleDirectionsClicked();
 
