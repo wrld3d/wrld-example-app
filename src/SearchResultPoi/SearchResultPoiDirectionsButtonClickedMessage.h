@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include <string>
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -10,7 +10,13 @@ namespace ExampleApp
     {
         class SearchResultPoiDirectionsButtonClickedMessage
         {
+        private:
+            Search::SdkModel::SearchResultModel m_model;
 
+        public:
+            SearchResultPoiDirectionsButtonClickedMessage(const Search::SdkModel::SearchResultModel& model);
+
+            const Search::SdkModel::SearchResultModel& GetModel() const;
         };
     }
 }

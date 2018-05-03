@@ -8,6 +8,7 @@
 #include "INavWidgetViewModule.h"
 #include "NavWidgetController.h"
 #include "NavWidgetViewModel.h"
+#include "ILocationService.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
 
@@ -27,6 +28,7 @@ namespace ExampleApp
                 NavWidgetViewModule(
                     AndroidNativeState& nativeState,
                     INavWidgetViewModel& navWidgetViewModel,
+                    Eegeo::Location::ILocationService& locationService,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 

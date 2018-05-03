@@ -6,8 +6,10 @@
 #include "Types.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
+#include "ILocationService.h"
 #include "INavWidgetView.h"
 #include "INavWidgetViewModel.h"
+#include "NavRoutingLocationModel.h"
 #include "SearchResultPoiDirectionsButtonClickedMessage.h"
 
 namespace ExampleApp
@@ -21,16 +23,29 @@ namespace ExampleApp
             private:
                 INavWidgetView& m_view;
                 INavWidgetViewModel& m_viewModel;
+                Eegeo::Location::ILocationService& m_locationService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewOpenedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewClosedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_closeButtonCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingLocationModel&> m_startLocationSetCallback;
+                Eegeo::Helpers::TCallback0<NavWidgetController> m_startLocationClearedCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingLocationModel&> m_endLocationSetCallback;
+                Eegeo::Helpers::TCallback0<NavWidgetController> m_endLocationClearedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
 
                 void OnViewClosed();
 
                 void OnCloseButtonClicked();
+
+                void OnStartLocationSet(const SdkModel::NavRoutingLocationModel& startLocation);
+
+                void OnStartLocationCleared();
+
+                void OnEndLocationSet(const SdkModel::NavRoutingLocationModel& endLocation);
+
+                void OnEndLocationCleared();
 
                 void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
 
@@ -43,6 +58,7 @@ namespace ExampleApp
             public:
                 NavWidgetController(INavWidgetView& view,
                                     INavWidgetViewModel& viewModel,
+                                    Eegeo::Location::ILocationService& locationService,
                                     ExampleAppMessaging::TMessageBus& messageBus);
 
                 virtual ~NavWidgetController();

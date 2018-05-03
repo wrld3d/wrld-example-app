@@ -7,6 +7,7 @@
 #include "CallbackCollection.h"
 #include "NavWidgetOpenableControl.h"
 #include "Reaction.h"
+#include "NavRoutingLocationModel.h"
 
 namespace ExampleApp
 {
@@ -18,6 +19,10 @@ namespace ExampleApp
             {
                 Eegeo::Helpers::CallbackCollection0 m_openedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const SdkModel::NavRoutingLocationModel&> m_startLocationSetCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_startLocationClearedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const SdkModel::NavRoutingLocationModel&> m_endLocationSetCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_endLocationClearedCallbacks;
                 NavWidgetOpenableControl m_openable;
 
             public:
@@ -34,6 +39,14 @@ namespace ExampleApp
 
                 void Close();
 
+                void SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel);
+
+                void ClearStartLocation();
+
+                void SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel);
+
+                void ClearEndLocation();
+
                 OpenableControl::View::IOpenableControlViewModel& GetOpenableControl();
 
                 void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
@@ -43,6 +56,23 @@ namespace ExampleApp
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
 
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+
+                void InsertStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback);
+
+                void RemoveStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback);
+
+                void InsertStartLocationClearedCallback(Eegeo::Helpers::ICallback0& startLocationClearedCallback);
+
+                void RemoveStartLocationClearedCallback(Eegeo::Helpers::ICallback0& startLocationClearedCallback);
+
+                void InsertEndLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& endLocationSetCallback);
+
+                void RemoveEndLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& endLocationSetCallback);
+
+                void InsertEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback);
+
+                void RemoveEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback);
+
             };
         }
     }

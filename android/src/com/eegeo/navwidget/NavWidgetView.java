@@ -2,6 +2,7 @@
 
 package com.eegeo.navwidget;
 
+import android.location.Location;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -9,6 +10,7 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IBackButtonListener;
 import com.eegeo.mobileexampleapp.R;
 import com.wrld.widgets.navigation.model.WrldNavEvent;
+import com.wrld.widgets.navigation.model.WrldNavLocation;
 import com.wrld.widgets.navigation.model.WrldNavMode;
 import com.wrld.widgets.navigation.model.WrldNavModel;
 import com.wrld.widgets.navigation.model.WrldNavModelObserver;
@@ -54,6 +56,46 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_view.setEnabled(false);
 
         NavWidgetViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
+    }
+
+    private WrldNavLocation createNavLocation(String name, double lat, double lon, boolean isIndoors, String indoorMapId, int floorMapFloorId)
+    {
+        Location loc = new Location("Wrld");
+        loc.setLatitude(lat);
+        loc.setLongitude(lon);
+
+        WrldNavLocation location;
+
+        if (isIndoors)
+        {
+            location = new WrldNavLocation(name, loc, indoorMapId, floorMapFloorId);
+        }
+        else
+        {
+            location = new WrldNavLocation(name, loc);
+        }
+
+        return location;
+    }
+
+    public void setStartLocation(String name, double lat, double lon, boolean isIndoors, String indoorMapId, int floorMapFloorId)
+    {
+        m_model.setStartLocation(createNavLocation(name, lat, lon, isIndoors, indoorMapId, floorMapFloorId));
+    }
+
+    public void clearStartLocation()
+    {
+        m_model.setStartLocation(null);
+    }
+
+    public void setEndLocation(String name, double lat, double lon, boolean isIndoors, String indoorMapId, int floorMapFloorId)
+    {
+        m_model.setEndLocation(createNavLocation(name, lat, lon, isIndoors, indoorMapId, floorMapFloorId));
+    }
+
+    public void clearEndLocation()
+    {
+        m_model.setEndLocation(null);
     }
 
     public void dismissNavWidgetView()

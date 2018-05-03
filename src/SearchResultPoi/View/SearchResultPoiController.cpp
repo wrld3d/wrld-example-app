@@ -56,7 +56,7 @@ namespace ExampleApp
 
             void SearchResultPoiController::OnDirectionsButtonClicked(Search::SdkModel::SearchResultModel& searchResultModel)
             {
-                m_messageBus.Publish(SearchResultPoiDirectionsButtonClickedMessage());
+                m_messageBus.Publish(SearchResultPoiDirectionsButtonClickedMessage(searchResultModel));
             }
             
             void SearchResultPoiController::OnSearchResultImageLoaded(const SearchResultPoiViewImageDownloadCompletedMessage& message)

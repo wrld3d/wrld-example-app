@@ -7,6 +7,7 @@
 #include "AndroidNativeState.h"
 #include "CallbackCollection.h"
 #include "INavWidgetView.h"
+#include "NavRoutingLocationModel.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,14 @@ namespace ExampleApp
 
                 void Hide();
 
+                void SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel);
+
+                void ClearStartLocation();
+
+                void SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel);
+
+                void ClearEndLocation();
+
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -39,6 +48,9 @@ namespace ExampleApp
                 void HandleCloseClicked();
 
             private:
+                void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);
+
+                void CallVoidMethod(const std::string& methodName);
 
                 jclass CreateJavaClass(const std::string& viewClass);
 

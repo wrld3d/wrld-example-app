@@ -44,8 +44,8 @@ namespace ExampleApp
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
-                jmethodID dismissPoiInfo = env->GetMethodID(m_uiViewClass, "dismissNavWidgetView", "()V");
-                env->CallVoidMethod(m_uiView, dismissPoiInfo);
+                jmethodID dismissNavWidgetViewMethod = env->GetMethodID(m_uiViewClass, "dismissNavWidgetView", "()V");
+                env->CallVoidMethod(m_uiView, dismissNavWidgetViewMethod);
 
                 jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
                 env->CallVoidMethod(m_uiView, removeHudMethod);
@@ -54,6 +54,68 @@ namespace ExampleApp
 
                 m_uiViewClass = NULL;
                 m_uiView = NULL;
+            }
+
+            void NavWidgetView::SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel)
+            {
+                ASSERT_UI_THREAD
+
+                SetLocation(locationModel, true);
+            }
+
+            void NavWidgetView::ClearStartLocation()
+            {
+                ASSERT_UI_THREAD
+
+                CallVoidMethod("clearStartLocation");
+            }
+
+            void NavWidgetView::SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel)
+            {
+                ASSERT_UI_THREAD
+
+                SetLocation(locationModel, false);
+            }
+
+            void NavWidgetView::ClearEndLocation()
+            {
+                ASSERT_UI_THREAD
+
+                CallVoidMethod("clearEndLocation");
+            }
+
+            void NavWidgetView::SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation)
+            {
+                ASSERT_UI_THREAD
+
+                Eegeo::Space::LatLong latLong = locationModel.GetLatLon();
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jstring nameStr = env->NewStringUTF(locationModel.GetName().c_str());
+                jstring indoorMapIdStr = env->NewStringUTF(locationModel.GetIndoorMapId().Value().c_str());
+
+                jmethodID setLocationMethod = env->GetMethodID(m_uiViewClass, isStartLocation ? "setStartLocation" : "setEndLocation", "(Ljava/lang/String;DDZLjava/lang/String;I)V");
+                env->CallVoidMethod(m_uiView,
+                                    setLocationMethod,
+                                    nameStr,
+                                    latLong.GetLatitudeInDegrees(),
+                                    latLong.GetLongitudeInDegrees(),
+                                    locationModel.GetIsIndoors(),
+                                    indoorMapIdStr,
+                                    locationModel.GetIndoorMapFloorId());
+            }
+
+            void NavWidgetView::CallVoidMethod(const std::string& methodName)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID methodID = env->GetMethodID(m_uiViewClass, methodName.c_str(), "()V");
+                env->CallVoidMethod(m_uiView, methodID);
             }
 
             void NavWidgetView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)

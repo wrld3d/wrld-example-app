@@ -51,6 +51,34 @@ namespace ExampleApp
                 m_closedCallbacks.ExecuteCallbacks();
             }
 
+            void NavWidgetViewModel::SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel)
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot set start location when NavWidget is not open.\n");
+
+                m_startLocationSetCallbacks.ExecuteCallbacks(locationModel);
+            }
+
+            void NavWidgetViewModel::ClearStartLocation()
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot clear start location when NavWidget is not open.\n");
+
+                m_startLocationClearedCallbacks.ExecuteCallbacks();
+            }
+
+            void NavWidgetViewModel::SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel)
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot set end location when NavWidget is not open.\n");
+
+                m_endLocationSetCallbacks.ExecuteCallbacks(locationModel);
+            }
+
+            void NavWidgetViewModel::ClearEndLocation()
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot clear end location when NavWidget is not open.\n");
+
+                m_endLocationClearedCallbacks.ExecuteCallbacks();
+            }
+
             OpenableControl::View::IOpenableControlViewModel& NavWidgetViewModel::GetOpenableControl()
             {
                 return m_openable;
@@ -74,6 +102,46 @@ namespace ExampleApp
             void NavWidgetViewModel::RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback)
             {
                 m_closedCallbacks.RemoveCallback(closedCallback);
+            }
+
+            void NavWidgetViewModel::InsertStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback)
+            {
+                m_startLocationSetCallbacks.AddCallback(startLocationSetCallback);
+            }
+
+            void NavWidgetViewModel::RemoveStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback)
+            {
+                m_startLocationSetCallbacks.RemoveCallback(startLocationSetCallback);
+            }
+
+            void NavWidgetViewModel::InsertStartLocationClearedCallback(Eegeo::Helpers::ICallback0& startLocationClearedCallback)
+            {
+                m_startLocationClearedCallbacks.AddCallback(startLocationClearedCallback);
+            }
+
+            void NavWidgetViewModel::RemoveStartLocationClearedCallback(Eegeo::Helpers::ICallback0& startLocationClearedCallback)
+            {
+                m_startLocationClearedCallbacks.RemoveCallback(startLocationClearedCallback);
+            }
+
+            void NavWidgetViewModel::InsertEndLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& endLocationSetCallback)
+            {
+                m_endLocationSetCallbacks.AddCallback(endLocationSetCallback);
+            }
+
+            void NavWidgetViewModel::RemoveEndLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& endLocationSetCallback)
+            {
+                m_endLocationSetCallbacks.RemoveCallback(endLocationSetCallback);
+            }
+
+            void NavWidgetViewModel::InsertEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback)
+            {
+                m_endLocationClearedCallbacks.AddCallback(endLocationClearedCallback);
+            }
+
+            void NavWidgetViewModel::RemoveEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback)
+            {
+                m_endLocationClearedCallbacks.RemoveCallback(endLocationClearedCallback);
             }
         }
     }
