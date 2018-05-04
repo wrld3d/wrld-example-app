@@ -159,7 +159,8 @@
                                                self.frame.size.width,
                                                self.frame.size.height - contentY);
     
-    const CGFloat textContentY =  0.0;
+    const CGFloat textMarginY  = 14.f;
+    const CGFloat textContentY = textMarginY;
     
     self.pTextContent.frame = CGRectMake(innerMargin.left, textContentY, innerMarginWidth, 0.0);
     self.pTextContent.numberOfLines = 0;
@@ -169,7 +170,7 @@
     
     [self.pTextContent sizeToFit];
     
-    CGFloat contentSeperatorY = self.pTextContent.frame.origin.y + self.pTextContent.frame.size.height + innerMargin.top;
+    CGFloat contentSeperatorY = self.pTextContent.frame.origin.y + self.pTextContent.frame.size.height + textMarginY + 1.f;
     self.pContentSeperator.frame = CGRectMake(outerMargin.left, contentSeperatorY, outerMarginWidth,1.0);
     
     const CGFloat developedByY = self.pContentSeperator.frame.origin.y + self.pContentSeperator.frame.size.height + innerMargin.top;
@@ -219,7 +220,9 @@
 
 - (void) setContent:(const std::string*)content
 {
-    self.pTextContent.text = [NSString stringWithUTF8String:content->c_str()];
+    self.pTextContent.text = [[NSString stringWithUTF8String:content->c_str()]
+                              stringByTrimmingCharactersInSet:
+                              [NSCharacterSet whitespaceAndNewlineCharacterSet]];
     [self setNeedsLayout];
 }
 
