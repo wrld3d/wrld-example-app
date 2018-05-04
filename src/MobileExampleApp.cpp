@@ -851,9 +851,9 @@ namespace ExampleApp
             m_pSearchMenuModule->AddMenuSection("My Pins", m_pMyPinsModule->GetMyPinsMenuModel(), true);
         }
 
+        m_pSearchMenuModule->AddMenuSection("Weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
         m_pSearchMenuModule->AddMenuSection("Options", m_pOptionsMenuModule->GetOptionsMenuModel(), false);
         m_pSearchMenuModule->AddMenuSection("About",  m_pAboutPageMenuModule->GetAboutPageMenuModel(), false);
-        m_pSearchMenuModule->AddMenuSection("Weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
 
         m_pSelectFirstResultSearchService = Eegeo_NEW(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService)(m_pSearchModule->GetSearchQueryPerformer());
 

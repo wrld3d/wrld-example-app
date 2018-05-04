@@ -102,7 +102,7 @@ namespace ExampleApp
 			{
 				if (section.Name() == "Find" ||
 					section.Name() == "Drop Pin" ||
-					section.Name() == "Options")
+					section.Name() == "Weather")
 				{
 					section.SetGroupStart(true);
 				}
