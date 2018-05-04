@@ -7,7 +7,7 @@ buildscript {
     }
 
 	dependencies {
-		classpath 'com.android.tools.build:gradle:2.3.2'
+		classpath 'com.android.tools.build:gradle:3.1.1'
 	}
 }
 
@@ -20,7 +20,6 @@ allprojects {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.eegeo.mobileexampleapp"
@@ -82,10 +81,16 @@ android {
         }
     }
 
+    flavorDimensions "main"
+
     productFlavors {
-        normal {}
+        normal {
+            dimension "main"
+        }
 
         screenshot {
+            dimension "main"
+
             externalNativeBuild {
                 cmake {
                    cppFlags "-DAUTOMATED_SCREENSHOTS=1"
@@ -103,20 +108,20 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:27.1.1'
-    compile 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     // compile 'com.android.support:support-core-utils:25.2.0'
-    compile 'com.android.support:multidex:1.0.1'
-    compile project(':wrld-navigation-release')
-    compile project(':wrld-navigation-widget-release')
+    implementation 'com.android.support:multidex:1.0.1'
+    implementation project(':wrld-navigation-release')
+    implementation project(':wrld-navigation-widget-release')
 
-    androidTestCompile 'tools.fastlane:screengrab:1.0.2'
-    androidTestCompile 'com.android.support:appcompat-v7:27.1.1'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
-    androidTestCompile project(':wrld-navigation-release')
-    androidTestCompile project(':wrld-navigation-widget-release')
+    androidTestImplementation 'tools.fastlane:screengrab:1.0.2'
+    androidTestImplementation 'com.android.support:appcompat-v7:27.1.1'
+    androidTestImplementation 'com.android.support.test:runner:0.5'
+    androidTestImplementation 'com.android.support.test:rules:0.5'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
+    androidTestImplementation project(':wrld-navigation-release')
+    androidTestImplementation project(':wrld-navigation-widget-release')
 }
