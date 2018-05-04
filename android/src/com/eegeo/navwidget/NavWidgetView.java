@@ -53,8 +53,6 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
 
     private void handleCloseClicked()
     {
-        m_view.setEnabled(false);
-
         NavWidgetViewJniMethods.CloseButtonClicked(m_nativeCallerPointer);
     }
 
@@ -98,11 +96,16 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_model.setEndLocation(null);
     }
 
+    public void showNavWidgetView()
+    {
+        m_model.sendNavEvent(WrldNavEvent.WidgetAnimateIn);
+    }
+
     public void dismissNavWidgetView()
     {
-        //TODO animate out
-        m_view.setVisibility(View.GONE);
+        m_model.sendNavEvent(WrldNavEvent.WidgetAnimateOut);
     }
+    
     public void destroy()
     {
         m_uiRoot.removeView(m_view);
@@ -144,9 +147,26 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     @Override
     public void onEventReceived(WrldNavEvent wrldNavEvent)
     {
-        if (wrldNavEvent == WrldNavEvent.CloseSetupJourneyClicked)
+        switch (wrldNavEvent)
         {
-            handleCloseClicked();
+            case CloseSetupJourneyClicked:
+                handleCloseClicked();
+                break;
+            case SelectStartLocationClicked:
+                NavWidgetViewJniMethods.SelectStartLocationClicked(m_nativeCallerPointer);
+                break;
+            case SelectEndLocationClicked:
+                NavWidgetViewJniMethods.SelectEndLocationClicked(m_nativeCallerPointer);
+                break;
+            case StartLocationClearButtonClicked:
+                NavWidgetViewJniMethods.StartLocationClearButtonClicked(m_nativeCallerPointer);
+                break;
+            case EndLocationClearButtonClicked:
+                NavWidgetViewJniMethods.EndLocationClearButtonClicked(m_nativeCallerPointer);
+                break;
+            case StartEndLocationsSwapped:
+                NavWidgetViewJniMethods.StartEndLocationsSwapped(m_nativeCallerPointer);
+                break;
         }
     }
 }

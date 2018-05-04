@@ -26,18 +26,33 @@ namespace ExampleApp
                 Eegeo::Location::ILocationService& m_locationService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
+                Eegeo::Helpers::TCallback0<NavWidgetController> m_closeButtonCallback;
+                Eegeo::Helpers::TCallback0<NavWidgetController> m_startLocationClickedCallback;
+                Eegeo::Helpers::TCallback0<NavWidgetController> m_endLocationClickedCallback;
+                Eegeo::Helpers::TCallback0<NavWidgetController> m_startLocationClearButtonClickedCallback;
+                Eegeo::Helpers::TCallback0<NavWidgetController> m_endLocationClearButtonClickedCallback;
+                Eegeo::Helpers::TCallback0<NavWidgetController> m_startEndLocationsSwappedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewOpenedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewClosedCallback;
-                Eegeo::Helpers::TCallback0<NavWidgetController> m_closeButtonCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingLocationModel&> m_startLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_startLocationClearedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingLocationModel&> m_endLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_endLocationClearedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
 
-                void OnViewClosed();
-
                 void OnCloseButtonClicked();
+
+                void OnStartLocationClicked();
+
+                void OnEndLocationClicked();
+
+                void OnStartLocationClearButtonClicked();
+
+                void OnEndLocationClearButtonClicked();
+
+                void OnStartEndLocationsSwapped();
+
+                void OnViewClosed();
 
                 void OnStartLocationSet(const SdkModel::NavRoutingLocationModel& startLocation);
 

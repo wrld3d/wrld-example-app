@@ -32,6 +32,21 @@ namespace ExampleApp
 
                 virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void InsertStartLocationClickedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveStartLocationClickedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void InsertEndLocationClickedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveEndLocationClickedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void InsertStartLocationClearButtonClickedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveStartLocationClearButtonClickedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void InsertEndLocationClearButtonCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveEndLocationClearButtonCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void InsertStartEndLocationsSwappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveStartEndLocationsSwappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

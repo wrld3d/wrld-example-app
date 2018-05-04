@@ -20,16 +20,7 @@ namespace ExampleApp
                     , m_uiView(NULL)
             {
                 ASSERT_UI_THREAD
-            }
 
-            NavWidgetView::~NavWidgetView()
-            {
-                ASSERT_UI_THREAD
-            }
-
-            void NavWidgetView::Show()
-            {
-                ASSERT_UI_THREAD
                 const std::string viewClass = "com/eegeo/navwidget/NavWidgetView";
                 m_uiViewClass = CreateJavaClass(viewClass);
                 Eegeo_ASSERT(m_uiViewClass != NULL, "failed to create viewClass NavWidgetView");
@@ -37,15 +28,12 @@ namespace ExampleApp
                 Eegeo_ASSERT(m_uiView != NULL, "failed to create view NavWidgetView");
             }
 
-            void NavWidgetView::Hide()
+            NavWidgetView::~NavWidgetView()
             {
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
-
-                jmethodID dismissNavWidgetViewMethod = env->GetMethodID(m_uiViewClass, "dismissNavWidgetView", "()V");
-                env->CallVoidMethod(m_uiView, dismissNavWidgetViewMethod);
 
                 jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
                 env->CallVoidMethod(m_uiView, removeHudMethod);
@@ -54,6 +42,20 @@ namespace ExampleApp
 
                 m_uiViewClass = NULL;
                 m_uiView = NULL;
+            }
+
+            void NavWidgetView::Show()
+            {
+                ASSERT_UI_THREAD
+
+                CallVoidMethod("showNavWidgetView");
+            }
+
+            void NavWidgetView::Hide()
+            {
+                ASSERT_UI_THREAD
+
+                CallVoidMethod("dismissNavWidgetView");
             }
 
             void NavWidgetView::SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel)
@@ -137,6 +139,111 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_closedCallbacks.ExecuteCallbacks();
+            }
+
+            void NavWidgetView::InsertStartLocationClickedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_startLocationClickedCallbacks.AddCallback(callback);
+            }
+
+            void NavWidgetView::RemoveStartLocationClickedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_startLocationClickedCallbacks.RemoveCallback(callback);
+            }
+
+            void NavWidgetView::HandleStartLocationClicked()
+            {
+                ASSERT_UI_THREAD
+
+                m_startLocationClickedCallbacks.ExecuteCallbacks();
+            }
+
+            void NavWidgetView::InsertEndLocationClickedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_endLocationClickedCallbacks.AddCallback(callback);
+            }
+
+            void NavWidgetView::RemoveEndLocationClickedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_endLocationClickedCallbacks.RemoveCallback(callback);
+            }
+
+            void NavWidgetView::HandleEndLocationClicked()
+            {
+                ASSERT_UI_THREAD
+
+                m_endLocationClickedCallbacks.ExecuteCallbacks();
+            }
+
+            void NavWidgetView::InsertStartLocationClearButtonClickedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_startLocationClearButtonClickedCallbacks.AddCallback(callback);
+            }
+
+            void NavWidgetView::RemoveStartLocationClearButtonClickedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_startLocationClearButtonClickedCallbacks.RemoveCallback(callback);
+            }
+
+            void NavWidgetView::HandleStartLocationClearButtonClicked()
+            {
+                ASSERT_UI_THREAD
+
+                m_startLocationClearButtonClickedCallbacks.ExecuteCallbacks();
+            }
+
+            void NavWidgetView::InsertEndLocationClearButtonCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_endLocationClearButtonClickedCallbacks.AddCallback(callback);
+            }
+
+            void NavWidgetView::RemoveEndLocationClearButtonCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_endLocationClearButtonClickedCallbacks.RemoveCallback(callback);
+            }
+
+            void NavWidgetView::HandleEndLocationClearButtonClicked()
+            {
+                ASSERT_UI_THREAD
+
+                m_endLocationClearButtonClickedCallbacks.ExecuteCallbacks();
+            }
+
+            void NavWidgetView::InsertStartEndLocationsSwappedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_startEndLocationsSwappedCallbacks.AddCallback(callback);
+            }
+
+            void NavWidgetView::RemoveStartEndLocationsSwappedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_startEndLocationsSwappedCallbacks.RemoveCallback(callback);
+            }
+
+            void NavWidgetView::HandleStartEndLocationsSwapped()
+            {
+                ASSERT_UI_THREAD
+
+                m_startEndLocationsSwappedCallbacks.ExecuteCallbacks();
             }
 
             jclass NavWidgetView::CreateJavaClass(const std::string& viewClass)

@@ -1,6 +1,10 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "NavWidgetController.h"
+#include "NavRoutingViewClosedMessage.h"
+#include "NavRoutingSelectStartLocationClickedMessage.h"
+#include "NavRoutingSelectEndLocationClickedMessage.h"
+#include "NavRoutingViewStartEndLocationSwappedMessage.h"
 
 namespace ExampleApp
 {
@@ -26,12 +30,39 @@ namespace ExampleApp
             {
                 m_view.Hide();
 
-                //TODO publish closed message
+                m_messageBus.Publish(NavRoutingViewClosedMessage());
             }
 
             void NavWidgetController::OnCloseButtonClicked()
             {
                 m_viewModel.Close();
+            }
+
+            void NavWidgetController::OnStartLocationClicked()
+            {
+                m_messageBus.Publish(NavRoutingSelectStartLocationClickedMessage());
+                //TODO animate out and show search widget
+            }
+
+            void NavWidgetController::OnEndLocationClicked()
+            {
+                m_messageBus.Publish(NavRoutingSelectEndLocationClickedMessage());
+                //TODO animate out and show search widget
+            }
+
+            void NavWidgetController::OnStartLocationClearButtonClicked()
+            {
+                m_viewModel.ClearStartLocation();
+            }
+
+            void NavWidgetController::OnEndLocationClearButtonClicked()
+            {
+                m_viewModel.ClearEndLocation();
+            }
+
+            void NavWidgetController::OnStartEndLocationsSwapped()
+            {
+                m_messageBus.Publish(NavRoutingViewStartEndLocationSwappedMessage());
             }
 
             void NavWidgetController::OnStartLocationSet(const SdkModel::NavRoutingLocationModel& startLocation)
@@ -93,9 +124,14 @@ namespace ExampleApp
                     , m_viewModel(viewModel)
                     , m_locationService(locationService)
                     , m_messageBus(messageBus)
+                    , m_closeButtonCallback(this, &NavWidgetController::OnCloseButtonClicked)
+                    , m_startLocationClickedCallback(this, &NavWidgetController::OnStartLocationClicked)
+                    , m_endLocationClickedCallback(this, &NavWidgetController::OnEndLocationClicked)
+                    , m_startLocationClearButtonClickedCallback(this, &NavWidgetController::OnStartLocationClearButtonClicked)
+                    , m_endLocationClearButtonClickedCallback(this, &NavWidgetController::OnEndLocationClearButtonClicked)
+                    , m_startEndLocationsSwappedCallback(this, &NavWidgetController::OnStartEndLocationsSwapped)
                     , m_viewOpenedCallback(this, &NavWidgetController::OnViewOpened)
                     , m_viewClosedCallback(this, &NavWidgetController::OnViewClosed)
-                    , m_closeButtonCallback(this, &NavWidgetController::OnCloseButtonClicked)
                     , m_startLocationSetCallback(this, &NavWidgetController::OnStartLocationSet)
                     , m_startLocationClearedCallback(this, &NavWidgetController::OnStartLocationCleared)
                     , m_endLocationSetCallback(this, &NavWidgetController::OnEndLocationSet)
@@ -103,6 +139,11 @@ namespace ExampleApp
                     , m_directionsButtonClickedMessageHandler(this, &NavWidgetController::OnDirectionsButtonClicked)
             {
                 m_view.InsertClosedCallback(m_closeButtonCallback);
+                m_view.InsertStartLocationClickedCallback(m_startLocationClickedCallback);
+                m_view.InsertEndLocationClickedCallback(m_endLocationClickedCallback);
+                m_view.InsertStartLocationClearButtonClickedCallback(m_startLocationClearButtonClickedCallback);
+                m_view.InsertEndLocationClearButtonCallback(m_endLocationClearButtonClickedCallback);
+                m_view.InsertStartEndLocationsSwappedCallback(m_startEndLocationsSwappedCallback);
                 m_viewModel.InsertOpenedCallback(m_viewOpenedCallback);
                 m_viewModel.InsertClosedCallback(m_viewClosedCallback);
                 m_viewModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
@@ -121,6 +162,11 @@ namespace ExampleApp
                 m_viewModel.RemoveStartLocationSetCallback(m_startLocationSetCallback);
                 m_viewModel.RemoveClosedCallback(m_viewClosedCallback);
                 m_viewModel.RemoveOpenedCallback(m_viewOpenedCallback);
+                m_view.RemoveStartEndLocationsSwappedCallback(m_startEndLocationsSwappedCallback);
+                m_view.RemoveEndLocationClearButtonCallback(m_endLocationClearButtonClickedCallback);
+                m_view.RemoveStartLocationClearButtonClickedCallback(m_startLocationClearButtonClickedCallback);
+                m_view.RemoveEndLocationClickedCallback(m_endLocationClickedCallback);
+                m_view.RemoveStartLocationClickedCallback(m_startLocationClickedCallback);
                 m_view.RemoveClosedCallback(m_closeButtonCallback);
             }
         }

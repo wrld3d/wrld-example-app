@@ -20,6 +20,11 @@ namespace ExampleApp
             private:
                 AndroidNativeState& m_nativeState;
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_startLocationClickedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_endLocationClickedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_startLocationClearButtonClickedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_endLocationClearButtonClickedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_startEndLocationsSwappedCallbacks;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
@@ -29,23 +34,53 @@ namespace ExampleApp
 
                 ~NavWidgetView();
 
-                void Show();
+                void Show() override;
 
-                void Hide();
+                void Hide() override;
 
-                void SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel);
+                void SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel) override;
 
-                void ClearStartLocation();
+                void ClearStartLocation() override;
 
-                void SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel);
+                void SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel) override;
 
-                void ClearEndLocation();
+                void ClearEndLocation() override;
 
-                void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
+                void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) override;
 
-                void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) override;
 
                 void HandleCloseClicked();
+
+                void InsertStartLocationClickedCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void RemoveStartLocationClickedCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void HandleStartLocationClicked();
+
+                void InsertEndLocationClickedCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void RemoveEndLocationClickedCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void HandleEndLocationClicked();
+
+                void InsertStartLocationClearButtonClickedCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void RemoveStartLocationClearButtonClickedCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void HandleStartLocationClearButtonClicked();
+
+                void InsertEndLocationClearButtonCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void RemoveEndLocationClearButtonCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void HandleEndLocationClearButtonClicked();
+
+                void InsertStartEndLocationsSwappedCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void RemoveStartEndLocationsSwappedCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void HandleStartEndLocationsSwapped();
 
             private:
                 void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);
