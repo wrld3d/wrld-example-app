@@ -59,9 +59,7 @@ namespace ExampleApp
                 InteriorEntityHighlightController::InteriorEntityHighlightController(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                                Eegeo::Resources::Interiors::InteriorsCellResourceObserver& interiorsCellResourceObserver,
                                                                                                Search::SdkModel::ISearchService& searchService,
-                                                                                               Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                                                               Search::SdkModel::ISearchResultRepository& searchResultRepository,
-                                                                                               Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& legacyLabelController,
+                                                                                               Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer, Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& legacyLabelController,
                                                                                                Eegeo::Labels::ILabelAnchorFilterModel& labelHiddenFilterModel,
                                                                                                const Eegeo::Labels::LabelLayer::IdType interiorLabelLayer,
                                                                                                ExampleAppMessaging::TMessageBus& messageBus,
@@ -71,12 +69,10 @@ namespace ExampleApp
                 , m_interiorsCellResourceObserver(interiorsCellResourceObserver)
                 , m_interiorLabelLayer(interiorLabelLayer)
                 , m_labelHiddenFilterModel(labelHiddenFilterModel)
-                , m_searchService(searchService)
                 , m_searchQueryPerformer(searchQueryPerformer)
-                , m_searchResultRepository(searchResultRepository)
                 , m_highlightColorMapper(highlightColorMapper)
                 , m_searchResultsIndex(-1)
-                , m_searchResultsHandler(this, &InteriorEntityHighlightController::OnSearchResultsLoaded)
+                , m_searchQueryResponseHandler(this, &InteriorEntityHighlightController::OnSearchQueryResponseReceived)
                 , m_searchResultsClearedHandler(this, &InteriorEntityHighlightController::OnSearchResultCleared)
                 , m_handleSearchResultSectionItemSelectedMessageBinding(this, &InteriorEntityHighlightController::OnSearchItemSelected)
                 , m_interiorInteractionModelChangedHandler(this, &InteriorEntityHighlightController::OnInteriorChanged)
@@ -88,7 +84,7 @@ namespace ExampleApp
                 , m_hideLabelAlwaysFilter(this, &InteriorEntityHighlightController::HideLabelAlwaysPredicate)
                 , m_hideLabelByNameFilter(this, &InteriorEntityHighlightController::HideLabelByNamePredicate)
                 {
-                    m_searchService.InsertOnReceivedQueryResultsCallback(m_searchResultsHandler);
+                    m_messageBus.SubscribeUi(m_searchQueryResponseHandler);
                     m_searchQueryPerformer.InsertOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
                     
@@ -101,7 +97,8 @@ namespace ExampleApp
                 {
                     m_interiorsCellResourceObserver.UnregisterAddedToSceneGraphCallback(m_interiorCellAddedHandler);
                     
-                    m_searchService.RemoveOnReceivedQueryResultsCallback(m_searchResultsHandler);
+                    m_messageBus.UnsubscribeUi(m_searchQueryResponseHandler);
+                    
                     m_searchQueryPerformer.RemoveOnSearchResultsClearedCallback(m_searchResultsClearedHandler);
                     m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
                     
@@ -115,6 +112,7 @@ namespace ExampleApp
                 void InteriorEntityHighlightController::RemoveHighlights()
                 {
                     m_interiorsHighlightService.ClearAllHighlights();
+                    
                 }
                 
                 void InteriorEntityHighlightController::ActivateLabels(bool active)
@@ -125,7 +123,7 @@ namespace ExampleApp
                 void InteriorEntityHighlightController::OnInteriorLabelsBuilt()
                 {
                     ApplyHighlightsForCurrentResults();
-                    bool hasResults = m_searchResultRepository.GetItemCount() > 0;
+                    bool hasResults = m_searchResults.size() > 0;
                     ActivateLabels(!hasResults);
                 }
                 
@@ -185,7 +183,7 @@ namespace ExampleApp
                         }
                         
                         RemoveHighlights();
-                        bool hasResults = m_searchResultRepository.GetItemCount() > 0;
+                        bool hasResults = m_searchResults.size() > 0;
                         ActivateLabels(!hasResults);
                     }
                     else
@@ -224,8 +222,9 @@ namespace ExampleApp
                     }
                 }
                 
-                void InteriorEntityHighlightController::OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results)
+                void InteriorEntityHighlightController::OnSearchQueryResponseReceived(const Search::SearchQueryResponseReceivedMessage& message)
                 {
+                    auto results = message.GetResults();
                     RemoveHighlights();
                     if (m_searchResultsIndex >= 0)
                     {
@@ -254,12 +253,12 @@ namespace ExampleApp
                 std::vector<Search::SdkModel::SearchResultModel> InteriorEntityHighlightController::GetCurrentSearchResults()
                 {
                     std::vector<Search::SdkModel::SearchResultModel> results;
-                    results.reserve(m_searchResultRepository.GetItemCount());
+                    results.reserve(m_searchResults.size());
                     
-                    for (int i = 0; i < m_searchResultRepository.GetItemCount(); i++)
+                    for (int i = 0; i < m_searchResults.size(); i++)
                     {
-                        Search::SdkModel::SearchResultModel* pResult = m_searchResultRepository.GetItemAtIndex(i);
-                        results.push_back(*pResult);
+                        Search::SdkModel::SearchResultModel pResult = m_searchResults.at(i);
+                        results.push_back(pResult);
                     }
                     return results;
                 }

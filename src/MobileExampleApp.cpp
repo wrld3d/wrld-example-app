@@ -374,7 +374,6 @@ namespace ExampleApp
                                                                                                                      mapModule.GetInteriorsModelModule().GetInteriorsCellResourceObserver(),
                                                                                                                      m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
                                                                                                                      m_pSearchModule->GetSearchQueryPerformer(),
-                                                                                                                     m_pSearchModule->GetSearchResultRepository(),
                                                                                                                      mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(),
                                                                                                                      mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
                                                                                                                      mapModule.GetInteriorsStreamingModule().GetLabelLayerId(),
@@ -856,10 +855,7 @@ namespace ExampleApp
         m_pSearchMenuModule->AddMenuSection("About",  m_pAboutPageMenuModule->GetAboutPageMenuModel(), false);
         m_pSearchMenuModule->AddMenuSection("Weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
 
-        m_pSelectFirstResultSearchService = Eegeo_NEW(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService)(m_pSearchModule->GetSearchQueryPerformer(),
-                                                                                                                           m_pSearchResultSectionModule->GetSearchResultSectionModel(),
-                                                                                                                           m_messageBus
-                                                                                                                           );
+        m_pSelectFirstResultSearchService = Eegeo_NEW(Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService)(m_pSearchModule->GetSearchQueryPerformer());
 
 #ifdef AUTOMATED_SCREENSHOTS
         const bool instantiateAutomatedScreenshotController = true;

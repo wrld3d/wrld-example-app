@@ -31,7 +31,6 @@ namespace ExampleApp
                                                            Eegeo::Resources::Interiors::InteriorsCellResourceObserver& interiorsCellResourceObserver,
                                                            Search::SdkModel::ISearchService& searchService,
                                                            Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                           Search::SdkModel::ISearchResultRepository& searchResultRepository,
                                                            Eegeo::Resources::Interiors::Entities::IInteriorsLabelController& legacyLabelController,
                                                            Eegeo::Labels::ILabelAnchorFilterModel& labelHiddenFilterModel,
                                                            const Eegeo::Labels::LabelLayer::IdType interiorLabelLayer,
@@ -42,7 +41,7 @@ namespace ExampleApp
                     ~InteriorEntityHighlightController();
                     
                 private:
-                    void OnSearchResultsLoaded(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+                    void OnSearchQueryResponseReceived(const Search::SearchQueryResponseReceivedMessage& message);
                     void OnSearchResultCleared();
                     void OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message);
                     void OnInteriorChanged();
@@ -67,15 +66,14 @@ namespace ExampleApp
                     
                     Eegeo::Labels::ILabelAnchorFilterModel& m_labelHiddenFilterModel;
                     const Eegeo::Labels::LabelLayer::IdType m_interiorLabelLayer;
-                    Search::SdkModel::ISearchService& m_searchService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
-                    Search::SdkModel::ISearchResultRepository& m_searchResultRepository;
                     IHighlightColorMapper& m_highlightColorMapper;
                     Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& m_interiorsHighlightService;
                     std::vector<Search::SdkModel::SearchResultModel> m_searchResults;
                     int m_searchResultsIndex;
                     
-                    Eegeo::Helpers::TCallback2<InteriorEntityHighlightController, const Search::SdkModel::SearchQuery&, const std::vector<Search::SdkModel::SearchResultModel>&> m_searchResultsHandler;
+                    Eegeo::Helpers::TCallback1<InteriorEntityHighlightController, const Search::SearchQueryResponseReceivedMessage&>
+                    m_searchQueryResponseHandler;
                     Eegeo::Helpers::TCallback1<InteriorEntityHighlightController, const Eegeo::Resources::Interiors::InteriorsCellResource> m_interiorCellAddedHandler;
                     Eegeo::Helpers::TCallback0<InteriorEntityHighlightController> m_searchResultsClearedHandler;
                     Eegeo::Helpers::TCallback0<InteriorEntityHighlightController> m_interiorInteractionModelChangedHandler;

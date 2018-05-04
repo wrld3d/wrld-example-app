@@ -7,6 +7,7 @@
 #include "ISearchWidgetView.h"
 #include "SearchServices.h"
 #include "SearchQueryRefreshedMessage.h"
+#include "DeepLinkedSearchQueryRequestMessage.h"
 #include "IMenuViewModel.h"
 #include "IMenuSectionsViewModel.h"
 #include "IUpdateableViewController.h"
@@ -41,9 +42,13 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchWidgetController, int> m_onSearchResultSelectedCallback;
 				Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::SearchQueryRefreshedMessage&>
 																		m_onSearchQueryRefreshedHandler;
+                Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::SearchQueryResponseReceivedMessage&>
+                                                                        m_onSearchQueryResultsLoadedHandler;
+                
                 Eegeo::Helpers::TCallback2<SearchWidgetController, ScreenControl::View::IScreenControlViewModel&, float> m_onScreenStateChanged;
                 Eegeo::Helpers::TCallback2<SearchWidgetController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenableStateChanged;
 				Eegeo::Helpers::TCallback0<SearchWidgetController> m_onModalBackgroundTouchCallback;
+                Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::DeepLinkedSearchQueryRequestMessage&> m_deepLinkRequestedHandler;
 
                 Eegeo::Helpers::TCallback1<SearchWidgetController, const AppModes::AppModeChangedMessage&> m_onAppModeChanged;
                 Eegeo::Helpers::TCallback3<SearchWidgetController, const std::string&, int, int> m_onItemSelectedCallback;
@@ -52,6 +57,7 @@ namespace ExampleApp
 
                 bool m_menuContentsChanged;
 				bool m_inInteriorMode;
+                bool m_shouldSelectFirstResult;
 
 				TagCollection m_tagCollection;
 
@@ -72,7 +78,9 @@ namespace ExampleApp
 				void OnSearchResultsCleared();
 				void OnSearchResultSelected(int& index);
 				void OnSearchQueryRefreshedMessage(const Search::SearchQueryRefreshedMessage& message);
-
+                void OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message);
+                void OnSearchDeepLinkRequestedMessage(const Search::DeepLinkedSearchQueryRequestMessage& message);
+                
 				virtual void UpdateUiThread(float dt);
 				void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
 				void RefreshPresentation();

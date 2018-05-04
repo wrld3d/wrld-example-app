@@ -9,6 +9,7 @@
 #include "SearchResultRemovedMessage.h"
 #include "SearchQueryPerformedMessage.h"
 #include "SearchQueryRefreshedMessage.h"
+#include "DeepLinkedSearchQueryRequestMessage.h"
 #include "SearchQueryRemovedMessage.h"
 #include "SearchQueryResultsRemovedMessage.h"
 #include "AutocompleteSuggestionsReceivedMessage.h"
@@ -65,6 +66,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultAddedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryPerformedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Search::DeepLinkedSearchQueryRequestMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRefreshedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResultsRemovedMessage>
