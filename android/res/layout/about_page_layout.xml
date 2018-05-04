@@ -76,6 +76,7 @@
                         android:id="@+id/about_page_view_about_text"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
+						android:layout_marginTop="12dp"
                         android:textColor="@color/darkgrey"
                         android:textSize="14.5sp" />
 

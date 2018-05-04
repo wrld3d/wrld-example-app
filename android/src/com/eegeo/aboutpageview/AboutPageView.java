@@ -122,7 +122,7 @@ public class AboutPageView implements View.OnClickListener
 
     public void displayContent(final String content)
     {
-        m_aboutTextView.setText(content);
+        m_aboutTextView.setText(content.trim());
     }
 
     public void showHiddenText()
