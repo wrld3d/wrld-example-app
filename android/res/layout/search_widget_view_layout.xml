@@ -8,7 +8,7 @@
     android:paddingRight="21dp"
     android:id="@+id/search_widget_view_layout">
 
-    <fragment android:name="com.wrld.widgets.searchbox.WrldSearchWidget"
+    <fragment android:name="com.wrld.widgets.search.WrldSearchWidget"
         android:id="@+id/search_widget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
