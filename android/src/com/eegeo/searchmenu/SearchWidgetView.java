@@ -18,18 +18,18 @@ import com.eegeo.tags.TagResources;
 import com.eegeo.ui.IAnimatedView;
 import com.eegeo.ui.IViewAnimator;
 import com.eegeo.ui.ViewAnimator;
-import com.wrld.widgets.searchbox.WrldSearchWidget;
-import com.wrld.widgets.searchbox.model.MenuChild;
-import com.wrld.widgets.searchbox.model.MenuGroup;
-import com.wrld.widgets.searchbox.model.MenuOption;
-import com.wrld.widgets.searchbox.model.OnMenuOptionSelectedCallback;
-import com.wrld.widgets.searchbox.model.SearchQuery;
-import com.wrld.widgets.searchbox.model.SearchProviderQueryResult;
-import com.wrld.widgets.searchbox.model.SearchQueryModelListener;
-import com.wrld.widgets.searchbox.model.SearchResult;
-import com.wrld.widgets.searchbox.model.SearchResultsListener;
-import com.wrld.widgets.searchbox.view.MenuViewListener;
-import com.wrld.widgets.searchbox.view.SearchResultsViewListener;
+import com.wrld.widgets.search.WrldSearchWidget;
+import com.wrld.widgets.search.model.MenuChild;
+import com.wrld.widgets.search.model.MenuGroup;
+import com.wrld.widgets.search.model.MenuOption;
+import com.wrld.widgets.search.model.OnMenuOptionSelectedCallback;
+import com.wrld.widgets.search.model.SearchQuery;
+import com.wrld.widgets.search.model.SearchProviderQueryResult;
+import com.wrld.widgets.search.model.SearchQueryModelListener;
+import com.wrld.widgets.search.model.SearchResult;
+import com.wrld.widgets.search.model.SearchResultsListener;
+import com.wrld.widgets.search.view.MenuViewListener;
+import com.wrld.widgets.search.view.SearchResultsViewListener;
 
 
 import org.json.JSONObject;
@@ -105,7 +105,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
 
     }
 
-    public void onSearchResultsRecieved(SearchQuery searchQuery, List<SearchProviderQueryResult> list) {
+    public void onSearchResultsReceived(SearchQuery searchQuery, List<SearchProviderQueryResult> list) {
         setHasSearchResults(true);
     }
 
@@ -119,7 +119,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     {
         m_searchWidget.clearSearch();
 
-        m_searchWidget.showSearchResults(); // state to "shown", for the next time a search is done
+        m_searchWidget.showResultsView(); // state to "shown", for the next time a search is done
     }
 
     public void onSearchResultsSelected(SearchResult searchResult) {
@@ -151,7 +151,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
                 new QueryContext(clearPreviousResults,
                         isTag, tagText, tryInterior);
 
-        m_searchWidget.doSearch(queryText, context);
+        m_searchWidget.getSearchResults(queryText, context);
     }
 
     public boolean onMenuOptionSelected(final String text, final Object context) {
@@ -288,19 +288,19 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     }
 
     public void animateOffScreen() {
-        m_searchWidget.hideSearchResults();
+        m_searchWidget.hideResultsView();
         m_searchWidget.closeMenu();
         m_viewAnimator.animateToInactive(m_stateChangeAnimationTimeMilliseconds);
     }
 
     public void animateToIntermediateOnScreenState(final float onScreenState) {
-        m_searchWidget.hideSearchResults();
+        m_searchWidget.hideResultsView();
         m_searchWidget.closeMenu();
         m_viewAnimator.animateToOnScreenState(onScreenState);
     }
 
     public void closeMenu() {
-        m_searchWidget.hideSearchResults();
+        m_searchWidget.hideResultsView();
         m_searchWidget.closeMenu();
         m_view.clearFocus();
     }

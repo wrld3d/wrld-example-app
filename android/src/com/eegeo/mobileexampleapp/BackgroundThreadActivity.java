@@ -13,7 +13,7 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
 import com.eegeo.recce.*;
-import com.wrld.widgets.searchbox.WrldSearchWidget;
+import com.wrld.widgets.search.WrldSearchWidget;
 
 
 import android.Manifest;
@@ -282,7 +282,7 @@ public class BackgroundThreadActivity extends MainActivity
             String query = intent.getStringExtra(SearchManager.QUERY);
             if(query != null) {
                 WrldSearchWidget searchWidget = (WrldSearchWidget)getFragmentManager().findFragmentById(R.id.search_widget);
-                searchWidget.doSearch(query, null);
+                searchWidget.getSearchResults(query, null);
             }
         }
     }

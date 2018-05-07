@@ -8,10 +8,10 @@ import android.widget.TextView;
 import android.widget.ImageView;
 
 import com.eegeo.tags.TagResources;
-import com.wrld.widgets.R;
-import com.wrld.widgets.searchbox.model.SearchResult;
-import com.wrld.widgets.searchbox.view.ISearchResultViewFactory;
-import com.wrld.widgets.searchbox.view.ISearchResultViewHolder;
+import com.wrld.widgets.search.R;
+import com.wrld.widgets.search.model.SearchResult;
+import com.wrld.widgets.search.view.ISearchResultViewFactory;
+import com.wrld.widgets.search.view.ISearchResultViewHolder;
 
 public class SearchResultViewFactory implements ISearchResultViewFactory
 {

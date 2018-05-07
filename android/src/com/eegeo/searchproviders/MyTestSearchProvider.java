@@ -5,18 +5,18 @@ package com.eegeo.searchproviders;
 import android.app.Activity;
 import android.support.v4.content.res.ResourcesCompat;
 
-import com.wrld.widgets.R;
-import com.wrld.widgets.searchbox.model.SearchProvider;
-import com.wrld.widgets.searchbox.model.SearchProviderResultsReadyCallback;
-import com.wrld.widgets.searchbox.model.SearchResult;
-import com.wrld.widgets.searchbox.model.SearchResultPropertyString;
-import com.wrld.widgets.searchbox.model.SuggestionProvider;
-import com.wrld.widgets.searchbox.view.DefaultSuggestionViewFactory;
-import com.wrld.widgets.searchbox.view.ISearchResultViewFactory;
+import com.wrld.widgets.search.R;
+import com.wrld.widgets.search.model.SearchProvider;
+import com.wrld.widgets.search.model.SearchProviderResultsReadyCallback;
+import com.wrld.widgets.search.model.SearchResult;
+import com.wrld.widgets.search.model.SearchResultPropertyString;
+import com.wrld.widgets.search.model.SuggestionProvider;
+import com.wrld.widgets.search.view.DefaultSuggestionViewFactory;
+import com.wrld.widgets.search.view.ISearchResultViewFactory;
 
 import com.eegeo.searchmenu.SearchWidgetResult;
 import com.eegeo.searchproviders.QueryContext;
-import com.wrld.widgets.searchbox.view.TextHighlighter;
+import com.wrld.widgets.search.view.TextHighlighter;
 
 import java.util.HashSet;
 

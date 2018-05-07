@@ -2,8 +2,8 @@
 
 package com.eegeo.searchmenu;
 
-import com.wrld.widgets.searchbox.model.DefaultSearchResult;
-import com.wrld.widgets.searchbox.model.SearchResultPropertyString;
+import com.wrld.widgets.search.model.DefaultSearchResult;
+import com.wrld.widgets.search.model.SearchResultPropertyString;
 
 public class SearchWidgetResult extends DefaultSearchResult
 {
