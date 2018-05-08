@@ -1,9 +1,8 @@
 #pragma once
 
-@protocol WRLDSearchRequestFulfillerHandle;
 @protocol WRLDSearchResultModel;
 
-typedef NSMutableArray< id <WRLDSearchRequestFulfillerHandle> > WRLDSearchRequestFulfillerCollection;
+/*!
+ A collection of WRLDSearchResultModels.
+ */
 typedef NSArray< id<WRLDSearchResultModel> > WRLDSearchResultsCollection;
-typedef NSMutableArray< id<WRLDSearchResultModel> > WRLDMutableSearchResultsCollection;
-typedef NSMutableDictionary< NSNumber *, WRLDSearchResultsCollection * > WRLDFulfillerResultsDictionary;
