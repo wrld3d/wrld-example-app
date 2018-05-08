@@ -6,6 +6,7 @@
 #include "WidgetQueryContext.h"
 #include "MenuItemModel.h"
 #include "ViewController.h"
+#import <WrldSearchWidget/WRLDSearchQuery.h>
 
 namespace ExampleApp
 {
@@ -25,10 +26,12 @@ namespace ExampleApp
                 m_pSearchProviderHandle = [m_pSearchModel addSearchProvider: searchProvider];
                 m_pSuggestionProviderHandle = [m_pSearchModel addSuggestionProvider: suggestionProvider];
 
-                m_pSearchWidgetViewController = [[WRLDSearchWidgetViewController alloc] initWithSearchModel:m_pSearchModel menuModel: m_pMenuModel];
+                m_pSearchWidgetView = [WRLDSearchWidgetView alloc];
+                [m_pSearchWidgetView useSearchModel:m_pSearchModel];
+                [m_pSearchWidgetView useMenuModel:m_pMenuModel];
 
-                [m_pSearchWidgetViewController displaySearchProvider: m_pSearchProviderHandle];
-                [m_pSearchWidgetViewController displaySuggestionProvider: m_pSuggestionProviderHandle];
+                [m_pSearchWidgetView displaySearchProvider: m_pSearchProviderHandle];
+                [m_pSearchWidgetView displaySuggestionProvider: m_pSuggestionProviderHandle];
 
                 UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
                 UIEdgeInsets safeInsets = [rootViewController safeInsets];
@@ -51,24 +54,22 @@ namespace ExampleApp
                 
                 CGFloat searchBoxHeight = 50;
                 m_widgetAnimationOffset = - searchFrame.origin.y - searchBoxHeight;
-                
-                UIView *widget = m_pSearchWidgetViewController.view;
 
-                widget.frame = searchFrame;
+                m_pSearchWidgetView.frame = searchFrame;
 
                 CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0,m_widgetAnimationOffset);
-                widget.transform = transform;
+                m_pSearchWidgetView.transform = transform;
 
                 NSBundle* resourceBundle = [NSBundle bundleForClass:[WidgetSearchResultTableViewCell class]];
                 UINib* nib = [UINib nibWithNibName: @"WidgetSearchResultTableViewCell" bundle:resourceBundle];
 
-                [m_pSearchWidgetViewController registerNib:nib forUseWithResultsTableCellIdentifier:@"WidgetSearchResultTableViewCell"];
+                [m_pSearchWidgetView registerNib:nib forUseWithResultsTableCellIdentifier:@"WidgetSearchResultTableViewCell"];
 
                 m_pMenuGroups = [[NSMutableDictionary alloc] init];
                 m_pMenuOptions = [[NSMutableDictionary alloc] init];
                 
-                m_pSpeechHandler = [[WRLDSpeechHandler alloc] initWithFrame: [UIScreen mainScreen].bounds];
-                [m_pSearchWidgetViewController enableVoiceSearch:m_pSpeechHandler];
+                m_pSpeechCapture = [[WRLDSpeechCapture alloc] initWithFrame: [UIScreen mainScreen].bounds];
+                [m_pSearchWidgetView enableVoiceSearch:m_pSpeechCapture];
                 
                 AddEventListeners();
             }
@@ -78,9 +79,9 @@ namespace ExampleApp
             {
                 RemoveEventListeners();
                 
-                [m_pSearchWidgetViewController disableVoiceSearch];
+                [m_pSearchWidgetView disableVoiceSearch];
                 
-                [m_pSpeechHandler release];
+                [m_pSpeechCapture release];
                 [m_pMenuOptions release];
                 [m_pMenuGroups release];
                 [m_pMenuModel release];
@@ -98,7 +99,7 @@ namespace ExampleApp
                          previous firstResponder to reassume control when userInteraction is enabled (as the transition ends).  To prevent this, the firstResponder must resign control BEFORE
                          we disable userInteraction.
                      */
-                    [m_pSearchWidgetViewController resignFocus];
+                    [m_pSearchWidgetView resignFocus];
                     
                     WidgetSearchResultModel* selectedResultModelWithIndex = (WidgetSearchResultModel*) selectedResultModel;
                     if (selectedResultModelWithIndex != nil)
@@ -108,14 +109,14 @@ namespace ExampleApp
                     
                 };
                 
-                [m_pSearchWidgetViewController.searchSelectionObserver addResultSelectedEvent:m_onResultSelection];
+                [m_pSearchWidgetView.searchSelectionObserver addResultSelectedEvent:m_onResultSelection];
                 
                 m_onFocusEvent = ^{
                     this->pushControlsOfScreenIfNeeded();
                 };
                 
-                [m_pSearchWidgetViewController.observer addSearchWidgetGainedFocusEvent:m_onFocusEvent];
-                [m_pSearchWidgetViewController.observer addSearchWidgetResignedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetView.observer addSearchWidgetGainedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetView.observer addSearchWidgetResignedFocusEvent:m_onFocusEvent];
                 
                 m_onMenuSelection = ^(NSObject* selectedOptionContext)
                 {
@@ -128,15 +129,15 @@ namespace ExampleApp
                         
                         this->HandleItemSelected(menuText, sectionIndex, itemIndex);
                         
-                        [m_pSearchWidgetViewController closeMenu];
+                        [m_pSearchWidgetView closeMenu];
                         if (m_tagCollection.HasTag(menuText))
                         {
-                            [m_pSearchWidgetViewController showResultsView];
+                            [m_pSearchWidgetView showResultsView];
                         }
                     }
                 };
                 
-                [m_pSearchWidgetViewController.menuObserver addOptionSelectedEvent:m_onMenuSelection];
+                [m_pSearchWidgetView.menuObserver addOptionSelectedEvent:m_onMenuSelection];
                 
                 m_onResultsCleared = ^()
                 {
@@ -152,8 +153,8 @@ namespace ExampleApp
                     OnSearchResultsReceived();
                 };
                 
-                [m_pSearchWidgetViewController.observer addSearchResultsClearedEvent:m_onResultsCleared];
-                [m_pSearchWidgetViewController.observer addSearchResultsReceivedEvent:m_onResultsReceived];
+                [m_pSearchWidgetView.observer addSearchResultsClearedEvent:m_onResultsCleared];
+                [m_pSearchWidgetView.observer addSearchResultsReceivedEvent:m_onResultsReceived];
 
                 [m_pSearchModel.searchObserver addQueryCancelledEvent:m_onQueryCancelled];
                 
@@ -162,15 +163,15 @@ namespace ExampleApp
             void SearchWidgetView::RemoveEventListeners(){
                 [m_pSearchModel.searchObserver removeQueryCancelledEvent:m_onQueryCancelled];
 
-                [m_pSearchWidgetViewController.observer removeSearchResultsReceivedEvent:m_onResultsReceived];
-                [m_pSearchWidgetViewController.observer removeSearchResultsClearedEvent:m_onResultsCleared];
+                [m_pSearchWidgetView.observer removeSearchResultsReceivedEvent:m_onResultsReceived];
+                [m_pSearchWidgetView.observer removeSearchResultsClearedEvent:m_onResultsCleared];
 
-                [m_pSearchWidgetViewController.menuObserver removeOptionSelectedEvent:m_onMenuSelection];
+                [m_pSearchWidgetView.menuObserver removeOptionSelectedEvent:m_onMenuSelection];
 
-                [m_pSearchWidgetViewController.observer removeSearchWidgetGainedFocusEvent :m_onFocusEvent];
-                [m_pSearchWidgetViewController.observer removeSearchWidgetResignedFocusEvent:m_onFocusEvent];
+                [m_pSearchWidgetView.observer removeSearchWidgetGainedFocusEvent :m_onFocusEvent];
+                [m_pSearchWidgetView.observer removeSearchWidgetResignedFocusEvent:m_onFocusEvent];
 
-                [m_pSearchWidgetViewController.searchSelectionObserver removeResultSelectedEvent:m_onResultSelection];
+                [m_pSearchWidgetView.searchSelectionObserver removeResultSelectedEvent:m_onResultSelection];
             }
             
             void SearchWidgetView::OnSearchResultsReceived()
@@ -184,19 +185,14 @@ namespace ExampleApp
                 m_hasSearchResults = false;
             }
 
-            UIViewController* SearchWidgetView::GetWidgetController() const
-            {
-                return (UIViewController*)m_pSearchWidgetViewController;
-            }
-
             UIView* SearchWidgetView::GetWidgetView() const
             {
-                return (UIView*)m_pSearchWidgetViewController.view;
+                return (UIView*)m_pSearchWidgetView;
             }
             
-            UIView* SearchWidgetView::GetSpeechHandlerView() const
+            UIView* SearchWidgetView::GetSpeechCaptureView() const
             {
-                return (UIView*)m_pSpeechHandler;
+                return (UIView*)m_pSpeechCapture;
             }
 
             void SearchWidgetView::OnSearchResultSelected(int index)
@@ -272,7 +268,8 @@ namespace ExampleApp
                 widgetQueryContext.altitude = (CGFloat) context.Location().GetAltitude();
                 widgetQueryContext.radius = (CGFloat) context.Radius();
 
-                [m_pSearchModel getSearchResultsForString:queryString withContext:widgetQueryContext];
+                [m_pSearchModel getSearchResultsForString:queryString
+                                              withOptions:[WRLDSearchQueryOptions withContext:widgetQueryContext]];
             }
 
             void SearchWidgetView::ClearSearchResults()
@@ -330,7 +327,7 @@ namespace ExampleApp
 
             void SearchWidgetView::pushControlsOfScreenIfNeeded(){
               
-                bool shouldTakeFocus = m_pSearchWidgetViewController.hasFocus;
+                bool shouldTakeFocus = m_pSearchWidgetView.hasFocus;
                 
                 if( shouldTakeFocus )
                 {
@@ -374,36 +371,32 @@ namespace ExampleApp
 
             void SearchWidgetView::SetOnScreenStateToIntermediateValue(float value)
             {
-                [m_pSearchWidgetViewController hideResultsView];
-                [m_pSearchWidgetViewController closeMenu];
-                UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
+                [m_pSearchWidgetView hideResultsView];
+                [m_pSearchWidgetView closeMenu];
                
                 CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0,m_widgetAnimationOffset*value);
 
                 [UIView animateWithDuration:0.3 animations:^{
-                    widget.transform = transform;
+                    m_pSearchWidgetView.transform = transform;
                 }];
             }
 
             void SearchWidgetView::SetFullyOnScreen()
             {
-                UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
-                
                 [UIView animateWithDuration:0.3 animations:^{
-                    widget.transform = CGAffineTransformIdentity;
+                    m_pSearchWidgetView.transform = CGAffineTransformIdentity;
                 }];
             }
 
             void SearchWidgetView::SetFullyOffScreen()
             {
-                [m_pSearchWidgetViewController hideResultsView];
-                [m_pSearchWidgetViewController closeMenu];
-                UIView *widget = (UIView*)m_pSearchWidgetViewController.view;
-                
+                [m_pSearchWidgetView hideResultsView];
+                [m_pSearchWidgetView closeMenu];
+
                 CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0,m_widgetAnimationOffset);
 
                 [UIView animateWithDuration:0.3 animations:^{
-                    widget.transform = transform;
+                    m_pSearchWidgetView.transform = transform;
                 }];
             }
 
@@ -458,8 +451,8 @@ namespace ExampleApp
 
             void SearchWidgetView::CloseMenu()
             {
-                [m_pSearchWidgetViewController hideResultsView];
-                [m_pSearchWidgetViewController closeMenu];
+                [m_pSearchWidgetView hideResultsView];
+                [m_pSearchWidgetView closeMenu];
             }
         }
     }

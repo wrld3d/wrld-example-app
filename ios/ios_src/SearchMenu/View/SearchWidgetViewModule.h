@@ -41,7 +41,6 @@ namespace ExampleApp
                 
                 SearchWidgetContainerView& GetSearchWidgetView() const;
                 SearchWidgetController& GetSearchWidgetController() const;
-                UIViewController& GetSearchWidgetUIViewController() const;
             };
         }
     }

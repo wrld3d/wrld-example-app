@@ -17,7 +17,6 @@ namespace ExampleApp
                 virtual SearchWidgetContainerView& GetSearchWidgetView() const = 0;
                 
                 virtual SearchWidgetController& GetSearchWidgetController() const = 0;
-                virtual UIViewController& GetSearchWidgetUIViewController() const = 0;
             };
         }
     }

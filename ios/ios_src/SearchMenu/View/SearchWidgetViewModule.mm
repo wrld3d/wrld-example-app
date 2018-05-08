@@ -42,11 +42,6 @@ namespace ExampleApp
                 return *m_pView;
             }
             
-            UIViewController& SearchWidgetViewModule::GetSearchWidgetUIViewController() const
-            {
-                return *[m_pView getInterop]->GetWidgetController();
-            }
-            
             SearchWidgetViewModule::~SearchWidgetViewModule()
             {
                 Eegeo_DELETE m_pSearchWidgetController;

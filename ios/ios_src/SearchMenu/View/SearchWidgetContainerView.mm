@@ -21,7 +21,7 @@
         
         self.frame = [UIScreen mainScreen].bounds;
         self.widget = m_pInterop->GetWidgetView();
-        self.speechWidget = m_pInterop->GetSpeechHandlerView();
+        self.speechWidget = m_pInterop->GetSpeechCaptureView();
         
         [self addSubview:self.widget];
         [self addSubview:self.speechWidget];

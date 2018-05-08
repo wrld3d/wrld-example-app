@@ -17,12 +17,12 @@ namespace ExampleApp
             class SearchWidgetView : public SearchMenu::View::ISearchWidgetView
             {
             private:
-                WRLDSearchWidgetViewController* m_pSearchWidgetViewController;
+                WRLDSearchWidgetView* m_pSearchWidgetView;
                 WRLDSearchModel* m_pSearchModel;
                 WRLDSearchMenuModel* m_pMenuModel;
                 WRLDSearchProviderHandle* m_pSearchProviderHandle;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
-                WRLDSpeechHandler* m_pSpeechHandler;
+                WRLDSpeechCapture* m_pSpeechCapture;
 
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
@@ -58,9 +58,8 @@ namespace ExampleApp
                                  ExampleAppMessaging::TMessageBus& messageBus);
                 ~SearchWidgetView();
 
-                UIViewController* GetWidgetController() const;
                 UIView* GetWidgetView() const;
-                UIView* GetSpeechHandlerView() const;
+                UIView* GetSpeechCaptureView() const;
 
                 void OnSearchResultSelected(int index);
 

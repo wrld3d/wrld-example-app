@@ -1,4 +1,5 @@
 #import "WidgetSearchResultTableViewCell.h"
+#import <WRLDSearchWidget/WRLDLabelTextHighlighter.h>
 #import "ImageHelpers.h"
 
 @implementation WidgetSearchResultTableViewCell
@@ -10,14 +11,14 @@
     [WRLDLabelTextHighlighter applyAttributedTextTo: self.titleLabel
                                            fullText: searchResult.title
                                   regularAttributes: self.titleLabelRegularAttrs
-                                           boldText: query.queryString
-                                     boldAttributes: self.titleLabelBoldAttrs];
+                                      highlightText: query.queryString
+                                highlightAttributes: self.titleLabelHighlightAttrs];
 
     [WRLDLabelTextHighlighter applyAttributedTextTo: self.descriptionLabel
                                            fullText: searchResult.subTitle
                                   regularAttributes: self.descriptionLabelRegularAttrs
-                                           boldText: query.queryString
-                                     boldAttributes: self.descriptionLabelBoldAttrs];
+                                      highlightText: query.queryString
+                                highlightAttributes: self.descriptionLabelHighlightAttrs];
 
     if(self.iconImageView && searchResult.iconKey)
     {

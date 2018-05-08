@@ -1,6 +1,7 @@
 #pragma once
 
 #import <Foundation/Foundation.h>
+#import <WRLDSearchWidget/WRLDSearchQuery.h>
 
 @interface WidgetQueryContext : NSObject
 @property (nonatomic) BOOL clearPreviousResults;

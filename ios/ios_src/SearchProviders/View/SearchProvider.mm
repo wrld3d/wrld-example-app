@@ -68,6 +68,8 @@ namespace ExampleApp
 
         void SearchProvider::UpdateResults(const TSearchResults& searchResults, WRLDSearchRequest* searchRequest)
         {
+            typedef NSMutableArray< id<WRLDSearchResultModel> > WRLDMutableSearchResultsCollection;
+            
             WRLDMutableSearchResultsCollection* widgetSearchResults = [[WRLDMutableSearchResultsCollection alloc] init];
             
             for(int i = 0; i < searchResults.size(); i++)
