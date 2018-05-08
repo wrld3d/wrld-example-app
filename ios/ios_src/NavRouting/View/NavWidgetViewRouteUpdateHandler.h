@@ -15,17 +15,17 @@ using namespace ExampleApp::NavRouting::SdkModel;
 
 namespace ExampleApp
 {
-    namespace NavUI
+    namespace NavRouting
     {
         namespace View
         {
-            class NavUIViewRouteUpdateHandler: private Eegeo::NonCopyable
+            class NavWidgetViewRouteUpdateHandler: private Eegeo::NonCopyable
             {
             public:
-                NavUIViewRouteUpdateHandler(WRLDNavModel* navModel,
+                NavWidgetViewRouteUpdateHandler(WRLDNavModel* navModel,
                                             NavRoutingServiceController& routingServiceController);
                 
-                ~NavUIViewRouteUpdateHandler();
+                ~NavWidgetViewRouteUpdateHandler();
                 
                 void UpdateRoute();
                 
@@ -35,7 +35,7 @@ namespace ExampleApp
                 WRLDNavModel* m_navModel;
                 NavRoutingServiceController& m_routingServiceController;
                 
-                Eegeo::Helpers::TCallback1<NavUIViewRouteUpdateHandler, const std::vector<Eegeo::Routes::Webservice::RouteData>> m_routesReceivedCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetViewRouteUpdateHandler, const std::vector<Eegeo::Routes::Webservice::RouteData>> m_routesReceivedCallback;
             };
         }
     }

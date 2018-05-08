@@ -8,7 +8,7 @@
 
 #include "WrldNav/WrldNav.h"
 
-@interface NavUIViewRouteDrawingHandler : NSObject
+@interface NavWidgetViewRouteDrawingHandler : NSObject
 
 - (instancetype) initWithDrawingController:(ExampleApp::NavRouting::SdkModel::NavRouteDrawingController*)drawingController
                     journeyModel:(WRLDNavModel*)journeyModel;

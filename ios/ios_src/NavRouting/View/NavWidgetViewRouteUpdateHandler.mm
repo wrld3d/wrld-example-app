@@ -1,12 +1,12 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "NavUIViewRouteUpdateHandler.h"
+#include "NavWidgetViewRouteUpdateHandler.h"
 
 #include "RoutingQueryOptions.h"
 
 namespace ExampleApp
 {
-    namespace NavUI
+    namespace NavRouting
     {
         namespace View
         {
@@ -156,21 +156,21 @@ namespace ExampleApp
                 navModel.navMode = ([[navRoute directions] count]>0) ? WRLDNavModeReady : WRLDNavModeNotReady;
             }
             
-            NavUIViewRouteUpdateHandler::NavUIViewRouteUpdateHandler(WRLDNavModel* navModel,
+            NavWidgetViewRouteUpdateHandler::NavWidgetViewRouteUpdateHandler(WRLDNavModel* navModel,
                                                                      NavRoutingServiceController& routingServiceController)
             : m_navModel(navModel)
             , m_routingServiceController(routingServiceController)
-            , m_routesReceivedCallback(this, &NavUIViewRouteUpdateHandler::OnRoutingQueryCompleted)
+            , m_routesReceivedCallback(this, &NavWidgetViewRouteUpdateHandler::OnRoutingQueryCompleted)
             {
                 m_routingServiceController.RegisterQueryCompletedCallback(m_routesReceivedCallback);
             }
             
-            NavUIViewRouteUpdateHandler::~NavUIViewRouteUpdateHandler()
+            NavWidgetViewRouteUpdateHandler::~NavWidgetViewRouteUpdateHandler()
             {
                 m_routingServiceController.UnregisterQueryCompletedCallback(m_routesReceivedCallback);
             }
             
-            void NavUIViewRouteUpdateHandler::UpdateRoute()
+            void NavWidgetViewRouteUpdateHandler::UpdateRoute()
             {
                 m_navModel.route = nil;
                 m_navModel.navMode = WRLDNavModeNotReady;
@@ -191,7 +191,7 @@ namespace ExampleApp
                 }
             }
             
-            void NavUIViewRouteUpdateHandler::OnRoutingQueryCompleted(const std::vector<Eegeo::Routes::Webservice::RouteData>& results)
+            void NavWidgetViewRouteUpdateHandler::OnRoutingQueryCompleted(const std::vector<Eegeo::Routes::Webservice::RouteData>& results)
             {
                 //Only using first route for now
                 UpdateDirectionsFromRoute(results[0], m_navModel);

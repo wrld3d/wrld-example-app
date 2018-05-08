@@ -1,13 +1,13 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include "NavUIViewRouteDrawingHandler.h"
+#include "NavWidgetViewRouteDrawingHandler.h"
 
 #include <MapKit/MapKit.h>
 
-@interface NavUIViewRouteDrawingHandler()<WRLDNavModelObserverProtocol>
+@interface NavWidgetViewRouteDrawingHandler()<WRLDNavModelObserverProtocol>
 @end
 
-@implementation NavUIViewRouteDrawingHandler
+@implementation NavWidgetViewRouteDrawingHandler
 {
     ExampleApp::NavRouting::SdkModel::NavRouteDrawingController* m_pDrawingController;
     WRLDNavModel* m_navModel;
