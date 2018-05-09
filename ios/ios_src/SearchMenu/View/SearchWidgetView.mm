@@ -26,7 +26,7 @@ namespace ExampleApp
                 m_pSearchProviderHandle = [m_pSearchModel addSearchProvider: searchProvider];
                 m_pSuggestionProviderHandle = [m_pSearchModel addSuggestionProvider: suggestionProvider];
 
-                m_pSearchWidgetView = [WRLDSearchWidgetView alloc];
+                m_pSearchWidgetView = [[[WRLDSearchWidgetView alloc] init] autorelease];
                 [m_pSearchWidgetView useSearchModel:m_pSearchModel];
                 [m_pSearchWidgetView useMenuModel:m_pMenuModel];
 
