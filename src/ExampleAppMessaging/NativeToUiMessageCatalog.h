@@ -54,6 +54,7 @@
 #include "ClosePoiMessage.h"
 #include "OpenSearchMenuSectionMessage.h"
 #include "SearchResultPoiDirectionsButtonClickedMessage.h"
+#include "NavRoutingQueryCompletedMessage.h"
 
 namespace ExampleApp
 {
@@ -109,6 +110,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Automation::SelectMenuItemMessage>
             , public Eegeo::Messaging::CatalogBinding<Automation::ClosePoiMessage>
             , public Eegeo::Messaging::CatalogBinding<Automation::OpenSearchMenuSectionMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingQueryCompletedMessage>
             , private Eegeo::NonCopyable
         {
 

@@ -38,6 +38,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_startLocationClearedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingLocationModel&> m_endLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_endLocationClearedCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingRouteModel&> m_routeSetCallback;
+                Eegeo::Helpers::TCallback0<NavWidgetController> m_routeClearedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
 
                 void OnCloseButtonClicked();
@@ -61,6 +63,10 @@ namespace ExampleApp
                 void OnEndLocationSet(const SdkModel::NavRoutingLocationModel& endLocation);
 
                 void OnEndLocationCleared();
+
+                void OnRouteSet(const SdkModel::NavRoutingRouteModel& routeModel);
+
+                void OnRouteCleared();
 
                 void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
 

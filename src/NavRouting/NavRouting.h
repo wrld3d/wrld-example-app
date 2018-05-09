@@ -17,6 +17,7 @@ namespace ExampleApp
             
             class NavRoutingModule;
             class NavRouteDrawingController;
+            class INavRoutingServiceController;
             class NavRoutingServiceController;
             
             typedef Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Routes::Webservice::RouteData>> RoutesReceivedCallback;

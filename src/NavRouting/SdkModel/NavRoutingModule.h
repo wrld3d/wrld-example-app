@@ -23,7 +23,7 @@ namespace ExampleApp
                 ~NavRoutingModule();
                 
                 NavRouteDrawingController& GetRouteDrawingController();
-                NavRoutingServiceController& GetRoutingServiceController();
+                INavRoutingServiceController& GetRoutingServiceController();
                 
             private:
                 

@@ -35,6 +35,7 @@ namespace ExampleApp
 
             void NavWidgetController::OnCloseButtonClicked()
             {
+                m_viewModel.ClearRoute();
                 m_viewModel.Close();
             }
 
@@ -83,6 +84,16 @@ namespace ExampleApp
             void NavWidgetController::OnEndLocationCleared()
             {
                 m_view.ClearEndLocation();
+            }
+
+            void NavWidgetController::OnRouteSet(const SdkModel::NavRoutingRouteModel& routeModel)
+            {
+                m_view.SetRoute(routeModel);
+            }
+
+            void NavWidgetController::OnRouteCleared()
+            {
+                m_view.ClearRoute();
             }
 
             void NavWidgetController::OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message)
@@ -136,6 +147,8 @@ namespace ExampleApp
                     , m_startLocationClearedCallback(this, &NavWidgetController::OnStartLocationCleared)
                     , m_endLocationSetCallback(this, &NavWidgetController::OnEndLocationSet)
                     , m_endLocationClearedCallback(this, &NavWidgetController::OnEndLocationCleared)
+                    , m_routeSetCallback(this, &NavWidgetController::OnRouteSet)
+                    , m_routeClearedCallback(this, &NavWidgetController::OnRouteCleared)
                     , m_directionsButtonClickedMessageHandler(this, &NavWidgetController::OnDirectionsButtonClicked)
             {
                 m_view.InsertClosedCallback(m_closeButtonCallback);
@@ -150,12 +163,16 @@ namespace ExampleApp
                 m_viewModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
                 m_viewModel.InsertEndLocationSetCallback(m_endLocationSetCallback);
                 m_viewModel.InsertEndLocationClearedCallback(m_endLocationClearedCallback);
+                m_viewModel.InsertRouteSetCallback(m_routeSetCallback);
+                m_viewModel.InsertRouteClearedCallback(m_routeClearedCallback);
                 m_messageBus.SubscribeUi(m_directionsButtonClickedMessageHandler);
             }
 
             NavWidgetController::~NavWidgetController()
             {
                 m_messageBus.UnsubscribeUi(m_directionsButtonClickedMessageHandler);
+                m_viewModel.RemoveRouteClearedCallback(m_routeClearedCallback);
+                m_viewModel.RemoveRouteSetCallback(m_routeSetCallback);
                 m_viewModel.RemoveEndLocationClearedCallback(m_endLocationClearedCallback);
                 m_viewModel.RemoveEndLocationSetCallback(m_endLocationSetCallback);
                 m_viewModel.RemoveStartLocationClearedCallback(m_startLocationClearedCallback);

@@ -28,8 +28,8 @@ namespace ExampleApp
             {
                 return *m_pNavRouteDrawingController;
             }
-            
-            NavRoutingServiceController& NavRoutingModule::GetRoutingServiceController()
+
+            INavRoutingServiceController& NavRoutingModule::GetRoutingServiceController()
             {
                 return *m_pNavRoutingServiceController;
             }

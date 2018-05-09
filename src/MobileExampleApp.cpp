@@ -685,9 +685,15 @@ namespace ExampleApp
                                                                                             m_pSearchModule->GetSearchQueryPerformer(),
                                                                                             m_messageBus,
                                                                                             m_metricsService);
-        
+
+        Eegeo::Modules::RoutesModule& routesModule = world.GetRoutesModule();
+        m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(routesModule.GetRouteService(),
+                                                                                            routesModule.GetRoutingWebservice());
+
         m_pNavUIModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavUIModule)(m_identityProvider,
-															                  m_pReactionControllerModule->GetReactionControllerModel());
+															                  m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                              m_pNavRoutingModule->GetRoutingServiceController(),
+                                                                              m_messageBus);
   
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
@@ -961,6 +967,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pSearchMenuModule;
         
         Eegeo_DELETE m_pNavUIModule;
+
+        Eegeo_DELETE m_pNavRoutingModule;
 
         Eegeo_DELETE m_pSearchResultSectionModule;
 

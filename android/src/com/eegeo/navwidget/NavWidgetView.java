@@ -15,6 +15,7 @@ import com.wrld.widgets.navigation.model.WrldNavMode;
 import com.wrld.widgets.navigation.model.WrldNavModel;
 import com.wrld.widgets.navigation.model.WrldNavModelObserver;
 import com.wrld.widgets.navigation.model.WrldNavModelObserverListener;
+import com.wrld.widgets.navigation.model.WrldNavRoute;
 import com.wrld.widgets.navigation.widget.WrldNavWidget;
 
 public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverListener
@@ -94,6 +95,20 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     public void clearEndLocation()
     {
         m_model.setEndLocation(null);
+    }
+
+    public void setRoute(WrldNavRoute route)
+    {
+        m_model.setRoute(route);
+        m_model.setRemainingRouteDurationSeconds(route.estimatedRouteDurationSeconds);
+        m_model.setCurrentNavMode(WrldNavMode.Ready);
+    }
+
+    public void clearRoute()
+    {
+        m_model.setRoute(null);
+        m_model.setRemainingRouteDurationSeconds(0);
+        m_model.setCurrentNavMode(WrldNavMode.NotReady);
     }
 
     public void showNavWidgetView()

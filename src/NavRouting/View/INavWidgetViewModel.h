@@ -5,6 +5,7 @@
 #include "ICallback.h"
 #include "IOpenableControlViewModel.h"
 #include "NavRoutingLocationModel.h"
+#include "NavRoutingRouteModel.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,10 @@ namespace ExampleApp
 
                 virtual void ClearEndLocation() = 0;
 
+                virtual void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel) = 0;
+
+                virtual void ClearRoute() = 0;
+
                 virtual void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
 
                 virtual void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
@@ -56,6 +61,14 @@ namespace ExampleApp
                 virtual void InsertEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback) = 0;
 
                 virtual void RemoveEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback) = 0;
+
+                virtual void InsertRouteSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingRouteModel&>& routeSetCallback) = 0;
+
+                virtual void RemoveRouteSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingRouteModel&>& routeSetCallback) = 0;
+
+                virtual void InsertRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) = 0;
+
+                virtual void RemoveRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) = 0;
 
                 virtual OpenableControl::View::IOpenableControlViewModel& GetOpenableControl() = 0;
             };

@@ -6,6 +6,7 @@
 #include "Types.h"
 #include "ICallback.h"
 #include "NavRoutingLocationModel.h"
+#include "NavRoutingRouteModel.h"
 
 namespace ExampleApp
 {
@@ -29,6 +30,10 @@ namespace ExampleApp
                 virtual void SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel) = 0;
 
                 virtual void ClearEndLocation() = 0;
+
+                virtual void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel) = 0;
+
+                virtual void ClearRoute() = 0;
 
                 virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

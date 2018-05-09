@@ -46,6 +46,10 @@ namespace ExampleApp
 
                 void ClearEndLocation() override;
 
+                void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel) override;
+
+                void ClearRoute() override;
+
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) override;
 
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) override;

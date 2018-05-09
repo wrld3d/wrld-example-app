@@ -6,6 +6,7 @@
 #include "Routes.h"
 #include "NavRouting.h"
 #include "CallbackCollection.h"
+#include "INavRoutingServiceController.h"
 
 namespace ExampleApp
 {
@@ -13,17 +14,17 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class NavRoutingServiceController : private Eegeo::NonCopyable
+            class NavRoutingServiceController : public INavRoutingServiceController, private Eegeo::NonCopyable
             {
             public:
                 NavRoutingServiceController(Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice);
 
                 ~NavRoutingServiceController();
                 
-                void MakeRoutingQuery(const Eegeo::Routes::Webservice::RoutingQueryOptions& options);
+                void MakeRoutingQuery(const Eegeo::Routes::Webservice::RoutingQueryOptions& options) override;
                 
-                void RegisterQueryCompletedCallback(RoutesReceivedCallback& callback);
-                void UnregisterQueryCompletedCallback(RoutesReceivedCallback& callback);
+                void RegisterQueryCompletedCallback(RoutesReceivedCallback& callback) override;
+                void UnregisterQueryCompletedCallback(RoutesReceivedCallback& callback) override;
                 
             private:
                 

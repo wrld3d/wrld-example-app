@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include <string>
+
 #include "Types.h"
 #include "NavRouting.h"
 #include "RouteService.h"
@@ -34,11 +36,11 @@ namespace ExampleApp
 
             private:
 
-                const std::string m_name;
-                const Eegeo::Space::LatLong m_latLon;
-                const bool m_isIndoors;
-                const Eegeo::Resources::Interiors::InteriorId m_indoorMapId;
-                const int m_indoorMapFloorId;
+                std::string m_name;
+                Eegeo::Space::LatLong m_latLon;
+                bool m_isIndoors;
+                Eegeo::Resources::Interiors::InteriorId m_indoorMapId;
+                int m_indoorMapFloorId;
             };
         }
     }

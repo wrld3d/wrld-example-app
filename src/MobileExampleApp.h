@@ -94,6 +94,7 @@
 #include "SelectFirstResultSearchService.h"
 #include "MapsceneModule.h"
 #include "NavUIModule.h"
+#include "NavRoutingModule.h"
 
 namespace ExampleApp
 {
@@ -124,6 +125,7 @@ namespace ExampleApp
         Eegeo::Helpers::IdentityProvider m_identityProvider;
         ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule* m_pSettingsMenuModule;
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
+        ExampleApp::NavRouting::SdkModel::NavRoutingModule* m_pNavRoutingModule;
         ExampleApp::NavRouting::View::NavUIModule* m_pNavUIModule;
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;

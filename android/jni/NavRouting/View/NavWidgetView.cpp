@@ -86,6 +86,87 @@ namespace ExampleApp
                 CallVoidMethod("clearEndLocation");
             }
 
+            void NavWidgetView::SetRoute(const SdkModel::NavRoutingRouteModel& routeModel)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jclass locationClass = env->FindClass("android/location/Location");
+                jmethodID locationCtor = env->GetMethodID(locationClass, "<init>", "(Ljava/lang/String;)V");
+
+                jmethodID setLatitudeMethod = env->GetMethodID(locationClass, "setLatitude", "(D)V");
+                jmethodID setLongitudeMethod = env->GetMethodID(locationClass, "setLongitude", "(D)V");
+
+                jstring wrldStr = env->NewStringUTF("Wrld");
+
+                jclass arrayListClass = env->FindClass("java/util/ArrayList");
+                jmethodID arrayListCtor = env->GetMethodID(arrayListClass, "<init>", "()V");
+                jmethodID arrayListAddMethod = env->GetMethodID(arrayListClass, "add", "(Ljava/lang/Object;)Z");
+
+                jclass navDirectionClass = env->FindClass("com/wrld/widgets/navigation/model/WrldNavDirection");
+                jmethodID navDirectionsCtor = env->GetMethodID(navDirectionClass, "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;IZ)V");
+
+                jobject directionsArrayListObject = env->NewObject(arrayListClass, arrayListCtor);
+
+                for (auto &direction: routeModel.GetDirections())
+                {
+                    jobject pathArrayListObject = env->NewObject(arrayListClass, arrayListCtor);
+
+                    for (auto &latLng: direction.GetPath())
+                    {
+                        jobject locationObject = env->NewObject(locationClass, locationCtor, wrldStr);
+                        env->CallVoidMethod(locationObject, setLatitudeMethod, latLng.GetLatitude());
+                        env->CallVoidMethod(locationObject, setLongitudeMethod, latLng.GetLongitude());
+
+                        env->CallBooleanMethod(pathArrayListObject, arrayListAddMethod, locationObject);
+                    }
+
+                    jstring name = env->NewStringUTF(direction.GetName().c_str());
+                    jstring icon = env->NewStringUTF(direction.GetIcon().c_str());
+                    jstring instruction = env->NewStringUTF(direction.GetInstruction().c_str());
+                    jstring thenInstruction = env->NewStringUTF(direction.GetNextInstruction().c_str());
+                    jstring indoorMapId = env->NewStringUTF(direction.GetIndoorMapId().Value().c_str());
+
+                    jobject navDirectionObject = env->NewObject(navDirectionClass,
+                                                                navDirectionsCtor,
+                                                                name,
+                                                                icon,
+                                                                instruction,
+                                                                thenInstruction,
+                                                                pathArrayListObject,
+                                                                direction.GetIsIndoors() ? indoorMapId : NULL,
+                                                                direction.GetIndoorMapFloorId(),
+                                                                direction.GetIsMultiFloor());
+
+                    env->CallBooleanMethod(directionsArrayListObject, arrayListAddMethod, navDirectionObject);
+
+                    env->DeleteLocalRef(name);
+                    env->DeleteLocalRef(icon);
+                    env->DeleteLocalRef(instruction);
+                    env->DeleteLocalRef(thenInstruction);
+                    env->DeleteLocalRef(indoorMapId);
+                }
+
+                jclass navRouteClass = env->FindClass("com/wrld/widgets/navigation/model/WrldNavRoute");
+                jmethodID navRouteCtor = env->GetMethodID(navRouteClass, "<init>", "(DLjava/util/List;)V");
+
+                jobject navRouteObject = env->NewObject(navRouteClass, navRouteCtor, routeModel.GetDuration(), directionsArrayListObject);
+
+                jmethodID setRouteMethod = env->GetMethodID(m_uiViewClass, "setRoute", "(Lcom/wrld/widgets/navigation/model/WrldNavRoute;)V");
+                env->CallVoidMethod(m_uiView, setRouteMethod, navRouteObject);
+
+                env->DeleteLocalRef(wrldStr);
+            }
+
+            void NavWidgetView::ClearRoute()
+            {
+                ASSERT_UI_THREAD
+
+                CallVoidMethod("clearRoute");
+            }
+
             void NavWidgetView::SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation)
             {
                 ASSERT_UI_THREAD
@@ -107,6 +188,9 @@ namespace ExampleApp
                                     locationModel.GetIsIndoors(),
                                     indoorMapIdStr,
                                     locationModel.GetIndoorMapFloorId());
+
+                env->DeleteLocalRef(nameStr);
+                env->DeleteLocalRef(indoorMapIdStr);
             }
 
             void NavWidgetView::CallVoidMethod(const std::string& methodName)

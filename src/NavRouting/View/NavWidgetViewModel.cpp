@@ -79,6 +79,20 @@ namespace ExampleApp
                 m_endLocationClearedCallbacks.ExecuteCallbacks();
             }
 
+            void NavWidgetViewModel::SetRoute(const SdkModel::NavRoutingRouteModel& routeModel)
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot set route when NavWidget is not open.\n");
+
+                m_routeSetCallbacks.ExecuteCallbacks(routeModel);
+            }
+
+            void NavWidgetViewModel::ClearRoute()
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot clear route when NavWidget is not open.\n");
+
+                m_routeClearedCallbacks.ExecuteCallbacks();
+            }
+
             OpenableControl::View::IOpenableControlViewModel& NavWidgetViewModel::GetOpenableControl()
             {
                 return m_openable;
@@ -142,6 +156,26 @@ namespace ExampleApp
             void NavWidgetViewModel::RemoveEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback)
             {
                 m_endLocationClearedCallbacks.RemoveCallback(endLocationClearedCallback);
+            }
+
+            void NavWidgetViewModel::InsertRouteSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingRouteModel&>& routeSetCallback)
+            {
+                m_routeSetCallbacks.AddCallback(routeSetCallback);
+            }
+
+            void NavWidgetViewModel::RemoveRouteSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingRouteModel&>& routeSetCallback)
+            {
+                m_routeSetCallbacks.RemoveCallback(routeSetCallback);
+            }
+
+            void NavWidgetViewModel::InsertRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback)
+            {
+                m_routeClearedCallbacks.AddCallback(routeClearedCallback);
+            }
+
+            void NavWidgetViewModel::RemoveRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback)
+            {
+                m_routeClearedCallbacks.RemoveCallback(routeClearedCallback);
             }
         }
     }

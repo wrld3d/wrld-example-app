@@ -9,6 +9,8 @@ set(currsources
   ../src/NavRouting/View/NavWidgetController.h
   ../src/NavRouting/View/NavWidgetOpenableControl.cpp
   ../src/NavRouting/View/NavWidgetOpenableControl.h
+  ../src/NavRouting/View/NavWidgetRouteUpdateHandler.cpp
+  ../src/NavRouting/View/NavWidgetRouteUpdateHandler.h
   ../src/NavRouting/View/NavWidgetViewModel.cpp
   ../src/NavRouting/View/NavWidgetViewModel.h
   ../src/NavRouting/View/CMakeLists.txt
