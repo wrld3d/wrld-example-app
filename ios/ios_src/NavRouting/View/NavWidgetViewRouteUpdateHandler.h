@@ -7,7 +7,7 @@
 #include "Types.h"
 #include "NavRouting.h"
 #include "NavRouteDrawingController.h"
-#include "NavRoutingServiceController.h"
+#include "INavRoutingServiceController.h"
 
 #include <vector>
 
@@ -23,7 +23,7 @@ namespace ExampleApp
             {
             public:
                 NavWidgetViewRouteUpdateHandler(WRLDNavModel* navModel,
-                                            NavRoutingServiceController& routingServiceController);
+                                            INavRoutingServiceController& routingServiceController);
                 
                 ~NavWidgetViewRouteUpdateHandler();
                 
@@ -33,7 +33,7 @@ namespace ExampleApp
                 void OnRoutingQueryCompleted(const std::vector<Eegeo::Routes::Webservice::RouteData>& results);
                 
                 WRLDNavModel* m_navModel;
-                NavRoutingServiceController& m_routingServiceController;
+                INavRoutingServiceController& m_routingServiceController;
                 
                 Eegeo::Helpers::TCallback1<NavWidgetViewRouteUpdateHandler, const std::vector<Eegeo::Routes::Webservice::RouteData>> m_routesReceivedCallback;
             };

@@ -20,44 +20,44 @@ namespace ExampleApp
             {
                 
             private:
-//                UIViewController* m_pController;
-//                
-//                UIColor* m_pColour;
-//                
-//                float m_width;
-//                float m_height;
-//                
-//                float m_screenWidth;
-//                float m_screenHeight;
-//                float m_pixelScale;
-//                
-//                float m_yPosActive;
-//                float m_yPosInactive;
+                
+                Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_startLocationClickedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_endLocationClickedCallback;
+                Eegeo::Helpers::CallbackCollection0 m_startLocationClearButtonClickedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_endLocationClearButtonClickedCallback;
+                Eegeo::Helpers::CallbackCollection0 m_startEndLocationsSwappedCallbacks;
                 
                 WRLDNavWidgetBase* m_pView;
+                WRLDNavModel* m_pNavModel;
+                
+                void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);
+                               
                 
             public:
-                NavWidgetView();
+                NavWidgetView(WRLDNavModel* m_pNavModel);
                 
                 ~NavWidgetView() { };
                 
                 UIView* GetUIView();
                 
-                BOOL consumesTouch(UITouch*);
                 
-                // Public WRLDNavWidgetBase View
+                
+                BOOL consumesTouch(UITouch*);
                 
                 void Show() ;
                 
                 void Hide() ;
                 
                 void SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel);
-                
-                void ClearStartLocation() ;
-                
                 void SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel);
                 
+                void ClearStartLocation() ;
                 void ClearEndLocation() ;
+                
+                void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel);
+                
+                void ClearRoute();
                 
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback);
@@ -81,4 +81,3 @@ namespace ExampleApp
         }
     }
 }
-

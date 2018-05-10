@@ -15,112 +15,115 @@ namespace ExampleApp
     {
         namespace View
         {
-            Eegeo::Routes::Webservice::RoutingQueryWaypoint GetWaypoint(const SdkModel::NavRoutingLocationModel& locationModel)
+            namespace
             {
-
-                return Eegeo::Routes::Webservice::RoutingQueryWaypoint
-                        {
-                               locationModel.GetLatLon(),
-                               locationModel.GetIsIndoors(),
-                               locationModel.GetIndoorMapFloorId()
-                       };
-            }
-
-            std::string GetIconNameFromType(const std::string& directionType, const std::string& directionModifier)
-            {
-                std::string type = directionType;
-                std::string modifier = directionModifier;
-
-                std::replace(type.begin(), type.end(), ' ', '_');
-                std::replace(modifier.begin(), modifier.end(), ' ', '_');
-
-                if (type == "arrive" || type == "depart")
+                Eegeo::Routes::Webservice::RoutingQueryWaypoint GetWaypoint(const SdkModel::NavRoutingLocationModel& locationModel)
                 {
-                    return type;
+
+                    return Eegeo::Routes::Webservice::RoutingQueryWaypoint
+                            {
+                                   locationModel.GetLatLon(),
+                                   locationModel.GetIsIndoors(),
+                                   locationModel.GetIndoorMapFloorId()
+                           };
                 }
 
-                if (type == "new_name")
+                std::string GetIconNameFromType(const std::string& directionType, const std::string& directionModifier)
                 {
-                    type = "turn";
-                }
+                    std::string type = directionType;
+                    std::string modifier = directionModifier;
 
-                if (type == "turn" && modifier == "straight")
-                {
-                    return modifier;
-                }
+                    std::replace(type.begin(), type.end(), ' ', '_');
+                    std::replace(modifier.begin(), modifier.end(), ' ', '_');
 
-                return (type + "_" + modifier);
-            }
-
-            std::string GetCurrentInstructionFromType(const std::string& directionType, const std::string& directionModifier, bool shouldCapitalize = true)
-            {
-                std::string type = directionType;
-                std::string modifier = directionModifier;
-
-                if (type == "new name")
-                {
-                    type = "turn";
-                }
-
-                if (type == "turn" && modifier == "straight")
-                {
-                    return ((shouldCapitalize ? "Continue " : "continue ") + modifier);
-                }
-
-                if (type == "turn" && modifier == "uturn")
-                {
-                    return ((shouldCapitalize ? "Make a U-turn" : "make a U-turn") + modifier);
-                }
-
-                if (shouldCapitalize)
-                {
-                    type[0] = (char) toupper(type[0]);
-                }
-
-                return (type + " " + modifier);
-            }
-
-            std::vector<SdkModel::NavRoutingDirectionModel> GetDirectionsFromRouteData(const Eegeo::Routes::Webservice::RouteData& route)
-            {
-                std::vector<SdkModel::NavRoutingDirectionModel> directionsVector;
-
-                for (auto& section: route.Sections)
-                {
-                    int count = static_cast<int>(section.Steps.size());
-                    for (int i=0; i<count; i++)
+                    if (type == "arrive" || type == "depart")
                     {
-                        auto& step = section.Steps[i];
-                        auto& directions = step.Directions;
-
-                        std::string name = GetCurrentInstructionFromType(directions.Type, directions.Modifier);
-                        std::ostringstream directionStringStream;
-                        directionStringStream << (int) step.Distance << "m - " << name;
-                        std::string currentInstruction = directionStringStream.str();
-                        std::string nextInstruction = "Arrived at destination.";
-
-                        if ((i+1)<count)
-                        {
-                            auto& nextStep = section.Steps[i+1];
-                            auto& nextDirection = nextStep.Directions;
-
-                            nextInstruction = "Then " + GetCurrentInstructionFromType(nextDirection.Type, nextDirection.Modifier, false);
-                        }
-
-                        directionsVector.emplace_back(currentInstruction,
-                                                      GetIconNameFromType(directions.Type, directions.Modifier),
-                                                      currentInstruction,
-                                                      nextInstruction,
-                                                      step.Path,
-                                                      step.IsIndoors,
-                                                      step.IndoorId,
-                                                      step.IndoorFloorId,
-                                                      step.IsMultiFloor);
+                        return type;
                     }
+
+                    if (type == "new_name")
+                    {
+                        type = "turn";
+                    }
+
+                    if (type == "turn" && modifier == "straight")
+                    {
+                        return modifier;
+                    }
+
+                    return (type + "_" + modifier);
                 }
 
-                return directionsVector;
-            }
+                std::string GetCurrentInstructionFromType(const std::string& directionType, const std::string& directionModifier, bool shouldCapitalize = true)
+                {
+                    std::string type = directionType;
+                    std::string modifier = directionModifier;
 
+                    if (type == "new name")
+                    {
+                        type = "turn";
+                    }
+
+                    if (type == "turn" && modifier == "straight")
+                    {
+                        return ((shouldCapitalize ? "Continue " : "continue ") + modifier);
+                    }
+
+                    if (type == "turn" && modifier == "uturn")
+                    {
+                        return ((shouldCapitalize ? "Make a U-turn" : "make a U-turn") + modifier);
+                    }
+
+                    if (shouldCapitalize)
+                    {
+                        type[0] = (char) toupper(type[0]);
+                    }
+
+                    return (type + " " + modifier);
+                }
+
+                std::vector<SdkModel::NavRoutingDirectionModel> GetDirectionsFromRouteData(const Eegeo::Routes::Webservice::RouteData& route)
+                {
+                    std::vector<SdkModel::NavRoutingDirectionModel> directionsVector;
+
+                    for (auto& section: route.Sections)
+                    {
+                        int count = static_cast<int>(section.Steps.size());
+                        for (int i=0; i<count; i++)
+                        {
+                            auto& step = section.Steps[i];
+                            auto& directions = step.Directions;
+
+                            std::string name = GetCurrentInstructionFromType(directions.Type, directions.Modifier);
+                            std::ostringstream directionStringStream;
+                            directionStringStream << (int) step.Distance << "m - " << name;
+                            std::string currentInstruction = directionStringStream.str();
+                            std::string nextInstruction = "Arrived at destination.";
+
+                            if ((i+1)<count)
+                            {
+                                auto& nextStep = section.Steps[i+1];
+                                auto& nextDirection = nextStep.Directions;
+
+                                nextInstruction = "Then " + GetCurrentInstructionFromType(nextDirection.Type, nextDirection.Modifier, false);
+                            }
+
+                            directionsVector.emplace_back(currentInstruction,
+                                                          GetIconNameFromType(directions.Type, directions.Modifier),
+                                                          currentInstruction,
+                                                          nextInstruction,
+                                                          step.Path,
+                                                          step.IsIndoors,
+                                                          step.IndoorId,
+                                                          step.IndoorFloorId,
+                                                          step.IsMultiFloor);
+                        }
+                    }
+
+                    return directionsVector;
+                }
+            }
+            
             NavWidgetRouteUpdateHandler::NavWidgetRouteUpdateHandler(INavWidgetViewModel& navWidgetViewModel,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                     : m_navWidgetViewModel(navWidgetViewModel)

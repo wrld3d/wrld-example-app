@@ -42,16 +42,27 @@ namespace ExampleApp
                                              ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                              INavWidgetViewModel& viewModel,
                                              ExampleApp::NavRouting::SdkModel::NavRouteDrawingController& routeDrawingController,
-                                             ExampleApp::NavRouting::SdkModel::NavRoutingServiceController& routingServiceController,
+                                             ExampleApp::NavRouting::SdkModel::INavRoutingServiceController& routingServiceController,
                                              ExampleAppMessaging::TMessageBus& messageBus_)
             {
-                m_pView = Eegeo_NEW(NavWidgetView);
+                
+                m_pNavModel = [[WRLDNavModel alloc] init];
+                
+                m_pView = Eegeo_NEW(NavWidgetView)(m_pNavModel);
+                
+                
+                
+                m_pNavWidgetViewRouteUpdateHandler = Eegeo_NEW(NavWidgetViewRouteUpdateHandler)(m_pNavModel,
+                                                                                                routingServiceController);
+                
+                m_pNavWidgetViewRouteDrawingHandler = [[NavWidgetViewRouteDrawingHandler alloc] initWithDrawingController:(&routeDrawingController) journeyModel:m_pNavModel];
                 
                 m_pNavWidgetController = Eegeo_NEW(NavWidgetController)(*m_pView,
                                                                         viewModel,
                                                                         *iOSLocationService,
                                                                         messageBus_);
                
+                
             }
             
             NavWidgetViewModule::~NavWidgetViewModule()
