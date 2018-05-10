@@ -24,7 +24,7 @@ typedef void (^SearchResultsSourceEvent) (void);
 
 - (void) setQuery: (WRLDSearchQuery *) query updateResults: (BOOL) updateResults;
 - (void) clearResults;
-- (NSString*) getDisplayedQueryText;
+- (WRLDSearchQuery*) getCurrentlyDisplayedQuery;
 
 - (void) selected : (NSIndexPath *) index;
 - (void) expandSection: (NSInteger) expandedSectionPosition;

@@ -69,7 +69,7 @@ set(ios_frameworks
   -framework CoreBluetooth
   -framework IndoorAtlas
   -framework SLIndoorLocation
-  -framework WrldSearchWidget
+  -framework WRLDSearchWidget
   -framework HockeySDK")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")

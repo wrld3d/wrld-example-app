@@ -9,10 +9,10 @@ def embed_frameworks():
     path = 'ios/Include'
     frameworks = [
         {
-            'name': 'WrldSearchWidget.framework',
-            'guid': 'C43ACF66204DAE2D0040495A',
-            'embed_guid': 'C43ACF64204DAE2A0040495A',
-            'path_in_project': 'Include/WrldSearchWidget/WrldSearchWidget.framework'
+            'name': 'WRLDSearchWidget.framework',
+            'guid': '266A140D20A4544B0078E39E',
+            'embed_guid': '266A140E20A454600078E39E',
+            'path_in_project': 'Include/WrldSearchWidget/WRLDSearchWidget.framework'
         }
     ]
 

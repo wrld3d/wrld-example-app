@@ -6,3 +6,4 @@
  A collection of WRLDSearchResultModels.
  */
 typedef NSArray< id<WRLDSearchResultModel> > WRLDSearchResultsCollection;
+typedef NSMutableArray< id<WRLDSearchResultModel> > WRLDMutableSearchResultsCollection;

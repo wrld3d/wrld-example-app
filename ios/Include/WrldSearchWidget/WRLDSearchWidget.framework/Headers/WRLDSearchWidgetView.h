@@ -148,6 +148,11 @@
 - (void) hideResultsView;
 
 /*!
+ Tells the search widget to collapse all results views to show the minimum number of results
+ */
+- (void) collapseResultsView;
+
+/*!
  Minimises any open search results views (search results, suggestions or no results), stops editing the UISearchBar and closes the search menu.
  */
 - (void) resignFocus;
@@ -156,6 +161,7 @@
  Opens the search menu.
  */
 - (void) openMenu;
+
 /*!
  Closes the search menu.
  */
