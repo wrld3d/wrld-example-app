@@ -346,6 +346,8 @@ namespace ExampleApp
 
             void SearchWidgetView::HandleViewCloseCompleted()
             {
+                [m_pSearchWidgetView collapseResultsView];
+
                 m_onViewClosedCallbacks.ExecuteCallbacks();
             }
 
