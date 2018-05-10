@@ -93,6 +93,20 @@ namespace ExampleApp
                 m_routeClearedCallbacks.ExecuteCallbacks();
             }
 
+            void NavWidgetViewModel::SetCurrentDirection(int directionIndex)
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot set current direction when NavWidget is not open.\n");
+
+                m_currentDirectionSetCallbacks.ExecuteCallbacks(directionIndex);
+            }
+
+            void NavWidgetViewModel::SetRemainingRouteDuration(double seconds)
+            {
+                Eegeo_ASSERT(IsOpen(), "Cannot set remaining route duration when NavWidget is not open.\n");
+
+                m_remainingRouteDurationSetCallbacks.ExecuteCallbacks(seconds);
+            }
+
             OpenableControl::View::IOpenableControlViewModel& NavWidgetViewModel::GetOpenableControl()
             {
                 return m_openable;
@@ -176,6 +190,26 @@ namespace ExampleApp
             void NavWidgetViewModel::RemoveRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback)
             {
                 m_routeClearedCallbacks.RemoveCallback(routeClearedCallback);
+            }
+
+            void NavWidgetViewModel::InsertCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback)
+            {
+                m_currentDirectionSetCallbacks.AddCallback(currentDirectionSetCallback);
+            }
+
+            void NavWidgetViewModel::RemoveCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback)
+            {
+                m_currentDirectionSetCallbacks.RemoveCallback(currentDirectionSetCallback);
+            }
+
+            void NavWidgetViewModel::InsertRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback)
+            {
+                m_remainingRouteDurationSetCallbacks.AddCallback(remainingRouteDurationSetCallback);
+            }
+
+            void NavWidgetViewModel::RemoveRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback)
+            {
+                m_remainingRouteDurationSetCallbacks.RemoveCallback(remainingRouteDurationSetCallback);
             }
         }
     }

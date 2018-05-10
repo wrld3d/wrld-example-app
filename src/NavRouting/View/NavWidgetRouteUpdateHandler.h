@@ -8,6 +8,7 @@
 #include "RouteData.h"
 #include "BidirectionalBus.h"
 #include "NavRoutingQueryCompletedMessage.h"
+#include "NavRoutingViewStartEndLocationSwappedMessage.h"
 
 namespace ExampleApp
 {
@@ -31,6 +32,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetRouteUpdateHandler, const SdkModel::NavRoutingLocationModel&> m_endLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetRouteUpdateHandler> m_endLocationClearedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetRouteUpdateHandler, const NavRoutingQueryCompletedMessage&> m_queryCompletedMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetRouteUpdateHandler, const NavRoutingViewStartEndLocationSwappedMessage&> m_startEndLocationSwappedMessageHandler;
 
                 void OnStartLocationSet(const SdkModel::NavRoutingLocationModel& startLocation);
 
@@ -45,6 +47,8 @@ namespace ExampleApp
                 void UpdateDirectionsFromRoute(const Eegeo::Routes::Webservice::RouteData& route);
 
                 void OnRoutingQueryCompleted(const NavRoutingQueryCompletedMessage& message);
+
+                void OnStartEndLocationSwapped(const NavRoutingViewStartEndLocationSwappedMessage& message);
 
             public:
                 NavWidgetRouteUpdateHandler(INavWidgetViewModel& navWidgetViewModel,

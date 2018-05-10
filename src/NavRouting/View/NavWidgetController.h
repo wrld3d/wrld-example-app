@@ -32,6 +32,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_startLocationClearButtonClickedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_endLocationClearButtonClickedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_startEndLocationsSwappedCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_selectedDirectionIndexChangedCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingMode> m_currentNavModeChangedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewOpenedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewClosedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingLocationModel&> m_startLocationSetCallback;
@@ -40,6 +42,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_endLocationClearedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingRouteModel&> m_routeSetCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_routeClearedCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_currentDirectionSetCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const double> m_remainingRouteDurationSetCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
 
                 void OnCloseButtonClicked();
@@ -54,6 +58,10 @@ namespace ExampleApp
 
                 void OnStartEndLocationsSwapped();
 
+                void OnSelectedDirectionIndexChanged(const int& selectedDirection);
+
+                void OnCurrentNavModeChanged(const NavRoutingMode& navRoutingMode);
+
                 void OnViewClosed();
 
                 void OnStartLocationSet(const SdkModel::NavRoutingLocationModel& startLocation);
@@ -67,6 +75,10 @@ namespace ExampleApp
                 void OnRouteSet(const SdkModel::NavRoutingRouteModel& routeModel);
 
                 void OnRouteCleared();
+
+                void OnCurrentDirectionSet(const int& directionIndex);
+
+                void OnRemainingRouteDurationSet(const double& seconds);
 
                 void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
 
