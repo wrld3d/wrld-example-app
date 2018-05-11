@@ -38,6 +38,10 @@ namespace ExampleApp
 
                 virtual void ClearRoute() = 0;
 
+                virtual void SetCurrentDirection(int directionIndex) = 0;
+
+                virtual void SetRemainingRouteDuration(double seconds) = 0;
+
                 virtual void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
 
                 virtual void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
@@ -69,6 +73,14 @@ namespace ExampleApp
                 virtual void InsertRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) = 0;
 
                 virtual void RemoveRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) = 0;
+
+                virtual void InsertCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) = 0;
+
+                virtual void RemoveCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) = 0;
+
+                virtual void InsertRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback) = 0;
+
+                virtual void RemoveRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback) = 0;
 
                 virtual OpenableControl::View::IOpenableControlViewModel& GetOpenableControl() = 0;
             };

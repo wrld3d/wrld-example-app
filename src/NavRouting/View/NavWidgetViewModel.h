@@ -26,6 +26,8 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_endLocationClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const SdkModel::NavRoutingRouteModel&> m_routeSetCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_routeClearedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const int> m_currentDirectionSetCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const double> m_remainingRouteDurationSetCallbacks;
                 NavWidgetOpenableControl m_openable;
 
             public:
@@ -34,59 +36,71 @@ namespace ExampleApp
 
                 ~NavWidgetViewModel();
 
-                bool TryAcquireReactorControl();
+                bool TryAcquireReactorControl() override;
 
-                bool IsOpen() const;
+                bool IsOpen() const override;
 
-                void Open();
+                void Open() override;
 
-                void Close();
+                void Close() override;
 
-                void SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel);
+                void SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel) override;
 
-                void ClearStartLocation();
+                void ClearStartLocation() override;
 
-                void SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel);
+                void SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel) override;
 
-                void ClearEndLocation();
+                void ClearEndLocation() override;
 
-                void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel);
+                void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel) override;
 
-                void ClearRoute();
+                void ClearRoute() override;
 
-                OpenableControl::View::IOpenableControlViewModel& GetOpenableControl();
+                void SetCurrentDirection(int directionIndex) override;
 
-                void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+                void SetRemainingRouteDuration(double seconds) override;
 
-                void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback);
+                OpenableControl::View::IOpenableControlViewModel& GetOpenableControl() override;
 
-                void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+                void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) override;
 
-                void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback);
+                void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) override;
 
-                void InsertStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback);
+                void InsertClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) override;
 
-                void RemoveStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback);
+                void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) override;
 
-                void InsertStartLocationClearedCallback(Eegeo::Helpers::ICallback0& startLocationClearedCallback);
+                void InsertStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback) override;
 
-                void RemoveStartLocationClearedCallback(Eegeo::Helpers::ICallback0& startLocationClearedCallback);
+                void RemoveStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback) override;
 
-                void InsertEndLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& endLocationSetCallback);
+                void InsertStartLocationClearedCallback(Eegeo::Helpers::ICallback0& startLocationClearedCallback) override;
 
-                void RemoveEndLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& endLocationSetCallback);
+                void RemoveStartLocationClearedCallback(Eegeo::Helpers::ICallback0& startLocationClearedCallback) override;
 
-                void InsertEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback);
+                void InsertEndLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& endLocationSetCallback) override;
 
-                void RemoveEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback);
+                void RemoveEndLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& endLocationSetCallback) override;
 
-                void InsertRouteSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingRouteModel&>& routeSetCallback);
+                void InsertEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback) override;
 
-                void RemoveRouteSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingRouteModel&>& routeSetCallback);
+                void RemoveEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback) override;
 
-                void InsertRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback);
+                void InsertRouteSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingRouteModel&>& routeSetCallback) override;
 
-                void RemoveRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback);
+                void RemoveRouteSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingRouteModel&>& routeSetCallback) override;
+
+                void InsertRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) override;
+
+                void RemoveRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) override;
+
+                void InsertCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) override;
+
+                void RemoveCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) override;
+
+                void InsertRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback) override;
+
+                void RemoveRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback) override;
 
             };
         }
