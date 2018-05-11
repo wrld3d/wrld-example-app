@@ -48,6 +48,8 @@ namespace ExampleApp
                 
                 m_pNavModel = [[WRLDNavModel alloc] init];
                 
+                setNavModel(m_pNavModel);
+                
                 m_pView = Eegeo_NEW(NavWidgetView)(m_pNavModel);
                 
                 
@@ -78,6 +80,63 @@ namespace ExampleApp
             NavWidgetController& NavWidgetViewModule::GetNavWidgetController() const
             {
                 return *m_pNavWidgetController;
+            }
+            
+            void NavWidgetViewModule::modelSet()
+            {
+                
+            }
+            
+            void NavWidgetViewModule::changeReceived(const std::string& keyPath)
+            {
+                if(keyPath == "selectedDirection")
+                {
+                    m_pView->HandleSelectedDirectionIndexChanged(m_pNavModel.selectedDirection);
+                }
+                else if(keyPath == "navMode")
+                {
+                    m_pView->HandleCurrentNavModeChanged(m_pNavModel.navMode);
+                }
+            }
+            
+            void NavWidgetViewModule::eventReceived(WRLDNavEvent key)
+            {
+                
+                switch (key) {
+                    case WRLDNavEventCloseSetupJourneyClicked:
+                        m_pView->HandleClosedCallback();
+                        break;
+                    case WRLDNavEventSelectStartLocationClicked:
+                        m_pView->HandleStartLocationClickedCallback();
+                        break;
+                    case WRLDNavEventSelectEndLocationClicked:
+                        m_pView->HandleEndLocationClickedCallback();
+                        break;
+                    case WRLDNavEventStartLocationClearButtonClicked:
+                        m_pView->HandleStartLocationClearButtonClickedCallback();
+                        break;
+                    case WRLDNavEventEndLocationClearButtonClicked:
+                        m_pView->HandleEndLocationClearButtonCallback();
+                        break;
+                    case WRLDNavEventStartEndLocationsSwapped:
+                        m_pView->HandleStartEndLocationsSwappedCallback();
+                        break;
+                    case WRLDNavEventStartEndButtonClicked:
+                        switch (m_pNavModel.navMode)
+                        {
+                            case WRLDNavModeReady:
+                                [m_pNavModel setNavMode:WRLDNavModeActive];
+                                break;
+                            case WRLDNavModeActive:
+                                [m_pNavModel setNavMode:WRLDNavModeReady];
+                                break;
+                            case WRLDNavModeNotReady:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

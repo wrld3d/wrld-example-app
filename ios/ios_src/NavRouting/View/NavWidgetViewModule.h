@@ -4,6 +4,7 @@
 
 #include "Types.h"
 #include "WrldNav/WrldNav.h"
+#include "WrldNavWidget/WrldNavWidget.h"
 #include "NavRouteDrawingController.h"
 #include "INavRoutingServiceController.h"
 #include "NavWidgetController.h"
@@ -42,7 +43,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class NavWidgetViewModule: public INavWidgetViewModule, private Eegeo::NonCopyable
+            class NavWidgetViewModule: public INavWidgetViewModule, public WRLDNavModelObserverCpp , private Eegeo::NonCopyable
             {
             private:
                 NavWidgetController* m_pNavWidgetController;
@@ -65,6 +66,12 @@ namespace ExampleApp
                 
                 UIView& GetNavWidgetView() const;
                 NavWidgetController& GetNavWidgetController() const;
+                
+                void modelSet();
+                
+                void changeReceived(const std::string& keyPath);
+                
+                void eventReceived(WRLDNavEvent key);
                 
             
             };
