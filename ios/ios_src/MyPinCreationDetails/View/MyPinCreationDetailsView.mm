@@ -269,31 +269,32 @@
                                                innerMarginWidth,
                                                innerMarginWidth*aspectRatio);
     
-    CGFloat shareOffset =  self.pPoiImageView.frame.size.height +  self.pPoiImageView.frame.origin.y + innerMargin.top;
+    CGFloat shareOffsetX =  innerMargin.right;
+    CGFloat shareOffsetY =  self.pPoiImageView.frame.size.height +  self.pPoiImageView.frame.origin.y + innerMargin.top;
     CGSize shareImageSize = self.pShareImageView.frame.size;
     
     
-    self.pShareImageView.frame = CGRectMake(innerMargin.left + outerMargin.right,
-                                            shareOffset,
+    self.pShareImageView.frame = CGRectMake(shareOffsetX ,
+                                            shareOffsetY ,
                                             shareImageSize.width,
                                             shareImageSize.height);
     
-    self.pShareLabel.frame = CGRectMake( self.pShareImageView.frame.origin.x + shareImageSize.width,
-                                        shareOffset,
+    self.pShareLabel.frame = CGRectMake( self.pShareImageView.frame.origin.x + shareImageSize.width + outerMargin.left,
+                                        shareOffsetY,
                                         45,
                                         shareImageSize.height);
     
     
     CGFloat switchWidth = 40;
-    self.pShareSwitch.frame = CGRectMake(self.frame.size.width - innerMargin.right - outerMargin.right - switchWidth,
-                                      shareOffset,
+    self.pShareSwitch.frame = CGRectMake(self.frame.size.width - innerMargin.right - switchWidth,
+                                      shareOffsetY,
                                       switchWidth,
                                       shareImageSize.height);
     
     
-    CGFloat termsX = self.pShareLabel.frame.origin.x + self.pShareLabel.frame.size.width;
+    CGFloat termsX = self.pShareLabel.frame.origin.x + self.pShareLabel.frame.size.width + outerMargin.left;
     self.pTermsButton.frame = CGRectMake(termsX,
-                                         shareOffset,
+                                         shareOffsetY,
                                          self.pShareSwitch.frame.origin.x - termsX - outerMargin.right,
                                          shareImageSize.height);
     
