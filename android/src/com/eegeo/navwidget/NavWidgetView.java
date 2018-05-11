@@ -48,6 +48,8 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_navWidget.getObserver().setNavModel(m_model);
 
         m_observer = new WrldNavModelObserver();
+        m_observer.observeProperty(WrldNavModel.WrldNavModelProperty.SelectedDirectionIndex);
+        m_observer.observeProperty(WrldNavModel.WrldNavModelProperty.CurrentNavMode);
         m_observer.setListener(this);
         m_observer.setNavModel(m_model);
     }
@@ -111,6 +113,16 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_model.setCurrentNavMode(WrldNavMode.NotReady);
     }
 
+    public void setCurrentDirectionIndex(int directionIndex)
+    {
+        m_model.setCurrentDirectionIndex(directionIndex);
+    }
+
+    public void setRemainingRouteDurationSeconds(double remainingRouteDurationSeconds)
+    {
+        m_model.setRemainingRouteDurationSeconds(remainingRouteDurationSeconds);
+    }
+
     public void showNavWidgetView()
     {
         m_model.sendNavEvent(WrldNavEvent.WidgetAnimateIn);
@@ -156,7 +168,15 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     @Override
     public void onPropertyChanged(WrldNavModel.WrldNavModelProperty wrldNavModelProperty)
     {
-
+        switch (wrldNavModelProperty)
+        {
+            case SelectedDirectionIndex:
+                NavWidgetViewJniMethods.SelectedDirectionIndexChanged(m_nativeCallerPointer, m_model.getSelectedDirectionIndex());
+                break;
+            case CurrentNavMode:
+                NavWidgetViewJniMethods.CurrentNavModeChanged(m_nativeCallerPointer, m_model.getCurrentNavMode());
+                break;
+        }
     }
 
     @Override
@@ -182,6 +202,19 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
             case StartEndLocationsSwapped:
                 NavWidgetViewJniMethods.StartEndLocationsSwapped(m_nativeCallerPointer);
                 break;
+            case StartEndButtonClicked:
+            {
+                switch (m_model.getCurrentNavMode())
+                {
+                    case Ready:
+                        m_model.setCurrentNavMode(WrldNavMode.Active);
+                        break;
+                    case Active:
+                        m_model.setCurrentNavMode(WrldNavMode.Ready);
+                        break;
+                }
+                break;
+            }
         }
     }
 }

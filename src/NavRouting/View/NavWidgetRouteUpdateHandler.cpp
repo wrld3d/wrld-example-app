@@ -19,19 +19,25 @@ namespace ExampleApp
             {
                 Eegeo::Routes::Webservice::RoutingQueryWaypoint GetWaypoint(const SdkModel::NavRoutingLocationModel& locationModel)
                 {
-
                     return Eegeo::Routes::Webservice::RoutingQueryWaypoint
                             {
-                                   locationModel.GetLatLon(),
-                                   locationModel.GetIsIndoors(),
-                                   locationModel.GetIndoorMapFloorId()
-                           };
+                                locationModel.GetLatLon(),
+                                locationModel.GetIsIndoors(),
+                                locationModel.GetIndoorMapFloorId()
+                        };
                 }
+
+                
 
                 std::string GetIconNameFromType(const std::string& directionType, const std::string& directionModifier)
                 {
                     std::string type = directionType;
                     std::string modifier = directionModifier;
+
+                    if(type == "turn" && modifier == "straight")
+                    {
+                        return "straight_ahead";
+                    }
 
                     std::replace(type.begin(), type.end(), ' ', '_');
                     std::replace(modifier.begin(), modifier.end(), ' ', '_');
@@ -137,16 +143,19 @@ namespace ExampleApp
                     , m_endLocationSetCallback(this, &NavWidgetRouteUpdateHandler::OnEndLocationSet)
                     , m_endLocationClearedCallback(this, &NavWidgetRouteUpdateHandler::OnEndLocationCleared)
                     , m_queryCompletedMessageHandler(this, &NavWidgetRouteUpdateHandler::OnRoutingQueryCompleted)
+                    , m_startEndLocationSwappedMessageHandler(this, &NavWidgetRouteUpdateHandler::OnStartEndLocationSwapped)
             {
                 m_navWidgetViewModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_navWidgetViewModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
                 m_navWidgetViewModel.InsertEndLocationSetCallback(m_endLocationSetCallback);
                 m_navWidgetViewModel.InsertEndLocationClearedCallback(m_endLocationClearedCallback);
                 m_messageBus.SubscribeUi(m_queryCompletedMessageHandler);
+                m_messageBus.SubscribeNative(m_startEndLocationSwappedMessageHandler);
             }
 
             NavWidgetRouteUpdateHandler::~NavWidgetRouteUpdateHandler()
             {
+                m_messageBus.UnsubscribeNative(m_startEndLocationSwappedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_queryCompletedMessageHandler);
                 m_navWidgetViewModel.RemoveEndLocationClearedCallback(m_endLocationClearedCallback);
                 m_navWidgetViewModel.RemoveEndLocationSetCallback(m_endLocationSetCallback);
@@ -210,6 +219,15 @@ namespace ExampleApp
             {
                 //Only using first route for now
                 UpdateDirectionsFromRoute(message.GetRouteData()[0]);
+            }
+
+            void NavWidgetRouteUpdateHandler::OnStartEndLocationSwapped(const NavRoutingViewStartEndLocationSwappedMessage& message)
+            {
+                SdkModel::NavRoutingLocationModel tempLocation = m_startLocation;
+                m_startLocation = m_endLocation;
+                m_endLocation = tempLocation;
+
+                UpdateRoute();
             }
         }
     }

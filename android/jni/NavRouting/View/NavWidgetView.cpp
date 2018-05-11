@@ -167,6 +167,28 @@ namespace ExampleApp
                 CallVoidMethod("clearRoute");
             }
 
+            void NavWidgetView::SetCurrentDirection(int directionIndex)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID methodID = env->GetMethodID(m_uiViewClass, "setCurrentDirectionIndex", "(I)V");
+                env->CallVoidMethod(m_uiView, methodID, directionIndex);
+            }
+
+            void NavWidgetView::SetRemainingRouteDuration(double seconds)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID methodID = env->GetMethodID(m_uiViewClass, "setRemainingRouteDurationSeconds", "(D)V");
+                env->CallVoidMethod(m_uiView, methodID, seconds);
+            }
+
             void NavWidgetView::SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation)
             {
                 ASSERT_UI_THREAD
@@ -328,6 +350,46 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_startEndLocationsSwappedCallbacks.ExecuteCallbacks();
+            }
+
+            void NavWidgetView::InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback)
+            {
+                ASSERT_UI_THREAD
+
+                m_selectedDirectionIndexChangedCallbacks.AddCallback(selectedDirectionIndexChangedCallback);
+            }
+
+            void NavWidgetView::RemoveSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback)
+            {
+                ASSERT_UI_THREAD
+
+                m_selectedDirectionIndexChangedCallbacks.RemoveCallback(selectedDirectionIndexChangedCallback);
+            }
+
+            void NavWidgetView::HandleSelectedDirectionIndexChanged(int selectedDirectionIndex)
+            {
+                ASSERT_UI_THREAD
+
+                m_selectedDirectionIndexChangedCallbacks.ExecuteCallbacks(selectedDirectionIndex);
+            }
+
+            void NavWidgetView::InsertCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& currentNavModeChangedCallback)
+            {
+                ASSERT_UI_THREAD
+
+                m_currentNavModeChangedCallbacks.AddCallback(currentNavModeChangedCallback);
+            }
+
+            void NavWidgetView::RemoveCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& currentNavModeChangedCallback)
+            {
+                ASSERT_UI_THREAD
+
+                m_currentNavModeChangedCallbacks.RemoveCallback(currentNavModeChangedCallback);
+            }
+
+            void NavWidgetView::HandleCurrentNavModeChanged(NavRoutingMode mode)
+            {
+                m_currentNavModeChangedCallbacks.ExecuteCallbacks(mode);
             }
 
             jclass NavWidgetView::CreateJavaClass(const std::string& viewClass)

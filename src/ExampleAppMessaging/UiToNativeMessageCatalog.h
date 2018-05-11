@@ -37,6 +37,7 @@
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
 #include "NavRoutingViewPerformedRouteQueryMessage.h"
+#include "NavRoutingViewStartEndLocationSwappedMessage.h"
 
 namespace ExampleApp
 {
@@ -76,6 +77,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationAuthorizationChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingViewPerformedRouteQueryMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingViewStartEndLocationSwappedMessage>
             , private Eegeo::NonCopyable
         {
 
