@@ -1,6 +1,6 @@
 {
     "name": "WRLD App",
-    "eegeo_api_key": "45a96d433218b2451a0f8cf9b5676647",
+    "eegeo_api_key": "",
     "start_location_latitude": 37.7858,
     "start_location_longitude": -122.401,
     "start_location_altitude": 2.7,
@@ -20,7 +20,7 @@
     "yelp_oauth_token": "",
     "yelp_oauth_token_secret": "",
     "geonames_username": "",
-    "eegeo_search_service_url": "https://poi.wrld3d.com/v1.1/",
+    "eegeo_search_service_url": "",
     "mypins_web_service_url": "",
     "mypins_web_service_auth_token": "",
     "mypins_poi_set_id": "",
