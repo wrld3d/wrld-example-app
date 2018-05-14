@@ -42,13 +42,11 @@ namespace ExampleApp
                         SdkModel::NavRouteFormattedInstructions formattedInstructions = SdkModel::NavRouteInstructionHelper::GetFormattedInstructionForStep(
                                 route, sectionIndex, i);
 
-                        Eegeo::TtyHandler::TtyEnabled = true;
-                        // TODO: Should use Location Name for instruction unless it's blank, in which case use the INstruction Direction
-                        // TODO: Using ShortInstructionName just now as need to wire up Instruction Name in widget directions list
+                        bool hasLocationName = !formattedInstructions.GetInstructionLocation().empty();
                         directionsVector.emplace_back(formattedInstructions.GetShortInstructionName(),
                                                       formattedInstructions.GetIconKey(),
-                                                      formattedInstructions.GetShortInstructionName(),
-                                                      formattedInstructions.GetInstructionDirection(),
+                                                      hasLocationName ? formattedInstructions.GetInstructionLocation() : formattedInstructions.GetShortInstructionName(),
+                                                      hasLocationName ? formattedInstructions.GetInstructionDirection() : std::string(),
                                                       step.Path,
                                                       step.IsIndoors,
                                                       step.IndoorId,
