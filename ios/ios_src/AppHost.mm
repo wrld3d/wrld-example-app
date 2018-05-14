@@ -446,8 +446,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(m_piOSLocationService,
                                                                              app.NavUIModule().GetObservableOpenableControl(),
                                                                              app.NavUIModule().GetNavWidgetViewModel(),
-                                                                             m_pNavRoutingModule->GetRouteDrawingController(),
-                                                                             m_pNavRoutingModule->GetRoutingServiceController(),
                                                                              m_messageBus);
     
     

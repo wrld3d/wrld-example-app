@@ -127,6 +127,8 @@ set_xcode_property(${executable_name} CLANG_CXX_LIBRARY "libc++")
 
 set_xcode_property(${executable_name} LD_RUNPATH_SEARCH_PATHS "@executable_path/Frameworks")
 
+set_xcode_property(${executable_name} ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES "YES")
+
 # Test Project Settings
 if (BUILD_SNAPSHOT_TEST)
   set(CMAKE_Swift_COMPILER_FORCED 1)

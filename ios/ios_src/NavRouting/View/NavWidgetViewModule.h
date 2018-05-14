@@ -11,8 +11,6 @@
 #include "BidirectionalBus.h"
 #include "INavWidgetViewModule.h"
 #include "INavWidgetViewModel.h"
-#include "NavWidgetViewRouteUpdateHandler.h"
-#include "NavWidgetViewRouteDrawingHandler.h"
 
 
 namespace Eegeo
@@ -48,18 +46,13 @@ namespace ExampleApp
             private:
                 NavWidgetController* m_pNavWidgetController;
                 NavWidgetView* m_pView ;
-                
-                NavWidgetViewRouteUpdateHandler* m_pNavWidgetViewRouteUpdateHandler;
-                NavWidgetViewRouteDrawingHandler* m_pNavWidgetViewRouteDrawingHandler;
-                
+
                 WRLDNavModel* m_pNavModel;
             
             public:
                 NavWidgetViewModule(Eegeo::iOS::iOSLocationService* iOSLocationService,
                                 ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                 INavWidgetViewModel& viewModel,
-                                ExampleApp::NavRouting::SdkModel::NavRouteDrawingController& routeDrawingController,
-                                ExampleApp::NavRouting::SdkModel::INavRoutingServiceController& routingServiceController,
                                 ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~NavWidgetViewModule();

@@ -84,6 +84,17 @@ namespace ExampleApp
                 [m_pNavModel setNavMode:WRLDNavModeNotReady];
             }
             
+            void NavWidgetView::SetRemainingRouteDuration(double seconds)
+            {
+                [m_pNavModel setRemainingRouteDuration:seconds];
+            }
+            
+            
+            void NavWidgetView::SetCurrentDirection(int currentDirection)
+            {
+                [m_pNavModel setCurrentDirection:(NSInteger)currentDirection];
+            }
+            
             void NavWidgetView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_closedCallbacks.AddCallback(callback);
@@ -164,32 +175,31 @@ namespace ExampleApp
                 m_startEndLocationsSwappedCallbacks.ExecuteCallbacks();
             }
             
-            void NavWidgetView::InsertSelectedDirectionIndexChanged(Eegeo::Helpers::ICallback1<NSInteger>& callback)
+            void NavWidgetView::InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& callback)
             {
-                
+                m_selectedDirectionIndexChangedCallback.AddCallback(callback);
             }
-            void NavWidgetView::RemoveSelectedDirectionIndexChanged(Eegeo::Helpers::ICallback1<NSInteger>& callback)
+            void NavWidgetView::RemoveSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& callback)
             {
-                
+                m_selectedDirectionIndexChangedCallback.RemoveCallback(callback);
             }
-            void NavWidgetView::HandleSelectedDirectionIndexChanged(NSInteger selectedDirection)
+            void NavWidgetView::HandleSelectedDirectionIndexChangedCallback(int selectedDirection)
             {
-                
+                m_selectedDirectionIndexChangedCallback.ExecuteCallbacks(selectedDirection);
             }
-            
-            void NavWidgetView::InsertCurrentNavModeChanged(Eegeo::Helpers::ICallback1<WRLDNavMode>& callback)
+
+            void NavWidgetView::InsertCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& callback)
             {
-                
+                m_currentNavModeChangedCallback.AddCallback(callback);
             }
-            void NavWidgetView::RemoveCurrentNavModeChanged(Eegeo::Helpers::ICallback1<WRLDNavMode>& callback)
+            void NavWidgetView::RemoveCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& callback)
             {
-                
+                m_currentNavModeChangedCallback.RemoveCallback(callback);
             }
-            void NavWidgetView::HandleCurrentNavModeChanged(WRLDNavMode navMode)
+            void NavWidgetView::HandleCurrentNavModeChanged(NavRoutingMode navMode)
             {
-                
+                m_currentNavModeChangedCallback.ExecuteCallbacks(navMode);
             }
-            
             
             void NavWidgetView::SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation)
             {
@@ -221,20 +231,14 @@ namespace ExampleApp
                     [directionsArray addObject:BuildWlrdNavDirectionFromFromNavRoutingDirectionModel(direction)];
                 }
                 
-                
-                
                 return [[WRLDNavRoute alloc] initWithEstimatedRouteDuration:routeModel.GetDuration() directions:directionsArray];
             }
             
             WRLDNavDirection* NavWidgetView::BuildWlrdNavDirectionFromFromNavRoutingDirectionModel(const SdkModel::NavRoutingDirectionModel& directionModel )
             {
-                
                 NSMutableArray<NSValue*>* path = [[NSMutableArray alloc] init];
-                
-                for( auto step : directionModel.GetPath())
-                {
-                    [path addObject:[NSValue valueWithMKCoordinate: CLLocationCoordinate2DMake(step.GetLatitude(), step.GetLongitude())]];
-                }
+
+                //TODO Set up Paths Correctly without Casting Problems otherwise the device wont build when not debuging/Running on a machine.
                 
                 return [[WRLDNavDirection alloc] initWithName: BuildNSStringFromString(directionModel.GetName())
                                                          icon: BuildNSStringFromString(directionModel.GetIcon())

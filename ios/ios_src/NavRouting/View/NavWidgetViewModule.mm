@@ -11,9 +11,6 @@
 
 #include "IOpenableControlViewModel.h"
 
-#include "NavWidgetViewRouteUpdateHandler.h"
-#include "NavWidgetViewRouteDrawingHandler.h"
-
 #include "BidirectionalBus.h"
 
 #include "NavWidgetView.h"
@@ -41,8 +38,6 @@ namespace ExampleApp
             NavWidgetViewModule::NavWidgetViewModule(Eegeo::iOS::iOSLocationService* iOSLocationService,
                                              ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                              INavWidgetViewModel& viewModel,
-                                             ExampleApp::NavRouting::SdkModel::NavRouteDrawingController& routeDrawingController,
-                                             ExampleApp::NavRouting::SdkModel::INavRoutingServiceController& routingServiceController,
                                              ExampleAppMessaging::TMessageBus& messageBus_)
             {
                 
@@ -53,23 +48,17 @@ namespace ExampleApp
                 m_pView = Eegeo_NEW(NavWidgetView)(m_pNavModel);
                 
                 
-                
-                m_pNavWidgetViewRouteUpdateHandler = Eegeo_NEW(NavWidgetViewRouteUpdateHandler)(m_pNavModel,
-                                                                                                routingServiceController);
-                
-                m_pNavWidgetViewRouteDrawingHandler = [[NavWidgetViewRouteDrawingHandler alloc] initWithDrawingController:(&routeDrawingController) journeyModel:m_pNavModel];
-                
                 m_pNavWidgetController = Eegeo_NEW(NavWidgetController)(*m_pView,
                                                                         viewModel,
                                                                         *iOSLocationService,
                                                                         messageBus_);
                
-                
             }
             
             NavWidgetViewModule::~NavWidgetViewModule()
             {
                 delete m_pNavWidgetController;
+                delete m_pView;
             }
             
             UIView& NavWidgetViewModule::GetNavWidgetView() const
@@ -91,11 +80,26 @@ namespace ExampleApp
             {
                 if(keyPath == "selectedDirection")
                 {
-                    m_pView->HandleSelectedDirectionIndexChanged(m_pNavModel.selectedDirection);
+                    m_pView->HandleSelectedDirectionIndexChangedCallback((int)m_pNavModel.selectedDirection);
                 }
                 else if(keyPath == "navMode")
                 {
-                    m_pView->HandleCurrentNavModeChanged(m_pNavModel.navMode);
+                    NavRoutingMode navMode;
+                    
+                    switch(m_pNavModel.navMode)
+                    {
+                        case WRLDNavModeNotReady:
+                            navMode = NavRoutingMode::NotReady;
+                            break;
+                        case WRLDNavModeReady:
+                            navMode = NavRoutingMode::Ready;
+                            break;
+                        case WRLDNavModeActive:
+                            navMode = NavRoutingMode::Active;
+                            break;
+                    }
+                    
+                    m_pView->HandleCurrentNavModeChanged(navMode);
                 }
             }
             
