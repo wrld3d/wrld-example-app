@@ -13,6 +13,7 @@ namespace ExampleApp
             namespace Direction
             {
                 static const char* DestinationReached = "destination reached";
+                static const char* Destination = "destination";
                 static const char* Entrance = "entrance";
                 static const char *Turn = "turn";
                 static const char *Continue = "continue";
@@ -41,6 +42,7 @@ namespace ExampleApp
                 static const char* On = "on";
                 static const char* Via = "via";
                 static const char* To = "to";
+                static const char* At = "at";
             }
 
             namespace Modifiers
@@ -119,7 +121,10 @@ namespace ExampleApp
                     return GetDirectionWithOptionalLocation(ss.str(), Preposition::On, step.Directions.Modifier);
                 }
 
-                std::string GetBasicInstruction(const std::string& type, const std::string& modifier, const std::string& locationName, bool indoors)
+                std::string GetBasicInstruction(const std::string& type,
+                                                const std::string& modifier,
+                                                const std::string& locationName,
+                                                const std::string& prep)
                 {
                     std::stringstream directionStream;
                     directionStream << type;
@@ -129,7 +134,7 @@ namespace ExampleApp
                     }
 
                     return GetDirectionWithOptionalLocation(directionStream.str(),
-                                                            indoors ? Preposition::Into : Preposition::Onto,
+                                                            prep,
                                                             locationName);
                 }
 
@@ -249,14 +254,16 @@ namespace ExampleApp
 
                 if(type == Direction::Arrive)
                 {
-                    if(pNextStep == NULL)
+                    if(pNextStep != NULL)
                     {
-                        type = Direction::Turn;
-                        //return Direction::DestinationReached;
+                        return GetInstructionForApproachingEntrance(step);
                     }
                     else
                     {
-                        return GetInstructionForApproachingEntrance(step);
+                        return GetBasicInstruction(type,
+                                                   modifier,
+                                                   Direction::Destination,
+                                                   Preposition::At);
                     }
                 }
                 else if(type == Direction::Depart)
@@ -270,7 +277,7 @@ namespace ExampleApp
                 return GetBasicInstruction(type,
                                            modifier,
                                            shouldShowLocationName ? step.Name : std::string(),
-                                           step.IsIndoors);
+                                           step.IsIndoors ? Preposition::Into : Preposition::Onto);
             }
 
             std::string NavRouteInstructionHelper::GetIconNameFromType(const std::string& directionType,
@@ -284,6 +291,10 @@ namespace ExampleApp
                     type == Direction::Arrive)
                 {
                     type = Direction::Turn;
+                    if(modifier.empty())
+                    {
+                        modifier = Modifiers::Straight;
+                    }
                 }
 
                 // TODO: Better mapping pass for assets.
