@@ -55,12 +55,4 @@
 @property (nonatomic, retain) UIView* pCompassDialogArrow;
 @property (nonatomic, retain) UIView* pCompassDialogArrowOutline;
 
-@property (nonatomic, retain) UIView* pPinCreationDialogContainer;
-@property (nonatomic, retain) UIView* pPinCreationDialogContent;
-@property (nonatomic, retain) UIView* pPinCreationDialogIcon;
-@property (nonatomic, retain) UILabel* pPinCreationDialogTitle;
-@property (nonatomic, retain) UITextView* pPinCreationDialogDescription;
-@property (nonatomic, retain) UIView* pPinCreationDialogArrow;
-@property (nonatomic, retain) UIView* pPinCreationDialogArrowOutline;
-
 @end
