@@ -8,6 +8,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include "NavRouteInstructionHelper.h"
 
 namespace ExampleApp
 {
@@ -27,103 +28,34 @@ namespace ExampleApp
                         };
                 }
 
-                
-
-                std::string GetIconNameFromType(const std::string& directionType, const std::string& directionModifier)
-                {
-                    std::string type = directionType;
-                    std::string modifier = directionModifier;
-
-                    if(type == "turn" && modifier == "straight")
-                    {
-                        return "straight_ahead";
-                    }
-
-                    std::replace(type.begin(), type.end(), ' ', '_');
-                    std::replace(modifier.begin(), modifier.end(), ' ', '_');
-
-                    if (type == "arrive" || type == "depart")
-                    {
-                        return type;
-                    }
-
-                    if (type == "new_name")
-                    {
-                        type = "turn";
-                    }
-
-                    if (type == "turn" && modifier == "straight")
-                    {
-                        return modifier;
-                    }
-
-                    return (type + "_" + modifier);
-                }
-
-                std::string GetCurrentInstructionFromType(const std::string& directionType, const std::string& directionModifier, bool shouldCapitalize = true)
-                {
-                    std::string type = directionType;
-                    std::string modifier = directionModifier;
-
-                    if (type == "new name")
-                    {
-                        type = "turn";
-                    }
-
-                    if (type == "turn" && modifier == "straight")
-                    {
-                        return ((shouldCapitalize ? "Continue " : "continue ") + modifier);
-                    }
-
-                    if (type == "turn" && modifier == "uturn")
-                    {
-                        return ((shouldCapitalize ? "Make a U-turn" : "make a U-turn") + modifier);
-                    }
-
-                    if (shouldCapitalize)
-                    {
-                        type[0] = (char) toupper(type[0]);
-                    }
-
-                    return (type + " " + modifier);
-                }
-
                 std::vector<SdkModel::NavRoutingDirectionModel> GetDirectionsFromRouteData(const Eegeo::Routes::Webservice::RouteData& route)
                 {
                     std::vector<SdkModel::NavRoutingDirectionModel> directionsVector;
 
+                    int sectionIndex = 0;
                     for (auto& section: route.Sections)
                     {
                         int count = static_cast<int>(section.Steps.size());
                         for (int i=0; i<count; i++)
                         {
                             auto& step = section.Steps[i];
-                            auto& directions = step.Directions;
 
-                            std::string name = GetCurrentInstructionFromType(directions.Type, directions.Modifier);
-                            std::ostringstream directionStringStream;
-                            directionStringStream << (int) step.Distance << "m - " << name;
-                            std::string currentInstruction = directionStringStream.str();
-                            std::string nextInstruction = "Arrived at destination.";
+                            SdkModel::NavRouteFormattedInstructions formattedInstructions = SdkModel::NavRouteInstructionHelper::GetFormattedInstructionForStep(
+                                    route, sectionIndex, i);
 
-                            if ((i+1)<count)
-                            {
-                                auto& nextStep = section.Steps[i+1];
-                                auto& nextDirection = nextStep.Directions;
-
-                                nextInstruction = "Then " + GetCurrentInstructionFromType(nextDirection.Type, nextDirection.Modifier, false);
-                            }
-
-                            directionsVector.emplace_back(currentInstruction,
-                                                          GetIconNameFromType(directions.Type, directions.Modifier),
-                                                          currentInstruction,
-                                                          nextInstruction,
+                            bool hasLocationName = !formattedInstructions.GetInstructionLocation().empty();
+                            directionsVector.emplace_back(formattedInstructions.GetShortInstructionName(),
+                                                          formattedInstructions.GetIconKey(),
+                                                          hasLocationName ? formattedInstructions.GetInstructionLocation() : formattedInstructions.GetShortInstructionName(),
+                                                          hasLocationName ? formattedInstructions.GetInstructionDirection() : std::string(),
                                                           step.Path,
                                                           step.IsIndoors,
                                                           step.IndoorId,
                                                           step.IndoorFloorId,
                                                           step.IsMultiFloor);
                         }
+
+                        sectionIndex++;
                     }
 
                     return directionsVector;

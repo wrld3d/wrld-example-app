@@ -3,6 +3,8 @@ set(headers ${headers} ../src/NavRouting/SdkModel
 set(currsources
   ../src/NavRouting/SdkModel/CMakeLists.txt
   ../src/NavRouting/SdkModel/INavRoutingServiceController.h
+  ../src/NavRouting/SdkModel/NavRouteInstructionHelper.cpp
+  ../src/NavRouting/SdkModel/NavRouteInstructionHelper.h
   ../src/NavRouting/SdkModel/NavRoutingServiceController.cpp
   ../src/NavRouting/SdkModel/NavRoutingServiceController.h
   ../src/NavRouting/SdkModel/NavRouteDrawingVertexData.cpp
