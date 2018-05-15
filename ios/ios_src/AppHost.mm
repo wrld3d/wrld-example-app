@@ -212,9 +212,6 @@ AppHost::AppHost(
         m_piOSAutomatedScreenshotController = Eegeo_NEW(ExampleApp::Automation::SdkModel::iOSAutomatedScreenshotController)(m_screenshotService, *screenshotController);
     }
     
-    Eegeo::Modules::RoutesModule& routesModule = m_pApp->World().GetRoutesModule();
-    m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(routesModule.GetRouteService(), routesModule.GetRoutingWebservice());
-    
     CreateApplicationViewModules(screenProperties);
 
     m_pAppInputDelegate = Eegeo_NEW(AppInputDelegate)(*m_pApp, m_viewController, screenProperties.GetScreenWidth(), screenProperties.GetScreenHeight(), screenProperties.GetPixelScale());
@@ -236,9 +233,6 @@ AppHost::~AppHost()
 
     Eegeo_DELETE m_pAppInputDelegate;
     m_pAppInputDelegate = NULL;
-
-    Eegeo_DELETE m_pNavRoutingModule;
-    m_pNavRoutingModule = NULL;
     
     DestroyApplicationViewModules();
     
@@ -441,12 +435,10 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                  *m_pURLRequestHandler,
                                                                                  m_pApp->GetApplicationConfiguration().TimerSurveyUrl());
     
-    
-    
-    m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(m_piOSLocationService,
-                                                                             app.NavUIModule().GetObservableOpenableControl(),
-                                                                             app.NavUIModule().GetNavWidgetViewModel(),
-                                                                             m_messageBus);
+    const ExampleApp::NavRouting::View::NavUIModule& navUIModule = app.NavUIModule();
+    m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(navUIModule.GetObservableOpenableControl(),
+                                                                                      navUIModule.GetNavWidgetViewModel(),
+                                                                                      m_messageBus);
     
     
     // 3d map view layer.

@@ -50,10 +50,9 @@ namespace ExampleApp
                 WRLDNavModel* m_pNavModel;
             
             public:
-                NavWidgetViewModule(Eegeo::iOS::iOSLocationService* iOSLocationService,
-                                ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
-                                INavWidgetViewModel& viewModel,
-                                ExampleAppMessaging::TMessageBus& messageBus);
+                NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
+                                    INavWidgetViewModel& viewModel,
+                                    ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~NavWidgetViewModule();
                 
