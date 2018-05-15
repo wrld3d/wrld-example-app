@@ -20,7 +20,7 @@
 
 First, download the appropriate WRLD Android SDK by running the following command in the root of the repository:
 
-*   `./update.platform.sh -p android -v NNNN` where NNNN is the build number of the platform SDK.
+*   `./update.platform.sh -p android -v NNNN` where NNNN is the build number of the WRLD platform SDK. If omitted, the most recent WRLD platform SDK will be used.
 
 ### Setting up and building the project
 
@@ -36,13 +36,14 @@ To build a local release build, define `versionCode` and `versionName` in [build
 
 This repository includes build scripts for automated builds.  Note that Android Studio must still be installed.
 To build from the command line at the root of this repository:
-1. `./update.platform.sh -p android`
+1. `./update.platform.sh -p android -v $WRLD_SDK_BUILD`
 2. `./build-scripts/encrypt_config.sh -p android -e $ENVIRONMENT -j $CONFIG_PASSWORD` 
 3. `./build-scripts/android/create_apk_file_gradle.step.sh ./android/ $VERSION_CODE $VERSION_STRING `
 where the parameters are :
 
 Parameter | Description
 ----------|------------
+WRLD_SDK_BUILD | Build number of the WRLD platform SDK
 ENVIRONMENT | One of `staging`, `production`, or `release` 
 CONFIG_PASSWORD | Password used to derive encryption key
 VERSION_CODE | Android version code, see [android docs](https://developer.android.com/studio/publish/versioning)
