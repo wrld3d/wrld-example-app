@@ -6,11 +6,18 @@
 #include "Types.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
-#include "ILocationService.h"
 #include "INavWidgetView.h"
 #include "INavWidgetViewModel.h"
 #include "NavRoutingLocationModel.h"
-#include "SearchResultPoiDirectionsButtonClickedMessage.h"
+#include "NavRoutingViewOpenMessage.h"
+#include "NavRoutingStartLocationSetMessage.h"
+#include "NavRoutingStartLocationClearedMessage.h"
+#include "NavRoutingEndLocationSetMessage.h"
+#include "NavRoutingEndLocationClearedMessage.h"
+#include "NavRoutingRouteSetMessage.h"
+#include "NavRoutingRouteClearedMessage.h"
+#include "NavRoutingCurrentDirectionSetMessage.h"
+#include "NavRoutingRemainingRouteDurationSetMessage.h"
 
 namespace ExampleApp
 {
@@ -23,7 +30,6 @@ namespace ExampleApp
             private:
                 INavWidgetView& m_view;
                 INavWidgetViewModel& m_viewModel;
-                Eegeo::Location::ILocationService& m_locationService;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_closeButtonCallback;
@@ -36,15 +42,16 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingMode> m_currentNavModeChangedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewOpenedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewClosedCallback;
-                Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingLocationModel&> m_startLocationSetCallback;
-                Eegeo::Helpers::TCallback0<NavWidgetController> m_startLocationClearedCallback;
-                Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingLocationModel&> m_endLocationSetCallback;
-                Eegeo::Helpers::TCallback0<NavWidgetController> m_endLocationClearedCallback;
-                Eegeo::Helpers::TCallback1<NavWidgetController, const SdkModel::NavRoutingRouteModel&> m_routeSetCallback;
-                Eegeo::Helpers::TCallback0<NavWidgetController> m_routeClearedCallback;
-                Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_currentDirectionSetCallback;
-                Eegeo::Helpers::TCallback1<NavWidgetController, const double> m_remainingRouteDurationSetCallback;
-                Eegeo::Helpers::TCallback1<NavWidgetController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingStartLocationSetMessage&> m_startLocationSetMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingStartLocationClearedMessage&> m_startLocationClearedMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingEndLocationSetMessage&> m_endLocationSetMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingEndLocationClearedMessage&> m_endLocationClearedMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRouteSetMessage&> m_routeSetMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRouteClearedMessage&> m_routeClearedMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingCurrentDirectionSetMessage&> m_currentDirectionSetMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRemainingRouteDurationSetMessage&> m_remainingRouteDurationSetMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingViewOpenMessage&> m_navRoutingViewOpenMessageHandler;
+
 
                 void OnCloseButtonClicked();
 
@@ -64,23 +71,23 @@ namespace ExampleApp
 
                 void OnViewClosed();
 
-                void OnStartLocationSet(const SdkModel::NavRoutingLocationModel& startLocation);
+                void OnStartLocationSet(const NavRoutingStartLocationSetMessage& message);
 
-                void OnStartLocationCleared();
+                void OnStartLocationCleared(const NavRoutingStartLocationClearedMessage& message);
 
-                void OnEndLocationSet(const SdkModel::NavRoutingLocationModel& endLocation);
+                void OnEndLocationSet(const NavRoutingEndLocationSetMessage& message);
 
-                void OnEndLocationCleared();
+                void OnEndLocationCleared(const NavRoutingEndLocationClearedMessage& message);
 
-                void OnRouteSet(const SdkModel::NavRoutingRouteModel& routeModel);
+                void OnRouteSet(const NavRoutingRouteSetMessage& message);
 
-                void OnRouteCleared();
+                void OnRouteCleared(const NavRoutingRouteClearedMessage& message);
 
-                void OnCurrentDirectionSet(const int& directionIndex);
+                void OnCurrentDirectionSet(const NavRoutingCurrentDirectionSetMessage& message);
 
-                void OnRemainingRouteDurationSet(const double& seconds);
+                void OnRemainingRouteDurationSet(const NavRoutingRemainingRouteDurationSetMessage& message);
 
-                void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
+                void OnNavRoutingViewOpen(const NavRoutingViewOpenMessage& message);
 
             protected:
                 INavWidgetView& GetView() { return m_view; }
@@ -91,7 +98,6 @@ namespace ExampleApp
             public:
                 NavWidgetController(INavWidgetView& view,
                                     INavWidgetViewModel& viewModel,
-                                    Eegeo::Location::ILocationService& locationService,
                                     ExampleAppMessaging::TMessageBus& messageBus);
 
                 virtual ~NavWidgetController();

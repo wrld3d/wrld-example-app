@@ -3,9 +3,15 @@
 #pragma once
 
 #include "Types.h"
+#include "BidirectionalBus.h"
 #include "NavRouting.h"
 #include "RouteService.h"
 #include "IRoutingWebservice.h"
+#include "ILocationService.h"
+#include "NavRoutingController.h"
+#include "NavRoutingModel.h"
+#include "NavRouteDrawingController.h"
+#include "NavRoutingServiceController.h"
 
 namespace ExampleApp
 {
@@ -17,18 +23,25 @@ namespace ExampleApp
             {
             public:
                 
-                NavRoutingModule(Eegeo::Routes::RouteService& routeService,
-                                 Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice);
+                NavRoutingModule(PolyLineArgs::IShapeService& shapeService,
+                                 Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
+                                 Eegeo::Location::ILocationService& locationService,
+                                 ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~NavRoutingModule();
-                
-                NavRouteDrawingController& GetRouteDrawingController();
+
+
+                INavRouteDrawingController& GetRouteDrawingController();
                 INavRoutingServiceController& GetRoutingServiceController();
                 
             private:
-                
+
+                NavRoutingModel* m_pNavRoutingModel;
                 NavRouteDrawingController* m_pNavRouteDrawingController;
                 NavRoutingServiceController* m_pNavRoutingServiceController;
+                NavWidgetRouteUpdateHandler* m_pRouteUpdateHandler;
+                NavWidgetRouteDrawingHandler* m_pRouteDrawingHandler;
+                NavRoutingController* m_pRoutingController;
             };
         }
     }

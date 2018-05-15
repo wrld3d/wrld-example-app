@@ -3,11 +3,10 @@
 #pragma once
 
 #include "Types.h"
-#include "Routes.h"
-#include "RouteService.h"
-#include "IdentityRouteThicknessPolicy.h"
-#include "NavRouteDrawingVertexData.h"
+#include "INavRouteDrawingController.h"
 #include "VectorMath.h"
+#include "NavRouting.h"
+#include "NavRoutingDirectionModel.h"
 
 #include <vector>
 #include <unordered_map>
@@ -18,28 +17,38 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class NavRouteDrawingController : private Eegeo::NonCopyable
+            class NavRouteDrawingController : public INavRouteDrawingController, private Eegeo::NonCopyable
             {
             public:
-                NavRouteDrawingController(Eegeo::Routes::RouteService& routeService);
+                NavRouteDrawingController(PolyLineArgs::IShapeService& shapeService);
 
-                ~NavRouteDrawingController();
+                ~NavRouteDrawingController() override;
                 
-                void AddRoute(int routeStep, const std::vector<NavRouteDrawingVertexData>& vertsData, Eegeo::v4 color);
+                void AddRoute(const std::vector<NavRoutingDirectionModel>& directions,
+                              const Eegeo::v4& color) override;
                 
-                void ClearRoute();
+                void ClearRoute() override;
                 
-                void SetRouteColor(int routeStep, Eegeo::v4 color);
+                void SetRouteColor(int routeStep, const Eegeo::v4& color) override;
                 
             private:
-                Eegeo::Routes::Route* BuildRoute(const std::vector<Eegeo::Routes::RouteVertex>& points);
-                
-                Eegeo::Routes::RouteService& m_routeService;
-                std::unordered_map<int, Eegeo::Routes::Route*> m_routes;
-                Eegeo::Routes::Style::Thickness::IdentityRouteThicknessPolicy m_routeThicknessPolicy;
-                
-                float m_halfWidth;
-                float m_velocity;
+                PolyLineArgs::IShapeService& m_shapeService;
+                std::unordered_map<int, std::vector<PolyLineArgs::ShapeModel::IdType>> m_routes;
+
+                void AddLineForRouteDirection(int routeStep,
+                                              const NavRoutingDirectionModel& directionModel,
+                                              const Eegeo::v4& color);
+
+                void AddLinesForFloorTransition(int routeStep,
+                                                const NavRoutingDirectionModel& currentDirection,
+                                                const NavRoutingDirectionModel& directionBefore,
+                                                const NavRoutingDirectionModel& directionAfter,
+                                                const Eegeo::v4& color);
+
+                PolyLineArgs::ShapeModel::IdType MakeVerticalLine(const NavRoutingDirectionModel& currentDirection,
+                                                                  int floor,
+                                                                  double height,
+                                                                  const Eegeo::v4& color);
             };
         }
     }

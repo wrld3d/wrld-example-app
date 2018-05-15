@@ -28,7 +28,6 @@ namespace ExampleApp
                 NavWidgetViewModule(
                     AndroidNativeState& nativeState,
                     INavWidgetViewModel& navWidgetViewModel,
-                    Eegeo::Location::ILocationService& locationService,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 

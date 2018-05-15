@@ -45,25 +45,15 @@ namespace ExampleApp
             };
             
             NavUIModule::NavUIModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                     Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                     SdkModel::INavRoutingServiceController& navRoutingServiceController,
-                                     ExampleAppMessaging::TMessageBus& messageBus):
+                                     Reaction::View::IReactionControllerModel& reactionControllerModel):
                 d(new Private(identityProvider, reactionControllerModel))
             {
                 m_pNavWidgetViewModel = Eegeo_NEW(NavWidgetViewModel)(identityProvider.GetNextIdentity(),
                                                                        reactionControllerModel);
-
-                m_pRouteUpdateHandler = Eegeo_NEW(NavWidgetRouteUpdateHandler)(*m_pNavWidgetViewModel,
-                                                                               messageBus);
-
-                m_pRouteQueryMessageHandler = Eegeo_NEW(SdkModel::NavRoutingViewPerformedRouteQueryMessageHandler)(navRoutingServiceController,
-                                                                                                                   messageBus);
             }
 
             NavUIModule::~NavUIModule()
             {
-                Eegeo_DELETE m_pRouteQueryMessageHandler;
-                Eegeo_DELETE m_pRouteUpdateHandler;
                 Eegeo_DELETE m_pNavWidgetViewModel;
                 delete d;
             }

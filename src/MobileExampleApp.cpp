@@ -129,6 +129,7 @@
 #include "InteriorHighlightsModule.h"
 #include "IInteriorsHighlightService.h"
 #include "MapsceneModule.h"
+#include "PolylineShapesModule.h"
 
 namespace ExampleApp
 {
@@ -686,14 +687,14 @@ namespace ExampleApp
                                                                                             m_messageBus,
                                                                                             m_metricsService);
 
-        Eegeo::Modules::RoutesModule& routesModule = world.GetRoutesModule();
-        m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(routesModule.GetRouteService(),
-                                                                                            routesModule.GetRoutingWebservice());
+        auto& polylineShapesModule = world.GetShapesModule().GetPolylineShapesModule();
+        m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(polylineShapesModule.GetShapeService(),
+                                                                                            world.GetRoutesModule().GetRoutingWebservice(),
+                                                                                            world.GetLocationService(),
+                                                                                            m_messageBus);
 
         m_pNavUIModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavUIModule)(m_identityProvider,
-															                  m_pReactionControllerModule->GetReactionControllerModel(),
-                                                                              m_pNavRoutingModule->GetRoutingServiceController(),
-                                                                              m_messageBus);
+															                  m_pReactionControllerModule->GetReactionControllerModel());
   
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 

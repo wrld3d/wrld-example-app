@@ -25,6 +25,7 @@
 #include "GpsMarkerVisibilityMessage.h"
 #include "InitialExperienceIntroDismissedMessage.h"
 #include "SearchResultPoiPinToggledMessage.h"
+#include "SearchResultPoiDirectionsButtonClickedMessage.h"
 #include "SearchResultPoiViewOpenedMessage.h"
 #include "SearchResultPoiViewClosedMessage.h"
 #include "InteriorsExplorerSelectFloorMessage.h"
@@ -36,8 +37,13 @@
 #include "SurveyTimeRequirementMetMessage.h"
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
-#include "NavRoutingViewPerformedRouteQueryMessage.h"
 #include "NavRoutingViewStartEndLocationSwappedMessage.h"
+#include "NavRoutingSelectStartLocationClickedMessage.h"
+#include "NavRoutingSelectEndLocationClickedMessage.h"
+#include "NavRoutingEndLocationClearClickedMessage.h"
+#include "NavRoutingStartLocationClearClickedMessage.h"
+#include "NavRoutingSelectedDirectionChangedMessage.h"
+#include "NavRoutingViewClosedMessage.h"
 
 namespace ExampleApp
 {
@@ -65,6 +71,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<GpsMarker::GpsMarkerVisibilityMessage>
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::InitialExperienceIntroDismissedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewOpenedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewClosedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerSelectFloorMessage>
@@ -76,8 +83,13 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Surveys::SurveyTimeRequirementMetMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsPosition::InteriorsLocationAuthorizationChangedMessage>
-            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingViewPerformedRouteQueryMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingViewStartEndLocationSwappedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingSelectStartLocationClickedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingSelectEndLocationClickedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingStartLocationClearClickedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingEndLocationClearClickedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingSelectedDirectionChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingViewClosedMessage>
             , private Eegeo::NonCopyable
         {
 

@@ -8,6 +8,16 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            NavRoutingLocationModel::NavRoutingLocationModel()
+            : m_name("")
+            , m_latLon(Eegeo::Space::LatLong(0,0))
+            , m_isIndoors(false)
+            , m_indoorMapId(Eegeo::Resources::Interiors::InteriorId())
+            , m_indoorMapFloorId(0)
+            {
+
+            }
+
             NavRoutingLocationModel::NavRoutingLocationModel(const std::string& name,
                                                              const Eegeo::Space::LatLong& latLon)
             : NavRoutingLocationModel(name, latLon, false, Eegeo::Resources::Interiors::InteriorId(), 0)
