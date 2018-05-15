@@ -4,7 +4,9 @@
 #include "NavRoutingViewClosedMessage.h"
 #include "NavRoutingSelectStartLocationClickedMessage.h"
 #include "NavRoutingSelectEndLocationClickedMessage.h"
-#include "NavRoutingViewStartEndLocationSwappedMessage.h"
+#include "NavRoutingStartLocationClearClickedMessage.h"
+#include "NavRoutingEndLocationClearClickedMessage.h"
+#include "NavRoutingSelectedDirectionChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -35,7 +37,6 @@ namespace ExampleApp
 
             void NavWidgetController::OnCloseButtonClicked()
             {
-                m_viewModel.ClearRoute();
                 m_viewModel.Close();
             }
 
@@ -53,23 +54,22 @@ namespace ExampleApp
 
             void NavWidgetController::OnStartLocationClearButtonClicked()
             {
-                m_viewModel.ClearStartLocation();
+                m_messageBus.Publish(NavRoutingStartLocationClearClickedMessage());
             }
 
             void NavWidgetController::OnEndLocationClearButtonClicked()
             {
-                m_viewModel.ClearEndLocation();
+                m_messageBus.Publish(NavRoutingEndLocationClearClickedMessage());
             }
 
             void NavWidgetController::OnStartEndLocationsSwapped()
             {
-                m_viewModel.ClearRoute();
                 m_messageBus.Publish(NavRoutingViewStartEndLocationSwappedMessage());
             }
 
             void NavWidgetController::OnSelectedDirectionIndexChanged(const int& selectedDirection)
             {
-                //TODO route drawing selection change handling
+                m_messageBus.Publish(NavRoutingSelectedDirectionChangedMessage(selectedDirection));
             }
 
             void NavWidgetController::OnCurrentNavModeChanged(const NavRoutingMode& navRoutingMode)
@@ -77,84 +77,85 @@ namespace ExampleApp
                 //TODO turn by turn nav mode change handling
             }
 
-            void NavWidgetController::OnStartLocationSet(const SdkModel::NavRoutingLocationModel& startLocation)
+            void NavWidgetController::OnStartLocationSet(const NavRoutingStartLocationSetMessage& message)
             {
-                m_view.SetStartLocation(startLocation);
+                m_view.SetStartLocation(message.GetStartLocation());
             }
 
-            void NavWidgetController::OnStartLocationCleared()
+            void NavWidgetController::OnStartLocationCleared(const NavRoutingStartLocationClearedMessage& message)
             {
                 m_view.ClearStartLocation();
             }
 
-            void NavWidgetController::OnEndLocationSet(const SdkModel::NavRoutingLocationModel& endLocation)
+            void NavWidgetController::OnEndLocationSet(const NavRoutingEndLocationSetMessage& message)
             {
-                m_view.SetEndLocation(endLocation);
+                m_view.SetEndLocation(message.GetEndLocation());
             }
 
-            void NavWidgetController::OnEndLocationCleared()
+            void NavWidgetController::OnEndLocationCleared(const NavRoutingEndLocationClearedMessage& message)
             {
                 m_view.ClearEndLocation();
             }
 
-            void NavWidgetController::OnRouteSet(const SdkModel::NavRoutingRouteModel& routeModel)
+            void NavWidgetController::OnRouteSet(const NavRoutingRouteSetMessage& message)
             {
-                m_view.SetRoute(routeModel);
+                m_view.SetRoute(message.GetRouteModel());
             }
 
-            void NavWidgetController::OnRouteCleared()
+            void NavWidgetController::OnRouteCleared(const NavRoutingRouteClearedMessage& message)
             {
                 m_view.ClearRoute();
             }
 
-            void NavWidgetController::OnCurrentDirectionSet(const int& directionIndex)
+            void NavWidgetController::OnCurrentDirectionSet(const NavRoutingCurrentDirectionSetMessage& message)
             {
-                m_view.SetCurrentDirection(directionIndex);
+                m_view.SetCurrentDirection(message.GetDirectionIndex());
             }
 
-            void NavWidgetController::OnRemainingRouteDurationSet(const double& seconds)
+            void NavWidgetController::OnRemainingRouteDurationSet(const NavRoutingRemainingRouteDurationSetMessage& message)
             {
-                m_view.SetRemainingRouteDuration(seconds);
+                m_view.SetRemainingRouteDuration(message.GetRemainingRouteDuration());
             }
 
-            void NavWidgetController::OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message)
+            void NavWidgetController::OnNavRoutingViewOpen(const NavRoutingViewOpenMessage& message)
             {
                 if (!m_viewModel.IsOpen())
                 {
                     m_viewModel.Open();
 
-                    const Search::SdkModel::SearchResultModel& searchResultModel = message.GetModel();
-                    m_viewModel.SetEndLocation(SdkModel::NavRoutingLocationModel(searchResultModel.GetTitle(),
-                                                                                 searchResultModel.GetLocation(),
-                                                                                 searchResultModel.IsInterior(),
-                                                                                 searchResultModel.GetBuildingId(),
-                                                                                 searchResultModel.GetFloor()));
+                    //Resetting view
+                    m_view.ClearRoute();
+                    m_view.SetRemainingRouteDuration(0);
 
-                    if(m_locationService.GetIsAuthorized())
+                    const SdkModel::INavRoutingModel& navRoutingModel = message.GetNavRoutingModel();
+
+                    SdkModel::NavRoutingLocationModel startLocation, endLocation;
+
+                    if (navRoutingModel.TryGetStartLocation(startLocation))
                     {
-                        Eegeo::Space::LatLong currentLocation = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
-                        if(m_locationService.GetLocation(currentLocation))
-                        {
-                            int indoorMapFloorId = 0;
-                            m_locationService.GetFloorIndex(indoorMapFloorId);
+                        m_view.SetStartLocation(startLocation);
+                    }
+                    else
+                    {
+                        m_view.ClearStartLocation();
+                    }
 
-                            m_viewModel.SetStartLocation(SdkModel::NavRoutingLocationModel("Current Location",
-                                                                                           currentLocation,
-                                                                                           m_locationService.IsIndoors(),
-                                                                                           m_locationService.GetInteriorId(),
-                                                                                           indoorMapFloorId));
-                        }
+                    if (navRoutingModel.TryGetEndLocation(endLocation))
+                    {
+                        m_view.SetEndLocation(endLocation);
+                    }
+                    else
+                    {
+                        m_view.ClearEndLocation();
                     }
                 }
             }
 
             NavWidgetController::NavWidgetController(INavWidgetView& view,
                                                      INavWidgetViewModel& viewModel,
-                                                     Eegeo::Location::ILocationService& locationService,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
                     : m_view(view)
                     , m_viewModel(viewModel)
-                    , m_locationService(locationService)
                     , m_messageBus(messageBus)
                     , m_closeButtonCallback(this, &NavWidgetController::OnCloseButtonClicked)
                     , m_startLocationClickedCallback(this, &NavWidgetController::OnStartLocationClicked)
@@ -166,15 +167,15 @@ namespace ExampleApp
                     , m_currentNavModeChangedCallback(this, &NavWidgetController::OnCurrentNavModeChanged)
                     , m_viewOpenedCallback(this, &NavWidgetController::OnViewOpened)
                     , m_viewClosedCallback(this, &NavWidgetController::OnViewClosed)
-                    , m_startLocationSetCallback(this, &NavWidgetController::OnStartLocationSet)
-                    , m_startLocationClearedCallback(this, &NavWidgetController::OnStartLocationCleared)
-                    , m_endLocationSetCallback(this, &NavWidgetController::OnEndLocationSet)
-                    , m_endLocationClearedCallback(this, &NavWidgetController::OnEndLocationCleared)
-                    , m_routeSetCallback(this, &NavWidgetController::OnRouteSet)
-                    , m_routeClearedCallback(this, &NavWidgetController::OnRouteCleared)
-                    , m_currentDirectionSetCallback(this, &NavWidgetController::OnCurrentDirectionSet)
-                    , m_remainingRouteDurationSetCallback(this, &NavWidgetController::OnRemainingRouteDurationSet)
-                    , m_directionsButtonClickedMessageHandler(this, &NavWidgetController::OnDirectionsButtonClicked)
+                    , m_startLocationSetMessageHandler(this, &NavWidgetController::OnStartLocationSet)
+                    , m_startLocationClearedMessageHandler(this, &NavWidgetController::OnStartLocationCleared)
+                    , m_endLocationSetMessageHandler(this, &NavWidgetController::OnEndLocationSet)
+                    , m_endLocationClearedMessageHandler(this, &NavWidgetController::OnEndLocationCleared)
+                    , m_routeSetMessageHandler(this, &NavWidgetController::OnRouteSet)
+                    , m_routeClearedMessageHandler(this, &NavWidgetController::OnRouteCleared)
+                    , m_currentDirectionSetMessageHandler(this, &NavWidgetController::OnCurrentDirectionSet)
+                    , m_remainingRouteDurationSetMessageHandler(this, &NavWidgetController::OnRemainingRouteDurationSet)
+                    , m_navRoutingViewOpenMessageHandler(this, &NavWidgetController::OnNavRoutingViewOpen)
             {
                 m_view.InsertClosedCallback(m_closeButtonCallback);
                 m_view.InsertStartLocationClickedCallback(m_startLocationClickedCallback);
@@ -186,28 +187,28 @@ namespace ExampleApp
                 m_view.InsertCurrentNavModeChangedCallback(m_currentNavModeChangedCallback);
                 m_viewModel.InsertOpenedCallback(m_viewOpenedCallback);
                 m_viewModel.InsertClosedCallback(m_viewClosedCallback);
-                m_viewModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
-                m_viewModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
-                m_viewModel.InsertEndLocationSetCallback(m_endLocationSetCallback);
-                m_viewModel.InsertEndLocationClearedCallback(m_endLocationClearedCallback);
-                m_viewModel.InsertRouteSetCallback(m_routeSetCallback);
-                m_viewModel.InsertRouteClearedCallback(m_routeClearedCallback);
-                m_viewModel.InsertCurrentDirectionSetCallback(m_currentDirectionSetCallback);
-                m_viewModel.InsertRemainingRouteDurationSetCallback(m_remainingRouteDurationSetCallback);
-                m_messageBus.SubscribeUi(m_directionsButtonClickedMessageHandler);
+                m_messageBus.SubscribeUi(m_startLocationSetMessageHandler);
+                m_messageBus.SubscribeUi(m_startLocationClearedMessageHandler);
+                m_messageBus.SubscribeUi(m_endLocationSetMessageHandler);
+                m_messageBus.SubscribeUi(m_endLocationClearedMessageHandler);
+                m_messageBus.SubscribeUi(m_routeSetMessageHandler);
+                m_messageBus.SubscribeUi(m_routeClearedMessageHandler);
+                m_messageBus.SubscribeUi(m_currentDirectionSetMessageHandler);
+                m_messageBus.SubscribeUi(m_remainingRouteDurationSetMessageHandler);
+                m_messageBus.SubscribeUi(m_navRoutingViewOpenMessageHandler);
             }
 
             NavWidgetController::~NavWidgetController()
             {
-                m_messageBus.UnsubscribeUi(m_directionsButtonClickedMessageHandler);
-                m_viewModel.RemoveRemainingRouteDurationSetCallback(m_remainingRouteDurationSetCallback);
-                m_viewModel.RemoveCurrentDirectionSetCallback(m_currentDirectionSetCallback);
-                m_viewModel.RemoveRouteClearedCallback(m_routeClearedCallback);
-                m_viewModel.RemoveRouteSetCallback(m_routeSetCallback);
-                m_viewModel.RemoveEndLocationClearedCallback(m_endLocationClearedCallback);
-                m_viewModel.RemoveEndLocationSetCallback(m_endLocationSetCallback);
-                m_viewModel.RemoveStartLocationClearedCallback(m_startLocationClearedCallback);
-                m_viewModel.RemoveStartLocationSetCallback(m_startLocationSetCallback);
+                m_messageBus.UnsubscribeUi(m_navRoutingViewOpenMessageHandler);
+                m_messageBus.UnsubscribeUi(m_remainingRouteDurationSetMessageHandler);
+                m_messageBus.UnsubscribeUi(m_currentDirectionSetMessageHandler);
+                m_messageBus.UnsubscribeUi(m_routeClearedMessageHandler);
+                m_messageBus.UnsubscribeUi(m_routeSetMessageHandler);
+                m_messageBus.UnsubscribeUi(m_endLocationClearedMessageHandler);
+                m_messageBus.UnsubscribeUi(m_endLocationSetMessageHandler);
+                m_messageBus.UnsubscribeUi(m_startLocationClearedMessageHandler);
+                m_messageBus.UnsubscribeUi(m_startLocationSetMessageHandler);
                 m_viewModel.RemoveClosedCallback(m_viewClosedCallback);
                 m_viewModel.RemoveOpenedCallback(m_viewOpenedCallback);
                 m_view.RemoveCurrentNavModeChangedCallback(m_currentNavModeChangedCallback);

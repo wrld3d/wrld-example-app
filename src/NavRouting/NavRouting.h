@@ -4,6 +4,7 @@
 
 #include "ICallback.h"
 #include "RouteData.h"
+#include "PolylineShapeArgs.h"
 
 #include <vector>
 
@@ -14,12 +15,16 @@ namespace ExampleApp
         namespace SdkModel
         {
             struct NavRouteDrawingVertexData;
-            
+
+            class INavRoutingModel;
             class NavRoutingModule;
-            class NavRouteDrawingController;
+            class INavRouteDrawingController;
             class INavRoutingServiceController;
-            class NavRoutingServiceController;
-            
+            class NavWidgetRouteUpdateHandler;
+            class NavWidgetRouteDrawingHandler;
+            class NavRoutingController;
+
+            typedef Eegeo::Shapes::Polylines::PolylineShapeArgs PolyLineArgs;
             typedef Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Routes::Webservice::RouteData>> RoutesReceivedCallback;
         }
 

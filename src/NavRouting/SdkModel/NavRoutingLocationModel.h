@@ -19,6 +19,8 @@ namespace ExampleApp
             class NavRoutingLocationModel
             {
             public:
+                NavRoutingLocationModel();
+
                 NavRoutingLocationModel(const std::string& name,
                                         const Eegeo::Space::LatLong& latLon);
 

@@ -8,6 +8,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            NavRoutingRouteModel::NavRoutingRouteModel()
+            : m_duration(0)
+            , m_distance(0)
+            {
+
+            }
+
             NavRoutingRouteModel::NavRoutingRouteModel(const double duration,
                                                        const double distance,
                                                        const std::vector<NavRoutingDirectionModel>& directions)

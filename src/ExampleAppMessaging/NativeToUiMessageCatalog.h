@@ -53,8 +53,15 @@
 #include "SelectMenuItemMessage.h"
 #include "ClosePoiMessage.h"
 #include "OpenSearchMenuSectionMessage.h"
-#include "SearchResultPoiDirectionsButtonClickedMessage.h"
-#include "NavRoutingQueryCompletedMessage.h"
+#include "NavRoutingViewOpenMessage.h"
+#include "NavRoutingStartLocationSetMessage.h"
+#include "NavRoutingStartLocationClearedMessage.h"
+#include "NavRoutingEndLocationSetMessage.h"
+#include "NavRoutingEndLocationClearedMessage.h"
+#include "NavRoutingRouteSetMessage.h"
+#include "NavRoutingRouteClearedMessage.h"
+#include "NavRoutingCurrentDirectionSetMessage.h"
+#include "NavRoutingRemainingRouteDurationSetMessage.h"
 
 namespace ExampleApp
 {
@@ -85,7 +92,6 @@ namespace ExampleApp
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::ShowInitialExperienceIntroMessage>
             , public Eegeo::Messaging::CatalogBinding<Options::CompletedCacheClearMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewImageDownloadCompletedMessage>
-            , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::SetWatermarkVisibilityMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkModelChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkAlignmentStateChangedMessage>
@@ -110,7 +116,15 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Automation::SelectMenuItemMessage>
             , public Eegeo::Messaging::CatalogBinding<Automation::ClosePoiMessage>
             , public Eegeo::Messaging::CatalogBinding<Automation::OpenSearchMenuSectionMessage>
-            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingQueryCompletedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingViewOpenMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingStartLocationSetMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingStartLocationClearedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingEndLocationSetMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingEndLocationClearedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRouteSetMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRouteClearedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingCurrentDirectionSetMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRemainingRouteDurationSetMessage>
             , private Eegeo::NonCopyable
         {
 

@@ -7,9 +7,6 @@
 #include "IIdentity.h"
 #include "Reaction.h"
 #include "INavWidgetViewModel.h"
-#include "NavWidgetRouteUpdateHandler.h"
-#include "INavRoutingServiceController.h"
-#include "NavRoutingViewPerformedRouteQueryMessageHandler.h"
 
 namespace ExampleApp
 {
@@ -21,9 +18,7 @@ namespace ExampleApp
             {
             public:
                 NavUIModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                            Reaction::View::IReactionControllerModel& reactionControllerModel,
-                            SdkModel::INavRoutingServiceController& navRoutingServiceController,
-                            ExampleAppMessaging::TMessageBus& messageBus);
+                            Reaction::View::IReactionControllerModel& reactionControllerModel);
 
                 ~NavUIModule();
 
@@ -36,8 +31,6 @@ namespace ExampleApp
                 Private* d;
 
                 INavWidgetViewModel* m_pNavWidgetViewModel;
-                NavWidgetRouteUpdateHandler* m_pRouteUpdateHandler;
-                SdkModel::NavRoutingViewPerformedRouteQueryMessageHandler* m_pRouteQueryMessageHandler;
             };
         }
     }

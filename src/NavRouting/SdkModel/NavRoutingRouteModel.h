@@ -7,6 +7,8 @@
 #include "InteriorId.h"
 #include "NavRoutingDirectionModel.h"
 
+#include <vector>
+
 namespace ExampleApp
 {
     namespace NavRouting
@@ -16,6 +18,8 @@ namespace ExampleApp
             class NavRoutingRouteModel
             {
             public:
+                NavRoutingRouteModel();
+
                 NavRoutingRouteModel(const double duration,
                                      const double distance,
                                      const std::vector<NavRoutingDirectionModel>& directions);
