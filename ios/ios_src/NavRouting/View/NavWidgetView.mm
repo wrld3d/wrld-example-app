@@ -71,17 +71,12 @@ namespace ExampleApp
             
             void NavWidgetView::SetRoute(const SdkModel::NavRoutingRouteModel& routeModel)
             {
-               
                 [m_pNavModel setRoute:BuildWRLDNavRouteFromNavRoutingRouteModel(routeModel)];
-                [m_pNavModel setRemainingRouteDuration:routeModel.GetDuration()];
-                [m_pNavModel setNavMode:WRLDNavModeReady];
             }
             
             void NavWidgetView::ClearRoute()
             {
                 [m_pNavModel setRoute:NULL];
-                [m_pNavModel setRemainingRouteDuration:0];
-                [m_pNavModel setNavMode:WRLDNavModeNotReady];
             }
             
             void NavWidgetView::SetRemainingRouteDuration(double seconds)
@@ -89,6 +84,27 @@ namespace ExampleApp
                 [m_pNavModel setRemainingRouteDuration:seconds];
             }
             
+            void NavWidgetView::SetNavMode(SdkModel::NavRoutingMode mode)
+            {
+                WRLDNavMode navMode;
+                
+                switch (mode)
+                {
+                    case SdkModel::Ready:
+                    navMode = WRLDNavModeReady;
+                    break;
+                    
+                    case SdkModel::Active:
+                    navMode = WRLDNavModeActive;
+                    break;
+                    
+                    default:
+                    navMode = WRLDNavModeNotReady;
+                    break;
+                }
+                
+                [m_pNavModel setNavMode:navMode];
+            }
             
             void NavWidgetView::SetCurrentDirection(int currentDirection)
             {
@@ -175,6 +191,19 @@ namespace ExampleApp
                 m_startEndLocationsSwappedCallbacks.ExecuteCallbacks();
             }
             
+            void NavWidgetView::InsertStartEndRoutingButtonClickedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_startEndRoutingButtonClickedCallbacks.AddCallback(callback);
+            }
+            void NavWidgetView::RemoveStartEndRoutingButtonClickedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_startEndRoutingButtonClickedCallbacks.RemoveCallback(callback);
+            }
+            void NavWidgetView::HandleStartEndRoutingButtonClickedCallback()
+            {
+                m_startEndRoutingButtonClickedCallbacks.ExecuteCallbacks();
+            }
+            
             void NavWidgetView::InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& callback)
             {
                 m_selectedDirectionIndexChangedCallback.AddCallback(callback);
@@ -186,19 +215,6 @@ namespace ExampleApp
             void NavWidgetView::HandleSelectedDirectionIndexChangedCallback(int selectedDirection)
             {
                 m_selectedDirectionIndexChangedCallback.ExecuteCallbacks(selectedDirection);
-            }
-
-            void NavWidgetView::InsertCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& callback)
-            {
-                m_currentNavModeChangedCallback.AddCallback(callback);
-            }
-            void NavWidgetView::RemoveCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& callback)
-            {
-                m_currentNavModeChangedCallback.RemoveCallback(callback);
-            }
-            void NavWidgetView::HandleCurrentNavModeChanged(NavRoutingMode navMode)
-            {
-                m_currentNavModeChangedCallback.ExecuteCallbacks(navMode);
             }
             
             void NavWidgetView::SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation)

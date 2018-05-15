@@ -78,25 +78,6 @@ namespace ExampleApp
                 {
                     m_pView->HandleSelectedDirectionIndexChangedCallback((int)m_pNavModel.selectedDirection);
                 }
-                else if(keyPath == "navMode")
-                {
-                    NavRoutingMode navMode;
-                    
-                    switch(m_pNavModel.navMode)
-                    {
-                        case WRLDNavModeNotReady:
-                            navMode = NavRoutingMode::NotReady;
-                            break;
-                        case WRLDNavModeReady:
-                            navMode = NavRoutingMode::Ready;
-                            break;
-                        case WRLDNavModeActive:
-                            navMode = NavRoutingMode::Active;
-                            break;
-                    }
-                    
-                    m_pView->HandleCurrentNavModeChanged(navMode);
-                }
             }
             
             void NavWidgetViewModule::eventReceived(WRLDNavEvent key)
@@ -122,17 +103,7 @@ namespace ExampleApp
                         m_pView->HandleStartEndLocationsSwappedCallback();
                         break;
                     case WRLDNavEventStartEndButtonClicked:
-                        switch (m_pNavModel.navMode)
-                        {
-                            case WRLDNavModeReady:
-                                [m_pNavModel setNavMode:WRLDNavModeActive];
-                                break;
-                            case WRLDNavModeActive:
-                                [m_pNavModel setNavMode:WRLDNavModeReady];
-                                break;
-                            case WRLDNavModeNotReady:
-                                break;
-                        }
+                        m_pView->HandleStartEndRoutingButtonClickedCallback();
                         break;
                     default:
                         break;
