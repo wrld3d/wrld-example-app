@@ -38,21 +38,21 @@
                 </dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>@EEGEO_PLIST_BUNDLE_VERSION@</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to increase indoor location accuracy using your device's bluetooth.</string>
+	<string>@EEGEO_PLIST_BLUETOOTH_PREIPHERAL_USAGE_DESCRIPTION@</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>If you allow access to your location the app can display your position in the map.</string>
+	<string>@EEGEO_PLIST_LOCATION_WHEN_IN_USE_USAGE_DESCRIPTION@</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>If you allow access to the Speech Recognition feature you can search using your voice</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>If you allow access to the Microphone you can search using your voice</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>@EEGEO_PLIST_PHOTO_LIBRARY_USAGE_DESCRIPTION@</string>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>@EEGEO_PLIST_CAMERA_USAGE_DESCRIPTION@</string>
 	<key>UIMainStoryboardFile</key>
 	<string>MainStoryboard_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>
