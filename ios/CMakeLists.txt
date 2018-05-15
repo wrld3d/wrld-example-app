@@ -28,16 +28,10 @@ set(storyboards
 
 # plist settings
 set(EEGEO_PLIST_BUNDLE_EXECUTABLE "\${EXECUTABLE_NAME}")
-set(EEGEO_PLIST_BUNDLE_IDENTIFIER "com.bloomberg.mobile.\${PRODUCT_NAME:rfc1034identifier}")
+set(EEGEO_PLIST_BUNDLE_IDENTIFIER "com.eegeo.\${PRODUCT_NAME:rfc1034identifier}")
 set(EEGEO_PLIST_BUNDLE_SHORT_VERSION_STRING "\${PRODUCT_VERSION}")
 set(EEGEO_PLIST_BUNDLE_DISPLAY_NAME "BWAY")
 set(EEGEO_PLIST_PRODUCT_NAME "\${PRODUCT_NAME}")
-
-set(EEGEO_PLIST_BUNDLE_VERSION "\${BUILD_NUMBER}")
-set(EEGEO_PLIST_BLUETOOTH_PREIPHERAL_USAGE_DESCRIPTION "BWAY would like to increase indoor location accuracy using your device's bluetooth.")
-set(EEGEO_PLIST_CAMERA_USAGE_DESCRIPTION "BWAY would like to access the camera for you to take photos for your custom POIs.")
-set(EEGEO_PLIST_LOCATION_WHEN_IN_USE_USAGE_DESCRIPTION "BWAY would like to use your location to show your location on the map.")
-set(EEGEO_PLIST_PHOTO_LIBRARY_USAGE_DESCRIPTION "BWAY would like to display photos for your custom POIs.")
 
 # compiler/linker settings
 set(CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos;-iphonesimulator")
