@@ -43,6 +43,7 @@
 #include "NavRoutingEndLocationClearClickedMessage.h"
 #include "NavRoutingStartLocationClearClickedMessage.h"
 #include "NavRoutingSelectedDirectionChangedMessage.h"
+#include "NavRoutingStartEndRoutingButtonClickedMessage.h"
 #include "NavRoutingViewClosedMessage.h"
 
 namespace ExampleApp
@@ -89,6 +90,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingStartLocationClearClickedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingEndLocationClearClickedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingSelectedDirectionChangedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingStartEndRoutingButtonClickedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingViewClosedMessage>
             , private Eegeo::NonCopyable
         {

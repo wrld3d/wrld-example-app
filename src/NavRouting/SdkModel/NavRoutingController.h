@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Types.h"
+#include "NavRouting.h"
 #include "INavRoutingModel.h"
 #include "ILocationService.h"
 #include "BidirectionalBus.h"
@@ -11,6 +12,8 @@
 #include "NavRoutingViewStartEndLocationSwappedMessage.h"
 #include "NavRoutingStartLocationClearClickedMessage.h"
 #include "NavRoutingEndLocationClearClickedMessage.h"
+#include "NavRoutingSelectedDirectionChangedMessage.h"
+#include "NavRoutingStartEndRoutingButtonClickedMessage.h"
 
 namespace ExampleApp
 {
@@ -18,7 +21,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class NavRoutingController
+            class NavRoutingController : private Eegeo::NonCopyable
             {
             public:
                 NavRoutingController(INavRoutingModel& routingModel,
@@ -41,11 +44,14 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_routeClearedCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const int> m_currentDirectionSetCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const double> m_remainingRouteDurationSetCallback;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingMode> m_navRoutingModeSetCallback;
 
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingViewClosedMessage&> m_viewClosedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingViewStartEndLocationSwappedMessage&> m_startEndLocationSwappedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingStartLocationClearClickedMessage&> m_startLocationClearClickedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingEndLocationClearClickedMessage&> m_endLocationClearClickedMessageHandler;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingStartEndRoutingButtonClickedMessage&> m_startEndRoutingButtonClickedMessageHandler;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingSelectedDirectionChangedMessage&> m_selectedDirectionChangedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
 
 
@@ -65,6 +71,8 @@ namespace ExampleApp
 
                 void OnRemainingRouteDurationSet(const double& seconds);
 
+                void OnNavRoutingModeSet(const NavRoutingMode& mode);
+
                 void OnNavWidgetViewClosed(const NavRoutingViewClosedMessage& message);
 
                 void OnStartEndLocationSwapped(const NavRoutingViewStartEndLocationSwappedMessage& message);
@@ -72,6 +80,10 @@ namespace ExampleApp
                 void OnStartLocationClearClicked(const NavRoutingStartLocationClearClickedMessage& message);
 
                 void OnEndLocationClearClicked(const NavRoutingEndLocationClearClickedMessage& message);
+
+                void OnStartEndRoutingButtonClicked(const NavRoutingStartEndRoutingButtonClickedMessage& message);
+
+                void OnSelectedDirectionChanged(const NavRoutingSelectedDirectionChangedMessage& message);
 
                 void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
             };

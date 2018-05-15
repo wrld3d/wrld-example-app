@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Types.h"
+#include "NavRouting.h"
 #include "CallbackCollection.h"
 #include "NavRoutingLocationModel.h"
 #include "NavRoutingRouteModel.h"
@@ -40,9 +41,17 @@ namespace ExampleApp
 
                 virtual int GetCurrentDirection() const = 0;
 
+                virtual void SetSelectedDirection(int directionIndex) = 0;
+
+                virtual int GetSelectedDirection() const = 0;
+
                 virtual void SetRemainingRouteDuration(double seconds) = 0;
 
                 virtual double GetRemainingRouteDuration() const = 0;
+
+                virtual void SetNavMode(NavRoutingMode mode) = 0;
+
+                virtual NavRoutingMode GetNavMode() const = 0;
 
                 virtual void InsertStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback) = 0;
 
@@ -72,9 +81,17 @@ namespace ExampleApp
 
                 virtual void RemoveCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) = 0;
 
+                virtual void InsertSelectedDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionSetCallback) = 0;
+
+                virtual void RemoveSelectedDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionSetCallback) = 0;
+
                 virtual void InsertRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback) = 0;
 
                 virtual void RemoveRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback) = 0;
+
+                virtual void InsertNavModeSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& navRoutingModeSetCallback) = 0;
+
+                virtual void RemoveNavModeSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& navRoutingModeSetCallback) = 0;
             };
         }
     }

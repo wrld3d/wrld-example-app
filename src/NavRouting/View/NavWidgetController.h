@@ -18,6 +18,7 @@
 #include "NavRoutingRouteClearedMessage.h"
 #include "NavRoutingCurrentDirectionSetMessage.h"
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
+#include "NavRoutingModeSetMessage.h"
 
 namespace ExampleApp
 {
@@ -39,7 +40,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_endLocationClearButtonClickedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_startEndLocationsSwappedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_selectedDirectionIndexChangedCallback;
-                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingMode> m_currentNavModeChangedCallback;
+                Eegeo::Helpers::TCallback0<NavWidgetController> m_startEndRoutingButtonClickedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewOpenedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewClosedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingStartLocationSetMessage&> m_startLocationSetMessageHandler;
@@ -50,6 +51,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRouteClearedMessage&> m_routeClearedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingCurrentDirectionSetMessage&> m_currentDirectionSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRemainingRouteDurationSetMessage&> m_remainingRouteDurationSetMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingModeSetMessage&> m_navRoutingModeSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingViewOpenMessage&> m_navRoutingViewOpenMessageHandler;
 
 
@@ -67,7 +69,7 @@ namespace ExampleApp
 
                 void OnSelectedDirectionIndexChanged(const int& selectedDirection);
 
-                void OnCurrentNavModeChanged(const NavRoutingMode& navRoutingMode);
+                void OnStartEndRoutingButtonClicked();
 
                 void OnViewClosed();
 
@@ -86,6 +88,8 @@ namespace ExampleApp
                 void OnCurrentDirectionSet(const NavRoutingCurrentDirectionSetMessage& message);
 
                 void OnRemainingRouteDurationSet(const NavRoutingRemainingRouteDurationSetMessage& message);
+
+                void OnNavRoutingModeSet(const NavRoutingModeSetMessage& message);
 
                 void OnNavRoutingViewOpen(const NavRoutingViewOpenMessage& message);
 

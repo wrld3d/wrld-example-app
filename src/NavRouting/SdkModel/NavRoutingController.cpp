@@ -11,6 +11,7 @@
 #include "NavRoutingRouteClearedMessage.h"
 #include "NavRoutingCurrentDirectionSetMessage.h"
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
+#include "NavRoutingModeSetMessage.h"
 
 namespace ExampleApp
 {
@@ -32,10 +33,13 @@ namespace ExampleApp
             , m_routeClearedCallback(this, &NavRoutingController::OnRouteCleared)
             , m_currentDirectionSetCallback(this, &NavRoutingController::OnCurrentDirectionSet)
             , m_remainingRouteDurationSetCallback(this, &NavRoutingController::OnRemainingRouteDurationSet)
+            , m_navRoutingModeSetCallback(this, &NavRoutingController::OnNavRoutingModeSet)
             , m_viewClosedMessageHandler(this, &NavRoutingController::OnNavWidgetViewClosed)
             , m_startEndLocationSwappedMessageHandler(this, &NavRoutingController::OnStartEndLocationSwapped)
             , m_startLocationClearClickedMessageHandler(this, &NavRoutingController::OnStartLocationClearClicked)
             , m_endLocationClearClickedMessageHandler(this, &NavRoutingController::OnEndLocationClearClicked)
+            , m_startEndRoutingButtonClickedMessageHandler(this, &NavRoutingController::OnStartEndRoutingButtonClicked)
+            , m_selectedDirectionChangedMessageHandler(this, &NavRoutingController::OnSelectedDirectionChanged)
             , m_directionsButtonClickedMessageHandler(this, &NavRoutingController::OnDirectionsButtonClicked)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
@@ -46,20 +50,26 @@ namespace ExampleApp
                 m_routingModel.InsertRouteClearedCallback(m_routeClearedCallback);
                 m_routingModel.InsertCurrentDirectionSetCallback(m_currentDirectionSetCallback);
                 m_routingModel.InsertRemainingRouteDurationSetCallback(m_remainingRouteDurationSetCallback);
+                m_routingModel.InsertNavModeSetCallback(m_navRoutingModeSetCallback);
                 m_messageBus.SubscribeNative(m_viewClosedMessageHandler);
                 m_messageBus.SubscribeNative(m_startEndLocationSwappedMessageHandler);
                 m_messageBus.SubscribeNative(m_startLocationClearClickedMessageHandler);
                 m_messageBus.SubscribeNative(m_endLocationClearClickedMessageHandler);
+                m_messageBus.SubscribeNative(m_startEndRoutingButtonClickedMessageHandler);
+                m_messageBus.SubscribeNative(m_selectedDirectionChangedMessageHandler);
                 m_messageBus.SubscribeNative(m_directionsButtonClickedMessageHandler);
             }
 
             NavRoutingController::~NavRoutingController()
             {
                 m_messageBus.UnsubscribeNative(m_directionsButtonClickedMessageHandler);
+                m_messageBus.UnsubscribeNative(m_selectedDirectionChangedMessageHandler);
+                m_messageBus.UnsubscribeNative(m_startEndRoutingButtonClickedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_endLocationClearClickedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_startLocationClearClickedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_startEndLocationSwappedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_viewClosedMessageHandler);
+                m_routingModel.RemoveNavModeSetCallback(m_navRoutingModeSetCallback);
                 m_routingModel.RemoveRemainingRouteDurationSetCallback(m_remainingRouteDurationSetCallback);
                 m_routingModel.RemoveCurrentDirectionSetCallback(m_currentDirectionSetCallback);
                 m_routingModel.RemoveRouteClearedCallback(m_routeClearedCallback);
@@ -93,11 +103,15 @@ namespace ExampleApp
             void NavRoutingController::OnRouteSet(const SdkModel::NavRoutingRouteModel& routeModel)
             {
                 m_messageBus.Publish(NavRoutingRouteSetMessage(routeModel));
+                m_routingModel.SetNavMode(Ready);
+                m_routingModel.SetRemainingRouteDuration(routeModel.GetDuration());
             }
 
             void NavRoutingController::OnRouteCleared()
             {
                 m_messageBus.Publish(NavRoutingRouteClearedMessage());
+                m_routingModel.SetNavMode(NotReady);
+                m_routingModel.SetRemainingRouteDuration(0);
             }
 
             void NavRoutingController::OnCurrentDirectionSet(const int& directionIndex)
@@ -108,6 +122,11 @@ namespace ExampleApp
             void NavRoutingController::OnRemainingRouteDurationSet(const double& seconds)
             {
                 m_messageBus.Publish(NavRoutingRemainingRouteDurationSetMessage(seconds));
+            }
+
+            void NavRoutingController::OnNavRoutingModeSet(const NavRoutingMode& mode)
+            {
+                m_messageBus.Publish(NavRoutingModeSetMessage(mode));
             }
 
             void NavRoutingController::OnNavWidgetViewClosed(const NavRoutingViewClosedMessage& message)
@@ -140,6 +159,27 @@ namespace ExampleApp
             void NavRoutingController::OnEndLocationClearClicked(const NavRoutingEndLocationClearClickedMessage& message)
             {
                 m_routingModel.ClearEndLocation();
+            }
+
+            void NavRoutingController::OnStartEndRoutingButtonClicked(const NavRoutingStartEndRoutingButtonClickedMessage& message)
+            {
+                switch (m_routingModel.GetNavMode())
+                {
+                    case NavRoutingMode::Active:
+                        m_routingModel.SetNavMode(NavRoutingMode::Ready);
+                        break;
+                    case NavRoutingMode::Ready:
+                        m_routingModel.SetNavMode(NavRoutingMode::Active);
+                        break;
+                    default:
+                        m_routingModel.SetNavMode(NavRoutingMode::NotReady);
+                        break;
+                }
+            }
+
+            void NavRoutingController::OnSelectedDirectionChanged(const NavRoutingSelectedDirectionChangedMessage& message)
+            {
+                m_routingModel.SetSelectedDirection(message.GetDirectionIndex());
             }
 
             void NavRoutingController::OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message)

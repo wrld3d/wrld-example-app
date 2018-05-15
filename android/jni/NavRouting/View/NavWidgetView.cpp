@@ -189,6 +189,38 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, methodID, seconds);
             }
 
+            void NavWidgetView::SetNavMode(SdkModel::NavRoutingMode mode)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jclass navModeClass = env->FindClass("com/wrld/widgets/navigation/model/WrldNavMode");
+
+                jfieldID readyFieldId = env->GetStaticFieldID(navModeClass, "Ready", "Lcom/wrld/widgets/navigation/model/WrldNavMode;");
+                jfieldID activeFieldId = env->GetStaticFieldID(navModeClass, "Active", "Lcom/wrld/widgets/navigation/model/WrldNavMode;");
+                jfieldID notReadyFieldId = env->GetStaticFieldID(navModeClass, "NotReady", "Lcom/wrld/widgets/navigation/model/WrldNavMode;");
+
+                jobject modeObject;
+
+                switch (mode)
+                {
+                    case SdkModel::NavRoutingMode::Ready:
+                        modeObject = env->GetStaticObjectField(navModeClass, readyFieldId);
+                        break;
+                    case SdkModel::NavRoutingMode::Active:
+                        modeObject = env->GetStaticObjectField(navModeClass, activeFieldId);
+                        break;
+                    default:
+                        modeObject = env->GetStaticObjectField(navModeClass, notReadyFieldId);
+                        break;
+                }
+
+                jmethodID methodID = env->GetMethodID(m_uiViewClass, "setCurrentNavMode", "(Lcom/wrld/widgets/navigation/model/WrldNavMode;)V");
+                env->CallVoidMethod(m_uiView, methodID, modeObject);
+            }
+
             void NavWidgetView::SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation)
             {
                 ASSERT_UI_THREAD
@@ -352,6 +384,27 @@ namespace ExampleApp
                 m_startEndLocationsSwappedCallbacks.ExecuteCallbacks();
             }
 
+            void NavWidgetView::InsertStartEndRoutingButtonClickedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_startEndRoutingButtonClicked.AddCallback(callback);
+            }
+
+            void NavWidgetView::RemoveStartEndRoutingButtonClickedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                ASSERT_UI_THREAD
+
+                m_startEndRoutingButtonClicked.RemoveCallback(callback);
+            }
+
+            void NavWidgetView::HandleStartEndRoutingButtonClicked()
+            {
+                ASSERT_UI_THREAD
+
+                m_startEndRoutingButtonClicked.ExecuteCallbacks();
+            }
+
             void NavWidgetView::InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback)
             {
                 ASSERT_UI_THREAD
@@ -371,25 +424,6 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_selectedDirectionIndexChangedCallbacks.ExecuteCallbacks(selectedDirectionIndex);
-            }
-
-            void NavWidgetView::InsertCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& currentNavModeChangedCallback)
-            {
-                ASSERT_UI_THREAD
-
-                m_currentNavModeChangedCallbacks.AddCallback(currentNavModeChangedCallback);
-            }
-
-            void NavWidgetView::RemoveCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& currentNavModeChangedCallback)
-            {
-                ASSERT_UI_THREAD
-
-                m_currentNavModeChangedCallbacks.RemoveCallback(currentNavModeChangedCallback);
-            }
-
-            void NavWidgetView::HandleCurrentNavModeChanged(NavRoutingMode mode)
-            {
-                m_currentNavModeChangedCallbacks.ExecuteCallbacks(mode);
             }
 
             jclass NavWidgetView::CreateJavaClass(const std::string& viewClass)

@@ -25,6 +25,7 @@ namespace ExampleApp
                 int m_currentDirectionIndex;
                 int m_selectedDirectionIndex; //TODO add callbacks for selected direction
                 double m_remainingRouteDuration;
+                NavRoutingMode m_navMode;
 
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingLocationModel&> m_startLocationSetCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_startLocationClearedCallbacks;
@@ -33,7 +34,9 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingRouteModel&> m_routeSetCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_routeClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_currentDirectionSetCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const int> m_selectedDirectionIndexSetCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const double> m_remainingRouteDurationSetCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const NavRoutingMode> m_navModeSetCallbacks;
 
             public:
                 NavRoutingModel();
@@ -60,9 +63,17 @@ namespace ExampleApp
 
                 int GetCurrentDirection() const override;
 
+                void SetSelectedDirection(int directionIndex) override;
+
+                int GetSelectedDirection() const override;
+
                 void SetRemainingRouteDuration(double seconds) override;
 
                 double GetRemainingRouteDuration() const override;
+
+                void SetNavMode(NavRoutingMode mode) override;
+
+                NavRoutingMode GetNavMode() const override;
 
                 void InsertStartLocationSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingLocationModel&>& startLocationSetCallback) override;
 
@@ -92,9 +103,17 @@ namespace ExampleApp
 
                 void RemoveCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) override;
 
+                void InsertSelectedDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionSetCallback) override;
+
+                void RemoveSelectedDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionSetCallback) override;
+
                 void InsertRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback) override;
 
                 void RemoveRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback) override;
+
+                void InsertNavModeSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& navRoutingModeSetCallback) override;
+
+                void RemoveNavModeSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& navRoutingModeSetCallback) override;
             };
         }
     }

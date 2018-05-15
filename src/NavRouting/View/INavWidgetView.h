@@ -5,6 +5,7 @@
 #include <vector>
 #include "Types.h"
 #include "ICallback.h"
+#include "NavRouting.h"
 #include "NavRoutingLocationModel.h"
 #include "NavRoutingRouteModel.h"
 
@@ -39,6 +40,8 @@ namespace ExampleApp
 
                 virtual void SetRemainingRouteDuration(double seconds) = 0;
 
+                virtual void SetNavMode(SdkModel::NavRoutingMode mode) = 0;
+
                 virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
@@ -57,11 +60,11 @@ namespace ExampleApp
                 virtual void InsertStartEndLocationsSwappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveStartEndLocationsSwappedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
+                virtual void InsertStartEndRoutingButtonClickedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveStartEndRoutingButtonClickedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
                 virtual void InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback) = 0;
                 virtual void RemoveSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback) = 0;
-
-                virtual void InsertCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& currentNavModeChangedCallback) = 0;
-                virtual void RemoveCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& currentNavModeChangedCallback) = 0;
             };
         }
     }
