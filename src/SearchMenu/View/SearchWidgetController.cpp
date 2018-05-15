@@ -172,7 +172,7 @@ namespace ExampleApp
             {
                 auto query = message.Query();
                 auto clearPreviousResults = false;
-                auto tagText = "";
+                auto tagText = query.IsTag() ? query.Query() : "";
                 
                 auto queryContext = QueryContext(clearPreviousResults,
                                                  query.IsTag(),

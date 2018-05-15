@@ -34,6 +34,13 @@ namespace ExampleApp
                 
                 virtual void AskForDeepLinkQuery(const std::string& query,const std::string& interiorId) = 0;
 
+                virtual void AskForDeepLinkQuery(const std::string& query,
+                                                 bool isTag,
+                                                 bool tryInteriorSearch,
+                                                 const Eegeo::Space::LatLongAltitude& location,
+                                                 bool startAtGPSLocation = false,
+                                                 const std::string& interiorId = "") = 0;
+
                 virtual void RemoveSearchQueryResults() = 0;
 
                 virtual void InsertOnSearchResultsClearedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

@@ -117,6 +117,24 @@ namespace ExampleApp
                 m_messageBus.Publish(DeepLinkedSearchQueryRequestMessage(searchQuery));
             }
 
+            void SearchQueryPerformer::AskForDeepLinkQuery(const std::string& query,
+                                                           bool isTag,
+                                                           bool tryInteriorSearch,
+                                                           const Eegeo::Space::LatLongAltitude& location,
+                                                           bool startAtGPSLocation,
+                                                           const std::string& interiorId)
+            {
+                const float radius = GetSearchRadius(m_cameraController);
+                Eegeo::Space::LatLongAltitude searchLocation = location;
+                if (startAtGPSLocation)
+                {
+                    searchLocation = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetRenderCamera().GetEcefLocation());
+                }
+                SearchQuery searchQuery(query, isTag, tryInteriorSearch, searchLocation, radius, interiorId);
+
+                m_messageBus.Publish(DeepLinkedSearchQueryRequestMessage(searchQuery));
+            }
+
             void SearchQueryPerformer::RemoveSearchQueryResults()
             {
                 m_hasQuery = false;
