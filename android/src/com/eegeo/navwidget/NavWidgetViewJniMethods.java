@@ -1,7 +1,5 @@
 package com.eegeo.navwidget;
 
-import com.wrld.widgets.navigation.model.WrldNavMode;
-
 public class NavWidgetViewJniMethods
 {
     public static native void CloseButtonClicked(long nativeCallerPointer);
@@ -16,7 +14,7 @@ public class NavWidgetViewJniMethods
 
     public static native void StartEndLocationsSwapped(long nativeCallerPointer);
 
-    public static native void SelectedDirectionIndexChanged(long nativeCallerPointer, int directionIndex);
+    public static native void StartEndButtonClicked(long nativeCallerPointer);
 
-    public static native void CurrentNavModeChanged(long nativeCallerPointer, WrldNavMode currentNavMode);
+    public static native void SelectedDirectionIndexChanged(long nativeCallerPointer, int directionIndex);
 }

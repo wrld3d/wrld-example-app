@@ -7,8 +7,6 @@
 
 #include "SearchResultPoiViewInterop.h"
 
-#include "iOSLocationService.h"
-
 #include "IOpenableControlViewModel.h"
 
 #include "BidirectionalBus.h"
@@ -35,10 +33,9 @@ namespace ExampleApp
         namespace View
         {
             
-            NavWidgetViewModule::NavWidgetViewModule(Eegeo::iOS::iOSLocationService* iOSLocationService,
-                                             ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
-                                             INavWidgetViewModel& viewModel,
-                                             ExampleAppMessaging::TMessageBus& messageBus_)
+            NavWidgetViewModule::NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
+                                                     INavWidgetViewModel& viewModel,
+                                                     ExampleAppMessaging::TMessageBus& messageBus_)
             {
                 
                 m_pNavModel = [[WRLDNavModel alloc] init];
@@ -50,7 +47,6 @@ namespace ExampleApp
                 
                 m_pNavWidgetController = Eegeo_NEW(NavWidgetController)(*m_pView,
                                                                         viewModel,
-                                                                        *iOSLocationService,
                                                                         messageBus_);
                
             }

@@ -106,6 +106,17 @@ namespace ExampleApp
                 return m_currentDirectionIndex;
             }
 
+            void NavRoutingModel::SetSelectedDirection(int directionIndex)
+            {
+                m_selectedDirectionIndex = directionIndex;
+                m_selectedDirectionIndexSetCallbacks.ExecuteCallbacks(m_selectedDirectionIndex);
+            }
+
+            int NavRoutingModel::GetSelectedDirection() const
+            {
+                return m_selectedDirectionIndex;
+            }
+
             void NavRoutingModel::SetRemainingRouteDuration(double seconds)
             {
                 m_remainingRouteDuration = seconds;
@@ -115,6 +126,17 @@ namespace ExampleApp
             double NavRoutingModel::GetRemainingRouteDuration() const
             {
                 return m_remainingRouteDuration;
+            }
+
+            void NavRoutingModel::SetNavMode(NavRoutingMode mode)
+            {
+                m_navMode = mode;
+                m_navModeSetCallbacks.ExecuteCallbacks(m_navMode);
+            }
+
+            NavRoutingMode NavRoutingModel::GetNavMode() const
+            {
+                return m_navMode;
             }
 
             void NavRoutingModel::InsertStartLocationSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingLocationModel&>& startLocationSetCallback)
@@ -187,6 +209,16 @@ namespace ExampleApp
                 m_currentDirectionSetCallbacks.RemoveCallback(currentDirectionSetCallback);
             }
 
+            void NavRoutingModel::InsertSelectedDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionSetCallback)
+            {
+                m_selectedDirectionIndexSetCallbacks.AddCallback(selectedDirectionSetCallback);
+            }
+
+            void NavRoutingModel::RemoveSelectedDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionSetCallback)
+            {
+                m_selectedDirectionIndexSetCallbacks.RemoveCallback(selectedDirectionSetCallback);
+            }
+
             void NavRoutingModel::InsertRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback)
             {
                 m_remainingRouteDurationSetCallbacks.AddCallback(remainingRouteDurationSetCallback);
@@ -195,6 +227,16 @@ namespace ExampleApp
             void NavRoutingModel::RemoveRemainingRouteDurationSetCallback(Eegeo::Helpers::ICallback1<const double>& remainingRouteDurationSetCallback)
             {
                 m_remainingRouteDurationSetCallbacks.RemoveCallback(remainingRouteDurationSetCallback);
+            }
+
+            void NavRoutingModel::InsertNavModeSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& navRoutingModeSetCallback)
+            {
+                m_navModeSetCallbacks.AddCallback(navRoutingModeSetCallback);
+            }
+
+            void NavRoutingModel::RemoveNavModeSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& navRoutingModeSetCallback)
+            {
+                m_navModeSetCallbacks.RemoveCallback(navRoutingModeSetCallback);
             }
         }
     }

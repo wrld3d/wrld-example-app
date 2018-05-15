@@ -62,7 +62,6 @@
 #include "iOSScreenshotService.h"
 #include "iOSAutomatedScreenshotController.h"
 #include "NavWidgetViewIncludes.h"
-#include "NavRoutingModule.h"
 #include "NavWidgetViewModule.h"
 
 @class ViewController;
@@ -113,7 +112,6 @@ private:
     AppInputDelegate* m_pAppInputDelegate;
     AppLocationDelegate* m_pAppLocationDelegate;
     AppUrlDelegate* m_pAppUrlDelegate;
-    ExampleApp::NavRouting::SdkModel::NavRoutingModule* m_pNavRoutingModule;
 
     Eegeo::UI::NativeInput::iOS::iOSInputBoxFactory m_iOSInputBoxFactory;
     Eegeo::UI::NativeInput::iOS::iOSKeyboardInputFactory m_iOSKeyboardInputFactory;

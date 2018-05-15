@@ -102,15 +102,11 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     public void setRoute(WrldNavRoute route)
     {
         m_model.setRoute(route);
-        m_model.setRemainingRouteDurationSeconds(route.estimatedRouteDurationSeconds);
-        m_model.setCurrentNavMode(WrldNavMode.Ready);
     }
 
     public void clearRoute()
     {
         m_model.setRoute(null);
-        m_model.setRemainingRouteDurationSeconds(0);
-        m_model.setCurrentNavMode(WrldNavMode.NotReady);
     }
 
     public void setCurrentDirectionIndex(int directionIndex)
@@ -121,6 +117,11 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     public void setRemainingRouteDurationSeconds(double remainingRouteDurationSeconds)
     {
         m_model.setRemainingRouteDurationSeconds(remainingRouteDurationSeconds);
+    }
+
+    public void setCurrentNavMode(WrldNavMode navMode)
+    {
+        m_model.setCurrentNavMode(navMode);
     }
 
     public void showNavWidgetView()
@@ -173,9 +174,6 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
             case SelectedDirectionIndex:
                 NavWidgetViewJniMethods.SelectedDirectionIndexChanged(m_nativeCallerPointer, m_model.getSelectedDirectionIndex());
                 break;
-            case CurrentNavMode:
-                NavWidgetViewJniMethods.CurrentNavModeChanged(m_nativeCallerPointer, m_model.getCurrentNavMode());
-                break;
         }
     }
 
@@ -203,18 +201,8 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
                 NavWidgetViewJniMethods.StartEndLocationsSwapped(m_nativeCallerPointer);
                 break;
             case StartEndButtonClicked:
-            {
-                switch (m_model.getCurrentNavMode())
-                {
-                    case Ready:
-                        m_model.setCurrentNavMode(WrldNavMode.Active);
-                        break;
-                    case Active:
-                        m_model.setCurrentNavMode(WrldNavMode.Ready);
-                        break;
-                }
+                NavWidgetViewJniMethods.StartEndButtonClicked(m_nativeCallerPointer);
                 break;
-            }
         }
     }
 }

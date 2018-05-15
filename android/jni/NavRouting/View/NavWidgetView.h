@@ -25,8 +25,8 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_startLocationClearButtonClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_endLocationClearButtonClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_startEndLocationsSwappedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_startEndRoutingButtonClicked;
                 Eegeo::Helpers::CallbackCollection1<const int> m_selectedDirectionIndexChangedCallbacks;
-                Eegeo::Helpers::CallbackCollection1<const NavRoutingMode> m_currentNavModeChangedCallbacks;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
@@ -55,6 +55,8 @@ namespace ExampleApp
                 void SetCurrentDirection(int directionIndex) override;
 
                 void SetRemainingRouteDuration(double seconds) override;
+
+                void SetNavMode(SdkModel::NavRoutingMode mode) override;
 
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) override;
 
@@ -92,17 +94,17 @@ namespace ExampleApp
 
                 void HandleStartEndLocationsSwapped();
 
+                void InsertStartEndRoutingButtonClickedCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void RemoveStartEndRoutingButtonClickedCallback(Eegeo::Helpers::ICallback0& callback) override;
+
+                void HandleStartEndRoutingButtonClicked();
+
                 void InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback) override;
 
                 void RemoveSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback) override;
 
                 void HandleSelectedDirectionIndexChanged(int selectedDirectionIndex);
-
-                void InsertCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& currentNavModeChangedCallback) override;
-
-                void RemoveCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& currentNavModeChangedCallback) override;
-
-                void HandleCurrentNavModeChanged(NavRoutingMode mode);
 
             private:
                 void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);

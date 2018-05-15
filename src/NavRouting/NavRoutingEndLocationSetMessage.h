@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "INavRoutingModel.h"
+#include "NavRoutingLocationModel.h"
 
 namespace ExampleApp
 {

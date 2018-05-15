@@ -66,6 +66,15 @@ JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_StartEnd
     pView->HandleStartEndLocationsSwapped();
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_StartEndButtonClicked(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr)
+{
+    ASSERT_UI_THREAD
+
+    auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
+    pView->HandleStartEndRoutingButtonClicked();
+}
 
 JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SelectedDirectionIndexChanged(
         JNIEnv *jenv, jobject obj,
@@ -76,38 +85,4 @@ JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_Selected
 
     auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
     pView->HandleSelectedDirectionIndexChanged(directionIndex);
-}
-
-JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_CurrentNavModeChanged(
-        JNIEnv *jenv, jclass type,
-        jlong nativeObjectPtr,
-        jobject currentNavMode)
-{
-    ASSERT_UI_THREAD
-
-    jclass navModeClass = jenv->FindClass("com/wrld/widgets/navigation/model/WrldNavMode");
-
-    jfieldID readyFieldId = jenv->GetStaticFieldID(navModeClass, "Ready", "Lcom/wrld/widgets/navigation/model/WrldNavMode;");
-    jfieldID activeFieldId = jenv->GetStaticFieldID(navModeClass, "Active", "Lcom/wrld/widgets/navigation/model/WrldNavMode;");
-
-    jobject readyObject = jenv->GetStaticObjectField(navModeClass, readyFieldId);
-    jobject activeObject = jenv->GetStaticObjectField(navModeClass, activeFieldId);
-
-    ExampleApp::NavRouting::View::NavRoutingMode navRoutingMode;
-
-    if (jenv->IsSameObject(currentNavMode, readyObject))
-    {
-        navRoutingMode = ExampleApp::NavRouting::View::NavRoutingMode::Ready;
-    }
-    else if (jenv->IsSameObject(currentNavMode, activeObject))
-    {
-        navRoutingMode = ExampleApp::NavRouting::View::NavRoutingMode::Active;
-    }
-    else
-    {
-        navRoutingMode = ExampleApp::NavRouting::View::NavRoutingMode::NotReady;
-    }
-
-    auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
-    pView->HandleCurrentNavModeChanged(navRoutingMode);
 }

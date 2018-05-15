@@ -14,6 +14,13 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            enum NavRoutingMode
+            {
+                NotReady = 0,
+                Ready,
+                Active,
+            };
+
             struct NavRouteDrawingVertexData;
 
             class INavRoutingModel;
@@ -37,13 +44,6 @@ namespace ExampleApp
 
         namespace View
         {
-            enum NavRoutingMode
-            {
-                NotReady = 0,
-                Ready,
-                Active,
-            };
-
             class INavWidgetView;
             class INavWidgetViewModel;
             class NavUIModule;
