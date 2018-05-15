@@ -66,6 +66,11 @@ namespace ExampleApp
                 return false;
             }
 
+            bool NavRoutingModel::HasRoute() const
+            {
+                return m_routeIsSet;
+            }
+
             void NavRoutingModel::SetRoute(const NavRoutingRouteModel& routeModel)
             {
                 m_route = routeModel;

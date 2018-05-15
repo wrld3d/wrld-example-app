@@ -30,6 +30,8 @@ namespace ExampleApp
 
                 virtual bool TryGetEndLocation(SdkModel::NavRoutingLocationModel &out_endLocation) const = 0;
 
+                virtual bool HasRoute() const = 0;
+
                 virtual void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel) = 0;
 
                 virtual void ClearRoute() = 0;

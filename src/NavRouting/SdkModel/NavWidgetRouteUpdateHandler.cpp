@@ -140,7 +140,8 @@ namespace ExampleApp
             {
                 m_navRoutingModel.SetRoute(NavRoutingRouteModel(route.Duration,
                                                                 route.Distance,
-                                                                GetDirectionsFromRouteData(route)));
+                                                                GetDirectionsFromRouteData(route),
+                                                                route));
             }
 
             void NavWidgetRouteUpdateHandler::OnRoutingQueryCompleted(const std::vector<Eegeo::Routes::Webservice::RouteData>& data)

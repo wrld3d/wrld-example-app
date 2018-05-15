@@ -50,6 +50,8 @@ namespace ExampleApp
 
                 bool TryGetEndLocation(NavRoutingLocationModel &out_endLocation) const override;
 
+                bool HasRoute() const override;
+
                 void SetRoute(const NavRoutingRouteModel& routeModel) override;
 
                 void ClearRoute() override;

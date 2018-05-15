@@ -32,3 +32,4 @@ set(currsources
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\NavRouting\\SdkModel FILES ${currsources})
+include(../src/NavRouting/SdkModel/TurnByTurn/CMakeLists.txt)

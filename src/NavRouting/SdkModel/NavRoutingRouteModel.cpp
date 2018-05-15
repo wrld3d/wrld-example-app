@@ -17,10 +17,12 @@ namespace ExampleApp
 
             NavRoutingRouteModel::NavRoutingRouteModel(const double duration,
                                                        const double distance,
-                                                       const std::vector<NavRoutingDirectionModel>& directions)
+                                                       const std::vector<NavRoutingDirectionModel>& directions,
+                                                       const Eegeo::Routes::Webservice::RouteData& sourceRouteData)
             : m_duration(duration)
             , m_distance(distance)
             , m_directions(directions)
+            , m_sourceRoute(sourceRouteData)
             {
 
             }
@@ -38,6 +40,10 @@ namespace ExampleApp
             const std::vector<NavRoutingDirectionModel>& NavRoutingRouteModel::GetDirections() const
             {
                 return m_directions;
+            }
+
+            const Eegeo::Routes::Webservice::RouteData& NavRoutingRouteModel::GetSourceRouteData() const {
+                return m_sourceRoute;
             }
         }
     }

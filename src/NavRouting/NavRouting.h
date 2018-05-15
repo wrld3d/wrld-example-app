@@ -26,6 +26,13 @@ namespace ExampleApp
 
             typedef Eegeo::Shapes::Polylines::PolylineShapeArgs PolyLineArgs;
             typedef Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Routes::Webservice::RouteData>> RoutesReceivedCallback;
+
+            namespace TurnByTurn
+            {
+                class INavTurnByTurnModel;
+                class NavTurnByTurnController;
+            }
+
         }
 
         namespace View
