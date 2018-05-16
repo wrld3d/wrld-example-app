@@ -35,6 +35,12 @@ namespace ExampleApp
                 PolyLineArgs::IShapeService& m_shapeService;
                 std::unordered_map<int, std::vector<PolyLineArgs::ShapeModel::IdType>> m_routes;
 
+                float m_routeThickness;
+                float m_miterLimit;
+                double m_routeElevation;
+                Eegeo::Positioning::ElevationMode::Type m_routeElevationMode;
+                bool m_shouldScaleWithMap;
+
                 void AddLineForRouteDirection(int routeStep,
                                               const NavRoutingDirectionModel& directionModel,
                                               const Eegeo::v4& color);
