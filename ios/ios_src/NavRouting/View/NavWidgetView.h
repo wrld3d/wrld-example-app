@@ -28,8 +28,8 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_startLocationClearButtonClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_endLocationClearButtonClickedCallback;
                 Eegeo::Helpers::CallbackCollection0 m_startEndLocationsSwappedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_startEndRoutingButtonClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_selectedDirectionIndexChangedCallback;
-                Eegeo::Helpers::CallbackCollection1<const NavRoutingMode> m_currentNavModeChangedCallback;
                 
                 WRLDNavWidgetBase* m_pView;
                 WRLDNavModel* m_pNavModel;                
@@ -69,6 +69,8 @@ namespace ExampleApp
 
                 void SetRemainingRouteDuration(double seconds);
                 
+                void SetNavMode(SdkModel::NavRoutingMode mode);
+                
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback);
                 void HandleClosedCallback();
@@ -93,13 +95,13 @@ namespace ExampleApp
                 void RemoveStartEndLocationsSwappedCallback(Eegeo::Helpers::ICallback0& callback) ;
                 void HandleStartEndLocationsSwappedCallback();
                 
+                void InsertStartEndRoutingButtonClickedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveStartEndRoutingButtonClickedCallback(Eegeo::Helpers::ICallback0& callback);
+                void HandleStartEndRoutingButtonClickedCallback();
+                
                 void InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback);
                 void RemoveSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback);
                 void HandleSelectedDirectionIndexChangedCallback(int selectedDirection);
-                
-                void InsertCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& currentNavModeChangedCallback) ;
-                void RemoveCurrentNavModeChangedCallback(Eegeo::Helpers::ICallback1<const NavRoutingMode>& currentNavModeChangedCallback) ;
-                void HandleCurrentNavModeChanged(NavRoutingMode navMode);
             };
         }
     }
