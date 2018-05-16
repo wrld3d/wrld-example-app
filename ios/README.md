@@ -33,4 +33,4 @@ There is a script included in the repo to build the app from the command line. Y
 
 To build from the command line, you will need to install the Xcode Command Line Tools by running the command: `xcode-select --install`
 
-Then run `./build.sh -p ios` from the root of this repository to build the project.
+Then run `./build.sh -p ios -v 3503` from the root of this repository to build the project.
