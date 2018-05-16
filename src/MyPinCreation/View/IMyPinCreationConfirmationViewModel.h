@@ -18,6 +18,10 @@ namespace ExampleApp
                 virtual bool TryOpen() = 0;
                 virtual void Close() = 0;
                 virtual void TryReleaseReactorControl() = 0;
+
+                virtual void Open() = 0;
+                virtual void InsertOpenCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveOpenCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

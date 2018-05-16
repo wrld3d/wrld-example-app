@@ -75,11 +75,6 @@
     self.alpha = openState;
 }
 
-- (BOOL)consumesTouch:(UITouch *)touch
-{
-    return [self isVisible];
-}
-
 - (void) animateToAlpha:(float)alpha
 {
     m_isAnimating = true;
@@ -98,12 +93,31 @@
     }];
 }
 
+- (UIView *) hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    if ([self isVisible])
+    {
+        return self;
+    }
+    else
+    {
+        return nil;
+    }
+}
+
 - (void)tapGesture:(UITapGestureRecognizer *)recognizer
 {
     if(!m_isAnimating && [self isVisible])
     {
         m_pInterop->HandleViewTapped();
     }
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:event
+{
+    m_pInterop->HandleTouchOnView();
+    
+    [super touchesBegan:touches withEvent:event];
 }
 
 - (BOOL)isVisible

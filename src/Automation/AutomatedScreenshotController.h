@@ -12,7 +12,6 @@
 #include "GlobeCameraController.h"
 #include "ICallback.h"
 #include "ICityThemeChangedObserver.h"
-#include "IFlattenButtonModel.h"
 #include "InteriorsExplorerController.h"
 #include "InteriorsExplorerModel.h"
 #include "InteriorSelectionModel.h"
@@ -39,7 +38,6 @@ namespace ExampleApp
                                           ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& placeJumpController,
                                           ExampleApp::WeatherMenu::SdkModel::IWeatherController& weatherController,
                                           ExampleApp::Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                          ExampleApp::FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
                                           ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                           Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                           Eegeo::Resources::Interiors::InteriorsCameraController& interiorCameraController,
@@ -76,7 +74,6 @@ namespace ExampleApp
             ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& m_placeJumpController;
             ExampleApp::WeatherMenu::SdkModel::IWeatherController& m_weatherController;
             ExampleApp::Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
-            ExampleApp::FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
             IScreenshotService& m_screenshotService;
             Eegeo::EegeoWorld& m_eegeoWorld;
             int m_updateCyclesToWait;

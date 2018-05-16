@@ -6,8 +6,6 @@ set(currsources
   jni/MyPinCreation/View/IMyPinCreationViewModule.h
   jni/MyPinCreation/View/MyPinCreationConfirmationView.h
   jni/MyPinCreation/View/MyPinCreationConfirmationView.cpp
-  jni/MyPinCreation/View/MyPinCreationInitiationView.h
-  jni/MyPinCreation/View/MyPinCreationInitiationView.cpp
   jni/MyPinCreation/View/MyPinCreationViewIncludes.h
   jni/MyPinCreation/View/MyPinCreationViewJni.h
   jni/MyPinCreation/View/MyPinCreationViewJni.cpp

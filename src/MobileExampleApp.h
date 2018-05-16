@@ -13,11 +13,9 @@
 #include "SearchResultOnMap.h"
 #include "NavigationService.h"
 #include "IPlatformAbstractionModule.h"
-#include "SettingsMenu.h"
 #include "SearchResultSection.h"
 #include "SearchMenu.h"
 #include "Modality.h"
-#include "FlattenButton.h"
 #include "Search.h"
 #include "WorldPins.h"
 #include "SearchResultOnMap.h"
@@ -35,6 +33,7 @@
 #include "AboutPageModule.h"
 #include "SearchModule.h"
 #include "SearchResultOnMapModule.h"
+#include "IAutocompleteSuggestionQueryPerformer.h"
 #include "WorldPinsModule.h"
 #include "RegularTexturePageLayout.h"
 #include "PinsModule.h"
@@ -43,7 +42,6 @@
 #include "ReactionModelModule.h"
 #include "ReactionControllerModule.h"
 #include "SearchResultPoiModule.h"
-#include "FlattenButtonModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
 #include "WeatherMenuModule.h"
@@ -92,6 +90,8 @@
 #include "AutomatedScreenshotController.h"
 #include "SelectFirstResultSearchService.h"
 #include "MapsceneModule.h"
+#include "IAboutPageMenuModule.h"
+#include "IOptionsMenuModule.h"
 #include "InteriorEntityHighlightController.h"
 
 namespace ExampleApp
@@ -121,13 +121,13 @@ namespace ExampleApp
         ExampleApp::Metrics::IMetricsService& m_metricsService;
         
         Eegeo::Helpers::IdentityProvider m_identityProvider;
-        ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule* m_pSettingsMenuModule;
+        AboutPage::SdkModel::IAboutPageMenuModule* m_pAboutPageMenuModule;
+        Options::SdkModel:: IOptionsMenuModule* m_pOptionsMenuModule;
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
         ExampleApp::MapMode::SdkModel::IMapModeModule* m_pMapModeModule;
-        ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule* m_pFlattenButtonModule;
         Search::SdkModel::ISearchModule* m_pSearchModule;
         Eegeo::Pins::PinsModule* m_pPinsModule;
         ExampleApp::WorldPins::SdkModel::IWorldPinIconMapping* m_pWorldPinsIconMapping;
@@ -159,6 +159,7 @@ namespace ExampleApp
         std::map<std::string,ExampleApp::Search::SdkModel::ISearchServiceModule*> m_searchServiceModules;
         Search::SdkModel::ISearchServiceModule* m_pSearchServiceModule;
         Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService* m_pSelectFirstResultSearchService;
+        Search::SdkModel::IAutocompleteSuggestionQueryPerformer* m_pSuggestionsQueryPerformer;
         InteriorsExplorer::SdkModel::IInteriorsExplorerModule* m_pInteriorsExplorerModule;
         UserInteraction::SdkModel::UserInteractionModule* m_pUserInteractionModule;
         VisualMap::SdkModel::IVisualMapModule* m_pVisualMapModule;
@@ -266,11 +267,6 @@ namespace ExampleApp
             return *m_pReactorIgnoredReactionModel;
         }
         
-        const ExampleApp::SettingsMenu::SdkModel::ISettingsMenuModule& SettingsMenuModule() const
-        {
-            return *m_pSettingsMenuModule;
-        }
-
         const SearchMenu::SdkModel::ISearchMenuModule& SearchMenuModule() const
         {
             return *m_pSearchMenuModule;
@@ -284,11 +280,6 @@ namespace ExampleApp
         const ExampleApp::Modality::View::IModalityModule& ModalityModule() const
         {
             return *m_pModalityModule;
-        }
-
-        const ExampleApp::FlattenButton::SdkModel::IFlattenButtonModule& FlattenButtonModule() const
-        {
-            return *m_pFlattenButtonModule;
         }
 
         const Search::SdkModel::ISearchModule& SearchModule() const

@@ -13,3 +13,13 @@ JNIEXPORT void JNICALL Java_com_eegeo_modalbackground_ModalBackgroundViewJniMeth
     ExampleApp::ModalBackground::View::ModalBackgroundAggregateView* pView = reinterpret_cast<ExampleApp::ModalBackground::View::ModalBackgroundAggregateView*>(nativeObjectPtr);
     pView->HandleViewTapped();
 }
+
+JNIEXPORT void JNICALL Java_com_eegeo_modalbackground_ModalBackgroundViewJniMethods_HandleTouchOnView(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::ModalBackground::View::ModalBackgroundAggregateView* pView = reinterpret_cast<ExampleApp::ModalBackground::View::ModalBackgroundAggregateView*>(nativeObjectPtr);
+    pView->HandleTouchOnView();
+}

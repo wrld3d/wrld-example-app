@@ -1,0 +1,6 @@
+framework module WRLDSearchWidget {
+  umbrella header "WRLDSearchWidget-umbrella.h"
+
+  export *
+  module * { export * }
+}

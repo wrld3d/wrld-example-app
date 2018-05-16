@@ -23,10 +23,8 @@
 #include "EegeoWorld.h"
 #include "EffectHandler.h"
 #include "EGL/egl.h"
-#include "FlattenButtonViewModule.h"
 #include "IAboutPageModule.h"
 #include "ICompassModule.h"
-#include "IFlattenButtonModule.h"
 #include "IInteriorsExplorerModule.h"
 #include "IModalityModule.h"
 #include "IMyPinCreationDetailsModule.h"
@@ -39,7 +37,6 @@
 #include "ISearchMenuModule.h"
 #include "ISearchResultPoiModule.h"
 #include "ISearchResultSectionModule.h"
-#include "ISettingsMenuModule.h"
 #include "ITagSearchModule.h"
 #include "IViewControllerUpdaterModel.h"
 #include "IWatermarkModule.h"
@@ -59,7 +56,6 @@
 #include "SearchMenuViewModule.h"
 #include "SearchResultPoiViewModule.h"
 #include "SearchResultSectionViewModule.h"
-#include "SettingsMenuViewModule.h"
 #include "TagSearchViewModule.h"
 #include "TtyHandler.h"
 #include "UserInteractionEnabledChangedMessage.h"
@@ -107,11 +103,9 @@ AppHost::AppHost(
     ,m_androidNativeUIFactories(m_androidAlertBoxFactory, m_androidInputBoxFactory, m_androidKeyboardInputFactory)
     ,m_pInputProcessor(NULL)
     ,m_pAndroidPlatformAbstractionModule(NULL)
-    ,m_pSearchMenuViewModule(NULL)
-	,m_pSettingsMenuViewModule(NULL)
-	,m_pSearchResultSectionViewModule(NULL)
+    ,m_pSearchResultSectionViewModule(NULL)
+    ,m_pSearchWidgetViewModule(NULL)
     ,m_pModalBackgroundViewModule(NULL)
-    ,m_pFlattenButtonViewModule(NULL)
     ,m_pMyPinCreationViewModule(NULL)
     ,m_pMyPinCreationDetailsViewModule(NULL)
     ,m_pMyPinDetailsViewModule(NULL)
@@ -514,13 +508,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     // 3d map view layer.
 
     // HUD behind modal background layer.
-    m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
-                                     m_nativeState,
-                                     app.FlattenButtonModule().GetFlattenButtonViewModel(),
-                                     m_messageBus,
-                                     *m_pAndroidFlurryMetricsService
-                                 );
-
     m_pMyPinCreationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationViewModule)(
                                      m_nativeState,
                                      app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
@@ -544,32 +531,18 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                        m_messageBus
                                    );
 
-    m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(
-                                        "com/eegeo/searchmenu/SearchMenuView",
-                                        m_nativeState,
-                                        app.SearchMenuModule().GetSearchMenuModel(),
-                                        app.SearchMenuModule().GetSearchMenuViewModel(),
-										app.SearchMenuModule().GetSearchSectionViewModel(),
-                                        app.TagSearchModule().GetTagSearchRepository(),
-	                                    app.SearchMenuModule().GetSearchMenuOptionsModel(),
-										m_pModalBackgroundViewModule->GetModalBackgroundView(),
-                                        m_messageBus
-                                    );
+	m_pSearchWidgetViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetViewModule)(
+			m_nativeState,
+			m_pModalBackgroundViewModule->GetModalBackgroundView(),
+			m_pApp->SearchMenuModule().GetSearchMenuViewModel(),
+			m_messageBus
+	);
 
     m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
             app.TagSearchModule().GetTagSearchMenuOptionsModel(),
-            app.SettingsMenuModule().GetSettingsMenuViewModel(),
+            app.SearchMenuModule().GetSearchMenuViewModel(),
             m_messageBus,
             *m_pMenuReactionModel);
-
-    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(
-    											"com/eegeo/settingsmenu/SettingsMenuView",
-    		                                     m_nativeState,
-    		                                     app.SettingsMenuModule().GetSettingsMenuModel(),
-    		                                     app.SettingsMenuModule().GetSettingsMenuViewModel(),
-												 m_pModalBackgroundViewModule->GetModalBackgroundView(),
-    		                                     m_messageBus
-    		                                 );
 
     m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(
     		app.SearchMenuModule().GetSearchMenuViewModel(),
@@ -641,8 +614,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
+	viewControllerUpdaterModel.AddUpdateableObject(m_pSearchWidgetViewModule->GetSearchWidgetController());
 
     SetTouchExclusivity();
 
@@ -679,19 +651,15 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
 
         Eegeo_DELETE m_pSearchResultSectionViewModule;
 
-        Eegeo_DELETE m_pSettingsMenuViewModule;
-
         Eegeo_DELETE m_pTagSearchViewModule;
 
-        Eegeo_DELETE m_pSearchMenuViewModule;
+		Eegeo_DELETE m_pSearchWidgetViewModule;
 
         Eegeo_DELETE m_pModalBackgroundViewModule;
 
         Eegeo_DELETE m_pCompassViewModule;
 
         Eegeo_DELETE m_pMyPinCreationViewModule;
-
-        Eegeo_DELETE m_pFlattenButtonViewModule;
 
         Eegeo_DELETE m_pWatermarkViewModule;
     }

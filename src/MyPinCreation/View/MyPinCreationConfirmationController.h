@@ -30,6 +30,7 @@ namespace ExampleApp
 
             private:
 
+                void OnOpened();
                 void OnDismissed();
                 void OnConfirmed();
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
@@ -38,12 +39,14 @@ namespace ExampleApp
                 IMyPinCreationConfirmationView& m_view;
                 MyPinCreationDetails::View::IMyPinCreationDetailsViewModel& m_detailsViewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                Metrics::IMetricsService& m_metricsService;
+                bool m_appModeAllowsOpen;
+                bool m_userInteractionEnabled;
 
                 Eegeo::Helpers::TCallback2<MyPinCreationConfirmationController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationConfirmationController> m_dismissedCallback;
                 Eegeo::Helpers::TCallback0<MyPinCreationConfirmationController> m_confirmedCallback;
-                
-                Metrics::IMetricsService& m_metricsService;
+                Eegeo::Helpers::TCallback0<MyPinCreationConfirmationController> m_openedCallback;
             };
         }
     }

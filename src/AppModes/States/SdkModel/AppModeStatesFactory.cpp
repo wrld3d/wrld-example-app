@@ -11,7 +11,6 @@
 #include "LatLongAltitude.h"
 #include "ScreenProperties.h"
 #include "BidirectionalBus.h"
-#include "IFlattenButtonModel.h"
 #include "NavigationService.h"
 #include "CameraTransitionService.h"
 #include "ILocationService.h"
@@ -47,8 +46,7 @@ namespace ExampleApp
                                                            const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                            ExampleAppMessaging::TMessageBus& messageBus,
                                                            Eegeo::Location::NavigationService& navigationService,
-                                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel)
+                                                           Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
                 : m_appCameraController(appCameraController)
                 , m_cameraSplinePlaybackController(cameraSplinePlaybackController)
                 , m_worldCameraController(worldCameraController)
@@ -72,7 +70,6 @@ namespace ExampleApp
                 , m_messageBus(messageBus)
                 , m_navigationService(navigationService)
                 , m_searchQueryPerformer(searchQueryPerformer)
-                , m_flattenButtonModel(flattenButtonModel)
                 {
                     
                 }
@@ -120,8 +117,7 @@ namespace ExampleApp
                                                                                    m_messageBus,
                                                                                    m_navigationService,
                                                                                    m_searchQueryPerformer,
-                                                                                   m_visualMapService,
-                                                                                   m_flattenButtonModel));
+                                                                                   m_visualMapService));
                     }
 
                     return states;

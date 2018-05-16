@@ -18,6 +18,7 @@ namespace ExampleApp
             SearchMenuModule::SearchMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                                ExampleApp::Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                               Search::SdkModel::IAutocompleteSuggestionQueryPerformer& autocompleteSuggestionQueryPerformer,
                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                Metrics::IMetricsService& metricsService)
             : m_pMenuModel(NULL)
@@ -34,6 +35,7 @@ namespace ExampleApp
                                                                         reactionControllerModel);
                 
                 m_pPerformedSearchMessageHandler = Eegeo_NEW(SearchMenuPerformedSearchMessageHandler)(searchQueryPerformer,
+                                                                                                      autocompleteSuggestionQueryPerformer,
                                                                                                       messageBus,
                                                                                                       metricsService);
             }

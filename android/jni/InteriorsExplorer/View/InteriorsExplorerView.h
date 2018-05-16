@@ -55,7 +55,6 @@ namespace ExampleApp
             private:
                 jclass m_uiViewClass;
                 jobject m_uiView;
-                jobject m_uiTutorialView;
 
                 Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;
                 Eegeo::Helpers::CallbackCollection1<float> m_floorSelectionDraggedCallbacks;

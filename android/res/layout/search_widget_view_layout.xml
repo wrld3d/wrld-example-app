@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:layout_marginTop="10dp"
+    android:paddingLeft="21dp"
+    android:paddingRight="21dp"
+    android:id="@+id/search_widget_view_layout">
+
+    <fragment android:name="com.wrld.widgets.search.WrldSearchWidget"
+        android:id="@+id/search_widget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <!--
+		eegeo:maxSuggestions="2"
+		eegeo:maxResults="4"
+	-->
+
+</LinearLayout>

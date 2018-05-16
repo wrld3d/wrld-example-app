@@ -33,6 +33,11 @@
 #include "BatchedSpriteMaterial.h"
 #include "BatchedSpriteRenderable.h"
 
+#include "MyPinCreationMenuOption.h"
+#include "MyPinCreation.h"
+#include "MenuOptionsModel.h"
+#include "MenuModel.h"
+
 #include "RenderableFilters.h"
 
 namespace ExampleApp
@@ -43,9 +48,8 @@ namespace ExampleApp
         {
             MyPinCreationModule::MyPinCreationModule(MyPins::SdkModel::IMyPinsService& myPinsService,
                     Eegeo::Helpers::IIdentityProvider& identityProvider,
-                    ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                    ExampleApp::Menu::View::IMenuViewModel& menuViewModel,
                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                    ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
                     ScreenControl::View::IScreenControlViewModel& interiorControlViewModel,
                     Eegeo::Labels::ILabelFilterModel& labelFilterModel,
@@ -74,14 +78,19 @@ namespace ExampleApp
                 m_pMyPinCreationCompositeViewModel = Eegeo_NEW(View::MyPinCreationCompositeViewModel)(messageBus,
                                                      *m_pMyPinCreationInitiationViewModel,
                                                      *m_pMyPinCreationConfirmationViewModel,
-                                                     searchMenuViewModel,
-                                                     settingsMenuViewModel,
+                                                     menuViewModel,
                                                      interiorControlViewModel,
                                                      watermarkViewModel);
+
+                m_pMyPinCreationMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
+                m_pMyPinCreationMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMyPinCreationMenuModel);
+                m_pMyPinCreationMenuOptionsModel->AddItem("Drop Pin", "Drop Pin", "", "", Eegeo_NEW(View::MyPinCreationMenuOption)(menuViewModel,*m_pMyPinCreationConfirmationViewModel));
             }
 
             MyPinCreationModule::~MyPinCreationModule()
             {
+                Eegeo_DELETE m_pMyPinCreationMenuOptionsModel;
+                Eegeo_DELETE m_pMyPinCreationMenuModel;
                 Eegeo_DELETE m_pMyPinCreationCompositeViewModel;
                 Eegeo_DELETE m_pMyPinCreationConfirmationViewModel;
                 Eegeo_DELETE m_pMyPinCreationInitiationViewModel;
@@ -121,6 +130,11 @@ namespace ExampleApp
             OpenableControl::View::IOpenableControlViewModel& MyPinCreationModule::GetObservableOpenableControl() const
             {
                 return m_pMyPinCreationConfirmationViewModel->GetOpenableControlViewModel();
+            }
+
+            Menu::View::IMenuModel& MyPinCreationModule::GetMyPinCreationMenuModel() const
+            {
+                return *m_pMyPinCreationMenuModel;
             }
         }
     }

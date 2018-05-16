@@ -19,15 +19,9 @@
 #include "JpegLoader.h"
 #include "iOSPlatformAbstractionModule.h"
 #include "ViewController.h"
-#include "ISettingsMenuModule.h"
-#include "SettingsMenuViewModule.h"
-#include "SettingsMenuView.h"
 #include "ISearchMenuModule.h"
-#include "SearchMenuViewModule.h"
-#include "SearchMenuView.h"
+#include "SearchWidgetViewModule.h"
 #include "ModalBackgroundView.h"
-#include "FlattenButtonView.h"
-#include "FlattenButtonViewModule.h"
 #include "SearchResultPoiViewModule.h"
 #include "SearchResultPoiView.h"
 #include "SearchResultSectionModule.h"
@@ -41,8 +35,6 @@
 #include "AboutPageViewModule.h"
 #include "AboutPageView.h"
 #include "TagSearchModule.h"
-#include "MyPinCreationInitiationViewModule.h"
-#include "MyPinCreationInitiationView.h"
 #include "MyPinCreationConfirmationViewModule.h"
 #include "MyPinCreationConfirmationView.h"
 #include "IMyPinCreationModule.h"
@@ -342,55 +334,26 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                          m_iOSFlurryMetricsService);
 
     m_pModalBackgroundViewModule = Eegeo_NEW(ExampleApp::ModalBackground::View::ModalBackgroundViewModule)(app.ModalityModule().GetModalityModel(), screenProperties);
-    
-    m_pSettingsMenuViewModule = Eegeo_NEW(ExampleApp::SettingsMenu::View::SettingsMenuViewModule)(app.SettingsMenuModule().GetSettingsMenuModel(),
-                                                                                                  app.SettingsMenuModule().GetSettingsMenuViewModel(),
-                                                                                                  screenProperties,
-                                                                                                  m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
-                                                                                                  m_messageBus);
-    
-    m_pSearchMenuViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchMenuViewModule)(app.SearchMenuModule().GetSearchMenuModel(),
-                                                                                            app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                            app.SearchMenuModule().GetSearchSectionViewModel(),
-                                                                                            screenProperties,
-                                                                                            app.TagSearchModule().GetTagSearchRepository(),
-                                                                                            m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
-                                                                                            m_messageBus);
 
     m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(
             app.TagSearchModule().GetTagSearchMenuOptionsModel(),
-            app.SettingsMenuModule().GetSettingsMenuViewModel(),
+            app.SearchMenuModule().GetSearchMenuViewModel(),
             m_messageBus,
             *m_pMenuReactionModel);
-    
-    m_pSearchResultSectionViewModule = Eegeo_NEW(ExampleApp::SearchResultSection::View::SearchResultSectionViewModule)(app.SearchMenuModule().GetSearchMenuViewModel(),
-                                                                                                                       app.SearchResultSectionModule().GetSearchResultSectionOptionsModel(),
-                                                                                                                       app.SearchResultSectionModule().GetSearchResultSectionOrder(),
-                                                                                                                       m_messageBus,
-                                                                                                                       *m_pMenuReactionModel,
-                                                                                                                       app.SearchResultPoiModule().GetSearchResultPoiViewModel());
+
+    m_pSearchWidgetViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetViewModule)(m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
+         app.SearchMenuModule().GetSearchMenuViewModel(),
+         m_messageBus);
 
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                                                                                            m_messageBus,
                                                                                                            m_iOSFlurryMetricsService);
-
-    m_pFlattenButtonViewModule = Eegeo_NEW(ExampleApp::FlattenButton::View::FlattenButtonViewModule)(
-                                     app.FlattenButtonModule().GetFlattenButtonViewModel(),
-                                     screenProperties,
-                                     m_messageBus,
-                                     m_iOSFlurryMetricsService);
     
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
                            screenProperties,
                            m_messageBus);
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), m_iOSFlurryMetricsService, m_messageBus);
-
-    m_pMyPinCreationInitiationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationInitiationViewModule)(m_messageBus,
-                                           app.MyPinCreationModule().GetMyPinCreationInitiationViewModel(),
-                                           app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
-                                           screenProperties,
-                                           m_iOSFlurryMetricsService);
 
     m_pMyPinCreationConfirmationViewModule = Eegeo_NEW(ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewModule)(m_messageBus,
             app.MyPinCreationModule().GetMyPinCreationConfirmationViewModel(),
@@ -439,9 +402,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 
     // HUD behind modal background layer.
     [m_pView addSubview: &m_pWatermarkViewModule->GetWatermarkView()];
-    [m_pView addSubview: &m_pFlattenButtonViewModule->GetFlattenButtonView()];
     [m_pView addSubview: &m_pCompassViewModule->GetCompassView()];
-    [m_pView addSubview: &m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView()];
     [m_pView addSubview: &m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView()];
     [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetView()];
 
@@ -449,9 +410,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pModalBackgroundViewModule->GetModalBackgroundView()];
 
     // Menus & HUD layer.
-    [m_pView addSubview: &m_pSettingsMenuViewModule->GetSettingsMenuView()];
-    [m_pView addSubview: &m_pSearchMenuViewModule->GetSearchMenuView()];
-
+    [m_pView addSubview:&m_pSearchWidgetViewModule->GetSearchWidgetView()];
+    
     // Pop-up layer.
     [m_pView addSubview: &m_pSearchResultPoiViewModule->GetView()];
     [m_pView addSubview: &m_pAboutPageViewModule->GetAboutPageView()];
@@ -468,8 +428,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
     
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSettingsMenuViewModule->GetMenuController());
-    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchMenuViewModule->GetMenuController());
+    viewControllerUpdaterModel.AddUpdateableObject(m_pSearchWidgetViewModule->GetSearchWidgetController());
     
     SetTouchExclusivity();
 }
@@ -482,9 +441,7 @@ void AppHost::DestroyApplicationViewModules()
 
     // HUD behind modal background layer.
     [&m_pWatermarkViewModule->GetWatermarkView() removeFromSuperview];
-    [&m_pFlattenButtonViewModule->GetFlattenButtonView() removeFromSuperview];
     [&m_pCompassViewModule->GetCompassView() removeFromSuperview];
-    [&m_pMyPinCreationInitiationViewModule->GetMyPinCreationInitiationView() removeFromSuperview];
     [&m_pMyPinCreationConfirmationViewModule->GetMyPinCreationConfirmationView() removeFromSuperview];
     [&m_pInteriorsExplorerViewModule->GetView() removeFromSuperview];
 
@@ -492,8 +449,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pModalBackgroundViewModule->GetModalBackgroundView() removeFromSuperview];
 
     // Menus & HUD layer.
-    [&m_pSettingsMenuViewModule->GetSettingsMenuView() removeFromSuperview];
-    [&m_pSearchMenuViewModule->GetSearchMenuView() removeFromSuperview];
+    [&m_pSearchWidgetViewModule->GetSearchWidgetView() removeFromSuperview];
 
     // Pop-up layer.
     [&m_pMyPinDetailsViewModule->GetMyPinDetailsView() removeFromSuperview];
@@ -528,16 +484,10 @@ void AppHost::DestroyApplicationViewModules()
 
     Eegeo_DELETE m_pModalBackgroundViewModule;
 
-    Eegeo_DELETE m_pSearchResultSectionViewModule;
-
     Eegeo_DELETE m_pTagSearchViewModule;
 
-    Eegeo_DELETE m_pSearchMenuViewModule;
-    
-    Eegeo_DELETE m_pSettingsMenuViewModule;
+    Eegeo_DELETE m_pSearchWidgetViewModule;
 
-    Eegeo_DELETE m_pFlattenButtonViewModule;
-    
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;
     
     Eegeo_DELETE m_pWatermarkViewModule;
