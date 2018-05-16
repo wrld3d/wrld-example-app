@@ -10,20 +10,22 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 ## Requirements
 
-- [Xcode](https://developer.apple.com/xcode/) (7.2 tested)
-- [CMake](https://cmake.org/) (3.1.1  or higher)
+- [Xcode](https://developer.apple.com/xcode/) (9.3 tested)
+- [CMake](https://cmake.org/) (3.11.0  or higher)
 - [Python] (https://python.org) (2.7.12 tested)
 
 ## Setup
 
 1.  Clone the repo: **git clone git@github.com:wrld3d/swallow-app.git**.
-2.  In the root of the repo, run the command `./update.platform.sh -p ios` to download the latest wrld iOS SDK.
-	*	We recommend you run this step frequently to keep your SDK version up to date.
+2.  In the root of the repo, run the command `./update.platform.sh -p ios -v 3503` to download the wrld iOS SDK.
 3.  In the `ios` directory, run `mkdir build` to create a build directory.
 4.  In the `ios/build` directory, run `cmake -G Xcode ..` to generate a project file.
 5.  Still in the `ios/build` directory, run `python ../embed_frameworks.py` to set the embed framework build phases in the project file.
 6.  Open the `ProjectSwallowApp.xcodeproj` project file in Xcode.
 7.  Build and run the ProjectSwallowApp target.
+
+## Known issues
+Opening the project before running the embed frameworks script will cause the script to corrupt the generated project.  If this happens run `rm -rf build` from the ios folder and repeat steps 3, 4 & 5.
 
 ## Building from the command line
 
@@ -31,4 +33,4 @@ There is a script included in the repo to build the app from the command line. Y
 
 To build from the command line, you will need to install the Xcode Command Line Tools by running the command: `xcode-select --install`
 
-Then run `./build.sh -p ios` from the root of this repository to build the project.
+Then run `./build.sh -p ios -v 3503` from the root of this repository to build the project.
