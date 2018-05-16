@@ -254,6 +254,34 @@
       ]
     },
     {
+        "interior_id": "swallow_ny_919third",
+        "type": "Senion",
+        "config": [{
+            "api_key": "34f8d844-2982-4e2d-ba92-2c4838ea534f",
+            "api_secret": "da2ed8ab-5a81-403c-a7f6-e8f16b46551a"
+        }],
+        "floor_mapping": [{
+            "building_floor_index": 0,
+            "tracked_floor_index": "0"
+        }, {
+            "building_floor_index": 2,
+            "tracked_floor_index": "1"
+        }, {
+            "building_floor_index": 3,
+            "tracked_floor_index": "2"
+        }, {
+            "building_floor_index": 4,
+            "tracked_floor_index": "3"
+        }, {
+            "building_floor_index": 5,
+            "tracked_floor_index": "4"
+        }, {
+            "building_floor_index": 6,
+            "tracked_floor_index": "5"
+        }
+        ]
+    },
+    {
       "interior_id": "swallow_ny_78madison",
       "type": "Senion",
       "config": [{
