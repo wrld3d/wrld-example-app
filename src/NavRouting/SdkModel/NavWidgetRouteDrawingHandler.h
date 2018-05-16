@@ -16,7 +16,7 @@ namespace ExampleApp
             {
             private:
                 INavRoutingModel& m_navRoutingModel;
-                NavRouteDrawingController& m_routeDrawingController;
+                INavRouteDrawingController& m_routeDrawingController;
 
                 Eegeo::Helpers::TCallback1<NavWidgetRouteDrawingHandler, const NavRoutingRouteModel&> m_routeSetCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetRouteDrawingHandler> m_routeClearedCallback;
@@ -27,7 +27,7 @@ namespace ExampleApp
 
             public:
                 NavWidgetRouteDrawingHandler(INavRoutingModel& navRoutingModel,
-                                             NavRouteDrawingController& routeDrawingController);
+                                             INavRouteDrawingController& routeDrawingController);
 
                 ~NavWidgetRouteDrawingHandler();
             };

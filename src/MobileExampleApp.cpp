@@ -691,6 +691,7 @@ namespace ExampleApp
         m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(polylineShapesModule.GetShapeService(),
                                                                                             world.GetRoutesModule().GetRoutingWebservice(),
                                                                                             world.GetLocationService(),
+                                                                                            *m_pNavigationService,
                                                                                             m_messageBus);
 
         m_pNavUIModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavUIModule)(m_identityProvider,
@@ -1132,6 +1133,7 @@ namespace ExampleApp
         }
 
         m_pInteriorsExplorerModule->Update(dt);
+        m_pNavRoutingModule->Update(dt);
 
         Eegeo::Camera::RenderCamera renderCamera = m_pAppCameraModule->GetController().GetRenderCamera();
         Eegeo::Camera::CameraState cameraState = m_pAppCameraModule->GetController().GetCameraState();

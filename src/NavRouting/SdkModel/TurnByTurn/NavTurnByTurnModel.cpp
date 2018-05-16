@@ -27,7 +27,7 @@ namespace ExampleApp
                         for(int routeSectionIndex = 0; routeSectionIndex < route.Sections.size(); ++routeSectionIndex)
                         {
                             const Eegeo::Routes::Webservice::RouteSection& currentSection = route.Sections.at(
-                                    static_cast<unsigned long>(sectionIndex));
+                                    static_cast<unsigned long>(routeSectionIndex));
 
                             for(int routeStepIndex = 0; routeStepIndex < currentSection.Steps.size(); ++routeStepIndex)
                             {
@@ -128,6 +128,7 @@ namespace ExampleApp
                     // TODO: Also, should maybe guard against going backwards or jumping several points due to error.
                     // Also this step is a linear index through the whole route - need to translate that from Section/Step index format
                     //int currentStep = m_navRoutingModel.GetCurrentDirection();
+                    // TODO: This should probably not be in here - is specificially a widget requirement.
                     m_currentStepIndex = GetStepIndexFromRouteIndices(currentRouteModel.GetSourceRouteData(),
                                                                       pointOnRouteResult.GetRouteSectionIndex(),
                                                                       pointOnRouteResult.GetRouteStepIndex());

@@ -5,13 +5,8 @@
 #include "Types.h"
 #include "BidirectionalBus.h"
 #include "NavRouting.h"
-#include "RouteService.h"
-#include "IRoutingWebservice.h"
-#include "ILocationService.h"
-#include "NavRoutingController.h"
-#include "NavRoutingModel.h"
-#include "NavRouteDrawingController.h"
-#include "NavRoutingServiceController.h"
+#include "Routes.h"
+#include "Location.h"
 
 namespace ExampleApp
 {
@@ -26,22 +21,27 @@ namespace ExampleApp
                 NavRoutingModule(PolyLineArgs::IShapeService& shapeService,
                                  Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
                                  Eegeo::Location::ILocationService& locationService,
+                                 Eegeo::Location::NavigationService& navigationService,
                                  ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~NavRoutingModule();
 
+                void Update(float dt);
 
                 INavRouteDrawingController& GetRouteDrawingController();
                 INavRoutingServiceController& GetRoutingServiceController();
                 
             private:
 
-                NavRoutingModel* m_pNavRoutingModel;
-                NavRouteDrawingController* m_pNavRouteDrawingController;
-                NavRoutingServiceController* m_pNavRoutingServiceController;
+                INavRoutingModel* m_pNavRoutingModel;
+                INavRouteDrawingController* m_pNavRouteDrawingController;
+                INavRoutingServiceController* m_pNavRoutingServiceController;
                 NavWidgetRouteUpdateHandler* m_pRouteUpdateHandler;
                 NavWidgetRouteDrawingHandler* m_pRouteDrawingHandler;
                 NavRoutingController* m_pRoutingController;
+
+                TurnByTurn::INavTurnByTurnModel* m_pTurnByTurnModel;
+                TurnByTurn::NavTurnByTurnController* m_pTurnByTurnController;
             };
         }
     }

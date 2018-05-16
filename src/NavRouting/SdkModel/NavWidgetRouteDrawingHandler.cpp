@@ -9,7 +9,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             NavWidgetRouteDrawingHandler::NavWidgetRouteDrawingHandler(INavRoutingModel& navRoutingModel,
-                                                                       NavRouteDrawingController& routeDrawingController)
+                                                                       INavRouteDrawingController& routeDrawingController)
                     : m_navRoutingModel(navRoutingModel)
                     , m_routeDrawingController(routeDrawingController)
                     , m_routeSetCallback(this, &NavWidgetRouteDrawingHandler::OnRouteSet)

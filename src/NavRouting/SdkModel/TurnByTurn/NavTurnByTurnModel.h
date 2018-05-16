@@ -21,12 +21,10 @@ namespace ExampleApp
 
                     float distanceToNextStepThreshold = 10.0f;
                     float updateRateSeconds = 1.0f;
-                    float distanceForRecalculateRouteThreshold = 100.0f; // Might need a timeout too.
+                    float distanceForRecalculateRouteThreshold = 100.0f;
                 };
 
-                // DEV NOTE
-                // Don't take any deps on anything outside this repository that isn't part of WRLD SDK
-                class NavTurnByTurnModel : INavTurnByTurnModel {
+                class NavTurnByTurnModel : public INavTurnByTurnModel {
                 public:
 
                     bool TurnByTurnEnabled() const { return m_enabled; }
@@ -76,7 +74,7 @@ namespace ExampleApp
                     // it's useless.
                     Eegeo::Location::ILocationService& m_locationService;
                     INavRoutingModel& m_navRoutingModel;
-                    const NavTurnByTurnConfig& m_config;
+                    const NavTurnByTurnConfig m_config;
 
                     Eegeo::Helpers::CallbackCollection0 m_startedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_stoppedCallbacks;

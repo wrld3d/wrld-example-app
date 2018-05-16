@@ -26,6 +26,7 @@ namespace ExampleApp
             public:
                 NavRoutingController(INavRoutingModel& routingModel,
                                      Eegeo::Location::ILocationService& locationService,
+                                     TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
                                      ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~NavRoutingController();
@@ -33,6 +34,7 @@ namespace ExampleApp
             private:
                 INavRoutingModel& m_routingModel;
                 Eegeo::Location::ILocationService& m_locationService;
+                TurnByTurn::INavTurnByTurnModel& m_turnByTurnModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
 

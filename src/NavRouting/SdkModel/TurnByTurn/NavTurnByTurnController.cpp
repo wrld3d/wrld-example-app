@@ -4,6 +4,7 @@
 #include "INavRoutingModel.h"
 #include "NavigationService.h"
 
+
 namespace ExampleApp
 {
     namespace NavRouting
@@ -42,13 +43,22 @@ namespace ExampleApp
 
                 void NavTurnByTurnController::HandleTurnByTurnStarted()
                 {
-                    //m_navRoutingModel.SetMode(ACTIVE);
+                    m_navRoutingModel.SetNavMode(NavRoutingMode::Active);
                     m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsMode::GpsModeCompass);
                 }
 
                 void NavTurnByTurnController::HandleTurnByTurnStopped()
                 {
-                    //m_navRoutingModel.SetMode(ACTIVE);
+                    m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsMode::GpsModeOff);
+
+                    if(m_navRoutingModel.HasRoute())
+                    {
+                        m_navRoutingModel.SetNavMode(NavRoutingMode::Ready);
+                    }
+                    else
+                    {
+                        m_navRoutingModel.SetNavMode(NavRoutingMode::NotReady);
+                    }
                 }
 
                 void NavTurnByTurnController::HandleTurnByTurnUpdated()

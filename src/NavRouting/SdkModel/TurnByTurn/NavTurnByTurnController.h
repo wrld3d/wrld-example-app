@@ -1,7 +1,3 @@
-//
-// Created by malcolm.brown on 15/05/2018.
-//
-
 #pragma once
 
 #include "NavRouting.h"

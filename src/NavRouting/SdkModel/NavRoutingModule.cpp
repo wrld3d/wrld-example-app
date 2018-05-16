@@ -7,6 +7,9 @@
 #include "NavWidgetRouteUpdateHandler.h"
 #include "NavWidgetRouteDrawingHandler.h"
 #include "NavRoutingController.h"
+#include "RouteService.h"
+#include "NavTurnByTurnModel.h"
+#include "NavTurnByTurnController.h"
 
 namespace ExampleApp
 {
@@ -17,6 +20,7 @@ namespace ExampleApp
             NavRoutingModule::NavRoutingModule(PolyLineArgs::IShapeService& shapeService,
                                                Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
                                                Eegeo::Location::ILocationService& locationService,
+                                               Eegeo::Location::NavigationService& navigationService,
                                                ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
@@ -29,19 +33,39 @@ namespace ExampleApp
                 m_pRouteDrawingHandler = Eegeo_NEW(NavWidgetRouteDrawingHandler)(*m_pNavRoutingModel,
                                                                                  *m_pNavRouteDrawingController);
 
+                TurnByTurn::NavTurnByTurnConfig turnByTurnConfig = TurnByTurn::NavTurnByTurnConfig();
+
+                m_pTurnByTurnModel = Eegeo_NEW(TurnByTurn::NavTurnByTurnModel)(turnByTurnConfig,
+                                                                               *m_pNavRoutingModel,
+                                                                               locationService);
+
+
+
+                m_pTurnByTurnController = Eegeo_NEW(TurnByTurn::NavTurnByTurnController)(*m_pTurnByTurnModel,
+                                                                                         *m_pNavRoutingModel,
+                                                                                         navigationService);
+
                 m_pRoutingController = Eegeo_NEW(NavRoutingController)(*m_pNavRoutingModel,
                                                                        locationService,
+                                                                       *m_pTurnByTurnModel,
                                                                        messageBus);
             }
 
             NavRoutingModule::~NavRoutingModule()
             {
                 Eegeo_DELETE m_pRoutingController;
+                Eegeo_DELETE m_pTurnByTurnController;
+                Eegeo_DELETE m_pTurnByTurnModel;
                 Eegeo_DELETE m_pRouteDrawingHandler;
                 Eegeo_DELETE m_pRouteUpdateHandler;
                 Eegeo_DELETE m_pNavRouteDrawingController;
                 Eegeo_DELETE m_pNavRoutingServiceController;
                 Eegeo_DELETE m_pNavRoutingModel;
+            }
+
+            void NavRoutingModule::Update(float dt)
+            {
+                m_pTurnByTurnController->Update(dt);
             }
 
             INavRouteDrawingController& NavRoutingModule::GetRouteDrawingController()

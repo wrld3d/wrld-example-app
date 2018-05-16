@@ -12,6 +12,7 @@
 #include "NavRoutingCurrentDirectionSetMessage.h"
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
 #include "NavRoutingModeSetMessage.h"
+#include "INavTurnByTurnModel.h"
 
 namespace ExampleApp
 {
@@ -21,9 +22,11 @@ namespace ExampleApp
         {
             NavRoutingController::NavRoutingController(INavRoutingModel& routingModel,
                                                        Eegeo::Location::ILocationService& locationService,
+                                                       TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
                                                        ExampleAppMessaging::TMessageBus& messageBus)
             : m_routingModel(routingModel)
             , m_locationService(locationService)
+            , m_turnByTurnModel(turnByTurnModel)
             , m_messageBus(messageBus)
             , m_startLocationSetCallback(this, &NavRoutingController::OnStartLocationSet)
             , m_startLocationClearedCallback(this, &NavRoutingController::OnStartLocationCleared)
@@ -166,10 +169,10 @@ namespace ExampleApp
                 switch (m_routingModel.GetNavMode())
                 {
                     case NavRoutingMode::Active:
-                        m_routingModel.SetNavMode(NavRoutingMode::Ready);
+                        m_turnByTurnModel.Stop();
                         break;
                     case NavRoutingMode::Ready:
-                        m_routingModel.SetNavMode(NavRoutingMode::Active);
+                        m_turnByTurnModel.Start();
                         break;
                     default:
                         m_routingModel.SetNavMode(NavRoutingMode::NotReady);
