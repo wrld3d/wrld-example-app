@@ -2,8 +2,8 @@ import fileinput
 import sys
 
 
-def embed_frameworks():
-    project_file_name = 'ExampleApp.xcodeproj/project.pbxproj'
+def embed_frameworks(projectName):
+    project_file_name = projectName + '.xcodeproj/project.pbxproj'
     link_phase_guid = '52712FB4208DE9360088D080'
     embed_phase_guid = '52712FB5208DE9360088D080'
     path = 'ios/Include'
@@ -118,4 +118,7 @@ def _add_framework_build_phases(project_file_name, link_phase_guid, embed_phase_
 
 
 if __name__ == '__main__':
-    embed_frameworks()
+    if len(sys.argv) > 1:
+        embed_frameworks(sys.argv[1])   # expecting an alternate Xcode project name, like PrivateExampleApp
+    else:
+        embed_frameworks('ExampleApp')

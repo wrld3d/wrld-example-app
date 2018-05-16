@@ -49,7 +49,7 @@ if [ $resultcode -ne 0 ]; then
     exit $resultcode
 fi
 
-(cd $projectPath && python ../embed_frameworks.py)
+(cd $projectPath && python ../embed_frameworks.py "$xcodeTarget")
 
 resultcode=$?
 if [ $resultcode -ne 0 ]; then
