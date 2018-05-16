@@ -9,8 +9,6 @@ set(currsources
   ../src/NavRouting/SdkModel/NavRouteInstructionHelper.h
   ../src/NavRouting/SdkModel/NavRoutingServiceController.cpp
   ../src/NavRouting/SdkModel/NavRoutingServiceController.h
-  ../src/NavRouting/SdkModel/NavRouteDrawingVertexData.cpp
-  ../src/NavRouting/SdkModel/NavRouteDrawingVertexData.h
   ../src/NavRouting/SdkModel/NavRoutingController.cpp
   ../src/NavRouting/SdkModel/NavRoutingController.h
   ../src/NavRouting/SdkModel/NavRoutingDirectionModel.cpp

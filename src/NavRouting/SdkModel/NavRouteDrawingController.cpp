@@ -10,7 +10,12 @@ namespace ExampleApp
         namespace SdkModel
         {
             NavRouteDrawingController::NavRouteDrawingController(PolyLineArgs::IShapeService& shapeService)
-            : m_shapeService(shapeService)
+            : m_routeThickness(10.f)
+            , m_miterLimit(10.f)
+            , m_routeElevation(0)
+            , m_routeElevationMode(Eegeo::Positioning::ElevationMode::Type::HeightAboveGround)
+            , m_shapeService(shapeService)
+            , m_shouldScaleWithMap(false)
             {
 
             }
@@ -88,12 +93,12 @@ namespace ExampleApp
                     const auto& params = Eegeo::Shapes::Polylines::PolylineShapeBuilder()
                                         .SetCoordinates(directionModel.GetPath())
                                         .SetFillColor(color)
-                                        .SetThickness(10.0f)//TODO
-                                        .SetMiterLimit(10.0f)
-                                        .SetElevation(0)
-                                        .SetElevationMode(Eegeo::Positioning::ElevationMode::Type::HeightAboveGround)
+                                        .SetThickness(m_routeThickness)
+                                        .SetMiterLimit(m_miterLimit)
+                                        .SetElevation(m_routeElevation)
+                                        .SetElevationMode(m_routeElevationMode)
                                         .SetIndoorMap(directionModel.GetIndoorMapId().Value(), directionModel.GetIndoorMapFloorId())
-                                        .SetShouldScaleWithMap(true)
+                                        .SetShouldScaleWithMap(m_shouldScaleWithMap)
                                         .Build();
 
                     shapeId = m_shapeService.Create(params);
@@ -103,11 +108,11 @@ namespace ExampleApp
                     const auto& params = Eegeo::Shapes::Polylines::PolylineShapeBuilder()
                                         .SetCoordinates(directionModel.GetPath())
                                         .SetFillColor(color)
-                                        .SetThickness(10.0f)//TODO
-                                        .SetMiterLimit(10.0f)
-                                        .SetElevation(0)
-                                        .SetElevationMode(Eegeo::Positioning::ElevationMode::Type::HeightAboveGround)
-                                        .SetShouldScaleWithMap(true)
+                                        .SetThickness(m_routeThickness)
+                                        .SetMiterLimit(m_miterLimit)
+                                        .SetElevation(m_routeElevation)
+                                        .SetElevationMode(m_routeElevationMode)
+                                        .SetShouldScaleWithMap(m_shouldScaleWithMap)
                                         .Build();
 
                     shapeId = m_shapeService.Create(params);
@@ -148,12 +153,12 @@ namespace ExampleApp
                 const auto& params = Eegeo::Shapes::Polylines::PolylineShapeBuilder()
                         .SetCoordinates(currentDirection.GetPath())
                         .SetFillColor(color)
-                        .SetThickness(10.0f)//TODO
-                        .SetMiterLimit(10.0f)
-                        .SetElevation(0)
-                        .SetElevationMode(Eegeo::Positioning::ElevationMode::Type::HeightAboveGround)
+                        .SetThickness(m_routeThickness)
+                        .SetMiterLimit(m_miterLimit)
+                        .SetElevation(m_routeElevation)
+                        .SetElevationMode(m_routeElevationMode)
                         .SetIndoorMap(currentDirection.GetIndoorMapId().Value(), floor)
-                        .SetShouldScaleWithMap(true)
+                        .SetShouldScaleWithMap(m_shouldScaleWithMap)
                         .SetPerPointElevations(perPointElevations)
                         .Build();
 

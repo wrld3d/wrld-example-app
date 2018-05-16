@@ -37,6 +37,7 @@ namespace ExampleApp
                                                      INavWidgetViewModel& viewModel,
                                                      ExampleAppMessaging::TMessageBus& messageBus_)
             {
+                registerObserver("selectedDirection");
                 
                 m_pNavModel = [[WRLDNavModel alloc] init];
                 
