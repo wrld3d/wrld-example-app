@@ -10,6 +10,7 @@
 #include "NavRoutingRouteSetMessage.h"
 #include "NavRoutingRouteClearedMessage.h"
 #include "NavRoutingCurrentDirectionSetMessage.h"
+#include "NavRoutingSelectedDirectionSetMessage.h"
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
 #include "NavRoutingModeSetMessage.h"
 #include "INavTurnByTurnModel.h"
@@ -35,6 +36,7 @@ namespace ExampleApp
             , m_routeSetCallback(this, &NavRoutingController::OnRouteSet)
             , m_routeClearedCallback(this, &NavRoutingController::OnRouteCleared)
             , m_currentDirectionSetCallback(this, &NavRoutingController::OnCurrentDirectionSet)
+            , m_selectedDirectionSetCallback(this, &NavRoutingController::OnSelectedDirectionSet)
             , m_remainingRouteDurationSetCallback(this, &NavRoutingController::OnRemainingRouteDurationSet)
             , m_navRoutingModeSetCallback(this, &NavRoutingController::OnNavRoutingModeSet)
             , m_viewClosedMessageHandler(this, &NavRoutingController::OnNavWidgetViewClosed)
@@ -51,6 +53,7 @@ namespace ExampleApp
                 m_routingModel.InsertEndLocationClearedCallback(m_endLocationClearedCallback);
                 m_routingModel.InsertRouteSetCallback(m_routeSetCallback);
                 m_routingModel.InsertRouteClearedCallback(m_routeClearedCallback);
+                m_routingModel.InsertSelectedDirectionSetCallback(m_selectedDirectionSetCallback);
                 m_routingModel.InsertCurrentDirectionSetCallback(m_currentDirectionSetCallback);
                 m_routingModel.InsertRemainingRouteDurationSetCallback(m_remainingRouteDurationSetCallback);
                 m_routingModel.InsertNavModeSetCallback(m_navRoutingModeSetCallback);
@@ -75,6 +78,7 @@ namespace ExampleApp
                 m_routingModel.RemoveNavModeSetCallback(m_navRoutingModeSetCallback);
                 m_routingModel.RemoveRemainingRouteDurationSetCallback(m_remainingRouteDurationSetCallback);
                 m_routingModel.RemoveCurrentDirectionSetCallback(m_currentDirectionSetCallback);
+                m_routingModel.RemoveSelectedDirectionSetCallback(m_selectedDirectionSetCallback);
                 m_routingModel.RemoveRouteClearedCallback(m_routeClearedCallback);
                 m_routingModel.RemoveRouteSetCallback(m_routeSetCallback);
                 m_routingModel.RemoveEndLocationClearedCallback(m_endLocationClearedCallback);
@@ -120,6 +124,11 @@ namespace ExampleApp
             void NavRoutingController::OnCurrentDirectionSet(const int& directionIndex)
             {
                 m_messageBus.Publish(NavRoutingCurrentDirectionSetMessage(directionIndex));
+            }
+
+            void NavRoutingController::OnSelectedDirectionSet(const int& directionIndex)
+            {
+                m_messageBus.Publish(NavRoutingSelectedDirectionSetMessage(directionIndex));
             }
 
             void NavRoutingController::OnRemainingRouteDurationSet(const double& seconds)

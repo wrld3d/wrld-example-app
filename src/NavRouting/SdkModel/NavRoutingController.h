@@ -45,6 +45,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const SdkModel::NavRoutingRouteModel&> m_routeSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_routeClearedCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const int> m_currentDirectionSetCallback;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const int> m_selectedDirectionSetCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const double> m_remainingRouteDurationSetCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingMode> m_navRoutingModeSetCallback;
 
@@ -70,6 +71,8 @@ namespace ExampleApp
                 void OnRouteCleared();
 
                 void OnCurrentDirectionSet(const int& directionIndex);
+
+                void OnSelectedDirectionSet(const int& directionIndex);
 
                 void OnRemainingRouteDurationSet(const double& seconds);
 

@@ -37,6 +37,7 @@ namespace ExampleApp
                 virtual void ClearRoute() = 0;
 
                 virtual void SetCurrentDirection(int directionIndex) = 0;
+                virtual void SetSelectedDirection(int directionIndex) = 0;
 
                 virtual void SetRemainingRouteDuration(double seconds) = 0;
 

@@ -24,7 +24,8 @@ namespace ExampleApp
                     float distanceForRecalculateRouteThreshold = 100.0f;
                 };
 
-                class NavTurnByTurnModel : public INavTurnByTurnModel {
+                class NavTurnByTurnModel : public INavTurnByTurnModel
+                {
                 public:
 
                     bool TurnByTurnEnabled() const { return m_enabled; }

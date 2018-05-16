@@ -66,6 +66,7 @@ namespace ExampleApp
                 void ClearRoute();
                 
                 void SetCurrentDirection(int directionIndex);
+                void SetSelectedDirection(int directionIndex);
 
                 void SetRemainingRouteDuration(double seconds);
                 

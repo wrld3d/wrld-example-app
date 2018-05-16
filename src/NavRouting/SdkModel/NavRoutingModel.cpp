@@ -106,10 +106,12 @@ namespace ExampleApp
                 return m_currentDirectionIndex;
             }
 
-            void NavRoutingModel::SetSelectedDirection(int directionIndex)
-            {
-                m_selectedDirectionIndex = directionIndex;
-                m_selectedDirectionIndexSetCallbacks.ExecuteCallbacks(m_selectedDirectionIndex);
+            void NavRoutingModel::SetSelectedDirection(int directionIndex) {
+                if (m_selectedDirectionIndex != directionIndex)
+                {
+                    m_selectedDirectionIndex = directionIndex;
+                    m_selectedDirectionIndexSetCallbacks.ExecuteCallbacks(m_selectedDirectionIndex);
+                }
             }
 
             int NavRoutingModel::GetSelectedDirection() const

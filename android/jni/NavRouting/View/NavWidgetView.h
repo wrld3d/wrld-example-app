@@ -54,6 +54,8 @@ namespace ExampleApp
 
                 void SetCurrentDirection(int directionIndex) override;
 
+                void SetSelectedDirection(int directionIndex) override;
+
                 void SetRemainingRouteDuration(double seconds) override;
 
                 void SetNavMode(SdkModel::NavRoutingMode mode) override;

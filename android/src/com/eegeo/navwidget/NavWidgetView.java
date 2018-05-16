@@ -114,6 +114,11 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_model.setCurrentDirectionIndex(directionIndex);
     }
 
+    public void setSelectedDirectionIndex(int directionIndex)
+    {
+        m_model.setSelectedDirectionIndex(directionIndex);
+    }
+
     public void setRemainingRouteDurationSeconds(double remainingRouteDurationSeconds)
     {
         m_model.setRemainingRouteDurationSeconds(remainingRouteDurationSeconds);

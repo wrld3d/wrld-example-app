@@ -61,6 +61,7 @@
 #include "NavRoutingRouteSetMessage.h"
 #include "NavRoutingRouteClearedMessage.h"
 #include "NavRoutingCurrentDirectionSetMessage.h"
+#include "NavRoutingSelectedDirectionSetMessage.h"
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
 #include "NavRoutingModeSetMessage.h"
 
@@ -125,6 +126,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRouteSetMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRouteClearedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingCurrentDirectionSetMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingSelectedDirectionSetMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRemainingRouteDurationSetMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingModeSetMessage>
             , private Eegeo::NonCopyable

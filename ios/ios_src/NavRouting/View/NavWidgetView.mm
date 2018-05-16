@@ -110,6 +110,11 @@ namespace ExampleApp
             {
                 [m_pNavModel setCurrentDirection:(NSInteger)currentDirection];
             }
+
+            void NavWidgetView::SetSelectedDirection(int directionIndex)
+            {
+                //[m_pNavModel setSelectedDirection:(NSInteger)directionIndex];
+            }
             
             void NavWidgetView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)
             {

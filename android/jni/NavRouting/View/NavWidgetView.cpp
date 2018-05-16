@@ -178,6 +178,17 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, methodID, directionIndex);
             }
 
+            void NavWidgetView::SetSelectedDirection(int directionIndex)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID methodID = env->GetMethodID(m_uiViewClass, "setSelectedDirectionIndex", "(I)V");
+                env->CallVoidMethod(m_uiView, methodID, directionIndex);
+            }
+
             void NavWidgetView::SetRemainingRouteDuration(double seconds)
             {
                 ASSERT_UI_THREAD
