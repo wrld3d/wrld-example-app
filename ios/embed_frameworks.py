@@ -1,6 +1,6 @@
 import fileinput
 import sys
-
+import argparse
 
 def embed_frameworks(projectName):
     project_file_name = projectName + '.xcodeproj/project.pbxproj'
@@ -116,9 +116,17 @@ def _add_framework_build_phases(project_file_name, link_phase_guid, embed_phase_
             sys.stdout.write('\t\t\t\t{} /* Embed Frameworks */,\n'.format(embed_phase_guid))
     project_file.close()
 
+def _parse_args():
+    parser = argparse.ArgumentParser(description="Add the search widget to the app's project.")
+
+    parser.add_argument('projectName', nargs='?', default='ExampleApp', help='The target name of an Xcode project')
+
+    return parser.parse_args()
+
+def main():
+    args = _parse_args()
+
+    embed_frameworks(args.projectName)
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        embed_frameworks(sys.argv[1])   # expecting an alternate Xcode project name, like PrivateExampleApp
-    else:
-        embed_frameworks('ExampleApp')
+    main()
