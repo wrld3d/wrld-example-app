@@ -184,17 +184,25 @@ JNIEXPORT void JNICALL Java_com_eegeo_entrypointinfrastructure_NativeJniCalls_ha
 	jstring path,
     jstring query)
 {
-    const char* nativeHost = jenv->GetStringUTFChars(host, JNI_FALSE);
-    const char* nativePath = jenv->GetStringUTFChars(path, JNI_FALSE);
+    const char* nativeHost = host != NULL ? jenv->GetStringUTFChars(host, JNI_FALSE) : "";
+    const char* nativePath = path != NULL ? jenv->GetStringUTFChars(path, JNI_FALSE) : "";
     const char* nativeQuery = NULL;
     if(query != NULL)
     {
         nativeQuery = jenv->GetStringUTFChars(query, JNI_FALSE);
     }
+
     const AppInterface::UrlData data = {nativeHost, nativePath, nativeQuery};
     g_pAppRunner->HandleUrlOpenEvent(data);
-    jenv->ReleaseStringUTFChars(host, nativeHost);
-    jenv->ReleaseStringUTFChars(path, nativePath);
+
+    if (host != NULL)
+    {
+        jenv->ReleaseStringUTFChars(host, nativeHost);
+    }
+    if (path != NULL)
+    {
+        jenv->ReleaseStringUTFChars(path, nativePath);
+    }
     if(query != NULL)
     {
         jenv->ReleaseStringUTFChars(query, nativeQuery);

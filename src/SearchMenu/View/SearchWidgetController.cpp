@@ -295,7 +295,7 @@ namespace ExampleApp
 
                 if(!m_viewModel.IsFullyClosed())
                 {
-                    m_viewModel.Close();
+                    m_viewModel.Close(false);
                 }
 
                 if(m_viewModel.HasReactorControl())
