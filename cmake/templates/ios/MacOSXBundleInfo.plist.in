@@ -41,8 +41,10 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>BWAY would like to access your photo library for submitting faults and reports</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to increase indoor location accuracy using your device's bluetooth.</string>
+	<string>BWAY would like to increase indoor location accuracy using your device's bluetooth.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>If you allow access to your location the app can display your position in the map.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
