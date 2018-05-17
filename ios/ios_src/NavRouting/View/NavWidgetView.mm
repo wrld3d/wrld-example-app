@@ -113,7 +113,7 @@ namespace ExampleApp
 
             void NavWidgetView::SetSelectedDirection(int directionIndex)
             {
-                //[m_pNavModel setSelectedDirection:(NSInteger)directionIndex];
+                [m_pNavModel setSelectedDirection:(NSInteger)directionIndex];
             }
             
             void NavWidgetView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)

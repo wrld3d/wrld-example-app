@@ -29,9 +29,9 @@ namespace ExampleApp
                 static const char *Depart = "depart";
                 static const char *UTurn = "make a u-turn";
                 static const char* Floor = "floor";
-                static const char* Stairs = "stairs";
+                //static const char* Stairs = "stairs";
                 static const char* Elevator = "elevator";
-                static const char* Escalator = "escalator";
+                //static const char* Escalator = "escalator";
             }
 
             namespace Preposition {
