@@ -21,6 +21,7 @@ namespace ExampleApp
                                                Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
                                                Eegeo::Location::ILocationService& locationService,
                                                Eegeo::Location::NavigationService& navigationService,
+                                               Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
@@ -28,7 +29,8 @@ namespace ExampleApp
                 m_pNavRoutingServiceController = Eegeo_NEW(NavRoutingServiceController)(routingWebservice);
 
                 m_pRouteUpdateHandler = Eegeo_NEW(NavWidgetRouteUpdateHandler)(*m_pNavRoutingModel,
-                                                                               *m_pNavRoutingServiceController);
+                                                                               *m_pNavRoutingServiceController,
+                                                                               alertBoxFactory);
 
                 m_pRouteDrawingHandler = Eegeo_NEW(NavWidgetRouteDrawingHandler)(*m_pNavRoutingModel,
                                                                                  *m_pNavRouteDrawingController);
@@ -36,7 +38,6 @@ namespace ExampleApp
                 TurnByTurn::NavTurnByTurnConfig turnByTurnConfig = TurnByTurn::NavTurnByTurnConfig();
 
                 m_pTurnByTurnModel = Eegeo_NEW(TurnByTurn::NavTurnByTurnModel)(turnByTurnConfig,
-                                                                               *m_pNavRoutingModel,
                                                                                locationService);
 
 

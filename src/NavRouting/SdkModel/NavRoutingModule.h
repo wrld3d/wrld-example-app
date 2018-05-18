@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "AlertBox.h"
 #include "Types.h"
 #include "BidirectionalBus.h"
 #include "NavRouting.h"
@@ -22,6 +23,7 @@ namespace ExampleApp
                                  Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
                                  Eegeo::Location::ILocationService& locationService,
                                  Eegeo::Location::NavigationService& navigationService,
+                                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                  ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~NavRoutingModule();

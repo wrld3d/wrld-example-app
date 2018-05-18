@@ -33,6 +33,7 @@ namespace ExampleApp
 
             typedef Eegeo::Shapes::Polylines::PolylineShapeArgs PolyLineArgs;
             typedef Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Routes::Webservice::RouteData>> RoutesReceivedCallback;
+            typedef Eegeo::Helpers::ICallback0 RouteFailedCallback;
 
             namespace TurnByTurn
             {

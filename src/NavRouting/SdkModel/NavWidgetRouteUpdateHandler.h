@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "Types.h"
 #include "INavRoutingModel.h"
 #include "NavRoutingLocationModel.h"
@@ -9,6 +10,8 @@
 #include "BidirectionalBus.h"
 #include "NavRoutingViewStartEndLocationSwappedMessage.h"
 #include "INavRoutingServiceController.h"
+#include "AlertBox.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
 
 namespace ExampleApp
 {
@@ -21,6 +24,7 @@ namespace ExampleApp
             private:
                 INavRoutingModel& m_navRoutingModel;
                 INavRoutingServiceController& m_navRoutingServiceController;
+                Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
 
                 NavRoutingLocationModel m_startLocation;
                 bool m_startLocationIsSet;
@@ -32,6 +36,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetRouteUpdateHandler, const NavRoutingLocationModel&> m_endLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetRouteUpdateHandler> m_endLocationClearedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetRouteUpdateHandler, const std::vector<Eegeo::Routes::Webservice::RouteData>> m_queryCompletedCallback;
+                Eegeo::Helpers::TCallback0<NavWidgetRouteUpdateHandler> m_queryFailedCallback;
+                Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavWidgetRouteUpdateHandler> m_failAlertHandler;
 
                 void OnStartLocationSet(const NavRoutingLocationModel& startLocation);
 
@@ -47,9 +53,15 @@ namespace ExampleApp
 
                 void OnRoutingQueryCompleted(const std::vector<Eegeo::Routes::Webservice::RouteData>& data);
 
+                void OnRoutingQueryFailed();
+
+                void OnFailAlertBoxDismissed();
+
             public:
                 NavWidgetRouteUpdateHandler(INavRoutingModel& navRoutingModel,
-                                            INavRoutingServiceController& navRoutingServiceController);
+                                            INavRoutingServiceController& navRoutingServiceController,
+                                            Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory
+                );
 
                 ~NavWidgetRouteUpdateHandler();
             };

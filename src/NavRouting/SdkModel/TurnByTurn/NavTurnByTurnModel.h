@@ -1,3 +1,4 @@
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #pragma once
 
@@ -5,6 +6,7 @@
 #include "LatLongAltitude.h"
 #include "Location.h"
 #include "NavRouting.h"
+#include "RouteData.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
 
@@ -41,11 +43,10 @@ namespace ExampleApp
                     int GetCurrentStepIndex() const { return m_currentStepIndex; }
 
                     NavTurnByTurnModel(const NavTurnByTurnConfig& config,
-                                       INavRoutingModel& navRoutingModel,
                                        Eegeo::Location::ILocationService& locationService);
                     ~NavTurnByTurnModel();
 
-                    void Start();
+                    void Start(const Eegeo::Routes::Webservice::RouteData& route);
                     void Stop();
 
                     void Update(float dt);
@@ -62,8 +63,8 @@ namespace ExampleApp
                     void UpdateTurnByTurn();
 
                     Eegeo::Location::ILocationService& m_locationService;
-                    INavRoutingModel& m_navRoutingModel;
                     const NavTurnByTurnConfig m_config;
+                    Eegeo::Routes::Webservice::RouteData m_route;
 
                     Eegeo::Helpers::CallbackCollection0 m_startedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_stoppedCallbacks;

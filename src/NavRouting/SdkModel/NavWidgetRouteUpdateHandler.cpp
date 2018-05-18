@@ -3,6 +3,7 @@
 #include "NavWidgetRouteUpdateHandler.h"
 #include "RoutingQueryOptions.h"
 #include "NavRoutingRouteModel.h"
+#include "IAlertBoxFactory.h"
 
 #include <string>
 #include <sstream>
@@ -62,9 +63,11 @@ namespace ExampleApp
             }
             
             NavWidgetRouteUpdateHandler::NavWidgetRouteUpdateHandler(INavRoutingModel& navRoutingModel,
-                                                                     INavRoutingServiceController& navRoutingServiceController)
+                                                                     INavRoutingServiceController& navRoutingServiceController,
+                                                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
                     : m_navRoutingModel(navRoutingModel)
                     , m_navRoutingServiceController(navRoutingServiceController)
+                    , m_alertBoxFactory(alertBoxFactory)
                     , m_startLocation("", Eegeo::Space::LatLong(0,0))
                     , m_startLocationIsSet(false)
                     , m_endLocation("", Eegeo::Space::LatLong(0,0))
@@ -74,16 +77,20 @@ namespace ExampleApp
                     , m_endLocationSetCallback(this, &NavWidgetRouteUpdateHandler::OnEndLocationSet)
                     , m_endLocationClearedCallback(this, &NavWidgetRouteUpdateHandler::OnEndLocationCleared)
                     , m_queryCompletedCallback(this, &NavWidgetRouteUpdateHandler::OnRoutingQueryCompleted)
+                    , m_queryFailedCallback(this, &NavWidgetRouteUpdateHandler::OnRoutingQueryFailed)
+                    , m_failAlertHandler(this, &NavWidgetRouteUpdateHandler::OnFailAlertBoxDismissed)
             {
                 m_navRoutingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_navRoutingModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
                 m_navRoutingModel.InsertEndLocationSetCallback(m_endLocationSetCallback);
                 m_navRoutingModel.InsertEndLocationClearedCallback(m_endLocationClearedCallback);
                 m_navRoutingServiceController.RegisterQueryCompletedCallback(m_queryCompletedCallback);
+                m_navRoutingServiceController.RegisterQueryFailedCallback(m_queryFailedCallback);
             }
 
             NavWidgetRouteUpdateHandler::~NavWidgetRouteUpdateHandler()
             {
+                m_navRoutingServiceController.UnregisterQueryFailedCallback(m_queryFailedCallback);
                 m_navRoutingServiceController.UnregisterQueryCompletedCallback(m_queryCompletedCallback);
                 m_navRoutingModel.RemoveEndLocationClearedCallback(m_endLocationClearedCallback);
                 m_navRoutingModel.RemoveEndLocationSetCallback(m_endLocationSetCallback);
@@ -148,6 +155,18 @@ namespace ExampleApp
             {
                 //Only using first route for now
                 UpdateDirectionsFromRoute(data[0]);
+            }
+
+            void NavWidgetRouteUpdateHandler::OnRoutingQueryFailed()
+            {
+                m_navRoutingModel.ClearRoute();
+                m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to find route",
+                                                             "We couldn't find a route between those two points",
+                                                             m_failAlertHandler);
+            }
+
+            void NavWidgetRouteUpdateHandler::OnFailAlertBoxDismissed()
+            {
             }
         }
     }

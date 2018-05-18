@@ -25,6 +25,8 @@ namespace ExampleApp
                 
                 void RegisterQueryCompletedCallback(RoutesReceivedCallback& callback) override;
                 void UnregisterQueryCompletedCallback(RoutesReceivedCallback& callback) override;
+                void RegisterQueryFailedCallback(RouteFailedCallback& callback) override;
+                void UnregisterQueryFailedCallback(RouteFailedCallback& callback) override;
                 
             private:
                 
@@ -37,6 +39,7 @@ namespace ExampleApp
                 Eegeo::Routes::Webservice::RoutingQueryId m_routingQueryId;
                 
                 Eegeo::Helpers::CallbackCollection1<const std::vector<Eegeo::Routes::Webservice::RouteData>> m_routingQueryCompletedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_routingQueryFailedCallbacks;
             };
         }
     }

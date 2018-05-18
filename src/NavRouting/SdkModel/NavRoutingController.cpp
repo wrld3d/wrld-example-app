@@ -181,8 +181,18 @@ namespace ExampleApp
                         m_turnByTurnModel.Stop();
                         break;
                     case NavRoutingMode::Ready:
-                        m_turnByTurnModel.Start();
+                    {
+                        SdkModel::NavRoutingRouteModel routeModel;
+                        if(m_routingModel.TryGetRoute(routeModel))
+                        {
+                            m_turnByTurnModel.Start(routeModel.GetSourceRouteData());
+                        }
+                        else
+                        {
+                            m_routingModel.SetNavMode(NavRoutingMode::NotReady);
+                        }
                         break;
+                    }
                     default:
                         m_routingModel.SetNavMode(NavRoutingMode::NotReady);
                         break;

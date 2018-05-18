@@ -43,6 +43,10 @@ namespace ExampleApp
                     {
                         m_routingQueryCompletedCallbacks.ExecuteCallbacks(results.Results);
                     }
+                    else
+                    {
+                        m_routingQueryFailedCallbacks.ExecuteCallbacks();
+                    }
                     
                     m_routingQueryId = 0;
                 }
@@ -56,6 +60,16 @@ namespace ExampleApp
             void NavRoutingServiceController::UnregisterQueryCompletedCallback(RoutesReceivedCallback& callback)
             {
                 m_routingQueryCompletedCallbacks.RemoveCallback(callback);
+            }
+
+            void NavRoutingServiceController::RegisterQueryFailedCallback(RouteFailedCallback& callback)
+            {
+                m_routingQueryFailedCallbacks.AddCallback(callback);
+            }
+
+            void NavRoutingServiceController::UnregisterQueryFailedCallback(RouteFailedCallback& callback)
+            {
+                m_routingQueryFailedCallbacks.RemoveCallback(callback);
             }
         }
     }

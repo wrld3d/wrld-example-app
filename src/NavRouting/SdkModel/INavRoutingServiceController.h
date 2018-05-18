@@ -21,6 +21,8 @@ namespace ExampleApp
 
                 virtual void RegisterQueryCompletedCallback(RoutesReceivedCallback& callback) = 0;
                 virtual void UnregisterQueryCompletedCallback(RoutesReceivedCallback& callback) = 0;
+                virtual void RegisterQueryFailedCallback(RouteFailedCallback& callback) = 0;
+                virtual void UnregisterQueryFailedCallback(RouteFailedCallback& callback) = 0;
             };
         }
     }

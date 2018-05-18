@@ -1,3 +1,4 @@
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "NavTurnByTurnModel.h"
 #include "RouteHelpers.h"
@@ -27,10 +28,8 @@ namespace ExampleApp
                 }
 
                 NavTurnByTurnModel::NavTurnByTurnModel(const NavTurnByTurnConfig &config,
-                                                       INavRoutingModel &navRoutingModel,
                                                        Eegeo::Location::ILocationService &locationService)
                 : m_config(config)
-                , m_navRoutingModel(navRoutingModel)
                 , m_locationService(locationService)
                 , m_closestPointOnRoute(0,0)
                 , m_enabled(false)
@@ -73,14 +72,6 @@ namespace ExampleApp
                     }
 
                     SdkModel::NavRoutingRouteModel currentRouteModel;
-                    bool gotRoute = m_navRoutingModel.TryGetRoute(currentRouteModel);
-                    if(!gotRoute)
-                    {
-                        Stop();
-                        return;
-                    }
-
-                    const Eegeo::Routes::Webservice::RouteData& sourceRoute = currentRouteModel.GetSourceRouteData();
 
                     // TODO: Check this actually works if you're not looking at the indoor model itself.
                     Eegeo::Routes::PointOnRouteOptions options;
@@ -96,7 +87,7 @@ namespace ExampleApp
                         options.IndoorMapFloorId = floorIndex;
                     }
 
-                    Eegeo::Routes::PointOnRoute pointOnRouteResult = Eegeo::Routes::RouteHelpers::GetPointOnRoute(currentLocation, sourceRoute, options);
+                    Eegeo::Routes::PointOnRoute pointOnRouteResult = Eegeo::Routes::RouteHelpers::GetPointOnRoute(currentLocation, m_route, options);
 
                     // TODO: First test is just use the results from here. Actually need to decide at what threshold to advance to next point
                     int nextSectionIndex = pointOnRouteResult.GetRouteSectionIndex();
@@ -122,7 +113,7 @@ namespace ExampleApp
 
                     m_paramAlongStep = pointOnRouteResult.GetFractionAlongRouteStep();
                     m_paramAlongRoute = pointOnRouteResult.GetFractionAlongRoute();
-                    const Eegeo::Routes::Webservice::RouteSection& currentSection = sourceRoute.Sections.at(
+                    const Eegeo::Routes::Webservice::RouteSection& currentSection = m_route.Sections.at(
                             static_cast<unsigned long>(m_currentSectionIndex));
                     const Eegeo::Routes::Webservice::RouteStep& currentStep = currentSection.Steps.at(
                             static_cast<unsigned long>(m_currentStepIndex));
@@ -132,19 +123,15 @@ namespace ExampleApp
                     m_updateCallbacks.ExecuteCallbacks();
                 }
 
-                void NavTurnByTurnModel::Start()
+                void NavTurnByTurnModel::Start(const Eegeo::Routes::Webservice::RouteData& route)
                 {
                     if(TurnByTurnEnabled()) {
                         return;
                     }
 
-                    if(!m_navRoutingModel.HasRoute())
-                    {
-                        return;
-                    }
-
+                    m_route = route;
                     m_distanceFromRoute = 0.0;
-                    m_remainingDuration = m_navRoutingModel.GetRemainingRouteDuration();
+                    m_remainingDuration = route.Duration;
                     m_distanceToNextStep = 0;
                     m_currentSectionIndex = 0;
                     m_currentStepIndex = 0;

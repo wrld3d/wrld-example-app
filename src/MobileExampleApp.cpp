@@ -692,6 +692,7 @@ namespace ExampleApp
                                                                                             world.GetRoutesModule().GetRoutingWebservice(),
                                                                                             world.GetLocationService(),
                                                                                             *m_pNavigationService,
+                                                                                            m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
                                                                                             m_messageBus);
 
         m_pNavUIModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavUIModule)(m_identityProvider,

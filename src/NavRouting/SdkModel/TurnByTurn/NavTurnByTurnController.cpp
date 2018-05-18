@@ -1,9 +1,9 @@
+// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "NavTurnByTurnController.h"
 #include "INavTurnByTurnModel.h"
 #include "INavRoutingModel.h"
 #include "NavigationService.h"
-
 
 namespace ExampleApp
 {
@@ -58,9 +58,9 @@ namespace ExampleApp
 
                 NavTurnByTurnController::~NavTurnByTurnController()
                 {
-                    m_turnByTurnModel.InsertUpdatedCallback(m_turnByTurnUpdatedCallback);
-                    m_turnByTurnModel.InsertStoppedCallback(m_turnByTurnStoppedCallback);
-                    m_turnByTurnModel.InsertStartedCallback(m_turnByTurnStartedCallback);
+                    m_turnByTurnModel.RemoveUpdatedCallback(m_turnByTurnUpdatedCallback);
+                    m_turnByTurnModel.RemoveStoppedCallback(m_turnByTurnStoppedCallback);
+                    m_turnByTurnModel.RemoveStartedCallback(m_turnByTurnStartedCallback);
                 }
 
                 void NavTurnByTurnController::Update(float dt)
