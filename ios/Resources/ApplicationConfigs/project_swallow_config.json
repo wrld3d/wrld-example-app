@@ -228,10 +228,10 @@
         "tracked_floor_index": "18"
       }, {
         "building_floor_index": 3,
-        "tracked_floor_index": "1"
+        "tracked_floor_index": "2"
       }, {
         "building_floor_index": 4,
-        "tracked_floor_index": "2"
+        "tracked_floor_index": "1"
       }, {
         "building_floor_index": 5,
         "tracked_floor_index": "0"
