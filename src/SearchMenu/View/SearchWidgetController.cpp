@@ -172,8 +172,21 @@ namespace ExampleApp
             {
                 auto query = message.Query();
                 auto clearPreviousResults = false;
-                auto tagText = query.IsTag() ? query.Query() : "";
-                
+                std::string visibleText = query.Query();
+                std::string tagText = "";
+
+                if (query.IsTag())
+                {
+                    tagText = visibleText;
+                    
+                    if (m_tagCollection.HasText(tagText))
+                    {
+                        const TagCollection::TagInfo& tagInfo = m_tagCollection.GetInfoByTag(tagText);
+                        
+                        visibleText = tagInfo.VisibleText();
+                    }
+                }
+
                 auto queryContext = QueryContext(clearPreviousResults,
                                                  query.IsTag(),
                                                  tagText,
@@ -181,7 +194,7 @@ namespace ExampleApp
                                                  query.Location(),
                                                  query.Radius());
                 m_shouldSelectFirstResult = true;
-                m_view.PerformSearch(query.Query(),queryContext);
+                m_view.PerformSearch(visibleText, queryContext);
             }
             
             void SearchWidgetController::UpdateUiThread(float dt)

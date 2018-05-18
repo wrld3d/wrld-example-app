@@ -73,6 +73,7 @@
 #include "InteriorMetaDataRepository.h"
 #include "InteriorMetaDataModule.h"
 #include "iOSAutomatedScreenshotController.h"
+#include "UiCreatedMessage.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -429,6 +430,8 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
     
     viewControllerUpdaterModel.AddUpdateableObject(m_pSearchWidgetViewModule->GetSearchWidgetController());
+    
+    m_messageBus.Publish(ExampleApp::UiCreatedMessage());
     
     SetTouchExclusivity();
 }

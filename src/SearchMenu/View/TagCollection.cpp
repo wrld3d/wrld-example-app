@@ -84,10 +84,15 @@ namespace ExampleApp
 				m_tagsByTag .erase(tag);
 			}
 
-			bool TagCollection::HasTag(const std::string& text)
-			{
-				return m_tagsByText.find(text) != m_tagsByText.end();
-			}
+            bool TagCollection::HasTag(const std::string& text)
+            {
+                return m_tagsByText.find(text) != m_tagsByText.end();
+            }
+
+            bool TagCollection::HasText(const std::string& tag)
+            {
+                return m_tagsByTag.find(tag) != m_tagsByTag.end();
+            }
 
 			const TagCollection::TagInfo& TagCollection::GetInfoByText(const std::string& text)
 			{

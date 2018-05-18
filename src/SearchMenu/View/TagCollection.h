@@ -68,7 +68,8 @@ namespace ExampleApp
 				TagCollection(ExampleAppMessaging::TMessageBus& messageBus);
 				~TagCollection();
 
-				bool HasTag(const std::string& text);
+                bool HasTag(const std::string& text);
+                bool HasText(const std::string& tag);
 				const TagInfo& GetInfoByText(const std::string& text);
 				const TagInfo& GetInfoByTag(const std::string& tag);
 			};
