@@ -136,8 +136,12 @@ namespace ExampleApp
 				if (interiorsModel == NULL)
 					return false;
 
-				floorId = interiorsModel->GetFloorAtIndex(floorIndex).GetFloorNumber();
-				return true;
+                if (floorIndex >= 0 && floorIndex < interiorsModel->GetFloorCount())
+                {
+                    floorId = interiorsModel->GetFloorAtIndex(floorIndex).GetFloorNumber();
+                    return true;
+                }
+                return false;
 			}
 		}
     }
