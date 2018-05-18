@@ -304,6 +304,9 @@
         "building_floor_index": 3,
         "tracked_floor_index": "3"
       }, {
+        "building_floor_index": 3,
+        "tracked_floor_index": "7"
+      }, {
         "building_floor_index": 4,
         "tracked_floor_index": "4"
       }, {
