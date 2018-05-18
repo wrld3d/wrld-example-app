@@ -51,8 +51,6 @@
 	<string>If you allow access to the Speech Recognition feature you can search using your voice</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>If you allow access to the Microphone you can search using your voice</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
 	<key>NSCameraUsageDescription</key>
 	<string></string>
 	<key>UIMainStoryboardFile</key>
