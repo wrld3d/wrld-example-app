@@ -66,6 +66,7 @@
 #include "SenionLabBroadcastReceiver.h"
 #include "AndroidAutomatedScreenshotController.h"
 #include "AutomatedScreenshotController.h"
+#include "UiCreatedMessage.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -417,8 +418,6 @@ void AppHost::HandleApplicationUiCreatedOnNativeThread()
 
     m_uiCreatedMessageReceivedOnNativeThread = true;
     PublishNetworkConnectivityStateToUIThread();
-
-	m_pApp->OnUiCreated();
 }
 
 void AppHost::PublishNetworkConnectivityStateToUIThread()
@@ -467,6 +466,8 @@ void AppHost::CreateUiFromUiThread()
     Eegeo_ASSERT(!m_createdUIModules);
     CreateApplicationViewModulesFromUiThread();
     DispatchUiCreatedMessageToNativeThreadFromUiThread();
+
+	m_messageBus.Publish(ExampleApp::UiCreatedMessage());
 }
 
 void AppHost::UpdateUiViewsFromUiThread(float dt)

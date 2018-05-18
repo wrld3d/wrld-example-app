@@ -272,6 +272,7 @@ namespace ExampleApp
     , m_pGlobalAppModeTransitionRules(NULL)
     , m_pAutomatedScreenshotController(NULL)
     , m_screenshotService(screenshotService)
+	, m_onUiCreatedCallback(this, &MobileExampleApp::OnUiCreated)
     {
         if (m_applicationConfiguration.IsInKioskMode())
         {
@@ -467,6 +468,8 @@ namespace ExampleApp
     MobileExampleApp::~MobileExampleApp()
     {
         OnPause();
+
+        m_messageBus.UnsubscribeNative(m_onUiCreatedCallback);
 
         m_pAppModeModel->DestroyStateMachine();
 
@@ -917,9 +920,11 @@ namespace ExampleApp
                                                                               m_pSearchModule->GetSearchQueryPerformer());
 
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules), AppModes::SdkModel::WorldMode, m_pGlobalAppModeTransitionRules);
+
+		m_messageBus.SubscribeNative(m_onUiCreatedCallback);
     }
 
-	void MobileExampleApp::OnUiCreated()
+	void MobileExampleApp::OnUiCreated(const UiCreatedMessage& message)
 	{
 		if (m_applicationConfiguration.ShouldPerformStartUpSearch())
 		{

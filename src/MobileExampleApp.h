@@ -93,6 +93,8 @@
 #include "IAboutPageMenuModule.h"
 #include "IOptionsMenuModule.h"
 #include "InteriorEntityHighlightController.h"
+#include "ICallback.h"
+#include "UiCreatedMessage.h"
 
 namespace ExampleApp
 {
@@ -191,6 +193,8 @@ namespace ExampleApp
 
         ExampleApp::Automation::IScreenshotService& m_screenshotService;
 
+		Eegeo::Helpers::TCallback1<MobileExampleApp, const UiCreatedMessage&> m_onUiCreatedCallback;
+
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening,
                                            const bool createBlueSphereViews);
@@ -215,6 +219,8 @@ namespace ExampleApp
         void InitialiseAppState(Eegeo::UI::NativeUIFactories& nativeUIFactories);
 
         bool CanAcceptTouch() const;
+
+		void OnUiCreated(const UiCreatedMessage& message);
 
     public:
         MobileExampleApp(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
@@ -441,8 +447,6 @@ namespace ExampleApp
         }
 
         void InitialiseApplicationViewState();
-
-		void OnUiCreated();
 
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& GetCameraController()
         {
