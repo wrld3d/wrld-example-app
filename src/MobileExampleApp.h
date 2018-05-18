@@ -241,8 +241,8 @@ namespace ExampleApp
         {
             return * m_pWorld;
         }
-       
-        ExampleApp::ApplicationConfig::ApplicationConfiguration GetApplicationConfiguration() const
+
+        const ExampleApp::ApplicationConfig::ApplicationConfiguration& GetApplicationConfiguration() const
         {
             return m_applicationConfiguration;
         }
@@ -441,6 +441,8 @@ namespace ExampleApp
         }
 
         void InitialiseApplicationViewState();
+
+		void OnUiCreated();
 
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraController& GetCameraController()
         {

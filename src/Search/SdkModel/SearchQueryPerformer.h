@@ -57,6 +57,9 @@ namespace ExampleApp
                 void AskForDeepLinkQuery(const std::string& query,const std::string& interiorId);
                 void AskForDeepLinkQuery(const std::string& query,
                                          bool isTag,
+                                         bool tryInteriorSearch);
+                void AskForDeepLinkQuery(const std::string& query,
+                                         bool isTag,
                                          bool tryInteriorSearch,
                                          const Eegeo::Space::LatLongAltitude& location,
                                          bool startAtGPSLocation = false,

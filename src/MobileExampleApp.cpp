@@ -917,12 +917,16 @@ namespace ExampleApp
                                                                               m_pSearchModule->GetSearchQueryPerformer());
 
         m_pAppModeModel->InitialiseStateMachine(appModeStatesFactory.CreateStateMachineStates(*m_pGlobalAppModeTransitionRules), AppModes::SdkModel::WorldMode, m_pGlobalAppModeTransitionRules);
-        
-        if (m_applicationConfiguration.ShouldPerformStartUpSearch())
-        {
-            m_pSearchModule->GetSearchQueryPerformer().PerformSearchQuery(m_applicationConfiguration.StartUpSearchTag(), true, false);
-        }
     }
+
+	void MobileExampleApp::OnUiCreated()
+	{
+		if (m_applicationConfiguration.ShouldPerformStartUpSearch())
+		{
+			// not a deep link, but we're using the same mechanism
+			m_pSearchModule->GetSearchQueryPerformer().AskForDeepLinkQuery(m_applicationConfiguration.StartUpSearchTag(), true, false);
+		}
+	}
 
     void MobileExampleApp::DestroyApplicationModelModules()
     {

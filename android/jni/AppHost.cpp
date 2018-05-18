@@ -417,6 +417,8 @@ void AppHost::HandleApplicationUiCreatedOnNativeThread()
 
     m_uiCreatedMessageReceivedOnNativeThread = true;
     PublishNetworkConnectivityStateToUIThread();
+
+	m_pApp->OnUiCreated();
 }
 
 void AppHost::PublishNetworkConnectivityStateToUIThread()

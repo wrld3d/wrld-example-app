@@ -36,6 +36,10 @@ namespace ExampleApp
 
                 virtual void AskForDeepLinkQuery(const std::string& query,
                                                  bool isTag,
+                                                 bool tryInteriorSearch) = 0;
+
+                virtual void AskForDeepLinkQuery(const std::string& query,
+                                                 bool isTag,
                                                  bool tryInteriorSearch,
                                                  const Eegeo::Space::LatLongAltitude& location,
                                                  bool startAtGPSLocation = false,

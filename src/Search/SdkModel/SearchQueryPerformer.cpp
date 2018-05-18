@@ -119,6 +119,15 @@ namespace ExampleApp
 
             void SearchQueryPerformer::AskForDeepLinkQuery(const std::string& query,
                                                            bool isTag,
+                                                           bool tryInteriorSearch)
+            {
+                Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
+
+                AskForDeepLinkQuery(query, isTag, tryInteriorSearch, location);
+            }
+
+            void SearchQueryPerformer::AskForDeepLinkQuery(const std::string& query,
+                                                           bool isTag,
                                                            bool tryInteriorSearch,
                                                            const Eegeo::Space::LatLongAltitude& location,
                                                            bool startAtGPSLocation,
