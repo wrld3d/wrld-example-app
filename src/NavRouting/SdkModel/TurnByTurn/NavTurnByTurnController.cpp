@@ -13,6 +13,33 @@ namespace ExampleApp
         {
             namespace TurnByTurn
             {
+                namespace
+                {
+                    int GetDirectionIndexFromRouteIndices(const Eegeo::Routes::Webservice::RouteData& route,
+                                                         int sectionIndex,
+                                                         int stepIndex)
+                    {
+                        int currentIndex = 0;
+                        for(int routeSectionIndex = 0; routeSectionIndex < route.Sections.size(); ++routeSectionIndex)
+                        {
+                            const Eegeo::Routes::Webservice::RouteSection& currentSection = route.Sections.at(
+                                    static_cast<unsigned long>(routeSectionIndex));
+
+                            for(int routeStepIndex = 0; routeStepIndex < currentSection.Steps.size(); ++routeStepIndex)
+                            {
+                                if(routeSectionIndex == sectionIndex && routeStepIndex == stepIndex)
+                                {
+                                    return currentIndex;
+                                }
+
+                                currentIndex++;
+                            }
+                        }
+
+                        return 0;
+                    }
+                }
+
                 NavTurnByTurnController::NavTurnByTurnController(
                         INavTurnByTurnModel &turnByTurnModel,
                         INavRoutingModel& navRoutingModel,
@@ -65,11 +92,18 @@ namespace ExampleApp
 
                 void NavTurnByTurnController::HandleTurnByTurnUpdated()
                 {
-                    m_navRoutingModel.SetCurrentDirection(m_turnByTurnModel.GetCurrentStepIndex());
-                    m_navRoutingModel.SetRemainingRouteDuration(m_turnByTurnModel.GetRemainingDuration());
+                    SdkModel::NavRoutingRouteModel currentRouteModel;
+                    if(!m_navRoutingModel.TryGetRoute(currentRouteModel)) {
+                        return;
+                    }
 
+                    int directionIndex = GetDirectionIndexFromRouteIndices(currentRouteModel.GetSourceRouteData(),
+                                                                           m_turnByTurnModel.GetCurrentSectionIndex(),
+                                                                           m_turnByTurnModel.GetCurrentStepIndex());
+
+                    m_navRoutingModel.SetCurrentDirection(directionIndex);
+                    m_navRoutingModel.SetRemainingRouteDuration(m_turnByTurnModel.GetRemainingDuration());
                     // TODO: Update distance - this is done on a per step basis so might need to regen whole route
-                    // TODO: Update route draw progress
                 }
             }
         }

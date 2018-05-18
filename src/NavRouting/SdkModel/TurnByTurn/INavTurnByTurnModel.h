@@ -21,8 +21,10 @@ namespace ExampleApp
                     virtual const Eegeo::Space::LatLong& GetClosestPointOnRoute() const  = 0;
                     virtual double GetDistanceFromRoute() const  = 0;
                     virtual double GetRemainingDuration() const = 0;
+                    virtual double GetDistanceToNextStep() const = 0;
                     virtual double GetRouteProgressParam() const  = 0;
                     virtual double GetRouteStepProgressParam() const  = 0;
+                    virtual int GetCurrentSectionIndex() const = 0;
                     virtual int GetCurrentStepIndex() const = 0;
 
                     virtual void Start() = 0;

@@ -3,6 +3,7 @@
 #include "RouteHelpers.h"
 #include "ILocationService.h"
 #include "INavRoutingModel.h"
+#include "Point3Spline.h"
 
 namespace ExampleApp
 {
@@ -16,31 +17,12 @@ namespace ExampleApp
                 {
                     double CalculateDuration(double t, double duration)
                     {
-                        return (1.0-t)*duration;
+                        return (1.0-Eegeo::Math::Clamp01(t))*duration;
                     }
 
-                    int GetStepIndexFromRouteIndices(const Eegeo::Routes::Webservice::RouteData& route,
-                        int sectionIndex,
-                        int stepIndex)
+                    double CalculateDistanceToEndOfStep(const Eegeo::Routes::Webservice::RouteStep& step, double paramAlongStep)
                     {
-                        int currentIndex = 0;
-                        for(int routeSectionIndex = 0; routeSectionIndex < route.Sections.size(); ++routeSectionIndex)
-                        {
-                            const Eegeo::Routes::Webservice::RouteSection& currentSection = route.Sections.at(
-                                    static_cast<unsigned long>(routeSectionIndex));
-
-                            for(int routeStepIndex = 0; routeStepIndex < currentSection.Steps.size(); ++routeStepIndex)
-                            {
-                                if(routeSectionIndex == sectionIndex && routeStepIndex == stepIndex)
-                                {
-                                    return currentIndex;
-                                }
-
-                                currentIndex++;
-                            }
-                        }
-
-                        return 0;
+                        return step.Distance * (1.0 - Eegeo::Math::Clamp01(paramAlongStep));
                     }
                 }
 
@@ -116,25 +98,36 @@ namespace ExampleApp
 
                     Eegeo::Routes::PointOnRoute pointOnRouteResult = Eegeo::Routes::RouteHelpers::GetPointOnRoute(currentLocation, sourceRoute, options);
 
+                    // TODO: First test is just use the results from here. Actually need to decide at what threshold to advance to next point
+                    int nextSectionIndex = pointOnRouteResult.GetRouteSectionIndex();
+                    int nextStepIndex = pointOnRouteResult.GetRouteStepIndex();
+                    bool isOnCurrentOrNextStep = nextSectionIndex >= m_currentSectionIndex && nextStepIndex >= m_currentStepIndex;
+                    if(!isOnCurrentOrNextStep) {
+                        return;
+                    }
+
+                    bool tooFarFromPath = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint() > m_config.distanceToPathRangeMeters;
+                    if(tooFarFromPath) {
+                        return;
+                    }
+
                     m_closestPointOnRoute = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetResultPoint();
                     m_distanceFromRoute = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
 
-                    // NOTE: Duration is just a fraction of the total route duration from the service / your progress.
-                    // This isn't accurate - discuss a better way of calculating remaining duration based on average speed or by recalling the
-                    // service with more information?
+                    // NOTE: Duration is currently just a fraction of the total route duration from the service / your progress.
                     m_remainingDuration = CalculateDuration(pointOnRouteResult.GetFractionAlongRoute(), currentRouteModel.GetDuration());
 
-                    // TODO: First test is just use the results from here. Actually need to decide at what threshold to advance to next point
-                    // TODO: Also, should maybe guard against going backwards or jumping several points due to error.
-                    // Also this step is a linear index through the whole route - need to translate that from Section/Step index format
-                    //int currentStep = m_navRoutingModel.GetCurrentDirection();
-                    // TODO: This should probably not be in here - is specificially a widget requirement.
-                    m_currentStepIndex = GetStepIndexFromRouteIndices(currentRouteModel.GetSourceRouteData(),
-                                                                      pointOnRouteResult.GetRouteSectionIndex(),
-                                                                      pointOnRouteResult.GetRouteStepIndex());
+                    m_currentSectionIndex = nextSectionIndex;
+                    m_currentStepIndex = nextStepIndex;
 
                     m_paramAlongStep = pointOnRouteResult.GetFractionAlongRouteStep();
                     m_paramAlongRoute = pointOnRouteResult.GetFractionAlongRoute();
+                    const Eegeo::Routes::Webservice::RouteSection& currentSection = sourceRoute.Sections.at(
+                            static_cast<unsigned long>(m_currentSectionIndex));
+                    const Eegeo::Routes::Webservice::RouteStep& currentStep = currentSection.Steps.at(
+                            static_cast<unsigned long>(m_currentStepIndex));
+
+                    m_distanceToNextStep = CalculateDistanceToEndOfStep(currentStep, pointOnRouteResult.GetFractionAlongRouteStep());
 
                     m_updateCallbacks.ExecuteCallbacks();
                 }
@@ -152,6 +145,8 @@ namespace ExampleApp
 
                     m_distanceFromRoute = 0.0;
                     m_remainingDuration = m_navRoutingModel.GetRemainingRouteDuration();
+                    m_distanceToNextStep = 0;
+                    m_currentSectionIndex = 0;
                     m_currentStepIndex = 0;
                     m_paramAlongRoute = 0.0;
                     m_paramAlongStep = 0.0;
