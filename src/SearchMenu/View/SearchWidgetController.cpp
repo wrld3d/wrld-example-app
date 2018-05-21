@@ -170,6 +170,9 @@ namespace ExampleApp
            
             void SearchWidgetController::OnSearchDeepLinkRequestedMessage(const Search::DeepLinkedSearchQueryRequestMessage& message)
             {
+                // needed to avoid a reentrant call on the reactor logic on startup queries / deeplinks
+                m_view.CloseMenu();
+
                 auto query = message.Query();
                 auto clearPreviousResults = false;
                 std::string visibleText = query.Query();
@@ -305,10 +308,9 @@ namespace ExampleApp
 
             void SearchWidgetController::OnViewClosed()
             {
-
                 if(!m_viewModel.IsFullyClosed())
                 {
-                    m_viewModel.Close(false);
+                    m_viewModel.Close();
                 }
 
                 if(m_viewModel.HasReactorControl())
