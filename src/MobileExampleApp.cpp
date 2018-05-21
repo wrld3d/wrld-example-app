@@ -1222,7 +1222,6 @@ namespace ExampleApp
         m_initialisedApplicationViewState = true;
 
         m_pSearchMenuModule->GetSearchMenuViewModel().AddToScreen();
-        m_pSearchMenuModule->GetSearchMenuViewModel().AddToScreen();
         m_pCompassModule->GetScreenControlViewModel().AddToScreen();
         m_pMyPinCreationModule->GetInitiationScreenControlViewModel().AddToScreen();
         m_pWatermarkModule->GetWatermarkViewModel().AddToScreen();
