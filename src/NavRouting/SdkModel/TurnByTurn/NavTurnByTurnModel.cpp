@@ -38,6 +38,7 @@ namespace ExampleApp
                 , m_paramAlongStep(0.0)
                 , m_paramAlongRoute(0.0)
                 , m_distanceFromRoute(0.0)
+                , m_indexOfPathSegmentStartVertex(0)
                 , m_updateTime(0.0f)
                 {
                 }
@@ -120,6 +121,8 @@ namespace ExampleApp
 
                     m_distanceToNextStep = CalculateDistanceToEndOfStep(currentStep, pointOnRouteResult.GetFractionAlongRouteStep());
 
+                    m_indexOfPathSegmentStartVertex = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetIndexOfPathSegmentStartVertex();
+                    
                     m_updateCallbacks.ExecuteCallbacks();
                 }
 
@@ -138,6 +141,7 @@ namespace ExampleApp
                     m_paramAlongRoute = 0.0;
                     m_paramAlongStep = 0.0;
                     m_updateTime = 0.0f;
+                    m_indexOfPathSegmentStartVertex = 0;
                     m_enabled = true;
 
                     m_startedCallbacks.ExecuteCallbacks();

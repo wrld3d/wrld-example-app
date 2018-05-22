@@ -2,6 +2,7 @@
 
 #include "NavRoutingModule.h"
 #include "NavRoutingModel.h"
+#include "NavRoutingPolylineFactory.h"
 #include "NavRouteDrawingController.h"
 #include "NavRoutingServiceController.h"
 #include "NavWidgetRouteUpdateHandler.h"
@@ -25,15 +26,20 @@ namespace ExampleApp
                                                ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
-                m_pNavRouteDrawingController = Eegeo_NEW(NavRouteDrawingController)(shapeService);
+                
+                NavRoutingPolylineConfig polylineConfig = NavRoutingPolylineConfig();
+                m_pNavRoutingPolylineFactory = Eegeo_NEW(NavRoutingPolylineFactory)(shapeService,
+                                                                                    polylineConfig);
+                
+                m_pNavRouteDrawingController = Eegeo_NEW(NavRouteDrawingController)(*m_pNavRoutingModel,
+                                                                                    *m_pNavRoutingPolylineFactory,
+                                                                                    shapeService);
+                
                 m_pNavRoutingServiceController = Eegeo_NEW(NavRoutingServiceController)(routingWebservice);
 
                 m_pRouteUpdateHandler = Eegeo_NEW(NavWidgetRouteUpdateHandler)(*m_pNavRoutingModel,
                                                                                *m_pNavRoutingServiceController,
                                                                                alertBoxFactory);
-
-                m_pRouteDrawingHandler = Eegeo_NEW(NavWidgetRouteDrawingHandler)(*m_pNavRoutingModel,
-                                                                                 *m_pNavRouteDrawingController);
 
                 TurnByTurn::NavTurnByTurnConfig turnByTurnConfig = TurnByTurn::NavTurnByTurnConfig();
 
@@ -45,6 +51,10 @@ namespace ExampleApp
                 m_pTurnByTurnController = Eegeo_NEW(TurnByTurn::NavTurnByTurnController)(*m_pTurnByTurnModel,
                                                                                          *m_pNavRoutingModel,
                                                                                          navigationService);
+                
+                m_pRouteDrawingHandler = Eegeo_NEW(NavWidgetRouteDrawingHandler)(*m_pNavRoutingModel,
+                                                                                 *m_pTurnByTurnModel,
+                                                                                 *m_pNavRouteDrawingController);
 
                 m_pRoutingController = Eegeo_NEW(NavRoutingController)(*m_pNavRoutingModel,
                                                                        locationService,
@@ -55,12 +65,13 @@ namespace ExampleApp
             NavRoutingModule::~NavRoutingModule()
             {
                 Eegeo_DELETE m_pRoutingController;
+                Eegeo_DELETE m_pRouteDrawingHandler;
                 Eegeo_DELETE m_pTurnByTurnController;
                 Eegeo_DELETE m_pTurnByTurnModel;
-                Eegeo_DELETE m_pRouteDrawingHandler;
                 Eegeo_DELETE m_pRouteUpdateHandler;
-                Eegeo_DELETE m_pNavRouteDrawingController;
                 Eegeo_DELETE m_pNavRoutingServiceController;
+                Eegeo_DELETE m_pNavRouteDrawingController;
+                Eegeo_DELETE m_pNavRoutingPolylineFactory;
                 Eegeo_DELETE m_pNavRoutingModel;
             }
 

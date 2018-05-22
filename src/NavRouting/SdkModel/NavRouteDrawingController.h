@@ -4,9 +4,11 @@
 
 #include "Types.h"
 #include "INavRouteDrawingController.h"
+#include "INavRoutingModel.h"
 #include "VectorMath.h"
 #include "NavRouting.h"
 #include "NavRoutingDirectionModel.h"
+#include "INavRoutingPolylineFactory.h"
 
 #include <vector>
 #include <unordered_map>
@@ -20,41 +22,43 @@ namespace ExampleApp
             class NavRouteDrawingController : public INavRouteDrawingController, private Eegeo::NonCopyable
             {
             public:
-                NavRouteDrawingController(PolyLineArgs::IShapeService& shapeService);
+                NavRouteDrawingController(INavRoutingModel& navRoutingModel,
+                                          INavRoutingPolylineFactory& polylineFactory,
+                                          PolyLineArgs::IShapeService& shapeService);
 
                 ~NavRouteDrawingController() override;
                 
-                void AddRoute(const std::vector<NavRoutingDirectionModel>& directions,
-                              const Eegeo::v4& color) override;
+                void DrawRoute(const Eegeo::v4& color) override;
                 
                 void ClearRoute() override;
                 
-                void SetRouteColor(int routeStep, const Eegeo::v4& color) override;
+                void SetRouteStepColor(int step, const Eegeo::v4& color) override;
+                
+                void UpdateRouteStepProgress(int step,
+                                             const Eegeo::v4& colorForCrossedPath,
+                                             const Eegeo::v4& colorForUpcomingPath,
+                                             int splitIndex,
+                                             const Eegeo::Space::LatLong& closestPointOnRoute) override;
                 
             private:
+                
+                INavRoutingModel& m_navRoutingModel;
+                INavRoutingPolylineFactory& m_polylineFactory;
                 PolyLineArgs::IShapeService& m_shapeService;
-                std::unordered_map<int, std::vector<PolyLineArgs::ShapeModel::IdType>> m_routes;
-
-                float m_routeThickness;
-                float m_miterLimit;
-                double m_routeElevation;
-                Eegeo::Positioning::ElevationMode::Type m_routeElevationMode;
-                bool m_shouldScaleWithMap;
-
-                void AddLineForRouteDirection(int routeStep,
-                                              const NavRoutingDirectionModel& directionModel,
-                                              const Eegeo::v4& color);
-
-                void AddLinesForFloorTransition(int routeStep,
-                                                const NavRoutingDirectionModel& currentDirection,
-                                                const NavRoutingDirectionModel& directionBefore,
-                                                const NavRoutingDirectionModel& directionAfter,
-                                                const Eegeo::v4& color);
-
-                PolyLineArgs::ShapeModel::IdType MakeVerticalLine(const NavRoutingDirectionModel& currentDirection,
-                                                                  int floor,
-                                                                  double height,
-                                                                  const Eegeo::v4& color);
+                std::unordered_map<int, RouteLines> m_routes;
+                
+                void DrawRouteForStep(int step,
+                                      const std::vector<NavRoutingDirectionModel>& directions,
+                                      const Eegeo::v4& color);
+                
+                void DrawRouteForStep(int step,
+                                      const std::vector<NavRoutingDirectionModel>& directions,
+                                      const Eegeo::v4& forwardColor,
+                                      const Eegeo::v4& backwardColor,
+                                      int splitIndex,
+                                      const Eegeo::Space::LatLong& closestPointOnRoute);
+                
+                void DestroyLines(RouteLines lines);
             };
         }
     }

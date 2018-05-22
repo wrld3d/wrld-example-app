@@ -4,6 +4,7 @@ set(currsources
   ../src/NavRouting/SdkModel/CMakeLists.txt
   ../src/NavRouting/SdkModel/INavRoutingModel.h
   ../src/NavRouting/SdkModel/INavRouteDrawingController.h
+  ../src/NavRouting/SdkModel/INavRoutingPolylineFactory.h
   ../src/NavRouting/SdkModel/INavRoutingServiceController.h
   ../src/NavRouting/SdkModel/NavRouteInstructionHelper.cpp
   ../src/NavRouting/SdkModel/NavRouteInstructionHelper.h
@@ -23,6 +24,8 @@ set(currsources
   ../src/NavRouting/SdkModel/NavRouteDrawingController.h
   ../src/NavRouting/SdkModel/NavRoutingModule.cpp
   ../src/NavRouting/SdkModel/NavRoutingModule.h
+  ../src/NavRouting/SdkModel/NavRoutingPolylineFactory.cpp
+  ../src/NavRouting/SdkModel/NavRoutingPolylineFactory.h
   ../src/NavRouting/SdkModel/NavWidgetRouteDrawingHandler.cpp
   ../src/NavRouting/SdkModel/NavWidgetRouteDrawingHandler.h
   ../src/NavRouting/SdkModel/NavWidgetRouteUpdateHandler.cpp

@@ -25,6 +25,7 @@ namespace ExampleApp
 
             class INavRoutingModel;
             class NavRoutingModule;
+            class INavRoutingPolylineFactory;
             class INavRouteDrawingController;
             class INavRoutingServiceController;
             class NavWidgetRouteUpdateHandler;
@@ -32,6 +33,7 @@ namespace ExampleApp
             class NavRoutingController;
 
             typedef Eegeo::Shapes::Polylines::PolylineShapeArgs PolyLineArgs;
+            typedef std::vector<PolyLineArgs::ShapeModel::IdType> RouteLines;
             typedef Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Routes::Webservice::RouteData>> RoutesReceivedCallback;
             typedef Eegeo::Helpers::ICallback0 RouteFailedCallback;
 
