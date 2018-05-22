@@ -32,15 +32,19 @@ namespace ExampleApp
 
                 virtual void AskForQueryRefresh(const SearchQuery& query, const Eegeo::Space::LatLongAltitude& location) = 0;
 
-                virtual void AskForSearchQuery(const std::string& query,const std::string& interiorId) = 0;
-
                 virtual void AskForSearchQuery(const std::string& query,
-                                               bool isTag,
-                                               bool tryInteriorSearch) = 0;
+											   bool selectFirstResult,
+                                               const std::string& interiorId) = 0;
 
                 virtual void AskForSearchQuery(const std::string& query,
                                                bool isTag,
                                                bool tryInteriorSearch,
+                                               bool selectFirstResult) = 0;
+
+                virtual void AskForSearchQuery(const std::string& query,
+                                               bool isTag,
+                                               bool tryInteriorSearch,
+											   bool selectFirstResult,
                                                const Eegeo::Space::LatLongAltitude& location,
                                                bool startAtGPSLocation = false,
                                                const std::string& interiorId = "") = 0;

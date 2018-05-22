@@ -196,7 +196,7 @@ namespace ExampleApp
                                                  query.ShouldTryInteriorSearch(),
                                                  query.Location(),
                                                  query.Radius());
-                m_shouldSelectFirstResult = true;
+                m_shouldSelectFirstResult = query.SelectFirstResult();
                 m_view.PerformSearch(visibleText, queryContext);
             }
             

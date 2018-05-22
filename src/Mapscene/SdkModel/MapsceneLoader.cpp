@@ -185,7 +185,13 @@ namespace ExampleApp
                 if(m_shouldPerformStartupSearch)
                 {
                     m_shouldPerformStartupSearch = false;
-                    m_searchQueryPerformer.AskForSearchQuery(m_startupSearchTag, true, false, m_startupSearchLocation, m_startAtGPSLocation);
+
+                    bool isTag = true;
+                    bool tryInteriorSearch = false;
+                    bool selectFirstResult = false;
+                    m_searchQueryPerformer.AskForSearchQuery(m_startupSearchTag,
+                                                             isTag, tryInteriorSearch, selectFirstResult,
+                                                             m_startupSearchLocation, m_startAtGPSLocation);
                 }
                 
             }

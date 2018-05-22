@@ -54,13 +54,17 @@ namespace ExampleApp
 
                 void AskForQueryRefresh(const SearchQuery& query, const Eegeo::Space::LatLongAltitude& location);
                 
-                void AskForSearchQuery(const std::string& query,const std::string& interiorId);
                 void AskForSearchQuery(const std::string& query,
-                                       bool isTag,
-                                       bool tryInteriorSearch);
+									   bool selectFirstResult,
+                                       const std::string& interiorId);
                 void AskForSearchQuery(const std::string& query,
                                        bool isTag,
                                        bool tryInteriorSearch,
+                                       bool selectFirstResult);
+                void AskForSearchQuery(const std::string& query,
+                                       bool isTag,
+                                       bool tryInteriorSearch,
+									   bool selectFirstResult,
                                        const Eegeo::Space::LatLongAltitude& location,
                                        bool startAtGPSLocation = false,
                                        const std::string& interiorId = "");

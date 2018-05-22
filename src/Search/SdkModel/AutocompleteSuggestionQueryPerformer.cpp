@@ -27,7 +27,7 @@ namespace ExampleApp {
                     , m_eeGeoParser(eeGeoParser)
                     , m_serviceUrl(serviceUrl)
                     , m_apiTokenModel(apiTokenModel)
-                    , m_current_query("", false, false, Eegeo::Space::LatLongAltitude(0,0,0), 0.0)
+                    , m_current_query("", false, false, false, Eegeo::Space::LatLongAltitude(0,0,0), 0.0)
             ,m_urlEncoder(urlEncoder)
             {
 
@@ -43,8 +43,9 @@ namespace ExampleApp {
                 Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
                 bool isTag = false;
                 bool tryInteriorSearch = false;
+                bool selectFirstResult = false;
                 float radius = 0.0;
-                m_current_query = SearchQuery(query, isTag, tryInteriorSearch, location, radius);
+                m_current_query = SearchQuery(query, isTag, tryInteriorSearch, selectFirstResult, location, radius);
 
                 const int timeOutSecs = 30;
                 std::stringstream urlstream;

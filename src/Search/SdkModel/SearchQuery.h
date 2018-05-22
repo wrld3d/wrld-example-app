@@ -16,6 +16,7 @@ namespace ExampleApp
                 std::string m_query;
                 bool m_isTag;
                 bool m_tryInteriorSearch;
+                bool m_selectFirstResult;
                 Eegeo::Space::LatLongAltitude m_where;
                 float m_radius;
                 std::string m_interiorId;
@@ -24,6 +25,7 @@ namespace ExampleApp
                 SearchQuery(const std::string& query,
                             bool isTag,
                             bool tryInteriorSearch,
+                            bool selectFirstResult,
                             const Eegeo::Space::LatLongAltitude& where,
                             float radius,
                             const std::string& interiorId = "");
@@ -36,12 +38,13 @@ namespace ExampleApp
                 
                 bool ShouldTryInteriorSearch() const;
 
+                bool SelectFirstResult() const;
+
                 float Radius() const;
 
                 const Eegeo::Space::LatLongAltitude& Location() const;
                 
                 const std::string& InteriorId() const;
-
             };
         }
     }

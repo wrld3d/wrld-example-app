@@ -928,7 +928,11 @@ namespace ExampleApp
 	{
 		if (m_applicationConfiguration.ShouldPerformStartUpSearch())
 		{
-			m_pSearchModule->GetSearchQueryPerformer().AskForSearchQuery(m_applicationConfiguration.StartUpSearchTag(), true, false);
+            bool isTag = true;
+            bool tryInteriorSearch = false;
+            bool selectFirstResult = false;
+            m_pSearchModule->GetSearchQueryPerformer().AskForSearchQuery(m_applicationConfiguration.StartUpSearchTag(),
+                                                                         isTag, tryInteriorSearch, selectFirstResult);
 		}
 	}
 
