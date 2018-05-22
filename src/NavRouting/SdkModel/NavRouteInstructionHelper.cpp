@@ -18,6 +18,7 @@ namespace ExampleApp
                 static const char *Turn = "turn";
                 static const char *Continue = "continue";
                 static const char *Take = "take";
+                static const char *Enter = "enter";
                 static const char *Exit = "exit";
                 static const char *EnterBuilding = "enter building";
                 static const char *ExitBuilding = "exit building";
@@ -29,9 +30,8 @@ namespace ExampleApp
                 static const char *Depart = "depart";
                 static const char *UTurn = "make a u-turn";
                 static const char* Floor = "floor";
-                //static const char* Stairs = "stairs";
                 static const char* Elevator = "elevator";
-                //static const char* Escalator = "escalator";
+                static const char* Lift = "lift";
             }
 
             namespace Preposition {
@@ -49,6 +49,8 @@ namespace ExampleApp
             {
                 static const char* UTurn = "uturn";
                 static const char* Straight = "straight";
+                static const char* Up = "up";
+                static const char* Down = "down";
             }
 
             namespace
@@ -184,10 +186,10 @@ namespace ExampleApp
                 int nextStepIndex;
                 int nextSectionIndex;
                 const Eegeo::Routes::Webservice::RouteStep* pNextStep = NULL;
+                const Eegeo::Routes::Webservice::RouteStep* pNextNextStep = NULL;
                 std::string nextInstructionText;
                 if(TryGetNextValidStep(route, sectionIndex, stepIndex, pNextStep, nextSectionIndex, nextStepIndex))
                 {
-                    const Eegeo::Routes::Webservice::RouteStep* pNextNextStep = NULL;
                     TryGetNextValidStep(route, nextSectionIndex, nextStepIndex, pNextNextStep, nextSectionIndex, nextStepIndex);
                     nextInstructionText = GetStandardInstructionTextForStep(*pNextStep,
                                                                             &currentStep,
@@ -211,8 +213,9 @@ namespace ExampleApp
                 }
                 else
                 {
-                    iconKey = GetIconNameFromType(pNextStep->Directions.Type,
-                                                  pNextStep->Directions.Modifier);
+                    iconKey = GetIconNameFromType(*pNextStep,
+                                                  *pNextNextStep,
+                                                  &currentStep);
                 }
 
                 return NavRouteFormattedInstructions(shortInstructionName,
@@ -280,11 +283,12 @@ namespace ExampleApp
                                            step.IsIndoors ? Preposition::Into : Preposition::Onto);
             }
 
-            std::string NavRouteInstructionHelper::GetIconNameFromType(const std::string& directionType,
-                                                                       const std::string& directionModifier)
+            std::string NavRouteInstructionHelper::GetIconNameFromType(const Eegeo::Routes::Webservice::RouteStep& step,
+                                                                       const Eegeo::Routes::Webservice::RouteStep& nextStep,
+                                                                       const Eegeo::Routes::Webservice::RouteStep* pPrevStep)
             {
-                std::string type = directionType;
-                std::string modifier = directionModifier;
+                std::string type = step.Directions.Type;
+                std::string modifier = step.Directions.Modifier;
 
                 if (type == Direction::NewName ||
                     type == Direction::Continue ||
@@ -297,10 +301,30 @@ namespace ExampleApp
                     }
                 }
 
-                // TODO: Better mapping pass for assets.
-                if (type == Direction::Elevator)
+                bool isMultilevel = step.IsMultiFloor&& pPrevStep != NULL;
+                bool goingUp = isMultilevel && nextStep.IndoorFloorId > pPrevStep->IndoorFloorId;
+
+                if(isMultilevel)
                 {
-                    return "lift";
+                    if (type == Direction::Elevator)
+                    {
+                        return Direction::Lift;
+                    }
+                    else
+                    {
+                        modifier = goingUp ? Modifiers::Up : Modifiers::Down;
+                    }
+                }
+
+                if(type == Direction::Entrance)
+                {
+                    if(nextStep.Directions.Type != Direction::Entrance)
+                    {
+                        bool isEnteringBuilding = nextStep.IsIndoors;
+                        return isEnteringBuilding ? Direction::Enter : Direction::Exit;
+                    }
+
+                    type = Direction::Turn;
                 }
 
                 std::replace(type.begin(), type.end(), ' ', '_');
