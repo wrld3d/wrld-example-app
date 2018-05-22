@@ -36,6 +36,7 @@ namespace ExampleApp
             private:
 
                 INavRoutingModel* m_pNavRoutingModel;
+                INavRoutingPolylineFactory* m_pNavRoutingPolylineFactory;
                 INavRouteDrawingController* m_pNavRouteDrawingController;
                 INavRoutingServiceController* m_pNavRoutingServiceController;
                 NavWidgetRouteUpdateHandler* m_pRouteUpdateHandler;

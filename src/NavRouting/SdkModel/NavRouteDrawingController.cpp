@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "NavRouteDrawingController.h"
-#include "PolylineShapeBuilder.h"
 
 namespace ExampleApp
 {
@@ -9,13 +8,12 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            NavRouteDrawingController::NavRouteDrawingController(PolyLineArgs::IShapeService& shapeService)
-            : m_routeThickness(10.f)
-            , m_miterLimit(10.f)
-            , m_routeElevation(0)
-            , m_routeElevationMode(Eegeo::Positioning::ElevationMode::Type::HeightAboveGround)
+            NavRouteDrawingController::NavRouteDrawingController(INavRoutingModel& navRoutingModel,
+                                                                 INavRoutingPolylineFactory& polylineFactory,
+                                                                 PolyLineArgs::IShapeService& shapeService)
+            : m_navRoutingModel(navRoutingModel)
+            , m_polylineFactory(polylineFactory)
             , m_shapeService(shapeService)
-            , m_shouldScaleWithMap(false)
             {
 
             }
@@ -24,145 +22,141 @@ namespace ExampleApp
             {
                 ClearRoute();
             }
-
-            void NavRouteDrawingController::AddRoute(const std::vector<NavRoutingDirectionModel>& directions,
-                                                     const Eegeo::v4& color)
+            
+            void NavRouteDrawingController::DrawRoute(const Eegeo::v4& color)
             {
-                for (int i = 0; i < directions.size(); ++i)
+                NavRoutingRouteModel routeModel;
+                if(m_navRoutingModel.TryGetRoute(routeModel))
                 {
-                    const NavRoutingDirectionModel& directionModel = directions[i];
-
-                    if (directionModel.GetPath().size() < 2)
+                    const auto& directions = routeModel.GetDirections();
+                    for (int i = 0; i < directions.size(); ++i)
                     {
-                        continue;
-                    }
-
-                    if (directionModel.GetIsMultiFloor())
-                    {
-                        bool isValidTransition = i > 0 && i < (directions.size() - 1) && directionModel.GetIsIndoors();
-
-                        if (!isValidTransition)
-                        {
-                            continue;
-                        }
-
-                        const NavRoutingDirectionModel& directionBefore = directions[i-1];
-                        const NavRoutingDirectionModel& directionAfter = directions[i+1];
-
-                        AddLinesForFloorTransition(i, directionModel, directionBefore, directionAfter, color);
-                    }
-                    else
-                    {
-                        AddLineForRouteDirection(i, directionModel, color);
+                        DrawRouteForStep(i, directions, color);
                     }
                 }
             }
-
+            
             void NavRouteDrawingController::ClearRoute()
             {
                 for(const auto& routeIt : m_routes)
                 {
-                    for (const auto& shapeId : routeIt.second)
-                    {
-                        m_shapeService.Destroy(shapeId);
-                    }
+                    DestroyLines(routeIt.second);
                 }
 
                 m_routes.clear();
             }
-
-            void NavRouteDrawingController::SetRouteColor(int routeStep, const Eegeo::v4& color)
+            
+            void NavRouteDrawingController::SetRouteStepColor(int step,
+                                                              const Eegeo::v4& color)
             {
-                if (m_routes.find(routeStep)!=m_routes.end())
+                NavRoutingRouteModel routeModel;
+                if(m_navRoutingModel.TryGetRoute(routeModel))
                 {
-                    for (const auto& shapeId : m_routes[routeStep])
+                    if (m_routes.find(step)!=m_routes.end())
                     {
-                        PolyLineArgs::ShapeModel &shapeModel = m_shapeService.Get(shapeId);
-                        shapeModel.SetFillColor(color);
+                        DestroyLines(m_routes[step]);
+                        DrawRouteForStep(step, routeModel.GetDirections(), color);
                     }
                 }
             }
 
-            void NavRouteDrawingController::AddLineForRouteDirection(int routeStep,
-                                                                     const NavRoutingDirectionModel& directionModel,
-                                                                     const Eegeo::v4& color)
+            void NavRouteDrawingController::UpdateRouteStepProgress(int step,
+                                                                    const Eegeo::v4& colorForCrossedPath,
+                                                                    const Eegeo::v4& colorForUpcomingPath,
+                                                                    int splitIndex,
+                                                                    const Eegeo::Space::LatLong& closestPointOnRoute)
             {
-                PolyLineArgs::ShapeModel::IdType shapeId;
-                if (directionModel.GetIsIndoors())
+                NavRoutingRouteModel routeModel;
+                if(m_navRoutingModel.TryGetRoute(routeModel))
                 {
-                    const auto& params = Eegeo::Shapes::Polylines::PolylineShapeBuilder()
-                                        .SetCoordinates(directionModel.GetPath())
-                                        .SetFillColor(color)
-                                        .SetThickness(m_routeThickness)
-                                        .SetMiterLimit(m_miterLimit)
-                                        .SetElevation(m_routeElevation)
-                                        .SetElevationMode(m_routeElevationMode)
-                                        .SetIndoorMap(directionModel.GetIndoorMapId().Value(), directionModel.GetIndoorMapFloorId())
-                                        .SetShouldScaleWithMap(m_shouldScaleWithMap)
-                                        .Build();
-
-                    shapeId = m_shapeService.Create(params);
+                    if (m_routes.find(step)!=m_routes.end())
+                    {
+                        const auto& polylines = m_routes[step];
+                        
+                        DestroyLines(polylines);
+                        
+                        DrawRouteForStep(step,
+                                         routeModel.GetDirections(),
+                                         colorForUpcomingPath,
+                                         colorForCrossedPath,
+                                         splitIndex,
+                                         closestPointOnRoute);
+                    }
+                }
+            }
+            
+            void NavRouteDrawingController::DrawRouteForStep(int step,
+                                                             const std::vector<NavRoutingDirectionModel>& directions,
+                                                             const Eegeo::v4& color)
+            {
+                const NavRoutingDirectionModel& directionModel = directions[step];
+                
+                if (directionModel.GetPath().size() < 2)
+                {
+                    return;
+                }
+                
+                if (directionModel.GetIsMultiFloor())
+                {
+                    bool isValidTransition = step > 0 && step < (directions.size() - 1) && directionModel.GetIsIndoors();
+                    
+                    if (!isValidTransition)
+                    {
+                        return;
+                    }
+                    
+                    const NavRoutingDirectionModel& directionBefore = directions[step-1];
+                    const NavRoutingDirectionModel& directionAfter = directions[step+1];
+                    
+                    m_routes[step] = m_polylineFactory.CreateLinesForFloorTransition(directionModel.GetPath(),
+                                                                                  directionModel.GetIndoorMapId().Value(),
+                                                                                  directionBefore.GetIndoorMapFloorId(),
+                                                                                  directionAfter.GetIndoorMapFloorId(),
+                                                                                  color);
                 }
                 else
                 {
-                    const auto& params = Eegeo::Shapes::Polylines::PolylineShapeBuilder()
-                                        .SetCoordinates(directionModel.GetPath())
-                                        .SetFillColor(color)
-                                        .SetThickness(m_routeThickness)
-                                        .SetMiterLimit(m_miterLimit)
-                                        .SetElevation(m_routeElevation)
-                                        .SetElevationMode(m_routeElevationMode)
-                                        .SetShouldScaleWithMap(m_shouldScaleWithMap)
-                                        .Build();
-
-                    shapeId = m_shapeService.Create(params);
+                    m_routes[step] = m_polylineFactory.CreateLinesForRouteDirection(directionModel, color);
                 }
-
-                std::vector<PolyLineArgs::ShapeModel::IdType> polyLines;
-                polyLines.push_back(shapeId);
-                m_routes[routeStep] = polyLines;
             }
-
-            void NavRouteDrawingController::AddLinesForFloorTransition(int routeStep,
-                                                                       const NavRoutingDirectionModel& currentDirection,
-                                                                       const NavRoutingDirectionModel& directionBefore,
-                                                                       const NavRoutingDirectionModel& directionAfter,
-                                                                       const Eegeo::v4& color)
+            
+            void NavRouteDrawingController::DrawRouteForStep(int step,
+                                                             const std::vector<NavRoutingDirectionModel>& directions,
+                                                             const Eegeo::v4& forwardColor,
+                                                             const Eegeo::v4& backwardColor,
+                                                             int splitIndex,
+                                                             const Eegeo::Space::LatLong& closestPointOnRoute)
             {
-                int floorBefore = directionBefore.GetIndoorMapFloorId();
-                int floorAfter = directionAfter.GetIndoorMapFloorId();
-
-                double verticalLineHeight = 5.0;
-                double lineHeight = (floorAfter > floorBefore) ? verticalLineHeight : -verticalLineHeight;
-
-                std::vector<PolyLineArgs::ShapeModel::IdType> polyLines;
-                polyLines.push_back(MakeVerticalLine(currentDirection, floorBefore, lineHeight, color));
-                polyLines.push_back(MakeVerticalLine(currentDirection, floorAfter, -lineHeight, color));
-                m_routes[routeStep] = polyLines;
+                const NavRoutingDirectionModel& directionModel = directions[step];
+                
+                if (directionModel.GetPath().size() < 2)
+                {
+                    return;
+                }
+                
+                if (directionModel.GetIsMultiFloor())
+                {
+                    bool hasReachedEnd = splitIndex == (directionModel.GetPath().size()-1);
+                    DrawRouteForStep(step, directions, hasReachedEnd? backwardColor : forwardColor);
+                }
+                else
+                {
+                    m_routes[step] = m_polylineFactory.CreateLinesForRouteDirection(directionModel,
+                                                                                    forwardColor,
+                                                                                    backwardColor,
+                                                                                    splitIndex,
+                                                                                    closestPointOnRoute);
+                }
             }
-
-            PolyLineArgs::ShapeModel::IdType NavRouteDrawingController::MakeVerticalLine(const NavRoutingDirectionModel& currentDirection,
-                                                                                         int floor,
-                                                                                         double height,
-                                                                                         const Eegeo::v4& color)
+            
+            void NavRouteDrawingController::DestroyLines(RouteLines lines)
             {
-                std::vector<double> perPointElevations;
-                perPointElevations.push_back(0);
-                perPointElevations.push_back(height);
-
-                const auto& params = Eegeo::Shapes::Polylines::PolylineShapeBuilder()
-                        .SetCoordinates(currentDirection.GetPath())
-                        .SetFillColor(color)
-                        .SetThickness(m_routeThickness)
-                        .SetMiterLimit(m_miterLimit)
-                        .SetElevation(m_routeElevation)
-                        .SetElevationMode(m_routeElevationMode)
-                        .SetIndoorMap(currentDirection.GetIndoorMapId().Value(), floor)
-                        .SetShouldScaleWithMap(m_shouldScaleWithMap)
-                        .SetPerPointElevations(perPointElevations)
-                        .Build();
-
-                return m_shapeService.Create(params);
+                for (const auto& shapeId : lines)
+                {
+                    m_shapeService.Destroy(shapeId);
+                }
+                
+                lines.clear();
             }
         }
     }

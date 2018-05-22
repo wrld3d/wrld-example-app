@@ -29,6 +29,7 @@ namespace ExampleApp
                     virtual double GetRouteStepProgressParam() const  = 0;
                     virtual int GetCurrentSectionIndex() const = 0;
                     virtual int GetCurrentStepIndex() const = 0;
+                    virtual int GetIndexOfPathSegmentStartVertex() const = 0;
 
                     virtual void Start(const Eegeo::Routes::Webservice::RouteData& route) = 0;
                     virtual void Stop() = 0;

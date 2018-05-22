@@ -41,6 +41,7 @@ namespace ExampleApp
                     double GetDistanceToNextStep() const { return m_distanceToNextStep; }
                     int GetCurrentSectionIndex() const { return m_currentSectionIndex; }
                     int GetCurrentStepIndex() const { return m_currentStepIndex; }
+                    int GetIndexOfPathSegmentStartVertex() const { return m_indexOfPathSegmentStartVertex; }
 
                     NavTurnByTurnModel(const NavTurnByTurnConfig& config,
                                        Eegeo::Location::ILocationService& locationService);
@@ -79,6 +80,7 @@ namespace ExampleApp
                     float m_updateTime;
                     int m_currentSectionIndex;
                     int m_currentStepIndex;
+                    int m_indexOfPathSegmentStartVertex;
                     bool m_enabled;
 
                 };

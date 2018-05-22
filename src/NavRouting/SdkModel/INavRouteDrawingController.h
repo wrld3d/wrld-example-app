@@ -22,12 +22,17 @@ namespace ExampleApp
 
                 virtual ~INavRouteDrawingController() {}
                 
-                virtual void AddRoute(const std::vector<NavRoutingDirectionModel>& directions,
-                              const Eegeo::v4& color) = 0;
+                virtual void DrawRoute(const Eegeo::v4& color) = 0;
 
                 virtual void ClearRoute() = 0;
+                
+                virtual void SetRouteStepColor(int step, const Eegeo::v4& color) = 0;
 
-                virtual void SetRouteColor(int routeStep, const Eegeo::v4& color) = 0;
+                virtual void UpdateRouteStepProgress(int step,
+                                                     const Eegeo::v4& colorForCrossedPath,
+                                                     const Eegeo::v4& colorForUpcomingPath,
+                                                     int splitIndex,
+                                                     const Eegeo::Space::LatLong& closestPointOnRoute) = 0;
             };
         }
     }
