@@ -33,9 +33,8 @@ namespace ExampleApp
             public:
                 MyPinCreationModule(MyPins::SdkModel::IMyPinsService& myPinsService,
                                     Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                    ExampleApp::Menu::View::IMenuViewModel& searchMenuViewModel,
+                                    ExampleApp::Menu::View::IMenuViewModel& menuViewModel,
                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                    ExampleApp::Menu::View::IMenuViewModel& settingsMenuViewModel,
                                     Search::SdkModel::ISearchRefreshService& searchRefreshService,
                                     ScreenControl::View::IScreenControlViewModel& interiorControlViewModel,
                                     Eegeo::Labels::ILabelFilterModel& labelFilterModel,
@@ -56,6 +55,8 @@ namespace ExampleApp
 
                 OpenableControl::View::IOpenableControlViewModel& GetObservableOpenableControl() const;
 
+                Menu::View::IMenuModel& GetMyPinCreationMenuModel() const;
+
             private:
 
                 MyPinCreationModel* m_pMyPinCreationModel;
@@ -65,6 +66,9 @@ namespace ExampleApp
                 MyPinCreationModelObserver* m_pMyPinCreationModelObserver;
                 MyPinCreationViewStateChangedHandler* m_pMyPinCreationViewStateChangedHandler;
                 MyPinCreationViewSavePinHandler* m_pMyPinCreationViewSavePinHandler;
+
+                Menu::View::IMenuModel* m_pMyPinCreationMenuModel;
+                Menu::View::IMenuOptionsModel* m_pMyPinCreationMenuOptionsModel;
             };
         }
     }

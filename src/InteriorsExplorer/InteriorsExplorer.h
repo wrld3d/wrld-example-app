@@ -22,6 +22,7 @@ namespace ExampleApp
                 class InteriorsHighlightVisibilityController;
                 class InteriorsHighlightPickingController;
                 class IHighlightColorMapper;
+                class InteriorEntityHighlightController;
             }
         }
         

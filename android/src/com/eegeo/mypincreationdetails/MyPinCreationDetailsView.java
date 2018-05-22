@@ -2,11 +2,8 @@
 
 package com.eegeo.mypincreationdetails;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,36 +15,40 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore.Images;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IActivityIntentResultHandler;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
-import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 
-import android.Manifest;
-import android.app.Activity;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MyPinCreationDetailsView implements View.OnClickListener, IActivityIntentResultHandler, IRuntimePermissionResultHandler
 {
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
-    protected ConstraintLayout m_view = null;
+    protected LinearLayout m_view = null;
     protected View m_closeButton = null;
     protected View m_takePhotoButton = null;
     protected View m_selectFromGalleryButton = null;
@@ -66,6 +67,19 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 
     private final int JPEG_QUALITY = 90;
     private final String TERMS_AND_CONDITIONS_LINK = "http://wrld3d.com/terms-of-service";
+
+    private class ScreenDimensions
+    {
+        DisplayMetrics m_metrics;
+
+        ScreenDimensions(Activity activity)
+        {
+            m_metrics = activity.getResources().getDisplayMetrics();
+        }
+
+        float getWidth ()   { return m_metrics.widthPixels;  }
+        float getHeight()   { return m_metrics.heightPixels; }
+    }
 
     public MyPinCreationDetailsView(MainActivity activity, long nativeCallerPointer)
     {
@@ -90,7 +104,9 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
     private void createView()
     {
         final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-        m_view = (ConstraintLayout)m_activity.getLayoutInflater().inflate(R.layout.poi_creation_details_layout, uiRoot, false);
+
+        m_view = (LinearLayout)m_activity.getLayoutInflater().inflate(R.layout.poi_creation_details_layout, uiRoot, false);
+        ViewGroup mainGroup = (ViewGroup)m_view.findViewById(R.id.poi_creation_details_main);
 
         m_closeButton = (View)m_view.findViewById(R.id.poi_creation_details_button_close);
         m_closeButton.setOnClickListener(this);
@@ -104,6 +120,11 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         m_title = (EditText)m_view.findViewById(R.id.poi_creation_details_title_edit_text);
         m_description = (EditText)m_view.findViewById(R.id.poi_creation_details_description);
         m_shouldShareButton = (ToggleButton)m_view.findViewById(R.id.poi_creation_details_share_togglebutton);
+
+        ScreenDimensions dims = new ScreenDimensions(m_activity);
+        MarginLayoutParams margins = (MarginLayoutParams)mainGroup.getLayoutParams();
+        margins.leftMargin = margins.rightMargin  = (int)Math.round(dims.getWidth()  * 0.05);
+        margins.topMargin  = margins.bottomMargin = (int)Math.round(dims.getHeight() * 0.05);
 
         m_shouldShareButton.setOnCheckedChangeListener(new OnCheckedChangeListener()
         {
@@ -283,6 +304,7 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
 
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
+		bmOptions.inPreferredConfig = Bitmap.Config.RGB_565;
 
         Bitmap bitmap = BitmapFactory.decodeStream(is, null, bmOptions);
         is.close();

@@ -6,14 +6,12 @@
 
 @interface UIButton (DefaultStates)
 
-- (void)setDefaultStates;
-
-- (void)setDefaultStatesWithImages:(UIImage*)normalImage
-                                  :(UIImage*)highlightImage;
-
-- (void)setDefaultStatesWithImageName:(NSString*)imageName;
 
 - (void)setDefaultStatesWithImageNames:(NSString*)normalImageName
                                       :(NSString*)highlightImageName;
 
+- (void)setDefaultStatesWithNormalImageName:(NSString*)normalImageName
+                         highlightImageName:(NSString*)highlightImageName
+                      normalBackgroundColor:(UIColor *)normalColor
+                   highlightBackgroundColor:(UIColor *)highlightColor;
 @end

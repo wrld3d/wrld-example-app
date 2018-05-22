@@ -52,6 +52,19 @@ namespace ExampleApp
                 void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, bool startAtGPSLocation=false, const std::string& interiorId = "");
                 void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius, bool startAtGPSLocation=false, const std::string& interiorId = "");
 
+                void AskForQueryRefresh(const SearchQuery& query, const Eegeo::Space::LatLongAltitude& location);
+                
+                void AskForDeepLinkQuery(const std::string& query,const std::string& interiorId);
+                void AskForDeepLinkQuery(const std::string& query,
+                                         bool isTag,
+                                         bool tryInteriorSearch);
+                void AskForDeepLinkQuery(const std::string& query,
+                                         bool isTag,
+                                         bool tryInteriorSearch,
+                                         const Eegeo::Space::LatLongAltitude& location,
+                                         bool startAtGPSLocation = false,
+                                         const std::string& interiorId = "");
+
                 void RemoveSearchQueryResults();
 
                 void InsertOnSearchResultsClearedCallback(Eegeo::Helpers::ICallback0& callback);

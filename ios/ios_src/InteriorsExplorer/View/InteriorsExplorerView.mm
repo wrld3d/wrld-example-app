@@ -235,8 +235,6 @@ namespace
     CGPoint floorPanelLocation = [self convertPoint:touchLocation toView:self.pFloorPanel];
     if (CGRectContainsPoint(self.pFloorChangeButton.frame, floorPanelLocation) && m_floorSelectionEnabled)
         return YES;
-    if (CGRectContainsPoint(self.pDetailsPanel.frame, touchLocation))
-        return YES;
     if (CGRectContainsPoint(self.pDismissButtonBackground.frame, touchLocation))
         return YES;
     return  NO;
@@ -410,20 +408,6 @@ namespace
     {
         self.hidden = false;
     }
-    
-    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
-                          delay:0.0f
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^
-     {
-         self.pDetailsPanel.alpha = t;
-     }
-                     completion:^(BOOL finished)
-     {
-         self.hidden = (t == 0.0f);
-         m_onScreenParam = t;
-     }
-     ];
     
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
                           delay:delaySeconds

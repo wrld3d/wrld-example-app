@@ -1,4 +1,14 @@
 set(resources ${resources}
+	    Resources/WidgetSearchResultTableViewCell.xib
+        Resources/ReportPinIcon.png
+        Resources/ReportPinIcon@2x.png
+        Resources/ReportPinIcon@3x.png
+        Resources/BinButton.png
+        Resources/BinButton@2x.png
+        Resources/BinButton@3x.png
+        Resources/BinButton_Down.png
+        Resources/BinButton_Down@2x.png
+        Resources/BinButton_Down@3x.png
         Resources/Alert_Tutorial_icon.png
         Resources/Alert_Tutorial_icon@2x.png
         Resources/Alert_Tutorial_icon@3x.png
@@ -11,6 +21,9 @@ set(resources ${resources}
         Resources/Arrow@2x.png
         Resources/Arrow@3x.png
         Resources/CMakeLists.txt
+	    Resources/Close_Blue.png
+	    Resources/Close_Blue@2x.png
+	    Resources/Close_Blue@3x.png
         Resources/CompassNew.png
         Resources/CompassNew@0.75x.png
         Resources/CompassNew@1.5x.png
@@ -53,6 +66,27 @@ set(resources ${resources}
         Resources/CompassNewUnlocked_Down@2x.png
         Resources/CompassNewUnlocked_Down@3x.png
         Resources/CompassNewUnlocked_Down@4x.png
+        Resources/ButtonGallery.png
+        Resources/ButtonGallery@2x.png
+        Resources/ButtonGallery@3x.png
+        Resources/ButtonGallery_Down.png
+        Resources/ButtonGallery_Down@2x.png
+        Resources/ButtonGallery_Down@3x.png
+        Resources/ButtonPhoto.png
+        Resources/ButtonPhoto@2x.png
+        Resources/ButtonPhoto@3x.png
+        Resources/ButtonPhoto_Down.png
+        Resources/ButtonPhoto_Down@2x.png
+        Resources/ButtonPhoto_Down@3x.png
+        Resources/LargeTick_Blue.png
+        Resources/LargeTick_Blue@2x.png
+        Resources/LargeTick_Blue@3x.png
+        Resources/LargeTick_White.png
+        Resources/LargeTick_White@2x.png
+        Resources/LargeTick_White@3x.png
+        Resources/ShareIcon.png
+        Resources/ShareIcon@2x.png
+        Resources/ShareIcon@3x.png
         Resources/EmbeddedTheme
         Resources/EmbeddedTheme/Default_water_reflection_cube_map_cubemap.pvr
         Resources/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
@@ -111,6 +145,12 @@ set(resources ${resources}
         Resources/EmbeddedTheme/SanFrancisco_trees_top_01.pvr
         Resources/EmbeddedTheme/SanFrancisco_water_normalmap.pvr
         Resources/EmbeddedTheme/SanFrancisco_water_reflectionmap.pvr
+	    Resources/FullSwitchOff.png
+	    Resources/FullSwitchOff@2x.png
+	    Resources/FullSwitchOff@3x.png
+	    Resources/FullSwitchOn.png
+	    Resources/FullSwitchOn@2x.png
+	    Resources/FullSwitchOn@3x.png
         Resources/Geosphere_01.pod
         Resources/IPAexGothic_sdf.fnt
         Resources/IPAexGothic_sdf_0.png

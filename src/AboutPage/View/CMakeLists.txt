@@ -4,6 +4,8 @@ set(currsources
   ../src/AboutPage/View/AboutPage.h
   ../src/AboutPage/View/AboutPageController.cpp
   ../src/AboutPage/View/AboutPageController.h
+  ../src/AboutPage/View/AboutPageMenuOption.cpp
+  ../src/AboutPage/View/AboutPageMenuOption.h
   ../src/AboutPage/View/AboutPageModule.cpp
   ../src/AboutPage/View/AboutPageModule.h
   ../src/AboutPage/View/AboutPageOpenableControl.cpp

@@ -13,4 +13,5 @@ set(currsources
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\AboutPage FILES ${currsources})
+include(../src/AboutPage/SdkModel/CMakeLists.txt)
 include(../src/AboutPage/View/CMakeLists.txt)

@@ -61,7 +61,7 @@ namespace ExampleApp
                 const std::string path = "/" + queryData.GetMapscene();
                 m_mapsceneLoader.LoadMapscene(path, true);
             }
-            
+
             void DeepLinkSearchHandler::HandleStartupSearchCameraTransitionComplete()
             {
                 if(m_shouldWaitForTransition)

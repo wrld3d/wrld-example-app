@@ -72,7 +72,7 @@ namespace ExampleApp
 
             bool MyPinCreationDetailsViewInterop::ShareSelected() const
             {
-                return m_pView.pCheckbox.selected;
+                return m_pView.pShareSwitch.isOn;
             }
 
             Byte* MyPinCreationDetailsViewInterop::GetImageBuffer() const

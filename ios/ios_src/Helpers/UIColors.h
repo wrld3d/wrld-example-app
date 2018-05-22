@@ -8,6 +8,7 @@ namespace ExampleApp
     {
         namespace ColorPalette
         {
+            extern UIColor* UISeparatorColor;
             extern UIColor* UiBackgroundColor;
             extern UIColor* UiBorderColor;
             

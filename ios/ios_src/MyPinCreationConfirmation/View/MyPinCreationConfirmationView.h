@@ -11,20 +11,15 @@
 {
     ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewInterop* m_pInterop;
 
-    float m_width;
-    float m_height;
-
-    float m_screenWidth;
-    float m_screenHeight;
-    float m_pixelScale;
-
-    float m_yPosActive;
-    float m_yPosInactive;
+    CGFloat m_screenWidth;
+    CGFloat m_screenHeight;
+    
+    CGFloat m_offscreen_offset;
 
     float m_stateChangeAnimationTimeSeconds;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale;
+- (instancetype) initWithScreenWidth:(CGFloat)width screenHeight:(CGFloat)height;
 
 - (ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewInterop*) getInterop;
 
@@ -35,8 +30,6 @@
 - (void) setFullyOffScreen;
 
 - (void) setOnScreenStateToIntermediateValue:(float)openState;
-
-- (void) animateToY:(float)y;
 
 @property(nonatomic, retain) UILabel* pTitleBarText;
 @property(nonatomic, retain) UIView* pMainSection;

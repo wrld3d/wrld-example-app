@@ -11,6 +11,7 @@
 #include "BidirectionalBus.h"
 #include "SearchQueryResultsRemovedMessage.h"
 #include "CameraState.h"
+#include "SearchQueryResultsRemovedMessage.h"
 
 namespace
 {
@@ -98,6 +99,49 @@ namespace ExampleApp
                 
                 m_previousQuery = searchQuery;
                 m_searchService.PerformLocationQuerySearch(searchQuery);
+            }
+
+            void SearchQueryPerformer::AskForQueryRefresh(const SearchQuery& query,
+                                                          const Eegeo::Space::LatLongAltitude& location)
+            {
+                m_messageBus.Publish(SearchQueryRefreshedMessage(query,
+                                                                 location,
+                                                                 GetSearchRadius(m_cameraController)));
+            }
+            
+            void SearchQueryPerformer::AskForDeepLinkQuery(const std::string& query,const std::string& interiorId)
+            {
+                Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
+                const float radius = GetSearchRadius(m_cameraController);
+                SearchQuery searchQuery(query, false, true, location, radius, interiorId);
+                m_messageBus.Publish(DeepLinkedSearchQueryRequestMessage(searchQuery));
+            }
+
+            void SearchQueryPerformer::AskForDeepLinkQuery(const std::string& query,
+                                                           bool isTag,
+                                                           bool tryInteriorSearch)
+            {
+                Eegeo::Space::LatLongAltitude location = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetCameraState().InterestPointEcef());
+
+                AskForDeepLinkQuery(query, isTag, tryInteriorSearch, location);
+            }
+
+            void SearchQueryPerformer::AskForDeepLinkQuery(const std::string& query,
+                                                           bool isTag,
+                                                           bool tryInteriorSearch,
+                                                           const Eegeo::Space::LatLongAltitude& location,
+                                                           bool startAtGPSLocation,
+                                                           const std::string& interiorId)
+            {
+                const float radius = GetSearchRadius(m_cameraController);
+                Eegeo::Space::LatLongAltitude searchLocation = location;
+                if (startAtGPSLocation)
+                {
+                    searchLocation = Eegeo::Space::LatLongAltitude::FromECEF(m_cameraController.GetRenderCamera().GetEcefLocation());
+                }
+                SearchQuery searchQuery(query, isTag, tryInteriorSearch, searchLocation, radius, interiorId);
+
+                m_messageBus.Publish(DeepLinkedSearchQueryRequestMessage(searchQuery));
             }
 
             void SearchQueryPerformer::RemoveSearchQueryResults()

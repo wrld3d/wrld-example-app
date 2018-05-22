@@ -22,7 +22,6 @@
 #include "Search.h"
 #include "VisualMap.h"
 #include "AttractModeStates.h"
-#include "IFlattenButtonModel.h"
 #include <vector>
 
 namespace ExampleApp
@@ -52,7 +51,6 @@ namespace ExampleApp
                     Eegeo::Input::IUserIdleService& m_userIdleService;
                     Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
                     VisualMap::SdkModel::IVisualMapService& m_visualMapService;
-                    FlattenButton::SdkModel::IFlattenButtonModel& m_flattenButtonModel;
 
                     Eegeo::Geometry::CatmullRomSpline m_cameraTargetSpline;
                     Eegeo::Geometry::CatmullRomSpline m_cameraPositionSpline;
@@ -78,8 +76,7 @@ namespace ExampleApp
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Eegeo::Location::NavigationService& navigationService,
                                  Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                 VisualMap::SdkModel::IVisualMapService& visualMapService,
-                                 FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel);
+                                 VisualMap::SdkModel::IVisualMapService& visualMapService);
                     ~AttractState();
 
                     void Enter(int previousState);

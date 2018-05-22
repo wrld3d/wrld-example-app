@@ -13,6 +13,8 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
 import com.eegeo.recce.*;
+import com.wrld.widgets.search.WrldSearchWidget;
+
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -32,6 +34,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.view.View;
+import android.app.SearchManager;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.Constants;
@@ -160,7 +163,6 @@ public class BackgroundThreadActivity extends MainActivity
     protected void onResume()
     {
         super.onResume();
-        updateSystemNavigation();
     	if(hasValidHockeyAppId())
     	{
     		registerCrashLogging();
@@ -274,8 +276,15 @@ public class BackgroundThreadActivity extends MainActivity
 
     @Override
     public void onNewIntent(Intent intent) {
-         m_deepLinkUrlData = intent.getData();
-
+        m_deepLinkUrlData = intent.getData();
+        setIntent(intent);
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            if(query != null) {
+                WrldSearchWidget searchWidget = (WrldSearchWidget)getFragmentManager().findFragmentById(R.id.search_widget);
+                searchWidget.getSearchResults(query, null);
+            }
+        }
     }
 
     public void dispatchRevealUiMessageToUiThreadFromNativeThread(final long nativeCallerPointer)
@@ -496,14 +505,5 @@ public class BackgroundThreadActivity extends MainActivity
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        updateSystemNavigation();
-    }
-
-    private void updateSystemNavigation()
-    {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN |
-                                                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                                                         View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                                                         View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 }
