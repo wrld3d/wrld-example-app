@@ -72,7 +72,7 @@ set(ios_frameworks
   -framework WRLDSearchWidget
   -framework WrldNav
   -framework WrldNavWidget
-  -framework WrldUtils"
+  -framework WrldUtils
   -framework HockeySDK")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")

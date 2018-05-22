@@ -15,6 +15,17 @@
                     forState:UIControlStateHighlighted];
 }
 
+- (void)setDefaultStatesWithImages:(UIImage*)normalImage
+                                  :(UIImage*)highlightImage
+{
+    [self setImage:normalImage
+          forState:UIControlStateNormal];
+    [self setImage:highlightImage
+          forState:UIControlStateHighlighted];
+    
+    [self setDefaultStates];
+}
+
 - (void)setDefaultStatesWithImageNames:(NSString*)normalImageName
                                       :(NSString*)highlightImageName
 {
