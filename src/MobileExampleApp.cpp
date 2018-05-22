@@ -928,8 +928,7 @@ namespace ExampleApp
 	{
 		if (m_applicationConfiguration.ShouldPerformStartUpSearch())
 		{
-			// not a deep link, but we're using the same mechanism
-			m_pSearchModule->GetSearchQueryPerformer().AskForDeepLinkQuery(m_applicationConfiguration.StartUpSearchTag(), true, false);
+			m_pSearchModule->GetSearchQueryPerformer().AskForSearchQuery(m_applicationConfiguration.StartUpSearchTag(), true, false);
 		}
 	}
 

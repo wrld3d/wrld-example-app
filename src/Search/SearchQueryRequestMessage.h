@@ -8,12 +8,12 @@ namespace ExampleApp
 {
     namespace Search
     {
-        class DeepLinkedSearchQueryRequestMessage
+        class SearchQueryRequestMessage
         {
             SdkModel::SearchQuery m_query;
             
         public:
-            DeepLinkedSearchQueryRequestMessage(const SdkModel::SearchQuery& searchQuery);
+            SearchQueryRequestMessage(const SdkModel::SearchQuery& searchQuery);
             
             const SdkModel::SearchQuery& Query() const;
         };

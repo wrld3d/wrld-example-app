@@ -29,7 +29,7 @@ namespace ExampleApp
             , m_onSearchResultSelectedCallback(this, &SearchWidgetController::OnSearchResultSelected)
             , m_onSearchQueryRefreshedHandler(this, &SearchWidgetController::OnSearchQueryRefreshedMessage)
             , m_onSearchQueryResultsLoadedHandler(this, &SearchWidgetController::OnSearchResultsLoaded)
-            , m_deepLinkRequestedHandler(this, &SearchWidgetController::OnSearchDeepLinkRequestedMessage)
+            , m_deepLinkRequestedHandler(this, &SearchWidgetController::OnSearchRequestedMessage)
             , m_menuContentsChanged(true)
 			, m_inInteriorMode(false)
             , m_onAppModeChanged(this, &SearchWidgetController::OnAppModeChanged)
@@ -168,7 +168,7 @@ namespace ExampleApp
                                                   message.Radius()));
             }
            
-            void SearchWidgetController::OnSearchDeepLinkRequestedMessage(const Search::DeepLinkedSearchQueryRequestMessage& message)
+            void SearchWidgetController::OnSearchRequestedMessage(const Search::SearchQueryRequestMessage& message)
             {
                 // needed to avoid a reentrant call on the reactor logic on startup queries / deeplinks
                 m_view.CloseMenu();

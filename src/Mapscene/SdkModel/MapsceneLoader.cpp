@@ -185,7 +185,7 @@ namespace ExampleApp
                 if(m_shouldPerformStartupSearch)
                 {
                     m_shouldPerformStartupSearch = false;
-                    m_searchQueryPerformer.AskForDeepLinkQuery(m_startupSearchTag, true, false, m_startupSearchLocation, m_startAtGPSLocation);
+                    m_searchQueryPerformer.AskForSearchQuery(m_startupSearchTag, true, false, m_startupSearchLocation, m_startAtGPSLocation);
                 }
                 
             }
