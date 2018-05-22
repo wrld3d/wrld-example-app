@@ -19,7 +19,6 @@ namespace ExampleApp
             class MenuView : public IMenuView, private Eegeo::NonCopyable
             {
             private:
-                Eegeo::Helpers::IFunc0<bool>* m_pTryDragFunc;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenStartedCallbacks;

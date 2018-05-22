@@ -26,7 +26,6 @@ namespace ExampleApp
         {
             ExampleApp::DeepLink::SdkModel::DeepLinkModule::DeepLinkModule(CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                                            Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                                                                           FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
                                                                            Search::SelectFirstResult::SdkModel::SelectFirstResultSearchService& selectFirstResultSearchService,
                                                                            Mapscene::SdkModel::MapsceneLoader& mapsceneLoader)
             {
@@ -43,7 +42,7 @@ namespace ExampleApp
                 
                 m_pDeepLinkModel->AddRoute(SEARCH_PATH, m_pDeepLinkSearchHandler);
 
-                m_pDeepLinkController = Eegeo_NEW(DeepLinkController)(*m_pDeepLinkModel, flattenButtonModel);
+                m_pDeepLinkController = Eegeo_NEW(DeepLinkController)(*m_pDeepLinkModel);
             }
 
             ExampleApp::DeepLink::SdkModel::DeepLinkModule::~DeepLinkModule()

@@ -4,13 +4,15 @@
 
 #include "Types.h"
 #include "CatalogBinding.h"
+#include "UiCreatedMessage.h"
 #include "SearchMenuPerformedSearchMessage.h"
+#include "SearchMenuSearchWithContextMessage.h"
+#include "AutocompleteSuggestionsMessage.h"
 #include "SearchResultSectionItemSelectedMessage.h"
 #include "TagSearchSelectedMessage.h"
 #include "WeatherSelectedMessage.h"
 #include "PlaceJumpSelectedMessage.h"
 #include "ModalityChangedMessage.h"
-#include "FlattenButtonViewStateChangedMessage.h"
 #include "CompassViewCycledMessage.h"
 #include "SearchResultViewClearedMessage.h"
 #include "MyPinCreationViewStateChangedMessage.h"
@@ -51,14 +53,16 @@ namespace ExampleApp
     namespace ExampleAppMessaging
     {
         class UiToNativeMessageCatalog
-            : public Eegeo::Messaging::CatalogBinding<SearchMenu::SearchMenuPerformedSearchMessage>
+            : public Eegeo::Messaging::CatalogBinding<UiCreatedMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchMenu::SearchMenuPerformedSearchMessage>
+			, public Eegeo::Messaging::CatalogBinding<SearchMenu::SearchMenuSearchWithContextMessage>
+            , public Eegeo::Messaging::CatalogBinding<SearchMenu::AutocompleteSuggestionsMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultSectionItemSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<TagSearch::TagSearchSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<WeatherMenu::WeatherSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<PlaceJumps::PlaceJumpSelectedMessage>
             , public Eegeo::Messaging::CatalogBinding<Modality::ModalityChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Modality::UpdateNativeModalBackgroundMessage>
-            , public Eegeo::Messaging::CatalogBinding<FlattenButton::FlattenButtonViewStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassViewCycledMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultSection::SearchResultViewClearedMessage>
             , public Eegeo::Messaging::CatalogBinding<MyPinCreation::MyPinCreationViewStateChangedMessage>

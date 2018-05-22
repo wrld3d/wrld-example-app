@@ -18,6 +18,23 @@ namespace ExampleApp
 
             }
 
+            void MyPinCreationConfirmationViewModel::Open()
+            {
+                if(TryOpen()){
+                    m_openCallbacks.ExecuteCallbacks();
+                }
+            }
+
+            void MyPinCreationConfirmationViewModel::InsertOpenCallback(Eegeo::Helpers::ICallback0 &callback)
+            {
+                m_openCallbacks.AddCallback(callback);
+            }
+
+            void MyPinCreationConfirmationViewModel::RemoveOpenCallback(Eegeo::Helpers::ICallback0 &callback)
+            {
+                m_openCallbacks.RemoveCallback(callback);
+            }
+
             ScreenControl::View::IScreenControlViewModel& MyPinCreationConfirmationViewModel::GetScreenControlViewModel()
             {
                 return m_screenControl;

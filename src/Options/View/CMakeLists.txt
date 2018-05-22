@@ -9,6 +9,8 @@ set(currsources
   ../src/Options/View/Options.h
   ../src/Options/View/OptionsController.cpp
   ../src/Options/View/OptionsController.h
+  ../src/Options/View/OptionsMenuOption.cpp
+  ../src/Options/View/OptionsMenuOption.h
   ../src/Options/View/OptionsOpenableControl.cpp
   ../src/Options/View/OptionsOpenableControl.h
   ../src/Options/View/OptionsViewModel.cpp

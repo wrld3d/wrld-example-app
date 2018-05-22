@@ -55,20 +55,4 @@
 @property (nonatomic, retain) UIView* pCompassDialogArrow;
 @property (nonatomic, retain) UIView* pCompassDialogArrowOutline;
 
-@property (nonatomic, retain) UIView* pMapModeDialogContainer;
-@property (nonatomic, retain) UIView* pMapModeDialogContent;
-@property (nonatomic, retain) UIView* pMapModeDialogIcon;
-@property (nonatomic, retain) UILabel* pMapModeDialogTitle;
-@property (nonatomic, retain) UITextView* pMapModeDialogDescription;
-@property (nonatomic, retain) UIView* pMapModeDialogArrow;
-@property (nonatomic, retain) UIView* pMapModeDialogArrowOutline;
-
-@property (nonatomic, retain) UIView* pPinCreationDialogContainer;
-@property (nonatomic, retain) UIView* pPinCreationDialogContent;
-@property (nonatomic, retain) UIView* pPinCreationDialogIcon;
-@property (nonatomic, retain) UILabel* pPinCreationDialogTitle;
-@property (nonatomic, retain) UITextView* pPinCreationDialogDescription;
-@property (nonatomic, retain) UIView* pPinCreationDialogArrow;
-@property (nonatomic, retain) UIView* pPinCreationDialogArrowOutline;
-
 @end

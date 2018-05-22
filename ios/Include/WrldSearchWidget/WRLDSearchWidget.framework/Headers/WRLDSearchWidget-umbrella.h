@@ -1,0 +1,81 @@
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#else
+#ifndef FOUNDATION_EXPORT
+#if defined(__cplusplus)
+#define FOUNDATION_EXPORT extern "C"
+#else
+#define FOUNDATION_EXPORT extern
+#endif
+#endif
+#endif
+
+#import "WRLDMenuChangedListener.h"
+#import "WRLDMenuGroup+Private.h"
+#import "WRLDMenuOption+Private.h"
+#import "WRLDSearchMenuModel+Private.h"
+#import "WRLDSearchProviderHandle+Private.h"
+#import "WRLDSearchQuery+Private.h"
+#import "WRLDSearchQueryObserver+Private.h"
+#import "WRLDSearchRequest+Private.h"
+#import "WRLDSearchWidgetColorStyleApplier.h"
+#import "WRLDSearchWidgetNumberStyleApplier.h"
+#import "WRLDSearchWidgetObserver+Private.h"
+#import "WRLDSpeechModel.h"
+#import "WRLDSuggestionProviderHandle+Private.h"
+#import "CALayer(Elevation).h"
+#import "WRLDMenuChildTableViewCell.h"
+#import "WRLDMenuGroupTitleTableViewCell.h"
+#import "WRLDMenuOptionTableViewCell.h"
+#import "WRLDMoreResultsTableViewCell.h"
+#import "WRLDSuggestionTableViewCell.h"
+#import "WRLDFadeableView.h"
+#import "WRLDMenuObserver+Private.h"
+#import "WRLDMenuTableSectionViewModel.h"
+#import "WRLDNoSearchResultsView.h"
+#import "WRLDSearchBar.h"
+#import "WRLDSearchMenuView.h"
+#import "WRLDSearchMenuViewController.h"
+#import "WRLDSearchResultSelectedObserver+Private.h"
+#import "WRLDSearchWidgetResultSetViewModel.h"
+#import "WRLDSearchWidgetResultsTableDataSource.h"
+#import "WRLDSearchWidgetTableViewContainer.h"
+#import "WRLDSearchWidgetTableViewController.h"
+#import "WRLDSpeechHandler+Private.h"
+#import "WRLDSpeechObserver+Private.h"
+#import "WRLDViewVisibilityController.h"
+#import "WRLDSearchTypes(Private).h"
+#import "WRLDAsyncImageLoadResponse.h"
+#import "WRLDBasicSearchResultModel.h"
+#import "WRLDLabelTextHighlighter.h"
+#import "WRLDMenuChild.h"
+#import "WRLDMenuGroup.h"
+#import "WRLDMenuObserver.h"
+#import "WRLDMenuOption.h"
+#import "WRLDMockSearchProvider.h"
+#import "WRLDPositionedSearchResultModel.h"
+#import "WRLDSearchMenuModel.h"
+#import "WRLDSearchModel.h"
+#import "WRLDSearchProvider.h"
+#import "WRLDSearchProviderHandle.h"
+#import "WRLDSearchQuery.h"
+#import "WRLDSearchQueryObserver.h"
+#import "WRLDSearchRequest.h"
+#import "WRLDSearchRequestFulfillerHandle.h"
+#import "WRLDSearchResultModel.h"
+#import "WRLDSearchResultSelectedObserver.h"
+#import "WRLDSearchResultTableViewCell.h"
+#import "WRLDSearchTypes.h"
+#import "WRLDSearchWidgetObserver.h"
+#import "WRLDSearchWidgetStyle.h"
+#import "WRLDSearchWidgetView.h"
+#import "WRLDSpeechCapture.h"
+#import "WRLDSpeechObserver.h"
+#import "WRLDSuggestionProvider.h"
+#import "WRLDSuggestionProviderHandle.h"
+#import "WRLDUrlImageLoader.h"
+#import "WrldSearchWidget.h"
+
+FOUNDATION_EXPORT double WRLDSearchWidgetVersionNumber;
+FOUNDATION_EXPORT const unsigned char WRLDSearchWidgetVersionString[];
+

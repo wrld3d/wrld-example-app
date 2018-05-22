@@ -1,6 +1,6 @@
 #include "HighlightColorMapper.h"
 #include "ISearchResultRepository.h"
-#include "document.h"
+//#include "document.h"
 
 namespace ExampleApp
 {
@@ -10,6 +10,22 @@ namespace ExampleApp
         {
             namespace Highlights
             {
+                Eegeo::v4 HighlightColorMapper::GetColorFromValue(rapidjson::Value& value) const
+                {
+                    assert(value.IsArray());
+                    Eegeo::v4 highlightColor = m_defaultColor;
+                    
+                    if (value.Size() == 4)
+                    {
+                        highlightColor.Set(value[0].GetDouble()/255.0,
+                                           value[1].GetDouble()/255.0,
+                                           value[2].GetDouble()/255.0,
+                                           value[3].GetDouble()/255.0);
+                    }
+                    
+                    return highlightColor;
+                }
+                
                 Eegeo::v4 HighlightColorMapper::GetColor(const Search::SdkModel::SearchResultModel& result, const std::string highlightColorData) const
                 {
                     rapidjson::Document json;
@@ -17,18 +33,41 @@ namespace ExampleApp
                     
                     if (!json.Parse<0>(result.GetJsonData().c_str()).HasParseError() && json.HasMember(highlightColorData.c_str()))
                     {
-                        const rapidjson::Value& entity_highlight_color = json[highlightColorData.c_str()];
-                        assert(entity_highlight_color.IsArray());
-                        
-                        if (entity_highlight_color.Size() == 4)
-                        {
-                            highlightColor.Set(entity_highlight_color[0].GetDouble()/255.0,
-                                               entity_highlight_color[1].GetDouble()/255.0,
-                                               entity_highlight_color[2].GetDouble()/255.0,
-                                               entity_highlight_color[3].GetDouble()/255.0);
-                        }
+                        highlightColor = GetColorFromValue(json[highlightColorData.c_str()]);
                     }
+                    
                     return highlightColor;
+                }
+                
+                std::vector<Eegeo::v4> HighlightColorMapper::GetColors(const Search::SdkModel::SearchResultModel& result) const
+                {
+                    rapidjson::Document json;
+                    
+                    std::vector<Eegeo::v4>highlightColors;
+                    
+                    auto highlightColorTag = "highlight_color";
+                    auto entityHighlightColorTag = "entity_highlight_color";
+                    
+                    if (!json.Parse<0>(result.GetJsonData().c_str()).HasParseError() )
+                    {
+
+                        if(json.HasMember("highlight"))
+                        {
+                            highlightColors.push_back( json.HasMember(highlightColorTag) ? GetColorFromValue(json[highlightColorTag]): m_defaultColor );
+                        }
+                        
+                        if(json.HasMember("entity_highlight"))
+                        {
+                            highlightColors.push_back( json.HasMember(entityHighlightColorTag) ? GetColorFromValue(json[entityHighlightColorTag]): m_defaultColor );
+                        }
+                        
+                    }
+                    
+                    if (highlightColors.size() == 0){
+                        highlightColors.push_back(m_defaultColor);
+                    }
+                    
+                    return highlightColors;
                 }
             }
         }

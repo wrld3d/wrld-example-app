@@ -49,15 +49,23 @@ if [ $resultcode -ne 0 ]; then
     exit $resultcode
 fi
 
-(cd $projectPath && xcodebuild -target $xcodeTarget -arch "i386" -sdk "iphonesimulator")
-resultcode=$?
+(cd $projectPath && python ../embed_frameworks.py "$xcodeTarget")
 
-echo
-if [ $resultcode = 0 ] ; then
-  echo "COMPILE XCODE PROJECT SUCCEEDED"
-else
-  echo "COMPILE XCODE PROJECT FAILED"
+resultcode=$?
+if [ $resultcode -ne 0 ]; then
+    echo "FAILED TO EMBED SEARCH WIDGET IN PROJECT"
+    exit $resultcode
 fi
-echo
+
+#(cd $projectPath && xcodebuild -target $xcodeTarget -arch "i386" -sdk "iphonesimulator")
+#resultcode=$?
+
+#echo
+#if [ $resultcode = 0 ] ; then
+#  echo "COMPILE XCODE PROJECT SUCCEEDED"
+#else
+#  echo "COMPILE XCODE PROJECT FAILED"
+#fi
+#echo
 
 exit $resultcode

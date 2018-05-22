@@ -6,6 +6,7 @@
 #include "ILocationService.h"
 #include "VectorMath.h"
 #include "BlueSphereModel.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -17,29 +18,34 @@ namespace ExampleApp
             {
             public:
                 GpsMarkerModel(Eegeo::Location::ILocationService& locationService,
+                               Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                Eegeo::BlueSphere::BlueSphereModel& blueSphereModel);
                 ~GpsMarkerModel();
 
                 bool UpdateGpsPosition(float dt);
-                
+
                 const Eegeo::dv3& GetCurrentLocationEcef() const { return m_currentLocationEcef; }
-                
+
                 void UpdateHeading(float dt);
-                
+
                 void SetEnabled(bool enabled);
 
                 const float GetSphereHeightAboveBase() const;
 
                 bool IsLocationIndoors() const;
-                
+
             private:
                 Eegeo::Location::ILocationService& m_locationService;
+                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::BlueSphere::BlueSphereModel& m_blueSphereModel;
-                
+
                 Eegeo::dv3 m_currentLocationEcef;
-                
+
                 float m_currentHeadingRadians;
                 float m_currentHeadingVelocity;
+
+                bool TryGetLocationServiceIndoorMapFloorId(const Eegeo::Resources::Interiors::InteriorId& locationServiceInteriorId, int& out_indoorMapFloorId) const;
+                bool TryGetFloorIdFromIndex(int floorIndex, int& out_indoorMapFloorId) const;
             };
         }
     }

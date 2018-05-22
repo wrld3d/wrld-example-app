@@ -4,6 +4,9 @@ set(currsources
   ../src/Options/SdkModel/CacheEnabledChangedMessageHandler.cpp
   ../src/Options/SdkModel/CacheEnabledChangedMessageHandler.h
   ../src/Options/SdkModel/CMakeLists.txt
+  ../src/Options/SdkModel/IOptionsMenuModule.h
+  ../src/Options/SdkModel/OptionsMenuModule.cpp
+  ../src/Options/SdkModel/OptionsMenuModule.h
   ../src/Options/SdkModel/OptionsSdkIncludes.h
   ../src/Options/SdkModel/StreamOverWifiOnlyChangedMessageHandler.cpp
   ../src/Options/SdkModel/StreamOverWifiOnlyChangedMessageHandler.h

@@ -5,4 +5,5 @@ package com.eegeo.modalbackground;
 public class ModalBackgroundViewJniMethods
 {
     public static native void HandleViewTapped(long nativeCallerPointer);
+    public static native void HandleTouchOnView(long nativeCallerPointer);
 }

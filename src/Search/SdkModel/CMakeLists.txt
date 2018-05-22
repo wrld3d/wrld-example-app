@@ -2,6 +2,9 @@ set(headers ${headers} ../src/Search/SdkModel
 )
 set(currsources
   ../src/Search/SdkModel/CMakeLists.txt
+  ../src/Search/SdkModel/AutocompleteSuggestionQueryPerformer.cpp
+  ../src/Search/SdkModel/AutocompleteSuggestionQueryPerformer.h
+  ../src/Search/SdkModel/IAutocompleteSuggestionQueryPerformer.h
   ../src/Search/SdkModel/IdentitySearchCallbackData.h
   ../src/Search/SdkModel/ISearchModule.h
   ../src/Search/SdkModel/ISearchQueryPerformer.h

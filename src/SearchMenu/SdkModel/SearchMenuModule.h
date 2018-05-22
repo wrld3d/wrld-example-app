@@ -13,6 +13,7 @@
 #include "Search.h"
 #include "SearchMenu.h"
 #include "Types.h"
+#include "IAutocompleteSuggestionQueryPerformer.h"
 
 namespace ExampleApp
 {
@@ -34,6 +35,7 @@ namespace ExampleApp
                 SearchMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                  ExampleApp::Reaction::View::IReactionControllerModel& reactionControllerModel,
                                  Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                 Search::SdkModel::IAutocompleteSuggestionQueryPerformer& autocompleteSuggestionQueryPerformer,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Metrics::IMetricsService& metricsService);
                 

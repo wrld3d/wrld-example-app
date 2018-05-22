@@ -15,7 +15,8 @@ namespace ExampleApp
                 public:
                     virtual ~IHighlightColorMapper() {}
                     
-                    virtual Eegeo::v4 GetColor(const Search::SdkModel::SearchResultModel& result, const std::string highlightColor) const = 0;
+                    virtual Eegeo::v4 GetColor(const Search::SdkModel::SearchResultModel& result, const std::string highlightColor) const = 0 ;
+                    virtual std::vector<Eegeo::v4> GetColors(const Search::SdkModel::SearchResultModel& result) const = 0 ;
                 };
             }
         }

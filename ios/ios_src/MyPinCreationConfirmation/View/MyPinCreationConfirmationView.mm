@@ -4,7 +4,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "MyPinCreationConfirmationViewInterop.h"
-
+#include "ViewController.h"
 #import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
 
@@ -15,28 +15,31 @@
     return m_pInterop;
 }
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale
+- (instancetype) initWithScreenWidth:(CGFloat)width screenHeight:(CGFloat)height
 {
     if (self = [super init])
     {
         m_stateChangeAnimationTimeSeconds = 0.2f;
-        m_pixelScale = 1.f;
-        m_screenWidth = width/pixelScale;
-        m_screenHeight = height/pixelScale;
+        
+        m_screenWidth = width;
+        m_screenHeight = height;
 
         m_pInterop = new ExampleApp::MyPinCreation::View::MyPinCreationConfirmationViewInterop(self);
         
-        const float containerWidth = 320.f;
+        UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+        UIEdgeInsets safeInsets = [viewController safeInsets];
+        
+        UIEdgeInsets margin =  UIEdgeInsetsMake(16, 16, 16, 16);
+        CGFloat maxContainerWidth = 400;
+        const float containerWidth = MIN( m_screenWidth - margin.left - margin.right, maxContainerWidth );
         const float containerHeight = 40.f;
-
-        m_yPosInactive = m_screenHeight + containerHeight;
-        m_yPosActive = m_screenHeight - containerHeight;
-
-        self.frame = CGRectMake((m_screenWidth * 0.5f) - (containerWidth * 0.5f),
-                                m_screenHeight - containerHeight,
+        
+        self.frame = CGRectMake(0.5*(m_screenWidth  - containerWidth),
+                                m_screenHeight - containerHeight - margin.bottom - safeInsets.bottom,
                                 containerWidth,
                                 containerHeight);
-
+        
+        m_offscreen_offset = m_screenHeight - self.frame.origin.y;
         const float buttonSize = containerHeight;
 
         // cancel button
@@ -50,7 +53,6 @@
         [self.pConfirmButton setDefaultStatesWithImageNames:@"button_ok_place_pin_off" :@"button_ok_place_pin_on"];
         [self.pConfirmButton addTarget:self action:@selector(onOkayButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview: self.pConfirmButton];
-        
         
         // main section with text
         const float mainSectionWidth = containerWidth - (buttonSize * 2.f);
@@ -116,54 +118,25 @@
 
 - (void) setOnScreenStateToIntermediateValue:(float)onScreenState
 {
-    float newY = m_yPosInactive + (m_yPosActive - m_yPosInactive) * onScreenState;
-
     self.hidden = onScreenState == 0.0f;
-    CGRect f = self.frame;
-    f.origin.y = newY;
-    self.frame = f;
+    CGFloat offScreenState = 1.0 - onScreenState;
+    
+    self.transform = CGAffineTransformMakeTranslation(0.0, m_offscreen_offset*offScreenState);
 }
 
 - (void) setFullyOnScreen
 {
-    if(self.frame.origin.y == m_yPosActive)
-    {
-        return;
-    }
-
-    [self animateToY:m_yPosActive];
+    self.hidden = false;
+    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
+                     animations:^{ self.transform = CGAffineTransformIdentity;}];
 }
 
 - (void) setFullyOffScreen
 {
-    if(self.frame.origin.y == m_yPosInactive)
-    {
-        return;
-    }
-
-    [self animateToY:m_yPosInactive];
-}
-
-- (void) animateToY:(float)y
-{
-    CGRect f = self.frame;
-    f.origin.y = y;
-
-    if(y != m_yPosInactive)
-    {
-        self.hidden = false;
-    }
-
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds
-     animations:^
-    {
-        self.frame = f;
-    }
-    completion:^(BOOL finished)
-    {
-        self.hidden = (y == m_yPosInactive);
-    }
-    ];
+                     animations:^{ self.transform = CGAffineTransformMakeTranslation(0.0, m_offscreen_offset);}
+                     completion:^(BOOL finished){ self.hidden = true;}];
+   
 }
 
 @end

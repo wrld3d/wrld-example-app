@@ -62,7 +62,12 @@ namespace ExampleApp
                     Eegeo_DELETE m_pReadableTagMapper;
                     Eegeo_DELETE m_pEegeoSearchQueryFactory;
                 }
-                
+
+                IEegeoParser& EegeoSearchServiceModule::GetEegeoParser() const
+                {
+                    return *m_pEegeoParser;
+                }
+
                 Search::SdkModel::ISearchService& EegeoSearchServiceModule::GetSearchService() const
                 {
                     return *m_pSearchService;

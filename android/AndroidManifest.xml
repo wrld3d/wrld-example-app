@@ -4,9 +4,6 @@
         package="com.eegeo.mobileexampleapp"
         android:versionCode="1"
         android:versionName="1.0">
-
-    <uses-sdk android:minSdkVersion="19"
-        android:targetSdkVersion="24"/>
     
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -30,8 +27,6 @@
 		android:required="false" />
 	<uses-feature android:name="android.hardware.wifi"
 		android:required="true" />
-
-    
 
     <application android:icon="@mipmap/icon" android:label="WRLD" android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
        
@@ -60,6 +55,11 @@
 		        <data android:scheme="eegeo" android:host="mapscene" />
                 <data android:scheme="eegeo" android:host="search" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
         </activity>
         
        	<receiver

@@ -7,8 +7,6 @@ set(currsources
   ../src/SearchResultPoi/View/ISearchResultPoiViewModel.h
   ../src/SearchResultPoi/View/SearchResultPoiController.cpp
   ../src/SearchResultPoi/View/SearchResultPoiController.h
-  ../src/SearchResultPoi/View/DesktopSearchResultPoiController.cpp
-  ../src/SearchResultPoi/View/DesktopSearchResultPoiController.h
   ../src/SearchResultPoi/View/SearchResultPoiModule.cpp
   ../src/SearchResultPoi/View/SearchResultPoiModule.h
   ../src/SearchResultPoi/View/SearchResultPoiOpenableControl.cpp

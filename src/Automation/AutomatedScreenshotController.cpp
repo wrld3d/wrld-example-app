@@ -12,7 +12,7 @@
 #include "ICallback.h"
 #include "ICityThemesService.h"
 #include "ICityThemesUpdater.h"
-#include "IFlattenButtonModel.h"
+
 #include "IMenuSectionViewModel.h"
 #include "InteriorsCameraController.h"
 #include "InteriorsExplorerModel.h"
@@ -123,7 +123,6 @@ namespace ExampleApp
                                                                      ExampleApp::PlaceJumps::SdkModel::IPlaceJumpController& placeJumpController,
                                                                      ExampleApp::WeatherMenu::SdkModel::IWeatherController& weatherController,
                                                                      ExampleApp::Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                                     ExampleApp::FlattenButton::SdkModel::IFlattenButtonModel& flattenButtonModel,
                                                                      ExampleApp::SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                                                      Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                      Eegeo::Resources::Interiors::InteriorsCameraController& interiorCameraController,
@@ -139,7 +138,6 @@ namespace ExampleApp
         , m_placeJumpController(placeJumpController)
         , m_weatherController(weatherController)
         , m_searchQueryPerformer(searchQueryPerformer)
-        , m_flattenButtonModel(flattenButtonModel)
         , m_screenshotService(screenshotService)
         , m_eegeoWorld(eegeoWorld)
         , m_updateCyclesToWait(UpdateCyclesPerScreenshot)
@@ -250,7 +248,6 @@ namespace ExampleApp
                             1780.1f,
                             "");
 
-                    m_flattenButtonModel.Unflatten();
                     m_placeJumpController.JumpTo(London);
                     m_weatherController.SetTime("Day");
                     m_weatherController.SetTheme("Summer");
@@ -315,7 +312,6 @@ namespace ExampleApp
                     m_messageBus.Publish(ClosePoiMessage());
                     m_messageBus.Publish(SearchMenu::OpenSearchMenuMessage(false));
                     m_placeJumpController.JumpTo(SanFran);
-                    m_flattenButtonModel.Unflatten();
                     m_cityThemeLoader.LoadThemes(LightThemesManifestUrlDefault, "Summer", "DayDefault");
 
                     return Seq(WaitMs(MsToWaitForSearchQueryToClear),

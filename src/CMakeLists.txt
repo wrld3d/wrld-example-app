@@ -9,6 +9,8 @@ set(currsources
   ../src/MobileExampleApp.h
   ../src/PlatformAbstractionsFacade.cpp
   ../src/PlatformAbstractionsFacade.h
+  ../src/UiCreatedMessage.cpp
+  ../src/UiCreatedMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src FILES ${currsources})
@@ -20,7 +22,6 @@ include(../src/CameraTransitions/CMakeLists.txt)
 include(../src/Compass/CMakeLists.txt)
 include(../src/DeepLink/CMakeLists.txt)
 include(../src/ExampleAppMessaging/CMakeLists.txt)
-include(../src/FlattenButton/CMakeLists.txt)
 include(../src/GpsMarker/CMakeLists.txt)
 include(../src/Helpers/CMakeLists.txt)
 include(../src/InitialExperience/CMakeLists.txt)
@@ -50,7 +51,6 @@ include(../src/SearchMenu/CMakeLists.txt)
 include(../src/SearchResultPoi/CMakeLists.txt)
 include(../src/SearchResultOnMap/CMakeLists.txt)
 include(../src/SearchResultSection/CMakeLists.txt)
-include(../src/SettingsMenu/CMakeLists.txt)
 include(../src/Surveys/CMakeLists.txt)
 include(../src/TagSearch/CMakeLists.txt)
 include(../src/URLRequest/CMakeLists.txt)

@@ -10,9 +10,15 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 ## Requirements
 
-- [Microsoft Visual Studio 2015](https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)
+- [Microsoft Visual Studio 2015](https://www.visualstudio.com/vs/older-downloads/)
 - [CMake](https://cmake.org/) (>= 3.1.1)
 - [Git for Windows (MinGW shell)](https://git-for-windows.github.io/)
+
+## Deprecation
+
+- Windows is no longer supported for the WRLD example app.
+- The last stable windows build is stored in a branch.
+- Use `git checkout windows-deprecated` to move to the deprecated windows branch before attempting the steps in **Setup**.
 
 ## Setup
 

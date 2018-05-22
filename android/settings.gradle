@@ -1,1 +1,2 @@
-include ':wrld-navigation-release', ':wrld-navigation-widget-release'
+include ':wrld-android-search-widget-release', ':wrld-navigation-release', ':wrld-navigation-widget-release'
+

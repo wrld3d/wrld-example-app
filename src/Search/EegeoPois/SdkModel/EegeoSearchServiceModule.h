@@ -45,7 +45,8 @@ namespace ExampleApp
                                              const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
                     
                     ~EegeoSearchServiceModule();
-                    
+
+                    IEegeoParser& GetEegeoParser() const;
                     Search::SdkModel::ISearchService& GetSearchService() const;
                 };
             }

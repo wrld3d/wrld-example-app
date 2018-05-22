@@ -21,7 +21,6 @@ namespace ExampleApp
             MenuView::MenuView(AndroidNativeState& nativeState,
                                const std::string& viewClassName)
                     : m_nativeState(nativeState)
-                    , m_pTryDragFunc(NULL)
             {
                 ASSERT_UI_THREAD
 

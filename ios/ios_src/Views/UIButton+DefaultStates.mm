@@ -26,22 +26,35 @@
     [self setDefaultStates];
 }
 
-- (void)setDefaultStatesWithImageName:(NSString*)imageName
-{
-    UIImage* image = ExampleApp::Helpers::ImageHelpers::LoadImage(imageName);
-    
-    [self setDefaultStatesWithImages:image
-                                    :image];
-}
-
 - (void)setDefaultStatesWithImageNames:(NSString*)normalImageName
                                       :(NSString*)highlightImageName
 {
+  
+    [self setDefaultStatesWithNormalImageName:normalImageName highlightImageName:highlightImageName normalBackgroundColor:ExampleApp::Helpers::ColorPalette::UiBorderColor highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor];
+}
+
+
+
+- (void)setDefaultStatesWithNormalImageName:(NSString*)normalImageName
+                             highlightImageName:(NSString*)highlightImageName
+                            normalBackgroundColor:(UIColor *)normalColor
+                            highlightBackgroundColor:(UIColor *)highlightColor
+{
+    
+    
+    [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(normalColor)
+                    forState:UIControlStateNormal];
+    [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(highlightColor)
+                    forState:UIControlStateHighlighted];
+    
     UIImage* normalImage = ExampleApp::Helpers::ImageHelpers::LoadImage(normalImageName);
     UIImage* highlightImage = ExampleApp::Helpers::ImageHelpers::LoadImage(highlightImageName);
     
-    [self setDefaultStatesWithImages:normalImage
-                                    :highlightImage];
+    [self setImage:normalImage
+          forState:UIControlStateNormal];
+    [self setImage:highlightImage
+          forState:UIControlStateHighlighted];
+    
 }
 
 @end
