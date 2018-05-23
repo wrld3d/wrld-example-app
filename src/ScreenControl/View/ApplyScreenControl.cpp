@@ -10,7 +10,6 @@ namespace ExampleApp
         {
             void Apply(IScreenControlViewModel& viewModel, IScreenControlView& view)
             {
-                view.SetOnScreenPosition(viewModel.GetOnScreenPosition());
                 if (viewModel.IsFullyOffScreen())
                 {
                     view.SetFullyOffScreen();
@@ -23,6 +22,11 @@ namespace ExampleApp
                 {
                     view.SetOnScreenStateToIntermediateValue(viewModel.OnScreenState());
                 }
+            }
+
+            void ApplyMovement(IMovableScreenControlViewModel& movableViewModel, IMovableScreenControlView& movableView)
+            {
+                movableView.SetOnScreenPosition(movableViewModel.GetOnScreenPosition());
             }
         }
     }

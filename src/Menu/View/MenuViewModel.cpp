@@ -127,12 +127,6 @@ namespace ExampleApp
             {
                 return m_sectionsViewModel.GetMenuSection(index);
             }
-
-            void MenuViewModel::SetOnScreenPosition(
-                    ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
-            {
-                m_screenViewModel.SetOnScreenPosition(screenControlViewPosition);
-            }
        }
     }
 }

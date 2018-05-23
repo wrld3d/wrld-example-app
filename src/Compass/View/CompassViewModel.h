@@ -43,11 +43,11 @@ namespace ExampleApp
                 
                 bool IsAddedToScreen() const;
 
-                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel();
+                ScreenControl::View::IMovableScreenControlViewModel& GetScreenControlViewModel();
 
-                void SetOnScreenPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition);
+                void SetOnScreenPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition) override;
 
-                ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() { return m_screenControl.GetOnScreenPosition(); }
+                ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() override { return m_screenControl.GetOnScreenPosition(); }
 
             private:
                 CompassScreenControl m_screenControl;

@@ -14,7 +14,7 @@ namespace ExampleApp
         {
             ReactionPushScreenControl::ReactionPushScreenControl(
                     const OpenableControl::View::IOpenableControlViewModel& openableControlViewModel,
-                    ScreenControl::View::IScreenControlViewModel& screenControlToMove,
+                    ScreenControl::View::IMovableScreenControlViewModel& screenControlToMove,
                     const ScreenControl::View::IScreenControlViewPosition destination)
                     : m_openableControl(openableControlViewModel)
                     , m_screenControlToMove(screenControlToMove), m_destination(destination)

@@ -102,14 +102,7 @@ namespace ExampleApp
 
             void MyPinCreationConfirmationViewModel::Close()
             {
-            }
 
-
-
-            void MyPinCreationConfirmationViewModel::SetOnScreenPosition(
-                    ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
-            {
-                m_screenControl.SetOnScreenPosition(screenControlViewPosition);
             }
         }
     }

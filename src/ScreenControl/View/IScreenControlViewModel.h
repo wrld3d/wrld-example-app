@@ -34,7 +34,11 @@ namespace ExampleApp
                 virtual float OnScreenState() const = 0;
                 
                 virtual bool IsAddedToScreen() const = 0;
+            };
 
+            class IMovableScreenControlViewModel : public virtual IScreenControlViewModel
+            {
+            public:
                 virtual IScreenControlViewPosition GetOnScreenPosition() = 0;
 
                 virtual void SetOnScreenPosition(IScreenControlViewPosition screenControlViewPosition) = 0;

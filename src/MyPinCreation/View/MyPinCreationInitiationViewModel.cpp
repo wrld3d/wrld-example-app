@@ -99,12 +99,6 @@ namespace ExampleApp
             {
                 m_canAddToScreen = (message.GetAppMode() != AppModes::SdkModel::AttractMode);
             }
-
-            void MyPinCreationInitiationViewModel::SetOnScreenPosition(
-                    ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
-            {
-                m_screenControl.SetOnScreenPosition(screenControlViewPosition);
-            }
         }
     }
 }

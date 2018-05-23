@@ -73,13 +73,6 @@ namespace ExampleApp
             {
                 return m_addedToScreen;
             }
-
-            void ScreenControlViewModelBase::SetOnScreenPosition(
-                    IScreenControlViewPosition screenControlViewPosition)
-            {
-                m_viewPosition = screenControlViewPosition;
-                m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
-            }
         }
     }
 }

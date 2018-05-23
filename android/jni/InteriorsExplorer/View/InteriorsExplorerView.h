@@ -48,8 +48,6 @@ namespace ExampleApp
                 void SetFullyOnScreen();
                 void SetFullyOffScreen();
 
-                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position){}
-
                 void SetTouchEnabled(bool enabled);
 
                 void PlaySliderAnim();
