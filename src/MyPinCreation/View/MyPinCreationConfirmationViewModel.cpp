@@ -9,11 +9,10 @@ namespace ExampleApp
         namespace View
         {
             MyPinCreationConfirmationViewModel::MyPinCreationConfirmationViewModel(Eegeo::Helpers::TIdentity identity,
-                    bool initiallyOnScreen,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
+                    bool initiallyOnScreen)
 
                 : m_screenControl(initiallyOnScreen, identity)
-                , m_openable(identity, reactionControllerModel)
+                , m_openable(identity)
             {
 
             }

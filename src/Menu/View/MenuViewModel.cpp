@@ -9,10 +9,9 @@ namespace ExampleApp
         namespace View
         {
             MenuViewModel::MenuViewModel(bool isInitiallyOnScreen,
-                                         Eegeo::Helpers::TIdentity identity,
-                                         Reaction::View::IReactionControllerModel& reactionControllerModel)
+                                         Eegeo::Helpers::TIdentity identity)
             : m_identity(identity)
-            , m_openViewModel(identity, reactionControllerModel)
+            , m_openViewModel(identity)
             , m_screenViewModel(identity)
             {
             }

@@ -9,7 +9,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            OpenableControlViewModelBase::OpenableControlViewModelBase(Reaction::View::IReactionControllerModel& reactionControllerModel)
+            OpenableControlViewModelBase::OpenableControlViewModelBase()
                 : m_openState(false)
             {
 

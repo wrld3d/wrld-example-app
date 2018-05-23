@@ -12,14 +12,12 @@ namespace ExampleApp
         namespace SdkModel
         {
             MyPinDetailsModule::MyPinDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                                   Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                    MyPins::SdkModel::IMyPinsService& myPinsService,
                                                    SearchResultPoi::View::ISearchResultPoiViewModel& searchResultPoiViewModel,
                                                    ExampleAppMessaging::TMessageBus& messageBus,
                                                    const Menu::View::IMenuReactionModel& menuReaction)
             {
-                m_pMyPinDetailsViewModel = Eegeo_NEW(MyPinDetails::View::MyPinDetailsViewModel)(identityProvider.GetNextIdentity(),
-                                           reactionControllerModel);
+                m_pMyPinDetailsViewModel = Eegeo_NEW(MyPinDetails::View::MyPinDetailsViewModel)(identityProvider.GetNextIdentity());
                 
                 m_pMyPinDetailsDisplayService = Eegeo_NEW(View::MyPinDetailsDisplayService)(*m_pMyPinDetailsViewModel,
                                                                                             searchResultPoiViewModel,

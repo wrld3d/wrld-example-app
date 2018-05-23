@@ -9,10 +9,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiViewModel::SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
+            SearchResultPoiViewModel::SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity)
                 : m_searchResultModel()
-                , m_openable(identity, reactionControllerModel)
+                , m_openable(identity)
             {
 
             }

@@ -40,7 +40,6 @@
 #include "SearchResultRepository.h"
 #include "LatLongAltitude.h"
 #include "ReactionModelModule.h"
-#include "ReactionControllerModule.h"
 #include "SearchResultPoiModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
@@ -141,7 +140,6 @@ namespace ExampleApp
         ExampleApp::WorldPins::SdkModel::IWorldPinsFocusModule* m_pWorldPinsFocusModule;
         SearchResultOnMap::SdkModel::ISearchResultOnMapModule* m_pSearchResultOnMapModule;
         ExampleApp::Reaction::View::IReactionModelModule* m_pReactionModelModule;
-        ExampleApp::Reaction::View::IReactionControllerModule* m_pReactionControllerModule;
         ExampleApp::SearchResultPoi::View::ISearchResultPoiModule* m_pSearchResultPoiModule;
         ExampleApp::PlaceJumps::SdkModel::IPlaceJumpsModule* m_pPlaceJumpsModule;
         ExampleApp::WeatherMenu::SdkModel::IWeatherMenuModule* m_pWeatherMenuModule;
@@ -326,11 +324,6 @@ namespace ExampleApp
         const Reaction::View::IReactionModelModule& ReactionModelModule() const
         {
             return *m_pReactionModelModule;
-        }
-
-        const Reaction::View::IReactionControllerModule& ReactionControllerModule() const
-        {
-            return *m_pReactionControllerModule;
         }
 
         const ExampleApp::SearchResultPoi::View::ISearchResultPoiModule& SearchResultPoiModule() const

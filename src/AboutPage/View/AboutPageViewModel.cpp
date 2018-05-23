@@ -13,14 +13,13 @@ namespace ExampleApp
         {
             AboutPageViewModel::AboutPageViewModel(
                 Eegeo::Helpers::TIdentity identity,
-                Reaction::View::IReactionControllerModel& reactionControllerModel,
                 const std::string& buildVersion,
                 const std::string& platformVersion,
                 const std::string& platformHash,
                 const std::string& platformArchitecture,
                 const std::string& aboutText,
                 const std::string& appName)
-                : m_openable(identity, reactionControllerModel)
+                : m_openable(identity)
                 , m_buildVersion(buildVersion)
                 , m_platformVersion(platformVersion)
                 , m_platformHash(platformHash)

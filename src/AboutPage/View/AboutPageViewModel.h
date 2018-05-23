@@ -43,7 +43,6 @@ namespace ExampleApp
             public:
                 AboutPageViewModel(
                     Eegeo::Helpers::TIdentity identity,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                     const std::string& buildVersion,
                     const std::string& platformVersion,
                     const std::string& platformHash,

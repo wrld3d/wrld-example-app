@@ -7,7 +7,6 @@
 #include "IOptionsModule.h"
 #include "OptionsViewModel.h"
 #include "IIdentity.h"
-#include "Reaction.h"
 #include "OptionsSdkIncludes.h"
 #include "BidirectionalBus.h"
 #include "IHttpCache.h"
@@ -27,7 +26,6 @@ namespace ExampleApp
             
         public:
             OptionsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                          Reaction::View::IReactionControllerModel& reactionControllerModel,
                           ExampleAppMessaging::TMessageBus& messageBus,
                           Net::SdkModel::INetworkCapabilities& networkCapabilities);
             

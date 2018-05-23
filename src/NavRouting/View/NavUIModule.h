@@ -19,7 +19,6 @@ namespace ExampleApp
             {
             public:
                 NavUIModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                            Reaction::View::IReactionControllerModel& reactionControllerModel,
                             Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction);
 
                 ~NavUIModule();

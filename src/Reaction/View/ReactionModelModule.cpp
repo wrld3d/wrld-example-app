@@ -3,7 +3,6 @@
 #include "IReaction.h"
 #include "ReactionModelModule.h"
 #include "ReactionModel.h"
-#include "ReactionControllerModel.h"
 
 namespace ExampleApp
 {
