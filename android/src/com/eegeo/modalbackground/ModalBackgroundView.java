@@ -61,7 +61,7 @@ public class ModalBackgroundView implements View.OnClickListener, View.OnTouchLi
 
     public void animateToIntermediateActivityState(final float openState)
     {
-        m_view.setClickable(openState > 0.f);
+        m_view.setClickable(/*openState > 0.f*/false);
     }
     
     @Override

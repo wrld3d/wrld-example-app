@@ -8,6 +8,7 @@
 #include "NavRouting.h"
 #include "Routes.h"
 #include "Location.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -18,12 +19,13 @@ namespace ExampleApp
             class NavRoutingModule : private Eegeo::NonCopyable
             {
             public:
-                
+
                 NavRoutingModule(PolyLineArgs::IShapeService& shapeService,
                                  Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
                                  Eegeo::Location::ILocationService& locationService,
                                  Eegeo::Location::NavigationService& navigationService,
                                  Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                  ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~NavRoutingModule();
@@ -41,6 +43,7 @@ namespace ExampleApp
                 NavWidgetRouteUpdateHandler* m_pRouteUpdateHandler;
                 NavWidgetRouteDrawingHandler* m_pRouteDrawingHandler;
                 NavRoutingController* m_pRoutingController;
+                NavRouteInstructionHelper* m_pNavRouteInstructionHelper;
 
                 TurnByTurn::INavTurnByTurnModel* m_pTurnByTurnModel;
                 TurnByTurn::NavTurnByTurnController* m_pTurnByTurnController;

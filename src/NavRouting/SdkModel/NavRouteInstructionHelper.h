@@ -3,6 +3,7 @@
 
 #include "RouteData.h"
 #include <string>
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -46,29 +47,31 @@ namespace ExampleApp
             {
 
             public:
-                NavRouteInstructionHelper() {};
+                NavRouteInstructionHelper(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
 
-                static NavRouteFormattedInstructions GetFormattedInstructionForStep(const Eegeo::Routes::Webservice::RouteData& route,
+                NavRouteFormattedInstructions GetFormattedInstructionForStep(const Eegeo::Routes::Webservice::RouteData& route,
                     int sectionIndex,
                     int stepIndex);
 
             private:
 
 
-                static std::string GetStandardInstructionTextForStep(const Eegeo::Routes::Webservice::RouteStep &step,
+                std::string GetStandardInstructionTextForStep(const Eegeo::Routes::Webservice::RouteStep &step,
                                                                      const Eegeo::Routes::Webservice::RouteStep* pPrevStep,
                                                                      const Eegeo::Routes::Webservice::RouteStep* pNextStep);
 
-                static std::string GetIconNameFromType(const Eegeo::Routes::Webservice::RouteStep& step,
+                std::string GetIconNameFromType(const Eegeo::Routes::Webservice::RouteStep& step,
                                                        const Eegeo::Routes::Webservice::RouteStep& nextStep,
                                                        const Eegeo::Routes::Webservice::RouteStep* pPrevStep);
 
-                static bool TryGetNextValidStep(const Eegeo::Routes::Webservice::RouteData& route,
-                                                                    int inSectionIndex,
-                                                                    int inStepIndex,
-                                                                    const Eegeo::Routes::Webservice::RouteStep*& pNextStep,
-                                                                    int &out_sectionIndex,
-                                                                    int &out_stepIndex);
+                bool TryGetNextValidStep(const Eegeo::Routes::Webservice::RouteData& route,
+                                                                int inSectionIndex,
+                                                                int inStepIndex,
+                                                                const Eegeo::Routes::Webservice::RouteStep*& pNextStep,
+                                                                int &out_sectionIndex,
+                                                                int &out_stepIndex);
+
+                Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
             };
         }
     }

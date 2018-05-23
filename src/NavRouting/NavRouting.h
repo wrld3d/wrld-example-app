@@ -30,6 +30,7 @@ namespace ExampleApp
             class NavWidgetRouteUpdateHandler;
             class NavWidgetRouteDrawingHandler;
             class NavRoutingController;
+            class NavRouteInstructionHelper;
 
             typedef Eegeo::Shapes::Polylines::PolylineShapeArgs PolyLineArgs;
             typedef Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Routes::Webservice::RouteData>> RoutesReceivedCallback;

@@ -22,15 +22,18 @@ namespace ExampleApp
                                                Eegeo::Location::ILocationService& locationService,
                                                Eegeo::Location::NavigationService& navigationService,
                                                Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                               Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                ExampleAppMessaging::TMessageBus& messageBus)
             {
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
                 m_pNavRouteDrawingController = Eegeo_NEW(NavRouteDrawingController)(shapeService);
                 m_pNavRoutingServiceController = Eegeo_NEW(NavRoutingServiceController)(routingWebservice);
+                m_pNavRouteInstructionHelper = Eegeo_NEW(NavRouteInstructionHelper)(interiorInteractionModel);
 
                 m_pRouteUpdateHandler = Eegeo_NEW(NavWidgetRouteUpdateHandler)(*m_pNavRoutingModel,
                                                                                *m_pNavRoutingServiceController,
-                                                                               alertBoxFactory);
+                                                                               alertBoxFactory,
+                                                                               *m_pNavRouteInstructionHelper);
 
                 m_pRouteDrawingHandler = Eegeo_NEW(NavWidgetRouteDrawingHandler)(*m_pNavRoutingModel,
                                                                                  *m_pNavRouteDrawingController);
@@ -60,6 +63,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pRouteDrawingHandler;
                 Eegeo_DELETE m_pRouteUpdateHandler;
                 Eegeo_DELETE m_pNavRouteDrawingController;
+                Eegeo_DELETE m_pNavRouteInstructionHelper;
                 Eegeo_DELETE m_pNavRoutingServiceController;
                 Eegeo_DELETE m_pNavRoutingModel;
             }

@@ -1,4 +1,8 @@
 #include "NavRouteInstructionHelper.h"
+#include "InteriorInteractionModel.h"
+#include "InteriorsModel.h"
+#include "InteriorId.h"
+#include "InteriorsFloorModel.h"
 #include <sstream>
 #include <vector>
 #include <cmath>
@@ -89,14 +93,34 @@ namespace ExampleApp
                 }
 
                 std::string GetInstructionForMultifloorStep(const Eegeo::Routes::Webservice::RouteStep& step,
-                                                            const Eegeo::Routes::Webservice::RouteStep& nextStep)
+                                                            const Eegeo::Routes::Webservice::RouteStep& nextStep,
+                                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
                 {
+                    std::string floorName;
+                    bool hasFloorName = false;
+
+                    if(interiorInteractionModel.HasInteriorModel())
+                    {
+                        const Eegeo::Resources::Interiors::InteriorsModel* pInteriorModel = interiorInteractionModel.GetInteriorModel();
+                        if(pInteriorModel->GetId().Value() == step.IndoorId)
+                        {
+                            int floorIndex = pInteriorModel->FindFloorIndexWithFloorNumber(nextStep.IndoorFloorId);
+                            const Eegeo::Resources::Interiors::InteriorsFloorModel& floorModel = pInteriorModel->GetFloorAtIndex(floorIndex);
+                            floorName = floorModel.GetFloorName();
+                            hasFloorName = true;
+                        }
+                    }
+
                     std::stringstream ss;
                     ss << Direction::Take << " " << step.Directions.Type;
                     std::string direction = ss.str();
-                    ss.str(std::string());
-                    ss << Direction::Floor << " " << nextStep.IndoorFloorId;
-                    std::string floorName = ss.str();
+                    if(!hasFloorName)
+                    {
+                        ss.str(std::string());
+                        ss << Direction::Floor << " " << nextStep.IndoorFloorId;
+                        floorName = ss.str();
+                    }
+
                     return GetDirectionWithOptionalLocation(direction, Preposition::To, floorName);
                 }
 
@@ -170,6 +194,11 @@ namespace ExampleApp
                 }
             }
 
+            NavRouteInstructionHelper::NavRouteInstructionHelper(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
+            : m_interiorInteractionModel(interiorInteractionModel)
+            {
+
+            }
 
             NavRouteFormattedInstructions NavRouteInstructionHelper::GetFormattedInstructionForStep(
                     const Eegeo::Routes::Webservice::RouteData& route,
@@ -235,7 +264,7 @@ namespace ExampleApp
 
                 std::stringstream ss;
                 if(step.IsMultiFloor && pNextStep != NULL) {
-                    return GetInstructionForMultifloorStep(step, *pNextStep);
+                    return GetInstructionForMultifloorStep(step, *pNextStep, m_interiorInteractionModel);
                 }
 
                 if(pPrevStep != NULL && pPrevStep->IsMultiFloor)

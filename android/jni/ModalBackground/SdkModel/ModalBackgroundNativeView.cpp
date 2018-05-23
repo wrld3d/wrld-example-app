@@ -53,7 +53,7 @@ namespace ExampleApp
                                                    Eegeo::Rendering::LayerIds::AfterAll, m_pMaterial, vertexBinding, pScreenQuad, Eegeo::dv3::Zero());
                 m_pModalBackgroundRenderable->SetModelViewProjection(Eegeo::m44::CreateIdentity());
 
-                m_baseAlpha = 0.46f;
+                m_baseAlpha = 0.0f;//0.46f;
                 SetAlpha(0.0f);
             }
 

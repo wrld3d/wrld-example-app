@@ -12,6 +12,7 @@
 #include "INavRoutingServiceController.h"
 #include "AlertBox.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "NavRouteInstructionHelper.h"
 
 namespace ExampleApp
 {
@@ -39,6 +40,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<NavWidgetRouteUpdateHandler> m_queryFailedCallback;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavWidgetRouteUpdateHandler> m_failAlertHandler;
 
+                NavRouteInstructionHelper& m_instructionHelper;
+
                 void OnStartLocationSet(const NavRoutingLocationModel& startLocation);
 
                 void OnStartLocationCleared();
@@ -60,7 +63,8 @@ namespace ExampleApp
             public:
                 NavWidgetRouteUpdateHandler(INavRoutingModel& navRoutingModel,
                                             INavRoutingServiceController& navRoutingServiceController,
-                                            Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory
+                                            Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                            NavRouteInstructionHelper& instructionHelper
                 );
 
                 ~NavWidgetRouteUpdateHandler();

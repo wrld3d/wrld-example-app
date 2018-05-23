@@ -28,7 +28,8 @@ namespace ExampleApp
                         };
                 }
 
-                std::vector<SdkModel::NavRoutingDirectionModel> GetDirectionsFromRouteData(const Eegeo::Routes::Webservice::RouteData& route)
+                std::vector<SdkModel::NavRoutingDirectionModel> GetDirectionsFromRouteData(const Eegeo::Routes::Webservice::RouteData& route,
+                    NavRouteInstructionHelper& instructionHelper)
                 {
                     std::vector<SdkModel::NavRoutingDirectionModel> directionsVector;
 
@@ -40,7 +41,7 @@ namespace ExampleApp
                         {
                             auto& step = section.Steps[i];
 
-                            SdkModel::NavRouteFormattedInstructions formattedInstructions = SdkModel::NavRouteInstructionHelper::GetFormattedInstructionForStep(
+                            SdkModel::NavRouteFormattedInstructions formattedInstructions = instructionHelper.GetFormattedInstructionForStep(
                                     route, sectionIndex, i);
 
                             bool hasLocationName = !formattedInstructions.GetInstructionLocation().empty();
@@ -64,10 +65,12 @@ namespace ExampleApp
             
             NavWidgetRouteUpdateHandler::NavWidgetRouteUpdateHandler(INavRoutingModel& navRoutingModel,
                                                                      INavRoutingServiceController& navRoutingServiceController,
-                                                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+                                                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                                                     NavRouteInstructionHelper& instructionHelper)
                     : m_navRoutingModel(navRoutingModel)
                     , m_navRoutingServiceController(navRoutingServiceController)
                     , m_alertBoxFactory(alertBoxFactory)
+                    , m_instructionHelper(instructionHelper)
                     , m_startLocation("", Eegeo::Space::LatLong(0,0))
                     , m_startLocationIsSet(false)
                     , m_endLocation("", Eegeo::Space::LatLong(0,0))
@@ -147,7 +150,7 @@ namespace ExampleApp
             {
                 m_navRoutingModel.SetRoute(NavRoutingRouteModel(route.Duration,
                                                                 route.Distance,
-                                                                GetDirectionsFromRouteData(route),
+                                                                GetDirectionsFromRouteData(route, m_instructionHelper),
                                                                 route));
             }
 
