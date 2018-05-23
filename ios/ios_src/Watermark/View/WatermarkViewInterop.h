@@ -32,8 +32,6 @@ namespace ExampleApp
 
                 void SetFullyOffScreen();
                 
-                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position) { }
-                
                 void OnSelected();
 
                 void InsertSelectedCallback(Eegeo::Helpers::ICallback0& callback);
