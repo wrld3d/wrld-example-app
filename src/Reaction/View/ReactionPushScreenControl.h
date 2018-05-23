@@ -15,11 +15,11 @@ namespace ExampleApp
             class ReactionPushScreenControl : public IReaction
             {
                 const OpenableControl::View::IOpenableControlViewModel& m_openableControl;
-                ScreenControl::View::IScreenControlViewModel& m_screenControlToMove;
+                ScreenControl::View::IMovableScreenControlViewModel& m_screenControlToMove;
                 const ScreenControl::View::IScreenControlViewPosition m_destination;
             public:
                 ReactionPushScreenControl(const OpenableControl::View::IOpenableControlViewModel& openableControl,
-                                           ScreenControl::View::IScreenControlViewModel& screenControlToMove,
+                                           ScreenControl::View::IMovableScreenControlViewModel& screenControlToMove,
                                           const ScreenControl::View::IScreenControlViewPosition destination);
                 ~ReactionPushScreenControl() { }
 

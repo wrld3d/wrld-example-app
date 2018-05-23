@@ -69,13 +69,6 @@ namespace ExampleApp
             {
                 return m_screenControl.IsAddedToScreen();
             }
-
-            void WatermarkViewModel::SetOnScreenPosition(
-                    ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
-            {
-                m_screenControl.GetOnScreenPosition();
-            }
-
         }
     }
 }

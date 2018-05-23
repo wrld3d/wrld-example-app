@@ -16,7 +16,7 @@ namespace ExampleApp
 
             }
 
-            ScreenControl::View::IScreenControlViewModel& CompassViewModel::GetScreenControlViewModel()
+            ScreenControl::View::IMovableScreenControlViewModel& CompassViewModel::GetScreenControlViewModel()
             {
                 return m_screenControl;
             }

@@ -53,10 +53,6 @@ namespace ExampleApp
 
                 void SetShouldOffsetViewButton(bool shouldOffset);
 
-                void SetOnScreenPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition);
-
-                ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() { return m_screenControl.GetOnScreenPosition(); }
-
             private:
                 MyPinCreationScreenControl m_screenControl;
                 bool m_shouldOffsetViewButton;

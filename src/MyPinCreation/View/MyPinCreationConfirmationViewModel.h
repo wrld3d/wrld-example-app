@@ -60,10 +60,6 @@ namespace ExampleApp
 
                 void RemoveOpenCallback(Eegeo::Helpers::ICallback0& callback);
 
-                void SetOnScreenPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition);
-
-                ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() { return m_screenControl.GetOnScreenPosition(); }
-
             private:
                 MyPinCreationScreenControl m_screenControl;
                 MyPinCreationConfirmationOpenableControl m_openable;
