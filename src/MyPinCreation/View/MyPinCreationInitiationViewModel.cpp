@@ -50,39 +50,26 @@ namespace ExampleApp
                 m_screenControl.RemoveFromScreen();
             }
 
-            void MyPinCreationInitiationViewModel::UpdateOnScreenState(float onScreenState)
-            {
-                m_screenControl.UpdateOnScreenState(onScreenState);
-            }
-
-            void MyPinCreationInitiationViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            void MyPinCreationInitiationViewModel::InsertOnScreenStateChangedCallback(
+                    Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback)
             {
                 m_screenControl.InsertOnScreenStateChangedCallback(callback);
             }
 
-            void MyPinCreationInitiationViewModel::RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            void MyPinCreationInitiationViewModel::RemoveOnScreenStateChangedCallback(
+                    Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback)
             {
                 m_screenControl.RemoveOnScreenStateChangedCallback(callback);
             }
 
-            bool MyPinCreationInitiationViewModel::IsFullyOffScreen() const
+            bool MyPinCreationInitiationViewModel::IsOffScreen() const
             {
-                return m_screenControl.IsFullyOffScreen();
+                return m_screenControl.IsOffScreen();
             }
 
-            bool MyPinCreationInitiationViewModel::IsFullyOnScreen() const
+            bool MyPinCreationInitiationViewModel::IsOnScreen() const
             {
-                return m_screenControl.IsFullyOnScreen();
-            }
-
-            float MyPinCreationInitiationViewModel::OnScreenState() const
-            {
-                return m_screenControl.OnScreenState();
-            }
-            
-            bool MyPinCreationInitiationViewModel::IsAddedToScreen() const
-            {
-                return m_screenControl.IsAddedToScreen();
+                return m_screenControl.IsOnScreen();
             }
 
             bool MyPinCreationInitiationViewModel::ShouldOffsetViewButton() const

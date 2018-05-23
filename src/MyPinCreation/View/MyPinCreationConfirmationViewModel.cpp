@@ -60,39 +60,26 @@ namespace ExampleApp
                 m_screenControl.RemoveFromScreen();
             }
 
-            void MyPinCreationConfirmationViewModel::UpdateOnScreenState(float onScreenState)
-            {
-                m_screenControl.UpdateOnScreenState(onScreenState);
-            }
-
-            void MyPinCreationConfirmationViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            void MyPinCreationConfirmationViewModel::InsertOnScreenStateChangedCallback(
+                    Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback)
             {
                 m_screenControl.InsertOnScreenStateChangedCallback(callback);
             }
 
-            void MyPinCreationConfirmationViewModel::RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            void MyPinCreationConfirmationViewModel::RemoveOnScreenStateChangedCallback(
+                    Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback)
             {
                 m_screenControl.RemoveOnScreenStateChangedCallback(callback);
             }
 
-            bool MyPinCreationConfirmationViewModel::IsFullyOffScreen() const
+            bool MyPinCreationConfirmationViewModel::IsOffScreen() const
             {
-                return m_screenControl.IsFullyOffScreen();
+                return m_screenControl.IsOffScreen();
             }
 
-            bool MyPinCreationConfirmationViewModel::IsFullyOnScreen() const
+            bool MyPinCreationConfirmationViewModel::IsOnScreen() const
             {
-                return m_screenControl.IsFullyOnScreen();
-            }
-
-            float MyPinCreationConfirmationViewModel::OnScreenState() const
-            {
-                return m_screenControl.OnScreenState();
-            }
-            
-            bool MyPinCreationConfirmationViewModel::IsAddedToScreen() const
-            {
-                return m_screenControl.IsAddedToScreen();
+                return m_screenControl.IsOnScreen();
             }
 
             bool MyPinCreationConfirmationViewModel::TryOpen()

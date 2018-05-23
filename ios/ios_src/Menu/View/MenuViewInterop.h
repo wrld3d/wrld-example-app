@@ -91,12 +91,12 @@ namespace ExampleApp
                     [m_pView setOnScreenStateToIntermediateValue:value];
                 }
 
-                void SetFullyOnScreen()
+                void SetOnScreen()
                 {
                     [m_pView animateToClosedOnScreen];
                 }
 
-                void SetFullyOffScreen()
+                void SetOffScreen()
                 {
                     [m_pView animateToRemovedFromScreen];
                 }

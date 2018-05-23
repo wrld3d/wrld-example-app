@@ -19,7 +19,7 @@ namespace ExampleApp
                 : m_openables(openables)
                 , m_reactions(reactions)
                 , m_menuIgnoredReaction(menuIgnoredReaction)
-                , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<ReactionModel, OpenableControl::View::IOpenableControlViewModel&, float>))(this, &ReactionModel::MenuOpenStateChangeHandler))
+                , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<ReactionModel, OpenableControl::View::IOpenableControlViewModel&>))(this, &ReactionModel::MenuOpenStateChangeHandler))
             {
                 for(std::vector<OpenableControl::View::IOpenableControlViewModel*>::iterator it = m_openables.begin();
                         it != m_openables.end();
@@ -58,7 +58,7 @@ namespace ExampleApp
                 }
             }
 
-            void ReactionModel::MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState)
+            void ReactionModel::MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel)
             {
                 Eegeo::Helpers::TIdentity identity = viewModel.GetIdentity();
 

@@ -23,27 +23,21 @@ namespace ExampleApp
 
             bool NavWidgetViewModel::IsOpen() const
             {
-                return m_openable.IsFullyOpen();
+                return m_openable.IsOpen();
             }
 
             void NavWidgetViewModel::Open()
             {
                 Eegeo_ASSERT(!IsOpen(), "Cannot open NavWidgetViewModel when already open.\n");
-                if(m_openable.Open())
-                {
-                    m_openedCallbacks.ExecuteCallbacks();
-                }
+                m_openable.Open();
+                m_openedCallbacks.ExecuteCallbacks();
             }
 
             void NavWidgetViewModel::Close()
             {
                 Eegeo_ASSERT(IsOpen(), "Cannot close NavWidgetViewModel when view model when already closed.\n");
 
-                {
-                    const bool closed = m_openable.Close();
-                    Eegeo_ASSERT(closed, "Failed to close");
-                }
-
+                m_openable.Close();
                 m_closedCallbacks.ExecuteCallbacks();
             }
 

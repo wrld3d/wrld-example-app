@@ -57,7 +57,7 @@
 
 - (void) setRotationHighlight:(bool)shouldShowRotationHighlight;
 
-- (void) setOnScreenPosition:(float) offset;
+- (void) SetOffsetFromDefaultPosition:(float) offset;
 
 @property (nonatomic, retain) UIImageView* pOuterShape;
 @property (nonatomic, retain) UIView* pInnerShape;

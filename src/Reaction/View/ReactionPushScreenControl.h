@@ -16,11 +16,11 @@ namespace ExampleApp
             {
                 const OpenableControl::View::IOpenableControlViewModel& m_openableControl;
                 ScreenControl::View::IMovableScreenControlViewModel& m_screenControlToMove;
-                const ScreenControl::View::IScreenControlViewPosition m_destination;
+                const ScreenControl::View::IScreenControlViewPosition m_offset;
             public:
                 ReactionPushScreenControl(const OpenableControl::View::IOpenableControlViewModel& openableControl,
                                            ScreenControl::View::IMovableScreenControlViewModel& screenControlToMove,
-                                          const ScreenControl::View::IScreenControlViewPosition destination);
+                                          const ScreenControl::View::IScreenControlViewPosition offset);
                 ~ReactionPushScreenControl() { }
 
                 Eegeo::Helpers::TIdentity ReactionToOpenableIdentity() override;

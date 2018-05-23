@@ -205,7 +205,7 @@ namespace ExampleApp
 				env->CallVoidMethod(m_uiView, animateToIntermediateOnScreenState, value);
             }
 
-            void InteriorsExplorerView::SetFullyOnScreen()
+            void InteriorsExplorerView::SetOnScreen()
             {
                 ASSERT_UI_THREAD
 
@@ -216,7 +216,7 @@ namespace ExampleApp
 				env->CallVoidMethod(m_uiView, animateToActive);
             }
 
-            void InteriorsExplorerView::SetFullyOffScreen()
+            void InteriorsExplorerView::SetOffScreen()
             {
                 ASSERT_UI_THREAD
 

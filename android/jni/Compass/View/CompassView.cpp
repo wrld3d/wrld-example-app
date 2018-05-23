@@ -104,12 +104,12 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, animateToIntermediateOpenStateOnScreen, value);
             }
 
-            void CompassView::SetFullyOnScreen()
+            void CompassView::SetOnScreen()
             {
                 CallVoidMethod("animateToActive");
             }
 
-            void CompassView::SetFullyOffScreen()
+            void CompassView::SetOffScreen()
             {
                 CallVoidMethod("animateToInactive");;
             }
@@ -135,7 +135,7 @@ namespace ExampleApp
                 m_callbacks.RemoveCallback(callback);
             }
 
-            void CompassView::SetOnScreenPosition(
+            void CompassView::SetOffsetFromDefaultPosition(
                     ScreenControl::View::IScreenControlViewPosition position) 
 			{
                 ASSERT_UI_THREAD

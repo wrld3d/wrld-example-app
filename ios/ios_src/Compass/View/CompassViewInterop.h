@@ -38,9 +38,9 @@ namespace ExampleApp
 
                 void SetOnScreenStateToIntermediateValue(float value);
 
-                void SetFullyOnScreen();
+                void SetOnScreen();
 
-                void SetFullyOffScreen();
+                void SetOffScreen();
                 
                 void SetRotationHighlight(bool shouldShowRotationHighlight);
 
@@ -48,7 +48,7 @@ namespace ExampleApp
 
                 void RemoveCycledCallback(Eegeo::Helpers::ICallback0& callback);
                 
-                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position);
+                void SetOffsetFromDefaultPosition(ScreenControl::View::IScreenControlViewPosition position);
             };
         }
     }

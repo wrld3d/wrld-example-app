@@ -42,13 +42,13 @@ namespace ExampleApp
 
             bool DesktopSearchResultPoiViewModel::IsOpen() const
             {
-                return m_openable.IsFullyOpen();
+                return m_openable.IsOpen();
             }
 
             void DesktopSearchResultPoiViewModel::Open(const Search::SdkModel::SearchResultModel& searchResultModel,
                                                 bool isPinned)
             {
-                if (m_openable.IsFullyOpen())
+                if (m_openable.IsOpen())
                 {
                     if (m_searchResultModel.GetIdentifier() == searchResultModel.GetIdentifier())
                     {
@@ -60,7 +60,7 @@ namespace ExampleApp
                     }
                 }
                 
-                m_openable.Open(false);
+                m_openable.Open();
                 m_searchResultModel = searchResultModel;
                 m_isPinned = isPinned;
                 m_openedCallbacks.ExecuteCallbacks();
@@ -70,11 +70,7 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(IsOpen(), "Cannot close SearchResultModel when view model when already closed.\n");
 
-                {
-                    const bool closed = m_openable.Close(false);
-                    Eegeo_ASSERT(closed, "Failed to close");
-                }
-
+                m_openable.Close();
                 m_closedCallbacks.ExecuteCallbacks();
             }
 

@@ -29,25 +29,19 @@ namespace ExampleApp
 
                 void RemoveFromScreen() override;
 
-                void UpdateOnScreenState(float onScreenState) override;
+                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback1<ScreenControl::View::IScreenControlViewModel&>& callback) override;
 
-                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback) override;
+                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback1<ScreenControl::View::IScreenControlViewModel&>& callback) override;
 
-                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback) override;
+                bool IsOffScreen() const override;
 
-                bool IsFullyOffScreen() const override;
-
-                bool IsFullyOnScreen() const override;
-
-                float OnScreenState() const override;
-                
-                bool IsAddedToScreen() const override;
+                bool IsOnScreen() const override;
 
                 ScreenControl::View::IMovableScreenControlViewModel& GetScreenControlViewModel();
 
-                void SetOnScreenPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition) override;
+                void SetOffsetFromDefaultPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition) override;
 
-                ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() override { return m_screenControl.GetOnScreenPosition(); }
+                ScreenControl::View::IScreenControlViewPosition GetOffsetFromDefaultPosition() override { return m_screenControl.GetOffsetFromDefaultPosition(); }
 
             private:
                 CompassScreenControl m_screenControl;

@@ -45,8 +45,8 @@ namespace ExampleApp
                 void RemoveFloorSelectionDraggedCallback(Eegeo::Helpers::ICallback1<float>& callback);
 
                 void SetOnScreenStateToIntermediateValue(float value);
-                void SetFullyOnScreen();
-                void SetFullyOffScreen();
+                void SetOnScreen();
+                void SetOffScreen();
 
                 void SetTouchEnabled(bool enabled);
 

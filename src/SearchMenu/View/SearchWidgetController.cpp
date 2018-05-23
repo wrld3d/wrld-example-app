@@ -258,44 +258,36 @@ namespace ExampleApp
                 m_view.UpdateMenuSectionViews(sections);
             }
 
-            void SearchWidgetController::OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state)
+            void SearchWidgetController::OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel)
             {
-                if(m_viewModel.IsAddedToScreen())
+                if(m_viewModel.IsOnScreen())
                 {
-                    if (m_viewModel.IsFullyClosed() || m_viewModel.IsFullyOpen())
+                    if (m_viewModel.IsOpen())
                     {
-                        m_view.SetFullyOnScreen();
-                    }
-                    else
-                    {
-                        m_view.SetOnScreenStateToIntermediateValue(state);
+                        m_view.SetOnScreen();
                     }
                 }
                 else
                 {
-                    m_view.SetFullyOffScreen();
+                    m_view.SetOffScreen();
                 }
             }
 
-            void SearchWidgetController::OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& state)
+            void SearchWidgetController::OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel)
             {
-                if (m_viewModel.IsFullyOnScreen())
+                if (m_viewModel.IsOnScreen())
                 {
-                    m_view.SetFullyOnScreen();
+                    m_view.SetOnScreen();
                 }
-                else if (m_viewModel.IsFullyOffScreen())
+                else if (m_viewModel.IsOffScreen())
                 {
-                    m_view.SetFullyOffScreen();
-                }
-                else
-                {
-                    m_view.SetOnScreenStateToIntermediateValue(state);
+                    m_view.SetOffScreen();
                 }
             }
 
             void SearchWidgetController::OnViewOpened()
             {
-                if(!m_viewModel.IsFullyOpen())
+                if(!m_viewModel.IsOpen())
                 {
                     m_viewModel.Open();
                 }
@@ -303,7 +295,7 @@ namespace ExampleApp
 
             void SearchWidgetController::OnViewClosed()
             {
-                if(!m_viewModel.IsFullyClosed())
+                if(!m_viewModel.IsClosed())
                 {
                     m_viewModel.Close();
                 }

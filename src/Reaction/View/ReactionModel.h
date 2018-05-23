@@ -24,7 +24,7 @@ namespace ExampleApp
 
                 Menu::View::IMenuIgnoredReactionModel& m_menuIgnoredReaction;
 
-                Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
+                Eegeo::Helpers::ICallback1<OpenableControl::View::IOpenableControlViewModel&>* m_pMenuOpenStateChangedCallback;
 
             public:
                 ReactionModel(const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
@@ -37,7 +37,7 @@ namespace ExampleApp
 
                 void UpdateOnScreenStatesInReactionToMenuOpenStateChange(OpenableControl::View::IOpenableControlViewModel& viewModel);
 
-                void MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
+                void MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel);
             };
         }
     }

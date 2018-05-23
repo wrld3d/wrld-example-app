@@ -24,9 +24,10 @@ namespace ExampleApp
 
                 Eegeo::Helpers::TIdentity GetIdentity() const override;
 
-                ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() override { return m_viewPosition; }
+                ScreenControl::View::IScreenControlViewPosition GetOffsetFromDefaultPosition() override { return m_viewPosition; }
 
-                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition screenControlViewPosition) override;
+                void SetOffsetFromDefaultPosition(
+                        ScreenControl::View::IScreenControlViewPosition screenControlViewPosition) override;
             };
         }
     }

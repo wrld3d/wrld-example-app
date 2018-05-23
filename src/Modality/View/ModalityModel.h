@@ -17,7 +17,7 @@ namespace ExampleApp
         {
             class ModalityModel : public IModalityModel, private Eegeo::NonCopyable
             {
-                float m_modality;
+                ModalityValue m_modality;
                 Eegeo::Helpers::CallbackCollection0 m_modalityChangedCallbacks;
 
             public:
@@ -25,11 +25,9 @@ namespace ExampleApp
 
                 ~ModalityModel();
 
-                bool IsModalEnabled() const;
+                ModalityValue GetModality() const;
 
-                float GetModality() const;
-
-                void SetModality(float modality);
+                void SetModality(ModalityValue modality);
 
                 void InsertModalityChangedCallback(Eegeo::Helpers::ICallback0& modalityChangedCallback);
 

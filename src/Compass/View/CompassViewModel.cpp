@@ -36,45 +36,30 @@ namespace ExampleApp
                 m_screenControl.RemoveFromScreen();
             }
 
-            void CompassViewModel::UpdateOnScreenState(float onScreenState)
-            {
-                m_screenControl.UpdateOnScreenState(onScreenState);
-            }
-
-            void CompassViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            void CompassViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback1<ScreenControl::View::IScreenControlViewModel&>& callback)
             {
                 m_screenControl.InsertOnScreenStateChangedCallback(callback);
             }
 
-            void CompassViewModel::RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            void CompassViewModel::RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback1<ScreenControl::View::IScreenControlViewModel&>& callback)
             {
                 m_screenControl.RemoveOnScreenStateChangedCallback(callback);
             }
 
-            bool CompassViewModel::IsFullyOffScreen() const
+            bool CompassViewModel::IsOffScreen() const
             {
-                return m_screenControl.IsFullyOffScreen();
+                return m_screenControl.IsOffScreen();
             }
 
-            bool CompassViewModel::IsFullyOnScreen() const
+            bool CompassViewModel::IsOnScreen() const
             {
-                return m_screenControl.IsFullyOnScreen();
+                return m_screenControl.IsOnScreen();
             }
 
-            float CompassViewModel::OnScreenState() const
-            {
-                return m_screenControl.OnScreenState();
-            }
-            
-            bool CompassViewModel::IsAddedToScreen() const
-            {
-                return m_screenControl.IsAddedToScreen();
-            }
-
-            void CompassViewModel::SetOnScreenPosition(
+            void CompassViewModel::SetOffsetFromDefaultPosition(
                     ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
             {
-                m_screenControl.SetOnScreenPosition(screenControlViewPosition);
+                m_screenControl.SetOffsetFromDefaultPosition(screenControlViewPosition);
             }
         }
     }

@@ -32,8 +32,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback2<MenuController, int, int> m_onItemSelectedCallback;
                 Eegeo::Helpers::TCallback1<MenuController, MenuItemModel> m_onItemAddedCallback;
                 Eegeo::Helpers::TCallback1<MenuController, MenuItemModel> m_onItemRemovedCallback;
-                Eegeo::Helpers::TCallback2<MenuController, ScreenControl::View::IScreenControlViewModel&, float> m_onScreenStateChanged;
-                Eegeo::Helpers::TCallback2<MenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenableStateChanged;
+                Eegeo::Helpers::TCallback1<MenuController, ScreenControl::View::IScreenControlViewModel&> m_onScreenStateChanged;
+                Eegeo::Helpers::TCallback1<MenuController, OpenableControl::View::IOpenableControlViewModel&> m_onOpenableStateChanged;
                 Eegeo::Helpers::TCallback2<MenuController, IMenuSectionViewModel&, bool> m_onMenuSectionExpandedStateChanged;
                 Eegeo::Helpers::TCallback1<MenuController, const AppModes::AppModeChangedMessage&> m_onAppModeChanged;
                 Eegeo::Helpers::TCallback1<MenuController, const InteriorsExplorer::InteriorsExplorerStateChangedMessage& > m_onInteriorStateChangedCallback;
@@ -53,9 +53,9 @@ namespace ExampleApp
 
                 virtual void OnMenuSectionExpandeStateChanged(IMenuSectionViewModel& menuSectionViewModel, bool& expanded);
                 
-                virtual void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state);
+                virtual void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel);
 
-                virtual void OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
+                virtual void OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel);
 
                 virtual bool TryDrag();
 

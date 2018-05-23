@@ -32,8 +32,8 @@ namespace ExampleApp
                 void RemoveConfirmedCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void SetOnScreenStateToIntermediateValue(float value);
-                void SetFullyOnScreen();
-                void SetFullyOffScreen();
+                void SetOnScreen();
+                void SetOffScreen();
 
             private:
 

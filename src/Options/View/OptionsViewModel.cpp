@@ -62,17 +62,15 @@ namespace ExampleApp
             
             bool OptionsViewModel::IsOpen() const
             {
-                return m_openable.IsFullyOpen();
+                return m_openable.IsOpen();
             }
             
             void OptionsViewModel::Open()
             {
                 if(!IsOpen())
                 {
-                    if(m_openable.Open())
-                    {
-                        m_openedCallbacks.ExecuteCallbacks();
-                    }
+                    m_openable.Open();
+                    m_openedCallbacks.ExecuteCallbacks();
                 }
             }
             
@@ -80,11 +78,7 @@ namespace ExampleApp
             {
                 if(IsOpen())
                 {
-                    {
-                        const bool closed = m_openable.Close();
-                        Eegeo_ASSERT(closed, "Failed to close");
-                    }
-                    
+                    m_openable.Close();
                     m_closedCallbacks.ExecuteCallbacks();
                 }
             }

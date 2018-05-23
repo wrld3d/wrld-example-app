@@ -14,17 +14,13 @@ namespace ExampleApp
     {
         namespace View
         {
+            typedef bool OpenState;
             class OpenableControlViewModelBase : public IOpenableControlViewModel
             {
             private:
-                float m_openState;
-                Reaction::View::IReactionControllerModel& m_reactionControllerModel;
+                OpenState m_openState;
 
-                Eegeo::Helpers::CallbackCollection2<IOpenableControlViewModel&, float> m_openStateChangedCallbacks;
-
-                bool TryAcquireOpenableControl();
-
-                void ReleaseOpenableControl();
+                Eegeo::Helpers::CallbackCollection1<IOpenableControlViewModel&> m_openStateChangedCallbacks;
 
             protected:
                 OpenableControlViewModelBase(Reaction::View::IReactionControllerModel& reactionControllerModel);
@@ -33,21 +29,17 @@ namespace ExampleApp
 
                 ~OpenableControlViewModelBase();
 
-                bool Open(bool acquireReactor = true);
+                void Open() override;
 
-                bool Close(bool releaseReactor = true);
+                void Close() override;
 
-                void UpdateOpenState(float openState);
+                void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback1<IOpenableControlViewModel&>& callback) override;
 
-                void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
+                void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback1<IOpenableControlViewModel&>& callback) override;
 
-                void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
+                bool IsOpen() const override;
 
-                bool IsFullyOpen() const;
-
-                bool IsFullyClosed() const;
-
-                float OpenState() const;
+                bool IsClosed() const override;
             };
         }
     }

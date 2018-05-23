@@ -32,13 +32,15 @@ namespace ExampleApp
                 
                 void UpdateOnScreenState(float onScreenState);
                 
-                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<IScreenControlViewModel&, float>& callback);
+                void InsertOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
                 
-                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<IScreenControlViewModel&, float>& callback);
+                void RemoveOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
                 
-                bool IsFullyOffScreen() const;
+                bool IsOffScreen() const;
                 
-                bool IsFullyOnScreen() const;
+                bool IsOnScreen() const;
                 
                 float OnScreenState() const;
                 
@@ -51,7 +53,7 @@ namespace ExampleApp
                 bool m_addedToScreen;
                 bool m_canAddToScreen;
                 
-                Eegeo::Helpers::CallbackCollection2<IScreenControlViewModel&, float> m_onScreenStateChangedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<IScreenControlViewModel&> m_onScreenStateChangedCallbacks;
                 
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerViewModel, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
