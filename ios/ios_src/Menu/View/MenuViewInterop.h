@@ -100,11 +100,6 @@ namespace ExampleApp
                 {
                     [m_pView animateToRemovedFromScreen];
                 }
-                
-                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position)
-                {
-                    
-                }
 
                 void InsertOnViewClicked(Eegeo::Helpers::ICallback0& callback)
                 {

@@ -23,25 +23,25 @@ namespace ExampleApp
                 CompassViewModel(Eegeo::Helpers::TIdentity identity,
                                  bool isInitiallyOnScreen);
 
-                Eegeo::Helpers::TIdentity GetIdentity() const;
+                Eegeo::Helpers::TIdentity GetIdentity() const override;
 
-                void AddToScreen();
+                void AddToScreen() override;
 
-                void RemoveFromScreen();
+                void RemoveFromScreen() override;
 
-                void UpdateOnScreenState(float onScreenState);
+                void UpdateOnScreenState(float onScreenState) override;
 
-                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback) override;
 
-                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback) override;
 
-                bool IsFullyOffScreen() const;
+                bool IsFullyOffScreen() const override;
 
-                bool IsFullyOnScreen() const;
+                bool IsFullyOnScreen() const override;
 
-                float OnScreenState() const;
+                float OnScreenState() const override;
                 
-                bool IsAddedToScreen() const;
+                bool IsAddedToScreen() const override;
 
                 ScreenControl::View::IMovableScreenControlViewModel& GetScreenControlViewModel();
 

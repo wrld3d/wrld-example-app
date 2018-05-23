@@ -22,7 +22,7 @@ namespace ExampleApp
             public:
                 CompassScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
 
-                Eegeo::Helpers::TIdentity GetIdentity() const;
+                Eegeo::Helpers::TIdentity GetIdentity() const override;
 
                 ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() override { return m_viewPosition; }
 
