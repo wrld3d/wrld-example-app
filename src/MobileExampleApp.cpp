@@ -855,8 +855,7 @@ namespace ExampleApp
 
         m_pModalityModule = Eegeo_NEW(Modality::View::ModalityModule)(m_messageBus, openables, *m_pModalityIgnoredReactionModel);
 
-        m_pReactionModelModule = Eegeo_NEW(Reaction::View::ReactionModelModule)(m_pReactionControllerModule->GetReactionControllerModel(),
-                                                                                openables,
+        m_pReactionModelModule = Eegeo_NEW(Reaction::View::ReactionModelModule)(openables,
                                                                                 reactions,
                                                                                 *m_pReactorIgnoredReactionModel);
 

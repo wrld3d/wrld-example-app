@@ -5,6 +5,7 @@
 #include "ISearchWidgetView.h"
 #include "WidgetSearchResultModel.h"
 #include "TagCollection.h"
+#include "IScreenControlView.h"
 
 #import <WrldSearchWidget/WrldSearchWidget.h>
 
@@ -96,6 +97,7 @@ namespace ExampleApp
                 void SetOnScreenStateToIntermediateValue(float value);
                 void SetFullyOnScreen();
                 void SetFullyOffScreen();
+                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position) { }
 
                 void CloseMenu();
 

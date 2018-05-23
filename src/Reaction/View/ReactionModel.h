@@ -19,8 +19,6 @@ namespace ExampleApp
         {
             class ReactionModel : public IReactionModel, private Eegeo::NonCopyable
             {
-                IReactionControllerModel& m_reactionControllerModel;
-
                 std::vector<OpenableControl::View::IOpenableControlViewModel*> m_openables;
                 std::vector<IReaction*> m_reactions;
 
@@ -29,8 +27,7 @@ namespace ExampleApp
                 Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
 
             public:
-                ReactionModel(IReactionControllerModel& reactionControllerModel,
-                              const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
+                ReactionModel(const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
                               const std::vector<IReaction*>& reactions,
                               Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction);
 

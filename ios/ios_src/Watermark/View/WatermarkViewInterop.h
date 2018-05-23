@@ -6,6 +6,7 @@
 #include "Watermark.h"
 #include "WatermarkView.h"
 #include "CallbackCollection.h"
+#include "IScreenControlView.h"
 
 namespace ExampleApp
 {
@@ -30,6 +31,8 @@ namespace ExampleApp
                 void SetFullyOnScreen();
 
                 void SetFullyOffScreen();
+                
+                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position) { }
                 
                 void OnSelected();
 
