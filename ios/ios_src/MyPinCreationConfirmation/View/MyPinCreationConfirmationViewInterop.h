@@ -6,6 +6,7 @@
 #include "MyPinCreationConfirmationViewIncludes.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
+#include "IScreenControlView.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,7 @@ namespace ExampleApp
                 void SetOnScreenStateToIntermediateValue(float value);
                 void SetFullyOnScreen();
                 void SetFullyOffScreen();
+                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position) { }
 
             private:
 

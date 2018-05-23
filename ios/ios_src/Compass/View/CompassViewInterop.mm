@@ -72,6 +72,11 @@ namespace ExampleApp
             {
                 [m_pView setRotationHighlight:shouldShowRotationHighlight];
             }
+            
+            void CompassViewInterop::SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position)
+            {
+                [m_pView setOnScreenPosition: position];
+            }
         }
     }
 }

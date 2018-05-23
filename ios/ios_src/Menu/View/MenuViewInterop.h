@@ -7,6 +7,7 @@
 #include "IFunc.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
+#include "IScreenControlView.h"
 
 namespace ExampleApp
 {
@@ -98,6 +99,11 @@ namespace ExampleApp
                 void SetFullyOffScreen()
                 {
                     [m_pView animateToRemovedFromScreen];
+                }
+                
+                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position)
+                {
+                    
                 }
 
                 void InsertOnViewClicked(Eegeo::Helpers::ICallback0& callback)

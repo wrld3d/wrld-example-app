@@ -7,6 +7,7 @@
 #include "CompassViewIncludes.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
+#include "IScreenControlView.h"
 
 namespace ExampleApp
 {
@@ -46,6 +47,8 @@ namespace ExampleApp
                 void InsertCycledCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveCycledCallback(Eegeo::Helpers::ICallback0& callback);
+                
+                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position);
             };
         }
     }

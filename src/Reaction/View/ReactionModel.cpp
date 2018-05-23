@@ -13,12 +13,10 @@ namespace ExampleApp
     {
         namespace View
         {
-            ReactionModel::ReactionModel(IReactionControllerModel& reactionControllerModel,
-                                         const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
+            ReactionModel::ReactionModel(const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
                                          const std::vector<IReaction*>& reactions,
                                          Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction)
-                : m_reactionControllerModel(reactionControllerModel)
-                , m_openables(openables)
+                : m_openables(openables)
                 , m_reactions(reactions)
                 , m_menuIgnoredReaction(menuIgnoredReaction)
                 , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<ReactionModel, OpenableControl::View::IOpenableControlViewModel&, float>))(this, &ReactionModel::MenuOpenStateChangeHandler))

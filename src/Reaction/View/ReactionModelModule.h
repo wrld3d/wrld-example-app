@@ -23,8 +23,7 @@ namespace ExampleApp
             private:
                 IReactionModel* m_pModel;
             public:
-                ReactionModelModule(IReactionControllerModel& reactionControllerModel,
-                                    const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
+                ReactionModelModule(const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
                                     const std::vector<IReaction*>& reactors,
                                     Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction);
 

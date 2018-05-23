@@ -7,6 +7,7 @@
 #include "ICallback.h"
 #include "CallbackCollection.h"
 #include "InteriorsExplorerTutorialView.h"
+#include "IScreenControlView.h"
 
 #include <vector>
 
@@ -50,6 +51,7 @@ namespace ExampleApp
                 void SetOnScreenStateToIntermediateValue(float value);
                 void SetFullyOnScreen();
                 void SetFullyOffScreen();
+                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position) { }
                 
                 void SetTouchEnabled(bool enabled);
                 
