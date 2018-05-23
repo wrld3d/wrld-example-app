@@ -37,9 +37,19 @@ namespace ExampleApp
 
             void ReactionHideOtherScreenControls::Perform()
             {
-                for(auto screenControl: m_screenControlsToHide){
-                    if(screenControl->GetIdentity() != m_openableControl.GetIdentity()){
-                        screenControl->UpdateOnScreenState(1.f-m_openableControl.OpenState());
+                bool hideComponents = m_openableControl.IsOpen();
+                for(auto screenControl: m_screenControlsToHide)
+                {
+                    if(screenControl->GetIdentity() != m_openableControl.GetIdentity())
+                    {
+                        if(hideComponents)
+                        {
+                            screenControl->RemoveFromScreen();
+                        }
+                        else
+                        {
+                            screenControl->AddToScreen();
+                        }
                     }
                 }
             }

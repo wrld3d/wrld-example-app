@@ -45,7 +45,7 @@ namespace ExampleApp
                 void OnFloorSelectionDragged(float& dragParam);
                 void OnFloorSelected(const InteriorsExplorerFloorSelectedMessage& message);
                 void OnStateChanged(const InteriorsExplorerStateChangedMessage& message);
-                void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state);
+                void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel);
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
                 void OnInteriorsUINotificationRequired(const InteriorsExplorerUINotifyMessage& message);
                 void TryShowTutorials();
@@ -65,7 +65,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, float> m_draggingFloorSelectionCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerStateChangedMessage&> m_stateChangedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerFloorSelectedMessage&> m_floorSelectedCallback;
-                Eegeo::Helpers::TCallback2<InteriorsExplorerController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
+                Eegeo::Helpers::TCallback1<InteriorsExplorerController, ScreenControl::View::IScreenControlViewModel&> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerUINotifyMessage&> m_interiorsUINotificationCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InitialExperience::InitialExperienceIntroDismissedMessage&> m_dismissedMessageHandler;

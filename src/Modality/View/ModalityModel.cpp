@@ -10,7 +10,7 @@ namespace ExampleApp
         namespace View
         {
             ModalityModel::ModalityModel()
-                :m_modality(0.f)
+                :m_modality(false)
             {
 
             }
@@ -20,12 +20,7 @@ namespace ExampleApp
 
             }
 
-            bool ModalityModel::IsModalEnabled() const
-            {
-                return m_modality != 0.f;
-            }
-
-            float ModalityModel::GetModality() const
+            ModalityValue ModalityModel::GetModality() const
             {
                 return m_modality;
             }
@@ -40,9 +35,8 @@ namespace ExampleApp
                 m_modalityChangedCallbacks.RemoveCallback(modalityChangedCallback);
             }
 
-            void ModalityModel::SetModality(float modality)
+            void ModalityModel::SetModality(ModalityValue modality)
             {
-                Eegeo_ASSERT(modality >= 0.f && modality <= 1.f, "Invalid modality value %f, valid range for modality is 0.0 to 1.0 inclusive.\n", modality);
                 m_modality = modality;
                 m_modalityChangedCallbacks.ExecuteCallbacks();
             }

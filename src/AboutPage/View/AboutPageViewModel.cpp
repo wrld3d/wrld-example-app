@@ -40,7 +40,7 @@ namespace ExampleApp
 
             bool AboutPageViewModel::IsOpen() const
             {
-                return m_openable.IsFullyOpen();
+                return m_openable.IsOpen();
             }
 
             const std::string AboutPageViewModel::GetContent(bool showHiddenContent) const
@@ -88,10 +88,8 @@ namespace ExampleApp
             {
                 if(!IsOpen())
                 {
-                    if(m_openable.Open())
-                    {
-                        m_openedCallbacks.ExecuteCallbacks();
-                    }
+                    m_openable.Open();
+                    m_openedCallbacks.ExecuteCallbacks();
                 }
             }
 
@@ -99,11 +97,7 @@ namespace ExampleApp
             {
                 if(IsOpen())
                 {
-                    {
-                        const bool closed = m_openable.Close();
-                        Eegeo_ASSERT(closed, "Failed to close");
-                    }
-
+                    m_openable.Close();
                     m_closedCallbacks.ExecuteCallbacks();
                 }
             }

@@ -35,39 +35,24 @@ namespace ExampleApp
                 m_screenControl.RemoveFromScreen();
             }
 
-            void WatermarkViewModel::UpdateOnScreenState(float onScreenState)
-            {
-                m_screenControl.UpdateOnScreenState(onScreenState);
-            }
-
-            void WatermarkViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            void WatermarkViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback1<ScreenControl::View::IScreenControlViewModel&>& callback)
             {
                 m_screenControl.InsertOnScreenStateChangedCallback(callback);
             }
 
-            void WatermarkViewModel::RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            void WatermarkViewModel::RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback1<ScreenControl::View::IScreenControlViewModel&>& callback)
             {
                 m_screenControl.RemoveOnScreenStateChangedCallback(callback);
             }
 
-            bool WatermarkViewModel::IsFullyOffScreen() const
+            bool WatermarkViewModel::IsOffScreen() const
             {
-                return m_screenControl.IsFullyOffScreen();
+                return m_screenControl.IsOffScreen();
             }
 
-            bool WatermarkViewModel::IsFullyOnScreen() const
+            bool WatermarkViewModel::IsOnScreen() const
             {
-                return m_screenControl.IsFullyOnScreen();
-            }
-
-            float WatermarkViewModel::OnScreenState() const
-            {
-                return m_screenControl.OnScreenState();
-            }
-            
-            bool WatermarkViewModel::IsAddedToScreen() const
-            {
-                return m_screenControl.IsAddedToScreen();
+                return m_screenControl.IsOnScreen();
             }
         }
     }

@@ -15,9 +15,9 @@ namespace ExampleApp
             ReactionPushScreenControl::ReactionPushScreenControl(
                     const OpenableControl::View::IOpenableControlViewModel& openableControlViewModel,
                     ScreenControl::View::IMovableScreenControlViewModel& screenControlToMove,
-                    const ScreenControl::View::IScreenControlViewPosition destination)
+                    const ScreenControl::View::IScreenControlViewPosition offset)
                     : m_openableControl(openableControlViewModel)
-                    , m_screenControlToMove(screenControlToMove), m_destination(destination)
+                    , m_screenControlToMove(screenControlToMove), m_offset(offset)
             {
 
             }
@@ -29,7 +29,8 @@ namespace ExampleApp
 
             void ReactionPushScreenControl::Perform()
             {
-                m_screenControlToMove.SetOnScreenPosition(m_destination * m_openableControl.OpenState());
+                m_screenControlToMove.SetOffsetFromDefaultPosition(
+                        m_openableControl.IsOpen() ? m_offset : 0.0f );
             }
         }
     }

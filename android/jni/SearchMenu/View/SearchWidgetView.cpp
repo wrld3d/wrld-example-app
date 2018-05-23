@@ -185,14 +185,14 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, animateToIntermediateOpenStateOnScreen, value);
             }
 
-            void SearchWidgetView::SetFullyOnScreen()
+            void SearchWidgetView::SetOnScreen()
             {
                 ASSERT_UI_THREAD
 
                 CallVoidVoidFunction("animateOnScreen");
             }
 
-            void SearchWidgetView::SetFullyOffScreen()
+            void SearchWidgetView::SetOffScreen()
             {
                 ASSERT_UI_THREAD
 

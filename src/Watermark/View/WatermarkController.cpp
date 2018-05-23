@@ -16,9 +16,9 @@ namespace ExampleApp
                 m_metricsService.SetEvent("UIItem: Watermark Selected");
             }
 
-            void WatermarkController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state)
+            void WatermarkController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel)
             {
-                if(!m_appModeAllowsOpen && state > 0.01f)
+                if(!m_appModeAllowsOpen && viewModel.IsOnScreen())
                 {
                     return;
                 }
@@ -59,11 +59,11 @@ namespace ExampleApp
                 m_appModeAllowsOpen = appMode == AppModes::SdkModel::WorldMode ||
                                       appMode == AppModes::SdkModel::InteriorMode;
                 
-                if(m_appModeAllowsOpen && !m_viewModel.IsFullyOnScreen())
+                if(m_appModeAllowsOpen && !m_viewModel.IsOnScreen())
                 {
                     m_viewModel.AddToScreen();
                 }
-                else if(!m_appModeAllowsOpen && !m_viewModel.IsFullyOffScreen())
+                else if(!m_appModeAllowsOpen && !m_viewModel.IsOffScreen())
                 {
                     m_viewModel.RemoveFromScreen();
                 }

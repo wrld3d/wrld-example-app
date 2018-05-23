@@ -19,7 +19,7 @@ namespace ExampleApp
                 return m_identity;
             }
 
-            void CompassScreenControl::SetOnScreenPosition(
+            void CompassScreenControl::SetOffsetFromDefaultPosition(
                     ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
             {
                 m_viewPosition = screenControlViewPosition;

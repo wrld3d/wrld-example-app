@@ -362,7 +362,7 @@ enum CompassViewState
      }];
 }
 
-- (void) setOnScreenPosition:(float)offset
+- (void) SetOffsetFromDefaultPosition:(float)offset
 {
     m_yPosActive = m_yPosBase + offset;
     [self animateToY: m_yPosActive];

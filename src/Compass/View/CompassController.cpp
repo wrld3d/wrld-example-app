@@ -41,13 +41,13 @@ namespace ExampleApp
 
             void CompassController::OnCompassHeadingChangedMessage(const CompassHeadingUpdateMessage& message)
             {
-                if (!m_viewModel.IsFullyOffScreen())
+                if (!m_viewModel.IsOffScreen())
                 {
                     m_view.SetHeadingRadians(message.GetHeadingRadians());
                 }
             }
 
-            void CompassController::OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState)
+            void CompassController::OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel)
             {
                 ScreenControl::View::ApplyMovement(m_viewModel, m_view);
                 ScreenControl::View::Apply(m_viewModel, m_view);
@@ -141,8 +141,6 @@ namespace ExampleApp
 
                 m_view.InsertCycledCallback(m_viewCycledCallback);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_viewStateCallback);
-
-                m_view.SetOnScreenStateToIntermediateValue(m_viewModel.OnScreenState());
             }
 
             CompassController::~CompassController()

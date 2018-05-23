@@ -58,12 +58,12 @@ namespace ExampleApp
                 [m_pView setOnScreenStateToIntermediateValue:value];
             }
 
-            void CompassViewInterop::SetFullyOnScreen()
+            void CompassViewInterop::SetOnScreen()
             {
                 [m_pView setFullyOnScreen];
             }
 
-            void CompassViewInterop::SetFullyOffScreen()
+            void CompassViewInterop::SetOffScreen()
             {
                 [m_pView setFullyOffScreen];
             }
@@ -73,9 +73,9 @@ namespace ExampleApp
                 [m_pView setRotationHighlight:shouldShowRotationHighlight];
             }
             
-            void CompassViewInterop::SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position)
+            void CompassViewInterop::SetOffsetFromDefaultPosition(ScreenControl::View::IScreenControlViewPosition position)
             {
-                [m_pView setOnScreenPosition: position];
+                [m_pView SetOffsetFromDefaultPosition: position];
             }
         }
     }

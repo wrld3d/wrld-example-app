@@ -41,33 +41,31 @@ namespace ExampleApp
 
                 void UpdateOnScreenState(float onScreenState);
 
-                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                void InsertOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
 
-                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                void RemoveOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
 
-                bool IsFullyOffScreen() const;
+                bool IsOffScreen() const;
 
-                bool IsFullyOnScreen() const;
+                bool IsOnScreen() const;
 
                 float OnScreenState() const;
                 
                 bool IsAddedToScreen() const;
 
-                bool Open(bool acquireReactor = true);
+                void Open();
 
-                bool Close(bool releaseReactor = true);
+                void Close();
 
-                void UpdateOpenState(float openState);
+                bool IsOpen() const;
 
-                void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>& callback);
+                bool IsClosed() const;
 
-                void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>& callback);
+                void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback1<OpenableControl::View::IOpenableControlViewModel&>& callback);
 
-                bool IsFullyOpen() const;
-
-                bool IsFullyClosed() const;
-
-                float OpenState() const;
+                void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback1<OpenableControl::View::IOpenableControlViewModel&>& callback);
 
                 void AddSection(IMenuSectionViewModel& section);
                 void RemoveSection(IMenuSectionViewModel& section);

@@ -14,7 +14,7 @@ namespace ExampleApp
                                                    const std::vector<OpenableControl::View::IOpenableControlViewModel*>& viewModels,
                                                    Menu::View::IMenuIgnoredReactionModel& ignoredReactionModel)
                 : m_modalityModel(modalityModel)
-                , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<ModalityController, OpenableControl::View::IOpenableControlViewModel&, float>))(this, &ModalityController::MenuOpenStateChangeHandler))
+                , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback1<ModalityController, OpenableControl::View::IOpenableControlViewModel&>))(this, &ModalityController::MenuOpenStateChangeHandler))
                 , m_viewModels(viewModels)
                 , m_ignoredReactionModel(ignoredReactionModel)
             {
@@ -43,26 +43,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pMenuOpenStateChangedCallback;
             }
 
-            float ModalityController::GetModality() const
-            {
-                float max = 0.f;
-
-                for(std::vector<OpenableControl::View::IOpenableControlViewModel*>::const_iterator it = m_viewModels.begin();
-                        it != m_viewModels.end();
-                        ++ it)
-                {
-                    OpenableControl::View::IOpenableControlViewModel& viewModel = **it;
-
-                    if(viewModel.OpenState() > max)
-                    {
-                        max = viewModel.OpenState();
-                    }
-                }
-
-                return max;
-            }
-
-            void ModalityController::MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState)
+            void ModalityController::MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel)
             {
                 Eegeo::Helpers::TIdentity identity = viewModel.GetIdentity();
 
@@ -70,8 +51,8 @@ namespace ExampleApp
                 {
                     return;
                 }
-                
-                m_modalityModel.SetModality(openState);
+
+                m_modalityModel.SetModality(viewModel.IsOpen());
             }
         }
     }

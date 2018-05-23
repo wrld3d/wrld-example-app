@@ -17,47 +17,39 @@ namespace ExampleApp
                 m_messageBus.Publish(MenuSectionExpandedChangedMessage(menuSectionViewModel.Name(), expanded));
             }
             
-            void MenuController::OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state)
+            void MenuController::OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel)
             {
                 if(m_dragInProgress)
                 {
                     return;
                 }
 
-                if(m_viewModel.IsAddedToScreen())
+                if(m_viewModel.IsOpen())
                 {
-                    if (m_viewModel.IsFullyClosed())
+                    if (m_viewModel.IsClosed())
                     {
                         m_view.SetFullyOnScreenClosed();
                     }
-                    else if (m_viewModel.IsFullyOpen())
+                    else if (m_viewModel.IsOpen())
                     {
                         m_view.SetFullyOnScreenOpen();
                     }
-                    else
-                    {
-                        m_view.SetOnScreenStateToIntermediateValue(state);
-                    }
                 }
                 else
                 {
-                    m_view.SetFullyOffScreen();
+                    m_view.SetOffScreen();
                 }
             }
 
-            void MenuController::OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& state)
+            void MenuController::OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel)
             {
-                if (m_viewModel.IsFullyOnScreen())
+                if (m_viewModel.IsOnScreen())
                 {
                     m_view.SetFullyOnScreenClosed();
                 }
-                else if (m_viewModel.IsFullyOffScreen())
+                else if (m_viewModel.IsOffScreen())
                 {
-                    m_view.SetFullyOffScreen();
-                }
-                else
-                {
-                    m_view.SetOnScreenStateToIntermediateValue(state);
+                    m_view.SetOffScreen();
                 }
             }
 
@@ -78,7 +70,7 @@ namespace ExampleApp
                     sections.push_back(&section);
                 }
 
-                if(!m_viewModel.IsFullyClosed() || forceRefresh)
+                if(!m_viewModel.IsClosed() || forceRefresh)
                 {
                     m_view.UpdateMenuSectionViews(sections, m_menuContentsChanged);
                     m_presentationDirty = false;
@@ -103,9 +95,6 @@ namespace ExampleApp
                 if(isAnimating)
                 {
                     m_view.UpdateAnimation(dt);
-
-                    const float normalisedAnimationProgress = m_view.GetAnimationProgress();
-                    m_viewModel.UpdateOpenState(normalisedAnimationProgress);
                 }
                 
                 if(m_view.IsTableAnimating())
@@ -114,7 +103,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    m_view.SetTableCanInteract(m_viewModel.IsFullyOpen());
+                    m_view.SetTableCanInteract(m_viewModel.IsOpen());
                 }
             }
 
@@ -123,11 +112,11 @@ namespace ExampleApp
                 Eegeo_ASSERT(!m_dragInProgress, "Cannot click on view while dragging it");
 
 
-                if(m_viewModel.IsFullyClosed())
+                if(m_viewModel.IsClosed())
                 {
                     m_view.SetFullyOnScreenOpen();
                 }
-                else if(m_viewModel.IsFullyOpen())
+                else if(m_viewModel.IsOpen())
                 {
                     m_view.SetFullyOnScreenClosed();
                 }
@@ -143,7 +132,7 @@ namespace ExampleApp
                     return;
                 }
 
-                if(!m_viewModel.IsFullyOpen())
+                if(!m_viewModel.IsOpen())
                 {
                     m_viewModel.Open();
                 }
@@ -152,7 +141,7 @@ namespace ExampleApp
 
             void MenuController::OnViewOpenStarted()
             {
-                if(!m_viewModel.IsFullyOpen())
+                if(!m_viewModel.IsOpen())
                 {
                     m_viewModel.Open();
                 }
@@ -164,7 +153,7 @@ namespace ExampleApp
 
                 m_forceClose = false;
 
-                if(!m_viewModel.IsFullyClosed())
+                if(!m_viewModel.IsClosed())
                 {
                     m_viewModel.Close();
                 }
@@ -188,9 +177,6 @@ namespace ExampleApp
             void MenuController::OnDrag(float& value)
             {
                 Eegeo_ASSERT(m_dragInProgress);
-
-
-                m_viewModel.UpdateOpenState(value);
             }
 
             void MenuController::OnDragCompleted()
@@ -198,10 +184,10 @@ namespace ExampleApp
                 Eegeo_ASSERT(m_dragInProgress);
 
 
-                if(!m_viewModel.IsAddedToScreen())
+                if(!m_viewModel.IsOnScreen())
                 {
                     m_viewModel.Close();
-                    m_view.SetFullyOffScreen();
+                    m_view.SetOffScreen();
                 }
                 m_dragInProgress = false;
                 m_messageBus.Publish(MenuDragStateChangedMessage(m_dragInProgress));
@@ -260,7 +246,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    if (!m_viewModel.IsFullyOnScreen())
+                    if (!m_viewModel.IsOnScreen())
                     {
                         m_viewModel.AddToScreen();
                     }
@@ -280,7 +266,7 @@ namespace ExampleApp
             }
 
             void MenuController::OnInteriorStateChanged(const InteriorsExplorer::InteriorsExplorerStateChangedMessage& message) {
-                if (!m_viewModel.IsFullyClosed())
+                if (!m_viewModel.IsClosed())
                 {
                     m_forceClose = true;
                     m_viewModel.Close();
@@ -333,10 +319,9 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
                 m_messageBus.SubscribeUi(m_onInteriorStateChangedCallback);
 
-                if(m_viewModel.IsFullyOnScreen())
+                if(m_viewModel.IsOnScreen())
                 {
-                    float value = m_viewModel.OpenState();
-                    OnOpenableStateChanged(m_viewModel, value);
+                    OnOpenableStateChanged(m_viewModel);
                 }
 
                 m_presentationDirty = true;

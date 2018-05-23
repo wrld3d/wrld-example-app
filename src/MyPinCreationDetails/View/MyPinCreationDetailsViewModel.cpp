@@ -22,17 +22,15 @@ namespace ExampleApp
 
             bool MyPinCreationDetailsViewModel::IsOpen() const
             {
-                return m_openable.IsFullyOpen();
+                return m_openable.IsOpen();
             }
 
             void MyPinCreationDetailsViewModel::Open()
             {
                 if(!IsOpen())
                 {
-                    if(m_openable.Open())
-                    {
-                        m_openedCallbacks.ExecuteCallbacks();
-                    }
+                    m_openable.Open();
+                    m_openedCallbacks.ExecuteCallbacks();
                 }
             }
 
@@ -40,7 +38,7 @@ namespace ExampleApp
             {
                 if(IsOpen())
                 {
-                    Eegeo_ASSERT(m_openable.Close());
+                    m_openable.Close();
                     m_closedCallbacks.ExecuteCallbacks();
                 }
             }
