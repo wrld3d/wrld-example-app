@@ -11,10 +11,9 @@ namespace ExampleApp
         namespace View
         {
             OptionsViewModel::OptionsViewModel(Eegeo::Helpers::TIdentity identity,
-                                               Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                bool streamOverWifiOnly,
                                                bool cachingEnabled)
-            : m_openable(identity, reactionControllerModel)
+            : m_openable(identity)
             , m_streamOverWifiOnly(streamOverWifiOnly)
             , m_cachingEnabled(cachingEnabled)
             , m_inCacheClearCeremony(false)

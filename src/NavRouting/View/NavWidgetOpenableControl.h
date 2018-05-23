@@ -17,8 +17,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TIdentity m_identity;
 
             public:
-                NavWidgetOpenableControl(Eegeo::Helpers::TIdentity identity,
-                                         Reaction::View::IReactionControllerModel& reactionControllerModel);
+                NavWidgetOpenableControl(Eegeo::Helpers::TIdentity identity);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;
             };

@@ -8,9 +8,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            NavWidgetViewModel::NavWidgetViewModel(Eegeo::Helpers::TIdentity identity,
-                                                   Reaction::View::IReactionControllerModel& reactionControllerModel)
-                    : m_openable(identity, reactionControllerModel)
+            NavWidgetViewModel::NavWidgetViewModel(Eegeo::Helpers::TIdentity identity)
+                    : m_openable(identity)
             {
 
             }

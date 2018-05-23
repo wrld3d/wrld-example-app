@@ -23,7 +23,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<IOpenableControlViewModel&> m_openStateChangedCallbacks;
 
             protected:
-                OpenableControlViewModelBase(Reaction::View::IReactionControllerModel& reactionControllerModel);
+                OpenableControlViewModelBase();
 
             public:
 

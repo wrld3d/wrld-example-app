@@ -233,7 +233,6 @@ namespace ExampleApp
     , m_pWorldPinsIconMapping(NULL)
     , m_pSearchResultOnMapModule(NULL)
     , m_pReactionModelModule(NULL)
-    , m_pReactionControllerModule(NULL)
     , m_pSearchResultPoiModule(NULL)
     , m_pPlaceJumpsModule(NULL)
     , m_pWeatherMenuModule(NULL)
@@ -518,15 +517,11 @@ namespace ExampleApp
         m_pReactorIgnoredReactionModel = Eegeo_NEW(Menu::View::ReactorIgnoredReactionModel)();
         m_pModalityIgnoredReactionModel = Eegeo_NEW(Menu::View::ModalityIgnoredReactionModel)();
 
-        m_pReactionControllerModule = Eegeo_NEW(Reaction::View::ReactionControllerModule)(*m_pReactorIgnoredReactionModel);
-
         m_pAboutPageModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageModule)(m_identityProvider,
-                                                                                     m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                      m_applicationConfiguration.ProductVersion(),
                                                                                      m_applicationConfiguration.Name());
 
         m_pOptionsModule = Eegeo_NEW(ExampleApp::Options::OptionsModule)(m_identityProvider,
-                                                                         m_pReactionControllerModule->GetReactionControllerModel(),
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
 
@@ -639,7 +634,6 @@ namespace ExampleApp
                                                                                                                       m_messageBus);
 
         m_pSearchMenuModule = Eegeo_NEW(ExampleApp::SearchMenu::SdkModel::SearchMenuModule)(m_identityProvider,
-                                                                                            m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                             m_pSearchModule->GetSearchQueryPerformer(),
                                                                                             *m_pSuggestionsQueryPerformer,
                                                                                             m_messageBus,
@@ -681,7 +675,6 @@ namespace ExampleApp
 
         m_pSearchResultPoiModule =
         Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiModule)(m_identityProvider,
-                                                                            m_pReactionControllerModule->GetReactionControllerModel(),
                                                                             m_pMyPinsModule->GetMyPinsService(),
                                                                             m_pSearchModule->GetSearchResultMyPinsService(),
                                                                             m_pTagSearchModule->GetSearchResultIconKeyMapper(),
@@ -697,7 +690,6 @@ namespace ExampleApp
                                                                                             m_messageBus);
 
         m_pNavUIModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavUIModule)(m_identityProvider,
-															                  m_pReactionControllerModule->GetReactionControllerModel(),
                                                                               *m_pModalityIgnoredReactionModel);
   
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
@@ -808,7 +800,6 @@ namespace ExampleApp
                                                                                                      mapModule.GetLabelsModule().GetDebugLabelLayerFilterModel(),
                                                                                                      mapModule.GetInteriorsStreamingModule().GetInteriorMarkerLabelLayerId(),
                                                                                                      m_messageBus,
-                                                                                                     m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                                      m_pWatermarkModule->GetWatermarkViewModel());
 
         m_pPoiRingModule = Eegeo_NEW(ExampleApp::MyPinCreation::PoiRing::SdkModel::PoiRingModule)(m_pMyPinCreationModule->GetMyPinCreationModel(),
@@ -823,11 +814,9 @@ namespace ExampleApp
                                                                                                   interiorsAffectedByFlattening,
                                                                                                   m_applicationConfiguration.IsInKioskMode());
 
-        m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsModule)(m_identityProvider,
-                                                                                                                      m_pReactionControllerModule->GetReactionControllerModel());
+        m_pMyPinCreationDetailsModule = Eegeo_NEW(ExampleApp::MyPinCreationDetails::View::MyPinCreationDetailsModule)(m_identityProvider);
 
         m_pMyPinDetailsModule = Eegeo_NEW(ExampleApp::MyPinDetails::SdkModel::MyPinDetailsModule)(m_identityProvider,
-                                                                                                  m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                                   m_pMyPinsModule->GetMyPinsService(),
                                                                                                   m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                   m_messageBus,
@@ -1029,9 +1018,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pOptionsModule;
 
         Eegeo_DELETE m_pAboutPageModule;
-
-
-        Eegeo_DELETE m_pReactionControllerModule;
     }
 
     std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> MobileExampleApp::GetOpenableControls() const

@@ -21,8 +21,7 @@ namespace ExampleApp
                 NavWidgetOpenableControl m_openable;
 
             public:
-                NavWidgetViewModel(Eegeo::Helpers::TIdentity identity,
-                                   Reaction::View::IReactionControllerModel& reactionControllerModel);
+                NavWidgetViewModel(Eegeo::Helpers::TIdentity identity);
 
                 ~NavWidgetViewModel();
 

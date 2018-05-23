@@ -30,16 +30,13 @@ namespace ExampleApp
 
             public:
                 MenuViewModel(bool isInitiallyOnScreen,
-                              Eegeo::Helpers::TIdentity identity,
-                              Reaction::View::IReactionControllerModel& reactionControllerModel);
+                              Eegeo::Helpers::TIdentity identity);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;
 
                 void AddToScreen();
 
                 void RemoveFromScreen();
-
-                void UpdateOnScreenState(float onScreenState);
 
                 void InsertOnScreenStateChangedCallback(
                         Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
@@ -50,10 +47,6 @@ namespace ExampleApp
                 bool IsOffScreen() const;
 
                 bool IsOnScreen() const;
-
-                float OnScreenState() const;
-                
-                bool IsAddedToScreen() const;
 
                 void Open();
 

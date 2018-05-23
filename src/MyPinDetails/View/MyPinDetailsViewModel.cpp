@@ -9,9 +9,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinDetailsViewModel::MyPinDetailsViewModel(Eegeo::Helpers::TIdentity identity,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
-                : m_openable(identity, reactionControllerModel)
+            MyPinDetailsViewModel::MyPinDetailsViewModel(Eegeo::Helpers::TIdentity identity)
+                : m_openable(identity)
             {
 
             }

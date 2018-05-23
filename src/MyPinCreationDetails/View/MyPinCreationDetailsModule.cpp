@@ -8,10 +8,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationDetailsModule::MyPinCreationDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
+            MyPinCreationDetailsModule::MyPinCreationDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider)
             {
-                m_pMyPinCreationDetailsViewModel = Eegeo_NEW(MyPinCreationDetailsViewModel)(identityProvider.GetNextIdentity(), reactionControllerModel);
+                m_pMyPinCreationDetailsViewModel = Eegeo_NEW(MyPinCreationDetailsViewModel)(identityProvider.GetNextIdentity());
             }
 
             MyPinCreationDetailsModule::~MyPinCreationDetailsModule()

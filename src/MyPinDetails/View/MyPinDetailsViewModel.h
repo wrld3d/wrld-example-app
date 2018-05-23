@@ -26,8 +26,7 @@ namespace ExampleApp
                 MyPinDetailsOpenableControl m_openable;
 
             public:
-                MyPinDetailsViewModel(Eegeo::Helpers::TIdentity identity,
-                                      Reaction::View::IReactionControllerModel& reactionControllerModel);
+                MyPinDetailsViewModel(Eegeo::Helpers::TIdentity identity);
 
                 ~MyPinDetailsViewModel();
                 
