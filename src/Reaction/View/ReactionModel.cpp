@@ -4,6 +4,7 @@
 #include "MathFunc.h"
 #include "IIdentity.h"
 #include "IReactionControllerModel.h"
+#include "IReaction.h"
 #include <algorithm>
 
 namespace ExampleApp
@@ -14,11 +15,11 @@ namespace ExampleApp
         {
             ReactionModel::ReactionModel(IReactionControllerModel& reactionControllerModel,
                                          const std::vector<OpenableControl::View::IOpenableControlViewModel*>& openables,
-                                         const std::vector<ScreenControl::View::IScreenControlViewModel*>& reactors,
+                                         const std::vector<IReaction*>& reactions,
                                          Menu::View::IMenuIgnoredReactionModel& menuIgnoredReaction)
                 : m_reactionControllerModel(reactionControllerModel)
                 , m_openables(openables)
-                , m_reactors(reactors)
+                , m_reactions(reactions)
                 , m_menuIgnoredReaction(menuIgnoredReaction)
                 , m_pMenuOpenStateChangedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<ReactionModel, OpenableControl::View::IOpenableControlViewModel&, float>))(this, &ReactionModel::MenuOpenStateChangeHandler))
             {
@@ -44,17 +45,17 @@ namespace ExampleApp
                 Eegeo_DELETE m_pMenuOpenStateChangedCallback;
             }
 
-            void ReactionModel::UpdateOnScreenStatesInReactionToMenuOpenStateChange(OpenableControl::View::IOpenableControlViewModel& changingViewModel, float openState)
+            void ReactionModel::UpdateOnScreenStatesInReactionToMenuOpenStateChange(OpenableControl::View::IOpenableControlViewModel& changingViewModel)
             {
-                for(std::vector<ScreenControl::View::IScreenControlViewModel*>::const_iterator it = m_reactors.begin();
-                        it != m_reactors.end();
+                for(auto it = m_reactions.begin();
+                        it != m_reactions.end();
                         ++ it)
                 {
-                    ScreenControl::View::IScreenControlViewModel& reactor = **it;
+                    IReaction& reaction = **it;
 
-                    if(reactor != changingViewModel)
+                    if(reaction.ReactionToOpenableIdentity() == changingViewModel.GetIdentity())
                     {
-                        reactor.UpdateOnScreenState(1.f - openState);
+                        reaction.Perform();
                     }
                 }
             }
@@ -67,11 +68,8 @@ namespace ExampleApp
                 {
                     return;
                 }
-                
-                if(m_reactionControllerModel.HasModalControl(viewModel.GetIdentity()))
-                {
-                    UpdateOnScreenStatesInReactionToMenuOpenStateChange(viewModel, openState);
-                }
+
+                UpdateOnScreenStatesInReactionToMenuOpenStateChange(viewModel);
             }
         }
     }

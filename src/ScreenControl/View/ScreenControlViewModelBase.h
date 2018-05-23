@@ -21,6 +21,8 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::CallbackCollection2<IScreenControlViewModel&, float> m_onScreenStateChangedCallbacks;
 
+                IScreenControlViewPosition m_viewPosition;
+
             protected:
                 ScreenControlViewModelBase(bool isInitiallyOnScreen);
 
@@ -45,6 +47,10 @@ namespace ExampleApp
                 float OnScreenState() const;
                 
                 bool IsAddedToScreen() const;
+
+                void SetOnScreenPosition(IScreenControlViewPosition screenControlViewPosition);
+
+                IScreenControlViewPosition GetOnScreenPosition() { return m_viewPosition; }
             };
         }
     }

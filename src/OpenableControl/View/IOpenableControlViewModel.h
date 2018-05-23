@@ -16,12 +16,6 @@ namespace ExampleApp
             public:
                 virtual ~IOpenableControlViewModel() { }
 
-                virtual bool HasReactorControl() const = 0;
-
-                virtual bool TryAcquireReactorControl() = 0;
-
-                virtual void ReleaseReactorControl() = 0;
-
                 virtual bool Open(bool acquireReactor = true) = 0;
 
                 virtual bool Close(bool releaseReactor = true) = 0;

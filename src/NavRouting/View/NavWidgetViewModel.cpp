@@ -20,10 +20,6 @@ namespace ExampleApp
 
             }
 
-            bool NavWidgetViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
-            }
 
             bool NavWidgetViewModel::IsOpen() const
             {

@@ -45,6 +45,10 @@ namespace ExampleApp
 
                 ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel();
 
+                void SetOnScreenPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition);
+
+                ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() { return m_screenControl.GetOnScreenPosition(); }
+
             private:
                 CompassScreenControl m_screenControl;
             };

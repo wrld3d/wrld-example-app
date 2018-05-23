@@ -63,7 +63,7 @@ namespace ExampleApp
 
             bool MenuController::TryDrag()
             {
-                return m_viewModel.TryAcquireReactorControl();
+                return true;
             }
 
             void MenuController::RefreshPresentation(bool forceRefresh)
@@ -104,11 +104,8 @@ namespace ExampleApp
                 {
                     m_view.UpdateAnimation(dt);
 
-                    if(m_viewModel.HasReactorControl())
-                    {
-                        const float normalisedAnimationProgress = m_view.GetAnimationProgress();
-                        m_viewModel.UpdateOpenState(normalisedAnimationProgress);
-                    }
+                    const float normalisedAnimationProgress = m_view.GetAnimationProgress();
+                    m_viewModel.UpdateOpenState(normalisedAnimationProgress);
                 }
                 
                 if(m_view.IsTableAnimating())
@@ -125,10 +122,6 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(!m_dragInProgress, "Cannot click on view while dragging it");
 
-                if(!m_viewModel.TryAcquireReactorControl())
-                {
-                    return;
-                }
 
                 if(m_viewModel.IsFullyClosed())
                 {
@@ -137,10 +130,6 @@ namespace ExampleApp
                 else if(m_viewModel.IsFullyOpen())
                 {
                     m_view.SetFullyOnScreenClosed();
-                }
-                else
-                {
-                    m_viewModel.ReleaseReactorControl();
                 }
             }
 
@@ -159,10 +148,6 @@ namespace ExampleApp
                     m_viewModel.Open();
                 }
 
-                if(m_viewModel.HasReactorControl())
-                {
-                    m_viewModel.ReleaseReactorControl();
-                }
             }
 
             void MenuController::OnViewOpenStarted()
@@ -184,10 +169,6 @@ namespace ExampleApp
                     m_viewModel.Close();
                 }
 
-                if(m_viewModel.HasReactorControl())
-                {
-                    m_viewModel.ReleaseReactorControl();
-                }
             }
 
             Eegeo::Helpers::TIdentity MenuController::Identity() const
@@ -199,10 +180,6 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(!m_dragInProgress, "identity %d\n", Identity());
 
-                {
-                    const bool acquiredReactorControl = m_viewModel.TryAcquireReactorControl();
-                    Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
-                }
 
                 m_dragInProgress = true;
                 m_messageBus.Publish(MenuDragStateChangedMessage(m_dragInProgress));
@@ -212,10 +189,6 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(m_dragInProgress);
 
-                {
-                    const bool acquiredReactorControl = m_viewModel.TryAcquireReactorControl();
-                    Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
-                }
 
                 m_viewModel.UpdateOpenState(value);
             }
@@ -224,10 +197,6 @@ namespace ExampleApp
             {
                 Eegeo_ASSERT(m_dragInProgress);
 
-                {
-                    const bool acquiredReactorControl = m_viewModel.TryAcquireReactorControl();
-                    Eegeo_ASSERT(acquiredReactorControl, "%d failed to acquire reactor control.\n", Identity());
-                }
 
                 if(!m_viewModel.IsAddedToScreen())
                 {

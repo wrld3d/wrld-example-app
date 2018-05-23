@@ -72,20 +72,6 @@ namespace ExampleApp
                 return m_screenViewModel.IsAddedToScreen();
             }
             
-            bool MenuViewModel::HasReactorControl() const
-            {
-                return m_openViewModel.HasReactorControl();
-            }
-            
-            bool MenuViewModel::TryAcquireReactorControl()
-            {
-                return m_openViewModel.TryAcquireReactorControl();
-            }
-            
-            void MenuViewModel::ReleaseReactorControl()
-            {
-                m_openViewModel.ReleaseReactorControl();
-            }
             
             bool MenuViewModel::Open(bool acquireReactor)
             {
@@ -140,6 +126,12 @@ namespace ExampleApp
             IMenuSectionViewModel& MenuViewModel::GetMenuSection(int index) const
             {
                 return m_sectionsViewModel.GetMenuSection(index);
+            }
+
+            void MenuViewModel::SetOnScreenPosition(
+                    ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
+            {
+                m_screenViewModel.SetOnScreenPosition(screenControlViewPosition);
             }
        }
     }

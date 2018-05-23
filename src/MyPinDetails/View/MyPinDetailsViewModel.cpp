@@ -20,11 +20,6 @@ namespace ExampleApp
             {
 
             }
-
-            bool MyPinDetailsViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
-            }
             
             MyPins::SdkModel::MyPinModel::TPinIdType MyPinDetailsViewModel::GetMyPinId() const
             {

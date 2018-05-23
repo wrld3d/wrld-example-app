@@ -31,6 +31,8 @@ namespace ExampleApp
                 void SetFullyOnScreen();
                 void SetFullyOffScreen();
 
+                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position){}
+
             private:
 
                 AndroidNativeState& m_nativeState;

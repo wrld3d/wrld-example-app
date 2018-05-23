@@ -101,6 +101,12 @@ namespace ExampleApp
             {
                 m_canAddToScreen = (message.GetAppMode() == AppModes::SdkModel::InteriorMode);
             }
+
+            void InteriorsExplorerViewModel::SetOnScreenPosition(
+                    ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
+            {
+                m_screenControlViewPosition = screenControlViewPosition;
+            }
         }
     }
 }

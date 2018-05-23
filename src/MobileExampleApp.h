@@ -210,6 +210,7 @@ namespace ExampleApp
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> GetOpenableControls() const;
 
         std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> GetReactorControls() const;
+        std::vector<ExampleApp::Reaction::View::IReaction*> GetReactions() const;
         
         Eegeo::Pins::PinsModule* CreatePlatformPinsModuleInstance(Eegeo::EegeoWorld& world,
             const Eegeo::Helpers::GLHelpers::TextureInfo& pinTextureInfo,

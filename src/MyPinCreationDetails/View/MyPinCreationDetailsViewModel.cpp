@@ -19,10 +19,6 @@ namespace ExampleApp
 
             }
 
-            bool MyPinCreationDetailsViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
-            }
 
             bool MyPinCreationDetailsViewModel::IsOpen() const
             {

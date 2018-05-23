@@ -132,6 +132,9 @@
 #include "AboutPageMenuModule.h"
 #include "OptionsMenuModule.h"
 
+#include "ReactionHideOtherScreenControls.h"
+#include "ReactionPushScreenControl.h"
+
 namespace ExampleApp
 {
     namespace
@@ -694,7 +697,8 @@ namespace ExampleApp
                                                                                             m_messageBus);
 
         m_pNavUIModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavUIModule)(m_identityProvider,
-															                  m_pReactionControllerModule->GetReactionControllerModel());
+															                  m_pReactionControllerModule->GetReactionControllerModel(),
+                                                                              *m_pModalityIgnoredReactionModel);
   
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
@@ -846,14 +850,14 @@ namespace ExampleApp
 
 
 
-        std::vector<ScreenControl::View::IScreenControlViewModel*> reactors(GetReactorControls());
+        std::vector<Reaction::View::IReaction*> reactions(GetReactions());
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> openables(GetOpenableControls());
 
         m_pModalityModule = Eegeo_NEW(Modality::View::ModalityModule)(m_messageBus, openables, *m_pModalityIgnoredReactionModel);
 
         m_pReactionModelModule = Eegeo_NEW(Reaction::View::ReactionModelModule)(m_pReactionControllerModule->GetReactionControllerModel(),
                                                                                 openables,
-                                                                                reactors,
+                                                                                reactions,
                                                                                 *m_pReactorIgnoredReactionModel);
 
         m_pSearchMenuModule->SetSearchSection("Search Results", m_pSearchResultSectionModule->GetSearchResultSectionModel());
@@ -1054,6 +1058,23 @@ namespace ExampleApp
         reactors.push_back(&WatermarkModule().GetScreenControlViewModel());
         reactors.push_back(&InteriorsExplorerModule().GetScreenControlViewModel());
         return reactors;
+    }
+
+    std::vector<ExampleApp::Reaction::View::IReaction*> MobileExampleApp::GetReactions() const
+    {
+        std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> allReactors(GetReactorControls());
+
+        std::vector<Reaction::View::IReaction*> reactions;
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(SearchMenuModule().GetSearchMenuViewModel(), allReactors));
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(SearchResultPoiModule().GetObservableOpenableControl(), allReactors));
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(AboutPageModule().GetObservableOpenableControl(), allReactors));
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(MyPinCreationDetailsModule().GetObservableOpenableControl(), allReactors));
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(MyPinDetailsModule().GetObservableOpenableControl(), allReactors));
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(MyPinCreationModule().GetObservableOpenableControl(), allReactors));
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(NavUIModule().GetObservableOpenableControl(), SearchMenuModule().GetSearchMenuViewModel()));
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(OptionsModule().GetObservableOpenableControl(), allReactors));
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionPushScreenControl)(NavUIModule().GetObservableOpenableControl(), CompassModule().GetScreenControlViewModel(), -100.0f));
+        return reactions;
     }
 
     Eegeo::Pins::PinsModule* MobileExampleApp::CreatePlatformPinsModuleInstance(Eegeo::EegeoWorld& world,

@@ -53,7 +53,6 @@ namespace ExampleApp
 
                 ~AboutPageViewModel();
 
-                bool TryAcquireReactorControl();
                 bool IsOpen() const;
                 void Open();
                 void Close();

@@ -4,6 +4,7 @@
 
 #include "ICallback.h"
 #include "IIdentity.h"
+#include "IScreenControlView.h"
 
 namespace ExampleApp
 {
@@ -33,6 +34,10 @@ namespace ExampleApp
                 virtual float OnScreenState() const = 0;
                 
                 virtual bool IsAddedToScreen() const = 0;
+
+                virtual IScreenControlViewPosition GetOnScreenPosition() = 0;
+
+                virtual void SetOnScreenPosition(IScreenControlViewPosition screenControlViewPosition) = 0;
             };
         }
     }

@@ -44,6 +44,8 @@ namespace ExampleApp
                 void SetWatermarkAlignmentState(bool alignAlongBottom, bool alignBelowFloorDisplay);
 
                 void  SetInteriorStylingState(bool shouldUseInteriorStyling);
+
+                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position){}
             };
         }
     }

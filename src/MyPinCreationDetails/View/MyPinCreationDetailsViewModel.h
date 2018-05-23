@@ -25,7 +25,6 @@ namespace ExampleApp
 
                 ~MyPinCreationDetailsViewModel();
 
-                bool TryAcquireReactorControl();
 
                 bool IsOpen() const;
 

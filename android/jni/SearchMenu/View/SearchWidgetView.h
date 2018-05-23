@@ -42,6 +42,8 @@ namespace ExampleApp
 
                 void SetFullyOffScreen();
 
+                void SetOnScreenPosition(ScreenControl::View::IScreenControlViewPosition position){}
+
                 void CloseMenu();
 
                 void PerformSearch(const std::string& query, const QueryContext& context);

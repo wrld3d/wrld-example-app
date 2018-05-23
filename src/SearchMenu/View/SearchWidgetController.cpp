@@ -299,11 +299,6 @@ namespace ExampleApp
                 {
                     m_viewModel.Open();
                 }
-
-                if(m_viewModel.HasReactorControl())
-                {
-                    m_viewModel.ReleaseReactorControl();
-                }
             }
 
             void SearchWidgetController::OnViewClosed()
@@ -311,11 +306,6 @@ namespace ExampleApp
                 if(!m_viewModel.IsFullyClosed())
                 {
                     m_viewModel.Close();
-                }
-
-                if(m_viewModel.HasReactorControl())
-                {
-                    m_viewModel.ReleaseReactorControl();
                 }
             }
 

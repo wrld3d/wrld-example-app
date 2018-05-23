@@ -43,7 +43,11 @@ namespace ExampleApp
                 float OnScreenState() const;
                 
                 bool IsAddedToScreen() const;
-                
+
+                void SetOnScreenPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition);
+
+                ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() { return m_screenControlViewPosition; }
+
             private:
                 Eegeo::Helpers::TIdentity m_identity;
                 
@@ -57,6 +61,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<InteriorsExplorerViewModel, const AppModes::AppModeChangedMessage&> m_appModeChangedCallback;
                 
                 void OnAppModeChanged(const AppModes::AppModeChangedMessage& message);
+                ScreenControl::View::IScreenControlViewPosition m_screenControlViewPosition;
             };
         }
     }

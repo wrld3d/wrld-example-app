@@ -13,14 +13,6 @@ namespace ExampleApp
         {   
             void SearchResultPoiController::OnViewOpened()
             {
-                if(!m_viewModel.TryAcquireReactorControl())
-                {
-                    if (m_viewModel.IsOpen())
-                    {
-                        m_viewModel.Close();
-                    }
-                    return;
-                }
 
                 const Search::SdkModel::SearchResultModel& searchResultModel = m_viewModel.GetSearchResultModel();
                 

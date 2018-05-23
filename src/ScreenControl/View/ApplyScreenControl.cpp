@@ -10,6 +10,7 @@ namespace ExampleApp
         {
             void Apply(IScreenControlViewModel& viewModel, IScreenControlView& view)
             {
+                view.SetOnScreenPosition(viewModel.GetOnScreenPosition());
                 if (viewModel.IsFullyOffScreen())
                 {
                     view.SetFullyOffScreen();
