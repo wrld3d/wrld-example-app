@@ -22,6 +22,7 @@ namespace ExampleApp
                 std::string m_interiorId;
 
             public:
+                SearchQuery();
                 SearchQuery(const std::string& query,
                             bool isTag,
                             bool tryInteriorSearch,

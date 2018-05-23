@@ -8,6 +8,17 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            SearchQuery::SearchQuery()
+            : m_query("")
+            , m_isTag(false)
+            , m_tryInteriorSearch(false)
+            , m_selectFirstResult(false)
+            , m_where(0, 0, 0)
+            , m_radius(0.f)
+            , m_interiorId("")
+            {
+            }
+
             SearchQuery::SearchQuery(const std::string& query,
                                      bool isTag,
                                      bool tryInteriorSearch,

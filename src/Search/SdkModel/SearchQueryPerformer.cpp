@@ -38,7 +38,7 @@ namespace ExampleApp
                 : m_searchService(searchService)
                 , m_searchResultsRepository(searchResultRepository)
                 , m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchQueryPerformer, const SearchQuery&, const std::vector<SearchResultModel>&>))(this, &SearchQueryPerformer::HandleSearchResultsResponseReceived))
-                , m_previousQuery("", false, false, false, Eegeo::Space::LatLongAltitude(0.0, 0.0, 0.0), 0.f)
+                , m_previousQuery()
                 , m_hasQuery(false)
                 , m_cameraController(cameraController)
                 , m_messageBus(messageBus)

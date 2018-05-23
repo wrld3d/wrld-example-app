@@ -34,7 +34,7 @@ namespace ExampleApp
             , m_modalBackgroundView(modalBackgroundView)
             , m_messageBus(messageBus)
             , m_appModeAllowsOpen(true)
-            , m_lastPerformedQuery(Search::SdkModel::SearchQuery("", false, false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0))
+            , m_lastPerformedQuery()
             , m_onSearchItemAddedCallback(this, &SearchMenuController::OnSearchItemAdded)
             , m_onSearchItemRemovedCallback(this, &SearchMenuController::OnSearchItemRemoved)
             , m_onOpenStateChangedCallback(this, &SearchMenuController::OnOpenStateChanged)

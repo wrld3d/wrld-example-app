@@ -27,7 +27,7 @@ namespace ExampleApp {
                     , m_eeGeoParser(eeGeoParser)
                     , m_serviceUrl(serviceUrl)
                     , m_apiTokenModel(apiTokenModel)
-                    , m_current_query("", false, false, false, Eegeo::Space::LatLongAltitude(0,0,0), 0.0)
+                    , m_current_query()
             ,m_urlEncoder(urlEncoder)
             {
 

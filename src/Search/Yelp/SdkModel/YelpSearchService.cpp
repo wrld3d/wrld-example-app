@@ -35,7 +35,7 @@ namespace ExampleApp
                 , m_yelpBusinessQueryFactory(yelpBusinessQueryFactory)
                 , m_searchResultParser(searchResultParser)
                 , m_networkCapabilities(networkCapabilities)
-                , m_currentQueryModel("", false, false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
+                , m_currentQueryModel()
                 , m_poiSearchCallback(this, &YelpSearchService::HandleSearchResponse)
                 , m_pCurrentRequest(NULL)
                 , m_hasActiveQuery(false)
