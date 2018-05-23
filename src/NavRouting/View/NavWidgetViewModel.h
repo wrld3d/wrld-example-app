@@ -26,8 +26,6 @@ namespace ExampleApp
 
                 ~NavWidgetViewModel();
 
-                bool TryAcquireReactorControl() override;
-
                 bool IsOpen() const override;
 
                 void Open() override;

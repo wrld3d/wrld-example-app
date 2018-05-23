@@ -45,8 +45,6 @@ namespace ExampleApp
                 
                 void EndCacheClearCeremony();
                 
-                bool TryAcquireReactorControl();
-                
                 bool IsOpen() const;
 
                 void Open();

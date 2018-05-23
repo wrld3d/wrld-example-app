@@ -33,12 +33,6 @@ namespace ExampleApp
 
                 ~OpenableControlViewModelBase();
 
-                bool HasReactorControl() const;
-
-                bool TryAcquireReactorControl();
-
-                void ReleaseReactorControl();
-
                 bool Open(bool acquireReactor = true);
 
                 bool Close(bool releaseReactor = true);

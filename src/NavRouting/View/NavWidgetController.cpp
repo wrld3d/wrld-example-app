@@ -17,14 +17,6 @@ namespace ExampleApp
         {
             void NavWidgetController::OnViewOpened()
             {
-                if(!m_viewModel.TryAcquireReactorControl())
-                {
-                    if (m_viewModel.IsOpen())
-                    {
-                        m_viewModel.Close();
-                    }
-                    return;
-                }
 
                 m_view.Show();
             }

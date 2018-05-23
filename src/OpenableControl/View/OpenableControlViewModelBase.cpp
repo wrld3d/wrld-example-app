@@ -21,24 +21,6 @@ namespace ExampleApp
 
             }
 
-            bool OpenableControlViewModelBase::HasReactorControl() const
-            {
-                return m_reactionControllerModel.HasModalControl(GetIdentity());
-            }
-
-            bool OpenableControlViewModelBase::TryAcquireReactorControl()
-            {
-                if(m_reactionControllerModel.IsModalControlAcquired())
-                {
-                    return m_reactionControllerModel.HasModalControl(GetIdentity());
-                }
-                else
-                {
-                    m_reactionControllerModel.AcquireModalControl(GetIdentity());
-                    return true;
-                }
-            }
-
             bool OpenableControlViewModelBase::TryAcquireOpenableControl()
             {
                 if(m_reactionControllerModel.IsAnyOpenableOpen())
@@ -60,61 +42,23 @@ namespace ExampleApp
                 }
             }
 
-            void OpenableControlViewModelBase::ReleaseReactorControl()
-            {
-                return m_reactionControllerModel.ReleaseModalControl(GetIdentity());
-            }
-
             bool OpenableControlViewModelBase::Open(bool acquireReactor)
             {
-                if (!acquireReactor)
-                {
-                    m_openState = 1.f;
-                    m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
-                    return true;
-                }
-                else if(TryAcquireReactorControl())
-                {
-                    m_openState = 1.f;
-                    m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
-
-                    {
-                        const bool acquiredOpenableControl = TryAcquireOpenableControl();
-                        Eegeo_ASSERT(acquiredOpenableControl, "failed to acquire openable control");
-                    }
-
-                    return true;
-                }
-                return false;
+                m_openState = 1.f;
+                m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
+                return true;
             }
 
             bool OpenableControlViewModelBase::Close(bool releaseReactor)
             {
-                if (!releaseReactor)
-                {
-                    m_openState = 0.f;
-                    m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
-                    return true;
-                }
-                else if(TryAcquireReactorControl())
-                {
-                    m_openState = 0.f;
-                    m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
-                    ReleaseReactorControl();
-                    ReleaseOpenableControl();
-                    return true;
-                }
-                return false;
+                m_openState = 0.f;
+                m_openStateChangedCallbacks.ExecuteCallbacks(*this, m_openState);
+                return true;
             }
 
             void OpenableControlViewModelBase::UpdateOpenState(float openState)
             {
                 Eegeo_ASSERT(openState >= 0.f && openState <= 1.f, "Invalid value %f for open state, valid range for UI open-state is 0.0 to 1.0 inclusive.\n", openState)
-
-                {
-                    const bool acquiredReactorControl = TryAcquireReactorControl();
-                    Eegeo_ASSERT(acquiredReactorControl, "failed to acquire reactor control");
-                }
 
                 if(openState < 1.f)
                 {

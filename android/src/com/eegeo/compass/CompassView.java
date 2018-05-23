@@ -30,6 +30,7 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	private View m_compassUnlocked = null;
 	private boolean	m_unauthorizedGpsAlertShown = false;
 
+	private float m_defaultYPosActive;
 	private float m_yPosActive;
 	private float m_yPosInactive;
 
@@ -82,7 +83,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 				final float viewWidth = m_view.getWidth();
 				final float viewHeight = m_view.getHeight();
 
-				m_yPosActive = (screenHeight - viewWidth) - m_activity.dipAsPx(8.f);
+				m_defaultYPosActive = (screenHeight - viewWidth) - m_activity.dipAsPx(8.f);
+				m_yPosActive = m_defaultYPosActive;
 				m_yPosInactive = screenHeight + viewHeight;
 
 				m_view.setX((screenWidth * 0.5f) - (viewWidth * 0.5f));
@@ -191,6 +193,12 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		{
 			m_view.setY(newYPx);
 		}
+	}
+
+	public void setPosition(final float positionOffset)
+	{
+		m_yPosActive = m_defaultYPosActive + m_activity.dipAsPx(positionOffset);
+		animateToActive();
 	}
 
 	@Override

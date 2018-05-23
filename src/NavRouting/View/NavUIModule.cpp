@@ -45,11 +45,13 @@ namespace ExampleApp
             };
             
             NavUIModule::NavUIModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                     Reaction::View::IReactionControllerModel& reactionControllerModel):
+                                     Reaction::View::IReactionControllerModel& reactionControllerModel,
+                                     Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction):
                 d(new Private(identityProvider, reactionControllerModel))
             {
                 m_pNavWidgetViewModel = Eegeo_NEW(NavWidgetViewModel)(identityProvider.GetNextIdentity(),
                                                                        reactionControllerModel);
+                ignoredMenuReaction.AddIgnoredMenuIdentity(m_pNavWidgetViewModel->GetOpenableControl().GetIdentity());
             }
 
             NavUIModule::~NavUIModule()

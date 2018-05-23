@@ -35,8 +35,6 @@ namespace ExampleApp
                 
                 void ToggleIsPinned();
 
-                bool TryAcquireReactorControl();
-
                 bool IsOpen() const;
 
                 void Open(const Search::SdkModel::SearchResultModel& searchResultModel,

@@ -52,11 +52,8 @@ namespace ExampleApp
 
             void MyPinCreationDetailsController::OnOpened()
             {
-                if(m_viewModel.TryAcquireReactorControl())
-                {
-                    m_metricsService.BeginTimedEvent("MyPinCreationDetailsDialogue");
-                    m_view.Open();
-                }
+                m_metricsService.BeginTimedEvent("MyPinCreationDetailsDialogue");
+                m_view.Open();
             }
 
             void MyPinCreationDetailsController::OnClosed()

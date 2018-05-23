@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "CompassViewModel.h"
+#include "IScreenControlView.h"
 
 namespace ExampleApp
 {
@@ -68,6 +69,12 @@ namespace ExampleApp
             bool CompassViewModel::IsAddedToScreen() const
             {
                 return m_screenControl.IsAddedToScreen();
+            }
+
+            void CompassViewModel::SetOnScreenPosition(
+                    ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
+            {
+                m_screenControl.SetOnScreenPosition(screenControlViewPosition);
             }
         }
     }

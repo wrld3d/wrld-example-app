@@ -54,13 +54,15 @@ namespace ExampleApp
 
                 void Close();
 
-                void TryReleaseReactorControl();
-
                 void Open();
 
                 void InsertOpenCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void RemoveOpenCallback(Eegeo::Helpers::ICallback0& callback);
+
+                void SetOnScreenPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition);
+
+                ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() { return m_screenControl.GetOnScreenPosition(); }
 
             private:
                 MyPinCreationScreenControl m_screenControl;

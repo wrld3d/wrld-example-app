@@ -53,12 +53,6 @@ namespace ExampleApp
                 
                 bool IsAddedToScreen() const;
 
-                bool HasReactorControl() const;
-
-                bool TryAcquireReactorControl();
-
-                void ReleaseReactorControl();
-
                 bool Open(bool acquireReactor = true);
 
                 bool Close(bool releaseReactor = true);
@@ -90,6 +84,9 @@ namespace ExampleApp
 
                 IMenuSectionViewModel& GetMenuSection(int index) const;
 
+                void SetOnScreenPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition);
+
+                ScreenControl::View::IScreenControlViewPosition GetOnScreenPosition() { return m_screenViewModel.GetOnScreenPosition(); }
             };
         }
     }

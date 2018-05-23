@@ -60,11 +60,6 @@ namespace ExampleApp
                 m_cacheClearCeremonyCompletedCallbacks.ExecuteCallbacks();
             }
             
-            bool OptionsViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
-            }
-            
             bool OptionsViewModel::IsOpen() const
             {
                 return m_openable.IsFullyOpen();

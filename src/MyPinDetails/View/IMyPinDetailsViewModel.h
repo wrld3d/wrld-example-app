@@ -27,8 +27,6 @@ namespace ExampleApp
                 
                 virtual const std::string& GetImagePath() const = 0;
 
-                virtual bool TryAcquireReactorControl() = 0;
-
                 virtual bool IsOpen() const = 0;
 
                 virtual void Open(MyPins::SdkModel::MyPinModel::TPinIdType pinId,

@@ -37,10 +37,6 @@ namespace ExampleApp
                 
             }
 
-            bool AboutPageViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
-            }
 
             bool AboutPageViewModel::IsOpen() const
             {

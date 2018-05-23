@@ -22,11 +22,6 @@ namespace ExampleApp
 
             }
 
-            bool DesktopSearchResultPoiViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
-            }
-
             const Search::SdkModel::SearchResultModel& DesktopSearchResultPoiViewModel::GetSearchResultModel() const
             {
                 Eegeo_ASSERT(IsOpen(), "Cannot read SearchResultModel when view model is not open.\n");

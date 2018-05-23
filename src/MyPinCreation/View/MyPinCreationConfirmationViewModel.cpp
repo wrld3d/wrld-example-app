@@ -97,20 +97,19 @@ namespace ExampleApp
 
             bool MyPinCreationConfirmationViewModel::TryOpen()
             {
-                return m_openable.TryAcquireReactorControl();
+                return true;
             }
 
             void MyPinCreationConfirmationViewModel::Close()
             {
-                m_openable.ReleaseReactorControl();
             }
 
-            void MyPinCreationConfirmationViewModel::TryReleaseReactorControl()
+
+
+            void MyPinCreationConfirmationViewModel::SetOnScreenPosition(
+                    ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
             {
-                if (m_openable.HasReactorControl())
-                {
-                    m_openable.ReleaseReactorControl();
-                }
+                m_screenControl.SetOnScreenPosition(screenControlViewPosition);
             }
         }
     }

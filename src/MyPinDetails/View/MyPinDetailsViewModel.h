@@ -39,8 +39,6 @@ namespace ExampleApp
                 
                 const std::string& GetImagePath() const;
 
-                bool TryAcquireReactorControl();
-
                 bool IsOpen() const;
 
                 void Open(MyPins::SdkModel::MyPinModel::TPinIdType pinId,
