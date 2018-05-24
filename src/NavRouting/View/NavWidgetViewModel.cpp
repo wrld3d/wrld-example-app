@@ -43,7 +43,7 @@ namespace ExampleApp
 
             void NavWidgetViewModel::SetNavMode(SdkModel::NavRoutingMode mode)
             {
-                const float navWidgetBottomHeight = 100.0f;
+                const float navWidgetBottomHeight = -100.0f;
                 if(mode == SdkModel::NavRoutingMode::Ready || mode == SdkModel::NavRoutingMode::Active)
                 {
                     m_compassOffsetProvider.SetOffset(navWidgetBottomHeight);
