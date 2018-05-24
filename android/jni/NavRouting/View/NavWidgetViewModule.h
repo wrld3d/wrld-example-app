@@ -11,6 +11,7 @@
 #include "ILocationService.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
+#include "ICompassView.h"
 
 namespace ExampleApp
 {
@@ -28,6 +29,7 @@ namespace ExampleApp
                 NavWidgetViewModule(
                     AndroidNativeState& nativeState,
                     INavWidgetViewModel& navWidgetViewModel,
+                    Compass::View::ICompassView& compassView,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 

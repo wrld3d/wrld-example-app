@@ -562,6 +562,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pNavWidgetViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(
                                     m_nativeState,
                                     app.NavUIModule().GetNavWidgetViewModel(),
+                                    m_pCompassViewModule->GetCompassView(),
                                     m_messageBus);
 
     // Pop-up layer.

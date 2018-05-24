@@ -7,6 +7,7 @@
 #include "YelpParsingHelpers.h"
 #include "EegeoJsonParser.h"
 #include "EegeoSearchResultModel.h"
+#include "ICompassView.h"
 
 namespace ExampleApp
 {
@@ -14,10 +15,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            NavWidgetView::NavWidgetView(AndroidNativeState& nativeState)
+            NavWidgetView::NavWidgetView(AndroidNativeState& nativeState, Compass::View::ICompassView& compassView)
                     : m_nativeState(nativeState)
                     , m_uiViewClass(NULL)
                     , m_uiView(NULL)
+                    , m_compassView(compassView)
             {
                 ASSERT_UI_THREAD
 
@@ -435,6 +437,12 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_selectedDirectionIndexChangedCallbacks.ExecuteCallbacks(selectedDirectionIndex);
+            }
+
+            void NavWidgetView::SetBottomViewHeight(int bottomViewHeight){
+                ASSERT_UI_THREAD
+
+                m_compassView.SetNavigationModeOffset(bottomViewHeight);
             }
 
             jclass NavWidgetView::CreateJavaClass(const std::string& viewClass)
