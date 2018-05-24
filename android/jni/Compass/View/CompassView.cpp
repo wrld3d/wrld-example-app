@@ -146,6 +146,17 @@ namespace ExampleApp
                 jmethodID setState = env->GetMethodID(m_uiViewClass, "setState", "(I)V");
                 env->CallVoidMethod(m_uiView, setState, state);
             }
+
+            void CompassView::SetNavigationModeOffset(int offset)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv *env = attached.envForThread;
+
+                jmethodID setNavigationModeOffset = env->GetMethodID(m_uiViewClass, "setNavigationModeOffset", "(I)V");
+                env->CallVoidMethod(m_uiView, setNavigationModeOffset, offset);
+            }
         }
     }
 }

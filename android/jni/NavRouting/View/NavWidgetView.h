@@ -8,6 +8,7 @@
 #include "CallbackCollection.h"
 #include "INavWidgetView.h"
 #include "NavRoutingLocationModel.h"
+#include "ICompassView.h"
 
 namespace ExampleApp
 {
@@ -28,11 +29,13 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_startEndRoutingButtonClicked;
                 Eegeo::Helpers::CallbackCollection1<const int> m_selectedDirectionIndexChangedCallbacks;
 
+                Compass::View::ICompassView& m_compassView;
+
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
             public:
-                NavWidgetView(AndroidNativeState& nativeState);
+                NavWidgetView(AndroidNativeState& nativeState, Compass::View::ICompassView& compassView);
 
                 ~NavWidgetView();
 
@@ -107,6 +110,8 @@ namespace ExampleApp
                 void RemoveSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback) override;
 
                 void HandleSelectedDirectionIndexChanged(int selectedDirectionIndex);
+
+                void SetBottomViewHeight(int bottomViewHeight);
 
             private:
                 void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);

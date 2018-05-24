@@ -33,6 +33,11 @@ namespace ExampleApp
                 Eegeo_DELETE m_pController;
                 Eegeo_DELETE m_pView;
             }
+
+            ICompassView& CompassViewModule::GetCompassView()
+            {
+                return *m_pView;
+            }
         }
     }
 }

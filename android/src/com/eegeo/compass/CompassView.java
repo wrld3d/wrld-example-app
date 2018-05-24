@@ -42,7 +42,7 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	private final float CompassOuterShapeInactiveAlpha = 0.5f;
 	private final float CompassOuterShapeActiveAlpha = 1.0f;
 
-	private final int m_navWidgetBottomViewHeightDip = 96;
+	private int m_navWidgetModeOffset = 0;
 
 	private enum CompassState {Default, Navigation};
 
@@ -203,9 +203,14 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	public void setState(final int state)
 	{
 		CompassState compassState = CompassState.values()[state];
-		int offsetDip = (compassState == CompassState.Default) ? 0 : m_navWidgetBottomViewHeightDip;
+		int offsetDip = (compassState == CompassState.Default) ? 0 : m_navWidgetModeOffset;
 		m_yPosActive = m_defaultYPosActive - m_activity.dipAsPx(offsetDip);
 		animateToActive();
+	}
+
+	public void setNavigationModeOffset(final int offset)
+	{
+		m_navWidgetModeOffset = offset;
 	}
 
 	@Override
