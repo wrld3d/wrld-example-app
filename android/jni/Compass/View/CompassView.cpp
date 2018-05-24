@@ -135,16 +135,16 @@ namespace ExampleApp
                 m_callbacks.RemoveCallback(callback);
             }
 
-            void CompassView::SetOffsetFromDefaultPosition(
-                    ScreenControl::View::IScreenControlViewPosition position) 
+            void CompassView::SetState(
+                    ScreenControl::View::TScreenControlViewState state)
 			{
                 ASSERT_UI_THREAD
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv *env = attached.envForThread;
 
-                jmethodID setPosition = env->GetMethodID(m_uiViewClass, "setPosition", "(F)V");
-                env->CallVoidMethod(m_uiView, setPosition, position);
+                jmethodID setState = env->GetMethodID(m_uiViewClass, "setState", "(I)V");
+                env->CallVoidMethod(m_uiView, setState, state);
             }
         }
     }

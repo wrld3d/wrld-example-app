@@ -1,5 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+#include "CompassScreenControl.h"
 #include "NavWidgetViewModel.h"
 
 namespace ExampleApp
@@ -11,7 +12,7 @@ namespace ExampleApp
             NavWidgetViewModel::NavWidgetViewModel(Eegeo::Helpers::TIdentity identity)
                     : m_openable(identity)
             {
-
+                m_compassStateProvider.SetState(Compass::View::CompassScreenControl::DisplayMode::Default);
             }
 
             NavWidgetViewModel::~NavWidgetViewModel()
@@ -37,20 +38,20 @@ namespace ExampleApp
                 Eegeo_ASSERT(IsOpen(), "Cannot close NavWidgetViewModel when view model when already closed.\n");
 
                 m_openable.Close();
+                m_compassStateProvider.SetState(Compass::View::CompassScreenControl::DisplayMode::Default);
                 m_closedCallbacks.ExecuteCallbacks();
             }
 
 
             void NavWidgetViewModel::SetNavMode(SdkModel::NavRoutingMode mode)
             {
-                const float navWidgetBottomHeight = -100.0f;
                 if(mode == SdkModel::NavRoutingMode::Ready || mode == SdkModel::NavRoutingMode::Active)
                 {
-                    m_compassOffsetProvider.SetOffset(navWidgetBottomHeight);
+                    m_compassStateProvider.SetState(Compass::View::CompassScreenControl::DisplayMode::Navigation);
                 }
                 else
                 {
-                    m_compassOffsetProvider.SetOffset(0.0f);
+                    m_compassStateProvider.SetState(Compass::View::CompassScreenControl::DisplayMode::Default);
                 }
             }
 
@@ -79,9 +80,9 @@ namespace ExampleApp
                 m_closedCallbacks.RemoveCallback(closedCallback);
             }
 
-            Reaction::View::IReactionScreenOffsetProvider& NavWidgetViewModel::GetCompassOffsetProvider()
+            Reaction::View::IReactionScreenStateProvider& NavWidgetViewModel::GetCompassStateProvider()
             {
-                return m_compassOffsetProvider;
+                return m_compassStateProvider;
             }
         }
     }

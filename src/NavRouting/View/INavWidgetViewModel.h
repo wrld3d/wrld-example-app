@@ -6,7 +6,7 @@
 #include "IOpenableControlViewModel.h"
 #include "NavRoutingLocationModel.h"
 #include "NavRoutingRouteModel.h"
-#include "IReactionScreenOffsetProvider.h"
+#include "IReactionScreenStateProvider.h"
 
 namespace ExampleApp
 {
@@ -37,7 +37,7 @@ namespace ExampleApp
 
                 virtual OpenableControl::View::IOpenableControlViewModel& GetOpenableControl() = 0;
 
-                virtual Reaction::View::IReactionScreenOffsetProvider& GetCompassOffsetProvider() = 0;
+                virtual Reaction::View::IReactionScreenStateProvider& GetCompassStateProvider() = 0;
             };
         }
     }

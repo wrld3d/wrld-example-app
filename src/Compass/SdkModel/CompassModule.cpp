@@ -67,7 +67,7 @@ namespace ExampleApp
                 return *m_pCompassUpdateController;
             }
 
-            ScreenControl::View::IMovableScreenControlViewModel& CompassModule::GetScreenControlViewModel() const
+            ScreenControl::View::IMultiStateScreenControlViewModel& CompassModule::GetScreenControlViewModel() const
             {
                 return m_pViewModel->GetScreenControlViewModel();
             }

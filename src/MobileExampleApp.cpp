@@ -1063,7 +1063,7 @@ namespace ExampleApp
         reactions.push_back(Eegeo_NEW(Reaction::View::ReactionPushScreenControl)
                                     (NavUIModule().GetObservableOpenableControl(),
                                      CompassModule().GetScreenControlViewModel(),
-                                     NavUIModule().GetNavWidgetViewModel().GetCompassOffsetProvider()));
+                                     NavUIModule().GetNavWidgetViewModel().GetCompassStateProvider()));
         return reactions;
     }
 

@@ -4,6 +4,7 @@
 
 #import <UIKit/UIKit.h>
 #include "CompassViewIncludes.h"
+#include "IScreenControlView.h"
 
 @class CompassView;
 
@@ -31,6 +32,8 @@
     float m_compassPointNaturalOffsetY;
 }
 
+enum CompassPositionState {Default, Navigation};
+
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale;
 
 - (ExampleApp::Compass::View::CompassViewInterop*) getInterop;
@@ -57,7 +60,9 @@
 
 - (void) setRotationHighlight:(bool)shouldShowRotationHighlight;
 
-- (void) SetOffsetFromDefaultPosition:(float) offset;
+- (BOOL) isValidState: (ExampleApp::ScreenControl::View::TScreenControlViewState) state;
+
+- (void) setPositionState: (CompassPositionState) state;
 
 @property (nonatomic, retain) UIImageView* pOuterShape;
 @property (nonatomic, retain) UIView* pInnerShape;

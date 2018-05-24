@@ -73,9 +73,12 @@ namespace ExampleApp
                 [m_pView setRotationHighlight:shouldShowRotationHighlight];
             }
             
-            void CompassViewInterop::SetOffsetFromDefaultPosition(ScreenControl::View::IScreenControlViewPosition position)
+            void CompassViewInterop::SetState(ScreenControl::View::TScreenControlViewState state)
             {
-                [m_pView SetOffsetFromDefaultPosition: position];
+                BOOL isValidState = [m_pView isValidState: state];
+                Eegeo_ASSERT(isValidState, "Tried to set an invalid compass state");
+                CompassPositionState positionState = (CompassPositionState) state;
+                [m_pView setPositionState: positionState];
             }
         }
     }
