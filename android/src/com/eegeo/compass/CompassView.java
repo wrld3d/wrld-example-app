@@ -6,6 +6,7 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
+import com.wrld.widgets.navigation.widget.WrldNavWidget;
 
 import android.Manifest;
 import android.app.Activity;
@@ -40,6 +41,10 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 
 	private final float CompassOuterShapeInactiveAlpha = 0.5f;
 	private final float CompassOuterShapeActiveAlpha = 1.0f;
+
+	private final int m_navWidgetBottomViewHeightDip = 96;
+
+	private enum CompassState {Default, Navigation};
 
 	public CompassView(MainActivity activity, long nativeCallerPointer)
 	{
@@ -195,9 +200,11 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		}
 	}
 
-	public void setPosition(final float positionOffset)
+	public void setState(final int state)
 	{
-		m_yPosActive = m_defaultYPosActive + m_activity.dipAsPx(positionOffset);
+		CompassState compassState = CompassState.values()[state];
+		int offsetDip = (compassState == CompassState.Default) ? 0 : m_navWidgetBottomViewHeightDip;
+		m_yPosActive = m_defaultYPosActive - m_activity.dipAsPx(offsetDip);
 		animateToActive();
 	}
 

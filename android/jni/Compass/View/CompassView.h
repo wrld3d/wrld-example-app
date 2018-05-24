@@ -54,7 +54,7 @@ namespace ExampleApp
 
                 void RemoveCycledCallback(Eegeo::Helpers::ICallback0& callback);
 
-                void SetOffsetFromDefaultPosition(ScreenControl::View::IScreenControlViewPosition position);
+                void SetState(ScreenControl::View::TScreenControlViewState state);
             };
         }
     }

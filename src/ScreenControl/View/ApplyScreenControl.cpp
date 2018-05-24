@@ -20,10 +20,11 @@ namespace ExampleApp
                 }
             }
 
-            void ApplyMovement(IMovableScreenControlViewModel& movableViewModel, IMovableScreenControlView& movableView)
+            void ApplyState(IMultiStateScreenControlViewModel &movableViewModel,
+                            IMultiStateScreenControlView &movableView)
             {
-                movableView.SetOffsetFromDefaultPosition(
-                        movableViewModel.GetOffsetFromDefaultPosition());
+                movableView.SetState(
+                        movableViewModel.GetState());
             }
         }
     }

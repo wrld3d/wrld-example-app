@@ -14,19 +14,19 @@ namespace ExampleApp
         {
             ReactionPushScreenControl::ReactionPushScreenControl(
                     const OpenableControl::View::IOpenableControlViewModel& openableControlViewModel,
-                    ScreenControl::View::IMovableScreenControlViewModel& screenControlToMove,
-                    IReactionScreenOffsetProvider& offsetProvider)
+                    ScreenControl::View::IMultiStateScreenControlViewModel& screenControlToMove,
+                    IReactionScreenStateProvider& offsetProvider)
                     : m_openableControl(openableControlViewModel)
                     , m_screenControlToMove(screenControlToMove)
                     , m_offsetProvider(offsetProvider)
-                    , m_offsetUpdateCallback(this, &ReactionPushScreenControl::Update)
+                    , m_offsetUpdateCallback(this, &ReactionPushScreenControl::Perform)
             {
-                m_offsetProvider.InsertOffsetUpdatedCallback(m_offsetUpdateCallback);
+                m_offsetProvider.InsertStateUpdatedCallback(m_offsetUpdateCallback);
             }
 
             ReactionPushScreenControl::~ReactionPushScreenControl()
             {
-                m_offsetProvider.RemoveOffsetUpdatedCallback(m_offsetUpdateCallback);
+                m_offsetProvider.RemoveStateUpdatedCallback(m_offsetUpdateCallback);
             }
 
             Eegeo::Helpers::TIdentity ReactionPushScreenControl::ReactionToOpenableIdentity()
@@ -36,16 +36,7 @@ namespace ExampleApp
 
             void ReactionPushScreenControl::Perform()
             {
-                m_screenControlToMove.SetOffsetFromDefaultPosition(
-                        m_openableControl.IsOpen() ? m_offsetProvider.GetOffset() : 0.0f );
-            }
-
-            void ReactionPushScreenControl::Update()
-            {
-                if(m_openableControl.IsOpen())
-                {
-                    m_screenControlToMove.SetOffsetFromDefaultPosition(m_offsetProvider.GetOffset());
-                }
+                m_screenControlToMove.SetState(m_offsetProvider.GetState());
             }
         }
     }

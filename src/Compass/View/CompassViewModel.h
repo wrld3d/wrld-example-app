@@ -37,11 +37,11 @@ namespace ExampleApp
 
                 bool IsOnScreen() const override;
 
-                ScreenControl::View::IMovableScreenControlViewModel& GetScreenControlViewModel();
+                ScreenControl::View::IMultiStateScreenControlViewModel& GetScreenControlViewModel();
 
-                void SetOffsetFromDefaultPosition( ScreenControl::View::IScreenControlViewPosition screenControlViewPosition) override;
+                void SetState( ScreenControl::View::TScreenControlViewState state) override;
 
-                ScreenControl::View::IScreenControlViewPosition GetOffsetFromDefaultPosition() override { return m_screenControl.GetOffsetFromDefaultPosition(); }
+                ScreenControl::View::TScreenControlViewState GetState() override;
 
             private:
                 CompassScreenControl m_screenControl;

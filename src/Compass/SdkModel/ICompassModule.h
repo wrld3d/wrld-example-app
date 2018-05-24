@@ -22,7 +22,7 @@ namespace ExampleApp
 
                 virtual ICompassUpdateController& GetCompassUpdateController() const = 0;
 
-                virtual ScreenControl::View::IMovableScreenControlViewModel& GetScreenControlViewModel() const = 0;
+                virtual ScreenControl::View::IMultiStateScreenControlViewModel& GetScreenControlViewModel() const = 0;
 
                 virtual ICompassTouchController& GetTouchController() = 0;
             };

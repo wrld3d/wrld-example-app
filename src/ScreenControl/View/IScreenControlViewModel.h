@@ -32,13 +32,12 @@ namespace ExampleApp
                 virtual bool IsOnScreen() const = 0;
             };
 
-            class IMovableScreenControlViewModel : public virtual IScreenControlViewModel
+            class IMultiStateScreenControlViewModel : public virtual IScreenControlViewModel
             {
             public:
-                virtual IScreenControlViewPosition GetOffsetFromDefaultPosition() = 0;
+                virtual TScreenControlViewState GetState() = 0;
 
-                virtual void SetOffsetFromDefaultPosition(
-                        IScreenControlViewPosition screenControlViewPosition) = 0;
+                virtual void SetState(TScreenControlViewState state) = 0;
             };
         }
     }

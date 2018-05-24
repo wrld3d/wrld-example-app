@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "CompassScreenControl.h"
+#include "ICompassViewModel.h"
 
 namespace ExampleApp
 {
@@ -9,8 +10,9 @@ namespace ExampleApp
         namespace View {
             CompassScreenControl::CompassScreenControl(bool initiallyOnScreen,
                                                        Eegeo::Helpers::TIdentity identity)
-                    : ScreenControl::View::ScreenControlViewModelBase(initiallyOnScreen),
-                      m_identity(identity)
+                    : ScreenControl::View::ScreenControlViewModelBase(initiallyOnScreen)
+                    , m_identity(identity)
+                    , m_viewState(DisplayMode::Default)
             {
             }
 
@@ -19,10 +21,10 @@ namespace ExampleApp
                 return m_identity;
             }
 
-            void CompassScreenControl::SetOffsetFromDefaultPosition(
-                    ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
+            void CompassScreenControl::SetState(
+                    ScreenControl::View::TScreenControlViewState screenControlViewState)
             {
-                m_viewPosition = screenControlViewPosition;
+                m_viewState = screenControlViewState;
                 AddToScreen();
             }
         }

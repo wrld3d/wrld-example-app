@@ -12,22 +12,24 @@ namespace ExampleApp
         namespace View
         {
             class CompassScreenControl : public ScreenControl::View::ScreenControlViewModelBase,
-                                         public ScreenControl::View::IMovableScreenControlViewModel,
+                                         public ScreenControl::View::IMultiStateScreenControlViewModel,
                                          private Eegeo::NonCopyable
             {
                 Eegeo::Helpers::TIdentity m_identity;
 
-                ScreenControl::View::IScreenControlViewPosition m_viewPosition;
+                ScreenControl::View::TScreenControlViewState m_viewState;
 
             public:
+
+                enum DisplayMode {Default, Navigation};
                 CompassScreenControl(bool initiallyOnScreen, Eegeo::Helpers::TIdentity identity);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const override;
 
-                ScreenControl::View::IScreenControlViewPosition GetOffsetFromDefaultPosition() override { return m_viewPosition; }
+                ScreenControl::View::TScreenControlViewState GetState() override { return m_viewState; }
 
-                void SetOffsetFromDefaultPosition(
-                        ScreenControl::View::IScreenControlViewPosition screenControlViewPosition) override;
+                void SetState(
+                        ScreenControl::View::TScreenControlViewState screenControlViewPosition) override;
             };
         }
     }

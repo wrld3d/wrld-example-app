@@ -16,7 +16,7 @@ namespace ExampleApp
 
             }
 
-            ScreenControl::View::IMovableScreenControlViewModel& CompassViewModel::GetScreenControlViewModel()
+            ScreenControl::View::IMultiStateScreenControlViewModel& CompassViewModel::GetScreenControlViewModel()
             {
                 return m_screenControl;
             }
@@ -56,10 +56,15 @@ namespace ExampleApp
                 return m_screenControl.IsOnScreen();
             }
 
-            void CompassViewModel::SetOffsetFromDefaultPosition(
-                    ScreenControl::View::IScreenControlViewPosition screenControlViewPosition)
+            ScreenControl::View::TScreenControlViewState CompassViewModel::GetState()
             {
-                m_screenControl.SetOffsetFromDefaultPosition(screenControlViewPosition);
+                return m_screenControl.GetState();
+            }
+
+            void CompassViewModel::SetState(
+                    ScreenControl::View::TScreenControlViewState screenControlViewState)
+            {
+                m_screenControl.SetState(screenControlViewState);
             }
         }
     }

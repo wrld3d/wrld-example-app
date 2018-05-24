@@ -49,7 +49,7 @@ namespace ExampleApp
 
             void CompassController::OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel)
             {
-                ScreenControl::View::ApplyMovement(m_viewModel, m_view);
+                ScreenControl::View::ApplyState(m_viewModel, m_view);
                 ScreenControl::View::Apply(m_viewModel, m_view);
             }
             

@@ -58,7 +58,7 @@ namespace ExampleApp
 
                 ICompassUpdateController& GetCompassUpdateController() const;
 
-                ScreenControl::View::IMovableScreenControlViewModel& GetScreenControlViewModel() const;
+                ScreenControl::View::IMultiStateScreenControlViewModel& GetScreenControlViewModel() const;
 
                 ICompassTouchController& GetTouchController();
             };

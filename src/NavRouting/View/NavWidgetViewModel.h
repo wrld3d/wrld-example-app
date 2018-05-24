@@ -7,7 +7,7 @@
 #include "CallbackCollection.h"
 #include "NavWidgetOpenableControl.h"
 #include "Reaction.h"
-#include "ReactionScreenOffsetProvider.h"
+#include "ReactionScreenStateProvider.h"
 
 namespace ExampleApp
 {
@@ -21,7 +21,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
                 NavWidgetOpenableControl m_openable;
 
-                Reaction::View::ReactionScreenOffsetProvider m_compassOffsetProvider;
+                Reaction::View::ReactionScreenStateProvider m_compassStateProvider;
 
             public:
                 NavWidgetViewModel(Eegeo::Helpers::TIdentity identity);
@@ -46,7 +46,7 @@ namespace ExampleApp
 
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) override;
 
-                Reaction::View::IReactionScreenOffsetProvider& GetCompassOffsetProvider() override;
+                Reaction::View::IReactionScreenStateProvider& GetCompassStateProvider() override;
             };
         }
     }
