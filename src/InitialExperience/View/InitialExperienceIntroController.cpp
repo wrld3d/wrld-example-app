@@ -11,6 +11,11 @@ namespace ExampleApp
     {
         namespace View
         {
+            namespace
+            {
+                const int maxTutorialViews = 2;
+            }
+
             InitialExperienceIntroController::InitialExperienceIntroController(IInitialExperienceIntroView& view,
                                                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController)
@@ -18,8 +23,8 @@ namespace ExampleApp
             , m_messageBus(messageBus)
             , m_showIntroMessageHandler(this, &InitialExperienceIntroController::OnShowIntro)
             , m_viewDismissed(this, &InitialExperienceIntroController::OnViewDismissed)
-            , m_replayExitIUX(true)
-            , m_exitIUXViewedCount(0)
+            , m_replayExitIUX(false)
+            , m_exitIUXViewedCount(maxTutorialViews)
             , m_currAppMode(AppModes::SdkModel::WorldMode)
             , m_shouldShowExitIUX(false)
             , m_appModeChangedHandler(this, &InitialExperienceIntroController::OnAppModeChangedMessage)
@@ -89,7 +94,6 @@ namespace ExampleApp
 
             void InitialExperienceIntroController::ShowExitIUX()
             {
-                const int maxTutorialViews = 2;
                 if(m_replayExitIUX || m_exitIUXViewedCount < maxTutorialViews)
                 {
                     m_view.ShowExitIUX();
