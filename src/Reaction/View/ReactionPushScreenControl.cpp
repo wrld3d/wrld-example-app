@@ -15,11 +15,18 @@ namespace ExampleApp
             ReactionPushScreenControl::ReactionPushScreenControl(
                     const OpenableControl::View::IOpenableControlViewModel& openableControlViewModel,
                     ScreenControl::View::IMovableScreenControlViewModel& screenControlToMove,
-                    const ScreenControl::View::IScreenControlViewPosition offset)
+                    IReactionScreenOffsetProvider& offsetProvider)
                     : m_openableControl(openableControlViewModel)
-                    , m_screenControlToMove(screenControlToMove), m_offset(offset)
+                    , m_screenControlToMove(screenControlToMove)
+                    , m_offsetProvider(offsetProvider)
+                    , m_offsetUpdateCallback(this, &ReactionPushScreenControl::Update)
             {
+                m_offsetProvider.InsertOffsetUpdatedCallback(m_offsetUpdateCallback);
+            }
 
+            ReactionPushScreenControl::~ReactionPushScreenControl()
+            {
+                m_offsetProvider.RemoveOffsetUpdatedCallback(m_offsetUpdateCallback);
             }
 
             Eegeo::Helpers::TIdentity ReactionPushScreenControl::ReactionToOpenableIdentity()
@@ -30,7 +37,15 @@ namespace ExampleApp
             void ReactionPushScreenControl::Perform()
             {
                 m_screenControlToMove.SetOffsetFromDefaultPosition(
-                        m_openableControl.IsOpen() ? m_offset : 0.0f );
+                        m_openableControl.IsOpen() ? m_offsetProvider.GetOffset() : 0.0f );
+            }
+
+            void ReactionPushScreenControl::Update()
+            {
+                if(m_openableControl.IsOpen())
+                {
+                    m_screenControlToMove.SetOffsetFromDefaultPosition(m_offsetProvider.GetOffset());
+                }
             }
         }
     }
