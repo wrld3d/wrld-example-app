@@ -40,6 +40,20 @@ namespace ExampleApp
                 m_closedCallbacks.ExecuteCallbacks();
             }
 
+
+            void NavWidgetViewModel::SetNavMode(SdkModel::NavRoutingMode mode)
+            {
+                const float navWidgetBottomHeight = 100.0f;
+                if(mode == SdkModel::NavRoutingMode::Ready || mode == SdkModel::NavRoutingMode::Active)
+                {
+                    m_compassOffsetProvider.SetOffset(navWidgetBottomHeight);
+                }
+                else
+                {
+                    m_compassOffsetProvider.SetOffset(0.0f);
+                }
+            }
+
             OpenableControl::View::IOpenableControlViewModel& NavWidgetViewModel::GetOpenableControl()
             {
                 return m_openable;
@@ -63,6 +77,11 @@ namespace ExampleApp
             void NavWidgetViewModel::RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback)
             {
                 m_closedCallbacks.RemoveCallback(closedCallback);
+            }
+
+            Reaction::View::IReactionScreenOffsetProvider& NavWidgetViewModel::GetCompassOffsetProvider()
+            {
+                return m_compassOffsetProvider;
             }
         }
     }

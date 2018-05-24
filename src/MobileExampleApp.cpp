@@ -1059,7 +1059,10 @@ namespace ExampleApp
         reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(MyPinCreationModule().GetObservableOpenableControl(), allReactors));
         reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(NavUIModule().GetObservableOpenableControl(), SearchMenuModule().GetSearchMenuViewModel()));
         reactions.push_back(Eegeo_NEW(Reaction::View::ReactionHideOtherScreenControls)(OptionsModule().GetObservableOpenableControl(), allReactors));
-        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionPushScreenControl)(NavUIModule().GetObservableOpenableControl(), CompassModule().GetScreenControlViewModel(), -100.0f));
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionPushScreenControl)
+                                    (NavUIModule().GetObservableOpenableControl(),
+                                     CompassModule().GetScreenControlViewModel(),
+                                     NavUIModule().GetNavWidgetViewModel().GetCompassOffsetProvider()));
         return reactions;
     }
 

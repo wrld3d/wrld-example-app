@@ -2,6 +2,7 @@
 
 #include "IIdentity.h"
 #include "IReaction.h"
+#include "IReactionScreenOffsetProvider.h"
 #include "IScreenControlViewModel.h"
 #include "IOpenableControlViewModel.h"
 #include <vector>
@@ -16,12 +17,15 @@ namespace ExampleApp
             {
                 const OpenableControl::View::IOpenableControlViewModel& m_openableControl;
                 ScreenControl::View::IMovableScreenControlViewModel& m_screenControlToMove;
-                const ScreenControl::View::IScreenControlViewPosition m_offset;
+                IReactionScreenOffsetProvider& m_offsetProvider;
+                Eegeo::Helpers::TCallback0<ReactionPushScreenControl> m_offsetUpdateCallback;
+
+                void Update();
             public:
                 ReactionPushScreenControl(const OpenableControl::View::IOpenableControlViewModel& openableControl,
                                            ScreenControl::View::IMovableScreenControlViewModel& screenControlToMove,
-                                          const ScreenControl::View::IScreenControlViewPosition offset);
-                ~ReactionPushScreenControl() { }
+                                          IReactionScreenOffsetProvider& offsetProvider);
+                ~ReactionPushScreenControl();
 
                 Eegeo::Helpers::TIdentity ReactionToOpenableIdentity() override;
 

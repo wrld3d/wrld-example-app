@@ -6,6 +6,7 @@
 #include "IOpenableControlViewModel.h"
 #include "NavRoutingLocationModel.h"
 #include "NavRoutingRouteModel.h"
+#include "IReactionScreenOffsetProvider.h"
 
 namespace ExampleApp
 {
@@ -24,6 +25,8 @@ namespace ExampleApp
 
                 virtual void Close() = 0;
 
+                virtual void SetNavMode(SdkModel::NavRoutingMode mode) = 0;
+
                 virtual void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
 
                 virtual void RemoveOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
@@ -33,6 +36,8 @@ namespace ExampleApp
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
 
                 virtual OpenableControl::View::IOpenableControlViewModel& GetOpenableControl() = 0;
+
+                virtual Reaction::View::IReactionScreenOffsetProvider& GetCompassOffsetProvider() = 0;
             };
         }
     }

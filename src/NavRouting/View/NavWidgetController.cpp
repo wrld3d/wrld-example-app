@@ -118,6 +118,7 @@ namespace ExampleApp
             void NavWidgetController::OnNavRoutingModeSet(const NavRoutingModeSetMessage& message)
             {
                 m_view.SetNavMode(message.GetNavMode());
+                m_viewModel.SetNavMode(message.GetNavMode());
             }
 
             void NavWidgetController::OnNavRoutingViewOpen(const NavRoutingViewOpenMessage& message)
