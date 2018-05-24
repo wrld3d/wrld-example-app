@@ -13,13 +13,11 @@ namespace ExampleApp
         {
             InitialExperienceIntroController::InitialExperienceIntroController(IInitialExperienceIntroView& view,
                                                                                ExampleAppMessaging::TMessageBus& messageBus,
-                                                                               bool isInKioskMode,
                                                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController)
             : m_view(view)
             , m_messageBus(messageBus)
             , m_showIntroMessageHandler(this, &InitialExperienceIntroController::OnShowIntro)
             , m_viewDismissed(this, &InitialExperienceIntroController::OnViewDismissed)
-            , m_isInKioskMode(isInKioskMode)
             , m_replayExitIUX(true)
             , m_exitIUXViewedCount(0)
             , m_currAppMode(AppModes::SdkModel::WorldMode)
@@ -56,31 +54,28 @@ namespace ExampleApp
 
             void InitialExperienceIntroController::OnAppModeChangedMessage(const AppModes::AppModeChangedMessage& message)
             {
-                if(m_isInKioskMode)
-                {
-                    m_shouldShowExitIUX = false;
+				m_shouldShowExitIUX = false;
 
-                    AppModes::SdkModel::AppMode newAppMode = message.GetAppMode();
-                    if(newAppMode == AppModes::SdkModel::AttractMode)
-                    {
-                        m_view.DismissExitIUX();
-                        ReplayExitIUX(true);
-                        m_exitIUXViewedCount = 0;
-                    }
-                    else if(newAppMode == AppModes::SdkModel::WorldMode && m_currAppMode == AppModes::SdkModel::InteriorMode)
-                    {
-                        if (m_cameraTransitionController.IsTransitioning())
-                        {
-                            m_shouldShowExitIUX = true;
-                        }
-                        else
-                        {
-                            ShowExitIUX();
-                        }
-                    }
+				AppModes::SdkModel::AppMode newAppMode = message.GetAppMode();
+				if(newAppMode == AppModes::SdkModel::AttractMode)
+				{
+					m_view.DismissExitIUX();
+					ReplayExitIUX(true);
+					m_exitIUXViewedCount = 0;
+				}
+				else if(newAppMode == AppModes::SdkModel::WorldMode && m_currAppMode == AppModes::SdkModel::InteriorMode)
+				{
+					if (m_cameraTransitionController.IsTransitioning())
+					{
+						m_shouldShowExitIUX = true;
+					}
+					else
+					{
+						ShowExitIUX();
+					}
+				}
 
-                    m_currAppMode = newAppMode;
-                }
+				m_currAppMode = newAppMode;
             }
 
             void InitialExperienceIntroController::OnTransitionCompleteHandler()
