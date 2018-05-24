@@ -8,6 +8,7 @@
 #include "NavRouting.h"
 #include "Routes.h"
 #include "Location.h"
+#include "InteriorsModelRepository.h"
 #include "Markers.h"
 
 namespace ExampleApp
@@ -26,7 +27,8 @@ namespace ExampleApp
                                  Eegeo::Location::NavigationService& navigationService,
                                  Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                  ExampleAppMessaging::TMessageBus& messageBus,
-                                 Eegeo::Markers::IMarkerService& markerService);
+                                 Eegeo::Markers::IMarkerService& markerService,
+                                 Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository);
 
                 ~NavRoutingModule();
 
