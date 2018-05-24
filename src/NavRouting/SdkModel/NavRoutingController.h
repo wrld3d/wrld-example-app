@@ -14,6 +14,9 @@
 #include "NavRoutingEndLocationClearClickedMessage.h"
 #include "NavRoutingSelectedDirectionChangedMessage.h"
 #include "NavRoutingStartEndRoutingButtonClickedMessage.h"
+#include "InteriorsModelRepository.h"
+#include "AlertBox.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
 
 namespace ExampleApp
 {
@@ -27,7 +30,9 @@ namespace ExampleApp
                 NavRoutingController(INavRoutingModel& routingModel,
                                      Eegeo::Location::ILocationService& locationService,
                                      TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
-                                     ExampleAppMessaging::TMessageBus& messageBus);
+                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                     Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
+                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
 
                 ~NavRoutingController();
 
@@ -36,7 +41,8 @@ namespace ExampleApp
                 Eegeo::Location::ILocationService& m_locationService;
                 TurnByTurn::INavTurnByTurnModel& m_turnByTurnModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-
+                Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
+                Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
 
                 Eegeo::Helpers::TCallback1<NavRoutingController, const SdkModel::NavRoutingLocationModel&> m_startLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_startLocationClearedCallback;
@@ -56,6 +62,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingStartEndRoutingButtonClickedMessage&> m_startEndRoutingButtonClickedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingSelectedDirectionChangedMessage&> m_selectedDirectionChangedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
+                
+                Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavRoutingController> m_failAlertHandler;
 
 
                 void OnStartLocationSet(const SdkModel::NavRoutingLocationModel& startLocation);
@@ -91,6 +99,8 @@ namespace ExampleApp
                 void OnSelectedDirectionChanged(const NavRoutingSelectedDirectionChangedMessage& message);
 
                 void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
+                
+                void OnFailAlertBoxDismissed();
             };
         }
     }

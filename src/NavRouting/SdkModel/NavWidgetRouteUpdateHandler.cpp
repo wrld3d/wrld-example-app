@@ -132,6 +132,8 @@ namespace ExampleApp
             {
                 if (m_startLocationIsSet && m_endLocationIsSet)
                 {
+                    m_navRoutingModel.ClearRoute();
+                    
                     std::vector<Eegeo::Routes::Webservice::RoutingQueryWaypoint> waypoints;
                     waypoints.reserve(2);
 

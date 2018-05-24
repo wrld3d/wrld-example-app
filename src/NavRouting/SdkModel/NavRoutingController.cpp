@@ -14,6 +14,9 @@
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
 #include "NavRoutingModeSetMessage.h"
 #include "INavTurnByTurnModel.h"
+#include "InteriorsModel.h"
+#include "InteriorsFloorModel.h"
+#include "IAlertBoxFactory.h"
 
 namespace ExampleApp
 {
@@ -24,11 +27,15 @@ namespace ExampleApp
             NavRoutingController::NavRoutingController(INavRoutingModel& routingModel,
                                                        Eegeo::Location::ILocationService& locationService,
                                                        TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
-                                                       ExampleAppMessaging::TMessageBus& messageBus)
+                                                       ExampleAppMessaging::TMessageBus& messageBus,
+                                                       Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
+                                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
             : m_routingModel(routingModel)
             , m_locationService(locationService)
             , m_turnByTurnModel(turnByTurnModel)
             , m_messageBus(messageBus)
+            , m_interiorsModelRepository(interiorsModelRepository)
+            , m_alertBoxFactory(alertBoxFactory)
             , m_startLocationSetCallback(this, &NavRoutingController::OnStartLocationSet)
             , m_startLocationClearedCallback(this, &NavRoutingController::OnStartLocationCleared)
             , m_endLocationSetCallback(this, &NavRoutingController::OnEndLocationSet)
@@ -46,6 +53,7 @@ namespace ExampleApp
             , m_startEndRoutingButtonClickedMessageHandler(this, &NavRoutingController::OnStartEndRoutingButtonClicked)
             , m_selectedDirectionChangedMessageHandler(this, &NavRoutingController::OnSelectedDirectionChanged)
             , m_directionsButtonClickedMessageHandler(this, &NavRoutingController::OnDirectionsButtonClicked)
+            , m_failAlertHandler(this, &NavRoutingController::OnFailAlertBoxDismissed)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_routingModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
@@ -206,6 +214,8 @@ namespace ExampleApp
 
             void NavRoutingController::OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message)
             {
+                SdkModel::NavRoutingLocationModel startLocation, endLocation;
+                
                 if(m_locationService.GetIsAuthorized())
                 {
                     Eegeo::Space::LatLong currentLocation = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
@@ -214,22 +224,68 @@ namespace ExampleApp
                         int indoorMapFloorId = 0;
                         m_locationService.GetFloorIndex(indoorMapFloorId);
 
-                        m_routingModel.SetStartLocation(SdkModel::NavRoutingLocationModel("Current Location",
-                                                                                       currentLocation,
-                                                                                       m_locationService.IsIndoors(),
-                                                                                       m_locationService.GetInteriorId(),
-                                                                                       indoorMapFloorId));
+                        startLocation = SdkModel::NavRoutingLocationModel("Current Location",
+                                                                          currentLocation,
+                                                                          m_locationService.IsIndoors(),
+                                                                          m_locationService.GetInteriorId(),
+                                                                          indoorMapFloorId);
                     }
+                    else
+                    {
+                        m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to acquire location",
+                                                                     "We couldn't find your current location",
+                                                                     m_failAlertHandler);
+                        return;
+                    }
+                }
+                else
+                {
+                    m_alertBoxFactory.CreateSingleOptionAlertBox("Location service is not authorized",
+                                                                 "We didn't recieve autorization for location service",
+                                                                 m_failAlertHandler);
+                    return;
                 }
 
                 const Search::SdkModel::SearchResultModel& searchResultModel = message.GetModel();
-                m_routingModel.SetEndLocation(SdkModel::NavRoutingLocationModel(searchResultModel.GetTitle(),
-                                                                                searchResultModel.GetLocation(),
-                                                                                searchResultModel.IsInterior(),
-                                                                                searchResultModel.GetBuildingId(),
-                                                                                searchResultModel.GetFloor()));
+                
+                if(searchResultModel.IsInterior())
+                {
+                    const auto& indoorMapId = searchResultModel.GetBuildingId().Value();
+                    if (m_interiorsModelRepository.HasInterior(indoorMapId))
+                    {
+                        auto& interiorModel = m_interiorsModelRepository.GetInterior(indoorMapId);
+                        auto& floorModel = interiorModel.GetFloorAtIndex(searchResultModel.GetFloor());
+                        endLocation = SdkModel::NavRoutingLocationModel(searchResultModel.GetTitle(),
+                                                                        searchResultModel.GetLocation(),
+                                                                        searchResultModel.IsInterior(),
+                                                                        searchResultModel.GetBuildingId(),
+                                                                        floorModel.GetFloorNumber());
+                    }
+                    else
+                    {
+                        m_alertBoxFactory.CreateSingleOptionAlertBox("Interior not loaded",
+                                                                     "Interior information is not available",
+                                                                     m_failAlertHandler);
+                        return;
+                    }
+                }
+                else
+                {
+                    endLocation = SdkModel::NavRoutingLocationModel(searchResultModel.GetTitle(),
+                                                                    searchResultModel.GetLocation(),
+                                                                    searchResultModel.IsInterior(),
+                                                                    searchResultModel.GetBuildingId(),
+                                                                    searchResultModel.GetFloor());
+                }
+                
+                m_routingModel.SetStartLocation(startLocation);
+                m_routingModel.SetEndLocation(endLocation);
 
                 m_messageBus.Publish(NavRoutingViewOpenMessage(m_routingModel));
+            }
+            
+            void NavRoutingController::OnFailAlertBoxDismissed()
+            {
             }
         }
     }

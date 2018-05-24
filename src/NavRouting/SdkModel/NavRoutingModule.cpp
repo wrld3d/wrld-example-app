@@ -23,7 +23,8 @@ namespace ExampleApp
                                                Eegeo::Location::ILocationService& locationService,
                                                Eegeo::Location::NavigationService& navigationService,
                                                Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                                               ExampleAppMessaging::TMessageBus& messageBus)
+                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                               Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository)
             {
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
                 
@@ -59,7 +60,9 @@ namespace ExampleApp
                 m_pRoutingController = Eegeo_NEW(NavRoutingController)(*m_pNavRoutingModel,
                                                                        locationService,
                                                                        *m_pTurnByTurnModel,
-                                                                       messageBus);
+                                                                       messageBus,
+                                                                       interiorsModelRepository,
+                                                                       alertBoxFactory);
             }
 
             NavRoutingModule::~NavRoutingModule()

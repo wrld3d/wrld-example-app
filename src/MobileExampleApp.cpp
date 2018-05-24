@@ -680,6 +680,8 @@ namespace ExampleApp
                                                                             m_pTagSearchModule->GetSearchResultIconKeyMapper(),
                                                                             world.GetPlatformAbstractionModule().GetWebLoadRequestFactory(),
                                                                             m_messageBus);
+        
+        Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
         auto& polylineShapesModule = world.GetShapesModule().GetPolylineShapesModule();
         m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(polylineShapesModule.GetShapeService(),
@@ -687,12 +689,11 @@ namespace ExampleApp
                                                                                             world.GetLocationService(),
                                                                                             *m_pNavigationService,
                                                                                             m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
-                                                                                            m_messageBus);
+                                                                                            m_messageBus,
+                                                                                            interiorsModelModule.GetInteriorsModelRepository());
 
         m_pNavUIModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavUIModule)(m_identityProvider,
                                                                               *m_pModalityIgnoredReactionModel);
-  
-        Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
         m_pSearchResultSectionModule = Eegeo_NEW(SearchResultSection::SdkModel::SearchResultSectionModule)(m_pSearchMenuModule->GetSearchMenuViewModel(),
                                                                                                            m_pSearchModule->GetSearchResultRepository(),
