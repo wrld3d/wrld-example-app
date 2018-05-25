@@ -72,8 +72,6 @@ namespace ExampleApp
                         return;
                     }
 
-                    SdkModel::NavRoutingRouteModel currentRouteModel;
-
                     // TODO: Check this actually works if you're not looking at the indoor model itself.
                     Eegeo::Routes::PointOnRouteOptions options;
                     if(m_locationService.IsIndoors())
@@ -107,7 +105,7 @@ namespace ExampleApp
                     m_distanceFromRoute = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
 
                     // NOTE: Duration is currently just a fraction of the total route duration from the service / your progress.
-                    m_remainingDuration = CalculateDuration(pointOnRouteResult.GetFractionAlongRoute(), currentRouteModel.GetDuration());
+                    m_remainingDuration = CalculateDuration(pointOnRouteResult.GetFractionAlongRoute(), m_route.Duration);
 
                     m_currentSectionIndex = nextSectionIndex;
                     m_currentStepIndex = nextStepIndex;
