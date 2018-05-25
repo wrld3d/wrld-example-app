@@ -926,6 +926,9 @@ namespace ExampleApp
 
 	void MobileExampleApp::OnUiCreated(const UiCreatedMessage& message)
 	{
+		AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration,
+						   m_yelpCategoryMapperUpdater);
+
 		if (m_applicationConfiguration.ShouldPerformStartUpSearch())
 		{
             bool isTag = true;
@@ -1258,9 +1261,6 @@ namespace ExampleApp
             // Note: we're doing this here in a hacky way, as the views aren't constructed when the MEA ctor runs
             // ... doing it a little later ensures the view will get the notifications when items are added.
             MyPinsModule().GetMyPinsService().LoadAllPinsFromDisk();
-
-            AddTagSearchModels(m_pTagSearchModule->GetTagSearchRepository(), m_applicationConfiguration,
-                              m_yelpCategoryMapperUpdater);
 
             if (m_applicationConfiguration.IsAttractModeEnabled())
             {
