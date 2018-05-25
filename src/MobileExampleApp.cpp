@@ -934,6 +934,8 @@ namespace ExampleApp
             m_pSearchModule->GetSearchQueryPerformer().AskForSearchQuery(m_applicationConfiguration.StartUpSearchTag(),
                                                                          isTag, tryInteriorSearch, selectFirstResult);
 		}
+
+        m_pDeepLinkModule->GetDeepLinkController().OnUiStarted();
 	}
 
     void MobileExampleApp::DestroyApplicationModelModules()
