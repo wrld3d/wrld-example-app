@@ -25,6 +25,9 @@ namespace ExampleApp
 
             class INavRoutingModel;
             class NavRoutingModule;
+            class NavRoutingRouteModel;
+            class NavRoutingLocationModel;
+            class NavRoutingDirectionModel;
             class INavRoutingPolylineFactory;
             class INavRouteDrawingController;
             class INavRoutingServiceController;

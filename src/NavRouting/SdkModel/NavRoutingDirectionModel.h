@@ -19,23 +19,27 @@ namespace ExampleApp
                                          const std::string& icon,
                                          const std::string& instruction,
                                          const std::string& nextInstruction,
-                                         const std::vector<Eegeo::Space::LatLong>& path);
+                                         const std::vector<Eegeo::Space::LatLong>& path,
+                                         const double distance);
 
                 NavRoutingDirectionModel(const std::string& name,
                                          const std::string& icon,
                                          const std::string& instruction,
                                          const std::string& nextInstruction,
                                          const std::vector<Eegeo::Space::LatLong>& path,
+                                         const double distance,
                                          const bool isIndoors,
                                          const Eegeo::Resources::Interiors::InteriorId& indoorMapId,
                                          const int indoorMapFloorId,
                                          const bool isMultiFloor);
 
-                const std::string& GetName() const;
+                const std::string GetName() const;
                 const std::string& GetIcon() const;
-                const std::string& GetInstruction() const;
-                const std::string& GetNextInstruction() const;
+                const std::string GetInstruction() const;
+                const std::string GetNextInstruction() const;
                 const std::vector<Eegeo::Space::LatLong>& GetPath() const;
+                const double GetDistance() const;
+                void SetDistance(double distance);
                 const bool GetIsIndoors() const;
                 const Eegeo::Resources::Interiors::InteriorId& GetIndoorMapId() const;
                 const int GetIndoorMapFloorId() const;
@@ -48,6 +52,7 @@ namespace ExampleApp
                 std::string m_instruction;
                 std::string m_nextInstruction;
                 std::vector<Eegeo::Space::LatLong> m_path;
+                double m_distance;
                 bool m_isIndoors;
                 Eegeo::Resources::Interiors::InteriorId m_indoorMapId;
                 int m_indoorMapFloorId;
