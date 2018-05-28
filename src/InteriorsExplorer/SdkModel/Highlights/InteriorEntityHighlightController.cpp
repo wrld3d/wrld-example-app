@@ -219,6 +219,7 @@ namespace ExampleApp
                         if (model.GetId() == resource.GetInteriorId())
                         {
                             OnInteriorChanged();
+                            ApplyHighlightsForCurrentResults();
                         }
                     }
                 }
