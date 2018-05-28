@@ -17,6 +17,7 @@
 #include "NavRoutingRouteSetMessage.h"
 #include "NavRoutingRouteClearedMessage.h"
 #include "NavRoutingCurrentDirectionSetMessage.h"
+#include "NavRoutingCurrentDirectionUpdatedMessage.h"
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
 #include "NavRoutingModeSetMessage.h"
 
@@ -50,6 +51,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRouteSetMessage&> m_routeSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRouteClearedMessage&> m_routeClearedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingCurrentDirectionSetMessage&> m_currentDirectionSetMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingCurrentDirectionUpdatedMessage&> m_currentDirectionUpdatedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingSelectedDirectionSetMessage&> m_selectedDirectionSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRemainingRouteDurationSetMessage&> m_remainingRouteDurationSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingModeSetMessage&> m_navRoutingModeSetMessageHandler;
@@ -87,6 +89,8 @@ namespace ExampleApp
                 void OnRouteCleared(const NavRoutingRouteClearedMessage& message);
 
                 void OnCurrentDirectionSet(const NavRoutingCurrentDirectionSetMessage& message);
+
+                void OnCurrentDirectionUpdated(const NavRoutingCurrentDirectionUpdatedMessage& message);
 
                 void OnSelectedDirectionSet(const NavRoutingSelectedDirectionSetMessage& message);
 

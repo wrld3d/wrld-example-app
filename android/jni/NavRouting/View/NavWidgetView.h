@@ -57,6 +57,8 @@ namespace ExampleApp
 
                 void SetCurrentDirection(int directionIndex) override;
 
+                void UpdateCurrentDirection(const SdkModel::NavRoutingDirectionModel& directionModel) override;
+
                 void SetSelectedDirection(int directionIndex) override;
 
                 void SetRemainingRouteDuration(double seconds) override;

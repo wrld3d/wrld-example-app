@@ -23,7 +23,7 @@ namespace ExampleApp
                 NavRoutingRouteModel m_route;
                 bool m_routeIsSet;
                 int m_currentDirectionIndex;
-                int m_selectedDirectionIndex; //TODO add callbacks for selected direction
+                int m_selectedDirectionIndex;
                 double m_remainingRouteDuration;
                 NavRoutingMode m_navMode;
 
@@ -34,6 +34,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingRouteModel&> m_routeSetCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_routeClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_currentDirectionSetCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const NavRoutingDirectionModel&>m_currentDirectionUpdatedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_selectedDirectionIndexSetCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const double> m_remainingRouteDurationSetCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingMode> m_navModeSetCallbacks;
@@ -62,6 +63,8 @@ namespace ExampleApp
                 bool TryGetRoute(NavRoutingRouteModel &out_routeModel) const override;
 
                 void SetCurrentDirection(int directionIndex) override;
+
+                void UpdateCurrentDirection(const NavRoutingDirectionModel& directionModel) override;
 
                 int GetCurrentDirection() const override;
 
@@ -104,6 +107,10 @@ namespace ExampleApp
                 void InsertCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) override;
 
                 void RemoveCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) override;
+
+                void InsertCurrentDirectionUpdatedCallback(Eegeo::Helpers::ICallback1<const NavRoutingDirectionModel&>& currentDirectionUpdatedCallback) override;
+
+                void RemoveCurrentDirectionUpdatedCallback(Eegeo::Helpers::ICallback1<const NavRoutingDirectionModel&>& currentDirectionUpdatedCallback) override;
 
                 void InsertSelectedDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionSetCallback) override;
 

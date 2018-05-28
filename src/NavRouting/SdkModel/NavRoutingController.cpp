@@ -10,6 +10,7 @@
 #include "NavRoutingRouteSetMessage.h"
 #include "NavRoutingRouteClearedMessage.h"
 #include "NavRoutingCurrentDirectionSetMessage.h"
+#include "NavRoutingCurrentDirectionUpdatedMessage.h"
 #include "NavRoutingSelectedDirectionSetMessage.h"
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
 #include "NavRoutingModeSetMessage.h"
@@ -43,6 +44,7 @@ namespace ExampleApp
             , m_routeSetCallback(this, &NavRoutingController::OnRouteSet)
             , m_routeClearedCallback(this, &NavRoutingController::OnRouteCleared)
             , m_currentDirectionSetCallback(this, &NavRoutingController::OnCurrentDirectionSet)
+            , m_currentDirectionUpdatedCallback(this, &NavRoutingController::OnCurrentDirectionUpdated)
             , m_selectedDirectionSetCallback(this, &NavRoutingController::OnSelectedDirectionSet)
             , m_remainingRouteDurationSetCallback(this, &NavRoutingController::OnRemainingRouteDurationSet)
             , m_navRoutingModeSetCallback(this, &NavRoutingController::OnNavRoutingModeSet)
@@ -63,6 +65,7 @@ namespace ExampleApp
                 m_routingModel.InsertRouteClearedCallback(m_routeClearedCallback);
                 m_routingModel.InsertSelectedDirectionSetCallback(m_selectedDirectionSetCallback);
                 m_routingModel.InsertCurrentDirectionSetCallback(m_currentDirectionSetCallback);
+                m_routingModel.InsertCurrentDirectionUpdatedCallback(m_currentDirectionUpdatedCallback);
                 m_routingModel.InsertRemainingRouteDurationSetCallback(m_remainingRouteDurationSetCallback);
                 m_routingModel.InsertNavModeSetCallback(m_navRoutingModeSetCallback);
                 m_messageBus.SubscribeNative(m_viewClosedMessageHandler);
@@ -85,6 +88,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeNative(m_viewClosedMessageHandler);
                 m_routingModel.RemoveNavModeSetCallback(m_navRoutingModeSetCallback);
                 m_routingModel.RemoveRemainingRouteDurationSetCallback(m_remainingRouteDurationSetCallback);
+                m_routingModel.RemoveCurrentDirectionUpdatedCallback(m_currentDirectionUpdatedCallback);
                 m_routingModel.RemoveCurrentDirectionSetCallback(m_currentDirectionSetCallback);
                 m_routingModel.RemoveSelectedDirectionSetCallback(m_selectedDirectionSetCallback);
                 m_routingModel.RemoveRouteClearedCallback(m_routeClearedCallback);
@@ -95,7 +99,7 @@ namespace ExampleApp
                 m_routingModel.RemoveStartLocationSetCallback(m_startLocationSetCallback);
             }
 
-            void NavRoutingController::OnStartLocationSet(const SdkModel::NavRoutingLocationModel& startLocation)
+            void NavRoutingController::OnStartLocationSet(const NavRoutingLocationModel& startLocation)
             {
                 m_messageBus.Publish(NavRoutingStartLocationSetMessage(startLocation));
             }
@@ -105,7 +109,7 @@ namespace ExampleApp
                 m_messageBus.Publish(NavRoutingStartLocationClearedMessage());
             }
 
-            void NavRoutingController::OnEndLocationSet(const SdkModel::NavRoutingLocationModel& endLocation)
+            void NavRoutingController::OnEndLocationSet(const NavRoutingLocationModel& endLocation)
             {
                 m_messageBus.Publish(NavRoutingEndLocationSetMessage(endLocation));
             }
@@ -115,7 +119,7 @@ namespace ExampleApp
                 m_messageBus.Publish(NavRoutingEndLocationClearedMessage());
             }
 
-            void NavRoutingController::OnRouteSet(const SdkModel::NavRoutingRouteModel& routeModel)
+            void NavRoutingController::OnRouteSet(const NavRoutingRouteModel& routeModel)
             {
                 m_messageBus.Publish(NavRoutingRouteSetMessage(routeModel));
                 m_routingModel.SetNavMode(Ready);
@@ -132,6 +136,11 @@ namespace ExampleApp
             void NavRoutingController::OnCurrentDirectionSet(const int& directionIndex)
             {
                 m_messageBus.Publish(NavRoutingCurrentDirectionSetMessage(directionIndex));
+            }
+
+            void NavRoutingController::OnCurrentDirectionUpdated(const NavRoutingDirectionModel& directionModel)
+            {
+                m_messageBus.Publish(NavRoutingCurrentDirectionUpdatedMessage(directionModel));
             }
 
             void NavRoutingController::OnSelectedDirectionSet(const int& directionIndex)
@@ -190,7 +199,7 @@ namespace ExampleApp
                         break;
                     case NavRoutingMode::Ready:
                     {
-                        SdkModel::NavRoutingRouteModel routeModel;
+                        NavRoutingRouteModel routeModel;
                         if(m_routingModel.TryGetRoute(routeModel))
                         {
                             m_turnByTurnModel.Start(routeModel.GetSourceRouteData());
@@ -214,7 +223,7 @@ namespace ExampleApp
 
             void NavRoutingController::OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message)
             {
-                SdkModel::NavRoutingLocationModel startLocation, endLocation;
+                NavRoutingLocationModel startLocation, endLocation;
                 
                 if(m_locationService.GetIsAuthorized())
                 {
@@ -224,7 +233,7 @@ namespace ExampleApp
                         int indoorMapFloorId = 0;
                         m_locationService.GetFloorIndex(indoorMapFloorId);
 
-                        startLocation = SdkModel::NavRoutingLocationModel("Current Location",
+                        startLocation = NavRoutingLocationModel("Current Location",
                                                                           currentLocation,
                                                                           m_locationService.IsIndoors(),
                                                                           m_locationService.GetInteriorId(),
@@ -246,7 +255,7 @@ namespace ExampleApp
                     return;
                 }
 
-                const Search::SdkModel::SearchResultModel& searchResultModel = message.GetModel();
+                const auto& searchResultModel = message.GetModel();
                 
                 if(searchResultModel.IsInterior())
                 {
@@ -255,11 +264,11 @@ namespace ExampleApp
                     {
                         auto& interiorModel = m_interiorsModelRepository.GetInterior(indoorMapId);
                         auto& floorModel = interiorModel.GetFloorAtIndex(searchResultModel.GetFloor());
-                        endLocation = SdkModel::NavRoutingLocationModel(searchResultModel.GetTitle(),
-                                                                        searchResultModel.GetLocation(),
-                                                                        searchResultModel.IsInterior(),
-                                                                        searchResultModel.GetBuildingId(),
-                                                                        floorModel.GetFloorNumber());
+                        endLocation = NavRoutingLocationModel(searchResultModel.GetTitle(),
+                                                              searchResultModel.GetLocation(),
+                                                              searchResultModel.IsInterior(),
+                                                              searchResultModel.GetBuildingId(),
+                                                              floorModel.GetFloorNumber());
                     }
                     else
                     {
@@ -271,11 +280,11 @@ namespace ExampleApp
                 }
                 else
                 {
-                    endLocation = SdkModel::NavRoutingLocationModel(searchResultModel.GetTitle(),
-                                                                    searchResultModel.GetLocation(),
-                                                                    searchResultModel.IsInterior(),
-                                                                    searchResultModel.GetBuildingId(),
-                                                                    searchResultModel.GetFloor());
+                    endLocation = NavRoutingLocationModel(searchResultModel.GetTitle(),
+                                                          searchResultModel.GetLocation(),
+                                                          searchResultModel.IsInterior(),
+                                                          searchResultModel.GetBuildingId(),
+                                                          searchResultModel.GetFloor());
                 }
                 
                 m_routingModel.SetStartLocation(startLocation);
