@@ -38,7 +38,7 @@ namespace ExampleApp
                                                      Compass::View::ICompassView& compassView,
                                                      ExampleAppMessaging::TMessageBus& messageBus_)
             {
-                registerObserver("selectedDirection");
+                registerObserver("selectedDirectionIndex");
                 
                 m_pNavModel = [[WRLDNavModel alloc] init];
                 
@@ -75,9 +75,9 @@ namespace ExampleApp
             
             void NavWidgetViewModule::changeReceived(const std::string& keyPath)
             {
-                if(keyPath == "selectedDirection")
+                if(keyPath == "selectedDirectionIndex")
                 {
-                    m_pView->HandleSelectedDirectionIndexChangedCallback((int)m_pNavModel.selectedDirection);
+                    m_pView->HandleSelectedDirectionIndexChangedCallback((int)m_pNavModel.selectedDirectionIndex);
                 }
             }
             

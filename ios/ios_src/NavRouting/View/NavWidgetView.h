@@ -67,6 +67,7 @@ namespace ExampleApp
                 void ClearRoute();
                 
                 void SetCurrentDirection(int directionIndex);
+                void UpdateCurrentDirection(const SdkModel::NavRoutingDirectionModel& directionModel);
                 void SetSelectedDirection(int directionIndex);
 
                 void SetRemainingRouteDuration(double seconds);
