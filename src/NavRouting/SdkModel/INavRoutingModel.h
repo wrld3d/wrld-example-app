@@ -7,6 +7,7 @@
 #include "CallbackCollection.h"
 #include "NavRoutingLocationModel.h"
 #include "NavRoutingRouteModel.h"
+#include "NavRoutingDirectionModel.h"
 
 namespace ExampleApp
 {
@@ -19,27 +20,29 @@ namespace ExampleApp
             public:
                 virtual ~INavRoutingModel() {}
 
-                virtual void SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel) = 0;
+                virtual void SetStartLocation(const NavRoutingLocationModel& locationModel) = 0;
 
                 virtual void ClearStartLocation() = 0;
 
-                virtual bool TryGetStartLocation(SdkModel::NavRoutingLocationModel &out_startLocation) const = 0;
+                virtual bool TryGetStartLocation(NavRoutingLocationModel &out_startLocation) const = 0;
 
-                virtual void SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel) = 0;
+                virtual void SetEndLocation(const NavRoutingLocationModel& locationModel) = 0;
 
                 virtual void ClearEndLocation() = 0;
 
-                virtual bool TryGetEndLocation(SdkModel::NavRoutingLocationModel &out_endLocation) const = 0;
+                virtual bool TryGetEndLocation(NavRoutingLocationModel &out_endLocation) const = 0;
 
                 virtual bool HasRoute() const = 0;
 
-                virtual void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel) = 0;
+                virtual void SetRoute(const NavRoutingRouteModel& routeModel) = 0;
 
                 virtual void ClearRoute() = 0;
 
-                virtual bool TryGetRoute(SdkModel::NavRoutingRouteModel &out_routeModel) const = 0;
+                virtual bool TryGetRoute(NavRoutingRouteModel &out_routeModel) const = 0;
 
                 virtual void SetCurrentDirection(int directionIndex) = 0;
+
+                virtual void UpdateCurrentDirection(const NavRoutingDirectionModel& directionModel) = 0;
 
                 virtual int GetCurrentDirection() const = 0;
 
@@ -55,25 +58,25 @@ namespace ExampleApp
 
                 virtual NavRoutingMode GetNavMode() const = 0;
 
-                virtual void InsertStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback) = 0;
+                virtual void InsertStartLocationSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingLocationModel&>& startLocationSetCallback) = 0;
 
-                virtual void RemoveStartLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& startLocationSetCallback) = 0;
+                virtual void RemoveStartLocationSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingLocationModel&>& startLocationSetCallback) = 0;
 
                 virtual void InsertStartLocationClearedCallback(Eegeo::Helpers::ICallback0& startLocationClearedCallback) = 0;
 
                 virtual void RemoveStartLocationClearedCallback(Eegeo::Helpers::ICallback0& startLocationClearedCallback) = 0;
 
-                virtual void InsertEndLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& endLocationSetCallback) = 0;
+                virtual void InsertEndLocationSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingLocationModel&>& endLocationSetCallback) = 0;
 
-                virtual void RemoveEndLocationSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingLocationModel&>& endLocationSetCallback) = 0;
+                virtual void RemoveEndLocationSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingLocationModel&>& endLocationSetCallback) = 0;
 
                 virtual void InsertEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback) = 0;
 
                 virtual void RemoveEndLocationClearedCallback(Eegeo::Helpers::ICallback0& endLocationClearedCallback) = 0;
 
-                virtual void InsertRouteSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingRouteModel&>& routeSetCallback) = 0;
+                virtual void InsertRouteSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingRouteModel&>& routeSetCallback) = 0;
 
-                virtual void RemoveRouteSetCallback(Eegeo::Helpers::ICallback1<const SdkModel::NavRoutingRouteModel&>& routeSetCallback) = 0;
+                virtual void RemoveRouteSetCallback(Eegeo::Helpers::ICallback1<const NavRoutingRouteModel&>& routeSetCallback) = 0;
 
                 virtual void InsertRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) = 0;
 
@@ -82,6 +85,10 @@ namespace ExampleApp
                 virtual void InsertCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) = 0;
 
                 virtual void RemoveCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) = 0;
+
+                virtual void InsertCurrentDirectionUpdatedCallback(Eegeo::Helpers::ICallback1<const NavRoutingDirectionModel&>& currentDirectionUpdatedCallback) = 0;
+
+                virtual void RemoveCurrentDirectionUpdatedCallback(Eegeo::Helpers::ICallback1<const NavRoutingDirectionModel&>& currentDirectionUpdatedCallback) = 0;
 
                 virtual void InsertSelectedDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionSetCallback) = 0;
 

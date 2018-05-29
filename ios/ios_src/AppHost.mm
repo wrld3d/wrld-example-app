@@ -77,6 +77,7 @@
 #include "NavRoutingModule.h"
 #include "NavWidgetViewModule.h"
 #include "UiCreatedMessage.h"
+#include "ICompassView.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -402,6 +403,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     const ExampleApp::NavRouting::View::NavUIModule& navUIModule = app.NavUIModule();
     m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(navUIModule.GetObservableOpenableControl(),
                                                                                       navUIModule.GetNavWidgetViewModel(),
+                                                                                      m_pCompassViewModule->GetCompassViewInterop(),
                                                                                       m_messageBus);
     
     

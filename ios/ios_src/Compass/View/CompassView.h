@@ -64,6 +64,8 @@ enum CompassPositionState {Default, Navigation};
 
 - (void) setPositionState: (CompassPositionState) state;
 
+- (void) setNavigationModeOffset: (NSInteger) offset;
+
 @property (nonatomic, retain) UIImageView* pOuterShape;
 @property (nonatomic, retain) UIView* pInnerShape;
 @property (nonatomic, retain) UIImageView* pPoint;

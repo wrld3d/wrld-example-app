@@ -16,6 +16,7 @@ import com.wrld.widgets.navigation.model.WrldNavModel;
 import com.wrld.widgets.navigation.model.WrldNavModelObserver;
 import com.wrld.widgets.navigation.model.WrldNavModelObserverListener;
 import com.wrld.widgets.navigation.model.WrldNavRoute;
+import com.wrld.widgets.navigation.model.WrldNavDirection;
 import com.wrld.widgets.navigation.widget.WrldNavWidget;
 
 public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverListener
@@ -114,6 +115,11 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     public void setCurrentDirectionIndex(int directionIndex)
     {
         m_model.setCurrentDirectionIndex(directionIndex);
+    }
+
+    public void setCurrentDirection(WrldNavDirection currentDirection)
+    {
+        m_model.setCurrentDirection(currentDirection);
     }
 
     public void setSelectedDirectionIndex(int directionIndex)

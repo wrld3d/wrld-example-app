@@ -53,6 +53,11 @@ namespace ExampleApp
                 static const char* Down = "down";
             }
 
+            namespace VariableSpecifiers
+            {
+                static const char* Distance = "<dist>";
+            }
+
             namespace
             {
                 std::string GetDirectionWithOptionalLocation(std::string direction,
@@ -197,11 +202,11 @@ namespace ExampleApp
                 }
 
                 std::stringstream ss;
-                ss << currentStep.Distance << "m - " << nextInstructionText;
+                ss << VariableSpecifiers::Distance << "m - " << nextInstructionText;
                 std::string shortInstructionName = ss.str();
                 ss.str(std::string());
 
-                ss << Preposition::In << " " << currentStep.Distance << "m " << nextInstructionText;
+                ss << Preposition::In << " " << VariableSpecifiers::Distance << "m " << nextInstructionText;
                 std::string fullInstructionText = ss.str();
 
                 std::string iconKey;

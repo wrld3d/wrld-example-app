@@ -5,6 +5,8 @@ set(currsources
   ../src/NavRouting/NavRouting.h
   ../src/NavRouting/NavRoutingCurrentDirectionSetMessage.cpp
   ../src/NavRouting/NavRoutingCurrentDirectionSetMessage.h
+  ../src/NavRouting/NavRoutingCurrentDirectionUpdatedMessage.cpp
+  ../src/NavRouting/NavRoutingCurrentDirectionUpdatedMessage.h
   ../src/NavRouting/NavRoutingSelectedDirectionSetMessage.cpp
   ../src/NavRouting/NavRoutingSelectedDirectionSetMessage.h
   ../src/NavRouting/NavRoutingEndLocationClearClickedMessage.h

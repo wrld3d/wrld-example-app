@@ -31,6 +31,8 @@ namespace ExampleApp
                 const std::vector<NavRoutingDirectionModel>& GetDirections() const;
                 const Eegeo::Routes::Webservice::RouteData& GetSourceRouteData() const;
 
+                void UpdateDirection(int index, const NavRoutingDirectionModel& directionModel);
+
             private:
 
                 double m_duration;

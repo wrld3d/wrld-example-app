@@ -80,6 +80,11 @@ namespace ExampleApp
                 CompassPositionState positionState = (CompassPositionState) state;
                 [m_pView setPositionState: positionState];
             }
+            
+            void CompassViewInterop::SetNavigationModeOffset(int offset)
+            {
+                [m_pView setNavigationModeOffset: offset];
+            }
         }
     }
 }

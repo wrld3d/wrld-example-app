@@ -49,6 +49,7 @@ namespace ExampleApp
                                                           hasLocationName ? formattedInstructions.GetInstructionLocation() : formattedInstructions.GetShortInstructionName(),
                                                           hasLocationName ? formattedInstructions.GetInstructionDirection() : std::string(),
                                                           step.Path,
+                                                          step.Distance,
                                                           step.IsIndoors,
                                                           step.IndoorId,
                                                           step.IndoorFloorId,

@@ -8,6 +8,7 @@
 #include "IAppModeModel.h"
 #include "INavWidgetView.h"
 #include "INavWidgetViewModel.h"
+#include "ICompassView.h"
 
 
 namespace ExampleApp
@@ -41,7 +42,7 @@ namespace ExampleApp
                 NSString* BuildNSStringFromString(const std::string& string);
                 
             public:
-                NavWidgetView(WRLDNavModel* m_pNavModel);
+                NavWidgetView(WRLDNavModel* m_pNavModel, Compass::View::ICompassView& compassView);
                 
                 ~NavWidgetView() { };
                 

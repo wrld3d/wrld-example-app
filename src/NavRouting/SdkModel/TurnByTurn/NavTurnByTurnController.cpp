@@ -102,7 +102,10 @@ namespace ExampleApp
 
                     m_navRoutingModel.SetCurrentDirection(directionIndex);
                     m_navRoutingModel.SetRemainingRouteDuration(m_turnByTurnModel.GetRemainingDuration());
-                    // TODO: Update distance - this is done on a per step basis so might need to regen whole route
+
+                    auto currentDirection = currentRouteModel.GetDirections()[directionIndex];
+                    currentDirection.SetDistance(m_turnByTurnModel.GetDistanceToNextStep());
+                    m_navRoutingModel.UpdateCurrentDirection(currentDirection);
                 }
             }
         }
