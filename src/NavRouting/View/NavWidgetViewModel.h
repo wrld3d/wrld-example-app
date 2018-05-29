@@ -22,6 +22,7 @@ namespace ExampleApp
                 NavWidgetOpenableControl m_openable;
 
                 Reaction::View::ReactionScreenStateProvider m_compassStateProvider;
+                Reaction::View::ReactionScreenStateProvider m_interiorsStateProvider;
 
             public:
                 NavWidgetViewModel(Eegeo::Helpers::TIdentity identity);
@@ -47,6 +48,7 @@ namespace ExampleApp
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) override;
 
                 Reaction::View::IReactionScreenStateProvider& GetCompassStateProvider() override;
+                Reaction::View::IReactionScreenStateProvider& GetInteriorsStateProvider() override;
             };
         }
     }

@@ -44,7 +44,16 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 
 	private int m_navWidgetModeOffset = 0;
 
-	private enum CompassState {Default, Navigation};
+	private enum CompassState {
+	    Default(0), Navigation(1);
+        private final int state;
+        CompassState(int state){
+            this.state = state;
+        }
+        public final int getState(){
+            return this.state;
+        }
+	};
 
 	public CompassView(MainActivity activity, long nativeCallerPointer)
 	{
@@ -202,10 +211,21 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 
 	public void setState(final int state)
 	{
-		CompassState compassState = CompassState.values()[state];
+		CompassState compassState = rawStateToCompassState(state);
 		int offsetDip = (compassState == CompassState.Default) ? 0 : m_navWidgetModeOffset;
 		m_yPosActive = m_defaultYPosActive - m_activity.dipAsPx(offsetDip);
 		animateToActive();
+	}
+
+	private CompassState rawStateToCompassState(final int state)
+	{
+		if(CompassState.Navigation.getState() == state) {
+			return CompassState.Navigation;
+		}
+		if(CompassState.Default.getState() == state) {
+			return CompassState.Default;
+		}
+		throw new ClassCastException(state + " is not a valid CompassState");
 	}
 
 	public void setNavigationModeOffset(final int offset)

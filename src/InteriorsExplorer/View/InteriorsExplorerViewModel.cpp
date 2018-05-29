@@ -12,8 +12,8 @@ namespace ExampleApp
             InteriorsExplorerViewModel::InteriorsExplorerViewModel(bool initiallyOnScreen,
                                                                    Eegeo::Helpers::TIdentity identity,
                                                                    ExampleAppMessaging::TMessageBus& messageBus)
-            : m_onScreenState(initiallyOnScreen ? 1.f : 0.f)
-            , m_addedToScreen(initiallyOnScreen)
+            : m_isOnScreen(initiallyOnScreen)
+            , m_viewState(DisplayMode::Default)
             , m_identity(identity)
             , m_messageBus(messageBus)
             , m_canAddToScreen(false)
@@ -38,16 +38,14 @@ namespace ExampleApp
                 {
                     return;
                 }
-                
-                m_addedToScreen = true;
-                m_onScreenState = 1.f;
+
+                m_isOnScreen = true;
                 m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this);
             }
             
             void InteriorsExplorerViewModel::RemoveFromScreen()
             {
-                m_addedToScreen = false;
-                m_onScreenState = 0.f;
+                m_isOnScreen = false;
                 m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this);
             }
 
@@ -65,27 +63,37 @@ namespace ExampleApp
             
             bool InteriorsExplorerViewModel::IsOffScreen() const
             {
-                return OnScreenState() == 0.f;
+                return !m_isOnScreen;
             }
             
             bool InteriorsExplorerViewModel::IsOnScreen() const
             {
-                return OnScreenState() == 1.f;
+                return m_isOnScreen;
             }
-            
-            float InteriorsExplorerViewModel::OnScreenState() const
-            {
-                return m_onScreenState;
-            }
-            
-            bool InteriorsExplorerViewModel::IsAddedToScreen() const
-            {
-                return m_addedToScreen;
-            }
-            
+
             void InteriorsExplorerViewModel::OnAppModeChanged(const AppModes::AppModeChangedMessage &message)
             {
                 m_canAddToScreen = (message.GetAppMode() == AppModes::SdkModel::InteriorMode);
+            }
+
+            ScreenControl::View::IMultiStateScreenControlViewModel& InteriorsExplorerViewModel::GetScreenControlViewModel()
+            {
+                return *this;
+            }
+
+            void InteriorsExplorerViewModel::SetState(
+                    ScreenControl::View::TScreenControlViewState screenControlViewState)
+            {
+                m_viewState = screenControlViewState;
+                if(m_isOnScreen)
+                {
+                    m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this);
+                }
+            }
+
+            ScreenControl::View::TScreenControlViewState InteriorsExplorerViewModel::GetState()
+            {
+                return m_viewState;
             }
         }
     }

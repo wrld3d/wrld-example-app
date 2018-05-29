@@ -18,6 +18,7 @@
 #include "InteriorsExplorerView.h"
 #include "AndroidNativeState.h"
 #include "NavigationService.h"
+#include "INavWidgetView.h"
 
 namespace ExampleApp
 {
@@ -36,7 +37,8 @@ namespace ExampleApp
                 							InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
 											AndroidNativeState &nativeState,
-                                            Eegeo::Location::NavigationService& navigationService);
+                                            Eegeo::Location::NavigationService& navigationService,
+                                            Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navWidgetViewTopHeightChangedCallbacks);
                 
                 ~InteriorsExplorerViewModule();
                 

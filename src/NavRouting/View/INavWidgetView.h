@@ -19,6 +19,8 @@ namespace ExampleApp
             class INavWidgetView
             {
             public:
+                typedef const int THeight;
+
                 virtual ~INavWidgetView() { };
 
                 virtual void Show() = 0;
@@ -70,6 +72,9 @@ namespace ExampleApp
 
                 virtual void InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback) = 0;
                 virtual void RemoveSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback) = 0;
+
+                virtual THeight GetTopViewHeight() = 0;
+                virtual THeight GetBottomViewHeight() = 0;
             };
         }
     }

@@ -67,6 +67,7 @@
 #include "AndroidScreenshotService.h"
 #include "SurfaceScreenshotService.h"
 #include "INavWidgetViewModule.h"
+#include "INavWidgetView.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -128,6 +129,9 @@ private:
     Eegeo::Android::Input::AndroidInputProcessor* m_pInputProcessor;
 
     ExampleApp::ModalBackground::SdkModel::IModalBackgroundNativeViewModule* m_pModalBackgroundNativeViewModule;
+
+    Eegeo::Helpers::CallbackCollection1<ExampleApp::NavRouting::View::INavWidgetView::THeight> m_navWidgetViewTopHeightChangedCallbacks;
+    Eegeo::Helpers::CallbackCollection1<ExampleApp::NavRouting::View::INavWidgetView::THeight> m_navWidgetViewBottomHeightChangedCallbacks;
 
 
     Eegeo::Android::AndroidPlatformAbstractionModule* m_pAndroidPlatformAbstractionModule;

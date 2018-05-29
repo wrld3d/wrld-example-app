@@ -13,10 +13,14 @@ namespace ExampleApp
     {
         namespace View
         {
-        InteriorsExplorerView::InteriorsExplorerView(AndroidNativeState &state)
+        InteriorsExplorerView::InteriorsExplorerView(AndroidNativeState &state,
+													 Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navViewBottomHeightChangedCallbacks)
 				: m_nativeState(state)
 				, m_uiViewClass(NULL)
 				, m_uiView(NULL)
+				, m_navWidgetTopHeightChangedCallback(this,
+                                                      &InteriorsExplorerView::SetNavigationModeTopHeight)
+				, m_navWidgetTopHeightChangedCallbacks(navViewBottomHeightChangedCallbacks)
 			{
 				ASSERT_UI_THREAD
 
@@ -38,10 +42,13 @@ namespace ExampleApp
 								   );
 
 				m_uiView = env->NewGlobalRef(instance);
+
+				m_navWidgetTopHeightChangedCallbacks.AddCallback(m_navWidgetTopHeightChangedCallback);
 			}
 
 			InteriorsExplorerView::~InteriorsExplorerView()
 			{
+				m_navWidgetTopHeightChangedCallbacks.RemoveCallback(m_navWidgetTopHeightChangedCallback);
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;
 
@@ -227,6 +234,18 @@ namespace ExampleApp
 				env->CallVoidMethod(m_uiView, animateToInactive);
             }
 
+			void InteriorsExplorerView::SetState(
+					ScreenControl::View::TScreenControlViewState state)
+			{
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv *env = attached.envForThread;
+
+                jmethodID setState = env->GetMethodID(m_uiViewClass, "setState", "(I)V");
+                env->CallVoidMethod(m_uiView, setState, state);
+			}
+
             void InteriorsExplorerView::SetTouchEnabled(bool enabled)
             {
                 ASSERT_UI_THREAD
@@ -248,6 +267,29 @@ namespace ExampleApp
 				jmethodID playSliderAnim = env->GetMethodID(m_uiViewClass, "playShakeSliderAnim", "()V");
 				env->CallVoidMethod(m_uiView, playSliderAnim);
 			}
+
+			void InteriorsExplorerView::SetNavigationModeTopHeight(
+                    NavRouting::View::INavWidgetView::THeight &topHeight)
+			{
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID setTopBoundsInNavigationMode = env->GetMethodID(m_uiViewClass, "setNavigationModeUpperBound", "(I)V");
+                env->CallVoidMethod(m_uiView, setTopBoundsInNavigationMode, topHeight);
+			}
+
+            void InteriorsExplorerView::SetNavigationModeBottomHeight(NavRouting::View::INavWidgetView::THeight& bottomHeight)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID setTopBoundsInNavigationMode = env->GetMethodID(m_uiViewClass, "setNavigationModeLowerBound", "(I)V");
+                env->CallVoidMethod(m_uiView, setTopBoundsInNavigationMode, bottomHeight);
+            }
         }
     }
 }

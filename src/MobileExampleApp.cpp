@@ -1067,6 +1067,10 @@ namespace ExampleApp
                                     (NavUIModule().GetObservableOpenableControl(),
                                      CompassModule().GetScreenControlViewModel(),
                                      NavUIModule().GetNavWidgetViewModel().GetCompassStateProvider()));
+        reactions.push_back(Eegeo_NEW(Reaction::View::ReactionPushScreenControl)
+                                    (NavUIModule().GetObservableOpenableControl(),
+                                     InteriorsExplorerModule().GetScreenControlViewModel(),
+                                     NavUIModule().GetNavWidgetViewModel().GetInteriorsStateProvider()));
         return reactions;
     }
 
