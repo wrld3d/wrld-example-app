@@ -32,6 +32,8 @@ namespace ExampleApp
                 CompassController& GetCompassController() const;
 
                 CompassView& GetCompassView() const;
+                
+                ICompassView& GetCompassViewInterop();
             };
         }
     }

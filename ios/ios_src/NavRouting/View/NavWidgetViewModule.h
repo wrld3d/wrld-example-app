@@ -11,7 +11,7 @@
 #include "BidirectionalBus.h"
 #include "INavWidgetViewModule.h"
 #include "INavWidgetViewModel.h"
-
+#include "ICompassView.h"
 
 namespace Eegeo
 {
@@ -52,6 +52,7 @@ namespace ExampleApp
             public:
                 NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                     INavWidgetViewModel& viewModel,
+                                    Compass::View::ICompassView& compassView,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~NavWidgetViewModule();

@@ -16,6 +16,7 @@ namespace ExampleApp
 
         namespace View
         {
+            class ICompassView;
             class ICompassViewModel;
             class CompassViewModel;
             class CompassController;

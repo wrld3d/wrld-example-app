@@ -18,6 +18,7 @@ namespace ExampleApp
 
                 virtual CompassController& GetCompassController() const = 0;
                 virtual CompassView& GetCompassView() const = 0;
+                virtual ICompassView& GetCompassViewInterop() = 0;
             };
         }
     }

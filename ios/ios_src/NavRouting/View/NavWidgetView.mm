@@ -3,6 +3,7 @@
 #include "NavWidgetViewIncludes.h"
 #include "NavWidgetView.h"
 #include "NavWidgetView.h"
+#include "ICompassView.h"
 #include <MapKit/MapKit.h>
 
 namespace ExampleApp
@@ -12,17 +13,19 @@ namespace ExampleApp
         namespace View
         {
             
-            NavWidgetView::NavWidgetView(WRLDNavModel* navModel)
+            NavWidgetView::NavWidgetView(WRLDNavModel* navModel, Compass::View::ICompassView& compassView)
             {
                 m_pNavModel = navModel;
                 
                 if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                 {
                     m_pView = [[WRLDNavWidgetTablet alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+                    compassView.SetNavigationModeOffset(0);
                 }
                 else
                 {
                     m_pView = [[WRLDNavWidgetPhone alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+                    compassView.SetNavigationModeOffset(96);
                 }
                 
                 [m_pView setViewVisibilityWithAnimate:false hideViews:true];
