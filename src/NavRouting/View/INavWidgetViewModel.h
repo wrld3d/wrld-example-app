@@ -38,6 +38,7 @@ namespace ExampleApp
                 virtual OpenableControl::View::IOpenableControlViewModel& GetOpenableControl() = 0;
 
                 virtual Reaction::View::IReactionScreenStateProvider& GetCompassStateProvider() = 0;
+                virtual Reaction::View::IReactionScreenStateProvider& GetInteriorsStateProvider() = 0;
             };
         }
     }

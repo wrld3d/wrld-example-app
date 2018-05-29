@@ -54,6 +54,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_observer.setListener(this);
         m_observer.setNavModel(m_model);
 
+        NavWidgetViewJniMethods.SetTopViewHeight(m_nativeCallerPointer, 256);
         NavWidgetViewJniMethods.SetBottomViewHeight(m_nativeCallerPointer, m_navWidget.getBottomPanelHeight());
     }
 

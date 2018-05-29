@@ -9,6 +9,7 @@
 #include "INavWidgetView.h"
 #include "NavRoutingLocationModel.h"
 #include "ICompassView.h"
+#include "IInteriorsExplorerView.h"
 
 namespace ExampleApp
 {
@@ -29,13 +30,19 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_startEndRoutingButtonClicked;
                 Eegeo::Helpers::CallbackCollection1<const int> m_selectedDirectionIndexChangedCallbacks;
 
-                Compass::View::ICompassView& m_compassView;
+                Eegeo::Helpers::CallbackCollection1<THeight>& m_navWidgetViewTopHeightChangedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<THeight>& m_navWidgetViewBottomHeightChangedCallbacks;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
+                int m_topViewHeight;
+                int m_bottomViewHeight;
+
             public:
-                NavWidgetView(AndroidNativeState& nativeState, Compass::View::ICompassView& compassView);
+                NavWidgetView(AndroidNativeState& nativeState,
+                              Eegeo::Helpers::CallbackCollection1<THeight>& navWidgetViewTopHeightChangedCallbacks,
+                              Eegeo::Helpers::CallbackCollection1<THeight>& navWidgetViewBottomHeightChangedCallbacks);
 
                 ~NavWidgetView();
 
@@ -113,7 +120,13 @@ namespace ExampleApp
 
                 void HandleSelectedDirectionIndexChanged(int selectedDirectionIndex);
 
-                void SetBottomViewHeight(int bottomViewHeight);
+                void SetTopViewHeight(THeight topViewHeight);
+
+                void SetBottomViewHeight(THeight bottomViewHeight);
+
+                THeight GetTopViewHeight() override;
+
+                THeight GetBottomViewHeight() override;
 
             private:
                 void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);

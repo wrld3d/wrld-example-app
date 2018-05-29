@@ -13,11 +13,14 @@ namespace ExampleApp
             NavWidgetViewModule::NavWidgetViewModule(
                 AndroidNativeState& nativeState,
                 INavWidgetViewModel& navWidgetViewModel,
-                Compass::View::ICompassView& compassView,
+                Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& navWidgetViewTopHeightChangedCallbacks,
+                Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& navWidgetViewBottomHeightChangedCallbacks,
                 ExampleAppMessaging::TMessageBus& messageBus)
             {
                 ASSERT_UI_THREAD
-                m_pView = Eegeo_NEW(NavWidgetView)(nativeState, compassView);
+                m_pView = Eegeo_NEW(NavWidgetView)(nativeState,
+                                                   navWidgetViewTopHeightChangedCallbacks,
+                                                   navWidgetViewBottomHeightChangedCallbacks);
                 m_pController = Eegeo_NEW(NavWidgetController)(*m_pView, navWidgetViewModel, messageBus);
             }
 
@@ -28,7 +31,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pView;
             }
 
-            NavWidgetView& NavWidgetViewModule::GetView() const
+            INavWidgetView& NavWidgetViewModule::GetView() const
             {
                 return *m_pView;
             }

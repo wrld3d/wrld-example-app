@@ -12,6 +12,7 @@
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
 #include "ICompassView.h"
+#include "IInteriorsExplorerView.h"
 
 namespace ExampleApp
 {
@@ -29,13 +30,14 @@ namespace ExampleApp
                 NavWidgetViewModule(
                     AndroidNativeState& nativeState,
                     INavWidgetViewModel& navWidgetViewModel,
-                    Compass::View::ICompassView& compassView,
+                    Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& navWidgetViewTopHeightChangedCallbacks,
+                    Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& navWidgetViewBottomHeightChangedCallbacks,
                     ExampleAppMessaging::TMessageBus& messageBus
                 );
 
                 ~NavWidgetViewModule();
 
-                NavWidgetView& GetView() const;
+                INavWidgetView& GetView() const;
                 NavWidgetController& GetController() const;
             };
         }

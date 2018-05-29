@@ -7,7 +7,7 @@
     android:clipChildren="false"
     android:clipToPadding="false" >
 
-    <LinearLayout 
+    <LinearLayout
     android:id="@+id/top_panel"
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -25,14 +25,22 @@
             android:textSize="18dp" >
         </TextView>
 	</LinearLayout>
-	
+
+    <Space
+        android:id="@+id/interiors_explorer_layout_right_panel_top_margin"
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_height="100dp"/>
+
     <RelativeLayout
         android:id="@+id/right_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="45dp"
+        android:layout_below="@+id/interiors_explorer_layout_right_panel_top_margin"
+        android:layout_above="@+id/interiors_explorer_layout_right_panel_bottom_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:clipChildren="false"
         android:clipToPadding="false">
 
@@ -46,7 +54,14 @@
             android:src="@drawable/button_exit_interior_states">
         </ImageView>
 
-	<include android:layout_marginTop="15dp"  android:layout_below="@+id/back_button" android:layout_width="70dp"  android:layout_height="150dp"  layout="@layout/interiors_floor_list_container_layout"/>
-	</RelativeLayout>
+	    <include android:layout_marginTop="15dp"  android:layout_below="@+id/back_button" android:layout_width="70dp"  android:layout_height="150dp"  layout="@layout/interiors_floor_list_container_layout"/>
+
+    </RelativeLayout>
+
+    <Space
+        android:id="@+id/interiors_explorer_layout_right_panel_bottom_margin"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

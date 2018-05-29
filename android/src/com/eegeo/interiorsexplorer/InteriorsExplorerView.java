@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.BounceInterpolator;
@@ -25,6 +26,17 @@ import android.widget.TextView;
 
 public class InteriorsExplorerView implements OnPauseListener, View.OnClickListener, View.OnTouchListener
 {
+    private enum InteriorsExplorerViewState {
+        Default(0), Navigation(1);
+        private final int state;
+        InteriorsExplorerViewState(int state){
+            this.state = state;
+        }
+        public final int getState(){
+            return this.state;
+        }
+    };
+
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
     private View m_uiRootView = null;
@@ -74,6 +86,14 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     private final int TextColorNormal = Color.parseColor("#1256B0");
     private final int TextColorDown = Color.parseColor("#CDFC0D");
     private final float ListItemHeight;
+
+    private InteriorsExplorerViewState m_viewState = InteriorsExplorerViewState.Default;
+    private View m_rightPanelTopMargin;
+    private int m_rightPanelTopMarginDefault;
+    private int m_rightPanelTopMarginNavMode;
+    private View m_rightPanelBottomMargin;
+    private int m_rightPanelBottomMarginDefault;
+    private int m_rightPanelBottomMarginNavMode;
 
     private class PropogateToViewTouchListener implements View.OnTouchListener {
         private View m_target;
@@ -126,6 +146,9 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
         m_floorButtonText.setTextColor(TextColorNormal);
         m_draggingFloorButton = false;
 
+        m_rightPanelTopMargin = m_uiRootView.findViewById(R.id.interiors_explorer_layout_right_panel_top_margin);
+        m_rightPanelBottomMargin = m_uiRootView.findViewById(R.id.interiors_explorer_layout_right_panel_bottom_margin);
+
         m_floorButton.setOnTouchListener(this);
         
         m_uiRootView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
@@ -169,6 +192,9 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 		    	int maxFloorContainerHeight = screenHeight - rightPanelMarginTop - m_backButton.getHeight() - floorListMarginTop - rightPanelMarginBottom;
 		    	
 		    	m_maxFloorsViewableCount = (int) Math.floor(maxFloorContainerHeight / ListItemHeight);
+
+                m_rightPanelTopMarginDefault = m_rightPanelTopMargin.getHeight();
+                m_rightPanelBottomMarginDefault = m_rightPanelBottomMargin.getHeight();
 		    	
 		    	m_uiRootView.removeOnLayoutChangeListener(this);
 			}
@@ -533,6 +559,64 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
         {
         	m_topPanel.setY(newYPx);
         }
+    }
+
+    public void setState(final int state)
+    {
+        InteriorsExplorerViewState newState = rawStateToCompassState(state);
+        if(m_viewState != newState)
+        {
+            m_viewState = newState;
+            updateUpperBound();
+            updateLowerBound();
+        }
+    }
+
+    private InteriorsExplorerViewState rawStateToCompassState(final int state)
+    {
+        if(InteriorsExplorerViewState.Navigation.getState() == state) {
+            return InteriorsExplorerViewState.Navigation;
+        }
+        if(InteriorsExplorerViewState.Default.getState() == state) {
+            return InteriorsExplorerViewState.Default;
+        }
+        throw new IllegalArgumentException (state + " is not a valid InteriorsExplorerViewState");
+    }
+
+    public void setNavigationModeUpperBound(final int upperBound)
+    {
+        m_rightPanelTopMarginNavMode = upperBound;
+        if(m_viewState == InteriorsExplorerViewState.Navigation) {
+            updateUpperBound();
+        }
+    }
+
+    private void updateUpperBound()
+    {
+        ViewGroup.LayoutParams layoutParams = m_rightPanelTopMargin.getLayoutParams();
+        if (m_viewState == InteriorsExplorerViewState.Default) {
+            layoutParams.height = m_rightPanelTopMarginDefault;
+        } else {
+            layoutParams.height = m_rightPanelTopMarginNavMode;
+        }
+        m_rightPanelTopMargin.setLayoutParams(layoutParams);
+    }
+
+    public void setNavigationModeLowerBound(final int lowerBound) {
+        m_rightPanelBottomMarginNavMode = lowerBound;
+        if(m_viewState == InteriorsExplorerViewState.Navigation) {
+            updateLowerBound();
+        }
+    }
+
+    private void updateLowerBound() {
+        ViewGroup.LayoutParams layoutParams = m_rightPanelBottomMargin.getLayoutParams();
+        if (m_viewState == InteriorsExplorerViewState.Default) {
+            layoutParams.height = m_rightPanelBottomMarginDefault;
+        } else {
+            layoutParams.height = m_rightPanelBottomMarginNavMode;
+        }
+        m_rightPanelBottomMargin.setLayoutParams(layoutParams);
     }
 
     public void notifyOnPause()

@@ -7,6 +7,7 @@
 #include "ICallback.h"
 #include "CallbackCollection.h"
 #include "AndroidNativeState.h"
+#include "INavWidgetView.h"
 
 #include <string>
 
@@ -21,13 +22,19 @@ namespace ExampleApp
             private:
                 Eegeo::Helpers::CallbackCollection0 m_callbacks;
                 AndroidNativeState& m_nativeState;
+                Eegeo::Helpers::TCallback1<CompassView, NavRouting::View::INavWidgetView::THeight> m_navWidgetBottomHeightChangedCallback;
+
+                Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomHeightChangedCallbacks;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
                 void CallVoidMethod(const std::string& methodName);
+
+                void SetNavigationModeOffset(NavRouting::View::INavWidgetView::THeight& m_offset);
             public:
-                CompassView(AndroidNativeState& nativeState);
+                CompassView(AndroidNativeState& nativeState,
+                            Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navViewBottomHeightChangedCallbacks);
                 ~CompassView();
 
                 void OnCycle();
@@ -55,8 +62,6 @@ namespace ExampleApp
                 void RemoveCycledCallback(Eegeo::Helpers::ICallback0& callback);
 
                 void SetState(ScreenControl::View::TScreenControlViewState state);
-
-                void SetNavigationModeOffset(int m_offset);
             };
         }
     }

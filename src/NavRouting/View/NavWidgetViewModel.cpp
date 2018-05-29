@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "CompassScreenControl.h"
+#include "InteriorsExplorerViewModel.h"
 #include "NavWidgetViewModel.h"
 
 namespace ExampleApp
@@ -13,6 +14,7 @@ namespace ExampleApp
                     : m_openable(identity)
             {
                 m_compassStateProvider.SetState(Compass::View::CompassScreenControl::DisplayMode::Default);
+                m_interiorsStateProvider.SetState(InteriorsExplorer::View::InteriorsExplorerViewModel::DisplayMode::Default);
             }
 
             NavWidgetViewModel::~NavWidgetViewModel()
@@ -39,6 +41,7 @@ namespace ExampleApp
 
                 m_openable.Close();
                 m_compassStateProvider.SetState(Compass::View::CompassScreenControl::DisplayMode::Default);
+                m_interiorsStateProvider.SetState(InteriorsExplorer::View::InteriorsExplorerViewModel::DisplayMode::Default);
                 m_closedCallbacks.ExecuteCallbacks();
             }
 
@@ -53,6 +56,7 @@ namespace ExampleApp
                 {
                     m_compassStateProvider.SetState(Compass::View::CompassScreenControl::DisplayMode::Default);
                 }
+                m_interiorsStateProvider.SetState(InteriorsExplorer::View::InteriorsExplorerViewModel::DisplayMode::Navigation);
             }
 
             OpenableControl::View::IOpenableControlViewModel& NavWidgetViewModel::GetOpenableControl()
@@ -83,6 +87,11 @@ namespace ExampleApp
             Reaction::View::IReactionScreenStateProvider& NavWidgetViewModel::GetCompassStateProvider()
             {
                 return m_compassStateProvider;
+            }
+
+            Reaction::View::IReactionScreenStateProvider& NavWidgetViewModel::GetInteriorsStateProvider()
+            {
+                return m_interiorsStateProvider;
             }
         }
     }

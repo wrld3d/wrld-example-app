@@ -87,6 +87,17 @@ JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_Selected
     pView->HandleSelectedDirectionIndexChanged(directionIndex);
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetTopViewHeight(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jint height)
+{
+    ASSERT_UI_THREAD
+
+    auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
+    pView->SetTopViewHeight(height);
+}
+
 JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetBottomViewHeight(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr,

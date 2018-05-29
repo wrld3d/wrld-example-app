@@ -16,7 +16,7 @@ namespace ExampleApp
             public:
                 virtual ~INavWidgetViewModule() { }
 
-                virtual NavWidgetView& GetView() const = 0;
+                virtual INavWidgetView& GetView() const = 0;
                 virtual NavWidgetController& GetController() const = 0;
             };
         }

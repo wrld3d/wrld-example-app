@@ -15,11 +15,14 @@ namespace ExampleApp
     {
         namespace View
         {
-            NavWidgetView::NavWidgetView(AndroidNativeState& nativeState, Compass::View::ICompassView& compassView)
+            NavWidgetView::NavWidgetView(AndroidNativeState& nativeState,
+                                         Eegeo::Helpers::CallbackCollection1<THeight>& navWidgetViewTopHeightChangedCallbacks,
+                                         Eegeo::Helpers::CallbackCollection1<THeight>& navWidgetViewBottomHeightChangedCallbacks)
                     : m_nativeState(nativeState)
                     , m_uiViewClass(NULL)
                     , m_uiView(NULL)
-                    , m_compassView(compassView)
+                    , m_navWidgetViewTopHeightChangedCallbacks(navWidgetViewTopHeightChangedCallbacks)
+                    , m_navWidgetViewBottomHeightChangedCallbacks(navWidgetViewBottomHeightChangedCallbacks)
             {
                 ASSERT_UI_THREAD
 
@@ -455,10 +458,29 @@ namespace ExampleApp
                 m_selectedDirectionIndexChangedCallbacks.ExecuteCallbacks(selectedDirectionIndex);
             }
 
-            void NavWidgetView::SetBottomViewHeight(int bottomViewHeight){
+            void NavWidgetView::SetTopViewHeight(THeight topViewHeight){
                 ASSERT_UI_THREAD
 
-                m_compassView.SetNavigationModeOffset(bottomViewHeight);
+                m_topViewHeight = topViewHeight;
+                m_navWidgetViewTopHeightChangedCallbacks.ExecuteCallbacks(topViewHeight);
+            }
+
+            void NavWidgetView::SetBottomViewHeight(THeight bottomViewHeight){
+                ASSERT_UI_THREAD
+                m_bottomViewHeight = bottomViewHeight;
+                m_navWidgetViewBottomHeightChangedCallbacks.ExecuteCallbacks(bottomViewHeight);
+            }
+
+            INavWidgetView::THeight NavWidgetView::GetTopViewHeight()
+            {
+                ASSERT_UI_THREAD
+                return m_topViewHeight;
+            }
+
+            INavWidgetView::THeight NavWidgetView::GetBottomViewHeight()
+            {
+                ASSERT_UI_THREAD
+                return m_bottomViewHeight;
             }
 
             jclass NavWidgetView::CreateJavaClass(const std::string& viewClass)

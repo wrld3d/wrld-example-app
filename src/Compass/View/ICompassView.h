@@ -24,7 +24,6 @@ namespace ExampleApp
                 virtual void SetRotationHighlight(bool shouldShowRotationHighlight) = 0;
                 virtual void InsertCycledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveCycledCallback(Eegeo::Helpers::ICallback0& callback) = 0;
-                virtual void SetNavigationModeOffset(int offset) = 0;
             };
         }
     }

@@ -9,6 +9,7 @@ namespace ExampleApp
         namespace View
         {
             class IScreenControlViewModel;
+            class IMultiStateScreenControlViewModel;
         }
     }
 }
