@@ -40,6 +40,11 @@ namespace ExampleApp
             {
                 return *m_pView;
             }
+            
+            ICompassView& CompassViewModule::GetCompassViewInterop()
+            {
+                return *[m_pView getInterop];
+            }
         }
     }
 }
