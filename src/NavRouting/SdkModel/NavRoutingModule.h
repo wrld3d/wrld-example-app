@@ -10,6 +10,8 @@
 #include "Location.h"
 #include "InteriorsModelRepository.h"
 #include "Markers.h"
+#include "CameraTransitions.h"
+#include "Compass.h"
 
 namespace ExampleApp
 {
@@ -26,6 +28,8 @@ namespace ExampleApp
                                  Eegeo::Location::ILocationService& locationService,
                                  Eegeo::Location::NavigationService& navigationService,
                                  Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                 Compass::SdkModel::ICompassModel& compassModel,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Eegeo::Markers::IMarkerService& markerService,
                                  Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository);
@@ -46,6 +50,7 @@ namespace ExampleApp
                 NavWidgetRouteUpdateHandler* m_pRouteUpdateHandler;
                 NavWidgetRouteDrawingHandler* m_pRouteDrawingHandler;
                 NavRoutingController* m_pRoutingController;
+                NavRoutingCameraController* m_pRoutingCameraController;
 
                 TurnByTurn::INavTurnByTurnModel* m_pTurnByTurnModel;
                 TurnByTurn::NavTurnByTurnController* m_pTurnByTurnController;

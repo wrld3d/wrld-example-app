@@ -11,6 +11,7 @@
 #include "RouteService.h"
 #include "NavTurnByTurnModel.h"
 #include "NavTurnByTurnController.h"
+#include "NavRoutingCameraController.h"
 
 namespace ExampleApp
 {
@@ -23,6 +24,8 @@ namespace ExampleApp
                                                Eegeo::Location::ILocationService& locationService,
                                                Eegeo::Location::NavigationService& navigationService,
                                                Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                               CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                               Compass::SdkModel::ICompassModel& compassModel,
                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                Eegeo::Markers::IMarkerService& markerService,
                                                Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository)
@@ -65,10 +68,16 @@ namespace ExampleApp
                                                                        messageBus,
                                                                        interiorsModelRepository,
                                                                        alertBoxFactory);
+                
+                m_pRoutingCameraController = Eegeo_NEW(NavRoutingCameraController)(*m_pNavRoutingModel,
+                                                                                   cameraTransitionController,
+                                                                                   navigationService,
+                                                                                   compassModel);
             }
 
             NavRoutingModule::~NavRoutingModule()
             {
+                Eegeo_DELETE m_pRoutingCameraController;
                 Eegeo_DELETE m_pRoutingController;
                 Eegeo_DELETE m_pRouteDrawingHandler;
                 Eegeo_DELETE m_pTurnByTurnController;

@@ -18,6 +18,8 @@
 #include "TransitionToInteriorStage.h"
 #include "IAppCameraController.h"
 #include "InteriorsModelRepository.h"
+#include "CameraTransitionOptions.h"
+#include "CameraTransitionOptionsBuilder.h"
 
 namespace ExampleApp
 {
@@ -103,12 +105,29 @@ namespace ExampleApp
                                                                bool setInteriorHeading,
                                                                bool setDistanceToInterest)
             {
+                CameraTransitionOptionsBuilder builder;
+                builder.SetInterestPoint(newInterestPoint)
+                        .SetIndoorPosition(interiorId, targetFloorIndex)
+                        .SetJumpIfFar(jumpIfFar)
+                        .SetShouldDisableGps(setGpsModeOff)
+                        .SetHeadingRadians(newHeadingRadians, setInteriorHeading);
+                if(setDistanceToInterest)
+                {
+                    builder.SetDistanceFromInterest(distanceFromInterest);
+                }
+                StartTransition(builder.Build());
+            }
+            
+            void CameraTransitionController::StartTransition(const CameraTransitionOptions& options)
+            {
+                const Eegeo::Resources::Interiors::InteriorId& interiorId = options.GetInteriorId();
+                
                 if(IsTransitioning())
                 {
                     StopCurrentTransition();
                 }
                 
-                if(setGpsModeOff)
+                if(options.ShouldDisableGPS())
                 {
                     m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
                 }
@@ -116,17 +135,17 @@ namespace ExampleApp
                 if(m_appModeModel.GetAppMode() == ExampleApp::AppModes::SdkModel::InteriorMode)
                 {
                     const double exitInteriorDistanceSquared = 100*100;
-                    double interestDifferenceSquared = (m_interiorsCameraController.GetInterestLocation() - newInterestPoint).LengthSq();
+                    double interestDifferenceSquared = (m_interiorsCameraController.GetInterestLocation() - options.GetInterestPoint()).LengthSq();
                     if(m_interiorSelectionModel.GetSelectedInteriorId() == interiorId)
                     {
                         Eegeo_ASSERT(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId(), "Invalid state. Have selected null Interior while in Interior mode");
-                        EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, newHeadingRadians, setInteriorHeading, setDistanceToInterest);
+                        EnqueueTransitionToInteriorStage(options);
                         StartQueuedTransition();
                         return;
                     }
-                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId() && interestDifferenceSquared < exitInteriorDistanceSquared && m_interiorsModelRepository.HasInterior(interiorId.Value()))
+                    else if(interiorId != Eegeo::Resources::Interiors::InteriorId::NullId() && interestDifferenceSquared < exitInteriorDistanceSquared && m_interiorsModelRepository.HasInterior(options.GetInteriorId().Value()))
                     {
-                        EnqueueTransitionToInteriorPointStage(newInterestPoint, distanceFromInterest, newHeadingRadians, interiorId, targetFloorIndex, jumpIfFar);
+                        EnqueueTransitionToInteriorPointStage(options);
                         StartQueuedTransition();
                         return;
                     }
@@ -140,11 +159,11 @@ namespace ExampleApp
                 
                 if(!transitioningToNewInterior)
                 {
-                    EnqueueTransitionToPointStage(newInterestPoint, distanceFromInterest, newHeadingRadians, jumpIfFar);
+                    EnqueueTransitionToPointStage(options);
                 }
                 else
                 {
-                    EnqueueTransitionToInteriorStage(newInterestPoint, distanceFromInterest, interiorId, targetFloorIndex, newHeadingRadians, setInteriorHeading);
+                    EnqueueTransitionToInteriorStage(options);
                 }
                 
                 StartQueuedTransition();
@@ -230,48 +249,38 @@ namespace ExampleApp
                 m_transitionStages.push(pStage);
             }
             
-            void CameraTransitionController::EnqueueTransitionToPointStage(const Eegeo::dv3& newInterestPoint,
-                                                                           float distanceFromInterest,
-                                                                           float newHeadingRadians,
-                                                                           bool jumpIfFar)
+            void CameraTransitionController::EnqueueTransitionToPointStage(const CameraTransitionOptions& options)
             {
+                float currentBearingRadians = Eegeo::Math::Deg2Rad(m_appCameraController.GetHeadingDegrees());
+                float heading = options.ShouldSetHeading() ? options.GetHeadingRadians() : currentBearingRadians;
+                float distanceToInterest = options.ShouldSetDistanceToInterest() ? options.GetDistanceFromInterest() : m_cameraController.GetDistanceToInterest();
                 ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToWorldPointStage)(m_cameraController,
                                                                                         m_terrainHeightProvider,
-                                                                                        newInterestPoint,
-                                                                                        distanceFromInterest,
-                                                                                        newHeadingRadians,
-                                                                                        jumpIfFar);
+                                                                                        options.GetInterestPoint(),
+                                                                                        distanceToInterest,
+                                                                                        heading,
+                                                                                        options.ShouldJumpIfFar());
                 m_transitionStages.push(pStage);
             }
             
-            void CameraTransitionController::EnqueueTransitionToInteriorStage(const Eegeo::dv3& newInterestPoint,
-                                                                              float newDistanceToInterest,
-                                                                              const Eegeo::Resources::Interiors::InteriorId &interiorId,
-                                                                              int targetFloorIndex,
-                                                                              float newHeadingRadians,
-                                                                              bool setInteriorHeading,
-                                                                              bool setDisntaceToInterest)
+            void CameraTransitionController::EnqueueTransitionToInteriorStage(const CameraTransitionOptions& options)
             {
                 ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorStage)(m_interiorInteractionModel,
                                                                                       m_interiorSelectionModel,
                                                                                       m_interiorTransitionModel,
                                                                                       m_interiorsCameraController,
-                                                                                      newInterestPoint,
-                                                                                      newDistanceToInterest,
-                                                                                      interiorId,
-                                                                                      targetFloorIndex,
-                                                                                      setInteriorHeading,
-                                                                                      newHeadingRadians,
-                                                                                      setDisntaceToInterest);
+                                                                                      options.GetInterestPoint(),
+                                                                                      options.GetDistanceFromInterest(),
+                                                                                      options.GetInteriorId(),
+                                                                                      options.GetTargetFloorIndex(),
+                                                                                      options.IsTargetFloorIndexFloorId(),
+                                                                                      options.ShouldSetInteriorHeading(),
+                                                                                      options.GetHeadingRadians(),
+                                                                                      options.ShouldSetDistanceToInterest());
                 m_transitionStages.push(pStage);
             }
             
-            void CameraTransitionController::EnqueueTransitionToInteriorPointStage(const Eegeo::dv3& newInterestPoint,
-                                                                                   float newDistanceFromInterest,
-                                                                                   float newHeadingRadians,
-                                                                                   const Eegeo::Resources::Interiors::InteriorId &interiorId,
-                                                                                   int targetFloorIndex,
-                                                                                   bool jumpIfFar)
+            void CameraTransitionController::EnqueueTransitionToInteriorPointStage(const CameraTransitionOptions& options)
             {
                 ICameraTransitionStage* pStage = Eegeo_NEW(TransitionToInteriorPointStage)(
                                                                                            m_interiorInteractionModel,
@@ -279,11 +288,12 @@ namespace ExampleApp
                                                                                            m_interiorTransitionModel,
                                                                                            m_interiorsExplorerModel,
                                                                                            m_interiorsCameraController,
-                                                                                           newInterestPoint,
-                                                                                           newDistanceFromInterest,
-                                                                                           interiorId,
-                                                                                           targetFloorIndex,
-                                                                                           jumpIfFar);
+                                                                                           options.GetInterestPoint(),
+                                                                                           options.GetDistanceFromInterest(),
+                                                                                           options.GetInteriorId(),
+                                                                                           options.GetTargetFloorIndex(),
+                                                                                           options.IsTargetFloorIndexFloorId(),
+                                                                                           options.ShouldJumpIfFar());
                 m_transitionStages.push(pStage);
 
             }

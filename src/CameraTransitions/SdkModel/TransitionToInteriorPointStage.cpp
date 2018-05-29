@@ -6,7 +6,7 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorTransitionModel.h"
-
+#include "InteriorsModel.h"
 
 namespace ExampleApp
 {
@@ -23,6 +23,7 @@ namespace ExampleApp
                                                                            float newDistanceToInterest,
                                                                            const Eegeo::Resources::Interiors::InteriorId &interiorId,
                                                                            int targetFloorIndex,
+                                                                           bool targetFloorIndexIsFloorId,
                                                                            bool jumpIfFar)
             : m_interiorInteractionModel(interiorInteractionModel)
             , m_interiorSelectionModel(interiorSelectionModel)
@@ -35,6 +36,7 @@ namespace ExampleApp
             , m_transitionTime(0.0f)
             , m_interiorId(interiorId)
             , m_targetFloorIndex(targetFloorIndex)
+            , m_targetFloorIndexIsFloorId(targetFloorIndexIsFloorId)
             , m_failed(false)
             , m_jumpIfFar(jumpIfFar)
             , m_startCameraInterestAltitude(0.0f)
@@ -70,7 +72,7 @@ namespace ExampleApp
                 
                 if(!m_initialisedNextInterior && m_interiorInteractionModel.HasInteriorModel())
                 {
-                    m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
+                    UpdateFloorIndex();
                     m_endCameraInterestAltitude = m_cameraController.GetFloorOffsetHeight();
                     m_cameraInterestAltitudeStartTime = m_transitionTime;
                     m_initialisedNextInterior = true;
@@ -117,7 +119,7 @@ namespace ExampleApp
                 m_cameraController.SetCameraInterestAltitude(m_endCameraInterestAltitude);
                 m_cameraController.SetApplyRestrictions(true);
                 m_cameraController.SetApplyFloorOffset(true);
-                m_interiorInteractionModel.SetSelectedFloorIndex(m_targetFloorIndex);
+                UpdateFloorIndex();
                 m_interiorsExplorerModel.ShowInteriorExplorer(true);
             }
             
@@ -132,6 +134,17 @@ namespace ExampleApp
                 Eegeo::dv3 currentInterestPoint = m_cameraController.GetInterestLocation();
                 double distance = (newInterestPoint - currentInterestPoint).Length();
                 return distance > MAX_CAMERA_TRANSITION_DISTANCE;
+            }
+            
+            void TransitionToInteriorPointStage::UpdateFloorIndex()
+            {
+                int trueFloorIndex = m_targetFloorIndex;
+                if(m_targetFloorIndexIsFloorId)
+                {
+                    const Eegeo::Resources::Interiors::InteriorsModel* pInteriorModel = m_interiorInteractionModel.GetInteriorModel();
+                    trueFloorIndex = pInteriorModel->FindFloorIndexWithFloorNumber(m_targetFloorIndex);
+                }
+                m_interiorInteractionModel.SetSelectedFloorIndex(trueFloorIndex);
             }
             
             const bool TransitionToInteriorPointStage::StageHasFailed() const
