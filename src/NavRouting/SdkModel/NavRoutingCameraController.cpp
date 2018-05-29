@@ -59,7 +59,10 @@ namespace ExampleApp
             
             void NavRoutingCameraController::OnCurrentDirectionSet(const int& currentDirection)
             {
-                UpdateCamera();
+                if(m_navRoutingModel.GetCurrentDirection() == m_navRoutingModel.GetSelectedDirection())
+                {
+                    UpdateCamera();
+                }
             }
             
             void NavRoutingCameraController::OnNavModeSet(const NavRoutingMode& navMode)
@@ -72,7 +75,10 @@ namespace ExampleApp
                 if(m_navRoutingModel.GetNavMode() == NavRoutingMode::Active &&
                    m_compassModel.GetGpsMode() != Compass::GpsMode::GpsDisabled)
                 {
-                    m_navRoutingModel.SetSelectedDirection(m_navRoutingModel.GetCurrentDirection());
+                    if(m_navRoutingModel.GetCurrentDirection() != m_navRoutingModel.GetSelectedDirection())
+                    {
+                        m_navRoutingModel.SetSelectedDirection(m_navRoutingModel.GetCurrentDirection());
+                    }
                 }
             }
             
