@@ -683,15 +683,6 @@ namespace ExampleApp
         
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
-        auto& polylineShapesModule = world.GetShapesModule().GetPolylineShapesModule();
-        m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(polylineShapesModule.GetShapeService(),
-                                                                                            world.GetRoutesModule().GetRoutingWebservice(),
-                                                                                            world.GetLocationService(),
-                                                                                            *m_pNavigationService,
-                                                                                            m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
-                                                                                            m_messageBus,
-                                                                                            interiorsModelModule.GetInteriorsModelRepository());
-
         m_pNavUIModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavUIModule)(m_identityProvider,
                                                                               *m_pModalityIgnoredReactionModel);
 
@@ -835,6 +826,17 @@ namespace ExampleApp
                                                                                    m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
                                                                                    m_applicationConfiguration.IsInKioskMode());
 
+        auto& polylineShapesModule = world.GetShapesModule().GetPolylineShapesModule();
+        m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(polylineShapesModule.GetShapeService(),
+                                                                                            world.GetRoutesModule().GetRoutingWebservice(),
+                                                                                            world.GetLocationService(),
+                                                                                            *m_pNavigationService,
+                                                                                            m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
+                                                                                            *m_pCameraTransitionService,
+                                                                                            m_pCompassModule->GetCompassModel(),
+                                                                                            m_messageBus,
+                                                                                            interiorsModelModule.GetInteriorsModelRepository());
+        
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsCameraController());
 
@@ -951,6 +953,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pReactionModelModule;
 
         Eegeo_DELETE m_pModalityModule;
+        
+        Eegeo_DELETE m_pNavRoutingModule;
 
         Eegeo_DELETE m_pCompassModule;
 
@@ -965,8 +969,6 @@ namespace ExampleApp
         Eegeo_DELETE m_pSearchMenuModule;
         
         Eegeo_DELETE m_pNavUIModule;
-
-        Eegeo_DELETE m_pNavRoutingModule;
 
         Eegeo_DELETE m_pSearchResultSectionModule;
 

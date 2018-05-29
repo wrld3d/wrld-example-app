@@ -73,7 +73,6 @@ namespace ExampleApp
                     m_navRoutingModel.SetNavMode(NavRoutingMode::Active);
                     m_navRoutingModel.SetSelectedDirection(0);
                     m_navRoutingModel.SetCurrentDirection(0);
-                    m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsMode::GpsModeCompass);
                 }
 
                 void NavTurnByTurnController::HandleTurnByTurnStopped()

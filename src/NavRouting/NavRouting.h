@@ -31,6 +31,7 @@ namespace ExampleApp
             class NavWidgetRouteUpdateHandler;
             class NavWidgetRouteDrawingHandler;
             class NavRoutingController;
+            class NavRoutingCameraController;
 
             typedef Eegeo::Shapes::Polylines::PolylineShapeArgs PolyLineArgs;
             typedef std::vector<PolyLineArgs::ShapeModel::IdType> RouteLines;
