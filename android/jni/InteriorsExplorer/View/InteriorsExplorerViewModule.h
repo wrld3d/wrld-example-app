@@ -38,7 +38,8 @@ namespace ExampleApp
                                             ExampleAppMessaging::TMessageBus& messageBus,
 											AndroidNativeState &nativeState,
                                             Eegeo::Location::NavigationService& navigationService,
-                                            Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navWidgetViewTopHeightChangedCallbacks);
+                                            Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navWidgetViewTopHeightChangedCallbacks,
+                                            Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navWidgetViewBottomHeightChangedCallbacks);
                 
                 ~InteriorsExplorerViewModule();
                 

@@ -213,7 +213,7 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	{
 		CompassState compassState = rawStateToCompassState(state);
 		int offsetDip = (compassState == CompassState.Default) ? 0 : m_navWidgetModeOffset;
-		m_yPosActive = m_defaultYPosActive - m_activity.dipAsPx(offsetDip);
+		m_yPosActive = m_defaultYPosActive - offsetDip;
 		animateToActive();
 	}
 

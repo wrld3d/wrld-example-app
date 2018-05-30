@@ -609,7 +609,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
             m_messageBus,
             m_nativeState,
             app.GetNavigationService(),
-            m_navWidgetViewTopHeightChangedCallbacks);
+            m_navWidgetViewTopHeightChangedCallbacks,
+            m_navWidgetViewBottomHeightChangedCallbacks);
 
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
             m_nativeState,

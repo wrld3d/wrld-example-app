@@ -22,6 +22,7 @@ namespace ExampleApp
             public:
 
                 InteriorsExplorerView(AndroidNativeState& nativeState,
+                                      Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navViewTopHeightChangedCallbacks,
                                       Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navViewBottomHeightChangedCallbacks);
                 ~InteriorsExplorerView();
 
@@ -63,6 +64,9 @@ namespace ExampleApp
 
                 Eegeo::Helpers::TCallback1<InteriorsExplorerView, NavRouting::View::INavWidgetView::THeight> m_navWidgetTopHeightChangedCallback;
                 Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetTopHeightChangedCallbacks;
+
+                Eegeo::Helpers::TCallback1<InteriorsExplorerView, NavRouting::View::INavWidgetView::THeight> m_navWidgetBottomHeightChangedCallback;
+                Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomHeightChangedCallbacks;
 
                 Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;
                 Eegeo::Helpers::CallbackCollection1<float> m_floorSelectionDraggedCallbacks;
