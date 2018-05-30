@@ -9,6 +9,9 @@
 #include "NavRouting.h"
 #include "NavRoutingDirectionModel.h"
 #include "INavRoutingPolylineFactory.h"
+#include "Markers.h"
+#include "IMarker.h"
+#include "IMarkerService.h"
 
 #include <vector>
 #include <unordered_map>
@@ -24,7 +27,8 @@ namespace ExampleApp
             public:
                 NavRouteDrawingController(INavRoutingModel& navRoutingModel,
                                           INavRoutingPolylineFactory& polylineFactory,
-                                          PolyLineArgs::IShapeService& shapeService);
+                                          PolyLineArgs::IShapeService& shapeService,
+                                          Eegeo::Markers::IMarkerService& markerService);
 
                 ~NavRouteDrawingController() override;
                 
@@ -47,6 +51,10 @@ namespace ExampleApp
                 PolyLineArgs::IShapeService& m_shapeService;
                 std::unordered_map<int, RouteLines> m_routes;
                 
+                
+                Eegeo::Markers::IMarkerService& m_markerService;
+                std::vector<Eegeo::Markers::IMarker::IdType> m_markerIDs;
+                
                 void DrawRouteForStep(int step,
                                       const std::vector<NavRoutingDirectionModel>& directions,
                                       const Eegeo::v4& color);
@@ -59,6 +67,20 @@ namespace ExampleApp
                                       const Eegeo::Space::LatLong& closestPointOnRoute);
                 
                 void DestroyLines(RouteLines lines);
+                
+                void AddPin(std::string title,
+                            bool interior,
+                            const std::string& buildingID,
+                            const int& buildingfloor,
+                            const Eegeo::Space::LatLong& location,
+                            const std::string& pinIconKey,
+                            float heightAboveTerrainMetres,
+                            std::string identifier = "",
+                            std::string labelStyleName = "marker_default");
+                
+                //void AddHighlightPin(const Eegeo::Markers::IMarker& marker, std::string labelStyleName);
+
+                void ClearPins();
             };
         }
     }
