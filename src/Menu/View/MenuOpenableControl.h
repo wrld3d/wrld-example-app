@@ -17,7 +17,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TIdentity m_identity;
 
             public:
-                MenuOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::View::IReactionControllerModel& reactionControllerModel);
+                MenuOpenableControl(Eegeo::Helpers::TIdentity identity);
 
                 Eegeo::Helpers::TIdentity GetIdentity() const;
             };

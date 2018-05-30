@@ -13,10 +13,11 @@ namespace ExampleApp
             NavWidgetViewModule::NavWidgetViewModule(
                 AndroidNativeState& nativeState,
                 INavWidgetViewModel& navWidgetViewModel,
+                Compass::View::ICompassView& compassView,
                 ExampleAppMessaging::TMessageBus& messageBus)
             {
                 ASSERT_UI_THREAD
-                m_pView = Eegeo_NEW(NavWidgetView)(nativeState);
+                m_pView = Eegeo_NEW(NavWidgetView)(nativeState, compassView);
                 m_pController = Eegeo_NEW(NavWidgetController)(*m_pView, navWidgetViewModel, messageBus);
             }
 

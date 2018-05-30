@@ -29,8 +29,6 @@ namespace ExampleApp
                 
                 virtual void EndCacheClearCeremony() = 0;
 
-                virtual bool TryAcquireReactorControl() = 0;
-
                 virtual bool IsOpen() const = 0;
 
                 virtual void Open() = 0;

@@ -6,6 +6,7 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
+import com.wrld.widgets.navigation.widget.WrldNavWidget;
 
 import android.Manifest;
 import android.app.Activity;
@@ -30,6 +31,7 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	private View m_compassUnlocked = null;
 	private boolean	m_unauthorizedGpsAlertShown = false;
 
+	private float m_defaultYPosActive;
 	private float m_yPosActive;
 	private float m_yPosInactive;
 
@@ -39,6 +41,10 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 
 	private final float CompassOuterShapeInactiveAlpha = 0.5f;
 	private final float CompassOuterShapeActiveAlpha = 1.0f;
+
+	private int m_navWidgetModeOffset = 0;
+
+	private enum CompassState {Default, Navigation};
 
 	public CompassView(MainActivity activity, long nativeCallerPointer)
 	{
@@ -82,7 +88,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 				final float viewWidth = m_view.getWidth();
 				final float viewHeight = m_view.getHeight();
 
-				m_yPosActive = (screenHeight - viewWidth) - m_activity.dipAsPx(8.f);
+				m_defaultYPosActive = (screenHeight - viewWidth) - m_activity.dipAsPx(8.f);
+				m_yPosActive = m_defaultYPosActive;
 				m_yPosInactive = screenHeight + viewHeight;
 
 				m_view.setX((screenWidth * 0.5f) - (viewWidth * 0.5f));
@@ -191,6 +198,19 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		{
 			m_view.setY(newYPx);
 		}
+	}
+
+	public void setState(final int state)
+	{
+		CompassState compassState = CompassState.values()[state];
+		int offsetDip = (compassState == CompassState.Default) ? 0 : m_navWidgetModeOffset;
+		m_yPosActive = m_defaultYPosActive - m_activity.dipAsPx(offsetDip);
+		animateToActive();
+	}
+
+	public void setNavigationModeOffset(final int offset)
+	{
+		m_navWidgetModeOffset = offset;
 	}
 
 	@Override

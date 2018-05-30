@@ -29,6 +29,8 @@ namespace ExampleApp
                 );
 
                 ~CompassViewModule();
+
+                ICompassView& GetCompassView();
             };
         }
     }

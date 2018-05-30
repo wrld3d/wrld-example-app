@@ -9,9 +9,7 @@ namespace ExampleApp
         namespace View
         {
             class IReactionModelModule;
-            class IReactionControllerModel;
             class IReactionModel;
-            class IReactionControllerModule;
         }
     }
 }

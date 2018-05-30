@@ -15,6 +15,9 @@ namespace ExampleApp
             class TransitionToWorldPointStage;
             class ExitCurrentInteriorStage;
             class TransitionToInteriorStage;
+            
+            class CameraTransitionOptions;
+            class CameraTransitionOptionsBuilder;
         }
         
         class CameraTransitionChangedMessage;

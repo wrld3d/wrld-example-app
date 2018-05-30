@@ -35,16 +35,16 @@ namespace ExampleApp
             
             NavWidgetViewModule::NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                                      INavWidgetViewModel& viewModel,
+                                                     Compass::View::ICompassView& compassView,
                                                      ExampleAppMessaging::TMessageBus& messageBus_)
             {
-                registerObserver("selectedDirection");
+                registerObserver("selectedDirectionIndex");
                 
                 m_pNavModel = [[WRLDNavModel alloc] init];
                 
                 setNavModel(m_pNavModel);
                 
-                m_pView = Eegeo_NEW(NavWidgetView)(m_pNavModel);
-                
+                m_pView = Eegeo_NEW(NavWidgetView)(m_pNavModel, compassView);
                 
                 m_pNavWidgetController = Eegeo_NEW(NavWidgetController)(*m_pView,
                                                                         viewModel,
@@ -75,9 +75,9 @@ namespace ExampleApp
             
             void NavWidgetViewModule::changeReceived(const std::string& keyPath)
             {
-                if(keyPath == "selectedDirection")
+                if(keyPath == "selectedDirectionIndex")
                 {
-                    m_pView->HandleSelectedDirectionIndexChangedCallback((int)m_pNavModel.selectedDirection);
+                    m_pView->HandleSelectedDirectionIndexChangedCallback((int)m_pNavModel.selectedDirectionIndex);
                 }
             }
             

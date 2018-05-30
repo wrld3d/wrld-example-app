@@ -17,14 +17,6 @@ namespace ExampleApp
         {
             void NavWidgetController::OnViewOpened()
             {
-                if(!m_viewModel.TryAcquireReactorControl())
-                {
-                    if (m_viewModel.IsOpen())
-                    {
-                        m_viewModel.Close();
-                    }
-                    return;
-                }
 
                 m_view.Show();
             }
@@ -113,6 +105,11 @@ namespace ExampleApp
                 m_view.SetCurrentDirection(message.GetDirectionIndex());
             }
 
+            void NavWidgetController::OnCurrentDirectionUpdated(const NavRoutingCurrentDirectionUpdatedMessage& message)
+            {
+                m_view.UpdateCurrentDirection(message.GetDirectionModel());
+            }
+
             void NavWidgetController::OnSelectedDirectionSet(const NavRoutingSelectedDirectionSetMessage& message)
             {
                 m_view.SetSelectedDirection(message.GetDirectionIndex());
@@ -126,6 +123,7 @@ namespace ExampleApp
             void NavWidgetController::OnNavRoutingModeSet(const NavRoutingModeSetMessage& message)
             {
                 m_view.SetNavMode(message.GetNavMode());
+                m_viewModel.SetNavMode(message.GetNavMode());
             }
 
             void NavWidgetController::OnNavRoutingViewOpen(const NavRoutingViewOpenMessage& message)
@@ -185,6 +183,7 @@ namespace ExampleApp
                     , m_routeSetMessageHandler(this, &NavWidgetController::OnRouteSet)
                     , m_routeClearedMessageHandler(this, &NavWidgetController::OnRouteCleared)
                     , m_currentDirectionSetMessageHandler(this, &NavWidgetController::OnCurrentDirectionSet)
+                    , m_currentDirectionUpdatedMessageHandler(this, &NavWidgetController::OnCurrentDirectionUpdated)
                     , m_selectedDirectionSetMessageHandler(this, &NavWidgetController::OnSelectedDirectionSet)
                     , m_remainingRouteDurationSetMessageHandler(this, &NavWidgetController::OnRemainingRouteDurationSet)
                     , m_navRoutingModeSetMessageHandler(this, &NavWidgetController::OnNavRoutingModeSet)
@@ -207,6 +206,7 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_routeSetMessageHandler);
                 m_messageBus.SubscribeUi(m_routeClearedMessageHandler);
                 m_messageBus.SubscribeUi(m_currentDirectionSetMessageHandler);
+                m_messageBus.SubscribeUi(m_currentDirectionUpdatedMessageHandler);
                 m_messageBus.SubscribeUi(m_selectedDirectionSetMessageHandler);
                 m_messageBus.SubscribeUi(m_remainingRouteDurationSetMessageHandler);
                 m_messageBus.SubscribeUi(m_navRoutingModeSetMessageHandler);
@@ -219,6 +219,7 @@ namespace ExampleApp
                 m_messageBus.UnsubscribeUi(m_navRoutingModeSetMessageHandler);
                 m_messageBus.UnsubscribeUi(m_remainingRouteDurationSetMessageHandler);
                 m_messageBus.UnsubscribeUi(m_selectedDirectionSetMessageHandler);
+                m_messageBus.UnsubscribeUi(m_currentDirectionUpdatedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_currentDirectionSetMessageHandler);
                 m_messageBus.UnsubscribeUi(m_routeClearedMessageHandler);
                 m_messageBus.UnsubscribeUi(m_routeSetMessageHandler);

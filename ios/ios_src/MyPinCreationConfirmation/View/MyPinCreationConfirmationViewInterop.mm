@@ -39,12 +39,12 @@ namespace ExampleApp
                 m_dismissedCallbacks.RemoveCallback(callback);
             }
 
-            void MyPinCreationConfirmationViewInterop::SetFullyOffScreen()
+            void MyPinCreationConfirmationViewInterop::SetOffScreen()
             {
                 [m_pView setFullyOffScreen];
             }
 
-            void MyPinCreationConfirmationViewInterop::SetFullyOnScreen()
+            void MyPinCreationConfirmationViewInterop::SetOnScreen()
             {
                 [m_pView setFullyOnScreen];
             }

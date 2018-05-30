@@ -14,6 +14,9 @@
 #include "NavRoutingEndLocationClearClickedMessage.h"
 #include "NavRoutingSelectedDirectionChangedMessage.h"
 #include "NavRoutingStartEndRoutingButtonClickedMessage.h"
+#include "InteriorsModelRepository.h"
+#include "AlertBox.h"
+#include "ISingleOptionAlertBoxDismissedHandler.h"
 
 namespace ExampleApp
 {
@@ -27,7 +30,9 @@ namespace ExampleApp
                 NavRoutingController(INavRoutingModel& routingModel,
                                      Eegeo::Location::ILocationService& locationService,
                                      TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
-                                     ExampleAppMessaging::TMessageBus& messageBus);
+                                     ExampleAppMessaging::TMessageBus& messageBus,
+                                     Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
+                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
 
                 ~NavRoutingController();
 
@@ -36,15 +41,17 @@ namespace ExampleApp
                 Eegeo::Location::ILocationService& m_locationService;
                 TurnByTurn::INavTurnByTurnModel& m_turnByTurnModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+                Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
+                Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
 
-
-                Eegeo::Helpers::TCallback1<NavRoutingController, const SdkModel::NavRoutingLocationModel&> m_startLocationSetCallback;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingLocationModel&> m_startLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_startLocationClearedCallback;
-                Eegeo::Helpers::TCallback1<NavRoutingController, const SdkModel::NavRoutingLocationModel&> m_endLocationSetCallback;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingLocationModel&> m_endLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_endLocationClearedCallback;
-                Eegeo::Helpers::TCallback1<NavRoutingController, const SdkModel::NavRoutingRouteModel&> m_routeSetCallback;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingRouteModel&> m_routeSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_routeClearedCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const int> m_currentDirectionSetCallback;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingDirectionModel&> m_currentDirectionUpdatedCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const int> m_selectedDirectionSetCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const double> m_remainingRouteDurationSetCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingMode> m_navRoutingModeSetCallback;
@@ -56,21 +63,25 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingStartEndRoutingButtonClickedMessage&> m_startEndRoutingButtonClickedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingSelectedDirectionChangedMessage&> m_selectedDirectionChangedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
+                
+                Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavRoutingController> m_failAlertHandler;
 
 
-                void OnStartLocationSet(const SdkModel::NavRoutingLocationModel& startLocation);
+                void OnStartLocationSet(const NavRoutingLocationModel& startLocation);
 
                 void OnStartLocationCleared();
 
-                void OnEndLocationSet(const SdkModel::NavRoutingLocationModel& endLocation);
+                void OnEndLocationSet(const NavRoutingLocationModel& endLocation);
 
                 void OnEndLocationCleared();
 
-                void OnRouteSet(const SdkModel::NavRoutingRouteModel& routeModel);
+                void OnRouteSet(const NavRoutingRouteModel& routeModel);
 
                 void OnRouteCleared();
 
                 void OnCurrentDirectionSet(const int& directionIndex);
+
+                void OnCurrentDirectionUpdated(const NavRoutingDirectionModel& directionModel);
 
                 void OnSelectedDirectionSet(const int& directionIndex);
 
@@ -91,6 +102,8 @@ namespace ExampleApp
                 void OnSelectedDirectionChanged(const NavRoutingSelectedDirectionChangedMessage& message);
 
                 void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
+                
+                void OnFailAlertBoxDismissed();
             };
         }
     }

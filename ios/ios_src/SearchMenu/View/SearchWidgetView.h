@@ -5,6 +5,7 @@
 #include "ISearchWidgetView.h"
 #include "WidgetSearchResultModel.h"
 #include "TagCollection.h"
+#include "IScreenControlView.h"
 
 #import <WrldSearchWidget/WrldSearchWidget.h>
 
@@ -94,8 +95,8 @@ namespace ExampleApp
                 void RemoveOnViewClosed(Eegeo::Helpers::ICallback0& callback);
 
                 void SetOnScreenStateToIntermediateValue(float value);
-                void SetFullyOnScreen();
-                void SetFullyOffScreen();
+                void SetOnScreen();
+                void SetOffScreen();
 
                 void CloseMenu();
 

@@ -5,6 +5,7 @@
 #include "VectorMathDecl.h"
 #include "Interiors.h"
 #include "ICallback.h"
+#include "CameraTransitions.h"
 
 namespace ExampleApp
 {
@@ -17,6 +18,8 @@ namespace ExampleApp
             public:
 
                 virtual ~ICameraTransitionController() {};
+                
+                virtual void StartTransition(const CameraTransitionOptions& options) = 0;
 
                 virtual void StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                                float distanceFromInterest,

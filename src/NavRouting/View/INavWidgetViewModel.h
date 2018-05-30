@@ -6,6 +6,7 @@
 #include "IOpenableControlViewModel.h"
 #include "NavRoutingLocationModel.h"
 #include "NavRoutingRouteModel.h"
+#include "IReactionScreenStateProvider.h"
 
 namespace ExampleApp
 {
@@ -18,13 +19,13 @@ namespace ExampleApp
             public:
                 virtual ~INavWidgetViewModel() { }
 
-                virtual bool TryAcquireReactorControl() = 0;
-
                 virtual bool IsOpen() const = 0;
 
                 virtual void Open() = 0;
 
                 virtual void Close() = 0;
+
+                virtual void SetNavMode(SdkModel::NavRoutingMode mode) = 0;
 
                 virtual void InsertOpenedCallback(Eegeo::Helpers::ICallback0& openedCallback) = 0;
 
@@ -35,6 +36,8 @@ namespace ExampleApp
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& closedCallback) = 0;
 
                 virtual OpenableControl::View::IOpenableControlViewModel& GetOpenableControl() = 0;
+
+                virtual Reaction::View::IReactionScreenStateProvider& GetCompassStateProvider() = 0;
             };
         }
     }

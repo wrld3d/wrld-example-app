@@ -9,10 +9,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiViewModel::SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
+            SearchResultPoiViewModel::SearchResultPoiViewModel(Eegeo::Helpers::TIdentity identity)
                 : m_searchResultModel()
-                , m_openable(identity, reactionControllerModel)
+                , m_openable(identity)
             {
 
             }
@@ -20,11 +19,6 @@ namespace ExampleApp
             SearchResultPoiViewModel::~SearchResultPoiViewModel()
             {
 
-            }
-
-            bool SearchResultPoiViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
             }
 
             const Search::SdkModel::SearchResultModel& SearchResultPoiViewModel::GetSearchResultModel() const
@@ -47,30 +41,24 @@ namespace ExampleApp
 
             bool SearchResultPoiViewModel::IsOpen() const
             {
-                return m_openable.IsFullyOpen();
+                return m_openable.IsOpen();
             }
 
             void SearchResultPoiViewModel::Open(const Search::SdkModel::SearchResultModel& searchResultModel,
                                                 bool isPinned)
             {
                 Eegeo_ASSERT(!IsOpen(), "Cannot open SearchResultPoiViewModel when already open.\n");
-                if(m_openable.Open())
-                {
-                    m_searchResultModel = searchResultModel;
-                    m_isPinned = isPinned;
-                    m_openedCallbacks.ExecuteCallbacks();
-                }
+                m_openable.Open();
+                m_searchResultModel = searchResultModel;
+                m_isPinned = isPinned;
+                m_openedCallbacks.ExecuteCallbacks();
             }
 
             void SearchResultPoiViewModel::Close()
             {
                 Eegeo_ASSERT(IsOpen(), "Cannot close SearchResultModel when view model when already closed.\n");
 
-                {
-                    const bool closed = m_openable.Close();
-                    Eegeo_ASSERT(closed, "Failed to close");
-                }
-
+                m_openable.Close();
                 m_closedCallbacks.ExecuteCallbacks();
             }
 

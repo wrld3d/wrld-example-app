@@ -55,7 +55,6 @@ namespace ExampleApp
                     Eegeo::Labels::ILabelFilterModel& labelFilterModel,
                     const Eegeo::Labels::LabelLayer::IdType& interiorMarkerLabelLayer,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                     ExampleApp::Watermark::View::IWatermarkViewModel& watermarkViewModel)
             {
 
@@ -72,8 +71,7 @@ namespace ExampleApp
                                                       messageBus);
 
                 m_pMyPinCreationConfirmationViewModel = Eegeo_NEW(View::MyPinCreationConfirmationViewModel)(identityProvider.GetNextIdentity(),
-                                                        false,
-                                                        reactionControllerModel);
+                                                        false);
 
                 m_pMyPinCreationCompositeViewModel = Eegeo_NEW(View::MyPinCreationCompositeViewModel)(messageBus,
                                                      *m_pMyPinCreationInitiationViewModel,

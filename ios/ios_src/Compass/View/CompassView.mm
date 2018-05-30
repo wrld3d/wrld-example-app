@@ -32,6 +32,8 @@ enum CompassViewState
     
     bool m_disabledStateHighlighted;
     float m_currentAngleRadians;
+    
+    CGFloat m_navWidgetBottomHeight;
 }
 
 @end
@@ -56,6 +58,8 @@ enum CompassViewState
         
         m_innerHeight = 80.0f/1.5f;
         m_innerWidth = 80.0f/1.5f;
+        
+        m_navWidgetBottomHeight = 0.0f;
         
         m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_innerHeight - (m_height - m_innerHeight)/2;
         m_yPosInactive = m_screenHeight + m_height;
@@ -360,6 +364,29 @@ enum CompassViewState
      {
          self.pPoint.alpha = alpha;
      }];
+}
+
+- (BOOL) isValidState:(ExampleApp::ScreenControl::View::TScreenControlViewState) state
+{
+    return (state == CompassPositionState::Default || state == CompassPositionState::Navigation);
+}
+
+- (void) setPositionState:(CompassPositionState) state
+{
+    if(state == CompassPositionState::Default)
+    {
+        m_yPosActive = m_yPosBase;
+    }
+    else
+    {
+        m_yPosActive = m_yPosBase - m_navWidgetBottomHeight;
+    }
+    [self animateToY: m_yPosActive];
+}
+
+- (void) setNavigationModeOffset: (NSInteger) offset
+{
+    m_navWidgetBottomHeight = offset;
 }
 
 @end

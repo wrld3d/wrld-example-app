@@ -30,7 +30,7 @@ namespace ExampleApp
                 bool m_appModeAllowsOpen;
 
                 Eegeo::Helpers::TCallback0<WatermarkController> m_selectedCallback;
-                Eegeo::Helpers::TCallback2<WatermarkController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
+                Eegeo::Helpers::TCallback1<WatermarkController, ScreenControl::View::IScreenControlViewModel&> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<WatermarkController, const SetWatermarkVisibilityMessage&> m_setVisibilityHandler;
                 Eegeo::Helpers::TCallback1<WatermarkController, const WatermarkModelChangedMessage&> m_watermarkModelChangedHandler;
                 Eegeo::Helpers::TCallback1<WatermarkController, const WatermarkAlignmentStateChangedMessage&> m_watermarkAlignmentStateChangedHandler;
@@ -40,7 +40,7 @@ namespace ExampleApp
 
                 void OnSelected();
 
-                void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
+                void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel& viewModel);
                 
                 void OnHandleSetVisibility(const SetWatermarkVisibilityMessage& message);
                 void OnWatermarkModelChanged(const WatermarkModelChangedMessage& message);

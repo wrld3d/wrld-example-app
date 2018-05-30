@@ -47,16 +47,11 @@ namespace ExampleApp
 
             void MyPinDetailsController::OnOpened()
             {
-                if(m_viewModel.TryAcquireReactorControl())
-                {
-                    m_view.OpenWithModel(m_viewModel.GetMyPinTitle(),
-                                         m_viewModel.GetMyPinDescription(),
-                                         m_viewModel.GetImagePath());
-                }
-                else
-                {
-                    m_view.Close();
-                }
+
+                m_view.OpenWithModel(m_viewModel.GetMyPinTitle(),
+                                     m_viewModel.GetMyPinDescription(),
+                                     m_viewModel.GetImagePath());
+
             }
 
             void MyPinDetailsController::OnClosed()

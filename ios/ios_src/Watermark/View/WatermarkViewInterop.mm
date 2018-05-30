@@ -18,12 +18,12 @@ namespace ExampleApp
                 [m_pView setOnScreenStateToIntermediateValue:value];
             }
 
-            void WatermarkViewInterop::SetFullyOnScreen()
+            void WatermarkViewInterop::SetOnScreen()
             {
                 [m_pView setFullyOnScreen];
             }
 
-            void WatermarkViewInterop::SetFullyOffScreen()
+            void WatermarkViewInterop::SetOffScreen()
             {
                 [m_pView setFullyOffScreen];
             }

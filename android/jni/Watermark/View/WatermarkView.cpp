@@ -81,7 +81,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, animateToIntermediateOpenStateOnScreen, value);
             }
 
-            void WatermarkView::SetFullyOnScreen()
+            void WatermarkView::SetOnScreen()
             {
                 ASSERT_UI_THREAD
 
@@ -92,7 +92,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, animateToClosedOnScreen);
             }
 
-            void WatermarkView::SetFullyOffScreen()
+            void WatermarkView::SetOffScreen()
             {
                 ASSERT_UI_THREAD
 

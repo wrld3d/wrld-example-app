@@ -9,10 +9,9 @@ namespace ExampleApp
         namespace View
         {
             MenuViewModel::MenuViewModel(bool isInitiallyOnScreen,
-                                         Eegeo::Helpers::TIdentity identity,
-                                         Reaction::View::IReactionControllerModel& reactionControllerModel)
+                                         Eegeo::Helpers::TIdentity identity)
             : m_identity(identity)
-            , m_openViewModel(identity, reactionControllerModel)
+            , m_openViewModel(identity)
             , m_screenViewModel(identity)
             {
             }
@@ -29,7 +28,7 @@ namespace ExampleApp
             
             void MenuViewModel::RemoveFromScreen()
             {
-                if(!m_openViewModel.IsFullyClosed())
+                if(!m_openViewModel.IsClosed())
                 {
                     m_openViewModel.Close();
                 }
@@ -37,94 +36,56 @@ namespace ExampleApp
                 m_screenViewModel.RemoveFromScreen();
             }
             
-            void MenuViewModel::UpdateOnScreenState(float onScreenState)
-            {
-                m_screenViewModel.UpdateOnScreenState(onScreenState);
-            }
-            
-            void MenuViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            void MenuViewModel::InsertOnScreenStateChangedCallback(
+                    Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback)
             {
                 m_screenViewModel.InsertOnScreenStateChangedCallback(callback);
             }
             
-            void MenuViewModel::RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback)
+            void MenuViewModel::RemoveOnScreenStateChangedCallback(
+                    Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback)
             {
                 m_screenViewModel.RemoveOnScreenStateChangedCallback(callback);
             }
             
-            bool MenuViewModel::IsFullyOffScreen() const
+            bool MenuViewModel::IsOffScreen() const
             {
-                return m_screenViewModel.IsFullyOffScreen();
+                return m_screenViewModel.IsOffScreen();
             }
             
-            bool MenuViewModel::IsFullyOnScreen() const
+            bool MenuViewModel::IsOnScreen() const
             {
-                return m_screenViewModel.IsFullyOnScreen();
+                return m_screenViewModel.IsOnScreen();
+            }
+
+            void MenuViewModel::Open()
+            {
+                m_openViewModel.Open();
             }
             
-            float MenuViewModel::OnScreenState() const
+            void MenuViewModel::Close()
             {
-                return m_screenViewModel.OnScreenState();
+                m_openViewModel.Close();
             }
             
-            bool MenuViewModel::IsAddedToScreen() const
-            {
-                return m_screenViewModel.IsAddedToScreen();
-            }
-            
-            bool MenuViewModel::HasReactorControl() const
-            {
-                return m_openViewModel.HasReactorControl();
-            }
-            
-            bool MenuViewModel::TryAcquireReactorControl()
-            {
-                return m_openViewModel.TryAcquireReactorControl();
-            }
-            
-            void MenuViewModel::ReleaseReactorControl()
-            {
-                m_openViewModel.ReleaseReactorControl();
-            }
-            
-            bool MenuViewModel::Open(bool acquireReactor)
-            {
-                return m_openViewModel.Open(acquireReactor);
-            }
-            
-            bool MenuViewModel::Close(bool releaseReactor)
-            {
-                return m_openViewModel.Close(releaseReactor);
-            }
-            
-            void MenuViewModel::UpdateOpenState(float openState)
-            {
-                m_openViewModel.UpdateOpenState(openState);
-            }
-            
-            void MenuViewModel::InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>& callback)
+            void MenuViewModel::InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback1<OpenableControl::View::IOpenableControlViewModel&>& callback)
             {
                 m_openViewModel.InsertOpenStateChangedCallback(callback);
             }
             
-            void MenuViewModel::RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>& callback)
+            void MenuViewModel::RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback1<OpenableControl::View::IOpenableControlViewModel&>& callback)
             {
                 m_openViewModel.RemoveOpenStateChangedCallback(callback);
             }
             
-            bool MenuViewModel::IsFullyOpen() const
+            bool MenuViewModel::IsOpen() const
             {
-                return m_openViewModel.IsFullyOpen();
+                return m_openViewModel.IsOpen();
             }
             
-            bool MenuViewModel::IsFullyClosed() const
+            bool MenuViewModel::IsClosed() const
             {
-                return m_openViewModel.IsFullyClosed();
-            }
-            
-            float MenuViewModel::OpenState() const
-            {
-                return m_openViewModel.OpenState();
+                return m_openViewModel.IsClosed();
             }
             
             void MenuViewModel::AddSection(IMenuSectionViewModel& section)

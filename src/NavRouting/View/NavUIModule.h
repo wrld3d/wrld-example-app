@@ -7,6 +7,7 @@
 #include "IIdentity.h"
 #include "Reaction.h"
 #include "INavWidgetViewModel.h"
+#include "IMenuIgnoredReactionModel.h"
 
 namespace ExampleApp
 {
@@ -18,7 +19,7 @@ namespace ExampleApp
             {
             public:
                 NavUIModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                            Reaction::View::IReactionControllerModel& reactionControllerModel);
+                            Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction);
 
                 ~NavUIModule();
 

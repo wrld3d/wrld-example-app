@@ -16,8 +16,7 @@ namespace ExampleApp
             class MyPinCreationDetailsModule : public IMyPinCreationDetailsModule
             {
             public:
-                MyPinCreationDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                           Reaction::View::IReactionControllerModel& reactionControllerModel);
+                MyPinCreationDetailsModule(Eegeo::Helpers::IIdentityProvider& identityProvider);
 
                 ~MyPinCreationDetailsModule();
 

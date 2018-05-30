@@ -49,6 +49,7 @@ namespace ExampleApp
                                                           hasLocationName ? formattedInstructions.GetInstructionLocation() : formattedInstructions.GetShortInstructionName(),
                                                           hasLocationName ? formattedInstructions.GetInstructionDirection() : std::string(),
                                                           step.Path,
+                                                          step.Distance,
                                                           step.IsIndoors,
                                                           step.IndoorId,
                                                           step.IndoorFloorId,
@@ -132,6 +133,8 @@ namespace ExampleApp
             {
                 if (m_startLocationIsSet && m_endLocationIsSet)
                 {
+                    m_navRoutingModel.ClearRoute();
+                    
                     std::vector<Eegeo::Routes::Webservice::RoutingQueryWaypoint> waypoints;
                     waypoints.reserve(2);
 

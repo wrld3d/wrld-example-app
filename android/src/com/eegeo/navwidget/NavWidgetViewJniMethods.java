@@ -17,4 +17,6 @@ public class NavWidgetViewJniMethods
     public static native void StartEndButtonClicked(long nativeCallerPointer);
 
     public static native void SelectedDirectionIndexChanged(long nativeCallerPointer, int directionIndex);
+
+    public static native void SetBottomViewHeight(long nativeCallerPointer, int bottomViewHeight);
 }

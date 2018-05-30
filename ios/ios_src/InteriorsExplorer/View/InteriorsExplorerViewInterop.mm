@@ -95,12 +95,12 @@ namespace ExampleApp
                 [m_pView setOnScreenStateToIntermediateValue: value];
             }
             
-            void InteriorsExplorerViewInterop::SetFullyOnScreen()
+            void InteriorsExplorerViewInterop::SetOnScreen()
             {
                 [m_pView setFullyOnScreen];
             }
             
-            void InteriorsExplorerViewInterop::SetFullyOffScreen()
+            void InteriorsExplorerViewInterop::SetOffScreen()
             {
                 [m_pView setFullyOffScreen];
             }

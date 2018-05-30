@@ -45,8 +45,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::SearchQueryResponseReceivedMessage&>
                                                                         m_onSearchQueryResultsLoadedHandler;
                 
-                Eegeo::Helpers::TCallback2<SearchWidgetController, ScreenControl::View::IScreenControlViewModel&, float> m_onScreenStateChanged;
-                Eegeo::Helpers::TCallback2<SearchWidgetController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenableStateChanged;
+                Eegeo::Helpers::TCallback1<SearchWidgetController, ScreenControl::View::IScreenControlViewModel&> m_onScreenStateChanged;
+                Eegeo::Helpers::TCallback1<SearchWidgetController, OpenableControl::View::IOpenableControlViewModel&> m_onOpenableStateChanged;
 				Eegeo::Helpers::TCallback0<SearchWidgetController> m_onModalBackgroundTouchCallback;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::DeepLinkedSearchQueryRequestMessage&> m_deepLinkRequestedHandler;
 
@@ -86,8 +86,8 @@ namespace ExampleApp
 				void RefreshPresentation();
 
 				void OnItemSelected(const std::string& menuText, int& sectionIndex, int& itemIndex);
-				void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& state);
-                void OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& state);
+				void OnOpenableStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel);
+                void OnScreenControlStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel);
 				void OnViewOpened();
 				void OnViewClosed();
 				void OnModalBackgroundTouch();

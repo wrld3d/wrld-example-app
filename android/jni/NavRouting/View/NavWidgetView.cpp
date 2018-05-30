@@ -7,6 +7,7 @@
 #include "YelpParsingHelpers.h"
 #include "EegeoJsonParser.h"
 #include "EegeoSearchResultModel.h"
+#include "ICompassView.h"
 
 namespace ExampleApp
 {
@@ -14,10 +15,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            NavWidgetView::NavWidgetView(AndroidNativeState& nativeState)
+            NavWidgetView::NavWidgetView(AndroidNativeState& nativeState, Compass::View::ICompassView& compassView)
                     : m_nativeState(nativeState)
                     , m_uiViewClass(NULL)
                     , m_uiView(NULL)
+                    , m_compassView(compassView)
             {
                 ASSERT_UI_THREAD
 
@@ -93,14 +95,6 @@ namespace ExampleApp
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
-                jclass locationClass = env->FindClass("android/location/Location");
-                jmethodID locationCtor = env->GetMethodID(locationClass, "<init>", "(Ljava/lang/String;)V");
-
-                jmethodID setLatitudeMethod = env->GetMethodID(locationClass, "setLatitude", "(D)V");
-                jmethodID setLongitudeMethod = env->GetMethodID(locationClass, "setLongitude", "(D)V");
-
-                jstring wrldStr = env->NewStringUTF("Wrld");
-
                 jclass arrayListClass = env->FindClass("java/util/ArrayList");
                 jmethodID arrayListCtor = env->GetMethodID(arrayListClass, "<init>", "()V");
                 jmethodID arrayListAddMethod = env->GetMethodID(arrayListClass, "add", "(Ljava/lang/Object;)Z");
@@ -112,17 +106,6 @@ namespace ExampleApp
 
                 for (auto &direction: routeModel.GetDirections())
                 {
-                    jobject pathArrayListObject = env->NewObject(arrayListClass, arrayListCtor);
-
-                    for (auto &latLng: direction.GetPath())
-                    {
-                        jobject locationObject = env->NewObject(locationClass, locationCtor, wrldStr);
-                        env->CallVoidMethod(locationObject, setLatitudeMethod, latLng.GetLatitude());
-                        env->CallVoidMethod(locationObject, setLongitudeMethod, latLng.GetLongitude());
-
-                        env->CallBooleanMethod(pathArrayListObject, arrayListAddMethod, locationObject);
-                    }
-
                     jstring name = env->NewStringUTF(direction.GetName().c_str());
                     jstring icon = env->NewStringUTF(direction.GetIcon().c_str());
                     jstring instruction = env->NewStringUTF(direction.GetInstruction().c_str());
@@ -135,7 +118,7 @@ namespace ExampleApp
                                                                 icon,
                                                                 instruction,
                                                                 thenInstruction,
-                                                                pathArrayListObject,
+                                                                NULL,
                                                                 direction.GetIsIndoors() ? indoorMapId : NULL,
                                                                 direction.GetIndoorMapFloorId(),
                                                                 direction.GetIsMultiFloor());
@@ -156,8 +139,6 @@ namespace ExampleApp
 
                 jmethodID setRouteMethod = env->GetMethodID(m_uiViewClass, "setRoute", "(Lcom/wrld/widgets/navigation/model/WrldNavRoute;)V");
                 env->CallVoidMethod(m_uiView, setRouteMethod, navRouteObject);
-
-                env->DeleteLocalRef(wrldStr);
             }
 
             void NavWidgetView::ClearRoute()
@@ -176,6 +157,43 @@ namespace ExampleApp
 
                 jmethodID methodID = env->GetMethodID(m_uiViewClass, "setCurrentDirectionIndex", "(I)V");
                 env->CallVoidMethod(m_uiView, methodID, directionIndex);
+            }
+
+            void NavWidgetView::UpdateCurrentDirection(const SdkModel::NavRoutingDirectionModel& directionModel)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jclass navDirectionClass = env->FindClass("com/wrld/widgets/navigation/model/WrldNavDirection");
+                jmethodID navDirectionsCtor = env->GetMethodID(navDirectionClass, "<init>", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;IZ)V");
+
+                jstring name = env->NewStringUTF(directionModel.GetName().c_str());
+                jstring icon = env->NewStringUTF(directionModel.GetIcon().c_str());
+                jstring instruction = env->NewStringUTF(directionModel.GetInstruction().c_str());
+                jstring thenInstruction = env->NewStringUTF(directionModel.GetNextInstruction().c_str());
+                jstring indoorMapId = env->NewStringUTF(directionModel.GetIndoorMapId().Value().c_str());
+
+                jobject navDirectionObject = env->NewObject(navDirectionClass,
+                                                            navDirectionsCtor,
+                                                            name,
+                                                            icon,
+                                                            instruction,
+                                                            thenInstruction,
+                                                            NULL,
+                                                            directionModel.GetIsIndoors() ? indoorMapId : NULL,
+                                                            directionModel.GetIndoorMapFloorId(),
+                                                            directionModel.GetIsMultiFloor());
+
+                jmethodID setCurrentDirectionMethod = env->GetMethodID(m_uiViewClass, "setCurrentDirection", "(Lcom/wrld/widgets/navigation/model/WrldNavDirection;)V");
+                env->CallVoidMethod(m_uiView, setCurrentDirectionMethod, navDirectionObject);
+
+                env->DeleteLocalRef(name);
+                env->DeleteLocalRef(icon);
+                env->DeleteLocalRef(instruction);
+                env->DeleteLocalRef(thenInstruction);
+                env->DeleteLocalRef(indoorMapId);
             }
 
             void NavWidgetView::SetSelectedDirection(int directionIndex)
@@ -435,6 +453,12 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_selectedDirectionIndexChangedCallbacks.ExecuteCallbacks(selectedDirectionIndex);
+            }
+
+            void NavWidgetView::SetBottomViewHeight(int bottomViewHeight){
+                ASSERT_UI_THREAD
+
+                m_compassView.SetNavigationModeOffset(bottomViewHeight);
             }
 
             jclass NavWidgetView::CreateJavaClass(const std::string& viewClass)

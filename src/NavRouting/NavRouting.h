@@ -25,12 +25,16 @@ namespace ExampleApp
 
             class INavRoutingModel;
             class NavRoutingModule;
+            class NavRoutingRouteModel;
+            class NavRoutingLocationModel;
+            class NavRoutingDirectionModel;
             class INavRoutingPolylineFactory;
             class INavRouteDrawingController;
             class INavRoutingServiceController;
             class NavWidgetRouteUpdateHandler;
             class NavWidgetRouteDrawingHandler;
             class NavRoutingController;
+            class NavRoutingCameraController;
 
             typedef Eegeo::Shapes::Polylines::PolylineShapeArgs PolyLineArgs;
             typedef std::vector<PolyLineArgs::ShapeModel::IdType> RouteLines;

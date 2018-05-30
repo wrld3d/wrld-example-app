@@ -41,48 +41,34 @@ namespace ExampleApp
                 
                 m_addedToScreen = true;
                 m_onScreenState = 1.f;
-                m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
+                m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this);
             }
             
             void InteriorsExplorerViewModel::RemoveFromScreen()
             {
                 m_addedToScreen = false;
                 m_onScreenState = 0.f;
-                m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
+                m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this);
             }
-            
-            void InteriorsExplorerViewModel::UpdateOnScreenState(float onScreenState)
-            {
-                if(!m_canAddToScreen)
-                {
-                    m_onScreenState = 0.0f;
-                    return;
-                }
-                
-                if(m_addedToScreen)
-                {
-                    Eegeo_ASSERT(onScreenState >= 0.f && onScreenState <= 1.f, "Invalid value %f for screen state, valid range for UI on-screen-state is 0.0 to 1.0 inclusive.\n", onScreenState);
-                    m_onScreenState = onScreenState;
-                    m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this, m_onScreenState);
-                }
-            }
-            
-            void InteriorsExplorerViewModel::InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<IScreenControlViewModel&, float>& callback)
+
+            void InteriorsExplorerViewModel::InsertOnScreenStateChangedCallback(
+                    Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback)
             {
                 m_onScreenStateChangedCallbacks.AddCallback(callback);
             }
             
-            void InteriorsExplorerViewModel::RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<IScreenControlViewModel&, float>& callback)
+            void InteriorsExplorerViewModel::RemoveOnScreenStateChangedCallback(
+                    Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback)
             {
                 m_onScreenStateChangedCallbacks.RemoveCallback(callback);
             }
             
-            bool InteriorsExplorerViewModel::IsFullyOffScreen() const
+            bool InteriorsExplorerViewModel::IsOffScreen() const
             {
                 return OnScreenState() == 0.f;
             }
             
-            bool InteriorsExplorerViewModel::IsFullyOnScreen() const
+            bool InteriorsExplorerViewModel::IsOnScreen() const
             {
                 return OnScreenState() == 1.f;
             }

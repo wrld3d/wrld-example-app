@@ -42,8 +42,17 @@ namespace ExampleApp
                 return m_directions;
             }
 
-            const Eegeo::Routes::Webservice::RouteData& NavRoutingRouteModel::GetSourceRouteData() const {
+            const Eegeo::Routes::Webservice::RouteData& NavRoutingRouteModel::GetSourceRouteData() const
+            {
                 return m_sourceRoute;
+            }
+
+            void NavRoutingRouteModel::UpdateDirection(int index, const NavRoutingDirectionModel& directionModel)
+            {
+                if (index >= 0 && index < m_directions.size())
+                {
+                    m_directions[index] = directionModel;
+                }
             }
         }
     }

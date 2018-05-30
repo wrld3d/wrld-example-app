@@ -12,6 +12,7 @@ namespace ExampleApp
         namespace View
         {
             void Apply(IScreenControlViewModel& viewModel, IScreenControlView& view);
+            void ApplyState(IMultiStateScreenControlViewModel &viewModel, IMultiStateScreenControlView &view);
         }
     }
 }

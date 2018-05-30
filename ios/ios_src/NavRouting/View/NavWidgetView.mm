@@ -3,6 +3,7 @@
 #include "NavWidgetViewIncludes.h"
 #include "NavWidgetView.h"
 #include "NavWidgetView.h"
+#include "ICompassView.h"
 #include <MapKit/MapKit.h>
 
 namespace ExampleApp
@@ -12,17 +13,19 @@ namespace ExampleApp
         namespace View
         {
             
-            NavWidgetView::NavWidgetView(WRLDNavModel* navModel)
+            NavWidgetView::NavWidgetView(WRLDNavModel* navModel, Compass::View::ICompassView& compassView)
             {
                 m_pNavModel = navModel;
                 
                 if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                 {
                     m_pView = [[WRLDNavWidgetTablet alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+                    compassView.SetNavigationModeOffset(0);
                 }
                 else
                 {
                     m_pView = [[WRLDNavWidgetPhone alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+                    compassView.SetNavigationModeOffset(96);
                 }
                 
                 [m_pView setViewVisibilityWithAnimate:false hideViews:true];
@@ -108,12 +111,17 @@ namespace ExampleApp
             
             void NavWidgetView::SetCurrentDirection(int currentDirection)
             {
-                [m_pNavModel setCurrentDirection:(NSInteger)currentDirection];
+                [m_pNavModel setCurrentDirectionIndex:(NSInteger)currentDirection];
+            }
+            
+            void NavWidgetView::UpdateCurrentDirection(const SdkModel::NavRoutingDirectionModel& directionModel)
+            {
+                [m_pNavModel setCurrentDirection:BuildWlrdNavDirectionFromFromNavRoutingDirectionModel(directionModel)];
             }
 
             void NavWidgetView::SetSelectedDirection(int directionIndex)
             {
-                [m_pNavModel setSelectedDirection:(NSInteger)directionIndex];
+                [m_pNavModel setSelectedDirectionIndex:(NSInteger)directionIndex];
             }
             
             void NavWidgetView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)

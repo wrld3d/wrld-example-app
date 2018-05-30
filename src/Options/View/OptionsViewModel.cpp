@@ -11,10 +11,9 @@ namespace ExampleApp
         namespace View
         {
             OptionsViewModel::OptionsViewModel(Eegeo::Helpers::TIdentity identity,
-                                               Reaction::View::IReactionControllerModel& reactionControllerModel,
                                                bool streamOverWifiOnly,
                                                bool cachingEnabled)
-            : m_openable(identity, reactionControllerModel)
+            : m_openable(identity)
             , m_streamOverWifiOnly(streamOverWifiOnly)
             , m_cachingEnabled(cachingEnabled)
             , m_inCacheClearCeremony(false)
@@ -60,24 +59,17 @@ namespace ExampleApp
                 m_cacheClearCeremonyCompletedCallbacks.ExecuteCallbacks();
             }
             
-            bool OptionsViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
-            }
-            
             bool OptionsViewModel::IsOpen() const
             {
-                return m_openable.IsFullyOpen();
+                return m_openable.IsOpen();
             }
             
             void OptionsViewModel::Open()
             {
                 if(!IsOpen())
                 {
-                    if(m_openable.Open())
-                    {
-                        m_openedCallbacks.ExecuteCallbacks();
-                    }
+                    m_openable.Open();
+                    m_openedCallbacks.ExecuteCallbacks();
                 }
             }
             
@@ -85,11 +77,7 @@ namespace ExampleApp
             {
                 if(IsOpen())
                 {
-                    {
-                        const bool closed = m_openable.Close();
-                        Eegeo_ASSERT(closed, "Failed to close");
-                    }
-                    
+                    m_openable.Close();
                     m_closedCallbacks.ExecuteCallbacks();
                 }
             }

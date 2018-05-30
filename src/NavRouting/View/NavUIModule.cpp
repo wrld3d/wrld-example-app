@@ -11,9 +11,8 @@ namespace
     {
         Eegeo::Helpers::TIdentity m_identity;
     public:
-        OpenableControlViewModel_lt(ExampleApp::Reaction::View::IReactionControllerModel& reactionControllerModel,
-                                    Eegeo::Helpers::TIdentity identity):
-        ExampleApp::OpenableControl::View::OpenableControlViewModelBase(reactionControllerModel),
+        OpenableControlViewModel_lt(Eegeo::Helpers::TIdentity identity):
+        ExampleApp::OpenableControl::View::OpenableControlViewModelBase(),
         m_identity(identity)
         {
             
@@ -36,20 +35,19 @@ namespace ExampleApp
             {
                 OpenableControlViewModel_lt openable;
                 
-                Private(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                        Reaction::View::IReactionControllerModel& reactionControllerModel):
-                    openable(reactionControllerModel, identityProvider.GetNextIdentity())
+                Private(Eegeo::Helpers::IIdentityProvider& identityProvider)
+                        : openable(identityProvider.GetNextIdentity())
                 {
                     
                 }
             };
             
             NavUIModule::NavUIModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                     Reaction::View::IReactionControllerModel& reactionControllerModel):
-                d(new Private(identityProvider, reactionControllerModel))
+                                     Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction):
+                d(new Private(identityProvider))
             {
-                m_pNavWidgetViewModel = Eegeo_NEW(NavWidgetViewModel)(identityProvider.GetNextIdentity(),
-                                                                       reactionControllerModel);
+                m_pNavWidgetViewModel = Eegeo_NEW(NavWidgetViewModel)(identityProvider.GetNextIdentity());
+                ignoredMenuReaction.AddIgnoredMenuIdentity(m_pNavWidgetViewModel->GetOpenableControl().GetIdentity());
             }
 
             NavUIModule::~NavUIModule()

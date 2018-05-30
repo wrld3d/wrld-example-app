@@ -31,7 +31,7 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::TCallback1<SearchMenuController, Menu::View::MenuItemModel> m_onSearchItemAddedCallback;
                 Eegeo::Helpers::TCallback1<SearchMenuController, Menu::View::MenuItemModel> m_onSearchItemRemovedCallback;
-                Eegeo::Helpers::TCallback2<SearchMenuController, OpenableControl::View::IOpenableControlViewModel&, float> m_onOpenStateChangedCallback;
+                Eegeo::Helpers::TCallback1<SearchMenuController, OpenableControl::View::IOpenableControlViewModel&> m_onOpenStateChangedCallback;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const Search::SearchQueryPerformedMessage&> m_performedQueryHandler;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const Search::SearchQueryResponseReceivedMessage&> m_receivedQueryResponseHandler;
                 Eegeo::Helpers::TCallback1<SearchMenuController, const Search::SearchQueryResultsRemovedMessage&> m_receivedQueryResultsRemovedHandler;
@@ -47,7 +47,7 @@ namespace ExampleApp
                 
                 void OnSearchItemRemoved(Menu::View::MenuItemModel& item);
                 
-                void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
+                void OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel);
                 
                 void OnSearchQueryPerformedMessage(const Search::SearchQueryPerformedMessage& message);
                 
@@ -76,8 +76,7 @@ namespace ExampleApp
             protected:
                 
                 virtual void RefreshPresentation(bool forceRefresh);
-                bool IsFullyOpen() const;
-                void UpdateOpenState();
+                bool IsOpen() const;
                 
             public:
                 SearchMenuController(Menu::View::IMenuModel& model,

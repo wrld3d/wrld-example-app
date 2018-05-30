@@ -8,14 +8,19 @@ namespace ExampleApp
     {
         namespace View
         {
+            typedef int TScreenControlViewState;
             class IScreenControlView
             {
             public:
                 virtual ~IScreenControlView() { };
 
-                virtual void SetOnScreenStateToIntermediateValue(float value) = 0;
-                virtual void SetFullyOnScreen() = 0;
-                virtual void SetFullyOffScreen() = 0;
+                virtual void SetOnScreen() = 0;
+                virtual void SetOffScreen() = 0;
+            };
+            class IMultiStateScreenControlView : public virtual IScreenControlView
+            {
+            public:
+                virtual void SetState(TScreenControlViewState state) = 0;
             };
         }
     }

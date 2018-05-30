@@ -14,46 +14,32 @@ namespace ExampleApp
     {
         namespace View
         {
+            typedef bool OpenState;
             class OpenableControlViewModelBase : public IOpenableControlViewModel
             {
             private:
-                float m_openState;
-                Reaction::View::IReactionControllerModel& m_reactionControllerModel;
+                OpenState m_openState;
 
-                Eegeo::Helpers::CallbackCollection2<IOpenableControlViewModel&, float> m_openStateChangedCallbacks;
-
-                bool TryAcquireOpenableControl();
-
-                void ReleaseOpenableControl();
+                Eegeo::Helpers::CallbackCollection1<IOpenableControlViewModel&> m_openStateChangedCallbacks;
 
             protected:
-                OpenableControlViewModelBase(Reaction::View::IReactionControllerModel& reactionControllerModel);
+                OpenableControlViewModelBase();
 
             public:
 
                 ~OpenableControlViewModelBase();
 
-                bool HasReactorControl() const;
+                void Open() override;
 
-                bool TryAcquireReactorControl();
+                void Close() override;
 
-                void ReleaseReactorControl();
+                void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback1<IOpenableControlViewModel&>& callback) override;
 
-                bool Open(bool acquireReactor = true);
+                void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback1<IOpenableControlViewModel&>& callback) override;
 
-                bool Close(bool releaseReactor = true);
+                bool IsOpen() const override;
 
-                void UpdateOpenState(float openState);
-
-                void InsertOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
-
-                void RemoveOpenStateChangedCallback(Eegeo::Helpers::ICallback2<IOpenableControlViewModel&, float>& callback);
-
-                bool IsFullyOpen() const;
-
-                bool IsFullyClosed() const;
-
-                float OpenState() const;
+                bool IsClosed() const override;
             };
         }
     }

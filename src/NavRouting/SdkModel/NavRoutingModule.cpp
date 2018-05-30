@@ -11,6 +11,7 @@
 #include "RouteService.h"
 #include "NavTurnByTurnModel.h"
 #include "NavTurnByTurnController.h"
+#include "NavRoutingCameraController.h"
 
 namespace ExampleApp
 {
@@ -19,13 +20,15 @@ namespace ExampleApp
         namespace SdkModel
         {
             NavRoutingModule::NavRoutingModule(PolyLineArgs::IShapeService& shapeService,
-                                               Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
-                                               Eegeo::Location::ILocationService& locationService,
-                                               Eegeo::Location::NavigationService& navigationService,
-                                               Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                                               ExampleAppMessaging::TMessageBus& messageBus,
-                                               Eegeo::Markers::IMarkerService& markerService
-                                               )
+                                 Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
+                                 Eegeo::Location::ILocationService& locationService,
+                                 Eegeo::Location::NavigationService& navigationService,
+                                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                 Compass::SdkModel::ICompassModel& compassModel,
+                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                 Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
+                                 Eegeo::Markers::IMarkerService& markerService)
             {
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
                 
@@ -62,11 +65,19 @@ namespace ExampleApp
                 m_pRoutingController = Eegeo_NEW(NavRoutingController)(*m_pNavRoutingModel,
                                                                        locationService,
                                                                        *m_pTurnByTurnModel,
-                                                                       messageBus);
+                                                                       messageBus,
+                                                                       interiorsModelRepository,
+                                                                       alertBoxFactory);
+                
+                m_pRoutingCameraController = Eegeo_NEW(NavRoutingCameraController)(*m_pNavRoutingModel,
+                                                                                   cameraTransitionController,
+                                                                                   navigationService,
+                                                                                   compassModel);
             }
 
             NavRoutingModule::~NavRoutingModule()
             {
+                Eegeo_DELETE m_pRoutingCameraController;
                 Eegeo_DELETE m_pRoutingController;
                 Eegeo_DELETE m_pRouteDrawingHandler;
                 Eegeo_DELETE m_pTurnByTurnController;

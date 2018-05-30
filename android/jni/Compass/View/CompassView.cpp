@@ -104,12 +104,12 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, animateToIntermediateOpenStateOnScreen, value);
             }
 
-            void CompassView::SetFullyOnScreen()
+            void CompassView::SetOnScreen()
             {
                 CallVoidMethod("animateToActive");
             }
 
-            void CompassView::SetFullyOffScreen()
+            void CompassView::SetOffScreen()
             {
                 CallVoidMethod("animateToInactive");;
             }
@@ -133,6 +133,29 @@ namespace ExampleApp
             void CompassView::RemoveCycledCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 m_callbacks.RemoveCallback(callback);
+            }
+
+            void CompassView::SetState(
+                    ScreenControl::View::TScreenControlViewState state)
+			{
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv *env = attached.envForThread;
+
+                jmethodID setState = env->GetMethodID(m_uiViewClass, "setState", "(I)V");
+                env->CallVoidMethod(m_uiView, setState, state);
+            }
+
+            void CompassView::SetNavigationModeOffset(int offset)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv *env = attached.envForThread;
+
+                jmethodID setNavigationModeOffset = env->GetMethodID(m_uiViewClass, "setNavigationModeOffset", "(I)V");
+                env->CallVoidMethod(m_uiView, setNavigationModeOffset, offset);
             }
         }
     }

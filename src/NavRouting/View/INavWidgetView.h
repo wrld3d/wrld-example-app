@@ -8,6 +8,7 @@
 #include "NavRouting.h"
 #include "NavRoutingLocationModel.h"
 #include "NavRoutingRouteModel.h"
+#include "NavRoutingDirectionModel.h"
 
 namespace ExampleApp
 {
@@ -37,6 +38,9 @@ namespace ExampleApp
                 virtual void ClearRoute() = 0;
 
                 virtual void SetCurrentDirection(int directionIndex) = 0;
+
+                virtual void UpdateCurrentDirection(const SdkModel::NavRoutingDirectionModel& directionModel) = 0;
+
                 virtual void SetSelectedDirection(int directionIndex) = 0;
 
                 virtual void SetRemainingRouteDuration(double seconds) = 0;

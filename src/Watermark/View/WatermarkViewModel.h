@@ -27,15 +27,13 @@ namespace ExampleApp
 
                 void RemoveFromScreen();
 
-                void UpdateOnScreenState(float onScreenState);
+                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback1<ScreenControl::View::IScreenControlViewModel&>& callback);
 
-                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback1<ScreenControl::View::IScreenControlViewModel&>& callback);
 
-                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                bool IsOffScreen() const;
 
-                bool IsFullyOffScreen() const;
-
-                bool IsFullyOnScreen() const;
+                bool IsOnScreen() const;
 
                 float OnScreenState() const;
                 

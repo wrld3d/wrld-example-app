@@ -33,7 +33,6 @@ namespace ExampleApp
                 
             public:
                 SearchMenuModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                 ExampleApp::Reaction::View::IReactionControllerModel& reactionControllerModel,
                                  Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                  Search::SdkModel::IAutocompleteSuggestionQueryPerformer& autocompleteSuggestionQueryPerformer,
                                  ExampleAppMessaging::TMessageBus& messageBus,
