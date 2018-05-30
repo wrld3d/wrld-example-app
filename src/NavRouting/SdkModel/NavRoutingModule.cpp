@@ -23,7 +23,9 @@ namespace ExampleApp
                                                Eegeo::Location::ILocationService& locationService,
                                                Eegeo::Location::NavigationService& navigationService,
                                                Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                                               ExampleAppMessaging::TMessageBus& messageBus)
+                                               ExampleAppMessaging::TMessageBus& messageBus,
+                                               Eegeo::Markers::IMarkerService& markerService
+                                               )
             {
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
                 
@@ -33,7 +35,8 @@ namespace ExampleApp
                 
                 m_pNavRouteDrawingController = Eegeo_NEW(NavRouteDrawingController)(*m_pNavRoutingModel,
                                                                                     *m_pNavRoutingPolylineFactory,
-                                                                                    shapeService);
+                                                                                    shapeService,
+                                                                                    markerService);
                 
                 m_pNavRoutingServiceController = Eegeo_NEW(NavRoutingServiceController)(routingWebservice);
 
