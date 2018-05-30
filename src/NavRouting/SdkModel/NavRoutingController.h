@@ -17,6 +17,7 @@
 #include "InteriorsModelRepository.h"
 #include "AlertBox.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "WorldPins.h"
 
 namespace ExampleApp
 {
@@ -32,7 +33,8 @@ namespace ExampleApp
                                      TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
                                      ExampleAppMessaging::TMessageBus& messageBus,
                                      Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
+                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                     WorldPins::SdkModel::IWorldPinsService& worldPinsService);
 
                 ~NavRoutingController();
 
@@ -43,6 +45,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
+                WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
 
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingLocationModel&> m_startLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_startLocationClearedCallback;

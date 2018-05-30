@@ -835,8 +835,9 @@ namespace ExampleApp
                                                                                             *m_pCameraTransitionService,
                                                                                             m_pCompassModule->GetCompassModel(),
                                                                                             m_messageBus,
+                                                                                            interiorsModelModule.GetInteriorsModelRepository(),
                                                                                             mapModule.GetMarkersModule().GetMarkerService(),
-                                                                                            interiorsModelModule.GetInteriorsModelRepository());
+                                                                                            m_pWorldPinsModule->GetWorldPinsService());
         
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsCameraController());

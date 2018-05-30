@@ -18,6 +18,7 @@
 #include "InteriorsModel.h"
 #include "InteriorsFloorModel.h"
 #include "IAlertBoxFactory.h"
+#include "IWorldPinsService.h"
 
 namespace ExampleApp
 {
@@ -30,13 +31,15 @@ namespace ExampleApp
                                                        TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                        Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+                                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                                       WorldPins::SdkModel::IWorldPinsService& worldPinsService)
             : m_routingModel(routingModel)
             , m_locationService(locationService)
             , m_turnByTurnModel(turnByTurnModel)
             , m_messageBus(messageBus)
             , m_interiorsModelRepository(interiorsModelRepository)
             , m_alertBoxFactory(alertBoxFactory)
+            , m_worldPinsService(worldPinsService)
             , m_startLocationSetCallback(this, &NavRoutingController::OnStartLocationSet)
             , m_startLocationClearedCallback(this, &NavRoutingController::OnStartLocationCleared)
             , m_endLocationSetCallback(this, &NavRoutingController::OnEndLocationSet)
@@ -124,6 +127,7 @@ namespace ExampleApp
                 m_messageBus.Publish(NavRoutingRouteSetMessage(routeModel));
                 m_routingModel.SetNavMode(Ready);
                 m_routingModel.SetRemainingRouteDuration(routeModel.GetDuration());
+                m_worldPinsService.DeselectPin();
             }
 
             void NavRoutingController::OnRouteCleared()

@@ -18,15 +18,19 @@ namespace ExampleApp
             , m_shapeService(shapeService)
             , m_markerService(markerService)
             {
-
+                m_directionIconToPinIcon["enter"] = "nav_enter";
+                m_directionIconToPinIcon["exit"] = "nav_exit";
+                m_directionIconToPinIcon["stairs_up"] = "nav_stairs_up";
+                m_directionIconToPinIcon["stairs_down"] = "nav_stairs_down";
+                m_directionIconToPinIcon["escalator_up"] = "nav_escalator_up";
+                m_directionIconToPinIcon["escalator_down"] = "nav_escalator_down";
+                m_directionIconToPinIcon["lift"] = "nav_lift";
             }
 
             NavRouteDrawingController::~NavRouteDrawingController()
             {
                 ClearRoute();
             }
-            
-            
 
             void NavRouteDrawingController::DrawRoute(const Eegeo::v4& color)
             {
@@ -37,29 +41,59 @@ namespace ExampleApp
                    m_navRoutingModel.TryGetStartLocation(startLocation),
                    m_navRoutingModel.TryGetEndLocation(endLocation))
                 {
+                    const auto& directions = routeModel.GetDirections();
+                    const auto& firstDirection = directions.at(0);
+                    const auto& lastDirection = directions.back();
                     
+                    const auto& firstLocation = firstDirection.GetPath().at(0);
+                    const auto& lastLocation = lastDirection.GetPath().back();
                     
-                    AddPin("Start",
-                           startLocation.GetIsIndoors(),
-                           startLocation.GetIndoorMapId().Value(),
-                           startLocation.GetIndoorMapFloorId(),
-                           startLocation.GetLatLon(),
-                           "aroundme",
+                    AddPin(firstDirection.GetIsIndoors(),
+                           firstDirection.GetIndoorMapId().Value(),
+                           firstDirection.GetIndoorMapFloorId(),
+                           firstLocation,
+                           "nav_start",
                            0);
                     
-                    const auto& directions = routeModel.GetDirections();
                     for (int i = 0; i < directions.size(); ++i)
                     {
+                        const auto& direction = directions.at(i);
+                        const auto& iter = m_directionIconToPinIcon.find(direction.GetIcon());
+                        
+                        if(iter != m_directionIconToPinIcon.end())
+                        {
+                            const auto& pinIconKey = iter->second;
+                            
+                            const auto& directionLocation = direction.GetPath().back();
+                            
+                            AddPin(direction.GetIsIndoors(),
+                                   direction.GetIndoorMapId().Value(),
+                                   direction.GetIndoorMapFloorId(),
+                                   directionLocation,
+                                   pinIconKey,
+                                   0);
+                            
+                            const auto& nextDirection = directions.at(i+2);
+                            
+                            const auto& nextDirectionLocation = nextDirection.GetPath().at(0);
+                            
+                            AddPin(nextDirection.GetIsIndoors(),
+                                   nextDirection.GetIndoorMapId().Value(),
+                                   nextDirection.GetIndoorMapFloorId(),
+                                   nextDirectionLocation,
+                                   pinIconKey,
+                                   0);
+                        }
                         
                         DrawRouteForStep(i, directions, color);
+                        
                     }
                     
-                    AddPin("Finish",
-                           endLocation.GetIsIndoors(),
-                           endLocation.GetIndoorMapId().Value(),
-                           endLocation.GetIndoorMapFloorId(),
-                           endLocation.GetLatLon(),
-                           "aroundme",
+                    AddPin(lastDirection.GetIsIndoors(),
+                           lastDirection.GetIndoorMapId().Value(),
+                           lastDirection.GetIndoorMapFloorId(),
+                           lastLocation,
+                           "nav_finish",
                            0);
                 }
             }
@@ -188,39 +222,32 @@ namespace ExampleApp
                 lines.clear();
             }
             
-            void NavRouteDrawingController::AddPin(std::string title,
-                                                   bool interior,
+            void NavRouteDrawingController::AddPin(bool interior,
                                                    const std::string& buildingID,
                                                    const int& buildingFloor,
                                                    const Eegeo::Space::LatLong& location,
                                                    const std::string& pinIconKey,
-                                                   float heightAboveTerrainMetres,
-                                                   std::string identifier,
-                                                   std::string labelStyleName)
+                                                   float heightAboveTerrainMetres)
             {
                 
                 const auto& markerCreateParams = Eegeo::Markers::MarkerBuilder()
                     .SetLocation(location.GetLatitudeInDegrees(), location.GetLongitudeInDegrees())
-                    .SetLabelText(title)
-                    .SetLabelIcon("general")
+                    .SetLabelIcon(pinIconKey)
                     .SetElevation(heightAboveTerrainMetres)
-                    // temp workaround to specify interior floor by zero-based index rather than 'floor number' id (MPLY-8062)
-                    .SetInteriorWithFloorIndex(buildingID, buildingFloor)
-                    .SetLabelStyle("selected_default")
-                    .SetSubPriority(1)
+                    .SetInterior(buildingID, buildingFloor)
+                    .SetLabelStyle("nav_marker_default")
+                    .SetSubPriority(0)
                     .Build();
                 
                 const Eegeo::Markers::IMarker::IdType markerId = m_markerService.Create(markerCreateParams);
 
                 const auto& markerCreateParamsHighlight = Eegeo::Markers::MarkerBuilder()
                     .SetLocation(location.GetLatitudeInDegrees(), location.GetLongitudeInDegrees())
-                    .SetLabelText("")
-                    .SetLabelIcon("selected_pin")
+                    .SetLabelIcon("nav_container")
                     .SetElevation(heightAboveTerrainMetres)
-                    // temp workaround to specify interior floor by zero-based index rather than 'floor number' id (MPLY-8062)
-                    .SetInteriorWithFloorIndex(buildingID, buildingFloor)
-                    .SetLabelStyle("selected_default")
-                    .SetSubPriority(0)
+                    .SetInterior(buildingID, buildingFloor)
+                    .SetLabelStyle("nav_container")
+                    .SetSubPriority(1)
                     .Build();
 
                 const Eegeo::Markers::IMarker::IdType markerIdHighlight = m_markerService.Create(markerCreateParamsHighlight);
