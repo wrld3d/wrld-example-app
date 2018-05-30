@@ -12,6 +12,7 @@
 #include "CameraTransitions.h"
 #include "Compass.h"
 #include "Markers.h"
+#include "WorldPins.h"
 
 namespace ExampleApp
 {
@@ -32,7 +33,8 @@ namespace ExampleApp
                                  Compass::SdkModel::ICompassModel& compassModel,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                 Eegeo::Markers::IMarkerService& markerService);
+                                 Eegeo::Markers::IMarkerService& markerService,
+                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService);
 
                 ~NavRoutingModule();
 

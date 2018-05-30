@@ -325,6 +325,22 @@ namespace ExampleApp
                 }
             }
             
+            void WorldPinsService::DeselectPin()
+            {
+                
+                if ((m_selectedSearchResultId.empty()) && (m_selectedPinId != -1))
+                {
+                    return;
+                }
+                
+                RemoveHighlight(m_selectedPinId);
+                ClearSelectedSearchResult();
+                
+                m_selectedSearchResultId = "";
+                m_selectedPinId = -1;
+                
+            }
+            
             IWorldPinSelectionHandler* WorldPinsService::GetSelectionHandlerForPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId)
             {
                 if (m_pinsToSelectionHandlers.find(worldPinItemModelId) != m_pinsToSelectionHandlers.end())

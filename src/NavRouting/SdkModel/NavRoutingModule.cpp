@@ -20,15 +20,16 @@ namespace ExampleApp
         namespace SdkModel
         {
             NavRoutingModule::NavRoutingModule(PolyLineArgs::IShapeService& shapeService,
-                                 Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
-                                 Eegeo::Location::ILocationService& locationService,
-                                 Eegeo::Location::NavigationService& navigationService,
-                                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
-                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                 Compass::SdkModel::ICompassModel& compassModel,
-                                 ExampleAppMessaging::TMessageBus& messageBus,
-                                 Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                 Eegeo::Markers::IMarkerService& markerService)
+                                                Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
+                                                Eegeo::Location::ILocationService& locationService,
+                                                Eegeo::Location::NavigationService& navigationService,
+                                                Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                Compass::SdkModel::ICompassModel& compassModel,
+                                                ExampleAppMessaging::TMessageBus& messageBus,
+                                                Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
+                                                Eegeo::Markers::IMarkerService& markerService,
+                                                WorldPins::SdkModel::IWorldPinsService& worldPinsService)
             {
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
                 
@@ -67,7 +68,8 @@ namespace ExampleApp
                                                                        *m_pTurnByTurnModel,
                                                                        messageBus,
                                                                        interiorsModelRepository,
-                                                                       alertBoxFactory);
+                                                                       alertBoxFactory,
+                                                                       worldPinsService);
                 
                 m_pRoutingCameraController = Eegeo_NEW(NavRoutingCameraController)(*m_pNavRoutingModel,
                                                                                    cameraTransitionController,

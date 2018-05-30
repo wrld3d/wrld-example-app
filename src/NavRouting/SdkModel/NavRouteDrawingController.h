@@ -51,6 +51,7 @@ namespace ExampleApp
                 PolyLineArgs::IShapeService& m_shapeService;
                 std::unordered_map<int, RouteLines> m_routes;
                 
+                std::map<std::string, std::string> m_directionIconToPinIcon;
                 
                 Eegeo::Markers::IMarkerService& m_markerService;
                 std::vector<Eegeo::Markers::IMarker::IdType> m_markerIDs;
@@ -68,15 +69,12 @@ namespace ExampleApp
                 
                 void DestroyLines(RouteLines lines);
                 
-                void AddPin(std::string title,
-                            bool interior,
+                void AddPin(bool interior,
                             const std::string& buildingID,
                             const int& buildingfloor,
                             const Eegeo::Space::LatLong& location,
                             const std::string& pinIconKey,
-                            float heightAboveTerrainMetres,
-                            std::string identifier = "",
-                            std::string labelStyleName = "marker_default");
+                            float heightAboveTerrainMetres);
                 
                 //void AddHighlightPin(const Eegeo::Markers::IMarker& marker, std::string labelStyleName);
 
