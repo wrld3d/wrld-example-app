@@ -16,9 +16,10 @@ namespace ExampleApp
                                                                      ExampleAppMessaging::TMessageBus& messageBus,
 																	 AndroidNativeState& nativeState,
                                                                      Eegeo::Location::NavigationService& navigationService,
-                                                                     Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navWidgetViewTopHeightChangedCallbacks)
+                                                                     Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navWidgetViewTopHeightChangedCallbacks,
+                                                                     Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navWidgetViewBottomHeightChangedCallbacks)
             {
-            	m_pView = Eegeo_NEW(InteriorsExplorerView)(nativeState, navWidgetViewTopHeightChangedCallbacks);
+            	m_pView = Eegeo_NEW(InteriorsExplorerView)(nativeState, navWidgetViewTopHeightChangedCallbacks, navWidgetViewBottomHeightChangedCallbacks);
 
             	m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
             														   *m_pView,

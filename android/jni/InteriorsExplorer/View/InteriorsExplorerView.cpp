@@ -14,13 +14,17 @@ namespace ExampleApp
         namespace View
         {
         InteriorsExplorerView::InteriorsExplorerView(AndroidNativeState &state,
+                                                     Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navViewTopHeightChangedCallbacks,
 													 Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navViewBottomHeightChangedCallbacks)
 				: m_nativeState(state)
 				, m_uiViewClass(NULL)
 				, m_uiView(NULL)
 				, m_navWidgetTopHeightChangedCallback(this,
                                                       &InteriorsExplorerView::SetNavigationModeTopHeight)
-				, m_navWidgetTopHeightChangedCallbacks(navViewBottomHeightChangedCallbacks)
+				, m_navWidgetTopHeightChangedCallbacks(navViewTopHeightChangedCallbacks)
+                , m_navWidgetBottomHeightChangedCallback(this,
+                                                      &InteriorsExplorerView::SetNavigationModeBottomHeight)
+                , m_navWidgetBottomHeightChangedCallbacks(navViewBottomHeightChangedCallbacks)
 			{
 				ASSERT_UI_THREAD
 
@@ -44,10 +48,12 @@ namespace ExampleApp
 				m_uiView = env->NewGlobalRef(instance);
 
 				m_navWidgetTopHeightChangedCallbacks.AddCallback(m_navWidgetTopHeightChangedCallback);
+                m_navWidgetBottomHeightChangedCallbacks.AddCallback(m_navWidgetBottomHeightChangedCallback);
 			}
 
 			InteriorsExplorerView::~InteriorsExplorerView()
 			{
+                m_navWidgetBottomHeightChangedCallbacks.RemoveCallback(m_navWidgetBottomHeightChangedCallback);
 				m_navWidgetTopHeightChangedCallbacks.RemoveCallback(m_navWidgetTopHeightChangedCallback);
 				AndroidSafeNativeThreadAttachment attached(m_nativeState);
 				JNIEnv* env = attached.envForThread;

@@ -56,7 +56,9 @@ namespace ExampleApp
                 {
                     m_compassStateProvider.SetState(Compass::View::CompassScreenControl::DisplayMode::Default);
                 }
-                m_interiorsStateProvider.SetState(InteriorsExplorer::View::InteriorsExplorerViewModel::DisplayMode::Navigation);
+                if(m_openable.IsOpen()){
+                    m_interiorsStateProvider.SetState(InteriorsExplorer::View::InteriorsExplorerViewModel::DisplayMode::Navigation);
+                }
             }
 
             OpenableControl::View::IOpenableControlViewModel& NavWidgetViewModel::GetOpenableControl()
