@@ -5,6 +5,7 @@
 #import <UIKit/UIKit.h>
 #include "InteriorsExplorerViewIncludes.h"
 #include "InteriorsExplorerTutorialView.h"
+#include "IScreenControlView.h"
 #include <string>
 #include <vector>
 
@@ -45,6 +46,8 @@
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale :(InteriorsExplorerTutorialView&)tutorialView;
 
+enum InteriorExplorerViewState {InteriorExplorerViewStateDefault, InteriorExplorerViewStateNavigation};
+
 - (ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop*) getInterop;
 
 - (BOOL)consumesTouch:(UITouch *)touch;
@@ -63,8 +66,6 @@
 
 - (void) setFullyOffScreen;
 
-- (void) setOnScreenStateToIntermediateValue:(float)openState;
-
 - (void) animateTo:(float)t delaySeconds:(float)delaySeconds;
 
 - (void) setTouchEnabled:(BOOL)enabled;
@@ -74,6 +75,14 @@
 - (void) playSliderShakeAnim;
 
 - (bool) GetCanShowChangeFloorTutorialDialog;
+
+- (BOOL) isValidState: (ExampleApp::ScreenControl::View::TScreenControlViewState) state;
+
+- (void) setViewState: (InteriorExplorerViewState) state;
+
+- (void) setNavigationModeFloorPanelTopBound: (CGFloat) topBound;
+
+- (void) setNavigationModeFloorPanelBottomBound: (CGFloat) bottomBound;
 
 // NOTE: Replace these once integrated with search ux colour scheme.
 - (UIColor*) textColorNormal;

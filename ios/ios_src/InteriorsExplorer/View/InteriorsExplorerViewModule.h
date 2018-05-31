@@ -18,6 +18,7 @@
 #include "ScreenControlViewModelIncludes.h"
 #include "IInteriorsExplorerViewModule.h"
 #include "NavigationService.h"
+#include "INavWidgetView.h"
 
 namespace ExampleApp
 {
@@ -32,13 +33,24 @@ namespace ExampleApp
                 InteriorsExplorerView* m_pView;
                 InteriorsExplorerTutorialView* m_pTutorialView;
                 
+                Eegeo::Helpers::TCallback1<InteriorsExplorerViewModule, NavRouting::View::INavWidgetView::THeight> m_navWidgetBottomPanelVisibleHeightChangedCallback;
+                Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomPanelVisibleHeightChangedCallbacks;
+                
+                Eegeo::Helpers::TCallback1<InteriorsExplorerViewModule, NavRouting::View::INavWidgetView::THeight> m_navWidgetTopPanelVisibleHeightChangedCallback;
+                Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetTopPanelVisibleHeightChangedCallbacks;
+                
+                void NavWidgetTopPanelVisibleHeightChanged(NavRouting::View::INavWidgetView::THeight& newVisibleHeight);
+                void NavWidgetBottomPanelVisibleHeightChanged(NavRouting::View::INavWidgetView::THeight& newVisibleHeight);
+                
             public:
                 InteriorsExplorerViewModule(SdkModel::InteriorsExplorerModel& model,
                                             InteriorsExplorerViewModel& viewModel,
                                             ExampleAppMessaging::TMessageBus& messageBus,
                                             const Eegeo::Rendering::ScreenProperties& screenProperties,
                                             Eegeo::Helpers::IdentityProvider& identityProvider,
-                                            Eegeo::Location::NavigationService& navigationService);
+                                            Eegeo::Location::NavigationService& navigationService,
+                                            Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetTopPanelVisibleHeightChangedCallbacks,
+                                            Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomPanelVisibleHeightChangedCallbacks);
                 
                 ~InteriorsExplorerViewModule();
                 
