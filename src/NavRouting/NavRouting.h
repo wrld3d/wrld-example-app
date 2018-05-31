@@ -47,6 +47,13 @@ namespace ExampleApp
                 class NavTurnByTurnController;
             }
 
+            namespace InstructionTokens
+            {
+                static const char* Distance = "<dist>";
+                static const char* FloorName = "<floor>";
+                static const char* NextFloorName = "<nextfloor>";
+            }
+
         }
 
         namespace View

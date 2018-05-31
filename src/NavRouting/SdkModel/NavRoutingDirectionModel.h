@@ -6,6 +6,8 @@
 #include "InteriorId.h"
 #include "LatLongAltitude.h"
 
+#include <unordered_map>
+
 namespace ExampleApp
 {
     namespace NavRouting
@@ -31,7 +33,11 @@ namespace ExampleApp
                                          const bool isIndoors,
                                          const Eegeo::Resources::Interiors::InteriorId& indoorMapId,
                                          const int indoorMapFloorId,
-                                         const bool isMultiFloor);
+                                         const std::string& indoorMapFloorName,
+                                         const bool isMultiFloor,
+                                         const int nextIndoorMapFloorId,
+                                         const std::string& nextIndoorMapFloorName,
+                                         const bool isUsingPlaceHolders = true);
 
                 const std::string GetName() const;
                 const std::string& GetIcon() const;
@@ -43,7 +49,14 @@ namespace ExampleApp
                 const bool GetIsIndoors() const;
                 const Eegeo::Resources::Interiors::InteriorId& GetIndoorMapId() const;
                 const int GetIndoorMapFloorId() const;
+                void SetIndoorMapFloorName(const std::string& indoorMapFloorName);
+                const std::string& GetIndoorMapFloorName() const;
                 const bool GetIsMultiFloor() const;
+                const int GetNextIndoorMapFloorId() const;
+                void SetNextIndoorMapFloorName(const std::string& indoorMapFloorName);
+                const std::string& GetNextIndoorMapFloorName() const;
+                void SetIsUsingPlaceHolders(bool isUsingPlaceHolders);
+                const bool GetIsUsingPlaceHolders() const;
 
             private:
 
@@ -56,7 +69,14 @@ namespace ExampleApp
                 bool m_isIndoors;
                 Eegeo::Resources::Interiors::InteriorId m_indoorMapId;
                 int m_indoorMapFloorId;
+                std::string m_indoorMapFloorName;
                 bool m_isMultiFloor;
+                int m_nextIndoorMapFloorId;
+                std::string m_nextIndoorMapFloorName;
+                bool m_isUsingPlaceHolders;
+
+                std::unordered_map<std::string, std::string> m_keyMappings;
+                std::string GetReadableString(const std::string& formatString) const;
             };
         }
     }

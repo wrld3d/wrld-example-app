@@ -46,6 +46,7 @@ namespace ExampleApp
 
                 m_pRouteUpdateHandler = Eegeo_NEW(NavWidgetRouteUpdateHandler)(*m_pNavRoutingModel,
                                                                                *m_pNavRoutingServiceController,
+                                                                               interiorsModelRepository,
                                                                                alertBoxFactory);
 
                 TurnByTurn::NavTurnByTurnConfig turnByTurnConfig = TurnByTurn::NavTurnByTurnConfig();
