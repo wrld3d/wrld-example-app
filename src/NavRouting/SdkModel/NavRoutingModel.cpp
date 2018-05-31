@@ -76,6 +76,8 @@ namespace ExampleApp
                 m_route = routeModel;
                 m_routeIsSet = true;
                 m_routeSetCallbacks.ExecuteCallbacks(m_route);
+                SetCurrentDirection(0);
+                SetSelectedDirection(0);
             }
 
             void NavRoutingModel::ClearRoute()

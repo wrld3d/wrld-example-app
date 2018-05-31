@@ -100,7 +100,12 @@ namespace ExampleApp
                                                                            m_turnByTurnModel.GetCurrentSectionIndex(),
                                                                            m_turnByTurnModel.GetCurrentStepIndex());
 
+                    bool currentDirectionIsSelected = m_navRoutingModel.GetSelectedDirection() == m_navRoutingModel.GetCurrentDirection();
                     m_navRoutingModel.SetCurrentDirection(directionIndex);
+                    if(currentDirectionIsSelected)
+                    {
+                        m_navRoutingModel.SetSelectedDirection(directionIndex);
+                    }
                     m_navRoutingModel.SetRemainingRouteDuration(m_turnByTurnModel.GetRemainingDuration());
 
                     auto currentDirection = currentRouteModel.GetDirections()[directionIndex];
