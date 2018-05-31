@@ -107,20 +107,21 @@ namespace ExampleApp
                 double lineHeight = (floorAfter > floorBefore) ? verticalLineHeight : -verticalLineHeight;
                 
                 RouteLines routeLines;
-                routeLines.push_back(MakeVerticalLine(coordinates, indoorMapId, floorBefore, lineHeight, color));
-                routeLines.push_back(MakeVerticalLine(coordinates, indoorMapId, floorAfter, -lineHeight, color));
+                routeLines.push_back(MakeVerticalLine(coordinates, indoorMapId, floorBefore, 0, lineHeight, color));
+                routeLines.push_back(MakeVerticalLine(coordinates, indoorMapId, floorAfter, -lineHeight, 0, color));
                 return routeLines;
             }
             
             PolyLineArgs::ShapeModel::IdType NavRoutingPolylineFactory::MakeVerticalLine(const std::vector<Eegeo::Space::LatLong>& coordinates,
                                                                                          const std::string& indoorMapId,
                                                                                          int floor,
-                                                                                         double height,
+                                                                                         double heightStart,
+                                                                                         double heightEnd,
                                                                                          const Eegeo::v4& color)
             {
                 std::vector<double> perPointElevations;
-                perPointElevations.push_back(0);
-                perPointElevations.push_back(height);
+                perPointElevations.push_back(heightStart);
+                perPointElevations.push_back(heightEnd);
                 
                 return CreatePolyline(coordinates, color, true, indoorMapId, floor, true, perPointElevations);
             }

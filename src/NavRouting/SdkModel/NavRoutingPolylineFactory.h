@@ -56,7 +56,8 @@ namespace ExampleApp
                 PolyLineArgs::ShapeModel::IdType MakeVerticalLine(const std::vector<Eegeo::Space::LatLong>& coordinates,
                                                                   const std::string& indoorMapId,
                                                                   int floor,
-                                                                  double height,
+                                                                  double heightStart,
+                                                                  double heightEnd,
                                                                   const Eegeo::v4& color);
                 
                 PolyLineArgs::ShapeModel::IdType CreatePolyline(const std::vector<Eegeo::Space::LatLong>& coordinates,
