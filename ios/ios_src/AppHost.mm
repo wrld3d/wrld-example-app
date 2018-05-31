@@ -332,6 +332,11 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 {
     ExampleApp::MobileExampleApp& app = *m_pApp;
     
+    const ExampleApp::NavRouting::View::NavUIModule& navUIModule = app.NavUIModule();
+    m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(navUIModule.GetObservableOpenableControl(),
+                                                                                      navUIModule.GetNavWidgetViewModel(),
+                                                                                      m_messageBus);
+    
     m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
                                                                                          app.WatermarkModule().GetWatermarkDataRepository(),
                                                                                          screenProperties,
@@ -356,6 +361,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
                            screenProperties,
+                           m_pNavUIViewModule->getBottomPanelVisibleHeightChangedCallbacks(),
                            m_messageBus);
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), m_iOSFlurryMetricsService, m_messageBus);
@@ -386,7 +392,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                  m_messageBus,
                                                                                                                  screenProperties,
                                                                                                                  app.GetIdentityProvider(),
-                                                                                                                 app.GetNavigationService());
+                                                                                                                 app.GetNavigationService(),
+                                                                                                                 m_pNavUIViewModule->getTopPanelVisibleHeightChangedCallbacks(),
+                                                                                                                 m_pNavUIViewModule->getBottomPanelVisibleHeightChangedCallbacks());
     
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
                                                                                    m_piOSPlatformAbstractionModule->GetiOSHttpCache(),
@@ -399,13 +407,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                  m_iOSFlurryMetricsService,
                                                                                  *m_pURLRequestHandler,
                                                                                  m_pApp->GetApplicationConfiguration().TimerSurveyUrl());
-    
-    const ExampleApp::NavRouting::View::NavUIModule& navUIModule = app.NavUIModule();
-    m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(navUIModule.GetObservableOpenableControl(),
-                                                                                      navUIModule.GetNavWidgetViewModel(),
-                                                                                      m_pCompassViewModule->GetCompassViewInterop(),
-                                                                                      m_messageBus);
-    
     
     // 3d map view layer.
     
@@ -494,8 +495,6 @@ void AppHost::DestroyApplicationViewModules()
     
     Eegeo_DELETE m_pAboutPageViewModule;
     
-    Eegeo_DELETE m_pNavUIViewModule;
-
     Eegeo_DELETE m_pCompassViewModule;
 
     Eegeo_DELETE m_pSearchResultPoiViewModule;
@@ -509,6 +508,8 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;
     
     Eegeo_DELETE m_pWatermarkViewModule;
+    
+    Eegeo_DELETE m_pNavUIViewModule;
 }
 
 void AppHost::SetTouchExclusivity()

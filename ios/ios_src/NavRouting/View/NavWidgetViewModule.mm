@@ -35,7 +35,6 @@ namespace ExampleApp
             
             NavWidgetViewModule::NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                                      INavWidgetViewModel& viewModel,
-                                                     Compass::View::ICompassView& compassView,
                                                      ExampleAppMessaging::TMessageBus& messageBus_)
             {
                 registerObserver("selectedDirectionIndex");
@@ -44,7 +43,7 @@ namespace ExampleApp
                 
                 setNavModel(m_pNavModel);
                 
-                m_pView = Eegeo_NEW(NavWidgetView)(m_pNavModel, compassView);
+                m_pView = Eegeo_NEW(NavWidgetView)(m_pNavModel, getTopPanelVisibleHeightChangedCallbacks(), getBottomPanelVisibleHeightChangedCallbacks());
                 
                 m_pNavWidgetController = Eegeo_NEW(NavWidgetController)(*m_pView,
                                                                         viewModel,
@@ -109,6 +108,16 @@ namespace ExampleApp
                     default:
                         break;
                 }
+            }
+            
+            Eegeo::Helpers::CallbackCollection1<ExampleApp::NavRouting::View::INavWidgetView::THeight>& NavWidgetViewModule::getTopPanelVisibleHeightChangedCallbacks()
+            {
+                return m_topPanelVisibleHeightChangedCallbacks;
+            }
+            
+            Eegeo::Helpers::CallbackCollection1<ExampleApp::NavRouting::View::INavWidgetView::THeight>& NavWidgetViewModule::getBottomPanelVisibleHeightChangedCallbacks()
+            {
+                return m_bottomPanelVisibleHeightChangedCallbacks;
             }
         }
     }

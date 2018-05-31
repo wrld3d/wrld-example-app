@@ -32,7 +32,7 @@
     float m_compassPointNaturalOffsetY;
 }
 
-enum CompassPositionState {Default, Navigation};
+enum CompassPositionState {CompassPositionStateDefault, CompassPositionStateNavigation};
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale;
 
@@ -60,11 +60,11 @@ enum CompassPositionState {Default, Navigation};
 
 - (void) setRotationHighlight:(bool)shouldShowRotationHighlight;
 
-- (BOOL) isValidState: (ExampleApp::ScreenControl::View::TScreenControlViewState) state;
+- (BOOL) isValidPositionState: (ExampleApp::ScreenControl::View::TScreenControlViewState) state;
 
 - (void) setPositionState: (CompassPositionState) state;
 
-- (void) setNavigationModeOffset: (NSInteger) offset;
+- (void) setNavigationModeCompassPosition: (CGFloat) position;
 
 @property (nonatomic, retain) UIImageView* pOuterShape;
 @property (nonatomic, retain) UIView* pInnerShape;

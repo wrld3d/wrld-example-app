@@ -24,7 +24,7 @@ namespace ExampleApp
                 
                 ~InteriorsExplorerViewModel();
                 
-                Eegeo::Helpers::TIdentity GetIdentity() const;
+                Eegeo::Helpers::TIdentity GetIdentity() const override;
 
                 enum DisplayMode {Default, Navigation};
                 

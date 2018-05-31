@@ -75,15 +75,10 @@ namespace ExampleApp
             
             void CompassViewInterop::SetState(ScreenControl::View::TScreenControlViewState state)
             {
-                BOOL isValidState = [m_pView isValidState: state];
+                BOOL isValidState = [m_pView isValidPositionState: state];
                 Eegeo_ASSERT(isValidState, "Tried to set an invalid compass state");
-                CompassPositionState positionState = (CompassPositionState) state;
-                [m_pView setPositionState: positionState];
-            }
-            
-            void CompassViewInterop::SetNavigationModeOffset(int offset)
-            {
-                [m_pView setNavigationModeOffset: offset];
+                CompassPositionState viewState = (CompassPositionState) state;
+                [m_pView setPositionState: viewState];
             }
         }
     }
