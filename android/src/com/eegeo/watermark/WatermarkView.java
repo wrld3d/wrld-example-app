@@ -88,7 +88,7 @@ public class WatermarkView implements View.OnClickListener
         final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
         m_gradientView = m_activity.getLayoutInflater().inflate(R.layout.watermark_background_layout, uiRoot, false);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.watermark_layout, uiRoot, false);
-        m_view.setOnClickListener(this);
+        //m_view.setOnClickListener(this);
 
         m_view.addOnLayoutChangeListener(new View.OnLayoutChangeListener()
         {

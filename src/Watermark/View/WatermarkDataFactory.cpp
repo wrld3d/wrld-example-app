@@ -32,7 +32,7 @@ namespace ExampleApp
                 
             WatermarkData WatermarkDataFactory::CreateDefaultEegeo()
             {
-                std::string imageAssetName = "eegeo_logo";
+                std::string imageAssetName = "pixel_1_transparent";
                 std::string popupTitle = "Maps by WRLD";
                 std::string popupBody = "This app is open source. It's built using the WRLD maps SDK, a cross platform API for building engaging, customizable apps.";
                 std::string utmSource = m_googleAnalyticsReferrerToken.empty() ? "unspecified" : m_googleAnalyticsReferrerToken;
