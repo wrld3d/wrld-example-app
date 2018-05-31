@@ -14,8 +14,6 @@
     ExampleApp::Watermark::View::WatermarkViewInterop* m_pInterop;
     UIViewController* m_pController;
     
-    UIColor* m_pColour;
-    
     float m_width;
     float m_height;
     

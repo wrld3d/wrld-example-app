@@ -1,0 +1,1 @@
+Beware: it's 1x1 in Android, but 204x53 in iOS. Used by src/Watermark/View/WatermarkDataFactory.cpp (common code).
