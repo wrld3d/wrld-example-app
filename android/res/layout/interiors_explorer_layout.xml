@@ -31,8 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="45dp"
+        android:paddingTop="100dp"
+        android:paddingBottom="45dp"
         android:clipChildren="false"
         android:clipToPadding="false">
 
@@ -46,7 +46,7 @@
             android:src="@drawable/button_exit_interior_states">
         </ImageView>
 
-	<include android:layout_marginTop="15dp"  android:layout_below="@+id/back_button" android:layout_width="70dp"  android:layout_height="150dp"  layout="@layout/interiors_floor_list_container_layout"/>
+	    <include android:layout_marginTop="15dp"  android:layout_below="@+id/back_button" android:layout_width="70dp"  android:layout_height="150dp"  layout="@layout/interiors_floor_list_container_layout"/>
 	</RelativeLayout>
 
 </RelativeLayout>

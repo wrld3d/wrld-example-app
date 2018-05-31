@@ -69,6 +69,7 @@
 #include "AndroidAutomatedScreenshotController.h"
 #include "AutomatedScreenshotController.h"
 #include "UiCreatedMessage.h"
+#include "INavWidgetView.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -527,6 +528,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(
                                m_nativeState,
                                app.CompassModule().GetCompassViewModel(),
+                               m_navWidgetViewBottomHeightChangedCallbacks,
                                m_messageBus
                            );
 
@@ -562,7 +564,8 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pNavWidgetViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(
                                     m_nativeState,
                                     app.NavUIModule().GetNavWidgetViewModel(),
-                                    m_pCompassViewModule->GetCompassView(),
+                                    m_navWidgetViewTopHeightChangedCallbacks,
+                                    m_navWidgetViewBottomHeightChangedCallbacks,
                                     m_messageBus);
 
     // Pop-up layer.
@@ -605,7 +608,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 			app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
             m_messageBus,
             m_nativeState,
-            app.GetNavigationService());
+            app.GetNavigationService(),
+            m_navWidgetViewTopHeightChangedCallbacks,
+            m_navWidgetViewBottomHeightChangedCallbacks);
 
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
             m_nativeState,
@@ -632,6 +637,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     SetTouchExclusivity();
 
     m_messageBus.SubscribeUi(m_userInteractionEnabledChangedHandler);
+
+    m_navWidgetViewTopHeightChangedCallbacks.ExecuteCallbacks(m_pNavWidgetViewModule->GetView().GetTopViewHeight());
+    m_navWidgetViewBottomHeightChangedCallbacks.ExecuteCallbacks(m_pNavWidgetViewModule->GetView().GetBottomViewHeight());
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()

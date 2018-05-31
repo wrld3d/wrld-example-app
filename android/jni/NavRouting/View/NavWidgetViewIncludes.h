@@ -8,6 +8,7 @@ namespace ExampleApp
     {
         namespace View
         {
+            class INavWidgetView;
             class NavWidgetView;
             class INavWidgetViewModule;
         }

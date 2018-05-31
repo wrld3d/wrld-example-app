@@ -56,7 +56,7 @@ namespace ExampleApp
                 
                 View::InteriorsExplorerViewModel& GetInteriorsExplorerViewModel() const;
                 
-                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const;
+                ScreenControl::View::IMultiStateScreenControlViewModel& GetScreenControlViewModel() const;
                 
                 Eegeo::Resources::Interiors::InteriorsCameraController& GetInteriorsCameraController() const;
                 

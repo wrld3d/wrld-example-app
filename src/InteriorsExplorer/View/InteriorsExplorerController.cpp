@@ -168,6 +168,7 @@ namespace ExampleApp
             
             void InteriorsExplorerController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel)
             {
+                ScreenControl::View::ApplyState(m_viewModel, m_view);
                 ScreenControl::View::Apply(m_viewModel, m_view);
             }
             

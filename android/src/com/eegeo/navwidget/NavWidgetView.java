@@ -18,6 +18,9 @@ import com.wrld.widgets.navigation.model.WrldNavModelObserverListener;
 import com.wrld.widgets.navigation.model.WrldNavRoute;
 import com.wrld.widgets.navigation.model.WrldNavDirection;
 import com.wrld.widgets.navigation.widget.WrldNavWidget;
+import com.wrld.widgets.navigation.widget.WrldNavWidgetViewObserver;
+import com.wrld.widgets.navigation.widget.WrldNavWidgetViewVisibilityListener;
+import com.wrld.widgets.navigation.widget.WrldNavWidgetViewSizeListener;
 
 public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverListener
 {
@@ -29,8 +32,15 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     private WrldNavWidget m_navWidget = null;
     private WrldNavModelObserver m_observer;
 
+    private WrldNavWidgetViewObserver m_viewObserver;
+
     //Test model
     private WrldNavModel m_model;
+
+    private boolean m_isTopPanelVisible = false;
+    private boolean m_isBottomPanelVisible = false;
+    private float m_topPanelHeight = 0.0f;
+    private float m_bottomPanelHeight = 0.0f;
 
     public NavWidgetView(MainActivity activity, long nativeCallerPointer)
     {
@@ -47,6 +57,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
 
         m_navWidget = (WrldNavWidget) m_view.findViewById(R.id.wrld_nav_widget_view);
         m_navWidget.getObserver().setNavModel(m_model);
+        m_viewObserver = m_navWidget.getViewObserver();
 
         m_observer = new WrldNavModelObserver();
         m_observer.observeProperty(WrldNavModel.WrldNavModelProperty.SelectedDirectionIndex);
@@ -54,7 +65,52 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_observer.setListener(this);
         m_observer.setNavModel(m_model);
 
-        NavWidgetViewJniMethods.SetBottomViewHeight(m_nativeCallerPointer, m_navWidget.getBottomPanelHeight());
+        m_viewObserver.addSizeChangedListener(new WrldNavWidgetViewSizeListener(){
+            public void onTopPanelHeightChanged(float height)
+            {
+                m_topPanelHeight = height;
+                NavWidgetViewJniMethods.SetTopViewHeight(m_nativeCallerPointer, calculateVisibleTopHeight());
+            }
+            public void onBottomPanelHeightChanged(float height)
+            {
+                m_bottomPanelHeight = height;
+                NavWidgetViewJniMethods.SetBottomViewHeight(m_nativeCallerPointer, calculateVisibleBottomHeight());
+            }
+            public void onLeftPanelWidthChanged(float width)
+            {
+            }
+        });
+
+        m_viewObserver.addVisibilityListener(new WrldNavWidgetViewVisibilityListener(){
+            public void onTopPanelVisible(boolean isVisible) {
+                m_isTopPanelVisible = isVisible;
+                NavWidgetViewJniMethods.SetBottomViewHeight(m_nativeCallerPointer, calculateVisibleTopHeight());
+            }
+            public void onBottomPanelVisible(boolean isVisible) {
+                m_isBottomPanelVisible = isVisible;
+                NavWidgetViewJniMethods.SetBottomViewHeight(m_nativeCallerPointer, calculateVisibleBottomHeight());
+            }
+            public void onLeftPanelVisible(boolean isVisible){}
+        });
+
+        NavWidgetViewJniMethods.SetTopViewHeight(m_nativeCallerPointer, (int) m_viewObserver.getTopPanelHeight());
+        NavWidgetViewJniMethods.SetBottomViewHeight(m_nativeCallerPointer,  (int) m_viewObserver.getBottomPanelHeight());
+    }
+
+    private int calculateVisibleTopHeight()
+    {
+        if(m_isTopPanelVisible){
+            return (int) m_topPanelHeight;
+        }
+        return 0;
+    }
+
+    private int calculateVisibleBottomHeight()
+    {
+        if(m_isBottomPanelVisible){
+            return (int) m_bottomPanelHeight;
+        }
+        return 0;
     }
 
     private void handleCloseClicked()

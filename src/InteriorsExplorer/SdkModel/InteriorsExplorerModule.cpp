@@ -105,7 +105,7 @@ namespace ExampleApp
                 return *m_pViewModel;
             }
             
-            ScreenControl::View::IScreenControlViewModel& InteriorsExplorerModule::GetScreenControlViewModel() const
+            ScreenControl::View::IMultiStateScreenControlViewModel& InteriorsExplorerModule::GetScreenControlViewModel() const
             {
                 return *m_pViewModel;
             }

@@ -25,6 +25,17 @@ import android.widget.TextView;
 
 public class InteriorsExplorerView implements OnPauseListener, View.OnClickListener, View.OnTouchListener
 {
+    private enum InteriorsExplorerViewState {
+        Default(0), Navigation(1);
+        private final int state;
+        InteriorsExplorerViewState(int state){
+            this.state = state;
+        }
+        public final int getState(){
+            return this.state;
+        }
+    };
+
     protected MainActivity m_activity = null;
     protected long m_nativeCallerPointer;
     private View m_uiRootView = null;
@@ -74,6 +85,14 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     private final int TextColorNormal = Color.parseColor("#1256B0");
     private final int TextColorDown = Color.parseColor("#CDFC0D");
     private final float ListItemHeight;
+
+    private InteriorsExplorerViewState m_viewState = InteriorsExplorerViewState.Default;
+    private int m_rightPanelTopSpacingDefault;
+    private int m_rightPanelTopSpacingNavMode;
+    private int m_rightPanelBottomSpacingDefault;
+    private int m_rightPanelBottomSpacingNavMode;
+
+    private int m_currentlySelectedFloorIndex;
 
     private class PropogateToViewTouchListener implements View.OnTouchListener {
         private View m_target;
@@ -127,52 +146,26 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
         m_draggingFloorButton = false;
 
         m_floorButton.setOnTouchListener(this);
-        
-        m_uiRootView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() 
+
+        m_uiRootView.addOnLayoutChangeListener(new View.OnLayoutChangeListener()
         {
-			@Override
-			public void onLayoutChange(View v, int left, int top, int right,
-					int bottom, int oldLeft, int oldTop, int oldRight,
-					int oldBottom) 
-			{				
-		    	final float screenWidth = uiRoot.getWidth();
-		    	
-		    	float controlWidth = m_topPanel.getWidth();
-		    	float controlHeight = m_topPanel.getHeight();
-		    	
-		    	m_topYPosActive = m_activity.dipAsPx(20);
-		    	m_topYPosInactive = -controlHeight;
-		    	
-		    	m_topPanel.setX((screenWidth * 0.5f) - (controlWidth * 0.5f));
-		    	m_topPanel.setY(m_topYPosInactive);
-		    	
-		    	controlWidth = m_floorListContainer.getWidth();
-		    	controlHeight = m_floorListContainer.getHeight();
-		    	int menuButtonMarginPx = (int) m_activity.getResources().getDimension(R.dimen.menu_button_margin);
-		    	
-		    	m_leftXPosActiveBackButton = screenWidth - (menuButtonMarginPx + m_backButton.getWidth());
-		    	m_leftXPosActiveFloorListContainer = screenWidth - (menuButtonMarginPx + controlWidth - (controlWidth - m_backButton.getWidth()) / 2.0f);
-		    	m_leftXPosInactive = screenWidth;
-		    	
-		    	m_floorListContainer.setX(m_leftXPosInactive);
-		    	m_backButton.setX(m_leftXPosInactive);
-		    	
-		    	int screenHeight = uiRoot.getHeight();
-		    	
-		    	RelativeLayout.LayoutParams rightPanelLayoutParams = (RelativeLayout.LayoutParams) m_rightPanel.getLayoutParams();
-		    	int rightPanelMarginTop = rightPanelLayoutParams.topMargin;
-		    	int rightPanelMarginBottom = rightPanelLayoutParams.bottomMargin;
-		    	
-		    	RelativeLayout.LayoutParams floorListContainerLayoutParams = (RelativeLayout.LayoutParams) m_floorListContainer.getLayoutParams();
-		    	int floorListMarginTop = floorListContainerLayoutParams.topMargin;
-		    	
-		    	int maxFloorContainerHeight = screenHeight - rightPanelMarginTop - m_backButton.getHeight() - floorListMarginTop - rightPanelMarginBottom;
-		    	
-		    	m_maxFloorsViewableCount = (int) Math.floor(maxFloorContainerHeight / ListItemHeight);
-		    	
-		    	m_uiRootView.removeOnLayoutChangeListener(this);
-			}
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right,
+                                       int bottom, int oldLeft, int oldTop, int oldRight,
+                                       int oldBottom) {
+
+                m_rightPanelTopSpacingDefault = m_rightPanel.getPaddingTop();
+                m_rightPanelBottomSpacingDefault = m_rightPanel.getPaddingBottom();
+
+                refreshRightPanelLayout();
+
+                m_floorListContainer.setX(m_leftXPosInactive);
+                m_backButton.setX(m_leftXPosInactive);
+
+                m_uiRootView.removeOnLayoutChangeListener(this);
+            }
         });
+
         uiRoot.addView(m_uiRootView);
         
         m_tutorialView = new InteriorsExplorerTutorialView(m_activity);
@@ -191,6 +184,43 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 				m_scrollHandler.postDelayed(m_scrollingRunnable, 1);
 			}
 		};
+    }
+
+    private void refreshRightPanelLayout()
+    {
+
+        final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+
+        final float screenWidth = uiRoot.getWidth();
+
+        float controlWidth = m_topPanel.getWidth();
+        float controlHeight = m_topPanel.getHeight();
+
+        controlWidth = m_floorListContainer.getWidth();
+        controlHeight = m_floorListContainer.getHeight();
+        int menuButtonMarginPx = (int) m_activity.getResources().getDimension(R.dimen.menu_button_margin);
+
+        m_leftXPosActiveBackButton = screenWidth - (menuButtonMarginPx + m_backButton.getWidth());
+        m_leftXPosActiveFloorListContainer = screenWidth - (menuButtonMarginPx + controlWidth - (controlWidth - m_backButton.getWidth()) / 2.0f);
+        m_leftXPosInactive = screenWidth;
+
+        m_topYPosActive = m_activity.dipAsPx(20);
+        m_topYPosInactive = -controlHeight;
+
+        m_topPanel.setX((screenWidth * 0.5f) - (controlWidth * 0.5f));
+        m_topPanel.setY(m_topYPosInactive);
+
+        int screenHeight = uiRoot.getHeight();
+
+        int rightPanelTopMargin  = m_rightPanel.getPaddingTop();
+        int rightPanelBottomMargin = m_rightPanel.getPaddingBottom();
+
+        RelativeLayout.LayoutParams floorListContainerLayoutParams = (RelativeLayout.LayoutParams) m_floorListContainer.getLayoutParams();
+        int floorListMarginTop = floorListContainerLayoutParams.topMargin;
+
+        int maxFloorContainerHeight = screenHeight - rightPanelTopMargin - m_backButton.getHeight() - floorListMarginTop - rightPanelBottomMargin;
+
+        m_maxFloorsViewableCount = (int) Math.floor(maxFloorContainerHeight / ListItemHeight);
     }
 
     private int getListViewHeight(ListView list) 
@@ -246,23 +276,29 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     	}
     	
     	m_floorListAdapter.setData(temp);
-    	float controlHeight = getListViewHeight(Math.min(m_floorList.getCount(), m_maxFloorsViewableCount));
-    	RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)m_floorListContainer.getLayoutParams();
-    	layoutParams.height = (int)controlHeight;
-    	m_floorListContainer.setLayoutParams(layoutParams);
-    	
-    	refreshFloorIndicator(currentlySelectedFloorIndex);
-    	moveButtonToFloorIndex(currentlySelectedFloorIndex, false);
+        m_currentlySelectedFloorIndex = currentlySelectedFloorIndex;
+        refreshFloorLayout();
     	
     	boolean floorSelectionEnabled = floorShortNames.length > 1;
     	m_floorListContainer.setVisibility(floorSelectionEnabled ? View.VISIBLE : View.GONE);
-    	
-    	int floorListWidth = m_floorList.getWidth();
-    	int floorArrowHeight = m_floorUpArrow.getHeight();
-    	m_floorList.setClipBounds(new Rect(-floorListWidth / 2, floorArrowHeight, floorListWidth, (int) controlHeight - floorArrowHeight));
-    	
-    	m_floorUpArrow.setY(m_floorList.getY());
-    	m_floorDownArrow.setY(m_floorList.getY() + controlHeight - m_floorDownArrow.getHeight());
+    }
+
+    private void refreshFloorLayout()
+    {
+        float controlHeight = getListViewHeight(Math.min(m_floorList.getCount(), m_maxFloorsViewableCount));
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)m_floorListContainer.getLayoutParams();
+        layoutParams.height = (int)controlHeight;
+        m_floorListContainer.setLayoutParams(layoutParams);
+
+        int floorListWidth = m_floorList.getWidth();
+        int floorArrowHeight = m_floorUpArrow.getHeight();
+        m_floorList.setClipBounds(new Rect(-floorListWidth / 2, floorArrowHeight, floorListWidth, (int) controlHeight - floorArrowHeight));
+
+        m_floorUpArrow.setY(m_floorList.getY());
+        m_floorDownArrow.setY(m_floorList.getY() + controlHeight - m_floorDownArrow.getHeight());
+
+        refreshFloorIndicator(m_currentlySelectedFloorIndex);
+        moveButtonToFloorIndex(m_currentlySelectedFloorIndex, false);
     }
     
     private void setArrowState(boolean showUp, boolean showDown)
@@ -329,6 +365,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     
     public void setSelectedFloorIndex(int index)
     {
+        m_currentlySelectedFloorIndex = index;
     	refreshFloorIndicator(index);
     	
     	if(!m_draggingFloorButton)
@@ -414,6 +451,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 		float dragParameter = 1.0f - ((topY + m_floorButton.getY()) / (getListViewHeight(m_floorList.getCount() - 1)));
 		int floorCount = m_floorListAdapter.getCount()-1;
 		int selectedFloor = Math.round(dragParameter * floorCount);
+		m_currentlySelectedFloorIndex = selectedFloor;
 		moveButtonToFloorIndex(selectedFloor, true);
 
 		InteriorsExplorerViewJniMethods.OnFloorSelected(m_nativeCallerPointer, selectedFloor);
@@ -532,6 +570,80 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
         if(viewYPx != newYPx)
         {
         	m_topPanel.setY(newYPx);
+        }
+    }
+
+    public void setState(final int state)
+    {
+        InteriorsExplorerViewState newState = rawStateToViewState(state);
+        if(m_viewState != newState)
+        {
+            m_viewState = newState;
+            updateUpperBound();
+            updateLowerBound();
+            refreshLayout();
+        }
+    }
+
+    private InteriorsExplorerViewState rawStateToViewState(final int state)
+    {
+        if(InteriorsExplorerViewState.Navigation.getState() == state) {
+            return InteriorsExplorerViewState.Navigation;
+        }
+        if(InteriorsExplorerViewState.Default.getState() == state) {
+            return InteriorsExplorerViewState.Default;
+        }
+        throw new IllegalArgumentException (state + " is not a valid InteriorsExplorerViewState");
+    }
+
+    private void refreshLayout()
+    {
+        m_uiRootView.addOnLayoutChangeListener(new View.OnLayoutChangeListener()
+        {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right,
+                                       int bottom, int oldLeft, int oldTop, int oldRight,
+                                       int oldBottom) {
+                refreshRightPanelLayout();
+                refreshFloorLayout();
+                m_uiRootView.removeOnLayoutChangeListener(this);
+            }
+        });
+    }
+
+    public void setNavigationModeUpperBound(final int upperBound)
+    {
+        m_rightPanelTopSpacingNavMode = upperBound;
+        m_rightPanelTopSpacingNavMode = upperBound + m_activity.dipAsPx(16);
+        if(m_viewState == InteriorsExplorerViewState.Navigation) {
+            updateUpperBound();
+            refreshLayout();
+        }
+    }
+
+    private void updateUpperBound()
+    {
+        if (m_viewState == InteriorsExplorerViewState.Default) {
+            m_rightPanel.setPadding(m_rightPanel.getPaddingLeft(), m_rightPanelTopSpacingDefault, m_rightPanel.getPaddingRight(), m_rightPanel.getPaddingBottom());
+        } else {
+            m_rightPanel.setPadding(m_rightPanel.getPaddingLeft(), m_rightPanelTopSpacingNavMode, m_rightPanel.getPaddingRight(), m_rightPanel.getPaddingBottom());
+        }
+    }
+
+    public void setNavigationModeLowerBound(final int lowerBound) {
+        m_rightPanelBottomSpacingNavMode = lowerBound;
+        m_rightPanelBottomSpacingNavMode = lowerBound + m_activity.dipAsPx(16);
+        if(m_viewState == InteriorsExplorerViewState.Navigation) {
+            updateLowerBound();
+            refreshLayout();
+        }
+    }
+
+    private void updateLowerBound() {
+        if (m_viewState == InteriorsExplorerViewState.Default) {
+            m_rightPanel.setPadding(m_rightPanel.getPaddingLeft(), m_rightPanel.getPaddingTop(), m_rightPanel.getPaddingRight(), m_rightPanelBottomSpacingDefault);
+        } else {
+            m_rightPanel.setPadding(m_rightPanel.getPaddingLeft(), m_rightPanel.getPaddingTop(), m_rightPanel.getPaddingRight(), m_rightPanelBottomSpacingNavMode);
         }
     }
 

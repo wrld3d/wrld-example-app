@@ -9,8 +9,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            CompassView::CompassView(AndroidNativeState& nativeState)
+            CompassView::CompassView(AndroidNativeState& nativeState,
+                                     Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navViewBottomHeightChangedCallbacks)
                 : m_nativeState(nativeState)
+                , m_navWidgetBottomHeightChangedCallback(this, &CompassView::SetNavigationModeOffset)
+                , m_navWidgetBottomHeightChangedCallbacks(navViewBottomHeightChangedCallbacks)
             {
                 ASSERT_UI_THREAD
 
@@ -32,12 +35,15 @@ namespace ExampleApp
                                    );
 
                 m_uiView = env->NewGlobalRef(instance);
+
+                m_navWidgetBottomHeightChangedCallbacks.AddCallback(m_navWidgetBottomHeightChangedCallback);
             }
 
             CompassView::~CompassView()
             {
                 ASSERT_UI_THREAD
 
+                m_navWidgetBottomHeightChangedCallbacks.RemoveCallback(m_navWidgetBottomHeightChangedCallback);
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
                 jmethodID removeHudMethod = env->GetMethodID(m_uiViewClass, "destroy", "()V");
@@ -147,7 +153,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, setState, state);
             }
 
-            void CompassView::SetNavigationModeOffset(int offset)
+            void CompassView::SetNavigationModeOffset(NavRouting::View::INavWidgetView::THeight& offset)
             {
                 ASSERT_UI_THREAD
 

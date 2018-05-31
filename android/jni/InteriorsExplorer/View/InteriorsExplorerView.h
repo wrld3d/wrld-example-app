@@ -5,6 +5,7 @@
 #include "IInteriorsExplorerView.h"
 #include "InteriorsExplorerViewIncludes.h"
 #include "ICallback.h"
+#include "INavWidgetView.h"
 #include "CallbackCollection.h"
 #include "AndroidNativeState.h"
 
@@ -20,7 +21,9 @@ namespace ExampleApp
             {
             public:
 
-                InteriorsExplorerView(AndroidNativeState& nativeState);
+                InteriorsExplorerView(AndroidNativeState& nativeState,
+                                      Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navViewTopHeightChangedCallbacks,
+                                      Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navViewBottomHeightChangedCallbacks);
                 ~InteriorsExplorerView();
 
                 void OnDismissed();
@@ -48,6 +51,8 @@ namespace ExampleApp
                 void SetOnScreen();
                 void SetOffScreen();
 
+                void SetState(ScreenControl::View::TScreenControlViewState state);
+
                 void SetTouchEnabled(bool enabled);
 
                 void PlaySliderAnim();
@@ -56,10 +61,22 @@ namespace ExampleApp
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
+
+                Eegeo::Helpers::TCallback1<InteriorsExplorerView, NavRouting::View::INavWidgetView::THeight> m_navWidgetTopHeightChangedCallback;
+                Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetTopHeightChangedCallbacks;
+
+                Eegeo::Helpers::TCallback1<InteriorsExplorerView, NavRouting::View::INavWidgetView::THeight> m_navWidgetBottomHeightChangedCallback;
+                Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomHeightChangedCallbacks;
+
                 Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;
                 Eegeo::Helpers::CallbackCollection1<float> m_floorSelectionDraggedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_dismissedCallbacks;
                 AndroidNativeState& m_nativeState;
+
+                void SetNavigationModeTopHeight(
+                        NavRouting::View::INavWidgetView::THeight &topHeight);
+                void SetNavigationModeBottomHeight(
+                        NavRouting::View::INavWidgetView::THeight &bottomHeight);
             };
         }
     }

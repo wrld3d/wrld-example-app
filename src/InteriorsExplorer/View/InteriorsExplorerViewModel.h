@@ -15,7 +15,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class InteriorsExplorerViewModel : public ScreenControl::View::IScreenControlViewModel
+            class InteriorsExplorerViewModel : public ScreenControl::View::IMultiStateScreenControlViewModel
             {
             public:
                 InteriorsExplorerViewModel(bool initiallyOnScreen,
@@ -25,33 +25,36 @@ namespace ExampleApp
                 ~InteriorsExplorerViewModel();
                 
                 Eegeo::Helpers::TIdentity GetIdentity() const;
+
+                enum DisplayMode {Default, Navigation};
                 
-                void AddToScreen();
+                void AddToScreen() override;
                 
-                void RemoveFromScreen();
-                
-                void UpdateOnScreenState(float onScreenState);
-                
+                void RemoveFromScreen() override;
+
                 void InsertOnScreenStateChangedCallback(
-                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback) override;
                 
                 void RemoveOnScreenStateChangedCallback(
-                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback) override;
                 
-                bool IsOffScreen() const;
+                bool IsOffScreen() const override;
                 
-                bool IsOnScreen() const;
-                
-                float OnScreenState() const;
-                
-                bool IsAddedToScreen() const;
+                bool IsOnScreen() const override;
+
+                ScreenControl::View::IMultiStateScreenControlViewModel& GetScreenControlViewModel();
+
+                void SetState(ScreenControl::View::TScreenControlViewState state) override;
+
+                ScreenControl::View::TScreenControlViewState GetState() override;
 
             private:
                 Eegeo::Helpers::TIdentity m_identity;
                 
-                float m_onScreenState;
-                bool m_addedToScreen;
+                bool m_isOnScreen;
                 bool m_canAddToScreen;
+
+                ScreenControl::View::TScreenControlViewState m_viewState;
                 
                 Eegeo::Helpers::CallbackCollection1<IScreenControlViewModel&> m_onScreenStateChangedCallbacks;
                 

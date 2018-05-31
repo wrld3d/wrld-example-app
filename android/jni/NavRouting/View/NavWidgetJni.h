@@ -43,4 +43,9 @@ extern "C"
         JNIEnv *jenv, jobject obj,
         jlong nativeObjectPtr,
         jint bottomViewHeight);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetTopViewHeight(
+            JNIEnv *jenv, jobject obj,
+            jlong nativeObjectPtr,
+            jint topViewHeight);
 }
