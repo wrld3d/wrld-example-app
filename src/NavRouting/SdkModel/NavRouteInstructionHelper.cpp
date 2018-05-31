@@ -1,4 +1,6 @@
 #include "NavRouteInstructionHelper.h"
+#include "NavRouting.h"
+
 #include <sstream>
 #include <vector>
 #include <cmath>
@@ -53,11 +55,6 @@ namespace ExampleApp
                 static const char* Down = "down";
             }
 
-            namespace VariableSpecifiers
-            {
-                static const char* Distance = "<dist>";
-            }
-
             namespace
             {
                 std::string GetDirectionWithOptionalLocation(std::string direction,
@@ -100,7 +97,7 @@ namespace ExampleApp
                     ss << Direction::Take << " " << step.Directions.Type;
                     std::string direction = ss.str();
                     ss.str(std::string());
-                    ss << Direction::Floor << " " << nextStep.IndoorFloorId;
+                    ss << Direction::Floor << " " << InstructionTokens::NextFloorName;
                     std::string floorName = ss.str();
                     return GetDirectionWithOptionalLocation(direction, Preposition::To, floorName);
                 }
@@ -202,11 +199,11 @@ namespace ExampleApp
                 }
 
                 std::stringstream ss;
-                ss << VariableSpecifiers::Distance << "m - " << nextInstructionText;
+                ss << InstructionTokens::Distance << "m - " << nextInstructionText;
                 std::string shortInstructionName = ss.str();
                 ss.str(std::string());
 
-                ss << Preposition::In << " " << VariableSpecifiers::Distance << "m " << nextInstructionText;
+                ss << Preposition::In << " " << InstructionTokens::Distance << "m " << nextInstructionText;
                 std::string fullInstructionText = ss.str();
 
                 std::string iconKey;

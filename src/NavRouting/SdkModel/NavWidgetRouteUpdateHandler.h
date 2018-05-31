@@ -12,6 +12,7 @@
 #include "INavRoutingServiceController.h"
 #include "AlertBox.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "InteriorsModelRepository.h"
 
 namespace ExampleApp
 {
@@ -24,6 +25,7 @@ namespace ExampleApp
             private:
                 INavRoutingModel& m_navRoutingModel;
                 INavRoutingServiceController& m_navRoutingServiceController;
+                Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
 
                 NavRoutingLocationModel m_startLocation;
@@ -60,6 +62,7 @@ namespace ExampleApp
             public:
                 NavWidgetRouteUpdateHandler(INavRoutingModel& navRoutingModel,
                                             INavRoutingServiceController& navRoutingServiceController,
+                                            Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                             Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory
                 );
 

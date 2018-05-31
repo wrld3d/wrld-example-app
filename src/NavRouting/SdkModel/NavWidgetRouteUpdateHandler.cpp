@@ -4,6 +4,8 @@
 #include "RoutingQueryOptions.h"
 #include "NavRoutingRouteModel.h"
 #include "IAlertBoxFactory.h"
+#include "InteriorsModel.h"
+#include "InteriorsFloorModel.h"
 
 #include <string>
 #include <sstream>
@@ -28,7 +30,31 @@ namespace ExampleApp
                         };
                 }
 
-                std::vector<SdkModel::NavRoutingDirectionModel> GetDirectionsFromRouteData(const Eegeo::Routes::Webservice::RouteData& route)
+                std::string GetReadableFloorName(Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
+                                                 const std::string& indoorMapId,
+                                                 const int indoorMapFloorId,
+                                                 bool& out_isPlaceholder)
+                {
+                    if(interiorsModelRepository.HasInterior(indoorMapId))
+                    {
+                        out_isPlaceholder = false;
+                        const auto& interiorModel = interiorsModelRepository.GetInterior(indoorMapId);
+                        const auto floorIndex = interiorModel.FindFloorIndexWithFloorNumber(indoorMapFloorId);
+                        const auto& floorModel = interiorModel.GetFloorAtIndex(floorIndex);
+
+                        return floorModel.GetFloorName();
+                    }
+                    else
+                    {
+                        out_isPlaceholder = true;
+                        std::ostringstream oss;
+                        oss << indoorMapFloorId;
+                        return oss.str();
+                    }
+                }
+
+                std::vector<SdkModel::NavRoutingDirectionModel> GetDirectionsFromRouteData(const Eegeo::Routes::Webservice::RouteData& route,
+                                                                                           Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository)
                 {
                     std::vector<SdkModel::NavRoutingDirectionModel> directionsVector;
 
@@ -44,16 +70,58 @@ namespace ExampleApp
                                     route, sectionIndex, i);
 
                             bool hasLocationName = !formattedInstructions.GetInstructionLocation().empty();
-                            directionsVector.emplace_back(formattedInstructions.GetShortInstructionName(),
-                                                          formattedInstructions.GetIconKey(),
-                                                          hasLocationName ? formattedInstructions.GetInstructionLocation() : formattedInstructions.GetShortInstructionName(),
-                                                          hasLocationName ? formattedInstructions.GetInstructionDirection() : std::string(),
-                                                          step.Path,
-                                                          step.Distance,
-                                                          step.IsIndoors,
-                                                          step.IndoorId,
-                                                          step.IndoorFloorId,
-                                                          step.IsMultiFloor);
+                            const auto& instruction = hasLocationName
+                                                      ? formattedInstructions.GetInstructionLocation()
+                                                      : formattedInstructions.GetShortInstructionName();
+                            const auto& nextInstruction =  hasLocationName
+                                                           ? formattedInstructions.GetInstructionDirection()
+                                                           : std::string();
+
+                            if (step.IsIndoors)
+                            {
+                                bool isUsingPlaceHolder = true;
+                                std::string floorName = GetReadableFloorName(interiorsModelRepository,
+                                                                             step.IndoorId,
+                                                                             step.IndoorFloorId,
+                                                                             isUsingPlaceHolder);
+
+                                std::string nextFloorName;
+                                int nextFloorId = 0;
+
+                                if ((i + 1) < count)
+                                {
+                                    const auto &nextStep = section.Steps[i + 1];
+                                    nextFloorId = nextStep.IndoorFloorId;
+                                    nextFloorName = GetReadableFloorName(interiorsModelRepository,
+                                                                         nextStep.IndoorId,
+                                                                         nextStep.IndoorFloorId,
+                                                                         isUsingPlaceHolder);
+                                }
+
+                                directionsVector.emplace_back(formattedInstructions.GetShortInstructionName(),
+                                                              formattedInstructions.GetIconKey(),
+                                                              instruction,
+                                                              nextInstruction,
+                                                              step.Path,
+                                                              step.Distance,
+                                                              step.IsIndoors,
+                                                              step.IndoorId,
+                                                              step.IndoorFloorId,
+                                                              floorName,
+                                                              step.IsMultiFloor,
+                                                              nextFloorId,
+                                                              nextFloorName,
+                                                              isUsingPlaceHolder);
+                            }
+                            else
+                            {
+                                directionsVector.emplace_back(formattedInstructions.GetShortInstructionName(),
+                                                              formattedInstructions.GetIconKey(),
+                                                              instruction,
+                                                              nextInstruction,
+                                                              step.Path,
+                                                              step.Distance);
+                            }
                         }
 
                         sectionIndex++;
@@ -65,9 +133,11 @@ namespace ExampleApp
             
             NavWidgetRouteUpdateHandler::NavWidgetRouteUpdateHandler(INavRoutingModel& navRoutingModel,
                                                                      INavRoutingServiceController& navRoutingServiceController,
+                                                                     Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                                                      Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
                     : m_navRoutingModel(navRoutingModel)
                     , m_navRoutingServiceController(navRoutingServiceController)
+                    , m_interiorsModelRepository(interiorsModelRepository)
                     , m_alertBoxFactory(alertBoxFactory)
                     , m_startLocation("", Eegeo::Space::LatLong(0,0))
                     , m_startLocationIsSet(false)
@@ -150,7 +220,7 @@ namespace ExampleApp
             {
                 m_navRoutingModel.SetRoute(NavRoutingRouteModel(route.Duration,
                                                                 route.Distance,
-                                                                GetDirectionsFromRouteData(route),
+                                                                GetDirectionsFromRouteData(route, m_interiorsModelRepository),
                                                                 route));
             }
 

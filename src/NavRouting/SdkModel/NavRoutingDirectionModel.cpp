@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "NavRoutingDirectionModel.h"
+#include "NavRouting.h"
 
 #include <sstream>
 
@@ -10,24 +11,6 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            std::string GetStringWithDistance(const std::string& formatString, double distance)
-            {
-                std::string distFormat = "<dist>";
-                std::size_t pos = formatString.find(distFormat);
-                if (pos == std::string::npos)
-                {
-                    return formatString;
-                }
-                else
-                {
-                    std::ostringstream oss;
-                    oss << (int) distance;
-                    std::string stringWithDistance = formatString;
-                    stringWithDistance.replace(pos, distFormat.length(), oss.str());
-                    return stringWithDistance;
-                }
-            }
-
             NavRoutingDirectionModel::NavRoutingDirectionModel(const std::string& name,
                                                                const std::string& icon,
                                                                const std::string& instruction,
@@ -43,7 +26,10 @@ namespace ExampleApp
                                        false,
                                        Eegeo::Resources::Interiors::InteriorId(),
                                        0,
-                                       false)
+                                       "",
+                                       false,
+                                       0,
+                                       "")
             {
 
             }
@@ -57,7 +43,11 @@ namespace ExampleApp
                                                                const bool isIndoors,
                                                                const Eegeo::Resources::Interiors::InteriorId& indoorMapId,
                                                                const int indoorMapFloorId,
-                                                               const bool isMultiFloor)
+                                                               const std::string& indoorMapFloorName,
+                                                               const bool isMultiFloor,
+                                                               const int nextIndoorMapFloorId,
+                                                               const std::string& nextIndoorMapFloorName,
+                                                               const bool isUsingPlaceHolders)
             : m_name(name)
             , m_icon(icon)
             , m_instruction(instruction)
@@ -67,14 +57,22 @@ namespace ExampleApp
             , m_isIndoors(isIndoors)
             , m_indoorMapId(indoorMapId)
             , m_indoorMapFloorId(indoorMapFloorId)
+            , m_indoorMapFloorName(indoorMapFloorName)
             , m_isMultiFloor(isMultiFloor)
+            , m_nextIndoorMapFloorId(nextIndoorMapFloorId)
+            , m_nextIndoorMapFloorName(nextIndoorMapFloorName)
+            , m_isUsingPlaceHolders(isUsingPlaceHolders)
             {
-
+                std::ostringstream oss;
+                oss << (int) m_distance;
+                m_keyMappings[InstructionTokens::Distance] = oss.str();
+                m_keyMappings[InstructionTokens::FloorName] = m_indoorMapFloorName;
+                m_keyMappings[InstructionTokens::NextFloorName] = m_nextIndoorMapFloorName;
             }
 
             const std::string NavRoutingDirectionModel::GetName() const
             {
-                return GetStringWithDistance(m_name, m_distance);
+                return GetReadableString(m_name);
             }
 
             const std::string& NavRoutingDirectionModel::GetIcon() const
@@ -84,12 +82,12 @@ namespace ExampleApp
 
             const std::string NavRoutingDirectionModel::GetInstruction() const
             {
-                return GetStringWithDistance(m_instruction, m_distance);
+                return GetReadableString(m_instruction);
             }
 
             const std::string NavRoutingDirectionModel::GetNextInstruction() const
             {
-                return GetStringWithDistance(m_nextInstruction, m_distance);
+                return GetReadableString(m_nextInstruction);
             }
 
             const std::vector<Eegeo::Space::LatLong>& NavRoutingDirectionModel::GetPath() const
@@ -105,6 +103,9 @@ namespace ExampleApp
             void NavRoutingDirectionModel::SetDistance(double distance)
             {
                 m_distance = distance;
+                std::ostringstream oss;
+                oss << (int) m_distance;
+                m_keyMappings[InstructionTokens::Distance] = oss.str();
             }
 
             const bool NavRoutingDirectionModel::GetIsIndoors() const
@@ -122,9 +123,64 @@ namespace ExampleApp
                 return m_indoorMapFloorId;
             }
 
+            void NavRoutingDirectionModel::SetIndoorMapFloorName(const std::string& indoorMapFloorName)
+            {
+                m_indoorMapFloorName = indoorMapFloorName;
+                m_keyMappings[InstructionTokens::FloorName] = m_indoorMapFloorName;
+            }
+
+            const std::string& NavRoutingDirectionModel::GetIndoorMapFloorName() const
+            {
+                return m_indoorMapFloorName;
+            }
+
             const bool NavRoutingDirectionModel::GetIsMultiFloor() const
             {
                 return m_isMultiFloor;
+            }
+
+            const int NavRoutingDirectionModel::GetNextIndoorMapFloorId() const
+            {
+                return m_nextIndoorMapFloorId;
+            }
+
+            void NavRoutingDirectionModel::SetNextIndoorMapFloorName(const std::string& indoorMapFloorName)
+            {
+                m_nextIndoorMapFloorName = indoorMapFloorName;
+                m_keyMappings[InstructionTokens::NextFloorName] = m_nextIndoorMapFloorName;
+            }
+
+            const std::string& NavRoutingDirectionModel::GetNextIndoorMapFloorName() const
+            {
+                return m_nextIndoorMapFloorName;
+            }
+
+            void NavRoutingDirectionModel::SetIsUsingPlaceHolders(bool isUsingPlaceHolders)
+            {
+                m_isUsingPlaceHolders = isUsingPlaceHolders;
+            }
+
+            const bool NavRoutingDirectionModel::GetIsUsingPlaceHolders() const
+            {
+                return m_isUsingPlaceHolders;
+            }
+
+            std::string NavRoutingDirectionModel::GetReadableString(const std::string& formatString) const
+            {
+                std::string readableString = formatString;
+                for (auto it = m_keyMappings.begin(); it != m_keyMappings.end(); ++it)
+                {
+                    const std::string& token = it->first;
+                    const std::string& value = it->second;
+
+                    std::size_t pos = readableString.find(token);
+                    if (pos != std::string::npos)
+                    {
+                        readableString.replace(pos, token.length(), value);
+                    }
+                }
+
+                return readableString;
             }
         }
     }
