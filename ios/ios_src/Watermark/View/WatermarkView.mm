@@ -10,9 +10,6 @@
 const float InteriorStylingEnabledAlpha = 0.5f;
 const float InteriorStylingDisabledAlpha = 0.8f;
 
-//#define USE_SHADOW
-//#define USE_CLICK_POPUP
-
 @interface WatermarkView()
 
 - (void) fitToSize:(CGSize)size withActivePosition:(bool)active;
@@ -52,31 +49,13 @@ const float InteriorStylingDisabledAlpha = 0.8f;
         [self updateYPositions];
         
         self.pButton = [[UIButton alloc] init];
+        self.pButton.adjustsImageWhenHighlighted = NO;
+        
         [self fitToSize:CGSizeMake(initialWidth, initialHeight) withActivePosition:false];
-
-#ifdef USE_SHADOW
-        self.pShadowGradient = [[UIView alloc] initWithFrame:CGRectMake(0, 0, m_screenWidth, m_height)];
-        
-        CAGradientLayer *gradient = [CAGradientLayer layer];
-        gradient.frame =  CGRectMake(0, 0.f, m_screenWidth, m_screenHeight - m_yPosActive);
-        
-        UIColor *topColor = [UIColor clearColor];
-        UIColor *bottomColor = [[UIColor blackColor] colorWithAlphaComponent:0.85];
-        
-        gradient.colors = [NSArray arrayWithObjects:(id)[topColor CGColor], (id)[bottomColor CGColor], nil];
-        
-        [self.pShadowGradient.layer insertSublayer:gradient atIndex:0];
-        self.pShadowGradient.layer.shouldRasterize = YES;
-        [self.pShadowGradient setAlpha:0.0];
-        [self addSubview:self.pShadowGradient];
-#endif
 
         m_stateChangeAnimationTimeSeconds = 0.2f;
         [self addSubview: self.pButton];
 
-#ifdef USE_CLICK_POPUP
-        [self.pButton addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
-#endif
         [self updateWatermarkData: watermarkData];
         
         [self.pButton setAlpha:0.8];
@@ -96,65 +75,10 @@ const float InteriorStylingDisabledAlpha = 0.8f;
     [self.pButton removeFromSuperview];
     [self.pButton release];
     
-#ifdef USE_SHADOW
-    [self.pShadowGradient removeFromSuperview];
-    [self.pShadowGradient release];
-#endif
-    
     delete m_pInterop;
     [m_pController release];
     [super dealloc];
 }
-
-- (BOOL)consumesTouch:(UITouch *)touch
-{
-    CGPoint touchLocation = [touch locationInView:self];
-    return CGRectContainsPoint(self.pButton.frame, touchLocation);
-}
-
-#ifdef USE_CLICK_POPUP
-- (void) onClick:(UIButton *)sender
-{
-    NSString* alertTitle = [NSString stringWithUTF8String: m_popupTitle.c_str()];
-    NSString* alertMessage = [NSString stringWithUTF8String: m_popupBody.c_str()];
-    NSString* cancelMessage = @"Later";
-    NSString* goToSiteMessage = @"Find Out More";
-    
-    if([UIAlertController class])
-    {
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:alertTitle
-                                                                       message:alertMessage
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction* openSiteAction = [UIAlertAction actionWithTitle:goToSiteMessage
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction * action) { [self goToWatermarkUrl]; }];
-        
-        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:cancelMessage
-                                                               style:UIAlertActionStyleCancel
-                                                             handler:^(UIAlertAction * action) {}];
-        
-        [alert addAction:openSiteAction];
-        [alert addAction:cancelAction];
-        [m_pController presentViewController:alert animated:YES completion:nil];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
-                                                        message:alertMessage
-                                                       delegate:self
-                                              cancelButtonTitle:cancelMessage
-                                              otherButtonTitles:goToSiteMessage, nil];
-        
-        
-        
-        [alert show];
-        [alert release];
-    }
-    
-    m_pInterop->OnSelected();
-}
-#endif
 
 - (void) setFullyOnScreen
 {
@@ -208,22 +132,6 @@ const float InteriorStylingDisabledAlpha = 0.8f;
      ];
 }
 
-#ifdef USE_CLICK_POPUP
-- (void) goToWatermarkUrl
-{
-    NSString* urlString = [NSString stringWithUTF8String: m_webUrl.c_str()];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1)
-    {
-        [self goToWatermarkUrl];
-    }
-}
-#endif
-
 - (void) updateWatermarkData: (const ExampleApp::Watermark::View::WatermarkData&) watermarkData
 {
     m_popupTitle = watermarkData.PopupTitle();
@@ -262,19 +170,6 @@ const float InteriorStylingDisabledAlpha = 0.8f;
     crossFade.toValue = (id)newImage.CGImage;
     crossFade.removedOnCompletion = NO;
     crossFade.fillMode = kCAFillModeForwards;
-    
-#ifdef USE_SHADOW
-    const float  fadeTo = m_shouldShowShadow ? 1.0f : 0.0f;
-    const float fadeDelay = m_alignAlongBottom ? m_stateChangeAnimationTimeSeconds : 0.0f;
-    [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds delay:fadeDelay options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^
-     {
-         [self.pShadowGradient setAlpha:fadeTo];
-     }
-                     completion:^(BOOL finished)
-     {
-     }];
-#endif
 
     [CATransaction begin];
     {
@@ -334,11 +229,6 @@ const float InteriorStylingDisabledAlpha = 0.8f;
     m_alignAlongBottom = alignAlongBottom;
 
     [self updateYPositions];
-    
-#ifdef USE_SHADOW
-    CALayer* gradient = [self.pShadowGradient.layer.sublayers objectAtIndex:0];
-    gradient.frame = CGRectMake(0, 0.f, m_screenWidth, m_screenHeight - m_yPosActive);
-#endif
 }
 
 - (void) fitToSize:(CGSize)size withActivePosition:(bool)active
