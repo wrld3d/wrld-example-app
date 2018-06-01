@@ -451,6 +451,7 @@ set(resources ${resources}
         Resources/detail_icon_web_link_active@1.5x.png
         Resources/detail_icon_web_link_active@2x.png
         Resources/detail_icon_web_link_active@3x.png
+        Resources/dummy_transparent.png
         Resources/eegeo_logo.png
         Resources/eegeo_logo@2x.png
         Resources/eegeo_logo@3x.png

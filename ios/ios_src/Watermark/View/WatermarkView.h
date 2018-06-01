@@ -14,8 +14,6 @@
     ExampleApp::Watermark::View::WatermarkViewInterop* m_pInterop;
     UIViewController* m_pController;
     
-    UIColor* m_pColour;
-    
     float m_width;
     float m_height;
     
@@ -45,8 +43,6 @@
                                :(float)pixelScale
                                :(const ExampleApp::Watermark::View::WatermarkData&) watermarkData;
 
-- (BOOL) consumesTouch:(UITouch *)touch;
-
 - (void) setFullyOnScreen;
 
 - (void) setFullyOffScreen;
@@ -61,8 +57,6 @@
                                    : (bool) alignBelowFloorDisplay;
 
 - (void) setInteriorStylingState: (bool) shouldUseInteriorStyle;
-
-@property(nonatomic, retain) UIView* pShadowGradient;
 
 @property(nonatomic, retain) UIButton* pButton;
 
