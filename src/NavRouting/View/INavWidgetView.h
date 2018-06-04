@@ -35,7 +35,7 @@ namespace ExampleApp
 
                 virtual void ClearEndLocation() = 0;
 
-                virtual void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel) = 0;
+                virtual void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel, bool isNewRoute) = 0;
 
                 virtual void ClearRoute() = 0;
 

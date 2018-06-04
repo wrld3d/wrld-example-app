@@ -7,7 +7,7 @@
 #include "NavRoutingStartLocationClearedMessage.h"
 #include "NavRoutingEndLocationSetMessage.h"
 #include "NavRoutingEndLocationClearedMessage.h"
-#include "NavRoutingRouteSetMessage.h"
+#include "NavRoutingRouteChangedMessage.h"
 #include "NavRoutingRouteClearedMessage.h"
 #include "NavRoutingCurrentDirectionSetMessage.h"
 #include "NavRoutingCurrentDirectionUpdatedMessage.h"
@@ -46,6 +46,7 @@ namespace ExampleApp
             , m_endLocationClearedCallback(this, &NavRoutingController::OnEndLocationCleared)
             , m_routeSetCallback(this, &NavRoutingController::OnRouteSet)
             , m_routeClearedCallback(this, &NavRoutingController::OnRouteCleared)
+            , m_routeUpdatedCallback(this, &NavRoutingController::OnRouteUpdated)
             , m_currentDirectionSetCallback(this, &NavRoutingController::OnCurrentDirectionSet)
             , m_currentDirectionUpdatedCallback(this, &NavRoutingController::OnCurrentDirectionUpdated)
             , m_selectedDirectionSetCallback(this, &NavRoutingController::OnSelectedDirectionSet)
@@ -66,6 +67,7 @@ namespace ExampleApp
                 m_routingModel.InsertEndLocationClearedCallback(m_endLocationClearedCallback);
                 m_routingModel.InsertRouteSetCallback(m_routeSetCallback);
                 m_routingModel.InsertRouteClearedCallback(m_routeClearedCallback);
+                m_routingModel.InsertRouteUpdatedCallback(m_routeUpdatedCallback);
                 m_routingModel.InsertSelectedDirectionSetCallback(m_selectedDirectionSetCallback);
                 m_routingModel.InsertCurrentDirectionSetCallback(m_currentDirectionSetCallback);
                 m_routingModel.InsertCurrentDirectionUpdatedCallback(m_currentDirectionUpdatedCallback);
@@ -94,6 +96,7 @@ namespace ExampleApp
                 m_routingModel.RemoveCurrentDirectionUpdatedCallback(m_currentDirectionUpdatedCallback);
                 m_routingModel.RemoveCurrentDirectionSetCallback(m_currentDirectionSetCallback);
                 m_routingModel.RemoveSelectedDirectionSetCallback(m_selectedDirectionSetCallback);
+                m_routingModel.RemoveRouteUpdatedCallback(m_routeUpdatedCallback);
                 m_routingModel.RemoveRouteClearedCallback(m_routeClearedCallback);
                 m_routingModel.RemoveRouteSetCallback(m_routeSetCallback);
                 m_routingModel.RemoveEndLocationClearedCallback(m_endLocationClearedCallback);
@@ -124,7 +127,7 @@ namespace ExampleApp
 
             void NavRoutingController::OnRouteSet(const NavRoutingRouteModel& routeModel)
             {
-                m_messageBus.Publish(NavRoutingRouteSetMessage(routeModel));
+                m_messageBus.Publish(NavRoutingRouteChangedMessage(routeModel, true));
                 m_routingModel.SetNavMode(Ready);
                 m_routingModel.SetRemainingRouteDuration(routeModel.GetDuration());
                 m_worldPinsService.DeselectPin();
@@ -135,6 +138,11 @@ namespace ExampleApp
                 m_messageBus.Publish(NavRoutingRouteClearedMessage());
                 m_routingModel.SetNavMode(NotReady);
                 m_routingModel.SetRemainingRouteDuration(0);
+            }
+
+            void NavRoutingController::OnRouteUpdated(const NavRoutingRouteModel& routeModel)
+            {
+                m_messageBus.Publish(NavRoutingRouteChangedMessage(routeModel, false));
             }
 
             void NavRoutingController::OnCurrentDirectionSet(const int& directionIndex)

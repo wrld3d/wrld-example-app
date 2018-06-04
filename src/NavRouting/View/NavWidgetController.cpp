@@ -90,9 +90,9 @@ namespace ExampleApp
                 m_view.ClearEndLocation();
             }
 
-            void NavWidgetController::OnRouteSet(const NavRoutingRouteSetMessage& message)
+            void NavWidgetController::OnRouteChanged(const NavRoutingRouteChangedMessage &message)
             {
-                m_view.SetRoute(message.GetRouteModel());
+                m_view.SetRoute(message.GetRouteModel(), message.GetIsNewRoute());
             }
 
             void NavWidgetController::OnRouteCleared(const NavRoutingRouteClearedMessage& message)
@@ -180,7 +180,7 @@ namespace ExampleApp
                     , m_startLocationClearedMessageHandler(this, &NavWidgetController::OnStartLocationCleared)
                     , m_endLocationSetMessageHandler(this, &NavWidgetController::OnEndLocationSet)
                     , m_endLocationClearedMessageHandler(this, &NavWidgetController::OnEndLocationCleared)
-                    , m_routeSetMessageHandler(this, &NavWidgetController::OnRouteSet)
+                    , m_routeSetMessageHandler(this, &NavWidgetController::OnRouteChanged)
                     , m_routeClearedMessageHandler(this, &NavWidgetController::OnRouteCleared)
                     , m_currentDirectionSetMessageHandler(this, &NavWidgetController::OnCurrentDirectionSet)
                     , m_currentDirectionUpdatedMessageHandler(this, &NavWidgetController::OnCurrentDirectionUpdated)

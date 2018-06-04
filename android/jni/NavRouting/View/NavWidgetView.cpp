@@ -91,7 +91,7 @@ namespace ExampleApp
                 CallVoidMethod("clearEndLocation");
             }
 
-            void NavWidgetView::SetRoute(const SdkModel::NavRoutingRouteModel& routeModel)
+            void NavWidgetView::SetRoute(const SdkModel::NavRoutingRouteModel& routeModel, bool isNewRoute)
             {
                 ASSERT_UI_THREAD
 
@@ -140,8 +140,8 @@ namespace ExampleApp
 
                 jobject navRouteObject = env->NewObject(navRouteClass, navRouteCtor, routeModel.GetDuration(), directionsArrayListObject);
 
-                jmethodID setRouteMethod = env->GetMethodID(m_uiViewClass, "setRoute", "(Lcom/wrld/widgets/navigation/model/WrldNavRoute;)V");
-                env->CallVoidMethod(m_uiView, setRouteMethod, navRouteObject);
+                jmethodID setRouteMethod = env->GetMethodID(m_uiViewClass, "setRoute", "(Lcom/wrld/widgets/navigation/model/WrldNavRoute;Z)V");
+                env->CallVoidMethod(m_uiView, setRouteMethod, navRouteObject, isNewRoute);
             }
 
             void NavWidgetView::ClearRoute()

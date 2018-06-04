@@ -13,6 +13,7 @@
 #include "AlertBox.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "InteriorsModelRepository.h"
+#include "InteriorsModel.h"
 
 namespace ExampleApp
 {
@@ -40,6 +41,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetRouteUpdateHandler, const std::vector<Eegeo::Routes::Webservice::RouteData>> m_queryCompletedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetRouteUpdateHandler> m_queryFailedCallback;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavWidgetRouteUpdateHandler> m_failAlertHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetRouteUpdateHandler, Eegeo::Resources::Interiors::InteriorsModel&> m_interiorModelAddedCallback;
 
                 void OnStartLocationSet(const NavRoutingLocationModel& startLocation);
 
@@ -58,6 +60,8 @@ namespace ExampleApp
                 void OnRoutingQueryFailed();
 
                 void OnFailAlertBoxDismissed();
+
+                void OnInteriorModelAdded(Eegeo::Resources::Interiors::InteriorsModel& interiorsModel);
 
             public:
                 NavWidgetRouteUpdateHandler(INavRoutingModel& navRoutingModel,

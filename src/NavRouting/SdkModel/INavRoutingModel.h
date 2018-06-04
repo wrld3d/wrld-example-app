@@ -40,9 +40,13 @@ namespace ExampleApp
 
                 virtual bool TryGetRoute(NavRoutingRouteModel &out_routeModel) const = 0;
 
+                virtual void RouteUpdated() const = 0;
+
                 virtual void SetCurrentDirection(int directionIndex) = 0;
 
                 virtual void UpdateCurrentDirection(const NavRoutingDirectionModel& directionModel) = 0;
+
+                virtual void UpdateDirection(int index, const NavRoutingDirectionModel& directionModel) = 0;
 
                 virtual int GetCurrentDirection() const = 0;
 
@@ -81,6 +85,10 @@ namespace ExampleApp
                 virtual void InsertRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) = 0;
 
                 virtual void RemoveRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) = 0;
+
+                virtual void InsertRouteUpdatedCallback(Eegeo::Helpers::ICallback1<const NavRoutingRouteModel&>& routeUpdatedCallback) = 0;
+
+                virtual void RemoveRouteUpdatedCallback(Eegeo::Helpers::ICallback1<const NavRoutingRouteModel&>& routeUpdatedCallback) = 0;
 
                 virtual void InsertCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) = 0;
 
