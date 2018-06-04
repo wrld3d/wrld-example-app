@@ -33,6 +33,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_endLocationClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingRouteModel&> m_routeSetCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_routeClearedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const NavRoutingRouteModel&> m_routeUpdatedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_currentDirectionSetCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingDirectionModel&>m_currentDirectionUpdatedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_selectedDirectionIndexSetCallbacks;
@@ -62,9 +63,13 @@ namespace ExampleApp
 
                 bool TryGetRoute(NavRoutingRouteModel &out_routeModel) const override;
 
+                void RouteUpdated() const override;
+
                 void SetCurrentDirection(int directionIndex) override;
 
                 void UpdateCurrentDirection(const NavRoutingDirectionModel& directionModel) override;
+
+                void UpdateDirection(int index, const NavRoutingDirectionModel& directionModel) override;
 
                 int GetCurrentDirection() const override;
 
@@ -103,6 +108,10 @@ namespace ExampleApp
                 void InsertRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) override;
 
                 void RemoveRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback) override;
+
+                void InsertRouteUpdatedCallback(Eegeo::Helpers::ICallback1<const NavRoutingRouteModel&>& routeUpdatedCallback) override;
+
+                void RemoveRouteUpdatedCallback(Eegeo::Helpers::ICallback1<const NavRoutingRouteModel&>& routeUpdatedCallback) override;
 
                 void InsertCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback) override;
 

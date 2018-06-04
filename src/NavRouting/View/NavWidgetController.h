@@ -14,7 +14,7 @@
 #include "NavRoutingStartLocationClearedMessage.h"
 #include "NavRoutingEndLocationSetMessage.h"
 #include "NavRoutingEndLocationClearedMessage.h"
-#include "NavRoutingRouteSetMessage.h"
+#include "NavRoutingRouteChangedMessage.h"
 #include "NavRoutingRouteClearedMessage.h"
 #include "NavRoutingCurrentDirectionSetMessage.h"
 #include "NavRoutingCurrentDirectionUpdatedMessage.h"
@@ -48,7 +48,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingStartLocationClearedMessage&> m_startLocationClearedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingEndLocationSetMessage&> m_endLocationSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingEndLocationClearedMessage&> m_endLocationClearedMessageHandler;
-                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRouteSetMessage&> m_routeSetMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRouteChangedMessage&> m_routeSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRouteClearedMessage&> m_routeClearedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingCurrentDirectionSetMessage&> m_currentDirectionSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingCurrentDirectionUpdatedMessage&> m_currentDirectionUpdatedMessageHandler;
@@ -84,7 +84,7 @@ namespace ExampleApp
 
                 void OnEndLocationCleared(const NavRoutingEndLocationClearedMessage& message);
 
-                void OnRouteSet(const NavRoutingRouteSetMessage& message);
+                void OnRouteChanged(const NavRoutingRouteChangedMessage &message);
 
                 void OnRouteCleared(const NavRoutingRouteClearedMessage& message);
 

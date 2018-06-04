@@ -97,6 +97,14 @@ namespace ExampleApp
                 return false;
             }
 
+            void NavRoutingModel::RouteUpdated() const
+            {
+                if (m_routeIsSet)
+                {
+                    m_routeUpdatedCallbacks.ExecuteCallbacks(m_route);
+                }
+            }
+
             void NavRoutingModel::SetCurrentDirection(int directionIndex)
             {
                 m_currentDirectionIndex = directionIndex;
@@ -109,6 +117,14 @@ namespace ExampleApp
                 {
                     m_route.UpdateDirection(m_currentDirectionIndex, directionModel);
                     m_currentDirectionUpdatedCallbacks.ExecuteCallbacks(directionModel);
+                }
+            }
+
+            void NavRoutingModel::UpdateDirection(int index, const NavRoutingDirectionModel& directionModel)
+            {
+                if(HasRoute())
+                {
+                    m_route.UpdateDirection(index, directionModel);
                 }
             }
 
@@ -207,6 +223,16 @@ namespace ExampleApp
             void NavRoutingModel::RemoveRouteClearedCallback(Eegeo::Helpers::ICallback0& routeClearedCallback)
             {
                 m_routeClearedCallbacks.RemoveCallback(routeClearedCallback);
+            }
+
+            void NavRoutingModel::InsertRouteUpdatedCallback(Eegeo::Helpers::ICallback1<const NavRoutingRouteModel&>& routeUpdatedCallback)
+            {
+                m_routeUpdatedCallbacks.AddCallback(routeUpdatedCallback);
+            }
+
+            void NavRoutingModel::RemoveRouteUpdatedCallback(Eegeo::Helpers::ICallback1<const NavRoutingRouteModel&>& routeUpdatedCallback)
+            {
+                m_routeUpdatedCallbacks.RemoveCallback(routeUpdatedCallback);
             }
 
             void NavRoutingModel::InsertCurrentDirectionSetCallback(Eegeo::Helpers::ICallback1<const int>& currentDirectionSetCallback)

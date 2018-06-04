@@ -30,6 +30,13 @@ namespace ExampleApp
                         };
                 }
 
+                std::string GetFloorName(const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel, const int indoorMapFloorId)
+                {
+                    const auto floorIndex = interiorsModel.FindFloorIndexWithFloorNumber(indoorMapFloorId);
+                    const auto& floorModel = interiorsModel.GetFloorAtIndex(floorIndex);
+                    return floorModel.GetFloorName();
+                }
+
                 std::string GetReadableFloorName(Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                                  const std::string& indoorMapId,
                                                  const int indoorMapFloorId,
@@ -38,11 +45,7 @@ namespace ExampleApp
                     if(interiorsModelRepository.HasInterior(indoorMapId))
                     {
                         out_isPlaceholder = false;
-                        const auto& interiorModel = interiorsModelRepository.GetInterior(indoorMapId);
-                        const auto floorIndex = interiorModel.FindFloorIndexWithFloorNumber(indoorMapFloorId);
-                        const auto& floorModel = interiorModel.GetFloorAtIndex(floorIndex);
-
-                        return floorModel.GetFloorName();
+                        return GetFloorName(interiorsModelRepository.GetInterior(indoorMapId), indoorMapFloorId);
                     }
                     else
                     {
@@ -150,6 +153,7 @@ namespace ExampleApp
                     , m_queryCompletedCallback(this, &NavWidgetRouteUpdateHandler::OnRoutingQueryCompleted)
                     , m_queryFailedCallback(this, &NavWidgetRouteUpdateHandler::OnRoutingQueryFailed)
                     , m_failAlertHandler(this, &NavWidgetRouteUpdateHandler::OnFailAlertBoxDismissed)
+                    , m_interiorModelAddedCallback(this, &NavWidgetRouteUpdateHandler::OnInteriorModelAdded)
             {
                 m_navRoutingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_navRoutingModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
@@ -157,10 +161,12 @@ namespace ExampleApp
                 m_navRoutingModel.InsertEndLocationClearedCallback(m_endLocationClearedCallback);
                 m_navRoutingServiceController.RegisterQueryCompletedCallback(m_queryCompletedCallback);
                 m_navRoutingServiceController.RegisterQueryFailedCallback(m_queryFailedCallback);
+                m_interiorsModelRepository.RegisterAddedCallback(m_interiorModelAddedCallback);
             }
 
             NavWidgetRouteUpdateHandler::~NavWidgetRouteUpdateHandler()
             {
+                m_interiorsModelRepository.UnregisterAddedCallback(m_interiorModelAddedCallback);
                 m_navRoutingServiceController.UnregisterQueryFailedCallback(m_queryFailedCallback);
                 m_navRoutingServiceController.UnregisterQueryCompletedCallback(m_queryCompletedCallback);
                 m_navRoutingModel.RemoveEndLocationClearedCallback(m_endLocationClearedCallback);
@@ -240,6 +246,35 @@ namespace ExampleApp
 
             void NavWidgetRouteUpdateHandler::OnFailAlertBoxDismissed()
             {
+            }
+
+            void NavWidgetRouteUpdateHandler::OnInteriorModelAdded(Eegeo::Resources::Interiors::InteriorsModel& interiorsModel)
+            {
+                NavRoutingRouteModel routeModel;
+                if (m_navRoutingModel.TryGetRoute(routeModel))
+                {
+                    auto& directions = routeModel.GetDirections();
+                    bool routeIsUpdated = false;
+
+                    for (int i=0; i<directions.size(); i++)
+                    {
+                        auto direction = directions[i];
+
+                        if(direction.GetIndoorMapId() == interiorsModel.GetId() && direction.GetIsUsingPlaceHolders())
+                        {
+                            direction.SetIndoorMapFloorName(GetFloorName(interiorsModel, direction.GetIndoorMapFloorId()));
+                            direction.SetNextIndoorMapFloorName(GetFloorName(interiorsModel, direction.GetNextIndoorMapFloorId()));
+                            direction.SetIsUsingPlaceHolders(false);
+                            m_navRoutingModel.UpdateDirection(i, direction);
+                            routeIsUpdated = true;
+                        }
+                    }
+
+                    if (routeIsUpdated)
+                    {
+                        m_navRoutingModel.RouteUpdated();
+                    }
+                }
             }
         }
     }

@@ -18,8 +18,8 @@ set(currsources
   ../src/NavRouting/NavRoutingRemainingRouteDurationSetMessage.cpp
   ../src/NavRouting/NavRoutingRemainingRouteDurationSetMessage.h
   ../src/NavRouting/NavRoutingRouteClearedMessage.h
-  ../src/NavRouting/NavRoutingRouteSetMessage.cpp
-  ../src/NavRouting/NavRoutingRouteSetMessage.h
+  ../src/NavRouting/NavRoutingRouteChangedMessage.cpp
+  ../src/NavRouting/NavRoutingRouteChangedMessage.h
   ../src/NavRouting/NavRoutingSelectedDirectionChangedMessage.cpp
   ../src/NavRouting/NavRoutingSelectedDirectionChangedMessage.h
   ../src/NavRouting/NavRoutingSelectEndLocationClickedMessage.h

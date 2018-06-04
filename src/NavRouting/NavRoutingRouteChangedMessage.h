@@ -8,15 +8,18 @@ namespace ExampleApp
 {
     namespace NavRouting
     {
-        class NavRoutingRouteSetMessage
+        class NavRoutingRouteChangedMessage
         {
         private:
             SdkModel::NavRoutingRouteModel m_routeModel;
+            bool m_isNewRoute;
 
         public:
-            NavRoutingRouteSetMessage(const SdkModel::NavRoutingRouteModel& routeModel);
+            NavRoutingRouteChangedMessage(const SdkModel::NavRoutingRouteModel& routeModel, bool isNewRoute);
 
             const SdkModel::NavRoutingRouteModel& GetRouteModel() const;
+
+            const bool GetIsNewRoute() const;
         };
     }
 }
