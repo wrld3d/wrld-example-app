@@ -52,9 +52,8 @@ namespace ExampleApp
                 TurnByTurn::NavTurnByTurnConfig turnByTurnConfig = TurnByTurn::NavTurnByTurnConfig();
 
                 m_pTurnByTurnModel = Eegeo_NEW(TurnByTurn::NavTurnByTurnModel)(turnByTurnConfig,
-                                                                               locationService);
-
-
+                                                                               locationService,
+                                                                               interiorsModelRepository);
 
                 m_pTurnByTurnController = Eegeo_NEW(TurnByTurn::NavTurnByTurnController)(*m_pTurnByTurnModel,
                                                                                          *m_pNavRoutingModel,

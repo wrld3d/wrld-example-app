@@ -9,6 +9,7 @@
 #include "RouteData.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
+#include "InteriorsModelRepository.h"
 
 namespace ExampleApp
 {
@@ -23,7 +24,7 @@ namespace ExampleApp
 
                     float updateRateSeconds = 1.0f;
                     float distanceToPathRangeMeters = 10.0f;
-                    float distanceToPathToTriggerReroute = 10.f;
+                    float distanceToPathToTriggerReroute = 3.f;
                 };
 
                 class NavTurnByTurnModel : public INavTurnByTurnModel
@@ -43,7 +44,8 @@ namespace ExampleApp
                     int GetIndexOfPathSegmentStartVertex() const { return m_indexOfPathSegmentStartVertex; }
 
                     NavTurnByTurnModel(const NavTurnByTurnConfig& config,
-                                       Eegeo::Location::ILocationService& locationService);
+                                       Eegeo::Location::ILocationService& locationService,
+                                       Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository);
                     ~NavTurnByTurnModel();
 
                     void Start(const Eegeo::Routes::Webservice::RouteData& route);
@@ -64,8 +66,9 @@ namespace ExampleApp
 
                     void UpdateTurnByTurn();
 
-                    Eegeo::Location::ILocationService& m_locationService;
                     const NavTurnByTurnConfig m_config;
+                    Eegeo::Location::ILocationService& m_locationService;
+                    Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
                     Eegeo::Routes::Webservice::RouteData m_route;
 
                     Eegeo::Helpers::CallbackCollection0 m_startedCallbacks;
