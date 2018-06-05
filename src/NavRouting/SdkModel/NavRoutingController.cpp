@@ -19,6 +19,7 @@
 #include "InteriorsFloorModel.h"
 #include "IAlertBoxFactory.h"
 #include "IWorldPinsService.h"
+#include "NavRouteInteriorModelHelper.h"
 
 namespace ExampleApp
 {
@@ -120,25 +121,43 @@ namespace ExampleApp
                 }
 
                 Eegeo::Space::LatLong currentLocation = Eegeo::Space::LatLong(0,0);
-                if(m_locationService.GetLocation(currentLocation))
-                {
-                    int indoorMapFloorId = 0;
-                    m_locationService.GetFloorIndex(indoorMapFloorId);
 
-                    location = NavRoutingLocationModel("Current Location",
-                                                       currentLocation,
-                                                       m_locationService.IsIndoors(),
-                                                       m_locationService.GetInteriorId(),
-                                                       indoorMapFloorId);
-                    return true;
-                }
-                else
+                bool locationServiceHasUserLocation = m_locationService.GetLocation(currentLocation);
+                if(!locationServiceHasUserLocation)
                 {
                     m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to acquire location",
                                                                  "We couldn't find your current location",
                                                                  m_failAlertHandler);
                     return false;
                 }
+
+                int floorIndex = 0;
+                m_locationService.GetFloorIndex(floorIndex);
+
+                int indoorMapFloorId = 0;
+
+                if (m_locationService.IsIndoors())
+                {
+                    const auto& indoorMapId = m_locationService.GetInteriorId().Value();
+                    const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
+                                                                                                              indoorMapId,
+                                                                                                              floorIndex,
+                                                                                                              indoorMapFloorId);
+                    if (!interiorDetailsAvailable)
+                    {
+                        m_alertBoxFactory.CreateSingleOptionAlertBox("Interior not loaded",
+                                                                     "Interior information is not available",
+                                                                     m_failAlertHandler);
+                        return false;
+                    }
+                }
+
+                location = NavRoutingLocationModel("Current Location",
+                                                   currentLocation,
+                                                   m_locationService.IsIndoors(),
+                                                   m_locationService.GetInteriorId(),
+                                                   indoorMapFloorId);
+                return true;
             }
 
             void NavRoutingController::OnStartLocationSet(const NavRoutingLocationModel& startLocation)
@@ -290,24 +309,25 @@ namespace ExampleApp
                 
                 if(searchResultModel.IsInterior())
                 {
+                    int indoorMapFloorId = 0;
                     const auto& indoorMapId = searchResultModel.GetBuildingId().Value();
-                    if (m_interiorsModelRepository.HasInterior(indoorMapId))
-                    {
-                        auto& interiorModel = m_interiorsModelRepository.GetInterior(indoorMapId);
-                        auto& floorModel = interiorModel.GetFloorAtIndex(searchResultModel.GetFloor());
-                        endLocation = NavRoutingLocationModel(searchResultModel.GetTitle(),
-                                                              searchResultModel.GetLocation(),
-                                                              searchResultModel.IsInterior(),
-                                                              searchResultModel.GetBuildingId(),
-                                                              floorModel.GetFloorNumber());
-                    }
-                    else
+                    const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
+                                                                                                              indoorMapId,
+                                                                                                              searchResultModel.GetFloor(),
+                                                                                                              indoorMapFloorId);
+                    if (!interiorDetailsAvailable)
                     {
                         m_alertBoxFactory.CreateSingleOptionAlertBox("Interior not loaded",
                                                                      "Interior information is not available",
                                                                      m_failAlertHandler);
                         return;
                     }
+
+                    endLocation = NavRoutingLocationModel(searchResultModel.GetTitle(),
+                                                          searchResultModel.GetLocation(),
+                                                          searchResultModel.IsInterior(),
+                                                          searchResultModel.GetBuildingId(),
+                                                          indoorMapFloorId);
                 }
                 else
                 {

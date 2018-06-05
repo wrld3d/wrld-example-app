@@ -5,7 +5,7 @@
 #include "ILocationService.h"
 #include "INavRoutingModel.h"
 #include "Point3Spline.h"
-
+#include "NavRouteInteriorModelHelper.h"
 namespace ExampleApp
 {
     namespace NavRouting
@@ -28,9 +28,11 @@ namespace ExampleApp
                 }
 
                 NavTurnByTurnModel::NavTurnByTurnModel(const NavTurnByTurnConfig &config,
-                                                       Eegeo::Location::ILocationService &locationService)
+                                                       Eegeo::Location::ILocationService &locationService,
+                                                       Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository)
                 : m_config(config)
                 , m_locationService(locationService)
+                , m_interiorsModelRepository(interiorsModelRepository)
                 , m_closestPointOnRoute(0,0)
                 , m_enabled(false)
                 , m_remainingDuration(0.0)
@@ -76,14 +78,23 @@ namespace ExampleApp
                     Eegeo::Routes::PointOnRouteOptions options;
                     if(m_locationService.IsIndoors())
                     {
-                        Eegeo::Resources::Interiors::InteriorId indoorId = m_locationService.GetInteriorId();
-                        options.IndoorMapId = indoorId.Value();
+                        const auto& indoorMapId = m_locationService.GetInteriorId().Value();
+                        options.IndoorMapId = indoorMapId;
 
                         int floorIndex;
                         m_locationService.GetFloorIndex(floorIndex);
-                        // TODO: FloorIndex != FloorID.  Check how to convert these
-                        // (Might require Indoor model which only exists if you're in it)
-                        options.IndoorMapFloorId = floorIndex;
+
+                        int indoorMapFloorId = 0;
+                        const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
+                                                                                                                  indoorMapId,
+                                                                                                                  floorIndex,
+                                                                                                                  indoorMapFloorId);
+                        if (!interiorDetailsAvailable)
+                        {
+                            return;
+                        }
+
+                        options.IndoorMapFloorId = indoorMapFloorId;
                     }
 
                     Eegeo::Routes::PointOnRoute pointOnRouteResult = Eegeo::Routes::RouteHelpers::GetPointOnRoute(currentLocation, m_route, options);
