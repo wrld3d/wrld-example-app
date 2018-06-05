@@ -102,7 +102,7 @@ namespace ExampleApp
 
                     bool currentDirectionIsSelected = m_navRoutingModel.GetSelectedDirection() == m_navRoutingModel.GetCurrentDirection();
                     m_navRoutingModel.SetCurrentDirection(directionIndex);
-                    if(currentDirectionIsSelected)
+                    if(currentDirectionIsSelected && m_navRoutingModel.GetSelectedDirection() != directionIndex)
                     {
                         m_navRoutingModel.SetSelectedDirection(directionIndex);
                     }
