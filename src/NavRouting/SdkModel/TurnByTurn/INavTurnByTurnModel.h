@@ -27,6 +27,7 @@ namespace ExampleApp
                     virtual double GetDistanceToNextStep() const = 0;
                     virtual double GetRouteProgressParam() const  = 0;
                     virtual double GetRouteStepProgressParam() const  = 0;
+                    virtual float GetPathHeadingDegrees() const = 0;
                     virtual int GetCurrentSectionIndex() const = 0;
                     virtual int GetCurrentStepIndex() const = 0;
                     virtual int GetIndexOfPathSegmentStartVertex() const = 0;

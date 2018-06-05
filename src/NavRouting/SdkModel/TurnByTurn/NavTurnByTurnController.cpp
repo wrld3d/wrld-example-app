@@ -102,8 +102,9 @@ namespace ExampleApp
 
                     bool currentDirectionIsSelected = m_navRoutingModel.GetSelectedDirection() == m_navRoutingModel.GetCurrentDirection();
                     m_navRoutingModel.SetCurrentDirection(directionIndex);
-                    if(currentDirectionIsSelected)
+                    if(currentDirectionIsSelected && m_navRoutingModel.GetSelectedDirection() != directionIndex)
                     {
+                        Eegeo_TTY("WTF: Updating selected direction as these were previously matching current");
                         m_navRoutingModel.SetSelectedDirection(directionIndex);
                     }
                     m_navRoutingModel.SetRemainingRouteDuration(m_turnByTurnModel.GetRemainingDuration());

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "DebugRenderer.h"
 #include "AlertBox.h"
 #include "Types.h"
 #include "BidirectionalBus.h"
@@ -34,7 +35,8 @@ namespace ExampleApp
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                  Eegeo::Markers::IMarkerService& markerService,
-                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService);
+                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                 Eegeo::DebugRendering::DebugRenderer& debugRenderer);
 
                 ~NavRoutingModule();
 
@@ -42,6 +44,7 @@ namespace ExampleApp
 
                 INavRouteDrawingController& GetRouteDrawingController();
                 INavRoutingServiceController& GetRoutingServiceController();
+                TurnByTurn::NavTurnByTurnLocationService& GetTurnByTurnLocationService();
                 
             private:
 
@@ -56,6 +59,7 @@ namespace ExampleApp
 
                 TurnByTurn::INavTurnByTurnModel* m_pTurnByTurnModel;
                 TurnByTurn::NavTurnByTurnController* m_pTurnByTurnController;
+                TurnByTurn::NavTurnByTurnLocationService* m_pTurnByTurnLocationService;
             };
         }
     }

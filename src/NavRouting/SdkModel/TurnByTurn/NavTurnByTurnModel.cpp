@@ -5,6 +5,7 @@
 #include "ILocationService.h"
 #include "INavRoutingModel.h"
 #include "Point3Spline.h"
+#include "CameraHelpers.h"
 
 namespace ExampleApp
 {
@@ -24,6 +25,27 @@ namespace ExampleApp
                     double CalculateDistanceToEndOfStep(const Eegeo::Routes::Webservice::RouteStep& step, double paramAlongStep)
                     {
                         return step.Distance * (1.0 - Eegeo::Math::Clamp01(paramAlongStep));
+                    }
+
+                    float CalculatePathHeading(const Eegeo::Routes::Webservice::RouteStep& step, unsigned int vertIndex)
+                    {
+                        float fallbackHeading = static_cast<float>(step.Directions.BearingAfter);
+                        if(step.Path.size() <= 1 ||
+                           step.Distance <= 0.0)
+                        {
+                           return fallbackHeading;
+                        }
+                        vertIndex = Eegeo::Min(vertIndex, (step.Path.size()-2));
+                        Eegeo::dv3 ecefPoint = step.Path.at(vertIndex).ToECEF();
+                        Eegeo::dv3 nextPoint = step.Path.at(vertIndex+1).ToECEF();
+                        Eegeo::v3 forward = (nextPoint-ecefPoint).Norm().ToSingle();
+                        if(forward.LengthSq() == 0.0)
+                        {
+                            return fallbackHeading;
+                        }
+                        float headingRadians = Eegeo::Camera::CameraHelpers::GetAbsoluteBearingRadians(ecefPoint, forward);
+
+                        return Eegeo::Math::Rad2Deg(headingRadians);
                     }
                 }
 
@@ -120,7 +142,8 @@ namespace ExampleApp
                     m_distanceToNextStep = CalculateDistanceToEndOfStep(currentStep, pointOnRouteResult.GetFractionAlongRouteStep());
 
                     m_indexOfPathSegmentStartVertex = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetIndexOfPathSegmentStartVertex();
-                    
+                    m_pathHeadingDegrees = CalculatePathHeading(currentStep, static_cast<unsigned int>(m_indexOfPathSegmentStartVertex));
+
                     m_updateCallbacks.ExecuteCallbacks();
                 }
 
@@ -139,7 +162,12 @@ namespace ExampleApp
                     m_paramAlongRoute = 0.0;
                     m_paramAlongStep = 0.0;
                     m_updateTime = 0.0f;
+                    m_pathHeadingDegrees = GetPathHeadingDegrees();
                     m_indexOfPathSegmentStartVertex = 0;
+                    Eegeo_ASSERT(route.Sections.size() > 0, "No sections in route");
+                    Eegeo_ASSERT(route.Sections.at(0).Steps.size() > 0, "No Steps in Section");
+                    Eegeo_ASSERT(route.Sections.at(0).Steps.at(0).Path.size() > 0, "No Path in step");
+                    m_closestPointOnRoute = route.Sections.at(0).Steps.at(0).Path.at(0);
                     m_enabled = true;
 
                     m_startedCallbacks.ExecuteCallbacks();

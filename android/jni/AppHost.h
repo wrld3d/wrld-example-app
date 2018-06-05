@@ -114,7 +114,8 @@ private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
     Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
-    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
+    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService; // Device/IPS Location Service
+    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pTrueCurrentLocationService; // Global Location Service.
     Eegeo::Android::AndroidConnectivityService* m_pAndroidConnectivityService;
 
     AndroidNativeState& m_nativeState;

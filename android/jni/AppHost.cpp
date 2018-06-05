@@ -70,6 +70,7 @@
 #include "AutomatedScreenshotController.h"
 #include "UiCreatedMessage.h"
 #include "INavWidgetView.h"
+#include "NavTurnByTurnLocationService.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -144,6 +145,7 @@ AppHost::AppHost(
 
     m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
     m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_pAndroidLocationService);
+    m_pTrueCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_pAndroidLocationService);
     m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
@@ -194,6 +196,7 @@ AppHost::AppHost(
     			 applicationConfiguration,
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
+                 *m_pTrueCurrentLocationService,
                  *m_pCurrentLocationService,
                  m_androidNativeUIFactories,
                  platformConfiguration,
@@ -208,6 +211,10 @@ AppHost::AppHost(
                  *m_pMenuReactionModel,
                  m_userIdleService,
                  m_screenshotService);
+
+    Eegeo::TtyHandler::TtyEnabled = true;
+    m_pApp->GetTurnByTurnLocationService().SetLocationService(*m_pCurrentLocationService);
+    m_pTrueCurrentLocationService->SetLocationService(m_pApp->GetTurnByTurnLocationService());
 
     Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
     Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();

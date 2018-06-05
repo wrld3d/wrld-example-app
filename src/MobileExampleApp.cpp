@@ -196,6 +196,7 @@ namespace ExampleApp
                                        Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                                        Eegeo::Rendering::ScreenProperties& screenProperties,
                                        Eegeo::Location::ILocationService& locationService,
+                                       Eegeo::Location::ILocationService& deviceLocationService,
                                        Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                        const Eegeo::Config::PlatformConfig& platformConfig,
                                        Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
@@ -318,6 +319,7 @@ namespace ExampleApp
 
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraConfig = Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration::CreateDefault();
         gpsGlobeCameraConfig.panToUnlockThreshold = PanToUnlockThreshold;
+        gpsGlobeCameraConfig.compassCameraDampingEnabled = false;
 
         if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
         {
@@ -365,7 +367,10 @@ namespace ExampleApp
                                                                                        Eegeo::Streaming::QuadTreeCube::MAX_DEPTH_TO_VISIT,
                                                                                        mapModule.GetEnvironmentFlatteningService());
 
-        CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening, platformConfig.MapLayersConfig.BlueSphereConfig.CreateViews);
+        CreateApplicationModelModules(nativeUIFactories,
+                                      deviceLocationService,
+                                      platformConfig.OptionsConfig.InteriorsAffectedByFlattening,
+                                      platformConfig.MapLayersConfig.BlueSphereConfig.CreateViews);
 
         namespace IntHighlights = InteriorsExplorer::SdkModel::Highlights;
 
@@ -509,6 +514,7 @@ namespace ExampleApp
     }
 
     void MobileExampleApp::CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                                         Eegeo::Location::ILocationService& deviceLocationService,
                                                          const bool interiorsAffectedByFlattening,
                                                          const bool createBlueSphereViews)
     {
@@ -722,6 +728,7 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraComponentConfig = Eegeo::Resources::Interiors::InteriorsGpsCameraControllerFactory::DefaultGpsGlobeCameraComponentConfiguration();
         gpsGlobeCameraComponentConfig.defaultGpsDistanceToInterest = ExampleApp::InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance;
         gpsGlobeCameraComponentConfig.panToUnlockThreshold = PanToUnlockThreshold;
+        gpsGlobeCameraComponentConfig.compassCameraDampingEnabled = false;
 
         if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
         {
@@ -829,7 +836,7 @@ namespace ExampleApp
 
         m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(polylineShapesModule.GetShapeService(),
                                                                                             world.GetRoutesModule().GetRoutingWebservice(),
-                                                                                            world.GetLocationService(),
+                                                                                            deviceLocationService,
                                                                                             *m_pNavigationService,
                                                                                             m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
                                                                                             *m_pCameraTransitionService,
@@ -837,7 +844,8 @@ namespace ExampleApp
                                                                                             m_messageBus,
                                                                                             interiorsModelModule.GetInteriorsModelRepository(),
                                                                                             mapModule.GetMarkersModule().GetMarkerService(),
-                                                                                            m_pWorldPinsModule->GetWorldPinsService());
+                                                                                            m_pWorldPinsModule->GetWorldPinsService(),
+        m_pWorld->GetDebugRenderingModule().GetDebugRenderer());
         
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsCameraController());
@@ -1206,6 +1214,9 @@ namespace ExampleApp
         }
 
         UpdateLoadingScreen(dt);
+
+        const bool userInteractionEnabled = m_pUserInteractionModule->GetUserInteractionModel().IsEnabled();
+        const bool cameraTransitioning = m_pCameraTransitionService->IsTransitioning();
         
         m_pSurveyTimer->Update();
     }

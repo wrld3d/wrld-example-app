@@ -198,6 +198,7 @@ namespace ExampleApp
 		Eegeo::Helpers::TCallback1<MobileExampleApp, const UiCreatedMessage&> m_onUiCreatedCallback;
 
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
+                                           Eegeo::Location::ILocationService& deviceLocationService,
                                            const bool interiorsAffectedByFlattening,
                                            const bool createBlueSphereViews);
 
@@ -230,6 +231,7 @@ namespace ExampleApp
                          Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                          Eegeo::Rendering::ScreenProperties& screenProperties,
                          Eegeo::Location::ILocationService& locationService,
+                         Eegeo::Location::ILocationService& deviceLocationService,
                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
                          const Eegeo::Config::PlatformConfig& platformConfig,
                          Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
@@ -421,6 +423,11 @@ namespace ExampleApp
         Eegeo::Location::NavigationService& GetNavigationService() const
         {
             return *m_pNavigationService;
+        }
+
+        ExampleApp::NavRouting::SdkModel::TurnByTurn::NavTurnByTurnLocationService& GetTurnByTurnLocationService() const
+        {
+            return m_pNavRoutingModule->GetTurnByTurnLocationService();
         }
 
         void OnPause();

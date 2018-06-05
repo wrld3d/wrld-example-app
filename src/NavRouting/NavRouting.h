@@ -45,6 +45,7 @@ namespace ExampleApp
             {
                 class INavTurnByTurnModel;
                 class NavTurnByTurnController;
+                class NavTurnByTurnLocationService;
             }
 
             namespace InstructionTokens

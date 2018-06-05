@@ -12,6 +12,7 @@
 #include "NavTurnByTurnModel.h"
 #include "NavTurnByTurnController.h"
 #include "NavRoutingCameraController.h"
+#include "NavTurnByTurnLocationService.h"
 
 namespace ExampleApp
 {
@@ -29,7 +30,8 @@ namespace ExampleApp
                                                 ExampleAppMessaging::TMessageBus& messageBus,
                                                 Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                                 Eegeo::Markers::IMarkerService& markerService,
-                                                WorldPins::SdkModel::IWorldPinsService& worldPinsService)
+                                                WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                Eegeo::DebugRendering::DebugRenderer& debugRenderer)
             {
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
                 
@@ -76,10 +78,17 @@ namespace ExampleApp
                                                                                    cameraTransitionController,
                                                                                    navigationService,
                                                                                    compassModel);
+
+                m_pTurnByTurnLocationService = Eegeo_NEW(TurnByTurn::NavTurnByTurnLocationService)(
+                    *m_pTurnByTurnModel,
+                    *m_pNavRoutingModel,
+                    interiorsModelRepository,
+                    debugRenderer);
             }
 
             NavRoutingModule::~NavRoutingModule()
             {
+                Eegeo_DELETE m_pTurnByTurnLocationService;
                 Eegeo_DELETE m_pRoutingCameraController;
                 Eegeo_DELETE m_pRoutingController;
                 Eegeo_DELETE m_pRouteDrawingHandler;
@@ -95,6 +104,7 @@ namespace ExampleApp
             void NavRoutingModule::Update(float dt)
             {
                 m_pTurnByTurnController->Update(dt);
+                m_pTurnByTurnLocationService->Update(dt);
             }
 
             INavRouteDrawingController& NavRoutingModule::GetRouteDrawingController()
@@ -105,6 +115,11 @@ namespace ExampleApp
             INavRoutingServiceController& NavRoutingModule::GetRoutingServiceController()
             {
                 return *m_pNavRoutingServiceController;
+            }
+
+            TurnByTurn::NavTurnByTurnLocationService& NavRoutingModule::GetTurnByTurnLocationService()
+            {
+                return *m_pTurnByTurnLocationService;
             }
         }
     }

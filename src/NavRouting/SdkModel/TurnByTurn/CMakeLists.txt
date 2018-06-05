@@ -7,6 +7,8 @@ set(currsources
   ../src/NavRouting/SdkModel/TurnByTurn/NavTurnByTurnModel.cpp
   ../src/NavRouting/SdkModel/TurnByTurn/NavTurnByTurnController.h
   ../src/NavRouting/SdkModel/TurnByTurn/NavTurnByTurnController.cpp
+  ../src/NavRouting/SdkModel/TurnByTurn/NavTurnByTurnLocationService.h
+  ../src/NavRouting/SdkModel/TurnByTurn/NavTurnByTurnLocationService.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\NavRouting\\SdkModel\\TurnByTurn FILES ${currsources})
