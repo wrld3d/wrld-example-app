@@ -88,6 +88,13 @@ namespace ExampleApp
 
                     Eegeo::Routes::PointOnRoute pointOnRouteResult = Eegeo::Routes::RouteHelpers::GetPointOnRoute(currentLocation, m_route, options);
 
+                    double distanceToRouteAtCurrentPoint = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
+                    bool shouldReroute = distanceToRouteAtCurrentPoint > m_config.distanceToPathToTriggerReroute;
+                    if(shouldReroute)
+                    {
+                        m_shouldRerouteCallbacks.ExecuteCallbacks();
+                    }
+
                     // TODO: First test is just use the results from here. Actually need to decide at what threshold to advance to next point
                     int nextSectionIndex = pointOnRouteResult.GetRouteSectionIndex();
                     int nextStepIndex = pointOnRouteResult.GetRouteStepIndex();
@@ -96,7 +103,7 @@ namespace ExampleApp
                         return;
                     }
 
-                    bool tooFarFromPath = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint() > m_config.distanceToPathRangeMeters;
+                    bool tooFarFromPath = distanceToRouteAtCurrentPoint > m_config.distanceToPathRangeMeters;
                     if(tooFarFromPath) {
                         return;
                     }
@@ -187,6 +194,15 @@ namespace ExampleApp
                     m_updateCallbacks.RemoveCallback(callback);
                 }
 
+                void NavTurnByTurnModel::InsertShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_shouldRerouteCallbacks.AddCallback(callback);
+                }
+
+                void NavTurnByTurnModel::RemoveShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_shouldRerouteCallbacks.RemoveCallback(callback);
+                }
             }
         }
     }
