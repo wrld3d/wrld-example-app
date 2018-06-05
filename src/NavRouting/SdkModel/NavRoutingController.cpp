@@ -40,6 +40,7 @@ namespace ExampleApp
             , m_interiorsModelRepository(interiorsModelRepository)
             , m_alertBoxFactory(alertBoxFactory)
             , m_worldPinsService(worldPinsService)
+            , m_isRerouting(false)
             , m_startLocationSetCallback(this, &NavRoutingController::OnStartLocationSet)
             , m_startLocationClearedCallback(this, &NavRoutingController::OnStartLocationCleared)
             , m_endLocationSetCallback(this, &NavRoutingController::OnEndLocationSet)
@@ -60,6 +61,7 @@ namespace ExampleApp
             , m_selectedDirectionChangedMessageHandler(this, &NavRoutingController::OnSelectedDirectionChanged)
             , m_directionsButtonClickedMessageHandler(this, &NavRoutingController::OnDirectionsButtonClicked)
             , m_failAlertHandler(this, &NavRoutingController::OnFailAlertBoxDismissed)
+            , m_shouldRerouteCallback(this, &NavRoutingController::OnShouldReroute)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_routingModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
@@ -80,10 +82,12 @@ namespace ExampleApp
                 m_messageBus.SubscribeNative(m_startEndRoutingButtonClickedMessageHandler);
                 m_messageBus.SubscribeNative(m_selectedDirectionChangedMessageHandler);
                 m_messageBus.SubscribeNative(m_directionsButtonClickedMessageHandler);
+                m_turnByTurnModel.InsertShouldRerouteCallback(m_shouldRerouteCallback);
             }
 
             NavRoutingController::~NavRoutingController()
             {
+                m_turnByTurnModel.RemoveShouldRerouteCallback(m_shouldRerouteCallback);
                 m_messageBus.UnsubscribeNative(m_directionsButtonClickedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_selectedDirectionChangedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_startEndRoutingButtonClickedMessageHandler);
@@ -103,6 +107,38 @@ namespace ExampleApp
                 m_routingModel.RemoveEndLocationSetCallback(m_endLocationSetCallback);
                 m_routingModel.RemoveStartLocationClearedCallback(m_startLocationClearedCallback);
                 m_routingModel.RemoveStartLocationSetCallback(m_startLocationSetCallback);
+            }
+
+            bool NavRoutingController::TryGetCurrentLocation(NavRoutingLocationModel &location)
+            {
+                if(!m_locationService.GetIsAuthorized())
+                {
+                    m_alertBoxFactory.CreateSingleOptionAlertBox("Location service is not authorized",
+                                                                 "We didn't recieve autorization for location service",
+                                                                 m_failAlertHandler);
+                    return false;
+                }
+
+                Eegeo::Space::LatLong currentLocation = Eegeo::Space::LatLong(0,0);
+                if(m_locationService.GetLocation(currentLocation))
+                {
+                    int indoorMapFloorId = 0;
+                    m_locationService.GetFloorIndex(indoorMapFloorId);
+
+                    location = NavRoutingLocationModel("Current Location",
+                                                       currentLocation,
+                                                       m_locationService.IsIndoors(),
+                                                       m_locationService.GetInteriorId(),
+                                                       indoorMapFloorId);
+                    return true;
+                }
+                else
+                {
+                    m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to acquire location",
+                                                                 "We couldn't find your current location",
+                                                                 m_failAlertHandler);
+                    return false;
+                }
             }
 
             void NavRoutingController::OnStartLocationSet(const NavRoutingLocationModel& startLocation)
@@ -128,7 +164,15 @@ namespace ExampleApp
             void NavRoutingController::OnRouteSet(const NavRoutingRouteModel& routeModel)
             {
                 m_messageBus.Publish(NavRoutingRouteChangedMessage(routeModel, true));
-                m_routingModel.SetNavMode(Ready);
+                if (m_isRerouting)
+                {
+                    m_turnByTurnModel.Start(routeModel.GetSourceRouteData());
+                    m_isRerouting = false;
+                }
+                else
+                {
+                    m_routingModel.SetNavMode(Ready);
+                }
                 m_routingModel.SetRemainingRouteDuration(routeModel.GetDuration());
                 m_worldPinsService.DeselectPin();
             }
@@ -237,33 +281,8 @@ namespace ExampleApp
             {
                 NavRoutingLocationModel startLocation, endLocation;
                 
-                if(m_locationService.GetIsAuthorized())
+                if (!TryGetCurrentLocation(startLocation))
                 {
-                    Eegeo::Space::LatLong currentLocation = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
-                    if(m_locationService.GetLocation(currentLocation))
-                    {
-                        int indoorMapFloorId = 0;
-                        m_locationService.GetFloorIndex(indoorMapFloorId);
-
-                        startLocation = NavRoutingLocationModel("Current Location",
-                                                                          currentLocation,
-                                                                          m_locationService.IsIndoors(),
-                                                                          m_locationService.GetInteriorId(),
-                                                                          indoorMapFloorId);
-                    }
-                    else
-                    {
-                        m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to acquire location",
-                                                                     "We couldn't find your current location",
-                                                                     m_failAlertHandler);
-                        return;
-                    }
-                }
-                else
-                {
-                    m_alertBoxFactory.CreateSingleOptionAlertBox("Location service is not authorized",
-                                                                 "We didn't recieve autorization for location service",
-                                                                 m_failAlertHandler);
                     return;
                 }
 
@@ -307,6 +326,19 @@ namespace ExampleApp
             
             void NavRoutingController::OnFailAlertBoxDismissed()
             {
+            }
+
+            void NavRoutingController::OnShouldReroute()
+            {
+                NavRoutingLocationModel startLocation;
+
+                if (TryGetCurrentLocation(startLocation))
+                {
+                    //TODO add ui dialog box
+                    m_routingModel.SetStartLocation(startLocation);
+                    m_isRerouting = true;
+                    m_turnByTurnModel.Stop();
+                }
             }
         }
     }

@@ -47,6 +47,8 @@ namespace ExampleApp
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
 
+                bool m_isRerouting;
+
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingLocationModel&> m_startLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_startLocationClearedCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingLocationModel&> m_endLocationSetCallback;
@@ -69,7 +71,9 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
                 
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavRoutingController> m_failAlertHandler;
+                Eegeo::Helpers::TCallback0<NavRoutingController> m_shouldRerouteCallback;
 
+                bool TryGetCurrentLocation(NavRoutingLocationModel &location);
 
                 void OnStartLocationSet(const NavRoutingLocationModel& startLocation);
 
@@ -110,6 +114,8 @@ namespace ExampleApp
                 void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
                 
                 void OnFailAlertBoxDismissed();
+
+                void OnShouldReroute();
             };
         }
     }

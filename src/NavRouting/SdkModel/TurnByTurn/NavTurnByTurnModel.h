@@ -23,8 +23,7 @@ namespace ExampleApp
 
                     float updateRateSeconds = 1.0f;
                     float distanceToPathRangeMeters = 10.0f;
-
-                    // TODO: Recalculate route event config
+                    float distanceToPathToTriggerReroute = 10.f;
                 };
 
                 class NavTurnByTurnModel : public INavTurnByTurnModel
@@ -58,6 +57,8 @@ namespace ExampleApp
                     void RemoveStoppedCallback(Eegeo::Helpers::ICallback0& callback);
                     void InsertUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
                     void RemoveUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
+                    void InsertShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback);
+                    void RemoveShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback);
 
                 private:
 
@@ -70,6 +71,7 @@ namespace ExampleApp
                     Eegeo::Helpers::CallbackCollection0 m_startedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_stoppedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_updateCallbacks;
+                    Eegeo::Helpers::CallbackCollection0 m_shouldRerouteCallbacks;
 
                     Eegeo::Space::LatLong m_closestPointOnRoute;
                     double m_distanceFromRoute;
