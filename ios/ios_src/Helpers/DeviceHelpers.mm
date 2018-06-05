@@ -7,32 +7,33 @@ namespace ExampleApp
 {
     namespace Helpers
     {
-        int deviceFramerateWhitelist[] = {
-            GAME_DEVICE_IPHONE8_PLUS,
-            GAME_DEVICE_IPHONE8,
-            GAME_DEVICE_IPADPRO_12_9_INCH,
-            GAME_DEVICE_IPADPRO_9_7_INCH,
-            GAME_DEVICE_IPHONE_SE,
-            GAME_DEVICE_IPHONE7_PLUS,
-            GAME_DEVICE_IPHONE7,
-            GAME_DEVICE_IPHONE6S_PLUS,
-            GAME_DEVICE_IPHONE6S,
-            GAME_DEVICE_IPHONE6PLUS,
-            GAME_DEVICE_IPHONE6,
-            GAME_DEVICE_IPHONE5S,
-            GAME_DEVICE_IPOD6GEN,
-            GAME_DEVICE_IPADAIR_2,
-            GAME_DEVICE_IPADMINI_3,
-            GAME_DEVICE_IPADMINI_4
+        int deviceFramerateBlacklist[] = {
+            GAME_DEVICE_IPHONE1,
+            GAME_DEVICE_IPHONE3G,
+            GAME_DEVICE_IPHONE4,
+            GAME_DEVICE_IPHONE4S,
+            GAME_DEVICE_IPHONE5,
+            GAME_DEVICE_IPOD1GEN,
+            GAME_DEVICE_IPOD2GEN,
+            GAME_DEVICE_IPOD3GEN,
+            GAME_DEVICE_IPOD4GEN,
+            GAME_DEVICE_IPOD5GEN,
+            GAME_DEVICE_IPAD1,
+            GAME_DEVICE_IPAD2,
+            GAME_DEVICE_IPAD3,
+            GAME_DEVICE_IPAD4,
+            GAME_DEVICE_IPADAIR,
+            GAME_DEVICE_IPADMINI_1GEN,
+            GAME_DEVICE_IPADMINI_2
         };
         
         namespace DeviceHelpers
         {
             NSInteger GetPreferredFramerate(const GameDeviceType& deviceType)
             {   
-                bool isWhitelisted = std::find(std::begin(deviceFramerateWhitelist), std::end(deviceFramerateWhitelist), deviceType) != std::end(deviceFramerateWhitelist);
+                bool isBlacklisted = std::find(std::begin(deviceFramerateBlacklist), std::end(deviceFramerateBlacklist), deviceType) != std::end(deviceFramerateBlacklist);
                 
-                return isWhitelisted ? (NSInteger)60 : (NSInteger)30;
+                return isBlacklisted ? (NSInteger)30 : (NSInteger)60;
             }
         }
     }
