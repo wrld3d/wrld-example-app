@@ -107,7 +107,7 @@ namespace ExampleApp
                 
                 int selectedIndex = m_navRoutingModel.GetSelectedDirection();
                 
-                if(selectedIndex < 0 || selectedIndex > routeModel.GetDirections().size())
+                if(selectedIndex < 0 || selectedIndex >= routeModel.GetDirections().size())
                 {
                     return;
                 }
