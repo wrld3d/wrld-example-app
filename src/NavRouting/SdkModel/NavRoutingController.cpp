@@ -7,7 +7,7 @@
 #include "NavRoutingStartLocationClearedMessage.h"
 #include "NavRoutingEndLocationSetMessage.h"
 #include "NavRoutingEndLocationClearedMessage.h"
-#include "NavRoutingRouteSetMessage.h"
+#include "NavRoutingRouteChangedMessage.h"
 #include "NavRoutingRouteClearedMessage.h"
 #include "NavRoutingCurrentDirectionSetMessage.h"
 #include "NavRoutingCurrentDirectionUpdatedMessage.h"
@@ -19,6 +19,7 @@
 #include "InteriorsFloorModel.h"
 #include "IAlertBoxFactory.h"
 #include "IWorldPinsService.h"
+#include "NavRouteInteriorModelHelper.h"
 
 namespace ExampleApp
 {
@@ -40,12 +41,14 @@ namespace ExampleApp
             , m_interiorsModelRepository(interiorsModelRepository)
             , m_alertBoxFactory(alertBoxFactory)
             , m_worldPinsService(worldPinsService)
+            , m_isRerouting(false)
             , m_startLocationSetCallback(this, &NavRoutingController::OnStartLocationSet)
             , m_startLocationClearedCallback(this, &NavRoutingController::OnStartLocationCleared)
             , m_endLocationSetCallback(this, &NavRoutingController::OnEndLocationSet)
             , m_endLocationClearedCallback(this, &NavRoutingController::OnEndLocationCleared)
             , m_routeSetCallback(this, &NavRoutingController::OnRouteSet)
             , m_routeClearedCallback(this, &NavRoutingController::OnRouteCleared)
+            , m_routeUpdatedCallback(this, &NavRoutingController::OnRouteUpdated)
             , m_currentDirectionSetCallback(this, &NavRoutingController::OnCurrentDirectionSet)
             , m_currentDirectionUpdatedCallback(this, &NavRoutingController::OnCurrentDirectionUpdated)
             , m_selectedDirectionSetCallback(this, &NavRoutingController::OnSelectedDirectionSet)
@@ -59,6 +62,7 @@ namespace ExampleApp
             , m_selectedDirectionChangedMessageHandler(this, &NavRoutingController::OnSelectedDirectionChanged)
             , m_directionsButtonClickedMessageHandler(this, &NavRoutingController::OnDirectionsButtonClicked)
             , m_failAlertHandler(this, &NavRoutingController::OnFailAlertBoxDismissed)
+            , m_shouldRerouteCallback(this, &NavRoutingController::OnShouldReroute)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_routingModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
@@ -66,6 +70,7 @@ namespace ExampleApp
                 m_routingModel.InsertEndLocationClearedCallback(m_endLocationClearedCallback);
                 m_routingModel.InsertRouteSetCallback(m_routeSetCallback);
                 m_routingModel.InsertRouteClearedCallback(m_routeClearedCallback);
+                m_routingModel.InsertRouteUpdatedCallback(m_routeUpdatedCallback);
                 m_routingModel.InsertSelectedDirectionSetCallback(m_selectedDirectionSetCallback);
                 m_routingModel.InsertCurrentDirectionSetCallback(m_currentDirectionSetCallback);
                 m_routingModel.InsertCurrentDirectionUpdatedCallback(m_currentDirectionUpdatedCallback);
@@ -78,10 +83,12 @@ namespace ExampleApp
                 m_messageBus.SubscribeNative(m_startEndRoutingButtonClickedMessageHandler);
                 m_messageBus.SubscribeNative(m_selectedDirectionChangedMessageHandler);
                 m_messageBus.SubscribeNative(m_directionsButtonClickedMessageHandler);
+                m_turnByTurnModel.InsertShouldRerouteCallback(m_shouldRerouteCallback);
             }
 
             NavRoutingController::~NavRoutingController()
             {
+                m_turnByTurnModel.RemoveShouldRerouteCallback(m_shouldRerouteCallback);
                 m_messageBus.UnsubscribeNative(m_directionsButtonClickedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_selectedDirectionChangedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_startEndRoutingButtonClickedMessageHandler);
@@ -94,12 +101,63 @@ namespace ExampleApp
                 m_routingModel.RemoveCurrentDirectionUpdatedCallback(m_currentDirectionUpdatedCallback);
                 m_routingModel.RemoveCurrentDirectionSetCallback(m_currentDirectionSetCallback);
                 m_routingModel.RemoveSelectedDirectionSetCallback(m_selectedDirectionSetCallback);
+                m_routingModel.RemoveRouteUpdatedCallback(m_routeUpdatedCallback);
                 m_routingModel.RemoveRouteClearedCallback(m_routeClearedCallback);
                 m_routingModel.RemoveRouteSetCallback(m_routeSetCallback);
                 m_routingModel.RemoveEndLocationClearedCallback(m_endLocationClearedCallback);
                 m_routingModel.RemoveEndLocationSetCallback(m_endLocationSetCallback);
                 m_routingModel.RemoveStartLocationClearedCallback(m_startLocationClearedCallback);
                 m_routingModel.RemoveStartLocationSetCallback(m_startLocationSetCallback);
+            }
+
+            bool NavRoutingController::TryGetCurrentLocation(NavRoutingLocationModel &location)
+            {
+                if(!m_locationService.GetIsAuthorized())
+                {
+                    m_alertBoxFactory.CreateSingleOptionAlertBox("Location service is not authorized",
+                                                                 "We didn't recieve autorization for location service",
+                                                                 m_failAlertHandler);
+                    return false;
+                }
+
+                Eegeo::Space::LatLong currentLocation = Eegeo::Space::LatLong(0,0);
+
+                bool locationServiceHasUserLocation = m_locationService.GetLocation(currentLocation);
+                if(!locationServiceHasUserLocation)
+                {
+                    m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to acquire location",
+                                                                 "We couldn't find your current location",
+                                                                 m_failAlertHandler);
+                    return false;
+                }
+
+                int floorIndex = 0;
+                m_locationService.GetFloorIndex(floorIndex);
+
+                int indoorMapFloorId = 0;
+
+                if (m_locationService.IsIndoors())
+                {
+                    const auto& indoorMapId = m_locationService.GetInteriorId().Value();
+                    const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
+                                                                                                              indoorMapId,
+                                                                                                              floorIndex,
+                                                                                                              indoorMapFloorId);
+                    if (!interiorDetailsAvailable)
+                    {
+                        m_alertBoxFactory.CreateSingleOptionAlertBox("Interior not loaded",
+                                                                     "Interior information is not available",
+                                                                     m_failAlertHandler);
+                        return false;
+                    }
+                }
+
+                location = NavRoutingLocationModel("Current Location",
+                                                   currentLocation,
+                                                   m_locationService.IsIndoors(),
+                                                   m_locationService.GetInteriorId(),
+                                                   indoorMapFloorId);
+                return true;
             }
 
             void NavRoutingController::OnStartLocationSet(const NavRoutingLocationModel& startLocation)
@@ -124,8 +182,16 @@ namespace ExampleApp
 
             void NavRoutingController::OnRouteSet(const NavRoutingRouteModel& routeModel)
             {
-                m_messageBus.Publish(NavRoutingRouteSetMessage(routeModel));
-                m_routingModel.SetNavMode(Ready);
+                m_messageBus.Publish(NavRoutingRouteChangedMessage(routeModel, true));
+                if (m_isRerouting)
+                {
+                    m_turnByTurnModel.Start(routeModel.GetSourceRouteData());
+                    m_isRerouting = false;
+                }
+                else
+                {
+                    m_routingModel.SetNavMode(Ready);
+                }
                 m_routingModel.SetRemainingRouteDuration(routeModel.GetDuration());
                 m_worldPinsService.DeselectPin();
             }
@@ -135,6 +201,11 @@ namespace ExampleApp
                 m_messageBus.Publish(NavRoutingRouteClearedMessage());
                 m_routingModel.SetNavMode(NotReady);
                 m_routingModel.SetRemainingRouteDuration(0);
+            }
+
+            void NavRoutingController::OnRouteUpdated(const NavRoutingRouteModel& routeModel)
+            {
+                m_messageBus.Publish(NavRoutingRouteChangedMessage(routeModel, false));
             }
 
             void NavRoutingController::OnCurrentDirectionSet(const int& directionIndex)
@@ -229,33 +300,8 @@ namespace ExampleApp
             {
                 NavRoutingLocationModel startLocation, endLocation;
                 
-                if(m_locationService.GetIsAuthorized())
+                if (!TryGetCurrentLocation(startLocation))
                 {
-                    Eegeo::Space::LatLong currentLocation = Eegeo::Space::LatLong::FromDegrees(0.0, 0.0);
-                    if(m_locationService.GetLocation(currentLocation))
-                    {
-                        int indoorMapFloorId = 0;
-                        m_locationService.GetFloorIndex(indoorMapFloorId);
-
-                        startLocation = NavRoutingLocationModel("Current Location",
-                                                                          currentLocation,
-                                                                          m_locationService.IsIndoors(),
-                                                                          m_locationService.GetInteriorId(),
-                                                                          indoorMapFloorId);
-                    }
-                    else
-                    {
-                        m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to acquire location",
-                                                                     "We couldn't find your current location",
-                                                                     m_failAlertHandler);
-                        return;
-                    }
-                }
-                else
-                {
-                    m_alertBoxFactory.CreateSingleOptionAlertBox("Location service is not authorized",
-                                                                 "We didn't recieve autorization for location service",
-                                                                 m_failAlertHandler);
                     return;
                 }
 
@@ -263,24 +309,25 @@ namespace ExampleApp
                 
                 if(searchResultModel.IsInterior())
                 {
+                    int indoorMapFloorId = 0;
                     const auto& indoorMapId = searchResultModel.GetBuildingId().Value();
-                    if (m_interiorsModelRepository.HasInterior(indoorMapId))
-                    {
-                        auto& interiorModel = m_interiorsModelRepository.GetInterior(indoorMapId);
-                        auto& floorModel = interiorModel.GetFloorAtIndex(searchResultModel.GetFloor());
-                        endLocation = NavRoutingLocationModel(searchResultModel.GetTitle(),
-                                                              searchResultModel.GetLocation(),
-                                                              searchResultModel.IsInterior(),
-                                                              searchResultModel.GetBuildingId(),
-                                                              floorModel.GetFloorNumber());
-                    }
-                    else
+                    const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
+                                                                                                              indoorMapId,
+                                                                                                              searchResultModel.GetFloor(),
+                                                                                                              indoorMapFloorId);
+                    if (!interiorDetailsAvailable)
                     {
                         m_alertBoxFactory.CreateSingleOptionAlertBox("Interior not loaded",
                                                                      "Interior information is not available",
                                                                      m_failAlertHandler);
                         return;
                     }
+
+                    endLocation = NavRoutingLocationModel(searchResultModel.GetTitle(),
+                                                          searchResultModel.GetLocation(),
+                                                          searchResultModel.IsInterior(),
+                                                          searchResultModel.GetBuildingId(),
+                                                          indoorMapFloorId);
                 }
                 else
                 {
@@ -299,6 +346,19 @@ namespace ExampleApp
             
             void NavRoutingController::OnFailAlertBoxDismissed()
             {
+            }
+
+            void NavRoutingController::OnShouldReroute()
+            {
+                NavRoutingLocationModel startLocation;
+
+                if (TryGetCurrentLocation(startLocation))
+                {
+                    //TODO add ui dialog box
+                    m_routingModel.SetStartLocation(startLocation);
+                    m_isRerouting = true;
+                    m_turnByTurnModel.Stop();
+                }
             }
         }
     }

@@ -18,7 +18,7 @@ namespace ExampleApp
         namespace View
         {
             
-            class NavWidgetView : public INavWidgetView
+            class NavWidgetView : public WRLDNSObjectObserverCpp, public INavWidgetView
             {
                 
             private:
@@ -31,6 +31,8 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_startEndLocationsSwappedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_startEndRoutingButtonClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_selectedDirectionIndexChangedCallback;
+                Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& m_topPanelVisibleHeightChangedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& m_bottomPanelVisibleHeightChangedCallbacks;
                 
                 WRLDNavWidgetBase* m_pView;
                 WRLDNavModel* m_pNavModel;                
@@ -42,15 +44,17 @@ namespace ExampleApp
                 NSString* BuildNSStringFromString(const std::string& string);
                 
             public:
-                NavWidgetView(WRLDNavModel* m_pNavModel, Compass::View::ICompassView& compassView);
+                NavWidgetView(WRLDNavModel* m_pNavModel,
+                              Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& topPanelVisibleHeightChangedCallbacks,
+                              Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& bottomPanelVisibleHeightChangedCallbacks);
                 
                 ~NavWidgetView() { };
                 
                 UIView* GetUIView();
                 
-                
-                
                 BOOL consumesTouch(UITouch*);
+                
+                void changeReceived(const std::string& keyPath);
                 
                 void Show() ;
                 
@@ -62,7 +66,7 @@ namespace ExampleApp
                 void ClearStartLocation() ;
                 void ClearEndLocation() ;
                 
-                void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel);
+                void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel, bool isNewRoute);
                 
                 void ClearRoute();
                 
@@ -105,6 +109,9 @@ namespace ExampleApp
                 void InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback);
                 void RemoveSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback);
                 void HandleSelectedDirectionIndexChangedCallback(int selectedDirection);
+                
+                THeight GetTopViewHeight();
+                THeight GetBottomViewHeight();
             };
         }
     }

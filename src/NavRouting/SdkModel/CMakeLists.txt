@@ -8,6 +8,8 @@ set(currsources
   ../src/NavRouting/SdkModel/INavRoutingServiceController.h
   ../src/NavRouting/SdkModel/NavRouteInstructionHelper.cpp
   ../src/NavRouting/SdkModel/NavRouteInstructionHelper.h
+  ../src/NavRouting/SdkModel/NavRouteInteriorModelHelper.cpp
+  ../src/NavRouting/SdkModel/NavRouteInteriorModelHelper.h
   ../src/NavRouting/SdkModel/NavRoutingServiceController.cpp
   ../src/NavRouting/SdkModel/NavRoutingServiceController.h
   ../src/NavRouting/SdkModel/NavRoutingController.cpp

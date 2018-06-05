@@ -6,6 +6,7 @@
 #include "INavRoutingModel.h"
 #include "Point3Spline.h"
 #include "CameraHelpers.h"
+#include "NavRouteInteriorModelHelper.h"
 
 namespace ExampleApp
 {
@@ -35,7 +36,7 @@ namespace ExampleApp
                         {
                            return fallbackHeading;
                         }
-                        vertIndex = Eegeo::Min(vertIndex, (step.Path.size()-2));
+                        vertIndex = Eegeo::Min(vertIndex, static_cast<unsigned int>(step.Path.size()-2));
                         Eegeo::dv3 ecefPoint = step.Path.at(vertIndex).ToECEF();
                         Eegeo::dv3 nextPoint = step.Path.at(vertIndex+1).ToECEF();
                         Eegeo::v3 forward = (nextPoint-ecefPoint).Norm().ToSingle();
@@ -50,9 +51,11 @@ namespace ExampleApp
                 }
 
                 NavTurnByTurnModel::NavTurnByTurnModel(const NavTurnByTurnConfig &config,
-                                                       Eegeo::Location::ILocationService &locationService)
+                                                       Eegeo::Location::ILocationService &locationService,
+                                                       Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository)
                 : m_config(config)
                 , m_locationService(locationService)
+                , m_interiorsModelRepository(interiorsModelRepository)
                 , m_closestPointOnRoute(0,0)
                 , m_enabled(false)
                 , m_remainingDuration(0.0)
@@ -98,17 +101,33 @@ namespace ExampleApp
                     Eegeo::Routes::PointOnRouteOptions options;
                     if(m_locationService.IsIndoors())
                     {
-                        Eegeo::Resources::Interiors::InteriorId indoorId = m_locationService.GetInteriorId();
-                        options.IndoorMapId = indoorId.Value();
+                        const auto& indoorMapId = m_locationService.GetInteriorId().Value();
+                        options.IndoorMapId = indoorMapId;
 
                         int floorIndex;
                         m_locationService.GetFloorIndex(floorIndex);
-                        // TODO: FloorIndex != FloorID.  Check how to convert these
-                        // (Might require Indoor model which only exists if you're in it)
-                        options.IndoorMapFloorId = floorIndex;
+
+                        int indoorMapFloorId = 0;
+                        const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
+                                                                                                                  indoorMapId,
+                                                                                                                  floorIndex,
+                                                                                                                  indoorMapFloorId);
+                        if (!interiorDetailsAvailable)
+                        {
+                            return;
+                        }
+
+                        options.IndoorMapFloorId = indoorMapFloorId;
                     }
 
                     Eegeo::Routes::PointOnRoute pointOnRouteResult = Eegeo::Routes::RouteHelpers::GetPointOnRoute(currentLocation, m_route, options);
+
+                    double distanceToRouteAtCurrentPoint = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
+                    bool shouldReroute = distanceToRouteAtCurrentPoint > m_config.distanceToPathToTriggerReroute;
+                    if(shouldReroute)
+                    {
+                        m_shouldRerouteCallbacks.ExecuteCallbacks();
+                    }
 
                     // TODO: First test is just use the results from here. Actually need to decide at what threshold to advance to next point
                     int nextSectionIndex = pointOnRouteResult.GetRouteSectionIndex();
@@ -118,7 +137,7 @@ namespace ExampleApp
                         return;
                     }
 
-                    bool tooFarFromPath = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint() > m_config.distanceToPathRangeMeters;
+                    bool tooFarFromPath = distanceToRouteAtCurrentPoint > m_config.distanceToPathRangeMeters;
                     if(tooFarFromPath) {
                         return;
                     }
@@ -215,6 +234,15 @@ namespace ExampleApp
                     m_updateCallbacks.RemoveCallback(callback);
                 }
 
+                void NavTurnByTurnModel::InsertShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_shouldRerouteCallbacks.AddCallback(callback);
+                }
+
+                void NavTurnByTurnModel::RemoveShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_shouldRerouteCallbacks.RemoveCallback(callback);
+                }
             }
         }
     }

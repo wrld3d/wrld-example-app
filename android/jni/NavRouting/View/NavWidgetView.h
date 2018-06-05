@@ -58,7 +58,7 @@ namespace ExampleApp
 
                 void ClearEndLocation() override;
 
-                void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel) override;
+                void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel, bool isNewRoute) override;
 
                 void ClearRoute() override;
 

@@ -56,6 +56,8 @@ namespace ExampleApp
                 
                 void PlaySliderAnim();
                 
+                void SetState(ScreenControl::View::TScreenControlViewState state);
+                
             private:
                 
                 Eegeo::Helpers::CallbackCollection1<int> m_selectedFloorCallbacks;

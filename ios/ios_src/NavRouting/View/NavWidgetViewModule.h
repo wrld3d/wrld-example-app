@@ -11,7 +11,6 @@
 #include "BidirectionalBus.h"
 #include "INavWidgetViewModule.h"
 #include "INavWidgetViewModel.h"
-#include "ICompassView.h"
 
 namespace Eegeo
 {
@@ -48,11 +47,13 @@ namespace ExampleApp
                 NavWidgetView* m_pView ;
 
                 WRLDNavModel* m_pNavModel;
+                
+                Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight> m_topPanelVisibleHeightChangedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight> m_bottomPanelVisibleHeightChangedCallbacks;
             
             public:
                 NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                     INavWidgetViewModel& viewModel,
-                                    Compass::View::ICompassView& compassView,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~NavWidgetViewModule();
@@ -66,7 +67,8 @@ namespace ExampleApp
                 
                 void eventReceived(WRLDNavEvent key);
                 
-            
+                Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& getTopPanelVisibleHeightChangedCallbacks();
+                Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& getBottomPanelVisibleHeightChangedCallbacks();
             };
         }
     }

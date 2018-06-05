@@ -22,6 +22,8 @@ import com.wrld.widgets.navigation.widget.WrldNavWidgetViewObserver;
 import com.wrld.widgets.navigation.widget.WrldNavWidgetViewVisibilityListener;
 import com.wrld.widgets.navigation.widget.WrldNavWidgetViewSizeListener;
 
+import java.util.List;
+
 public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverListener
 {
     protected MainActivity m_activity = null;
@@ -34,7 +36,6 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
 
     private WrldNavWidgetViewObserver m_viewObserver;
 
-    //Test model
     private WrldNavModel m_model;
 
     private boolean m_isTopPanelVisible = false;
@@ -158,9 +159,23 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_model.setEndLocation(null);
     }
 
-    public void setRoute(WrldNavRoute route)
+    public void setRoute(WrldNavRoute route, boolean isNewRoute)
     {
-        m_model.setRoute(route);
+        if (isNewRoute)
+        {
+            m_model.setRoute(route);
+        }
+        else
+        {
+            List<WrldNavDirection> directions = route.directions;
+
+            for (int i = 0; i < directions.size(); i++)
+            {
+                m_model.setDirection(i, directions.get(i));
+            }
+
+            m_model.sendNavEvent(WrldNavEvent.RouteUpdated);
+        }
     }
 
     public void clearRoute()

@@ -47,12 +47,15 @@ namespace ExampleApp
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
 
+                bool m_isRerouting;
+
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingLocationModel&> m_startLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_startLocationClearedCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingLocationModel&> m_endLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_endLocationClearedCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingRouteModel&> m_routeSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_routeClearedCallback;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingRouteModel&> m_routeUpdatedCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const int> m_currentDirectionSetCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingDirectionModel&> m_currentDirectionUpdatedCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const int> m_selectedDirectionSetCallback;
@@ -68,7 +71,9 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
                 
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavRoutingController> m_failAlertHandler;
+                Eegeo::Helpers::TCallback0<NavRoutingController> m_shouldRerouteCallback;
 
+                bool TryGetCurrentLocation(NavRoutingLocationModel &location);
 
                 void OnStartLocationSet(const NavRoutingLocationModel& startLocation);
 
@@ -81,6 +86,8 @@ namespace ExampleApp
                 void OnRouteSet(const NavRoutingRouteModel& routeModel);
 
                 void OnRouteCleared();
+
+                void OnRouteUpdated(const NavRoutingRouteModel& routeModel);
 
                 void OnCurrentDirectionSet(const int& directionIndex);
 
@@ -107,6 +114,8 @@ namespace ExampleApp
                 void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
                 
                 void OnFailAlertBoxDismissed();
+
+                void OnShouldReroute();
             };
         }
     }

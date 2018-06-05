@@ -60,7 +60,7 @@
 #include "NavRoutingStartLocationClearedMessage.h"
 #include "NavRoutingEndLocationSetMessage.h"
 #include "NavRoutingEndLocationClearedMessage.h"
-#include "NavRoutingRouteSetMessage.h"
+#include "NavRoutingRouteChangedMessage.h"
 #include "NavRoutingRouteClearedMessage.h"
 #include "NavRoutingCurrentDirectionSetMessage.h"
 #include "NavRoutingCurrentDirectionUpdatedMessage.h"
@@ -128,7 +128,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingStartLocationClearedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingEndLocationSetMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingEndLocationClearedMessage>
-            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRouteSetMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRouteChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRouteClearedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingCurrentDirectionSetMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingCurrentDirectionUpdatedMessage>

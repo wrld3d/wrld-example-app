@@ -68,34 +68,7 @@ namespace ExampleApp
                     m_targetHeading = m_turnByTurnModel.GetPathHeadingDegrees();
                     // Refresh averaged coordinates/headings and such.
 
-                    if(m_debugRenderingEnabled && m_pInternalLocationService != NULL)
-                    {
-
-                        Eegeo::Space::LatLong truePos = Eegeo::Space::LatLong::FromDegrees(0,0);
-                        if(m_pInternalLocationService->GetLocation(truePos) && GetInteriorId().IsValid())
-                        {
-                            // Get Interior Floor.
-                            Eegeo::dv3 truePosEcef = truePos.ToECEF();
-                            float offset = 0.0f;
-                            int floorIndex = 0;
-                            const auto& interiorModel = m_interiorsModelRepository.GetInterior(GetInteriorId().Value());
-                            if(GetFloorIndex(floorIndex))
-                            {
-                                const float untransformedFloorHeightAboveBase = Eegeo::Resources::Interiors::GetFloorHeight(floorIndex) + Eegeo::Resources::Interiors::INTERIOR_FLOOR_THICKNESS;
-
-                                const float baseAltitude = interiorModel.GetBaseAltitude();
-
-                                offset = (baseAltitude*0.2f) + untransformedFloorHeightAboveBase;
-                                //offset = interiorModel.GetFloorAltitude(floorIndex);
-                            }
-
-                            Eegeo::v3 verticalOffset = truePosEcef.Norm().ToSingle() * (offset);
-
-                            m_debugRenderer.DrawSphere(truePosEcef + verticalOffset, 1.0f, Eegeo::Rendering::Colors::RED, 1.0f);
-                        }
-
-
-                    }
+                    DrawLocation(Eegeo::Rendering::Colors::YELLOW, 1.0f);
                 }
 
                 void NavTurnByTurnLocationService::SetLocationService(Eegeo::Location::ILocationService& internalLocationService)
@@ -254,27 +227,43 @@ namespace ExampleApp
                 void NavTurnByTurnLocationService::Update(float dt)
                 {
                     // Smooth things here.
-                    if(m_targetHeading< m_currentHeading)
+                    //m_currentHeading += (m_targetHeading-m_currentHeading)*Eegeo::Math::Clamp01(dt)*0.1f;
+                    m_currentHeading = m_targetHeading;
+                    
+                    DrawLocation(Eegeo::Rendering::Colors::RED, 0.0f);
+                }
+                
+                void NavTurnByTurnLocationService::DrawLocation(const Eegeo::v4& color, float time)
+                {
+                    
+                    if(m_debugRenderingEnabled && m_pInternalLocationService != NULL)
                     {
-                        float test = m_currentHeading - Eegeo::Math::kPI*2.f;
-
-                        if ( Eegeo::Math::Abs(m_targetHeading-test) < m_currentHeading-m_targetHeading)
+                        
+                        Eegeo::Space::LatLong truePos = Eegeo::Space::LatLong::FromDegrees(0,0);
+                        if(m_pInternalLocationService->GetLocation(truePos) && GetInteriorId().IsValid())
                         {
-                            m_currentHeading    = test;
+                            // Get Interior Floor.
+                            Eegeo::dv3 truePosEcef = truePos.ToECEF();
+                            float offset = 0.0f;
+                            int floorIndex = 0;
+                            const auto& interiorModel = m_interiorsModelRepository.GetInterior(GetInteriorId().Value());
+                            if(GetFloorIndex(floorIndex))
+                            {
+                                const float untransformedFloorHeightAboveBase = Eegeo::Resources::Interiors::GetFloorHeight(floorIndex) + Eegeo::Resources::Interiors::INTERIOR_FLOOR_THICKNESS;
+                                
+                                const float baseAltitude = interiorModel.GetBaseAltitude();
+                                
+                                offset = (baseAltitude*0.2f) + untransformedFloorHeightAboveBase;
+                                //offset = interiorModel.GetFloorAltitude(floorIndex);
+                            }
+                            
+                            Eegeo::v3 verticalOffset = truePosEcef.Norm().ToSingle() * (offset);
+                            
+                            m_debugRenderer.DrawSphere(truePosEcef + verticalOffset, 1.0f, color, time);
                         }
+                        
+                        
                     }
-                    else
-                    {
-                        float test = m_currentHeading +  Eegeo::Math::kPI*2.f;
-
-                        if ( Eegeo::Math::Abs(m_targetHeading-test) < m_targetHeading-m_currentHeading)
-                        {
-                            m_currentHeading    = test;
-                        }
-                    }
-
-                    m_currentHeading += (m_targetHeading-m_currentHeading)*Eegeo::Math::Clamp01(dt)*0.1f;
-
                 }
             }
         }

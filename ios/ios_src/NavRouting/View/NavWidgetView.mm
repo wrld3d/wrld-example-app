@@ -13,25 +13,30 @@ namespace ExampleApp
         namespace View
         {
             
-            NavWidgetView::NavWidgetView(WRLDNavModel* navModel, Compass::View::ICompassView& compassView)
+            NavWidgetView::NavWidgetView(WRLDNavModel* navModel,
+                                         Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& topPanelVisibleHeightChangedCallbacks,
+                                         Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& bottomPanelVisibleHeightChangedCallbacks)
+            : m_topPanelVisibleHeightChangedCallbacks(topPanelVisibleHeightChangedCallbacks)
+            , m_bottomPanelVisibleHeightChangedCallbacks(bottomPanelVisibleHeightChangedCallbacks)
             {
                 m_pNavModel = navModel;
                 
                 if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
                 {
                     m_pView = [[WRLDNavWidgetTablet alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-                    compassView.SetNavigationModeOffset(0);
                 }
                 else
                 {
                     m_pView = [[WRLDNavWidgetPhone alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-                    compassView.SetNavigationModeOffset(96);
                 }
                 
                 [m_pView setViewVisibilityWithAnimate:false hideViews:true];
                 [m_pView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
                 
                 [[m_pView observer] setNavModel:navModel];
+                registerObserver("topPanelVisibleHeight");
+                registerObserver("bottomPanelVisibleHeight");
+                setObject(m_pView);
             }
             
             UIView* NavWidgetView::GetUIView()
@@ -52,6 +57,8 @@ namespace ExampleApp
             void NavWidgetView::Hide()
             {
                 [m_pNavModel sendNavEvent:WRLDNavEventWidgetAnimateOut];
+                m_topPanelVisibleHeightChangedCallbacks.ExecuteCallbacks(0);
+                m_bottomPanelVisibleHeightChangedCallbacks.ExecuteCallbacks(0);
             }
             
             void NavWidgetView::SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel)
@@ -63,6 +70,20 @@ namespace ExampleApp
                 NavWidgetView::SetLocation(locationModel, false);
             }
             
+            void NavWidgetView::changeReceived(const std::string& keyPath)
+            {
+                if(keyPath == "topPanelVisibleHeight")
+                {
+                    INavWidgetView::THeight topViewHeight = GetTopViewHeight();
+                    m_topPanelVisibleHeightChangedCallbacks.ExecuteCallbacks(topViewHeight);
+                }
+                if(keyPath == "bottomPanelVisibleHeight")
+                {
+                    INavWidgetView::THeight bottomViewHeight = GetBottomViewHeight();
+                    m_bottomPanelVisibleHeightChangedCallbacks.ExecuteCallbacks(bottomViewHeight);
+                }
+            }
+            
             void NavWidgetView::ClearStartLocation()
             {
                 [m_pNavModel setStartLocation:NULL];
@@ -72,7 +93,7 @@ namespace ExampleApp
                 [m_pNavModel setEndLocation:NULL];
             }
             
-            void NavWidgetView::SetRoute(const SdkModel::NavRoutingRouteModel& routeModel)
+            void NavWidgetView::SetRoute(const SdkModel::NavRoutingRouteModel& routeModel, bool isNewRoute)
             {
                 [m_pNavModel setRoute:BuildWRLDNavRouteFromNavRoutingRouteModel(routeModel)];
             }
@@ -283,6 +304,16 @@ namespace ExampleApp
             {
                 return [NSString stringWithCString:string.c_str()
                                           encoding:[NSString defaultCStringEncoding]];
+            }
+            
+            INavWidgetView::THeight NavWidgetView::GetTopViewHeight()
+            {
+                return (INavWidgetView::THeight)m_pView.topPanelVisibleHeight;
+            }
+            
+            INavWidgetView::THeight NavWidgetView::GetBottomViewHeight()
+            {
+                return (INavWidgetView::THeight)m_pView.bottomPanelVisibleHeight;
             }
         }
     }

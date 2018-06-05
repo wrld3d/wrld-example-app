@@ -78,6 +78,7 @@
 #include "NavWidgetViewModule.h"
 #include "UiCreatedMessage.h"
 #include "ICompassView.h"
+#include "NavTurnByTurnLocationService.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -118,6 +119,7 @@ AppHost::AppHost(
     m_piOSLocationService = Eegeo_NEW(iOSLocationService)();
     
     m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_piOSLocationService);
+    m_pTrueCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_piOSLocationService);
 
     m_piOSConnectivityService = Eegeo_NEW(iOSConnectivityService)();
 
@@ -153,6 +155,7 @@ AppHost::AppHost(
 			 applicationConfiguration,
              *m_piOSPlatformAbstractionModule,
              screenProperties,
+             *m_pTrueCurrentLocationService,
              *m_pCurrentLocationService,
              m_iOSNativeUIFactories,
              platformConfiguration,
@@ -167,6 +170,9 @@ AppHost::AppHost(
              *m_pMenuReactionModel,
              m_userIdleService,
              m_screenshotService);
+    
+    m_pApp->GetTurnByTurnLocationService().SetLocationService(*m_pCurrentLocationService);
+    m_pTrueCurrentLocationService->SetLocationService(m_pApp->GetTurnByTurnLocationService());
     
     Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
     Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
@@ -332,6 +338,11 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
 {
     ExampleApp::MobileExampleApp& app = *m_pApp;
     
+    const ExampleApp::NavRouting::View::NavUIModule& navUIModule = app.NavUIModule();
+    m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(navUIModule.GetObservableOpenableControl(),
+                                                                                      navUIModule.GetNavWidgetViewModel(),
+                                                                                      m_messageBus);
+    
     m_pWatermarkViewModule = Eegeo_NEW(ExampleApp::Watermark::View::WatermarkViewModule)(app.WatermarkModule().GetWatermarkViewModel(),
                                                                                          app.WatermarkModule().GetWatermarkDataRepository(),
                                                                                          screenProperties,
@@ -356,6 +367,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(app.CompassModule().GetCompassViewModel(),
                            screenProperties,
+                           m_pNavUIViewModule->getBottomPanelVisibleHeightChangedCallbacks(),
                            m_messageBus);
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(app.AboutPageModule().GetAboutPageViewModel(), m_iOSFlurryMetricsService, m_messageBus);
@@ -386,7 +398,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                                                  m_messageBus,
                                                                                                                  screenProperties,
                                                                                                                  app.GetIdentityProvider(),
-                                                                                                                 app.GetNavigationService());
+                                                                                                                 app.GetNavigationService(),
+                                                                                                                 m_pNavUIViewModule->getTopPanelVisibleHeightChangedCallbacks(),
+                                                                                                                 m_pNavUIViewModule->getBottomPanelVisibleHeightChangedCallbacks());
     
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(app.OptionsModule().GetOptionsViewModel(),
                                                                                    m_piOSPlatformAbstractionModule->GetiOSHttpCache(),
@@ -399,13 +413,6 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
                                                                                  m_iOSFlurryMetricsService,
                                                                                  *m_pURLRequestHandler,
                                                                                  m_pApp->GetApplicationConfiguration().TimerSurveyUrl());
-    
-    const ExampleApp::NavRouting::View::NavUIModule& navUIModule = app.NavUIModule();
-    m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(navUIModule.GetObservableOpenableControl(),
-                                                                                      navUIModule.GetNavWidgetViewModel(),
-                                                                                      m_pCompassViewModule->GetCompassViewInterop(),
-                                                                                      m_messageBus);
-    
     
     // 3d map view layer.
     
@@ -494,8 +501,6 @@ void AppHost::DestroyApplicationViewModules()
     
     Eegeo_DELETE m_pAboutPageViewModule;
     
-    Eegeo_DELETE m_pNavUIViewModule;
-
     Eegeo_DELETE m_pCompassViewModule;
 
     Eegeo_DELETE m_pSearchResultPoiViewModule;
@@ -509,6 +514,8 @@ void AppHost::DestroyApplicationViewModules()
     Eegeo_DELETE m_pInitialExperienceIntroViewModule;
     
     Eegeo_DELETE m_pWatermarkViewModule;
+    
+    Eegeo_DELETE m_pNavUIViewModule;
 }
 
 void AppHost::SetTouchExclusivity()

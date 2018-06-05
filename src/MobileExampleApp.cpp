@@ -319,7 +319,8 @@ namespace ExampleApp
 
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraConfig = Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration::CreateDefault();
         gpsGlobeCameraConfig.panToUnlockThreshold = PanToUnlockThreshold;
-        gpsGlobeCameraConfig.compassCameraDampingEnabled = false;
+        gpsGlobeCameraConfig.compassCameraDampingEnabled = true;
+        
 
         if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
         {
@@ -728,7 +729,7 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraComponentConfiguration gpsGlobeCameraComponentConfig = Eegeo::Resources::Interiors::InteriorsGpsCameraControllerFactory::DefaultGpsGlobeCameraComponentConfiguration();
         gpsGlobeCameraComponentConfig.defaultGpsDistanceToInterest = ExampleApp::InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance;
         gpsGlobeCameraComponentConfig.panToUnlockThreshold = PanToUnlockThreshold;
-        gpsGlobeCameraComponentConfig.compassCameraDampingEnabled = false;
+        gpsGlobeCameraComponentConfig.compassCameraDampingEnabled = true;
 
         if(m_applicationConfiguration.IsInKioskMode() && m_applicationConfiguration.IsFixedIndoorLocationEnabled())
         {
@@ -1214,9 +1215,6 @@ namespace ExampleApp
         }
 
         UpdateLoadingScreen(dt);
-
-        const bool userInteractionEnabled = m_pUserInteractionModule->GetUserInteractionModel().IsEnabled();
-        const bool cameraTransitioning = m_pCameraTransitionService->IsTransitioning();
         
         m_pSurveyTimer->Update();
     }

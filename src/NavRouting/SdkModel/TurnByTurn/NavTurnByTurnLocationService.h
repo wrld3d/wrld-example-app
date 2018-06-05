@@ -11,6 +11,7 @@
 #include "ICallback.h"
 #include "DebugRendering.h"
 #include "Interiors.h"
+#include "VectorMathDecl.h"
 
 namespace ExampleApp
 {
@@ -51,6 +52,8 @@ namespace ExampleApp
 
                 private:
 
+                    void DrawLocation(const Eegeo::v4& color, float time);
+                    
                     Eegeo::Helpers::TCallback0<NavTurnByTurnLocationService> m_turnByTurnStartedCallback;
                     Eegeo::Helpers::TCallback0<NavTurnByTurnLocationService> m_turnByTurnEndedCallback;
                     Eegeo::Helpers::TCallback0<NavTurnByTurnLocationService> m_turnByTurnUpdatedCallback;

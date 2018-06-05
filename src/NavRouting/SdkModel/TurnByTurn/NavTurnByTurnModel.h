@@ -9,6 +9,7 @@
 #include "RouteData.h"
 #include "ICallback.h"
 #include "CallbackCollection.h"
+#include "InteriorsModelRepository.h"
 
 namespace ExampleApp
 {
@@ -23,8 +24,7 @@ namespace ExampleApp
 
                     float updateRateSeconds = 1.0f;
                     float distanceToPathRangeMeters = 10.0f;
-
-                    // TODO: Recalculate route event config
+                    float distanceToPathToTriggerReroute = 3.f;
                 };
 
                 class NavTurnByTurnModel : public INavTurnByTurnModel
@@ -45,7 +45,8 @@ namespace ExampleApp
                     float GetPathHeadingDegrees() const { return m_pathHeadingDegrees; }
 
                     NavTurnByTurnModel(const NavTurnByTurnConfig& config,
-                                       Eegeo::Location::ILocationService& locationService);
+                                       Eegeo::Location::ILocationService& locationService,
+                                       Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository);
                     ~NavTurnByTurnModel();
 
                     void Start(const Eegeo::Routes::Webservice::RouteData& route);
@@ -59,18 +60,22 @@ namespace ExampleApp
                     void RemoveStoppedCallback(Eegeo::Helpers::ICallback0& callback);
                     void InsertUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
                     void RemoveUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
+                    void InsertShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback);
+                    void RemoveShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback);
 
                 private:
 
                     void UpdateTurnByTurn();
 
-                    Eegeo::Location::ILocationService& m_locationService;
                     const NavTurnByTurnConfig m_config;
+                    Eegeo::Location::ILocationService& m_locationService;
+                    Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
                     Eegeo::Routes::Webservice::RouteData m_route;
 
                     Eegeo::Helpers::CallbackCollection0 m_startedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_stoppedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_updateCallbacks;
+                    Eegeo::Helpers::CallbackCollection0 m_shouldRerouteCallbacks;
 
                     Eegeo::Space::LatLong m_closestPointOnRoute;
                     double m_distanceFromRoute;
