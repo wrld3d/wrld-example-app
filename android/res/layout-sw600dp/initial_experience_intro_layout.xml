@@ -15,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="22dp">
+        android:layout_marginLeft="345dp"
+        android:layout_marginTop="44dp">
 
         <include layout="@layout/initial_experience_intro_dialog_layout"
             android:layout_height="wrap_content"
