@@ -207,12 +207,12 @@ namespace ExampleApp
                     {
                         return false;
                     }
-                    if(m_followingRoute)
+                    /*if(m_followingRoute)
                     {
                         headingDegrees = m_currentHeading;
                         return true;
                     }
-                    else return m_pInternalLocationService->GetHeadingDegrees(headingDegrees);
+                    else */return m_pInternalLocationService->GetHeadingDegrees(headingDegrees);
                 }
 
                 void NavTurnByTurnLocationService::StopListening()
