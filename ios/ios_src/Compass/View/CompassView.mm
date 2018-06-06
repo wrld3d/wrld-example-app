@@ -397,10 +397,12 @@ enum CompassViewState
 
 - (void) setNavigationModeCompassPosition:(CGFloat) position
 {
-    m_navWidgetBottomHeight = position;
-    if(m_positionState == CompassPositionStateNavigation)
-    {
-        [self updateCompassPosition];
+    if(position < m_screenHeight * 0.25f){
+        m_navWidgetBottomHeight = position;
+        if(m_positionState == CompassPositionStateNavigation)
+        {
+            [self updateCompassPosition];
+        }
     }
 }
 
