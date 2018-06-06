@@ -32,10 +32,6 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 				SearchServices& m_searchServices;
 
-				typedef std::map<std::string, std::string> TTagMap;
-				TTagMap m_knownTags;
-				TTagMap m_visibleTextOfTag;
-
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onViewOpenedCallback;
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onViewClosedCallback;
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onSearchResultsClearedCallback;
@@ -60,6 +56,7 @@ namespace ExampleApp
                 bool m_shouldSelectFirstResult;
 
 				TagCollection m_tagCollection;
+				std::string m_previousVisibleTextFromTagSearch;
 
             public:
                 SearchWidgetController(ISearchWidgetView& view,
