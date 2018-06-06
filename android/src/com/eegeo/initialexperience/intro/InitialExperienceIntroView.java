@@ -7,8 +7,10 @@ import com.eegeo.mobileexampleapp.R;
 
 import android.content.res.Resources;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -19,7 +21,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class InitialExperienceIntroView implements View.OnClickListener, AnimationListener
+public class InitialExperienceIntroView implements View.OnTouchListener, AnimationListener
 {
 	private MainActivity m_activity;
 	private long m_nativeCallerPointer;
@@ -35,7 +37,7 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
 	private View m_view;
 	private TextView m_welcomeIntroText;
 	private TextView m_welcomeIntroDescription;
-	
+
 	private Animation m_mainAnimationOn;
 	private Animation m_mainAnimationOff;
 	
@@ -62,7 +64,7 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
         m_compassDialog = (ViewGroup)m_view.findViewById(R.id.initial_ux_compass_dialog);
 		m_welcomeIntroText = (TextView)m_view.findViewById(R.id.welcome_intro_text);
 		m_welcomeIntroDescription = (TextView)m_view.findViewById(R.id.welcome_intro_description);
-        
+
         Resources resources = m_activity.getResources();
         setDialogText(m_searchMenuDialog,
                       resources.getString(R.string.initial_ux_search_dialog_title),
@@ -70,14 +72,14 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
         setDialogText(m_compassDialog,
                       resources.getString(R.string.initial_ux_compass_dialog_title),
                       resources.getString(R.string.initial_ux_compass_dialog_description));
-        m_view.setOnClickListener(this);
-        
+        m_view.setOnTouchListener(this);
+
         m_awaitingInput = false;
         
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
 	}
-    
+
     public void destroy()
 	{
     	m_view.setOnClickListener(null);
@@ -191,8 +193,50 @@ public class InitialExperienceIntroView implements View.OnClickListener, Animati
 	{
 	}
 
+	private class HitAreas
+	{
+		private Rect m_bannerArea;
+		private Rect m_searchDialogArea;
+		private Rect m_compassDialogArea;
+
+		public HitAreas()
+		{
+			m_bannerArea = getArea(m_banner);
+			m_searchDialogArea = getArea(m_searchMenuDialog);
+			m_compassDialogArea = getArea(m_compassDialog);
+		}
+
+		private Rect getArea(View view)
+		{
+			Rect rect = new Rect();
+
+			view.getGlobalVisibleRect(rect);
+
+			return rect;
+		}
+
+		public boolean hitTest(int x, int y)
+		{
+			return m_bannerArea       .contains(x, y) ||
+			       m_searchDialogArea .contains(x, y) ||
+			       m_compassDialogArea.contains(x, y);
+		}
+	}
+
 	@Override
-	public void onClick(View arg0) 
+	public boolean onTouch(View v, MotionEvent e)
+	{
+		onClick();
+
+		HitAreas hitAreas = new HitAreas();
+
+		int x = Math.round(e.getRawX());
+		int y = Math.round(e.getRawY());
+
+		return hitAreas.hitTest(x, y);
+	}
+
+	private void onClick()
 	{
 		if(m_awaitingInput)
 		{
