@@ -85,7 +85,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_viewObserver.addVisibilityListener(new WrldNavWidgetViewVisibilityListener(){
             public void onTopPanelVisible(boolean isVisible) {
                 m_isTopPanelVisible = isVisible;
-                NavWidgetViewJniMethods.SetBottomViewHeight(m_nativeCallerPointer, calculateVisibleTopHeight());
+                NavWidgetViewJniMethods.SetTopViewHeight(m_nativeCallerPointer, calculateVisibleTopHeight());
             }
             public void onBottomPanelVisible(boolean isVisible) {
                 m_isBottomPanelVisible = isVisible;

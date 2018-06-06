@@ -34,6 +34,7 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	private float m_defaultYPosActive;
 	private float m_yPosActive;
 	private float m_yPosInactive;
+    private float m_screenHeight;
 
 	private final long m_stateChangeAnimationTimeMilliseconds = 200;
 	private final long RotationHighlightAnimationMilliseconds = 200;
@@ -76,6 +77,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		final RelativeLayout uiRoot = (RelativeLayout) m_activity.findViewById(R.id.ui_container);
 		m_view = m_activity.getLayoutInflater().inflate(R.layout.compass_layout, uiRoot, false);
 		m_view.setOnClickListener(this);
+
+        m_screenHeight = uiRoot.getMeasuredHeight();
 
 		m_compassPoint = m_view.findViewById(R.id.compass_arrow_shape);
 		m_compassInner = (ImageView) m_view.findViewById(R.id.compass_inner_shape);
@@ -212,8 +215,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 	public void setState(final int state)
 	{
 		CompassState compassState = rawStateToCompassState(state);
-		int offsetDip = (compassState == CompassState.Default) ? 0 : m_navWidgetModeOffset;
-		m_yPosActive = m_defaultYPosActive - offsetDip;
+		int offset = (compassState == CompassState.Default) ? 0 : m_navWidgetModeOffset;
+		m_yPosActive = m_defaultYPosActive - offset;
 		animateToActive();
 	}
 
@@ -230,7 +233,9 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 
 	public void setNavigationModeOffset(final int offset)
 	{
-		m_navWidgetModeOffset = offset;
+		if(offset < m_screenHeight * 0.25f) {
+			m_navWidgetModeOffset = offset;
+		}
 	}
 
 	@Override
