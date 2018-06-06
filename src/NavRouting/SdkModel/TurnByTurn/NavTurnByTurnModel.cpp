@@ -230,7 +230,7 @@ namespace ExampleApp
                     bool accuracyFetchSuccessful = m_locationService.GetHorizontalAccuracy(accuracy);
 
                     if(accuracyFetchSuccessful){
-                        return distanceToRouteAtCurrentPoint > m_config.distanceToPathToTriggerReroute + accuracy;
+                        return distanceToRouteAtCurrentPoint > (m_config.distanceToPathToTriggerReroute + accuracy);
                     }
                     else{
                         return distanceToRouteAtCurrentPoint > m_config.distanceToPathToTriggerReroute;
