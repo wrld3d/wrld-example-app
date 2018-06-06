@@ -167,6 +167,7 @@ namespace ExampleApp
                     m_paramAlongStep = 0.0;
                     m_updateTime = 0.0f;
                     m_indexOfPathSegmentStartVertex = 0;
+                    m_secondsElapsedSinceOffRoute = 0.f;
                     m_enabled = true;
 
                     m_startedCallbacks.ExecuteCallbacks();
