@@ -25,6 +25,7 @@ namespace ExampleApp
                     float updateRateSeconds = 1.0f;
                     float distanceToPathRangeMeters = 10.0f;
                     float distanceToPathToTriggerReroute = 3.f;
+                    float timeInSecondsToTriggerReroute = 10.0f;
                 };
 
                 class NavTurnByTurnModel : public INavTurnByTurnModel
@@ -85,6 +86,7 @@ namespace ExampleApp
                     double m_distanceToNextStep;
                     float m_updateTime;
                     float m_pathHeadingDegrees;
+                    float m_secondsElapsedSinceOffRoute;
                     int m_currentSectionIndex;
                     int m_currentStepIndex;
                     int m_indexOfPathSegmentStartVertex;

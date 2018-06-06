@@ -65,6 +65,7 @@ namespace ExampleApp
                 , m_distanceFromRoute(0.0)
                 , m_indexOfPathSegmentStartVertex(0)
                 , m_updateTime(0.0f)
+                , m_secondsElapsedSinceOffRoute(0.0f)
                 {
                 }
 
@@ -80,6 +81,7 @@ namespace ExampleApp
                     }
 
                     m_updateTime += dt;
+                    m_secondsElapsedSinceOffRoute += dt;
 
                     if(m_updateTime >= m_config.updateRateSeconds) {
                         m_updateTime = 0;
@@ -123,8 +125,15 @@ namespace ExampleApp
                     Eegeo::Routes::PointOnRoute pointOnRouteResult = Eegeo::Routes::RouteHelpers::GetPointOnRoute(currentLocation, m_route, options);
 
                     double distanceToRouteAtCurrentPoint = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
-                    bool shouldReroute = distanceToRouteAtCurrentPoint > m_config.distanceToPathToTriggerReroute;
-                    if(shouldReroute)
+
+                    bool onRoute = distanceToRouteAtCurrentPoint <= m_config.distanceToPathToTriggerReroute;
+
+                    if(onRoute)
+                    {
+                        m_secondsElapsedSinceOffRoute = 0.0f;
+                    }
+
+                    if(m_secondsElapsedSinceOffRoute > m_config.timeInSecondsToTriggerReroute)
                     {
                         m_shouldRerouteCallbacks.ExecuteCallbacks();
                     }
