@@ -30,7 +30,7 @@ namespace ExampleApp
                     void RegisterReceiver();
                     void UnregisterReceiver();
 
-                    void DidUpdateLocation(const double latitude, const double longitude, const int floorNumber);
+                    void DidUpdateLocation(const double latitude, const double longitude, const double horizontalAccuracyInMeters, const int floorNumber);
                     void SetIsAuthorized(const bool isAuthorized);
 
                 private:

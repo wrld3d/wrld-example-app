@@ -67,6 +67,8 @@ namespace ExampleApp
 
                     void UpdateTurnByTurn();
 
+                    bool IsTooFarFromPath(double distanceToRouteAtCurrentPoint);
+
                     const NavTurnByTurnConfig m_config;
                     Eegeo::Location::ILocationService& m_locationService;
                     Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
