@@ -42,8 +42,10 @@ namespace ExampleApp
 			void TagCollection::AddTag(const std::string& text, const std::string& tag,
 			                           bool shouldTryInterior)
 			{
-				Eegeo_ASSERT(m_tagsByText.find(text) == m_tagsByText.end());
-				Eegeo_ASSERT(m_tagsByTag .find(tag)  == m_tagsByTag .end());
+				if (FindIndex(&text, &tag) >= 0)
+				{
+					return;
+				}
 
 				TagInfo info(tag, text, shouldTryInterior);
 				int     pos;
@@ -63,51 +65,68 @@ namespace ExampleApp
 					m_freeStorage = storagePlace->m_freeChain;
 					*storagePlace = info;
 				}
-
-				m_tagsByText[text] = pos;
-				m_tagsByTag [tag]  = pos;
 			}
 
 			void TagCollection::RemoveTag(const std::string& text, const std::string& tag)
 			{
-				Eegeo_ASSERT(m_tagsByText.find(text) != m_tagsByText.end());
-				Eegeo_ASSERT(m_tagsByTag .find(tag)  != m_tagsByTag .end());
+				int index = FindIndex(&text, &tag);
 
-				Eegeo_ASSERT(m_tagsByText[text] == m_tagsByTag[tag]);
-
-				int index = m_tagsByText[text];
+				if (index < 0)
+				{
+					return;
+				}
 
 				m_tagStorage[index].m_freeChain = m_freeStorage;
 				m_freeStorage = index;
+			}
 
-				m_tagsByText.erase(text);
-				m_tagsByTag .erase(tag);
+			int TagCollection::FindIndex(const std::string* text, const std::string* tag)
+			{
+				const void* WILDCARD = NULL;
+
+				for (int pos = 0; pos < m_tagStorage.size(); pos++)
+				{
+					const TagInfo& info = m_tagStorage[pos];
+
+					if (info.m_freeChain != IN_USE)
+					{
+						continue;
+					}
+
+					if ((text == WILDCARD || *text == info.VisibleText()) &&
+					    (tag  == WILDCARD || *tag  == info.Tag()))
+					{
+						return pos;
+					}
+				}
+
+				return -1;
 			}
 
             bool TagCollection::HasTag(const std::string& text)
             {
-                return m_tagsByText.find(text) != m_tagsByText.end();
+                return FindIndex(&text, NULL) >= 0;
             }
 
             bool TagCollection::HasText(const std::string& tag)
             {
-                return m_tagsByTag.find(tag) != m_tagsByTag.end();
+				return FindIndex(NULL, &tag) >= 0;
             }
 
 			const TagCollection::TagInfo& TagCollection::GetInfoByText(const std::string& text)
 			{
-				TTagTextMap::iterator it = m_tagsByText.find(text);
-				Eegeo_ASSERT(it != m_tagsByText.end());
+				int index = FindIndex(&text, NULL);
+				Eegeo_ASSERT(index >= 0);
 
-				return m_tagStorage[it->second];
+				return m_tagStorage[index];
 			}
 
 			const TagCollection::TagInfo& TagCollection::GetInfoByTag(const std::string& tag)
 			{
-				TTagTextMap::iterator it = m_tagsByTag.find(tag);
-				Eegeo_ASSERT(it != m_tagsByTag.end());
+				int index = FindIndex(NULL, &tag);
+				Eegeo_ASSERT(index >= 0);
 
-				return m_tagStorage[it->second];
+				return m_tagStorage[index];
 			}
 		}
 	}

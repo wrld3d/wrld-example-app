@@ -42,6 +42,7 @@ namespace ExampleApp
             , m_onViewOpenedCallback(this, &SearchWidgetController::OnViewOpened)
             , m_onViewClosedCallback(this, &SearchWidgetController::OnViewClosed)
 			, m_tagCollection(m_messageBus)
+			, m_previousVisibleTextFromTagSearch("")
             , m_shouldSelectFirstResult(false)
             {
                 m_view.InsertSearchClearedCallback(m_onSearchResultsClearedCallback);
@@ -142,7 +143,7 @@ namespace ExampleApp
                     m_shouldSelectFirstResult = false;
                 }
             }
-            
+
             void SearchWidgetController::OnSearchQueryRefreshedMessage(const Search::SearchQueryRefreshedMessage& message)
             {
                 const Search::SdkModel::SearchQuery &query = message.Query();
@@ -152,11 +153,8 @@ namespace ExampleApp
 
 				if (query.IsTag())
 				{
-					tagText = visibleText;
-
-					const TagCollection::TagInfo& tagInfo = m_tagCollection.GetInfoByTag(tagText);
-
-					visibleText = tagInfo.VisibleText();
+					tagText     = visibleText;
+					visibleText = m_previousVisibleTextFromTagSearch;
 				}
 
                 m_view.PerformSearch(visibleText,
@@ -222,6 +220,7 @@ namespace ExampleApp
 					m_view.ClearSearchResults();
 
 					TagCollection::TagInfo tagInfo = m_tagCollection.GetInfoByText(menuText);
+					m_previousVisibleTextFromTagSearch = menuText;
 
 					m_view.PerformSearch(menuText,
 										 QueryContext(true, true, tagInfo.Tag(),
