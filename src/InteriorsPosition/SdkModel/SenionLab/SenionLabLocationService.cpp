@@ -71,9 +71,10 @@ namespace ExampleApp
                     return true;
                 }
                 
-                bool SenionLabLocationService::GetHorizontalAccuracy(double& accuracy)
+                bool SenionLabLocationService::GetHorizontalAccuracy(double& accuracyInMeters)
                 {
-                    return false;
+                    accuracyInMeters = m_horizontalAccuracyInMeters;
+                    return true;
                 }
                 
                 bool SenionLabLocationService::GetHeadingDegrees(double& headingDegrees)
@@ -93,6 +94,10 @@ namespace ExampleApp
                 void SenionLabLocationService::SetLocation(Eegeo::Space::LatLong &latLong)
                 {
                     m_latLong = latLong;
+                }
+
+                void SenionLabLocationService::SetHorizontalAccuracyInMeters(double horizontalAccuracyInMeters){
+                    m_horizontalAccuracyInMeters = horizontalAccuracyInMeters;
                 }
                 
                 void SenionLabLocationService::SetFloorIndex(int floorIndex)

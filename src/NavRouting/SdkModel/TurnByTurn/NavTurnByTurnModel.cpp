@@ -103,9 +103,9 @@ namespace ExampleApp
 
                     double distanceToRouteAtCurrentPoint = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
 
-                    bool onRoute = distanceToRouteAtCurrentPoint <= m_config.distanceToPathToTriggerReroute;
+                    bool tooFarFromPath = IsTooFarFromPath(distanceToRouteAtCurrentPoint);
 
-                    if(onRoute)
+                    if(!tooFarFromPath)
                     {
                         m_secondsElapsedSinceOffRoute = 0.0f;
                     }
@@ -123,7 +123,6 @@ namespace ExampleApp
                         return;
                     }
 
-                    bool tooFarFromPath = distanceToRouteAtCurrentPoint > m_config.distanceToPathRangeMeters;
                     if(tooFarFromPath) {
                         return;
                     }
@@ -223,6 +222,19 @@ namespace ExampleApp
                 void NavTurnByTurnModel::RemoveShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback)
                 {
                     m_shouldRerouteCallbacks.RemoveCallback(callback);
+                }
+
+                bool NavTurnByTurnModel::IsTooFarFromPath(double distanceToRouteAtCurrentPoint)
+                {
+                    double accuracy;
+                    bool accuracyFetchSuccessful = m_locationService.GetHorizontalAccuracy(accuracy);
+
+                    if(accuracyFetchSuccessful){
+                        return distanceToRouteAtCurrentPoint > m_config.distanceToPathToTriggerReroute + accuracy;
+                    }
+                    else{
+                        return distanceToRouteAtCurrentPoint > m_config.distanceToPathToTriggerReroute;
+                    }
                 }
             }
         }

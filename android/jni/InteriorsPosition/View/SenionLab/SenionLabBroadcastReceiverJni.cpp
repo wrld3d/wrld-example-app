@@ -13,11 +13,13 @@ JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroad
         jlong nativeObjectPtr,
         jdouble latitude,
         jdouble longitude,
+        jdouble horizontalAccuracyInMeters,
         jint floorNumber)
 {
     using ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver;
     reinterpret_cast<SenionLabBroadcastReceiver *>(nativeObjectPtr)->DidUpdateLocation(latitude,
                                                                                      longitude,
+                                                                                     horizontalAccuracyInMeters,
                                                                                      floorNumber);
 }
 
