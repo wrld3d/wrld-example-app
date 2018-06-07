@@ -11,6 +11,7 @@ extern "C"
             jlong nativeObjectPtr,
             jdouble latitude,
             jdouble longitude,
+            jdouble accuracyInMeters,
             jstring floorId);
 
     JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasLocationManagerJniMethods_SetIsAuthorized(

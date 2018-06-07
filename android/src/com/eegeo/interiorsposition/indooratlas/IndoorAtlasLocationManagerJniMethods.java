@@ -7,6 +7,7 @@ public class IndoorAtlasLocationManagerJniMethods
     public static native void DidUpdateLocation(long nativeCallerPointer,
                                                 double latitude,
                                                 double longitude,
+                                                double accuracyInMeters,
                                                 String floorId);
 
     public static native void SetIsAuthorized(long nativeCallerPointer, boolean isAuthorized);
