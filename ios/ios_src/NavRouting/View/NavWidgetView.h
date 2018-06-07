@@ -31,6 +31,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_startEndLocationsSwappedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_startEndRoutingButtonClickedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_selectedDirectionIndexChangedCallback;
+                Eegeo::Helpers::CallbackCollection1<const bool> m_rerouteDialogClosedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& m_topPanelVisibleHeightChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& m_bottomPanelVisibleHeightChangedCallbacks;
                 
@@ -78,6 +79,8 @@ namespace ExampleApp
                 
                 void SetNavMode(SdkModel::NavRoutingMode mode);
                 
+                void ShowRerouteDialog(const std::string message);
+                
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback);
                 void HandleClosedCallback();
@@ -109,6 +112,10 @@ namespace ExampleApp
                 void InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback);
                 void RemoveSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback);
                 void HandleSelectedDirectionIndexChangedCallback(int selectedDirection);
+                
+                void InsertRerouteDialogClosedCallback(Eegeo::Helpers::ICallback1<const bool>& rerouteDialogClosedCallback);
+                void RemoveRerouteDialogClosedCallback(Eegeo::Helpers::ICallback1<const bool>& rerouteDialogClosedCallback);
+                void HandleRerouteDialogClosed(bool shouldReroute);
                 
                 THeight GetTopViewHeight();
                 THeight GetBottomViewHeight();

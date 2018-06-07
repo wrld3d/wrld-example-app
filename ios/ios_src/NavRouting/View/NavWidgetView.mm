@@ -130,6 +130,12 @@ namespace ExampleApp
                 [m_pNavModel setNavMode:navMode];
             }
             
+            void NavWidgetView::ShowRerouteDialog(const std::string message)
+            {
+                //TODO add implementation
+                HandleRerouteDialogClosed(true);
+            }
+            
             void NavWidgetView::SetCurrentDirection(int currentDirection)
             {
                 [m_pNavModel setCurrentDirectionIndex:(NSInteger)currentDirection];
@@ -249,6 +255,21 @@ namespace ExampleApp
             void NavWidgetView::HandleSelectedDirectionIndexChangedCallback(int selectedDirection)
             {
                 m_selectedDirectionIndexChangedCallback.ExecuteCallbacks(selectedDirection);
+            }
+            
+            void NavWidgetView::InsertRerouteDialogClosedCallback(Eegeo::Helpers::ICallback1<const bool>& rerouteDialogClosedCallback)
+            {
+                m_rerouteDialogClosedCallbacks.AddCallback(rerouteDialogClosedCallback);
+            }
+            
+            void NavWidgetView::RemoveRerouteDialogClosedCallback(Eegeo::Helpers::ICallback1<const bool>& rerouteDialogClosedCallback)
+            {
+                m_rerouteDialogClosedCallbacks.RemoveCallback(rerouteDialogClosedCallback);
+            }
+            
+            void NavWidgetView::HandleRerouteDialogClosed(bool shouldReroute)
+            {
+                m_rerouteDialogClosedCallbacks.ExecuteCallbacks(shouldReroute);
             }
             
             void NavWidgetView::SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation)
