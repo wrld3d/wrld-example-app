@@ -14,6 +14,7 @@
 #include "NavRoutingEndLocationClearClickedMessage.h"
 #include "NavRoutingSelectedDirectionChangedMessage.h"
 #include "NavRoutingStartEndRoutingButtonClickedMessage.h"
+#include "NavRoutingRerouteDialogClosedMessage.h"
 #include "InteriorsModelRepository.h"
 #include "AlertBox.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
@@ -48,6 +49,7 @@ namespace ExampleApp
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
 
                 bool m_isRerouting;
+                bool m_waitingForRerouteResponse;
 
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingLocationModel&> m_startLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_startLocationClearedCallback;
@@ -68,6 +70,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingEndLocationClearClickedMessage&> m_endLocationClearClickedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingStartEndRoutingButtonClickedMessage&> m_startEndRoutingButtonClickedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingSelectedDirectionChangedMessage&> m_selectedDirectionChangedMessageHandler;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingRerouteDialogClosedMessage&> m_rerouteDialogClosedMessageMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
                 
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavRoutingController> m_failAlertHandler;
@@ -110,6 +113,8 @@ namespace ExampleApp
                 void OnStartEndRoutingButtonClicked(const NavRoutingStartEndRoutingButtonClickedMessage& message);
 
                 void OnSelectedDirectionChanged(const NavRoutingSelectedDirectionChangedMessage& message);
+
+                void OnRerouteDialogClosed(const NavRoutingRerouteDialogClosedMessage& message);
 
                 void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
                 

@@ -8,6 +8,7 @@
 #include "NavRoutingEndLocationClearClickedMessage.h"
 #include "NavRoutingSelectedDirectionChangedMessage.h"
 #include "NavRoutingStartEndRoutingButtonClickedMessage.h"
+#include "NavRoutingRerouteDialogClosedMessage.h"
 
 namespace ExampleApp
 {
@@ -63,6 +64,11 @@ namespace ExampleApp
             void NavWidgetController::OnSelectedDirectionIndexChanged(const int& selectedDirection)
             {
                 m_messageBus.Publish(NavRoutingSelectedDirectionChangedMessage(selectedDirection));
+            }
+
+            void NavWidgetController::OnRerouteDialogClosed(const bool& shouldReroute)
+            {
+                m_messageBus.Publish(NavRoutingRerouteDialogClosedMessage(shouldReroute));
             }
 
             void NavWidgetController::OnStartEndRoutingButtonClicked()
@@ -160,6 +166,11 @@ namespace ExampleApp
                 }
             }
 
+            void NavWidgetController::OnNavRoutingShowRerouteDialog(const NavRoutingShowRerouteDialogMessage& message)
+            {
+                m_view.ShowRerouteDialog(message.GetMessage());
+            }
+
             NavWidgetController::NavWidgetController(INavWidgetView& view,
                                                      INavWidgetViewModel& viewModel,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
@@ -173,6 +184,7 @@ namespace ExampleApp
                     , m_endLocationClearButtonClickedCallback(this, &NavWidgetController::OnEndLocationClearButtonClicked)
                     , m_startEndLocationsSwappedCallback(this, &NavWidgetController::OnStartEndLocationsSwapped)
                     , m_selectedDirectionIndexChangedCallback(this, &NavWidgetController::OnSelectedDirectionIndexChanged)
+                    , m_rerouteDialogClosedCallback(this, &NavWidgetController::OnRerouteDialogClosed)
                     , m_startEndRoutingButtonClickedCallback(this, &NavWidgetController::OnStartEndRoutingButtonClicked)
                     , m_viewOpenedCallback(this, &NavWidgetController::OnViewOpened)
                     , m_viewClosedCallback(this, &NavWidgetController::OnViewClosed)
@@ -188,6 +200,7 @@ namespace ExampleApp
                     , m_remainingRouteDurationSetMessageHandler(this, &NavWidgetController::OnRemainingRouteDurationSet)
                     , m_navRoutingModeSetMessageHandler(this, &NavWidgetController::OnNavRoutingModeSet)
                     , m_navRoutingViewOpenMessageHandler(this, &NavWidgetController::OnNavRoutingViewOpen)
+                    , m_navRoutingShowRerouteDialogMessageMessageHandler(this, &NavWidgetController::OnNavRoutingShowRerouteDialog)
             {
                 m_view.InsertClosedCallback(m_closeButtonCallback);
                 m_view.InsertStartLocationClickedCallback(m_startLocationClickedCallback);
@@ -196,6 +209,7 @@ namespace ExampleApp
                 m_view.InsertEndLocationClearButtonCallback(m_endLocationClearButtonClickedCallback);
                 m_view.InsertStartEndLocationsSwappedCallback(m_startEndLocationsSwappedCallback);
                 m_view.InsertSelectedDirectionIndexChangedCallback(m_selectedDirectionIndexChangedCallback);
+                m_view.InsertRerouteDialogClosedCallback(m_rerouteDialogClosedCallback);
                 m_view.InsertStartEndRoutingButtonClickedCallback(m_startEndRoutingButtonClickedCallback);
                 m_viewModel.InsertOpenedCallback(m_viewOpenedCallback);
                 m_viewModel.InsertClosedCallback(m_viewClosedCallback);
@@ -211,10 +225,12 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_remainingRouteDurationSetMessageHandler);
                 m_messageBus.SubscribeUi(m_navRoutingModeSetMessageHandler);
                 m_messageBus.SubscribeUi(m_navRoutingViewOpenMessageHandler);
+                m_messageBus.SubscribeUi(m_navRoutingShowRerouteDialogMessageMessageHandler);
             }
 
             NavWidgetController::~NavWidgetController()
             {
+                m_messageBus.UnsubscribeUi(m_navRoutingShowRerouteDialogMessageMessageHandler);
                 m_messageBus.UnsubscribeUi(m_navRoutingViewOpenMessageHandler);
                 m_messageBus.UnsubscribeUi(m_navRoutingModeSetMessageHandler);
                 m_messageBus.UnsubscribeUi(m_remainingRouteDurationSetMessageHandler);
@@ -230,6 +246,7 @@ namespace ExampleApp
                 m_viewModel.RemoveClosedCallback(m_viewClosedCallback);
                 m_viewModel.RemoveOpenedCallback(m_viewOpenedCallback);
                 m_view.RemoveStartEndRoutingButtonClickedCallback(m_startEndRoutingButtonClickedCallback);
+                m_view.RemoveRerouteDialogClosedCallback(m_rerouteDialogClosedCallback);
                 m_view.RemoveSelectedDirectionIndexChangedCallback(m_selectedDirectionIndexChangedCallback);
                 m_view.RemoveStartEndLocationsSwappedCallback(m_startEndLocationsSwappedCallback);
                 m_view.RemoveEndLocationClearButtonCallback(m_endLocationClearButtonClickedCallback);

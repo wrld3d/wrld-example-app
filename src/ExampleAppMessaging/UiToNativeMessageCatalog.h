@@ -47,6 +47,7 @@
 #include "NavRoutingSelectedDirectionChangedMessage.h"
 #include "NavRoutingStartEndRoutingButtonClickedMessage.h"
 #include "NavRoutingViewClosedMessage.h"
+#include "NavRoutingRerouteDialogClosedMessage.h"
 
 namespace ExampleApp
 {
@@ -96,6 +97,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingSelectedDirectionChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingStartEndRoutingButtonClickedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingViewClosedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRerouteDialogClosedMessage>
             , private Eegeo::NonCopyable
         {
 

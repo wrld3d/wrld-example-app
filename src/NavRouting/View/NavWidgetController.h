@@ -20,6 +20,7 @@
 #include "NavRoutingCurrentDirectionUpdatedMessage.h"
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
 #include "NavRoutingModeSetMessage.h"
+#include "NavRoutingShowRerouteDialogMessage.h"
 
 namespace ExampleApp
 {
@@ -41,6 +42,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_endLocationClearButtonClickedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_startEndLocationsSwappedCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_selectedDirectionIndexChangedCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const bool> m_rerouteDialogClosedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_startEndRoutingButtonClickedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewOpenedCallback;
                 Eegeo::Helpers::TCallback0<NavWidgetController> m_viewClosedCallback;
@@ -56,6 +58,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingRemainingRouteDurationSetMessage&> m_remainingRouteDurationSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingModeSetMessage&> m_navRoutingModeSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingViewOpenMessage&> m_navRoutingViewOpenMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingShowRerouteDialogMessage&> m_navRoutingShowRerouteDialogMessageMessageHandler;
 
 
                 void OnCloseButtonClicked();
@@ -71,6 +74,8 @@ namespace ExampleApp
                 void OnStartEndLocationsSwapped();
 
                 void OnSelectedDirectionIndexChanged(const int& selectedDirection);
+
+                void OnRerouteDialogClosed(const bool& shouldReroute);
 
                 void OnStartEndRoutingButtonClicked();
 
@@ -99,6 +104,8 @@ namespace ExampleApp
                 void OnNavRoutingModeSet(const NavRoutingModeSetMessage& message);
 
                 void OnNavRoutingViewOpen(const NavRoutingViewOpenMessage& message);
+
+                void OnNavRoutingShowRerouteDialog(const NavRoutingShowRerouteDialogMessage& message);
 
             protected:
                 INavWidgetView& GetView() { return m_view; }

@@ -40,4 +40,5 @@
 	<color name="initial_ux_intro_banner_outline">#80FFFFFF</color>
 	<color name="scrollbars">#1256B0</color>
 	<color name="about_links">#1256B0</color>
+    <color name="nav_dialog">#1256B0</color>
 </resources>

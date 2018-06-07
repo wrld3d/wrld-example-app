@@ -21,4 +21,6 @@ public class NavWidgetViewJniMethods
     public static native void SetTopViewHeight(long nativeCallerPointer, int topViewHeight);
 
     public static native void SetBottomViewHeight(long nativeCallerPointer, int bottomViewHeight);
+
+    public static native void RerouteDialogClosed(long nativeCallerPointer, boolean shouldReroute);
 }

@@ -2,9 +2,13 @@
 
 package com.eegeo.navwidget;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.location.Location;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IBackButtonListener;
@@ -216,6 +220,42 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     public void dismissNavWidgetView()
     {
         m_model.sendNavEvent(WrldNavEvent.WidgetAnimateOut);
+    }
+
+    public void showRerouteDialog(String message)
+    {
+        final AlertDialog dialog = new AlertDialog.Builder(m_activity).create();
+        LayoutInflater layoutInflater = m_activity.getLayoutInflater();
+        View rerouteDialog = layoutInflater.inflate(R.layout.nav_widget_reroute_dialog_layout, null);
+
+        rerouteDialog.findViewById(R.id.nav_reroute_dialog_btn_yes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavWidgetViewJniMethods.RerouteDialogClosed(m_nativeCallerPointer, true);
+                dialog.dismiss();
+            }
+        });
+
+        rerouteDialog.findViewById(R.id.nav_reroute_dialog_btn_no).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavWidgetViewJniMethods.RerouteDialogClosed(m_nativeCallerPointer, false);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                NavWidgetViewJniMethods.RerouteDialogClosed(m_nativeCallerPointer, false);
+            }
+        });
+
+        TextView messageText = rerouteDialog.findViewById(R.id.nav_reroute_dialog_msg);
+        messageText.setText(message);
+
+        dialog.setView(rerouteDialog);
+        dialog.show();
     }
     
     public void destroy()
