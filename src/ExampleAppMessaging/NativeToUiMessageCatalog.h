@@ -67,6 +67,7 @@
 #include "NavRoutingSelectedDirectionSetMessage.h"
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
 #include "NavRoutingModeSetMessage.h"
+#include "NavRoutingShowRerouteDialogMessage.h"
 
 namespace ExampleApp
 {
@@ -135,6 +136,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingSelectedDirectionSetMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRemainingRouteDurationSetMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingModeSetMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingShowRerouteDialogMessage>
             , private Eegeo::NonCopyable
         {
 

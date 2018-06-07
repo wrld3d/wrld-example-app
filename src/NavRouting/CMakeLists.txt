@@ -17,6 +17,8 @@ set(currsources
   ../src/NavRouting/NavRoutingModeSetMessage.h
   ../src/NavRouting/NavRoutingRemainingRouteDurationSetMessage.cpp
   ../src/NavRouting/NavRoutingRemainingRouteDurationSetMessage.h
+  ../src/NavRouting/NavRoutingRerouteDialogClosedMessage.cpp
+  ../src/NavRouting/NavRoutingRerouteDialogClosedMessage.h
   ../src/NavRouting/NavRoutingRouteClearedMessage.h
   ../src/NavRouting/NavRoutingRouteChangedMessage.cpp
   ../src/NavRouting/NavRoutingRouteChangedMessage.h
@@ -24,6 +26,8 @@ set(currsources
   ../src/NavRouting/NavRoutingSelectedDirectionChangedMessage.h
   ../src/NavRouting/NavRoutingSelectEndLocationClickedMessage.h
   ../src/NavRouting/NavRoutingSelectStartLocationClickedMessage.h
+  ../src/NavRouting/NavRoutingShowRerouteDialogMessage.cpp
+  ../src/NavRouting/NavRoutingShowRerouteDialogMessage.h
   ../src/NavRouting/NavRoutingStartEndRoutingButtonClickedMessage.h
   ../src/NavRouting/NavRoutingStartLocationClearClickedMessage.h
   ../src/NavRouting/NavRoutingStartLocationClearedMessage.h

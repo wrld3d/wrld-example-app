@@ -253,6 +253,21 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, methodID, modeObject);
             }
 
+            void NavWidgetView::ShowRerouteDialog(const std::string message)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jstring messageStr = env->NewStringUTF(message.c_str());
+
+                jmethodID setLocationMethod = env->GetMethodID(m_uiViewClass, "showRerouteDialog", "(Ljava/lang/String;)V");
+                env->CallVoidMethod(m_uiView, setLocationMethod, messageStr);
+
+                env->DeleteLocalRef(messageStr);
+            }
+
             void NavWidgetView::SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation)
             {
                 ASSERT_UI_THREAD
@@ -456,6 +471,27 @@ namespace ExampleApp
                 ASSERT_UI_THREAD
 
                 m_selectedDirectionIndexChangedCallbacks.ExecuteCallbacks(selectedDirectionIndex);
+            }
+
+            void NavWidgetView::InsertRerouteDialogClosedCallback(Eegeo::Helpers::ICallback1<const bool>& rerouteDialogClosedCallback)
+            {
+                ASSERT_UI_THREAD
+
+                m_rerouteDialogClosedCallbacks.AddCallback(rerouteDialogClosedCallback);
+            }
+
+            void NavWidgetView::RemoveRerouteDialogClosedCallback(Eegeo::Helpers::ICallback1<const bool>& rerouteDialogClosedCallback)
+            {
+                ASSERT_UI_THREAD
+
+                m_rerouteDialogClosedCallbacks.RemoveCallback(rerouteDialogClosedCallback);
+            }
+
+            void NavWidgetView::HandleRerouteDialogClosed(bool shouldReroute)
+            {
+                ASSERT_UI_THREAD
+
+                m_rerouteDialogClosedCallbacks.ExecuteCallbacks(shouldReroute);
             }
 
             void NavWidgetView::SetTopViewHeight(THeight topViewHeight){

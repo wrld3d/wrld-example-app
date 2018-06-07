@@ -70,9 +70,9 @@ namespace ExampleApp
 
                 void NavTurnByTurnController::HandleTurnByTurnStarted()
                 {
-                    m_navRoutingModel.SetNavMode(NavRoutingMode::Active);
                     m_navRoutingModel.SetSelectedDirection(0);
                     m_navRoutingModel.SetCurrentDirection(0);
+                    m_navRoutingModel.SetNavMode(NavRoutingMode::Active);
                 }
 
                 void NavTurnByTurnController::HandleTurnByTurnStopped()

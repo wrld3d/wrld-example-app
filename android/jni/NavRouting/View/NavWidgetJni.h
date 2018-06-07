@@ -48,4 +48,9 @@ extern "C"
             JNIEnv *jenv, jobject obj,
             jlong nativeObjectPtr,
             jint topViewHeight);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_RerouteDialogClosed(
+            JNIEnv *jenv, jobject obj,
+            jlong nativeObjectPtr,
+            jboolean shouldReroute);
 }
