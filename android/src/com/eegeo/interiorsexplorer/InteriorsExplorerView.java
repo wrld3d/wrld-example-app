@@ -9,11 +9,13 @@ import com.eegeo.menu.BackwardsCompatibleListView;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.view.OnPauseListener;
 
+import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.BounceInterpolator;
@@ -79,7 +81,8 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     private InteriorsExplorerTutorialView m_tutorialView = null;
     
     private boolean m_canProcessButtons;
-    private boolean m_isOnScreen = false;
+    private boolean m_isOnScreenWhenSpaceAvailable = false;
+    private boolean m_keepOffScreenDueToLackOfSpace = false;
     
     // TODO: Replace these with refs to UX iteration color scheme.
     private final int TextColorNormal = Color.parseColor("#1256B0");
@@ -93,6 +96,8 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     private int m_rightPanelBottomSpacingNavMode;
 
     private int m_currentlySelectedFloorIndex;
+
+    private final ViewGroup m_uiRoot;
 
     private class PropogateToViewTouchListener implements View.OnTouchListener {
         private View m_target;
@@ -116,9 +121,9 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 
         // TODO: Move to Dimens values resource when integrated with Search UX changes.
         ListItemHeight = m_activity.dipAsPx(50.0f);
-        
-        final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-        m_uiRootView = m_activity.getLayoutInflater().inflate(R.layout.interiors_explorer_layout, uiRoot, false);
+
+        m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+        m_uiRootView = m_activity.getLayoutInflater().inflate(R.layout.interiors_explorer_layout, m_uiRoot, false);
 
         
         m_topPanel = m_uiRootView.findViewById(R.id.top_panel);
@@ -166,7 +171,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
             }
         });
 
-        uiRoot.addView(m_uiRootView);
+        m_uiRoot.addView(m_uiRootView);
         
         m_tutorialView = new InteriorsExplorerTutorialView(m_activity);
         
@@ -188,16 +193,11 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 
     private void refreshRightPanelLayout()
     {
+        final float screenWidth = m_uiRoot.getWidth();
 
-        final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+        float controlWidth =  m_floorListContainer.getWidth();
+        float controlHeight = m_floorListContainer.getHeight();
 
-        final float screenWidth = uiRoot.getWidth();
-
-        float controlWidth = m_topPanel.getWidth();
-        float controlHeight = m_topPanel.getHeight();
-
-        controlWidth = m_floorListContainer.getWidth();
-        controlHeight = m_floorListContainer.getHeight();
         int menuButtonMarginPx = (int) m_activity.getResources().getDimension(R.dimen.menu_button_margin);
 
         m_leftXPosActiveBackButton = screenWidth - (menuButtonMarginPx + m_backButton.getWidth());
@@ -210,17 +210,8 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
         m_topPanel.setX((screenWidth * 0.5f) - (controlWidth * 0.5f));
         m_topPanel.setY(m_topYPosInactive);
 
-        int screenHeight = uiRoot.getHeight();
-
-        int rightPanelTopMargin  = m_rightPanel.getPaddingTop();
-        int rightPanelBottomMargin = m_rightPanel.getPaddingBottom();
-
-        RelativeLayout.LayoutParams floorListContainerLayoutParams = (RelativeLayout.LayoutParams) m_floorListContainer.getLayoutParams();
-        int floorListMarginTop = floorListContainerLayoutParams.topMargin;
-
-        int maxFloorContainerHeight = screenHeight - rightPanelTopMargin - m_backButton.getHeight() - floorListMarginTop - rightPanelBottomMargin;
-
-        m_maxFloorsViewableCount = (int) Math.floor(maxFloorContainerHeight / ListItemHeight);
+        checkOnScreenSpace();
+        resizeFloorList();
     }
 
     private int getListViewHeight(ListView list) 
@@ -235,8 +226,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 
     public void destroy()
     {
-        final RelativeLayout uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
-        uiRoot.removeView(m_uiRootView);
+        m_uiRoot.removeView(m_uiRootView);
         m_uiRootView = null;
         
         m_scrollHandler.removeCallbacks(m_scrollingRunnable);
@@ -245,7 +235,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     
     public void playShakeSliderAnim()
     {
-    	if(!m_isOnScreen)
+    	if(!isOnScreen())
     	{
     		return;
     	}
@@ -496,19 +486,32 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 
     public void animateToActive()
     {
-        boolean wasOnScreen = m_isOnScreen;
-        m_isOnScreen = true;
+        boolean wasOnScreen = isOnScreen();
+        m_isOnScreenWhenSpaceAvailable = true;
 
         long updateDelay = 0;
         if(!wasOnScreen)
         {
-            updateDelay = m_stateChangeAnimationTimeMilliseconds + (m_isOnScreen ? m_stateChangeAnimationDelayMilliseconds : 0);
+            updateDelay = m_stateChangeAnimationTimeMilliseconds + (isOnScreen() ? m_stateChangeAnimationDelayMilliseconds : 0);
+        }
+
+        moveOnScreenIfSpaceAvailable(updateDelay);
+    }
+
+    private boolean isOnScreen() {
+        return m_isOnScreenWhenSpaceAvailable && !m_keepOffScreenDueToLackOfSpace;
+    }
+
+    private void moveOnScreenIfSpaceAvailable(long updateDelay){
+
+        if(m_keepOffScreenDueToLackOfSpace){
+            return;
         }
 
         animateViewToY((int)m_topYPosActive);
-        animateViewToX((int)m_leftXPosActiveBackButton, (int) m_leftXPosActiveFloorListContainer, m_isOnScreen);
-        
-       final Handler handler = new Handler();
+        animateViewToX((int)m_leftXPosActiveBackButton, (int) m_leftXPosActiveFloorListContainer, isOnScreen());
+
+        final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -531,12 +534,16 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 
     public void animateToInactive()
     {
+        m_isOnScreenWhenSpaceAvailable = false;
+        moveOffScreen();
+    }
+
+    private void moveOffScreen(){
         endScrollingUpdate();
-        m_isOnScreen = false;
-    	
-    	animateViewToY((int)m_topYPosInactive);
-        animateViewToX((int)m_leftXPosInactive, (int)m_leftXPosInactive, m_isOnScreen);
-        
+
+        animateViewToY((int)m_topYPosInactive);
+        animateViewToX((int)m_leftXPosInactive, (int)m_leftXPosInactive, isOnScreen());
+
         m_tutorialView.animateToInactive(m_stateChangeAnimationTimeMilliseconds);
     }
 
@@ -581,7 +588,6 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
             m_viewState = newState;
             updateUpperBound();
             updateLowerBound();
-            refreshLayout();
         }
     }
 
@@ -604,6 +610,8 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
             public void onLayoutChange(View v, int left, int top, int right,
                                        int bottom, int oldLeft, int oldTop, int oldRight,
                                        int oldBottom) {
+
+                boolean wasOnScreen = isOnScreen();
                 refreshRightPanelLayout();
                 refreshFloorLayout();
                 m_uiRootView.removeOnLayoutChangeListener(this);
@@ -611,40 +619,98 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
         });
     }
 
+    private void checkOnScreenSpace(){
+        boolean wasOnScreen = isOnScreen();
+
+        int screenHeight = m_uiRoot.getHeight();
+
+        int rightPanelTopMargin  = m_rightPanel.getPaddingTop();
+        int rightPanelBottomMargin = m_rightPanel.getPaddingBottom();
+
+        int rightPanelAvailableSpace = screenHeight - rightPanelBottomMargin - rightPanelTopMargin;
+        m_keepOffScreenDueToLackOfSpace = (rightPanelAvailableSpace < screenHeight * 0.5f);
+
+        if(wasOnScreen && !isOnScreen()){
+            moveOffScreen();
+        }
+
+        if(!wasOnScreen && isOnScreen()){
+            moveOnScreenIfSpaceAvailable(0);
+        }
+    }
+
+    private void resizeFloorList()
+    {
+        int screenHeight = m_uiRoot.getHeight();
+
+        int rightPanelTopMargin  = m_rightPanel.getPaddingTop();
+        int rightPanelBottomMargin = m_rightPanel.getPaddingBottom();
+
+        RelativeLayout.LayoutParams floorListContainerLayoutParams = (RelativeLayout.LayoutParams) m_floorListContainer.getLayoutParams();
+        int floorListMarginTop = floorListContainerLayoutParams.topMargin;
+
+        int maxFloorContainerHeight = screenHeight - rightPanelTopMargin - m_backButton.getHeight() - floorListMarginTop - rightPanelBottomMargin;
+
+        m_maxFloorsViewableCount = (int) Math.floor(maxFloorContainerHeight / ListItemHeight);
+    }
+
     public void setNavigationModeUpperBound(final int upperBound)
     {
-        m_rightPanelTopSpacingNavMode = upperBound;
         m_rightPanelTopSpacingNavMode = upperBound + m_activity.dipAsPx(16);
         if(m_viewState == InteriorsExplorerViewState.Navigation) {
             updateUpperBound();
-            refreshLayout();
         }
     }
 
     private void updateUpperBound()
     {
+        ValueAnimator animator;
         if (m_viewState == InteriorsExplorerViewState.Default) {
-            m_rightPanel.setPadding(m_rightPanel.getPaddingLeft(), m_rightPanelTopSpacingDefault, m_rightPanel.getPaddingRight(), m_rightPanel.getPaddingBottom());
+            animator = ValueAnimator.ofInt(m_rightPanel.getPaddingTop(), m_rightPanelTopSpacingDefault);
         } else {
-            m_rightPanel.setPadding(m_rightPanel.getPaddingLeft(), m_rightPanelTopSpacingNavMode, m_rightPanel.getPaddingRight(), m_rightPanel.getPaddingBottom());
+            animator = ValueAnimator.ofInt(m_rightPanel.getPaddingTop(), m_rightPanelTopSpacingNavMode);
         }
+
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                m_rightPanel.setPadding(m_rightPanel.getPaddingLeft(), (Integer) valueAnimator.getAnimatedValue(), m_rightPanel.getPaddingRight(), m_rightPanel.getPaddingBottom());
+                checkOnScreenSpace();
+                resizeFloorList();
+                refreshFloorLayout();
+            }
+        });
+        animator.setDuration(m_stateChangeAnimationTimeMilliseconds);
+        animator.start();
     }
 
     public void setNavigationModeLowerBound(final int lowerBound) {
-        m_rightPanelBottomSpacingNavMode = lowerBound;
         m_rightPanelBottomSpacingNavMode = lowerBound + m_activity.dipAsPx(16);
+
         if(m_viewState == InteriorsExplorerViewState.Navigation) {
             updateLowerBound();
-            refreshLayout();
         }
     }
 
     private void updateLowerBound() {
+        ValueAnimator animator;
         if (m_viewState == InteriorsExplorerViewState.Default) {
-            m_rightPanel.setPadding(m_rightPanel.getPaddingLeft(), m_rightPanel.getPaddingTop(), m_rightPanel.getPaddingRight(), m_rightPanelBottomSpacingDefault);
+            animator = ValueAnimator.ofInt(m_rightPanel.getPaddingBottom(), m_rightPanelBottomSpacingDefault);
         } else {
-            m_rightPanel.setPadding(m_rightPanel.getPaddingLeft(), m_rightPanel.getPaddingTop(), m_rightPanel.getPaddingRight(), m_rightPanelBottomSpacingNavMode);
+            animator = ValueAnimator.ofInt(m_rightPanel.getPaddingBottom(), m_rightPanelBottomSpacingNavMode);
         }
+
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                m_rightPanel.setPadding(m_rightPanel.getPaddingLeft(), m_rightPanel.getPaddingTop(), m_rightPanel.getPaddingRight(), (Integer) valueAnimator.getAnimatedValue());
+                checkOnScreenSpace();
+                resizeFloorList();
+                refreshFloorLayout();
+            }
+        });
+        animator.setDuration(m_stateChangeAnimationTimeMilliseconds);
+        animator.start();
     }
 
     public void notifyOnPause()
