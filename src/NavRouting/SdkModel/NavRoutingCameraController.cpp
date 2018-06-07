@@ -25,13 +25,11 @@ namespace ExampleApp
             , m_compassModel(compassModel)
             , m_routeSetCallback(this, &NavRoutingCameraController::OnRouteSet)
             , m_selectedDirectionSetCallback(this, &NavRoutingCameraController::OnSelectedDirectionSet)
-            , m_currentDirectionSetCallback(this, &NavRoutingCameraController::OnCurrentDirectionSet)
             , m_navModeSetCallback(this, &NavRoutingCameraController::OnNavModeSet)
             , m_gpsModeChangedCallback(this, &NavRoutingCameraController::OnGpsModeChanged)
             {
                 m_navRoutingModel.InsertRouteSetCallback(m_routeSetCallback);
                 m_navRoutingModel.InsertSelectedDirectionSetCallback(m_selectedDirectionSetCallback);
-                m_navRoutingModel.InsertCurrentDirectionSetCallback(m_currentDirectionSetCallback);
                 m_navRoutingModel.InsertNavModeSetCallback(m_navModeSetCallback);
                 
                 m_compassModel.InsertGpsModeChangedCallback(m_gpsModeChangedCallback);
@@ -42,7 +40,6 @@ namespace ExampleApp
                 m_compassModel.RemoveGpsModeChangedCallback(m_gpsModeChangedCallback);
                 
                 m_navRoutingModel.RemoveNavModeSetCallback(m_navModeSetCallback);
-                m_navRoutingModel.RemoveCurrentDirectionSetCallback(m_currentDirectionSetCallback);
                 m_navRoutingModel.RemoveSelectedDirectionSetCallback(m_selectedDirectionSetCallback);
                 m_navRoutingModel.RemoveRouteSetCallback(m_routeSetCallback);
             }
@@ -54,20 +51,20 @@ namespace ExampleApp
             
             void NavRoutingCameraController::OnSelectedDirectionSet(const int& selectedDirection)
             {
-                UpdateCamera();
-            }
-            
-            void NavRoutingCameraController::OnCurrentDirectionSet(const int& currentDirection)
-            {
-                if(m_navRoutingModel.GetCurrentDirection() == m_navRoutingModel.GetSelectedDirection())
+                if(m_navRoutingModel.GetCurrentDirection() != selectedDirection || !m_navigationService.IsGPSActive())
                 {
+                    m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
                     UpdateCamera();
                 }
             }
             
             void NavRoutingCameraController::OnNavModeSet(const NavRoutingMode& navMode)
             {
-                UpdateCamera();
+                if(navMode == NavRoutingMode::Active)
+                {
+                    m_cameraTransitionController.StopCurrentTransition();
+                    m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeCompass);
+                }
             }
             
             void NavRoutingCameraController::OnGpsModeChanged()
@@ -84,15 +81,7 @@ namespace ExampleApp
             
             void NavRoutingCameraController::UpdateCamera()
             {
-                if(m_navRoutingModel.GetSelectedDirection() == m_navRoutingModel.GetCurrentDirection() &&
-                   m_navRoutingModel.GetNavMode() == NavRoutingMode::Active)
-                {
-                    m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeCompass);
-                }
-                else
-                {
-                    SetCameraToSelectedDirection();
-                }
+                SetCameraToSelectedDirection();
             }
             
             void NavRoutingCameraController::SetCameraToSelectedDirection()
@@ -132,7 +121,6 @@ namespace ExampleApp
                     builder.SetTargetFloorIndexIsFloorId(true);
                 }
                 builder.SetDistanceFromInterest(InteriorsExplorer::DefaultInteriorSearchResultTransitionInterestDistance);
-                
                 m_cameraTransitionController.StartTransition(builder.Build());
             }
         }

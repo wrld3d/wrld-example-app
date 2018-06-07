@@ -73,11 +73,12 @@ namespace ExampleApp
 
             void NavRoutingModel::SetRoute(const NavRoutingRouteModel& routeModel)
             {
+                SetCurrentDirection(0);
+                SetSelectedDirection(0);
                 m_route = routeModel;
                 m_routeIsSet = true;
                 m_routeSetCallbacks.ExecuteCallbacks(m_route);
-                SetCurrentDirection(0);
-                SetSelectedDirection(0);
+
             }
 
             void NavRoutingModel::ClearRoute()
@@ -134,8 +135,11 @@ namespace ExampleApp
             }
 
             void NavRoutingModel::SetSelectedDirection(int directionIndex) {
-                m_selectedDirectionIndex = directionIndex;
-                m_selectedDirectionIndexSetCallbacks.ExecuteCallbacks(m_selectedDirectionIndex);
+                if(directionIndex != m_selectedDirectionIndex)
+                {
+                    m_selectedDirectionIndex = directionIndex;
+                    m_selectedDirectionIndexSetCallbacks.ExecuteCallbacks(m_selectedDirectionIndex);
+                }
             }
 
             int NavRoutingModel::GetSelectedDirection() const
