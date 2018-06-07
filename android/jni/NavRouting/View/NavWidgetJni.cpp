@@ -108,3 +108,14 @@ JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetBotto
     auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
     pView->SetBottomViewHeight(height);
 }
+
+JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_RerouteDialogClosed(
+        JNIEnv *jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jboolean shouldReroute)
+{
+    ASSERT_UI_THREAD
+
+    auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
+    pView->HandleRerouteDialogClosed(shouldReroute);
+}

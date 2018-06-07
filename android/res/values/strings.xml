@@ -76,4 +76,9 @@
     <string name="eegeo_app_base">Android-MEA</string>
 
     <string name="search_closest_label">Show me the closest...</string>
+    <string name="nav_reroute_dialog_label_text">End Navigation?</string>
+    <string name="nav_reroute_dialog_btn_text_no">No</string>
+    <string name="nav_reroute_dialog_btn_subtext_no">End Navigation</string>
+    <string name="nav_reroute_dialog_btn_text_yes">Yes</string>
+    <string name="nav_reroute_dialog_btn_subtext_yes">Update Route</string>
 </resources>

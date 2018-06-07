@@ -24,7 +24,7 @@ namespace ExampleApp
 
                     float updateRateSeconds = 1.0f;
                     float distanceToPathRangeMeters = 10.0f;
-                    float distanceToPathToTriggerReroute = 3.f;
+                    float distanceToPathToTriggerReroute = 10.f;
                     float timeInSecondsToTriggerReroute = 10.0f;
                 };
 

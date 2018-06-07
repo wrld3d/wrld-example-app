@@ -49,6 +49,8 @@ namespace ExampleApp
 
                 virtual void SetNavMode(SdkModel::NavRoutingMode mode) = 0;
 
+                virtual void ShowRerouteDialog(const std::string message) = 0;
+
                 virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
 
@@ -72,6 +74,9 @@ namespace ExampleApp
 
                 virtual void InsertSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback) = 0;
                 virtual void RemoveSelectedDirectionIndexChangedCallback(Eegeo::Helpers::ICallback1<const int>& selectedDirectionIndexChangedCallback) = 0;
+
+                virtual void InsertRerouteDialogClosedCallback(Eegeo::Helpers::ICallback1<const bool>& rerouteDialogClosedCallback) = 0;
+                virtual void RemoveRerouteDialogClosedCallback(Eegeo::Helpers::ICallback1<const bool>& rerouteDialogClosedCallback) = 0;
 
                 virtual THeight GetTopViewHeight() = 0;
                 virtual THeight GetBottomViewHeight() = 0;

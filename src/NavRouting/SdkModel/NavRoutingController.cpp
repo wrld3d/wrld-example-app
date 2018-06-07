@@ -20,6 +20,7 @@
 #include "IAlertBoxFactory.h"
 #include "IWorldPinsService.h"
 #include "NavRouteInteriorModelHelper.h"
+#include "NavRoutingShowRerouteDialogMessage.h"
 
 namespace ExampleApp
 {
@@ -42,6 +43,7 @@ namespace ExampleApp
             , m_alertBoxFactory(alertBoxFactory)
             , m_worldPinsService(worldPinsService)
             , m_isRerouting(false)
+            , m_waitingForRerouteResponse(false)
             , m_startLocationSetCallback(this, &NavRoutingController::OnStartLocationSet)
             , m_startLocationClearedCallback(this, &NavRoutingController::OnStartLocationCleared)
             , m_endLocationSetCallback(this, &NavRoutingController::OnEndLocationSet)
@@ -60,6 +62,7 @@ namespace ExampleApp
             , m_endLocationClearClickedMessageHandler(this, &NavRoutingController::OnEndLocationClearClicked)
             , m_startEndRoutingButtonClickedMessageHandler(this, &NavRoutingController::OnStartEndRoutingButtonClicked)
             , m_selectedDirectionChangedMessageHandler(this, &NavRoutingController::OnSelectedDirectionChanged)
+            , m_rerouteDialogClosedMessageMessageHandler(this, &NavRoutingController::OnRerouteDialogClosed)
             , m_directionsButtonClickedMessageHandler(this, &NavRoutingController::OnDirectionsButtonClicked)
             , m_failAlertHandler(this, &NavRoutingController::OnFailAlertBoxDismissed)
             , m_shouldRerouteCallback(this, &NavRoutingController::OnShouldReroute)
@@ -82,6 +85,7 @@ namespace ExampleApp
                 m_messageBus.SubscribeNative(m_endLocationClearClickedMessageHandler);
                 m_messageBus.SubscribeNative(m_startEndRoutingButtonClickedMessageHandler);
                 m_messageBus.SubscribeNative(m_selectedDirectionChangedMessageHandler);
+                m_messageBus.SubscribeNative(m_rerouteDialogClosedMessageMessageHandler);
                 m_messageBus.SubscribeNative(m_directionsButtonClickedMessageHandler);
                 m_turnByTurnModel.InsertShouldRerouteCallback(m_shouldRerouteCallback);
             }
@@ -90,6 +94,7 @@ namespace ExampleApp
             {
                 m_turnByTurnModel.RemoveShouldRerouteCallback(m_shouldRerouteCallback);
                 m_messageBus.UnsubscribeNative(m_directionsButtonClickedMessageHandler);
+                m_messageBus.UnsubscribeNative(m_rerouteDialogClosedMessageMessageHandler);
                 m_messageBus.UnsubscribeNative(m_selectedDirectionChangedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_startEndRoutingButtonClickedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_endLocationClearClickedMessageHandler);
@@ -296,6 +301,23 @@ namespace ExampleApp
                 m_routingModel.SetSelectedDirection(message.GetDirectionIndex());
             }
 
+            void NavRoutingController::OnRerouteDialogClosed(const NavRoutingRerouteDialogClosedMessage& message)
+            {
+                if (message.GetShouldReroute())
+                {
+                    NavRoutingLocationModel startLocation;
+
+                    if (TryGetCurrentLocation(startLocation))
+                    {
+                        m_routingModel.SetStartLocation(startLocation);
+                        m_isRerouting = true;
+                    }
+                }
+
+                m_turnByTurnModel.Stop();
+                m_waitingForRerouteResponse = false;
+            }
+
             void NavRoutingController::OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message)
             {
                 NavRoutingLocationModel startLocation, endLocation;
@@ -350,14 +372,18 @@ namespace ExampleApp
 
             void NavRoutingController::OnShouldReroute()
             {
-                NavRoutingLocationModel startLocation;
-
-                if (TryGetCurrentLocation(startLocation))
+                if (m_waitingForRerouteResponse)
                 {
-                    //TODO add ui dialog box
-                    m_routingModel.SetStartLocation(startLocation);
-                    m_isRerouting = true;
-                    m_turnByTurnModel.Stop();
+                    return;
+                }
+
+                NavRoutingLocationModel endLocation;
+                if (m_routingModel.TryGetEndLocation(endLocation))
+                {
+                    std::string message = "You seem to be heading away from your destination. Do you still want to go to ";
+                    message = message + endLocation.GetName() + "?";
+                    m_messageBus.Publish(NavRoutingShowRerouteDialogMessage(message));
+                    m_waitingForRerouteResponse = true;
                 }
             }
         }
