@@ -93,9 +93,29 @@ namespace ExampleApp
                 [m_pNavModel setEndLocation:NULL];
             }
             
-            void NavWidgetView::SetRoute(const SdkModel::NavRoutingRouteModel& routeModel)
+            void NavWidgetView::SetRoute(const SdkModel::NavRoutingRouteModel& routeModel, bool isNewRoute)
             {
-                [m_pNavModel setRoute:BuildWRLDNavRouteFromNavRoutingRouteModel(routeModel)];
+                
+                if(isNewRoute)
+                {
+                    [m_pNavModel setRoute:BuildWRLDNavRouteFromNavRoutingRouteModel(routeModel)];
+                }
+                else
+                {
+                    const auto& directions =routeModel.GetDirections();
+                    
+                    
+                    for(int i = 0; i < directions.size(); i++ )
+                    {
+                        if([m_pNavModel setDirection:i direction:BuildWlrdNavDirectionFromFromNavRoutingDirectionModel(directions.at(i))])
+                        {
+                            continue;
+                        }
+                    }
+                    [m_pNavModel sendNavEvent:WRLDNavEventRouteUpdated];
+                }
+                
+                
             }
             
             void NavWidgetView::ClearRoute()
