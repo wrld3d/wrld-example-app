@@ -102,7 +102,7 @@ namespace ExampleApp
                     env->CallVoidMethod(m_locationManagerInstance, stopUpdatingLocation);
                 }
 
-                void IndoorAtlasLocationManager::DidUpdateLocation(const double latitude, const double longitude, const std::string& floorId)
+                void IndoorAtlasLocationManager::DidUpdateLocation(const double latitude, const double longitude, const double accuracyInMeters, const std::string& floorId)
                 {
                     ASSERT_UI_THREAD
                     int wrldFloorId;
@@ -111,7 +111,7 @@ namespace ExampleApp
                         wrldFloorId = -1;
                     }
 
-                    m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, wrldFloorId));
+                    m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, accuracyInMeters, wrldFloorId));
                     m_messageBus.Publish(AboutPage::AboutPageIndoorAtlasDataMessage(wrldFloorId, floorId, latitude, longitude));
                 }
 
@@ -126,6 +126,7 @@ namespace ExampleApp
                     ASSERT_NATIVE_THREAD
                     Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(message.Latitude(), message.Longitude()));
                     m_indoorAtlasLocationService.SetLocation(location);
+                    m_indoorAtlasLocationService.SetHorizontalAccuracyInMeters(message.HorizontalAccuracyInMeters());
                     m_indoorAtlasLocationService.SetFloorIndex(message.FloorNumber());
                 }
 

@@ -13,6 +13,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasL
         jlong nativeObjectPtr,
         jdouble latitude,
         jdouble longitude,
+        jdouble accuracyInMeters,
         jstring floorId)
 {
     std::string floorIdString = "";
@@ -26,6 +27,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasL
     using ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationManager;
     reinterpret_cast<IndoorAtlasLocationManager *>(nativeObjectPtr)->DidUpdateLocation(latitude,
                                                                                        longitude,
+                                                                                       accuracyInMeters,
                                                                                        floorIdString);
 }
 

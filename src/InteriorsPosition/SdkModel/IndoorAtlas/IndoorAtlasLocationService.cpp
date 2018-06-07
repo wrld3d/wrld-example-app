@@ -77,7 +77,8 @@ namespace ExampleApp
                 
                 bool IndoorAtlasLocationService::GetHorizontalAccuracy(double& accuracy)
                 {
-                    return false;
+                    accuracy = m_horizontalAccuracyInMeters;
+                    return true;
                 }
                 
                 bool IndoorAtlasLocationService::GetHeadingDegrees(double& headingDegrees)
@@ -97,6 +98,11 @@ namespace ExampleApp
                 void IndoorAtlasLocationService::SetLocation(Eegeo::Space::LatLong &latLong)
                 {
                     m_latLong = latLong;
+                }
+
+                void IndoorAtlasLocationService::SetHorizontalAccuracyInMeters(
+                        double accuracyInMeters){
+                    m_horizontalAccuracyInMeters = accuracyInMeters;
                 }
                 
                 void IndoorAtlasLocationService::SetFloorIndex(int floorIndex)

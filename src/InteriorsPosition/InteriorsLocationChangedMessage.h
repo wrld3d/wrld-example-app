@@ -16,18 +16,7 @@ namespace ExampleApp
             : m_latitude(latitude)
             , m_longitude(longitude)
             , m_horizontalAccuracyInMeters(horizontalAccuracyInMeters)
-            , m_hasAccuracy(true)
             , m_floorNumber(floorNumber)
-            {}
-
-            InteriorsLocationChangedMessage(const double latitude,
-                                            const double longitude,
-                                            const int floorNumber)
-                    : m_latitude(latitude)
-                    , m_longitude(longitude)
-                    , m_horizontalAccuracyInMeters(0)
-                     ,m_hasAccuracy(false)
-                    , m_floorNumber(floorNumber)
             {}
 
             const double Latitude() const
@@ -38,11 +27,6 @@ namespace ExampleApp
             const double Longitude() const
             {
                 return m_longitude;
-            }
-
-            const bool HasAccuracy() const
-            {
-                return m_hasAccuracy;
             }
 
             const double HorizontalAccuracyInMeters() const
@@ -59,7 +43,6 @@ namespace ExampleApp
             double m_latitude;
             double m_longitude;
             double m_horizontalAccuracyInMeters;
-            bool m_hasAccuracy;
             int m_floorNumber;
         };
     }
