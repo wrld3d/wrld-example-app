@@ -66,7 +66,7 @@ namespace ExampleApp
                 void ClearStartLocation() ;
                 void ClearEndLocation() ;
                 
-                void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel);
+                void SetRoute(const SdkModel::NavRoutingRouteModel& routeModel,  bool isNewRoute);
                 
                 void ClearRoute();
                 
