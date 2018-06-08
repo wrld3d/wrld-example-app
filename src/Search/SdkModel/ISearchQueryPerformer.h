@@ -31,19 +31,23 @@ namespace ExampleApp
                 virtual void PerformSearchQuery(const std::string& query, bool isTag, bool tryInteriorSearch, const Eegeo::Space::LatLongAltitude& location, float radius, bool startAtGPSLocation=false, const std::string& interiorId = "") = 0;
 
                 virtual void AskForQueryRefresh(const SearchQuery& query, const Eegeo::Space::LatLongAltitude& location) = 0;
-                
-                virtual void AskForDeepLinkQuery(const std::string& query,const std::string& interiorId) = 0;
 
-                virtual void AskForDeepLinkQuery(const std::string& query,
-                                                 bool isTag,
-                                                 bool tryInteriorSearch) = 0;
+                virtual void AskForSearchQuery(const std::string& query,
+											   bool selectFirstResult,
+                                               const std::string& interiorId) = 0;
 
-                virtual void AskForDeepLinkQuery(const std::string& query,
-                                                 bool isTag,
-                                                 bool tryInteriorSearch,
-                                                 const Eegeo::Space::LatLongAltitude& location,
-                                                 bool startAtGPSLocation = false,
-                                                 const std::string& interiorId = "") = 0;
+                virtual void AskForSearchQuery(const std::string& query,
+                                               bool isTag,
+                                               bool tryInteriorSearch,
+                                               bool selectFirstResult) = 0;
+
+                virtual void AskForSearchQuery(const std::string& query,
+                                               bool isTag,
+                                               bool tryInteriorSearch,
+											   bool selectFirstResult,
+                                               const Eegeo::Space::LatLongAltitude& location,
+                                               bool startAtGPSLocation = false,
+                                               const std::string& interiorId = "") = 0;
 
                 virtual void RemoveSearchQueryResults() = 0;
 

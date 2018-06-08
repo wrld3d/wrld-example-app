@@ -1169,7 +1169,7 @@ const int DeletePinAlertViewTag = 2;
 
 -(void)scrollViewDidScroll: (UIScrollView*)scrollView
 {
-    if(self.pLabelsContainer.contentOffset.y + self.pLabelsContainer.frame.size.height >= self.pLabelsContainer.contentSize.height)
+    if(ceil(self.pLabelsContainer.contentOffset.y + self.pLabelsContainer.frame.size.height) >= self.pLabelsContainer.contentSize.height)
     {
         self.pFadeContainer.hidden = YES;
     }

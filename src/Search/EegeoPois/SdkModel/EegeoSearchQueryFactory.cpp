@@ -39,7 +39,9 @@ namespace ExampleApp
                 {
                     std::string lowerCaseQueryString = query.Query();
                     std::transform(lowerCaseQueryString.begin(), lowerCaseQueryString.end(), lowerCaseQueryString.begin(), tolower);
-                    Search::SdkModel::SearchQuery lowerCaseSearchQuery(lowerCaseQueryString, query.IsTag(), query.ShouldTryInteriorSearch(), query.Location(), query.Radius());
+                    Search::SdkModel::SearchQuery lowerCaseSearchQuery(lowerCaseQueryString,
+                                                                       query.IsTag(), query.ShouldTryInteriorSearch(), query.SelectFirstResult(),
+                                                                       query.Location(), query.Radius());
                     
                     const Eegeo::Resources::Interiors::InteriorsModel* interiorsModel = m_interiorInteractionModel.GetInteriorModel();
                     if (m_interiorInteractionModel.HasInteriorModel() && query.IsTag() && query.ShouldTryInteriorSearch())

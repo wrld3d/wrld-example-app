@@ -31,7 +31,7 @@ namespace ExampleApp
 				public:
 					TagInfo(const std::string& tag, const std::string& visibleText,
 							bool shouldTryInterior)
-							: m_freeChain(FREE_LIST_END)
+							: m_freeChain(IN_USE)
 							, m_tag(tag)
 							, m_visibleText(visibleText)
 							, m_shouldTryInterior(shouldTryInterior)
@@ -45,15 +45,10 @@ namespace ExampleApp
 			private:
 				ExampleAppMessaging::TMessageBus& m_messageBus;
 
-				typedef std::map<std::string, int> TTagInfoMap;
-				typedef std::map<std::string, int> TTagTextMap;
-
 				std::vector<TagInfo> m_tagStorage;
-				TTagInfoMap m_tagsByText;
-				TTagTextMap m_tagsByTag;
-
 				int m_freeStorage;
 				static const int FREE_LIST_END = -1;
+				static const int IN_USE = -2;
 
 				Eegeo::Helpers::TCallback1<TagCollection, const TagSearch::TagSearchAddedMessage&> m_onTagSearchAddedHandler;
 				Eegeo::Helpers::TCallback1<TagCollection, const TagSearch::TagSearchRemovedMessage&> m_onTagSearchRemovedHandler;
@@ -63,6 +58,7 @@ namespace ExampleApp
 				void AddTag(const std::string& text, const std::string& tag,
 				            bool shouldTryInterior);
 				void RemoveTag(const std::string& text, const std::string& tag);
+				int FindIndex(const std::string* text, const std::string* tag);
 
 			public:
 				TagCollection(ExampleAppMessaging::TMessageBus& messageBus);

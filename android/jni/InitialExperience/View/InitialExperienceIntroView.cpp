@@ -93,10 +93,12 @@ namespace ExampleApp
 
 			void InitialExperienceIntroView::ShowExitIUX()
 			{
+				Show();
 			}
 
 			void InitialExperienceIntroView::DismissExitIUX()
 			{
+				Dismiss();
 			}
 		}
 	}

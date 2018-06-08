@@ -23,7 +23,8 @@ namespace ExampleApp
                 void SelectFirstResultSearchService::PerformSearch(const std::string& queryString, const std::string& indoorMapId)
                 {
                     m_searchQueryPerformer.RemoveSearchQueryResults();
-                    m_searchQueryPerformer.AskForDeepLinkQuery(queryString,indoorMapId);
+                    bool selectFirstResult = true;
+                    m_searchQueryPerformer.AskForSearchQuery(queryString, selectFirstResult, indoorMapId);
                 }
             }
         }

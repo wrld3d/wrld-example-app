@@ -16,6 +16,7 @@ set(currsources
 ../src/DeepLink/SdkModel/DeepLinkConfigHandler.cpp
 ../src/DeepLink/SdkModel/DeepLinkConfigHandler.h
 ../src/DeepLink/SdkModel/IDeepLinkHandler.h
+../src/DeepLink/SdkModel/DeepLinkRequest.h
 ../src/DeepLink/SdkModel/CMakeLists.txt
 )
 set(sources ${sources} ${currsources})

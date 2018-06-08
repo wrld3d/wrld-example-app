@@ -29,6 +29,20 @@ namespace ExampleApp
         {
             namespace Highlights
             {
+                std::vector<std::string> GetEntityIdsFromJsonArray(const rapidjson::Value& jsonArray)
+                {
+                    assert(jsonArray.IsArray());
+                    std::vector<std::string> entities;
+                    
+                    for (int i  = 0; i < jsonArray.Size(); i++)
+                    {
+                        assert(jsonArray[i].IsString());
+                        entities.push_back(jsonArray[i].GetString());
+                    }
+                    
+                    return entities;
+                }
+                
                 std::vector<std::string> GetEntityIdsFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult)
                 {
                     rapidjson::Document json;
@@ -38,18 +52,22 @@ namespace ExampleApp
                     {
                         if( json.HasMember("highlight")  )
                         {
-                            entities.push_back(json["highlight"].GetString());
+                            const rapidjson::Value& area_highlight = json["highlight"];
+                            if(area_highlight.IsString())
+                            {
+                                entities.push_back(json["highlight"].GetString());
+                            }
+                            else
+                            {
+                                std::vector<std::string> areaHighlights = GetEntityIdsFromJsonArray(area_highlight);
+                                entities.insert(std::end(entities), std::begin(areaHighlights), std::end(areaHighlights));
+                            }
                         }
                         
                         if(  json.HasMember("entity_highlight")  )
                         {
-                            const rapidjson::Value& entity_highlight = json["entity_highlight"];
-                            assert(entity_highlight.IsArray());
-                            
-                            for (int i  = 0; i < entity_highlight.Size(); i++)
-                            {
-                                entities.push_back(entity_highlight[i].GetString());
-                            }
+                            std::vector<std::string> entityHighlights = GetEntityIdsFromJsonArray(json["entity_highlight"]);
+                            entities.insert(std::end(entities), std::begin(entityHighlights), std::end(entityHighlights));
                         }
                     }
                     
@@ -201,6 +219,7 @@ namespace ExampleApp
                         if (model.GetId() == resource.GetInteriorId())
                         {
                             OnInteriorChanged();
+                            ApplyHighlightsForCurrentResults();
                         }
                     }
                 }

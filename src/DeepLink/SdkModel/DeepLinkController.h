@@ -3,6 +3,7 @@
 #pragma once
 
 #include "DeepLinkModel.h"
+#include "DeepLinkRequest.h"
 #include "ApplicationConfiguration.h"
 
 
@@ -15,12 +16,16 @@ namespace ExampleApp
         {
             class DeepLinkController: private Eegeo::NonCopyable
             {
+                DeepLinkModel& m_deepLinkModel;
+                DeepLinkRequest* m_pDelayedRequest;
+                bool m_uiStarted;
             public:
                 DeepLinkController(DeepLinkModel& deepLinkModel);
                 ~DeepLinkController();
+                void OnUiStarted();
                 void HandleDeepLinkOpen(const AppInterface::UrlData& data);
             private:
-                DeepLinkModel& m_deepLinkModel;
+                void DoHandleDeepLinkOpen(const AppInterface::UrlData& data);
             };
         }
     }

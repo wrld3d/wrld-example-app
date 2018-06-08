@@ -19,7 +19,7 @@ namespace ExampleApp
                 , m_searchQueryResponseCallback(this, &CombinedSearchService::OnSearchResponseRecieved)
                 , m_pendingResultsLeft(0)
                 , m_interiorInteractionModel(interiorInteractionModel)
-                , m_currentQueryModel("", false, false, Eegeo::Space::LatLongAltitude(0, 0, 0), 0.f)
+                , m_currentQueryModel()
                 , m_hasActiveQuery(false)
                 {
                     std::map<std::string,Search::SdkModel::ISearchService*>::const_iterator iter;

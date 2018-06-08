@@ -7,7 +7,7 @@
 #include "ISearchWidgetView.h"
 #include "SearchServices.h"
 #include "SearchQueryRefreshedMessage.h"
-#include "DeepLinkedSearchQueryRequestMessage.h"
+#include "SearchQueryRequestMessage.h"
 #include "IMenuViewModel.h"
 #include "IMenuSectionsViewModel.h"
 #include "IUpdateableViewController.h"
@@ -32,10 +32,6 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 				SearchServices& m_searchServices;
 
-				typedef std::map<std::string, std::string> TTagMap;
-				TTagMap m_knownTags;
-				TTagMap m_visibleTextOfTag;
-
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onViewOpenedCallback;
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onViewClosedCallback;
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onSearchResultsClearedCallback;
@@ -48,7 +44,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchWidgetController, ScreenControl::View::IScreenControlViewModel&> m_onScreenStateChanged;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, OpenableControl::View::IOpenableControlViewModel&> m_onOpenableStateChanged;
 				Eegeo::Helpers::TCallback0<SearchWidgetController> m_onModalBackgroundTouchCallback;
-                Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::DeepLinkedSearchQueryRequestMessage&> m_deepLinkRequestedHandler;
+                Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::SearchQueryRequestMessage&> m_deepLinkRequestedHandler;
 
                 Eegeo::Helpers::TCallback1<SearchWidgetController, const AppModes::AppModeChangedMessage&> m_onAppModeChanged;
                 Eegeo::Helpers::TCallback3<SearchWidgetController, const std::string&, int, int> m_onItemSelectedCallback;
@@ -60,6 +56,7 @@ namespace ExampleApp
                 bool m_shouldSelectFirstResult;
 
 				TagCollection m_tagCollection;
+				std::string m_previousVisibleTextFromTagSearch;
 
             public:
                 SearchWidgetController(ISearchWidgetView& view,
@@ -79,7 +76,7 @@ namespace ExampleApp
 				void OnSearchResultSelected(int& index);
 				void OnSearchQueryRefreshedMessage(const Search::SearchQueryRefreshedMessage& message);
                 void OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message);
-                void OnSearchDeepLinkRequestedMessage(const Search::DeepLinkedSearchQueryRequestMessage& message);
+                void OnSearchRequestedMessage(const Search::SearchQueryRequestMessage& message);
                 
 				virtual void UpdateUiThread(float dt);
 				void OnAppModeChanged(const AppModes::AppModeChangedMessage &message);
