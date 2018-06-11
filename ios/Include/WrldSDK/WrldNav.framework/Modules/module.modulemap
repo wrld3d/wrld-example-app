@@ -1,0 +1,11 @@
+framework module WrldNav {
+  umbrella header "WrldNav.h"
+
+  export *
+  module * { export * }
+}
+
+module WrldNav.Swift {
+    header "WrldNav-Swift.h"
+    requires objc
+}
