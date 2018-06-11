@@ -63,7 +63,7 @@
     	    android:maxLength="2"
     	    android:paddingTop="5dp"
     	    android:text="BG"
-    	    android:textColor="@color/blue"
+    	    android:textColor="@color/interiors_elevator_text_normal"
     	    android:textSize="12sp"
     	    android:clickable="false" />
         
