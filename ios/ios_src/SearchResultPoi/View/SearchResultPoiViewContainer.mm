@@ -24,14 +24,18 @@
 @end
 
 @implementation SearchResultPoiViewContainer
+{
+    BOOL m_showDirectionsButton;
+}
 
-- (id)initWithoutParams
+- (id)initWithDirectionsButton: (BOOL) showDirectionsButton
 {
     self = [super init];
     
     if(self)
     {
         m_pInterop = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop)(self);
+        m_showDirectionsButton = showDirectionsButton;
     }
 
     return self;
@@ -90,7 +94,7 @@
     }
     else if(vendor == ExampleApp::Search::EegeoVendorName)
     {
-        return [[EegeoSearchResultPoiView alloc] initWithInterop:m_pInterop];
+        return [[EegeoSearchResultPoiView alloc] initWithInterop:m_pInterop showDirectionsButton: m_showDirectionsButton];
     }
     
     Eegeo_ASSERT(false, "Unknown POI vendor %s, cannot create view instance.\n", vendor.c_str());

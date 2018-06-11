@@ -28,7 +28,7 @@ namespace ExampleApp
                 Search::SdkModel::SearchResultModel m_model;
 
             public:
-                SearchResultPoiView(AndroidNativeState& nativeState);
+                SearchResultPoiView(AndroidNativeState& nativeState, bool showDirectionsButton);
 
                 ~SearchResultPoiView();
 
@@ -72,6 +72,8 @@ namespace ExampleApp
                 jobject CreateJavaObject(jclass uiViewClass);
 
                 jobjectArray CreateJavaArray(const std::vector<std::string>& stringVector);
+
+                bool m_showDirectionsButton;
             };
         }
     }

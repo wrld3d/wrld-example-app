@@ -16,6 +16,7 @@
 
 @interface EegeoSearchResultPoiView()<UIGestureRecognizerDelegate>
 {
+    BOOL m_showDirectionsButton;
 }
 @end
 
@@ -24,7 +25,7 @@ const int DeletePinAlertViewTag = 2;
 
 @implementation EegeoSearchResultPoiView
 
-- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;
+- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop showDirectionsButton: (BOOL) showDirectionsButton
 {
     self = [super init];
     
@@ -32,6 +33,8 @@ const int DeletePinAlertViewTag = 2;
     {
         m_pController = [UIViewController alloc];
         [m_pController setView:self];
+        
+        m_showDirectionsButton = showDirectionsButton;
         
         self->m_pRemovePinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
         self->m_pRemovePinHighlightButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") retain];
@@ -128,6 +131,7 @@ const int DeletePinAlertViewTag = 2;
         self.pDirectionsContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pDirectionsContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pControlContainer addSubview:self.pDirectionsContainer];
+        [self.pDirectionsContainer setHidden: !m_showDirectionsButton];
         
         self.pDirectionsButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pDirectionsButton setTitle:@"   Directions" forState:UIControlStateNormal];
@@ -375,7 +379,7 @@ const int DeletePinAlertViewTag = 2;
     
     const float headlineHeight = 50.f;
     const float pinButtonSectionHeight = 64.f;
-    const float closeButtonSectionOffsetY = mainWindowHeight - 94.f;
+    const float closeButtonSectionOffsetY = mainWindowHeight - (m_showDirectionsButton ? 94.f : 44.f);
     const float contentSectionHeight = mainWindowHeight - (pinButtonSectionHeight + headlineHeight);
     
     const float topMargin = 15.f;

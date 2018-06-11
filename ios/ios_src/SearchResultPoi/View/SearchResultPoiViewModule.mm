@@ -14,10 +14,11 @@ namespace ExampleApp
         namespace View
         {
             SearchResultPoiViewModule::SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
+                                                                 bool showDirectionsButton,
                                                                  ExampleAppMessaging::TMessageBus& messageBus,
                                                                  Metrics::IMetricsService& metricsService)
             {
-                m_pView = [[SearchResultPoiViewContainer alloc] initWithoutParams];
+                m_pView = [[SearchResultPoiViewContainer alloc] initWithDirectionsButton: showDirectionsButton];
                 
                 m_pController = Eegeo_NEW(SearchResultPoiController)(*[m_pView getInterop],
                                                                      searchResultPoiViewModel,

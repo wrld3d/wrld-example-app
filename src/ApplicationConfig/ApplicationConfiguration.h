@@ -75,6 +75,8 @@ namespace ExampleApp
 			std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> m_outdoorSearchMenuItems;
             bool m_overrideIndoorSearchMenuItems;
 
+			bool m_showPoiDirectionsButton;
+
         public:
             
 			ApplicationConfiguration(
@@ -124,7 +126,8 @@ namespace ExampleApp
 				const std::string& mapSceneId,
 				const std::vector<std::vector<std::string>>& customKeyboardLayout,
                 const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig>& outdoorSearchMenuItems,
-                bool overrideIndoorSearchMenuItems
+                bool overrideIndoorSearchMenuItems,
+				bool showPoiDirectionsButton
             );
             
             std::string Name() const;
@@ -215,6 +218,8 @@ namespace ExampleApp
 			const std::vector<std::vector<std::string>> CustomKeyboardLayout() const;
             const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> OutdoorSearchMenuItems() const;
             bool OverrideIndoorSearchMenuItems() const;
+
+			bool ShowPoiDirectionsButton() const;
         };
     }
 }

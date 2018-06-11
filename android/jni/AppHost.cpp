@@ -572,6 +572,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
                                        m_nativeState,
                                        app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
+                                       m_pApp->GetApplicationConfiguration().ShowPoiDirectionsButton(),
                                        m_messageBus,
                                        *m_pAndroidFlurryMetricsService
                                    );

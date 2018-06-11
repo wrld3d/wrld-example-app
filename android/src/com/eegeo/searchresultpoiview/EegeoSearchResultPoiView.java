@@ -178,7 +178,8 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
     		final String twitter,
     		final String email,
     		final String customViewUrl,
-    		final int customViewHeight) 
+    		final int customViewHeight,
+            final boolean showDirectionsButton)
     {
     	int containerWidth = m_searchResultPoiViewContainer.getWidth();
     	int containerHeight = m_searchResultPoiViewContainer.getHeight();
@@ -380,6 +381,8 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         	m_webViewContainer.setVisibility(View.VISIBLE);
         	m_poiImageHeader.setVisibility(View.VISIBLE);
         }
+
+        m_directionsButton.setVisibility(showDirectionsButton ? View.VISIBLE : View.GONE);
     }
 
 
