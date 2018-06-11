@@ -54,8 +54,8 @@ enum CompassViewState
         m_width = 80.f;
         m_height = 80.f;
         
-        m_innerHeight = 80.0f/1.5f;
-        m_innerWidth = 80.0f/1.5f;
+        m_innerHeight = 80.0f;
+        m_innerWidth = 80.0f;
         
         m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_innerHeight - (m_height - m_innerHeight)/2;
         m_yPosInactive = m_screenHeight + m_height;

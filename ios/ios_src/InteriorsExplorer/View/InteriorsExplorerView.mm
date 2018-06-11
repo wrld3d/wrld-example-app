@@ -30,12 +30,12 @@ namespace
 
 - (UIColor*) textColorNormal
 {
-    return [UIColor colorWithRed:(18.0f/255.0f) green:(86.0f/255.0f) blue:(176.0f/255.0f) alpha:1.0f];
+    return [UIColor colorWithRed:(255.0f/255.0f) green:(255.0f/255.0f) blue:(255.0f/255.0f) alpha:1.0f];
 }
 
 - (UIColor*) textColorHighlighted
 {
-    return [UIColor colorWithRed:(205.0f/255.0f) green:(252.0f/255.0f) blue:(13.0f/255.0f) alpha:1.0f];;
+    return [UIColor colorWithRed:(18.0f/255.0f) green:(86.0f/255.0f) blue:(176.0f/255.0f) alpha:1.0f];
 }
 
 - (id) initWithParams:(float)width :(float)height :(float)pixelScale :(InteriorsExplorerTutorialView&)tutorialView
@@ -131,7 +131,10 @@ namespace
         [dismissButtonParent addSubview:self.pDismissButtonBackground];
         
         self.pDismissButton = [[[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonSize, buttonSize)] autorelease];
-        [self.pDismissButton setDefaultStatesWithImageNames:@"button_exit_interior_off" :@"button_exit_interior_on"];
+        [self.pDismissButton setDefaultStatesWithNormalImageName:@"button_exit_interior_off"
+                                              highlightImageName:@"button_exit_interior_on"
+                                           normalBackgroundColor:[self textColorNormal]
+                                        highlightBackgroundColor:[self textColorHighlighted]];
 
         [self.pDismissButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self.pDismissButtonBackground addSubview:self.pDismissButton];
