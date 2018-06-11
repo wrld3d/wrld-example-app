@@ -32,6 +32,35 @@ namespace ExampleApp
                 out_floorId = interiorsFloorModel.GetFloorNumber();
                 return true;
             }
+            
+            bool NavRouteInteriorModelHelper::TryGetIndoorMapFloorName(const Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
+                                                                       const std::string& indoorMapId,
+                                                                       const int indoorMapFloorId,
+                                                                       std::string& out_indoorMapFloorName)
+            {
+                if (!interiorsModelRepository.HasInterior(indoorMapId))
+                {
+                    return false;
+                }
+                
+                return TryGetIndoorMapFloorName(interiorsModelRepository.GetInterior(indoorMapId), indoorMapFloorId, out_indoorMapFloorName);
+            }
+            
+            bool NavRouteInteriorModelHelper::TryGetIndoorMapFloorName(const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel,
+                                                                       const int indoorMapFloorId,
+                                                                       std::string& out_indoorMapFloorName)
+            {
+                const int floorIndex = interiorsModel.FindFloorIndexWithFloorNumber(indoorMapFloorId);
+                
+                if (floorIndex < 0 || floorIndex >= interiorsModel.GetFloorCount())
+                {
+                    return false;
+                }
+                
+                const auto& floorModel = interiorsModel.GetFloorAtIndex(floorIndex);
+                out_indoorMapFloorName = floorModel.GetFloorName();
+                return true;
+            }
         }
     }
 }
