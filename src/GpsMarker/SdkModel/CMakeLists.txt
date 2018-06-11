@@ -10,6 +10,12 @@ set(currsources
   ../src/GpsMarker/SdkModel/GpsMarkerModule.h
   ../src/GpsMarker/SdkModel/IGpsMarkerController.h
   ../src/GpsMarker/SdkModel/IGpsMarkerModule.h
+  ../src/GpsMarker/SdkModel/AccuracyRingView.h
+  ../src/GpsMarker/SdkModel/AccuracyRingView.cpp
+  ../src/GpsMarker/SdkModel/AccuracyRingRenderable.h
+  ../src/GpsMarker/SdkModel/AccuracyRingRenderable.cpp
+  ../src/GpsMarker/SdkModel/AccuracyRingRenderableFactory.h
+  ../src/GpsMarker/SdkModel/AccuracyRingRenderableFactory.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\GpsMarker\\SdkModel FILES ${currsources})

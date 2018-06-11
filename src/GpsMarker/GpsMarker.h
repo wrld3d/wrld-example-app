@@ -13,6 +13,10 @@ namespace ExampleApp
             class GpsMarkerModel;
             class GpsMarkerView;
             class GpsMarkerAnchorView;
+
+            class AccuracyRingRenderable;
+            class AccuracyRingRenderableFactory;
+            class AccuracyRingView;
         }
     }
 }

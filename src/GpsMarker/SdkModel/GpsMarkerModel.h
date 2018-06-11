@@ -32,6 +32,8 @@ namespace ExampleApp
 
                 const float GetSphereHeightAboveBase() const;
 
+                const double GetAccuracy() const { return m_currentAccuracyMeters; }
+
                 bool IsLocationIndoors() const;
 
             private:
@@ -41,11 +43,13 @@ namespace ExampleApp
 
                 Eegeo::dv3 m_currentLocationEcef;
 
+                double m_currentAccuracyMeters;
                 float m_currentHeadingRadians;
                 float m_currentHeadingVelocity;
 
                 bool TryGetLocationServiceIndoorMapFloorId(const Eegeo::Resources::Interiors::InteriorId& locationServiceInteriorId, int& out_indoorMapFloorId) const;
                 bool TryGetFloorIdFromIndex(int floorIndex, int& out_indoorMapFloorId) const;
+
             };
         }
     }

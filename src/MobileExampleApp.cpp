@@ -588,6 +588,7 @@ namespace ExampleApp
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetLocationService(),
                                                                                          m_pWorld->GetTerrainModelModule(),
                                                                                          m_pWorld->GetMapModule(),
+                                                                                         m_pWorld->GetRenderingModule(),
                                                                                          interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                          m_pVisualMapModule->GetVisualMapService(),
                                                                                          createBlueSphereViews,

@@ -26,6 +26,7 @@ namespace ExampleApp
                 , m_currentHeadingRadians(0)
                 , m_currentHeadingVelocity(0)
                 , m_blueSphereModel(blueSphereModel)
+                , m_currentAccuracyMeters(0.0)
             {
                 m_blueSphereModel.SetEnabled(true);
             }
@@ -82,6 +83,8 @@ namespace ExampleApp
                 {
                     m_blueSphereModel.SetIndoorMap(std::string(), 0);
                 }
+
+                m_locationService.GetHorizontalAccuracy(m_currentAccuracyMeters);
 
                 // return true regardless of whether or not we successfully found an indoorMapFloorId
                 return true;

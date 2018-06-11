@@ -6,6 +6,12 @@
 #include "GpsMarkerController.h"
 #include "TerrainModelModule.h"
 #include "MapModule.h"
+#include "AccuracyRingRenderableFactory.h"
+#include "AccuracyRingRenderable.h"
+#include "AccuracyRingView.h"
+#include "RenderingModule.h"
+#include "VectorMath.h"
+#include "RenderableFilters.h"
 
 namespace ExampleApp
 {
@@ -16,12 +22,26 @@ namespace ExampleApp
             GpsMarkerModule::GpsMarkerModule(Eegeo::Location::ILocationService& locationService,
                                              Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                              Eegeo::Modules::Map::MapModule& mapModule,
+                                             Eegeo::Modules::Core::RenderingModule& renderingModule,
                                              Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                              VisualMap::SdkModel::IVisualMapService& visualMapService,
                                              const bool createBlueSphereViews,
                                              ExampleAppMessaging::TMessageBus& messageBus)
+            : m_renderableFilters(renderingModule.GetRenderableFilters())
             {
                 m_pModel = Eegeo_NEW(GpsMarkerModel)(locationService, interiorInteractionModel, mapModule.GetBlueSphereModule().GetBlueSphereModel());
+
+                m_pRingRenderableFactory = AccuracyRingRenderableFactory::Create(renderingModule);
+                m_pRingRenderable = m_pRingRenderableFactory->BuildRenderable();
+                m_pRingRenderable->SetColors(Eegeo::v4(18.0f/255.0f, 86.0f/255.0f, 172.0f/255.0f, 0.2f),
+                                             Eegeo::v4(18.0f/255.0f, 86.0f/255.0f, 172.0f/255.0f, 1.0f));
+                m_pRingView = Eegeo_NEW(AccuracyRingView)(*m_pRingRenderable,
+                                                          interiorInteractionModel,
+                                                          mapModule.GetEnvironmentFlatteningService(),
+                                                          terrainModelModule.GetTerrainHeightProvider()
+                );
+
+                m_renderableFilters.AddRenderableFilter(*m_pRingView);
 
                 m_pController = Eegeo_NEW(GpsMarkerController)(*m_pModel,
                                                                interiorInteractionModel,
@@ -31,6 +51,7 @@ namespace ExampleApp
                                                                mapModule.GetBlueSphereModule().GetBlueSphereView(),
                                                                mapModule.GetBlueSphereModule().GetBlueSphereAnchorView(),
                                                                createBlueSphereViews,
+                                                               *m_pRingView,
                                                                messageBus);
             }
             
@@ -38,6 +59,12 @@ namespace ExampleApp
             {
                 Eegeo_DELETE m_pController;
                 Eegeo_DELETE m_pModel;
+
+                m_renderableFilters.RemoveRenderableFilter(*m_pRingView);
+
+                Eegeo_DELETE m_pRingView;
+                Eegeo_DELETE m_pRingRenderable;
+                Eegeo_DELETE m_pRingRenderableFactory;
             }
             
             IGpsMarkerController& GpsMarkerModule::GetGpsMarkerController()

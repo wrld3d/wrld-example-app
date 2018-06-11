@@ -9,6 +9,7 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorsModel.h"
 #include "BlueSphereConfiguration.h"
+#include "AccuracyRingView.h"
 
 namespace ExampleApp
 {
@@ -26,6 +27,7 @@ namespace ExampleApp
                                                      Eegeo::BlueSphere::BlueSphereView& blueSphereView,
                                                      Eegeo::BlueSphere::BlueSphereAnchorView& blueSphereAnchorView,
                                                      const bool createBlueSphereViews,
+                                                     AccuracyRingView& accuracyRingView,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
             : m_model(model)
             , m_interiorInteractionModel(interiorInteractionModel)
@@ -41,6 +43,7 @@ namespace ExampleApp
             , m_blueSphereAnchorView(blueSphereAnchorView)
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_createBlueSphereViews(createBlueSphereViews)
+            , m_accuracyRingView(accuracyRingView)
             {
                 
                 if(m_createBlueSphereViews)
@@ -81,6 +84,7 @@ namespace ExampleApp
                 Eegeo_ASSERT(m_visibilityCount <= 1, "Gps Marker sent visibility message to make visible before visibility message to be made invisible");
                 m_blueSphereView.SetVisible(m_visibilityCount == 1);
                 m_blueSphereAnchorView.SetVisible(m_visibilityCount == 1);
+                m_accuracyRingView.SetEnabled(m_visibilityCount == 1);
             }
 
             void GpsMarkerController::OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage &message)
@@ -106,6 +110,10 @@ namespace ExampleApp
                     m_blueSphereView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
                     m_blueSphereAnchorView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
                 }
+
+                m_accuracyRingView.SetPosition(m_model.GetCurrentLocationEcef());
+                m_accuracyRingView.SetAccuracyRange(static_cast<float>(m_model.GetAccuracy()));
+                m_accuracyRingView.Update(dt, renderCamera);
             }
             
             void GpsMarkerController::GetCurrentVisualMapTime(std::string& currentTime, std::string& currentWeather)
