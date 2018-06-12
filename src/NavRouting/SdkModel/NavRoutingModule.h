@@ -13,6 +13,7 @@
 #include "CameraTransitions.h"
 #include "Compass.h"
 #include "WorldPins.h"
+#include "GpsMarker.h"
 
 namespace ExampleApp
 {
@@ -34,7 +35,8 @@ namespace ExampleApp
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                  Eegeo::Markers::IMarkerService& markerService,
-                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService);
+                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                 GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel);
 
                 ~NavRoutingModule();
 

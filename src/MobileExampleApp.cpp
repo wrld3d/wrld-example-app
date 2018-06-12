@@ -588,6 +588,7 @@ namespace ExampleApp
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetLocationService(),
                                                                                          m_pWorld->GetTerrainModelModule(),
                                                                                          m_pWorld->GetMapModule(),
+                                                                                         m_pWorld->GetRenderingModule(),
                                                                                          interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                          m_pVisualMapModule->GetVisualMapService(),
                                                                                          createBlueSphereViews,
@@ -837,7 +838,8 @@ namespace ExampleApp
                                                                                             m_messageBus,
                                                                                             interiorsModelModule.GetInteriorsModelRepository(),
                                                                                             mapModule.GetMarkersModule().GetMarkerService(),
-                                                                                            m_pWorldPinsModule->GetWorldPinsService());
+                                                                                            m_pWorldPinsModule->GetWorldPinsService(),
+                                                                                            m_pGpsMarkerModule->GetGpsMarkerModel());
         
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsCameraController());

@@ -9,6 +9,7 @@
 #include "InteriorInteractionModel.h"
 #include "InteriorsModel.h"
 #include "BlueSphereConfiguration.h"
+#include "AccuracyRingView.h"
 
 namespace ExampleApp
 {
@@ -26,6 +27,7 @@ namespace ExampleApp
                                                      Eegeo::BlueSphere::BlueSphereView& blueSphereView,
                                                      Eegeo::BlueSphere::BlueSphereAnchorView& blueSphereAnchorView,
                                                      const bool createBlueSphereViews,
+                                                     AccuracyRingView& accuracyRingView,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
             : m_model(model)
             , m_interiorInteractionModel(interiorInteractionModel)
@@ -41,6 +43,7 @@ namespace ExampleApp
             , m_blueSphereAnchorView(blueSphereAnchorView)
             , m_environmentFlatteningService(environmentFlatteningService)
             , m_createBlueSphereViews(createBlueSphereViews)
+            , m_accuracyRingView(accuracyRingView)
             {
                 
                 if(m_createBlueSphereViews)
@@ -85,7 +88,6 @@ namespace ExampleApp
 
             void GpsMarkerController::OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage &message)
             {
-                m_currentFloorIndex = message.GetSelectedFloorIndex();
                 m_blueSphereView.UpdateBlueSphereRenderingLayer(message.IsInteriorVisible());
                 m_blueSphereAnchorView.UpdateBlueSphereRenderingLayer(message.IsInteriorVisible());
             }
@@ -96,6 +98,7 @@ namespace ExampleApp
                 m_model.UpdateHeading(dt);
 
                 m_model.SetEnabled(m_visibilityCount == 1 && positionValid);
+                m_accuracyRingView.SetEnabled(m_visibilityCount == 1 && m_model.IsAccuracyRingEnabled() && positionValid);
 
                 std::string currentTime;
                 std::string currentWeather;
@@ -106,6 +109,10 @@ namespace ExampleApp
                     m_blueSphereView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
                     m_blueSphereAnchorView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
                 }
+
+                m_accuracyRingView.SetPosition(m_model.GetCurrentLocationEcef());
+                m_accuracyRingView.SetAccuracyRange(static_cast<float>(m_model.GetAccuracy()));
+                m_accuracyRingView.Update(dt, renderCamera);
             }
             
             void GpsMarkerController::GetCurrentVisualMapTime(std::string& currentTime, std::string& currentWeather)
