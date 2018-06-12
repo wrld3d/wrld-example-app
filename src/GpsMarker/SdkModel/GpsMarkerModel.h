@@ -30,6 +30,10 @@ namespace ExampleApp
 
                 void SetEnabled(bool enabled);
 
+                void SetAccuracyRingEnabled(bool enabled);
+
+                bool IsAccuracyRingEnabled() const;
+
                 const float GetSphereHeightAboveBase() const;
 
                 const double GetAccuracy() const { return m_currentAccuracyMeters; }
@@ -46,6 +50,7 @@ namespace ExampleApp
                 double m_currentAccuracyMeters;
                 float m_currentHeadingRadians;
                 float m_currentHeadingVelocity;
+                bool m_accuracyRingEnabled;
 
                 bool TryGetLocationServiceIndoorMapFloorId(const Eegeo::Resources::Interiors::InteriorId& locationServiceInteriorId, int& out_indoorMapFloorId) const;
                 bool TryGetFloorIdFromIndex(int floorIndex, int& out_indoorMapFloorId) const;

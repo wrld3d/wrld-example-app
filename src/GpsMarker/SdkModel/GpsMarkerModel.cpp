@@ -174,6 +174,16 @@ namespace ExampleApp
                 out_floorId = interiorsFloorModel.GetFloorNumber();
                 return true;
             }
+
+            void GpsMarkerModel::SetAccuracyRingEnabled(bool enabled)
+            {
+                m_accuracyRingEnabled = enabled;
+            }
+
+            bool GpsMarkerModel::IsAccuracyRingEnabled() const
+            {
+                return m_accuracyRingEnabled;
+            }
         }
     }
 }

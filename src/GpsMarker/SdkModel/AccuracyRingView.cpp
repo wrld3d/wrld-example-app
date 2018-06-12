@@ -10,6 +10,7 @@
 #include "InteriorsModel.h"
 #include "TerrainHeightProvider.h"
 #include "MathsHelpers.h"
+#include "EarthConstants.h"
 
 namespace ExampleApp
 {
@@ -17,6 +18,19 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
+            namespace
+            {
+                float CalculateAltitudeBasedRingWidth(float altitude)
+                {
+                    const float minAltitude = 20.f;
+                    const float maxAltitude = 1000.f;
+                    const float lowAltitudeRadius = 0.1f;
+                    const float highAltitudeRadius = 5.0f;
+                    float t = Eegeo::Math::Clamp01((altitude - minAltitude)/(maxAltitude-minAltitude));
+                    return Eegeo::Math::Lerp(lowAltitudeRadius, highAltitudeRadius, t);
+                }
+            }
+
             AccuracyRingView::AccuracyRingView(AccuracyRingRenderable & renderable,
                     Eegeo::Resources::Interiors::InteriorInteractionModel &interiorInteractionModel,
                     Eegeo::Rendering::EnvironmentFlatteningService & environmentFlatteningService,
@@ -52,14 +66,15 @@ namespace ExampleApp
             void AccuracyRingView::SetEnabled(bool enabled)
             {
                 m_enabled = enabled;
-                if(!m_enabled)
-                {
-                    m_targetAccuracyMeters = 0.0f;
-                }
             }
 
             void AccuracyRingView::Update(float dt, const Eegeo::Camera::RenderCamera& renderCamera)
             {
+                if(!m_enabled)
+                {
+                    m_targetAccuracyMeters = 0.0f;
+                }
+
                 m_currentAccuracyMeters = Eegeo::Helpers::MathsHelpers::ExpMoveTowards(m_currentAccuracyMeters, m_targetAccuracyMeters, 0.1f, dt, 0.01f);
 
                 if(m_currentAccuracyMeters <= 0.0f)
@@ -67,24 +82,11 @@ namespace ExampleApp
                     return;
                 }
 
-                const float ringWidth = .5f; // Should change with altitude?
+                const float altitude = (float)(renderCamera.GetAltitude() - (m_positionEcef.Length() - Eegeo::Space::EarthConstants::Radius));
+                const float ringWidth = CalculateAltitudeBasedRingWidth(altitude);
                 m_accuracyRingRenderable.SetRadii(m_currentAccuracyMeters + ringWidth, m_currentAccuracyMeters);
 
                 Eegeo::dv3 ecefPosition = m_positionEcef;
-                /*if(m_interiorInteractionModel.HasInteriorModel())
-                {
-                    const Eegeo::Resources::Interiors::InteriorsModel* pModel = m_interiorInteractionModel.GetInteriorModel();
-
-                    ecefPosition += pModel->GetFloorAltitude(m_interiorInteractionModel.GetSelectedFloorIndex()) * ecefPosition.Norm();
-                }
-                else
-                {
-                    float height;
-                    if(m_terrainHeightProvider.TryGetHeight(ecefPosition, 11, height))
-                    {
-                        ecefPosition += height * ecefPosition.Norm();
-                    }
-                }*/
 
                 Eegeo::v3 cameraOffset = (ecefPosition - renderCamera.GetEcefLocation()).ToSingle();
                 m_accuracyRingRenderable.SetTransforms(cameraOffset, renderCamera.GetViewProjectionMatrix());
@@ -95,7 +97,7 @@ namespace ExampleApp
                     const Eegeo::Rendering::RenderContext &renderContext,
                     Eegeo::Rendering::RenderQueue &renderQueue)
             {
-                //if(m_enabled && m_currentAccuracyMeters > 0.0f)
+                if(m_currentAccuracyMeters > 0.0f)
                 {
                     renderQueue.EnqueueRenderable(m_accuracyRingRenderable);
                 }

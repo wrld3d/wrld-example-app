@@ -53,6 +53,8 @@ namespace ExampleApp
                     m_messageBus.SubscribeUi(m_interiorsExplorerStateChangedCallback);
                 }
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_floorSelectedCallback);
+
+                m_accuracyRingView.SetEnabled(true);
             }
 
             GpsMarkerController::~GpsMarkerController()
@@ -84,12 +86,10 @@ namespace ExampleApp
                 Eegeo_ASSERT(m_visibilityCount <= 1, "Gps Marker sent visibility message to make visible before visibility message to be made invisible");
                 m_blueSphereView.SetVisible(m_visibilityCount == 1);
                 m_blueSphereAnchorView.SetVisible(m_visibilityCount == 1);
-                m_accuracyRingView.SetEnabled(m_visibilityCount == 1);
             }
 
             void GpsMarkerController::OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage &message)
             {
-                m_currentFloorIndex = message.GetSelectedFloorIndex();
                 m_blueSphereView.UpdateBlueSphereRenderingLayer(message.IsInteriorVisible());
                 m_blueSphereAnchorView.UpdateBlueSphereRenderingLayer(message.IsInteriorVisible());
             }
@@ -100,6 +100,7 @@ namespace ExampleApp
                 m_model.UpdateHeading(dt);
 
                 m_model.SetEnabled(m_visibilityCount == 1 && positionValid);
+                m_accuracyRingView.SetEnabled(m_visibilityCount == 1 && m_model.IsAccuracyRingEnabled() && positionValid);
 
                 std::string currentTime;
                 std::string currentWeather;

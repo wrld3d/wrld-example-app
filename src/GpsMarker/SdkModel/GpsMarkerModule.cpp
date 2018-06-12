@@ -33,8 +33,8 @@ namespace ExampleApp
 
                 m_pRingRenderableFactory = AccuracyRingRenderableFactory::Create(renderingModule);
                 m_pRingRenderable = m_pRingRenderableFactory->BuildRenderable();
-                m_pRingRenderable->SetColors(Eegeo::v4(18.0f/255.0f, 86.0f/255.0f, 172.0f/255.0f, 0.2f),
-                                             Eegeo::v4(18.0f/255.0f, 86.0f/255.0f, 172.0f/255.0f, 1.0f));
+                m_pRingRenderable->SetColors(Eegeo::v4(18.0f/255.0f, 86.0f/255.0f, 172.0f/255.0f, 0.75f),
+                                             Eegeo::v4(18.0f/255.0f, 86.0f/255.0f, 172.0f/255.0f, 0.8f));
                 m_pRingView = Eegeo_NEW(AccuracyRingView)(*m_pRingRenderable,
                                                           interiorInteractionModel,
                                                           mapModule.GetEnvironmentFlatteningService(),

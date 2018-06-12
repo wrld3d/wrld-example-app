@@ -29,7 +29,8 @@ namespace ExampleApp
                                                 ExampleAppMessaging::TMessageBus& messageBus,
                                                 Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                                 Eegeo::Markers::IMarkerService& markerService,
-                                                WorldPins::SdkModel::IWorldPinsService& worldPinsService)
+                                                WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel)
             {
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
                 
@@ -57,7 +58,8 @@ namespace ExampleApp
 
                 m_pTurnByTurnController = Eegeo_NEW(TurnByTurn::NavTurnByTurnController)(*m_pTurnByTurnModel,
                                                                                          *m_pNavRoutingModel,
-                                                                                         navigationService);
+                                                                                         navigationService,
+                                                                                         gpsMarkerModel);
                 
                 m_pRouteDrawingHandler = Eegeo_NEW(NavWidgetRouteDrawingHandler)(*m_pNavRoutingModel,
                                                                                  *m_pTurnByTurnModel,

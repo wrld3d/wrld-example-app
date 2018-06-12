@@ -111,7 +111,7 @@ namespace ExampleApp
                 m_quadRenderable.Render(glState);
 
                 glState.Blend.Enable();
-                glState.BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                glState.BlendFunc(GL_DST_COLOR, GL_SRC_ALPHA);
                 glState.BlendEquation(GL_FUNC_ADD);
                 glState.StencilFunc(GL_EQUAL, 2, 0xFF);
 
