@@ -31,11 +31,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            struct NavUIModule::Private
+            struct NavUIModule::m_Private
             {
                 OpenableControlViewModel_lt openable;
                 
-                Private(Eegeo::Helpers::IIdentityProvider& identityProvider)
+                m_Private(Eegeo::Helpers::IIdentityProvider& identityProvider)
                         : openable(identityProvider.GetNextIdentity())
                 {
                     
@@ -44,7 +44,7 @@ namespace ExampleApp
             
             NavUIModule::NavUIModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
                                      Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction):
-                d(new Private(identityProvider))
+                m_pImpl(new m_Private(identityProvider))
             {
                 m_pNavWidgetViewModel = Eegeo_NEW(NavWidgetViewModel)(identityProvider.GetNextIdentity());
                 ignoredMenuReaction.AddIgnoredMenuIdentity(m_pNavWidgetViewModel->GetOpenableControl().GetIdentity());
@@ -53,7 +53,7 @@ namespace ExampleApp
             NavUIModule::~NavUIModule()
             {
                 Eegeo_DELETE m_pNavWidgetViewModel;
-                delete d;
+                delete m_pImpl;
             }
 
             OpenableControl::View::IOpenableControlViewModel& NavUIModule::GetObservableOpenableControl() const

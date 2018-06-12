@@ -28,8 +28,8 @@ namespace ExampleApp
                 INavWidgetViewModel& GetNavWidgetViewModel() const;
                 
             private:
-                struct Private;
-                Private* d;
+                struct m_Private;
+                m_Private* m_pImpl;
 
                 INavWidgetViewModel* m_pNavWidgetViewModel;
             };

@@ -35,7 +35,7 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_routeClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingRouteModel&> m_routeUpdatedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_currentDirectionSetCallbacks;
-                Eegeo::Helpers::CallbackCollection1<const NavRoutingDirectionModel&>m_currentDirectionUpdatedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const NavRoutingDirectionModel&> m_currentDirectionUpdatedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_selectedDirectionIndexSetCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const double> m_remainingRouteDurationSetCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingMode> m_navModeSetCallbacks;
