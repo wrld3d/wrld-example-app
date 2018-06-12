@@ -30,6 +30,7 @@ namespace ExampleApp
                                     Eegeo::BlueSphere::BlueSphereView& blueSphereView,
                                     Eegeo::BlueSphere::BlueSphereAnchorView& blueSphereAnchorView,
                                     const bool createBlueSphereViews,
+                                    AccuracyRingView& accuracyRingView,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 ~GpsMarkerController();
 
@@ -44,6 +45,7 @@ namespace ExampleApp
                 GpsMarkerModel& m_model;
                 Eegeo::BlueSphere::BlueSphereView& m_blueSphereView;
                 Eegeo::BlueSphere::BlueSphereAnchorView& m_blueSphereAnchorView;
+                AccuracyRingView& m_accuracyRingView;
 
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
