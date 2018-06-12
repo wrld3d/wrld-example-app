@@ -14,10 +14,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiView::SearchResultPoiView(AndroidNativeState& nativeState)
+            SearchResultPoiView::SearchResultPoiView(AndroidNativeState& nativeState, bool showDirectionsButton)
                 : m_nativeState(nativeState)
             	, m_uiViewClass(NULL)
                 , m_uiView(NULL)
+                , m_showDirectionsButton(showDirectionsButton)
             {
                 ASSERT_UI_THREAD
             }
@@ -278,7 +279,7 @@ namespace ExampleApp
             	jstring customViewStr = env->NewStringUTF(eegeoSearchResultModel.GetCustomViewUrl().c_str());
             	int customViewHeight = eegeoSearchResultModel.GetCustomViewHeight();
 
-            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V");
+            	jmethodID displayPoiInfoMethod = env->GetMethodID(m_uiViewClass, "displayPoiInfo", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZ)V");
             	env->CallVoidMethod(
             			m_uiView,
 						displayPoiInfoMethod,
@@ -297,7 +298,8 @@ namespace ExampleApp
 						twitterStr,
 						emailStr,
 						customViewStr,
-						customViewHeight
+						customViewHeight,
+                        m_showDirectionsButton
             	);
 
             	env->DeleteLocalRef(vendorStr);

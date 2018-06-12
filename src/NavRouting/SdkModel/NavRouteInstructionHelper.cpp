@@ -207,7 +207,9 @@ namespace ExampleApp
                 std::string fullInstructionText = ss.str();
 
                 std::string iconKey;
-
+                bool isMultiFloor = false;
+                int nextFloorId = 0;
+                
                 if(pNextStep == NULL)
                 {
                     fullInstructionText = shortInstructionName = Direction::DestinationReached;
@@ -218,12 +220,25 @@ namespace ExampleApp
                     iconKey = GetIconNameFromType(*pNextStep,
                                                   *pNextNextStep,
                                                   &currentStep);
+                    
+                    if (pNextStep->IsMultiFloor)
+                    {
+                        isMultiFloor = true;
+                        nextFloorId = pNextNextStep->IndoorFloorId;
+                    }
+                    else if (currentStep.IsMultiFloor)
+                    {
+                        isMultiFloor = true;
+                        nextFloorId = pNextStep->IndoorFloorId;
+                    }
                 }
 
                 return NavRouteFormattedInstructions(shortInstructionName,
                                                      locationName,
                                                      fullInstructionText,
-                                                     iconKey
+                                                     iconKey,
+                                                     isMultiFloor,
+                                                     nextFloorId
                 );
             }
 

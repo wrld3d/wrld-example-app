@@ -33,6 +33,9 @@ namespace
     CGFloat m_navigationViewStateFloorPanelBottomBound;
     
     InteriorExplorerViewState m_viewState;
+    
+    BOOL m_onScreenIfSpaceAvailable;
+    BOOL m_hasEnoughScreenSpaceToAppear;
 }
 
 - (ExampleApp::InteriorsExplorer::View::InteriorsExplorerViewInterop*) getInterop
@@ -59,6 +62,9 @@ namespace
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
+        
+        m_onScreenIfSpaceAvailable = NO;
+        m_hasEnoughScreenSpaceToAppear = YES;
         
         m_viewState = InteriorExplorerViewStateDefault;
         
@@ -313,6 +319,26 @@ namespace
         totalHeight = maxHeight;
     }
     
+    BOOL wasOnScreen = [self canBeOnScreen];
+    
+    if(maxHeight < m_screenHeight * 0.5f) {
+        m_hasEnoughScreenSpaceToAppear = NO;
+    }
+    else {
+        m_hasEnoughScreenSpaceToAppear = YES;
+    }
+    
+    BOOL canBeOnScreen = [self canBeOnScreen];
+    if(!wasOnScreen && canBeOnScreen)
+    {
+        [self animateOnScreen];
+    }
+    
+    if(wasOnScreen && !canBeOnScreen)
+    {
+        [self animateOffScreen];
+    }
+    
     CGRect floorPanelFrame = self.pFloorPanel.frame;
     const float floorPanelVerticalCenterline = (*m_floorPanelBottomBound + *m_floorPanelTopBound) * 0.54f;
     floorPanelFrame.origin.y = floorPanelVerticalCenterline - totalHeight*0.5f;
@@ -399,11 +425,30 @@ namespace
 
 - (void) setFullyOnScreen
 {
-    [self animateTo:1.0f
-       delaySeconds:0.8f];
+    m_onScreenIfSpaceAvailable = YES;
+    if([self canBeOnScreen]){
+        [self animateOnScreen];
+    }
 }
 
 - (void) setFullyOffScreen
+{
+    m_onScreenIfSpaceAvailable = NO;
+    [self animateOffScreen];
+}
+
+- (BOOL) canBeOnScreen
+{
+    return m_onScreenIfSpaceAvailable && m_hasEnoughScreenSpaceToAppear;
+}
+       
+- (void) animateOnScreen
+{
+    [self animateTo:1.0f
+       delaySeconds:0.8f];
+}
+       
+- (void) animateOffScreen
 {
     [self animateTo:0.0f
        delaySeconds:0.0f];

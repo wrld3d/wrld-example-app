@@ -16,7 +16,7 @@
     ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop* m_pInterop;
 }
 
-- (id) initWithoutParams;
+- (id) initWithDirectionsButton: (BOOL) showDirectionsButton;
 
 - (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*) getInterop;
 

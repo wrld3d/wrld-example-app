@@ -30,6 +30,5 @@ ios/XcodeBuild/
 *.iml
 **/local.properties
 ios/Include/SenionLab/*.framework
-ios/Include/wrldSDK/*.framework
 android/libs/SLDistribution_4.13.1-rc1.jar
 

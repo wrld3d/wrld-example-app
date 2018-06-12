@@ -377,14 +377,9 @@ namespace ExampleApp
                     return;
                 }
 
-                NavRoutingLocationModel endLocation;
-                if (m_routingModel.TryGetEndLocation(endLocation))
-                {
-                    std::string message = "You seem to be heading away from your destination. Do you still want to go to ";
-                    message = message + endLocation.GetName() + "?";
-                    m_messageBus.Publish(NavRoutingShowRerouteDialogMessage(message));
-                    m_waitingForRerouteResponse = true;
-                }
+                std::string message = "You seem to be heading away from your destination. Do you want to end navigation?";
+                m_messageBus.Publish(NavRoutingShowRerouteDialogMessage(message));
+                m_waitingForRerouteResponse = true;
             }
         }
     }

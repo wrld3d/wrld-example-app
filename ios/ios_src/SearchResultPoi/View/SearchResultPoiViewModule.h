@@ -24,6 +24,7 @@ namespace ExampleApp
 
             public:
                 SearchResultPoiViewModule(ISearchResultPoiViewModel& searchResultPoiViewModel,
+                                          bool showDirections,
                                           ExampleAppMessaging::TMessageBus& messageBus,
                                           Metrics::IMetricsService& metricsService);
 
