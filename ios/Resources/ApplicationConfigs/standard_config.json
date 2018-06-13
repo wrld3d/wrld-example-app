@@ -27,7 +27,7 @@
     "use_japanese_font": false,
     "use_chinese_font": false,
     "timer_survey_url":"",
-    "show_poi_directions_button": false,
+    "enable_navigation": false,
     "outdoor_search_menu_items": [{
                                   "name": "Around Me",
                                   "search_tag": "",

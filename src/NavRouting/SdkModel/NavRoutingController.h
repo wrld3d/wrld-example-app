@@ -39,6 +39,9 @@ namespace ExampleApp
 
                 ~NavRoutingController();
 
+                bool TryGetCurrentLocation(NavRoutingLocationModel &location);
+                void OpenViewWithModel(INavRoutingModel& routingModel);
+
             private:
                 INavRoutingModel& m_routingModel;
                 Eegeo::Location::ILocationService& m_locationService;
@@ -75,8 +78,6 @@ namespace ExampleApp
                 
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavRoutingController> m_failAlertHandler;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_shouldRerouteCallback;
-
-                bool TryGetCurrentLocation(NavRoutingLocationModel &location);
 
                 void OnStartLocationSet(const NavRoutingLocationModel& startLocation);
 

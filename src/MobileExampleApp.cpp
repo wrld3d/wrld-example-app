@@ -866,6 +866,12 @@ namespace ExampleApp
         }
 
         m_pSearchMenuModule->AddMenuSection("Weather", m_pWeatherMenuModule->GetWeatherMenuModel(), true);
+
+        if(m_applicationConfiguration.NavigationEnabled())
+        {
+            m_pSearchMenuModule->AddMenuSection("Navigation", m_pNavRoutingModule->GetNavMenuModel(), false);
+        }
+
         m_pSearchMenuModule->AddMenuSection("Options", m_pOptionsMenuModule->GetOptionsMenuModel(), false);
         m_pSearchMenuModule->AddMenuSection("About",  m_pAboutPageMenuModule->GetAboutPageMenuModel(), false);
 

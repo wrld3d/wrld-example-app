@@ -363,7 +363,12 @@ namespace ExampleApp
                 m_routingModel.SetStartLocation(startLocation);
                 m_routingModel.SetEndLocation(endLocation);
 
-                m_messageBus.Publish(NavRoutingViewOpenMessage(m_routingModel));
+                OpenViewWithModel(m_routingModel);
+            }
+
+            void NavRoutingController::OpenViewWithModel(INavRoutingModel& routingModel)
+            {
+                m_messageBus.Publish(NavRoutingViewOpenMessage(routingModel));
             }
             
             void NavRoutingController::OnFailAlertBoxDismissed()

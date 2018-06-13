@@ -7,6 +7,8 @@ set(currsources
   ../src/NavRouting/View/NavUIModule.h
   ../src/NavRouting/View/NavWidgetController.cpp
   ../src/NavRouting/View/NavWidgetController.h
+  ../src/NavRouting/View/NavWidgetMenuOption.cpp
+  ../src/NavRouting/View/NavWidgetMenuOption.h
   ../src/NavRouting/View/NavWidgetOpenableControl.cpp
   ../src/NavRouting/View/NavWidgetOpenableControl.h
   ../src/NavRouting/View/NavWidgetViewModel.cpp

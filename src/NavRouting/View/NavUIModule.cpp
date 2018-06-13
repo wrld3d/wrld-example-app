@@ -34,11 +34,18 @@ namespace ExampleApp
             struct NavUIModule::m_Private
             {
                 OpenableControlViewModel_lt openable;
+
+                INavWidgetViewModel* pNavWidgetViewModel;
                 
                 m_Private(Eegeo::Helpers::IIdentityProvider& identityProvider)
                         : openable(identityProvider.GetNextIdentity())
                 {
-                    
+                    pNavWidgetViewModel = Eegeo_NEW(NavWidgetViewModel)(identityProvider.GetNextIdentity());
+                }
+
+                ~m_Private()
+                {
+                    Eegeo_DELETE pNavWidgetViewModel;
                 }
             };
             
@@ -46,24 +53,22 @@ namespace ExampleApp
                                      Menu::View::IMenuIgnoredReactionModel& ignoredMenuReaction):
                 m_pImpl(new m_Private(identityProvider))
             {
-                m_pNavWidgetViewModel = Eegeo_NEW(NavWidgetViewModel)(identityProvider.GetNextIdentity());
-                ignoredMenuReaction.AddIgnoredMenuIdentity(m_pNavWidgetViewModel->GetOpenableControl().GetIdentity());
+                ignoredMenuReaction.AddIgnoredMenuIdentity(m_pImpl->pNavWidgetViewModel->GetOpenableControl().GetIdentity());
             }
 
             NavUIModule::~NavUIModule()
             {
-                Eegeo_DELETE m_pNavWidgetViewModel;
                 delete m_pImpl;
             }
 
             OpenableControl::View::IOpenableControlViewModel& NavUIModule::GetObservableOpenableControl() const
             {
-                return m_pNavWidgetViewModel->GetOpenableControl();
+                return m_pImpl->pNavWidgetViewModel->GetOpenableControl();
             }
 
             INavWidgetViewModel& NavUIModule::GetNavWidgetViewModel() const
             {
-                return *m_pNavWidgetViewModel;
+                return *m_pImpl->pNavWidgetViewModel;
             }
         }
     }

@@ -30,8 +30,6 @@ namespace ExampleApp
             private:
                 struct m_Private;
                 m_Private* m_pImpl;
-
-                INavWidgetViewModel* m_pNavWidgetViewModel;
             };
         }
     }

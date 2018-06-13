@@ -14,6 +14,7 @@
 #include "Compass.h"
 #include "WorldPins.h"
 #include "GpsMarker.h"
+#include "Menu.h"
 
 namespace ExampleApp
 {
@@ -44,6 +45,8 @@ namespace ExampleApp
 
                 INavRouteDrawingController& GetRouteDrawingController();
                 INavRoutingServiceController& GetRoutingServiceController();
+
+                Menu::View::IMenuModel& GetNavMenuModel() const;
                 
             private:
 
@@ -58,6 +61,9 @@ namespace ExampleApp
 
                 TurnByTurn::INavTurnByTurnModel* m_pTurnByTurnModel;
                 TurnByTurn::NavTurnByTurnController* m_pTurnByTurnController;
+
+                Menu::View::IMenuModel* m_pMenuModel;
+                Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;
             };
         }
     }

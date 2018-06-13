@@ -569,13 +569,14 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                     m_messageBus);
 
     // Pop-up layer.
+    bool showDirectionsButton = m_pApp->GetApplicationConfiguration().NavigationEnabled();
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
-                                       m_nativeState,
-                                       app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
-                                       m_pApp->GetApplicationConfiguration().ShowPoiDirectionsButton(),
-                                       m_messageBus,
-                                       *m_pAndroidFlurryMetricsService
-                                   );
+                               m_nativeState,
+                               app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
+                               showDirectionsButton,
+                               m_messageBus,
+                               *m_pAndroidFlurryMetricsService
+                           );
 
     m_pAboutPageViewModule = Eegeo_NEW(ExampleApp::AboutPage::View::AboutPageViewModule)(
                                  m_nativeState,
