@@ -12,4 +12,5 @@ set(currsources
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\NavRouting\\View FILES ${currsources})
+include(ios_src/NavRouting/View/NavRoutingRerouteDialog/CMakeLists.txt)
 endif(${IOS})
