@@ -5,6 +5,7 @@
 #include "CompassView.h"
 #include "ScreenProperties.h"
 #include "CompassViewInterop.h"
+#include "INavWidgetView.h"
 
 namespace ExampleApp
 {
@@ -14,7 +15,10 @@ namespace ExampleApp
         {
             CompassViewModule::CompassViewModule(ICompassViewModel& viewModel,
                                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                                 Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomPanelVisibleHeightChangedCallbacks,
                                                  ExampleAppMessaging::TMessageBus& messageBus)
+            : m_navWidgetBottomPanelVisibleHeightChangedCallback(this, &CompassViewModule::NavWidgetBottomPanelVisibleHeightChanged)
+            , m_navWidgetBottomPanelVisibleHeightChangedCallbacks(m_navWidgetBottomPanelVisibleHeightChangedCallbacks)
             {
 
                 m_pView = [[CompassView alloc] initWithParams
@@ -23,10 +27,13 @@ namespace ExampleApp
                             :screenProperties.GetPixelScale()];
 
                 m_pController = Eegeo_NEW(CompassController)(*[m_pView getInterop], viewModel, messageBus);
+                
+                m_navWidgetBottomPanelVisibleHeightChangedCallbacks.AddCallback(m_navWidgetBottomPanelVisibleHeightChangedCallback);
             }
 
             CompassViewModule::~CompassViewModule()
             {
+                m_navWidgetBottomPanelVisibleHeightChangedCallbacks.RemoveCallback(m_navWidgetBottomPanelVisibleHeightChangedCallback);
                 Eegeo_DELETE m_pController;
                 [m_pView release];
             }
@@ -39,6 +46,16 @@ namespace ExampleApp
             CompassView& CompassViewModule::GetCompassView() const
             {
                 return *m_pView;
+            }
+            
+            ICompassView& CompassViewModule::GetCompassViewInterop()
+            {
+                return *[m_pView getInterop];
+            }
+                                                                                
+            void CompassViewModule::NavWidgetBottomPanelVisibleHeightChanged(NavRouting::View::INavWidgetView::THeight& newVisibleHeight)
+            {
+                [m_pView setNavigationModeCompassPosition: newVisibleHeight];
             }
         }
     }

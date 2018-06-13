@@ -40,6 +40,7 @@
 #include "ITagSearchModule.h"
 #include "IViewControllerUpdaterModel.h"
 #include "IWatermarkModule.h"
+#include "INavWidgetViewModule.h"
 #include "jni.h"
 #include "JpegLoader.h"
 #include "MenuController.h"
@@ -61,12 +62,14 @@
 #include "UserInteractionEnabledChangedMessage.h"
 #include "ViewControllerUpdaterModule.h"
 #include "WatermarkViewModule.h"
+#include "NavWidgetViewModule.h"
 #include "WebConnectivityValidator.h"
 #include "SurveyViewModule.h"
 #include "SenionLabBroadcastReceiver.h"
 #include "AndroidAutomatedScreenshotController.h"
 #include "AutomatedScreenshotController.h"
 #include "UiCreatedMessage.h"
+#include "INavWidgetView.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -112,6 +115,7 @@ AppHost::AppHost(
     ,m_pMyPinDetailsViewModule(NULL)
     ,m_pSearchResultPoiViewModule(NULL)
     ,m_pCompassViewModule(NULL)
+    ,m_pNavWidgetViewModule(NULL)
     ,m_pApp(NULL)
     ,m_androidPersistentSettingsModel(nativeState)
     ,m_createdUIModules(false)
@@ -524,6 +528,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pCompassViewModule = Eegeo_NEW(ExampleApp::Compass::View::CompassViewModule)(
                                m_nativeState,
                                app.CompassModule().GetCompassViewModel(),
+                               m_navWidgetViewBottomHeightChangedCallbacks,
                                m_messageBus
                            );
 
@@ -555,10 +560,19 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     					*m_pMenuReactionModel,
     		            app.SearchResultPoiModule().GetSearchResultPoiViewModel());
 
+    // Widget layer
+    m_pNavWidgetViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(
+                                    m_nativeState,
+                                    app.NavUIModule().GetNavWidgetViewModel(),
+                                    m_navWidgetViewTopHeightChangedCallbacks,
+                                    m_navWidgetViewBottomHeightChangedCallbacks,
+                                    m_messageBus);
+
     // Pop-up layer.
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
                                        m_nativeState,
                                        app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
+                                       m_pApp->GetApplicationConfiguration().ShowPoiDirectionsButton(),
                                        m_messageBus,
                                        *m_pAndroidFlurryMetricsService
                                    );
@@ -595,7 +609,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 			app.InteriorsExplorerModule().GetInteriorsExplorerViewModel(),
             m_messageBus,
             m_nativeState,
-            app.GetNavigationService());
+            app.GetNavigationService(),
+            m_navWidgetViewTopHeightChangedCallbacks,
+            m_navWidgetViewBottomHeightChangedCallbacks);
 
     m_pOptionsViewModule = Eegeo_NEW(ExampleApp::Options::View::OptionsViewModule)(
             m_nativeState,
@@ -622,6 +638,9 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     SetTouchExclusivity();
 
     m_messageBus.SubscribeUi(m_userInteractionEnabledChangedHandler);
+
+    m_navWidgetViewTopHeightChangedCallbacks.ExecuteCallbacks(m_pNavWidgetViewModule->GetView().GetTopViewHeight());
+    m_navWidgetViewBottomHeightChangedCallbacks.ExecuteCallbacks(m_pNavWidgetViewModule->GetView().GetBottomViewHeight());
 }
 
 void AppHost::DestroyApplicationViewModulesFromUiThread()
@@ -665,6 +684,8 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
         Eegeo_DELETE m_pMyPinCreationViewModule;
 
         Eegeo_DELETE m_pWatermarkViewModule;
+
+        Eegeo_DELETE m_pNavWidgetViewModule;
     }
     m_createdUIModules = false;
 }

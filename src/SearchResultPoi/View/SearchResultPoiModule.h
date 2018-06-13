@@ -34,7 +34,6 @@ namespace ExampleApp
                 
            public:
                 SearchResultPoiModule(Eegeo::Helpers::IIdentityProvider& identityProvider,
-                                      Reaction::View::IReactionControllerModel& reactionControllerModel,
                                       MyPins::SdkModel::IMyPinsService& myPinsService,
                                       Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                       TagSearch::ISearchResultIconKeyMapper& searchResultIconKeyMapper,

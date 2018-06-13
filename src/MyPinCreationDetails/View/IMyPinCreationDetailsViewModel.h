@@ -15,8 +15,6 @@ namespace ExampleApp
             public:
                 virtual ~IMyPinCreationDetailsViewModel() { }
 
-                virtual bool TryAcquireReactorControl() = 0;
-
                 virtual bool IsOpen() const = 0;
 
                 virtual void Open() = 0;

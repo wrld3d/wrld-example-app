@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/nav_reroute_dialog_width"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/nav_reroute_dialog_margin_large"
+    android:orientation="vertical"
+    android:padding="@dimen/nav_reroute_dialog_margin_large">
+
+    <TextView
+        android:id="@+id/nav_reroute_dialog_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/nav_reroute_dialog_margin_medium"
+        android:paddingRight="@dimen/nav_reroute_dialog_margin_medium"
+        android:text="@string/nav_reroute_dialog_label_text"
+        android:textColor="@color/nav_dialog"
+        android:textSize="@dimen/nav_reroute_dialog_label_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_reroute_dialog_btn_line_size"
+        android:layout_marginBottom="@dimen/nav_reroute_dialog_margin_large"
+        android:layout_marginTop="@dimen/nav_reroute_dialog_margin_large"
+        android:background="@color/nav_dialog" />
+
+    <TextView
+        android:id="@+id/nav_reroute_dialog_msg"
+        android:layout_width="@dimen/nav_reroute_dialog_msg_width"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/nav_reroute_dialog_margin_large"
+        android:layout_marginEnd="@dimen/nav_reroute_dialog_margin_large"
+        android:layout_marginStart="@dimen/nav_reroute_dialog_margin_large"
+        android:layout_marginTop="@dimen/nav_reroute_dialog_margin_large"
+        android:textSize="@dimen/nav_reroute_dialog_msg_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/nav_reroute_dialog_margin_large"
+        android:layout_marginTop="@dimen/nav_reroute_dialog_margin_large"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:id="@+id/nav_reroute_dialog_btn_no"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/nav_reroute_dialog_margin_small"
+            android:layout_marginRight="@dimen/nav_reroute_dialog_margin_small"
+            android:layout_weight="1"
+            android:background="@drawable/wrld_nav_button_back"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/nav_reroute_dialog_margin_medium"
+            android:paddingTop="@dimen/nav_reroute_dialog_margin_medium">
+
+            <TextView
+                android:id="@+id/nav_reroute_dialog_btn_text_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/nav_reroute_dialog_btn_text_no"
+                android:textColor="@color/white"
+                android:textSize="@dimen/nav_reroute_dialog_btn_text_size" />
+
+            <TextView
+                android:id="@+id/nav_reroute_dialog_btn_subtext_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/nav_reroute_dialog_btn_subtext_no"
+                android:textColor="@color/white"
+                android:textSize="@dimen/nav_reroute_dialog_btn_subtext_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nav_reroute_dialog_btn_yes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/nav_reroute_dialog_margin_small"
+            android:layout_marginRight="@dimen/nav_reroute_dialog_margin_small"
+            android:layout_weight="1"
+            android:background="@drawable/wrld_nav_button_back"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/nav_reroute_dialog_margin_medium"
+            android:paddingTop="@dimen/nav_reroute_dialog_margin_medium">
+
+            <TextView
+                android:id="@+id/nav_reroute_dialog_btn_text_yes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/nav_reroute_dialog_btn_text_yes"
+                android:textColor="@color/white"
+                android:textSize="@dimen/nav_reroute_dialog_btn_text_size" />
+
+            <TextView
+                android:id="@+id/nav_reroute_dialog_btn_subtext_yes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/nav_reroute_dialog_btn_subtext_yes"
+                android:textColor="@color/white"
+                android:textSize="@dimen/nav_reroute_dialog_btn_subtext_size" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

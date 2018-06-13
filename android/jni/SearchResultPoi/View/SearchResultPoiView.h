@@ -21,13 +21,14 @@ namespace ExampleApp
                 AndroidNativeState& m_nativeState;
                 Eegeo::Helpers::CallbackCollection0 m_closedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_togglePinClickedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<Search::SdkModel::SearchResultModel> m_directionsCallbacks;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
                 Search::SdkModel::SearchResultModel m_model;
 
             public:
-                SearchResultPoiView(AndroidNativeState& nativeState);
+                SearchResultPoiView(AndroidNativeState& nativeState, bool showDirectionsButton);
 
                 ~SearchResultPoiView();
 
@@ -53,6 +54,12 @@ namespace ExampleApp
 
                 void HandlePinToggleClicked();
 
+                void InsertDirectionsCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback);
+
+                void RemoveDirectionsCallback(Eegeo::Helpers::ICallback1<Search::SdkModel::SearchResultModel>& callback);
+
+                void HandleDirectionsClicked();
+
             private:
                 void CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
 
@@ -65,6 +72,8 @@ namespace ExampleApp
                 jobject CreateJavaObject(jclass uiViewClass);
 
                 jobjectArray CreateJavaArray(const std::vector<std::string>& stringVector);
+
+                bool m_showDirectionsButton;
             };
         }
     }

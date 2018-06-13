@@ -4,6 +4,7 @@
 
 #include "ICallback.h"
 #include "IIdentity.h"
+#include "IScreenControlView.h"
 
 namespace ExampleApp
 {
@@ -20,19 +21,23 @@ namespace ExampleApp
 
                 virtual void RemoveFromScreen() = 0;
 
-                virtual void UpdateOnScreenState(float onScreenState) = 0;
+                virtual void InsertOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback) = 0;
 
-                virtual void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<IScreenControlViewModel&, float>& callback) = 0;
+                virtual void RemoveOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback) = 0;
 
-                virtual void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<IScreenControlViewModel&, float>& callback) = 0;
+                virtual bool IsOffScreen() const = 0;
 
-                virtual bool IsFullyOffScreen() const = 0;
+                virtual bool IsOnScreen() const = 0;
+            };
 
-                virtual bool IsFullyOnScreen() const = 0;
+            class IMultiStateScreenControlViewModel : public virtual IScreenControlViewModel
+            {
+            public:
+                virtual TScreenControlViewState GetState() = 0;
 
-                virtual float OnScreenState() const = 0;
-                
-                virtual bool IsAddedToScreen() const = 0;
+                virtual void SetState(TScreenControlViewState state) = 0;
             };
         }
     }

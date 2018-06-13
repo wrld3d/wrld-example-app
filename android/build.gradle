@@ -101,12 +101,16 @@ android {
         }
     }
 
-    flavorDimensions "default"
+    flavorDimensions "main"
 
     productFlavors {
-        normal {}
+        normal {
+            dimension "main"
+        }
 
         screenshot {
+            dimension "main"
+
             externalNativeBuild {
                 cmake {
                    cppFlags "-DAUTOMATED_SCREENSHOTS=1"
@@ -149,11 +153,10 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.1'
 
     implementation ('com.android.support:appcompat-v7:27.1.1', {
-        exclude group: 'com.android.support', module: 'support-fragment'
-        exclude group: 'com.android.support', module: 'support-core-ui'
-        exclude group: 'com.android.support', module: 'support-core-utils'
-        exclude group: 'com.android.support', module: 'support-compat'
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation project(':wrld-android-search-widget-release')
+    implementation project(':wrld-navigation-release')
+    implementation project(':wrld-navigation-widget-release')
 }

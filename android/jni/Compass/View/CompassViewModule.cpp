@@ -14,12 +14,13 @@ namespace ExampleApp
             CompassViewModule::CompassViewModule(
                 AndroidNativeState& nativeState,
                 ICompassViewModel& viewModel,
+                Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& navWidgetViewBottomHeightChangedCallbacks,
                 ExampleAppMessaging::TMessageBus& messageBus
             )
             {
                 ASSERT_UI_THREAD
 
-                m_pView = Eegeo_NEW(CompassView)(nativeState);
+                m_pView = Eegeo_NEW(CompassView)(nativeState, navWidgetViewBottomHeightChangedCallbacks);
                 m_pController = Eegeo_NEW(CompassController)(
                                     *m_pView,
                                     viewModel,
@@ -32,6 +33,11 @@ namespace ExampleApp
 
                 Eegeo_DELETE m_pController;
                 Eegeo_DELETE m_pView;
+            }
+
+            ICompassView& CompassViewModule::GetCompassView()
+            {
+                return *m_pView;
             }
         }
     }

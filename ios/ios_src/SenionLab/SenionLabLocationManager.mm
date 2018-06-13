@@ -100,6 +100,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
         
         Eegeo::Space::LatLong latLong = Eegeo::Space::LatLong::FromDegrees(location.latitude, location.longitude);
         m_pSenionLabLocationService->SetLocation(latLong);
+        m_pSenionLabLocationService->SetHorizontalAccuracyInMeters(radius);
         
         int floorIndex = [self getFloorIndexFromSenionFloorIndex:std::to_string(location.floorNr)];
         m_pSenionLabLocationService->SetFloorIndex(floorIndex);

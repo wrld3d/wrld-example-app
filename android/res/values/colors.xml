@@ -42,4 +42,5 @@
 	<color name="interiors_elevator_text_down">#1256B0</color>
 	<color name="scrollbars">#1256B0</color>
 	<color name="about_links">#1256B0</color>
+    <color name="nav_dialog">#1256B0</color>
 </resources>

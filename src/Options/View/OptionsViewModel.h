@@ -27,7 +27,6 @@ namespace ExampleApp
                 
             public:
                 OptionsViewModel(Eegeo::Helpers::TIdentity identity,
-                                 Reaction::View::IReactionControllerModel& reactionControllerModel,
                                  bool streamOverWifiOnly,
                                  bool cachingEnabled);
                 
@@ -44,8 +43,6 @@ namespace ExampleApp
                 void BeginCacheClearCeremony();
                 
                 void EndCacheClearCeremony();
-                
-                bool TryAcquireReactorControl();
                 
                 bool IsOpen() const;
 

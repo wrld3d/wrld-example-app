@@ -57,6 +57,8 @@
 #include "AlwaysActiveUserIdleService.h"
 #include "iOSScreenshotService.h"
 #include "iOSAutomatedScreenshotController.h"
+#include "NavWidgetViewIncludes.h"
+#include "NavWidgetViewModule.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -140,6 +142,7 @@ private:
     ExampleApp::URLRequest::View::URLRequestHandler* m_pURLRequestHandler;
     ExampleApp::Surveys::View::ISurveyViewModule* m_pSurveyViewModule;
     ExampleApp::Menu::View::IMenuReactionModel* m_pMenuReactionModel;
+    ExampleApp::NavRouting::View::NavWidgetViewModule* m_pNavUIViewModule;
     
     ImageStore* m_pImageStore;
     

@@ -10,13 +10,10 @@ namespace ExampleApp
         {
             void AboutPageController::OnOpen()
             {
-                if (m_viewModel.TryAcquireReactorControl())
-                {
-                    m_metricsService.SetEvent("UIItem: About page");
-                    m_metricsService.BeginTimedEvent("TimedEvent: Viewing About Page");
-                    m_view.SetContent(m_viewModel.GetContent(false));
-                    m_view.Open();
-                }
+                m_metricsService.SetEvent("UIItem: About page");
+                m_metricsService.BeginTimedEvent("TimedEvent: Viewing About Page");
+                m_view.SetContent(m_viewModel.GetContent(false));
+                m_view.Open();
             }
 
             void AboutPageController::OnClose()
@@ -35,10 +32,7 @@ namespace ExampleApp
             
             void AboutPageController::OnLogoLongPress()
             {
-                if (m_viewModel.TryAcquireReactorControl())
-                {
-                    m_view.SetContent(m_viewModel.GetContent(true));
-                }
+                m_view.SetContent(m_viewModel.GetContent(true));
             }
             
             void AboutPageController::OnAboutPageIndoorPositionTypeMessage(const AboutPage::AboutPageIndoorPositionTypeMessage& message)

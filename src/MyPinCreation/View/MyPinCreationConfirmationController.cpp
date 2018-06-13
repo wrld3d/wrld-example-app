@@ -35,7 +35,6 @@ namespace ExampleApp
                 m_view.InsertConfirmedCallback(m_confirmedCallback);
                 m_view.InsertDismissedCallback(m_dismissedCallback);
                 m_viewModel.InsertOpenCallback(m_openedCallback);
-                m_view.SetOnScreenStateToIntermediateValue(m_viewModel.OnScreenState());
             }
 
             MyPinCreationConfirmationController::~MyPinCreationConfirmationController()
@@ -72,7 +71,7 @@ namespace ExampleApp
                 }
             }
 
-            void MyPinCreationConfirmationController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel, float &state)
+            void MyPinCreationConfirmationController::OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel)
             {
                 ScreenControl::View::Apply(m_viewModel, m_view);
             }

@@ -9,9 +9,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinDetailsViewModel::MyPinDetailsViewModel(Eegeo::Helpers::TIdentity identity,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
-                : m_openable(identity, reactionControllerModel)
+            MyPinDetailsViewModel::MyPinDetailsViewModel(Eegeo::Helpers::TIdentity identity)
+                : m_openable(identity)
             {
 
             }
@@ -19,11 +18,6 @@ namespace ExampleApp
             MyPinDetailsViewModel::~MyPinDetailsViewModel()
             {
 
-            }
-
-            bool MyPinDetailsViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
             }
             
             MyPins::SdkModel::MyPinModel::TPinIdType MyPinDetailsViewModel::GetMyPinId() const
@@ -52,7 +46,7 @@ namespace ExampleApp
 
             bool MyPinDetailsViewModel::IsOpen() const
             {
-                return m_openable.IsFullyOpen();
+                return m_openable.IsOpen();
             }
 
             void MyPinDetailsViewModel::Open(MyPins::SdkModel::MyPinModel::TPinIdType pinId,
@@ -61,26 +55,20 @@ namespace ExampleApp
                                              const std::string& imagePath)
             {
                 Eegeo_ASSERT(!IsOpen(), "Cannot open MyPinDetailsViewModel when already open.\n");
-                
-                if(m_openable.Open())
-                {
-                    m_id = pinId;
-                    m_title = title;
-                    m_description = description;
-                    m_imagePath = imagePath;
-                    m_openedCallbacks.ExecuteCallbacks();
-                }
+
+                m_openable.Open();
+                m_id = pinId;
+                m_title = title;
+                m_description = description;
+                m_imagePath = imagePath;
+                m_openedCallbacks.ExecuteCallbacks();
             }
 
             void MyPinDetailsViewModel::Close()
             {
                 Eegeo_ASSERT(IsOpen(), "Cannot close SearchResultModel when view model when already closed.\n");
 
-                {
-                    const bool closed = m_openable.Close();
-                    Eegeo_ASSERT(closed, "Failed to close");
-                }
-
+                m_openable.Close();
                 m_closedCallbacks.ExecuteCallbacks();
             }
 

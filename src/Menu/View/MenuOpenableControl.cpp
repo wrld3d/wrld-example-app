@@ -8,8 +8,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            MenuOpenableControl::MenuOpenableControl(Eegeo::Helpers::TIdentity identity, Reaction::View::IReactionControllerModel& reactionControllerModel)
-                : OpenableControl::View::OpenableControlViewModelBase(reactionControllerModel)
+            MenuOpenableControl::MenuOpenableControl(Eegeo::Helpers::TIdentity identity)
+                : OpenableControl::View::OpenableControlViewModelBase()
                 , m_identity(identity)
             {
             }

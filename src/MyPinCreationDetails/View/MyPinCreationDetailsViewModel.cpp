@@ -8,8 +8,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationDetailsViewModel::MyPinCreationDetailsViewModel(Eegeo::Helpers::TIdentity identity, Reaction::View::IReactionControllerModel& reactionControllerModel)
-                : m_openable(identity, reactionControllerModel)
+            MyPinCreationDetailsViewModel::MyPinCreationDetailsViewModel(Eegeo::Helpers::TIdentity identity)
+                : m_openable(identity)
             {
 
             }
@@ -19,24 +19,18 @@ namespace ExampleApp
 
             }
 
-            bool MyPinCreationDetailsViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
-            }
 
             bool MyPinCreationDetailsViewModel::IsOpen() const
             {
-                return m_openable.IsFullyOpen();
+                return m_openable.IsOpen();
             }
 
             void MyPinCreationDetailsViewModel::Open()
             {
                 if(!IsOpen())
                 {
-                    if(m_openable.Open())
-                    {
-                        m_openedCallbacks.ExecuteCallbacks();
-                    }
+                    m_openable.Open();
+                    m_openedCallbacks.ExecuteCallbacks();
                 }
             }
 
@@ -44,7 +38,7 @@ namespace ExampleApp
             {
                 if(IsOpen())
                 {
-                    Eegeo_ASSERT(m_openable.Close());
+                    m_openable.Close();
                     m_closedCallbacks.ExecuteCallbacks();
                 }
             }

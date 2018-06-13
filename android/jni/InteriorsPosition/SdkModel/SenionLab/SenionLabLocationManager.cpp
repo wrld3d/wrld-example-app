@@ -93,6 +93,7 @@ namespace ExampleApp
                 {
                     Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(message.Latitude(), message.Longitude()));
                     m_senionLabLocationService.SetLocation(location);
+                    m_senionLabLocationService.SetHorizontalAccuracyInMeters(message.HorizontalAccuracyInMeters());
                     m_senionLabLocationService.SetFloorIndex(FloorNumberToFloorIndex(message.FloorNumber()));
                 }
 

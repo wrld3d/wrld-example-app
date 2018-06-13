@@ -11,7 +11,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class ICompassViewModel : public ScreenControl::View::IScreenControlViewModel
+            class ICompassViewModel : public ScreenControl::View::IMultiStateScreenControlViewModel
             {
             public:
                 virtual ~ICompassViewModel() { }

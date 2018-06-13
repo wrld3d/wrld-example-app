@@ -40,7 +40,6 @@
 #include "SearchResultRepository.h"
 #include "LatLongAltitude.h"
 #include "ReactionModelModule.h"
-#include "ReactionControllerModule.h"
 #include "SearchResultPoiModule.h"
 #include "PlaceJumpsModule.h"
 #include "IPlaceJumpController.h"
@@ -90,6 +89,8 @@
 #include "AutomatedScreenshotController.h"
 #include "SelectFirstResultSearchService.h"
 #include "MapsceneModule.h"
+#include "NavUIModule.h"
+#include "NavRoutingModule.h"
 #include "IAboutPageMenuModule.h"
 #include "IOptionsMenuModule.h"
 #include "InteriorEntityHighlightController.h"
@@ -126,6 +127,8 @@ namespace ExampleApp
         AboutPage::SdkModel::IAboutPageMenuModule* m_pAboutPageMenuModule;
         Options::SdkModel:: IOptionsMenuModule* m_pOptionsMenuModule;
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
+        ExampleApp::NavRouting::SdkModel::NavRoutingModule* m_pNavRoutingModule;
+        ExampleApp::NavRouting::View::NavUIModule* m_pNavUIModule;
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;
@@ -137,7 +140,6 @@ namespace ExampleApp
         ExampleApp::WorldPins::SdkModel::IWorldPinsFocusModule* m_pWorldPinsFocusModule;
         SearchResultOnMap::SdkModel::ISearchResultOnMapModule* m_pSearchResultOnMapModule;
         ExampleApp::Reaction::View::IReactionModelModule* m_pReactionModelModule;
-        ExampleApp::Reaction::View::IReactionControllerModule* m_pReactionControllerModule;
         ExampleApp::SearchResultPoi::View::ISearchResultPoiModule* m_pSearchResultPoiModule;
         ExampleApp::PlaceJumps::SdkModel::IPlaceJumpsModule* m_pPlaceJumpsModule;
         ExampleApp::WeatherMenu::SdkModel::IWeatherMenuModule* m_pWeatherMenuModule;
@@ -206,6 +208,7 @@ namespace ExampleApp
         std::vector<ExampleApp::OpenableControl::View::IOpenableControlViewModel*> GetOpenableControls() const;
 
         std::vector<ExampleApp::ScreenControl::View::IScreenControlViewModel*> GetReactorControls() const;
+        std::vector<ExampleApp::Reaction::View::IReaction*> GetReactions() const;
         
         Eegeo::Pins::PinsModule* CreatePlatformPinsModuleInstance(Eegeo::EegeoWorld& world,
             const Eegeo::Helpers::GLHelpers::TextureInfo& pinTextureInfo,
@@ -278,6 +281,11 @@ namespace ExampleApp
             return *m_pSearchMenuModule;
         }
         
+        const ExampleApp::NavRouting::View::NavUIModule& NavUIModule() const
+        {
+            return *m_pNavUIModule;
+        }
+        
         const SearchResultSection::SdkModel::ISearchResultSectionModule& SearchResultSectionModule() const
         {
             return *m_pSearchResultSectionModule;
@@ -316,11 +324,6 @@ namespace ExampleApp
         const Reaction::View::IReactionModelModule& ReactionModelModule() const
         {
             return *m_pReactionModelModule;
-        }
-
-        const Reaction::View::IReactionControllerModule& ReactionControllerModule() const
-        {
-            return *m_pReactionControllerModule;
         }
 
         const ExampleApp::SearchResultPoi::View::ISearchResultPoiModule& SearchResultPoiModule() const

@@ -8,9 +8,8 @@ namespace ExampleApp
     {
         namespace View
         {
-            MyPinCreationConfirmationOpenableControl::MyPinCreationConfirmationOpenableControl(Eegeo::Helpers::TIdentity identity,
-                    Reaction::View::IReactionControllerModel& reactionControllerModel)
-                : OpenableControl::View::OpenableControlViewModelBase(reactionControllerModel)
+            MyPinCreationConfirmationOpenableControl::MyPinCreationConfirmationOpenableControl(Eegeo::Helpers::TIdentity identity)
+                : OpenableControl::View::OpenableControlViewModelBase()
                 , m_identity(identity)
             {
             }

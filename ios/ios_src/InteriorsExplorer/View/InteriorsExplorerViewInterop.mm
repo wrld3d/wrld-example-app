@@ -90,17 +90,12 @@ namespace ExampleApp
                 m_floorSelectionDraggedCallbacks.RemoveCallback(callback);
             }
             
-            void InteriorsExplorerViewInterop::SetOnScreenStateToIntermediateValue(float value)
-            {
-                [m_pView setOnScreenStateToIntermediateValue: value];
-            }
-            
-            void InteriorsExplorerViewInterop::SetFullyOnScreen()
+            void InteriorsExplorerViewInterop::SetOnScreen()
             {
                 [m_pView setFullyOnScreen];
             }
             
-            void InteriorsExplorerViewInterop::SetFullyOffScreen()
+            void InteriorsExplorerViewInterop::SetOffScreen()
             {
                 [m_pView setFullyOffScreen];
             }
@@ -113,6 +108,14 @@ namespace ExampleApp
             void InteriorsExplorerViewInterop::PlaySliderAnim()
             {
                 [m_pView playSliderShakeAnim];
+            }
+            
+            void InteriorsExplorerViewInterop::SetState(ScreenControl::View::TScreenControlViewState state)
+            {
+                BOOL isValidState = [m_pView isValidState: state];
+                Eegeo_ASSERT(isValidState, "Tried to set an invalid compass state");
+                InteriorExplorerViewState viewState = (InteriorExplorerViewState) state;
+                [m_pView setViewState: viewState];
             }
         }
     }

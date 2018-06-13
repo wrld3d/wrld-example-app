@@ -20,7 +20,7 @@ namespace ExampleApp
 
                 virtual View::InteriorsExplorerViewModel& GetInteriorsExplorerViewModel() const = 0;
 
-                virtual ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel() const = 0;
+                virtual ScreenControl::View::IMultiStateScreenControlViewModel& GetScreenControlViewModel() const = 0;
                 
                 virtual InteriorVisibilityUpdater& GetInteriorVisibilityUpdater() const = 0;
                 

@@ -37,7 +37,7 @@
     UIImage* m_pAddPinHighlightButtonBackgroundImage;
 }
 
-- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;
+- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop showDirectionsButton: (BOOL) showDirectionsButton;
 
 - (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*) getInterop;
 
@@ -57,6 +57,8 @@
 @property (nonatomic, retain) UIButton* pCloseButton;
 @property (nonatomic, retain) UIButton* pPinButton;
 @property (nonatomic, retain) UIView* pDropPinContainer;
+@property (nonatomic, retain) UIButton* pDirectionsButton;
+@property (nonatomic, retain) UIView* pDirectionsContainer;
 @property (nonatomic, retain) UIView* pControlContainer;
 @property (nonatomic, retain) UIView* pTitleCardContainer;
 @property (nonatomic, retain) UIView* pDetailsCardContainer;

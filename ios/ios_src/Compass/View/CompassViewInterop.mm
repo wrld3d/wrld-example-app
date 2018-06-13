@@ -58,12 +58,12 @@ namespace ExampleApp
                 [m_pView setOnScreenStateToIntermediateValue:value];
             }
 
-            void CompassViewInterop::SetFullyOnScreen()
+            void CompassViewInterop::SetOnScreen()
             {
                 [m_pView setFullyOnScreen];
             }
 
-            void CompassViewInterop::SetFullyOffScreen()
+            void CompassViewInterop::SetOffScreen()
             {
                 [m_pView setFullyOffScreen];
             }
@@ -71,6 +71,14 @@ namespace ExampleApp
             void CompassViewInterop::SetRotationHighlight(bool shouldShowRotationHighlight)
             {
                 [m_pView setRotationHighlight:shouldShowRotationHighlight];
+            }
+            
+            void CompassViewInterop::SetState(ScreenControl::View::TScreenControlViewState state)
+            {
+                BOOL isValidState = [m_pView isValidPositionState: state];
+                Eegeo_ASSERT(isValidState, "Tried to set an invalid compass state");
+                CompassPositionState viewState = (CompassPositionState) state;
+                [m_pView setPositionState: viewState];
             }
         }
     }

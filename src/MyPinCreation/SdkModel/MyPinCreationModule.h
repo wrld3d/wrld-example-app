@@ -40,7 +40,6 @@ namespace ExampleApp
                                     Eegeo::Labels::ILabelFilterModel& labelFilterModel,
                                     const Eegeo::Labels::LabelLayer::IdType& interiorMarkerLabelLayer,
                                     ExampleAppMessaging::TMessageBus& messageBus,
-                                    Reaction::View::IReactionControllerModel& reactionControllerModel,
                                     ExampleApp::Watermark::View::IWatermarkViewModel& watermarkViewModel);
 
                 ~MyPinCreationModule();

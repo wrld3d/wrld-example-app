@@ -15,6 +15,20 @@
     <dimen name="menu_item_divider_height">1dp</dimen>
     <dimen name="menu_item_footer_padding_height">2dp</dimen>
     <dimen name="menu_button_top_offset">20dp</dimen>
+    <dimen name="main_button_size">60dp</dimen>
+    <dimen name="poi_creation_share_button_size">25dp</dimen>
+    <dimen name="search_menu_clear_button_size">20dp</dimen>
     <dimen name="menu_title_height">27dp</dimen>
     <dimen name="scrollbars_width">5dp</dimen>
+
+    <dimen name="nav_reroute_dialog_width">300dp</dimen>
+    <dimen name="nav_reroute_dialog_msg_width">250dp</dimen>
+    <dimen name="nav_reroute_dialog_margin_large">8dp</dimen>
+    <dimen name="nav_reroute_dialog_margin_medium">4dp</dimen>
+    <dimen name="nav_reroute_dialog_margin_small">2dp</dimen>
+    <dimen name="nav_reroute_dialog_btn_line_size">1dp</dimen>
+    <dimen name="nav_reroute_dialog_btn_text_size">17sp</dimen>
+    <dimen name="nav_reroute_dialog_btn_subtext_size">14sp</dimen>
+    <dimen name="nav_reroute_dialog_label_size">22sp</dimen>
+    <dimen name="nav_reroute_dialog_msg_size">14sp</dimen>
 </resources>

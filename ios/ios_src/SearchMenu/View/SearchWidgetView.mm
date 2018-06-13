@@ -383,14 +383,14 @@ namespace ExampleApp
                 }];
             }
 
-            void SearchWidgetView::SetFullyOnScreen()
+            void SearchWidgetView::SetOnScreen()
             {
                 [UIView animateWithDuration:0.3 animations:^{
                     m_pSearchWidgetView.transform = CGAffineTransformIdentity;
                 }];
             }
 
-            void SearchWidgetView::SetFullyOffScreen()
+            void SearchWidgetView::SetOffScreen()
             {
                 [m_pSearchWidgetView hideResultsView];
                 [m_pSearchWidgetView closeMenu];

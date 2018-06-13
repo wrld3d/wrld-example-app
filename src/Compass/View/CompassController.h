@@ -25,7 +25,7 @@ namespace ExampleApp
                 ICompassViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 
-                Eegeo::Helpers::TCallback2<CompassController, ScreenControl::View::IScreenControlViewModel&, float> m_viewStateCallback;
+                Eegeo::Helpers::TCallback1<CompassController, ScreenControl::View::IScreenControlViewModel&> m_viewStateCallback;
                 Eegeo::Helpers::TCallback1<CompassController, const CompassModeChangedMessage&> m_modeChangedHandler;
                 Eegeo::Helpers::TCallback1<CompassController, const CompassModeUnauthorizedMessage&> m_modeUnauthorizedHandler;
                 Eegeo::Helpers::TCallback1<CompassController, const CompassHeadingUpdateMessage&> m_headingChangedHandler;
@@ -43,7 +43,7 @@ namespace ExampleApp
 
                 void OnCompassHeadingChangedMessage(const CompassHeadingUpdateMessage& message);
 
-                void OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel, float& onScreenState);
+                void OnScreenStateChangedCallback(ScreenControl::View::IScreenControlViewModel &viewModel);
                 
                 void OnMyPinCreationStateChangedMessage(const MyPinCreation::MyPinCreationStateChangedMessage& message);
                 

@@ -34,6 +34,7 @@ namespace ExampleApp
                     
                     void SetIsAuthorized(bool isAuthorized);
                     void SetLocation(Eegeo::Space::LatLong& latLong);
+                    void SetHorizontalAccuracyInMeters(double accuracyInMeters);
                     void SetFloorIndex(int floorIndex);
                     
                 private:
@@ -43,6 +44,7 @@ namespace ExampleApp
                     
                     bool m_isAuthorized;
                     Eegeo::Space::LatLong m_latLong;
+                    double m_horizontalAccuracyInMeters;
                     int m_floorIndex;
                 };
             }

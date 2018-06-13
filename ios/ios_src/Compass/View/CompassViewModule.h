@@ -9,6 +9,7 @@
 #include "ICompassViewModule.h"
 #include "BidirectionalBus.h"
 #include "CompassController.h"
+#include "INavWidgetView.h"
 
 namespace ExampleApp
 {
@@ -21,10 +22,16 @@ namespace ExampleApp
             private:
                 CompassController* m_pController;
                 CompassView* m_pView;
+                
+                Eegeo::Helpers::TCallback1<CompassViewModule, NavRouting::View::INavWidgetView::THeight> m_navWidgetBottomPanelVisibleHeightChangedCallback;
+                Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomPanelVisibleHeightChangedCallbacks;
+                
+                void NavWidgetBottomPanelVisibleHeightChanged(NavRouting::View::INavWidgetView::THeight& newVisibleHeight);
 
             public:
                 CompassViewModule(ICompassViewModel& viewModel,
                                   const Eegeo::Rendering::ScreenProperties& screenProperties,
+                                  Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomPanelVisibleHeightChangedCallbacks,
                                   ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~CompassViewModule();
@@ -32,6 +39,8 @@ namespace ExampleApp
                 CompassController& GetCompassController() const;
 
                 CompassView& GetCompassView() const;
+                
+                ICompassView& GetCompassViewInterop();
             };
         }
     }

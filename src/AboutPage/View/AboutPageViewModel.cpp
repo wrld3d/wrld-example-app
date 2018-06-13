@@ -13,14 +13,13 @@ namespace ExampleApp
         {
             AboutPageViewModel::AboutPageViewModel(
                 Eegeo::Helpers::TIdentity identity,
-                Reaction::View::IReactionControllerModel& reactionControllerModel,
                 const std::string& buildVersion,
                 const std::string& platformVersion,
                 const std::string& platformHash,
                 const std::string& platformArchitecture,
                 const std::string& aboutText,
                 const std::string& appName)
-                : m_openable(identity, reactionControllerModel)
+                : m_openable(identity)
                 , m_buildVersion(buildVersion)
                 , m_platformVersion(platformVersion)
                 , m_platformHash(platformHash)
@@ -37,14 +36,10 @@ namespace ExampleApp
                 
             }
 
-            bool AboutPageViewModel::TryAcquireReactorControl()
-            {
-                return m_openable.TryAcquireReactorControl();
-            }
 
             bool AboutPageViewModel::IsOpen() const
             {
-                return m_openable.IsFullyOpen();
+                return m_openable.IsOpen();
             }
 
             const std::string AboutPageViewModel::GetContent(bool showHiddenContent) const
@@ -92,10 +87,8 @@ namespace ExampleApp
             {
                 if(!IsOpen())
                 {
-                    if(m_openable.Open())
-                    {
-                        m_openedCallbacks.ExecuteCallbacks();
-                    }
+                    m_openable.Open();
+                    m_openedCallbacks.ExecuteCallbacks();
                 }
             }
 
@@ -103,11 +96,7 @@ namespace ExampleApp
             {
                 if(IsOpen())
                 {
-                    {
-                        const bool closed = m_openable.Close();
-                        Eegeo_ASSERT(closed, "Failed to close");
-                    }
-
+                    m_openable.Close();
                     m_closedCallbacks.ExecuteCallbacks();
                 }
             }

@@ -63,7 +63,6 @@ namespace ExampleApp
                     }
 
                     m_confirmationViewModel.RemoveFromScreen();
-                    m_confirmationViewModel.TryReleaseReactorControl();
                     break;
                 }
                 case Ring:
@@ -92,9 +91,9 @@ namespace ExampleApp
             }
 
             // TODO: Investigate if this is necessary
-            void MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel, float& onScreenState)
+            void MyPinCreationCompositeViewModel::HandleSettingsMenuStateChanged(ScreenControl::View::IScreenControlViewModel& viewModel)
             {
-                if (viewModel.IsFullyOnScreen())
+                if (viewModel.IsOnScreen())
                 {
                     m_initiationViewModel.SetShouldOffsetViewButton(true);
                     m_initiationViewModel.AddToScreen();
@@ -102,7 +101,7 @@ namespace ExampleApp
                 else
                 {
                     m_initiationViewModel.SetShouldOffsetViewButton(false);
-                    if (m_initiationViewModel.IsFullyOnScreen())
+                    if (m_initiationViewModel.IsOnScreen())
                     {
                         m_initiationViewModel.AddToScreen();
                     }

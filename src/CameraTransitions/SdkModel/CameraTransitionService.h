@@ -25,6 +25,8 @@ namespace ExampleApp
                 
                 void SetTransitionController(ICameraTransitionController& transitionController);
                 
+                void StartTransition(const CameraTransitionOptions& options);
+                
                 void StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                        float distanceFromInterest,
                                        bool jumpIfFar=true);

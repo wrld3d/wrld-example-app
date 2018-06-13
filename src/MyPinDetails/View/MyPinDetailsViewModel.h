@@ -26,8 +26,7 @@ namespace ExampleApp
                 MyPinDetailsOpenableControl m_openable;
 
             public:
-                MyPinDetailsViewModel(Eegeo::Helpers::TIdentity identity,
-                                      Reaction::View::IReactionControllerModel& reactionControllerModel);
+                MyPinDetailsViewModel(Eegeo::Helpers::TIdentity identity);
 
                 ~MyPinDetailsViewModel();
                 
@@ -38,8 +37,6 @@ namespace ExampleApp
                 const std::string& GetMyPinDescription() const;
                 
                 const std::string& GetImagePath() const;
-
-                bool TryAcquireReactorControl();
 
                 bool IsOpen() const;
 

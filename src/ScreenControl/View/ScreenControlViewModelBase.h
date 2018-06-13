@@ -13,13 +13,12 @@ namespace ExampleApp
     {
         namespace View
         {
-            class ScreenControlViewModelBase : public IScreenControlViewModel
+            class ScreenControlViewModelBase : public virtual IScreenControlViewModel
             {
             private:
-                float m_onScreenState;
                 bool m_addedToScreen;
                 
-                Eegeo::Helpers::CallbackCollection2<IScreenControlViewModel&, float> m_onScreenStateChangedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<IScreenControlViewModel&> m_onScreenStateChangedCallbacks;
 
             protected:
                 ScreenControlViewModelBase(bool isInitiallyOnScreen);
@@ -32,19 +31,15 @@ namespace ExampleApp
 
                 void RemoveFromScreen();
 
-                void UpdateOnScreenState(float onScreenState);
+                void InsertOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
 
-                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<IScreenControlViewModel&, float>& callback);
+                void RemoveOnScreenStateChangedCallback(
+                        Eegeo::Helpers::ICallback1<IScreenControlViewModel &> &callback);
 
-                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<IScreenControlViewModel&, float>& callback);
+                bool IsOffScreen() const;
 
-                bool IsFullyOffScreen() const;
-
-                bool IsFullyOnScreen() const;
-
-                float OnScreenState() const;
-                
-                bool IsAddedToScreen() const;
+                bool IsOnScreen() const;
             };
         }
     }

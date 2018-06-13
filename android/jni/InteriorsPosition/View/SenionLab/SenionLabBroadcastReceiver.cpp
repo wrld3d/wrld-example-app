@@ -72,10 +72,13 @@ namespace ExampleApp
                 	env->CallVoidMethod(m_broadcastReceiverInstance, unregisterMethod);
 				}
 
-                void SenionLabBroadcastReceiver::DidUpdateLocation(const double latitude, const double longitude, const int floorNumber)
+                void SenionLabBroadcastReceiver::DidUpdateLocation(const double latitude,
+                                                                   const double longitude,
+                                                                   const double horizontalAccuracyInMeters,
+                                                                   const int floorNumber)
                 {
                     ASSERT_UI_THREAD
-                    m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, floorNumber));
+                    m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, horizontalAccuracyInMeters, floorNumber));
                 }
 
                 void SenionLabBroadcastReceiver::SetIsAuthorized(const bool isAuthorized)

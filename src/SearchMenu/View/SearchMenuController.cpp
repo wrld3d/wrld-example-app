@@ -111,9 +111,9 @@ namespace ExampleApp
                 m_presentationDirty = true;
             }
             
-            void SearchMenuController::OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState)
+            void SearchMenuController::OnOpenStateChanged(OpenableControl::View::IOpenableControlViewModel& viewModel)
             {
-                if(openState != 1.f)
+                if(viewModel.IsClosed())
                 {
                     m_searchMenuView.RemoveSeachKeyboard();
                 }
@@ -151,7 +151,7 @@ namespace ExampleApp
             
             void SearchMenuController::OnViewClicked()
             {
-                if(IsFullyOpen() && m_searchMenuView.GetEditText().length() > 0)
+                if(IsOpen() && m_searchMenuView.GetEditText().length() > 0)
                 {
                     m_messageBus.Publish(SearchMenuPerformedSearchMessage(m_searchMenuView.HasTagSearch() ? m_lastPerformedQuery.Query() : m_searchMenuView.GetEditText(),
                                                                           m_searchMenuView.HasTagSearch(),
@@ -196,7 +196,7 @@ namespace ExampleApp
                     return;
                 }
                 
-                if(m_viewModel.IsFullyOpen() && !m_view.IsAnimating())
+                if(m_viewModel.IsOpen() && !m_view.IsAnimating())
                 {
                     m_viewModel.Close();
                 }
@@ -206,34 +206,29 @@ namespace ExampleApp
             {
                 MenuController::RefreshPresentation(forceRefresh);
                 
-                if(!m_viewModel.IsFullyClosed())
+                if(!m_viewModel.IsClosed())
                 {
                     m_searchMenuView.SetSearchSection(m_searchSectionViewModel);
                 }
             }
 
-            bool SearchMenuController::IsFullyOpen() const
+            bool SearchMenuController::IsOpen() const
             {
-                return m_viewModel.IsFullyOpen();
-            }
-
-            void SearchMenuController::UpdateOpenState()
-            {
-                m_viewModel.UpdateOpenState(1.0f);
+                return m_viewModel.IsOpen();
             }
 
             void SearchMenuController::OnOpenSearchMenuMessage(const OpenSearchMenuMessage& message)
             {
                 if (message.OpenMenu())
                 {
-                    if (!IsFullyOpen())
+                    if (!IsOpen())
                     {
                         m_view.SetFullyOnScreenOpen();
                     }
                 }
                 else
                 {
-                    if (IsFullyOpen())
+                    if (IsOpen())
                     {
                         m_view.SetFullyOnScreenClosed();
                     }

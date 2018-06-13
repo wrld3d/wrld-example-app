@@ -494,6 +494,18 @@
         "size_px": 42,
         "color": "FFFFFFFF",
         "masked_color": "F0F0F080"
+    },
+    {
+        "name": "nav_marker_default",
+        "size_px": 38,
+        "color": "FFFFFFFF",
+        "masked_color": "F0F0F080"
+    },
+    {
+        "name": "nav_container",
+        "size_px": 60,
+        "color": "FFFFFFFF",
+        "masked_color": "F0F0F080"
     }
 	],
 	"LabelStyles": [{
@@ -509,6 +521,24 @@
         "fade_duration": 0.25,
         "screen_margin": 41.0,
         "screen_margin_hiding": "if_icon_outside_margin",
+        "stencil_mode": "always",
+        "initially_faded_out":true,
+        "priority": -1,
+		"ignore_occlusion": true,
+		"x_offset": 0.5,
+		"icon_y_offset": -3
+	},
+	{
+		"name": "nav_container",
+		"label_text_style_name": "place_name_default",
+		"label_icon_style_name": "nav_container",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "left",
+        "label_vertical_alignment": "bottom",
+        "constraint_radius_scale": 1.0,
+        "pickable": true,
+        "fade_duration": 0.25,
         "stencil_mode": "always",
         "initially_faded_out":true,
         "priority": -1,
@@ -978,6 +1008,23 @@
         "stencil_mode": "always",
         "initially_faded_out":true,
         "priority": 0
+    },
+    {
+        "name": "nav_marker_default",
+        "label_text_style_name": "marker_default",
+        "label_icon_style_name": "nav_marker_default",
+        "label_orientation": "screen",
+        "label_display": "screen_space",
+        "label_horizontal_alignment": "left",
+        "label_vertical_alignment": "bottom",
+        "constraint_radius_scale": 1.0,
+        "pickable": true,
+        "fade_duration": 0.25,
+        "stencil_mode": "always",
+        "initially_faded_out":true,
+        "priority": 0,
+        "ignore_occlusion": true,
+        "icon_y_offset": 12
     },
 	{
         "name": "marker_faded_in",

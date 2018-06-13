@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -24,7 +25,7 @@ import com.eegeo.photos.PhotoIntentDispatcher;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 import com.eegeo.view.OnPauseListener;
 
-public abstract class MainActivity extends Activity implements SurfaceHolder.Callback, INativeMessageRunner
+public abstract class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback, INativeMessageRunner
 {
     private PhotoIntentDispatcher m_photoIntentDispatcher;
     private RuntimePermissionDispatcher m_runtimePermissionDispatcher;

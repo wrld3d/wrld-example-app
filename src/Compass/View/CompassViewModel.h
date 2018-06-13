@@ -23,27 +23,25 @@ namespace ExampleApp
                 CompassViewModel(Eegeo::Helpers::TIdentity identity,
                                  bool isInitiallyOnScreen);
 
-                Eegeo::Helpers::TIdentity GetIdentity() const;
+                Eegeo::Helpers::TIdentity GetIdentity() const override;
 
-                void AddToScreen();
+                void AddToScreen() override;
 
-                void RemoveFromScreen();
+                void RemoveFromScreen() override;
 
-                void UpdateOnScreenState(float onScreenState);
+                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback1<ScreenControl::View::IScreenControlViewModel&>& callback) override;
 
-                void InsertOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback1<ScreenControl::View::IScreenControlViewModel&>& callback) override;
 
-                void RemoveOnScreenStateChangedCallback(Eegeo::Helpers::ICallback2<ScreenControl::View::IScreenControlViewModel&, float>& callback);
+                bool IsOffScreen() const override;
 
-                bool IsFullyOffScreen() const;
+                bool IsOnScreen() const override;
 
-                bool IsFullyOnScreen() const;
+                ScreenControl::View::IMultiStateScreenControlViewModel& GetScreenControlViewModel();
 
-                float OnScreenState() const;
-                
-                bool IsAddedToScreen() const;
+                void SetState( ScreenControl::View::TScreenControlViewState state) override;
 
-                ScreenControl::View::IScreenControlViewModel& GetScreenControlViewModel();
+                ScreenControl::View::TScreenControlViewState GetState() override;
 
             private:
                 CompassScreenControl m_screenControl;

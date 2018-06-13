@@ -6,6 +6,7 @@
 #include "Watermark.h"
 #include "WatermarkView.h"
 #include "CallbackCollection.h"
+#include "IScreenControlView.h"
 
 namespace ExampleApp
 {
@@ -27,9 +28,9 @@ namespace ExampleApp
 
                 void SetOnScreenStateToIntermediateValue(float value);
 
-                void SetFullyOnScreen();
+                void SetOnScreen();
 
-                void SetFullyOffScreen();
+                void SetOffScreen();
                 
                 void OnSelected();
 

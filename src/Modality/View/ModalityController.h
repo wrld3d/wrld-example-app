@@ -21,7 +21,7 @@ namespace ExampleApp
             {
                 IModalityModel& m_modalityModel;
                 std::vector<OpenableControl::View::IOpenableControlViewModel*> m_viewModels;
-                Eegeo::Helpers::ICallback2<OpenableControl::View::IOpenableControlViewModel&, float>* m_pMenuOpenStateChangedCallback;
+                Eegeo::Helpers::ICallback1<OpenableControl::View::IOpenableControlViewModel&>* m_pMenuOpenStateChangedCallback;
 
                 Menu::View::IMenuIgnoredReactionModel& m_ignoredReactionModel;
 
@@ -34,9 +34,7 @@ namespace ExampleApp
 
             private:
 
-                float GetModality() const;
-
-                void MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel, float& openState);
+                void MenuOpenStateChangeHandler(OpenableControl::View::IOpenableControlViewModel& viewModel);
             };
         }
     }

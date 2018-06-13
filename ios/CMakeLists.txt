@@ -70,10 +70,13 @@ set(ios_frameworks
   -framework IndoorAtlas
   -framework SLIndoorLocation
   -framework WRLDSearchWidget
+  -framework WrldNav
+  -framework WrldNavWidget
+  -framework WrldUtils
   -framework HockeySDK")
 
 set(linker_search_paths "-LInclude/eegeo -LInclude")
-set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab ${CMAKE_CURRENT_SOURCE_DIR}/Include/WrldSearchWidget ${CMAKE_CURRENT_SOURCE_DIR}/Include/HockeySDK-iOS/HockeySDK.embeddedframework")
+set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab ${CMAKE_CURRENT_SOURCE_DIR}/Include/WrldSearchWidget ${CMAKE_CURRENT_SOURCE_DIR}/Include/HockeySDK-iOS/HockeySDK.embeddedframework ${CMAKE_CURRENT_SOURCE_DIR}/Include/WrldSDK")
 set(libs "${eegeo_sdk_libs} -lturbojpeg -lz -lcurl -luv -lFlurry_6.0.0")
 set(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 
@@ -124,6 +127,8 @@ set_xcode_property(${executable_name} CLANG_CXX_LANGUAGE_STANDARD "c++11")
 set_xcode_property(${executable_name} CLANG_CXX_LIBRARY "libc++")
 
 set_xcode_property(${executable_name} LD_RUNPATH_SEARCH_PATHS "@executable_path/Frameworks")
+
+set_xcode_property(${executable_name} ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES "YES")
 
 # Test Project Settings
 if (BUILD_SNAPSHOT_TEST)

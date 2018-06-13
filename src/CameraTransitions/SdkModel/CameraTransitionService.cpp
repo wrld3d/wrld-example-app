@@ -43,6 +43,12 @@ namespace ExampleApp
                 Eegeo_ASSERT(HasValidController(), "No valid transition controller set");
             }
             
+            void CameraTransitionService::StartTransition(const CameraTransitionOptions& options)
+            {
+                FailIfNoValidControllerSet();
+                m_pTransitionController->StartTransition(options);
+            }
+            
             void CameraTransitionService::StartTransitionTo(const Eegeo::dv3& newInterestPoint,
                                    float distanceFromInterest,
                                    bool jumpIfFar)

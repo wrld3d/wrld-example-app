@@ -53,7 +53,8 @@ namespace ExampleApp
             const std::string& mapSceneId,
 			const std::vector<std::vector<std::string>>& customKeyboardLayout,
             const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig>& outdoorSearchMenuItems,
-            bool overrideIndoorSearchMenuItems
+            bool overrideIndoorSearchMenuItems,
+            bool showPoiDirectionsButton
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -102,6 +103,7 @@ namespace ExampleApp
 		, m_customKeyboardLayout(customKeyboardLayout)
         , m_outdoorSearchMenuItems(outdoorSearchMenuItems)
         , m_overrideIndoorSearchMenuItems(overrideIndoorSearchMenuItems)
+        , m_showPoiDirectionsButton(showPoiDirectionsButton)
         {
         }
         
@@ -350,6 +352,10 @@ namespace ExampleApp
         bool ApplicationConfiguration::OverrideIndoorSearchMenuItems() const
         {
             return m_overrideIndoorSearchMenuItems;
+        }
+
+        bool ApplicationConfiguration::ShowPoiDirectionsButton() const {
+            return m_showPoiDirectionsButton;
         }
     }
 }

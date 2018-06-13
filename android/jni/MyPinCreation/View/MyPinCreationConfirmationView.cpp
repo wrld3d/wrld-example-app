@@ -92,7 +92,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, method, value);
             }
 
-            void MyPinCreationConfirmationView::SetFullyOnScreen()
+            void MyPinCreationConfirmationView::SetOnScreen()
             {
                 ASSERT_UI_THREAD
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
@@ -102,7 +102,7 @@ namespace ExampleApp
                 env->CallVoidMethod(m_uiView, method);
             }
 
-            void MyPinCreationConfirmationView::SetFullyOffScreen()
+            void MyPinCreationConfirmationView::SetOffScreen()
             {
                 ASSERT_UI_THREAD
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);

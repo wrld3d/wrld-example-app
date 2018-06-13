@@ -28,9 +28,7 @@
 	<uses-feature android:name="android.hardware.wifi"
 		android:required="true" />
 
-    
-
-    <application android:icon="@mipmap/icon" android:label="WRLD" android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+    <application android:icon="@mipmap/icon" android:label="WRLD" android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
        
         <activity android:name="com.eegeo.mobileexampleapp.BackgroundThreadActivity"
                   android:label="WRLD"

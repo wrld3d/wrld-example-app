@@ -13,7 +13,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class IInteriorsExplorerView : public ScreenControl::View::IScreenControlView
+            class IInteriorsExplorerView : public ScreenControl::View::IMultiStateScreenControlView
             {
             public:
                 
