@@ -59,8 +59,8 @@ enum CompassViewState
         m_width = 80.f;
         m_height = 80.f;
         
-        m_innerHeight = 80.0f/1.5f;
-        m_innerWidth = 80.0f/1.5f;
+        m_innerHeight = 80.0f;
+        m_innerWidth = 80.0f;
         
         m_navWidgetBottomHeight = 0.0f;
         

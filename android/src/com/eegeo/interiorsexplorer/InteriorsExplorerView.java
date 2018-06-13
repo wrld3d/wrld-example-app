@@ -85,8 +85,8 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     private boolean m_keepOffScreenDueToLackOfSpace = false;
     
     // TODO: Replace these with refs to UX iteration color scheme.
-    private final int TextColorNormal = Color.parseColor("#1256B0");
-    private final int TextColorDown = Color.parseColor("#CDFC0D");
+    private final int TextColorNormal;
+    private final int TextColorDown;
     private final float ListItemHeight;
 
     private InteriorsExplorerViewState m_viewState = InteriorsExplorerViewState.Default;
@@ -118,6 +118,9 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     {
         m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
+
+		TextColorNormal = m_activity.getResources().getColor(R.color.interiors_elevator_text_normal);
+		TextColorDown = m_activity.getResources().getColor(R.color.interiors_elevator_text_down);
 
         // TODO: Move to Dimens values resource when integrated with Search UX changes.
         ListItemHeight = m_activity.dipAsPx(50.0f);
