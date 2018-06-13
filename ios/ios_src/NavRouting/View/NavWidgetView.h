@@ -5,6 +5,7 @@
 #include "NavWidgetViewIncludes.h"
 #include "WrldNav/WrldNav.h"
 #include "WrldNavWidget/WrldNavWidget.h"
+#include "NavRoutingRerouteDialog/NavRoutingRerouteDialog.h"
 #include "IAppModeModel.h"
 #include "INavWidgetView.h"
 #include "INavWidgetViewModel.h"
@@ -35,10 +36,14 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& m_topPanelVisibleHeightChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& m_bottomPanelVisibleHeightChangedCallbacks;
                 
+                Eegeo::Helpers::TCallback1<NavWidgetView, const bool> m_rerouteDialogOptionSelectedCallback;
+                
                 WRLDNavWidgetBase* m_pView;
-                WRLDNavModel* m_pNavModel;                
+                WRLDNavModel* m_pNavModel;
+                NavRoutingRerouteDialog* m_pRerouteDialog;
                 
                 void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);
+                void OnRerouteDialogOptionSelected(const bool& shouldReroute);
                 
                 WRLDNavRoute* BuildWRLDNavRouteFromNavRoutingRouteModel(const SdkModel::NavRoutingRouteModel& routeModel);
                 WRLDNavDirection* BuildWlrdNavDirectionFromFromNavRoutingDirectionModel(const SdkModel::NavRoutingDirectionModel& directionModel );
@@ -49,11 +54,9 @@ namespace ExampleApp
                               Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& topPanelVisibleHeightChangedCallbacks,
                               Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& bottomPanelVisibleHeightChangedCallbacks);
                 
-                ~NavWidgetView() { };
+                ~NavWidgetView();
                 
                 UIView* GetUIView();
-                
-                BOOL consumesTouch(UITouch*);
                 
                 void changeReceived(const std::string& keyPath);
                 

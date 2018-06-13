@@ -1,5 +1,6 @@
 set(resources ${resources}
-	    Resources/WidgetSearchResultTableViewCell.xib
+        Resources/NavRoutingRerouteDialog.xib
+        Resources/WidgetSearchResultTableViewCell.xib
         Resources/ReportPinIcon.png
         Resources/ReportPinIcon@2x.png
         Resources/ReportPinIcon@3x.png

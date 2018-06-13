@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NavRoutingRerouteDialog">
+            <connections>
+                <outlet property="messageLabel" destination="D6e-14-JY0" id="vOf-Cp-PL3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z5u-LE-8EO" userLabel="Dialog">
+                    <rect key="frame" x="38" y="239.5" width="300" height="189"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End Navigation?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACF-Uu-Njv">
+                            <rect key="frame" x="24" y="16" width="142" height="24"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" red="0.069977425039999999" green="0.33631908890000001" blue="0.68978685139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TvG-Iu-tD7" userLabel="Line">
+                            <rect key="frame" x="16" y="48" width="268" height="1"/>
+                            <color key="backgroundColor" red="0.069977425039999999" green="0.33631908890000001" blue="0.68978685139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="voX-NH-kth"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You seem to be heading away from your destination. Do you want to end nagivation?" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6e-14-JY0">
+                            <rect key="frame" x="24" y="57" width="252" height="54"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5in-Ic-QaZ" customClass="WRLDUtilsBackgroundColorButton" customModule="WrldUtils">
+                            <rect key="frame" x="8" y="119" width="138" height="52.5"/>
+                            <color key="backgroundColor" red="0.069977425039999999" green="0.33631908890000001" blue="0.68978685139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.0" green="0.17037141319999999" blue="0.38656401629999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="No">
+                                        <attributes>
+                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="20" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" metaFont="system" size="15"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Update Route">
+                                        <attributes>
+                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="normalColor">
+                                    <color key="value" red="0.069977425039999999" green="0.33631908890000001" blue="0.68978685139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="highlightedColor">
+                                    <color key="value" red="0.0" green="0.17037141319999999" blue="0.38656401629999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="updateRouteButtonTapped:" destination="-1" eventType="touchUpInside" id="MFN-82-qNw"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="characterWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kSY-l7-ZyV" customClass="WRLDUtilsBackgroundColorButton" customModule="WrldUtils">
+                            <rect key="frame" x="154" y="119" width="138" height="52.5"/>
+                            <color key="backgroundColor" red="0.069977425039999999" green="0.33631908890000001" blue="0.68978685139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.0" green="0.17037141319999999" blue="0.38656401629999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="Yes">
+                                        <attributes>
+                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="20" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" metaFont="system" size="15"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="End Navigation">
+                                        <attributes>
+                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                <userDefinedRuntimeAttribute type="color" keyPath="normalColor">
+                                    <color key="value" red="0.069977425039999999" green="0.33631908890000001" blue="0.68978685139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="highlightedColor">
+                                    <color key="value" red="0.0" green="0.17037141319999999" blue="0.38656401629999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="endNavigationButtonTapped:" destination="-1" eventType="touchUpInside" id="emj-MB-rCh"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="D6e-14-JY0" firstAttribute="leading" secondItem="Z5u-LE-8EO" secondAttribute="leading" constant="24" id="2dq-o6-HRf"/>
+                        <constraint firstItem="5in-Ic-QaZ" firstAttribute="width" secondItem="kSY-l7-ZyV" secondAttribute="width" id="2zJ-LZ-G9P"/>
+                        <constraint firstItem="D6e-14-JY0" firstAttribute="top" secondItem="TvG-Iu-tD7" secondAttribute="bottom" constant="8" id="MfC-Gg-qqZ"/>
+                        <constraint firstItem="5in-Ic-QaZ" firstAttribute="leading" secondItem="Z5u-LE-8EO" secondAttribute="leading" constant="8" id="Mon-LW-vz4"/>
+                        <constraint firstAttribute="trailing" secondItem="TvG-Iu-tD7" secondAttribute="trailing" constant="16" id="Njy-01-NOa"/>
+                        <constraint firstItem="TvG-Iu-tD7" firstAttribute="top" secondItem="ACF-Uu-Njv" secondAttribute="bottom" constant="8" id="Nx8-d3-dcs"/>
+                        <constraint firstAttribute="width" constant="300" id="OLR-Iu-OtE"/>
+                        <constraint firstAttribute="trailing" secondItem="kSY-l7-ZyV" secondAttribute="trailing" constant="8" id="PB4-NN-LmX"/>
+                        <constraint firstAttribute="trailing" secondItem="D6e-14-JY0" secondAttribute="trailing" constant="24" id="cwQ-4M-f8H"/>
+                        <constraint firstItem="5in-Ic-QaZ" firstAttribute="top" secondItem="D6e-14-JY0" secondAttribute="bottom" constant="8" id="dXL-h1-zQ6"/>
+                        <constraint firstItem="kSY-l7-ZyV" firstAttribute="leading" secondItem="5in-Ic-QaZ" secondAttribute="trailing" constant="8" id="eaZ-Gn-LwB"/>
+                        <constraint firstItem="kSY-l7-ZyV" firstAttribute="top" secondItem="D6e-14-JY0" secondAttribute="bottom" constant="8" id="iNV-5j-jSR"/>
+                        <constraint firstAttribute="bottom" secondItem="5in-Ic-QaZ" secondAttribute="bottom" constant="17.5" id="jgq-L7-yDI"/>
+                        <constraint firstItem="ACF-Uu-Njv" firstAttribute="top" secondItem="Z5u-LE-8EO" secondAttribute="top" constant="16" id="pZ6-BS-eAu"/>
+                        <constraint firstItem="ACF-Uu-Njv" firstAttribute="leading" secondItem="Z5u-LE-8EO" secondAttribute="leading" constant="24" id="qyC-5e-U0T"/>
+                        <constraint firstItem="TvG-Iu-tD7" firstAttribute="leading" secondItem="Z5u-LE-8EO" secondAttribute="leading" constant="16" id="yE3-jV-d8Q"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.40162852112676056" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Z5u-LE-8EO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="HBr-lV-9zB"/>
+                <constraint firstItem="Z5u-LE-8EO" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Ye2-tX-1Bo"/>
+            </constraints>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+</document>
