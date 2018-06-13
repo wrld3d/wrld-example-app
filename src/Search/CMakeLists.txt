@@ -19,6 +19,7 @@ set(currsources
   ../src/Search/SearchQueryResultsRemovedMessage.h
   ../src/Search/SearchQueryRequestMessage.cpp
   ../src/Search/SearchQueryRequestMessage.h
+  ../src/Search/SearchQueryClearRequestMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Search FILES ${currsources})

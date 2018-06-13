@@ -27,6 +27,7 @@ namespace ExampleApp
             , m_searchServices(searchServices)
             , m_onSearchResultsClearedCallback(this, &SearchWidgetController::OnSearchResultsCleared)
             , m_onSearchResultSelectedCallback(this, &SearchWidgetController::OnSearchResultSelected)
+            , m_onSearchQueryClearRequestHandler(this, &SearchWidgetController::OnSearchQueryClearRequest)
             , m_onSearchQueryRefreshedHandler(this, &SearchWidgetController::OnSearchQueryRefreshedMessage)
             , m_onSearchQueryResultsLoadedHandler(this, &SearchWidgetController::OnSearchResultsLoaded)
             , m_deepLinkRequestedHandler(this, &SearchWidgetController::OnSearchRequestedMessage)
@@ -59,6 +60,7 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_onSearchQueryRefreshedHandler);
                 
                 m_messageBus.SubscribeUi(m_onSearchQueryResultsLoadedHandler);
+                m_messageBus.SubscribeUi(m_onSearchQueryClearRequestHandler);
                 m_messageBus.SubscribeUi(m_deepLinkRequestedHandler);
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
 
@@ -84,6 +86,7 @@ namespace ExampleApp
 
                 m_messageBus.UnsubscribeUi(m_onAppModeChanged);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryRefreshedHandler);
+                m_messageBus.UnsubscribeUi(m_onSearchQueryClearRequestHandler);
                 m_messageBus.UnsubscribeUi(m_onSearchQueryResultsLoadedHandler);
                 m_messageBus.UnsubscribeUi(m_deepLinkRequestedHandler);
 
@@ -164,6 +167,11 @@ namespace ExampleApp
                                                   query.ShouldTryInteriorSearch(),
                                                   message.Location(),
                                                   message.Radius()));
+            }
+
+            void SearchWidgetController::OnSearchQueryClearRequest(const Search::SearchQueryClearRequestMessage &message)
+            {
+                m_view.ClearSearchResults();
             }
            
             void SearchWidgetController::OnSearchRequestedMessage(const Search::SearchQueryRequestMessage& message)

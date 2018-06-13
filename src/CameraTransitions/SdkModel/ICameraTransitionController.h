@@ -61,6 +61,9 @@ namespace ExampleApp
 
                 virtual void InsertTransitionCompletedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveTransitionCompletedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+
+                virtual void InsertTransitionFailedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                virtual void RemoveTransitionFailedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
             };
         }
     }

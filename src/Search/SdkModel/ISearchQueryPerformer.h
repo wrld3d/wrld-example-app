@@ -49,6 +49,8 @@ namespace ExampleApp
                                                bool startAtGPSLocation = false,
                                                const std::string& interiorId = "") = 0;
 
+                virtual void RequestClear() = 0;
+
                 virtual void RemoveSearchQueryResults() = 0;
 
                 virtual void InsertOnSearchResultsClearedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

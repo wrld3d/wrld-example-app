@@ -199,7 +199,7 @@ namespace ExampleApp
                     {
                         if(!TagStillPresent(previousQuery))
                         {
-                            m_searchQueryPerformer.RemoveSearchQueryResults();
+                            m_searchQueryPerformer.RequestClear();
                         }
                     }
                 }

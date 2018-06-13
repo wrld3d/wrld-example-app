@@ -10,8 +10,8 @@
 #include "SearchResultModel.h"
 #include "BidirectionalBus.h"
 #include "SearchQueryResultsRemovedMessage.h"
+#include "SearchQueryClearRequestMessage.h"
 #include "CameraState.h"
-#include "SearchQueryResultsRemovedMessage.h"
 
 namespace
 {
@@ -159,6 +159,11 @@ namespace ExampleApp
 
                 m_queryResultsClearedCallbacks.ExecuteCallbacks();
                 m_messageBus.Publish(SearchQueryResultsRemovedMessage());
+            }
+
+            void SearchQueryPerformer::RequestClear()
+            {
+                m_messageBus.Publish(SearchQueryClearRequestMessage());
             }
 
             void SearchQueryPerformer::InsertOnSearchResultsClearedCallback(Eegeo::Helpers::ICallback0& callback)

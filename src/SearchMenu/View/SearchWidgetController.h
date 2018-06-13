@@ -40,6 +40,9 @@ namespace ExampleApp
 																		m_onSearchQueryRefreshedHandler;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::SearchQueryResponseReceivedMessage&>
                                                                         m_onSearchQueryResultsLoadedHandler;
+				Eegeo::Helpers::TCallback1<SearchWidgetController, const Search::SearchQueryClearRequestMessage&>
+						m_onSearchQueryClearRequestHandler;
+
                 
                 Eegeo::Helpers::TCallback1<SearchWidgetController, ScreenControl::View::IScreenControlViewModel&> m_onScreenStateChanged;
                 Eegeo::Helpers::TCallback1<SearchWidgetController, OpenableControl::View::IOpenableControlViewModel&> m_onOpenableStateChanged;
@@ -75,6 +78,7 @@ namespace ExampleApp
 				void OnSearchResultsCleared();
 				void OnSearchResultSelected(int& index);
 				void OnSearchQueryRefreshedMessage(const Search::SearchQueryRefreshedMessage& message);
+				void OnSearchQueryClearRequest(const Search::SearchQueryClearRequestMessage& message);
                 void OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message);
                 void OnSearchRequestedMessage(const Search::SearchQueryRequestMessage& message);
                 

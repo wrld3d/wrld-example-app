@@ -86,6 +86,9 @@ namespace ExampleApp
                 void InsertTransitionCompletedCallback(Eegeo::Helpers::ICallback0& callback);
                 void RemoveTransitionCompletedCallback(Eegeo::Helpers::ICallback0& callback);
 
+                void InsertTransitionFailedCallback(Eegeo::Helpers::ICallback0& callback);
+                void RemoveTransitionFailedCallback(Eegeo::Helpers::ICallback0& callback);
+
             private:
 
                 std::queue<ICameraTransitionStage*> m_transitionStages;
@@ -117,6 +120,7 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::CallbackCollection0 m_transitioningChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_transitionCompletedCallbacks;
+                Eegeo::Helpers::CallbackCollection0 m_transitionFailedCallbacks;
             };
         }
     }

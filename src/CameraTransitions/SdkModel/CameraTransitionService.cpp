@@ -11,6 +11,8 @@ namespace ExampleApp
             CameraTransitionService::CameraTransitionService()
             : m_pTransitionController(NULL)
             , m_transitioningChangedHandler(this, &CameraTransitionService::OnTransitioningChanged)
+            , m_transitionCompleteHandler(this, &CameraTransitionService::OnTransitioningCompleted)
+            , m_transitionFailedHandler(this, &CameraTransitionService::OnTransitioningFailed)
             {
                 
             }
@@ -20,6 +22,8 @@ namespace ExampleApp
                 if(HasValidController())
                 {
                     m_pTransitionController->RemoveTransitioningChangedCallback(m_transitioningChangedHandler);
+                    m_pTransitionController->RemoveTransitionCompletedCallback(m_transitionCompleteHandler);
+                    m_pTransitionController->RemoveTransitionFailedCallback(m_transitionFailedHandler);
                 }
             }
             
@@ -28,9 +32,13 @@ namespace ExampleApp
                 if(HasValidController())
                 {
                     m_pTransitionController->RemoveTransitioningChangedCallback(m_transitioningChangedHandler);
+                    m_pTransitionController->RemoveTransitionCompletedCallback(m_transitionCompleteHandler);
+                    m_pTransitionController->RemoveTransitionFailedCallback(m_transitionFailedHandler);
                 }
                 m_pTransitionController = &transitionController;
                 m_pTransitionController->InsertTransitioningChangedCallback(m_transitioningChangedHandler);
+                m_pTransitionController->InsertTransitionCompletedCallback(m_transitionCompleteHandler);
+                m_pTransitionController->InsertTransitionFailedCallback(m_transitionFailedHandler);
             }
             
             const bool CameraTransitionService::HasValidController() const
@@ -136,10 +144,30 @@ namespace ExampleApp
             {
                 m_transitionCompletedCallbacks.RemoveCallback(callback);
             }
+
+            void CameraTransitionService::InsertTransitionFailedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitionFailedCallbacks.AddCallback(callback);
+            }
+
+            void CameraTransitionService::RemoveTransitionFailedCallback(Eegeo::Helpers::ICallback0& callback)
+            {
+                m_transitionFailedCallbacks.AddCallback(callback);
+            }
             
             void CameraTransitionService::OnTransitioningChanged()
             {
                 m_transitioningChangedCallbacks.ExecuteCallbacks();
+            }
+
+            void CameraTransitionService::OnTransitioningCompleted()
+            {
+                m_transitionCompletedCallbacks.ExecuteCallbacks();
+            }
+
+            void CameraTransitionService::OnTransitioningFailed()
+            {
+                m_transitionFailedCallbacks.ExecuteCallbacks();
             }
         }
     }

@@ -14,6 +14,7 @@
 #include "SearchQueryResultsRemovedMessage.h"
 #include "AutocompleteSuggestionsReceivedMessage.h"
 #include "SearchQueryResponseReceivedMessage.h"
+#include "SearchQueryClearRequestMessage.h"
 #include "CompassModeChangedMessage.h"
 #include "CompassHeadingUpdateMessage.h"
 #include "CompassModeUnauthorizedMessage.h"
@@ -84,6 +85,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResultsRemovedMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryResponseReceivedMessage>
+            , public Eegeo::Messaging::CatalogBinding<Search::SearchQueryClearRequestMessage>
             , public Eegeo::Messaging::CatalogBinding<Search::AutocompleteSuggestionsReceivedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassModeChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Compass::CompassHeadingUpdateMessage>

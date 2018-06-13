@@ -66,12 +66,14 @@ namespace ExampleApp
                 m_manifestNotifier.AddManifestLoadedObserver(m_newManifestCallback);
                 m_cityThemeService.SubscribeSharedThemeDataChanged(m_newThemeDataCallback);
                 m_cameraTransitionController.InsertTransitionCompletedCallback(m_startupSearchCameraTransitionCompleteCallback);
+                m_cameraTransitionController.InsertTransitionFailedCallback(m_startupSearchCameraTransitionCompleteCallback);
             }
             
             MapsceneLoader::~MapsceneLoader()
             {
                 m_cityThemeService.UnsubscribeSharedThemeDataChanged(m_newThemeDataCallback);
                 m_manifestNotifier.RemoveManifestLoadedObserver(m_newManifestCallback);
+                m_cameraTransitionController.RemoveTransitionFailedCallback(m_startupSearchCameraTransitionCompleteCallback);
                 m_cameraTransitionController.RemoveTransitionCompletedCallback(m_startupSearchCameraTransitionCompleteCallback);
             }
             
@@ -193,7 +195,7 @@ namespace ExampleApp
                                                              isTag, tryInteriorSearch, selectFirstResult,
                                                              m_startupSearchLocation, m_startAtGPSLocation);
                 }
-                
+
             }
         }
     }
