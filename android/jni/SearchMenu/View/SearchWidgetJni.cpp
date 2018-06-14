@@ -26,6 +26,18 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_OnSe
 }
 
 
+JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_OnSearchResultNavigationRequest(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jint index)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::SearchMenu::View::SearchWidgetView* pView = reinterpret_cast<ExampleApp::SearchMenu::View::SearchWidgetView*>(nativeObjectPtr);
+    pView->OnNavigationRequest((int)index);
+}
+
+
 JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_SelectedItem(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr,

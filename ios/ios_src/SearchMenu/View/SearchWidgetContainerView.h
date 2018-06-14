@@ -8,6 +8,7 @@
 @interface SearchWidgetContainerView : UIView
 
 - (instancetype)initWithSearchProvider:(WidgetSearchProvider *) searchProvider
+                     navigationEnabled:(BOOL) isNavigationEnabled
                             messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus &) messageBus;
 - (ExampleApp::SearchMenu::View::SearchWidgetView*) getInterop;
 - (BOOL) consumesTouch:(UITouch *)touch;

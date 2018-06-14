@@ -27,7 +27,7 @@
 #include "GpsMarkerVisibilityMessage.h"
 #include "InitialExperienceIntroDismissedMessage.h"
 #include "SearchResultPoiPinToggledMessage.h"
-#include "SearchResultPoiDirectionsButtonClickedMessage.h"
+#include "NavigateToMessage.h"
 #include "SearchResultPoiViewOpenedMessage.h"
 #include "SearchResultPoiViewClosedMessage.h"
 #include "InteriorsExplorerSelectFloorMessage.h"
@@ -77,7 +77,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<GpsMarker::GpsMarkerVisibilityMessage>
         	, public Eegeo::Messaging::CatalogBinding<InitialExperience::InitialExperienceIntroDismissedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiPinToggledMessage>
-            , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavigateToMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewOpenedMessage>
             , public Eegeo::Messaging::CatalogBinding<SearchResultPoi::SearchResultPoiViewClosedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerSelectFloorMessage>

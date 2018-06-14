@@ -31,6 +31,7 @@ namespace ExampleApp
 					AndroidNativeState& nativeState,
 					Modality::View::IModalBackgroundView& modalBackgroundView,
 					Menu::View::IMenuViewModel& viewModel,
+					bool showNavigationButtons,
 					ExampleAppMessaging::TMessageBus& messageBus
 				);
 				SearchWidgetController& GetSearchWidgetController() const;

@@ -539,10 +539,12 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                        m_messageBus
                                    );
 
+    bool showNavigationInSearchResults = m_pApp->GetApplicationConfiguration().NavigationEnabled();
 	m_pSearchWidgetViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetViewModule)(
 			m_nativeState,
 			m_pModalBackgroundViewModule->GetModalBackgroundView(),
 			m_pApp->SearchMenuModule().GetSearchMenuViewModel(),
+            showNavigationInSearchResults,
 			m_messageBus
 	);
 

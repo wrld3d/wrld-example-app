@@ -8,7 +8,7 @@ namespace ExampleApp
 {
     namespace SearchProviders
     {
-		MyTestSearchProvider::MyTestSearchProvider(AndroidNativeState& nativeState)
+		MyTestSearchProvider::MyTestSearchProvider(AndroidNativeState& nativeState, bool showNavigationButtons)
 		: m_nativeState(nativeState)
 		{
 			ASSERT_UI_THREAD
@@ -21,10 +21,11 @@ namespace ExampleApp
 					"com/eegeo/searchproviders/MyTestSearchProvider");
 			m_javaInstance = Helpers::JniHelper::LoadInstanceGlobalRef(
 					env,
-					"(JLandroid/app/Activity;)V",
+					"(JLandroid/app/Activity;Z)V",
 					m_javaClass,
 					(jlong)this,
-					m_nativeState.activity);
+					m_nativeState.activity,
+					showNavigationButtons);
 
 			m_onSearchCompleted = env->GetMethodID(
 					m_javaClass,

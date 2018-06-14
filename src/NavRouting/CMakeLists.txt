@@ -37,6 +37,8 @@ set(currsources
   ../src/NavRouting/NavRoutingViewOpenMessage.cpp
   ../src/NavRouting/NavRoutingViewOpenMessage.h
   ../src/NavRouting/NavRoutingViewStartEndLocationSwappedMessage.h
+  ../src/NavRouting/NavigateToMessage.cpp
+  ../src/NavRouting/NavigateToMessage.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\NavRouting FILES ${currsources})

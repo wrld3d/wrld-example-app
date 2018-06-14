@@ -2,7 +2,7 @@
 
 #include "SearchResultPoiController.h"
 #include "SearchResultPoiViewOpenedMessage.h"
-#include "SearchResultPoiDirectionsButtonClickedMessage.h"
+#include "NavigateToMessage.h"
 #include "SearchJsonParser.h"
 
 namespace ExampleApp
@@ -48,7 +48,13 @@ namespace ExampleApp
 
             void SearchResultPoiController::OnDirectionsButtonClicked(Search::SdkModel::SearchResultModel& searchResultModel)
             {
-                m_messageBus.Publish(SearchResultPoiDirectionsButtonClickedMessage(searchResultModel));
+                m_messageBus.Publish(NavRouting::NavigateToMessage(
+                        searchResultModel.GetTitle(),
+                        searchResultModel.GetLocation(),
+                        searchResultModel.IsInterior(),
+                        searchResultModel.GetBuildingId(),
+                        searchResultModel.GetFloor()
+                ));
             }
             
             void SearchResultPoiController::OnSearchResultImageLoaded(const SearchResultPoiViewImageDownloadCompletedMessage& message)

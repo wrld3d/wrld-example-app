@@ -251,6 +251,21 @@ namespace ExampleApp
                 m_resultSelectedCallbacks.RemoveCallback(callback);
             }
 
+            void SearchWidgetView::OnNavigationRequest(int index)
+            {
+                m_navigationRequestedCallbacks.ExecuteCallbacks(index);
+            }
+
+            void SearchWidgetView::InsertOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationRequestedCallbacks.AddCallback(callback);
+            }
+
+            void SearchWidgetView::RemoveOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationRequestedCallbacks.RemoveCallback(callback);
+            }
+
             void SearchWidgetView::InsertOnViewOpened(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD

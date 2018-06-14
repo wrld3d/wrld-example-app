@@ -5,28 +5,31 @@ package com.eegeo.searchproviders;
 import android.app.Activity;
 import android.support.v4.content.res.ResourcesCompat;
 
-import com.wrld.widgets.search.R;
+import com.eegeo.mobileexampleapp.R;
 import com.wrld.widgets.search.model.SearchProvider;
 import com.wrld.widgets.search.model.SearchProviderResultsReadyCallback;
 import com.wrld.widgets.search.model.SearchResult;
-import com.wrld.widgets.search.model.SearchResultPropertyString;
 import com.wrld.widgets.search.model.SuggestionProvider;
 import com.wrld.widgets.search.view.DefaultSuggestionViewFactory;
 import com.wrld.widgets.search.view.ISearchResultViewFactory;
 
 import com.eegeo.searchmenu.SearchWidgetResult;
-import com.eegeo.searchproviders.QueryContext;
 import com.wrld.widgets.search.view.TextHighlighter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
-public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
+public class MyTestSearchProvider implements SearchProvider, SuggestionProvider, SearchResultNavigationHandler
 {
 	private long										m_nativeCallerPointer;
 	private SearchResultViewFactory						m_resultFactory;
 	private ISearchResultViewFactory					m_suggestionResultFactory;
 	private HashSet<SearchProviderResultsReadyCallback>	m_callbacks;
 	private HashSet<SearchProviderResultsReadyCallback>	m_suggestion_callbacks;
+	private SearchResultNavigationHandler 				m_navRequestHandler;
+
+	private List<SearchResultNavigationHandler> m_navRequestHandlers;
 
 	public class SearchResultInfo
 	{
@@ -35,14 +38,23 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 		public String iconName;
 	}
 
-	public MyTestSearchProvider(long nativeCallerPointer, Activity activity)
+	public MyTestSearchProvider(long nativeCallerPointer, Activity activity, boolean navigationEnabled)
 	{
 		m_nativeCallerPointer = nativeCallerPointer;
-		m_resultFactory       = new SearchResultViewFactory(R.layout.search_result, activity);
+
+		if(navigationEnabled){
+			m_resultFactory = new SearchResultViewFactory(R.layout.search_result_navigation, activity, this);
+		}
+		else{
+			m_resultFactory = new SearchResultViewFactory(com.wrld.widgets.search.R.layout.search_result, activity);
+		}
+
 		int textHighlightColor = ResourcesCompat.getColor(activity.getResources(), R.color.search_widget_text_primary, null);
 		m_suggestionResultFactory = new DefaultSuggestionViewFactory(R.layout.search_suggestion, new TextHighlighter(textHighlightColor));
-		m_callbacks           = new HashSet<SearchProviderResultsReadyCallback>();
-		m_suggestion_callbacks = new HashSet<SearchProviderResultsReadyCallback>();
+		m_callbacks           = new HashSet<>();
+		m_suggestion_callbacks = new HashSet<>();
+
+		m_navRequestHandlers = new ArrayList<>();
 	}
 
 	@Override
@@ -163,6 +175,21 @@ public class MyTestSearchProvider implements SearchProvider,SuggestionProvider
 
 	public void removeSuggestionsReceivedCallback(SearchProviderResultsReadyCallback resultReadyCallback){
 		m_suggestion_callbacks.remove(resultReadyCallback);
+	}
+
+	@Override
+	public void navigateTo(SearchResult targetResult) {
+		for(SearchResultNavigationHandler handler : m_navRequestHandlers) {
+			handler.navigateTo(targetResult);
+		}
+	}
+
+	public void addNavigationRequestCallback(SearchResultNavigationHandler navRequestHandler){
+		m_navRequestHandlers.add(navRequestHandler);
+	}
+
+	public void removeNavigationRequestCallback(SearchResultNavigationHandler navRequestHandler){
+		m_navRequestHandlers.remove(navRequestHandler);
 	}
 
 	public ISearchResultViewFactory getSuggestionViewFactory(){

@@ -34,6 +34,7 @@ namespace ExampleApp
                 SearchWidgetViewModule(
                                        Modality::View::IModalBackgroundView& modalBackgroundView,
                                        Menu::View::IMenuViewModel& viewModel,
+                                       bool isNavigationEnabled,
                                        ExampleAppMessaging::TMessageBus& messageBus
                                        );
                 

@@ -70,7 +70,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingStartEndRoutingButtonClickedMessage&> m_startEndRoutingButtonClickedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingSelectedDirectionChangedMessage&> m_selectedDirectionChangedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingRerouteDialogClosedMessage&> m_rerouteDialogClosedMessageMessageHandler;
-                Eegeo::Helpers::TCallback1<NavRoutingController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRouting::NavigateToMessage&> m_navigateToMessageHandler;
 
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_shouldRerouteCallback;
 
@@ -112,7 +112,7 @@ namespace ExampleApp
 
                 void OnRerouteDialogClosed(const NavRoutingRerouteDialogClosedMessage& message);
 
-                void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
+                void OnNavigationMessage(const NavigateToMessage& message);
 
                 void OnShouldReroute();
             };

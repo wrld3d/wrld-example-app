@@ -59,7 +59,7 @@ namespace ExampleApp
             , m_startEndRoutingButtonClickedMessageHandler(this, &NavRoutingController::OnStartEndRoutingButtonClicked)
             , m_selectedDirectionChangedMessageHandler(this, &NavRoutingController::OnSelectedDirectionChanged)
             , m_rerouteDialogClosedMessageMessageHandler(this, &NavRoutingController::OnRerouteDialogClosed)
-            , m_directionsButtonClickedMessageHandler(this, &NavRoutingController::OnDirectionsButtonClicked)
+            , m_navigateToMessageHandler(this, &NavRoutingController::OnNavigationMessage)
             , m_shouldRerouteCallback(this, &NavRoutingController::OnShouldReroute)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
@@ -81,14 +81,14 @@ namespace ExampleApp
                 m_messageBus.SubscribeNative(m_startEndRoutingButtonClickedMessageHandler);
                 m_messageBus.SubscribeNative(m_selectedDirectionChangedMessageHandler);
                 m_messageBus.SubscribeNative(m_rerouteDialogClosedMessageMessageHandler);
-                m_messageBus.SubscribeNative(m_directionsButtonClickedMessageHandler);
+                m_messageBus.SubscribeNative(m_navigateToMessageHandler);
                 m_turnByTurnModel.InsertShouldRerouteCallback(m_shouldRerouteCallback);
             }
 
             NavRoutingController::~NavRoutingController()
             {
                 m_turnByTurnModel.RemoveShouldRerouteCallback(m_shouldRerouteCallback);
-                m_messageBus.UnsubscribeNative(m_directionsButtonClickedMessageHandler);
+                m_messageBus.UnsubscribeNative(m_navigateToMessageHandler);
                 m_messageBus.UnsubscribeNative(m_rerouteDialogClosedMessageMessageHandler);
                 m_messageBus.UnsubscribeNative(m_selectedDirectionChangedMessageHandler);
                 m_messageBus.UnsubscribeNative(m_startEndRoutingButtonClickedMessageHandler);
@@ -263,7 +263,7 @@ namespace ExampleApp
                 m_waitingForRerouteResponse = false;
             }
 
-            void NavRoutingController::OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message)
+            void NavRoutingController::OnNavigationMessage(const NavigateToMessage& message)
             {
                 NavRoutingLocationModel startLocation, endLocation;
                 
@@ -272,9 +272,7 @@ namespace ExampleApp
                     return;
                 }
 
-                const auto& searchResultModel = message.GetModel();
-                
-                if(!m_locationFinder.TryGetLocationFromSearchResultModel(searchResultModel, endLocation))
+                if(!m_locationFinder.TryGetLocationFromNavigationMessage(message, endLocation))
                 {
                     return;
                 }

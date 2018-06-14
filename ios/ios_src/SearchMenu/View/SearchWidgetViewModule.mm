@@ -11,6 +11,7 @@ namespace ExampleApp
             SearchWidgetViewModule::SearchWidgetViewModule(
                                                            Modality::View::IModalBackgroundView& modalBackgroundView,
                                                            Menu::View::IMenuViewModel& viewModel,
+                                                           bool isNavigationEnabled,
                                                            ExampleAppMessaging::TMessageBus& messageBus
                                                            )
             {
@@ -21,6 +22,7 @@ namespace ExampleApp
                 
                 
                 m_pView = [[SearchWidgetContainerView alloc] initWithSearchProvider:m_pWrldSearchProvider
+                                                                  navigationEnabled:isNavigationEnabled
                                                                 messageBus:messageBus];
                 
                 m_pSearchServices = Eegeo_NEW(SearchMenu::View::SearchServices)(*m_pSearchProvider,

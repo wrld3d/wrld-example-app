@@ -6,6 +6,8 @@
 #include "WidgetQueryContext.h"
 #include "MenuItemModel.h"
 #include "ViewController.h"
+#include "WidgetSearchResultTableViewCell.h"
+#include "ISearchNavigationHandler.h"
 #import <WrldSearchWidget/WRLDSearchQuery.h>
 
 namespace ExampleApp
@@ -16,10 +18,12 @@ namespace ExampleApp
         {
             SearchWidgetView::SearchWidgetView(id<WRLDSearchProvider> searchProvider,
                                                id<WRLDSuggestionProvider> suggestionProvider,
+                                               bool isNavigationEnabled,
                                                ExampleAppMessaging::TMessageBus& messageBus)
             : m_tagCollection(messageBus)
             , m_hasSearchResults(false)
             , m_hasPopulatedData(false)
+            , m_isNavigationHidden(!isNavigationEnabled)
             {
                 m_pSearchModel = [[WRLDSearchModel alloc] init];
                 m_pMenuModel = [[WRLDSearchMenuModel alloc] init];
@@ -108,6 +112,20 @@ namespace ExampleApp
                     }
                     
                 };
+                                
+                m_willPopulateResultCell = ^(WRLDSearchResultTableViewCell *cell)
+                {
+                    if([cell isKindOfClass:[WidgetSearchResultTableViewCell class]])
+                    {
+                        WidgetSearchResultTableViewCell* castCell = (WidgetSearchResultTableViewCell*) cell;
+                        [castCell setNavigationHidden: m_isNavigationHidden];
+                        if(!m_isNavigationHidden){
+                            [castCell assignNavigationHandler: this];
+                        }
+                    }
+                };
+                
+                [m_pSearchWidgetView.searchResultContentObserver addWillPopulateEvent: m_willPopulateResultCell];
                 
                 [m_pSearchWidgetView.searchSelectionObserver addResultSelectedEvent:m_onResultSelection];
                 
@@ -167,6 +185,8 @@ namespace ExampleApp
                 [m_pSearchWidgetView.observer removeSearchResultsClearedEvent:m_onResultsCleared];
 
                 [m_pSearchWidgetView.menuObserver removeOptionSelectedEvent:m_onMenuSelection];
+                
+                [m_pSearchWidgetView.searchResultContentObserver removeWillPopulateEvent: m_willPopulateResultCell];
 
                 [m_pSearchWidgetView.observer removeSearchWidgetGainedFocusEvent :m_onFocusEvent];
                 [m_pSearchWidgetView.observer removeSearchWidgetResignedFocusEvent:m_onFocusEvent];
@@ -308,6 +328,16 @@ namespace ExampleApp
             void SearchWidgetView::RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
             {
                 m_resultSelectedCallbacks.RemoveCallback(callback);
+            }
+            
+            void SearchWidgetView::InsertOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationRequestedCallbacks.AddCallback(callback);
+            }
+            
+            void SearchWidgetView::RemoveOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationRequestedCallbacks.RemoveCallback(callback);
             }
 
             void SearchWidgetView::HandleItemSelected(const std::string& menuText, int sectionIndex, int itemIndex)
@@ -455,6 +485,16 @@ namespace ExampleApp
             {
                 [m_pSearchWidgetView hideResultsView];
                 [m_pSearchWidgetView closeMenu];
+            }
+            
+            void SearchWidgetView::NavigateTo(id<WRLDSearchResultModel> resultModel)
+            {
+                WidgetSearchResultModel* selectedResultModelWithIndex = (WidgetSearchResultModel*) resultModel;
+                if (selectedResultModelWithIndex != nil)
+                {
+                    int index = (int)selectedResultModelWithIndex.index;
+                    m_navigationRequestedCallbacks.ExecuteCallbacks(index);
+                }
             }
         }
     }

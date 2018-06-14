@@ -351,8 +351,10 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
             m_messageBus,
             *m_pMenuReactionModel);
 
+    bool showDirectionsInSearchResults = m_pApp->GetApplicationConfiguration().NavigationEnabled();
     m_pSearchWidgetViewModule = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetViewModule)(m_pModalBackgroundViewModule->GetModalBackgroundViewInterop(),
          app.SearchMenuModule().GetSearchMenuViewModel(),
+         showDirectionsInSearchResults,
          m_messageBus);
 
     bool showDirectionsButton = m_pApp->GetApplicationConfiguration().NavigationEnabled();

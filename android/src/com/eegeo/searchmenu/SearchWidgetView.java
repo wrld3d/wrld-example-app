@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.eegeo.searchproviders.SearchResultNavigationHandler;
 import com.eegeo.tags.TagResources;
 import com.eegeo.ui.IAnimatedView;
 import com.eegeo.ui.IViewAnimator;
@@ -44,7 +45,8 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
                                         SearchResultsViewListener,
                                         View.OnFocusChangeListener,
                                         MenuViewListener,
-                                        SearchQueryModelListener
+                                        SearchQueryModelListener,
+                                        SearchResultNavigationHandler
 {
     protected MainActivity m_activity;
     protected MyTestSearchProvider m_searchProvider;
@@ -91,6 +93,8 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         m_searchWidget.addSearchProvider(m_searchProvider);
         m_searchWidget.addSuggestionProvider(m_searchProvider);
 
+        m_searchProvider.addNavigationRequestCallback(this);
+
         m_searchWidget.getSearchResultsModel().addResultListener(this);
 
         m_searchWidget.getMenuViewObserver().addMenuListener(this);
@@ -126,6 +130,15 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         SearchWidgetResult widgetResult = (SearchWidgetResult) searchResult;
 
         SearchWidgetViewJniMethods.OnSearchResultSelected(
+                m_nativeCallerPointer,
+                widgetResult.getIndex());
+    }
+
+    @Override
+    public void navigateTo(SearchResult navigateTo) {
+        SearchWidgetResult widgetResult = (SearchWidgetResult) navigateTo;
+
+        SearchWidgetViewJniMethods.OnSearchResultNavigationRequest(
                 m_nativeCallerPointer,
                 widgetResult.getIndex());
     }

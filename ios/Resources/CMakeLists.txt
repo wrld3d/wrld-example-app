@@ -1300,6 +1300,18 @@ set(resources ${resources}
         Resources/search_results_bar_small.png
         Resources/search_results_bar_small@2x.png
         Resources/search_results_bar_small@3x.png
+        Resources/search_results_directions_down.png
+        Resources/search_results_directions_down@0.75x.png
+        Resources/search_results_directions_down@1.5x.png
+        Resources/search_results_directions_down@2x.png
+        Resources/search_results_directions_down@3x.png
+        Resources/search_results_directions_down@4x.png
+        Resources/search_results_directions.png
+        Resources/search_results_directions@0.75x.png
+        Resources/search_results_directions@1.5x.png
+        Resources/search_results_directions@2x.png
+        Resources/search_results_directions@3x.png
+        Resources/search_results_directions@4x.png
         Resources/search_results_spinner.png
         Resources/search_results_spinner@2x.png
         Resources/search_results_spinner@3x.png

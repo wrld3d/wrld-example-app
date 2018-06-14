@@ -1,5 +1,6 @@
 #pragma once
 
+#include "NavigateToMessage.h"
 #include "Types.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "INavRoutingLocationFinder.h"
@@ -29,12 +30,10 @@ namespace ExampleApp
                         Eegeo::Location::ILocationService& locationService,
                         Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
-                
-                virtual ~NavRoutingLocationFinder() {};
-                
+
                 bool TryGetCurrentLocation(NavRoutingLocationModel &outLocation);
-                bool TryGetLocationFromSearchResultModel(
-                        const Search::SdkModel::SearchResultModel& searchResultModel,
+                bool TryGetLocationFromNavigationMessage(
+                        const NavigateToMessage& navigateToMessage,
                         NavRoutingLocationModel &outLocation);
             };
         }

@@ -7,6 +7,7 @@
 @class WRLDSearchResultSelectedObserver;
 @class WRLDSearchWidgetResultSetViewModel;
 @class WRLDSearchResultTableViewCell;
+@class WRLDSearchResultContentObserver;
 
 typedef void (^SearchResultsSourceEvent) (void);
 
@@ -15,6 +16,7 @@ typedef void (^SearchResultsSourceEvent) (void);
 - (instancetype) initWithDefaultCellIdentifier: (NSString *) defaultCellIdentifier;
 
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver * selectionObserver;
+@property (nonatomic, readonly) WRLDSearchResultContentObserver * contentObserver;
 @property (nonatomic, readonly) NSString* defaultCellIdentifier;
 @property (nonatomic, readonly) NSString* moreResultsCellIdentifier;
 @property (nonatomic, readonly) BOOL isAwaitingData;

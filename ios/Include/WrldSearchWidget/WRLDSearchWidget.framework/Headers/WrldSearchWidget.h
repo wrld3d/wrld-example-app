@@ -35,3 +35,4 @@ FOUNDATION_EXPORT const unsigned char WrldSearchWidgetVersionString[];
 #import "WRLDLabelTextHighlighter.h"
 #import "WRLDSearchWidgetObserver.h"
 #import "WRLDSpeechCapture.h"
+#import "WRLDSearchResultContentObserver.h"

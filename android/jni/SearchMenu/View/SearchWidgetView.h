@@ -24,6 +24,7 @@ namespace ExampleApp
 
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const int> m_navigationRequestedCallbacks;
                 Eegeo::Helpers::CallbackCollection3<const std::string&, int, int> m_onItemSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewClosedCallbacks;
@@ -56,6 +57,10 @@ namespace ExampleApp
 
                 void InsertResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
                 void RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
+
+                void OnNavigationRequest(int index);
+                void InsertOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback);
+                void RemoveOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback);
 
                 void HandleItemSelected(const std::string& menuText, int sectionIndex, int itemIndex);
                 void HandleViewOpenCompleted();

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.ImageView;
 
@@ -17,9 +18,21 @@ public class SearchResultViewFactory implements ISearchResultViewFactory
 {
     private int      m_layoutId;
     private Activity m_activity;
+    private boolean m_navigationEnabled;
+    SearchResultNavigationHandler m_navigationHandler;
 
-    public SearchResultViewFactory(int layoutId, Activity activity)
-    {
+    public SearchResultViewFactory(int layoutId, Activity activity) {
+        commonInit(layoutId, activity);
+        m_navigationEnabled = false;
+    }
+
+    public SearchResultViewFactory(int layoutId, Activity activity, SearchResultNavigationHandler navigationHandler) {
+        commonInit(layoutId, activity);
+        m_navigationEnabled = true;
+        m_navigationHandler = navigationHandler;
+    }
+
+    private void commonInit(int layoutId, Activity activity){
         m_layoutId = layoutId;
         m_activity = activity;
     }
@@ -68,8 +81,43 @@ public class SearchResultViewFactory implements ISearchResultViewFactory
         }
     }
 
+    private class SearchResultNavigationViewHolder extends SearchResultViewHolder
+    {
+        private SearchResult m_currentResult;
+
+        @Override
+        public void initialise(View view)
+        {
+            super.initialise(view);
+
+            View navButton = view.findViewById(com.eegeo.mobileexampleapp.R.id.search_result_navigation_button);
+
+            navButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    m_navigationHandler.navigateTo(m_currentResult);
+                }
+            });
+        }
+
+        @Override
+        public void populate(SearchResult result,
+                             String query,
+                             boolean firstResultInSet,
+                             boolean lastResultInSet)
+        {
+            m_currentResult = result;
+            super.populate(result, query, firstResultInSet, lastResultInSet);
+        }
+    }
+
     @Override
     public ISearchResultViewHolder makeSearchResultViewHolder() {
-        return new SearchResultViewHolder();
+        if(m_navigationEnabled) {
+            return new SearchResultNavigationViewHolder();
+        }
+        else{
+            return new SearchResultViewHolder();
+        }
     }
 }

@@ -14,13 +14,16 @@ namespace ExampleApp
 				AndroidNativeState& nativeState,
 				Modality::View::IModalBackgroundView& modalBackgroundView,
                 Menu::View::IMenuViewModel& viewModel,
+				bool showNavigationButtons,
 				ExampleAppMessaging::TMessageBus& messageBus
 			)
 			{
 				ASSERT_UI_THREAD
 
 				m_pMyTestSearchProvider = Eegeo_NEW(SearchProviders::MyTestSearchProvider)(
-						nativeState);
+						nativeState,
+						showNavigationButtons
+						);
 				m_pSearchServices = Eegeo_NEW(SearchMenu::View::SearchServices)(
 						*m_pMyTestSearchProvider,
 						messageBus);

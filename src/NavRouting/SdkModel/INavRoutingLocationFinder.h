@@ -12,9 +12,12 @@ namespace ExampleApp
             class INavRoutingLocationFinder
             {
             public:
+                virtual ~INavRoutingLocationFinder() {};
+
                 virtual bool TryGetCurrentLocation(NavRoutingLocationModel &outLocation) = 0;
-                virtual bool TryGetLocationFromSearchResultModel(
-                        const Search::SdkModel::SearchResultModel& searchResultModel,
+
+                virtual bool TryGetLocationFromNavigationMessage(
+                        const NavRouting::NavigateToMessage& navigateToMessage,
                         NavRoutingLocationModel &outLocation) = 0;
             };
         }

@@ -4,6 +4,7 @@
 #include "IAlertBoxFactory.h"
 #include "NavRouteInteriorModelHelper.h"
 #include "SearchResultModel.h"
+#include "NavigateToMessage.h"
 
 namespace ExampleApp
 {
@@ -74,19 +75,19 @@ namespace ExampleApp
                 return true;
             }
 
-            bool NavRoutingLocationFinder::TryGetLocationFromSearchResultModel(
-                    const Search::SdkModel::SearchResultModel& searchResultModel,
+            bool NavRoutingLocationFinder::TryGetLocationFromNavigationMessage(
+                    const NavigateToMessage& navigateToMessage,
                     NavRoutingLocationModel &outLocation)
             {
                 outLocation = NavRoutingLocationModel();
                 NavRoutingLocationModel locationModel;
-                if(searchResultModel.IsInterior())
+                if(navigateToMessage.IsInterior())
                 {
                     int indoorMapFloorId = 0;
-                    const auto& indoorMapId = searchResultModel.GetBuildingId().Value();
+                    const auto& indoorMapId = navigateToMessage.GetBuildingId().Value();
                     const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
                                                                                                               indoorMapId,
-                                                                                                              searchResultModel.GetFloor(),
+                                                                                                              navigateToMessage.GetFloor(),
                                                                                                               indoorMapFloorId);
                     if (!interiorDetailsAvailable)
                     {
@@ -96,19 +97,19 @@ namespace ExampleApp
                         return false;
                     }
 
-                    outLocation = NavRoutingLocationModel(searchResultModel.GetTitle(),
-                                                          searchResultModel.GetLocation(),
-                                                          searchResultModel.IsInterior(),
-                                                          searchResultModel.GetBuildingId(),
+                    outLocation = NavRoutingLocationModel(navigateToMessage.GetTitle(),
+                                                          navigateToMessage.GetLocation(),
+                                                          navigateToMessage.IsInterior(),
+                                                          navigateToMessage.GetBuildingId(),
                                                           indoorMapFloorId);
                 }
                 else
                 {
-                    outLocation = NavRoutingLocationModel(searchResultModel.GetTitle(),
-                                                          searchResultModel.GetLocation(),
-                                                          searchResultModel.IsInterior(),
-                                                          searchResultModel.GetBuildingId(),
-                                                          searchResultModel.GetFloor());
+                    outLocation = NavRoutingLocationModel(navigateToMessage.GetTitle(),
+                                                          navigateToMessage.GetLocation(),
+                                                          navigateToMessage.IsInterior(),
+                                                          navigateToMessage.GetBuildingId(),
+                                                          navigateToMessage.GetFloor());
                 }
                 return true;
             }

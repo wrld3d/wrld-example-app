@@ -32,8 +32,8 @@ namespace ExampleApp
                     return;
                 }
 
-                m_routingModel.SetStartLocation(startLocation);
                 m_routingModel.ClearEndLocation();
+                m_routingModel.SetStartLocation(startLocation);
 
                 m_routingController.OpenViewWithModel(m_routingModel);
             }

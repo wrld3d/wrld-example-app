@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WidgetSearchResultTableViewCell"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="WidgetSearchResultTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bp4-DC-QCd">
-                    <rect key="frame" x="50" y="14" width="325" height="18"/>
+                    <rect key="frame" x="50" y="14" width="275" height="18"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="Wgw-cY-TdA"/>
                     </constraints>
@@ -25,7 +27,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCm-Cd-22r">
-                    <rect key="frame" x="50" y="32" width="325" height="14"/>
+                    <rect key="frame" x="50" y="32" width="275" height="14"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="14" id="3kK-WB-wOR"/>
                     </constraints>
@@ -52,23 +54,56 @@
                         <constraint firstItem="6e4-p5-u9f" firstAttribute="centerY" secondItem="NTX-HF-Zq7" secondAttribute="centerY" constant="-2" id="aHS-ai-1ym"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ORx-Jh-YlD" userLabel="Navigation Space">
+                    <rect key="frame" x="325" y="0.0" width="50" height="64"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYA-5o-yvB">
+                            <rect key="frame" x="0.0" y="7" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="9QR-lp-0RC"/>
+                                <constraint firstAttribute="height" constant="50" id="d3I-qV-hvy"/>
+                            </constraints>
+                            <state key="normal" image="search_results_directions.png"/>
+                            <state key="highlighted" image="search_results_directions_down.png"/>
+                            <connections>
+                                <action selector="navigationActionTriggered:" destination="iN0-l3-epB" eventType="primaryActionTriggered" id="4M3-yw-3zW"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="RYA-5o-yvB" firstAttribute="centerX" secondItem="ORx-Jh-YlD" secondAttribute="centerX" id="2FC-PI-XDq"/>
+                        <constraint firstItem="RYA-5o-yvB" firstAttribute="centerY" secondItem="ORx-Jh-YlD" secondAttribute="centerY" id="3wR-Jj-4Ow"/>
+                        <constraint firstAttribute="width" constant="50" id="h29-ke-1CQ"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="ORx-Jh-YlD" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AKK-he-0Vy"/>
                 <constraint firstItem="NTX-HF-Zq7" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="BfU-Fa-Rbp"/>
                 <constraint firstItem="bp4-DC-QCd" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="centerY" id="HNc-d3-gA5"/>
                 <constraint firstItem="DCm-Cd-22r" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="centerY" id="KT1-I0-MnQ"/>
                 <constraint firstItem="NTX-HF-Zq7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Lso-Pf-hRU"/>
+                <constraint firstItem="ORx-Jh-YlD" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="Zbw-FK-yHM"/>
                 <constraint firstItem="bp4-DC-QCd" firstAttribute="leading" secondItem="NTX-HF-Zq7" secondAttribute="trailing" id="Zg4-2o-vLC"/>
                 <constraint firstItem="NTX-HF-Zq7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dHp-WU-x1b"/>
-                <constraint firstItem="DCm-Cd-22r" firstAttribute="leading" secondItem="NTX-HF-Zq7" secondAttribute="trailing" id="eVf-zX-jFh"/>
-                <constraint firstItem="DCm-Cd-22r" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="tEf-Vr-Yhs"/>
-                <constraint firstItem="bp4-DC-QCd" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="tGY-nf-wtO"/>
+                <constraint firstItem="DCm-Cd-22r" firstAttribute="leading" secondItem="bp4-DC-QCd" secondAttribute="leading" id="eVf-zX-jFh"/>
+                <constraint firstItem="ORx-Jh-YlD" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" id="fdq-L4-WxP"/>
+                <constraint firstItem="DCm-Cd-22r" firstAttribute="trailing" secondItem="bp4-DC-QCd" secondAttribute="trailing" id="tEf-Vr-Yhs"/>
+                <constraint firstItem="bp4-DC-QCd" firstAttribute="trailing" secondItem="ORx-Jh-YlD" secondAttribute="leading" id="tGY-nf-wtO"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="navigationButtonWidth">
+                    <integer key="value" value="50"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="descriptionLabel" destination="DCm-Cd-22r" id="fyy-7V-7HN"/>
                 <outlet property="iconImageView" destination="6e4-p5-u9f" id="gSu-6X-2pA"/>
+                <outlet property="navigationButton" destination="RYA-5o-yvB" id="AgE-GX-WWJ"/>
+                <outlet property="navigationWidthConstraint" destination="h29-ke-1CQ" id="QJs-lI-F9O"/>
                 <outlet property="titleLabel" destination="bp4-DC-QCd" id="Tkb-qa-tUK"/>
             </connections>
             <point key="canvasLocation" x="35.5" y="58"/>
@@ -76,5 +111,7 @@
     </objects>
     <resources>
         <image name="BinButton.png" width="64" height="64"/>
+        <image name="search_results_directions.png" width="24" height="24"/>
+        <image name="search_results_directions_down.png" width="24" height="24"/>
     </resources>
 </document>

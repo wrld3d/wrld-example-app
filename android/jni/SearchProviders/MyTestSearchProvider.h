@@ -25,7 +25,7 @@ namespace ExampleApp
 			jmethodID m_onSearchCompleted;
 			jmethodID m_onAutocompleteSuggestionsCompleted;
 		public:
-			MyTestSearchProvider(AndroidNativeState& nativeState);
+			MyTestSearchProvider(AndroidNativeState& nativeState, bool showNavigationButtons);
 			~MyTestSearchProvider();
 
 			jobject GetJavaInstance();

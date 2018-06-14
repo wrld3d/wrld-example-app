@@ -10,6 +10,7 @@
 }
 
 - (instancetype)initWithSearchProvider:(WidgetSearchProvider *) searchProvider
+                     navigationEnabled: (BOOL) isNavigationEnabled
                             messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus &) messageBus
 
 {
@@ -17,6 +18,7 @@
     if (self) {
         m_pInterop = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetView)(searchProvider,
                                                                  searchProvider,
+                                                                 isNavigationEnabled,
                                                                  messageBus);
         
         self.frame = [UIScreen mainScreen].bounds;

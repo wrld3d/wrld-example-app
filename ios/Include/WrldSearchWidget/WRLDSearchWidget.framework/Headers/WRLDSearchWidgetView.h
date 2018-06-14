@@ -11,6 +11,7 @@
 @class WRLDSearchWidgetObserver;
 @class WRLDSearchWidgetStyle;
 @class WRLDSpeechCapture;
+@class WRLDSearchResultContentObserver;
 
 /*!
  Creates a search widget UIView.
@@ -26,6 +27,17 @@
  @return WRLDSearchResultSelectedObserver that dispatches events when a suggestion is selected.
  */
 @property (nonatomic, readonly) WRLDSearchResultSelectedObserver* suggestionSelectionObserver;
+
+
+/*!
+ @return WRLDSearchResultSelectedObserver that dispatches events when a search result is selected.
+ */
+@property (nonatomic, readonly) WRLDSearchResultContentObserver* searchResultContentObserver;
+
+/*!
+ @return WRLDSearchResultSelectedObserver that dispatches events when a suggestion is selected.
+ */
+@property (nonatomic, readonly) WRLDSearchResultContentObserver* suggestionContentObserver;
 
 /*!
  See WRLDMenuObserver for a list of events.

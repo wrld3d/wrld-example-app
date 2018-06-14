@@ -4,6 +4,7 @@
 #include "SearchResultSectionItemSelectedMessage.h"
 #include "SearchServicesResult.h"
 #include "IMenuSectionViewModel.h"
+#include "NavigateToMessage.h"
 #include "IMenuView.h"
 #include "IMenuOption.h"
 #include "MenuItemModel.h"
@@ -27,6 +28,7 @@ namespace ExampleApp
             , m_searchServices(searchServices)
             , m_onSearchResultsClearedCallback(this, &SearchWidgetController::OnSearchResultsCleared)
             , m_onSearchResultSelectedCallback(this, &SearchWidgetController::OnSearchResultSelected)
+            , m_onNavigationRequestedCallback(this, &SearchWidgetController::OnNavigationRequested)
             , m_onSearchQueryClearRequestHandler(this, &SearchWidgetController::OnSearchQueryClearRequest)
             , m_onSearchQueryRefreshedHandler(this, &SearchWidgetController::OnSearchQueryRefreshedMessage)
             , m_onSearchQueryResultsLoadedHandler(this, &SearchWidgetController::OnSearchResultsLoaded)
@@ -51,6 +53,7 @@ namespace ExampleApp
                 m_view.InsertOnItemSelected(m_onItemSelectedCallback);
                 m_view.InsertOnViewClosed(m_onViewClosedCallback);
                 m_view.InsertOnViewOpened(m_onViewOpenedCallback);
+                m_view.InsertOnNavigationRequestedCallback(m_onNavigationRequestedCallback);
 
                 m_viewModel.InsertOpenStateChangedCallback(m_onOpenableStateChanged);
                 m_viewModel.InsertOnScreenStateChangedCallback(m_onScreenStateChanged);
@@ -95,10 +98,11 @@ namespace ExampleApp
                 m_viewModel.RemoveOnScreenStateChangedCallback(m_onScreenStateChanged);
                 m_viewModel.RemoveOpenStateChangedCallback(m_onOpenableStateChanged);
 
-                m_view.RemoveOnViewOpened(m_onViewOpenedCallback);
+                m_view.RemoveOnNavigationRequestedCallback(m_onNavigationRequestedCallback);
                 m_view.RemoveOnViewClosed(m_onViewClosedCallback);
                 m_view.RemoveResultSelectedCallback(m_onSearchResultSelectedCallback);
                 m_view.RemoveSearchClearedCallback(m_onSearchResultsClearedCallback);
+                m_view.RemoveOnItemSelected(m_onItemSelectedCallback);
                 m_view.RemoveOnItemSelected(m_onItemSelectedCallback);
 			}
 
@@ -136,6 +140,18 @@ namespace ExampleApp
                     sdkSearchResult.GetFloor(),
                     m_searchServices.GetResultOriginalIndexFromCurrentIndex(index),
                     sdkSearchResult.GetIdentifier()));
+            }
+
+            void SearchWidgetController::OnNavigationRequested(const int& index)
+            {
+                const SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_searchServices.GetSdkSearchResultByIndex(index);
+                m_messageBus.Publish(NavRouting::NavigateToMessage(
+                        sdkSearchResult.GetTitle(),
+                        sdkSearchResult.GetLocation(),
+                        sdkSearchResult.IsInterior(),
+                        sdkSearchResult.GetBuildingId(),
+                        sdkSearchResult.GetFloor()
+                ));
             }
             
             void SearchWidgetController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)
