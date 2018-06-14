@@ -355,8 +355,9 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
          app.SearchMenuModule().GetSearchMenuViewModel(),
          m_messageBus);
 
+    bool showDirectionsButton = m_pApp->GetApplicationConfiguration().NavigationEnabled();
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
-                                                                                                           m_pApp->GetApplicationConfiguration().ShowPoiDirectionsButton(),
+                                                                                                           showDirectionsButton,
                                                                                                            m_messageBus,
                                                                                                            m_iOSFlurryMetricsService);
     

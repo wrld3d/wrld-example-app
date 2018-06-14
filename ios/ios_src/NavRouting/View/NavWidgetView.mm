@@ -18,6 +18,7 @@ namespace ExampleApp
                                          Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& bottomPanelVisibleHeightChangedCallbacks)
             : m_topPanelVisibleHeightChangedCallbacks(topPanelVisibleHeightChangedCallbacks)
             , m_bottomPanelVisibleHeightChangedCallbacks(bottomPanelVisibleHeightChangedCallbacks)
+            , m_rerouteDialogOptionSelectedCallback(this, &NavWidgetView::OnRerouteDialogOptionSelected)
             {
                 m_pNavModel = navModel;
                 
@@ -37,16 +38,20 @@ namespace ExampleApp
                 registerObserver("topPanelVisibleHeight");
                 registerObserver("bottomPanelVisibleHeight");
                 setObject(m_pView);
+                
+                m_pRerouteDialog = [[NavRoutingRerouteDialog alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                [m_pRerouteDialog InsertRerouteDialogClosedCallback:&m_rerouteDialogOptionSelectedCallback];
+            }
+            
+            NavWidgetView::~NavWidgetView()
+            {
+                [m_pRerouteDialog RemoveRerouteDialogClosedCallback:&m_rerouteDialogOptionSelectedCallback];
+                [m_pRerouteDialog release];
             }
             
             UIView* NavWidgetView::GetUIView()
             {
                 return m_pView;
-            }
-            
-            BOOL NavWidgetView::consumesTouch(UITouch*)
-            {
-                return NO;
             }
             
             void NavWidgetView::Show()
@@ -152,8 +157,14 @@ namespace ExampleApp
             
             void NavWidgetView::ShowRerouteDialog(const std::string message)
             {
-                //TODO add implementation
-                HandleRerouteDialogClosed(true);
+                [m_pRerouteDialog setMessage:[NSString stringWithCString: message.c_str() encoding:NSUTF8StringEncoding]];
+                [m_pView.superview addSubview:m_pRerouteDialog];
+            }
+            
+            void NavWidgetView::OnRerouteDialogOptionSelected(const bool& shouldReroute)
+            {
+                [m_pRerouteDialog removeFromSuperview];
+                HandleRerouteDialogClosed(shouldReroute);
             }
             
             void NavWidgetView::SetCurrentDirection(int currentDirection)

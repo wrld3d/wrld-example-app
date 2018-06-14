@@ -196,6 +196,8 @@ namespace ExampleApp
                     }
                 }
 
+                m_previousVisibleTextFromTagSearch = visibleText;
+
                 auto queryContext = QueryContext(clearPreviousResults,
                                                  query.IsTag(),
                                                  tagText,

@@ -30,6 +30,7 @@ namespace ExampleApp
             class NavRoutingDirectionModel;
             class INavRoutingPolylineFactory;
             class INavRouteDrawingController;
+            class INavRoutingLocationFinder;
             class INavRoutingServiceController;
             class NavWidgetRouteUpdateHandler;
             class NavWidgetRouteDrawingHandler;

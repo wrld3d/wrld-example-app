@@ -41,7 +41,7 @@
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_pressed_colour_change"
+            android:background="@drawable/button_exit_interior_background"
             android:baselineAlignBottom="true"
             android:src="@drawable/button_exit_interior_states">
         </ImageView>

@@ -38,6 +38,8 @@
 	<color name="table_cell_highlight">#CCCCCC</color>
 	<color name="menu_header_separator">#002B63</color>
 	<color name="initial_ux_intro_banner_outline">#80FFFFFF</color>
+	<color name="interiors_elevator_text_normal">#FFFFFF</color>
+	<color name="interiors_elevator_text_down">#1256B0</color>
 	<color name="scrollbars">#1256B0</color>
 	<color name="about_links">#1256B0</color>
     <color name="nav_dialog">#1256B0</color>
