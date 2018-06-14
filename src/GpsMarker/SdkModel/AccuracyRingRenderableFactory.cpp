@@ -97,11 +97,14 @@ namespace ExampleApp
 
             AccuracyRingRenderable* AccuracyRingRenderableFactory::BuildRenderable()
             {
-                return Eegeo_NEW(AccuracyRingRenderable)(
+                auto* pRenderable = Eegeo_NEW(AccuracyRingRenderable)(
                         *m_pColorMaterial,
                         m_nullMaterial,
                         *m_pSphereRenderable,
                         *m_pQuadRenderable);
+                pRenderable->SetLayer(Eegeo::Rendering::LayerIds::ScreenOverlay);
+                pRenderable->SetUserDefined(1);
+                return pRenderable;
             }
         }
     }

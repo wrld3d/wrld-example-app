@@ -16,7 +16,7 @@ namespace ExampleApp
                     Eegeo::Rendering::Materials::IMaterial& nullMaterial,
                     Eegeo::Rendering::Renderables::WorldMeshRenderable &sphereRenderable,
                     Eegeo::Rendering::Renderables::WorldMeshRenderable &quadRenderable)
-            : Eegeo::Rendering::RenderableBase(Eegeo::Rendering::LayerIds::AfterAll,
+            : Eegeo::Rendering::RenderableBase(Eegeo::Rendering::LayerIds::ScreenOverlay,
                                                Eegeo::dv3::Zero(),
                                                &nullMaterial)
             , m_innerRingRadius(100.f)
@@ -27,7 +27,6 @@ namespace ExampleApp
             , m_quadRenderable(quadRenderable)
             , m_sphereRenderable(sphereRenderable)
             {
-
             }
 
             AccuracyRingRenderable::~AccuracyRingRenderable()
