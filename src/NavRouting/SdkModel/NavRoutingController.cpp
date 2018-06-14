@@ -29,18 +29,14 @@ namespace ExampleApp
         namespace SdkModel
         {
             NavRoutingController::NavRoutingController(INavRoutingModel& routingModel,
-                                                       Eegeo::Location::ILocationService& locationService,
                                                        TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
+                                                       INavRoutingLocationFinder& locationFinder,
                                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                                       Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService)
             : m_routingModel(routingModel)
-            , m_locationService(locationService)
             , m_turnByTurnModel(turnByTurnModel)
+            , m_locationFinder(locationFinder)
             , m_messageBus(messageBus)
-            , m_interiorsModelRepository(interiorsModelRepository)
-            , m_alertBoxFactory(alertBoxFactory)
             , m_worldPinsService(worldPinsService)
             , m_isRerouting(false)
             , m_waitingForRerouteResponse(false)
@@ -64,7 +60,6 @@ namespace ExampleApp
             , m_selectedDirectionChangedMessageHandler(this, &NavRoutingController::OnSelectedDirectionChanged)
             , m_rerouteDialogClosedMessageMessageHandler(this, &NavRoutingController::OnRerouteDialogClosed)
             , m_directionsButtonClickedMessageHandler(this, &NavRoutingController::OnDirectionsButtonClicked)
-            , m_failAlertHandler(this, &NavRoutingController::OnFailAlertBoxDismissed)
             , m_shouldRerouteCallback(this, &NavRoutingController::OnShouldReroute)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
@@ -113,56 +108,6 @@ namespace ExampleApp
                 m_routingModel.RemoveEndLocationSetCallback(m_endLocationSetCallback);
                 m_routingModel.RemoveStartLocationClearedCallback(m_startLocationClearedCallback);
                 m_routingModel.RemoveStartLocationSetCallback(m_startLocationSetCallback);
-            }
-
-            bool NavRoutingController::TryGetCurrentLocation(NavRoutingLocationModel &location)
-            {
-                if(!m_locationService.GetIsAuthorized())
-                {
-                    m_alertBoxFactory.CreateSingleOptionAlertBox("Location service is not authorized",
-                                                                 "We didn't recieve autorization for location service",
-                                                                 m_failAlertHandler);
-                    return false;
-                }
-
-                Eegeo::Space::LatLong currentLocation = Eegeo::Space::LatLong(0,0);
-
-                bool locationServiceHasUserLocation = m_locationService.GetLocation(currentLocation);
-                if(!locationServiceHasUserLocation)
-                {
-                    m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to acquire location",
-                                                                 "We couldn't find your current location",
-                                                                 m_failAlertHandler);
-                    return false;
-                }
-
-                int floorIndex = 0;
-                m_locationService.GetFloorIndex(floorIndex);
-
-                int indoorMapFloorId = 0;
-
-                if (m_locationService.IsIndoors())
-                {
-                    const auto& indoorMapId = m_locationService.GetInteriorId().Value();
-                    const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
-                                                                                                              indoorMapId,
-                                                                                                              floorIndex,
-                                                                                                              indoorMapFloorId);
-                    if (!interiorDetailsAvailable)
-                    {
-                        m_alertBoxFactory.CreateSingleOptionAlertBox("Interior not loaded",
-                                                                     "Interior information is not available",
-                                                                     m_failAlertHandler);
-                        return false;
-                    }
-                }
-
-                location = NavRoutingLocationModel("Current Location",
-                                                   currentLocation,
-                                                   m_locationService.IsIndoors(),
-                                                   m_locationService.GetInteriorId(),
-                                                   indoorMapFloorId);
-                return true;
             }
 
             void NavRoutingController::OnStartLocationSet(const NavRoutingLocationModel& startLocation)
@@ -307,7 +252,7 @@ namespace ExampleApp
                 {
                     NavRoutingLocationModel startLocation;
 
-                    if (TryGetCurrentLocation(startLocation))
+                    if (m_locationFinder.TryGetCurrentLocation(startLocation))
                     {
                         m_routingModel.SetStartLocation(startLocation);
                         m_isRerouting = true;
@@ -322,42 +267,16 @@ namespace ExampleApp
             {
                 NavRoutingLocationModel startLocation, endLocation;
                 
-                if (!TryGetCurrentLocation(startLocation))
+                if (!m_locationFinder.TryGetCurrentLocation(startLocation))
                 {
                     return;
                 }
 
                 const auto& searchResultModel = message.GetModel();
                 
-                if(searchResultModel.IsInterior())
+                if(!m_locationFinder.TryGetLocationFromSearchResultModel(searchResultModel, endLocation))
                 {
-                    int indoorMapFloorId = 0;
-                    const auto& indoorMapId = searchResultModel.GetBuildingId().Value();
-                    const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
-                                                                                                              indoorMapId,
-                                                                                                              searchResultModel.GetFloor(),
-                                                                                                              indoorMapFloorId);
-                    if (!interiorDetailsAvailable)
-                    {
-                        m_alertBoxFactory.CreateSingleOptionAlertBox("Interior not loaded",
-                                                                     "Interior information is not available",
-                                                                     m_failAlertHandler);
-                        return;
-                    }
-
-                    endLocation = NavRoutingLocationModel(searchResultModel.GetTitle(),
-                                                          searchResultModel.GetLocation(),
-                                                          searchResultModel.IsInterior(),
-                                                          searchResultModel.GetBuildingId(),
-                                                          indoorMapFloorId);
-                }
-                else
-                {
-                    endLocation = NavRoutingLocationModel(searchResultModel.GetTitle(),
-                                                          searchResultModel.GetLocation(),
-                                                          searchResultModel.IsInterior(),
-                                                          searchResultModel.GetBuildingId(),
-                                                          searchResultModel.GetFloor());
+                    return;
                 }
                 
                 m_routingModel.SetStartLocation(startLocation);
@@ -369,10 +288,6 @@ namespace ExampleApp
             void NavRoutingController::OpenViewWithModel(INavRoutingModel& routingModel)
             {
                 m_messageBus.Publish(NavRoutingViewOpenMessage(routingModel));
-            }
-            
-            void NavRoutingController::OnFailAlertBoxDismissed()
-            {
             }
 
             void NavRoutingController::OnShouldReroute()

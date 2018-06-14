@@ -9,9 +9,11 @@ namespace ExampleApp
     {
         namespace View
         {
-            NavWidgetMenuOption::NavWidgetMenuOption(SdkModel::INavRoutingModel& routingModel,
+            NavWidgetMenuOption::NavWidgetMenuOption(SdkModel::INavRoutingLocationFinder& locationFinder,
+                                                     SdkModel::INavRoutingModel& routingModel,
                                                      SdkModel::NavRoutingController& routingController)
-                    : m_routingModel(routingModel)
+                    : m_locationFinder(locationFinder)
+                    , m_routingModel(routingModel)
                     , m_routingController(routingController)
             {
 
@@ -24,9 +26,8 @@ namespace ExampleApp
 
             void NavWidgetMenuOption::Select()
             {
-                //FROM NavRoutingController::OnDirectionsButtonClicked - this is ideal
                 SdkModel::NavRoutingLocationModel startLocation;
-                if (!m_routingController.TryGetCurrentLocation(startLocation))
+                if (!m_locationFinder.TryGetCurrentLocation(startLocation))
                 {
                     return;
                 }

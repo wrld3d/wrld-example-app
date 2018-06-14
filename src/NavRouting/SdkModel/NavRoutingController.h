@@ -19,6 +19,7 @@
 #include "AlertBox.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "WorldPins.h"
+#include "INavRoutingLocationFinder.h"
 
 namespace ExampleApp
 {
@@ -30,25 +31,20 @@ namespace ExampleApp
             {
             public:
                 NavRoutingController(INavRoutingModel& routingModel,
-                                     Eegeo::Location::ILocationService& locationService,
                                      TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
+                                     INavRoutingLocationFinder& locationFinder,
                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                     Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                      WorldPins::SdkModel::IWorldPinsService& worldPinsService);
 
                 ~NavRoutingController();
 
-                bool TryGetCurrentLocation(NavRoutingLocationModel &location);
                 void OpenViewWithModel(INavRoutingModel& routingModel);
 
             private:
                 INavRoutingModel& m_routingModel;
-                Eegeo::Location::ILocationService& m_locationService;
                 TurnByTurn::INavTurnByTurnModel& m_turnByTurnModel;
+                INavRoutingLocationFinder& m_locationFinder;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-                Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
-                Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
 
                 bool m_isRerouting;
@@ -75,8 +71,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingSelectedDirectionChangedMessage&> m_selectedDirectionChangedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingRerouteDialogClosedMessage&> m_rerouteDialogClosedMessageMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage&> m_directionsButtonClickedMessageHandler;
-                
-                Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavRoutingController> m_failAlertHandler;
+
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_shouldRerouteCallback;
 
                 void OnStartLocationSet(const NavRoutingLocationModel& startLocation);
@@ -118,8 +113,6 @@ namespace ExampleApp
                 void OnRerouteDialogClosed(const NavRoutingRerouteDialogClosedMessage& message);
 
                 void OnDirectionsButtonClicked(const SearchResultPoi::SearchResultPoiDirectionsButtonClickedMessage& message);
-                
-                void OnFailAlertBoxDismissed();
 
                 void OnShouldReroute();
             };

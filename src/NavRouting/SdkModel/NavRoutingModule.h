@@ -15,6 +15,7 @@
 #include "WorldPins.h"
 #include "GpsMarker.h"
 #include "Menu.h"
+#include "NavRoutingLocationFinder.h"
 
 namespace ExampleApp
 {
@@ -56,6 +57,7 @@ namespace ExampleApp
                 INavRoutingServiceController* m_pNavRoutingServiceController;
                 NavWidgetRouteUpdateHandler* m_pRouteUpdateHandler;
                 NavWidgetRouteDrawingHandler* m_pRouteDrawingHandler;
+                NavRoutingLocationFinder* m_pNavRoutingLocationFinder;
                 NavRoutingController* m_pRoutingController;
                 NavRoutingCameraController* m_pRoutingCameraController;
 

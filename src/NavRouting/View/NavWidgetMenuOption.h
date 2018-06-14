@@ -18,10 +18,13 @@ namespace ExampleApp
             class NavWidgetMenuOption : public Menu::View::IMenuOption, private Eegeo::NonCopyable
             {
             private:
+                SdkModel::INavRoutingLocationFinder& m_locationFinder;
                 SdkModel::NavRoutingController& m_routingController;
                 SdkModel::INavRoutingModel& m_routingModel;
             public:
-                NavWidgetMenuOption(SdkModel::INavRoutingModel& m_routingModel, SdkModel::NavRoutingController& routingController);
+                NavWidgetMenuOption(SdkModel::INavRoutingLocationFinder& locationFinder,
+                                    SdkModel::INavRoutingModel& m_routingModel,
+                                    SdkModel::NavRoutingController& routingController);
 
                 ~NavWidgetMenuOption();
 

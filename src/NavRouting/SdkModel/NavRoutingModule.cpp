@@ -35,6 +35,7 @@ namespace ExampleApp
                                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                 GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel)
             {
+                const std::string navUIOptionText = "Open Navigation";
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
                 
                 NavRoutingPolylineConfig polylineConfig = NavRoutingPolylineConfig();
@@ -68,13 +69,16 @@ namespace ExampleApp
                                                                                  *m_pTurnByTurnModel,
                                                                                  *m_pNavRouteDrawingController);
 
+                m_pNavRoutingLocationFinder = Eegeo_NEW(NavRoutingLocationFinder)(locationService,
+                                                                                  interiorsModelRepository,
+                                                                                  alertBoxFactory);
+
                 m_pRoutingController = Eegeo_NEW(NavRoutingController)(*m_pNavRoutingModel,
-                                                                       locationService,
                                                                        *m_pTurnByTurnModel,
+                                                                       *m_pNavRoutingLocationFinder,
                                                                        messageBus,
-                                                                       interiorsModelRepository,
-                                                                       alertBoxFactory,
                                                                        worldPinsService);
+
                 
                 m_pRoutingCameraController = Eegeo_NEW(NavRoutingCameraController)(*m_pNavRoutingModel,
                                                                                    cameraTransitionController,
@@ -82,9 +86,12 @@ namespace ExampleApp
                                                                                    compassModel);
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
-                m_pMenuOptionsModel->AddItem("OpenNavUI",
-                                           "Open Navigation", "", "",
-                                           Eegeo_NEW(View::NavWidgetMenuOption)(*m_pNavRoutingModel, *m_pRoutingController));
+                m_pMenuOptionsModel->AddItem(navUIOptionText,
+                                             navUIOptionText, "", "",
+                                           Eegeo_NEW(View::NavWidgetMenuOption)(
+                                                   *m_pNavRoutingLocationFinder,
+                                                   *m_pNavRoutingModel,
+                                                   *m_pRoutingController));
             }
 
             NavRoutingModule::~NavRoutingModule()
@@ -93,6 +100,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pRoutingController;
                 Eegeo_DELETE m_pRouteDrawingHandler;
                 Eegeo_DELETE m_pTurnByTurnController;
+                Eegeo_DELETE m_pNavRoutingLocationFinder;
                 Eegeo_DELETE m_pTurnByTurnModel;
                 Eegeo_DELETE m_pRouteUpdateHandler;
                 Eegeo_DELETE m_pNavRoutingServiceController;
