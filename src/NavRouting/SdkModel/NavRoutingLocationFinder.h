@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Types.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "INavRoutingLocationFinder.h"
 #include "NavRoutingLocationModel.h"
@@ -13,7 +14,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class NavRoutingLocationFinder : public INavRoutingLocationFinder
+            class NavRoutingLocationFinder : public INavRoutingLocationFinder, private Eegeo::NonCopyable
             {
             private:
                 Eegeo::Location::ILocationService& m_locationService;
@@ -28,6 +29,9 @@ namespace ExampleApp
                         Eegeo::Location::ILocationService& locationService,
                         Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
+                
+                virtual ~NavRoutingLocationFinder() {};
+                
                 bool TryGetCurrentLocation(NavRoutingLocationModel &outLocation);
                 bool TryGetLocationFromSearchResultModel(
                         const Search::SdkModel::SearchResultModel& searchResultModel,
