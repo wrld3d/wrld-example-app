@@ -123,6 +123,7 @@ public class WRLDNavDirectionsView: UIView, WRLDNavModelObserverProtocol, UITabl
         if(row==count)
         {
             let cell: WRLDNavDirectionsViewDotCell = tableView.dequeueReusableCell(withIdentifier: dotCellIdentifier) as! WRLDNavDirectionsViewDotCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
             return cell
         }
         
@@ -185,6 +186,19 @@ public class WRLDNavDirectionsView: UIView, WRLDNavModelObserverProtocol, UITabl
                 tableView.deselectRow(at: tableSelectedDirectionIndex!, animated: false)
             }
         }
+    }
+    
+    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath?
+    {
+        if let directions = observer.navModel()?.route?.directions
+        {
+            if indexPath.row < directions.count
+            {
+                return indexPath
+            }
+        }
+        
+        return nil
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)

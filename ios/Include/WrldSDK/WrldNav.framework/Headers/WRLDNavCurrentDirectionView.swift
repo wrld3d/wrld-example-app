@@ -138,7 +138,13 @@ public class WRLDNavCurrentDirectionView: UIView, WRLDNavModelObserverProtocol, 
         {
             if let navModel = observer.navModel()
             {
-                scrollToDirection(direction: navModel.selectedDirectionIndex, animate:true)
+                if let directions = navModel.route?.directions
+                {
+                    if directions.count > navModel.selectedDirectionIndex
+                    {
+                        scrollToDirection(direction: navModel.selectedDirectionIndex, animate: true)
+                    }
+                }
             }
             
             return;
@@ -152,9 +158,15 @@ public class WRLDNavCurrentDirectionView: UIView, WRLDNavModelObserverProtocol, 
             if let navModel = observer.navModel()
             {
                 setupUICollecionView()
-                scrollToDirection(direction: navModel.selectedDirectionIndex, animate:false)
+                
+                if let directions = navModel.route?.directions
+                {
+                    if directions.count > navModel.selectedDirectionIndex
+                    {
+                        scrollToDirection(direction: navModel.selectedDirectionIndex, animate: false)
+                    }
+                }
             }
-            
         }
     }
     
