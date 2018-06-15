@@ -5,8 +5,8 @@ set(currsources
   ios_src/SenionLab/CMakeLists.txt
   ios_src/SenionLab/SenionLabLocationModule.h
   ios_src/SenionLab/SenionLabLocationModule.mm
-  ios_src/SenionLab/SenionLabLocationServiceImpl.h
-  ios_src/SenionLab/SenionLabLocationServiceImpl.mm
+  ios_src/SenionLab/SenionLabLocationInterop.h
+  ios_src/SenionLab/SenionLabLocationInterop.mm
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\SenionLab FILES ${currsources})

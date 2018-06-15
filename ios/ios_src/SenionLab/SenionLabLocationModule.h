@@ -4,6 +4,7 @@
 
 #include "SenionLabLocationController.h"
 #include "SenionLabLocationService.h"
+#include "SenionLabLocationInterop.h"
 #include "iOSAlertBoxFactory.h"
 #include "ICallback.h"
 #include "AppModeModel.h"
@@ -30,11 +31,12 @@ namespace ExampleApp
                                     ExampleAppMessaging::TMessageBus& messageBus);
             ~SenionLabLocationModule();
             
-            InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService& GetLocationService() { return m_locationService; }
+            InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService& GetLocationService() const;
             
         private:
-            InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService m_locationService;
-            InteriorsPosition::SdkModel::SenionLab::SenionLabLocationController m_locationController;
+            InteriorsPosition::SdkModel::SenionLab::SenionLabLocationInterop* m_pSenionInterop;
+            InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService* m_pLocationService;
+            InteriorsPosition::SdkModel::SenionLab::SenionLabLocationController* m_pLocationController;
         };
     }
 }
