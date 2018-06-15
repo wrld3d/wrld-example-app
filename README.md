@@ -60,7 +60,7 @@ In order to use the WRLD 3D Maps SDK, you must sign up for a free developer acco
 To run this example app, you must place the API key in the application configuration file for each of the platforms you are building, specifying the value of "EegeoApiKey":
 * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L3).
 * [Android app config](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L3).
-* [Windows app config (deprecated) ](https://github.com/wrld/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L3).
+* [Windows app config (deprecated) ](https://github.com/wrld3d/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L3).
 
 ### Optional Steps
 
