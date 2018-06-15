@@ -15,7 +15,9 @@ namespace ExampleApp
         void ParseIndoorTrackingInfo(std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
                                      const rapidjson::Value& indoorTrackedBuildingsArray);
         
-        void TryAndGetInteriorTrackingInfo(std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList, Eegeo::Resources::Interiors::InteriorId& interiorId, Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository);
+        void TryAndGetInteriorTrackingInfo(std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
+                                           const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                           const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository);
         
         const std::string IpsConfig = "ips_config";
     }

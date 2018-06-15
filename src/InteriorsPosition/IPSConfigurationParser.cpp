@@ -52,7 +52,9 @@ namespace ExampleApp
             interiorTrackingInfoList.insert(std::pair<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>(interiorId.Value(),interiorTrackingInfo));
         }
         
-        void TryAndGetInteriorTrackingInfo(std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList, Eegeo::Resources::Interiors::InteriorId& interiorId, Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
+        void TryAndGetInteriorTrackingInfo(std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
+                                           const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                           const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
         {
             if(!interiorMetaDataRepository.Contains(interiorId))
             {
