@@ -14,17 +14,15 @@ namespace ExampleApp
         {
             namespace IndoorAtlas
             {
-                IndoorAtlasLocationController::IndoorAtlasLocationController(IIndoorAtlasLocationManager& locationManager,
+                IndoorAtlasLocationController::IndoorAtlasLocationController(IndoorAtlasLocationService& locationService,
                                                                             ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                             const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                            Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
-                                                                            ExampleAppMessaging::TMessageBus& messageBus)
-                : m_locationManager(locationManager)
+                                                                            Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
+                : m_locationService(locationService)
                 , m_appModeModel(appModeModel)
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_appModeChangedCallback(this, &IndoorAtlasLocationController::OnAppModeChanged)
                 , m_interiorMetaDataRepository(interiorMetaDataRepository)
-                , m_messageBus(messageBus)
                 {
                     m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
                 }
@@ -36,45 +34,40 @@ namespace ExampleApp
                 
                 void IndoorAtlasLocationController::OnAppModeChanged()
                 {
-                    m_locationManager.StopUpdatingLocation();
-
-                    typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
-
-                    Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-                    TrackingInfoMap trackingInfoMap;
+                    // todo loc: duplicate code in service
+                    m_locationService.StopUpdating();
                     
-                    if(interiorId.IsValid())
-                    {
-                        InteriorsPosition::TryAndGetInteriorTrackingInfo(trackingInfoMap, interiorId, m_interiorMetaDataRepository);
-                    }
-                    else
+                    if(m_appModeModel.GetAppMode() != AppModes::SdkModel::InteriorMode)
                     {
                         return;
                     }
-
-                    if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                    
+                    const auto interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
+                    
+                    if(!interiorId.IsValid())
                     {
-                        const TrackingInfoMap::const_iterator trackingInfoEntry = trackingInfoMap.find(interiorId.Value());
-
-                        if (trackingInfoEntry != trackingInfoMap.end())
-                        {
-                            const ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo& trackingInfo = trackingInfoEntry->second;
-
-                            if (trackingInfo.GetType() == "IndoorAtlas")
-                            {
-                                const std::string& apiKey = trackingInfo.GetConfig().GetApiKey();
-                                const std::string& apiSecret = trackingInfo.GetConfig().GetApiSecret();
-                                const std::map<int, std::string>& floorMap = trackingInfo.GetFloorIndexMap();
-
-                                m_locationManager.StartUpdatingLocation(apiKey, apiSecret, floorMap);
-                                m_messageBus.Publish(AboutPage::AboutPageIndoorPositionSettingsMessage(
-                                         apiKey,
-                                         apiSecret,
-                                         floorMap,
-                                         trackingInfo.GetInteriorId().Value()));
-                            }
-                        }
+                        return;
                     }
+                    
+                    typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
+                    TrackingInfoMap trackingInfoMap;
+                    InteriorsPosition::TryAndGetInteriorTrackingInfo(trackingInfoMap, interiorId, m_interiorMetaDataRepository);
+                    
+                    const TrackingInfoMap::const_iterator trackingInfoEntry = trackingInfoMap.find(interiorId.Value());
+                    
+                    if (trackingInfoEntry == trackingInfoMap.end())
+                    {
+                        return;
+                    }
+                    
+                    const auto& trackingInfo = trackingInfoEntry->second;
+                    
+                    if (trackingInfo.GetType() != "IndoorAtlas")
+                    {
+                        return;
+                    }
+                    
+                    m_locationService.StartUpdating();
                 }
             }
         }

@@ -5,6 +5,9 @@
 #include "ILocationService.h"
 #include "LatLongAltitude.h"
 #include "InteriorsModel.h"
+#include "InteriorId.h"
+#include "BidirectionalBus.h"
+#include "InteriorMetaData.h"
 
 namespace ExampleApp
 {
@@ -14,38 +17,54 @@ namespace ExampleApp
         {
             namespace IndoorAtlas
             {
-                class IndoorAtlasLocationService : public Eegeo::Location::ILocationService
+                class IndoorAtlasLocationServiceImpl;
+
+                class IndoorAtlasLocationService : public Eegeo::Location::ILocationService, private Eegeo::NonCopyable
                 {
                 public:
                 	IndoorAtlasLocationService(Eegeo::Location::ILocationService& defaultLocationService,
-                                               const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+                            ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
+                            const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                            const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                            const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                            const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository);
+
+                    ~IndoorAtlasLocationService();
+
+                    // Non-interface methods
+                    void StartUpdating();
+                    void StopUpdating();
+
+                    // General
+                    void OnPause() override;
+                    void OnResume() override;
                     
-                    const bool GetIsAuthorized() const;
+                    // Location
+                    bool IsLocationAuthorized() const override;
+                    bool IsLocationActive() const override;
+                    bool GetLocation(Eegeo::Space::LatLong& latlong) const override;
+                    bool GetAltitude(double& altitude) const override;
+                    bool GetHorizontalAccuracy(double& accuracy) const override;
                     
-                    bool IsIndoors();
-                    Eegeo::Resources::Interiors::InteriorId GetInteriorId();
-                    bool GetLocation(Eegeo::Space::LatLong& latLong);
-                    bool GetAltitude(double& altitude);
-                    bool GetFloorIndex(int& floorIndex);
-                    bool GetHorizontalAccuracy(double& accuracy);
-                    bool GetHeadingDegrees(double& headingDegrees);
-                    void StopListening();
+                    void StartUpdatingLocation() override;
+                    void StopUpdatingLocation() override;
                     
-                    void SetIsAuthorized(bool isAuthorized);
-                    void SetLocation(Eegeo::Space::LatLong& latLong);
-                    void SetHorizontalAccuracyInMeters(double accuracyInMeters);
-                    void SetFloorIndex(int floorIndex);
+                    // Heading
+                    bool GetHeadingDegrees(double& headingDegrees) const override;
+                    bool IsHeadingAuthorized() const override;
+                    bool IsHeadingActive() const override;
+                    
+                    void StartUpdatingHeading() override;
+                    void StopUpdatingHeading() override;
+                    
+                    // Indoor
+                    bool IsIndoors() const override;
+                    Eegeo::Resources::Interiors::InteriorId GetInteriorId() const override;
+                    bool GetFloorIndex(int& floorIndex) const override;
+                    bool IsIndoorAuthorized() const override;
                     
                 private:
-                    Eegeo::Location::ILocationService& m_defaultLocationService;
-                    const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
-                    const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
-                    
-                    bool m_isAuthorized;
-                    Eegeo::Space::LatLong m_latLong;
-                    double m_horizontalAccuracyInMeters;
-                    int m_floorIndex;
+                    IndoorAtlasLocationServiceImpl* m_pImpl;
                 };
             }
         }

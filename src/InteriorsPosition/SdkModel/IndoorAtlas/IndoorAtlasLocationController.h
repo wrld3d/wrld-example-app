@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "IIndoorAtlasLocationManager.h"
 #include "ICallback.h"
 #include "AppModeModel.h"
 #include "InteriorsExplorer.h"
@@ -10,6 +9,7 @@
 #include "InteriorMetaDataRepository.h"
 #include "ApplicationInteriorTrackingInfo.h"
 #include "BidirectionalBus.h"
+#include "IndoorAtlasLocationService.h"
 
 namespace ExampleApp
 {
@@ -22,20 +22,18 @@ namespace ExampleApp
                 class IndoorAtlasLocationController
                 {
                 public:
-                	IndoorAtlasLocationController(IIndoorAtlasLocationManager& locationManager,
+                	IndoorAtlasLocationController(IndoorAtlasLocationService& indoorAtlasLocationService,
                                                   AppModes::SdkModel::IAppModeModel& appModeModel,
                                                   const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                  Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
-                                                  ExampleAppMessaging::TMessageBus& messageBus);
+                                                  Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository);
                     ~IndoorAtlasLocationController();
                     
                 private:
-                    IIndoorAtlasLocationManager& m_locationManager;
+                    IndoorAtlasLocationService& m_locationService;
                     ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                     Eegeo::Helpers::TCallback0<IndoorAtlasLocationController> m_appModeChangedCallback;
                     Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& m_interiorMetaDataRepository;
-                    ExampleAppMessaging::TMessageBus& m_messageBus;
                     
                     void OnAppModeChanged();
                 };

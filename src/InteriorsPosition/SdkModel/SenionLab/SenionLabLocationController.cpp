@@ -14,17 +14,15 @@ namespace ExampleApp
         {
             namespace SenionLab
             {
-                SenionLabLocationController::SenionLabLocationController(ISenionLabLocationManager& locationManager,
+                SenionLabLocationController::SenionLabLocationController(SenionLabLocationService& locationService,
                                                                          ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                          const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                         Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
-                                                                         ExampleAppMessaging::TMessageBus& messageBus)
-                : m_locationManager(locationManager)
+                                                                         const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
+                : m_locationService(locationService)
                 , m_appModeModel(appModeModel)
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_appModeChangedCallback(this, &SenionLabLocationController::OnAppModeChanged)
                 , m_interiorMetaDataRepository(interiorMetaDataRepository)
-                , m_messageBus(messageBus)
                 {
                     m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
                 }
@@ -36,45 +34,40 @@ namespace ExampleApp
                 
                 void SenionLabLocationController::OnAppModeChanged()
                 {
-                    m_locationManager.StopUpdatingLocation();
-
-                    typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
-
-                    Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-                    TrackingInfoMap trackingInfoMap;
+                    // todo loc: duplicate code in service
+                    m_locationService.StopUpdating();
                     
-                    if(interiorId.IsValid())
+                    if(m_appModeModel.GetAppMode() != AppModes::SdkModel::InteriorMode)
                     {
-                        InteriorsPosition::TryAndGetInteriorTrackingInfo(trackingInfoMap, interiorId, m_interiorMetaDataRepository);
+                        return;
                     }
-                    else
+                    
+                    const auto interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
+
+                    if(!interiorId.IsValid())
                     {
                         return;
                     }
 
-                    if (m_appModeModel.GetAppMode() == AppModes::SdkModel::InteriorMode)
+                    typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
+                    TrackingInfoMap trackingInfoMap;
+                    InteriorsPosition::TryAndGetInteriorTrackingInfo(trackingInfoMap, interiorId, m_interiorMetaDataRepository);
+
+                    const TrackingInfoMap::const_iterator trackingInfoEntry = trackingInfoMap.find(interiorId.Value());
+
+                    if (trackingInfoEntry == trackingInfoMap.end())
                     {
-                        const TrackingInfoMap::const_iterator trackingInfoEntry = trackingInfoMap.find(interiorId.Value());
-
-                        if (trackingInfoEntry != trackingInfoMap.end())
-                        {
-                            const ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo& trackingInfo = trackingInfoEntry->second;
-
-                            if (trackingInfo.GetType() == "Senion")
-                            {
-                                const std::string& apiKey = trackingInfo.GetConfig().GetApiKey();
-                                const std::string& apiSecret = trackingInfo.GetConfig().GetApiSecret();
-                                const std::map<int, std::string>& floorMap = trackingInfo.GetFloorIndexMap();
-
-                                m_locationManager.StartUpdatingLocation(apiKey, apiSecret, floorMap);
-                                m_messageBus.Publish(AboutPage::AboutPageIndoorPositionSettingsMessage(
-                                        apiKey,
-                                        apiSecret,
-                                        floorMap,
-                                        trackingInfo.GetInteriorId().Value()));
-                            }
-                        }
+                        return;
                     }
+
+                    const auto& trackingInfo = trackingInfoEntry->second;
+
+                    if (trackingInfo.GetType() != "Senion")
+                    {
+                        return;
+                    }
+
+                    m_locationService.StartUpdating();
                 }
             }
         }

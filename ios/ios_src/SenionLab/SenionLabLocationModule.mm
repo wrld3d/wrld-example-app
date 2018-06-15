@@ -19,14 +19,13 @@ namespace ExampleApp
                                                          Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                          Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory,
                                                          ExampleAppMessaging::TMessageBus& messageBus)
-        : m_locationService(defaultLocationService, environmentFlatteningService, interiorInteractionModel)
-        , m_locationManager(m_locationService, iOSAlertBoxFactory, messageBus)
-        , m_locationController(m_locationManager,
+        : m_locationService(defaultLocationService, messageBus, environmentFlatteningService, interiorInteractionModel, interiorSelectionModel, interiorMetaDataRepository)
+        , m_locationController(m_locationService,
                                appModeModel,
                                interiorSelectionModel,
-                               interiorMetaDataRepository,
-                               messageBus)
+                               interiorMetaDataRepository)
         {
+
         }
         
         SenionLabLocationModule::~SenionLabLocationModule()

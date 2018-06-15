@@ -8,8 +8,6 @@ set(currsources
   ios_src/AppHost.mm
   ios_src/AppInputDelegate.h
   ios_src/AppInputDelegate.mm
-  ios_src/AppLocationDelegate.h
-  ios_src/AppLocationDelegate.mm
   ios_src/AppUrlDelegate.h
   ios_src/AppUrlDelegate.mm
   ios_src/AppRunner.h

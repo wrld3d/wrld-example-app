@@ -26,49 +26,111 @@ namespace Eegeo
         {
         }
 
-        Eegeo::Resources::Interiors::InteriorId FixedIndoorLocationService::GetInteriorId()
+        // General
+        void FixedIndoorLocationService::OnPause()
         {
-            return Resources::Interiors::InteriorId(m_interiorId);
+            
         }
-
-        bool FixedIndoorLocationService::GetLocation(Eegeo::Space::LatLong& latlong)
+        
+        void FixedIndoorLocationService::OnResume()
+        {
+            
+        }
+        
+        // Location
+        bool FixedIndoorLocationService::IsLocationAuthorized() const
+        {
+            return true;
+        }
+        
+        bool FixedIndoorLocationService::IsLocationActive() const
+        {
+            return true;
+        }
+        
+        bool FixedIndoorLocationService::GetLocation(Eegeo::Space::LatLong& latlong) const
         {
             latlong.SetLatitude(m_location.GetLatitude());
             latlong.SetLongitude(m_location.GetLongitude());
             return true;
         }
-
-        bool FixedIndoorLocationService::GetAltitude(double& altitude)
+        
+        bool FixedIndoorLocationService::GetAltitude(double& altitude) const
         {
-            const Eegeo::Resources::Interiors::InteriorsModel* pInteriorsModel = m_interiorInteractionModel.GetInteriorModel();
-            if (pInteriorsModel != nullptr)
+            const auto* pInteriorsModel = m_interiorInteractionModel.GetInteriorModel();
+            
+            if (pInteriorsModel == nullptr)
             {
-                altitude = ExampleApp::Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(*pInteriorsModel, m_floorIndex, m_environmentFlatteningService.GetCurrentScale());
-                return true;
+                return false;
             }
-
-            return false;
-        }
-
-        bool FixedIndoorLocationService::GetFloorIndex(int& floorIndex)
-        {
-            floorIndex = m_floorIndex;
+            
+            altitude = ExampleApp::Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(
+                           *pInteriorsModel, m_floorIndex, m_environmentFlatteningService.GetCurrentScale());
             return true;
         }
-
-        bool FixedIndoorLocationService::GetHorizontalAccuracy(double& accuracy)
+        
+        bool FixedIndoorLocationService::GetHorizontalAccuracy(double& accuracy) const
         {
             return false;
         }
-
-        bool FixedIndoorLocationService::GetHeadingDegrees(double& headingDegrees)
+        
+        void FixedIndoorLocationService::StartUpdatingLocation()
+        {
+            
+        }
+        
+        void FixedIndoorLocationService::StopUpdatingLocation()
+        {
+            
+        }
+        
+        // Heading
+        bool FixedIndoorLocationService::GetHeadingDegrees(double& headingDegrees) const
         {
             headingDegrees = m_headingDegrees;
             return true;
         }
-
-        void FixedIndoorLocationService::StopListening()
+        
+        bool FixedIndoorLocationService::IsHeadingAuthorized() const
         {
+            return true;
+        }
+        
+        bool FixedIndoorLocationService::IsHeadingActive() const
+        {
+            return true;
+        }
+        
+        void FixedIndoorLocationService::StartUpdatingHeading()
+        {
+            
+        }
+        
+        void FixedIndoorLocationService::StopUpdatingHeading()
+        {
+            
+        }
+        
+        // Indoor
+        bool FixedIndoorLocationService::IsIndoors() const
+        {
+            return true;
+        }
+        
+        Resources::Interiors::InteriorId FixedIndoorLocationService::GetInteriorId() const
+        {
+            return Resources::Interiors::InteriorId(m_interiorId);
+        }
+        
+        bool FixedIndoorLocationService::GetFloorIndex(int& floorIndex) const
+        {
+            floorIndex = m_floorIndex;
+            return true;
+        }
+        
+        bool FixedIndoorLocationService::IsIndoorAuthorized() const
+        {
+            return true;
         }
     }
 }

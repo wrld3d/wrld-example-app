@@ -80,7 +80,7 @@ namespace ExampleApp
 
             void CompassModel::CycleToNextGpsMode()
             {
-                if(!m_locationService.GetIsAuthorized())
+                if(!m_locationService.IsLocationAuthorized() || !m_locationService.IsHeadingAuthorized())
                 {
                     DisableGpsMode();
                     m_gpsModeUnauthorizedCallbacks.ExecuteCallbacks();
@@ -133,7 +133,9 @@ namespace ExampleApp
 
             void CompassModel::TryUpdateToNavigationServiceGpsMode(Eegeo::Location::NavigationService::GpsMode value)
             {
-                if(!m_locationService.GetIsAuthorized())
+                const auto isLocationAuthorized = m_locationService.IsLocationAuthorized();
+                const auto isHeadingAuthorized = m_locationService.IsHeadingAuthorized();
+                if(!isLocationAuthorized || !isHeadingAuthorized)
                 {
                     DisableGpsMode();
                     return;
@@ -178,7 +180,7 @@ namespace ExampleApp
             {
                 if(!m_cameraController.IsTransitionInFlight())
                 {
-                    m_gpsMode = gpsMode;
+                    m_gpsMode = gpsMode;                    
                     m_navigationService.SetGpsMode(m_navigationGpsModeToCompassGpsMode[m_gpsMode]);
                     m_metricsService.SetEvent("SetGpsMode", "GpsMode", m_gpsModeToString[m_gpsMode]);
                 

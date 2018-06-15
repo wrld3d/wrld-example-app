@@ -3,7 +3,6 @@
 #pragma once
 
 #include "SenionLabLocationController.h"
-#include "SenionLabLocationManagerInterop.h"
 #include "SenionLabLocationService.h"
 #include "iOSAlertBoxFactory.h"
 #include "ICallback.h"
@@ -35,7 +34,6 @@ namespace ExampleApp
             
         private:
             InteriorsPosition::SdkModel::SenionLab::SenionLabLocationService m_locationService;
-            SenionLabLocationManagerInterop m_locationManager;
             InteriorsPosition::SdkModel::SenionLab::SenionLabLocationController m_locationController;
         };
     }

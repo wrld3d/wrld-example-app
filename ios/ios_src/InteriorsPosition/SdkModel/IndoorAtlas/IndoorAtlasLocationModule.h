@@ -3,7 +3,6 @@
 #pragma once
 
 #include "IndoorAtlasLocationController.h"
-#include "IndoorAtlasLocationManager.h"
 #include "IndoorAtlasLocationService.h"
 #include "iOSAlertBoxFactory.h"
 #include "ICallback.h"
@@ -33,16 +32,14 @@ namespace ExampleApp
                                               const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                               Eegeo::Location::ILocationService& defaultLocationService,
                                               Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
-                                              Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory,
-                                              ExampleAppMessaging::TMessageBus& messageBu);
+                                              ExampleAppMessaging::TMessageBus& messageBus);
                     ~IndoorAtlasLocationModule();
             
                     IndoorAtlasLocationService& GetLocationService() { return *m_pLocationService; }
             
                 private:
-                    IndoorAtlasLocationController* m_pLocationController;
                     IndoorAtlasLocationService* m_pLocationService;
-                    IndoorAtlasLocationManager* m_pLocationManager;
+                    IndoorAtlasLocationController* m_pLocationController;
                 };
             }
         }

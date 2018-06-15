@@ -21,15 +21,33 @@ namespace Eegeo
                                        const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                        const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
 
-            const bool GetIsAuthorized() const { return true; }
-            bool IsIndoors() { return true; };
-            Resources::Interiors::InteriorId GetInteriorId();
-            bool GetLocation(Eegeo::Space::LatLong& latlong);
-            bool GetAltitude(double& altitude);
-            bool GetFloorIndex(int& floorIndex);
-            bool GetHorizontalAccuracy(double& accuracy);
-            bool GetHeadingDegrees(double& headingDegrees);
-            void StopListening();
+            // General
+            void OnPause() override;
+            void OnResume() override;
+            
+            // Location
+            bool IsLocationAuthorized() const override;
+            bool IsLocationActive() const override;
+            bool GetLocation(Eegeo::Space::LatLong& latlong) const override;
+            bool GetAltitude(double& altitude) const override;
+            bool GetHorizontalAccuracy(double& accuracy) const override;
+            
+            void StartUpdatingLocation() override;
+            void StopUpdatingLocation() override;
+            
+            // Heading
+            bool GetHeadingDegrees(double& headingDegrees) const override;
+            bool IsHeadingAuthorized() const override;
+            bool IsHeadingActive() const override;
+            
+            void StartUpdatingHeading() override;
+            void StopUpdatingHeading() override;
+            
+            // Indoor
+            bool IsIndoors() const override;
+            Resources::Interiors::InteriorId GetInteriorId() const override;
+            bool GetFloorIndex(int& floorIndex) const override;
+            bool IsIndoorAuthorized() const override;
 
         private:
             Resources::Interiors::InteriorId m_interiorId;

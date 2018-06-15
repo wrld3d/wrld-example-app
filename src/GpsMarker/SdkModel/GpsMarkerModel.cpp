@@ -46,15 +46,16 @@ namespace ExampleApp
                 }
 
                 float terrainHeight = 0.0f;
-                Eegeo::dv3 ecefPositionFlat = locationServiceLatLong.ToECEF();
-
                 if(m_locationService.IsIndoors())
                 {
                     double altitude;
-                    m_locationService.GetAltitude(altitude);
-                    terrainHeight = static_cast<float>(altitude);
+                    if(m_locationService.GetAltitude(altitude))
+                    {
+                        terrainHeight = static_cast<float>(altitude);
+                    }
                 }
 
+                Eegeo::dv3 ecefPositionFlat = locationServiceLatLong.ToECEF();
                 Eegeo::dv3 newLocationEcef = ecefPositionFlat + (ecefPositionFlat.Norm() * terrainHeight);
 
                 float halfLife = 0.25f;
