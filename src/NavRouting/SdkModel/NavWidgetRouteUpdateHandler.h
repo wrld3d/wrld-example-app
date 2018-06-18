@@ -14,6 +14,8 @@
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "InteriorsModelRepository.h"
 #include "InteriorsModel.h"
+#include "BidirectionalBus.h"
+#include "NavRoutingViewClosedMessage.h"
 
 namespace ExampleApp
 {
@@ -28,6 +30,7 @@ namespace ExampleApp
                 INavRoutingServiceController& m_navRoutingServiceController;
                 Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
+                ExampleAppMessaging::TMessageBus& m_messageBus;
 
                 NavRoutingLocationModel m_startLocation;
                 bool m_startLocationIsSet;
@@ -42,6 +45,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<NavWidgetRouteUpdateHandler> m_queryFailedCallback;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavWidgetRouteUpdateHandler> m_failAlertHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetRouteUpdateHandler, Eegeo::Resources::Interiors::InteriorsModel&> m_interiorModelAddedCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetRouteUpdateHandler, const NavRoutingViewClosedMessage&> m_viewClosedMessageHandler;
 
                 void OnStartLocationSet(const NavRoutingLocationModel& startLocation);
 
@@ -63,11 +67,14 @@ namespace ExampleApp
 
                 void OnInteriorModelAdded(Eegeo::Resources::Interiors::InteriorsModel& interiorsModel);
 
+                void OnNavRoutingViewClosedMessage(const NavRoutingViewClosedMessage& message);
+
             public:
                 NavWidgetRouteUpdateHandler(INavRoutingModel& navRoutingModel,
                                             INavRoutingServiceController& navRoutingServiceController,
                                             Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                            Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory
+                                            Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                            ExampleAppMessaging::TMessageBus& messageBus
                 );
 
                 ~NavWidgetRouteUpdateHandler();

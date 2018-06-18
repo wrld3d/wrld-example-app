@@ -130,11 +130,13 @@ namespace ExampleApp
             NavWidgetRouteUpdateHandler::NavWidgetRouteUpdateHandler(INavRoutingModel& navRoutingModel,
                                                                      INavRoutingServiceController& navRoutingServiceController,
                                                                      Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                                                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+                                                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                                                     ExampleAppMessaging::TMessageBus& messageBus)
                     : m_navRoutingModel(navRoutingModel)
                     , m_navRoutingServiceController(navRoutingServiceController)
                     , m_interiorsModelRepository(interiorsModelRepository)
                     , m_alertBoxFactory(alertBoxFactory)
+                    , m_messageBus(messageBus)
                     , m_startLocation("", Eegeo::Space::LatLong(0,0))
                     , m_startLocationIsSet(false)
                     , m_endLocation("", Eegeo::Space::LatLong(0,0))
@@ -147,6 +149,7 @@ namespace ExampleApp
                     , m_queryFailedCallback(this, &NavWidgetRouteUpdateHandler::OnRoutingQueryFailed)
                     , m_failAlertHandler(this, &NavWidgetRouteUpdateHandler::OnFailAlertBoxDismissed)
                     , m_interiorModelAddedCallback(this, &NavWidgetRouteUpdateHandler::OnInteriorModelAdded)
+                    , m_viewClosedMessageHandler(this, &NavWidgetRouteUpdateHandler::OnNavRoutingViewClosedMessage)
             {
                 m_navRoutingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_navRoutingModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
@@ -155,10 +158,12 @@ namespace ExampleApp
                 m_navRoutingServiceController.RegisterQueryCompletedCallback(m_queryCompletedCallback);
                 m_navRoutingServiceController.RegisterQueryFailedCallback(m_queryFailedCallback);
                 m_interiorsModelRepository.RegisterAddedCallback(m_interiorModelAddedCallback);
+                m_messageBus.SubscribeNative(m_viewClosedMessageHandler);
             }
 
             NavWidgetRouteUpdateHandler::~NavWidgetRouteUpdateHandler()
             {
+                m_messageBus.UnsubscribeNative(m_viewClosedMessageHandler);
                 m_interiorsModelRepository.UnregisterAddedCallback(m_interiorModelAddedCallback);
                 m_navRoutingServiceController.UnregisterQueryFailedCallback(m_queryFailedCallback);
                 m_navRoutingServiceController.UnregisterQueryCompletedCallback(m_queryCompletedCallback);
@@ -284,6 +289,11 @@ namespace ExampleApp
                         m_navRoutingModel.RouteUpdated();
                     }
                 }
+            }
+
+            void NavWidgetRouteUpdateHandler::OnNavRoutingViewClosedMessage(const NavRoutingViewClosedMessage& message)
+            {
+                m_navRoutingServiceController.CancelRoutingQuery();
             }
         }
     }

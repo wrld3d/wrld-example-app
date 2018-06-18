@@ -18,6 +18,7 @@ namespace ExampleApp
                 virtual ~INavRoutingServiceController() { }
 
                 virtual void MakeRoutingQuery(const Eegeo::Routes::Webservice::RoutingQueryOptions& options) = 0;
+                virtual void CancelRoutingQuery() = 0;
 
                 virtual void RegisterQueryCompletedCallback(RoutesReceivedCallback& callback) = 0;
                 virtual void UnregisterQueryCompletedCallback(RoutesReceivedCallback& callback) = 0;

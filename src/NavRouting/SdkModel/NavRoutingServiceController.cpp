@@ -27,12 +27,16 @@ namespace ExampleApp
             
             void NavRoutingServiceController::MakeRoutingQuery(const Eegeo::Routes::Webservice::RoutingQueryOptions& options)
             {
+                CancelRoutingQuery();
+                m_routingQueryId = m_routingWebservice.BeginRoutingQuery(options);
+            }
+
+            void NavRoutingServiceController::CancelRoutingQuery()
+            {
                 if (m_routingQueryId!=0)
                 {
                     m_routingWebservice.CancelQuery(m_routingQueryId);
                 }
-                
-                m_routingQueryId = m_routingWebservice.BeginRoutingQuery(options);
             }
             
             void NavRoutingServiceController::OnRoutingQueryCompleted(const Eegeo::Routes::Webservice::RoutingQueryResponse& results)

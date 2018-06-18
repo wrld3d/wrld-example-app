@@ -22,6 +22,7 @@ namespace ExampleApp
                 ~NavRoutingServiceController();
                 
                 void MakeRoutingQuery(const Eegeo::Routes::Webservice::RoutingQueryOptions& options) override;
+                void CancelRoutingQuery() override;
                 
                 void RegisterQueryCompletedCallback(RoutesReceivedCallback& callback) override;
                 void UnregisterQueryCompletedCallback(RoutesReceivedCallback& callback) override;
