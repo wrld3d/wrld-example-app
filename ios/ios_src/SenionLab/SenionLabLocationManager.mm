@@ -116,6 +116,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
         m_lastLocationAvailability = locationAvailability;
         if(locationAvailability == SLLocationAvailabilityNotAvailable)
         {
+            m_pSenionLabLocationService->SetIsAuthorized(false);
             /*
             m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
             (
@@ -127,6 +128,7 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
         }
         if(locationAvailability == SLLocationAvailabilityAvailable)
         {
+            m_pSenionLabLocationService->SetIsAuthorized(true);
             /*
             m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
             (
@@ -141,12 +143,18 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
 
 -(void) didUpdateHeading:(double)heading withStatus:(BOOL)status
 {
-    m_pSenionLabLocationService->SetIsAuthorized(true);
+    if(m_lastLocationAvailability == SLLocationAvailabilityAvailable)
+    {
+      m_pSenionLabLocationService->SetIsAuthorized(true);
+    }
 }
 
 -(void) didUpdateMotionType:(SLMotionState)motionState
 {
-    m_pSenionLabLocationService->SetIsAuthorized(true);
+    if(m_lastLocationAvailability == SLLocationAvailabilityAvailable)
+    {
+        m_pSenionLabLocationService->SetIsAuthorized(true);
+    }
 }
 
 -(void) didFailInternetConnectionWithError:(NSError *)error

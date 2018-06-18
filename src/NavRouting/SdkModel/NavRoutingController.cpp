@@ -66,6 +66,7 @@ namespace ExampleApp
             , m_directionsButtonClickedMessageHandler(this, &NavRoutingController::OnDirectionsButtonClicked)
             , m_failAlertHandler(this, &NavRoutingController::OnFailAlertBoxDismissed)
             , m_shouldRerouteCallback(this, &NavRoutingController::OnShouldReroute)
+            , m_onGPSLostCallback(this, &NavRoutingController::OnGPSLost)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_routingModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
@@ -88,6 +89,7 @@ namespace ExampleApp
                 m_messageBus.SubscribeNative(m_rerouteDialogClosedMessageMessageHandler);
                 m_messageBus.SubscribeNative(m_directionsButtonClickedMessageHandler);
                 m_turnByTurnModel.InsertShouldRerouteCallback(m_shouldRerouteCallback);
+                m_turnByTurnModel.InsertOnGPSLostCallback(m_onGPSLostCallback);
             }
 
             NavRoutingController::~NavRoutingController()
@@ -113,6 +115,7 @@ namespace ExampleApp
                 m_routingModel.RemoveEndLocationSetCallback(m_endLocationSetCallback);
                 m_routingModel.RemoveStartLocationClearedCallback(m_startLocationClearedCallback);
                 m_routingModel.RemoveStartLocationSetCallback(m_startLocationSetCallback);
+                m_turnByTurnModel.RemoveOnGPSLostCallback(m_onGPSLostCallback);
             }
 
             bool NavRoutingController::TryGetCurrentLocation(NavRoutingLocationModel &location)
@@ -386,6 +389,15 @@ namespace ExampleApp
                     m_waitingForRerouteResponse = true;
                 }
             }
+            
+            void NavRoutingController::OnGPSLost()
+            {
+                m_alertBoxFactory.CreateSingleOptionAlertBox("Current Location Unavailble",
+                                                             "We are unable to find the location of your device.",
+                                                             m_failAlertHandler);
+                
+            }
+            
         }
     }
 }

@@ -44,6 +44,8 @@ namespace ExampleApp
                     virtual void RemoveUpdatedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                     virtual void InsertShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                     virtual void RemoveShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                    virtual void InsertOnGPSLostCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                    virtual void RemoveOnGPSLostCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 };
 
             }

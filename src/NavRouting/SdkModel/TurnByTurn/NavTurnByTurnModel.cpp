@@ -57,6 +57,11 @@ namespace ExampleApp
                         return;
                     }
 
+                    if(HasLostLocationServices())
+                    {
+                        return;
+                    }
+                    
                     m_updateTime += dt;
                     m_secondsElapsedSinceOffRoute += dt;
 
@@ -224,6 +229,16 @@ namespace ExampleApp
                     m_shouldRerouteCallbacks.RemoveCallback(callback);
                 }
 
+                void NavTurnByTurnModel::InsertOnGPSLostCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_hasLostGPSCallbacks.AddCallback(callback);
+                }
+
+                void NavTurnByTurnModel::RemoveOnGPSLostCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_hasLostGPSCallbacks.RemoveCallback(callback);
+                }
+
                 bool NavTurnByTurnModel::IsTooFarFromPath(double distanceToRouteAtCurrentPoint)
                 {
                     double accuracy;
@@ -235,6 +250,19 @@ namespace ExampleApp
                     else{
                         return distanceToRouteAtCurrentPoint > m_config.distanceToPathToTriggerReroute;
                     }
+                }
+                
+                bool NavTurnByTurnModel::HasLostLocationServices()
+                {
+                    if(!m_locationService.GetIsAuthorized())
+                    {
+                        Stop();
+                        m_hasLostGPSCallbacks.ExecuteCallbacks();
+                        return true;
+                    }
+                    
+                    return false;
+                    
                 }
             }
         }

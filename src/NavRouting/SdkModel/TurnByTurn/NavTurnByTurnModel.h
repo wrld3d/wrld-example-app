@@ -62,12 +62,15 @@ namespace ExampleApp
                     void RemoveUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
                     void InsertShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback);
                     void RemoveShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback);
+                    void InsertOnGPSLostCallback(Eegeo::Helpers::ICallback0& callback);
+                    void RemoveOnGPSLostCallback(Eegeo::Helpers::ICallback0& callback);
 
                 private:
 
                     void UpdateTurnByTurn();
 
                     bool IsTooFarFromPath(double distanceToRouteAtCurrentPoint);
+                    bool HasLostLocationServices();
 
                     const NavTurnByTurnConfig m_config;
                     Eegeo::Location::ILocationService& m_locationService;
@@ -78,6 +81,7 @@ namespace ExampleApp
                     Eegeo::Helpers::CallbackCollection0 m_stoppedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_updateCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_shouldRerouteCallbacks;
+                    Eegeo::Helpers::CallbackCollection0 m_hasLostGPSCallbacks;
 
                     Eegeo::Space::LatLong m_closestPointOnRoute;
                     double m_distanceFromRoute;
@@ -93,10 +97,7 @@ namespace ExampleApp
                     bool m_enabled;
 
                 };
-
             }
-
         }
     }
-
 }

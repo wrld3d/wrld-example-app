@@ -63,6 +63,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const int> m_selectedDirectionSetCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const double> m_remainingRouteDurationSetCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingMode> m_navRoutingModeSetCallback;
+                Eegeo::Helpers::TCallback0<NavRoutingController> m_onGPSLostCallback;
 
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingViewClosedMessage&> m_viewClosedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingViewStartEndLocationSwappedMessage&> m_startEndLocationSwappedMessageHandler;
@@ -121,6 +122,8 @@ namespace ExampleApp
                 void OnFailAlertBoxDismissed();
 
                 void OnShouldReroute();
+                
+                void OnGPSLost();
             };
         }
     }
