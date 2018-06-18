@@ -2,14 +2,16 @@
 
 #pragma once
 
-#import <UIKit/UIKit.h>
+#include "OptionsViewIncludes.h"
 #include "Options.h"
 #include "AppRunner.h"
 #include "UILabelledCheckboxView.h"
 #include "OptionsCacheClearSubView.h"
+#include "MessageView.h"
+
 #import "CustomSwitch.h"
 #import "HeaderView.h"
-#include "MessageView.h"
+#import <UIKit/UIKit.h>
 
 @class OptionsView;
 @class OptionsViewController;

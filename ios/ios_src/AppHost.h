@@ -48,8 +48,8 @@
 #include "SurveyViewIncludes.h"
 #include "IMenuReactionModel.h"
 #include "TagSearchViewIncludes.h"
-#include "IndoorAtlasLocationModule.h"
-#include "SenionLabLocationModule.h"
+#include "IndoorAtlasIncludes.h"
+#include "SenionLabIncludes.h"
 #include "CurrentLocationService.h"
 #include "InteriorsLocationServiceModule.h"
 #include "AppUrlDelegate.h"
@@ -114,7 +114,7 @@ private:
     Eegeo::iOS::iOSPlatformAbstractionModule* m_piOSPlatformAbstractionModule;
     
     ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationModule* m_pIndoorAtlasLocationModule;
-    ExampleApp::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
+    ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
     Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
     ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule* m_pInteriorsLocationServiceModule;
 

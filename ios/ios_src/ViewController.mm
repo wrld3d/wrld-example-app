@@ -6,8 +6,8 @@
 #include "AppDelegate.h"
 #include "App.h"
 #include "DeviceHelpers.h"
+
 #import <CoreLocation/CoreLocation.h>
-using namespace Eegeo::iOS;
 
 @implementation ViewController
 

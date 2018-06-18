@@ -10,6 +10,7 @@
 #include "MenuViewInterop.h"
 #include "MenuSectionViewModel.h"
 #include "ImageHelpers.h"
+#include "MenuItemModel.h"
 #include "UIHelpers.h"
 
 static const float HeaderCellFontSize = 22.0f;

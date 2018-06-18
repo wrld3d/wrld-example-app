@@ -2,13 +2,16 @@
 
 #pragma once
 
-#import <UIKit/UIKit.h>
-#include <vector>
+#include "SearchResultPoiViewIncludes.h"
 #include "Types.h"
 #include "AppRunner.h"
 #include "SearchResultModel.h"
 #include "SearchResultPoi.h"
 #include "SearchResultPoiView.h"
+
+#include <vector>
+
+#import <UIKit/UIKit.h>
 
 @interface SearchResultPoiViewContainer : UIView
 {

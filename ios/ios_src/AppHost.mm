@@ -1,8 +1,8 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
+#include "AppHost.h"
 #include "App.h"
 #include "MenuController.h"
-#include "AppHost.h"
 #include "LatLongAltitude.h"
 #include "EegeoWorld.h"
 #include "ScreenProperties.h"
@@ -78,6 +78,11 @@
 #include "NavWidgetViewModule.h"
 #include "UiCreatedMessage.h"
 #include "ICompassView.h"
+#include "UiCreatedMessage.h"
+#include "IndoorAtlasLocationModule.h"
+#include "SenionLabLocationModule.h"
+#include "SenionLabLocationService.h"
+#include "IndoorAtlasLocationService.h"
 
 #import "UIView+TouchExclusivity.h"
 
@@ -178,16 +183,17 @@ AppHost::AppHost(
                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                                                                               m_messageBus);
     
-    m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
+    m_pSenionLabLocationModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule)(m_pApp->GetAppModeModel(),
                                                                                            interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                            mapModule.GetEnvironmentFlatteningService(),                                                                                                                                                                                                                                                                
                                                                                            *m_piOSLocationService,
                                                                                            mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
-                                                                                           m_iOSAlertBoxFactory,
                                                                                            m_messageBus);
+    
     std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()},
                                                                                        {"IndoorAtlas", m_pIndoorAtlasLocationModule->GetLocationService()}};
+    
     m_pInteriorsLocationServiceModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                            *m_pCurrentLocationService,

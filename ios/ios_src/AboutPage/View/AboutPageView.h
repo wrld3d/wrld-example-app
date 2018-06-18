@@ -4,9 +4,9 @@
 
 #import <UIKit/UIKit.h>
 #include "AboutPage.h"
-#include "AppRunner.h"
 #import "HeaderView.h"
 #include "ViewController.h"
+#include "AboutPageViewIncludes.h"
 
 @class AboutPageView;
 @class AboutPageViewController;

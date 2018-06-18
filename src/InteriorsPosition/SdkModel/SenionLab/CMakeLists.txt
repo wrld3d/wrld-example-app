@@ -3,6 +3,7 @@ set(headers ${headers} ../src/InteriorsPosition/SdkModel/SenionLab
 set(currsources
   ../src/InteriorsPosition/SdkModel/SenionLab/CMakeLists.txt
   ../src/InteriorsPosition/SdkModel/SenionLab/ISenionLabLocationInterop.h
+  ../src/InteriorsPosition/SdkModel/SenionLab/SenionLabIncludes.h
   ../src/InteriorsPosition/SdkModel/SenionLab/SenionLabLocationController.cpp
   ../src/InteriorsPosition/SdkModel/SenionLab/SenionLabLocationController.h
   ../src/InteriorsPosition/SdkModel/SenionLab/SenionLabLocationService.cpp

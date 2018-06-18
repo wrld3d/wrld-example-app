@@ -2,16 +2,14 @@
 
 #pragma once
 
-#include "IndoorAtlasLocationController.h"
-#include "IndoorAtlasLocationService.h"
-#include "iOSAlertBoxFactory.h"
-#include "ICallback.h"
-#include "AppModeModel.h"
+#include "IndoorAtlasIncludes.h"
+#include "AppModes.h"
 #include "InteriorsExplorer.h"
 #include "ApplicationConfiguration.h"
 #include "ILocationService.h"
 #include "BidirectionalBus.h"
-
+#include "Rendering.h"
+#include "InteriorMetaDataRepository.h"
 
 @class IndoorAtlasLocationManager;
 

@@ -3,6 +3,9 @@
 #include "IndoorAtlasLocationModule.h"
 #include "InteriorSelectionModel.h"
 #include "InteriorInteractionModel.h"
+#include "IndoorAtlasLocationController.h"
+#include "IndoorAtlasLocationService.h"
+
 #include <map>
 #include <string>
 

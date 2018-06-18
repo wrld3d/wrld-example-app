@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "AppRunner.h"
+#include "AppHost.h"
 #include "Graphics.h"
 #include "App.h"
 

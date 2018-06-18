@@ -7,4 +7,5 @@ set(currsources
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\InteriorsPosition\\SdkModel FILES ${currsources})
 include(ios_src/InteriorsPosition/SdkModel/IndoorAtlas/CMakeLists.txt)
+include(ios_src/InteriorsPosition/SdkModel/SenionLab/CMakeLists.txt)
 endif(${IOS})

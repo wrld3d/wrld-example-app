@@ -4,11 +4,27 @@
 
 #import <UIKit/UIKit.h>
 #include "Graphics.h"
-#include "AppHost.h"
 #include "GlDisplayService.h"
+#include "AppInterface.h"
 #include "Types.h"
 
 @class ViewController;
+class AppHost;
+
+namespace ExampleApp
+{
+    namespace ApplicationConfig
+    {
+        class ApplicationConfiguration;
+    }
+    
+    namespace Metrics
+    {
+        class iOSFlurryMetricsService;
+    }
+}
+
+
 
 class AppRunner : Eegeo::NonCopyable
 {
