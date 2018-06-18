@@ -33,7 +33,8 @@ include(Resources/CMakeLists.txt)
 
 set(storyboards
     ExampleApp/en.lproj/MainStoryboard_iPad.storyboard
-    ExampleApp/en.lproj/MainStoryboard_iPhone.storyboard)
+    ExampleApp/en.lproj/MainStoryboard_iPhone.storyboard
+    "ExampleApp/en.lproj/Launch Screen.storyboard")
 
 # plist settings
 set(EEGEO_PLIST_BUNDLE_EXECUTABLE "\${EXECUTABLE_NAME}")
