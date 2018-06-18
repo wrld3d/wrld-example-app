@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "IndoorAtlasIncludes.h"
+
 #include <map>
 #include <string>
 
@@ -18,12 +20,14 @@ namespace ExampleApp
                 {
                 public:
                     virtual ~IIndoorAtlasLocationInterop() {}
+                
+                    void SetLocationService(IndoorAtlasLocationService* pLocationService);
                     
-                    virtual void StartUpdatingLocation(const std::string& apiKey,
-                                                       const std::string& apiSecret,
-                                                       const std::map<int, std::string>& floorMap) = 0;
+                    virtual void StartUpdating(const std::string& apiKey,
+                                               const std::string& apiSecret,
+                                               const std::map<int, std::string>& floorMap) = 0;
                     
-                    virtual void StopUpdatingLocation() = 0;
+                    virtual void StopUpdating() = 0;
                 };
             }
         }

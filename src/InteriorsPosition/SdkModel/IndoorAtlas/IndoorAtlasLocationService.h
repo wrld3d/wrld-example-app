@@ -8,6 +8,7 @@
 #include "InteriorId.h"
 #include "BidirectionalBus.h"
 #include "InteriorMetaData.h"
+#include "IIndoorAtlasLocationInterop.h"
 
 namespace ExampleApp
 {
@@ -17,54 +18,89 @@ namespace ExampleApp
         {
             namespace IndoorAtlas
             {
-                class IndoorAtlasLocationServiceImpl;
-
                 class IndoorAtlasLocationService : public Eegeo::Location::ILocationService, private Eegeo::NonCopyable
                 {
                 public:
-                	IndoorAtlasLocationService(Eegeo::Location::ILocationService& defaultLocationService,
-                            ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
-                            const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
-                            const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
-                            const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                            const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository);
+                	IndoorAtlasLocationService(IIndoorAtlasLocationInterop& indoorAtlasInterop,
+                                               Eegeo::Location::ILocationService& defaultLocationService,
+                                               ExampleApp::ExampleAppMessaging::TMessageBus& messageBus,
+                                               const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+                                               const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                               const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
+                                               const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository);
 
                     ~IndoorAtlasLocationService();
 
                     // Non-interface methods
+                    void SetIsAuthorized(bool isAuthorized);
+                    void SetIsActive(bool isActive);
+                    void SetLocation(const Eegeo::Space::LatLong &latLong);
+                    void SetHorizontalAccuracy(double radius);
+                    void SetFloor(const std::string& indoorAtlasFloorId, int floorIndex);
+                    
                     void StartUpdating();
                     void StopUpdating();
-
+                    
                     // General
-                    void OnPause() override;
-                    void OnResume() override;
+                    void OnPause();
+                    void OnResume();
                     
                     // Location
-                    bool IsLocationAuthorized() const override;
-                    bool IsLocationActive() const override;
-                    bool GetLocation(Eegeo::Space::LatLong& latlong) const override;
-                    bool GetAltitude(double& altitude) const override;
-                    bool GetHorizontalAccuracy(double& accuracy) const override;
+                    bool IsLocationAuthorized() const;
+                    bool IsLocationActive() const;
+                    bool GetLocation(Eegeo::Space::LatLong& latlong) const;
+                    bool GetAltitude(double& altitude) const;
+                    bool GetHorizontalAccuracy(double& accuracy) const;
                     
-                    void StartUpdatingLocation() override;
-                    void StopUpdatingLocation() override;
+                    void StartUpdatingLocation();
+                    void StopUpdatingLocation();
                     
                     // Heading
-                    bool GetHeadingDegrees(double& headingDegrees) const override;
-                    bool IsHeadingAuthorized() const override;
-                    bool IsHeadingActive() const override;
+                    bool GetHeadingDegrees(double& headingDegrees) const;
+                    bool IsHeadingAuthorized() const;
+                    bool IsHeadingActive() const;
                     
-                    void StartUpdatingHeading() override;
-                    void StopUpdatingHeading() override;
+                    void StartUpdatingHeading();
+                    void StopUpdatingHeading();
                     
                     // Indoor
-                    bool IsIndoors() const override;
-                    Eegeo::Resources::Interiors::InteriorId GetInteriorId() const override;
-                    bool GetFloorIndex(int& floorIndex) const override;
-                    bool IsIndoorAuthorized() const override;
-                    
+                    bool IsIndoors() const;
+                    Eegeo::Resources::Interiors::InteriorId GetInteriorId() const;
+                    bool GetFloorIndex(int& floorIndex) const;
+                    bool IsIndoorAuthorized() const;
                 private:
-                    IndoorAtlasLocationServiceImpl* m_pImpl;
+                    struct PauseState
+                    {
+                        PauseState(bool paused, bool currentlyUpdatingLocation, bool currentlyUpdatingHeading)
+                        : isPaused(paused)
+                        , wasUpdatingLocation(currentlyUpdatingLocation)
+                        , wasUpdatingHeading(currentlyUpdatingHeading)
+                        {
+                            
+                        }
+                        
+                        bool isPaused;
+                        bool wasUpdatingLocation;
+                        bool wasUpdatingHeading;
+                    };
+                    
+                    void PublishAboutPageIndoorAtlasDataMessage();
+                    
+                    IIndoorAtlasLocationInterop& m_indoorAtlasInterop;
+                    Eegeo::Location::ILocationService& m_defaultLocationService;
+                    const Eegeo::Rendering::EnvironmentFlatteningService& m_environmentFlatteningService;
+                    const Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
+                    const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
+                    const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& m_interiorMetaDataRepository;
+                    ExampleApp::ExampleAppMessaging::TMessageBus& m_messageBus;
+                    
+                    Eegeo::Space::LatLong m_latLong;
+                    PauseState m_pauseState;
+                    std::string m_indoorAtlasFloorId;
+                    int m_floorIndex;
+                    double m_horizontalAccuracy;
+                    bool m_isAuthorized;
+                    bool m_isActive;
                 };
             }
         }

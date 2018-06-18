@@ -11,8 +11,6 @@
 #include "Rendering.h"
 #include "InteriorMetaDataRepository.h"
 
-@class IndoorAtlasLocationManager;
-
 namespace ExampleApp
 {
     namespace InteriorsPosition
@@ -21,6 +19,8 @@ namespace ExampleApp
         {
             namespace IndoorAtlas
             {
+                class IndoorAtlasLocationInterop;
+                
                 class IndoorAtlasLocationModule
                 {
                 public:
@@ -33,9 +33,10 @@ namespace ExampleApp
                                               ExampleAppMessaging::TMessageBus& messageBus);
                     ~IndoorAtlasLocationModule();
             
-                    IndoorAtlasLocationService& GetLocationService() { return *m_pLocationService; }
+                    IndoorAtlasLocationService& GetLocationService() const;
             
                 private:
+                    IndoorAtlasLocationInterop* m_pIndoorAtlasLocationInterop;
                     IndoorAtlasLocationService* m_pLocationService;
                     IndoorAtlasLocationController* m_pLocationController;
                 };

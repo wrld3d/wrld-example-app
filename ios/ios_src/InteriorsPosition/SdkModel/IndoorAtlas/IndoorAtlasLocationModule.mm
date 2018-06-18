@@ -5,6 +5,7 @@
 #include "InteriorInteractionModel.h"
 #include "IndoorAtlasLocationController.h"
 #include "IndoorAtlasLocationService.h"
+#include "IndoorAtlasLocationInterop.h"
 
 #include <map>
 #include <string>
@@ -24,15 +25,21 @@ namespace ExampleApp
                                                                      Eegeo::Location::ILocationService& defaultLocationService,
                                                                      Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
-                : m_pLocationService(nullptr)
+                : m_pIndoorAtlasLocationInterop(nullptr)
+                , m_pLocationService(nullptr)
                 , m_pLocationController(nullptr)
                 {
-                    m_pLocationService = Eegeo_NEW(IndoorAtlasLocationService)(defaultLocationService,
+                    m_pIndoorAtlasLocationInterop = Eegeo_NEW(IndoorAtlasLocationInterop)();
+                    
+                    m_pLocationService = Eegeo_NEW(IndoorAtlasLocationService)(*m_pIndoorAtlasLocationInterop,
+                                                                               defaultLocationService,
                                                                                messageBus,
                                                                                environmentFlatteningService,
                                                                                interiorInteractionModel,
                                                                                interiorSelectionModel,
                                                                                interiorMetaDataRepository);
+                    
+                    m_pIndoorAtlasLocationInterop->SetLocationService(m_pLocationService);
                     
                     m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(*m_pLocationService,
                                                                                      appModeModel,
@@ -47,6 +54,14 @@ namespace ExampleApp
                     
                     Eegeo_DELETE m_pLocationService;
                     m_pLocationService = nullptr;
+                    
+                    Eegeo_DELETE m_pIndoorAtlasLocationInterop;
+                    m_pIndoorAtlasLocationInterop = nullptr;
+                }
+                
+                IndoorAtlasLocationService& IndoorAtlasLocationModule::GetLocationService() const
+                {
+                    return *m_pLocationService;                    
                 }
             }
         }

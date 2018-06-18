@@ -11,7 +11,7 @@ namespace ExampleApp
             namespace IndoorAtlas
             {
                 class IndoorAtlasLocationModule;
-            	class IIndoorAtlasLocationInterop;
+            	class IIndoorAtlasLocationInterop;                
              	class IndoorAtlasLocationController;
              	class IndoorAtlasLocationService;
             }

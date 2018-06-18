@@ -191,6 +191,7 @@ namespace ExampleApp
                 
                 void SenionLabLocationInterop::SetLocationService(SenionLabLocationService* pSenionLabLocationService)
                 {
+                    Eegeo_ASSERT(pSenionLabLocationService != nullptr);
                     [m_pManager setLocationService: pSenionLabLocationService];
                 }
                 

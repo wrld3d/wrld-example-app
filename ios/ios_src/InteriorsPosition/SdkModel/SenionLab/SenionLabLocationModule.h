@@ -2,14 +2,13 @@
 
 #pragma once
 
-#include "SenionLabLocationController.h"
-#include "SenionLabLocationService.h"
-#include "SenionLabLocationInterop.h"
+#include "SenionLabIncludes.h"
 #include "ICallback.h"
 #include "AppModeModel.h"
 #include "InteriorsExplorer.h"
 #include "ApplicationConfiguration.h"
 #include "ILocationService.h"
+#include "InteriorMetaData.h"
 
 namespace ExampleApp
 {
@@ -19,6 +18,8 @@ namespace ExampleApp
         {
             namespace SenionLab
             {
+                class SenionLabLocationInterop;
+                
                 class SenionLabLocationModule
                 {
                 public:
