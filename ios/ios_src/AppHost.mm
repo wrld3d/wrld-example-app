@@ -356,6 +356,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
          m_messageBus);
 
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
+                                                                                                           m_pApp->GetApplicationConfiguration().ShowPoiDirectionsButton(),
                                                                                                            m_messageBus,
                                                                                                            m_iOSFlurryMetricsService);
     

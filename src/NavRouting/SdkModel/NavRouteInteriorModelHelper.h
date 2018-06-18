@@ -20,6 +20,15 @@ namespace ExampleApp
                                                    const std::string& indoorMapId,
                                                    const int floorIndex,
                                                    int& out_floorId);
+                
+                static bool TryGetIndoorMapFloorName(const Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
+                                                     const std::string& indoorMapId,
+                                                     const int indoorMapFloorId,
+                                                     std::string& out_indoorMapFloorName);
+                
+                static bool TryGetIndoorMapFloorName(const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel,
+                                                     const int indoorMapFloorId,
+                                                     std::string& out_indoorMapFloorName);
             };
         }
     }

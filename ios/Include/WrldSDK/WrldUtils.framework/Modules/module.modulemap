@@ -1,0 +1,11 @@
+framework module WrldUtils {
+  umbrella header "WrldUtils.h"
+
+  export *
+  module * { export * }
+}
+
+module WrldUtils.Swift {
+    header "WrldUtils-Swift.h"
+    requires objc
+}

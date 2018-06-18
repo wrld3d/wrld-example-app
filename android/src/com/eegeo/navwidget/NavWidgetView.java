@@ -231,7 +231,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         rerouteDialog.findViewById(R.id.nav_reroute_dialog_btn_yes).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavWidgetViewJniMethods.RerouteDialogClosed(m_nativeCallerPointer, true);
+                NavWidgetViewJniMethods.RerouteDialogClosed(m_nativeCallerPointer, false);
                 dialog.dismiss();
             }
         });
@@ -239,7 +239,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         rerouteDialog.findViewById(R.id.nav_reroute_dialog_btn_no).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavWidgetViewJniMethods.RerouteDialogClosed(m_nativeCallerPointer, false);
+                NavWidgetViewJniMethods.RerouteDialogClosed(m_nativeCallerPointer, true);
                 dialog.dismiss();
             }
         });
@@ -247,7 +247,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                NavWidgetViewJniMethods.RerouteDialogClosed(m_nativeCallerPointer, false);
+                NavWidgetViewJniMethods.RerouteDialogClosed(m_nativeCallerPointer, true);
             }
         });
 

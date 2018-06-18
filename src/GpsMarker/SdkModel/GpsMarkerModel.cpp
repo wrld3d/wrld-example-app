@@ -26,6 +26,8 @@ namespace ExampleApp
                 , m_currentHeadingRadians(0)
                 , m_currentHeadingVelocity(0)
                 , m_blueSphereModel(blueSphereModel)
+                , m_currentAccuracyMeters(0.0)
+                , m_accuracyRingEnabled(false)
             {
                 m_blueSphereModel.SetEnabled(true);
             }
@@ -81,6 +83,11 @@ namespace ExampleApp
                 else
                 {
                     m_blueSphereModel.SetIndoorMap(std::string(), 0);
+                }
+
+                if(!m_locationService.GetHorizontalAccuracy(m_currentAccuracyMeters))
+                {
+                    m_currentAccuracyMeters = 0.0f;
                 }
 
                 // return true regardless of whether or not we successfully found an indoorMapFloorId
@@ -170,6 +177,16 @@ namespace ExampleApp
                 const Eegeo::Resources::Interiors::InteriorsFloorModel& interiorsFloorModel = interiorsModel.GetFloorAtIndex(floorIndex);
                 out_floorId = interiorsFloorModel.GetFloorNumber();
                 return true;
+            }
+
+            void GpsMarkerModel::SetAccuracyRingEnabled(bool enabled)
+            {
+                m_accuracyRingEnabled = enabled;
+            }
+
+            bool GpsMarkerModel::IsAccuracyRingEnabled() const
+            {
+                return m_accuracyRingEnabled;
             }
         }
     }

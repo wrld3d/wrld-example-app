@@ -4,6 +4,7 @@
 
 #include "NavRouting.h"
 #include "Location.h"
+#include "GpsMarker.h"
 
 namespace ExampleApp
 {
@@ -20,7 +21,8 @@ namespace ExampleApp
 
                     NavTurnByTurnController(INavTurnByTurnModel& turnByTurnModel,
                                             INavRoutingModel& navRoutingModel,
-                                            Eegeo::Location::NavigationService& navigationService);
+                                            Eegeo::Location::NavigationService& navigationService,
+                                            GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel);
                     ~NavTurnByTurnController();
 
                     void Update(float dt);
@@ -30,6 +32,7 @@ namespace ExampleApp
                     INavTurnByTurnModel& m_turnByTurnModel;
                     INavRoutingModel& m_navRoutingModel;
                     Eegeo::Location::NavigationService& m_navigationService;
+                    GpsMarker::SdkModel::GpsMarkerModel& m_gpsMarkerModel;
 
                     Eegeo::Helpers::TCallback0<NavTurnByTurnController> m_turnByTurnStartedCallback;
                     Eegeo::Helpers::TCallback0<NavTurnByTurnController> m_turnByTurnStoppedCallback;

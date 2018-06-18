@@ -175,8 +175,6 @@ namespace ExampleApp
                     m_enabled = true;
 
                     m_startedCallbacks.ExecuteCallbacks();
-
-                    UpdateTurnByTurn();
                 }
 
                 void NavTurnByTurnModel::Stop()

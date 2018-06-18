@@ -23,6 +23,7 @@ namespace ExampleApp
                 GpsMarkerModule(Eegeo::Location::ILocationService& locationService,
                                 Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule,
                                 Eegeo::Modules::Map::MapModule& mapModule,
+                                Eegeo::Modules::Core::RenderingModule& renderingModule,
                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                 VisualMap::SdkModel::IVisualMapService& visualMapService,
                                 const bool createBlueSphereViews,
@@ -37,6 +38,11 @@ namespace ExampleApp
                 
                 GpsMarkerModel* m_pModel;
                 IGpsMarkerController* m_pController;
+
+                AccuracyRingRenderableFactory* m_pRingRenderableFactory;
+                AccuracyRingRenderable* m_pRingRenderable;
+                AccuracyRingView* m_pRingView;
+                Eegeo::Rendering::RenderableFilters& m_renderableFilters;
             };
         }
     }

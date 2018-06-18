@@ -11,6 +11,7 @@
 #include <sstream>
 #include <algorithm>
 #include "NavRouteInstructionHelper.h"
+#include "NavRouteInteriorModelHelper.h"
 
 namespace ExampleApp
 {
@@ -30,30 +31,25 @@ namespace ExampleApp
                         };
                 }
 
-                std::string GetFloorName(const Eegeo::Resources::Interiors::InteriorsModel& interiorsModel, const int indoorMapFloorId)
-                {
-                    const auto floorIndex = interiorsModel.FindFloorIndexWithFloorNumber(indoorMapFloorId);
-                    const auto& floorModel = interiorsModel.GetFloorAtIndex(floorIndex);
-                    return floorModel.GetFloorName();
-                }
-
                 std::string GetReadableFloorName(Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                                  const std::string& indoorMapId,
                                                  const int indoorMapFloorId,
                                                  bool& out_isPlaceholder)
                 {
-                    if(interiorsModelRepository.HasInterior(indoorMapId))
+                    std::string floorName;
+                    if(NavRouteInteriorModelHelper::TryGetIndoorMapFloorName(interiorsModelRepository, indoorMapId, indoorMapFloorId, floorName))
                     {
                         out_isPlaceholder = false;
-                        return GetFloorName(interiorsModelRepository.GetInterior(indoorMapId), indoorMapFloorId);
                     }
                     else
                     {
                         out_isPlaceholder = true;
                         std::ostringstream oss;
                         oss << indoorMapFloorId;
-                        return oss.str();
+                        floorName = oss.str();
                     }
+                    
+                    return floorName;
                 }
 
                 std::vector<SdkModel::NavRoutingDirectionModel> GetDirectionsFromRouteData(const Eegeo::Routes::Webservice::RouteData& route,
@@ -89,15 +85,12 @@ namespace ExampleApp
                                                                              isUsingPlaceHolder);
 
                                 std::string nextFloorName;
-                                int nextFloorId = 0;
-
-                                if ((i + 1) < count)
+                                
+                                if (formattedInstructions.GetIsMultiFloor())
                                 {
-                                    const auto &nextStep = section.Steps[i + 1];
-                                    nextFloorId = nextStep.IndoorFloorId;
                                     nextFloorName = GetReadableFloorName(interiorsModelRepository,
-                                                                         nextStep.IndoorId,
-                                                                         nextStep.IndoorFloorId,
+                                                                         step.IndoorId,
+                                                                         formattedInstructions.GetNextFloorId(),
                                                                          isUsingPlaceHolder);
                                 }
 
@@ -112,7 +105,7 @@ namespace ExampleApp
                                                               step.IndoorFloorId,
                                                               floorName,
                                                               step.IsMultiFloor,
-                                                              nextFloorId,
+                                                              formattedInstructions.GetNextFloorId(),
                                                               nextFloorName,
                                                               isUsingPlaceHolder);
                             }
@@ -260,13 +253,29 @@ namespace ExampleApp
                     {
                         auto direction = directions[i];
 
-                        if(direction.GetIndoorMapId() == interiorsModel.GetId() && direction.GetIsUsingPlaceHolders())
+                        if(direction.GetIndoorMapId() == interiorsModel.GetId() && direction.GetIsIndoors() && direction.GetIsUsingPlaceHolders())
                         {
-                            direction.SetIndoorMapFloorName(GetFloorName(interiorsModel, direction.GetIndoorMapFloorId()));
-                            direction.SetNextIndoorMapFloorName(GetFloorName(interiorsModel, direction.GetNextIndoorMapFloorId()));
-                            direction.SetIsUsingPlaceHolders(false);
-                            m_navRoutingModel.UpdateDirection(i, direction);
-                            routeIsUpdated = true;
+                            bool directionUpdated = false;
+                            std::string floorName;
+                            if (NavRouteInteriorModelHelper::TryGetIndoorMapFloorName(interiorsModel, direction.GetIndoorMapFloorId(), floorName))
+                            {
+                                direction.SetIndoorMapFloorName(floorName);
+                                directionUpdated = true;
+                            }
+                            
+                            std::string nextFloorName;
+                            if (NavRouteInteriorModelHelper::TryGetIndoorMapFloorName(interiorsModel, direction.GetNextIndoorMapFloorId(), nextFloorName))
+                            {
+                                direction.SetNextIndoorMapFloorName(nextFloorName);
+                                directionUpdated = true;
+                            }
+                            
+                            if (directionUpdated)
+                            {
+                                direction.SetIsUsingPlaceHolders(false);
+                                m_navRoutingModel.UpdateDirection(i, direction);
+                                routeIsUpdated = true;
+                            }
                         }
                     }
 

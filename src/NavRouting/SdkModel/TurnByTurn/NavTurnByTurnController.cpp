@@ -4,6 +4,7 @@
 #include "INavTurnByTurnModel.h"
 #include "INavRoutingModel.h"
 #include "NavigationService.h"
+#include "GpsMarkerModel.h"
 
 namespace ExampleApp
 {
@@ -43,10 +44,12 @@ namespace ExampleApp
                 NavTurnByTurnController::NavTurnByTurnController(
                         INavTurnByTurnModel &turnByTurnModel,
                         INavRoutingModel& navRoutingModel,
-                        Eegeo::Location::NavigationService& navigationService)
+                        Eegeo::Location::NavigationService& navigationService,
+                        GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel)
                 : m_turnByTurnModel(turnByTurnModel)
                 , m_navRoutingModel(navRoutingModel)
                 , m_navigationService(navigationService)
+                , m_gpsMarkerModel(gpsMarkerModel)
                 , m_turnByTurnStartedCallback(this, &NavTurnByTurnController::HandleTurnByTurnStarted)
                 , m_turnByTurnStoppedCallback(this, &NavTurnByTurnController::HandleTurnByTurnStopped)
                 , m_turnByTurnUpdatedCallback(this, &NavTurnByTurnController::HandleTurnByTurnUpdated)
@@ -73,10 +76,12 @@ namespace ExampleApp
                     m_navRoutingModel.SetSelectedDirection(0);
                     m_navRoutingModel.SetCurrentDirection(0);
                     m_navRoutingModel.SetNavMode(NavRoutingMode::Active);
+                    m_gpsMarkerModel.SetAccuracyRingEnabled(true);
                 }
 
                 void NavTurnByTurnController::HandleTurnByTurnStopped()
                 {
+                    m_gpsMarkerModel.SetAccuracyRingEnabled(false);
                     m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsMode::GpsModeOff);
 
                     if(m_navRoutingModel.HasRoute())
@@ -102,7 +107,7 @@ namespace ExampleApp
 
                     bool currentDirectionIsSelected = m_navRoutingModel.GetSelectedDirection() == m_navRoutingModel.GetCurrentDirection();
                     m_navRoutingModel.SetCurrentDirection(directionIndex);
-                    if(currentDirectionIsSelected && m_navRoutingModel.GetSelectedDirection() != directionIndex)
+                    if(currentDirectionIsSelected)
                     {
                         m_navRoutingModel.SetSelectedDirection(directionIndex);
                     }

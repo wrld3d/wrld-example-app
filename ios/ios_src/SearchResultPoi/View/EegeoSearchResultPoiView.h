@@ -37,7 +37,7 @@
     UIImage* m_pAddPinHighlightButtonBackgroundImage;
 }
 
-- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop;
+- (id)initWithInterop:(ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*)pInterop showDirectionsButton: (BOOL) showDirectionsButton;
 
 - (ExampleApp::SearchResultPoi::View::SearchResultPoiViewInterop*) getInterop;
 

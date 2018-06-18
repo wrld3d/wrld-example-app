@@ -26,6 +26,7 @@ namespace ExampleApp
                 SearchResultPoiViewModule(
                     AndroidNativeState& nativeState,
                     ISearchResultPoiViewModel& searchResultPoiViewModel,
+                    bool showDirectionsButton,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService
                 );
