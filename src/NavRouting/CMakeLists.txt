@@ -11,6 +11,8 @@ set(currsources
   ../src/NavRouting/NavRoutingSelectedDirectionSetMessage.h
   ../src/NavRouting/NavRoutingEndLocationClearClickedMessage.h
   ../src/NavRouting/NavRoutingEndLocationClearedMessage.h
+  ../src/NavRouting/NavRoutingEndLocationSetFromSearchMessage.cpp
+  ../src/NavRouting/NavRoutingEndLocationSetFromSearchMessage.h
   ../src/NavRouting/NavRoutingEndLocationSetMessage.cpp
   ../src/NavRouting/NavRoutingEndLocationSetMessage.h
   ../src/NavRouting/NavRoutingModeSetMessage.cpp
@@ -31,6 +33,8 @@ set(currsources
   ../src/NavRouting/NavRoutingStartEndRoutingButtonClickedMessage.h
   ../src/NavRouting/NavRoutingStartLocationClearClickedMessage.h
   ../src/NavRouting/NavRoutingStartLocationClearedMessage.h
+  ../src/NavRouting/NavRoutingStartLocationSetFromSearchMessage.cpp
+  ../src/NavRouting/NavRoutingStartLocationSetFromSearchMessage.h
   ../src/NavRouting/NavRoutingStartLocationSetMessage.cpp
   ../src/NavRouting/NavRoutingStartLocationSetMessage.h
   ../src/NavRouting/NavRoutingViewClosedMessage.h

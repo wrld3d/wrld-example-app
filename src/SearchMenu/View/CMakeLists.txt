@@ -9,6 +9,8 @@ set(currsources
   ../src/SearchMenu/View/QueryContext.h
   ../src/SearchMenu/View/SearchMenuController.cpp
   ../src/SearchMenu/View/SearchMenuController.h
+  ../src/SearchMenu/View/SearchResultsRepository.cpp
+  ../src/SearchMenu/View/SearchResultsRepository.h
   ../src/SearchMenu/View/SearchServices.cpp
   ../src/SearchMenu/View/SearchServices.h
   ../src/SearchMenu/View/SearchServicesResult.cpp

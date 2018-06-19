@@ -80,6 +80,16 @@ namespace ExampleApp
 
                 virtual THeight GetTopViewHeight() = 0;
                 virtual THeight GetBottomViewHeight() = 0;
+
+                virtual void SetStartPointFromSuggestionIndex(int index) = 0;
+
+                virtual void SetEndPointFromSuggestionIndex(int index) = 0;
+
+                virtual void InsertOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
+                virtual void RemoveOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
+
+                virtual void InsertOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
+                virtual void RemoveOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
             };
         }
     }

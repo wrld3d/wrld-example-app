@@ -11,6 +11,7 @@
 #include "BidirectionalBus.h"
 #include "INavWidgetViewModule.h"
 #include "INavWidgetViewModel.h"
+#include "ISearchResultsRepository.h" 
 
 namespace Eegeo
 {
@@ -54,6 +55,7 @@ namespace ExampleApp
             public:
                 NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                     INavWidgetViewModel& viewModel,
+                                    SearchMenu::View::ISearchResultsRepository& suggestionsRespository,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~NavWidgetViewModule();

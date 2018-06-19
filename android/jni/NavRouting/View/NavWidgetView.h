@@ -10,6 +10,7 @@
 #include "NavRoutingLocationModel.h"
 #include "ICompassView.h"
 #include "IInteriorsExplorerView.h"
+#include "MyTestSearchProvider.h"
 
 namespace ExampleApp
 {
@@ -34,14 +35,23 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<THeight>& m_navWidgetViewTopHeightChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<THeight>& m_navWidgetViewBottomHeightChangedCallbacks;
 
+                Eegeo::Helpers::CallbackCollection1<const int> m_navigationStartPointFromSuggestionCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const int> m_navigationEndPointFromSuggestionCallbacks;
+
                 jclass m_uiViewClass;
                 jobject m_uiView;
 
                 int m_topViewHeight;
                 int m_bottomViewHeight;
 
+                SearchProviders::MyTestSearchProvider& m_navSearchProvider;
+
+                void AddSuggestionProvider(SearchProviders::MyTestSearchProvider& navSearchProvider);
+                void RemoveSuggestionProvider(SearchProviders::MyTestSearchProvider& navSearchProvider);
+
             public:
                 NavWidgetView(AndroidNativeState& nativeState,
+                              SearchProviders::MyTestSearchProvider& navSearchProvider,
                               Eegeo::Helpers::CallbackCollection1<THeight>& navWidgetViewTopHeightChangedCallbacks,
                               Eegeo::Helpers::CallbackCollection1<THeight>& navWidgetViewBottomHeightChangedCallbacks);
 
@@ -136,6 +146,18 @@ namespace ExampleApp
                 THeight GetTopViewHeight() override;
 
                 THeight GetBottomViewHeight() override;
+
+                void SetStartPointFromSuggestionIndex(int index) override;
+
+                void SetEndPointFromSuggestionIndex(int index) override;
+
+                void InsertOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
+
+                void RemoveOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
+
+                void InsertOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
+
+                void RemoveOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
 
             private:
                 void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);

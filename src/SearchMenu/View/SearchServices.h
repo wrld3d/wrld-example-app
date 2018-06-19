@@ -9,6 +9,7 @@
 #include "CallbackCollection.h"
 #include "SearchQueryResponseReceivedMessage.h"
 #include "AutocompleteSuggestionsReceivedMessage.h"
+#include "ISearchResultsRepository.h"
 #include <vector>
 
 namespace ExampleApp
@@ -30,18 +31,16 @@ namespace ExampleApp
 				Eegeo::Helpers::TCallback1<SearchServices, const Search::SearchQueryResponseReceivedMessage&> m_responseReceivedHandler;
 				Eegeo::Helpers::TCallback1<SearchServices, const Search::AutocompleteSuggestionsReceivedMessage&> m_autocompleteSuggestionsResponseReceivedHandler;
 
-				typedef Search::SdkModel::SearchResultModel TSdkSearchResult;
-
-				ISearchProvider::TSearchResults m_searchResults;
-				ISearchProvider::TSearchResults m_suggestionResults;
+				ISearchResultsRepository& m_searchResultsRepository;
+				ISearchResultsRepository& m_suggestionsRepository;
 
 			public:
 				SearchServices(ISearchProvider& searchProvider,
+							   ISearchResultsRepository& searchResultsRepository,
+							   ISearchResultsRepository& suggestionsRepository,
 							   ExampleAppMessaging::TMessageBus& messageBus);
 				~SearchServices();
 
-				int GetResultOriginalIndexFromCurrentIndex(int index) const;
-				const SearchMenu::View::SearchServicesResult::TSdkSearchResult& GetSdkSearchResultByIndex(int index) const;
 
 			private:
 				void OnSearch(const std::string& searchQuery);

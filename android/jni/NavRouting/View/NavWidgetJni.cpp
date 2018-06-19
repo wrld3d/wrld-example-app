@@ -119,3 +119,25 @@ JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_RerouteD
     auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
     pView->HandleRerouteDialogClosed(shouldReroute);
 }
+
+JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetNavigationStartPointFromSuggestion(
+        JNIEnv *jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jint searchResultIndex)
+{
+    ASSERT_UI_THREAD
+
+    auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
+    pView->SetStartPointFromSuggestionIndex(searchResultIndex);
+}
+
+JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetNavigationEndPointFromSuggestion(
+        JNIEnv *jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jint searchResultIndex)
+{
+    ASSERT_UI_THREAD
+
+    auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
+    pView->SetEndPointFromSuggestionIndex(searchResultIndex);
+}

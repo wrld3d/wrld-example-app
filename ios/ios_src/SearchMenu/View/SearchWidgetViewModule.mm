@@ -1,6 +1,5 @@
 #include "SearchWidgetViewModule.h"
-//#include "SearchWidgetView.h"
-
+#include "SearchResultsRepository.h"
 
 namespace ExampleApp
 {
@@ -25,11 +24,16 @@ namespace ExampleApp
                                                                   navigationEnabled:isNavigationEnabled
                                                                 messageBus:messageBus];
                 
+                m_pSearchResults = Eegeo_NEW(SearchResultsRepository)();
+                m_pSuggestions = Eegeo_NEW(SearchResultsRepository)();
+                
                 m_pSearchServices = Eegeo_NEW(SearchMenu::View::SearchServices)(*m_pSearchProvider,
+                                                                                *m_pSearchResults,
+                                                                                *m_pSuggestions,
                                                                                 messageBus);
                 
                 m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(*[m_pView getInterop],
-                                                                              *m_pSearchServices,
+                                                                              *m_pSearchResults,
                                                                               modalBackgroundView,
                                                                               viewModel,
                                                                               messageBus);
@@ -44,11 +48,19 @@ namespace ExampleApp
                 return *m_pView;
             }
             
+            ISearchResultsRepository& SearchWidgetViewModule::GetSuggestionsRepository() const
+            {
+                return *m_pSuggestions;
+            }
+            
             SearchWidgetViewModule::~SearchWidgetViewModule()
             {
                 Eegeo_DELETE m_pSearchWidgetController;
                 
                 Eegeo_DELETE m_pSearchServices;
+                
+                Eegeo_DELETE m_pSuggestions;
+                Eegeo_DELETE m_pSearchResults;
                 
                 [m_pView release];
                 

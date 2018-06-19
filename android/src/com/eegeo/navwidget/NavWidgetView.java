@@ -7,12 +7,14 @@ import android.content.DialogInterface;
 import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IBackButtonListener;
 import com.eegeo.mobileexampleapp.R;
+import com.eegeo.searchmenu.SearchWidgetResult;
 import com.wrld.widgets.navigation.model.WrldNavEvent;
 import com.wrld.widgets.navigation.model.WrldNavLocation;
 import com.wrld.widgets.navigation.model.WrldNavMode;
@@ -21,10 +23,17 @@ import com.wrld.widgets.navigation.model.WrldNavModelObserver;
 import com.wrld.widgets.navigation.model.WrldNavModelObserverListener;
 import com.wrld.widgets.navigation.model.WrldNavRoute;
 import com.wrld.widgets.navigation.model.WrldNavDirection;
+import com.wrld.widgets.navigation.search.WrldNavSearchLocationView;
 import com.wrld.widgets.navigation.widget.WrldNavWidget;
 import com.wrld.widgets.navigation.widget.WrldNavWidgetViewObserver;
 import com.wrld.widgets.navigation.widget.WrldNavWidgetViewVisibilityListener;
 import com.wrld.widgets.navigation.widget.WrldNavWidgetViewSizeListener;
+import com.wrld.widgets.search.WrldSearchWidget;
+import com.wrld.widgets.search.model.SearchProviderQueryResult;
+import com.wrld.widgets.search.model.SearchQuery;
+import com.wrld.widgets.search.model.SearchResult;
+import com.wrld.widgets.search.model.SearchResultsListener;
+import com.wrld.widgets.search.model.SuggestionProvider;
 
 import java.util.List;
 
@@ -47,6 +56,13 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     private float m_topPanelHeight = 0.0f;
     private float m_bottomPanelHeight = 0.0f;
 
+    private WrldSearchWidget m_searchWidget;
+    private WrldNavSearchLocationView m_searchLocationView;
+    private boolean m_searchingForLocation;
+    private boolean m_searchingForStartLocation;
+    private ViewPropertyAnimator m_searchLocationViewAnimation;
+    private SearchResultsListener m_searchResultSelectedListener;
+
     public NavWidgetView(MainActivity activity, long nativeCallerPointer)
     {
         m_activity = activity;
@@ -63,6 +79,53 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_navWidget = (WrldNavWidget) m_view.findViewById(R.id.wrld_nav_widget_view);
         m_navWidget.getObserver().setNavModel(m_model);
         m_viewObserver = m_navWidget.getViewObserver();
+
+        m_searchLocationView = m_uiRoot.findViewById(R.id.wrld_nav_search_widget_view);
+        m_searchLocationView.getBackButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endSearchForLocation();
+            }
+        });
+
+        m_searchLocationView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                m_searchLocationView.removeOnLayoutChangeListener(this);
+                setSearchLocationVisibility(false, false);
+            }
+        });
+
+
+        if(m_searchWidget == null) {
+            m_searchWidget = m_searchLocationView.getSearchWidget();
+        }
+
+        m_searchResultSelectedListener = new SearchResultsListener() {
+
+            @Override
+            public void onSearchResultsReceived(SearchQuery searchQuery, List<SearchProviderQueryResult> list) {}
+
+            @Override
+            public void onSearchResultsCleared() { }
+
+            @Override
+            public void onSearchResultsSelected(SearchResult searchResult) {
+                SearchWidgetResult widgetResult = (SearchWidgetResult) searchResult;
+
+                if(m_searchingForStartLocation) {
+                    NavWidgetViewJniMethods.SetNavigationStartPointFromSuggestion(
+                            m_nativeCallerPointer,
+                            widgetResult.getIndex());
+                }
+                else {
+                    NavWidgetViewJniMethods.SetNavigationEndPointFromSuggestion(
+                            m_nativeCallerPointer,
+                            widgetResult.getIndex());
+                }
+                endSearchForLocation();
+            }
+        };
 
         m_observer = new WrldNavModelObserver();
         m_observer.observeProperty(WrldNavModel.WrldNavModelProperty.SelectedDirectionIndex);
@@ -100,6 +163,14 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
 
         NavWidgetViewJniMethods.SetTopViewHeight(m_nativeCallerPointer, (int) m_viewObserver.getTopPanelHeight());
         NavWidgetViewJniMethods.SetBottomViewHeight(m_nativeCallerPointer,  (int) m_viewObserver.getBottomPanelHeight());
+    }
+
+    public void addLocationSearchProvider(SuggestionProvider locationSearchProvider) {
+        m_searchWidget.addSuggestionProvider(locationSearchProvider);
+    }
+
+    public void removeLocationSearchProvider(SuggestionProvider locationSearchProvider) {
+        m_searchWidget.removeSuggestionProvider(locationSearchProvider);
     }
 
     private int calculateVisibleTopHeight()
@@ -295,6 +366,13 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     {
         switch (wrldNavModelProperty)
         {
+            case StartLocation:
+            case EndLocation:
+                m_model.setRoute(null);
+                if(m_searchingForLocation) {
+                    endSearchForLocation();
+                }
+                break;
             case SelectedDirectionIndex:
                 NavWidgetViewJniMethods.SelectedDirectionIndexChanged(m_nativeCallerPointer, m_model.getSelectedDirectionIndex());
                 break;
@@ -311,9 +389,17 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
                 break;
             case SelectStartLocationClicked:
                 NavWidgetViewJniMethods.SelectStartLocationClicked(m_nativeCallerPointer);
+                {
+                    boolean isStartLocation = true;
+                    searchForLocation(isStartLocation);
+                }
                 break;
             case SelectEndLocationClicked:
                 NavWidgetViewJniMethods.SelectEndLocationClicked(m_nativeCallerPointer);
+                {
+                    boolean isStartLocation = false;
+                    searchForLocation(isStartLocation);
+                }
                 break;
             case StartLocationClearButtonClicked:
                 NavWidgetViewJniMethods.StartLocationClearButtonClicked(m_nativeCallerPointer);
@@ -327,6 +413,50 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
             case StartEndButtonClicked:
                 NavWidgetViewJniMethods.StartEndButtonClicked(m_nativeCallerPointer);
                 break;
+        }
+    }
+
+    public void searchForLocation(boolean startLocation) {
+        m_searchingForLocation = true;
+        m_searchingForStartLocation = startLocation;
+        setSearchLocationVisibility(true, true);
+        m_model.sendNavEvent(WrldNavEvent.WidgetAnimateOut);
+        m_searchWidget.getSuggestionResultsModel().addResultListener(m_searchResultSelectedListener);
+        m_searchWidget.clearSearch();
+//
+//         Try focus on the searchbox and show keyboard
+        View searchBoxView = m_searchWidget.getView().findViewById(R.id.searchbox_search_searchview);
+        if(searchBoxView != null) {
+            searchBoxView.requestFocus();
+//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        }
+    }
+
+    public void endSearchForLocation() {
+        m_searchingForLocation = false;
+        m_searchWidget.getSuggestionResultsModel().removeResultListener(m_searchResultSelectedListener);
+        m_searchWidget.getView().clearFocus();
+        setSearchLocationVisibility(false, true);
+        m_model.sendNavEvent(WrldNavEvent.WidgetAnimateIn);
+
+    }
+
+    private void setSearchLocationVisibility(boolean visible, boolean animate) {
+        if(m_searchLocationViewAnimation != null) {
+            m_searchLocationViewAnimation.cancel();
+            m_searchLocationViewAnimation=null;
+        }
+
+        int panelHeight = m_searchLocationView.getHeight();
+        float targetY = visible ? 0.0f : -panelHeight;
+        if(animate) {
+            m_searchLocationViewAnimation = m_searchLocationView.animate()
+                    .y(targetY)
+                    .setDuration(300);
+        }
+        else {
+            m_searchLocationView.setY(targetY);
         }
     }
 }

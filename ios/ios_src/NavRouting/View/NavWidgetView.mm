@@ -367,6 +367,37 @@ namespace ExampleApp
             {
                 return (INavWidgetView::THeight)m_pView.bottomPanelVisibleHeight;
             }
+            
+            void NavWidgetView::SetStartPointFromSuggestionIndex(int index)
+            {
+                m_navigationStartPointFromSuggestionCallbacks.ExecuteCallbacks(index);
+            }
+            
+            void NavWidgetView::SetEndPointFromSuggestionIndex(int index)
+            {
+                m_navigationEndPointFromSuggestionCallbacks.ExecuteCallbacks(index);
+            }
+            
+            void NavWidgetView::InsertOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationStartPointFromSuggestionCallbacks.AddCallback(callback);
+            }
+            
+            void NavWidgetView::RemoveOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationStartPointFromSuggestionCallbacks.AddCallback(callback);
+            }
+            
+            void NavWidgetView::InsertOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationEndPointFromSuggestionCallbacks.AddCallback(callback);
+            }
+            
+            void NavWidgetView::RemoveOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationEndPointFromSuggestionCallbacks.RemoveCallback(callback);
+            }
+            
         }
     }
 }

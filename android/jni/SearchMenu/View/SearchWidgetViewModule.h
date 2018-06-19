@@ -20,11 +20,13 @@ namespace ExampleApp
 			class SearchWidgetViewModule: private Eegeo::NonCopyable
 			{
 			private:
-				SearchMenu::View::SearchWidgetView* m_pSearchWidgetView;
-				SearchMenu::View::SearchWidgetController* m_pSearchWidgetController;
+				SearchWidgetView* m_pSearchWidgetView;
+				SearchWidgetController* m_pSearchWidgetController;
 
 				SearchProviders::MyTestSearchProvider* m_pMyTestSearchProvider;
-				SearchMenu::View::SearchServices* m_pSearchServices;
+				ISearchResultsRepository* m_pSearchResults;
+				ISearchResultsRepository* m_pSuggestions;
+				SearchServices* m_pSearchServices;
 
 			public:
 				SearchWidgetViewModule(
@@ -35,6 +37,8 @@ namespace ExampleApp
 					ExampleAppMessaging::TMessageBus& messageBus
 				);
 				SearchWidgetController& GetSearchWidgetController() const;
+				SearchProviders::MyTestSearchProvider& GetSearchProvider() const;
+				ISearchResultsRepository& GetSuggestionsRepository() const;
 				~SearchWidgetViewModule();
 			};
     	}

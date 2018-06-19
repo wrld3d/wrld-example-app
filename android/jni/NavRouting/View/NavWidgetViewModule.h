@@ -13,6 +13,8 @@
 #include "IMetricsService.h"
 #include "ICompassView.h"
 #include "IInteriorsExplorerView.h"
+#include "MyTestSearchProvider.h"
+#include "ISearchResultsRepository.h"
 
 namespace ExampleApp
 {
@@ -26,10 +28,15 @@ namespace ExampleApp
                 NavWidgetView* m_pView;
                 NavWidgetController* m_pController;
 
+                SearchProviders::MyTestSearchProvider* m_pMyTestSearchProvider;
+
+
             public:
                 NavWidgetViewModule(
                     AndroidNativeState& nativeState,
                     INavWidgetViewModel& navWidgetViewModel,
+                    SearchProviders::MyTestSearchProvider& navSearchProvider,
+                    SearchMenu::View::ISearchResultsRepository& suggestionsRepository,
                     Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& navWidgetViewTopHeightChangedCallbacks,
                     Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& navWidgetViewBottomHeightChangedCallbacks,
                     ExampleAppMessaging::TMessageBus& messageBus

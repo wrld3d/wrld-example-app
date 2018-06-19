@@ -9,6 +9,7 @@
 #include "IMenuOption.h"
 #include "MenuItemModel.h"
 #include "IMenuModel.h"
+#include "ISearchResultsRepository.h"
 
 namespace ExampleApp
 {
@@ -17,7 +18,7 @@ namespace ExampleApp
         namespace View
         {
             SearchWidgetController::SearchWidgetController(ISearchWidgetView& view,
-                                                           SearchServices& searchServices,
+                                                           ISearchResultsRepository& resultsRepository,
 														   Modality::View::IModalBackgroundView& modalBackgroundView,
                                                            Menu::View::IMenuViewModel& viewModel,
                                                            ExampleAppMessaging::TMessageBus& messageBus)
@@ -25,7 +26,7 @@ namespace ExampleApp
 			, m_modalBackgroundView(modalBackgroundView)
             , m_viewModel(viewModel)
             , m_messageBus(messageBus)
-            , m_searchServices(searchServices)
+            , m_resultsRepository(resultsRepository)
             , m_onSearchResultsClearedCallback(this, &SearchWidgetController::OnSearchResultsCleared)
             , m_onSearchResultSelectedCallback(this, &SearchWidgetController::OnSearchResultSelected)
             , m_onNavigationRequestedCallback(this, &SearchWidgetController::OnNavigationRequested)
@@ -131,20 +132,20 @@ namespace ExampleApp
 
             void SearchWidgetController::OnSearchResultSelected(int& index)
             {
-                const SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_searchServices.GetSdkSearchResultByIndex(index);
+                const SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_resultsRepository.GetSdkSearchResultByIndex(index);
 
                 m_messageBus.Publish(SearchResultSection::SearchResultSectionItemSelectedMessage(
                     sdkSearchResult.GetLocation().ToECEF(),
                     sdkSearchResult.IsInterior(),
                     sdkSearchResult.GetBuildingId(),
                     sdkSearchResult.GetFloor(),
-                    m_searchServices.GetResultOriginalIndexFromCurrentIndex(index),
+                    m_resultsRepository.GetResultOriginalIndexFromCurrentIndex(index),
                     sdkSearchResult.GetIdentifier()));
             }
 
             void SearchWidgetController::OnNavigationRequested(const int& index)
             {
-                const SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_searchServices.GetSdkSearchResultByIndex(index);
+                const SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_resultsRepository.GetSdkSearchResultByIndex(index);
                 m_messageBus.Publish(NavRouting::NavigateToMessage(
                         sdkSearchResult.GetTitle(),
                         sdkSearchResult.GetLocation(),

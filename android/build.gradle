@@ -159,4 +159,5 @@ dependencies {
     implementation project(':wrld-android-search-widget-release')
     implementation project(':wrld-navigation-release')
     implementation project(':wrld-navigation-widget-release')
+    implementation project(':wrld-navigation-search-release')
 }

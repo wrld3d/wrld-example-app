@@ -8,7 +8,6 @@
 #include "IMetricsService.h"
 #include "INavWidgetView.h"
 #include "INavWidgetViewModel.h"
-#include "NavRoutingLocationModel.h"
 #include "NavRoutingViewOpenMessage.h"
 #include "NavRoutingStartLocationSetMessage.h"
 #include "NavRoutingStartLocationClearedMessage.h"
@@ -21,6 +20,7 @@
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
 #include "NavRoutingModeSetMessage.h"
 #include "NavRoutingShowRerouteDialogMessage.h"
+#include "ISearchResultsRepository.h"
 
 namespace ExampleApp
 {
@@ -59,7 +59,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingModeSetMessage&> m_navRoutingModeSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingViewOpenMessage&> m_navRoutingViewOpenMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingShowRerouteDialogMessage&> m_navRoutingShowRerouteDialogMessageMessageHandler;
-
+                Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_onNavigationStartPointFromSuggestionCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_onNavigationEndPointFromSuggestionCallback;
 
                 void OnCloseButtonClicked();
 
@@ -107,6 +108,12 @@ namespace ExampleApp
 
                 void OnNavRoutingShowRerouteDialog(const NavRoutingShowRerouteDialogMessage& message);
 
+                void OnNavigationStartPointFromSuggestion(const int& index);
+
+                void OnNavigationEndPointFromSuggestion(const int& index);
+
+                SearchMenu::View::ISearchResultsRepository& m_suggestionsRepository;
+
             protected:
                 INavWidgetView& GetView() { return m_view; }
                 INavWidgetViewModel& GetViewModel() { return m_viewModel; }
@@ -116,6 +123,7 @@ namespace ExampleApp
             public:
                 NavWidgetController(INavWidgetView& view,
                                     INavWidgetViewModel& viewModel,
+                                    SearchMenu::View::ISearchResultsRepository& suggestionsRepository,
                                     ExampleAppMessaging::TMessageBus& messageBus);
 
                 virtual ~NavWidgetController();

@@ -3,6 +3,7 @@
 #include "SearchWidgetView.h"
 #include "SearchWidgetController.h"
 #include "SearchWidgetContainerView.h"
+#include "ISearchResultsRepository.h"
 namespace ExampleApp
 {
     namespace SearchMenu
@@ -17,6 +18,8 @@ namespace ExampleApp
                 virtual SearchWidgetContainerView& GetSearchWidgetView() const = 0;
                 
                 virtual SearchWidgetController& GetSearchWidgetController() const = 0;
+                
+                virtual ISearchResultsRepository& GetSuggestionsRepository() const = 0;
             };
         }
     }

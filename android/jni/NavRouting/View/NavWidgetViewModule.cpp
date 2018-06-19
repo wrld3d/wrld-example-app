@@ -3,6 +3,10 @@
 #include "NavWidgetViewModule.h"
 #include "NavWidgetView.h"
 #include "AndroidAppThreadAssertionMacros.h"
+#include "MyTestSearchProvider.h"
+#include "ISearchResultsRepository.h"
+#include "SearchServicesResult.h"
+#include "NavRoutingLocationModel.h"
 
 namespace ExampleApp
 {
@@ -13,22 +17,37 @@ namespace ExampleApp
             NavWidgetViewModule::NavWidgetViewModule(
                 AndroidNativeState& nativeState,
                 INavWidgetViewModel& navWidgetViewModel,
+                SearchProviders::MyTestSearchProvider& navSearchProvider,
+                SearchMenu::View::ISearchResultsRepository& suggestionsRepository,
                 Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& navWidgetViewTopHeightChangedCallbacks,
                 Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& navWidgetViewBottomHeightChangedCallbacks,
                 ExampleAppMessaging::TMessageBus& messageBus)
             {
                 ASSERT_UI_THREAD
+
+                m_pMyTestSearchProvider = Eegeo_NEW(SearchProviders::MyTestSearchProvider)(
+                        nativeState,
+                        false
+                );
+
                 m_pView = Eegeo_NEW(NavWidgetView)(nativeState,
+                                                   navSearchProvider,
                                                    navWidgetViewTopHeightChangedCallbacks,
                                                    navWidgetViewBottomHeightChangedCallbacks);
-                m_pController = Eegeo_NEW(NavWidgetController)(*m_pView, navWidgetViewModel, messageBus);
+
+                m_pController = Eegeo_NEW(NavWidgetController)(*m_pView,
+                                                               navWidgetViewModel,
+                                                               suggestionsRepository,
+                                                               messageBus);
             }
 
             NavWidgetViewModule::~NavWidgetViewModule()
             {
                 ASSERT_UI_THREAD
+
                 Eegeo_DELETE m_pController;
                 Eegeo_DELETE m_pView;
+                Eegeo_DELETE m_pMyTestSearchProvider;
             }
 
             INavWidgetView& NavWidgetViewModule::GetView() const

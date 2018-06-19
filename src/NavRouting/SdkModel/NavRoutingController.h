@@ -20,6 +20,8 @@
 #include "ISingleOptionAlertBoxDismissedHandler.h"
 #include "WorldPins.h"
 #include "INavRoutingLocationFinder.h"
+#include "NavRoutingStartLocationSetFromSearchMessage.h"
+#include "NavRoutingEndLocationSetFromSearchMessage.h"
 
 namespace ExampleApp
 {
@@ -71,6 +73,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingSelectedDirectionChangedMessage&> m_selectedDirectionChangedMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingRerouteDialogClosedMessage&> m_rerouteDialogClosedMessageMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRouting::NavigateToMessage&> m_navigateToMessageHandler;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingStartLocationSetFromSearchMessage&> m_startLocationSetFromSearchMessageHandler;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingEndLocationSetFromSearchMessage&> m_endLocationSetFromSearchMessageHandler;
 
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_shouldRerouteCallback;
 
@@ -115,6 +119,10 @@ namespace ExampleApp
                 void OnNavigationMessage(const NavigateToMessage& message);
 
                 void OnShouldReroute();
+
+                void OnStartLocationSetFromSearch(const NavRoutingStartLocationSetFromSearchMessage& message);
+
+                void OnEndLocationSetFromSearch(const NavRoutingEndLocationSetFromSearchMessage& message);
             };
         }
     }

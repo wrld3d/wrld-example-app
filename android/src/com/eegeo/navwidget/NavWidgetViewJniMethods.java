@@ -23,4 +23,8 @@ public class NavWidgetViewJniMethods
     public static native void SetBottomViewHeight(long nativeCallerPointer, int bottomViewHeight);
 
     public static native void RerouteDialogClosed(long nativeCallerPointer, boolean shouldReroute);
+
+    public static native void SetNavigationStartPointFromSuggestion(long nativeCallerPointer, int searchResultIndex);
+
+    public static native void SetNavigationEndPointFromSuggestion(long nativeCallerPointer, int searchResultIndex);
 }

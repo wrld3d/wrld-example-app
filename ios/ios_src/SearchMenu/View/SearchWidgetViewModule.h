@@ -28,6 +28,9 @@ namespace ExampleApp
                 SearchWidgetController* m_pSearchWidgetController;
                 SearchWidgetContainerView* m_pView;
                 
+                ISearchResultsRepository* m_pSearchResults;
+                ISearchResultsRepository* m_pSuggestions;
+
                 SearchMenu::View::SearchServices* m_pSearchServices;
                 SearchProviders::SearchProvider* m_pSearchProvider;
             public:
@@ -42,6 +45,8 @@ namespace ExampleApp
                 
                 SearchWidgetContainerView& GetSearchWidgetView() const;
                 SearchWidgetController& GetSearchWidgetController() const;
+                ISearchResultsRepository& GetSuggestionsRepository() const;
+
             };
         }
     }

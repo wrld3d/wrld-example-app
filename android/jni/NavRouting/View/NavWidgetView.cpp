@@ -8,6 +8,8 @@
 #include "EegeoJsonParser.h"
 #include "EegeoSearchResultModel.h"
 #include "ICompassView.h"
+#include "MyTestSearchProvider.h"
+#include "SearchServicesResult.h"
 
 namespace ExampleApp
 {
@@ -16,10 +18,12 @@ namespace ExampleApp
         namespace View
         {
             NavWidgetView::NavWidgetView(AndroidNativeState& nativeState,
+                                         SearchProviders::MyTestSearchProvider& navSearchProvider,
                                          Eegeo::Helpers::CallbackCollection1<THeight>& navWidgetViewTopHeightChangedCallbacks,
                                          Eegeo::Helpers::CallbackCollection1<THeight>& navWidgetViewBottomHeightChangedCallbacks)
                     : m_nativeState(nativeState)
                     , m_uiViewClass(NULL)
+                    , m_navSearchProvider(navSearchProvider)
                     , m_uiView(NULL)
                     , m_navWidgetViewTopHeightChangedCallbacks(navWidgetViewTopHeightChangedCallbacks)
                     , m_navWidgetViewBottomHeightChangedCallbacks(navWidgetViewBottomHeightChangedCallbacks)
@@ -31,11 +35,14 @@ namespace ExampleApp
                 Eegeo_ASSERT(m_uiViewClass != NULL, "failed to create viewClass NavWidgetView");
                 m_uiView = CreateJavaObject(m_uiViewClass);
                 Eegeo_ASSERT(m_uiView != NULL, "failed to create view NavWidgetView");
+
+                AddSuggestionProvider(m_navSearchProvider);
             }
 
             NavWidgetView::~NavWidgetView()
             {
                 ASSERT_UI_THREAD
+                RemoveSuggestionProvider(m_navSearchProvider);
 
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
@@ -47,6 +54,28 @@ namespace ExampleApp
 
                 m_uiViewClass = NULL;
                 m_uiView = NULL;
+            }
+
+            void NavWidgetView::AddSuggestionProvider(SearchProviders::MyTestSearchProvider& navSearchProvider)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID methodID = env->GetMethodID(m_uiViewClass, "addLocationSearchProvider", "(Lcom/wrld/widgets/search/model/SuggestionProvider;)V");
+                env->CallVoidMethod(m_uiView, methodID, navSearchProvider.GetJavaInstance());
+            }
+
+            void NavWidgetView::RemoveSuggestionProvider(SearchProviders::MyTestSearchProvider& navSearchProvider)
+            {
+                ASSERT_UI_THREAD
+
+                AndroidSafeNativeThreadAttachment attached(m_nativeState);
+                JNIEnv* env = attached.envForThread;
+
+                jmethodID methodID = env->GetMethodID(m_uiViewClass, "removeLocationSearchProvider", "(Lcom/wrld/widgets/search/model/SuggestionProvider;)V");
+                env->CallVoidMethod(m_uiView, methodID, navSearchProvider.GetJavaInstance());
             }
 
             void NavWidgetView::Show()
@@ -517,6 +546,36 @@ namespace ExampleApp
             {
                 ASSERT_UI_THREAD
                 return m_bottomViewHeight;
+            }
+
+            void NavWidgetView::SetStartPointFromSuggestionIndex(int index)
+            {
+                m_navigationStartPointFromSuggestionCallbacks.ExecuteCallbacks(index);
+            }
+
+            void NavWidgetView::SetEndPointFromSuggestionIndex(int index)
+            {
+                m_navigationEndPointFromSuggestionCallbacks.ExecuteCallbacks(index);
+            }
+
+            void NavWidgetView::InsertOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationStartPointFromSuggestionCallbacks.AddCallback(callback);
+            }
+
+            void NavWidgetView::RemoveOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationStartPointFromSuggestionCallbacks.AddCallback(callback);
+            }
+
+            void NavWidgetView::InsertOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationEndPointFromSuggestionCallbacks.AddCallback(callback);
+            }
+
+            void NavWidgetView::RemoveOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            {
+                m_navigationEndPointFromSuggestionCallbacks.RemoveCallback(callback);
             }
 
             jclass NavWidgetView::CreateJavaClass(const std::string& viewClass)

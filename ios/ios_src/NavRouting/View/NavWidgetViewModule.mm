@@ -13,6 +13,8 @@
 
 #include "NavWidgetView.h"
 
+#include "ISearchResultsRepository.h"
+
 //Wrld Example App fudges the propagation of touch events so to prevent our touch events getting
 //passed down to the Map we need to extend our common widget with a consumesTouch selector.
 @interface WRLDNavWidgetBase(ExampleApp)
@@ -35,6 +37,7 @@ namespace ExampleApp
             
             NavWidgetViewModule::NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                                      INavWidgetViewModel& viewModel,
+                                                     SearchMenu::View::ISearchResultsRepository& suggestionsRespository,
                                                      ExampleAppMessaging::TMessageBus& messageBus_)
             {
                 registerObserver("selectedDirectionIndex");
@@ -47,6 +50,7 @@ namespace ExampleApp
                 
                 m_pNavWidgetController = Eegeo_NEW(NavWidgetController)(*m_pView,
                                                                         viewModel,
+                                                                        suggestionsRespository,
                                                                         messageBus_);
                
             }

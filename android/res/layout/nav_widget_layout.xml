@@ -10,4 +10,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"/>
 
+
+    <com.wrld.widgets.navigation.search.WrldNavSearchLocationView
+        android:id="@+id/wrld_nav_search_widget_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+
 </RelativeLayout>

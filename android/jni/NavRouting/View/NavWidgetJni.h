@@ -53,4 +53,14 @@ extern "C"
             JNIEnv *jenv, jobject obj,
             jlong nativeObjectPtr,
             jboolean shouldReroute);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetNavigationStartPointFromSuggestion(
+            JNIEnv *jenv, jobject obj,
+            jlong nativeObjectPtr,
+            jint searchResultIndex);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetNavigationEndPointFromSuggestion(
+            JNIEnv *jenv, jobject obj,
+            jlong nativeObjectPtr,
+            jint searchResultIndex);
 }

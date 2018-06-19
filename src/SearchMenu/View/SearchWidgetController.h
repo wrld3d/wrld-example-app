@@ -30,7 +30,7 @@ namespace ExampleApp
 				Modality::View::IModalBackgroundView& m_modalBackgroundView;
                 Menu::View::IMenuViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
-				SearchServices& m_searchServices;
+				ISearchResultsRepository& m_resultsRepository;
 
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onViewOpenedCallback;
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onViewClosedCallback;
@@ -64,7 +64,7 @@ namespace ExampleApp
 
             public:
                 SearchWidgetController(ISearchWidgetView& view,
-                                       SearchServices& searchServices,
+                                       ISearchResultsRepository& resultsRepository,
 									   Modality::View::IModalBackgroundView& modalBackgroundView,
                                        Menu::View::IMenuViewModel& viewModel,
                                        ExampleAppMessaging::TMessageBus& messageBus);

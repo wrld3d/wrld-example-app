@@ -17,6 +17,18 @@ namespace ExampleApp
     {
         namespace View
         {
+            namespace
+            {
+                SdkModel::NavRoutingLocationModel LocationModelFromSuggestionIndex(const SearchMenu::View::SearchServicesResult::TSdkSearchResult& sdkSearchResult)
+                {
+                    return SdkModel::NavRoutingLocationModel(
+                            sdkSearchResult.GetTitle(),
+                            sdkSearchResult.GetLocation(),
+                            sdkSearchResult.IsInterior(),
+                            sdkSearchResult.GetBuildingId(),
+                            sdkSearchResult.GetFloor());
+                }
+            }
             void NavWidgetController::OnViewOpened()
             {
                 m_view.Show();
@@ -173,8 +185,23 @@ namespace ExampleApp
                 m_view.ShowRerouteDialog(message.GetMessage());
             }
 
+            void NavWidgetController::OnNavigationStartPointFromSuggestion(const int& index)
+            {
+                const SearchMenu::View::SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_suggestionsRepository.GetSdkSearchResultByIndex(index);
+                const SdkModel::NavRoutingLocationModel& startLocation = LocationModelFromSuggestionIndex(sdkSearchResult);
+                m_messageBus.Publish(NavRoutingStartLocationSetFromSearchMessage(startLocation));
+            }
+
+            void NavWidgetController::OnNavigationEndPointFromSuggestion(const int& index)
+            {
+                const SearchMenu::View::SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_suggestionsRepository.GetSdkSearchResultByIndex(index);
+                const SdkModel::NavRoutingLocationModel& endLocation = LocationModelFromSuggestionIndex(sdkSearchResult);
+                m_messageBus.Publish(NavRoutingEndLocationSetFromSearchMessage(endLocation));
+            }
+
             NavWidgetController::NavWidgetController(INavWidgetView& view,
                                                      INavWidgetViewModel& viewModel,
+                                                     SearchMenu::View::ISearchResultsRepository& suggestionsRepository,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
                     : m_view(view)
                     , m_viewModel(viewModel)
@@ -203,6 +230,9 @@ namespace ExampleApp
                     , m_navRoutingModeSetMessageHandler(this, &NavWidgetController::OnNavRoutingModeSet)
                     , m_navRoutingViewOpenMessageHandler(this, &NavWidgetController::OnNavRoutingViewOpen)
                     , m_navRoutingShowRerouteDialogMessageMessageHandler(this, &NavWidgetController::OnNavRoutingShowRerouteDialog)
+                    , m_suggestionsRepository(suggestionsRepository)
+                    , m_onNavigationStartPointFromSuggestionCallback(this, &NavWidgetController::OnNavigationStartPointFromSuggestion)
+                    , m_onNavigationEndPointFromSuggestionCallback(this, &NavWidgetController::OnNavigationEndPointFromSuggestion)
             {
                 m_view.InsertClosedCallback(m_closeButtonCallback);
                 m_view.InsertStartLocationClickedCallback(m_startLocationClickedCallback);
@@ -228,10 +258,16 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_navRoutingModeSetMessageHandler);
                 m_messageBus.SubscribeUi(m_navRoutingViewOpenMessageHandler);
                 m_messageBus.SubscribeUi(m_navRoutingShowRerouteDialogMessageMessageHandler);
+
+                m_view.InsertOnNavigationStartPointSetFromSuggestion(m_onNavigationStartPointFromSuggestionCallback);
+                m_view.InsertOnNavigationEndPointSetFromSuggestion(m_onNavigationEndPointFromSuggestionCallback);
             }
 
             NavWidgetController::~NavWidgetController()
             {
+                m_view.RemoveOnNavigationEndPointSetFromSuggestion(m_onNavigationEndPointFromSuggestionCallback);
+                m_view.RemoveOnNavigationStartPointSetFromSuggestion(m_onNavigationStartPointFromSuggestionCallback);
+
                 m_messageBus.UnsubscribeUi(m_navRoutingShowRerouteDialogMessageMessageHandler);
                 m_messageBus.UnsubscribeUi(m_navRoutingViewOpenMessageHandler);
                 m_messageBus.UnsubscribeUi(m_navRoutingModeSetMessageHandler);
