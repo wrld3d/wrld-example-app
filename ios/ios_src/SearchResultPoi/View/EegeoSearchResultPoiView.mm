@@ -378,9 +378,9 @@ const int DeletePinAlertViewTag = 2;
     const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
     
     const float headlineHeight = 50.f;
-    const float pinButtonSectionHeight = 64.f;
+    const float bottomButtonSectionHeight = m_showDirectionsButton? 148.f : 64.f;
     const float closeButtonSectionOffsetY = mainWindowHeight - (m_showDirectionsButton ? 94.f : 44.f);
-    const float contentSectionHeight = mainWindowHeight - (pinButtonSectionHeight + headlineHeight);
+    const float contentSectionHeight = mainWindowHeight - (bottomButtonSectionHeight + headlineHeight);
     
     const float topMargin = 15.f;
     const float bottomMargin = 15.f;
