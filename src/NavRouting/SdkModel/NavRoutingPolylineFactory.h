@@ -16,8 +16,8 @@ namespace ExampleApp
             class NavRoutingPolylineConfig
             {
             public:
-                float routeThickness = 10.f;
-                float miterLimit = 10.f;
+                float routeThickness = 17.5f;
+                float miterLimit = 17.5f;
                 double routeElevation = 0;
                 Eegeo::Positioning::ElevationMode::Type routeElevationMode = Eegeo::Positioning::ElevationMode::Type::HeightAboveGround;
                 bool shouldScaleWithMap = false;
