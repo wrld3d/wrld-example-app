@@ -45,6 +45,9 @@ namespace ExampleApp
             
             void InteriorsExplorerViewModel::RemoveFromScreen()
             {
+                if(IsOffScreen()){
+                    return;
+                }
                 m_isOnScreen = false;
                 m_onScreenStateChangedCallbacks.ExecuteCallbacks(*this);
             }

@@ -14,8 +14,11 @@ namespace ExampleApp
         {
             class ReactionHideOtherScreenControls : public IReaction
             {
+            private:
                 const OpenableControl::View::IOpenableControlViewModel& m_openableControl;
                 const std::vector<ScreenControl::View::IScreenControlViewModel *> m_screenControlsToHide;
+                void RemoveAllExceptOpenable();
+                void AddAllExceptOpenable();
             public:
                 ReactionHideOtherScreenControls(const OpenableControl::View::IOpenableControlViewModel& openableControl,
                                            const std::vector<ScreenControl::View::IScreenControlViewModel *>& screenControlsToHide);
