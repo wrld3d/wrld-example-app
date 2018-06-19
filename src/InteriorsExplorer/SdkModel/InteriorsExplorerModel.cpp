@@ -247,6 +247,8 @@ namespace ExampleApp
                 {
                     m_interiorInteractionModel.ToggleExpanded();
                 }
+
+                m_interiorInteractionModel.SetFloorParam(floor);
                 
                 if (m_interiorInteractionModel.GetSelectedFloorIndex() == floor)
                 {

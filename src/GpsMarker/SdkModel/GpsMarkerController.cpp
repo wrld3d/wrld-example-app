@@ -88,8 +88,6 @@ namespace ExampleApp
 
             void GpsMarkerController::OnInteriorsExplorerStateChangedMessage(const InteriorsExplorer::InteriorsExplorerStateChangedMessage &message)
             {
-                m_blueSphereView.UpdateBlueSphereRenderingLayer(message.IsInteriorVisible());
-                m_blueSphereAnchorView.UpdateBlueSphereRenderingLayer(message.IsInteriorVisible());
             }
 
             void GpsMarkerController::Update(float dt, const Eegeo::Camera::RenderCamera &renderCamera)
@@ -104,7 +102,7 @@ namespace ExampleApp
                 std::string currentWeather;
                 GetCurrentVisualMapTime(currentTime, currentWeather);
                 bool isFlattened = m_environmentFlatteningService.IsFlattened();
-               if(m_createBlueSphereViews)
+                if(m_createBlueSphereViews)
                 {
                     m_blueSphereView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
                     m_blueSphereAnchorView.SetBlueSphereStyle(currentTime, currentWeather, isFlattened ? m_environmentFlatteningService.GetCurrentScale() : 1);
