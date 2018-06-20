@@ -33,7 +33,8 @@ namespace ExampleApp
                                                 Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                                 Eegeo::Markers::IMarkerService& markerService,
                                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel)
+                                               GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,
+                                               WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController)
             {
                 const std::string navUIOptionText = "Open Navigation";
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
@@ -85,6 +86,10 @@ namespace ExampleApp
                                                                                    cameraTransitionController,
                                                                                    navigationService,
                                                                                    compassModel);
+                
+                m_pRoutingWorldPinsVisibilityHandler = Eegeo_NEW(NavRoutingWorldPinsVisibilityHandler)(messageBus,
+                                                                                                       worldPinsVisibilityController);
+                
                 m_pMenuModel = Eegeo_NEW(Menu::View::MenuModel)();
                 m_pMenuOptionsModel = Eegeo_NEW(Menu::View::MenuOptionsModel)(*m_pMenuModel);
                 m_pMenuOptionsModel->AddItem(navUIOptionText,
@@ -97,6 +102,7 @@ namespace ExampleApp
 
             NavRoutingModule::~NavRoutingModule()
             {
+                Eegeo_DELETE m_pRoutingWorldPinsVisibilityHandler;
                 Eegeo_DELETE m_pRoutingCameraController;
                 Eegeo_DELETE m_pRoutingController;
                 Eegeo_DELETE m_pRouteDrawingHandler;
