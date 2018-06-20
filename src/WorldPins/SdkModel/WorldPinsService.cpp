@@ -244,6 +244,7 @@ namespace ExampleApp
                 Eegeo::Markers::IMarker& oldMarker = m_markerService.Get(oldMarkerId);
                 const Eegeo::Space::LatLong& location = oldMarker.GetAnchorLocation().GetLatLong();
                 double elevation = oldMarker.GetElevation();
+                bool isHidden = oldMarker.IsHidden();
                 m_markerService.Destroy(oldMarkerId);
 
                 const IWorldPinsInFocusModel& inFocusModel = pinItemModel->GetInFocusModel();
@@ -279,6 +280,8 @@ namespace ExampleApp
                 m_pinsToIconKeys[pinId] = iconKey;
 
                 pinItemModel->SetId(pinId);
+                Eegeo::Markers::IMarker& newMarker = m_markerService.Get(markerId);
+                newMarker.SetHidden(isHidden);
             }
             
             bool WorldPinsService::HandleTouchTap(const Eegeo::v2& screenTapPoint)

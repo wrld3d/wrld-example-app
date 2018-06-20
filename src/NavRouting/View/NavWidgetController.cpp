@@ -9,6 +9,7 @@
 #include "NavRoutingSelectedDirectionChangedMessage.h"
 #include "NavRoutingStartEndRoutingButtonClickedMessage.h"
 #include "NavRoutingRerouteDialogClosedMessage.h"
+#include "NavRoutingViewOpenedMessage.h"
 
 namespace ExampleApp
 {
@@ -18,8 +19,9 @@ namespace ExampleApp
         {
             void NavWidgetController::OnViewOpened()
             {
-
                 m_view.Show();
+                
+                m_messageBus.Publish(NavRoutingViewOpenedMessage());
             }
 
             void NavWidgetController::OnViewClosed()

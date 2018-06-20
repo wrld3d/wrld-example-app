@@ -16,6 +16,8 @@
 #include "GpsMarker.h"
 #include "Menu.h"
 #include "NavRoutingLocationFinder.h"
+#include "WorldPins.h"
+#include "NavRoutingWorldPinsVisibilityHandler.h"
 
 namespace ExampleApp
 {
@@ -38,7 +40,8 @@ namespace ExampleApp
                                  Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
                                  Eegeo::Markers::IMarkerService& markerService,
                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                 GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel);
+                                 GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,
+                                 WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController);
 
                 ~NavRoutingModule();
 
@@ -60,7 +63,8 @@ namespace ExampleApp
                 NavRoutingLocationFinder* m_pNavRoutingLocationFinder;
                 NavRoutingController* m_pRoutingController;
                 NavRoutingCameraController* m_pRoutingCameraController;
-
+                NavRoutingWorldPinsVisibilityHandler* m_pRoutingWorldPinsVisibilityHandler;
+                
                 TurnByTurn::INavTurnByTurnModel* m_pTurnByTurnModel;
                 TurnByTurn::NavTurnByTurnController* m_pTurnByTurnController;
 
