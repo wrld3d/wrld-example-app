@@ -61,38 +61,9 @@ namespace ExampleApp
             UIViewController *viewController = window.rootViewController;
             [viewController presentViewController:alert animated:YES completion:nil];
         }
-        else
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
-                                                            message:alertMessage
-                                                           delegate:self
-                                                  cancelButtonTitle:noMessage
-                                                  otherButtonTitles:yesMessage, nil];
-            
-            [alert show];
-            [alert release];
-        }
     }
 
     return self;
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(m_handeled)
-    {
-        return;
-    }
-    m_handeled = true;
-    
-    bool shouldPreload = false;
-
-    if (buttonIndex == 1)
-    {
-        shouldPreload = true;
-    }
-
-    m_pInitialExperiencePreLoadModel->HandleDismiss(shouldPreload);
 }
 
 @end

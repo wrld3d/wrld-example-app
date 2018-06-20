@@ -5,6 +5,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "CompassViewInterop.h"
+#include "UIHelpers.h"
 
 static const float CompassOuterShapeInactiveAlpha = 0.5f;
 static const float CompassOuterShapeActiveAlpha = 1.0f;
@@ -42,7 +43,7 @@ enum CompassViewState
 
 @implementation CompassView
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(UIViewController*)rootViewController;
 {
     if(self = [super init])
     {
@@ -51,6 +52,7 @@ enum CompassViewState
         m_pixelScale = 1.f;
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
+        m_rootViewController = rootViewController;
         
         m_compassViewState = Disabled;
         m_positionState = CompassPositionStateDefault;
@@ -214,13 +216,10 @@ enum CompassViewState
 
 - (void) notifyGpsUnauthorized
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location Services disabled"
-                                                    message:@"GPS Compass inaccessible: Location Services are not enabled for this application. You can change this in your device settings."
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
-    [alert release];
+    UIAlertController *alertController = ExampleApp::Helpers::UIHelpers::CreateSimpleAlert(@"Location Services disabled",
+                                                                                           @"GPS Compass inaccessible: Location Services are not enabled for this application. You can change this in your device settings.",
+                                                                                           @"OK");
+    [m_rootViewController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void) updateHeading:(float)angleRadians

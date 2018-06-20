@@ -30,11 +30,13 @@
 
     float m_compassPointNaturalOffsetX;
     float m_compassPointNaturalOffsetY;
+    
+    UIViewController* m_rootViewController;
 }
 
 enum CompassPositionState {CompassPositionStateDefault, CompassPositionStateNavigation};
 
-- (id) initWithParams:(float)width :(float)height :(float)pixelScale;
+- (id) initWithParams:(float)width :(float)height :(float)pixelScale :(UIViewController*)rootViewController;
 
 - (ExampleApp::Compass::View::CompassViewInterop*) getInterop;
 

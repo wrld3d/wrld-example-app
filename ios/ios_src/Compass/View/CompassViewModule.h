@@ -32,7 +32,8 @@ namespace ExampleApp
                 CompassViewModule(ICompassViewModel& viewModel,
                                   const Eegeo::Rendering::ScreenProperties& screenProperties,
                                   Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomPanelVisibleHeightChangedCallbacks,
-                                  ExampleAppMessaging::TMessageBus& messageBus);
+                                  ExampleAppMessaging::TMessageBus& messageBus,
+                                  UIViewController* rootViewController);
 
                 ~CompassViewModule();
 

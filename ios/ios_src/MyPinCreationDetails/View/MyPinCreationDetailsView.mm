@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AVFoundation/AVFoundation.h>
 #import "ViewController.h"
+#import "UIHelpers.h"
 
 @implementation MyPinCreationDetailsView
 
@@ -392,7 +393,6 @@
     [self.pFooterContainer release];
     
     [self.pPlaceholderImage release];
-    [self.pPopover release];
     
     delete m_pInterop;
     
@@ -516,23 +516,17 @@
 {
     if (self.pShareSwitch.isOn && !m_hasNetworkConnectivity)
     {
-        UIAlertView* alert = [[[UIAlertView alloc] initWithTitle: @"No network connection"
-                               message: @"Pins cannot be shared when no network connection is available"
-                               delegate: nil
-                               cancelButtonTitle: @"Dismiss"
-                               otherButtonTitles: nil] autorelease];
-
-        [alert show];
+        UIAlertController *alertController = ExampleApp::Helpers::UIHelpers::CreateSimpleAlert(@"No network connection",
+                                                                                               @"Pins cannot be shared when no network connection is available",
+                                                                                               @"Dismiss");
+        [m_pRootViewController presentViewController:alertController animated:YES completion:nil];
+        
         [self.pShareSwitch setOn:NO];
     }
 }
 
 - (void)onPause
 {
-    if(m_usePopover)
-    {
-        [self.pPopover dismissPopoverAnimated: YES];
-    }
     [m_pRootViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -559,24 +553,15 @@
     imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     imagePicker.delegate=self;
     imagePicker.allowsEditing = NO;
-    
     if(m_usePopover)
     {
-        self.pPopover = [[UIPopoverController alloc] initWithContentViewController:imagePicker];
-        
-        CGRect rect = [self convertRect:sender.bounds fromView:sender];
-        
-        [self.pPopover presentPopoverFromRect:rect
-                                       inView:self
-                     permittedArrowDirections:UIPopoverArrowDirectionDown
-                                     animated:YES];
-        
-        [self.pPopover setDelegate: self];
+        imagePicker.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController* ppc = [imagePicker popoverPresentationController];
+        ppc.sourceView = self.pGalleryButton;
+        ppc.sourceRect = CGRectMake(CGRectGetMidX(self.pGalleryButton.bounds), CGRectGetMidY(self.pGalleryButton.bounds),0,0);
     }
-    else
-    {
-        [m_pRootViewController presentViewController:imagePicker animated:YES completion:nil];
-    }
+    
+    [m_pRootViewController presentViewController:imagePicker animated:YES completion:nil];
 }
 
 
@@ -589,14 +574,11 @@
 {
     if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera] == NO)
     {
-        UIAlertView* noCameraAlert = [[UIAlertView alloc] initWithTitle: @"No Camera!"
-                                                                message: @"This device has no available camera"
-                                                               delegate: nil
-                                                      cancelButtonTitle: @"Dismiss"
-                                                      otherButtonTitles: nil];
-        
-        [noCameraAlert show];
-        [noCameraAlert release];
+    
+        UIAlertController *alertController = ExampleApp::Helpers::UIHelpers::CreateSimpleAlert(@"No Camera!",
+                                                                                               @"This device has no available camera",
+                                                                                               @"Dismiss");
+        [m_pRootViewController presentViewController:alertController animated:YES completion:nil];
         return;
     }
     
@@ -604,14 +586,10 @@
     {
         NSString* appName =  [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
         NSString* message = [NSString stringWithFormat: @"Please ensure %@ has camera access in your privacy settings", appName];
-        UIAlertView* noPermissionsAlert = [[UIAlertView alloc] initWithTitle: @"Unable to access camera"
-                                                                     message: message
-                                                                    delegate: nil
-                                                           cancelButtonTitle: @"Dismiss"
-                                                           otherButtonTitles: nil];
-        
-        [noPermissionsAlert show];
-        [noPermissionsAlert release];
+        UIAlertController *alertController = ExampleApp::Helpers::UIHelpers::CreateSimpleAlert(@"Unable to access camera",
+                                                                                               message,
+                                                                                               @"Dismiss");
+        [m_pRootViewController presentViewController:alertController animated:YES completion:nil];
         return;
     }
     
@@ -653,18 +631,6 @@
     }
 }
 
-#pragma mark - UIPopoverController Delegate
-
-- (BOOL)popoverControllerShouldDismissPopover:(UIPopoverController *)popoverController
-{
-    if(m_usePopover)
-    {
-        [self.pPopover dismissPopoverAnimated: YES];
-    }
-    return YES;
-}
-
-
 #pragma mark - UIUIImagePickerController Delegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
@@ -674,21 +640,13 @@
     [self setNeedsLayout];
     
     m_imageAttached = YES;
-    
-    if(m_usePopover)
-    {
-        [self.pPopover dismissPopoverAnimated: YES];
-    }
+
     
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
-    if(m_usePopover)
-    {
-        [self.pPopover dismissPopoverAnimated: YES];
-    }
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 

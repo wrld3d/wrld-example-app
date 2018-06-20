@@ -22,7 +22,6 @@
 
 namespace
 {
-    const int DeletePinAlertViewTag = 1;
 }
 
 @implementation GeoNamesSearchResultPoiView
@@ -359,24 +358,6 @@ namespace
     return pLabel;
 }
 
--(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (alertView.tag)
-    {
-        case DeletePinAlertViewTag:
-        {
-            alertView.delegate = nil;
-            
-            if (buttonIndex == 1)
-            {
-                [self togglePinState];
-            }
-        }break;
-        default:
-            break;
-    }
-}
-
 - (void) handleClosedButtonSelected
 {
     m_pInterop->HandleCloseClicked();
@@ -444,18 +425,6 @@ namespace
         [alert addAction:defaultAction];
         [alert addAction:removePinAction];
         [m_pController presentViewController:alert animated:YES completion:nil];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
-                                                        message:alertMessage
-                                                       delegate:self
-                                              cancelButtonTitle:keepButtonText
-                                              otherButtonTitles:deleteButtonText, nil];
-        
-        [alert show];
-        alert.tag = DeletePinAlertViewTag;
-        [alert release];
     }
 }
 

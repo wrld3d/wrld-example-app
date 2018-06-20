@@ -9,6 +9,8 @@ namespace ExampleApp
         namespace UIHelpers
         {
             bool UsePhoneLayout();
+            
+            UIAlertController* CreateSimpleAlert(NSString* title, NSString* message, NSString* okButtonText);
         }
     }
 }

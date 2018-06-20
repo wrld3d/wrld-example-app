@@ -81,6 +81,5 @@
 @property (nonatomic, retain) UIButton* pConfirmButton;
 
 @property (nonatomic, retain) UIImage* pPlaceholderImage;
-@property (nonatomic, retain) UIPopoverController* pPopover;
 
 @end

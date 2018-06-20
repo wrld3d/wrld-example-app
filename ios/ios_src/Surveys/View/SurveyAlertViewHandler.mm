@@ -65,31 +65,6 @@
         UIViewController *viewController = window.rootViewController;
         [viewController presentViewController:alert animated:YES completion:nil];
     }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
-                                                        message:alertMessage
-                                                       delegate:self
-                                              cancelButtonTitle:rejectMessage
-                                              otherButtonTitles:acceptMessage, nil];
-        
-        [alert show];
-        [alert release];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    alertView.delegate = nil;
-    
-    if(buttonIndex == 0)
-    {
-        m_pOnAcceptCallbacks->ExecuteCallbacks();
-    }
-    else
-    {
-        m_pOnRejectCallbacks->ExecuteCallbacks();
-    }
 }
 
 @end

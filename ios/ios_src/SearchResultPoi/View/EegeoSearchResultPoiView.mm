@@ -20,8 +20,6 @@
 }
 @end
 
-const int PhoneAlertViewTag = 1;
-const int DeletePinAlertViewTag = 2;
 
 @implementation EegeoSearchResultPoiView
 
@@ -1042,45 +1040,35 @@ const int DeletePinAlertViewTag = 2;
     NSString *subject=@"";
     NSString *body = @"";
     NSString *email = [NSString stringWithFormat:@"mailto:%@?subject=%@&body=%@", toEmail,subject,body];
-    email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    email = [email stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
-}
-
--(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (alertView.tag)
-    {
-        case PhoneAlertViewTag:
-            if (buttonIndex == 1)
-            {
-                NSString * phoneUrlString = [NSString stringWithFormat:@"tel:%@", [self.pPhoneContent.text stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
-                NSURL *url = [NSURL URLWithString:phoneUrlString];
-                if (![[UIApplication sharedApplication] openURL:url])
-                {
-                    NSLog(@"%@%@",@"Failed to open phone link:",[url description]);
-                }
-            }
-            break;
-        case DeletePinAlertViewTag:
-        {
-            alertView.delegate = nil;
-            
-            if (buttonIndex == 1)
-            {
-                [self togglePinState];
-            }
-        }break;
-        default:
-            break;
-    }
 }
 
 - (void) userTappedOnPhone:(UITapGestureRecognizer *)recognizer
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"Call %@?", self.pPhoneContent.text] delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Call", nil];
-    [alert show];
-    alert.tag = PhoneAlertViewTag;
-    [alert release];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:[NSString stringWithFormat:@"Call %@?", self.pPhoneContent.text]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {}];
+    
+    UIAlertAction* callAction = [UIAlertAction actionWithTitle:@"Call"
+                                                              style:UIAlertActionStyleDefault
+                                                            handler: ^(UIAlertAction * action)
+                                      {
+                                          NSString * phoneUrlString = [NSString stringWithFormat:@"tel:%@", [self.pPhoneContent.text stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]]];
+                                          NSURL *url = [NSURL URLWithString:phoneUrlString];
+                                          if (![[UIApplication sharedApplication] openURL:url])
+                                          {
+                                              NSLog(@"%@%@",@"Failed to open phone link:",[url description]);
+                                          }
+                                      }];
+    
+    [alert addAction:defaultAction];
+    [alert addAction:callAction];
+    [m_pController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void) handleClosedButtonSelected
@@ -1156,18 +1144,6 @@ const int DeletePinAlertViewTag = 2;
         [alert addAction:defaultAction];
         [alert addAction:removePinAction];
         [m_pController presentViewController:alert animated:YES completion:nil];
-    }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
-                                                        message:alertMessage
-                                                       delegate:self
-                                              cancelButtonTitle:keepButtonText
-                                              otherButtonTitles:deleteButtonText, nil];
-        
-        [alert show];
-        alert.tag = DeletePinAlertViewTag;
-        [alert release];
     }
 }
 

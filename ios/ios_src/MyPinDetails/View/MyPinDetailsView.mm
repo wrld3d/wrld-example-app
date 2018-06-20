@@ -410,27 +410,6 @@
         [alert addAction:removePinAction];
         [m_pController presentViewController:alert animated:YES completion:nil];
     }
-    else
-    {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:alertTitle
-                              message:alertMessage
-                              delegate:self
-                              cancelButtonTitle:keepButtonText
-                              otherButtonTitles:deleteButtonText, nil];
-
-        [alert show];
-        [alert release];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    alertView.delegate = nil;
-
-    if (buttonIndex == 1)
-    {
-        m_pInterop->OnRemove();
-    }
 }
 
 @end

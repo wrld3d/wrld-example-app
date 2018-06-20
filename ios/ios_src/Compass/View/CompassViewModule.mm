@@ -16,7 +16,8 @@ namespace ExampleApp
             CompassViewModule::CompassViewModule(ICompassViewModel& viewModel,
                                                  const Eegeo::Rendering::ScreenProperties& screenProperties,
                                                  Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomPanelVisibleHeightChangedCallbacks,
-                                                 ExampleAppMessaging::TMessageBus& messageBus)
+                                                 ExampleAppMessaging::TMessageBus& messageBus,
+                                                 UIViewController* rootViewController)
             : m_navWidgetBottomPanelVisibleHeightChangedCallback(this, &CompassViewModule::NavWidgetBottomPanelVisibleHeightChanged)
             , m_navWidgetBottomPanelVisibleHeightChangedCallbacks(m_navWidgetBottomPanelVisibleHeightChangedCallbacks)
             {
@@ -24,7 +25,8 @@ namespace ExampleApp
                 m_pView = [[CompassView alloc] initWithParams
                             :screenProperties.GetScreenWidth()
                             :screenProperties.GetScreenHeight()
-                            :screenProperties.GetPixelScale()];
+                            :screenProperties.GetPixelScale()
+                            :rootViewController];
 
                 m_pController = Eegeo_NEW(CompassController)(*[m_pView getInterop], viewModel, messageBus);
                 
