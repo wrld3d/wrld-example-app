@@ -67,6 +67,7 @@ namespace ExampleApp
                 
                 TurnByTurn::INavTurnByTurnModel* m_pTurnByTurnModel;
                 TurnByTurn::NavTurnByTurnController* m_pTurnByTurnController;
+                TurnByTurn::NavTurnByTurnCompletionHandler* m_pTurnByTurnCompletionHandler;
 
                 Menu::View::IMenuModel* m_pMenuModel;
                 Menu::View::IMenuOptionsModel* m_pMenuOptionsModel;

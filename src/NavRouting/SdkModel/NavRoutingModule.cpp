@@ -15,6 +15,7 @@
 #include "MenuModel.h"
 #include "MenuOptionsModel.h"
 #include "NavWidgetMenuOption.h"
+#include "NavTurnByTurnCompletionHandler.h"
 
 namespace ExampleApp
 {
@@ -67,6 +68,12 @@ namespace ExampleApp
                                                                                          navigationService,
                                                                                          gpsMarkerModel);
                 
+                m_pTurnByTurnCompletionHandler = Eegeo_NEW(TurnByTurn::NavTurnByTurnCompletionHandler)(*m_pTurnByTurnModel,
+                                                                                                       *m_pNavRoutingModel,
+                                                                                                       locationService,
+                                                                                                       turnByTurnConfig.accuracyMultiplierToCompleteNavigation,
+                                                                                                       turnByTurnConfig.minDistanceToCompleteNavigation);
+                
                 m_pRouteDrawingHandler = Eegeo_NEW(NavWidgetRouteDrawingHandler)(*m_pNavRoutingModel,
                                                                                  *m_pTurnByTurnModel,
                                                                                  *m_pNavRouteDrawingController);
@@ -106,6 +113,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pRoutingCameraController;
                 Eegeo_DELETE m_pRoutingController;
                 Eegeo_DELETE m_pRouteDrawingHandler;
+                Eegeo_DELETE m_pTurnByTurnCompletionHandler;
                 Eegeo_DELETE m_pTurnByTurnController;
                 Eegeo_DELETE m_pNavRoutingLocationFinder;
                 Eegeo_DELETE m_pTurnByTurnModel;

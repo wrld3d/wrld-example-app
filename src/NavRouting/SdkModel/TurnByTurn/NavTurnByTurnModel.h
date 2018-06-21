@@ -26,6 +26,8 @@ namespace ExampleApp
                     float distanceToPathRangeMeters = 10.0f;
                     float distanceToPathToTriggerReroute = 10.f;
                     float timeInSecondsToTriggerReroute = 10.0f;
+                    float accuracyMultiplierToCompleteNavigation = 0.5f;
+                    float minDistanceToCompleteNavigation = 5.0f;
                 };
 
                 class NavTurnByTurnModel : public INavTurnByTurnModel
