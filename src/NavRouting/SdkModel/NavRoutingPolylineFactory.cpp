@@ -105,10 +105,19 @@ namespace ExampleApp
             {
                 double verticalLineHeight = 5.0;
                 double lineHeight = (floorAfter > floorBefore) ? verticalLineHeight : -verticalLineHeight;
-                
                 RouteLines routeLines;
-                routeLines.push_back(MakeVerticalLine(coordinates, indoorMapId, floorBefore, 0, lineHeight, color));
-                routeLines.push_back(MakeVerticalLine(coordinates, indoorMapId, floorAfter, -lineHeight, 0, color));
+
+                uint coordinateCount = static_cast<uint>(coordinates.size());
+                Eegeo_ASSERT(coordinateCount >= 2, "Can't make a floor transition line with a single point");
+                std::vector<Eegeo::Space::LatLong> startCoords;
+                startCoords.push_back(coordinates.at(0));
+                startCoords.push_back(coordinates.at(1));
+                std::vector<Eegeo::Space::LatLong> endCoords;
+                endCoords.push_back(coordinates.at(coordinateCount-2));
+                endCoords.push_back(coordinates.at(coordinateCount-1));
+
+                routeLines.push_back(MakeVerticalLine(startCoords, indoorMapId, floorBefore, 0, lineHeight, color));
+                routeLines.push_back(MakeVerticalLine(endCoords, indoorMapId, floorAfter, -lineHeight, 0, color));
                 return routeLines;
             }
             
