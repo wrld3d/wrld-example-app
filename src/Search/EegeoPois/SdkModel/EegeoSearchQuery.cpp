@@ -56,12 +56,6 @@ namespace ExampleApp
                         urlstream << "/search?s=" << encodedQuery << "&";
                     }
 
-                    if (interiorId.IsValid())
-                    {
-                        urlstream << "indoor_id=" << interiorId.Value() << "&"
-                                  << "f=" << interiorFloorIndex << "&";
-                    }
-
                     urlstream << "r=" << std::setprecision(4) << (radius);
                     urlstream << "&lat=" << std::setprecision(8) << query.Location().GetLatitudeInDegrees();
                     urlstream << "&lon=" << std::setprecision(8) << query.Location().GetLongitudeInDegrees();
