@@ -1,14 +1,15 @@
 // Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
-#include <jni.h>
-#include <sstream>
+#include "SenionLabLocationInterop.h"
 
 #include "AndroidAppThreadAssertionMacros.h"
 #include "AndroidNativeState.h"
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
 #include "SenionLabLocationService.h"
-#include "SenionLabLocationManager.h"
+
+#include <jni.h>
+#include <sstream>
 
 namespace ExampleApp
 {
@@ -18,14 +19,13 @@ namespace ExampleApp
         {
             namespace SenionLab
             {
-                SenionLabLocationManager::SenionLabLocationManager(SenionLabLocationService& senionLabLocationService,
-                                                                   ExampleAppMessaging::TMessageBus &messageBus,
+                SenionLabLocationInterop::SenionLabLocationInterop(ExampleAppMessaging::TMessageBus &messageBus,
                                                                    AndroidNativeState& nativeState)
                 : m_nativeState(nativeState)
-                , m_senionLabLocationService(senionLabLocationService)
+                , m_pSenionLabLocationService(nullptr)
                 , m_messageBus(messageBus)
-                , m_onDidUpdateLocationCallback(this, &SenionLabLocationManager::OnDidUpdateLocation)
-                , m_onSetIsAuthorized(this, &SenionLabLocationManager::OnSetIsAuthorized)
+                , m_onDidUpdateLocationCallback(this, &SenionLabLocationInterop::OnDidUpdateLocation)
+                , m_onSetIsAuthorized(this, &SenionLabLocationInterop::OnSetIsAuthorized)
                 , m_apiKey("")
                 , m_apiSecret("")
                 , m_isActive(false)
@@ -38,7 +38,7 @@ namespace ExampleApp
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
 
-                    jstring locationManagerClassName = env->NewStringUTF("com/eegeo/interiorsposition/senionlab/SenionLabLocationManager");
+                    jstring locationManagerClassName = env->NewStringUTF("com/eegeo/interiorsposition/senionlab/SenionLabLocationInterop");
                     jclass locationManagerClass = m_nativeState.LoadClass(env, locationManagerClassName);
                     env->DeleteLocalRef(locationManagerClassName);
 
@@ -52,7 +52,7 @@ namespace ExampleApp
                     m_locationManagerInstance = env->NewGlobalRef(instance);
                 }
 
-                SenionLabLocationManager::~SenionLabLocationManager()
+                SenionLabLocationInterop::~SenionLabLocationInterop()
                 {
                     ASSERT_NATIVE_THREAD
 
@@ -66,7 +66,13 @@ namespace ExampleApp
                     env->DeleteGlobalRef(m_locationManagerClass);
                 }
 
-                void SenionLabLocationManager::StartUpdatingLocation(const std::string& apiKey,
+                void SenionLabLocationInterop::SetLocationService(SenionLabLocationService *pLocationService)
+                {
+                    Eegeo_ASSERT(pLocationService != nullptr);
+                    m_pSenionLabLocationService = pLocationService;
+                }
+
+                void SenionLabLocationInterop::StartUpdatingLocation(const std::string& apiKey,
                                                                      const std::string& apiSecret,
                                                                      const std::map<int, std::string>& floorMap)
                 {
@@ -79,30 +85,33 @@ namespace ExampleApp
                     StartLocationUpdates();
                 }
 
-                void SenionLabLocationManager::StopUpdatingLocation()
+                void SenionLabLocationInterop::StopUpdatingLocation()
                 {
                     StopLocationUpdates();
                 }
 
-                jobject SenionLabLocationManager::ManagedInstance() const
+                jobject SenionLabLocationInterop::ManagedInstance() const
                 {
                     return m_locationManagerInstance;
                 }
 
-                void SenionLabLocationManager::OnDidUpdateLocation(const InteriorsLocationChangedMessage& message)
+                void SenionLabLocationInterop::OnDidUpdateLocation(const InteriorsLocationChangedMessage& message)
                 {
-                    Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(message.Latitude(), message.Longitude()));
-                    m_senionLabLocationService.SetLocation(location);
-                    m_senionLabLocationService.SetHorizontalAccuracyInMeters(message.HorizontalAccuracyInMeters());
-                    m_senionLabLocationService.SetFloorIndex(FloorNumberToFloorIndex(message.FloorNumber()));
+                    const auto wrldFloorIndex = FloorNumberToFloorIndex(message.VendorSpecificFloorNumber());
+
+                    m_pSenionLabLocationService->SetLocationFromSenionData(
+                            Eegeo::Space::LatLong::FromDegrees(message.LatitudeDegrees(), message.LongitudeDegrees()),
+                            message.VendorSpecificFloorNumber(),
+                            FloorNumberToFloorIndex(message.VendorSpecificFloorNumber()),
+                            wrldFloorIndex);
                 }
 
-                void SenionLabLocationManager::OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message)
+                void SenionLabLocationInterop::OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message)
                 {
-                    m_senionLabLocationService.SetIsAuthorized(message.IsAuthorized());
+                    m_pSenionLabLocationService->SetIsAuthorized(message.IsAuthorized());
                 }
 
-                int SenionLabLocationManager::FloorNumberToFloorIndex(const int floorIndex)
+                int SenionLabLocationInterop::FloorNumberToFloorIndex(const int floorIndex)
                 {
                     std::stringstream floorNameStream;
                     floorNameStream << floorIndex;
@@ -119,7 +128,7 @@ namespace ExampleApp
                     return floorIndex;
                 }
 
-                void SenionLabLocationManager::OnResume()
+                void SenionLabLocationInterop::OnResume()
                 {
                 	if(m_isActive)
                 	{
@@ -127,7 +136,7 @@ namespace ExampleApp
                 	}
                 }
 
-                void SenionLabLocationManager::OnPause()
+                void SenionLabLocationInterop::OnPause()
                 {
                 	if(m_isActive)
                 	{
@@ -135,7 +144,7 @@ namespace ExampleApp
                 	}
                 }
 
-                void SenionLabLocationManager::AskUserToEnableBluetoothIfDisabled()
+                void SenionLabLocationInterop::AskUserToEnableBluetoothIfDisabled()
                 {
                     ASSERT_NATIVE_THREAD
 
@@ -149,7 +158,7 @@ namespace ExampleApp
                     env->CallVoidMethod(m_locationManagerInstance, askUserToEnableBluetoothIfDisabled);
                 }
 
-                void SenionLabLocationManager::StartLocationUpdates()
+                void SenionLabLocationInterop::StartLocationUpdates()
                 {
                 	ASSERT_NATIVE_THREAD
 
@@ -170,7 +179,7 @@ namespace ExampleApp
 					env->DeleteLocalRef(apiSecretJString);
                 }
 
-                void SenionLabLocationManager::StopLocationUpdates()
+                void SenionLabLocationInterop::StopLocationUpdates()
                 {
                 	ASSERT_NATIVE_THREAD
 

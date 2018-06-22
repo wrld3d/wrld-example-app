@@ -8,7 +8,7 @@
 #include "ILocationService.h"
 #include "InteriorsExplorer.h"
 #include "IndoorAtlasLocationController.h"
-#include "IndoorAtlasLocationManager.h"
+#include "IndoorAtlasLocationInterop.h"
 #include "IndoorAtlasLocationService.h"
 
 namespace ExampleApp
@@ -32,13 +32,13 @@ namespace ExampleApp
                                               AndroidNativeState& nativeState);
                     ~IndoorAtlasLocationModule();
                     
-                    IndoorAtlasLocationService& GetLocationService() { return m_locationService; }
-                    IndoorAtlasLocationManager& GetLocationManager() { return m_locationManager; }
+                    IndoorAtlasLocationService& GetLocationService();
+                    IndoorAtlasLocationInterop& GetLocationManager();
 
                 private:
-                    IndoorAtlasLocationService m_locationService;
-                    IndoorAtlasLocationManager m_locationManager;
-                    IndoorAtlasLocationController m_locationController;
+                    IndoorAtlasLocationService* m_pLocationService;
+                    IndoorAtlasLocationInterop* m_pLocationInterop;
+                    IndoorAtlasLocationController* m_pLocationController;
                 };
             }
         }

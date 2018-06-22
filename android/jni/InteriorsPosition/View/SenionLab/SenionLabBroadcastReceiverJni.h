@@ -7,12 +7,13 @@
 extern "C"
 {
     JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroadcastReceiverJniMethods_DidUpdateLocation(
-            JNIEnv *jenv, jclass clazz,
+            JNIEnv *jenv,
+            jclass jobj,
             jlong nativeObjectPtr,
-            jdouble latitude,
-            jdouble longitude,
+            jdouble latitudeInDegrees,
+            jdouble longitudeInDegrees,
             jdouble horizontalAccuracyInMeters,
-            jint floorNumber);
+            jint senionFloorNumber);
 
     JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_senionlab_SenionLabBroadcastReceiverJniMethods_SetIsAuthorized(
             JNIEnv *jenv, jclass clazz,

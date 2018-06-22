@@ -327,12 +327,15 @@ void AppHost::OnResume()
     ASSERT_NATIVE_THREAD
 
 	m_pSenionLabLocationModule->GetLocationManager().OnResume();
+    //m_pIndoorAtlasLocationModule->GetLocationManager().OnResume();
     if(m_pSenionLabBroadcastReceiver != NULL)
     {
         m_pSenionLabBroadcastReceiver->RegisterReceiver();
     }
 
+    m_pCurrentLocationService->OnResume();
     m_pApp->OnResume();
+
     m_isPaused = false;
 }
 
@@ -342,7 +345,7 @@ void AppHost::OnPause()
 
     m_isPaused = true;
     m_pApp->OnPause();
-    m_pCurrentLocationService->StopListening();
+    m_pCurrentLocationService->OnPause();
 
     if (m_pSenionLabBroadcastReceiver != NULL)
     {

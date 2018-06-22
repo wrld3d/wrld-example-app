@@ -2,14 +2,14 @@
 
 #pragma once
 
+#include "AndroidNativeState.h"
+#include "BidirectionalBus.h"
+#include "SenionLabLocationInterop.h"
+#include "SenionLabLocationService.h"
+
 #include <jni.h>
 #include <map>
 #include <string>
-
-#include "AndroidNativeState.h"
-#include "BidirectionalBus.h"
-#include "SenionLabLocationManager.h"
-#include "SenionLabLocationService.h"
 
 namespace ExampleApp
 {
@@ -19,10 +19,10 @@ namespace ExampleApp
         {
             namespace SenionLab
             {
-                class SenionLabBroadcastReceiver : protected Eegeo::NonCopyable
+                class SenionLabBroadcastReceiver : private Eegeo::NonCopyable
                 {
                 public:
-                    SenionLabBroadcastReceiver(SdkModel::SenionLab::SenionLabLocationManager& locationmanager,
+                    SenionLabBroadcastReceiver(SdkModel::SenionLab::SenionLabLocationInterop& locationmanager,
                                                ExampleAppMessaging::TMessageBus& messageBus,
                                                AndroidNativeState& nativeState);
                     ~SenionLabBroadcastReceiver();
@@ -30,7 +30,12 @@ namespace ExampleApp
                     void RegisterReceiver();
                     void UnregisterReceiver();
 
-                    void DidUpdateLocation(const double latitude, const double longitude, const double horizontalAccuracyInMeters, const int floorNumber);
+                    void DidUpdateLocation(
+                            const double latitudeInDegrees,
+                            const double longitudeInDegrees,
+                            const double horizontalAccuracyInMeters,
+                            const int senionFloorNumber);
+
                     void SetIsAuthorized(const bool isAuthorized);
 
                 private:

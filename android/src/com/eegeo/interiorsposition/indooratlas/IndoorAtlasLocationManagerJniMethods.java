@@ -4,11 +4,11 @@ package com.eegeo.interiorsposition.indooratlas;
 
 public class IndoorAtlasLocationManagerJniMethods
 {
-    public static native void DidUpdateLocation(long nativeCallerPointer,
-                                                double latitude,
-                                                double longitude,
-                                                double accuracyInMeters,
-                                                String floorId);
+    public static native void UpdateLocation(long nativeCallerPointer,
+                                             double latitudeInDegrees,
+                                             double longitudeInDegrees,
+                                             double horizontalAccuracyInMeters,
+                                             String floorId);
 
-    public static native void SetIsAuthorized(long nativeCallerPointer, boolean isAuthorized);
+    public static native void UpdateIsAuthorized(long nativeCallerPointer, boolean isAuthorized);
 }

@@ -37,12 +37,14 @@ public class SenionLabLocationManager implements SLConsumer
 		}
     }
     
-	public void startUpdatingLocation(final String apiKey, final String apiSecret) throws SLIndoorLocationException
+	@SuppressWarnings("unused")
+    public void startUpdatingLocation(final String apiKey, final String apiSecret) throws SLIndoorLocationException
     {
 		m_serviceManager.start(apiKey, apiSecret);
 		bindService();
 	}
 
+    @SuppressWarnings("unused")
     public void stopUpdatingLocation()
     {
         unbindService();

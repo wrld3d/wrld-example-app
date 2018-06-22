@@ -8,7 +8,7 @@
 #include "ILocationService.h"
 #include "InteriorsExplorer.h"
 #include "SenionLabLocationController.h"
-#include "SenionLabLocationManager.h"
+#include "SenionLabLocationInterop.h"
 #include "SenionLabLocationService.h"
 
 namespace ExampleApp
@@ -32,13 +32,13 @@ namespace ExampleApp
                                             AndroidNativeState& nativeState);
                     ~SenionLabLocationModule();
                     
-                    SenionLabLocationService& GetLocationService() { return m_locationService; }
-                    SenionLabLocationManager& GetLocationManager() { return m_locationManager; }
+                    SenionLabLocationService& GetLocationService();
+                    SenionLabLocationInterop& GetLocationManager();
 
                 private:
-                    SenionLabLocationService m_locationService;
-                    SenionLabLocationManager m_locationManager;
-                    SenionLabLocationController m_locationController;
+                    SenionLabLocationInterop* m_pLocationInterop;
+                    SenionLabLocationService* m_pLocationService;
+                    SenionLabLocationController* m_pLocationController;
                 };
             }
         }

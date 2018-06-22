@@ -10,6 +10,7 @@ import com.indooratlas.android.sdk.IALocationManager;
 import com.indooratlas.android.sdk.IALocationRequest;
 import com.indooratlas.android.sdk.IARegion;
 
+@SuppressWarnings("unused")
 public class IndoorAtlasLocationManager implements IALocationListener, IARegion.Listener
 {
     private final MainActivity m_activity;
@@ -20,12 +21,14 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
     
     private static AlertDialog m_connectionDialog = null;
 
+	@SuppressWarnings("unused")
     public IndoorAtlasLocationManager(MainActivity activity, long nativeCallerPointer)
     {
         m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
     }
 
+	@SuppressWarnings("unused")
 	public void startUpdatingLocation(final String apiKey, final String apiSecret)
     {
 		m_activity.runOnUiThread(new Runnable()
@@ -41,12 +44,13 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
 				
 				IALocationRequest locationRequest = IALocationRequest.create();
 				m_locationManager.requestLocationUpdates(locationRequest, IndoorAtlasLocationManager.this);
-				
-				IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, true);
+
+                updateNativeIsAuthorized(true);
 			}
 		});
 	}
 
+	@SuppressWarnings("unused")
     public void stopUpdatingLocation()
     {
     	m_activity.runOnUiThread(new Runnable()
@@ -54,7 +58,7 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
 			@Override
 			public void run()
 			{
-				IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, false);
+				updateNativeIsAuthorized(false);
 				
 				if(m_locationManager != null)
 				{
@@ -75,8 +79,13 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
     @Override
     public void onLocationChanged(IALocation location)
     {
-    	IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, true);
-    	IndoorAtlasLocationManagerJniMethods.DidUpdateLocation(m_nativeCallerPointer, location.getLatitude(), location.getLongitude(), location.getAccuracy(), m_floorPlanId);
+    	updateNativeIsAuthorized(true);
+
+    	updateNativeLocation(
+    	        location.getLatitude(),
+                location.getLongitude(),
+				location.getAccuracy(),
+				m_floorPlanId);
     }
     
     @Override
@@ -130,4 +139,34 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
         m_connectionDialog = builder.show();
         //*/
     }
+
+	private void updateNativeLocation(
+			final double latitudeDegrees,
+			final double longitudeDegrees,
+			final double horizontalAccuracyInMeters,
+			final String floorId) {
+
+		m_activity.runOnNativeThread(new Runnable() {
+			public void run() {
+				IndoorAtlasLocationManagerJniMethods.UpdateLocation(
+						m_nativeCallerPointer,
+						latitudeDegrees,
+						longitudeDegrees,
+						horizontalAccuracyInMeters,
+						floorId);
+			}
+		});
+	}
+
+	private void updateNativeIsAuthorized(
+			final boolean isAuthorized) {
+
+		m_activity.runOnNativeThread(new Runnable() {
+			public void run() {
+				IndoorAtlasLocationManagerJniMethods.UpdateIsAuthorized(
+						m_nativeCallerPointer,
+						isAuthorized);
+			}
+		});
+	}
 }

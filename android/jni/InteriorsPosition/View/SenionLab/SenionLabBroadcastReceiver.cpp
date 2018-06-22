@@ -1,14 +1,14 @@
 // Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
-#include <jni.h>
-
+#include "SenionLabBroadcastReceiver.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "AndroidNativeState.h"
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
 #include "SenionLabLocationService.h"
-#include "SenionLabBroadcastReceiver.h"
-#include "SenionLabLocationManager.h"
+#include "SenionLabLocationInterop.h"
+
+#include <jni.h>
 
 namespace ExampleApp
 {
@@ -18,7 +18,7 @@ namespace ExampleApp
         {
             namespace SenionLab
             {
-                SenionLabBroadcastReceiver::SenionLabBroadcastReceiver(SdkModel::SenionLab::SenionLabLocationManager& locationManager,
+                SenionLabBroadcastReceiver::SenionLabBroadcastReceiver(SdkModel::SenionLab::SenionLabLocationInterop& locationManager,
                                                                        ExampleAppMessaging::TMessageBus &messageBus,
                                                                        AndroidNativeState& nativeState)
                 : m_nativeState(nativeState)
@@ -29,12 +29,12 @@ namespace ExampleApp
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
 
-                    jstring broadcastReceiverClassName = env->NewStringUTF("com/eegeo/interiorsposition/senionlab/SenionLabBroadcastReceiver");
-                    jclass broadcastReceiverClass = m_nativeState.LoadClass(env, broadcastReceiverClassName);
-                    env->DeleteLocalRef(broadcastReceiverClassName);
+                    jclass broadcastReceiverClass = m_nativeState.LoadClass(
+                            env, "com.eegeo.interiorsposition.senionlab.SenionLabBroadcastReceiver");
+
 
                     m_broadcastReceiverClass = static_cast<jclass>(env->NewGlobalRef(broadcastReceiverClass));
-                    jmethodID broadcastReceiverInit = env->GetMethodID(m_broadcastReceiverClass, "<init>", "(Lcom/eegeo/interiorsposition/senionlab/SenionLabLocationManager;J)V");
+                    jmethodID broadcastReceiverInit = env->GetMethodID(m_broadcastReceiverClass, "<init>", "(Lcom/eegeo/interiorsposition/senionlab/SenionLabLocationInterop;J)V");
 
                     jobject instance = env->NewObject(m_broadcastReceiverClass,
                                                       broadcastReceiverInit,
@@ -72,13 +72,15 @@ namespace ExampleApp
                 	env->CallVoidMethod(m_broadcastReceiverInstance, unregisterMethod);
 				}
 
-                void SenionLabBroadcastReceiver::DidUpdateLocation(const double latitude,
-                                                                   const double longitude,
-                                                                   const double horizontalAccuracyInMeters,
-                                                                   const int floorNumber)
+                void SenionLabBroadcastReceiver::DidUpdateLocation(
+                        const double latitudeInDegrees,
+                        const double longitudeInDegrees,
+                        const double horizontalAccuracyInMeters,
+                        const int senionFloorNumber)
                 {
                     ASSERT_UI_THREAD
-                    m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, horizontalAccuracyInMeters, floorNumber));
+                    m_messageBus.Publish(InteriorsLocationChangedMessage(
+                            latitudeInDegrees, longitudeInDegrees, horizontalAccuracyInMeters, senionFloorNumber));
                 }
 
                 void SenionLabBroadcastReceiver::SetIsAuthorized(const bool isAuthorized)

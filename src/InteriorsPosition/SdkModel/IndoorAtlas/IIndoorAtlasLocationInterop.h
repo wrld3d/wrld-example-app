@@ -21,7 +21,7 @@ namespace ExampleApp
                 public:
                     virtual ~IIndoorAtlasLocationInterop() {}
                 
-                    void SetLocationService(IndoorAtlasLocationService* pLocationService);
+                    virtual void SetLocationService(IndoorAtlasLocationService* pLocationService) = 0;
                     
                     virtual void StartUpdating(const std::string& apiKey,
                                                const std::string& apiSecret,

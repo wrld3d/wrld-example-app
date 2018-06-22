@@ -1,14 +1,12 @@
 // Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
-#include <jni.h>
-#include <sstream>
-
+#include "IndoorAtlasLocationInterop.h"
 #include "AndroidAppThreadAssertionMacros.h"
 #include "AndroidNativeState.h"
-#include "InteriorsLocationAuthorizationChangedMessage.h"
-#include "InteriorsLocationChangedMessage.h"
 #include "IndoorAtlasLocationService.h"
-#include "IndoorAtlasLocationManager.h"
+
+#include <jni.h>
+#include <sstream>
 
 namespace ExampleApp
 {
@@ -18,26 +16,17 @@ namespace ExampleApp
         {
             namespace IndoorAtlas
             {
-                IndoorAtlasLocationManager::IndoorAtlasLocationManager(IndoorAtlasLocationService& indoorAtlasLocationService,
-                                                                       ExampleAppMessaging::TMessageBus &messageBus,
-                                                                       AndroidNativeState& nativeState)
-                : m_nativeState(nativeState)
-                , m_messageBus(messageBus)
-                , m_indoorAtlasLocationService(indoorAtlasLocationService)
-                , m_onDidUpdateLocationCallback(this, &IndoorAtlasLocationManager::OnDidUpdateLocation)
-                , m_onSetIsAuthorized(this, &IndoorAtlasLocationManager::OnSetIsAuthorized)
+                IndoorAtlasLocationInterop::IndoorAtlasLocationInterop(AndroidNativeState& nativeState)
+                : m_pIndoorAtlasLocationService(nullptr)
+                , m_nativeState(nativeState)
                 {
                     ASSERT_NATIVE_THREAD
-
-                    m_messageBus.SubscribeNative(m_onDidUpdateLocationCallback);
-                    m_messageBus.SubscribeNative(m_onSetIsAuthorized);
 
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
 
-                    jstring locationManagerClassName = env->NewStringUTF("com/eegeo/interiorsposition/indooratlas/IndoorAtlasLocationManager");
-                    jclass locationManagerClass = m_nativeState.LoadClass(env, locationManagerClassName);
-                    env->DeleteLocalRef(locationManagerClassName);
+                    jclass locationManagerClass = m_nativeState.LoadClass(env, "com/eegeo/interiorsposition/indooratlas/IndoorAtlasLocationInterop");
+
 
                     m_locationManagerClass = static_cast<jclass>(env->NewGlobalRef(locationManagerClass));
                     jmethodID locationManagerInit = env->GetMethodID(m_locationManagerClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
@@ -49,12 +38,9 @@ namespace ExampleApp
                     m_locationManagerInstance = env->NewGlobalRef(instance);
                 }
 
-                IndoorAtlasLocationManager::~IndoorAtlasLocationManager()
+                IndoorAtlasLocationInterop::~IndoorAtlasLocationInterop()
                 {
                     ASSERT_NATIVE_THREAD
-
-                    m_messageBus.UnsubscribeNative(m_onSetIsAuthorized);
-                    m_messageBus.UnsubscribeNative(m_onDidUpdateLocationCallback);
 
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
@@ -63,9 +49,15 @@ namespace ExampleApp
                     env->DeleteGlobalRef(m_locationManagerClass);
                 }
 
-                void IndoorAtlasLocationManager::StartUpdatingLocation(const std::string& apiKey,
-                                                                       const std::string& apiSecret,
-                                                                       const std::map<int, std::string>& floorMap)
+                void IndoorAtlasLocationInterop::SetLocationService(IndoorAtlasLocationService* pLocationService)
+                {
+                    Eegeo_ASSERT(pLocationService != nullptr);
+                    m_pIndoorAtlasLocationService = pLocationService;
+                }
+
+                void IndoorAtlasLocationInterop::StartUpdating(const std::string& apiKey,
+                                                               const std::string& apiSecret,
+                                                               const std::map<int, std::string>& floorMap)
                 {
                     ASSERT_NATIVE_THREAD
 
@@ -88,7 +80,7 @@ namespace ExampleApp
                     env->DeleteLocalRef(apiSecretJString);
                 }
 
-                void IndoorAtlasLocationManager::StopUpdatingLocation()
+                void IndoorAtlasLocationInterop::StopUpdating()
                 {
                     ASSERT_NATIVE_THREAD
 
@@ -102,41 +94,32 @@ namespace ExampleApp
                     env->CallVoidMethod(m_locationManagerInstance, stopUpdatingLocation);
                 }
 
-                void IndoorAtlasLocationManager::DidUpdateLocation(const double latitude, const double longitude, const double accuracyInMeters, const std::string& floorId)
-                {
-                    ASSERT_UI_THREAD
-                    int wrldFloorId;
-                    if(!TryMapFloorIdToFloorIndex(floorId, wrldFloorId))
-                    {
-                        wrldFloorId = -1;
-                    }
-
-                    m_messageBus.Publish(InteriorsLocationChangedMessage(latitude, longitude, accuracyInMeters, wrldFloorId));
-                    m_messageBus.Publish(AboutPage::AboutPageIndoorAtlasDataMessage(wrldFloorId, floorId, latitude, longitude));
-                }
-
-                void IndoorAtlasLocationManager::SetIsAuthorized(const bool isAuthorized)
-                {
-                    ASSERT_UI_THREAD
-                    m_messageBus.Publish(InteriorsLocationAuthorizationChangedMessage(isAuthorized));
-                }
-
-                void IndoorAtlasLocationManager::OnDidUpdateLocation(const InteriorsLocationChangedMessage& message)
+                void IndoorAtlasLocationInterop::DidUpdateLocation(
+                        const double latitudeDegrees,
+                        const double longitudeDegrees,
+                        const double horizontalAccuracyInMeters,
+                        const std::string& floorId)
                 {
                     ASSERT_NATIVE_THREAD
-                    Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(message.Latitude(), message.Longitude()));
-                    m_indoorAtlasLocationService.SetLocation(location);
-                    m_indoorAtlasLocationService.SetHorizontalAccuracyInMeters(message.HorizontalAccuracyInMeters());
-                    m_indoorAtlasLocationService.SetFloorIndex(message.FloorNumber());
+
+                    int wrldFloorIndex;
+                    if(!TryMapFloorIdToFloorIndex(floorId, wrldFloorIndex))
+                    {
+                        wrldFloorIndex = -1;
+                    }
+
+                    m_pIndoorAtlasLocationService->SetLocation(Eegeo::Space::LatLong::FromDegrees(latitudeDegrees, longitudeDegrees));
+                    m_pIndoorAtlasLocationService->SetHorizontalAccuracy(horizontalAccuracyInMeters);
+                    m_pIndoorAtlasLocationService->SetFloor(floorId, wrldFloorIndex);
                 }
 
-                void IndoorAtlasLocationManager::OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message)
+                void IndoorAtlasLocationInterop::SetIsAuthorized(const bool isAuthorized)
                 {
-                	ASSERT_NATIVE_THREAD
-                	m_indoorAtlasLocationService.SetIsAuthorized(message.IsAuthorized());
+                    ASSERT_NATIVE_THREAD
+                    m_pIndoorAtlasLocationService->SetIsAuthorized(isAuthorized);
                 }
 
-                bool IndoorAtlasLocationManager::TryMapFloorIdToFloorIndex(const std::string floorId, int& wrldFloorId)
+                bool IndoorAtlasLocationInterop::TryMapFloorIdToFloorIndex(const std::string floorId, int& wrldFloorId)
                 {
                     for (auto &kv : m_floorMap)
                     {

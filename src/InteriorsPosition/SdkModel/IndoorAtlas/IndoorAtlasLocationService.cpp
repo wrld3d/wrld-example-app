@@ -78,7 +78,7 @@ namespace ExampleApp
                     m_indoorAtlasFloorId = indoorAtlasFloorId;
                     m_floorIndex = floorIndex;
                     
-                     PublishAboutPageIndoorAtlasDataMessage();
+                    PublishAboutPageIndoorAtlasDataMessage();
                 }
                 
                 void IndoorAtlasLocationService::PublishAboutPageIndoorAtlasDataMessage()

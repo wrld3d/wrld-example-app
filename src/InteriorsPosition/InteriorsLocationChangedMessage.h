@@ -9,41 +9,45 @@ namespace ExampleApp
         class InteriorsLocationChangedMessage
         {
         public:
-            InteriorsLocationChangedMessage(const double latitude,
-                                            const double longitude,
-                                            const double horizontalAccuracyInMeters,
-                                            const int floorNumber)
+            InteriorsLocationChangedMessage(
+                    const double latitude,
+                    const double longitude,
+                    const double horizontalAccuracyInMeters,
+                    const int vendorSpecificFloorNumber)
             : m_latitude(latitude)
             , m_longitude(longitude)
-            , m_horizontalAccuracyInMeters(horizontalAccuracyInMeters)
-            , m_floorNumber(floorNumber)
-            {}
+            , m_horizontalAccuracyInMetres(horizontalAccuracyInMeters)
+            , m_vendorSpecificFloorNumber(vendorSpecificFloorNumber)
+            {
 
-            const double Latitude() const
+            }
+
+            const double LatitudeDegrees() const
             {
                 return m_latitude;
             }
 
-            const double Longitude() const
+            const double LongitudeDegrees() const
             {
                 return m_longitude;
             }
 
             const double HorizontalAccuracyInMeters() const
             {
-                return m_horizontalAccuracyInMeters;
+                return m_horizontalAccuracyInMetres;
             }
 
-            const int FloorNumber() const
+            const int VendorSpecificFloorNumber() const
             {
-                return m_floorNumber;
+                return m_vendorSpecificFloorNumber;
             }
+
 
         private:
             double m_latitude;
             double m_longitude;
-            double m_horizontalAccuracyInMeters;
-            int m_floorNumber;
+            double m_horizontalAccuracyInMetres;
+            int m_vendorSpecificFloorNumber;
         };
     }
 }
