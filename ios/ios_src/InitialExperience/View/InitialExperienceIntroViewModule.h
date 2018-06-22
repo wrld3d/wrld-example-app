@@ -8,6 +8,7 @@
 #include "BidirectionalBus.h"
 #include "ScreenProperties.h"
 #include "CameraTransitions.h"
+#include "NavRouting.h"
 
 namespace ExampleApp
 {
@@ -19,7 +20,10 @@ namespace ExampleApp
             {
             public:
                 
-                InitialExperienceIntroViewModule(ExampleAppMessaging::TMessageBus& messageBus, CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, const Eegeo::Rendering::ScreenProperties& screenProperties);
+                InitialExperienceIntroViewModule(ExampleAppMessaging::TMessageBus& messageBus,
+                                                 NavRouting::View::INavWidgetViewModel& navWidgetViewModel,
+                                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                 const Eegeo::Rendering::ScreenProperties& screenProperties);
                 ~InitialExperienceIntroViewModule();
                 
                 InitialExperienceIntroController& GetIntroViewController() const

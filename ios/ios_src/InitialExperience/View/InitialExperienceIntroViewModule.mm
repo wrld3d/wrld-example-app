@@ -12,12 +12,15 @@ namespace ExampleApp
     {
         namespace View
         {
-            InitialExperienceIntroViewModule::InitialExperienceIntroViewModule(ExampleAppMessaging::TMessageBus& messageBus, CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController, const Eegeo::Rendering::ScreenProperties& screenProperties)
+            InitialExperienceIntroViewModule::InitialExperienceIntroViewModule(ExampleAppMessaging::TMessageBus& messageBus,
+                                                                               NavRouting::View::INavWidgetViewModel& navWidgetViewModel,
+                                                                               CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                                                               const Eegeo::Rendering::ScreenProperties& screenProperties)
             {
                 m_pBackgroundView = [[InitialExperienceIntroBackgroundView alloc] initView];
                 m_pView = [[InitialExperienceIntroView alloc] initView: m_pBackgroundView screenProperties:screenProperties];
                 
-                m_pController = Eegeo_NEW(InitialExperienceIntroController)(*[m_pView getInterop], messageBus, cameraTransitionController);
+                m_pController = Eegeo_NEW(InitialExperienceIntroController)(*[m_pView getInterop], messageBus, navWidgetViewModel, cameraTransitionController);
             }
             
             InitialExperienceIntroViewModule::~InitialExperienceIntroViewModule()
