@@ -63,6 +63,10 @@ namespace ExampleApp
                 const std::string AttractModeTimeoutMillis = "attract_mode_timeout_millis";
                 const std::string AttractModePlaybackSpeed = "attract_mode_playback_speed";
                 const std::string OptionsAdminPassword = "options_admin_password";
+                const std::string CompassCameraOffset = "compass_camera_offset";
+                const std::string Offset = "offset";
+                const std::string OffsetTopDown = "offset_top_down";
+                const std::string CompassCameraDampingEnabled = "compass_camera_damping_enabled";
                 const std::string SurveyTimeRequirementSec = "survey_time_requirement_sec";
                 const std::string TimerSurveyUrl = "timer_survey_url";
                 const std::string HockeyAppId = "hockey_app_id";
@@ -109,7 +113,7 @@ namespace ExampleApp
                     return defaultValue;
                 }
                 
-                double ParseDoubleOrDefault(rapidjson::Document& document, const std::string& key, double defaultValue)
+                double ParseDoubleOrDefault(const rapidjson::Value& document, const std::string& key, double defaultValue)
                 {
                     if (document.HasMember(key.c_str()))
                     {
@@ -317,7 +321,18 @@ namespace ExampleApp
                 const float attractModePlaybackSpeed = ParseDoubleOrDefault(document, AttractModePlaybackSpeed, m_defaultConfig.AttractModePlaybackSpeed());
 
                 const std::string optionsAdminPassword(ParseStringOrDefault(document, OptionsAdminPassword, m_defaultConfig.OptionsAdminPassword()));
-                
+
+                float compassCameraOffset = 0.0f;
+                float compassCameraOffsetTopDown = 0.0f;
+                if (document.HasMember(CompassCameraOffset.c_str()))
+                {
+                    const rapidjson::Value& offsetJSON = document[CompassCameraOffset.c_str()];
+                    compassCameraOffset = ParseDoubleOrDefault(offsetJSON, Offset, m_defaultConfig.CompassCameraOffset());
+                    compassCameraOffset = ParseDoubleOrDefault(offsetJSON, OffsetTopDown, m_defaultConfig.CompassCameraOffset());
+                }
+
+                bool compassCameraDampingEnabled = ParseBoolOrDefault(document, CompassCameraDampingEnabled, m_defaultConfig.CompassCameraDampingEnabled());
+
                 const long long surveyTimeRequirementSec = ParseIntOrDefault(document, SurveyTimeRequirementSec, static_cast<int>(m_defaultConfig.SurveyRequirementTimeSec()));
                 
                 const std::string timerSurveyUrl = ParseStringOrDefault(document, TimerSurveyUrl, m_defaultConfig.TimerSurveyUrl());
@@ -372,6 +387,9 @@ namespace ExampleApp
                     attractModeTimeoutMillis,
                     attractModePlaybackSpeed,
                     optionsAdminPassword,
+                    compassCameraOffset,
+                    compassCameraOffsetTopDown,
+                    compassCameraDampingEnabled,
                     surveyTimeRequirementSec,
                     timerSurveyUrl,
                     hockeyAppId,

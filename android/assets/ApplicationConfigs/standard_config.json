@@ -26,6 +26,11 @@
     "hockey_app_id":"",
     "timer_survey_url":"",
     "enable_navigation": false,
+    "compass_camera_offset": {
+      "offset": 0.0,
+      "offset_top_down": 0.0
+    },
+    "compass_camera_damping_enabled": true,
     "outdoor_search_menu_items": [{
                                   "name": "Around Me",
                                   "search_tag": "",

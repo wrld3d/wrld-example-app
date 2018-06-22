@@ -53,6 +53,10 @@ namespace ExampleApp
                     const float attractModePlaybackSpeed = 0.007f;
 
                     const std::string emptyOptionsAdminPassword;
+
+                    const float compassCameraOffset = 0.0f;
+                    const float compassCameraOffsetTopDown = 0.0f;
+                    const bool compassCameraDampingEnabled = false;
                     
                     const long long surveyTimeRequirementSec = 90;
                     
@@ -104,6 +108,9 @@ namespace ExampleApp
                         attractModeTimeoutDisabled,
                         attractModePlaybackSpeed,
                         emptyOptionsAdminPassword,
+                        compassCameraOffset,
+                        compassCameraOffsetTopDown,
+                        compassCameraDampingEnabled,
                         surveyTimeRequirementSec,
                         timerSurveyUrl,
                         hockeyAppId,
