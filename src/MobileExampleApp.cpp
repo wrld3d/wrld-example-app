@@ -561,10 +561,7 @@ namespace ExampleApp
                                                                                                                                       m_networkCapabilities,
                                                                                                                                       m_platformAbstractions.GetUrlEncoder(),
                                                                                                                                       searchTags,
-                                                                                                                                      m_applicationConfiguration.YelpConsumerKey(),
-                                                                                                                                      m_applicationConfiguration.YelpConsumerSecret(),
-                                                                                                                                      m_applicationConfiguration.YelpOAuthToken(),
-                                                                                                                                      m_applicationConfiguration.YelpOAuthTokenSecret(),
+                                                                                                                                      m_applicationConfiguration.YelpApiKey(),
                                                                                                                                       m_platformAbstractions.GetFileIO(),
                                                                                                                                       m_yelpCategoryMapperUpdater
                                                                                                                                       );

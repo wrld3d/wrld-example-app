@@ -26,10 +26,7 @@ namespace ExampleApp
             const std::string& startUpSearchTag,
             const std::string& googleAnalyticsReferrerToken,
             const std::string& flurryAppKey,
-            const std::string& yelpConsumerKey,
-            const std::string& yelpConsumerSecret,
-            const std::string& yelpOAuthToken,
-            const std::string& yelpOAuthTokenSecret,
+            const std::string& yelpApiKey,
             const std::string& geoNamesUserName,
             const std::string& eegeoSearchServiceUrl,
             const std::string& myPinsWebServiceUrl,
@@ -75,10 +72,7 @@ namespace ExampleApp
         , m_startUpSearchTag(startUpSearchTag)
         , m_googleAnalyticsReferrerToken(googleAnalyticsReferrerToken)
         , m_flurryAppKey(flurryAppKey)
-        , m_yelpConsumerKey(yelpConsumerKey)
-        , m_yelpConsumerSecret(yelpConsumerSecret)
-        , m_yelpOAuthToken(yelpOAuthToken)
-        , m_yelpOAuthTokenSecret(yelpOAuthTokenSecret)
+        , m_yelpApiKey(yelpApiKey)
         , m_geoNamesUserName(geoNamesUserName)
         , m_eegeoSearchServiceUrl(eegeoSearchServiceUrl)
         , m_myPinsWebServiceUrl(myPinsWebServiceUrl)
@@ -197,24 +191,9 @@ namespace ExampleApp
             return m_flurryAppKey;
         }
 
-        std::string ApplicationConfiguration::YelpConsumerKey() const
+        std::string ApplicationConfiguration::YelpApiKey() const
         {
-            return m_yelpConsumerKey;
-        }
-
-        std::string ApplicationConfiguration::YelpConsumerSecret() const
-        {
-            return m_yelpConsumerSecret;
-        }
-
-        std::string ApplicationConfiguration::YelpOAuthToken() const
-        {
-            return m_yelpOAuthToken;
-        }
-
-        std::string ApplicationConfiguration::YelpOAuthTokenSecret() const
-        {
-            return m_yelpOAuthTokenSecret;
+            return m_yelpApiKey;
         }
 
         std::string ApplicationConfiguration::GeoNamesUserName() const

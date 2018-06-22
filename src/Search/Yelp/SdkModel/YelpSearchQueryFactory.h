@@ -11,7 +11,6 @@
 #include "IWebLoadRequestFactory.h"
 #include "SearchTagToYelpCategoryMapper.h"
 
-#include "liboauthcpp.h"
 
 namespace ExampleApp
 {
@@ -25,10 +24,7 @@ namespace ExampleApp
                 {
                 public:
                     YelpSearchQueryFactory(
-                        const std::string& yelpConsumerKey,
-                        const std::string& yelpConsumerSecret,
-                        const std::string& yelpOAuthToken,
-                        const std::string& yelpOAuthTokenSecret,
+                        const std::string& yelpApiKey,
                         SdkModel::SearchTagToYelpCategoryMapper& searchTagToYelpCategoryMap,
                         Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
                     
@@ -39,10 +35,7 @@ namespace ExampleApp
                     
                 private:
                     const std::string m_apiUrl;
-                    
-                    OAuth::Consumer m_consumer;
-                    OAuth::Client m_client;
-                    OAuth::Token m_token;
+                    const std::string m_yelpApiKey;
                     
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
                     SdkModel::SearchTagToYelpCategoryMapper& m_searchTagToYelpCategoryMap;

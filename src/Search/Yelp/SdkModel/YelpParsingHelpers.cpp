@@ -68,48 +68,35 @@ namespace ExampleApp
                         {
                             const Value& categoryEntries = json["categories"];
                             const size_t numYelpCategoryEntries(categoryEntries.Size());
-                            
-                            
+
                             for(rapidjson::SizeType categoryEntryIndex = 0; categoryEntryIndex < numYelpCategoryEntries; ++categoryEntryIndex)
                             {
                                 const Value& categoryEntry = categoryEntries[categoryEntryIndex];
-                                const size_t numYelpCategoryEntryStrings(categoryEntry.Size());
-                                
-                                for(rapidjson::SizeType categoryStringIndex = 0; categoryStringIndex < numYelpCategoryEntryStrings; ++ categoryStringIndex)
+                                if (categoryEntry.HasMember("title"))
                                 {
-                                    /* Yelp data has category alias pairs; we're only interested in the first
-                                     * (more readable) one for generating human-readable categories, e.g.
-                                     "categories": [
-                                            [
-                                                "Mass Media", # friendly / readable
-                                                "massmedia"   # skip
-                                            ]
-                                        ]
-                                    */
-                                    const bool isReadableYelpCategory = categoryStringIndex % 2 == 0;
-                                    if(isReadableYelpCategory)
-                                    {
-                                        humanCategories.push_back(categoryEntry[categoryStringIndex].GetString());
-                                    }
-                                    
-                                    allCategories.push_back(categoryEntry[categoryStringIndex].GetString());
+                                    humanCategories.push_back(categoryEntry["title"].GetString());
+                                    allCategories.push_back(categoryEntry["title"].GetString());
+                                }
+                                if (categoryEntry.HasMember("alias"))
+                                {
+                                    allCategories.push_back(categoryEntry["alias"].GetString());
                                 }
                             }
                         }
 
                         yelpCategoryMapper.TryGetBestMatchingTagForYelpCategories(allCategories, entry.mappedAppTag);
-                        
+
+                        if(json.HasMember("coordinates"))
+                        {
+                            const Value& coordinates = json["coordinates"];
+                            entry.location = Eegeo::Space::LatLong::FromDegrees(coordinates["latitude"].GetDouble(),
+                                                                                coordinates["longitude"].GetDouble());
+                        }
+
                         if(json.HasMember("location"))
                         {
                             const Value& locationJson = json["location"];
-                            
-                            if(locationJson.HasMember("coordinate"))
-                            {
-                                const Value& coordinate = locationJson["coordinate"];
-                                entry.location = Eegeo::Space::LatLong::FromDegrees(coordinate["latitude"].GetDouble(),
-                                                                                    coordinate["longitude"].GetDouble());
-                            }
-                            
+
                             if(locationJson.HasMember("display_address"))
                             {
                                 const Value& displayAddress = locationJson["display_address"];
@@ -197,10 +184,14 @@ namespace ExampleApp
                             if(json.HasMember("image_url"))
                             {
                                 imageUrl = json["image_url"].GetString();
-                                const size_t lastSlashIndex(imageUrl.rfind("/"));
-                                Eegeo_ASSERT(lastSlashIndex != std::string::npos, "The image_url is not well formed: %s.\n",
-                                             imageUrl.c_str());
-                                imageUrl = imageUrl.substr(0, lastSlashIndex) + "/348s.jpg";
+                                if (imageUrl.find("http") == 0)
+                                {
+                                    const size_t lastSlashIndex(imageUrl.rfind("/"));
+                                    Eegeo_ASSERT(lastSlashIndex != std::string::npos,
+                                                 "The image_url is not well formed: %s.\n",
+                                                 imageUrl.c_str());
+                                    imageUrl = imageUrl.substr(0, lastSlashIndex) + "/348s.jpg";
+                                }
                             }
                             if(json.HasMember("rating"))
                             {

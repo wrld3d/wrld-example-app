@@ -26,6 +26,7 @@ namespace ExampleApp
                 public:
                     YelpSearchQuery(
                         const std::string& requestUrl,
+                        const std::string& yelpApiKey,
                         Eegeo::Helpers::ICallback0& completionCallback,
                         Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
 

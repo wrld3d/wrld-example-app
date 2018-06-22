@@ -38,10 +38,7 @@ namespace ExampleApp
                     Net::SdkModel::INetworkCapabilities& networkCapabilities,
                     Eegeo::Helpers::UrlHelpers::IUrlEncoder& urlEncoder,
                     const Search::SdkModel::SearchTags& searchTags,
-					const std::string& yelpConsumerKey,
-					const std::string& yelpConsumerSecret,
-					const std::string& yelpOAuthToken,
-					const std::string& yelpOAuthTokenSecret,
+                    const std::string& yelpApiKey,
                     Eegeo::Helpers::IFileIO& fileIO,
                     Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater);
 

@@ -36,11 +36,8 @@ namespace ExampleApp
             bool m_shouldPerformStartUpSearch;
             std::string m_startUpSearchTag;
             std::string m_googleAnalyticsReferrerToken;
+            std::string m_yelpApiKey;
             std::string m_flurryAppKey;
-            std::string m_yelpConsumerKey;
-            std::string m_yelpConsumerSecret;
-            std::string m_yelpOAuthToken;
-            std::string m_yelpOAuthTokenSecret;
             std::string m_geoNamesUserName;
             std::string m_eegeoSearchServiceUrl;
             std::string m_myPinsWebServiceUrl;
@@ -98,11 +95,8 @@ namespace ExampleApp
 				bool performStartUpSearch,
 				const std::string& startUpSearchTag,
 				const std::string& googleAnalyticsReferrerToken,
+				const std::string& yelpApiKey,
 				const std::string& flurryAppKey,
-				const std::string& yelpConsumerKey,
-				const std::string& yelpConsumerSecret,
-				const std::string& yelpOAuthToken,
-				const std::string& yelpOAuthTokenSecret,
 				const std::string& geoNamesUserName,
 				const std::string& eegeoSearchServiceUrl,
 				const std::string& myPinsWebServiceUrl,
@@ -168,13 +162,7 @@ namespace ExampleApp
 
             std::string FlurryAppKey() const;
 
-            std::string YelpConsumerKey() const;
-
-            std::string YelpConsumerSecret() const;
-
-            std::string YelpOAuthToken() const;
-
-            std::string YelpOAuthTokenSecret() const;
+            std::string YelpApiKey() const;
 
             std::string GeoNamesUserName() const;
 

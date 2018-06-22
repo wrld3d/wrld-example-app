@@ -26,10 +26,7 @@ namespace ExampleApp
                     const std::string& combinedVersionString = productVersion + "." + buildNumber;
                     const std::string emptyGoogleAnalyticsReferrerToken;
                     const std::string emptyFlurryApiKey;
-                    const std::string emptyYelpConsumerKey;
-                    const std::string emptyYelpConsumerSecret;
-                    const std::string emptyYelpOAuthToken;
-                    const std::string emptyYelpOAuthTokenSecret;
+                    const std::string emptyYelpApiKey;
                     const std::string emptyGeoNamesUserName;
                     const std::string eegeoSearchServiceUrl = "https://poi.eegeo.com/v1.1";
                     const std::string emptyMyPinsWebServiceUrl;
@@ -90,10 +87,7 @@ namespace ExampleApp
                         startUpSearchTag,
                         emptyGoogleAnalyticsReferrerToken,
                         emptyFlurryApiKey,
-                        emptyYelpConsumerKey,
-                        emptyYelpConsumerSecret,
-                        emptyYelpOAuthToken,
-                        emptyYelpOAuthTokenSecret,
+                        emptyYelpApiKey,
                         emptyGeoNamesUserName,
                         eegeoSearchServiceUrl,
                         emptyMyPinsWebServiceUrl,

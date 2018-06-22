@@ -15,18 +15,13 @@ namespace ExampleApp
             namespace SdkModel
             {
                 YelpBusinessQueryFactory::YelpBusinessQueryFactory(
-                                                               const std::string& yelpConsumerKey,
-                                                               const std::string& yelpConsumerSecret,
-                                                               const std::string& yelpOAuthToken,
-                                                               const std::string& yelpOAuthTokenSecret,
+                                                               const std::string& yelpApiKey,
                                                                const YelpBusinessJsonParser& yelpBusinessParser,
                                                                Eegeo::Web::IWebLoadRequestFactory& webRequestFactory)
                 : m_yelpBusinessParser(yelpBusinessParser)
                 , m_webRequestFactory(webRequestFactory)
-                , m_consumer(yelpConsumerKey, yelpConsumerSecret)
-                , m_token(yelpOAuthToken, yelpOAuthTokenSecret)
-                , m_client(&m_consumer, &m_token)
-                , m_apiUrl("https://api.yelp.com/v2/business/")
+                , m_yelpApiKey(yelpApiKey)
+                , m_apiUrl("https://api.yelp.com/v3/businesses/")
                 {
                 }
 
@@ -37,11 +32,7 @@ namespace ExampleApp
                     std::stringstream ss;
                     ss << m_apiUrl << searchEntityId << "?";
                     
-                    const std::string& oauthParams = m_client.getURLQueryString(OAuth::Http::RequestType::Get, ss.str());
-
-                    ss << oauthParams;
-                    
-                    return Eegeo_NEW(YelpBusinessQuery)(ss.str(), completionCallback, m_webRequestFactory, m_yelpBusinessParser);
+                    return Eegeo_NEW(YelpBusinessQuery)(ss.str(), m_yelpApiKey, completionCallback, m_webRequestFactory, m_yelpBusinessParser);
                 }
             }
         }

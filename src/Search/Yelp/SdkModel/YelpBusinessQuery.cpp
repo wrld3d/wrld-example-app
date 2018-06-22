@@ -23,6 +23,7 @@ namespace ExampleApp
             {
                 YelpBusinessQuery::YelpBusinessQuery(
                                                      const std::string& requestUrl,
+                                                     const std::string& yelpApiKey,
                                                      Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& completionCallback,
                                                      Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                      const YelpBusinessJsonParser& yelpBusinessParser)
@@ -32,7 +33,10 @@ namespace ExampleApp
                     , m_dispatched(false)
                     , m_webRequestCompleteCallback(this, &YelpBusinessQuery::HandleWebResponseComplete)
                 {
-                    m_pWebLoadRequest = webRequestFactory.Begin(Eegeo::Web::HttpVerbs::Values::GET, requestUrl, m_webRequestCompleteCallback).Build();
+                    m_pWebLoadRequest = webRequestFactory
+                            .Begin(Eegeo::Web::HttpVerbs::Values::GET, requestUrl, m_webRequestCompleteCallback)
+                            .AddHeader("Authorization", "Bearer " + yelpApiKey)
+                            .Build();
                 }
 
                 YelpBusinessQuery::~YelpBusinessQuery()

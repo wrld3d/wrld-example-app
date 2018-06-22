@@ -31,10 +31,7 @@ namespace ExampleApp
                 const std::string EmbeddedThemeTexturePath = "embedded_theme_texture_path";
                 const std::string GoogleAnalyticsReferrerToken = "google_analytics_referrer_token";
                 const std::string FlurryAppKey = "flurry_app_key";
-                const std::string YelpConsumerKey = "yelp_consumer_key";
-                const std::string YelpConsumerSecret = "yelp_consumer_secret";
-                const std::string YelpOAuthToken = "yelp_oauth_token";
-                const std::string YelpOAuthTokenSecret = "yelp_oauth_token_secret";
+                const std::string YelpApiKey = "yelp_api_key";
                 const std::string GeoNamesUserName = "geonames_username";
                 const std::string EegeoSearchServiceUrl = "eegeo_search_service_url";
                 const std::string MyPinsWebServiceUrl = "mypins_web_service_url";
@@ -283,10 +280,7 @@ namespace ExampleApp
                 const std::string& embeddedThemeTexturePath = ParseStringOrDefault(document, EmbeddedThemeTexturePath, m_defaultConfig.EmbeddedThemeTexturePath());
                 const std::string& googleAnalyticsReferrerToken = ParseStringOrDefault(document, GoogleAnalyticsReferrerToken, m_defaultConfig.GoogleAnalyticsReferrerToken());
                 const std::string& flurryAppKey = ParseStringOrDefault(document, FlurryAppKey, m_defaultConfig.FlurryAppKey());
-                const std::string& yelpConsumerKey = ParseStringOrDefault(document, YelpConsumerKey, m_defaultConfig.YelpConsumerKey());
-                const std::string& yelpConsumerSecret = ParseStringOrDefault(document, YelpConsumerSecret, m_defaultConfig.YelpConsumerSecret());
-                const std::string& yelpOAuthToken = ParseStringOrDefault(document, YelpOAuthToken, m_defaultConfig.YelpOAuthToken());
-                const std::string& yelpOAuthTokenSecret = ParseStringOrDefault(document, YelpOAuthTokenSecret, m_defaultConfig.YelpOAuthTokenSecret());
+                const std::string& yelpApiKey = ParseStringOrDefault(document, YelpApiKey, m_defaultConfig.YelpApiKey());
                 const std::string& geoNamesUserName = ParseStringOrDefault(document, GeoNamesUserName, m_defaultConfig.GeoNamesUserName());
                 const std::string& eegeoSearchServiceUrl = ParseStringOrDefault(document, EegeoSearchServiceUrl, m_defaultConfig.EegeoSearchServiceUrl());
                 const std::string& myPinsWebServiceUrl = ParseStringOrDefault(document, MyPinsWebServiceUrl, m_defaultConfig.MyPinsWebServiceUrl());
@@ -361,10 +355,7 @@ namespace ExampleApp
                     startUpSearchTag,
                     googleAnalyticsReferrerToken,
                     flurryAppKey,
-                    yelpConsumerKey,
-                    yelpConsumerSecret,
-                    yelpOAuthToken,
-                    yelpOAuthTokenSecret,
+                    yelpApiKey,
                     geoNamesUserName,
                     eegeoSearchServiceUrl,
                     myPinsWebServiceUrl,

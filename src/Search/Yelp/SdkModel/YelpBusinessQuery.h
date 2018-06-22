@@ -24,6 +24,7 @@ namespace ExampleApp
                 public:
                     YelpBusinessQuery(
                                       const std::string& requestUrl,
+                                      const std::string& yelpApiKey,
                                       Eegeo::Helpers::ICallback1<const Search::SdkModel::IdentitySearchCallbackData&>& completionCallback,
                                       Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                       const YelpBusinessJsonParser& yelpBusinessParser);

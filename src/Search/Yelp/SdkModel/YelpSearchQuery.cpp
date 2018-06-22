@@ -22,6 +22,7 @@ namespace ExampleApp
 
                 YelpSearchQuery::YelpSearchQuery(
                                                  const std::string& requestUrl,
+                                                 const std::string& yelpApiKey,
                                                  Eegeo::Helpers::ICallback0& completionCallback,
                                                  Eegeo::Web::IWebLoadRequestFactory& webRequestFactory)
                     : m_pWebLoadRequest(NULL)
@@ -34,6 +35,7 @@ namespace ExampleApp
                 {
                     m_pWebLoadRequest = m_webRequestFactory
                         .Begin(Eegeo::Web::HttpVerbs::Values::GET, requestUrl, m_webRequestCompleteCallback)
+                        .AddHeader("Authorization", "Bearer " + yelpApiKey)
                         .Build();
                 }
 

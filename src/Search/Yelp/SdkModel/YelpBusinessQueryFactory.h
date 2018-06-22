@@ -2,12 +2,12 @@
 
 #pragma once
 
+#include <string>
 #include "Types.h"
 #include "Search.h"
 #include "Yelp.h"
 #include "Web.h"
 #include "ICallback.h"
-#include "liboauthcpp.h"
 
 namespace ExampleApp
 {
@@ -21,10 +21,7 @@ namespace ExampleApp
                 {
                 public:
                     YelpBusinessQueryFactory(
-                                             const std::string& yelpConsumerKey,
-                                             const std::string& yelpConsumerSecret,
-                                             const std::string& yelpOAuthToken,
-                                             const std::string& yelpOAuthTokenSecret,
+                                             const std::string& yelpApiKey,
                                              const YelpBusinessJsonParser& yelpBusinessParser,
                                              Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
                     
@@ -35,11 +32,7 @@ namespace ExampleApp
                     
                 private:
                     const std::string m_apiUrl;
-                    
-                    OAuth::Consumer m_consumer;
-                    OAuth::Client m_client;
-                    OAuth::Token m_token;
-
+                    const std::string m_yelpApiKey;
                     
                     const YelpBusinessJsonParser& m_yelpBusinessParser;
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
