@@ -27,7 +27,7 @@ namespace ExampleApp
             bool NavRoutingLocationFinder::TryGetCurrentLocation(NavRoutingLocationModel &outLocation)
             {
                 outLocation = NavRoutingLocationModel();
-                if(!m_locationService.GetIsAuthorized())
+                if(!m_locationService.IsLocationAuthorized())
                 {
                     m_alertBoxFactory.CreateSingleOptionAlertBox("Location service is not authorized",
                                                                  "We didn't receive authorization for location service",
