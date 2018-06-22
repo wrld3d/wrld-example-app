@@ -32,7 +32,6 @@ namespace ExampleApp
                 m_pWorldPinsService = Eegeo_NEW(WorldPinsService)(*m_pWorldPinsRepository,
                                                                     interiorMarkerPickingService,
                                                                     markerService,
-                                                                    sdkDomainEventBus,
                                                                     messageBus,
                                                                     navigationService,
                                                                     searchResultOnMapMyPinsService,

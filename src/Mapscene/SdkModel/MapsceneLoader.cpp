@@ -84,7 +84,19 @@ namespace ExampleApp
                 Eegeo::Web::IWebLoadRequest* webRequest = m_webRequestFactory.Begin(Eegeo::Web::HttpVerbs::GET, url, m_configRequestCompleteCallback).Build();
                 webRequest->Load();
             }
-            
+
+            bool MapsceneLoader::ShouldStartAtGpsLocation(const ApplicationConfig::ApplicationConfiguration& parsedConfig) const
+            {
+                // see MPLY-9874 - if mapscene specifies both try_start_at_gps_location=true and an indoor map, may conflict.
+                // Ignore try_start_at_gps_location if interior_id is specified
+                if (!parsedConfig.IndoorId().empty())
+                {
+                    return false;
+                }
+
+                return parsedConfig.TryStartAtGpsLocation();
+            }
+
             void MapsceneLoader::HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse)
             {
                 if(webResponse.IsSucceeded())
@@ -115,25 +127,32 @@ namespace ExampleApp
                             m_interiorSelectionModel.ClearSelection();
                         }
                         
-                        bool jumpIfFar = true;
-                        bool setGpsModeOff = true;
-                        bool setInteriorHeading = true;
-                        m_cameraTransitionController.StartTransitionTo(applicationConfig.InterestLocation().ToECEF(), applicationConfig.DistanceToInterestMetres(), newHeading, applicationConfig.IndoorId(), applicationConfig.FloorIndex(), jumpIfFar, setGpsModeOff, setInteriorHeading);
                         m_interiorMenuObserver.UpdateDefaultOutdoorSearchMenuItems(applicationConfig.OutdoorSearchMenuItems(), applicationConfig.OverrideIndoorSearchMenuItems());
                         m_aboutPageViewModule.UpdateApplicationName(applicationConfig.Name());
-                        
-                        const std::string TryStartAtGpsLocation = "try_start_at_gps_location";
-                        const bool mapsceneSpecifiesGpsStart = parser.HasKey(resultString, TryStartAtGpsLocation);
-                        m_startAtGPSLocation = mapsceneSpecifiesGpsStart && applicationConfig.TryStartAtGpsLocation();
+
+                        m_startAtGPSLocation = ShouldStartAtGpsLocation(applicationConfig);
                         if (m_startAtGPSLocation)
                         {
                             m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeFollow);
                         }
-                        else
-                        {
-                            m_navigationService.SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
-                        }
-                        
+
+                        const bool jumpIfFar = true;
+                        const bool shouldDisableGPS = !m_startAtGPSLocation;
+                        const bool setInteriorHeading = true;
+                        m_cameraTransitionController.StartTransitionTo(
+                            // In the case of m_startAtGPSLocation==true, we can't reliably obtain current GPS location.
+                            // Instead, use the supplied interest location and rely on "GpsModeFolllow" behaviour changing
+                            // the location as and when a GPS fix becomes available.
+                            applicationConfig.InterestLocation().ToECEF(),
+                            applicationConfig.DistanceToInterestMetres(),
+                            newHeading,
+                            applicationConfig.IndoorId(),
+                            applicationConfig.FloorIndex(),
+                            jumpIfFar,
+                            shouldDisableGPS,
+                            setInteriorHeading);
+
+
                         const std::string PerformStartUpSearch = "perform_start_up_search";
                         const bool mapsceneSpecifiesStartUpSearch = parser.HasKey(resultString, PerformStartUpSearch);
                         const bool shouldPerformStartUpSearch = mapsceneSpecifiesStartUpSearch && applicationConfig.ShouldPerformStartUpSearch();

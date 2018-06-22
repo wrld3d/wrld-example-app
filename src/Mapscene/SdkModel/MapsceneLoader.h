@@ -48,7 +48,8 @@ namespace ExampleApp
                 std::string GenerateConfigUrl(const std::string& path) const;
                 void HandleConfigResponse(Eegeo::Web::IWebResponse& webResponse);
                 void OnFailAlertBoxDismissed();
-                
+                bool ShouldStartAtGpsLocation(const ApplicationConfig::ApplicationConfiguration& parsedConfig) const;
+
                 Eegeo::Helpers::TCallback0<MapsceneLoader> m_newThemeDataCallback;
                 void HandleNewThemeManifestLoaded();
                 

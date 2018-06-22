@@ -23,6 +23,7 @@
 #include "PlaneSimulation.h"
 #include "Streaming.h"
 #include "IAppCameraModule.h"
+#include "WorldPins.h"
 
 namespace ExampleApp
 {
