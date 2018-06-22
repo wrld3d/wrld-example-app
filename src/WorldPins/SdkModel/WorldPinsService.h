@@ -37,7 +37,6 @@ namespace ExampleApp
                                  IWorldPinsRepository& worldPinsRepository,
                                  Eegeo::Resources::Interiors::Markers::IInteriorMarkerPickingService& interiorMarkerPickingService,
                                  Eegeo::Markers::IMarkerService& markerService,
-                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Eegeo::Location::NavigationService& navigationService,
                                  Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultOnMapMyPinsService,
@@ -75,8 +74,6 @@ namespace ExampleApp
 
                 void SelectPin(WorldPinItemModel::WorldPinItemModelId worldPinItemModelId);
                 
-                void OnWorldPinHiddenStateChanged(const WorldPinHiddenStateChangedMessage& message);
-                
                 Eegeo::Markers::IMarker::IdType GetMarkerIdForWorldPinItemModelId(SdkModel::WorldPinItemModel::WorldPinItemModelId worldPinId) const;
                 
                 WorldPinItemModel::WorldPinItemModelId GetWorldPinItemModelIdForMarkerId(Eegeo::Markers::IMarker::IdType markerId) const;
@@ -101,9 +98,7 @@ namespace ExampleApp
                 Eegeo::Location::NavigationService& m_navigationService;
                 
                 Eegeo::Markers::IMarkerService& m_markerService;
-                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
                 
-                Eegeo::Helpers::TCallback1<WorldPinsService, const WorldPinHiddenStateChangedMessage&> m_worldPinHiddenStateChangedMessageBinding;
                 Eegeo::Helpers::TCallback1<WorldPinsService, const SearchResultSection::SearchResultSectionItemSelectedMessage&> m_onSearchResultSelected;
 
                 typedef std::map<WorldPinItemModel::WorldPinItemModelId, IWorldPinSelectionHandler*> TPinToSelectionHandlerMap;

@@ -24,6 +24,5 @@ namespace ExampleApp
         }
         class WorldPinsVisibilityMessage;
         class WorldPinsSelectedFocussedMessage;
-        class WorldPinHiddenStateChangedMessage;
     }
 }

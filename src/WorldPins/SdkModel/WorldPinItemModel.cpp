@@ -2,7 +2,6 @@
 
 #include "WorldPinItemModel.h"
 #include "Types.h"
-#include "WorldPinHiddenStateChangedMessage.h"
 
 namespace ExampleApp
 {
@@ -16,19 +15,18 @@ namespace ExampleApp
                 const float TransitionDeltaPerSeconds = 1.f / TransitionSeconds;
             }
 
-            WorldPinItemModel::WorldPinItemModel(const WorldPinItemModelId& id,
+            WorldPinItemModel::WorldPinItemModel(Eegeo::Markers::IMarker* pMarker,
                                                  IWorldPinSelectionHandler* pSelectionHandler,
                                                  IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                                  const WorldPinFocusData& worldPinFocusData,
                                                  bool interior,
                                                  const WorldPinInteriorData& worldPinInteriorData,
                                                  int visibilityMask,
-                                                 ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                                  std::string identifier)
-                : m_id(id)
+                : m_pMarker(pMarker)
                 , m_pSelectionHandler(pSelectionHandler)
                 , m_pVisibilityStateChangedHandler(pVisibilityStateChangedHandler)
-                , m_focusModel(m_id,
+                , m_focusModel(m_pMarker->GetId(),
                                worldPinFocusData.title,
                                worldPinFocusData.subtitle,
                                worldPinFocusData.vendor,
@@ -42,7 +40,6 @@ namespace ExampleApp
                 , m_interior(interior)
                 , m_worldPinInteriorData(worldPinInteriorData)
                 , m_visibilityMask(visibilityMask)
-                , m_sdkModelDomainEventBus(sdkModelDomainEventBus)
                 , m_identifier(identifier)
             {
                 Eegeo_ASSERT(m_pSelectionHandler != NULL, "WorldPinItemModel must be provided with a non-null selection handler.")
@@ -62,15 +59,15 @@ namespace ExampleApp
                 m_focusable = focusable;
             }
             
-            const WorldPinItemModel::WorldPinItemModelId& WorldPinItemModel::Id() const
+            const WorldPinItemModel::WorldPinItemModelId WorldPinItemModel::Id() const
             {
-                return m_id;
+                return m_pMarker->GetId();
             }
-
-            void WorldPinItemModel::SetId(const WorldPinItemModelId& worldPinItemModelId)
+            
+            void WorldPinItemModel::SetMarker(Eegeo::Markers::IMarker* pMarker)
             {
-                m_id = worldPinItemModelId;
-                m_focusModel.SetPinId(m_id);
+                m_pMarker = pMarker;
+                m_focusModel.SetPinId(m_pMarker->GetId());
             }
 
             void WorldPinItemModel::Select()
@@ -99,6 +96,8 @@ namespace ExampleApp
                 {
                     SetTransitionState(TransitionToHidden);
                 }
+                
+                UpdateMarkerState();
             }
 
             void WorldPinItemModel::Show()
@@ -107,6 +106,8 @@ namespace ExampleApp
                 {
                     SetTransitionState(TransitionToVisible);
                 }
+                
+                UpdateMarkerState();
             }
 
             float WorldPinItemModel::TransitionStateValue() const
@@ -158,7 +159,19 @@ namespace ExampleApp
                 if (m_transitionState != transitionState)
                 {
                     m_transitionState = transitionState;
-                    m_sdkModelDomainEventBus.Publish(WorldPinHiddenStateChangedMessage(*this));
+                }
+                
+                UpdateMarkerState();
+            }
+            
+            void WorldPinItemModel::UpdateMarkerState()
+            {
+                if(!IsTransitioning())
+                {
+                    if (m_pMarker->IsHidden() != IsHidden())
+                    {
+                        m_pMarker->SetHidden(IsHidden());
+                    }
                 }
             }
 

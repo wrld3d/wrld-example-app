@@ -37,7 +37,7 @@ namespace ExampleApp
                 typedef int WorldPinItemModelId;
 
             private:
-                WorldPinItemModelId m_id;
+                Eegeo::Markers::IMarker* m_pMarker;
                 IWorldPinSelectionHandler* m_pSelectionHandler;
                 IWorldPinVisibilityStateChangedHandler* m_pVisibilityStateChangedHandler;
                 WorldPinsInFocusModel m_focusModel;
@@ -47,25 +47,23 @@ namespace ExampleApp
                 bool m_interior;
                 WorldPinInteriorData m_worldPinInteriorData;
                 int m_visibilityMask;
-                ExampleAppMessaging::TSdkModelDomainEventBus& m_sdkModelDomainEventBus;
                 std::string m_identifier;
 
             public:
-                WorldPinItemModel(const WorldPinItemModelId& id,
+                WorldPinItemModel(Eegeo::Markers::IMarker* pMarker,
                                   IWorldPinSelectionHandler* pSelectionHandler,
                                   IWorldPinVisibilityStateChangedHandler* pVisibilityStateChangedHandler,
                                   const WorldPinFocusData& worldPinFocusData,
                                   bool interior,
                                   const WorldPinInteriorData& worldPinInteriorData,
                                   int visibilityMask,
-                                  ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                   std::string identifier);
 
                 ~WorldPinItemModel();
 
-                const WorldPinItemModelId& Id() const;
+                const WorldPinItemModelId Id() const;
 
-                void SetId(const WorldPinItemModelId& worldPinItemModelId);
+                void SetMarker(Eegeo::Markers::IMarker* pMarker);
 
                 void Select();
 
@@ -103,6 +101,7 @@ namespace ExampleApp
                 
             private:
                 void SetTransitionState(TransitionState transitionState);
+                void UpdateMarkerState();
             };
 
             inline bool operator==(const WorldPinItemModel& lhs, const WorldPinItemModel& rhs)
