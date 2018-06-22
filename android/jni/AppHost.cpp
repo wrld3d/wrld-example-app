@@ -604,6 +604,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
     m_pInitialExperienceIntroViewModule = Eegeo_NEW(ExampleApp::InitialExperience::View::InitialExperienceIntroViewModule)(
 									m_nativeState,
 									m_messageBus,
+                                    app.NavUIModule().GetNavWidgetViewModel(),
 									app.CameraTransitionController()
 								);
 

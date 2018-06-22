@@ -12,10 +12,11 @@ namespace ExampleApp
 		{
 			InitialExperienceIntroViewModule::InitialExperienceIntroViewModule(AndroidNativeState& nativeState,
                                                                                ExampleAppMessaging::TMessageBus& messageBus,
+																			   NavRouting::View::INavWidgetViewModel& navWidgetViewModel,
                                                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController)
 			{
 				m_pView = Eegeo_NEW(InitialExperienceIntroView)(nativeState, messageBus);
-				m_pController = Eegeo_NEW(InitialExperienceIntroController)(*m_pView, messageBus, cameraTransitionController);
+				m_pController = Eegeo_NEW(InitialExperienceIntroController)(*m_pView, messageBus, navWidgetViewModel, cameraTransitionController);
 			}
 
 			InitialExperienceIntroViewModule::~InitialExperienceIntroViewModule()

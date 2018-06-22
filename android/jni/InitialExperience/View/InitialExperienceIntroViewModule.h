@@ -7,6 +7,7 @@
 #include "AndroidNativeState.h"
 #include "BidirectionalBus.h"
 #include "CameraTransitions.h"
+#include "NavRouting.h"
 
 namespace ExampleApp
 {
@@ -19,6 +20,7 @@ namespace ExampleApp
 			public:
 				InitialExperienceIntroViewModule(AndroidNativeState& nativeState,
                                                  ExampleAppMessaging::TMessageBus& messageBus,
+												 NavRouting::View::INavWidgetViewModel& navWidgetViewModel,
                                                  CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController);
 				~InitialExperienceIntroViewModule();
 
