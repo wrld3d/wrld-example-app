@@ -113,7 +113,6 @@ namespace ExampleApp
                 
                 const Eegeo::Markers::IMarker::IdType markerId = GetWorldPinItemModelIdForMarkerId(pinId);
                 
-                m_markerService.Destroy(markerId);
                 
                 IWorldPinSelectionHandler* pSelectionHandler = m_pinsToSelectionHandlers.at(pinId);
                 m_pinsToSelectionHandlers.erase(pinId);
@@ -134,6 +133,8 @@ namespace ExampleApp
                 
                 m_worldPinsRepository.RemoveItem(pPinItemModel);
                 Eegeo_DELETE pPinItemModel;
+                
+                m_markerService.Destroy(markerId);
             }
 
             void WorldPinsService::HighlightPin(WorldPinItemModel* pinItemModel, std::string labelStyleName)
