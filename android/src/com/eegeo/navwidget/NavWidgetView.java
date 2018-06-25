@@ -3,11 +3,13 @@
 package com.eegeo.navwidget;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -63,6 +65,8 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     private ViewPropertyAnimator m_searchLocationViewAnimation;
     private SearchResultsListener m_searchResultSelectedListener;
 
+    private final int m_searchNavMargin;
+
     public NavWidgetView(MainActivity activity, long nativeCallerPointer)
     {
         m_activity = activity;
@@ -70,6 +74,8 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
 
         m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_view = m_activity.getLayoutInflater().inflate(R.layout.nav_widget_layout, m_uiRoot, false);
+
+        m_searchNavMargin = (int)activity.getResources().getDimension(R.dimen.nav_search_margin);
 
         m_uiRoot.addView(m_view);
         m_activity.addBackButtonPressedListener(this);
@@ -423,13 +429,13 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_model.sendNavEvent(WrldNavEvent.WidgetAnimateOut);
         m_searchWidget.getSuggestionResultsModel().addResultListener(m_searchResultSelectedListener);
         m_searchWidget.clearSearch();
-//
-//         Try focus on the searchbox and show keyboard
+
+//      Try focus on the searchbox and show keyboard
         View searchBoxView = m_searchWidget.getView().findViewById(R.id.searchbox_search_searchview);
         if(searchBoxView != null) {
             searchBoxView.requestFocus();
-//            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+            InputMethodManager imm = (InputMethodManager) m_activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
         }
     }
 
@@ -449,7 +455,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         }
 
         int panelHeight = m_searchLocationView.getHeight();
-        float targetY = visible ? 0.0f : -panelHeight;
+        float targetY = visible ? m_searchNavMargin : -panelHeight;
         if(animate) {
             m_searchLocationViewAnimation = m_searchLocationView.animate()
                     .y(targetY)
