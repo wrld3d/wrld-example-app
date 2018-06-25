@@ -192,17 +192,32 @@ namespace ExampleApp
             {
                 NavRoutingLocationModel startLocation, endLocation;
 
-                m_routingModel.TryGetStartLocation(startLocation);
-                m_routingModel.TryGetEndLocation(endLocation);
+                bool hasStartLocation = m_routingModel.TryGetStartLocation(startLocation);
+                bool hasEndLocation = m_routingModel.TryGetEndLocation(endLocation);
 
                 NavRoutingLocationModel tempLocation = startLocation;
                 startLocation = endLocation;
                 endLocation = tempLocation;
 
-                m_routingModel.SetStartLocation(startLocation);
-                m_routingModel.SetEndLocation(endLocation);
-
                 m_routingModel.ClearRoute();
+
+                if(hasEndLocation)
+                {
+                    m_routingModel.SetStartLocation(startLocation);
+                }
+                else
+                {
+                    m_routingModel.ClearStartLocation();
+                }
+
+                if(hasStartLocation)
+                {
+                    m_routingModel.SetEndLocation(endLocation);
+                }
+                else
+                {
+                    m_routingModel.ClearEndLocation();
+                }
             }
 
             void NavRoutingController::OnStartLocationClearClicked(const NavRoutingStartLocationClearClickedMessage& message)
