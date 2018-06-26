@@ -53,6 +53,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
 
     private WrldNavModel m_model;
 
+    private boolean m_isNavWidgetVisible = false;
     private boolean m_isTopPanelVisible = false;
     private boolean m_isBottomPanelVisible = false;
     private float m_topPanelHeight = 0.0f;
@@ -292,11 +293,13 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     public void showNavWidgetView()
     {
         m_model.sendNavEvent(WrldNavEvent.WidgetAnimateIn);
+        m_isNavWidgetVisible = true;
     }
 
     public void dismissNavWidgetView()
     {
         m_model.sendNavEvent(WrldNavEvent.WidgetAnimateOut);
+        m_isNavWidgetVisible = false;
     }
 
     public void showRerouteDialog(String message)
@@ -344,7 +347,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     @Override
     public boolean onBackButtonPressed()
     {
-        if (m_view.getVisibility() == View.VISIBLE)
+        if (m_isNavWidgetVisible)
         {
             WrldNavMode currentNavMode = m_model.getCurrentNavMode();
             if (currentNavMode == WrldNavMode.NotReady || currentNavMode == WrldNavMode.Ready)
