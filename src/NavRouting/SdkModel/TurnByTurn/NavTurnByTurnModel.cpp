@@ -101,6 +101,11 @@ namespace ExampleApp
 
                     Eegeo::Routes::PointOnRoute pointOnRouteResult = Eegeo::Routes::RouteHelpers::GetPointOnRoute(currentLocation, m_route, options);
 
+                    if (!pointOnRouteResult.IsValidResult())
+                    {
+                        return;
+                    }
+
                     double distanceToRouteAtCurrentPoint = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetDistanceFromInputPoint();
 
                     bool tooFarFromPath = IsTooFarFromPath(distanceToRouteAtCurrentPoint);
