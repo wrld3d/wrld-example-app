@@ -7,6 +7,7 @@
 #include "NavRouting.h"
 #include "CallbackCollection.h"
 #include "INavRoutingServiceController.h"
+#include "BidirectionalBus.h"
 
 namespace ExampleApp
 {
@@ -17,7 +18,8 @@ namespace ExampleApp
             class NavRoutingServiceController : public INavRoutingServiceController, private Eegeo::NonCopyable
             {
             public:
-                NavRoutingServiceController(Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice);
+                NavRoutingServiceController(Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
+                                            ExampleAppMessaging::TMessageBus& messageBus);
 
                 ~NavRoutingServiceController();
                 
@@ -35,12 +37,17 @@ namespace ExampleApp
                 
                 Eegeo::Routes::Webservice::IRoutingWebservice& m_routingWebservice;
                 
+                ExampleAppMessaging::TMessageBus& m_messageBus;
+                
                 Eegeo::Helpers::TCallback1<NavRoutingServiceController, const Eegeo::Routes::Webservice::RoutingQueryResponse> m_routingQueryCompleted;
                 
                 Eegeo::Routes::Webservice::RoutingQueryId m_routingQueryId;
                 
                 Eegeo::Helpers::CallbackCollection1<const std::vector<Eegeo::Routes::Webservice::RouteData>> m_routingQueryCompletedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_routingQueryFailedCallbacks;
+                
+                void ShowCalculatingRouteMesage();
+                void HideCalculatingRouteMesage();
             };
         }
     }

@@ -20,6 +20,7 @@
 #include "NavRoutingRemainingRouteDurationSetMessage.h"
 #include "NavRoutingModeSetMessage.h"
 #include "NavRoutingShowRerouteDialogMessage.h"
+#include "NavRoutingSetCalculatingRouteMessage.h"
 #include "ISearchResultsRepository.h"
 
 namespace ExampleApp
@@ -59,6 +60,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingModeSetMessage&> m_navRoutingModeSetMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingViewOpenMessage&> m_navRoutingViewOpenMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingShowRerouteDialogMessage&> m_navRoutingShowRerouteDialogMessageMessageHandler;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingSetCalculatingRouteMessage&> m_navRoutingSetCalculatingRouteMessageHandler;
+                
                 Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_onNavigationStartPointFromSuggestionCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_onNavigationEndPointFromSuggestionCallback;
 
@@ -111,7 +114,9 @@ namespace ExampleApp
                 void OnNavigationStartPointFromSuggestion(const int& index);
 
                 void OnNavigationEndPointFromSuggestion(const int& index);
-
+                
+                void OnSetCalculateRouteSpinner(const NavRoutingSetCalculatingRouteMessage& message);
+                
                 SearchMenu::View::ISearchResultsRepository& m_suggestionsRepository;
 
             protected:

@@ -4,6 +4,7 @@
 
 #include "IRoutingWebservice.h"
 #include "RoutingQueryResponse.h"
+#include "NavRoutingSetCalculatingRouteMessage.h"
 
 namespace ExampleApp
 {
@@ -11,9 +12,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            NavRoutingServiceController::NavRoutingServiceController(Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice)
+            NavRoutingServiceController::NavRoutingServiceController(Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
+                                                                     ExampleAppMessaging::TMessageBus& messageBus)
             : m_routingWebservice(routingWebservice)
             , m_routingQueryCompleted(this, &NavRoutingServiceController::OnRoutingQueryCompleted)
+            , m_messageBus(messageBus)
             {
                 m_routingQueryId = 0;
                 
@@ -28,6 +31,7 @@ namespace ExampleApp
             void NavRoutingServiceController::MakeRoutingQuery(const Eegeo::Routes::Webservice::RoutingQueryOptions& options)
             {
                 CancelRoutingQuery();
+                ShowCalculatingRouteMesage();
                 m_routingQueryId = m_routingWebservice.BeginRoutingQuery(options);
             }
 
@@ -36,6 +40,7 @@ namespace ExampleApp
                 if (m_routingQueryId!=0)
                 {
                     m_routingWebservice.CancelQuery(m_routingQueryId);
+                    HideCalculatingRouteMesage();
                 }
             }
             
@@ -51,7 +56,7 @@ namespace ExampleApp
                     {
                         m_routingQueryFailedCallbacks.ExecuteCallbacks();
                     }
-                    
+                    HideCalculatingRouteMesage();
                     m_routingQueryId = 0;
                 }
             }
@@ -74,6 +79,15 @@ namespace ExampleApp
             void NavRoutingServiceController::UnregisterQueryFailedCallback(RouteFailedCallback& callback)
             {
                 m_routingQueryFailedCallbacks.RemoveCallback(callback);
+            }
+            
+            void NavRoutingServiceController::ShowCalculatingRouteMesage()
+            {
+                m_messageBus.Publish(NavRoutingSetCalculatingRouteMessage(true));
+            }
+            void NavRoutingServiceController::HideCalculatingRouteMesage()
+            {
+                m_messageBus.Publish(NavRoutingSetCalculatingRouteMessage(false));
             }
         }
     }

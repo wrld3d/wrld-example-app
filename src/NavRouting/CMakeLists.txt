@@ -28,6 +28,8 @@ set(currsources
   ../src/NavRouting/NavRoutingSelectedDirectionChangedMessage.h
   ../src/NavRouting/NavRoutingSelectEndLocationClickedMessage.h
   ../src/NavRouting/NavRoutingSelectStartLocationClickedMessage.h
+  ../src/NavRouting/NavRoutingSetCalculatingRouteMessage.cpp
+  ../src/NavRouting/NavRoutingSetCalculatingRouteMessage.h
   ../src/NavRouting/NavRoutingShowRerouteDialogMessage.cpp
   ../src/NavRouting/NavRoutingShowRerouteDialogMessage.h
   ../src/NavRouting/NavRoutingStartEndRoutingButtonClickedMessage.h
