@@ -50,6 +50,9 @@ namespace ExampleApp
                 virtual void SetNavMode(SdkModel::NavRoutingMode mode) = 0;
 
                 virtual void ShowRerouteDialog(const std::string message) = 0;
+                
+                virtual void ShowCalculatingRouteSpinner() = 0;
+                virtual void HideCalculatingRouteSpinner() = 0;
 
                 virtual void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                 virtual void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) = 0;

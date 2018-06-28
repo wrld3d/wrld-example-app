@@ -49,7 +49,8 @@ namespace ExampleApp
                                                                                     shapeService,
                                                                                     markerService);
                 
-                m_pNavRoutingServiceController = Eegeo_NEW(NavRoutingServiceController)(routingWebservice);
+                m_pNavRoutingServiceController = Eegeo_NEW(NavRoutingServiceController)(routingWebservice,
+                                                                                        messageBus);
 
                 m_pRouteUpdateHandler = Eegeo_NEW(NavWidgetRouteUpdateHandler)(*m_pNavRoutingModel,
                                                                                *m_pNavRoutingServiceController,

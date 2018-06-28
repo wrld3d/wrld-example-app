@@ -323,6 +323,15 @@ namespace ExampleApp
                 env->DeleteLocalRef(indoorMapIdStr);
             }
 
+            void NavWidgetView::ShowCalculatingRouteSpinner()
+            {
+                //ToDo: Implement
+            }
+            void NavWidgetView::HideCalculatingRouteSpinner()
+            {
+                //ToDo: Implement
+            }
+
             void NavWidgetView::CallVoidMethod(const std::string& methodName)
             {
                 ASSERT_UI_THREAD

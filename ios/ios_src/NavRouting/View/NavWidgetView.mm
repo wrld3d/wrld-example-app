@@ -2,7 +2,6 @@
 
 #include "NavWidgetViewIncludes.h"
 #include "NavWidgetView.h"
-#include "NavWidgetView.h"
 #include "ICompassView.h"
 #include <MapKit/MapKit.h>
 
@@ -41,12 +40,17 @@ namespace ExampleApp
                 
                 m_pRerouteDialog = [[NavRoutingRerouteDialog alloc] initWithFrame:[UIScreen mainScreen].bounds];
                 [m_pRerouteDialog InsertRerouteDialogClosedCallback:&m_rerouteDialogOptionSelectedCallback];
+                
+                m_pCalculatingRoute = [[NavRoutingCalculatingRoute alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                
             }
             
             NavWidgetView::~NavWidgetView()
             {
                 [m_pRerouteDialog RemoveRerouteDialogClosedCallback:&m_rerouteDialogOptionSelectedCallback];
                 [m_pRerouteDialog release];
+                
+                [m_pCalculatingRoute release];
             }
             
             UIView* NavWidgetView::GetUIView()
@@ -180,6 +184,18 @@ namespace ExampleApp
             void NavWidgetView::SetSelectedDirection(int directionIndex)
             {
                 [m_pNavModel setSelectedDirectionIndex:(NSInteger)directionIndex];
+            }
+            
+            void NavWidgetView::ShowCalculatingRouteSpinner()
+            {
+                [m_pView.superview addSubview:m_pCalculatingRoute];
+                [m_pCalculatingRoute setSpinnerState:true];
+            }
+            
+            void NavWidgetView::HideCalculatingRouteSpinner()
+            {
+                [m_pCalculatingRoute setSpinnerState:false];
+                [m_pCalculatingRoute removeFromSuperview];
             }
             
             void NavWidgetView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)

@@ -85,6 +85,10 @@ namespace ExampleApp
 
                 void ShowRerouteDialog(const std::string message) override;
 
+                void ShowCalculatingRouteSpinner() override;
+
+                void HideCalculatingRouteSpinner() override;
+
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) override;
 
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) override;

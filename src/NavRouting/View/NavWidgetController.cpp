@@ -10,6 +10,7 @@
 #include "NavRoutingStartEndRoutingButtonClickedMessage.h"
 #include "NavRoutingRerouteDialogClosedMessage.h"
 #include "NavRoutingViewOpenedMessage.h"
+#include "NavRoutingSetCalculatingRouteMessage.h"
 
 namespace ExampleApp
 {
@@ -198,6 +199,18 @@ namespace ExampleApp
                 const SdkModel::NavRoutingLocationModel& endLocation = LocationModelFromSuggestionIndex(sdkSearchResult);
                 m_messageBus.Publish(NavRoutingEndLocationSetFromSearchMessage(endLocation));
             }
+            
+            void NavWidgetController::OnSetCalculateRouteSpinner(const NavRoutingSetCalculatingRouteMessage& message)
+            {
+                if(message.GetShouldCalculatingRoute())
+                {
+                    m_view.ShowCalculatingRouteSpinner();
+                }
+                else
+                {
+                    m_view.HideCalculatingRouteSpinner();
+                }
+            }
 
             NavWidgetController::NavWidgetController(INavWidgetView& view,
                                                      INavWidgetViewModel& viewModel,
@@ -233,6 +246,7 @@ namespace ExampleApp
                     , m_suggestionsRepository(suggestionsRepository)
                     , m_onNavigationStartPointFromSuggestionCallback(this, &NavWidgetController::OnNavigationStartPointFromSuggestion)
                     , m_onNavigationEndPointFromSuggestionCallback(this, &NavWidgetController::OnNavigationEndPointFromSuggestion)
+                    , m_navRoutingSetCalculatingRouteMessageHandler(this, &NavWidgetController::OnSetCalculateRouteSpinner)
             {
                 m_view.InsertClosedCallback(m_closeButtonCallback);
                 m_view.InsertStartLocationClickedCallback(m_startLocationClickedCallback);
@@ -258,7 +272,8 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_navRoutingModeSetMessageHandler);
                 m_messageBus.SubscribeUi(m_navRoutingViewOpenMessageHandler);
                 m_messageBus.SubscribeUi(m_navRoutingShowRerouteDialogMessageMessageHandler);
-
+                m_messageBus.SubscribeUi(m_navRoutingSetCalculatingRouteMessageHandler);
+                
                 m_view.InsertOnNavigationStartPointSetFromSuggestion(m_onNavigationStartPointFromSuggestionCallback);
                 m_view.InsertOnNavigationEndPointSetFromSuggestion(m_onNavigationEndPointFromSuggestionCallback);
             }
@@ -267,7 +282,8 @@ namespace ExampleApp
             {
                 m_view.RemoveOnNavigationEndPointSetFromSuggestion(m_onNavigationEndPointFromSuggestionCallback);
                 m_view.RemoveOnNavigationStartPointSetFromSuggestion(m_onNavigationStartPointFromSuggestionCallback);
-
+            
+                m_messageBus.UnsubscribeUi(m_navRoutingSetCalculatingRouteMessageHandler);
                 m_messageBus.UnsubscribeUi(m_navRoutingShowRerouteDialogMessageMessageHandler);
                 m_messageBus.UnsubscribeUi(m_navRoutingViewOpenMessageHandler);
                 m_messageBus.UnsubscribeUi(m_navRoutingModeSetMessageHandler);
