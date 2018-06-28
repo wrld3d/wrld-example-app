@@ -1,6 +1,10 @@
 set(resources ${resources}
+        Resources/NavRoutingCalculatingRoute.xib
         Resources/NavRoutingRerouteDialog.xib
         Resources/WidgetSearchResultTableViewCell.xib
+        resources/RecalculateSpinner.png
+        resources/RecalculateSpinner@2x.png
+        resources/RecalculateSpinner@3x.png
         Resources/ReportPinIcon.png
         Resources/ReportPinIcon@2x.png
         Resources/ReportPinIcon@3x.png

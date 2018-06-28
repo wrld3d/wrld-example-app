@@ -6,6 +6,7 @@
 #include "WrldNav/WrldNav.h"
 #include "WrldNavWidget/WrldNavWidget.h"
 #include "NavRoutingRerouteDialog/NavRoutingRerouteDialog.h"
+#include "NavRoutingCalculatingRoute/NavRoutingCalculatingRoute.h"
 #include "IAppModeModel.h"
 #include "INavWidgetView.h"
 #include "INavWidgetViewModel.h"
@@ -41,6 +42,7 @@ namespace ExampleApp
                 WRLDNavWidgetBase* m_pView;
                 WRLDNavModel* m_pNavModel;
                 NavRoutingRerouteDialog* m_pRerouteDialog;
+                NavRoutingCalculatingRoute* m_pCalculatingRoute;
                 
                 void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);
                 void OnRerouteDialogOptionSelected(const bool& shouldReroute);
@@ -87,6 +89,9 @@ namespace ExampleApp
                 
                 void ShowRerouteDialog(const std::string message) override;
                 
+                void ShowCalculatingRouteSpinner() override;
+                void HideCalculatingRouteSpinner() override;
+                
                 void InsertClosedCallback(Eegeo::Helpers::ICallback0& callback) override;
                 void RemoveClosedCallback(Eegeo::Helpers::ICallback0& callback) override;
                 void HandleClosedCallback();
@@ -131,7 +136,7 @@ namespace ExampleApp
                 
                 void InsertOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
                 void RemoveOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
-
+                
                 THeight GetTopViewHeight() override;
                 THeight GetBottomViewHeight() override;
             };

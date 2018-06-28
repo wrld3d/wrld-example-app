@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NavRoutingCalculatingRoute">
+            <connections>
+                <outlet property="spinners" destination="40X-nJ-Nyg" id="zQZ-gX-57D"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z5u-LE-8EO" userLabel="Dialog">
+                    <rect key="frame" x="38" y="243" width="300" height="182"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RecalculateSpinner.png" translatesAutoresizingMaskIntoConstraints="NO" id="40X-nJ-Nyg">
+                            <rect key="frame" x="86" y="10" width="128" height="128"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="128" id="6nv-Xx-yfG"/>
+                                <constraint firstAttribute="width" secondItem="40X-nJ-Nyg" secondAttribute="height" multiplier="1:1" id="x4J-L7-DYD"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calculating Route" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACF-Uu-Njv">
+                            <rect key="frame" x="73.5" y="148" width="154" height="24"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <color key="textColor" red="0.069977425039999999" green="0.33631908890000001" blue="0.68978685139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="ACF-Uu-Njv" firstAttribute="centerX" secondItem="Z5u-LE-8EO" secondAttribute="centerX" id="BO8-kj-b72"/>
+                        <constraint firstAttribute="width" constant="300" id="Mto-JX-El5"/>
+                        <constraint firstItem="40X-nJ-Nyg" firstAttribute="top" secondItem="Z5u-LE-8EO" secondAttribute="top" constant="10" id="UR3-av-XQw"/>
+                        <constraint firstItem="ACF-Uu-Njv" firstAttribute="top" secondItem="40X-nJ-Nyg" secondAttribute="bottom" constant="10" id="XHj-OU-Y23"/>
+                        <constraint firstItem="40X-nJ-Nyg" firstAttribute="centerX" secondItem="Z5u-LE-8EO" secondAttribute="centerX" id="pgM-Zo-2OB"/>
+                        <constraint firstItem="ACF-Uu-Njv" firstAttribute="bottom" secondItem="Z5u-LE-8EO" secondAttribute="bottom" constant="-10" id="uJ1-aM-pCG"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.40162852112676056" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Z5u-LE-8EO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="pv4-kt-M50"/>
+                <constraint firstItem="Z5u-LE-8EO" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="xrB-CU-t2V"/>
+            </constraints>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="RecalculateSpinner.png" width="66" height="66"/>
+    </resources>
+</document>
