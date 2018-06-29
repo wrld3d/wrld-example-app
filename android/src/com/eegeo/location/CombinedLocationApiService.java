@@ -19,7 +19,7 @@ public class CombinedLocationApiService
 {
 
     private Activity m_activity;
-    private static final String TAG = "CombinedLocationApiService";
+    private static final String TAG = "CombinedLocationService";
 
     private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000 * 5;
     private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 1000 * 1;
@@ -31,8 +31,8 @@ public class CombinedLocationApiService
 
     public CombinedLocationApiService(Activity activity, FusedLocationUpdateListener fusedLocationUpdateListener)
     {
-        this.m_activity = activity;
-        this.m_fusedLocationUpdateListener = fusedLocationUpdateListener;
+        m_activity = activity;
+        m_fusedLocationUpdateListener = fusedLocationUpdateListener;
         startListeningToUpdates();
     }
 
@@ -43,15 +43,16 @@ public class CombinedLocationApiService
 
     private synchronized void buildGoogleApiClient()
     {
-        if(ContextCompat.checkSelfPermission(m_activity,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        if(ContextCompat.checkSelfPermission(m_activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             return;
         }
         if(m_googleApiClient == null)
         {
-            m_googleApiClient = new GoogleApiClient.Builder(m_activity).addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
+            m_googleApiClient = new GoogleApiClient.Builder(m_activity)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API).build();
         }
         createLocationRequest();
     }
@@ -107,8 +108,8 @@ public class CombinedLocationApiService
             Log.v(TAG, "Connected to GoogleApiClient");
             if (m_currentLocation == null) {
                 m_currentLocation = LocationServices.FusedLocationApi.getLastLocation(m_googleApiClient);
-                if (this.m_fusedLocationUpdateListener != null && m_currentLocation != null) {
-                    this.m_fusedLocationUpdateListener.onFusedLocationChanged(m_currentLocation);
+                if (m_fusedLocationUpdateListener != null && m_currentLocation != null) {
+                    m_fusedLocationUpdateListener.onFusedLocationChanged(m_currentLocation);
                 }
             }
             startLocationUpdates();
@@ -120,9 +121,9 @@ public class CombinedLocationApiService
     {
         Log.v(TAG, "onLocationChanged , " + location.getLatitude() + " : " + location.getLongitude());
         m_currentLocation = location;
-        if(this.m_fusedLocationUpdateListener != null)
+        if(m_fusedLocationUpdateListener != null)
         {
-            this.m_fusedLocationUpdateListener.onFusedLocationChanged(m_currentLocation);
+            m_fusedLocationUpdateListener.onFusedLocationChanged(m_currentLocation);
         }
     }
 
@@ -144,6 +145,6 @@ public class CombinedLocationApiService
 
     public interface FusedLocationUpdateListener
     {
-        public void onFusedLocationChanged(Location location);
+        void onFusedLocationChanged(Location location);
     }
 }
