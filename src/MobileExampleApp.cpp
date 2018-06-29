@@ -550,6 +550,13 @@ namespace ExampleApp
                 world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel()
         );
 
+        // we need to enable location & heading for the blue dot. In future we should do something
+        // more sophisticated, like turning down the location & heading frequency / accuracy if it's
+        // not near the camera.
+        auto& locationService = m_pWorld->GetLocationService();
+        locationService.StartUpdatingLocation();
+        locationService.StartUpdatingHeading();
+
         const bool useEegeoPois = true;
         if(useEegeoPois)
         {
