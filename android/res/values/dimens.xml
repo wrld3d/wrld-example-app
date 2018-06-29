@@ -33,6 +33,8 @@
     <dimen name="nav_reroute_dialog_msg_size">14sp</dimen>
 
     <dimen name="nav_calculating_route_width">300dp</dimen>
+    <dimen name="nav_calculating_route_spinner_size">100dp</dimen>
+    <dimen name="nav_calculating_route_margin_large">8dp</dimen>
     <dimen name="nav_calculating_route_margin_medium">4dp</dimen>
     <dimen name="nav_calculating_route_label_size">22sp</dimen>
 
