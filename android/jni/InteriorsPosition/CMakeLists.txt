@@ -7,5 +7,4 @@ set(currsources
 set(sources ${sources} ${currsources})
 source_group(\\jni\\InteriorsPosition FILES ${currsources})
 include(jni/InteriorsPosition/SdkModel/CMakeLists.txt)
-include(jni/InteriorsPosition/View/CMakeLists.txt)
 endif(${ANDROID})

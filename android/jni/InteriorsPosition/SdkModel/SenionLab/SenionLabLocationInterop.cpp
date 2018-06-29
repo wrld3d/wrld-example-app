@@ -4,8 +4,6 @@
 
 #include "AndroidAppThreadAssertionMacros.h"
 #include "AndroidNativeState.h"
-#include "InteriorsLocationAuthorizationChangedMessage.h"
-#include "InteriorsLocationChangedMessage.h"
 #include "SenionLabLocationService.h"
 
 #include <jni.h>
@@ -24,52 +22,87 @@ namespace ExampleApp
                 : m_nativeState(nativeState)
                 , m_pSenionLabLocationService(nullptr)
                 , m_messageBus(messageBus)
-                , m_onDidUpdateLocationCallback(this, &SenionLabLocationInterop::OnDidUpdateLocation)
-                , m_onSetIsAuthorized(this, &SenionLabLocationInterop::OnSetIsAuthorized)
                 , m_apiKey("")
                 , m_apiSecret("")
                 , m_isActive(false)
                 {
                     ASSERT_NATIVE_THREAD
 
-                    m_messageBus.SubscribeNative(m_onDidUpdateLocationCallback);
-                    m_messageBus.SubscribeNative(m_onSetIsAuthorized);
-
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
 
-                    jstring locationManagerClassName = env->NewStringUTF("com/eegeo/interiorsposition/senionlab/SenionLabLocationInterop");
-                    jclass locationManagerClass = m_nativeState.LoadClass(env, locationManagerClassName);
-                    env->DeleteLocalRef(locationManagerClassName);
+                    jclass locationManagerClass = m_nativeState.LoadClass(env, "com/eegeo/interiorsposition/senionlab/SenionLabLocationInterop");
 
                     m_locationManagerClass = static_cast<jclass>(env->NewGlobalRef(locationManagerClass));
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(m_locationManagerClass != nullptr);
+
                     jmethodID locationManagerInit = env->GetMethodID(m_locationManagerClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(locationManagerInit != nullptr);
 
                     jobject instance = env->NewObject(m_locationManagerClass,
                                                       locationManagerInit,
                                                       m_nativeState.activity,
                                                       reinterpret_cast<jlong>(this));
+
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(instance != nullptr);
+
                     m_locationManagerInstance = env->NewGlobalRef(instance);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(m_locationManagerInstance != nullptr);
                 }
 
                 SenionLabLocationInterop::~SenionLabLocationInterop()
                 {
                     ASSERT_NATIVE_THREAD
 
-                    m_messageBus.UnsubscribeNative(m_onSetIsAuthorized);
-                    m_messageBus.UnsubscribeNative(m_onDidUpdateLocationCallback);
-
                     AndroidSafeNativeThreadAttachment attached(m_nativeState);
                     JNIEnv* env = attached.envForThread;
 
                     env->DeleteGlobalRef(m_locationManagerInstance);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+
                     env->DeleteGlobalRef(m_locationManagerClass);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
                 }
 
                 void SenionLabLocationInterop::SetLocationService(SenionLabLocationService *pLocationService)
                 {
+                    ASSERT_NATIVE_THREAD
+
                     Eegeo_ASSERT(pLocationService != nullptr);
                     m_pSenionLabLocationService = pLocationService;
+                }
+
+
+                void SenionLabLocationInterop::UpdateLocation(double latitudeDegrees,
+                                                              double longtitudeDegrees,
+                                                              double horizontalAccuracyInMeters,
+                                                              int senionFloorNumber)
+                {
+                    ASSERT_NATIVE_THREAD
+
+                    m_pSenionLabLocationService->SetLocationFromSenionData(
+                            Eegeo::Space::LatLong::FromDegrees(latitudeDegrees, longtitudeDegrees),
+                            senionFloorNumber,
+                            FloorNumberToFloorIndex(senionFloorNumber),
+                            horizontalAccuracyInMeters);
+                }
+
+                void SenionLabLocationInterop::UpdateHeading(double headingInDegrees)
+                {
+                    ASSERT_NATIVE_THREAD
+
+                    m_pSenionLabLocationService->SetHeadingFromSenionData(headingInDegrees, true);
+                }
+
+                void SenionLabLocationInterop::UpdateIsAuthorized(bool isAuthorized)
+                {
+                    ASSERT_NATIVE_THREAD
+
+                    m_pSenionLabLocationService->SetIsAuthorized(isAuthorized);
                 }
 
                 void SenionLabLocationInterop::StartUpdatingLocation(const std::string& apiKey,
@@ -81,7 +114,6 @@ namespace ExampleApp
                     m_apiSecret = apiSecret;
                     m_isActive = true;
 
-                    AskUserToEnableBluetoothIfDisabled();
                     StartLocationUpdates();
                 }
 
@@ -90,31 +122,10 @@ namespace ExampleApp
                     StopLocationUpdates();
                 }
 
-                jobject SenionLabLocationInterop::ManagedInstance() const
-                {
-                    return m_locationManagerInstance;
-                }
-
-                void SenionLabLocationInterop::OnDidUpdateLocation(const InteriorsLocationChangedMessage& message)
-                {
-                    const auto wrldFloorIndex = FloorNumberToFloorIndex(message.VendorSpecificFloorNumber());
-
-                    m_pSenionLabLocationService->SetLocationFromSenionData(
-                            Eegeo::Space::LatLong::FromDegrees(message.LatitudeDegrees(), message.LongitudeDegrees()),
-                            message.VendorSpecificFloorNumber(),
-                            FloorNumberToFloorIndex(message.VendorSpecificFloorNumber()),
-                            wrldFloorIndex);
-                }
-
-                void SenionLabLocationInterop::OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message)
-                {
-                    m_pSenionLabLocationService->SetIsAuthorized(message.IsAuthorized());
-                }
-
-                int SenionLabLocationInterop::FloorNumberToFloorIndex(const int floorIndex)
+                int SenionLabLocationInterop::FloorNumberToFloorIndex(const int senionFloorNumber)
                 {
                     std::stringstream floorNameStream;
-                    floorNameStream << floorIndex;
+                    floorNameStream << senionFloorNumber;
                     std::string floorName(floorNameStream.str());
 
                     for (auto &kv : m_floorMap)
@@ -125,7 +136,7 @@ namespace ExampleApp
                         }
                     }
 
-                    return floorIndex;
+                    return senionFloorNumber;
                 }
 
                 void SenionLabLocationInterop::OnResume()
@@ -144,20 +155,6 @@ namespace ExampleApp
                 	}
                 }
 
-                void SenionLabLocationInterop::AskUserToEnableBluetoothIfDisabled()
-                {
-                    ASSERT_NATIVE_THREAD
-
-                    AndroidSafeNativeThreadAttachment attached(m_nativeState);
-                    JNIEnv* env = attached.envForThread;
-
-                    jmethodID askUserToEnableBluetoothIfDisabled = env->GetMethodID(m_locationManagerClass,
-                                                                                    "askUserToEnableBluetoothIfDisabled",
-                                                                                    "()V");
-
-                    env->CallVoidMethod(m_locationManagerInstance, askUserToEnableBluetoothIfDisabled);
-                }
-
                 void SenionLabLocationInterop::StartLocationUpdates()
                 {
                 	ASSERT_NATIVE_THREAD
@@ -168,15 +165,26 @@ namespace ExampleApp
 					jmethodID startUpdatingLocation = env->GetMethodID(m_locationManagerClass,
 																	   "startUpdatingLocation",
 																	   "(Ljava/lang/String;Ljava/lang/String;)V");
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(startUpdatingLocation != nullptr);
 
 					jstring apiKeyJString = env->NewStringUTF(m_apiKey.c_str());
-					jstring apiSecretJString = env->NewStringUTF(m_apiSecret.c_str());
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+
+                    jstring apiSecretJString = env->NewStringUTF(m_apiSecret.c_str());
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+
 					env->CallVoidMethod(m_locationManagerInstance,
 										startUpdatingLocation,
 										apiKeyJString,
 										apiSecretJString);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+
 					env->DeleteLocalRef(apiKeyJString);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+
 					env->DeleteLocalRef(apiSecretJString);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
                 }
 
                 void SenionLabLocationInterop::StopLocationUpdates()
@@ -189,8 +197,11 @@ namespace ExampleApp
 					jmethodID stopUpdatingLocation = env->GetMethodID(m_locationManagerClass,
 																	  "stopUpdatingLocation",
 																	  "()V");
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(stopUpdatingLocation != nullptr);
 
 					env->CallVoidMethod(m_locationManagerInstance, stopUpdatingLocation);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
                 }
             }
         }

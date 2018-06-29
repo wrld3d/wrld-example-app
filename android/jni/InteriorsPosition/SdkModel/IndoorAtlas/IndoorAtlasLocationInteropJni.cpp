@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2017), All Rights Reserved
 
 #include "IndoorAtlasLocationInteropJni.h"
-#include "AndroidAppThreadAssertionMacros.h"
 #include "IndoorAtlasLocationInterop.h"
 
 #include <jni.h>
@@ -25,7 +24,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasL
     }
 
     using ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationInterop;
-    reinterpret_cast<IndoorAtlasLocationInterop *>(nativeObjectPtr)->DidUpdateLocation(
+    reinterpret_cast<IndoorAtlasLocationInterop *>(nativeObjectPtr)->UpdateLocation(
             latitudeDegrees,
             longitudeDegrees,
             horizontalAccuracyInMeters,
@@ -38,6 +37,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasL
         jboolean isAuthorized)
 {
     using ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationInterop;
-    reinterpret_cast<IndoorAtlasLocationInterop *>(nativeObjectPtr)->SetIsAuthorized(isAuthorized);
+    reinterpret_cast<IndoorAtlasLocationInterop *>(nativeObjectPtr)->UpdateIsAuthorized(
+            isAuthorized);
 }
 }

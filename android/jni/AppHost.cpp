@@ -1,7 +1,6 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
-#include <set>
-
+#include "AppHost.h"
 #include "AboutPageViewModule.h"
 #include "AndroidApplicationConfigurationVersionProvider.h"
 #include "AndroidAppThreadAssertionMacros.h"
@@ -12,7 +11,6 @@
 #include "AndroidPlatformConfigBuilder.h"
 #include "AndroidAutomatedScreenshotController.h"
 #include "ApiKey.h"
-#include "AppHost.h"
 #include "AppInterface.h"
 #include "ApplicationConfiguration.h"
 #include "ApplicationConfigurationModule.h"
@@ -65,11 +63,12 @@
 #include "NavWidgetViewModule.h"
 #include "WebConnectivityValidator.h"
 #include "SurveyViewModule.h"
-#include "SenionLabBroadcastReceiver.h"
 #include "AndroidAutomatedScreenshotController.h"
 #include "AutomatedScreenshotController.h"
 #include "UiCreatedMessage.h"
 #include "INavWidgetView.h"
+
+#include <set>
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -130,7 +129,6 @@ AppHost::AppHost(
     ,m_pSenionLabLocationModule(NULL)
     ,m_pIndoorAtlasLocationModule(NULL)
     ,m_pInteriorsLocationServiceModule(NULL)
-    ,m_pSenionLabBroadcastReceiver(NULL)
     ,m_pAndroidAutomatedScreenshotController(NULL)
     ,m_surfaceScreenshotService(screenProperties)
     ,m_screenshotService(m_nativeState, m_surfaceScreenshotService)
@@ -328,10 +326,6 @@ void AppHost::OnResume()
 
 	m_pSenionLabLocationModule->GetLocationManager().OnResume();
     //m_pIndoorAtlasLocationModule->GetLocationManager().OnResume();
-    if(m_pSenionLabBroadcastReceiver != NULL)
-    {
-        m_pSenionLabBroadcastReceiver->RegisterReceiver();
-    }
 
     m_pCurrentLocationService->OnResume();
     m_pApp->OnResume();
@@ -347,10 +341,6 @@ void AppHost::OnPause()
     m_pApp->OnPause();
     m_pCurrentLocationService->OnPause();
 
-    if (m_pSenionLabBroadcastReceiver != NULL)
-    {
-        m_pSenionLabBroadcastReceiver->UnregisterReceiver();
-    }
     m_pSenionLabLocationModule->GetLocationManager().OnPause();
 }
 
@@ -634,12 +624,6 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     m_pViewControllerUpdaterModule = Eegeo_NEW(ExampleApp::ViewControllerUpdater::View::ViewControllerUpdaterModule);
 
-    m_pSenionLabBroadcastReceiver = Eegeo_NEW(ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver)(
-            m_pSenionLabLocationModule->GetLocationManager(),
-            m_messageBus,
-            m_nativeState);
-    m_pSenionLabBroadcastReceiver->RegisterReceiver();
-
     ExampleApp::ViewControllerUpdater::View::IViewControllerUpdaterModel& viewControllerUpdaterModel = m_pViewControllerUpdaterModule->GetViewControllerUpdaterModel();
 
 	viewControllerUpdaterModel.AddUpdateableObject(m_pSearchWidgetViewModule->GetSearchWidgetController());
@@ -659,8 +643,6 @@ void AppHost::DestroyApplicationViewModulesFromUiThread()
     if(m_createdUIModules)
     {
     	m_messageBus.UnsubscribeUi(m_userInteractionEnabledChangedHandler);
-
-    	Eegeo_DELETE m_pSenionLabBroadcastReceiver;
 
         Eegeo_DELETE m_pViewControllerUpdaterModule;
 

@@ -26,16 +26,24 @@ namespace ExampleApp
                     JNIEnv* env = attached.envForThread;
 
                     jclass locationManagerClass = m_nativeState.LoadClass(env, "com/eegeo/interiorsposition/indooratlas/IndoorAtlasLocationInterop");
-
-
                     m_locationManagerClass = static_cast<jclass>(env->NewGlobalRef(locationManagerClass));
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(m_locationManagerClass != nullptr);
+
                     jmethodID locationManagerInit = env->GetMethodID(m_locationManagerClass, "<init>", "(Lcom/eegeo/entrypointinfrastructure/MainActivity;J)V");
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(locationManagerInit != nullptr);
 
                     jobject instance = env->NewObject(m_locationManagerClass,
                                                       locationManagerInit,
                                                       m_nativeState.activity,
                                                       reinterpret_cast<jlong>(this));
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(instance != nullptr);
+
                     m_locationManagerInstance = env->NewGlobalRef(instance);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(m_locationManagerInstance != nullptr);
                 }
 
                 IndoorAtlasLocationInterop::~IndoorAtlasLocationInterop()
@@ -46,7 +54,10 @@ namespace ExampleApp
                     JNIEnv* env = attached.envForThread;
 
                     env->DeleteGlobalRef(m_locationManagerInstance);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+
                     env->DeleteGlobalRef(m_locationManagerClass);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
                 }
 
                 void IndoorAtlasLocationInterop::SetLocationService(IndoorAtlasLocationService* pLocationService)
@@ -69,15 +80,24 @@ namespace ExampleApp
                     jmethodID startUpdatingLocation = env->GetMethodID(m_locationManagerClass,
                                                                        "startUpdatingLocation",
                                                                        "(Ljava/lang/String;Ljava/lang/String;)V");
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(startUpdatingLocation != nullptr);
 
                     jstring apiKeyJString = env->NewStringUTF(apiKey.c_str());
                     jstring apiSecretJString = env->NewStringUTF(apiSecret.c_str());
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+
                     env->CallVoidMethod(m_locationManagerInstance,
                                         startUpdatingLocation,
                                         apiKeyJString,
                                         apiSecretJString);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+
                     env->DeleteLocalRef(apiKeyJString);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+
                     env->DeleteLocalRef(apiSecretJString);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
                 }
 
                 void IndoorAtlasLocationInterop::StopUpdating()
@@ -90,11 +110,14 @@ namespace ExampleApp
                     jmethodID stopUpdatingLocation = env->GetMethodID(m_locationManagerClass,
                                                                       "stopUpdatingLocation",
                                                                       "()V");
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
+                    Eegeo_ASSERT(stopUpdatingLocation != nullptr)
 
                     env->CallVoidMethod(m_locationManagerInstance, stopUpdatingLocation);
+                    Eegeo_ASSERT(env->ExceptionCheck() == JNI_FALSE);
                 }
 
-                void IndoorAtlasLocationInterop::DidUpdateLocation(
+                void IndoorAtlasLocationInterop::UpdateLocation(
                         const double latitudeDegrees,
                         const double longitudeDegrees,
                         const double horizontalAccuracyInMeters,
@@ -113,7 +136,7 @@ namespace ExampleApp
                     m_pIndoorAtlasLocationService->SetFloor(floorId, wrldFloorIndex);
                 }
 
-                void IndoorAtlasLocationInterop::SetIsAuthorized(const bool isAuthorized)
+                void IndoorAtlasLocationInterop::UpdateIsAuthorized(const bool isAuthorized)
                 {
                     ASSERT_NATIVE_THREAD
                     m_pIndoorAtlasLocationService->SetIsAuthorized(isAuthorized);

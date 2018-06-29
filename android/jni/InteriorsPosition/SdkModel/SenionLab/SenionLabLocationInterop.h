@@ -2,17 +2,18 @@
 
 #pragma once
 
-#include <jni.h>
-#include <map>
-#include <string>
 
+#include "ISenionLabLocationInterop.h"
 #include "AndroidNativeState.h"
 #include "BidirectionalBus.h"
 #include "ICallback.h"
 #include "InteriorsLocationAuthorizationChangedMessage.h"
 #include "InteriorsLocationChangedMessage.h"
-#include "ISenionLabLocationInterop.h"
 #include "SenionLabLocationService.h"
+
+#include <jni.h>
+#include <map>
+#include <string>
 
 namespace ExampleApp
 {
@@ -31,10 +32,15 @@ namespace ExampleApp
                     ~SenionLabLocationInterop();
 
                     // non-interface
-                    jobject ManagedInstance() const;
+                    void UpdateIsAuthorized(bool isAuthorized);
 
-                    void OnDidUpdateLocation(const InteriorsLocationChangedMessage& message);
-                    void OnSetIsAuthorized(const InteriorsLocationAuthorizationChangedMessage& message);
+                    void UpdateLocation(
+                            double latitudeDegrees,
+                            double longtitudeDegrees,
+                            double horizontalAccuracyInMeters,
+                            int senionFloorNumber);
+
+                    void UpdateHeading(double headingInDegrees);
 
                     void OnResume();
                     void OnPause();
@@ -48,17 +54,14 @@ namespace ExampleApp
 
                     void StopUpdatingLocation() override;
                 private:
-                    int FloorNumberToFloorIndex(const int floorIndex);
+                    int FloorNumberToFloorIndex(const int senionFloorNumber);
 
-                    void AskUserToEnableBluetoothIfDisabled();
                     void StartLocationUpdates();
                     void StopLocationUpdates();
 
                     AndroidNativeState& m_nativeState;
                     SenionLabLocationService* m_pSenionLabLocationService;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
-                    Eegeo::Helpers::TCallback1<SenionLabLocationInterop, const InteriorsLocationChangedMessage&> m_onDidUpdateLocationCallback;
-                    Eegeo::Helpers::TCallback1<SenionLabLocationInterop, const InteriorsLocationAuthorizationChangedMessage&> m_onSetIsAuthorized;
                     jclass m_locationManagerClass;
                     jobject m_locationManagerInstance;
                     std::map<int, std::string> m_floorMap;

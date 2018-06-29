@@ -62,7 +62,6 @@
 #include "SenionLabLocationModule.h"
 #include "IndoorAtlasLocationModule.h"
 #include "InteriorsLocationServiceModule.h"
-#include "SenionLabBroadcastReceiver.h"
 #include "AndroidAutomatedScreenshotController.h"
 #include "AndroidScreenshotService.h"
 #include "SurfaceScreenshotService.h"
@@ -172,7 +171,6 @@ private:
     ExampleApp::InteriorsPosition::SdkModel::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
     ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationModule* m_pIndoorAtlasLocationModule;
     ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule* m_pInteriorsLocationServiceModule;
-    ExampleApp::InteriorsPosition::View::SenionLab::SenionLabBroadcastReceiver* m_pSenionLabBroadcastReceiver;
 
     ExampleApp::Automation::SdkModel::AndroidAutomatedScreenshotController* m_pAndroidAutomatedScreenshotController;
     ExampleApp::Automation::SdkModel::SurfaceScreenshotService m_surfaceScreenshotService;

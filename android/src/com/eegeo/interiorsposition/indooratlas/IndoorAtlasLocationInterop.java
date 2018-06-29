@@ -1,7 +1,6 @@
 package com.eegeo.interiorsposition.indooratlas;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.indooratlas.android.sdk.IALocation;
@@ -11,7 +10,7 @@ import com.indooratlas.android.sdk.IALocationRequest;
 import com.indooratlas.android.sdk.IARegion;
 
 @SuppressWarnings("unused")
-public class IndoorAtlasLocationManager implements IALocationListener, IARegion.Listener
+public class IndoorAtlasLocationInterop implements IALocationListener, IARegion.Listener
 {
     private final MainActivity m_activity;
     private long m_nativeCallerPointer;
@@ -22,7 +21,7 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
     private static AlertDialog m_connectionDialog = null;
 
 	@SuppressWarnings("unused")
-    public IndoorAtlasLocationManager(MainActivity activity, long nativeCallerPointer)
+    public IndoorAtlasLocationInterop(MainActivity activity, long nativeCallerPointer)
     {
         m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
@@ -40,10 +39,10 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
 				extras.putString(IALocationManager.EXTRA_API_KEY, apiKey);
 				extras.putString(IALocationManager.EXTRA_API_SECRET, apiSecret);
 				m_locationManager = IALocationManager.create(m_activity, extras);
-				m_locationManager.registerRegionListener(IndoorAtlasLocationManager.this);
+				m_locationManager.registerRegionListener(IndoorAtlasLocationInterop.this);
 				
 				IALocationRequest locationRequest = IALocationRequest.create();
-				m_locationManager.requestLocationUpdates(locationRequest, IndoorAtlasLocationManager.this);
+				m_locationManager.requestLocationUpdates(locationRequest, IndoorAtlasLocationInterop.this);
 
                 updateNativeIsAuthorized(true);
 			}
@@ -62,8 +61,8 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
 				
 				if(m_locationManager != null)
 				{
-					m_locationManager.unregisterRegionListener(IndoorAtlasLocationManager.this);
-					m_locationManager.removeLocationUpdates(IndoorAtlasLocationManager.this);
+					m_locationManager.unregisterRegionListener(IndoorAtlasLocationInterop.this);
+					m_locationManager.removeLocationUpdates(IndoorAtlasLocationInterop.this);
 					m_locationManager = null;
 				}
 			}
@@ -91,15 +90,7 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras)
     {
-    	switch(status)
-    	{
-        case IALocationManager.STATUS_AVAILABLE:
-            showConnectionDialog("IndoorAtlas available", "Recently connected to IndoorAtlas.");
-            break;
-        case IALocationManager.STATUS_TEMPORARILY_UNAVAILABLE:
-            showConnectionDialog("IndoorAtlas unavailable", "Recently lost connection to IndoorAtlas.");
-            break;
-    	}
+
     }
     
     @Override
@@ -115,32 +106,8 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
     public void onExitRegion(IARegion region)
     {
     }
-    
-    private void showConnectionDialog(String Title, String message)
-    {
-    	/*
-    	AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-        builder.setTitle(Title);
-        builder.setMessage(message);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-            	m_connectionDialog.dismiss();
-            	m_connectionDialog = null;
-            }
-        });
-        
-        if(m_connectionDialog != null)
-        {
-        	m_connectionDialog.dismiss();
-        }
-        m_connectionDialog = builder.show();
-        //*/
-    }
 
-	private void updateNativeLocation(
+   	private void updateNativeLocation(
 			final double latitudeDegrees,
 			final double longitudeDegrees,
 			final double horizontalAccuracyInMeters,
@@ -148,7 +115,7 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
 
 		m_activity.runOnNativeThread(new Runnable() {
 			public void run() {
-				IndoorAtlasLocationManagerJniMethods.UpdateLocation(
+				IndoorAtlasLocationInteropJniMethods.UpdateLocation(
 						m_nativeCallerPointer,
 						latitudeDegrees,
 						longitudeDegrees,
@@ -163,7 +130,7 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
 
 		m_activity.runOnNativeThread(new Runnable() {
 			public void run() {
-				IndoorAtlasLocationManagerJniMethods.UpdateIsAuthorized(
+				IndoorAtlasLocationInteropJniMethods.UpdateIsAuthorized(
 						m_nativeCallerPointer,
 						isAuthorized);
 			}

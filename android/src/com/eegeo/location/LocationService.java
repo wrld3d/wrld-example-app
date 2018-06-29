@@ -8,18 +8,24 @@ import com.eegeo.location.CombinedLocationApiService.FusedLocationUpdateListener
 import com.eegeo.entrypointinfrastructure.MainActivity;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.GoogleApiAvailability;
+
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.util.Log;
 
 @SuppressWarnings("unused")
-class LocationService
-{
+class LocationService {
     private final long m_nativeCallerPointer;
     private Location m_bestLocation = null;
     private boolean m_isListening = false;
@@ -33,55 +39,83 @@ class LocationService
     private LocationManager m_locationManager;
 
     @SuppressWarnings("unused")
-    public LocationService(Activity activity, long nativeCallerPointer)
-    {
-        m_activity = (MainActivity)activity;
+    public LocationService(Activity activity, long nativeCallerPointer) {
+        m_activity = (MainActivity) activity;
         m_nativeCallerPointer = nativeCallerPointer;
+        m_isAuthorized = isLocationEnabled(m_activity);
+
+        Log.v("Location", "ctor; is authorized? : " + m_isAuthorized);
+
+        // this could be re-entrant. Might be better to expose isAuthorized method and just call it
+        // from C++ the first time.
+        updateNativeAuthorized(m_isAuthorized);
+    }
+
+    // TODO: not sure which of these checks is the best
+    private static boolean isLocationEnabled(Context context) {
+        String locationProviders;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try {
+                return Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE) !=
+                        Settings.Secure.LOCATION_MODE_OFF;
+            } catch (Settings.SettingNotFoundException e) {
+                return false;
+            }
+        }
+
+        locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        return !TextUtils.isEmpty(locationProviders);
+    }
+
+    private boolean hasUserGrantedLocationPermissions() {
+        final boolean hasFineLocationPermission =
+                ActivityCompat.checkSelfPermission(m_activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        final boolean hasCoarseLocationPermission =
+               ActivityCompat.checkSelfPermission(m_activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        Log.v("Location", "location: ACCESS_FINE_LOCATION permission = " + hasFineLocationPermission);
+        Log.v("Location", "location: ACCESS_COARSE_LOCATION permission = " + hasCoarseLocationPermission);
+
+        return hasFineLocationPermission && hasCoarseLocationPermission;
     }
 
     @SuppressWarnings({"unused", "WeakerAccess"})
-    public void startListeningToUpdates()
-   {
-        m_activity.runOnUiThread(new Runnable()
-        {
-            public void run()
-            {
-                try
-                {
-                    if (m_isListening) {
-                        return;
-                    }
-
-                    setupListenerAndLocationManager();
-                    forceLocationFromCachedProviders();
-
-                    if (m_locationListener != null)
-                    {
-                        m_locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, m_locationListener);
-                        m_locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, m_locationListener);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Log.v("Location", e.getMessage());
-                }
+    public void startListeningToUpdates() {
+        try {
+            if (m_isListening) {
+                return;
             }
-        });
+
+            setupListenerAndLocationManager();
+            forceLocationFromCachedProviders();
+
+            if (m_locationListener != null) {
+                if (!hasUserGrantedLocationPermissions()) {
+                    return;
+                }
+
+                Log.v("Location", "requesting location updates for GPS_PROVIDER & NETWORK_PROVIDER");
+                m_locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, m_locationListener);
+                m_locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, m_locationListener);
+            }
+        }
+        catch (Exception e)
+        {
+            Log.v("Location", e.getMessage());
+        }
     }
 
     @SuppressWarnings("unused")
     public void stopListeningToUpdates()
     {
-        m_activity.runOnUiThread(new Runnable() {
-            public void run() {
-                if (m_combinedLocationApiService != null) {
-                    m_combinedLocationApiService.stopLocationUpdates();
-                    m_isListening = false;
-                } else if (m_isListening) {
-                    tearDownListener();
-                }
-            }
-        });
+        if (m_combinedLocationApiService != null) {
+            m_combinedLocationApiService.stopLocationUpdates();
+            m_isListening = false;
+        } else if (m_isListening) {
+            tearDownListener();
+        }
     }
 
     private void forceLocationFromCachedProviders()
@@ -128,76 +162,92 @@ class LocationService
         m_isListening = false;
     }
 
-    private boolean isAnyProviderEnabled(LocationManager locationManager)
+    private boolean isAnyProviderEnabled()
     {
-    	if(locationManager == null)
+    	if(m_locationManager == null)
     	{
     		return false;
     	}
     	
-    	boolean gpsIsAuthorized = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    	boolean networkIsAuthorized = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    	boolean gpsIsAuthorized = m_locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    	boolean networkIsAuthorized = m_locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     	return (gpsIsAuthorized || networkIsAuthorized);
     }
     
     private void setupListenerAndLocationManager()
     {
         m_locationManager = (LocationManager) m_activity.getSystemService(Context.LOCATION_SERVICE);
-        m_isAuthorized = isAnyProviderEnabled(m_locationManager);
+        m_isAuthorized = isAnyProviderEnabled();
 
-        if(GooglePlayServicesUtil.isGooglePlayServicesAvailable(m_activity) == ConnectionResult.SUCCESS)
-        {
-            if(m_combinedLocationApiService == null)
-            {
-                m_combinedLocationApiService = new CombinedLocationApiService(m_activity, new FusedLocationUpdateListener()
-                {
-                    @Override
-                    public void onFusedLocationChanged(Location location)
-                    {
-                        m_bestLocation = location;
-                        updateNativeLocation(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getAccuracy());
-                    }
-                });
+        final int resultCode = GoogleApiAvailability
+                .getInstance()
+                .isGooglePlayServicesAvailable(m_activity);
+
+        if(resultCode == ConnectionResult.SUCCESS) {
+            if(m_combinedLocationApiService == null) {
+                CreateCombinedLocationService();
             }
-            else
-            {
+            else {
                 m_combinedLocationApiService.startListeningToUpdates();
             }
 
-            if(m_bestLocation == null)
-            {
+            if(m_bestLocation == null) {
                 forceLocationFromCachedProviders();
             }
         }
         else
         {
            if (m_locationListener == null) {
-               m_locationListener = new LocationListener() {
-                   public void onLocationChanged(Location location) {
-                       if (isBetterLocation(location, m_bestLocation)) {
-                           m_bestLocation = location;
-                           updateNativeLocation(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getAccuracy());
-                           Log.v("Location", "best updated from onLocationChanged : " + location.getLatitude() + " , " + location.getLongitude());
-                       }
-                   }
-
-                   public void onStatusChanged(String provider, int status, Bundle extras) {
-                       Log.v("Location", "onStatusChanged");
-                   }
-
-                   public void onProviderEnabled(String provider) {
-                       m_isAuthorized = isAnyProviderEnabled(m_locationManager);
-                       Log.v("Location", "onProviderEnabled, LocationService.m_isAuthorized : " + m_isAuthorized);
-                   }
-
-                   public void onProviderDisabled(String provider) {
-                       m_isAuthorized = isAnyProviderEnabled(m_locationManager);
-                       Log.v("Location", "onProviderDisabled, LocationService.m_isAuthorized : " + m_isAuthorized);
-                   }
-               };
+               CreateFallbackLocationListener();
            }
         }
         m_isListening = true;
+    }
+
+    private void CreateCombinedLocationService() {
+        Log.v("Location", "Creating CombinedLocationApiService");
+        m_combinedLocationApiService = new CombinedLocationApiService(m_activity, new FusedLocationUpdateListener()
+        {
+            @Override
+            public void onFusedLocationChanged(Location location)
+            {
+                m_bestLocation = location;
+                updateNativeLocation(
+                        location.getLatitude(),
+                        location.getLongitude(),
+                        location.getAltitude(),
+                        location.getAccuracy());
+            }
+        });
+    }
+
+    private void CreateFallbackLocationListener() {
+        Log.v("Location", "Creating LocationListener as a fallback");
+        m_locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                if (isBetterLocation(location, m_bestLocation)) {
+                    m_bestLocation = location;
+                    updateNativeLocation(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getAccuracy());
+                    Log.v("Location", "best updated from onLocationChanged : " + location.getLatitude() + " , " + location.getLongitude());
+                }
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                Log.v("Location", "onStatusChanged");
+            }
+
+            public void onProviderEnabled(String provider) {
+                m_isAuthorized = isAnyProviderEnabled();
+                updateNativeAuthorized(m_isAuthorized);
+                Log.v("Location", "onProviderEnabled, LocationService.m_isAuthorized : " + m_isAuthorized);
+            }
+
+            public void onProviderDisabled(String provider) {
+                m_isAuthorized = isAnyProviderEnabled();
+                updateNativeAuthorized(m_isAuthorized);
+                Log.v("Location", "onProviderDisabled, LocationService.m_isAuthorized : " + m_isAuthorized);
+            }
+        };
     }
 
     // Hoick http://developer.android.com/guide/topics/location/strategies.html
@@ -272,30 +322,28 @@ class LocationService
             final double altitudeMeters,
             final double horizontalAccuracyMeters)
     {
-        m_activity.runOnNativeThread(new Runnable()
-        {
-            public void run()
-            {
+        //m_activity.runOnNativeThread(new Runnable()
+        //{
+        //    public void run() {
                 LocationServiceJniMethods.UpdateLocation(
                         m_nativeCallerPointer,
                         latitudeDegrees,
                         longitudeDegrees,
                         altitudeMeters,
                         horizontalAccuracyMeters);
-            }
-        });
+        //    }
+        //});
     }
 
     private void updateNativeAuthorized(final boolean isAuthorized)
     {
-        m_activity.runOnNativeThread(new Runnable()
-        {
-            public void run()
-            {
+        //m_activity.runOnNativeThread(new Runnable() {
+        //    public void run()
+        //   {
                 LocationServiceJniMethods.UpdateAuthorized(
                         m_nativeCallerPointer,
                         isAuthorized);
-            }
-        });
+        //    }
+        //});
     }
 }

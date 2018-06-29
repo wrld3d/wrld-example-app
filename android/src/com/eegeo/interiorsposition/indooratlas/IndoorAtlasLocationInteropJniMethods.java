@@ -2,7 +2,7 @@
 
 package com.eegeo.interiorsposition.indooratlas;
 
-public class IndoorAtlasLocationManagerJniMethods
+public class IndoorAtlasLocationInteropJniMethods
 {
     public static native void UpdateLocation(long nativeCallerPointer,
                                              double latitudeInDegrees,

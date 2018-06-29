@@ -30,13 +30,13 @@ namespace ExampleApp
                     ~IndoorAtlasLocationInterop();
 
                     // non-interface methods
-                    void DidUpdateLocation(
+                    void UpdateLocation(
                             const double latitudeDegrees,
                             const double longitudeDegrees,
                             const double horizontalAccuracyInMeters,
                             const std::string& floorId);
 
-                    void SetIsAuthorized(const bool isAuthorized);
+                    void UpdateIsAuthorized(const bool isAuthorized);
 
                     // interface implementation
                     void SetLocationService(IndoorAtlasLocationService* pLocationService) override;

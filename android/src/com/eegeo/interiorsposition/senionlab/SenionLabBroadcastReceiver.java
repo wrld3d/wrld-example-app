@@ -1,5 +1,6 @@
 package com.eegeo.interiorsposition.senionlab;
 
+import com.eegeo.entrypointinfrastructure.INativeMessageRunner;
 import com.senionlab.slutilities.geofencing.interfaces.SLGeometry;
 import com.senionlab.slutilities.service.SLBroadcastReceiver;
 import com.senionlab.slutilities.type.LocationAvailability;
@@ -9,100 +10,115 @@ import com.senionlab.slutilities.type.SLMotionType;
 
 class SenionLabBroadcastReceiver extends SLBroadcastReceiver
 {
-    private final Object m_errorLock = new Object();
-    private final Object m_updateLock = new Object();
-    private long m_nativeCallerPointer;
-    private SenionLabLocationManager m_locationManager;
+    private INativeMessageRunner m_nativeMessageRunner;
+    private final long m_nativeCallerPointer;
 
-    public SenionLabBroadcastReceiver(SenionLabLocationManager locationManager, long nativeCallerPointer)
+    public SenionLabBroadcastReceiver(INativeMessageRunner nativeMessageRunner, long nativeCallerPointer)
     {
+        m_nativeMessageRunner = nativeMessageRunner;
         m_nativeCallerPointer = nativeCallerPointer;
-        m_locationManager = locationManager;
-    }
-    
-    public void registerReceiver()
-    {
-    	m_locationManager.registerReceiver(this);
-    }
-
-    public void unregisterReceiver()
-    {
-        m_locationManager.unregisterReceiver(this);
     }
 
     @Override
     public void didUpdateLocation(SLCoordinate3D location, double horizontalAccuracyInMeters)
     {
-        synchronized (m_updateLock)
-        {
-            SenionLabBroadcastReceiverJniMethods.DidUpdateLocation(m_nativeCallerPointer,
-                                                                   location.getLatitude(),
-                                                                   location.getLongitude(),
-                                                                   horizontalAccuracyInMeters,
-                                                                   location.getFloorNr().intValue());
-        }
+        updateNativeLocation(
+                location.getLatitude(),
+                location.getLongitude(),
+                horizontalAccuracyInMeters,
+                location.getFloorNr().intValue());
     }
-    
+
     @Override
     public void didUpdateLocationAvailability(LocationAvailability locationAvailability)
     {
-    	boolean available = locationAvailability == LocationAvailability.AVAILABLE;
-    	m_locationManager.updateAvailability(available);
+
     }
 
     @Override
     public void didEnterGeometry(SLGeometry slGeometry)
     {
-        didLocationError(false);
+        updateNativeIsAuthorized(true);
     }
 
     @Override
     public void didLeaveGeometry(SLGeometry slGeometry)
     {
-        didLocationError(false);
+        updateNativeIsAuthorized(true);
     }
 
     @Override
-    public void didUpdateHeading(double v, SLHeadingStatus slHeadingStatus)
-    {
-        didLocationError(false);
+    public void didUpdateHeading(double headingInDegrees, SLHeadingStatus headingStatus) {
+        if (headingStatus == SLHeadingStatus.CONFIRMED || headingStatus == SLHeadingStatus.PREDICTED) {
+            updateNativeHeading(headingInDegrees);
+        } else {
+            updateNativeIsAuthorized(true);
+        }
     }
 
     @Override
     public void didUpdateMotionType(SLMotionType slMotionType)
     {
-        didLocationError(false);
+        updateNativeIsAuthorized(true);
     }
 
     @Override
     public void didFinishLoadingManager()
     {
-        didLocationError(false);
+        updateNativeIsAuthorized(true);
     }
 
     @Override
     public void errorWhileLoadingManager(String s)
     {
-        didLocationError(true);
+        updateNativeIsAuthorized(false);
     }
 
     @Override
     public void errorWifiNotEnabled()
     {
-        didLocationError(true);
+        updateNativeIsAuthorized(false);
     }
 
     @Override
     public void errorBleNotEnabled()
     {
-        didLocationError(true);
+        updateNativeIsAuthorized(false);
     }
 
-    private void didLocationError(final boolean didError)
-    {
-        synchronized (m_errorLock)
-        {
-            SenionLabBroadcastReceiverJniMethods.SetIsAuthorized(m_nativeCallerPointer, !didError);
-        }
+    private void updateNativeIsAuthorized(final boolean isAuthorized) {
+        m_nativeMessageRunner.runOnNativeThread(new Runnable() {
+            public void run() {
+                SenionLabLocationInteropJniMethods.UpdateIsAuthorized(m_nativeCallerPointer, isAuthorized);
+            }
+        });
+    }
+
+    private void updateNativeLocation(
+            final double latitudeDegrees,
+            final double longitudeDegrees,
+            final double horizontalAccuracyInMeters,
+            final int senionFloorNumber) {
+
+        m_nativeMessageRunner.runOnNativeThread(new Runnable() {
+            public void run() {
+                SenionLabLocationInteropJniMethods.UpdateLocation(
+                        m_nativeCallerPointer,
+                        latitudeDegrees,
+                        longitudeDegrees,
+                        horizontalAccuracyInMeters,
+                        senionFloorNumber);
+            }
+        });
+    }
+
+    private void updateNativeHeading(final double heading) {
+        m_nativeMessageRunner.runOnNativeThread(new Runnable() {
+            public void run() {
+                SenionLabLocationInteropJniMethods.UpdateHeading(
+                        m_nativeCallerPointer,
+                        heading);
+            }
+        });
     }
 }
