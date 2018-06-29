@@ -45,14 +45,14 @@ public class HeadingService implements SensorEventListener
 	private float[] m_geomagnetic = new float[3];
 
 	private double heading()
-	{ 
+	{
 		if(m_useDeprecatedOrientationMethod)
 		{
 			return m_azimuthDegrees;
 		}
 		else
 		{
-			return filteredResultDegrees(); 
+			return filteredResultDegrees();
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class HeadingService implements SensorEventListener
 		m_nativeCallerPointer = nativeCallerPointer;
 		m_deviceRotation = ((WindowManager) m_activity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
 	}
-    
+
     @SuppressWarnings("unused")
 	public void startListening()
     {
@@ -234,8 +234,8 @@ public class HeadingService implements SensorEventListener
 
 	private void updateNativeHeading(final double heading)
 	{
-		m_activity.runOnNativeThread(new Runnable()
-		{
+		Log.v("HeadingService", "heading: " + heading);
+		m_activity.runOnNativeThread(new Runnable() {
 			public void run()
 			{
 				HeadingServiceJniMethods.UpdateHeading(m_nativeCallerPointer, heading);
