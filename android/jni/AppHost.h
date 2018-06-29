@@ -103,10 +103,6 @@ public:
 
     void HandleOpenUrlEvent(const AppInterface::UrlData& data);
 
-    void SetEnvironmentFlatten(bool flattenState);
-    void SetCameraLocation(const Eegeo::Space::LatLongAltitude& interestPoint, double distanceToInterestPoint, double orientationInDegrees);
-    void SendCameraLocationToGUI();
-
     void SetSharedSurface(EGLSurface sharedSurface);
     void SetViewportOffset(float x, float y);
 
