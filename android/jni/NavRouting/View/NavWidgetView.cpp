@@ -291,8 +291,8 @@ namespace ExampleApp
 
                 jstring messageStr = env->NewStringUTF(message.c_str());
 
-                jmethodID setLocationMethod = env->GetMethodID(m_uiViewClass, "showRerouteDialog", "(Ljava/lang/String;)V");
-                env->CallVoidMethod(m_uiView, setLocationMethod, messageStr);
+                jmethodID showRerouteDialogMethod = env->GetMethodID(m_uiViewClass, "showRerouteDialog", "(Ljava/lang/String;)V");
+                env->CallVoidMethod(m_uiView, showRerouteDialogMethod, messageStr);
 
                 env->DeleteLocalRef(messageStr);
             }
@@ -325,11 +325,12 @@ namespace ExampleApp
 
             void NavWidgetView::ShowCalculatingRouteSpinner()
             {
-                //ToDo: Implement
+                CallVoidMethod("showCalculatingRouteSpinner");
             }
+
             void NavWidgetView::HideCalculatingRouteSpinner()
             {
-                //ToDo: Implement
+                CallVoidMethod("hideCalculatingRouteSpinner");
             }
 
             void NavWidgetView::CallVoidMethod(const std::string& methodName)

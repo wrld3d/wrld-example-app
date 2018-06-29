@@ -31,6 +31,11 @@
     <dimen name="nav_reroute_dialog_btn_subtext_size">14sp</dimen>
     <dimen name="nav_reroute_dialog_label_size">22sp</dimen>
     <dimen name="nav_reroute_dialog_msg_size">14sp</dimen>
+
+    <dimen name="nav_calculating_route_width">300dp</dimen>
+    <dimen name="nav_calculating_route_margin_medium">4dp</dimen>
+    <dimen name="nav_calculating_route_label_size">22sp</dimen>
+
     <dimen name="nav_search_margin">40sp</dimen>
     <dimen name="nav_search_width">300sp</dimen>
 </resources>

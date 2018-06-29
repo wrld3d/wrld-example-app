@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/nav_calculating_route_width"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/nav_calculating_route_margin_large"
+    android:orientation="vertical"
+    android:padding="@dimen/nav_calculating_route_margin_large">
+
+    <ImageView
+        android:id="@+id/calculating_spinner_image_view"
+        android:layout_width="150px"
+        android:layout_height="150px"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/calculate_spinner" />
+
+    <TextView
+        android:id="@+id/nav_calculating_route_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/nav_reroute_dialog_margin_medium"
+        android:paddingRight="@dimen/nav_reroute_dialog_margin_medium"
+        android:text="@string/nav_calculating_route_label_text"
+        android:textAlignment="center"
+        android:textColor="@color/nav_dialog"
+        android:textSize="@dimen/nav_calculating_route_label_size" />
+</LinearLayout>
