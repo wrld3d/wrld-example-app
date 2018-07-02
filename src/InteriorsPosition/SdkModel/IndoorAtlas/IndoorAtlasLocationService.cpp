@@ -158,17 +158,14 @@ namespace ExampleApp
                 {
                     const auto* interiorModel = m_interiorInteractionModel.GetInteriorModel();
                     
-                    if(interiorModel == nullptr)
+                    if(interiorModel == nullptr || m_floorIndex < 0)
                     {
                         return false;
                     }
-                    
-                    Eegeo_ASSERT(m_floorIndex >= 0, "invalid floor index");
-                    
+
                     altitude = ExampleApp::Helpers::InteriorHeightHelpers::GetFloorHeightAboveSeaLevelIncludingEnvironmentFlattening(*interiorModel,
                                                                                                                                      static_cast<unsigned int>(m_floorIndex),
                                                                                                                                      m_environmentFlatteningService.GetCurrentScale());
-                    
                     return true;
                 }
 
