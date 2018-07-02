@@ -102,6 +102,21 @@
 @property (nonatomic, assign) UIView* menuContainer;
 
 /*!
+ Boolean flag allowing the search results to be enabled or disabled
+ */
+@property (nonatomic) BOOL resultsVisible;
+
+/*!
+ Boolean flag allowing the suggestions to be enabled or disabled
+ */
+@property (nonatomic) BOOL suggestionsVisible;
+
+/*!
+ Boolean flag allowing the menu view to be enabled or disabled
+ */
+@property (nonatomic) BOOL menuVisible;
+
+/*!
  @param searchModel WRLDSearchModel that should populate result views.
  */
 - (void) useSearchModel: (WRLDSearchModel*) searchModel;
@@ -208,5 +223,10 @@
  Updates layouts of children elements when the container is updated
  */
 - (void) refreshLayout;
+
+/*!
+ Grants the Searchbar first responder status
+ */
+-(void) gainFocus;
 
 @end
