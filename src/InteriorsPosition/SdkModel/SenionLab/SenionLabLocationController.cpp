@@ -32,42 +32,55 @@ namespace ExampleApp
                     m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
                 }
                 
+                namespace
+                {
+                    bool IsInSenionIndoorMap(const AppModes::SdkModel::AppMode& appMode,
+                                             const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                             const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
+                    {
+                        if(appMode != AppModes::SdkModel::InteriorMode)
+                        {
+                            return false;
+                        }
+                        
+                        if(!interiorId.IsValid())
+                        {
+                            return false;
+                        }
+                        
+                        typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
+                        TrackingInfoMap trackingInfoMap;
+                        InteriorsPosition::TryAndGetInteriorTrackingInfo(trackingInfoMap, interiorId, interiorMetaDataRepository);
+                        
+                        const TrackingInfoMap::const_iterator trackingInfoEntry = trackingInfoMap.find(interiorId.Value());
+                        
+                        if (trackingInfoEntry == trackingInfoMap.end())
+                        {
+                            return false;
+                        }
+                        
+                        const auto& trackingInfo = trackingInfoEntry->second;
+                        
+                        return trackingInfo.GetType() == "Senion";
+                    }
+                }
+                
                 void SenionLabLocationController::OnAppModeChanged()
                 {
-                    // todo loc: duplicate code in service
                     m_locationService.StopUpdating();
                     
-                    if(m_appModeModel.GetAppMode() != AppModes::SdkModel::InteriorMode)
-                    {
-                        return;
-                    }
+                    const auto appMode = m_appModeModel.GetAppMode();
+                    const auto selectedInteriorId = m_interiorSelectionModel.GetSelectedInteriorId();
                     
-                    const auto interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-
-                    if(!interiorId.IsValid())
+                    if(IsInSenionIndoorMap(appMode, selectedInteriorId, m_interiorMetaDataRepository))
                     {
-                        return;
+                        m_locationService.StartUpdating();
                     }
-
-                    typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
-                    TrackingInfoMap trackingInfoMap;
-                    InteriorsPosition::TryAndGetInteriorTrackingInfo(trackingInfoMap, interiorId, m_interiorMetaDataRepository);
-
-                    const TrackingInfoMap::const_iterator trackingInfoEntry = trackingInfoMap.find(interiorId.Value());
-
-                    if (trackingInfoEntry == trackingInfoMap.end())
+                    else
                     {
-                        return;
+                        m_locationService.StopUpdating();
+                        m_locationService.RestoreDefaultState();
                     }
-
-                    const auto& trackingInfo = trackingInfoEntry->second;
-
-                    if (trackingInfo.GetType() != "Senion")
-                    {
-                        return;
-                    }
-
-                    m_locationService.StartUpdating();
                 }
             }
         }

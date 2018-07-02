@@ -38,8 +38,12 @@ namespace ExampleApp
                     void SetHorizontalAccuracy(double radius);
                     void SetFloor(const std::string& indoorAtlasFloorId, int floorIndex);
                     
+                    Eegeo::Location::ILocationService& GetDefaultLocationService() const;
+                    
                     void StartUpdating();
                     void StopUpdating();
+                    
+                    void RestoreDefaultState();
                     
                     // General
                     void OnPause();

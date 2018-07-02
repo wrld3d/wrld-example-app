@@ -32,42 +32,55 @@ namespace ExampleApp
                     m_appModeModel.UnregisterAppModeChangedCallback(m_appModeChangedCallback);
                 }
                 
+                namespace
+                {
+                    bool IsInIndoorAtlasIndoorMap(const AppModes::SdkModel::AppMode& appMode,
+                                                  const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                                                  const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
+                    {
+                        if(appMode != AppModes::SdkModel::InteriorMode)
+                        {
+                            return false;
+                        }
+                        
+                        if(!interiorId.IsValid())
+                        {
+                            return false;
+                        }
+                        
+                        typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
+                        TrackingInfoMap trackingInfoMap;
+                        InteriorsPosition::TryAndGetInteriorTrackingInfo(trackingInfoMap, interiorId, interiorMetaDataRepository);
+                        
+                        const TrackingInfoMap::const_iterator trackingInfoEntry = trackingInfoMap.find(interiorId.Value());
+                        
+                        if (trackingInfoEntry == trackingInfoMap.end())
+                        {
+                            return false;
+                        }
+                        
+                        const auto& trackingInfo = trackingInfoEntry->second;
+                        
+                        return trackingInfo.GetType() == "IndoorAtlas";
+                    }
+                }
+                
                 void IndoorAtlasLocationController::OnAppModeChanged()
                 {
-                    // todo loc: duplicate code in service
                     m_locationService.StopUpdating();
                     
-                    if(m_appModeModel.GetAppMode() != AppModes::SdkModel::InteriorMode)
+                    const auto appMode = m_appModeModel.GetAppMode();
+                    const auto selectedInteriorId = m_interiorSelectionModel.GetSelectedInteriorId();
+                    
+                    if(IsInIndoorAtlasIndoorMap(appMode, selectedInteriorId, m_interiorMetaDataRepository))
                     {
-                        return;
+                        m_locationService.StartUpdating();
                     }
-                    
-                    const auto interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
-                    
-                    if(!interiorId.IsValid())
+                    else
                     {
-                        return;
+                        m_locationService.StopUpdating();
+                        m_locationService.RestoreDefaultState();
                     }
-                    
-                    typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
-                    TrackingInfoMap trackingInfoMap;
-                    InteriorsPosition::TryAndGetInteriorTrackingInfo(trackingInfoMap, interiorId, m_interiorMetaDataRepository);
-                    
-                    const TrackingInfoMap::const_iterator trackingInfoEntry = trackingInfoMap.find(interiorId.Value());
-                    
-                    if (trackingInfoEntry == trackingInfoMap.end())
-                    {
-                        return;
-                    }
-                    
-                    const auto& trackingInfo = trackingInfoEntry->second;
-                    
-                    if (trackingInfo.GetType() != "IndoorAtlas")
-                    {
-                        return;
-                    }
-                    
-                    m_locationService.StartUpdating();
                 }
             }
         }

@@ -152,6 +152,12 @@ namespace ExampleApp
                     
                     m_senionInterop.StopUpdatingLocation();
                 }
+                
+                void SenionLabLocationService::RestoreDefaultState()
+                {
+                    m_defaultLocationService.StartUpdatingLocation();
+                    m_defaultLocationService.StartUpdatingHeading();
+                }
 
                 // General
                 void SenionLabLocationService::OnPause()

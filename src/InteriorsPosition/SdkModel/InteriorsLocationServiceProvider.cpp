@@ -73,8 +73,7 @@ namespace ExampleApp
                         Eegeo_TTY(interiorLocationServiceUseMessage.str().c_str());
 
                         indoorPositionTypeMessage << trackingInfo.GetType();
-                        m_currentLocationService.StopUpdatingHeading();
-                        m_currentLocationService.StopUpdatingLocation();
+                        
                         m_currentLocationService.SetLocationService(interiorLocationService->second);
 
                         m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(indoorPositionTypeMessage.str()));

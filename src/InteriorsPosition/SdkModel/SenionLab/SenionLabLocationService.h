@@ -43,6 +43,8 @@ namespace ExampleApp
                     void StartUpdating();
                     void StopUpdating();
                     
+                    void RestoreDefaultState();
+                    
                     // General
                     void OnPause() override;
                     void OnResume() override;

@@ -81,6 +81,12 @@ namespace ExampleApp
                     PublishAboutPageIndoorAtlasDataMessage();
                 }
                 
+                void IndoorAtlasLocationService::RestoreDefaultState()
+                {
+                    m_defaultLocationService.StartUpdatingLocation();
+                    m_defaultLocationService.StartUpdatingHeading();
+                }
+                
                 void IndoorAtlasLocationService::PublishAboutPageIndoorAtlasDataMessage()
                 {
                     m_messageBus.Publish(ExampleApp::AboutPage::AboutPageIndoorAtlasDataMessage(
@@ -245,6 +251,11 @@ namespace ExampleApp
 
                 void IndoorAtlasLocationService::StartUpdatingHeading()
                 {
+                    if(m_defaultLocationService.IsHeadingActive())
+                    {
+                        return;
+                    }
+                    
                     m_defaultLocationService.StartUpdatingHeading();
                 }
 
