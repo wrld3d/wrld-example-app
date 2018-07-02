@@ -10,8 +10,8 @@
 
 @implementation NavSearchContainerView
 {
-    WRLDSearchWidgetView* m_searchView;
-    UIView* m_backButton;
+    WRLDSearchWidgetView* m_pSearchView;
+    UIView* m_pBackButton;
 }
 
 - (instancetype) initWithSubviews: (WRLDSearchWidgetView*) searchView :(UIView*) backButton
@@ -22,11 +22,11 @@
     
     if(self == [super initWithFrame:searchFrame])
     {
-        m_searchView = searchView;
-        m_backButton = backButton;
+        m_pSearchView = searchView;
+        m_pBackButton = backButton;
         
-        [self addSubview: m_searchView];
-        [self addSubview: m_backButton];
+        [self addSubview: m_pSearchView];
+        [self addSubview: m_pBackButton];
         [self setHidden:YES];
         [self constrainSubviews];
     }
@@ -35,8 +35,8 @@
 
 - (BOOL)consumesTouch:(UITouch *)touch
 {
-    BOOL consume =  [m_searchView pointInside:[touch locationInView:m_searchView] withEvent:nil] ||
-                    [m_backButton pointInside:[touch locationInView:m_backButton] withEvent:nil];
+    BOOL consume =  [m_pSearchView pointInside:[touch locationInView:m_pSearchView] withEvent:nil] ||
+                    [m_pBackButton pointInside:[touch locationInView:m_pBackButton] withEvent:nil];
     return consume;
 }
 
@@ -47,28 +47,28 @@
 
 -(void) constrainSubviews
 {
-    m_searchView.translatesAutoresizingMaskIntoConstraints = false;
-    m_backButton.translatesAutoresizingMaskIntoConstraints = false;
+    m_pSearchView.translatesAutoresizingMaskIntoConstraints = false;
+    m_pBackButton.translatesAutoresizingMaskIntoConstraints = false;
     
-    NSLayoutConstraint* searchTop = [self constrainAttribute: NSLayoutAttributeTop of: m_searchView to: self withOffset: 0];
-    NSLayoutConstraint* searchBottom = [self constrainAttribute: NSLayoutAttributeBottom of: m_searchView to: self withOffset: 0];
-    NSLayoutConstraint* searchLeading = [self constrainAttribute: NSLayoutAttributeLeading of: m_searchView to: self withOffset: 40];
-    NSLayoutConstraint* searchTrailing = [self constrainAttribute: NSLayoutAttributeTrailing of: m_searchView to: self withOffset: 0];
+    NSLayoutConstraint* searchTop = [self constrainAttribute: NSLayoutAttributeTop of: m_pSearchView to: self withOffset: 0];
+    NSLayoutConstraint* searchBottom = [self constrainAttribute: NSLayoutAttributeBottom of: m_pSearchView to: self withOffset: 0];
+    NSLayoutConstraint* searchLeading = [self constrainAttribute: NSLayoutAttributeLeading of: m_pSearchView to: self withOffset: 40];
+    NSLayoutConstraint* searchTrailing = [self constrainAttribute: NSLayoutAttributeTrailing of: m_pSearchView to: self withOffset: 0];
     
-    NSLayoutConstraint* backTop = [self constrainAttribute: NSLayoutAttributeTop of: m_backButton to: m_searchView withOffset: 0];
-    NSLayoutConstraint* backHeight = [NSLayoutConstraint constraintWithItem:m_backButton
+    NSLayoutConstraint* backTop = [self constrainAttribute: NSLayoutAttributeTop of: m_pBackButton to: m_pSearchView withOffset: 0];
+    NSLayoutConstraint* backHeight = [NSLayoutConstraint constraintWithItem:m_pBackButton
                                                                   attribute:NSLayoutAttributeBottom
                                                                   relatedBy:NSLayoutRelationEqual
-                                                                     toItem:m_searchView.suggestionsContainer
+                                                                     toItem:m_pSearchView.suggestionsContainer
                                                                   attribute:NSLayoutAttributeTop
                                                                  multiplier:1.0
                                                                    constant:0];
     
-    NSLayoutConstraint* backLeading = [self constrainAttribute: NSLayoutAttributeLeading of: m_backButton to: self withOffset: 0];
-    NSLayoutConstraint* backTrailing = [NSLayoutConstraint constraintWithItem:m_backButton
+    NSLayoutConstraint* backLeading = [self constrainAttribute: NSLayoutAttributeLeading of: m_pBackButton to: self withOffset: 0];
+    NSLayoutConstraint* backTrailing = [NSLayoutConstraint constraintWithItem:m_pBackButton
                                                                     attribute:NSLayoutAttributeTrailing
                                                                     relatedBy:NSLayoutRelationEqual
-                                                                       toItem:m_searchView
+                                                                       toItem:m_pSearchView
                                                                     attribute:NSLayoutAttributeLeading
                                                                    multiplier:1.0
                                                                      constant:0];
