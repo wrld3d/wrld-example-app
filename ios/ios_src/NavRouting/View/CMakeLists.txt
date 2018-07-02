@@ -3,6 +3,8 @@ set(headers ${headers} ios_src/NavRouting/View
 )
 set(currsources
   ios_src/NavRouting/View/INavWidgetViewModule.h
+  ios_src/NavRouting/View/NavSearchContainerView.h
+  ios_src/NavRouting/View/NavSearchContainerView.mm
   ios_src/NavRouting/View/NavWidgetSearchController.h
   ios_src/NavRouting/View/NavWidgetSearchController.mm
   ios_src/NavRouting/View/NavWidgetSearchView.h

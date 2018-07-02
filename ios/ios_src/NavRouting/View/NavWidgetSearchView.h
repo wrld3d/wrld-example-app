@@ -5,13 +5,6 @@
 #include "WrldSearchWidget/WrldSearchWidget.h"
 #include "NavWidgetViewIncludes.h"
 
-@interface NavWidgetViewVisibilityControl : NSObject<WRLDNavModelEventListener>
-- (instancetype) initWithSearchView: (WRLDSearchWidgetView*) searchView navWidgetView : (ExampleApp::NavRouting::View::NavWidgetView*) navWidgetView;
-- (void) showNavView;
-- (void) showSearchView;
-@property (readonly) BOOL isSearchingForStartPoint;
-@end
-
 namespace ExampleApp
 {
     namespace NavRouting
@@ -28,8 +21,8 @@ namespace ExampleApp
                 UIView *m_container;
                 UIButton *m_backButton;
                 
-                void AddSubviewConstraints();
-                NSLayoutConstraint* Constrain (NSLayoutAttribute attribute, UIView* constrained, UIView* constrainer, CGFloat constant);
+                CGFloat m_onScreenPosition = 20;
+                CGFloat m_animationTimeInSeconds = 0.2f;
                 
             public:
                 NavWidgetSearchView(id<WRLDSuggestionProvider> navLocationFinder);
