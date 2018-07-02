@@ -18,8 +18,8 @@ namespace ExampleApp
                 WRLDSearchModel* m_pSearchModel;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
                 
-                UIView *m_container;
-                UIButton *m_backButton;
+                UIView* m_pContainer;
+                UIButton* m_pBackButton;
                 
                 CGFloat m_onScreenPosition = 20;
                 CGFloat m_animationTimeInSeconds = 0.2f;

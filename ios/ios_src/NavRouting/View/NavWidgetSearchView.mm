@@ -17,9 +17,9 @@ namespace ExampleApp
             {
                 m_pSearchModel = [[WRLDSearchModel alloc] init];
                 
-                m_backButton = [[[UIButton alloc] init] autorelease];
-                [m_backButton setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
-                [m_backButton setDefaultStatesWithNormalImageName:@"nav_search_back_button"
+                m_pBackButton = [[[UIButton alloc] init] autorelease];
+                [m_pBackButton setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+                [m_pBackButton setDefaultStatesWithNormalImageName:@"nav_search_back_button"
                                                highlightImageName:@"nav_search_back_button_down"
                                             normalBackgroundColor:ExampleApp::Helpers::ColorPalette::White
                                          highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor];
@@ -33,7 +33,7 @@ namespace ExampleApp
                 m_pSearchWidgetView.resultsVisible = NO;
                 
                 
-                m_container = [[NavSearchContainerView alloc] initWithSubviews:m_pSearchWidgetView :m_backButton];
+                m_pContainer = [[NavSearchContainerView alloc] initWithSubviews:m_pSearchWidgetView :m_pBackButton];
             }
             
             NavWidgetSearchView::~NavWidgetSearchView()
@@ -42,44 +42,44 @@ namespace ExampleApp
             
             UIView* NavWidgetSearchView::GetUIView()
             {
-                return m_container;
+                return m_pContainer;
             }
             
             void NavWidgetSearchView::Show()
             {
                 [m_pSearchWidgetView clearSearch];
                 [m_pSearchWidgetView gainFocus];
-                CGRect newFrame = m_container.frame;
+                CGRect newFrame = m_pContainer.frame;
                 newFrame.origin.y = m_onScreenPosition;
-                [m_container setHidden:NO];
+                [m_pContainer setHidden:NO];
                 [UIView animateWithDuration:m_animationTimeInSeconds animations:^{
-                    m_container.frame = newFrame;
+                    m_pContainer.frame = newFrame;
                 }];
             }
             
             void NavWidgetSearchView::Hide()
             {
                 [m_pSearchWidgetView hideResultsView];
-                CGRect newFrame = m_container.frame;
-                newFrame.origin.y = -m_backButton.bounds.size.height;
+                CGRect newFrame = m_pContainer.frame;
+                newFrame.origin.y = -m_pBackButton.bounds.size.height;
                 [UIView animateWithDuration:m_animationTimeInSeconds animations:^{
-                    m_container.frame = newFrame;
+                    m_pContainer.frame = newFrame;
                 } completion:^(BOOL finished) {
                     if(finished)
                     {
-                        [m_container setHidden:YES];
+                        [m_pContainer setHidden:YES];
                     }
                 }];
             }
             
             void NavWidgetSearchView::AddCloseButtonTarget(id target, SEL selector)
             {
-                [m_backButton addTarget:target action:selector forControlEvents:UIControlEventPrimaryActionTriggered];
+                [m_pBackButton addTarget:target action:selector forControlEvents:UIControlEventPrimaryActionTriggered];
             }
             
             void NavWidgetSearchView::RemoveCloseButtonTarget(id target, SEL selector)
             {
-                [m_backButton removeTarget:target action:selector forControlEvents:UIControlEventPrimaryActionTriggered];
+                [m_pBackButton removeTarget:target action:selector forControlEvents:UIControlEventPrimaryActionTriggered];
             }
             
             void NavWidgetSearchView::AddSuggestionSelectedCallback(ResultSelectedEvent resultSelectedEvent)
