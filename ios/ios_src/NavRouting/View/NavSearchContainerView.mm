@@ -16,7 +16,11 @@
 
 - (instancetype) initWithSubviews: (WRLDSearchWidgetView*) searchView :(UIView*) backButton
 {
-    if(self == [super initWithFrame:CGRectMake(20, -50, 300, 300)])
+    CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ?
+    CGRectMake(20, -50, 375, 300) :   // ipad
+    CGRectMake(10, -50, CGRectGetWidth([[UIScreen mainScreen] bounds]) - 20, 300); // iphone
+    
+    if(self == [super initWithFrame:searchFrame])
     {
         m_searchView = searchView;
         m_backButton = backButton;
