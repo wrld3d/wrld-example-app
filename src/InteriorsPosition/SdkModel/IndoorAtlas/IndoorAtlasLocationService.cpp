@@ -83,7 +83,11 @@ namespace ExampleApp
                 
                 void IndoorAtlasLocationService::PublishAboutPageIndoorAtlasDataMessage()
                 {
-                    m_messageBus.Publish(ExampleApp::AboutPage::AboutPageIndoorAtlasDataMessage(                                                                                                m_floorIndex, m_indoorAtlasFloorId, m_latLong.GetLatitudeInDegrees(), m_latLong.GetLongitudeInDegrees()));
+                    m_messageBus.Publish(ExampleApp::AboutPage::AboutPageIndoorAtlasDataMessage(
+                            m_floorIndex,
+                            m_indoorAtlasFloorId,
+                            m_latLong.GetLatitudeInDegrees(),
+                            m_latLong.GetLongitudeInDegrees()));
                 }
 
                 void IndoorAtlasLocationService::StartUpdating()
