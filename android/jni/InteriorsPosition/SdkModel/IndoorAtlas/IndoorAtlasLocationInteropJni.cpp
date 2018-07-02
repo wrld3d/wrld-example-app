@@ -7,7 +7,7 @@
 
 extern "C"
 {
-JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasLocationManagerJniMethods_UpdateLocation(
+JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasLocationInteropJniMethods_UpdateLocation(
         JNIEnv *jenv, jclass jobj,
         jlong nativeObjectPtr,
         jdouble latitudeDegrees,
@@ -31,7 +31,7 @@ JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasL
             floorIdString);
 }
 
-JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasLocationManagerJniMethods_UpdateIsAuthorized(
+JNIEXPORT void JNICALL Java_com_eegeo_interiorsposition_indooratlas_IndoorAtlasLocationInteropJniMethods_UpdateIsAuthorized(
         JNIEnv *jenv, jclass obj,
         jlong nativeObjectPtr,
         jboolean isAuthorized)
