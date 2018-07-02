@@ -4,6 +4,8 @@
 #include "SearchWidgetController.h"
 #include "SearchWidgetContainerView.h"
 #include "ISearchResultsRepository.h"
+#include <WrldSearchWidget/WrldSearchWidget.h>
+
 namespace ExampleApp
 {
     namespace SearchMenu
@@ -20,6 +22,8 @@ namespace ExampleApp
                 virtual SearchWidgetController& GetSearchWidgetController() const = 0;
                 
                 virtual ISearchResultsRepository& GetSuggestionsRepository() const = 0;
+                
+                virtual id<WRLDSuggestionProvider> GetSuggestionProvider() const = 0;
             };
         }
     }

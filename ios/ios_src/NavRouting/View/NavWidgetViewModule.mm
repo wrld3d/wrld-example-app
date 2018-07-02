@@ -1,32 +1,14 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "NavWidgetViewModule.h"
-
 #include "WrldNav/WrldNav.h"
 #include "WrldNavWidget/WrldNavWidget.h"
-
 #include "SearchResultPoiViewInterop.h"
-
 #include "IOpenableControlViewModel.h"
-
 #include "BidirectionalBus.h"
-
 #include "NavWidgetView.h"
-
+#include "NavWidgetSearchView.h"
 #include "ISearchResultsRepository.h"
-
-//Wrld Example App fudges the propagation of touch events so to prevent our touch events getting
-//passed down to the Map we need to extend our common widget with a consumesTouch selector.
-@interface WRLDNavWidgetBase(ExampleApp)
-- (BOOL)consumesTouch:(UITouch *)touch;
-@end
-
-@implementation WRLDNavWidgetBase(ExampleApp)
-- (BOOL)consumesTouch:(UITouch *)touch
-{
-    return [self pointInside:[touch locationInView:self] withEvent:nil];
-}
-@end
 
 namespace ExampleApp
 {
@@ -37,6 +19,7 @@ namespace ExampleApp
             
             NavWidgetViewModule::NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                                      INavWidgetViewModel& viewModel,
+                                                     id<WRLDSuggestionProvider> navSuggestionProvider,
                                                      SearchMenu::View::ISearchResultsRepository& suggestionsRespository,
                                                      ExampleAppMessaging::TMessageBus& messageBus_)
             {
@@ -48,22 +31,33 @@ namespace ExampleApp
                 
                 m_pView = Eegeo_NEW(NavWidgetView)(m_pNavModel, getTopPanelVisibleHeightChangedCallbacks(), getBottomPanelVisibleHeightChangedCallbacks());
                 
+                m_pNavSearchView = Eegeo_NEW(NavWidgetSearchView)(navSuggestionProvider);
+                
                 m_pNavWidgetController = Eegeo_NEW(NavWidgetController)(*m_pView,
                                                                         viewModel,
                                                                         suggestionsRespository,
                                                                         messageBus_);
-               
+                
+                m_pNavWidgetSearchController = [[NavWidgetSearchController alloc] initWithSearchView: m_pNavSearchView navWidgetView: m_pView];
+                [m_pNavModel registerNavEventListener: m_pNavWidgetSearchController];
             }
             
             NavWidgetViewModule::~NavWidgetViewModule()
             {
+                [m_pNavModel unregisterNavEventListener: m_pNavWidgetSearchController];
                 delete m_pNavWidgetController;
+                delete m_pNavSearchView;
                 delete m_pView;
             }
             
             UIView& NavWidgetViewModule::GetNavWidgetView() const
             {
                 return *(m_pView->GetUIView());
+            }
+            
+            UIView& NavWidgetViewModule::GetNavWidgetSearchView() const
+            {
+                return *(m_pNavSearchView->GetUIView());
             }
             
             NavWidgetController& NavWidgetViewModule::GetNavWidgetController() const

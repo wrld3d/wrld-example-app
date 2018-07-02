@@ -1234,6 +1234,12 @@ set(resources ${resources}
         Resources/micello_logo.png
         Resources/micello_logo@2x.png
         Resources/micello_logo@3x.png
+        Resources/nav_search_back_button.png
+        Resources/nav_search_back_button@2x.png
+        Resources/nav_search_back_button@3x.png
+        Resources/nav_search_back_button_down.png
+        Resources/nav_search_back_button_down@2x.png
+        Resources/nav_search_back_button_down@3x.png
         Resources/opensans_semibold_sdf.fnt
         Resources/opensans_semibold_sdf_0.png
         Resources/notosans_sdf_china_region.fnt

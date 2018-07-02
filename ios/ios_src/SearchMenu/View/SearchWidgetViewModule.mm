@@ -39,13 +39,19 @@ namespace ExampleApp
                                                                               messageBus);
             }
             
-            SearchWidgetController& SearchWidgetViewModule::GetSearchWidgetController() const{
+            SearchWidgetController& SearchWidgetViewModule::GetSearchWidgetController() const
+            {
                 return *m_pSearchWidgetController;
             }
             
             SearchWidgetContainerView& SearchWidgetViewModule::GetSearchWidgetView() const
             {
                 return *m_pView;
+            }
+            
+            id<WRLDSuggestionProvider> SearchWidgetViewModule::GetSuggestionProvider() const
+            {
+                return m_pWrldSearchProvider;
             }
             
             ISearchResultsRepository& SearchWidgetViewModule::GetSuggestionsRepository() const

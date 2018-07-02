@@ -46,6 +46,7 @@ namespace ExampleApp
                 SearchWidgetContainerView& GetSearchWidgetView() const;
                 SearchWidgetController& GetSearchWidgetController() const;
                 ISearchResultsRepository& GetSuggestionsRepository() const;
+                id<WRLDSuggestionProvider> GetSuggestionProvider() const;
 
             };
         }

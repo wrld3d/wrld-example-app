@@ -5,6 +5,19 @@
 #include "ICompassView.h"
 #include <MapKit/MapKit.h>
 
+//Wrld Example App fudges the propagation of touch events so to prevent our touch events getting
+//passed down to the Map we need to extend our common widget with a consumesTouch selector.
+@interface WRLDNavWidgetBase(ExampleApp)
+- (BOOL)consumesTouch:(UITouch *)touch;
+@end
+
+@implementation WRLDNavWidgetBase(ExampleApp)
+- (BOOL)consumesTouch:(UITouch *)touch
+{
+    return [self pointInside:[touch locationInView:self] withEvent:nil];
+}
+@end
+
 namespace ExampleApp
 {
     namespace NavRouting

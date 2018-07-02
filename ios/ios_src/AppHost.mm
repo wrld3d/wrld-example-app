@@ -350,6 +350,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     const ExampleApp::NavRouting::View::NavUIModule& navUIModule = app.NavUIModule();
     m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(navUIModule.GetObservableOpenableControl(),
                                                                                       navUIModule.GetNavWidgetViewModel(),
+                                                                                      m_pSearchWidgetViewModule->GetSuggestionProvider(),
                                                                                       m_pSearchWidgetViewModule->GetSuggestionsRepository(),
                                                                                       m_messageBus);
 
@@ -443,6 +444,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     [m_pView addSubview: &m_pMyPinCreationDetailsViewModule->GetMyPinCreationDetailsView()];
     [m_pView addSubview: &m_pMyPinDetailsViewModule->GetMyPinDetailsView()];
     [m_pView addSubview: &m_pNavUIViewModule->GetNavWidgetView()];
+    [m_pView addSubview: &m_pNavUIViewModule->GetNavWidgetSearchView()];
     
     // Interior tutorial layer
     [m_pView addSubview: &m_pInteriorsExplorerViewModule->GetTutorialView()];
@@ -485,6 +487,7 @@ void AppHost::DestroyApplicationViewModules()
     [&m_pAboutPageViewModule->GetAboutPageView() removeFromSuperview];
     [&m_pOptionsViewModule->GetOptionsView() removeFromSuperview];
     [&m_pNavUIViewModule->GetNavWidgetView() removeFromSuperview];
+    [&m_pNavUIViewModule->GetNavWidgetSearchView() removeFromSuperview];
     
     
     // Initial experience layer
