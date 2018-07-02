@@ -41,9 +41,8 @@ namespace ExampleApp
                 public:
                     IndoorAtlasLocationInterop();
                     ~IndoorAtlasLocationInterop();
-                    
-                    // non-interface
-                    void SetLocationService(IndoorAtlasLocationService* pIndoorAtlasLocationManager);
+                                        
+                    void SetLocationService(IndoorAtlasLocationService* pIndoorAtlasLocationManager) override;
                     
                     // interface implementation
                     void StartUpdating(const std::string& apiKey,
