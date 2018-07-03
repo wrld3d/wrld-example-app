@@ -3,6 +3,7 @@
 #include "SearchServices.h"
 #include "SearchQuery.h"
 #include "AutocompleteSuggestionsMessage.h"
+#include "AutocompleteSuggestionsCancelledMessage.h"
 #include "ISearchResultsRepository.h"
 
 #include <algorithm>
@@ -27,11 +28,13 @@ namespace ExampleApp
 			, m_onCancelCallback(this, &SearchServices::OnCancel)
 			, m_responseReceivedHandler(this, &SearchServices::OnSearchQueryResponseReceivedMessage)
 			, m_autocompleteSuggestionsResponseReceivedHandler(this, &SearchServices::OnAutocompleteSuggestionsResponseReceivedMessage)
+			, m_onCancelSuggestions(this, &SearchServices::OnCancelSuggestions)
 
 			{
 				m_searchProvider.InsertSearchPerformedCallback(m_onSearchCallback);
 				m_searchProvider.InsertSearchWithContextCallback(m_onSearchWithContextCallback);
 				m_searchProvider.InsertSearchCancelledCallback(m_onCancelCallback);
+				m_searchProvider.InsertSuggestionsCancelledCallback(m_onCancelSuggestions);
 				m_searchProvider.InsertAutocompleteSuggestionsCallback(m_onAutocompleteSuggestionsCallback);
 
                 m_messageBus.SubscribeUi(m_responseReceivedHandler);
@@ -44,6 +47,7 @@ namespace ExampleApp
 				m_messageBus.UnsubscribeUi(m_responseReceivedHandler);
 
 				m_searchProvider.RemoveAutocompleteSuggestionsCallback(m_onAutocompleteSuggestionsCallback);
+				m_searchProvider.RemoveSuggestionsCancelledCallback(m_onCancelSuggestions);
 				m_searchProvider.RemoveSearchCancelledCallback(m_onCancelCallback);
 				m_searchProvider.RemoveSearchWithContextCallback(m_onSearchWithContextCallback);
 				m_searchProvider.RemoveSearchPerformedCallback(m_onSearchCallback);
@@ -68,6 +72,11 @@ namespace ExampleApp
 			void SearchServices::OnCancel()
 			{
 				m_messageBus.Publish(SearchResultSection::SearchResultViewClearedMessage());
+			}
+
+			void SearchServices::OnCancelSuggestions()
+			{
+				m_messageBus.Publish(AutocompleteSuggestionsCancelledMessage());
 			}
 
 			void SearchServices::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)

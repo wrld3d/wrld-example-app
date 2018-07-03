@@ -33,6 +33,10 @@ namespace ExampleApp
 
                 SearchMenu::View::SearchServices* m_pSearchServices;
                 SearchProviders::SearchProvider* m_pSearchProvider;
+                
+                WRLDSearchModel* m_pSearchModel;
+                
+                QueryEvent m_autocompleteCancelledEvent;
             public:
                 SearchWidgetViewModule(
                                        Modality::View::IModalBackgroundView& modalBackgroundView,
@@ -46,7 +50,7 @@ namespace ExampleApp
                 SearchWidgetContainerView& GetSearchWidgetView() const;
                 SearchWidgetController& GetSearchWidgetController() const;
                 ISearchResultsRepository& GetSuggestionsRepository() const;
-                id<WRLDSuggestionProvider> GetSuggestionProvider() const;
+                WidgetSearchProvider* GetSuggestionProvider() const;
 
             };
         }

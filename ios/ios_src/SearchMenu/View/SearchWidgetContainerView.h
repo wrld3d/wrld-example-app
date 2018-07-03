@@ -7,9 +7,11 @@
 
 @interface SearchWidgetContainerView : UIView
 
-- (instancetype)initWithSearchProvider:(WidgetSearchProvider *) searchProvider
-                     navigationEnabled:(BOOL) isNavigationEnabled
-                            messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus &) messageBus;
+- (instancetype)initWithSearchModel: (WRLDSearchModel*) searchModel
+                     searchProvider: (WidgetSearchProvider *) searchProvider
+                  navigationEnabled: (BOOL) isNavigationEnabled
+                         messageBus: (ExampleApp::ExampleAppMessaging::TMessageBus &) messageBus;
+
 - (ExampleApp::SearchMenu::View::SearchWidgetView*) getInterop;
 - (BOOL) consumesTouch:(UITouch *)touch;
 @property (nonatomic, retain) UIView *widget;

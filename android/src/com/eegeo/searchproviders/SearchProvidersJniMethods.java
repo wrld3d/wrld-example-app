@@ -15,5 +15,6 @@ public class SearchProvidersJniMethods
                                                 boolean usesRadius,
                                                 float radius);
     public static native void cancel(long nativeCallerPointer);
+    public static native void cancelSuggestions(long nativeCallerPointer);
 
 }

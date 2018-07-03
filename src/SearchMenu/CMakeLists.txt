@@ -1,6 +1,8 @@
 set(headers ${headers} ../src/SearchMenu
 )
 set(currsources
+  ../src/SearchMenu/AutocompleteSuggestionsCancelledMessage.cpp
+  ../src/SearchMenu/AutocompleteSuggestionsCancelledMessage.h
   ../src/SearchMenu/AutocompleteSuggestionsMessage.cpp
   ../src/SearchMenu/AutocompleteSuggestionsMessage.h
   ../src/SearchMenu/CMakeLists.txt

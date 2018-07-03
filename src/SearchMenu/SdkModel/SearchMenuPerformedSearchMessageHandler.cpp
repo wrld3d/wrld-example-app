@@ -19,14 +19,17 @@ namespace ExampleApp
             , m_handlePerformedSearchMessageBinding(this, &SearchMenuPerformedSearchMessageHandler::OnPerformedSearchMessage)
             , m_handleSearchWithContextMessageBinding(this, &SearchMenuPerformedSearchMessageHandler::OnSearchWithContextMessage)
             , m_handleAutocompleteSuggestionsMessageBinding(this, &SearchMenuPerformedSearchMessageHandler::OnAutocompleteSuggestionsMessage)
+            , m_handleAutocompleteSuggestionsCancelledMessageBinding(this, &SearchMenuPerformedSearchMessageHandler::OnAutocompleteSuggestionsCancelledMessage)
             {
                 m_messageBus.SubscribeNative(m_handlePerformedSearchMessageBinding);
                 m_messageBus.SubscribeNative(m_handleSearchWithContextMessageBinding);
                 m_messageBus.SubscribeNative(m_handleAutocompleteSuggestionsMessageBinding);
+                m_messageBus.SubscribeNative(m_handleAutocompleteSuggestionsCancelledMessageBinding);
             }
 
             SearchMenuPerformedSearchMessageHandler::~SearchMenuPerformedSearchMessageHandler()
             {
+                m_messageBus.UnsubscribeNative(m_handleAutocompleteSuggestionsCancelledMessageBinding);
                 m_messageBus.UnsubscribeNative(m_handleAutocompleteSuggestionsMessageBinding);
                 m_messageBus.UnsubscribeNative(m_handleSearchWithContextMessageBinding);
                 m_messageBus.UnsubscribeNative(m_handlePerformedSearchMessageBinding);
@@ -81,6 +84,10 @@ namespace ExampleApp
             void SearchMenuPerformedSearchMessageHandler::OnAutocompleteSuggestionsMessage(const AutocompleteSuggestionsMessage& message){
                 m_autocompleteSuggestionsQueryPerformer.PerformSuggestionsQuery(message.SearchQuery());
             }
+
+			void SearchMenuPerformedSearchMessageHandler::OnAutocompleteSuggestionsCancelledMessage(const AutocompleteSuggestionsCancelledMessage &message){
+				m_autocompleteSuggestionsQueryPerformer.Cancel();
+			}
         }
     }
 }

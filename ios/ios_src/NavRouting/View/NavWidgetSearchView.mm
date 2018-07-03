@@ -3,6 +3,7 @@
 #import "NavWidgetSearchView.h"
 #import "NavSearchContainerView.h"
 #import <WrldSearchWidget/WrldSearchWidget.h>
+#import "WidgetSearchProvider.h"
 #import "WidgetSearchResultModel.h"
 #import "UIButton+DefaultStates.h"
 #import "UIColors.h"
@@ -13,9 +14,15 @@ namespace ExampleApp
     {
         namespace View
         {
-            NavWidgetSearchView::NavWidgetSearchView(id<WRLDSuggestionProvider> navLocationFinder)
+            NavWidgetSearchView::NavWidgetSearchView(WidgetSearchProvider* navLocationFinder)
             {
                 m_pSearchModel = [[WRLDSearchModel alloc] init];
+                
+                m_autocompleteCancelledEvent = ^(WRLDSearchQuery* cancelledQuery){
+                    [navLocationFinder cancelAutocompleteRequest];
+                };
+                
+                [m_pSearchModel.suggestionObserver addQueryCancelledEvent: m_autocompleteCancelledEvent];
                 
                 m_pBackButton = [[[UIButton alloc] init] autorelease];
                 [m_pBackButton setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
@@ -38,6 +45,7 @@ namespace ExampleApp
             
             NavWidgetSearchView::~NavWidgetSearchView()
             {
+                [m_pSearchModel.suggestionObserver removeQueryCancelledEvent: m_autocompleteCancelledEvent];
             }
             
             UIView* NavWidgetSearchView::GetUIView()

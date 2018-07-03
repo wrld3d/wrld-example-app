@@ -13,6 +13,7 @@
 #include "INavWidgetViewModel.h"
 #include "ISearchResultsRepository.h" 
 #include "NavWidgetSearchController.h"
+#include "WidgetSearchProvider.h"
 #import <WrldSearchWidget/WrldSearchWidget.h>
 
 namespace Eegeo
@@ -59,7 +60,7 @@ namespace ExampleApp
             public:
                 NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                     INavWidgetViewModel& viewModel,
-                                    id<WRLDSuggestionProvider> navSuggestionProvider,
+                                    WidgetSearchProvider* navSuggestionProvider,
                                     SearchMenu::View::ISearchResultsRepository& suggestionsRespository,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 

@@ -23,7 +23,7 @@ namespace ExampleApp
                 
                 virtual ISearchResultsRepository& GetSuggestionsRepository() const = 0;
                 
-                virtual id<WRLDSuggestionProvider> GetSuggestionProvider() const = 0;
+                virtual WidgetSearchProvider* GetSuggestionProvider() const = 0;
             };
         }
     }

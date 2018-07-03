@@ -16,16 +16,17 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchWidgetView::SearchWidgetView(id<WRLDSearchProvider> searchProvider,
+            SearchWidgetView::SearchWidgetView(WRLDSearchModel* searchModel,
+                                               id<WRLDSearchProvider> searchProvider,
                                                id<WRLDSuggestionProvider> suggestionProvider,
                                                bool isNavigationEnabled,
                                                ExampleAppMessaging::TMessageBus& messageBus)
-            : m_tagCollection(messageBus)
+            : m_pSearchModel(searchModel)
+            , m_tagCollection(messageBus)
             , m_hasSearchResults(false)
             , m_hasPopulatedData(false)
             , m_isNavigationHidden(!isNavigationEnabled)
             {
-                m_pSearchModel = [[WRLDSearchModel alloc] init];
                 m_pMenuModel = [[WRLDSearchMenuModel alloc] init];
                 m_pSearchProviderHandle = [m_pSearchModel addSearchProvider: searchProvider];
                 m_pSuggestionProviderHandle = [m_pSearchModel addSuggestionProvider: suggestionProvider];
@@ -89,8 +90,6 @@ namespace ExampleApp
                 [m_pMenuOptions release];
                 [m_pMenuGroups release];
                 [m_pMenuModel release];
-                [m_pSearchModel release];
-
             }
             
             void SearchWidgetView::AddEventListeners(){

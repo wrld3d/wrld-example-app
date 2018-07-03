@@ -4,6 +4,7 @@
 #include "WrldNav/WrldNav.h"
 #include "WrldSearchWidget/WrldSearchWidget.h"
 #include "NavWidgetViewIncludes.h"
+#include "WidgetSearchProvider.h"
 
 namespace ExampleApp
 {
@@ -18,6 +19,8 @@ namespace ExampleApp
                 WRLDSearchModel* m_pSearchModel;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
                 
+                QueryEvent m_autocompleteCancelledEvent;
+                
                 UIView* m_pContainer;
                 UIButton* m_pBackButton;
                 
@@ -25,7 +28,7 @@ namespace ExampleApp
                 CGFloat m_animationTimeInSeconds = 0.2f;
                 
             public:
-                NavWidgetSearchView(id<WRLDSuggestionProvider> navLocationFinder);
+                NavWidgetSearchView(WidgetSearchProvider* navLocationFinder);
                 
                 ~NavWidgetSearchView();
                 

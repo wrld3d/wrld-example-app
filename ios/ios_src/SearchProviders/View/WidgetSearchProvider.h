@@ -8,5 +8,6 @@
 @interface WidgetSearchProvider: NSObject <WRLDSearchProvider, WRLDSuggestionProvider>
 
 - (instancetype) initWithSearchProvider: (ExampleApp::SearchProviders::SearchProvider*) searchProvider;
+- (void) cancelAutocompleteRequest;
 
 @end

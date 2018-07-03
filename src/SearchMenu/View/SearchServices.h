@@ -28,6 +28,7 @@ namespace ExampleApp
 				Eegeo::Helpers::TCallback1<SearchServices, const std::string&> m_onAutocompleteSuggestionsCallback;
 				Eegeo::Helpers::TCallback2<SearchServices, const std::string&, const QueryContext&> m_onSearchWithContextCallback;
 				Eegeo::Helpers::TCallback0<SearchServices> m_onCancelCallback;
+				Eegeo::Helpers::TCallback0<SearchServices> m_onCancelSuggestions;
 				Eegeo::Helpers::TCallback1<SearchServices, const Search::SearchQueryResponseReceivedMessage&> m_responseReceivedHandler;
 				Eegeo::Helpers::TCallback1<SearchServices, const Search::AutocompleteSuggestionsReceivedMessage&> m_autocompleteSuggestionsResponseReceivedHandler;
 
@@ -46,6 +47,7 @@ namespace ExampleApp
 				void OnSearch(const std::string& searchQuery);
 				void OnSearchWithContext(const std::string& searchQuery, const QueryContext& context);
 				void OnCancel();
+				void OnCancelSuggestions();
 				void OnAutocompleteSuggestions(const std::string& searchQuery);
 				void OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message);
 				void OnAutocompleteSuggestionsResponseReceivedMessage(const Search::AutocompleteSuggestionsReceivedMessage& message);

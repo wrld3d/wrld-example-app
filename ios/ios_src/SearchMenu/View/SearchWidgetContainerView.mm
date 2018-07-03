@@ -9,17 +9,19 @@
     
 }
 
-- (instancetype)initWithSearchProvider:(WidgetSearchProvider *) searchProvider
-                     navigationEnabled: (BOOL) isNavigationEnabled
-                            messageBus:(ExampleApp::ExampleAppMessaging::TMessageBus &) messageBus
+- (instancetype)  initWithSearchModel: (WRLDSearchModel*) searchModel
+                       searchProvider: (WidgetSearchProvider *) searchProvider
+                    navigationEnabled: (BOOL) isNavigationEnabled
+                           messageBus: (ExampleApp::ExampleAppMessaging::TMessageBus &) messageBus
 
 {
     self = [super init];
     if (self) {
-        m_pInterop = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetView)(searchProvider,
-                                                                 searchProvider,
-                                                                 isNavigationEnabled,
-                                                                 messageBus);
+        m_pInterop = Eegeo_NEW(ExampleApp::SearchMenu::View::SearchWidgetView)(searchModel,
+                                                                               searchProvider,
+                                                                               searchProvider,
+                                                                               isNavigationEnabled,
+                                                                               messageBus);
         
         self.frame = [UIScreen mainScreen].bounds;
         self.widget = m_pInterop->GetWidgetView();

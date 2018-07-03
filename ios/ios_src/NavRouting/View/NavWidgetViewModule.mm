@@ -19,7 +19,7 @@ namespace ExampleApp
             
             NavWidgetViewModule::NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                                      INavWidgetViewModel& viewModel,
-                                                     id<WRLDSuggestionProvider> navSuggestionProvider,
+                                                     WidgetSearchProvider* navSuggestionProvider,
                                                      SearchMenu::View::ISearchResultsRepository& suggestionsRespository,
                                                      ExampleAppMessaging::TMessageBus& messageBus_)
             {

@@ -59,7 +59,8 @@ namespace ExampleApp
                 void PopulateMenuData(Menu::View::TSections& sections);
                 
             public:
-                SearchWidgetView(id<WRLDSearchProvider> searchProvider,
+                SearchWidgetView(WRLDSearchModel* searchModel,
+                                 id<WRLDSearchProvider> searchProvider,
                                  id<WRLDSuggestionProvider> suggestionProvider,
                                  bool m_navigationEnabled,
                                  ExampleAppMessaging::TMessageBus& messageBus);
