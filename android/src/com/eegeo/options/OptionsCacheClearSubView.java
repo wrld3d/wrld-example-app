@@ -15,7 +15,8 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 
 public class OptionsCacheClearSubView 
 {
-	private MainActivity m_activity = null;
+    private MainActivity m_activity = null;
+    protected long m_nativeCallerPointer;
     private View m_view = null;
     private RelativeLayout m_uiRoot = null;
     private Runnable m_confirmationCallback = null;
@@ -29,15 +30,17 @@ public class OptionsCacheClearSubView
 	private TextView m_content = null;
     private Timer m_timer = new Timer();
     private long m_cacheClearDialogMinimumEndTimeMilliseconds;
+    private boolean m_returnToOptions = true;
 
     private enum Containers
 	{
 		CONFIRMATION, PROGRESS, DONE
 	}
 
-    public OptionsCacheClearSubView(MainActivity activity)
+    public OptionsCacheClearSubView(MainActivity activity, long nativeCallerPointer)
     {
-    	m_activity = activity;
+        m_activity = activity;
+        m_nativeCallerPointer = nativeCallerPointer;
         m_uiRoot = (RelativeLayout)activity.findViewById(R.id.ui_container);
         m_view = activity.getLayoutInflater().inflate(R.layout.cache_clear_ceremony_layout, m_uiRoot, false);
         m_uiRoot.addView(m_view);
@@ -57,11 +60,15 @@ public class OptionsCacheClearSubView
 		});
 
         View.OnClickListener closeListener = new View.OnClickListener() {
-			public void onClick(View arg0) {
-				resetState();
-				m_uiRoot.removeView(m_view);
-			}
-		};
+            public void onClick(View arg0) {
+                resetState();
+                m_uiRoot.removeView(m_view);
+                if (!m_returnToOptions)
+                {
+                    OptionsViewJniMethods.CloseButtonSelected(m_nativeCallerPointer);
+                }
+            }
+        };
 
 		m_cancelButton.setOnClickListener(closeListener);
 		m_closeButton.setOnClickListener(closeListener);
@@ -123,33 +130,39 @@ public class OptionsCacheClearSubView
     	setContainer(Containers.DONE);
 	}
 
-	private void setContainer(Containers container)
-	{
-		switch (container)
-		{
-			case CONFIRMATION:
-				m_closeButton       .setVisibility(View.INVISIBLE);
-				m_container_confirm .setVisibility(View.VISIBLE);
-				m_container_progress.setVisibility(View.INVISIBLE);
-				break;
-			case PROGRESS:
-				m_closeButton       .setVisibility(View.INVISIBLE);
-				m_container_confirm .setVisibility(View.INVISIBLE);
-				m_container_progress.setVisibility(View.VISIBLE);
+    private void setContainer(Containers container)
+    {
+        switch (container)
+        {
+            case CONFIRMATION:
+                m_closeButton.setVisibility(View.INVISIBLE);
+                m_container_confirm.setVisibility(View.VISIBLE);
+                m_container_progress.setVisibility(View.INVISIBLE);
 
-				m_spinner.setVisibility(View.VISIBLE);
-				m_content.setText(R.string.cache_clear_working);
-				break;
-			case DONE:
-				m_closeButton       .setVisibility(View.VISIBLE);
-				m_container_confirm .setVisibility(View.INVISIBLE);
-				m_container_progress.setVisibility(View.VISIBLE);
+                m_returnToOptions = true;
+                break;
 
-				m_spinner.setVisibility(View.INVISIBLE);
-				m_content.setText(R.string.cache_clear_done);
-				break;
-		}
-	}
+            case PROGRESS:
+                m_closeButton.setVisibility(View.INVISIBLE);
+                m_container_confirm.setVisibility(View.INVISIBLE);
+                m_container_progress.setVisibility(View.VISIBLE);
+
+                m_spinner.setVisibility(View.VISIBLE);
+                m_content.setText(R.string.cache_clear_working);
+                break;
+
+            case DONE:
+
+                m_closeButton.setVisibility(View.VISIBLE);
+                m_container_confirm.setVisibility(View.INVISIBLE);
+                m_container_progress.setVisibility(View.VISIBLE);
+
+                m_returnToOptions = false;
+                m_spinner.setVisibility(View.INVISIBLE);
+                m_content.setText(R.string.cache_clear_done);
+                break;
+        }
+    }
 
     private void handleConfirmClicked()
     {

@@ -68,10 +68,8 @@ public class OptionsView
     
     public void concludeCacheClearCeremony()
     {
-    	m_cacheClearSubView.concludeCeremony();
-    	m_cacheClearSubView = null;
-
-        OptionsViewJniMethods.CloseButtonSelected(m_nativeCallerPointer);
+        m_cacheClearSubView.concludeCeremony();
+        m_cacheClearSubView = null;
     }
     
     public boolean isStreamOverWifiOnlySelected()
@@ -102,7 +100,7 @@ public class OptionsView
     public void openClearCacheWarning()
     {
         assert(m_cacheClearSubView == null);
-        m_cacheClearSubView = new OptionsCacheClearSubView(m_activity);
+        m_cacheClearSubView = new OptionsCacheClearSubView(m_activity, m_nativeCallerPointer);
 
         m_cacheClearSubView.displayWarning(new Runnable() {
             public void run() {
