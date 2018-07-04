@@ -104,26 +104,33 @@ typedef FailureHandler<SenionLabLocationManager> FailureHandlerType;
     if(locationAvailability != m_lastLocationAvailability)
     {
         m_lastLocationAvailability = locationAvailability;
+                
         if(locationAvailability == SLLocationAvailabilityNotAvailable)
         {
-            
+            m_pSenionLabLocationService->SetIsAuthorized(false);
         }
         
         if(locationAvailability == SLLocationAvailabilityAvailable)
         {
-            
+            m_pSenionLabLocationService->SetIsAuthorized(true);
         }
     }
 }
 
 -(void) didUpdateHeading:(double)heading withStatus:(BOOL)status
-{
-    m_pSenionLabLocationService->SetHeadingFromSenionData(heading, status);
+{    
+    if(m_lastLocationAvailability == SLLocationAvailabilityAvailable)
+    {
+        m_pSenionLabLocationService->SetHeadingFromSenionData(heading, status);
+    }
 }
 
 -(void) didUpdateMotionType:(SLMotionState)motionState
 {
-    m_pSenionLabLocationService->SetIsAuthorized(true);
+    if(m_lastLocationAvailability == SLLocationAvailabilityAvailable)
+    {
+        m_pSenionLabLocationService->SetIsAuthorized(true);
+    }    
 }
 
 -(void) didFailInternetConnectionWithError:(NSError *)error

@@ -134,17 +134,10 @@ typedef FailureHandler<IndoorAtlasLocationManager> FailureHandlerType;
 
 - (void) indoorLocationManager:(nonnull IALocationManager *)manager statusChanged:(nonnull IAStatus *)status
 {
-    if(status.type == ia_status_type::kIAStatusServiceUnavailable)
-    {
-        /*
-         m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
-         (
-         "IndoorAtlas unavailable",
-         "Recently lost connection to IndoorAtlas.",
-         *m_failAlertHandler
-         );
-         //*/
-    }
+    const bool isAuthorized = status.type == ia_status_type::kIAStatusServiceAvailable || 
+                              status.type == ia_status_type::kIAStatusServiceLimited;
+
+    m_pIndoorAtlasLocationService->SetIsAuthorized(isAuthorized);
 }
 
 - (void)handleFailure
