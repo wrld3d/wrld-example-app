@@ -6,15 +6,15 @@ namespace ExampleApp
 {
     namespace NavRouting
     {
-        NavRoutingEndLocationSetFromSearchMessage::NavRoutingEndLocationSetFromSearchMessage(const SdkModel::NavRoutingLocationModel& endLocation)
-        : m_endLocation(endLocation)
+        NavRoutingEndLocationSetFromSearchMessage::NavRoutingEndLocationSetFromSearchMessage(SearchNavigationData data)
+                : m_data(data)
         {
 
         }
 
-        const SdkModel::NavRoutingLocationModel& NavRoutingEndLocationSetFromSearchMessage::GetEndLocation() const
+        const SearchNavigationData& NavRoutingEndLocationSetFromSearchMessage::GetSearchData() const
         {
-            return m_endLocation;
+            return m_data;
         }
     }
 }

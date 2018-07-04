@@ -2,6 +2,8 @@ set(headers ${headers} ../src/NavRouting
 )
 set(currsources
   ../src/NavRouting/CMakeLists.txt
+  ../src/NavRouting/NavigateToMessage.cpp
+  ../src/NavRouting/NavigateToMessage.h
   ../src/NavRouting/NavRouting.h
   ../src/NavRouting/NavRoutingCurrentDirectionSetMessage.cpp
   ../src/NavRouting/NavRoutingCurrentDirectionSetMessage.h
@@ -44,8 +46,8 @@ set(currsources
   ../src/NavRouting/NavRoutingViewOpenMessage.cpp
   ../src/NavRouting/NavRoutingViewOpenMessage.h
   ../src/NavRouting/NavRoutingViewStartEndLocationSwappedMessage.h
-  ../src/NavRouting/NavigateToMessage.cpp
-  ../src/NavRouting/NavigateToMessage.h
+  ../src/NavRouting/SearchNavigationData.cpp
+  ../src/NavRouting/SearchNavigationData.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\NavRouting FILES ${currsources})

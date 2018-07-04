@@ -293,7 +293,8 @@ namespace ExampleApp
                     return;
                 }
 
-                if(!m_locationFinder.TryGetLocationFromNavigationMessage(message, endLocation))
+                if(!m_locationFinder.TryGetLocationFromSearchNavigationData(message.GetSearchData(),
+                                                                            endLocation))
                 {
                     return;
                 }
@@ -323,12 +324,26 @@ namespace ExampleApp
 
             void NavRoutingController::OnStartLocationSetFromSearch(const NavRoutingStartLocationSetFromSearchMessage& message)
             {
-                m_routingModel.SetStartLocation(message.GetStartLocation());
+                NavRoutingLocationModel startLocation;
+
+                if(!m_locationFinder.TryGetLocationFromSearchNavigationData(message.GetSearchData(),
+                                                                            startLocation))
+                {
+                    return;
+                }
+                m_routingModel.SetStartLocation(startLocation);
             }
 
             void NavRoutingController::OnEndLocationSetFromSearch(const NavRoutingEndLocationSetFromSearchMessage& message)
             {
-                m_routingModel.SetEndLocation(message.GetEndLocation());
+                NavRoutingLocationModel endLocation;
+
+                if(!m_locationFinder.TryGetLocationFromSearchNavigationData(message.GetSearchData(),
+                                                                            endLocation))
+                {
+                    return;
+                }
+                m_routingModel.SetEndLocation(endLocation);
             }
         }
     }

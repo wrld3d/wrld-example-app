@@ -1,8 +1,6 @@
-// Copyright eeGeo Ltd (2012-2015), All Rights Reserved
-
 #pragma once
 
-#include "NavRoutingLocationModel.h"
+#include "SearchNavigationData.h"
 
 namespace ExampleApp
 {
@@ -11,12 +9,12 @@ namespace ExampleApp
         class NavRoutingStartLocationSetFromSearchMessage
         {
         private:
-            SdkModel::NavRoutingLocationModel m_startLocation;
+            const SearchNavigationData m_data;
 
         public:
-            NavRoutingStartLocationSetFromSearchMessage(const SdkModel::NavRoutingLocationModel& startLocation);
+            NavRoutingStartLocationSetFromSearchMessage(SearchNavigationData data);
 
-            const SdkModel::NavRoutingLocationModel& GetStartLocation() const;
+            const SearchNavigationData& GetSearchData() const;
         };
     }
 }

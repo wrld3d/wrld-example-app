@@ -32,8 +32,8 @@ namespace ExampleApp
                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
 
                 bool TryGetCurrentLocation(NavRoutingLocationModel &outLocation);
-                bool TryGetLocationFromNavigationMessage(
-                        const NavigateToMessage& navigateToMessage,
+                bool TryGetLocationFromSearchNavigationData(
+                        const SearchNavigationData &searchNavigationData,
                         NavRoutingLocationModel &outLocation);
             };
         }

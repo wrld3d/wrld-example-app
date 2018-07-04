@@ -16,8 +16,8 @@ namespace ExampleApp
 
                 virtual bool TryGetCurrentLocation(NavRoutingLocationModel &outLocation) = 0;
 
-                virtual bool TryGetLocationFromNavigationMessage(
-                        const NavRouting::NavigateToMessage& navigateToMessage,
+                virtual bool TryGetLocationFromSearchNavigationData(
+                        const SearchNavigationData &searchNavigationData,
                         NavRoutingLocationModel &outLocation) = 0;
             };
         }

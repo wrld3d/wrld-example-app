@@ -75,19 +75,19 @@ namespace ExampleApp
                 return true;
             }
 
-            bool NavRoutingLocationFinder::TryGetLocationFromNavigationMessage(
-                    const NavigateToMessage& navigateToMessage,
+            bool NavRoutingLocationFinder::TryGetLocationFromSearchNavigationData(
+                    const SearchNavigationData &searchNavigationData,
                     NavRoutingLocationModel &outLocation)
             {
                 outLocation = NavRoutingLocationModel();
                 NavRoutingLocationModel locationModel;
-                if(navigateToMessage.IsInterior())
+                if(searchNavigationData.IsInterior())
                 {
                     int indoorMapFloorId = 0;
-                    const auto& indoorMapId = navigateToMessage.GetBuildingId().Value();
+                    const auto& indoorMapId = searchNavigationData.GetBuildingId().Value();
                     const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
                                                                                                               indoorMapId,
-                                                                                                              navigateToMessage.GetFloor(),
+                                                                                                              searchNavigationData.GetFloorIndex(),
                                                                                                               indoorMapFloorId);
                     if (!interiorDetailsAvailable)
                     {
@@ -97,19 +97,19 @@ namespace ExampleApp
                         return false;
                     }
 
-                    outLocation = NavRoutingLocationModel(navigateToMessage.GetTitle(),
-                                                          navigateToMessage.GetLocation(),
-                                                          navigateToMessage.IsInterior(),
-                                                          navigateToMessage.GetBuildingId(),
+                    outLocation = NavRoutingLocationModel(searchNavigationData.GetTitle(),
+                                                          searchNavigationData.GetLocation(),
+                                                          searchNavigationData.IsInterior(),
+                                                          searchNavigationData.GetBuildingId(),
                                                           indoorMapFloorId);
                 }
                 else
                 {
-                    outLocation = NavRoutingLocationModel(navigateToMessage.GetTitle(),
-                                                          navigateToMessage.GetLocation(),
-                                                          navigateToMessage.IsInterior(),
-                                                          navigateToMessage.GetBuildingId(),
-                                                          navigateToMessage.GetFloor());
+                    outLocation = NavRoutingLocationModel(searchNavigationData.GetTitle(),
+                                                          searchNavigationData.GetLocation(),
+                                                          searchNavigationData.IsInterior(),
+                                                          searchNavigationData.GetBuildingId(),
+                                                          searchNavigationData.GetFloorIndex());
                 }
                 return true;
             }
