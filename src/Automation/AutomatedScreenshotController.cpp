@@ -209,7 +209,7 @@ namespace ExampleApp
 
         AutomatedScreenshotController::WaitPredicate AutomatedScreenshotController::PhoneNYCSceneSetup(bool openSearchMenu) const
         {
-            static const std::string LightThemesManifestUrlDefault  = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
+            static const std::string LightThemesManifestUrlDefault  = "https://cdn-resources.wrld3d.com/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
             const PlaceJumps::View::PlaceJumpModel NYC(
                     "NYC",
                     Eegeo::Space::LatLong::FromDegrees(40.746636, -73.985261),
@@ -299,7 +299,7 @@ namespace ExampleApp
                 },
 
                 [this]() {
-                    static const std::string LightThemesManifestUrlDefault  = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
+                    static const std::string LightThemesManifestUrlDefault  = "https://cdn-resources.wrld3d.com/mobile-themes-new/v883/ambientwhite/manifest.bin.gz";
                     const long long MsToWaitForSearchQueryToClear = 3000;
                     const long long MsToWaitForThemeToLoad = 3000;
                     const PlaceJumps::View::PlaceJumpModel SanFran(
@@ -322,7 +322,7 @@ namespace ExampleApp
                 },
 
                 [this]() {
-                    static const std::string SciFiThemesManifestUrlDefault = "http://d2xvsc8j92rfya.cloudfront.net/mobile-themes-new/v883/scifi/manifest.bin.gz";
+                    static const std::string SciFiThemesManifestUrlDefault = "https://cdn-resources.wrld3d.com/mobile-themes-new/v883/scifi/manifest.bin.gz";
                     const long long MsToWaitForSearchResultsToClearAndThemeToLoad = 3000;
                     const PlaceJumps::View::PlaceJumpModel LA(
                             "LA",
