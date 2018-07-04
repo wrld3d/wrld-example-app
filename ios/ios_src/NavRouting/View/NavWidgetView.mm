@@ -31,6 +31,7 @@ namespace ExampleApp
             : m_topPanelVisibleHeightChangedCallbacks(topPanelVisibleHeightChangedCallbacks)
             , m_bottomPanelVisibleHeightChangedCallbacks(bottomPanelVisibleHeightChangedCallbacks)
             , m_rerouteDialogOptionSelectedCallback(this, &NavWidgetView::OnRerouteDialogOptionSelected)
+            , m_isVisible(false)
             {
                 m_pNavModel = navModel;
                 
@@ -73,14 +74,18 @@ namespace ExampleApp
             
             void NavWidgetView::Show()
             {
+                m_isVisible = true;
                 [m_pNavModel sendNavEvent:WRLDNavEventWidgetAnimateIn];
+                [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
             }
             
             void NavWidgetView::Hide()
             {
+                m_isVisible = false;
                 [m_pNavModel sendNavEvent:WRLDNavEventWidgetAnimateOut];
                 m_topPanelVisibleHeightChangedCallbacks.ExecuteCallbacks(0);
                 m_bottomPanelVisibleHeightChangedCallbacks.ExecuteCallbacks(0);
+                [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
             }
             
             void NavWidgetView::SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel)
@@ -170,6 +175,18 @@ namespace ExampleApp
                 }
                 
                 [m_pNavModel setNavMode:navMode];
+                
+                if(m_isVisible)
+                {
+                    if (navMode == WRLDNavModeActive)
+                    {
+                        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+                    }
+                    else
+                    {
+                        [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+                    }
+                }
             }
             
             void NavWidgetView::ShowRerouteDialog(const std::string message)

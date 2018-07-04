@@ -43,6 +43,7 @@ namespace ExampleApp
                 WRLDNavModel* m_pNavModel;
                 NavRoutingRerouteDialog* m_pRerouteDialog;
                 NavRoutingCalculatingRoute* m_pCalculatingRoute;
+                bool m_isVisible;
                 
                 void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);
                 void OnRerouteDialogOptionSelected(const bool& shouldReroute);

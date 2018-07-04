@@ -55,6 +55,11 @@ namespace ExampleApp
             
             void NavWidgetSearchView::Show()
             {
+                if (@available(iOS 11.0, *))
+                {
+                    m_onScreenPosition = m_pContainer.superview.safeAreaInsets.top;
+                }
+                
                 [m_pSearchWidgetView clearSearch];
                 [m_pSearchWidgetView gainFocus];
                 CGRect newFrame = m_pContainer.frame;

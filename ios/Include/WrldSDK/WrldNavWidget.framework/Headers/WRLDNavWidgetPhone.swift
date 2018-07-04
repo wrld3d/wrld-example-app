@@ -96,7 +96,7 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
         let frameWidth: Int = Int(view.frame.size.width)
         let frameHeight: Int = 135
         let openFrame   = CGRect(x: 0, y:                 0, width: frameWidth, height: frameHeight)
-        let closedFrame = CGRect(x: 0, y: -(frameHeight+11), width: frameWidth, height: frameHeight)
+        let closedFrame = CGRect(x: 0, y: -(frameHeight+20), width: frameWidth, height: frameHeight)
         
         let block = {
             self.topSetupJourneyPanel.frame  = (visible) ? (openFrame) : (closedFrame)
