@@ -257,7 +257,7 @@ namespace ExampleApp
                 
                 bool NavTurnByTurnModel::HasLostLocationService()
                 {
-                    if(!m_locationService.GetIsAuthorized())
+                    if(!m_locationService.IsLocationAuthorized())
                     {
                         Stop();
                         m_interiorLocationLostCallbacks.ExecuteCallbacks();
