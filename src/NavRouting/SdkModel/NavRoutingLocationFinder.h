@@ -35,6 +35,9 @@ namespace ExampleApp
                 bool TryGetLocationFromNavigationMessage(
                         const NavigateToMessage& navigateToMessage,
                         NavRoutingLocationModel &outLocation);
+                
+                void FailedToFindLocationMessage();
+                
             };
         }
     }

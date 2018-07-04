@@ -63,6 +63,7 @@ namespace ExampleApp
             , m_shouldRerouteCallback(this, &NavRoutingController::OnShouldReroute)
             , m_startLocationSetFromSearchMessageHandler(this, &NavRoutingController::OnStartLocationSetFromSearch)
             , m_endLocationSetFromSearchMessageHandler(this, &NavRoutingController::OnEndLocationSetFromSearch)
+            , m_interiorLocationLostCallback(this, &NavRoutingController::OnInteritorLocationLost)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_routingModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
@@ -87,10 +88,12 @@ namespace ExampleApp
                 m_messageBus.SubscribeNative(m_startLocationSetFromSearchMessageHandler);
                 m_messageBus.SubscribeNative(m_endLocationSetFromSearchMessageHandler);
                 m_turnByTurnModel.InsertShouldRerouteCallback(m_shouldRerouteCallback);
+                m_turnByTurnModel.InsertInteriorLocationLostCallback(m_interiorLocationLostCallback);
             }
 
             NavRoutingController::~NavRoutingController()
             {
+                m_turnByTurnModel.RemoveInteriorLocationLostCallback(m_interiorLocationLostCallback);
                 m_turnByTurnModel.RemoveShouldRerouteCallback(m_shouldRerouteCallback);
                 m_messageBus.UnsubscribeNative(m_endLocationSetFromSearchMessageHandler);
                 m_messageBus.UnsubscribeNative(m_startLocationSetFromSearchMessageHandler);
@@ -279,11 +282,11 @@ namespace ExampleApp
                         m_isRerouting = true;
                     }
                 }
-
+                
                 m_turnByTurnModel.Stop();
                 m_waitingForRerouteResponse = false;
             }
-
+            
             void NavRoutingController::OnNavigationMessage(const NavigateToMessage& message)
             {
                 NavRoutingLocationModel startLocation, endLocation;
@@ -292,7 +295,7 @@ namespace ExampleApp
                 {
                     return;
                 }
-
+                
                 if(!m_locationFinder.TryGetLocationFromNavigationMessage(message, endLocation))
                 {
                     return;
@@ -300,35 +303,40 @@ namespace ExampleApp
                 
                 m_routingModel.SetStartLocation(startLocation);
                 m_routingModel.SetEndLocation(endLocation);
-
+                
                 OpenViewWithModel(m_routingModel);
             }
-
+            
             void NavRoutingController::OpenViewWithModel(INavRoutingModel& routingModel)
             {
                 m_messageBus.Publish(NavRoutingViewOpenMessage(routingModel));
             }
-
+            
             void NavRoutingController::OnShouldReroute()
             {
                 if (m_waitingForRerouteResponse)
                 {
                     return;
                 }
-
+                
                 std::string message = "You seem to be heading away from your destination. Do you want to end navigation?";
                 m_messageBus.Publish(NavRoutingShowRerouteDialogMessage(message));
                 m_waitingForRerouteResponse = true;
             }
-
+            
             void NavRoutingController::OnStartLocationSetFromSearch(const NavRoutingStartLocationSetFromSearchMessage& message)
             {
                 m_routingModel.SetStartLocation(message.GetStartLocation());
             }
-
+            
             void NavRoutingController::OnEndLocationSetFromSearch(const NavRoutingEndLocationSetFromSearchMessage& message)
             {
                 m_routingModel.SetEndLocation(message.GetEndLocation());
+            }
+            
+            void NavRoutingController::OnInteritorLocationLost()
+            {
+                m_locationFinder.FailedToFindLocationMessage();
             }
         }
     }

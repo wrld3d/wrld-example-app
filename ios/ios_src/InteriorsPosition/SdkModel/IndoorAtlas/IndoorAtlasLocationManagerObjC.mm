@@ -152,6 +152,7 @@ typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
 {
     if(status.type == ia_status_type::kIAStatusServiceUnavailable)
     {
+        m_pIndoorAtlasLocationService->SetIsAuthorized(false);
         /*
         m_piOSAlertBoxFactory->CreateSingleOptionAlertBox
         (
@@ -160,6 +161,10 @@ typedef FailureHandler<IndoorAtlasLocationManagerObjC> FailureHandlerType;
          *m_failAlertHandler
          );
         //*/
+    }
+    else
+    {
+        m_pIndoorAtlasLocationService->SetIsAuthorized(true);
     }
 }
 

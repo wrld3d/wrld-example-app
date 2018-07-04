@@ -19,6 +19,8 @@ namespace ExampleApp
                 virtual bool TryGetLocationFromNavigationMessage(
                         const NavRouting::NavigateToMessage& navigateToMessage,
                         NavRoutingLocationModel &outLocation) = 0;
+                
+                virtual void FailedToFindLocationMessage() = 0;
             };
         }
     }

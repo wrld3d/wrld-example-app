@@ -117,6 +117,13 @@ namespace ExampleApp
             void NavRoutingLocationFinder::OnFailAlertBoxDismissed()
             {
             }
+            
+            void NavRoutingLocationFinder::FailedToFindLocationMessage()
+            {
+                m_alertBoxFactory.CreateSingleOptionAlertBox("Failed to acquire location",
+                                                             "We couldn't find your current location",
+                                                             m_failAlertHandler);
+            }
         }
     }
 }
