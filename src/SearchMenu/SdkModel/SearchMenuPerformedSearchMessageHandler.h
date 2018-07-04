@@ -26,12 +26,14 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<SearchMenuPerformedSearchMessageHandler, const SearchMenuPerformedSearchMessage&> m_handlePerformedSearchMessageBinding;
                 Eegeo::Helpers::TCallback1<SearchMenuPerformedSearchMessageHandler, const SearchMenuSearchWithContextMessage&> m_handleSearchWithContextMessageBinding;
                 Eegeo::Helpers::TCallback1<SearchMenuPerformedSearchMessageHandler, const AutocompleteSuggestionsMessage&> m_handleAutocompleteSuggestionsMessageBinding;
+                Eegeo::Helpers::TCallback1<SearchMenuPerformedSearchMessageHandler, const AutocompleteSuggestionsCancelledMessage&> m_handleAutocompleteSuggestionsCancelledMessageBinding;
 
                 Metrics::IMetricsService& m_metricsService;
                 
                 void OnPerformedSearchMessage(const SearchMenuPerformedSearchMessage& message);
                 void OnSearchWithContextMessage(const SearchMenuSearchWithContextMessage& message);
                 void OnAutocompleteSuggestionsMessage(const AutocompleteSuggestionsMessage& message);
+                void OnAutocompleteSuggestionsCancelledMessage(const AutocompleteSuggestionsCancelledMessage& message);
             public:
                 SearchMenuPerformedSearchMessageHandler(Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
                                                         Search::SdkModel::IAutocompleteSuggestionQueryPerformer& autocompleteSuggestionsQueryPerformer,

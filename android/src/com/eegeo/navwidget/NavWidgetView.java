@@ -9,7 +9,11 @@ import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,6 +49,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     protected long m_nativeCallerPointer;
     private View m_view = null;
     private RelativeLayout m_uiRoot = null;
+    private AlertDialog m_calculatingSpinner = null;
 
     private WrldNavWidget m_navWidget = null;
     private WrldNavModelObserver m_observer;
@@ -334,8 +339,43 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         TextView messageText = rerouteDialog.findViewById(R.id.nav_reroute_dialog_msg);
         messageText.setText(message);
 
+        dialog.setCancelable(false);
         dialog.setView(rerouteDialog);
         dialog.show();
+    }
+
+
+    public void showCalculatingRouteSpinner()
+    {
+        m_calculatingSpinner = new AlertDialog.Builder(m_activity).create();
+
+        LayoutInflater layoutInflater = m_activity.getLayoutInflater();
+        View calculatingSpinnerView = layoutInflater.inflate(R.layout.nav_widget_calculating_route_layout, null);
+
+        ImageView calculatingSpinnerImageView = calculatingSpinnerView.findViewById(R.id.calculating_spinner_image_view);
+
+        //Animate
+        RotateAnimation rotate = new RotateAnimation(0,360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+        rotate.setDuration(2000);
+        rotate.setInterpolator(new LinearInterpolator());
+        rotate.setRepeatCount(Animation.INFINITE);
+
+        calculatingSpinnerImageView.setAnimation(rotate);
+
+        m_calculatingSpinner.setCancelable(false);
+        m_calculatingSpinner.setView(calculatingSpinnerView);
+        m_calculatingSpinner.show();
+
+    }
+
+    public void hideCalculatingRouteSpinner()
+    {
+        if(m_calculatingSpinner != null)
+        {
+            m_calculatingSpinner.dismiss();
+            m_calculatingSpinner = null;
+        }
     }
     
     public void destroy()

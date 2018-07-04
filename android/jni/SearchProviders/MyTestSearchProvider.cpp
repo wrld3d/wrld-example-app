@@ -79,9 +79,16 @@ namespace ExampleApp
 			m_searchCancelledCallbacks.ExecuteCallbacks();
 		}
 
+		void MyTestSearchProvider::CancelSuggestions()
+		{
+			ASSERT_UI_THREAD
+
+			m_suggestionsCancelledCallbacks.ExecuteCallbacks();
+		}
+
 		void MyTestSearchProvider::OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults)
 		{
-			ResponceRecieved(searchResults,m_onAutocompleteSuggestionsCompleted);
+			ResponceRecieved(searchResults, m_onAutocompleteSuggestionsCompleted);
 		}
 
 		void MyTestSearchProvider::OnSearchResponseReceived(const TSearchResults& searchResults)
@@ -195,6 +202,20 @@ namespace ExampleApp
 			ASSERT_UI_THREAD
 
 			m_searchCancelledCallbacks.RemoveCallback(callback);
+		}
+
+		void MyTestSearchProvider::InsertSuggestionsCancelledCallback(Eegeo::Helpers::ICallback0& callback)
+		{
+			ASSERT_UI_THREAD
+
+			m_suggestionsCancelledCallbacks.AddCallback(callback);
+		}
+
+		void MyTestSearchProvider::RemoveSuggestionsCancelledCallback(Eegeo::Helpers::ICallback0& callback)
+		{
+			ASSERT_UI_THREAD
+
+			m_suggestionsCancelledCallbacks.RemoveCallback(callback);
 		}
 	}
 }

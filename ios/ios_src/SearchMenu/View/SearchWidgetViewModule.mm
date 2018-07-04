@@ -16,13 +16,20 @@ namespace ExampleApp
             {
                 m_pSearchProvider = Eegeo_NEW(SearchProviders::SearchProvider)();
                 
+                m_pSearchModel = [[[WRLDSearchModel alloc] init] autorelease];
+                
                 m_pWrldSearchProvider = [[WidgetSearchProvider alloc] initWithSearchProvider: m_pSearchProvider];
                 
+                m_autocompleteCancelledEvent = ^(WRLDSearchQuery* cancelledQuery){
+                    [m_pWrldSearchProvider cancelAutocompleteRequest];
+                };
                 
+                [m_pSearchModel.suggestionObserver addQueryCancelledEvent: m_autocompleteCancelledEvent];
                 
-                m_pView = [[SearchWidgetContainerView alloc] initWithSearchProvider:m_pWrldSearchProvider
-                                                                  navigationEnabled:isNavigationEnabled
-                                                                messageBus:messageBus];
+                m_pView = [[SearchWidgetContainerView alloc] initWithSearchModel: m_pSearchModel
+                                                                  searchProvider: m_pWrldSearchProvider
+                                                               navigationEnabled: isNavigationEnabled
+                                                                      messageBus: messageBus];
                 
                 m_pSearchResults = Eegeo_NEW(SearchResultsRepository)();
                 m_pSuggestions = Eegeo_NEW(SearchResultsRepository)();
@@ -39,13 +46,19 @@ namespace ExampleApp
                                                                               messageBus);
             }
             
-            SearchWidgetController& SearchWidgetViewModule::GetSearchWidgetController() const{
+            SearchWidgetController& SearchWidgetViewModule::GetSearchWidgetController() const
+            {
                 return *m_pSearchWidgetController;
             }
             
             SearchWidgetContainerView& SearchWidgetViewModule::GetSearchWidgetView() const
             {
                 return *m_pView;
+            }
+            
+            WidgetSearchProvider* SearchWidgetViewModule::GetSuggestionProvider() const
+            {
+                return m_pWrldSearchProvider;
             }
             
             ISearchResultsRepository& SearchWidgetViewModule::GetSuggestionsRepository() const
@@ -63,6 +76,8 @@ namespace ExampleApp
                 Eegeo_DELETE m_pSearchResults;
                 
                 [m_pView release];
+                
+                [m_pSearchModel.suggestionObserver removeQueryCancelledEvent: m_autocompleteCancelledEvent];
                 
                 Eegeo_DELETE m_pSearchProvider;
             }

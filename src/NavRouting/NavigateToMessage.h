@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "SearchResultModel.h"
+#include "SearchNavigationData.h"
 
 namespace ExampleApp
 {
@@ -11,26 +11,12 @@ namespace ExampleApp
         class NavigateToMessage
         {
         private:
-            const std::string& m_name;
-            const Eegeo::Space::LatLong& m_latLon;
-            const bool m_isIndoors;
-            const Eegeo::Resources::Interiors::InteriorId& m_indoorMapId;
-            const int m_indoorMapFloorId;
+            const SearchNavigationData m_data;
 
         public:
-            NavigateToMessage(
-                    const std::string& title,
-                    const Eegeo::Space::LatLong& location,
-                    const bool isInterior,
-                    const Eegeo::Resources::Interiors::InteriorId& buildingId,
-                    const int floor);
+            NavigateToMessage(SearchNavigationData data);
 
-            const std::string& GetTitle() const;
-            const Eegeo::Space::LatLong& GetLocation() const;
-            const bool IsInterior() const;
-            const Eegeo::Resources::Interiors::InteriorId& GetBuildingId() const;
-            const int GetFloor() const;
-
+            const SearchNavigationData& GetSearchData() const;
         };
     }
 }

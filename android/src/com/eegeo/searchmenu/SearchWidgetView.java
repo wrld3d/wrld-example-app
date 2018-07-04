@@ -341,6 +341,11 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
 
     @Override
     public void onFocusChange(View view, boolean inFocus) {
+        if(inFocus && !m_searchTextboxIsInFocus && !(m_hasSearchResults || m_searchInProgress))
+        {
+            return;
+        }
+
         m_searchTextboxIsInFocus = inFocus;
         pushControlsOfScreenIfNeeded();
     }

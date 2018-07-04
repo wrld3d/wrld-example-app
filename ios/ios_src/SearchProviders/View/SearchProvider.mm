@@ -55,6 +55,16 @@ namespace ExampleApp
         {
             m_searchCancelledCallbacks.RemoveCallback(callback);
         }
+        
+        void SearchProvider::InsertSuggestionsCancelledCallback(Eegeo::Helpers::ICallback0& callback)
+        {
+            m_suggestionsCancelledCallbacks.AddCallback(callback);
+        }
+        
+        void SearchProvider::RemoveSuggestionsCancelledCallback(Eegeo::Helpers::ICallback0& callback)
+        {
+            m_suggestionsCancelledCallbacks.RemoveCallback(callback);
+        }
 
         void SearchProvider::OnSearchResponseReceived(const TSearchResults& searchResults)
         {
@@ -64,6 +74,11 @@ namespace ExampleApp
         void SearchProvider::OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults)
         {
             UpdateResults(searchResults, m_pCurrentSuggestion);
+        }
+        
+        void SearchProvider::CancelAutocompleteRequest()
+        {
+            m_suggestionsCancelledCallbacks.ExecuteCallbacks();
         }
 
         void SearchProvider::UpdateResults(const TSearchResults& searchResults, WRLDSearchRequest* searchRequest)

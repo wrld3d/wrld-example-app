@@ -111,6 +111,13 @@ public class WRLDNavSetupJourneyView: UIView, WRLDNavModelObserverProtocol, UITe
         }
     }
     
+    public func setHidden(isHidden: Bool)
+    {
+        self.startLineEdit.alpha = isHidden ? 0.0 : 1.0
+        self.endLineEdit.alpha = isHidden ? 0.0 : 1.0
+        self.isHidden = isHidden
+    }
+    
     public func leftButtonClicked(textField: WRLDUtilsTextField)
     {
         

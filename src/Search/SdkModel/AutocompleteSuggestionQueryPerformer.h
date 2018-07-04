@@ -36,6 +36,7 @@ namespace ExampleApp {
                         ExampleAppMessaging::TMessageBus& messageBus);
                ~AutocompleteSuggestionQueryPerformer();
                 void PerformSuggestionsQuery(const std::string& query);
+                void Cancel();
 
                 void OnWebResponseReceived(Eegeo::Web::IWebResponse& webResponse);
             private:

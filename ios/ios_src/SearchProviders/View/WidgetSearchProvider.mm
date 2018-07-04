@@ -32,6 +32,11 @@
     m_pSearchProvider->PerformAutocompleteSuggestions(query);
 }
 
+- (void) cancelAutocompleteRequest
+{
+    m_pSearchProvider->CancelAutocompleteRequest();
+}
+
 @synthesize moreResultsName;
 
 @synthesize cellIdentifier;

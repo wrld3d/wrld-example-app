@@ -18,18 +18,6 @@ namespace ExampleApp
     {
         namespace View
         {
-            namespace
-            {
-                SdkModel::NavRoutingLocationModel LocationModelFromSuggestionIndex(const SearchMenu::View::SearchServicesResult::TSdkSearchResult& sdkSearchResult)
-                {
-                    return SdkModel::NavRoutingLocationModel(
-                            sdkSearchResult.GetTitle(),
-                            sdkSearchResult.GetLocation(),
-                            sdkSearchResult.IsInterior(),
-                            sdkSearchResult.GetBuildingId(),
-                            sdkSearchResult.GetFloor());
-                }
-            }
             void NavWidgetController::OnViewOpened()
             {
                 m_view.Show();
@@ -189,15 +177,15 @@ namespace ExampleApp
             void NavWidgetController::OnNavigationStartPointFromSuggestion(const int& index)
             {
                 const SearchMenu::View::SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_suggestionsRepository.GetSdkSearchResultByIndex(index);
-                const SdkModel::NavRoutingLocationModel& startLocation = LocationModelFromSuggestionIndex(sdkSearchResult);
-                m_messageBus.Publish(NavRoutingStartLocationSetFromSearchMessage(startLocation));
+                const NavRouting::SearchNavigationData searchNavigationData(sdkSearchResult);
+                m_messageBus.Publish(NavRoutingStartLocationSetFromSearchMessage(searchNavigationData));
             }
 
             void NavWidgetController::OnNavigationEndPointFromSuggestion(const int& index)
             {
                 const SearchMenu::View::SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_suggestionsRepository.GetSdkSearchResultByIndex(index);
-                const SdkModel::NavRoutingLocationModel& endLocation = LocationModelFromSuggestionIndex(sdkSearchResult);
-                m_messageBus.Publish(NavRoutingEndLocationSetFromSearchMessage(endLocation));
+                const NavRouting::SearchNavigationData searchNavigationData(sdkSearchResult);
+                m_messageBus.Publish(NavRoutingEndLocationSetFromSearchMessage(searchNavigationData));
             }
             
             void NavWidgetController::OnSetCalculateRouteSpinner(const NavRoutingSetCalculatingRouteMessage& message)

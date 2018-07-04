@@ -10,6 +10,7 @@
 #include "MenuItemModel.h"
 #include "IMenuModel.h"
 #include "ISearchResultsRepository.h"
+#include "SearchNavigationData.h"
 
 namespace ExampleApp
 {
@@ -146,13 +147,8 @@ namespace ExampleApp
             void SearchWidgetController::OnNavigationRequested(const int& index)
             {
                 const SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_resultsRepository.GetSdkSearchResultByIndex(index);
-                m_messageBus.Publish(NavRouting::NavigateToMessage(
-                        sdkSearchResult.GetTitle(),
-                        sdkSearchResult.GetLocation(),
-                        sdkSearchResult.IsInterior(),
-                        sdkSearchResult.GetBuildingId(),
-                        sdkSearchResult.GetFloor()
-                ));
+                const NavRouting::SearchNavigationData searchNavigationData(sdkSearchResult);
+                m_messageBus.Publish(NavRouting::NavigateToMessage(searchNavigationData));
             }
             
             void SearchWidgetController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)

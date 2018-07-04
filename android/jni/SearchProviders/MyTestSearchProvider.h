@@ -18,6 +18,7 @@ namespace ExampleApp
 			Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchPerformedCallbacks;
 			Eegeo::Helpers::CallbackCollection2<const std::string&, const SearchMenu::View::QueryContext&> m_searchWithContextCallbacks;
 			Eegeo::Helpers::CallbackCollection0 m_searchCancelledCallbacks;
+			Eegeo::Helpers::CallbackCollection0 m_suggestionsCancelledCallbacks;
 
 			AndroidNativeState& m_nativeState;
 			jclass m_javaClass;
@@ -44,11 +45,15 @@ namespace ExampleApp
 			void InsertSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback);
 			void RemoveSearchCancelledCallback(Eegeo::Helpers::ICallback0& callback);
 
+			void InsertSuggestionsCancelledCallback(Eegeo::Helpers::ICallback0& callback);
+			void RemoveSuggestionsCancelledCallback(Eegeo::Helpers::ICallback0& callback);
+
 			void PerformAutocompleteSuggestions(const std::string& searchQuery);
 			void PerformSearch(const std::string& searchQuery);
 			void PerformSearchWithContext(const std::string& searchQuery,
 										  const SearchMenu::View::QueryContext& queryContext);
 			void CancelSearch();
+			void CancelSuggestions();
 
 			void OnSearchResponseReceived(const TSearchResults& searchResults);
 			void OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults);

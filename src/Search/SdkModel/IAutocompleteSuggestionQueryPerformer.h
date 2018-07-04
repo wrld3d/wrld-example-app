@@ -15,6 +15,7 @@ namespace ExampleApp {
             public:
                 virtual ~IAutocompleteSuggestionQueryPerformer() {};
                 virtual void PerformSuggestionsQuery(const std::string& query) = 0;
+                virtual void Cancel() = 0;
             };
         }
     }

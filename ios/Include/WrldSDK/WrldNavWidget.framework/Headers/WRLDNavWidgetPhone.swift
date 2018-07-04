@@ -236,7 +236,7 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
     {
         UIView.animate(withDuration: 0.3, animations:
             {
-                self.setupJourneyView.isHidden = !(self.topToggleButton.toggleState)
+                self.setupJourneyView.setHidden(isHidden: !(self.topToggleButton.toggleState))
                 self.view.setNeedsLayout()
                 self.view.layoutIfNeeded()
                 self.topPanelVisibleHeight = self.calculateTopPanelVisibleHeight()

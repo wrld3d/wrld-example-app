@@ -151,8 +151,9 @@ public class MyTestSearchProvider implements SearchProvider, SuggestionProvider,
 
 	private void executeSuggestionCallbacks(SearchResult[] results, boolean success)
 	{
-		for (SearchProviderResultsReadyCallback callback : m_suggestion_callbacks)
+		for (SearchProviderResultsReadyCallback callback : m_suggestion_callbacks) {
 			callback.onQueryCompleted(results, success);
+		}
 	}
 
 	public String getSuggestionTitleFormatting(){
@@ -164,8 +165,7 @@ public class MyTestSearchProvider implements SearchProvider, SuggestionProvider,
 	}
 
 	public void cancelSuggestions(){
-		// TO DO - cancel ongoing autocomplete suggestions within the native thread
-		//SearchProvidersJniMethods.cancelSuggestions(m_nativeCallerPointer);
+		SearchProvidersJniMethods.cancelSuggestions(m_nativeCallerPointer);
 		executeSuggestionCallbacks(new SearchResult[0],false);
 	}
 

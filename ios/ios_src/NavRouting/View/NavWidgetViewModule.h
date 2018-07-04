@@ -12,6 +12,9 @@
 #include "INavWidgetViewModule.h"
 #include "INavWidgetViewModel.h"
 #include "ISearchResultsRepository.h" 
+#include "NavWidgetSearchController.h"
+#include "WidgetSearchProvider.h"
+#import <WrldSearchWidget/WrldSearchWidget.h>
 
 namespace Eegeo
 {
@@ -45,7 +48,9 @@ namespace ExampleApp
             {
             private:
                 NavWidgetController* m_pNavWidgetController;
-                NavWidgetView* m_pView ;
+                NavWidgetSearchController* m_pNavWidgetSearchController;
+                NavWidgetView* m_pView;
+                NavWidgetSearchView* m_pNavSearchView;
 
                 WRLDNavModel* m_pNavModel;
                 
@@ -55,12 +60,14 @@ namespace ExampleApp
             public:
                 NavWidgetViewModule(ExampleApp::OpenableControl::View::IOpenableControlViewModel& openable,
                                     INavWidgetViewModel& viewModel,
+                                    WidgetSearchProvider* navSuggestionProvider,
                                     SearchMenu::View::ISearchResultsRepository& suggestionsRespository,
                                     ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~NavWidgetViewModule();
                 
                 UIView& GetNavWidgetView() const;
+                UIView& GetNavWidgetSearchView() const;
                 NavWidgetController& GetNavWidgetController() const;
                 
                 void modelSet();

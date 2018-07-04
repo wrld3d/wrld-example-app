@@ -28,7 +28,7 @@ namespace ExampleApp {
                     , m_serviceUrl(serviceUrl)
                     , m_apiTokenModel(apiTokenModel)
                     , m_current_query()
-            ,m_urlEncoder(urlEncoder)
+                    , m_urlEncoder(urlEncoder)
             {
 
             }
@@ -70,9 +70,15 @@ namespace ExampleApp {
                 m_pWebLoadRequest->Load();
             }
 
+            void AutocompleteSuggestionQueryPerformer::Cancel()
+            {
+                Eegeo_ASSERT(m_pWebLoadRequest != NULL, "Cannot cancel autocomplete request - no request exists");
+                m_pWebLoadRequest->Cancel();
+            }
+
             void AutocompleteSuggestionQueryPerformer::OnWebResponseReceived(Eegeo::Web::IWebResponse& webResponse)
             {
-                if(webResponse.IsSucceeded())
+                if(!webResponse.IsCancelled() && webResponse.IsSucceeded())
                 {
                     size_t resultSize = webResponse.GetBodyData().size();
                     std::string response = std::string(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);

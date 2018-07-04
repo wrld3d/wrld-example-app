@@ -85,7 +85,8 @@
 				android:textColorHint="@color/lightgrey"
 				android:gravity="top|left"
 				android:textSize="15.0dp"
-				android:maxLength="10000" />
+				android:maxLength="10000"
+                android:lines="10" />
 
 			<ImageView
 				android:id="@+id/poi_creation_details_image"
