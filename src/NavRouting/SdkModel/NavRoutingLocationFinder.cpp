@@ -30,7 +30,7 @@ namespace ExampleApp
                 if(!m_locationService.GetIsAuthorized())
                 {
                     m_alertBoxFactory.CreateSingleOptionAlertBox("Location service is not authorized",
-                                                                 "We didn't recieve autorization for location service",
+                                                                 "We didn't receive authorization for location service",
                                                                  m_failAlertHandler);
                     return false;
                 }
@@ -60,10 +60,12 @@ namespace ExampleApp
                                                                                                               indoorMapFloorId);
                     if (!interiorDetailsAvailable)
                     {
-                        m_alertBoxFactory.CreateSingleOptionAlertBox("Interior not loaded",
-                                                                     "Interior information is not available",
-                                                                     m_failAlertHandler);
-                        return false;
+                        outLocation = NavRoutingLocationModel("Current Location",
+                                                              currentLocation,
+                                                              false,
+                                                              Eegeo::Resources::Interiors::InteriorId::NullId(),
+                                                              0);
+                        return true;
                     }
                 }
 
