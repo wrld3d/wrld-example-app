@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
+import com.eegeo.mapapi.INativeMessageRunner;
+
 public class EegeoSurfaceView extends SurfaceView
 {
     public static native void processNativePointerDown(int primaryActionIndex, int primaryActionIdentifier, int pointerCount, float[] x, float y[], int[] pointerIdentity, int[] pointerIndex);

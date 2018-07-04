@@ -4,14 +4,13 @@ package com.eegeo.location;
 
 import java.util.List;
 
+import com.eegeo.mapapi.INativeMessageRunner;
 import com.eegeo.location.CombinedLocationApiService.FusedLocationUpdateListener;
-import com.eegeo.entrypointinfrastructure.MainActivity;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -27,22 +26,35 @@ import android.util.Log;
 @SuppressWarnings("unused")
 class LocationService {
     private final long m_nativeCallerPointer;
+    private final INativeMessageRunner m_nativeMessageRunner;
     private Location m_bestLocation = null;
     private boolean m_isListening = false;
     private boolean m_isAuthorized = false;
 
     private CombinedLocationApiService m_combinedLocationApiService;
 
-    private MainActivity m_activity;
+    private Context m_context;
 
     private LocationListener m_locationListener;
     private LocationManager m_locationManager;
 
     @SuppressWarnings("unused")
-    public LocationService(Activity activity, long nativeCallerPointer) {
-        m_activity = (MainActivity) activity;
+    public LocationService(
+            Context context,
+            INativeMessageRunner nativeMessageRunner,
+            long nativeCallerPointer) {
+        if(context == null) {
+            throw new NullPointerException("context");
+        }
+
+        if(nativeMessageRunner == null) {
+            throw new NullPointerException("nativeMessageRunner");
+        }
+
+        m_context = context;
+        m_nativeMessageRunner = nativeMessageRunner;
         m_nativeCallerPointer = nativeCallerPointer;
-        m_isAuthorized = isLocationEnabled(m_activity);
+        m_isAuthorized = isLocationEnabled(m_context);
 
         Log.v("Location", "ctor; is authorized? : " + m_isAuthorized);
 
@@ -70,10 +82,10 @@ class LocationService {
 
     private boolean hasUserGrantedLocationPermissions() {
         final boolean hasFineLocationPermission =
-                ActivityCompat.checkSelfPermission(m_activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+                ActivityCompat.checkSelfPermission(m_context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
         final boolean hasCoarseLocationPermission =
-               ActivityCompat.checkSelfPermission(m_activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+               ActivityCompat.checkSelfPermission(m_context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
         Log.v("Location", "location: ACCESS_FINE_LOCATION permission = " + hasFineLocationPermission);
         Log.v("Location", "location: ACCESS_COARSE_LOCATION permission = " + hasCoarseLocationPermission);
@@ -176,12 +188,12 @@ class LocationService {
     
     private void setupListenerAndLocationManager()
     {
-        m_locationManager = (LocationManager) m_activity.getSystemService(Context.LOCATION_SERVICE);
+        m_locationManager = (LocationManager) m_context.getSystemService(Context.LOCATION_SERVICE);
         m_isAuthorized = isAnyProviderEnabled();
 
         final int resultCode = GoogleApiAvailability
                 .getInstance()
-                .isGooglePlayServicesAvailable(m_activity);
+                .isGooglePlayServicesAvailable(m_context);
 
         if(resultCode == ConnectionResult.SUCCESS) {
             if(m_combinedLocationApiService == null) {
@@ -206,7 +218,7 @@ class LocationService {
 
     private void CreateCombinedLocationService() {
         Log.v("Location", "Creating CombinedLocationApiService");
-        m_combinedLocationApiService = new CombinedLocationApiService(m_activity, new FusedLocationUpdateListener()
+        m_combinedLocationApiService = new CombinedLocationApiService(m_context, new FusedLocationUpdateListener()
         {
             @Override
             public void onFusedLocationChanged(Location location)
@@ -322,7 +334,7 @@ class LocationService {
             final double altitudeMeters,
             final double horizontalAccuracyMeters)
     {
-        //m_activity.runOnNativeThread(new Runnable()
+        //m_nativeMessageRunner.runOnNativeThread(new Runnable()
         //{
         //    public void run() {
                 LocationServiceJniMethods.UpdateLocation(
@@ -337,7 +349,7 @@ class LocationService {
 
     private void updateNativeAuthorized(final boolean isAuthorized)
     {
-        //m_activity.runOnNativeThread(new Runnable() {
+        //m_nativeMessageRunner.runOnNativeThread(new Runnable() {
         //    public void run()
         //   {
                 LocationServiceJniMethods.UpdateAuthorized(

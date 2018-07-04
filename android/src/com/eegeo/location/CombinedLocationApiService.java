@@ -7,7 +7,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import android.Manifest;
-import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ public class CombinedLocationApiService
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener
 {
 
-    private Activity m_activity;
+    private Context m_context;
     private static final String TAG = "CombinedLocationService";
 
     private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000 * 5;
@@ -29,9 +29,9 @@ public class CombinedLocationApiService
     private Location m_currentLocation;
     private FusedLocationUpdateListener m_fusedLocationUpdateListener;
 
-    public CombinedLocationApiService(Activity activity, FusedLocationUpdateListener fusedLocationUpdateListener)
+    public CombinedLocationApiService(Context context, FusedLocationUpdateListener fusedLocationUpdateListener)
     {
-        m_activity = activity;
+        m_context = context;
         m_fusedLocationUpdateListener = fusedLocationUpdateListener;
         startListeningToUpdates();
     }
@@ -43,13 +43,13 @@ public class CombinedLocationApiService
 
     private synchronized void buildGoogleApiClient()
     {
-        if(ContextCompat.checkSelfPermission(m_activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        if(ContextCompat.checkSelfPermission(m_context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             return;
         }
         if(m_googleApiClient == null)
         {
-            m_googleApiClient = new GoogleApiClient.Builder(m_activity)
+            m_googleApiClient = new GoogleApiClient.Builder(m_context)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
                     .addApi(LocationServices.API).build();

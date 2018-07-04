@@ -1,6 +1,5 @@
 package com.eegeo.location;
 
-import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -11,18 +10,21 @@ import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.WindowManager;
 
-import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.mapapi.INativeMessageRunner;
 
 @SuppressWarnings("unused")
 public class HeadingService implements SensorEventListener {
 	private final int m_ctorThreadId;
+
 	private final long m_nativeCallerPointer;
+	private Context m_context;
+	private final INativeMessageRunner m_nativeMessageRunner;
+
 	private boolean m_listeningForUpdates = false;
 	private int m_deviceRotation;
 
 	private SensorManager m_sensorManager;
 	private OrientationEventListener m_orientationEventListener = null;
-	private MainActivity m_activity;
 
 	// The results from SensorManager.getOrientation appear to be worse than the results of
 	// the deprecated Sensor.TYPE_ORIENTATION on the test device. To enable SensorManager.getOrientation
@@ -52,11 +54,24 @@ public class HeadingService implements SensorEventListener {
 	}
 
 	@SuppressWarnings("unused")
-	public HeadingService(Activity activity, long nativeCallerPointer) {
-		m_activity = (MainActivity) activity;
+	public HeadingService(Context context,
+						  INativeMessageRunner nativeMessageRunner,
+						  long nativeCallerPointer) {
+		//noinspection ConstantConditions -- this doesn't actually throw when it's null
+		if(context == null) {
+			throw new NullPointerException("context");
+		}
+
+		//noinspection ConstantConditions -- this doesn't actually throw when it's null
+		if(nativeMessageRunner == null) {
+			throw new NullPointerException("nativeMessageRunner");
+		}
+
+		m_context = context;
+		m_nativeMessageRunner = nativeMessageRunner;
 		m_nativeCallerPointer = nativeCallerPointer;
 		m_ctorThreadId = getThreadId();
-		WindowManager systemService = (WindowManager) m_activity.getSystemService(Context.WINDOW_SERVICE);
+		WindowManager systemService = (WindowManager) m_context.getSystemService(Context.WINDOW_SERVICE);
 		m_deviceRotation = systemService == null ? Surface.ROTATION_0 : systemService.getDefaultDisplay().getRotation();
 	}
 
@@ -70,16 +85,16 @@ public class HeadingService implements SensorEventListener {
 
 		m_listeningForUpdates = true;
 
-		m_sensorManager = (SensorManager) m_activity.getSystemService(Context.SENSOR_SERVICE);
+		m_sensorManager = (SensorManager) m_context.getSystemService(Context.SENSOR_SERVICE);
 
 		@SuppressWarnings("deprecation")
 		Sensor orientation = m_sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 		m_sensorManager.registerListener(HeadingService.this, orientation, SensorManager.SENSOR_DELAY_GAME);
 
-		m_orientationEventListener = new OrientationEventListener(m_activity, SensorManager.SENSOR_DELAY_NORMAL) {
+		m_orientationEventListener = new OrientationEventListener(m_context, SensorManager.SENSOR_DELAY_NORMAL) {
 			@Override
 			public void onOrientationChanged(int orientation) {
-				m_deviceRotation = ((WindowManager) m_activity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
+				m_deviceRotation = ((WindowManager) m_context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
 			}
 		};
 		m_orientationEventListener.enable();
@@ -148,7 +163,7 @@ public class HeadingService implements SensorEventListener {
 	}
 
 	private void updateNativeHeading(final double heading) {
-		m_activity.runOnNativeThread(new Runnable() {
+		m_nativeMessageRunner.runOnNativeThread(new Runnable() {
 			public void run() {
 				HeadingServiceJniMethods.UpdateHeading(m_nativeCallerPointer, heading);
 			}

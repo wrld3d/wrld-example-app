@@ -1,6 +1,6 @@
 package com.eegeo.interiorsposition.senionlab;
 
-import com.eegeo.entrypointinfrastructure.INativeMessageRunner;
+import com.eegeo.mapapi.INativeMessageRunner;
 import com.senionlab.slutilities.geofencing.interfaces.SLGeometry;
 import com.senionlab.slutilities.service.SLBroadcastReceiver;
 import com.senionlab.slutilities.type.LocationAvailability;

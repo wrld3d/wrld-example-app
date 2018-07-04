@@ -1,7 +1,7 @@
 -dontobfuscate
 -verbose
 
--keep class com.eegeo.entrypointinfrastructure.INativeMessageRunner
+-keep class com.eegeo.mapapi.INativeMessageRunner
 
 -keep class com.eegeo.** { *; }
 -dontwarn com.eegeo.**

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
@@ -20,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.RelativeLayout;
 
 import com.eegeo.helpers.IBackButtonListener;
+import com.eegeo.mapapi.INativeMessageRunner;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.photos.PhotoIntentDispatcher;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
