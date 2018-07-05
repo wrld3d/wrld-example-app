@@ -111,7 +111,6 @@ namespace ExampleApp
                 m_pMenuOptionsModel->AddItem(navUIOptionText,
                                              navUIOptionText, "", "",
                                            Eegeo_NEW(View::NavWidgetMenuOption)(
-                                                   *m_pNavRoutingLocationFinder,
                                                    *m_pNavRoutingModel,
                                                    *m_pRoutingController));
             }

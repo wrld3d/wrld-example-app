@@ -9,11 +9,9 @@ namespace ExampleApp
     {
         namespace View
         {
-            NavWidgetMenuOption::NavWidgetMenuOption(SdkModel::INavRoutingLocationFinder& locationFinder,
-                                                     SdkModel::INavRoutingModel& routingModel,
+            NavWidgetMenuOption::NavWidgetMenuOption(SdkModel::INavRoutingModel& routingModel,
                                                      SdkModel::NavRoutingController& routingController)
-                    : m_locationFinder(locationFinder)
-                    , m_routingModel(routingModel)
+                    : m_routingModel(routingModel)
                     , m_routingController(routingController)
             {
 
