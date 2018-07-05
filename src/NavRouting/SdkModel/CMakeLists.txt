@@ -39,6 +39,9 @@ set(currsources
   ../src/NavRouting/SdkModel/NavWidgetRouteUpdateHandler.h
   ../src/NavRouting/SdkModel/NavRoutingCameraController.cpp
   ../src/NavRouting/SdkModel/NavRoutingCameraController.h
+  ../src/NavRouting/SdkModel/NavRoutingCustomLocationPicker.cpp
+  ../src/NavRouting/SdkModel/NavRoutingCustomLocationPicker.h
+  ../src/NavRouting/SdkModel/INavRoutingCustomLocationPicker.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\NavRouting\\SdkModel FILES ${currsources})

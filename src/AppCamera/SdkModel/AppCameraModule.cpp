@@ -2,6 +2,7 @@
 
 #include "AppCameraModule.h"
 #include "AppCameraController.h"
+#include "AppCameraLocationPicker.h"
 
 namespace ExampleApp
 {
@@ -9,14 +10,23 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            AppCameraModule::AppCameraModule()
+            AppCameraModule::AppCameraModule(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                             Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
+                                             Eegeo::Collision::IFeatureRayCastingService& featureRayCastingService)
             {
                 m_pAppCameraController = Eegeo_NEW(AppCameraController)();
-            
+
+                m_pAppCameraLocationPicker = Eegeo_NEW(AppCameraLocationPicker)(*m_pAppCameraController,
+                    interiorTransitionModel,
+                    interiorInteractionModel,
+                    featureRayCastingService);
             }
             
             AppCameraModule::~AppCameraModule()
             {
+                Eegeo_DELETE m_pAppCameraLocationPicker;
+                m_pAppCameraLocationPicker = NULL;
+
                 Eegeo_DELETE m_pAppCameraController;
                 m_pAppCameraController = NULL;
             }
@@ -24,6 +34,11 @@ namespace ExampleApp
             IAppCameraController& AppCameraModule::GetController()
             {
                 return *m_pAppCameraController;
+            }
+
+            IAppCameraLocationPicker& AppCameraModule::GetLocationPicker()
+            {
+                return *m_pAppCameraLocationPicker;
             }
             
         }

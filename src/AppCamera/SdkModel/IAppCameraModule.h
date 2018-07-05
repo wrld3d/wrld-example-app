@@ -18,6 +18,7 @@ namespace ExampleApp
                 virtual ~IAppCameraModule() {}
                 
                 virtual IAppCameraController& GetController() = 0;
+                virtual IAppCameraLocationPicker& GetLocationPicker() = 0;
             };
         }
     }

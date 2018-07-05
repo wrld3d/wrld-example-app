@@ -37,6 +37,7 @@ namespace ExampleApp
 
                 Eegeo::Helpers::CallbackCollection1<const int> m_navigationStartPointFromSuggestionCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_navigationEndPointFromSuggestionCallbacks;
+                Eegeo::Helpers::CallbackCollection2<const bool, const bool> m_searchingForLocationCallbacks;
 
                 jclass m_uiViewClass;
                 jobject m_uiView;
@@ -155,6 +156,8 @@ namespace ExampleApp
 
                 void SetEndPointFromSuggestionIndex(int index) override;
 
+                void SetSearchingForLocation(bool isSearching, bool isStartLocation);
+
                 void InsertOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
 
                 void RemoveOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
@@ -162,6 +165,10 @@ namespace ExampleApp
                 void InsertOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
 
                 void RemoveOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
+
+                void InsertOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool>& callback) override;
+
+                void RemoveOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool>& callback) override;
 
             private:
                 void SetLocation(const SdkModel::NavRoutingLocationModel& locationModel, bool isStartLocation);

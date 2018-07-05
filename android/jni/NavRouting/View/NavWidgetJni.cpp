@@ -141,3 +141,15 @@ JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetNavig
     auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
     pView->SetEndPointFromSuggestionIndex(searchResultIndex);
 }
+
+JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetSearchingForLocation(
+        JNIEnv *jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jboolean isSearching,
+        jboolean isStartLocation)
+{
+    ASSERT_UI_THREAD
+
+    auto* pView = reinterpret_cast<ExampleApp::NavRouting::View::NavWidgetView*>(nativeObjectPtr);
+    pView->SetSearchingForLocation(isSearching, isStartLocation);
+}

@@ -22,6 +22,8 @@
 #include "INavRoutingLocationFinder.h"
 #include "NavRoutingStartLocationSetFromSearchMessage.h"
 #include "NavRoutingEndLocationSetFromSearchMessage.h"
+#include "NavRoutingSearchForLocationMessage.h"
+#include "AppCamera.h"
 
 namespace ExampleApp
 {
@@ -29,14 +31,15 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class NavRoutingController : private Eegeo::NonCopyable
+            class NavRoutingController
             {
             public:
                 NavRoutingController(INavRoutingModel& routingModel,
                                      TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
                                      INavRoutingLocationFinder& locationFinder,
                                      ExampleAppMessaging::TMessageBus& messageBus,
-                                     WorldPins::SdkModel::IWorldPinsService& worldPinsService);
+                                     WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                     INavRoutingCustomLocationPicker& m_customLocationPicker);
 
                 ~NavRoutingController();
 
@@ -48,6 +51,7 @@ namespace ExampleApp
                 INavRoutingLocationFinder& m_locationFinder;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
+                INavRoutingCustomLocationPicker& m_customLocationPicker;
 
                 bool m_isRerouting;
                 bool m_waitingForRerouteResponse;
@@ -76,6 +80,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRouting::NavigateToMessage&> m_navigateToMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingStartLocationSetFromSearchMessage&> m_startLocationSetFromSearchMessageHandler;
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingEndLocationSetFromSearchMessage&> m_endLocationSetFromSearchMessageHandler;
+                Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingSearchForLocationMessage&> m_searchForLocationMessageHandler;
 
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_shouldRerouteCallback;
 
@@ -124,7 +129,9 @@ namespace ExampleApp
                 void OnStartLocationSetFromSearch(const NavRoutingStartLocationSetFromSearchMessage& message);
 
                 void OnEndLocationSetFromSearch(const NavRoutingEndLocationSetFromSearchMessage& message);
-                
+
+                void OnSearchForLocation(const NavRoutingSearchForLocationMessage& message);
+
                 void OnInteritorLocationLost();
             };
         }

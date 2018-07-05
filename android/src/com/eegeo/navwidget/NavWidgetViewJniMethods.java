@@ -27,4 +27,6 @@ public class NavWidgetViewJniMethods
     public static native void SetNavigationStartPointFromSuggestion(long nativeCallerPointer, int searchResultIndex);
 
     public static native void SetNavigationEndPointFromSuggestion(long nativeCallerPointer, int searchResultIndex);
+
+    public static native void SetSearchingForLocation(long nativeCallerPointer, boolean isSearching, boolean isStartLocation);
 }

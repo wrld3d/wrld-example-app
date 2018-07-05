@@ -64,6 +64,7 @@ namespace ExampleApp
                 
                 Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_onNavigationStartPointFromSuggestionCallback;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_onNavigationEndPointFromSuggestionCallback;
+                Eegeo::Helpers::TCallback2<NavWidgetController, const bool, const bool> m_onSearchingForLocationCallback;
 
                 void OnCloseButtonClicked();
 
@@ -114,6 +115,8 @@ namespace ExampleApp
                 void OnNavigationStartPointFromSuggestion(const int& index);
 
                 void OnNavigationEndPointFromSuggestion(const int& index);
+
+                void OnSearchingForLocationChanged(const bool& isSearching, const bool& isStartLocation);
                 
                 void OnSetCalculateRouteSpinner(const NavRoutingSetCalculatingRouteMessage& message);
                 

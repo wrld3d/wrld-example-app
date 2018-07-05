@@ -9,6 +9,7 @@
 #include "NavWidgetView.h"
 #include "NavWidgetSearchView.h"
 #include "ISearchResultsRepository.h"
+#include "NavWidgetLocationSetHandler.h"
 
 namespace ExampleApp
 {
@@ -40,10 +41,14 @@ namespace ExampleApp
                 
                 m_pNavWidgetSearchController = [[NavWidgetSearchController alloc] initWithSearchView: m_pNavSearchView navWidgetView: m_pView];
                 [m_pNavModel registerNavEventListener: m_pNavWidgetSearchController];
+                
+                m_pLocationSetHandler = Eegeo_NEW(NavWidgetLocationSetHandler)(m_pView, m_pNavWidgetSearchController);
             }
             
             NavWidgetViewModule::~NavWidgetViewModule()
             {
+                Eegeo_DELETE m_pLocationSetHandler;
+                
                 [m_pNavModel unregisterNavEventListener: m_pNavWidgetSearchController];
                 delete m_pNavWidgetController;
                 delete m_pNavSearchView;

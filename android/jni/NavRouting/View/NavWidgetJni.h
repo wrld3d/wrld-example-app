@@ -63,4 +63,11 @@ extern "C"
             JNIEnv *jenv, jobject obj,
             jlong nativeObjectPtr,
             jint searchResultIndex);
+
+    JNIEXPORT void JNICALL Java_com_eegeo_navwidget_NavWidgetViewJniMethods_SetSearchingForLocation(
+            JNIEnv *jenv, jobject obj,
+            jlong nativeObjectPtr,
+            jboolean isSearching,
+            jboolean isStartLocation
+    );
 }

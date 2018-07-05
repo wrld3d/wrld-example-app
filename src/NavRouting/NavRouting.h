@@ -36,6 +36,7 @@ namespace ExampleApp
             class NavWidgetRouteDrawingHandler;
             class NavRoutingController;
             class NavRoutingCameraController;
+            class INavRoutingCustomLocationPicker;
 
             typedef Eegeo::Shapes::Polylines::PolylineShapeArgs PolyLineArgs;
             typedef std::vector<PolyLineArgs::ShapeModel::IdType> RouteLines;

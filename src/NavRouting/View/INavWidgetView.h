@@ -93,6 +93,9 @@ namespace ExampleApp
 
                 virtual void InsertOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
                 virtual void RemoveOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
+
+                virtual void InsertOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool>& callback) = 0;
+                virtual void RemoveOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool>& callback) = 0;
             };
         }
     }

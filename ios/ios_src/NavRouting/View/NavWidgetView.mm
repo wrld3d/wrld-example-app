@@ -91,10 +91,12 @@ namespace ExampleApp
             void NavWidgetView::SetStartLocation(const SdkModel::NavRoutingLocationModel& locationModel)
             {
                 NavWidgetView::SetLocation(locationModel, true);
+                m_locationSetCallbacks.ExecuteCallbacks(true);
             }
             void NavWidgetView::SetEndLocation(const SdkModel::NavRoutingLocationModel& locationModel)
             {
                 NavWidgetView::SetLocation(locationModel, false);
+                m_locationSetCallbacks.ExecuteCallbacks(false);
             }
             
             void NavWidgetView::changeReceived(const std::string& keyPath)
@@ -424,6 +426,11 @@ namespace ExampleApp
                 m_navigationEndPointFromSuggestionCallbacks.ExecuteCallbacks(index);
             }
             
+            void NavWidgetView::SetSearchingForLocation(bool isSearching, bool forStartLocation)
+            {
+                m_navigationSearchForLocationChangedCallbacks.ExecuteCallbacks(isSearching, forStartLocation);
+            }
+            
             void NavWidgetView::InsertOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
             {
                 m_navigationStartPointFromSuggestionCallbacks.AddCallback(callback);
@@ -444,6 +451,25 @@ namespace ExampleApp
                 m_navigationEndPointFromSuggestionCallbacks.RemoveCallback(callback);
             }
             
+            void NavWidgetView::InsertOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool>& callback)
+            {
+                m_navigationSearchForLocationChangedCallbacks.AddCallback(callback);
+            }
+            
+            void NavWidgetView::RemoveOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool>& callback)
+            {
+                m_navigationSearchForLocationChangedCallbacks.RemoveCallback(callback);
+            }
+            
+            void NavWidgetView::InsertLocationSetCallback(Eegeo::Helpers::ICallback1<const bool>& callback)
+            {
+                m_locationSetCallbacks.AddCallback(callback);
+            }
+            
+            void NavWidgetView::RemoveLocationSetCallback(Eegeo::Helpers::ICallback1<const bool>& callback)
+            {
+                m_locationSetCallbacks.RemoveCallback(callback);
+            }
         }
     }
 }

@@ -1292,6 +1292,9 @@ set(resources ${resources}
         Resources/results_anchor_arrow.png
         Resources/results_anchor_arrow@2x.png
         Resources/results_anchor_arrow@3x.png
+        Resources/searchbox_Destination.png
+        Resources/searchbox_Destination@2x.png
+        Resources/searchbox_Destination@3x.png
         Resources/search_mag_glass_off.png
         Resources/search_mag_glass_off@2x.png
         Resources/search_mag_glass_off@3x.png

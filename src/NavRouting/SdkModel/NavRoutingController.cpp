@@ -21,6 +21,7 @@
 #include "IWorldPinsService.h"
 #include "NavRouteInteriorModelHelper.h"
 #include "NavRoutingShowRerouteDialogMessage.h"
+#include "INavRoutingCustomLocationPicker.h"
 
 namespace ExampleApp
 {
@@ -32,12 +33,14 @@ namespace ExampleApp
                                                        TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
                                                        INavRoutingLocationFinder& locationFinder,
                                                        ExampleAppMessaging::TMessageBus& messageBus,
-                                                       WorldPins::SdkModel::IWorldPinsService& worldPinsService)
+                                                       WorldPins::SdkModel::IWorldPinsService& worldPinsService,
+                                                       INavRoutingCustomLocationPicker& customLocationPicker)
             : m_routingModel(routingModel)
             , m_turnByTurnModel(turnByTurnModel)
             , m_locationFinder(locationFinder)
             , m_messageBus(messageBus)
             , m_worldPinsService(worldPinsService)
+            , m_customLocationPicker(customLocationPicker)
             , m_isRerouting(false)
             , m_waitingForRerouteResponse(false)
             , m_startLocationSetCallback(this, &NavRoutingController::OnStartLocationSet)
@@ -63,6 +66,7 @@ namespace ExampleApp
             , m_shouldRerouteCallback(this, &NavRoutingController::OnShouldReroute)
             , m_startLocationSetFromSearchMessageHandler(this, &NavRoutingController::OnStartLocationSetFromSearch)
             , m_endLocationSetFromSearchMessageHandler(this, &NavRoutingController::OnEndLocationSetFromSearch)
+            , m_searchForLocationMessageHandler(this, &NavRoutingController::OnSearchForLocation)
             , m_interiorLocationLostCallback(this, &NavRoutingController::OnInteritorLocationLost)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
@@ -87,6 +91,7 @@ namespace ExampleApp
                 m_messageBus.SubscribeNative(m_navigateToMessageHandler);
                 m_messageBus.SubscribeNative(m_startLocationSetFromSearchMessageHandler);
                 m_messageBus.SubscribeNative(m_endLocationSetFromSearchMessageHandler);
+                m_messageBus.SubscribeNative(m_searchForLocationMessageHandler);
                 m_turnByTurnModel.InsertShouldRerouteCallback(m_shouldRerouteCallback);
                 m_turnByTurnModel.InsertInteriorLocationLostCallback(m_interiorLocationLostCallback);
             }
@@ -95,6 +100,7 @@ namespace ExampleApp
             {
                 m_turnByTurnModel.RemoveInteriorLocationLostCallback(m_interiorLocationLostCallback);
                 m_turnByTurnModel.RemoveShouldRerouteCallback(m_shouldRerouteCallback);
+                m_messageBus.UnsubscribeNative(m_searchForLocationMessageHandler);
                 m_messageBus.UnsubscribeNative(m_endLocationSetFromSearchMessageHandler);
                 m_messageBus.UnsubscribeNative(m_startLocationSetFromSearchMessageHandler);
                 m_messageBus.UnsubscribeNative(m_navigateToMessageHandler);
@@ -290,7 +296,7 @@ namespace ExampleApp
             void NavRoutingController::OnNavigationMessage(const NavigateToMessage& message)
             {
                 NavRoutingLocationModel startLocation, endLocation;
-                
+
                 if (!m_locationFinder.TryGetCurrentLocation(startLocation))
                 {
                     return;
@@ -301,7 +307,7 @@ namespace ExampleApp
                 {
                     return;
                 }
-                
+
                 m_routingModel.SetStartLocation(startLocation);
                 m_routingModel.SetEndLocation(endLocation);
                 
@@ -353,6 +359,20 @@ namespace ExampleApp
             {
                 m_locationFinder.FailedToFindLocationMessage();
             }
+
+            void NavRoutingController::OnSearchForLocation(const NavRoutingSearchForLocationMessage& message)
+            {
+                if(message.IsSearching())
+                {
+                    m_customLocationPicker.StartSearching(message.IsStartLocation());
+                }
+                else
+                {
+                    m_customLocationPicker.StopSearching();
+                }
+
+            }
+
         }
     }
 }

@@ -11,8 +11,11 @@ namespace ExampleApp
             class IAppCameraModule;
             class IAppCameraController;
             class IAppCamera;
+            class IAppCameraLocationPicker;
             class AppGlobeCameraWrapper;
             class AppInteriorCameraWrapper;
+
+            struct AppCameraLocationPickerResult;
         }
     }
 }

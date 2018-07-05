@@ -20,4 +20,35 @@
         android:paddingEnd="@dimen/nav_search_margin"
         android:layout_alignParentTop="true"/>
 
+    <LinearLayout
+        android:id="@+id/wrld_nav_search_hint_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/wrld_nav_small_margin"
+        android:orientation="horizontal"
+        android:background="@drawable/nav_search_hint_back"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/nav_search_hint_margin"
+        android:layout_marginTop="80dp"
+        android:elevation="@dimen/wrld_nav_large_margin">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="@dimen/wrld_nav_small_margin"
+            android:layout_gravity="center_vertical"
+            android:scaleType="center"
+            android:src="@drawable/searchbox_destination" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_search_hint_text"
+            android:textColor="@color/darkergrey"
+            android:layout_marginEnd="@dimen/wrld_nav_small_margin"/>
+
+    </LinearLayout>
+
+
+
 </RelativeLayout>

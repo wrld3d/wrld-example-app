@@ -81,6 +81,7 @@
     <string name="nav_reroute_dialog_btn_subtext_no">Update Route</string>
     <string name="nav_reroute_dialog_btn_text_yes">Yes</string>
     <string name="nav_reroute_dialog_btn_subtext_yes">End Navigation</string>
-
+    <string name="nav_search_hint_text">Tap to drop pin at your\ndesired starting location.</string>
     <string name="nav_calculating_route_label_text">Calculating Route...</string>
+
 </resources>

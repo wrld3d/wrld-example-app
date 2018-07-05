@@ -91,11 +91,21 @@
 {
     m_pNavWidgetView->Hide();
     m_pSearchView->Show();
+    m_pNavWidgetView->SetSearchingForLocation(true, self.isSearchingForStartPoint);
 }
 
 - (void) hideSearchView
 {
     m_pNavWidgetView->Show();
     m_pSearchView->Hide();
+    m_pNavWidgetView->SetSearchingForLocation(false, self.isSearchingForStartPoint);
+}
+
+- (void) handleLocationSet: (BOOL)wasStartLocation
+{
+    if(self.isSearchingForStartPoint == wasStartLocation)
+    {
+        [self hideSearchView];
+    }
 }
 @end

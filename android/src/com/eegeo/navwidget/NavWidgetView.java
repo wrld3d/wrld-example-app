@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Location;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.Animation;
@@ -50,6 +51,8 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     private View m_view = null;
     private RelativeLayout m_uiRoot = null;
     private AlertDialog m_calculatingSpinner = null;
+    private View m_navSearchHintView = null;
+    private boolean m_hasShownHint;
 
     private WrldNavWidget m_navWidget = null;
     private WrldNavModelObserver m_observer;
@@ -79,6 +82,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_nativeCallerPointer = nativeCallerPointer;
 
         m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
+
         m_view = m_activity.getLayoutInflater().inflate(R.layout.nav_widget_layout, m_uiRoot, false);
 
         m_searchNavMargin = (int)activity.getResources().getDimension(R.dimen.nav_search_margin);
@@ -108,6 +112,9 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
             }
         });
 
+        m_navSearchHintView = m_uiRoot.findViewById(R.id.wrld_nav_search_hint_container);
+        m_navSearchHintView.setVisibility(View.GONE);
+        m_hasShownHint = false;
 
         if(m_searchWidget == null) {
             m_searchWidget = m_searchLocationView.getSearchWidget();
@@ -142,6 +149,8 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_observer = new WrldNavModelObserver();
         m_observer.observeProperty(WrldNavModel.WrldNavModelProperty.SelectedDirectionIndex);
         m_observer.observeProperty(WrldNavModel.WrldNavModelProperty.CurrentNavMode);
+        m_observer.observeProperty(WrldNavModel.WrldNavModelProperty.StartLocation);
+        m_observer.observeProperty(WrldNavModel.WrldNavModelProperty.EndLocation);
         m_observer.setListener(this);
         m_observer.setNavModel(m_model);
 
@@ -472,26 +481,26 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_model.sendNavEvent(WrldNavEvent.WidgetAnimateOut);
         m_searchWidget.getSuggestionResultsModel().addResultListener(m_searchResultSelectedListener);
         m_searchWidget.clearSearch();
+        NavWidgetViewJniMethods.SetSearchingForLocation(m_nativeCallerPointer, true, m_searchingForStartLocation);
 
-//      Try focus on the searchbox and show keyboard
-        View searchBoxView = m_searchWidget.getView().findViewById(R.id.searchbox_search_searchview);
-        if(searchBoxView != null) {
-            searchBoxView.requestFocus();
-            InputMethodManager imm = (InputMethodManager) m_activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        if(!m_hasShownHint)
+        {
+            m_hasShownHint = true;
+            showSearchHint();
         }
+
     }
 
     public void endSearchForLocation() {
         m_searchingForLocation = false;
         m_searchWidget.getSuggestionResultsModel().removeResultListener(m_searchResultSelectedListener);
-        m_searchWidget.getView().clearFocus();
         setSearchLocationVisibility(false, true);
         m_model.sendNavEvent(WrldNavEvent.WidgetAnimateIn);
-
+        NavWidgetViewJniMethods.SetSearchingForLocation(m_nativeCallerPointer, false, m_searchingForStartLocation);
+        dismissSearchHint();
     }
 
-    private void setSearchLocationVisibility(boolean visible, boolean animate) {
+    private void setSearchLocationVisibility(final boolean visible, boolean animate) {
         if(m_searchLocationViewAnimation != null) {
             m_searchLocationViewAnimation.cancel();
             m_searchLocationViewAnimation=null;
@@ -502,10 +511,75 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         if(animate) {
             m_searchLocationViewAnimation = m_searchLocationView.animate()
                     .y(targetY)
+                    .withEndAction(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            if(visible) {
+                                //      Try focus on the searchbox and show keyboard
+                                View searchBoxView = m_searchWidget.getView().findViewById(R.id.searchbox_search_searchview);
+                                if (searchBoxView != null) {
+                                    searchBoxView.requestFocus();
+                                    InputMethodManager imm = (InputMethodManager) m_activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+                                }
+                            }
+                            else
+                            {
+                                m_searchWidget.getView().clearFocus();
+                            }
+                        }
+                    })
                     .setDuration(300);
         }
         else {
             m_searchLocationView.setY(targetY);
+        }
+    }
+
+    private void showSearchHint() {
+        m_navSearchHintView.setVisibility(View.VISIBLE);
+        m_navSearchHintView.setAlpha(0.0f);
+        m_navSearchHintView.animate()
+                .alpha(1.0f)
+                .setStartDelay(300)
+                .setDuration(200)
+                .withEndAction(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        if(m_searchingForLocation) {
+                            m_navSearchHintView.animate()
+                                    .alpha(0.0f)
+                                    .setStartDelay(5000)
+                                    .setDuration(200)
+                                    .withEndAction(new Runnable() {
+
+                                        @Override
+                                        public void run() {
+                                            m_navSearchHintView.setVisibility(View.GONE);
+                                        }
+                                    });
+                        }
+                    }
+                });
+
+    }
+
+    private void dismissSearchHint() {
+        if(m_navSearchHintView.getVisibility() != View.GONE) {
+            m_navSearchHintView.setAnimation(null);
+            m_navSearchHintView.animate()
+                    .alpha(0.0f)
+                    .setDuration(200)
+                    .setStartDelay(0)
+                    .withEndAction(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            m_navSearchHintView.setVisibility(View.GONE);
+                        }
+                    });
         }
     }
 }

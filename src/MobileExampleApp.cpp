@@ -131,6 +131,9 @@
 #include "PolylineShapesModule.h"
 #include "AboutPageMenuModule.h"
 #include "OptionsMenuModule.h"
+#include "FeatureInteractionModule.h"
+#include "CollisionModule.h"
+#include "INavRoutingCustomLocationPicker.h"
 
 #include "ReactionHideOtherScreenControls.h"
 #include "ReactionPushScreenControl.h"
@@ -571,19 +574,25 @@ namespace ExampleApp
         }
 
         m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
-    
-        // TODO: Check if this module is still relevant
-        m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)();
+
+        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
+
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+
+        m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)(
+                interiorsPresentationModule.GetInteriorInteractionModel(),
+                interiorsPresentationModule.GetInteriorTransitionModel(),
+                m_pWorld->GetFeatureInteractionModule().GetCollisionModule().GetFeatureRayCastingService());
 
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
 
-        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
+
 
         m_pVisualMapModule = Eegeo_NEW(VisualMap::SdkModel::VisualMapModule)(cityThemesModule.GetCityThemesService(),
                                                                              cityThemesModule.GetCityThemesUpdater(),
                                                                              mapModule.GetEnvironmentFlatteningService());
 
-        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+
 
         m_pGpsMarkerModule = Eegeo_NEW(ExampleApp::GpsMarker::SdkModel::GpsMarkerModule)(m_pWorld->GetLocationService(),
                                                                                          m_pWorld->GetTerrainModelModule(),
@@ -843,7 +852,8 @@ namespace ExampleApp
                                                                                             mapModule.GetMarkersModule().GetMarkerService(),
                                                                                             m_pWorldPinsModule->GetWorldPinsService(),
                                                                                             m_pGpsMarkerModule->GetGpsMarkerModel(),
-                                                                                            m_pWorldPinsModule->GetWorldPinsVisibilityController());
+                                                                                            m_pWorldPinsModule->GetWorldPinsVisibilityController(),
+                                                                                            m_pAppCameraModule->GetLocationPicker());
         
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsCameraController());
@@ -1441,6 +1451,11 @@ namespace ExampleApp
         }
 
         if (m_pWorldPinsModule->GetWorldPinsService().HandleTouchTap(data.point))
+        {
+            return;
+        }
+
+        if(m_pNavRoutingModule->GetCustomLocationPicker().HandleTouchTap(data.point.x, data.point.y))
         {
             return;
         }

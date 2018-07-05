@@ -4,5 +4,5 @@
 #include "WrldSearchWidget/WrldSearchWidget.h"
 
 @interface NavSearchContainerView : UIView
-- (instancetype) initWithSubviews: (WRLDSearchWidgetView*) searchView :(UIView*) backButton;
+- (instancetype) initWithSubviews: (WRLDSearchWidgetView*) searchView :(UIView*) backButton :(UIView*) searchHintContainer;
 @end

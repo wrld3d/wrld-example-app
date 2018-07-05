@@ -568,6 +568,21 @@ namespace ExampleApp
                 m_navigationEndPointFromSuggestionCallbacks.ExecuteCallbacks(index);
             }
 
+            void NavWidgetView::SetSearchingForLocation(bool isSearching, bool isStartLocation)
+            {
+                m_searchingForLocationCallbacks.ExecuteCallbacks(isSearching, isStartLocation);
+            }
+
+            void NavWidgetView::InsertOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool> &callback)
+            {
+                m_searchingForLocationCallbacks.AddCallback(callback);
+            }
+
+            void NavWidgetView::RemoveOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool> &callback)
+            {
+                m_searchingForLocationCallbacks.RemoveCallback(callback);
+            }
+
             void NavWidgetView::InsertOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
             {
                 m_navigationStartPointFromSuggestionCallbacks.AddCallback(callback);

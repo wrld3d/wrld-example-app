@@ -39,4 +39,5 @@
     <dimen name="nav_calculating_route_label_size">22sp</dimen>
 
     <dimen name="nav_search_margin">21dp</dimen>
+    <dimen name="nav_search_hint_margin">29dp</dimen>
 </resources>

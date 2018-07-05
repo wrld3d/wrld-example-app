@@ -14,6 +14,9 @@ set(currsources
   ../src/AppCamera/SdkModel/IAppCameraModule.h
   ../src/AppCamera/SdkModel/AppCameraSplinePlaybackWrapper.h
   ../src/AppCamera/SdkModel/AppCameraSplinePlaybackWrapper.cpp
+  ../src/AppCamera/SdkModel/IAppCameraLocationPicker.h
+  ../src/AppCamera/SdkModel/AppCameraLocationPicker.h
+  ../src/AppCamera/SdkModel/AppCameraLocationPicker.cpp
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\AppCamera\\SdkModel FILES ${currsources})

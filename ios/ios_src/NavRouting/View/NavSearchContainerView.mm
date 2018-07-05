@@ -12,9 +12,10 @@
 {
     WRLDSearchWidgetView* m_pSearchView;
     UIView* m_pBackButton;
+    UIView* m_pSearchHintContainer;
 }
 
-- (instancetype) initWithSubviews: (WRLDSearchWidgetView*) searchView :(UIView*) backButton
+- (instancetype) initWithSubviews: (WRLDSearchWidgetView*) searchView :(UIView*) backButton :(UIView*) searchHintContainer
 {
     CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ?
     CGRectMake(20, -50, 375, 300) :   // ipad
@@ -24,9 +25,11 @@
     {
         m_pSearchView = searchView;
         m_pBackButton = backButton;
+        m_pSearchHintContainer = searchHintContainer;
         
         [self addSubview: m_pSearchView];
         [self addSubview: m_pBackButton];
+        [self addSubview: m_pSearchHintContainer];
         [self setHidden:YES];
         [self constrainSubviews];
     }

@@ -24,8 +24,16 @@ namespace ExampleApp
                 UIView* m_pContainer;
                 UIButton* m_pBackButton;
                 
+                UIView* m_pSearchHintContainer;
+                UIImageView* m_pSearchHintIcon;
+                UILabel* m_pSearchHintLabel;
+                BOOL m_hasShownHint;
+                
                 CGFloat m_onScreenPosition = 20;
                 CGFloat m_animationTimeInSeconds = 0.2f;
+                
+                void ShowSearchHint();
+                void HideSearchHint();
                 
             public:
                 NavWidgetSearchView(WidgetSearchProvider* navLocationFinder);

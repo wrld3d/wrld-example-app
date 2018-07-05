@@ -52,6 +52,7 @@
 #include "NavRoutingRerouteDialogClosedMessage.h"
 #include "NavRoutingStartLocationSetFromSearchMessage.h"
 #include "NavRoutingEndLocationSetFromSearchMessage.h"
+#include "NavRoutingSearchForLocationMessage.h"
 
 namespace ExampleApp
 {
@@ -106,6 +107,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingRerouteDialogClosedMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingStartLocationSetFromSearchMessage>
             , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingEndLocationSetFromSearchMessage>
+            , public Eegeo::Messaging::CatalogBinding<NavRouting::NavRoutingSearchForLocationMessage>
             , private Eegeo::NonCopyable
         {
 

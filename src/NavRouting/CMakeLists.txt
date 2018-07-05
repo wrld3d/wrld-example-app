@@ -46,6 +46,10 @@ set(currsources
   ../src/NavRouting/NavRoutingViewOpenMessage.cpp
   ../src/NavRouting/NavRoutingViewOpenMessage.h
   ../src/NavRouting/NavRoutingViewStartEndLocationSwappedMessage.h
+  ../src/NavRouting/NavRoutingSearchForLocationMessage.h
+  ../src/NavRouting/NavRoutingSearchForLocationMessage.cpp
+  ../src/NavRouting/NavigateToMessage.cpp
+  ../src/NavRouting/NavigateToMessage.h
   ../src/NavRouting/SearchNavigationData.cpp
   ../src/NavRouting/SearchNavigationData.h
 )

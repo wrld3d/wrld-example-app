@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <AppCamera/SdkModel/IAppCameraLocationPicker.h>
 #include "AlertBox.h"
 #include "Types.h"
 #include "BidirectionalBus.h"
@@ -41,7 +42,8 @@ namespace ExampleApp
                                  Eegeo::Markers::IMarkerService& markerService,
                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                  GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,
-                                 WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController);
+                                 WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController,
+                                 AppCamera::SdkModel::IAppCameraLocationPicker& locationPicker);
 
                 ~NavRoutingModule();
 
@@ -49,6 +51,7 @@ namespace ExampleApp
 
                 INavRouteDrawingController& GetRouteDrawingController();
                 INavRoutingServiceController& GetRoutingServiceController();
+                INavRoutingCustomLocationPicker& GetCustomLocationPicker();
 
                 Menu::View::IMenuModel& GetNavMenuModel() const;
                 
@@ -61,6 +64,7 @@ namespace ExampleApp
                 NavWidgetRouteUpdateHandler* m_pRouteUpdateHandler;
                 NavWidgetRouteDrawingHandler* m_pRouteDrawingHandler;
                 NavRoutingLocationFinder* m_pNavRoutingLocationFinder;
+                INavRoutingCustomLocationPicker* m_pNavRoutingCustomLocationPicker;
                 NavRoutingController* m_pRoutingController;
                 NavRoutingCameraController* m_pRoutingCameraController;
                 NavRoutingWorldPinsVisibilityHandler* m_pRoutingWorldPinsVisibilityHandler;

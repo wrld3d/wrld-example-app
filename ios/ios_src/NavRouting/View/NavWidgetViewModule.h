@@ -51,6 +51,7 @@ namespace ExampleApp
                 NavWidgetSearchController* m_pNavWidgetSearchController;
                 NavWidgetView* m_pView;
                 NavWidgetSearchView* m_pNavSearchView;
+                NavWidgetLocationSetHandler* m_pLocationSetHandler;
 
                 WRLDNavModel* m_pNavModel;
                 

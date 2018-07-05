@@ -5,6 +5,8 @@
 #include "Types.h"
 #include "IAppCameraModule.h"
 #include "AppCamera.h"
+#include "Interiors.h"
+#include "Collision.h"
 
 namespace ExampleApp
 {
@@ -16,14 +18,18 @@ namespace ExampleApp
             {
             public:
                 
-                AppCameraModule();
+                AppCameraModule(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
+                                Eegeo::Resources::Interiors::InteriorTransitionModel& interiorTransitionModel,
+                                Eegeo::Collision::IFeatureRayCastingService& featureRayCastingService);
                 ~AppCameraModule();
                 
                 IAppCameraController& GetController();
+                IAppCameraLocationPicker& GetLocationPicker();
                 
             private:
                 
                 IAppCameraController* m_pAppCameraController;
+                IAppCameraLocationPicker* m_pAppCameraLocationPicker;
             };
         }
     }
