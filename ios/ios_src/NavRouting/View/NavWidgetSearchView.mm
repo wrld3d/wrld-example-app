@@ -51,7 +51,7 @@ namespace ExampleApp
                 CGFloat iconSize = 32;
                 m_pSearchHintIcon.frame = CGRectMake(hintPadding, hintPadding*1.5, iconSize, iconSize);
                 m_pSearchHintLabel = [[[UILabel alloc] init] autorelease];
-                m_pSearchHintLabel.text = @"Tap to drop pin at your\ndesired starting location.";
+                m_pSearchHintLabel.text = @"Tap to drop pin at your\ndesired location.";
                 m_pSearchHintLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextCopyColor;
                 m_pSearchHintLabel.font = [UIFont systemFontOfSize:14.0];
                 m_pSearchHintLabel.numberOfLines = 2;
