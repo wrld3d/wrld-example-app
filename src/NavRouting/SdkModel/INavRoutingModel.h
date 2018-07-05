@@ -22,6 +22,8 @@ namespace ExampleApp
 
                 virtual void SetStartLocation(const NavRoutingLocationModel& locationModel) = 0;
 
+                virtual bool SetStartLocationFromCurrentPosition() = 0;
+
                 virtual void ClearStartLocation() = 0;
 
                 virtual bool TryGetStartLocation(NavRoutingLocationModel &out_startLocation) const = 0;
@@ -33,6 +35,8 @@ namespace ExampleApp
                 virtual bool TryGetEndLocation(NavRoutingLocationModel &out_endLocation) const = 0;
 
                 virtual bool HasRoute() const = 0;
+
+                virtual bool IsUsingCurrentPositionAsStartLocation() = 0;
 
                 virtual void SetRoute(const NavRoutingRouteModel& routeModel) = 0;
 

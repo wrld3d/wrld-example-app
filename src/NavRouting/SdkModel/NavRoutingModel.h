@@ -7,6 +7,7 @@
 #include "CallbackCollection.h"
 #include "NavRoutingLocationModel.h"
 #include "NavRoutingRouteModel.h"
+#include "NavRoutingLocationFinder.h"
 
 namespace ExampleApp
 {
@@ -26,6 +27,8 @@ namespace ExampleApp
                 int m_selectedDirectionIndex;
                 double m_remainingRouteDuration;
                 NavRoutingMode m_navMode;
+                NavRoutingLocationFinder& m_locationFinder;
+                bool m_isUsingCurrentLocationAsStartPoint;
 
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingLocationModel&> m_startLocationSetCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_startLocationClearedCallbacks;
@@ -41,9 +44,11 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingMode> m_navModeSetCallbacks;
 
             public:
-                NavRoutingModel();
+                NavRoutingModel(NavRoutingLocationFinder& locationFinder);
 
                 void SetStartLocation(const NavRoutingLocationModel& locationModel) override;
+
+                bool SetStartLocationFromCurrentPosition() override;
 
                 void ClearStartLocation() override;
 
@@ -58,6 +63,8 @@ namespace ExampleApp
                 bool HasRoute() const override;
 
                 void SetRoute(const NavRoutingRouteModel& routeModel) override;
+
+                bool IsUsingCurrentPositionAsStartLocation() override;
 
                 void ClearRoute() override;
 

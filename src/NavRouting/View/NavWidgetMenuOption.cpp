@@ -26,12 +26,8 @@ namespace ExampleApp
 
             void NavWidgetMenuOption::Select()
             {
-                SdkModel::NavRoutingLocationModel startLocation;
-                if (m_locationFinder.TryGetCurrentLocation(startLocation)) {
-                    m_routingModel.ClearEndLocation();
-                    m_routingModel.SetStartLocation(startLocation);
-                } else {
-                    m_routingModel.ClearEndLocation();
+                m_routingModel.ClearEndLocation();
+                if (!m_routingModel.SetStartLocationFromCurrentPosition()) {
                     m_routingModel.ClearStartLocation();
                 }
 

@@ -251,6 +251,10 @@ namespace ExampleApp
                 {
                     case NavRoutingMode::Active:
                         m_turnByTurnModel.Stop();
+                        if(m_routingModel.IsUsingCurrentPositionAsStartLocation())
+                        {
+                            m_routingModel.SetStartLocationFromCurrentPosition();
+                        }
                         break;
                     case NavRoutingMode::Ready:
                     {
@@ -295,9 +299,9 @@ namespace ExampleApp
             
             void NavRoutingController::OnNavigationMessage(const NavigateToMessage& message)
             {
-                NavRoutingLocationModel startLocation, endLocation;
+                NavRoutingLocationModel endLocation;
 
-                if (!m_locationFinder.TryGetCurrentLocation(startLocation))
+                if (!m_routingModel.SetStartLocationFromCurrentPosition())
                 {
                     return;
                 }
@@ -308,7 +312,6 @@ namespace ExampleApp
                     return;
                 }
 
-                m_routingModel.SetStartLocation(startLocation);
                 m_routingModel.SetEndLocation(endLocation);
                 
                 OpenViewWithModel(m_routingModel);

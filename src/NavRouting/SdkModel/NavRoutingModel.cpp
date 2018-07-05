@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2015), All Rights Reserved
 
 #include "NavRoutingModel.h"
+#include "NavRoutingLocationFinder.h"
 
 namespace ExampleApp
 {
@@ -8,8 +9,10 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            NavRoutingModel::NavRoutingModel()
-            : m_startLocationIsSet(false)
+            NavRoutingModel::NavRoutingModel(NavRoutingLocationFinder& locationFinder)
+            : m_locationFinder(locationFinder)
+            , m_isUsingCurrentLocationAsStartPoint(false)
+            , m_startLocationIsSet(false)
             , m_endLocationIsSet(false)
             , m_routeIsSet(false)
             , m_currentDirectionIndex(0)
@@ -22,12 +25,27 @@ namespace ExampleApp
             {
                 m_startLocation = locationModel;
                 m_startLocationIsSet = true;
+                m_isUsingCurrentLocationAsStartPoint = false;
                 m_startLocationSetCallbacks.ExecuteCallbacks(m_startLocation);
+            }
+
+            bool NavRoutingModel::SetStartLocationFromCurrentPosition()
+            {
+                NavRoutingLocationModel start;
+                m_isUsingCurrentLocationAsStartPoint = m_locationFinder.TryGetCurrentLocation(m_startLocation);
+
+                if(m_isUsingCurrentLocationAsStartPoint)
+                {
+                    m_startLocationIsSet = true;
+                    m_startLocationSetCallbacks.ExecuteCallbacks(m_startLocation);
+                }
+                return m_isUsingCurrentLocationAsStartPoint;
             }
 
             void NavRoutingModel::ClearStartLocation()
             {
                 m_startLocationIsSet = false;
+                m_isUsingCurrentLocationAsStartPoint = false;
                 m_startLocationClearedCallbacks.ExecuteCallbacks();
             }
 
@@ -79,6 +97,11 @@ namespace ExampleApp
                 m_routeIsSet = true;
                 m_routeSetCallbacks.ExecuteCallbacks(m_route);
 
+            }
+
+            bool NavRoutingModel::IsUsingCurrentPositionAsStartLocation()
+            {
+                return m_isUsingCurrentLocationAsStartPoint;
             }
 
             void NavRoutingModel::ClearRoute()

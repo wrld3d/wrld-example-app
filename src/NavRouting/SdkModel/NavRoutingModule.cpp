@@ -40,7 +40,12 @@ namespace ExampleApp
                                                 AppCamera::SdkModel::IAppCameraLocationPicker& locationPicker)
             {
                 const std::string navUIOptionText = "Open Navigation";
-                m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)();
+
+                m_pNavRoutingLocationFinder = Eegeo_NEW(NavRoutingLocationFinder)(locationService,
+                                                                                  interiorsModelRepository,
+                                                                                  alertBoxFactory);
+
+                m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)(*m_pNavRoutingLocationFinder);
                 
                 NavRoutingPolylineConfig polylineConfig = NavRoutingPolylineConfig();
                 m_pNavRoutingPolylineFactory = Eegeo_NEW(NavRoutingPolylineFactory)(shapeService,
@@ -81,10 +86,6 @@ namespace ExampleApp
                                                                                  *m_pTurnByTurnModel,
                                                                                  *m_pNavRouteDrawingController);
 
-                m_pNavRoutingLocationFinder = Eegeo_NEW(NavRoutingLocationFinder)(locationService,
-                                                                                  interiorsModelRepository,
-                                                                                  alertBoxFactory);
-
                 m_pNavRoutingCustomLocationPicker = Eegeo_NEW(NavRoutingCustomLocationPicker)(
                         *m_pNavRoutingModel,
                         locationPicker);
@@ -117,6 +118,8 @@ namespace ExampleApp
 
             NavRoutingModule::~NavRoutingModule()
             {
+                Eegeo_DELETE m_pMenuOptionsModel;
+                Eegeo_DELETE m_pMenuModel;
                 Eegeo_DELETE m_pRoutingWorldPinsVisibilityHandler;
                 Eegeo_DELETE m_pRoutingCameraController;
                 Eegeo_DELETE m_pRoutingController;
@@ -124,15 +127,13 @@ namespace ExampleApp
                 Eegeo_DELETE m_pRouteDrawingHandler;
                 Eegeo_DELETE m_pTurnByTurnCompletionHandler;
                 Eegeo_DELETE m_pTurnByTurnController;
-                Eegeo_DELETE m_pNavRoutingLocationFinder;
                 Eegeo_DELETE m_pTurnByTurnModel;
                 Eegeo_DELETE m_pRouteUpdateHandler;
                 Eegeo_DELETE m_pNavRoutingServiceController;
                 Eegeo_DELETE m_pNavRouteDrawingController;
                 Eegeo_DELETE m_pNavRoutingPolylineFactory;
                 Eegeo_DELETE m_pNavRoutingModel;
-                Eegeo_DELETE m_pMenuOptionsModel;
-                Eegeo_DELETE m_pMenuModel;
+                Eegeo_DELETE m_pNavRoutingLocationFinder;
             }
 
             void NavRoutingModule::Update(float dt)
