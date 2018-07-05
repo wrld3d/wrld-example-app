@@ -7,12 +7,19 @@ namespace ExampleApp
 {
     namespace Search
     {
-        AutocompleteSuggestionsReceivedMessage::AutocompleteSuggestionsReceivedMessage(const SdkModel::SearchQuery& query,
-                                                                               const std::vector<SdkModel::SearchResultModel>& results)
-                : m_query(query)
+        AutocompleteSuggestionsReceivedMessage::AutocompleteSuggestionsReceivedMessage(const bool didSucceed,
+                                                                                       const SdkModel::SearchQuery& query,
+                                                                                       const std::vector<SdkModel::SearchResultModel>& results)
+                : m_didSucceed(didSucceed)
+                , m_query(query)
                 , m_results(results)
         {
 
+        }
+        
+        const bool AutocompleteSuggestionsReceivedMessage::DidSucceed() const
+        {
+            return m_didSucceed;
         }
 
         const SdkModel::SearchQuery AutocompleteSuggestionsReceivedMessage::GetQuery() const

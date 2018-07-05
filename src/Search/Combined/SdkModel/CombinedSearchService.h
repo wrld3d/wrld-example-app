@@ -41,7 +41,7 @@ namespace ExampleApp
                     
                 private:
                     
-                    void OnSearchResponseRecieved(const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
+                    void OnSearchResponseRecieved(const bool& didSucceed, const Search::SdkModel::SearchQuery& query, const std::vector<Search::SdkModel::SearchResultModel>& results);
                     
                     bool CanPerformLocationQuerySearch(const Search::SdkModel::SearchQuery& query, const Search::SdkModel::ISearchService& searchService) const;
                     
@@ -50,9 +50,10 @@ namespace ExampleApp
                     
                     std::map<std::string,Search::SdkModel::ISearchService*> m_searchServices;
                     
-                    Eegeo::Helpers::TCallback2<CombinedSearchService,
-                                               const Search::SdkModel::SearchQuery&,
-                                               const std::vector<Search::SdkModel::SearchResultModel>&> m_searchQueryResponseCallback;
+                    Eegeo::Helpers::TCallback3<CombinedSearchService,
+                    const bool&,
+                    const Search::SdkModel::SearchQuery&,
+                    const std::vector<Search::SdkModel::SearchResultModel>&> m_searchQueryResponseCallback;
                     
                     int m_pendingResultsLeft;
                     std::vector<Search::SdkModel::SearchResultModel> m_combinedResults;

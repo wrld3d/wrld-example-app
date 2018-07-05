@@ -60,7 +60,8 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         std::vector<Search::SdkModel::SearchResultModel> results;
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
+                        bool didSucceed = false;
+                        ExecutQueryResponseReceivedCallbacks(didSucceed, m_currentQueryModel, results);
                     }
                 }
                 
@@ -73,9 +74,18 @@ namespace ExampleApp
                     YelpCategoryModel categoryFilter { "", false };
                     m_searchTagToYelpCategoryMap.TryGetBestYelpCategoryForSearchTag(searchQuery.Query(), categoryFilter);
                     const bool noWifi = m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi();
-                    if(noWifi || categoryFilter.skipYelpSearch == true)
+                    
+                    if(noWifi)
                     {
-                        ExecutQueryResponseReceivedCallbacks(searchQuery, std::vector<Search::SdkModel::SearchResultModel>());
+                        bool didSucceed = false;
+                        ExecutQueryResponseReceivedCallbacks(didSucceed, searchQuery, std::vector<Search::SdkModel::SearchResultModel>());
+                        return;
+                    }
+                    
+                    if(categoryFilter.skipYelpSearch == true)
+                    {
+                        bool didSucceed = true;
+                        ExecutQueryResponseReceivedCallbacks(didSucceed, searchQuery, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
                     }
 
@@ -104,8 +114,8 @@ namespace ExampleApp
                     Eegeo_ASSERT(m_pCurrentRequest != NULL, "Yelp search request must have been performed");
                     
                     std::vector<Search::SdkModel::SearchResultModel> results;
-                    
-                    if(m_pCurrentRequest->IsSucceeded())
+                    bool succeeded = m_pCurrentRequest->IsSucceeded();
+                    if(succeeded)
                     {
                         const std::string& response(m_pCurrentRequest->ResponseString());
                         m_searchResultParser.ParseSearchResults(response, results);
@@ -113,7 +123,7 @@ namespace ExampleApp
                     
                     m_pCurrentRequest = NULL;
                     m_hasActiveQuery = false;
-                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
+                    ExecutQueryResponseReceivedCallbacks(succeeded, m_currentQueryModel, results);
                 }
                 
                 void YelpSearchService::HandleYelpBusinessQueryDestroy(YelpBusinessQuery& yelpBusinessQuery)

@@ -224,8 +224,9 @@ namespace ExampleApp
                 m_previousQueryFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
             }
 
-            void SearchRefreshService::HandleSearchResultsResponseReceived(const SearchQuery& query,
-                    const std::vector<SearchResultModel>& results)
+            void SearchRefreshService::HandleSearchResultsResponseReceived(const bool& didSucceed,
+                                                                           const SearchQuery& query,
+                                                                           const std::vector<SearchResultModel>& results)
             {
                 if (!m_searchResultsCleared)
                 {

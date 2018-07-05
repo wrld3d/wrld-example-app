@@ -42,10 +42,10 @@ namespace ExampleApp
             void InsertSuggestionsCancelledCallback(Eegeo::Helpers::ICallback0& callback);
             void RemoveSuggestionsCancelledCallback(Eegeo::Helpers::ICallback0& callback);
 
-            void OnSearchResponseReceived(const TSearchResults& searchResults);
-            void OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults);
+            void OnSearchResponseReceived(const bool success, const TSearchResults& searchResults);
+            void OnAutocompleteSuggestionsResponseReceived(const bool success, const TSearchResults& searchResults);
 
-            void UpdateResults(const TSearchResults& searchResults, WRLDSearchRequest* searchRequest);
+            void UpdateResults(const bool success, const TSearchResults& searchResults, WRLDSearchRequest* searchRequest);
             void CancelAutocompleteRequest();
 
             void PerformSearch(WRLDSearchRequest* searchRequest);

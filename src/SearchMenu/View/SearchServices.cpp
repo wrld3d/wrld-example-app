@@ -82,13 +82,13 @@ namespace ExampleApp
 			void SearchServices::OnSearchQueryResponseReceivedMessage(const Search::SearchQueryResponseReceivedMessage& message)
             {
 				m_searchResultsRepository.SetResults(message.GetResults());
-				m_searchProvider.OnSearchResponseReceived(m_searchResultsRepository.GetResults());
+				m_searchProvider.OnSearchResponseReceived(message.DidSucceed(), m_searchResultsRepository.GetResults());
 			}
 
 			void SearchServices::OnAutocompleteSuggestionsResponseReceivedMessage(const Search::AutocompleteSuggestionsReceivedMessage& message)
 			{
 				m_suggestionsRepository.SetResults(message.GetResults());
-				m_searchProvider.OnAutocompleteSuggestionsResponseReceived(m_suggestionsRepository.GetResults());
+				m_searchProvider.OnAutocompleteSuggestionsResponseReceived(message.DidSucceed(), m_suggestionsRepository.GetResults());
 			}
 		}
 	}

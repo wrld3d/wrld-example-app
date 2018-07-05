@@ -78,15 +78,21 @@ namespace ExampleApp {
 
             void AutocompleteSuggestionQueryPerformer::OnWebResponseReceived(Eegeo::Web::IWebResponse& webResponse)
             {
-                if(!webResponse.IsCancelled() && webResponse.IsSucceeded())
+                std::vector<Search::SdkModel::SearchResultModel> queryResults;
+                
+                if(!webResponse.IsSucceeded())
+                {
+                    m_messageBus.Publish(AutocompleteSuggestionsReceivedMessage(webResponse.IsSucceeded(), m_current_query, queryResults));
+                    return;
+                }
+                else if(!webResponse.IsCancelled())
                 {
                     size_t resultSize = webResponse.GetBodyData().size();
                     std::string response = std::string(reinterpret_cast<char const*>(&(webResponse.GetBodyData().front())), resultSize);
 
-                    std::vector<Search::SdkModel::SearchResultModel> queryResults;
                     m_eeGeoParser.ParseEegeoQueryResults(response, queryResults);
 
-                    m_messageBus.Publish(AutocompleteSuggestionsReceivedMessage(m_current_query, queryResults));
+                    m_messageBus.Publish(AutocompleteSuggestionsReceivedMessage(webResponse.IsSucceeded(), m_current_query, queryResults));
                 }
             }
 

@@ -30,12 +30,12 @@ namespace ExampleApp
 			m_onSearchCompleted = env->GetMethodID(
 					m_javaClass,
 					"onSearchCompleted",
-					"([Lcom/eegeo/searchproviders/MyTestSearchProvider$SearchResultInfo;)V");
+					"([Lcom/eegeo/searchproviders/MyTestSearchProvider$SearchResultInfo;Z)V");
 
 			m_onAutocompleteSuggestionsCompleted = env->GetMethodID(
 					m_javaClass,
 					"onSuggestionCompleted",
-					"([Lcom/eegeo/searchproviders/MyTestSearchProvider$SearchResultInfo;)V");
+					"([Lcom/eegeo/searchproviders/MyTestSearchProvider$SearchResultInfo;Z)V");
 		}
 
 		MyTestSearchProvider::~MyTestSearchProvider()
@@ -86,18 +86,18 @@ namespace ExampleApp
 			m_suggestionsCancelledCallbacks.ExecuteCallbacks();
 		}
 
-		void MyTestSearchProvider::OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults)
+		void MyTestSearchProvider::OnAutocompleteSuggestionsResponseReceived(const bool success, const TSearchResults& searchResults)
 		{
-			ResponceRecieved(searchResults, m_onAutocompleteSuggestionsCompleted);
+            ResponseReceived(success, searchResults, m_onAutocompleteSuggestionsCompleted);
 		}
 
-		void MyTestSearchProvider::OnSearchResponseReceived(const TSearchResults& searchResults)
+		void MyTestSearchProvider::OnSearchResponseReceived(const bool success, const TSearchResults& searchResults)
 		{
-			ResponceRecieved(searchResults,m_onSearchCompleted);
+            ResponseReceived(success, searchResults, m_onSearchCompleted);
 		}
 
 
-		void MyTestSearchProvider::ResponceRecieved(const TSearchResults& searchResults,jmethodID methodId)
+		void MyTestSearchProvider::ResponseReceived(const bool success, const TSearchResults& searchResults, jmethodID methodId)
 		{
 			ASSERT_UI_THREAD
 
@@ -139,7 +139,8 @@ namespace ExampleApp
 			env->CallVoidMethod(
 					m_javaInstance,
 					methodId,
-					javaArray);
+					javaArray,
+                    success);
 
 			env->DeleteLocalRef(javaArray);
 			env->DeleteLocalRef(javaClass);

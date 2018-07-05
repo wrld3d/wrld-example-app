@@ -66,14 +66,14 @@ namespace ExampleApp
             m_suggestionsCancelledCallbacks.RemoveCallback(callback);
         }
 
-        void SearchProvider::OnSearchResponseReceived(const TSearchResults& searchResults)
+        void SearchProvider::OnSearchResponseReceived(const bool success, const TSearchResults& searchResults)
         {
-            UpdateResults(searchResults, m_pCurrentRequest);
+            UpdateResults(success, searchResults, m_pCurrentRequest);
         }
 
-        void SearchProvider::OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults)
+        void SearchProvider::OnAutocompleteSuggestionsResponseReceived(const bool success, const TSearchResults& searchResults)
         {
-            UpdateResults(searchResults, m_pCurrentSuggestion);
+            UpdateResults(success, searchResults, m_pCurrentSuggestion);
         }
         
         void SearchProvider::CancelAutocompleteRequest()
@@ -81,11 +81,18 @@ namespace ExampleApp
             m_suggestionsCancelledCallbacks.ExecuteCallbacks();
         }
 
-        void SearchProvider::UpdateResults(const TSearchResults& searchResults, WRLDSearchRequest* searchRequest)
+        void SearchProvider::UpdateResults(const bool success, const TSearchResults& searchResults, WRLDSearchRequest* searchRequest)
         {
             typedef NSMutableArray< id<WRLDSearchResultModel> > WRLDMutableSearchResultsCollection;
             
             WRLDMutableSearchResultsCollection* widgetSearchResults = [[WRLDMutableSearchResultsCollection alloc] init];
+            
+            if(!success)
+            {
+                WRLDMutableSearchResultsCollection* widgetSearchResults = [[WRLDMutableSearchResultsCollection alloc] init];
+                [searchRequest didComplete: NO withResults: widgetSearchResults];
+                return;
+            }
             
             for(int i = 0; i < searchResults.size(); i++)
             {

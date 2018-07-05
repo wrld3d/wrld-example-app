@@ -36,7 +36,7 @@ namespace ExampleApp
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionsController;
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 Eegeo::Helpers::TCallback1<SearchRefreshService, const SearchQuery&> m_searchResultQueryIssuedCallback;
-                Eegeo::Helpers::TCallback2<SearchRefreshService, const SearchQuery&, const std::vector<SearchResultModel>&> m_searchResultResponseReceivedCallback;
+                Eegeo::Helpers::TCallback3<SearchRefreshService, const bool&, const SearchQuery&, const std::vector<SearchResultModel>&> m_searchResultResponseReceivedCallback;
                 Eegeo::Helpers::TCallback0<SearchRefreshService> m_searchQueryResultsClearedCallback;
                 Eegeo::Helpers::TCallback0<SearchRefreshService> m_interiorTagsUpdatedCallback;
                 Eegeo::Helpers::TCallback0<SearchRefreshService> m_interiorModelChangedCallback;
@@ -80,8 +80,9 @@ namespace ExampleApp
 
                 void HandleSearchQueryIssued(const SearchQuery& query);
 
-                void HandleSearchResultsResponseReceived(const SearchQuery& query,
-                        const std::vector<SearchResultModel>& results);
+                void HandleSearchResultsResponseReceived(const bool& didSucceed,
+                                                         const SearchQuery& query,
+                                                         const std::vector<SearchResultModel>& results);
 
                 void HandleSearchQueryResultsCleared();
                 

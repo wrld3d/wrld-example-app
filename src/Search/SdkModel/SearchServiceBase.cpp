@@ -30,10 +30,11 @@ namespace ExampleApp
                 m_queryPerformedCallbacks.ExecuteCallbacks(query);
             }
 
-            void SearchServiceBase::ExecutQueryResponseReceivedCallbacks(const SearchQuery& query,
-                    const std::vector<SearchResultModel>& results)
+            void SearchServiceBase::ExecutQueryResponseReceivedCallbacks(const bool& didSucceed,
+                                                                         const SearchQuery& query,
+                                                                         const std::vector<SearchResultModel>& results)
             {
-                m_queryResponseReceivedCallbacks.ExecuteCallbacks(query, results);
+                m_queryResponseReceivedCallbacks.ExecuteCallbacks(didSucceed, query, results);
             }
 
             void SearchServiceBase::InsertOnPerformedQueryCallback(Eegeo::Helpers::ICallback1<const SearchQuery&>& callback)
@@ -46,14 +47,16 @@ namespace ExampleApp
                 m_queryPerformedCallbacks.RemoveCallback(callback);
             }
 
-            void SearchServiceBase::InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback2<const SearchQuery&,
-                    const std::vector<SearchResultModel>& >& callback)
+            void SearchServiceBase::InsertOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback3<const bool&,
+                                                                         const SearchQuery&,
+                                                                         const std::vector<SearchResultModel>& >& callback)
             {
                 m_queryResponseReceivedCallbacks.AddCallback(callback);
             }
 
-            void SearchServiceBase::RemoveOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback2<const SearchQuery&,
-                    const std::vector<SearchResultModel>& >& callback)
+            void SearchServiceBase::RemoveOnReceivedQueryResultsCallback(Eegeo::Helpers::ICallback3<const bool&,
+                                                                         const SearchQuery&,
+                                                                         const std::vector<SearchResultModel>& >& callback)
             {
                 m_queryResponseReceivedCallbacks.RemoveCallback(callback);
             }

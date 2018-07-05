@@ -88,9 +88,9 @@ public class MyTestSearchProvider implements SearchProvider, SuggestionProvider,
 													context.Radius());
 	}
 
-	public void onSearchCompleted(SearchResultInfo[] searchResults)
+	public void onSearchCompleted(SearchResultInfo[] searchResults, boolean success)
 	{
-		executeCallbacks(WrapResults(searchResults), true);
+		executeCallbacks(WrapResults(searchResults), success);
 	}
 
 	@Override
@@ -145,8 +145,8 @@ public class MyTestSearchProvider implements SearchProvider, SuggestionProvider,
 		return new SearchWidgetResult(index, title, description, iconName);
 	}
 
-	public void onSuggestionCompleted(SearchResultInfo[] searchResults){
-		executeSuggestionCallbacks(WrapResults(searchResults),true);
+	public void onSuggestionCompleted(SearchResultInfo[] searchResults, boolean success){
+		executeSuggestionCallbacks(WrapResults(searchResults), success);
 	}
 
 	private void executeSuggestionCallbacks(SearchResult[] results, boolean success)

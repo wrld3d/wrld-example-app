@@ -13,13 +13,17 @@ namespace ExampleApp
         class SearchQueryResponseReceivedMessage
         {
         private:
+            const bool m_didSucceed;
             const SdkModel::SearchQuery m_query;
             const std::vector<SdkModel::SearchResultModel> m_results;
 
         public:
-            SearchQueryResponseReceivedMessage(const SdkModel::SearchQuery& query,
+            SearchQueryResponseReceivedMessage(const bool didSucceed,
+                                               const SdkModel::SearchQuery& query,
                                                const std::vector<SdkModel::SearchResultModel>& results);
 
+            const bool DidSucceed() const;
+            
             const SdkModel::SearchQuery GetQuery() const;
 
             const std::vector<SdkModel::SearchResultModel>& GetResults() const;

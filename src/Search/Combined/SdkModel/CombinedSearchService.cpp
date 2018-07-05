@@ -117,7 +117,8 @@ namespace ExampleApp
                     if(queryServices.empty())
                     {
                         Eegeo_TTY("Warning: No valid query dispatched");
-                        ExecutQueryResponseReceivedCallbacks(query, m_combinedResults);
+                        bool didSucceed = true;
+                        ExecutQueryResponseReceivedCallbacks(didSucceed, query, m_combinedResults);
                         return;
                     }
                     
@@ -160,12 +161,14 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         m_combinedResults.clear();
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, m_combinedResults);
+                        bool didSucceed = false;
+                        ExecutQueryResponseReceivedCallbacks(didSucceed, m_currentQueryModel, m_combinedResults);
                     }
                 }
                 
-                void CombinedSearchService::OnSearchResponseRecieved(const Search::SdkModel::SearchQuery& query,
-                                                                        const std::vector<Search::SdkModel::SearchResultModel>& results)
+                void CombinedSearchService::OnSearchResponseRecieved(const bool& didSucceed,
+                                                                     const Search::SdkModel::SearchQuery& query,
+                                                                     const std::vector<Search::SdkModel::SearchResultModel>& results)
                 {
                     std::vector<Search::SdkModel::SearchResultModel> filtered;
                     filtered.reserve(results.size());
@@ -184,7 +187,7 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         m_pendingResultsLeft = 0;
-                        ExecutQueryResponseReceivedCallbacks(query, m_combinedResults);
+                        ExecutQueryResponseReceivedCallbacks(didSucceed, query, m_combinedResults);
                         m_combinedResults.clear();
                     }
                 }

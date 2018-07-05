@@ -55,9 +55,9 @@ namespace ExampleApp
 			void CancelSearch();
 			void CancelSuggestions();
 
-			void OnSearchResponseReceived(const TSearchResults& searchResults);
-			void OnAutocompleteSuggestionsResponseReceived(const TSearchResults& searchResults);
-			void ResponceRecieved(const TSearchResults& searchResults,jmethodID methodId);
+			void OnSearchResponseReceived(const bool success, const TSearchResults& searchResults);
+			void OnAutocompleteSuggestionsResponseReceived(const bool success, const TSearchResults& searchResults);
+			void ResponseReceived(const bool success, const TSearchResults& searchResults,jmethodID methodId);
 		};
     }
 }

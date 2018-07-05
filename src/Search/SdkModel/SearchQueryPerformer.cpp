@@ -37,7 +37,7 @@ namespace ExampleApp
                                                        ExampleAppMessaging::TMessageBus& messageBus)
                 : m_searchService(searchService)
                 , m_searchResultsRepository(searchResultRepository)
-                , m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback2<SearchQueryPerformer, const SearchQuery&, const std::vector<SearchResultModel>&>))(this, &SearchQueryPerformer::HandleSearchResultsResponseReceived))
+                , m_pSearchResultResponseReceivedCallback(Eegeo_NEW((Eegeo::Helpers::TCallback3<SearchQueryPerformer, const bool&, const SearchQuery&, const std::vector<SearchResultModel>&>))(this, &SearchQueryPerformer::HandleSearchResultsResponseReceived))
                 , m_previousQuery()
                 , m_hasQuery(false)
                 , m_cameraController(cameraController)
@@ -176,8 +176,9 @@ namespace ExampleApp
                 m_queryResultsClearedCallbacks.RemoveCallback(callback);
             }
 
-            void SearchQueryPerformer::HandleSearchResultsResponseReceived(const SearchQuery& query,
-                    const std::vector<SearchResultModel>& results)
+            void SearchQueryPerformer::HandleSearchResultsResponseReceived(const bool& didSucceed,
+                                                                           const SearchQuery& query,
+                                                                           const std::vector<SearchResultModel>& results)
             {
                 // Ideally we should keep merge the new results into the old result set in a stable way, so that the
                 // result list doesn't jumble up when we move about and perform new searches.

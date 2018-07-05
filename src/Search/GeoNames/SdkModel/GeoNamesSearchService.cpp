@@ -52,7 +52,8 @@ namespace ExampleApp
                     {
                         m_hasActiveQuery = false;
                         std::vector<Search::SdkModel::SearchResultModel> results;
-                        ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, results);
+                        bool didSucceed = false;
+                        ExecutQueryResponseReceivedCallbacks(didSucceed, m_currentQueryModel, results);
                     }
                 }
                 
@@ -61,9 +62,16 @@ namespace ExampleApp
                     CancelInFlightQueries();
                     
                     ExecuteQueryPerformedCallbacks(query);
-                    if(m_currentQueryModel.IsTag() || (m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi()))
+                    if(m_currentQueryModel.IsTag())
                     {
-                        ExecutQueryResponseReceivedCallbacks(query, std::vector<Search::SdkModel::SearchResultModel>());
+                        bool didSucceed = true;
+                        ExecutQueryResponseReceivedCallbacks(didSucceed, query, std::vector<Search::SdkModel::SearchResultModel>());
+                        return;
+                    }
+                    if((m_networkCapabilities.StreamOverWifiOnly() && !m_networkCapabilities.ConnectedToWifi()))
+                    {
+                        bool didSucceed = false;
+                        ExecutQueryResponseReceivedCallbacks(didSucceed, query, std::vector<Search::SdkModel::SearchResultModel>());
                         return;
                     }
                     
@@ -103,7 +111,7 @@ namespace ExampleApp
                     }
                     
                     m_hasActiveQuery = false;
-                    ExecutQueryResponseReceivedCallbacks(m_currentQueryModel, queryResults);
+                    ExecutQueryResponseReceivedCallbacks(m_pCurrentRequest->IsSucceeded(), m_currentQueryModel, queryResults);
                 }
             }
         }
