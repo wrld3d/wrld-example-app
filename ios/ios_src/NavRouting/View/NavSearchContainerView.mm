@@ -41,10 +41,33 @@
 
 - (BOOL)consumesTouch:(UITouch *)touch
 {
+    if(self.isHidden)
+    {
+        return false;
+    }
+    
     BOOL consume =  [m_pSearchView pointInside:[touch locationInView:m_pSearchView] withEvent:nil] ||
-                    [m_pResultsView pointInside:[touch locationInView:m_pResultsView] withEvent:nil] ||
-                    [m_pBackButton pointInside:[touch locationInView:m_pBackButton] withEvent:nil];
+                    [m_pBackButton pointInside:[touch locationInView:m_pBackButton] withEvent:nil] ||
+                    [self touch: touch insideSubviewsOf: m_pResultsView];
     return consume;
+}
+
+- (BOOL) touch:(UITouch *)touch insideSubviewsOf:(UIView*) view
+{
+    for(UIView* subview in view.subviews)
+    {
+        if(subview.isHidden)
+        {
+            continue;
+        }
+        CGPoint locationInView = [touch locationInView:subview];
+        if([subview pointInside:locationInView withEvent:nil])
+        {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 - (void) setVisible:(BOOL) isVisible
