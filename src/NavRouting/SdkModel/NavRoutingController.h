@@ -44,6 +44,7 @@ namespace ExampleApp
                 ~NavRoutingController();
 
                 void OpenViewWithModel(INavRoutingModel& routingModel);
+                void Update();
 
             private:
                 INavRoutingModel& m_routingModel;
@@ -55,6 +56,7 @@ namespace ExampleApp
 
                 bool m_isRerouting;
                 bool m_waitingForRerouteResponse;
+                bool m_hasUpdatedSelectedDirection;
 
                 Eegeo::Helpers::TCallback1<NavRoutingController, const NavRoutingLocationModel&> m_startLocationSetCallback;
                 Eegeo::Helpers::TCallback0<NavRoutingController> m_startLocationClearedCallback;

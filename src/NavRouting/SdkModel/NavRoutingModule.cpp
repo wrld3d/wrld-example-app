@@ -140,6 +140,7 @@ namespace ExampleApp
             void NavRoutingModule::Update(float dt)
             {
                 m_pTurnByTurnController->Update(dt);
+                m_pRoutingController->Update();
             }
 
             INavRouteDrawingController& NavRoutingModule::GetRouteDrawingController()

@@ -68,6 +68,7 @@ namespace ExampleApp
             , m_endLocationSetFromSearchMessageHandler(this, &NavRoutingController::OnEndLocationSetFromSearch)
             , m_searchForLocationMessageHandler(this, &NavRoutingController::OnSearchForLocation)
             , m_interiorLocationLostCallback(this, &NavRoutingController::OnInteritorLocationLost)
+            , m_hasUpdatedSelectedDirection(false)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_routingModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
@@ -277,7 +278,11 @@ namespace ExampleApp
 
             void NavRoutingController::OnSelectedDirectionChanged(const NavRoutingSelectedDirectionChangedMessage& message)
             {
-                m_routingModel.SetSelectedDirection(message.GetDirectionIndex());
+                if(!m_hasUpdatedSelectedDirection)
+                {
+                    m_hasUpdatedSelectedDirection = true;
+                    m_routingModel.SetSelectedDirection(message.GetDirectionIndex());
+                }
             }
 
             void NavRoutingController::OnRerouteDialogClosed(const NavRoutingRerouteDialogClosedMessage& message)
@@ -374,6 +379,11 @@ namespace ExampleApp
                     m_customLocationPicker.StopSearching();
                 }
 
+            }
+
+            void NavRoutingController::Update()
+            {
+                m_hasUpdatedSelectedDirection = false;
             }
 
         }
