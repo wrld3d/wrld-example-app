@@ -26,6 +26,9 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
     @IBOutlet weak var timeToDestinationView: WRLDNavTimeToDestinationView!
     @IBOutlet weak var directionsView: WRLDNavDirectionsView!
     
+    @IBOutlet weak var setupJourneySafeArea: NSLayoutConstraint!
+    @IBOutlet weak var instructionsPanelSafeArea: NSLayoutConstraint!
+    
     var _hideViews: Bool = false
     var _dontCollapseTop: Bool = false
     
@@ -61,6 +64,14 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
         
         bottomPanel.translatesAutoresizingMaskIntoConstraints = true
         view.addSubview(bottomPanel)
+        
+        if #available(iOS 11.0, *) {
+            setupJourneySafeArea.constant = 0
+            instructionsPanelSafeArea.constant = 0
+        } else {
+            setupJourneySafeArea.constant = UIApplication.shared.statusBarFrame.height
+            instructionsPanelSafeArea.constant = UIApplication.shared.statusBarFrame.height
+        }
     }
     
     public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool
