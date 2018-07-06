@@ -42,6 +42,7 @@
 - (BOOL)consumesTouch:(UITouch *)touch
 {
     BOOL consume =  [m_pSearchView pointInside:[touch locationInView:m_pSearchView] withEvent:nil] ||
+                    [m_pResultsView pointInside:[touch locationInView:m_pResultsView] withEvent:nil] ||
                     [m_pBackButton pointInside:[touch locationInView:m_pBackButton] withEvent:nil];
     return consume;
 }
