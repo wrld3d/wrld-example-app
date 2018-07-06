@@ -11,11 +11,12 @@
 @implementation NavSearchContainerView
 {
     WRLDSearchWidgetView* m_pSearchView;
+    UIView* m_pResultsView;
     UIView* m_pBackButton;
     UIView* m_pSearchHintContainer;
 }
 
-- (instancetype) initWithSubviews: (WRLDSearchWidgetView*) searchView :(UIView*) backButton :(UIView*) searchHintContainer
+- (instancetype) initWithSubviews: (WRLDSearchWidgetView*) searchView :(UIView*) resultsView :(UIView*) backButton :(UIView*) searchHintContainer
 {
     CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ?
     CGRectMake(20, -50, 375, 300) :   // ipad
@@ -24,10 +25,12 @@
     if(self == [super initWithFrame:searchFrame])
     {
         m_pSearchView = searchView;
+        m_pResultsView = resultsView;
         m_pBackButton = backButton;
         m_pSearchHintContainer = searchHintContainer;
         
         [self addSubview: m_pSearchView];
+        [self addSubview: m_pResultsView];
         [self addSubview: m_pBackButton];
         [self addSubview: m_pSearchHintContainer];
         [self setHidden:YES];
@@ -51,6 +54,7 @@
 -(void) constrainSubviews
 {
     m_pSearchView.translatesAutoresizingMaskIntoConstraints = false;
+    m_pResultsView.translatesAutoresizingMaskIntoConstraints = false;
     m_pBackButton.translatesAutoresizingMaskIntoConstraints = false;
     
     NSLayoutConstraint* searchTop = [self constrainAttribute: NSLayoutAttributeTop of: m_pSearchView to: self withOffset: 0];
@@ -58,11 +62,16 @@
     NSLayoutConstraint* searchLeading = [self constrainAttribute: NSLayoutAttributeLeading of: m_pSearchView to: self withOffset: 40];
     NSLayoutConstraint* searchTrailing = [self constrainAttribute: NSLayoutAttributeTrailing of: m_pSearchView to: self withOffset: 0];
     
+    NSLayoutConstraint* resultsTop = [self constrainAttribute: NSLayoutAttributeTop of: m_pResultsView to: self withOffset: 44];
+    NSLayoutConstraint* resultsBottom = [self constrainAttribute: NSLayoutAttributeBottom of: m_pResultsView to: self withOffset: 0];
+    NSLayoutConstraint* resultsLeading = [self constrainAttribute: NSLayoutAttributeLeading of: m_pResultsView to: self withOffset: 0];
+    NSLayoutConstraint* resultsTrailing = [self constrainAttribute: NSLayoutAttributeTrailing of: m_pResultsView to: self withOffset: 0];
+    
     NSLayoutConstraint* backTop = [self constrainAttribute: NSLayoutAttributeTop of: m_pBackButton to: m_pSearchView withOffset: 0];
-    NSLayoutConstraint* backHeight = [NSLayoutConstraint constraintWithItem:m_pBackButton
+    NSLayoutConstraint* backBottom = [NSLayoutConstraint constraintWithItem:m_pBackButton
                                                                   attribute:NSLayoutAttributeBottom
                                                                   relatedBy:NSLayoutRelationEqual
-                                                                     toItem:m_pSearchView.suggestionsContainer
+                                                                     toItem:m_pResultsView
                                                                   attribute:NSLayoutAttributeTop
                                                                  multiplier:1.0
                                                                    constant:0];
@@ -81,8 +90,13 @@
     [self addConstraint:searchLeading];
     [self addConstraint:searchTrailing];
     
+    [self addConstraint:resultsTop];
+    [self addConstraint:resultsBottom];
+    [self addConstraint:resultsLeading];
+    [self addConstraint:resultsTrailing];
+    
     [self addConstraint:backTop];
-    [self addConstraint:backHeight];
+    [self addConstraint:backBottom];
     [self addConstraint:backLeading];
     [self addConstraint:backTrailing];
 }

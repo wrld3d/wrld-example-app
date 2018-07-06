@@ -22,7 +22,12 @@ namespace ExampleApp
                 m_autocompleteCancelledEvent = ^(WRLDSearchQuery* cancelledQuery){
                     [navLocationFinder cancelAutocompleteRequest];
                 };
+                                
+                m_autocompleteCompletedEvent = ^(WRLDSearchQuery* startedQuery){
+                    HideSearchHint();
+                };
                 
+                [m_pSearchModel.suggestionObserver addQueryCompletedEvent: m_autocompleteCompletedEvent];
                 [m_pSearchModel.suggestionObserver addQueryCancelledEvent: m_autocompleteCancelledEvent];
                 
                 m_pBackButton = [[[UIButton alloc] init] autorelease];
@@ -68,13 +73,16 @@ namespace ExampleApp
                 [m_pSearchHintContainer setHidden:YES];
                 m_pSearchHintContainer.alpha = 0.0;
                 
+                m_pResultsView = [[[UIView alloc] init] autorelease];
+                m_pSearchWidgetView.suggestionsContainer = m_pResultsView;
                 
-                m_pContainer = [[NavSearchContainerView alloc] initWithSubviews:m_pSearchWidgetView :m_pBackButton :m_pSearchHintContainer];
+                m_pContainer = [[NavSearchContainerView alloc] initWithSubviews: m_pSearchWidgetView :m_pResultsView :m_pBackButton :m_pSearchHintContainer];
             }
             
             NavWidgetSearchView::~NavWidgetSearchView()
             {
                 [m_pSearchModel.suggestionObserver removeQueryCancelledEvent: m_autocompleteCancelledEvent];
+                [m_pSearchModel.suggestionObserver removeQueryCompletedEvent: m_autocompleteCompletedEvent];
             }
             
             UIView* NavWidgetSearchView::GetUIView()

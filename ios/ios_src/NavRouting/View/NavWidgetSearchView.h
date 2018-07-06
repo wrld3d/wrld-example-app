@@ -16,10 +16,12 @@ namespace ExampleApp
             {
             private:
                 WRLDSearchWidgetView* m_pSearchWidgetView;
+                UIView* m_pResultsView;
                 WRLDSearchModel* m_pSearchModel;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
                 
                 QueryEvent m_autocompleteCancelledEvent;
+                QueryEvent m_autocompleteCompletedEvent;
                 
                 UIView* m_pContainer;
                 UIButton* m_pBackButton;

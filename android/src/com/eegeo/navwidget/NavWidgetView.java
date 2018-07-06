@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Location;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.Animation;
@@ -72,7 +71,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     private boolean m_searchingForLocation;
     private boolean m_searchingForStartLocation;
     private ViewPropertyAnimator m_searchLocationViewAnimation;
-    private SearchResultsListener m_searchResultSelectedListener;
+    private SearchResultsListener m_autocompleteListener;
 
     private final int m_searchNavMargin;
 
@@ -120,10 +119,13 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
             m_searchWidget = m_searchLocationView.getSearchWidget();
         }
 
-        m_searchResultSelectedListener = new SearchResultsListener() {
+        m_autocompleteListener = new SearchResultsListener() {
 
             @Override
-            public void onSearchResultsReceived(SearchQuery searchQuery, List<SearchProviderQueryResult> list) {}
+            public void onSearchResultsReceived(SearchQuery searchQuery, List<SearchProviderQueryResult> list)
+            {
+                dismissSearchHint();
+            }
 
             @Override
             public void onSearchResultsCleared() { }
@@ -479,7 +481,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_searchingForStartLocation = startLocation;
         setSearchLocationVisibility(true, true);
         m_model.sendNavEvent(WrldNavEvent.WidgetAnimateOut);
-        m_searchWidget.getSuggestionResultsModel().addResultListener(m_searchResultSelectedListener);
+        m_searchWidget.getSuggestionResultsModel().addResultListener(m_autocompleteListener);
         m_searchWidget.clearSearch();
         NavWidgetViewJniMethods.SetSearchingForLocation(m_nativeCallerPointer, true, m_searchingForStartLocation);
 
@@ -493,7 +495,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
 
     public void endSearchForLocation() {
         m_searchingForLocation = false;
-        m_searchWidget.getSuggestionResultsModel().removeResultListener(m_searchResultSelectedListener);
+        m_searchWidget.getSuggestionResultsModel().removeResultListener(m_autocompleteListener);
         setSearchLocationVisibility(false, true);
         m_model.sendNavEvent(WrldNavEvent.WidgetAnimateIn);
         NavWidgetViewJniMethods.SetSearchingForLocation(m_nativeCallerPointer, false, m_searchingForStartLocation);
