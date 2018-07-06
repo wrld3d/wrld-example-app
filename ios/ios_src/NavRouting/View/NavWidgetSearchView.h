@@ -31,7 +31,6 @@ namespace ExampleApp
                 UILabel* m_pSearchHintLabel;
                 BOOL m_hasShownHint;
                 
-                CGFloat m_onScreenPosition = 20;
                 CGFloat m_animationTimeInSeconds = 0.2f;
                 
                 void ShowSearchHint();

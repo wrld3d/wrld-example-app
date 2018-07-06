@@ -92,15 +92,20 @@ namespace ExampleApp
             
             void NavWidgetSearchView::Show()
             {
+                CGFloat onScreenPosition = 0;
                 if (@available(iOS 11.0, *))
                 {
-                    m_onScreenPosition = m_pContainer.superview.safeAreaInsets.top;
+                    onScreenPosition = m_pContainer.superview.safeAreaInsets.top;
+                }
+                else
+                {
+                    onScreenPosition = [UIApplication sharedApplication].statusBarFrame.size.height;
                 }
                 
                 [m_pSearchWidgetView clearSearch];
                 [m_pSearchWidgetView gainFocus];
                 CGRect newFrame = m_pContainer.frame;
-                newFrame.origin.y = m_onScreenPosition;
+                newFrame.origin.y = onScreenPosition;
                 [m_pContainer setHidden:NO];
                 [UIView animateWithDuration:m_animationTimeInSeconds animations:^{
                     m_pContainer.frame = newFrame;
