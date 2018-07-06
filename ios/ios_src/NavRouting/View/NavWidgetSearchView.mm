@@ -68,8 +68,10 @@ namespace ExampleApp
                 [m_pSearchHintContainer setHidden:YES];
                 m_pSearchHintContainer.alpha = 0.0;
                 
+                m_pResultsView = [[[UIView alloc] init] autorelease];
+                m_pSearchWidgetView.suggestionsContainer = m_pResultsView;
                 
-                m_pContainer = [[NavSearchContainerView alloc] initWithSubviews:m_pSearchWidgetView :m_pBackButton :m_pSearchHintContainer];
+                m_pContainer = [[NavSearchContainerView alloc] initWithSubviews: m_pSearchWidgetView :m_pResultsView :m_pBackButton :m_pSearchHintContainer];
             }
             
             NavWidgetSearchView::~NavWidgetSearchView()

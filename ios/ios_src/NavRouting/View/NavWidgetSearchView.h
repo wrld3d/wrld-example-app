@@ -16,6 +16,7 @@ namespace ExampleApp
             {
             private:
                 WRLDSearchWidgetView* m_pSearchWidgetView;
+                UIView* m_pResultsView;
                 WRLDSearchModel* m_pSearchModel;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
                 
