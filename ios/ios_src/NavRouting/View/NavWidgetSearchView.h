@@ -18,6 +18,7 @@ namespace ExampleApp
                 WRLDSearchWidgetView* m_pSearchWidgetView;
                 UIView* m_pResultsView;
                 WRLDSearchModel* m_pSearchModel;
+                WRLDSearchProviderHandle* m_pSearchProviderHandle;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
                 
                 QueryEvent m_autocompleteCancelledEvent;
@@ -50,8 +51,6 @@ namespace ExampleApp
                 void RemoveCloseButtonTarget(id target, SEL selector);
                 void AddSelectedResultCallback(ResultSelectedEvent resultSelectedEvent);
                 void RemoveSelectedResultCallback(ResultSelectedEvent resultSelectedEvent);
-                void AddSearchStartedCallback(QueryEvent queryEvent);
-                void RemoveSearchStartedCallback(QueryEvent queryEvent);
             };
         }
     }
