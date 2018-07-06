@@ -48,8 +48,8 @@ namespace ExampleApp
                 
                 void AddCloseButtonTarget(id target, SEL selector);
                 void RemoveCloseButtonTarget(id target, SEL selector);
-                void AddSuggestionSelectedCallback(ResultSelectedEvent resultSelectedEvent);
-                void RemoveSuggestionSelectedCallback(ResultSelectedEvent resultSelectedEvent);
+                void AddSelectedResultCallback(ResultSelectedEvent resultSelectedEvent);
+                void RemoveSelectedResultCallback(ResultSelectedEvent resultSelectedEvent);
                 void AddSearchStartedCallback(QueryEvent queryEvent);
                 void RemoveSearchStartedCallback(QueryEvent queryEvent);
             };
