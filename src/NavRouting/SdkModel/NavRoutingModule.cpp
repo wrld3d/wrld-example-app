@@ -30,6 +30,7 @@ namespace ExampleApp
                                                 Eegeo::Location::NavigationService& navigationService,
                                                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                               Eegeo::Camera::MapCamera::MapCameraDistanceFromBoundsCalculator& cameraDistanceFromBoundsCalculator,
                                                 Compass::SdkModel::ICompassModel& compassModel,
                                                 ExampleAppMessaging::TMessageBus& messageBus,
                                                 Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
@@ -100,6 +101,7 @@ namespace ExampleApp
                 
                 m_pRoutingCameraController = Eegeo_NEW(NavRoutingCameraController)(*m_pNavRoutingModel,
                                                                                    cameraTransitionController,
+                                                                                   cameraDistanceFromBoundsCalculator,
                                                                                    navigationService,
                                                                                    compassModel);
                 

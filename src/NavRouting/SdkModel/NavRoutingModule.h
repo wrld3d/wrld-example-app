@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include <AppCamera/SdkModel/IAppCameraLocationPicker.h>
 #include "AlertBox.h"
 #include "Types.h"
 #include "BidirectionalBus.h"
@@ -19,6 +18,8 @@
 #include "NavRoutingLocationFinder.h"
 #include "WorldPins.h"
 #include "NavRoutingWorldPinsVisibilityHandler.h"
+#include "AppCamera.h"
+#include "MapCamera.h"
 
 namespace ExampleApp
 {
@@ -36,6 +37,7 @@ namespace ExampleApp
                                  Eegeo::Location::NavigationService& navigationService,
                                  Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                  CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                 Eegeo::Camera::MapCamera::MapCameraDistanceFromBoundsCalculator& cameraDistanceFromBoundsCalculator,
                                  Compass::SdkModel::ICompassModel& compassModel,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,

@@ -96,6 +96,7 @@
 #include "InteriorEntityHighlightController.h"
 #include "ICallback.h"
 #include "UiCreatedMessage.h"
+#include "MapCamera.h"
 
 namespace ExampleApp
 {
@@ -181,6 +182,8 @@ namespace ExampleApp
         Net::SdkModel::ConnectivityChangedObserver* m_pConnectivityChangedObserver;
         
         AppCamera::SdkModel::IAppCameraModule* m_pAppCameraModule;
+        Eegeo::Camera::MapCamera::MapCameraDistanceBasedFovControl* m_pMapCameraDistanceBasedFovControl;
+        Eegeo::Camera::MapCamera::MapCameraDistanceFromBoundsCalculator* m_pMapCameraDistanceFromBoundsCalculator;
         ExampleApp::DoubleTapIndoorInteraction::SdkModel::IDoubleTapIndoorInteractionController* m_pDoubleTapIndoorInteractionController;
         Eegeo::Collision::IRayCaster* m_pRayCaster;
 

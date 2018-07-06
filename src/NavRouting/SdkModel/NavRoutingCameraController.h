@@ -8,6 +8,8 @@
 #include "ICallback.h"
 #include "NavRoutingRouteModel.h"
 #include "Compass.h"
+#include "AppCamera.h"
+#include "MapCamera.h"
 
 namespace ExampleApp
 {
@@ -21,6 +23,7 @@ namespace ExampleApp
                 
                 NavRoutingCameraController(INavRoutingModel& navRoutingModel,
                                            CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
+                                           Eegeo::Camera::MapCamera::MapCameraDistanceFromBoundsCalculator& cameraDistanceFromBoundsCalculator,
                                            Eegeo::Location::NavigationService& navigationService,
                                            Compass::SdkModel::ICompassModel& compassModel);
                 
@@ -35,6 +38,12 @@ namespace ExampleApp
                 
                 void UpdateCamera();
                 void SetCameraToSelectedDirection();
+                void SetCameraToRouteOverview();
+                void GetFirstSectionCentroidAndBounds(
+                        const Eegeo::Routes::Webservice::RouteData& route,
+                        Eegeo::Space::LatLong& out_centroid,
+                        Eegeo::Space::LatLong& out_boundsNE,
+                        Eegeo::Space::LatLong& out_boundsSW);
                 
                 Eegeo::Helpers::TCallback1<NavRoutingCameraController, const NavRoutingRouteModel&> m_routeSetCallback;
                 Eegeo::Helpers::TCallback1<NavRoutingCameraController, const int> m_selectedDirectionSetCallback;
@@ -43,8 +52,10 @@ namespace ExampleApp
                 
                 INavRoutingModel& m_navRoutingModel;
                 CameraTransitions::SdkModel::ICameraTransitionController& m_cameraTransitionController;
+                Eegeo::Camera::MapCamera::MapCameraDistanceFromBoundsCalculator& m_cameraDistanceFromBoundsCalculator;
                 Eegeo::Location::NavigationService& m_navigationService;
                 Compass::SdkModel::ICompassModel& m_compassModel;
+
             };
         }
     }

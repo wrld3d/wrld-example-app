@@ -134,7 +134,8 @@
 #include "FeatureInteractionModule.h"
 #include "CollisionModule.h"
 #include "INavRoutingCustomLocationPicker.h"
-
+#include "MapCameraDistanceBasedFovControl.h"
+#include "MapCameraDistanceFromBoundsCalculator.h"
 #include "ReactionHideOtherScreenControls.h"
 #include "ReactionPushScreenControl.h"
 
@@ -333,6 +334,13 @@ namespace ExampleApp
         Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration touchControllerConfig = Eegeo::Camera::GlobeCamera::GlobeCameraTouchControllerConfiguration::CreateDefault();
         Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration globeCameraConfig = Eegeo::Camera::GlobeCamera::GlobeCameraControllerConfiguration::CreateDefault(useLowSpecSettings);
 
+        m_pMapCameraDistanceBasedFovControl = Eegeo::Camera::MapCamera::MapCameraDistanceBasedFovControl::CreateFromGlobeCameraConfig(globeCameraConfig);
+        m_pMapCameraDistanceFromBoundsCalculator = Eegeo_NEW(Eegeo::Camera::MapCamera::MapCameraDistanceFromBoundsCalculator)(
+                *m_pMapCameraDistanceBasedFovControl,
+                globeCameraConfig.zoomAltitudeLow,
+                globeCameraConfig.maxAltitude
+        );
+
         m_pGlobeCameraController = cameraControllerFactory.Create(gpsGlobeCameraConfig, touchControllerConfig, globeCameraConfig, m_screenProperties);
 
         m_pGlobeCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppGlobeCameraWrapper)(*m_pGlobeCameraController);
@@ -505,6 +513,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pCameraSplinePlaybackController;
         Eegeo_DELETE m_pGlobeCameraWrapper;
         Eegeo_DELETE m_pGlobeCameraController;
+        Eegeo_DELETE m_pMapCameraDistanceBasedFovControl;
+        Eegeo_DELETE m_pMapCameraDistanceFromBoundsCalculator;
         Eegeo_DELETE m_pLoadingScreen;
 
         Eegeo_DELETE m_pAppModeModel;
@@ -840,12 +850,14 @@ namespace ExampleApp
                                                                                    m_applicationConfiguration.IsInKioskMode());
 
         auto& polylineShapesModule = world.GetShapesModule().GetPolylineShapesModule();
+
         m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(polylineShapesModule.GetShapeService(),
                                                                                             world.GetRoutesModule().GetRoutingWebservice(),
                                                                                             world.GetLocationService(),
                                                                                             *m_pNavigationService,
                                                                                             m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
                                                                                             *m_pCameraTransitionService,
+                                                                                            *m_pMapCameraDistanceFromBoundsCalculator,
                                                                                             m_pCompassModule->GetCompassModel(),
                                                                                             m_messageBus,
                                                                                             interiorsModelModule.GetInteriorsModelRepository(),
