@@ -29,7 +29,7 @@
         android:background="@drawable/nav_search_hint_back"
         android:layout_alignParentTop="true"
         android:layout_marginStart="@dimen/nav_search_hint_margin"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="@dimen/nav_search_hint_top_margin"
         android:elevation="@dimen/wrld_nav_large_margin">
 
         <ImageView

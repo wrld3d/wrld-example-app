@@ -40,4 +40,5 @@
 
     <dimen name="nav_search_margin">21dp</dimen>
     <dimen name="nav_search_hint_margin">29dp</dimen>
+    <dimen name="nav_search_hint_top_margin">80dp</dimen>
 </resources>
