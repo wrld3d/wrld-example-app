@@ -21,6 +21,7 @@ namespace ExampleApp
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
                 
                 QueryEvent m_autocompleteCancelledEvent;
+                QueryEvent m_autocompleteCompletedEvent;
                 
                 UIView* m_pContainer;
                 UIButton* m_pBackButton;
