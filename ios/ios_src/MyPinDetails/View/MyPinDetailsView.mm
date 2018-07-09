@@ -52,6 +52,8 @@
     
     self.pTitleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     self.pTitleLabel.textColor = ExampleApp::Helpers::ColorPalette::UiTextTitleColor;
+    self.pTitleLabel.textAlignment = NSTextAlignmentLeft;
+    self.pTitleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     
     self.pTitleLabel.font = [UIFont systemFontOfSize:24.f];
     [self.pHeaderView addSubview:self.pTitleLabel];
@@ -214,7 +216,6 @@
     CGFloat titleOffsetX = self.pPinIconImageView.frame.origin.x + self.pPinIconImageView.frame.size.width;
     CGFloat titleOffsetY = 4.0;
     self.pTitleLabel.frame = CGRectMake(titleOffsetX,titleOffsetY, innerMarginWidth - headerHeight-titleOffsetX,headerHeight);
-    [self.pTitleLabel sizeToFit];
     self.pCloseButton.frame = CGRectMake(innerMarginWidth - headerHeight,0.0, headerHeight,headerHeight);
     
     self.pHeaderSeparator.frame = CGRectMake(outerMargin.left, self.pHeaderView.frame.origin.y + self.pHeaderView.frame.size.height + outerMargin.top, outerMarginWidth,1.0);
