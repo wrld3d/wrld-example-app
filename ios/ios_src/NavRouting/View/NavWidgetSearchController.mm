@@ -8,7 +8,7 @@
 
 @interface NavWidgetSearchController()
 @property BOOL isSearchingForStartPoint;
-@property ResultSelectedEvent navSuggestionSelectedEvent;
+@property ResultSelectedEvent selectedResultEvent;
 @property QueryEvent navSearchRunEvent;
 @end;
 
@@ -26,7 +26,7 @@
         m_pSearchView = searchView;
         _isSearchingForStartPoint = NO;
         
-        self.navSuggestionSelectedEvent = ^(id<WRLDSearchResultModel> selectedResultModel) {
+        self.selectedResultEvent = ^(id<WRLDSearchResultModel> selectedResultModel) {
             [self hideSearchView];
             WidgetSearchResultModel* selectedWidgetResult = (WidgetSearchResultModel*) selectedResultModel;
             if(selectedWidgetResult != nil)
@@ -39,7 +39,7 @@
             [self hideSearchView];
         };
         
-        m_pSearchView->AddSuggestionSelectedCallback(self.navSuggestionSelectedEvent);
+        m_pSearchView->AddSelectedResultCallback(self.selectedResultEvent);
         m_pSearchView->AddSearchStartedCallback(self.navSearchRunEvent);        
         m_pSearchView->AddCloseButtonTarget(self, @selector(closeSearchHandler:));
     }
@@ -55,7 +55,7 @@
 {
     m_pSearchView->RemoveCloseButtonTarget(self, @selector(closeSearchHandler:));
     m_pSearchView->RemoveSearchStartedCallback(self.navSearchRunEvent);
-    m_pSearchView->RemoveSuggestionSelectedCallback(self.navSuggestionSelectedEvent);
+    m_pSearchView->RemoveSelectedResultCallback(self.selectedResultEvent);
     [super dealloc];
 }
 

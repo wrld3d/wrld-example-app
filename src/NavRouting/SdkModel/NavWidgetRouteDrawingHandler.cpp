@@ -77,12 +77,14 @@ namespace ExampleApp
             
             void NavWidgetRouteDrawingHandler::OnTurnByTurnUpdated()
             {
-                Eegeo_ASSERT(m_currentRouteStep >= 0, "Invalid route step index");
-                m_routeDrawingController.UpdateRouteStepProgress(m_currentRouteStep,
-                                                                 m_routePreviousStepColor,
-                                                                 m_routeCurrentStepColor,
-                                                                 m_navTurnByTurnModel.GetIndexOfPathSegmentStartVertex(),
-                                                                 m_navTurnByTurnModel.GetClosestPointOnRoute());
+                if (m_currentRouteStep >= 0)
+                {
+                    m_routeDrawingController.UpdateRouteStepProgress(m_currentRouteStep,
+                                                                     m_routePreviousStepColor,
+                                                                     m_routeCurrentStepColor,
+                                                                     m_navTurnByTurnModel.GetIndexOfPathSegmentStartVertex(),
+                                                                     m_navTurnByTurnModel.GetClosestPointOnRoute());
+                }
             }
         }
     }

@@ -83,6 +83,8 @@ namespace ExampleApp
             {
                 [m_pSearchModel.suggestionObserver removeQueryCancelledEvent: m_autocompleteCancelledEvent];
                 [m_pSearchModel.suggestionObserver removeQueryCompletedEvent: m_autocompleteCompletedEvent];
+                
+                [m_pSearchWidgetView stopDisplayingSuggestionProvider: m_pSuggestionProviderHandle];
             }
             
             UIView* NavWidgetSearchView::GetUIView()
@@ -175,12 +177,12 @@ namespace ExampleApp
                 [m_pBackButton removeTarget:target action:selector forControlEvents:UIControlEventPrimaryActionTriggered];
             }
             
-            void NavWidgetSearchView::AddSuggestionSelectedCallback(ResultSelectedEvent resultSelectedEvent)
+            void NavWidgetSearchView::AddSelectedResultCallback(ResultSelectedEvent resultSelectedEvent)
             {
                 [m_pSearchWidgetView.suggestionSelectionObserver addResultSelectedEvent: resultSelectedEvent];
             }
             
-            void NavWidgetSearchView::RemoveSuggestionSelectedCallback(ResultSelectedEvent resultSelectedEvent)
+            void NavWidgetSearchView::RemoveSelectedResultCallback(ResultSelectedEvent resultSelectedEvent)
             {
                 [m_pSearchWidgetView.suggestionSelectionObserver removeResultSelectedEvent: resultSelectedEvent];
             }
