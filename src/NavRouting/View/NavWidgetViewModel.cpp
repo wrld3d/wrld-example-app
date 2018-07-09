@@ -31,7 +31,8 @@ namespace ExampleApp
             void NavWidgetViewModel::Open()
             {
                 Eegeo_ASSERT(!IsOpen(), "Cannot open NavWidgetViewModel when already open.\n");
-                m_openable.Open();
+                m_openable.Open();                
+                m_interiorsStateProvider.SetState(InteriorsExplorer::View::InteriorsExplorerViewModel::DisplayMode::Navigation);
                 m_openedCallbacks.ExecuteCallbacks();
             }
 
@@ -55,9 +56,6 @@ namespace ExampleApp
                 else
                 {
                     m_compassStateProvider.SetState(Compass::View::CompassScreenControl::DisplayMode::Default);
-                }
-                if(m_openable.IsOpen()){
-                    m_interiorsStateProvider.SetState(InteriorsExplorer::View::InteriorsExplorerViewModel::DisplayMode::Navigation);
                 }
             }
 
