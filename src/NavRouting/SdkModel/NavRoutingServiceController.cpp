@@ -48,7 +48,9 @@ namespace ExampleApp
             {
                 if (results.Id == m_routingQueryId)
                 {
-                    if (results.Succeeded && results.Results.size()>0)
+                    if (results.Succeeded &&
+                        results.Results.size() > 0 &&
+                        results.Results.front().Distance > 0.0)
                     {
                         m_routingQueryCompletedCallbacks.ExecuteCallbacks(results.Results);
                     }
