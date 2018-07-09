@@ -47,8 +47,7 @@
 }
 
 - (void) setNavigationHidden:(BOOL) isNavigationHidden
-{
-    
+{    
     self.navigationWidthConstraint.constant = isNavigationHidden ? 0 : _navigationButtonWidth;
     [self.navigationButton setHidden: isNavigationHidden];
 }
