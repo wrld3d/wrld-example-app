@@ -40,6 +40,8 @@ namespace ExampleApp
                     
                     ~InteriorEntityHighlightController();
                     
+                    void HighlightResultWithId(const std::string& id);
+                    
                 private:
                     void OnSearchQueryResponseReceived(const Search::SearchQueryResponseReceivedMessage& message);
                     void OnSearchResultCleared();

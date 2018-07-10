@@ -5,6 +5,7 @@
 #include "ISearchResultPoiViewModel.h"
 #include "Logger.h"
 #include "SearchResultOnMapItemModelSelectedMessage.h"
+#include "InteriorEntityHighlightController.h"
 
 namespace ExampleApp
 {
@@ -14,10 +15,12 @@ namespace ExampleApp
         {
             SearchResultOnMapItemModel::SearchResultOnMapItemModel(const Search::SdkModel::SearchResultModel& searchResultModel,
                     ExampleAppMessaging::TMessageBus& messageBus,
-                    Metrics::IMetricsService& metricsService)
+                    Metrics::IMetricsService& metricsService,
+                    InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController& entityHighlightController)
                 : m_searchResultModel(searchResultModel)
                 , m_messageBus(messageBus)
                 , m_metricsService(metricsService)
+                , m_entityHighlightController(entityHighlightController)
             {
 
             }
@@ -31,6 +34,7 @@ namespace ExampleApp
             {
                 m_metricsService.SetEvent("Pin Selected", "Name", m_searchResultModel.GetTitle().c_str());
                 m_messageBus.Publish(SearchResultOnMapItemModelSelectedMessage(m_searchResultModel));
+                m_entityHighlightController.HighlightResultWithId(m_searchResultModel.GetIdentifier());
             }
         }
     }

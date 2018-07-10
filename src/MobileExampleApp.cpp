@@ -380,25 +380,6 @@ namespace ExampleApp
                                                                                        mapModule.GetEnvironmentFlatteningService());
 
         CreateApplicationModelModules(nativeUIFactories, platformConfig.OptionsConfig.InteriorsAffectedByFlattening, platformConfig.MapLayersConfig.BlueSphereConfig.CreateViews);
-
-        namespace IntHighlights = InteriorsExplorer::SdkModel::Highlights;
-
-        m_pHighlightColorMapper = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::HighlightColorMapper)(Eegeo::v4(0.0, 1.0, 0.0, 1.0));
-        
-        Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& highlightService =
-            m_pWorld->GetInteriorHighlightsModule().GetHighlightService();
-        
-        m_pInteriorsHighlightVisibilityController = Eegeo_NEW(InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController)(
-                                                                                                                     mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
-                                                                                                                     mapModule.GetInteriorsModelModule().GetInteriorsCellResourceObserver(),
-                                                                                                                     m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
-                                                                                                                     m_pSearchModule->GetSearchQueryPerformer(),
-                                                                                                                     mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(),
-                                                                                                                     mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
-                                                                                                                     mapModule.GetInteriorsStreamingModule().GetLabelLayerId(),
-                                                                                                                     m_messageBus,
-                                                                                                                     *m_pHighlightColorMapper,
-                                                                                                                     highlightService);
         
         Eegeo::Modules::Map::Layers::InteriorsModelModule& interiorsModelModule = mapModule.GetInteriorsModelModule();
 
@@ -716,6 +697,25 @@ namespace ExampleApp
                                                                                                            m_pSearchModule->GetSearchRefreshService(),
                                                                                                            m_messageBus);
 
+        namespace IntHighlights = InteriorsExplorer::SdkModel::Highlights;
+        
+        m_pHighlightColorMapper = Eegeo_NEW(IntHighlights::HighlightColorMapper)(Eegeo::v4(0.0, 1.0, 0.0, 1.0));
+        
+        Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& highlightService =
+        m_pWorld->GetInteriorHighlightsModule().GetHighlightService();
+        
+        m_pInteriorsHighlightVisibilityController = Eegeo_NEW(IntHighlights::InteriorEntityHighlightController)(
+                                                                                                                mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel(),
+                                                                                                                                          mapModule.GetInteriorsModelModule().GetInteriorsCellResourceObserver(),
+                                                                                                                                          m_searchServiceModules[Search::EegeoVendorName]->GetSearchService(),
+                                                                                                                                          m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                                                                          mapModule.GetInteriorsPresentationModule().GetInteriorsLabelsController(),
+                                                                                                                                          mapModule.GetLabelsModule().GetLabelHiddenFilterModel(),
+                                                                                                                                          mapModule.GetInteriorsStreamingModule().GetLabelLayerId(),
+                                                                                                                                          m_messageBus,
+                                                                                                                                          *m_pHighlightColorMapper,
+                                                                                                                                          highlightService);
+        
         m_pSearchResultOnMapModule = Eegeo_NEW(SearchResultOnMap::SdkModel::SearchResultOnMapModule)(m_pSearchModule->GetSearchResultRepository(),
                                                                                                      m_pSearchResultPoiModule->GetSearchResultPoiViewModel(),
                                                                                                      m_pWorldPinsModule->GetWorldPinsService(),
@@ -724,7 +724,8 @@ namespace ExampleApp
                                                                                                      m_pSearchModule->GetSearchResultMyPinsService(),
                                                                                                      m_messageBus,
                                                                                                      m_metricsService,
-                                                                                                     m_menuReaction);
+                                                                                                     m_menuReaction,
+                                                                                                     *m_pInteriorsHighlightVisibilityController);
 
         Eegeo::Camera::GlobeCamera::GpsGlobeCameraControllerFactory gpsCameraControllerFactory(m_pWorld->GetTerrainModelModule().GetTerrainHeightProvider(),
                                                                                                mapModule.GetEnvironmentFlatteningService(),

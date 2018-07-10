@@ -7,6 +7,7 @@
 #include "SearchResultPoi.h"
 #include "BidirectionalBus.h"
 #include "IMetricsService.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -19,9 +20,13 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 
                 Metrics::IMetricsService& m_metricsService;
+                
+                InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController& m_entityHighlightController;
 
             public:
-                SearchResultOnMapFactory(ExampleAppMessaging::TMessageBus& messageBus, Metrics::IMetricsService& metricsService);
+                SearchResultOnMapFactory(ExampleAppMessaging::TMessageBus& messageBus,
+                                         Metrics::IMetricsService& metricsService,
+                                         InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController& entityHighlightController);
 
                 ~SearchResultOnMapFactory();
 

@@ -19,6 +19,7 @@
 #include "MyPins.h"
 #include "IMetricsService.h"
 #include "IMenuReactionModel.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -42,7 +43,8 @@ namespace ExampleApp
                                         Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                         ExampleAppMessaging::TMessageBus& messageBus,
                                         Metrics::IMetricsService& metricsService,
-                                        const Menu::View::IMenuReactionModel& menuReaction);
+                                        const Menu::View::IMenuReactionModel& menuReaction,
+                                        InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController& entityHighlightController);
 
                 ~SearchResultOnMapModule();
 

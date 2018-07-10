@@ -22,9 +22,10 @@ namespace ExampleApp
                                                              Search::SdkModel::MyPins::ISearchResultMyPinsService& searchResultMyPinsService,
                                                              ExampleAppMessaging::TMessageBus& messageBus,
                                                              Metrics::IMetricsService& metricsService,
-                                                             const Menu::View::IMenuReactionModel& menuReaction)
+                                                             const Menu::View::IMenuReactionModel& menuReaction,
+                                                             InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController& entityHighlightController)
             {
-                m_pSearchResultOnMapFactory = Eegeo_NEW(View::SearchResultOnMapFactory)(messageBus, metricsService);
+                m_pSearchResultOnMapFactory = Eegeo_NEW(View::SearchResultOnMapFactory)(messageBus, metricsService, entityHighlightController);
                 
                 m_pSearchResultOnMapModel = Eegeo_NEW(SearchResultOnMapModel)(worldPinsService,
                                                                               myPinsService,

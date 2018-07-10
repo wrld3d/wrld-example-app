@@ -154,6 +154,24 @@ namespace ExampleApp
                     ActivateLabels(true);
                 }
                 
+                void InteriorEntityHighlightController::HighlightResultWithId(const std::string& id)
+                {
+                    int resultIndex = -1;
+                    for(int i = 0; i < m_searchResults.size(); ++i)
+                    {
+                        auto& searchResult = m_searchResults.at(i);
+                        if(searchResult.GetIdentifier() == id)
+                        {
+                            resultIndex = i;
+                            break;
+                        }
+                    }
+                    
+                    m_searchResultsIndex = resultIndex;
+                    
+                    ApplyHighlightsForCurrentResults();
+                }
+                
                 void InteriorEntityHighlightController::OnSearchItemSelected(const SearchResultSection::SearchResultSectionItemSelectedMessage& message)
                 {
                     if (message.ItemIndex() >= m_searchResults.size())

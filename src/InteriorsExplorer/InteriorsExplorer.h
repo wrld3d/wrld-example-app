@@ -19,7 +19,6 @@ namespace ExampleApp
             
             namespace Highlights
             {
-                class InteriorsHighlightVisibilityController;
                 class InteriorsHighlightPickingController;
                 class IHighlightColorMapper;
                 class InteriorEntityHighlightController;
