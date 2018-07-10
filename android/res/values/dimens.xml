@@ -21,6 +21,8 @@
     <dimen name="menu_title_height">27dp</dimen>
     <dimen name="scrollbars_width">5dp</dimen>
 
+    <dimen name="interiors_explorer_view_required_space">250dp</dimen>
+
     <dimen name="nav_reroute_dialog_width">300dp</dimen>
     <dimen name="nav_reroute_dialog_msg_width">250dp</dimen>
     <dimen name="nav_reroute_dialog_margin_large">8dp</dimen>

@@ -83,6 +83,8 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
     private boolean m_canProcessButtons;
     private boolean m_isOnScreenWhenSpaceAvailable = false;
     private boolean m_keepOffScreenDueToLackOfSpace = false;
+
+    private final float m_minSpaceForViewInPixels;
     
     // TODO: Replace these with refs to UX iteration color scheme.
     private final int TextColorNormal;
@@ -124,6 +126,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 
         // TODO: Move to Dimens values resource when integrated with Search UX changes.
         ListItemHeight = m_activity.dipAsPx(50.0f);
+        m_minSpaceForViewInPixels = m_activity.getResources().getDimension(R.dimen.interiors_explorer_view_required_space);
 
         m_uiRoot = (RelativeLayout)m_activity.findViewById(R.id.ui_container);
         m_uiRootView = m_activity.getLayoutInflater().inflate(R.layout.interiors_explorer_layout, m_uiRoot, false);
@@ -631,7 +634,7 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
         int rightPanelBottomMargin = m_rightPanel.getPaddingBottom();
 
         int rightPanelAvailableSpace = screenHeight - rightPanelBottomMargin - rightPanelTopMargin;
-        m_keepOffScreenDueToLackOfSpace = (rightPanelAvailableSpace < screenHeight * 0.5f);
+        m_keepOffScreenDueToLackOfSpace = (rightPanelAvailableSpace < m_minSpaceForViewInPixels);
 
         if(wasOnScreen && !isOnScreen()){
             moveOffScreen();
