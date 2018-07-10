@@ -14,6 +14,7 @@ namespace ExampleApp
             ModalBackgroundAggregateView::ModalBackgroundAggregateView(AndroidNativeState& nativeState, ExampleAppMessaging::TMessageBus& messageBus)
                 : m_nativeState(nativeState)
                 , m_messageBus(messageBus)
+                , m_searchPerformedCallback(this, &ModalBackgroundAggregateView::SearchPerformedCallbackImpl)
             {
                 ASSERT_UI_THREAD
 
@@ -99,9 +100,19 @@ namespace ExampleApp
             	m_tappedCallbacks.ExecuteCallbacks();
             }
 
-            void ModalBackgroundAggregateView::HandleTouchOnView()
+			void ModalBackgroundAggregateView::HandleTouchOnView()
+			{
+				m_touchCallbacks.ExecuteCallbacks();
+			}
+
+            void ModalBackgroundAggregateView::SearchPerformedCallbackImpl(const std::string & str)
             {
-                m_touchCallbacks.ExecuteCallbacks();
+                // Not needed on android build. On IOS notes whether whatever is over the modal background has been dismissed
+            }
+
+            Eegeo::Helpers::ICallback1<const std::string&>& ModalBackgroundAggregateView::GetSearchPerformedCallback()
+            {
+                return m_searchPerformedCallback;
             }
         }
     }

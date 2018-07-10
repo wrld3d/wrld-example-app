@@ -22,7 +22,8 @@ namespace ExampleApp
                                                            ISearchResultsRepository& resultsRepository,
 														   Modality::View::IModalBackgroundView& modalBackgroundView,
                                                            Menu::View::IMenuViewModel& viewModel,
-                                                           ExampleAppMessaging::TMessageBus& messageBus)
+                                                           ExampleAppMessaging::TMessageBus& messageBus,
+                                                           ISearchProvider& searchProvider)
             : m_view(view)
 			, m_modalBackgroundView(modalBackgroundView)
             , m_viewModel(viewModel)
@@ -77,6 +78,7 @@ namespace ExampleApp
                     menuModel.InsertItemAddedCallback(m_onItemAddedCallback);
                     menuModel.InsertItemRemovedCallback(m_onItemRemovedCallback);
                 }
+                searchProvider.InsertSearchPerformedCallback(m_modalBackgroundView.GetSearchPerformedCallback());
             }
 
             SearchWidgetController::~SearchWidgetController()

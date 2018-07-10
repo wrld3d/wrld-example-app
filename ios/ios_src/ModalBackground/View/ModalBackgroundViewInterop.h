@@ -20,6 +20,7 @@ namespace ExampleApp
 
                 ModalBackgroundViewInterop(ModalBackgroundView* pView)
                     : m_pView(pView)
+                , m_searchPerformedCallback(this, &ModalBackgroundViewInterop::SearchPerformedCallbackImpl)
                 {
                 }
 
@@ -35,12 +36,17 @@ namespace ExampleApp
                 void HandleViewTapped();
                 void HandleTouchOnView();
 
+                void SearchPerformedCallbackImpl(const std::string & str);
+                Eegeo::Helpers::ICallback1<const std::string&>& GetSearchPerformedCallback();
+                
             private:
 
                 ModalBackgroundView* m_pView;
                 
                 Eegeo::Helpers::CallbackCollection0 m_tappedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_touchCallbacks;
+
+                Eegeo::Helpers::TCallback1<ModalBackgroundViewInterop, const std::string&> m_searchPerformedCallback;
             };
         }
     }

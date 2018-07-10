@@ -21,10 +21,17 @@
         
         m_isAnimating = false;
         
+        m_isDismissed = false;
+        
         m_tapGestureRecogniser = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGesture:)] autorelease];
         [m_tapGestureRecogniser setDelegate:self];
         
         [self addGestureRecognizer:m_tapGestureRecogniser];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+            selector:@selector(onKeyboardHide:)
+            name:UIKeyboardWillHideNotification
+            object:nil];
     }
 
     return self;
@@ -36,6 +43,9 @@
 
     [self removeGestureRecognizer:m_tapGestureRecogniser];
     [self removeFromSuperview];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                name:UIKeyboardWillHideNotification
+                                                object:nil];
     [super dealloc];
 }
 
@@ -111,6 +121,24 @@
     {
         m_pInterop->HandleViewTapped();
     }
+}
+
+-(void)onKeyboardHide:(NSNotification *)notification
+{
+    NSLog(m_isDismissed?@"Already Dismissed, do nothing":@"Dismissal required, handling");
+    if(!m_isDismissed) // If nothing else has dismissed the modal background when the keyboard hides, do so - hcf
+    {
+        m_pInterop->HandleTouchOnView();
+    }
+    else
+    {
+        m_isDismissed = false;
+    }
+}
+
+- (void) setIsDismissed
+{
+    m_isDismissed = true;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:event

@@ -53,6 +53,16 @@ namespace ExampleApp
             {
                 m_touchCallbacks.ExecuteCallbacks();
             }
+         
+            void ModalBackgroundViewInterop::SearchPerformedCallbackImpl(const std::string & str)
+            {
+                [m_pView setIsDismissed];
+            }
+            
+            Eegeo::Helpers::ICallback1<const std::string&>& ModalBackgroundViewInterop::GetSearchPerformedCallback()
+            {
+                return m_searchPerformedCallback;
+            }
         }
     }
 }

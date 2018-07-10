@@ -67,7 +67,8 @@ namespace ExampleApp
                                        ISearchResultsRepository& resultsRepository,
 									   Modality::View::IModalBackgroundView& modalBackgroundView,
                                        Menu::View::IMenuViewModel& viewModel,
-                                       ExampleAppMessaging::TMessageBus& messageBus);
+                                       ExampleAppMessaging::TMessageBus& messageBus,
+                                       ISearchProvider& searchProvider);
                 ~SearchWidgetController();
 
             protected:

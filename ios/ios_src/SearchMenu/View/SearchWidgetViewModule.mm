@@ -44,7 +44,8 @@ namespace ExampleApp
                                                                               *m_pSearchResults,
                                                                               modalBackgroundView,
                                                                               viewModel,
-                                                                              messageBus);
+                                                                              messageBus,
+                                                                              *m_pSearchProvider);
             }
             
             SearchWidgetController& SearchWidgetViewModule::GetSearchWidgetController() const

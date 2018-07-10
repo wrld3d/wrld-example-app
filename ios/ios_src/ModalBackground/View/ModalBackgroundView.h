@@ -15,11 +15,15 @@
     bool m_isAnimating;
     
     UITapGestureRecognizer* m_tapGestureRecogniser;
+
+    bool m_isDismissed;
 }
 
 - (id)initWithParams:(float)screenWidth :(float)screenHeight;
 
 - (ExampleApp::ModalBackground::View::ModalBackgroundViewInterop*) getInterop;
+
+- (void) setIsDismissed;
 
 - (void) setFullyActive;
 

@@ -33,6 +33,9 @@ namespace ExampleApp
                 void HandleViewTapped();
                 void HandleTouchOnView();
 
+                void SearchPerformedCallbackImpl(const std::string & str);
+                Eegeo::Helpers::ICallback1<const std::string&>& GetSearchPerformedCallback();
+
             private:
 
                 AndroidNativeState& m_nativeState;
@@ -43,6 +46,8 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_tappedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_touchCallbacks;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
+
+                Eegeo::Helpers::TCallback1<ModalBackgroundAggregateView, const std::string&> m_searchPerformedCallback;
             };
         }
     }
