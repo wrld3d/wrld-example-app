@@ -37,6 +37,7 @@ namespace ExampleApp
                 m_pSearchServices = Eegeo_NEW(SearchMenu::View::SearchServices)(*m_pSearchProvider,
                                                                                 *m_pSearchResults,
                                                                                 *m_pSuggestions,
+                                                                                *[m_pView getInterop],
                                                                                 messageBus);
                 
                 m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(*[m_pView getInterop],

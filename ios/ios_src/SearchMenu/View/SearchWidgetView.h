@@ -27,6 +27,7 @@ namespace ExampleApp
 
                 Eegeo::Helpers::CallbackCollection0 m_searchClearedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<int> m_resultSelectedCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const std::string&> m_searchbarTextChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<const int> m_navigationRequestedCallbacks;
                 Eegeo::Helpers::CallbackCollection3<const std::string&, int, int> m_onItemSelectedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_onViewOpenedCallbacks;
@@ -44,6 +45,7 @@ namespace ExampleApp
                 void (^m_onResultsCleared) ();
                 void (^m_onQueryCancelled) (WRLDSearchQuery *query);
                 void (^m_onFocusEvent) ();
+                void (^m_onSearchbarTextChanged) (NSString*);
                 
                 void AddEventListeners();
                 void RemoveEventListeners();
@@ -85,6 +87,9 @@ namespace ExampleApp
 
                 void InsertResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
                 void RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback);
+                
+                void InsertSearchbarTextChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
+                void RemoveSearchbarTextChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback);
                 
                 void InsertOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback);
                 void RemoveOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback);
