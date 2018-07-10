@@ -62,6 +62,7 @@ namespace ExampleApp
             , m_interiorExitTutorialViewedCount(0)
 			, m_interiorChangeFloorTutorialViewedCount(0)
             , m_lastEntryAttemptSuccessful(false)
+            , m_interiorStreamingDialogVisibility(false)
             {
                 m_interiorInteractionModel.RegisterInteractionStateChangedCallback(m_interactionModelStateChangedCallback);
                 
@@ -261,6 +262,29 @@ namespace ExampleApp
                 Eegeo_ASSERT(pFloorModel, "Could not fetch current floor model");
 
                 m_metricsService.SetEvent(MetricEventInteriorFloorSelected, "InteriorId", m_interiorSelectionModel.GetSelectedInteriorId().Value(), "FloorName", pFloorModel->GetFloorName());
+            }
+
+            bool InteriorsExplorerModel::GetInteriorStreamingDialogVisibility()
+            {
+                return m_interiorStreamingDialogVisibility;
+            }
+            
+            void InteriorsExplorerModel::ShowInteriorStreamingDialog()
+            {
+                if (!GetInteriorStreamingDialogVisibility())
+                {
+                    m_interiorStreamingDialogVisibility = true;
+                    m_messageBus.Publish(InteriorsExplorerInteriorStreamingMessage(m_interiorStreamingDialogVisibility));
+                }
+            }
+            
+            void InteriorsExplorerModel::HideInteriorStreamingDialog(bool interiorLoaded)
+            {
+                if (GetInteriorStreamingDialogVisibility())
+                {
+                    m_interiorStreamingDialogVisibility = false;
+                    m_messageBus.Publish(InteriorsExplorerInteriorStreamingMessage(m_interiorStreamingDialogVisibility, interiorLoaded));
+                }
             }
 
             void InteriorsExplorerModel::PublishInteriorExplorerStateChange()

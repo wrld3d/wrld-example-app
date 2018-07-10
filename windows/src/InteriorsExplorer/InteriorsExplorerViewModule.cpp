@@ -5,6 +5,7 @@
 #include "InteriorsExplorerView.h"
 #include "InteriorsExplorerCLI.h"
 #include "InteriorsExplorerController.h"
+#include "InteriorStreamingDialogView.h"
 
 namespace ExampleApp
 {
@@ -18,19 +19,24 @@ namespace ExampleApp
                                                                      Eegeo::Location::NavigationService& navigationService)
             {
                 m_pView = Eegeo_NEW(InteriorsExplorerView)();
+
+                m_pStreamingDialogView = Eegeo_NEW(InteriorStreamingDialogView);
                 
                 m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
 																	  *m_pView,
                                                                        viewModel,
+                                                                      *m_pStreamingDialogView,
                                                                        messageBus,
                                                                        navigationService);
             }
             
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()
             {
-                Eegeo_DELETE m_pView;
-
                 Eegeo_DELETE m_pController;
+
+                Eegeo_DELETE m_pStreamingDialogView;
+
+                Eegeo_DELETE m_pView;
             }
             
             InteriorsExplorerController& InteriorsExplorerViewModule::GetController() const

@@ -31,6 +31,7 @@
 #include "CompletedCacheClearMessage.h"
 #include "SearchResultPoiViewImageDownloadCompletedMessage.h"
 #include "InteriorsExplorerFloorSelectedMessage.h"
+#include "InteriorsExplorerInteriorStreamingMessage.h"
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "WatermarkModelChangedMessage.h"
 #include "WatermarkAlignmentStateChangedMessage.h"
@@ -108,6 +109,7 @@ namespace ExampleApp
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkAlignmentStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<Watermark::WatermarkInteriorStylingStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerFloorSelectedMessage>
+            , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerInteriorStreamingMessage>
             , public Eegeo::Messaging::CatalogBinding<InteriorsExplorer::InteriorsExplorerStateChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<AppModes::AppModeChangedMessage>
             , public Eegeo::Messaging::CatalogBinding<UserInteraction::UserInteractionEnabledChangedMessage>

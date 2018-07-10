@@ -15,6 +15,14 @@ set(currsources
   ios_src/InteriorsExplorer/View/InteriorsExplorerViewInterop.mm
   ios_src/InteriorsExplorer/View/InteriorsExplorerViewModule.h
   ios_src/InteriorsExplorer/View/InteriorsExplorerViewModule.mm
+  ios_src/InteriorsExplorer/View/InteriorStreamingDialogSpinner.h
+  ios_src/InteriorsExplorer/View/InteriorStreamingDialogSpinner.mm
+  ios_src/InteriorsExplorer/View/InteriorStreamingDialogView.h
+  ios_src/InteriorsExplorer/View/InteriorStreamingDialogView.mm
+  ios_src/InteriorsExplorer/View/InteriorStreamingDialogViewInterop.h
+  ios_src/InteriorsExplorer/View/InteriorStreamingDialogViewInterop.mm
+  ios_src/InteriorsExplorer/View/InteriorStreamingDialogSpinner.h
+  ios_src/InteriorsExplorer/View/InteriorStreamingDialogSpinner.mm
 )
 set(sources ${sources} ${currsources})
 source_group(\\ios_src\\InteriorsExplorer\\View FILES ${currsources})

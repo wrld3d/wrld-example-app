@@ -4,6 +4,7 @@
 #include "InteriorsExplorerView.h"
 #include "InteriorsExplorerController.h"
 #include "INavWidgetView.h"
+#include "InteriorStreamingDialogView.h"
 
 namespace ExampleApp
 {
@@ -21,9 +22,12 @@ namespace ExampleApp
             {
             	m_pView = Eegeo_NEW(InteriorsExplorerView)(nativeState, navWidgetViewTopHeightChangedCallbacks, navWidgetViewBottomHeightChangedCallbacks);
 
+                m_pStreamingDialogView = Eegeo_NEW(InteriorStreamingDialogView)(nativeState);
+
             	m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
             														   *m_pView,
                                                                        viewModel,
+                                                                       *m_pStreamingDialogView,
                                                                        messageBus,
                                                                        navigationService);
             }
@@ -31,6 +35,8 @@ namespace ExampleApp
             InteriorsExplorerViewModule::~InteriorsExplorerViewModule()
             {
                 Eegeo_DELETE m_pController;
+
+                Eegeo_DELETE m_pStreamingDialogView;
                 
                 Eegeo_DELETE m_pView;
             }

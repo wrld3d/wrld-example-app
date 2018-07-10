@@ -5,6 +5,7 @@
 #include "CameraFrustumStreamingVolume.h"
 #include "InteriorVisibilityUpdater.h"
 #include "InteriorInteractionModel.h"
+#include "InteriorsExplorerModel.h"
 
 namespace ExampleApp
 {
@@ -14,15 +15,22 @@ namespace ExampleApp
         {
             namespace States
             {
+                namespace
+                {
+                    const float DelayForShowingStreamingDialogSeconds = 1.0f;
+                }
+                
                 InteriorExplorerStreamState::InteriorExplorerStreamState(AppModes::States::SdkModel::InteriorExplorerState& parentState,
                                                                          const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                          Eegeo::Streaming::CameraFrustumStreamingVolume& cameraFrustumStreamingVolume,
-                                                                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater)
+                                                                         InteriorsExplorer::SdkModel::InteriorVisibilityUpdater& interiorVisibilityUpdater,
+                                                                         InteriorsExplorerModel& interiorsExplorerModel)
                 : m_parentState(parentState)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_cameraFrustumStreamingVolume(cameraFrustumStreamingVolume)
                 , m_interiorVisibilityUpdater(interiorVisibilityUpdater)
-                , m_maxTimeout(5.0f)
+                , m_interiorsExplorerModel(interiorsExplorerModel)
+                , m_maxTimeout(60.0f)
                 , m_hasFailed(false)
                 {
                 }
@@ -42,12 +50,19 @@ namespace ExampleApp
                 void InteriorExplorerStreamState::Update(float dt)
                 {
                     m_timeUntilTimeout -= dt;
+                    
+                    if(!m_interiorsExplorerModel.GetInteriorStreamingDialogVisibility() &&
+                       (m_maxTimeout - m_timeUntilTimeout) >= DelayForShowingStreamingDialogSeconds)
+                    {
+                        m_interiorsExplorerModel.ShowInteriorStreamingDialog();
+                    }
+                    
                     if(m_timeUntilTimeout <= 0.0f && !m_hasFailed)
                     {
                         m_hasFailed = true;
                         m_parentState.SetLastEntryAttemptSuccessful(false);
-                        m_parentState.ShowFailMessage();
                         m_parentState.SetSubState(AppModes::States::SdkModel::InteriorExplorerSubStates::Exit);
+                        m_parentState.ShowFailMessage();
                         return;
                     }
                     
@@ -61,11 +76,9 @@ namespace ExampleApp
                 
                 void InteriorExplorerStreamState::Exit(int nextState)
                 {
-                    
+                    m_interiorsExplorerModel.HideInteriorStreamingDialog(m_parentState.GetLastEntryAttemptSuccessful());
                 }
-                
             }
-            
         }
     }
 }

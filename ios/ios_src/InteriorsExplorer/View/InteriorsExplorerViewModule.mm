@@ -4,6 +4,8 @@
 #include "ScreenProperties.h"
 #include "InteriorsExplorerView.h"
 #include "InteriorsExplorerViewInterop.h"
+#include "InteriorStreamingDialogView.h"
+#include "InteriorStreamingDialogViewInterop.h"
 #include "InteriorsExplorerController.h"
 
 namespace ExampleApp
@@ -33,9 +35,12 @@ namespace ExampleApp
                 
                 m_pView = [[InteriorsExplorerView alloc] initWithParams: screenWidth : screenHeight : pixelScale : *m_pTutorialView ];
                 
+                m_pStreamingDialogView = [[InteriorStreamingDialogView alloc] initWithParams: screenWidth : screenHeight : pixelScale ];
+                
                 m_pController = Eegeo_NEW(InteriorsExplorerController)(model,
                                                                        *[m_pView getInterop],
                                                                        viewModel,
+                                                                       *[m_pStreamingDialogView getInterop],
                                                                        messageBus,
                                                                        navigationService);
                 m_navWidgetTopPanelVisibleHeightChangedCallbacks.AddCallback(m_navWidgetTopPanelVisibleHeightChangedCallback);
@@ -47,6 +52,8 @@ namespace ExampleApp
                 m_navWidgetTopPanelVisibleHeightChangedCallbacks.RemoveCallback(m_navWidgetTopPanelVisibleHeightChangedCallback);
                 m_navWidgetBottomPanelVisibleHeightChangedCallbacks.RemoveCallback(m_navWidgetBottomPanelVisibleHeightChangedCallback);
                 Eegeo_DELETE m_pController;
+                
+                [m_pStreamingDialogView release];
                 
                 [m_pView release];
                 
@@ -67,7 +74,7 @@ namespace ExampleApp
             {
                 return *m_pTutorialView;
             }
-            
+
             void InteriorsExplorerViewModule::NavWidgetTopPanelVisibleHeightChanged(NavRouting::View::INavWidgetView::THeight& newVisibleHeight)
             {
                 [m_pView setNavigationModeFloorPanelTopBound: newVisibleHeight];
@@ -78,6 +85,11 @@ namespace ExampleApp
             {
                 [m_pView setNavigationModeFloorPanelBottomBound: newVisibleHeight];
                 [m_pView refreshFloorViews];
+            }
+
+            InteriorStreamingDialogView& InteriorsExplorerViewModule::GetStreamingDialogView() const
+            {
+                return *m_pStreamingDialogView;
             }
         }
     }

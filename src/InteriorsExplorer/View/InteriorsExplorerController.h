@@ -9,6 +9,7 @@
 #include "ScreenControlViewModelIncludes.h"
 #include "InteriorsExplorerStateChangedMessage.h"
 #include "InteriorsExplorerFloorSelectedMessage.h"
+#include "InteriorsExplorerInteriorStreamingMessage.h"
 #include "IAppModeModel.h" // FM: Included for definition of AppMode, may want to extract AppMode to separate .h
 #include <sstream>
 #include "InteriorsExplorerUINotifyMessage.h"
@@ -29,6 +30,7 @@ namespace ExampleApp
                 InteriorsExplorerController(SdkModel::InteriorsExplorerModel& model,
                                             IInteriorsExplorerView& view,
                                             InteriorsExplorerViewModel& viewModel,
+                                            IInteriorStreamingDialogView& streamingDialogView,
                                             ExampleAppMessaging::TMessageBus& messageBus,
                                             Eegeo::Location::NavigationService& navigationService);
                 
@@ -43,6 +45,7 @@ namespace ExampleApp
                 void OnDismiss();
                 void OnSelectFloor(int& selected);
                 void OnFloorSelectionDragged(float& dragParam);
+                void OnInteriorStreaming(const InteriorsExplorerInteriorStreamingMessage& message);
                 void OnFloorSelected(const InteriorsExplorerFloorSelectedMessage& message);
                 void OnStateChanged(const InteriorsExplorerStateChangedMessage& message);
                 void OnViewStateChangeScreenControl(ScreenControl::View::IScreenControlViewModel &viewModel);
@@ -55,6 +58,7 @@ namespace ExampleApp
                 SdkModel::InteriorsExplorerModel& m_model;
                 IInteriorsExplorerView& m_view;
                 InteriorsExplorerViewModel& m_viewModel;
+                IInteriorStreamingDialogView& m_streamingDialogView;
                 bool m_replayTutorials;
                 bool m_shouldShowTutorialsAfterWelcomeUX;
                 bool m_currentlyShowingIntro;
@@ -63,6 +67,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<InteriorsExplorerController> m_dismissedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, int> m_selectFloorCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, float> m_draggingFloorSelectionCallback;
+                Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerInteriorStreamingMessage&> m_interiorStreamingCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerStateChangedMessage&> m_stateChangedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, const InteriorsExplorerFloorSelectedMessage&> m_floorSelectedCallback;
                 Eegeo::Helpers::TCallback1<InteriorsExplorerController, ScreenControl::View::IScreenControlViewModel&> m_viewStateCallback;

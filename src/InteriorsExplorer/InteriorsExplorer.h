@@ -30,6 +30,7 @@ namespace ExampleApp
             class InteriorsExplorerViewModel;
             class IInteriorsExplorerView;
             class IMultiStateScreenControlViewModel;
+            class IInteriorStreamingDialogView;
             class InteriorsExplorerController;
         }
         

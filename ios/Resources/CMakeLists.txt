@@ -1328,6 +1328,12 @@ set(resources ${resources}
         Resources/search_results_spinner.png
         Resources/search_results_spinner@2x.png
         Resources/search_results_spinner@3x.png
+        Resources/streaming_dialog_spinner.png
+        Resources/streaming_dialog_spinner@2x.png
+        Resources/streaming_dialog_spinner@3x.png
+        Resources/streaming_dialog_loaded.png
+        Resources/streaming_dialog_loaded@2x.png
+        Resources/streaming_dialog_loaded@3x.png
         Resources/search_tags.json
         Resources/sub_menu_arrow_off.png
         Resources/sub_menu_arrow_off@2x.png

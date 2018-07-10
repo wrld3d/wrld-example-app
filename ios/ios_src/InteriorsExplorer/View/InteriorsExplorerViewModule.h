@@ -32,6 +32,7 @@ namespace ExampleApp
                 InteriorsExplorerController* m_pController;
                 InteriorsExplorerView* m_pView;
                 InteriorsExplorerTutorialView* m_pTutorialView;
+                InteriorStreamingDialogView* m_pStreamingDialogView;
                 
                 Eegeo::Helpers::TCallback1<InteriorsExplorerViewModule, NavRouting::View::INavWidgetView::THeight> m_navWidgetBottomPanelVisibleHeightChangedCallback;
                 Eegeo::Helpers::CallbackCollection1<NavRouting::View::INavWidgetView::THeight>& m_navWidgetBottomPanelVisibleHeightChangedCallbacks;
@@ -59,6 +60,8 @@ namespace ExampleApp
                 InteriorsExplorerView& GetView() const;
                 
                 InteriorsExplorerTutorialView& GetTutorialView() const;
+                
+                InteriorStreamingDialogView& GetStreamingDialogView() const;
             };
         }
     }
