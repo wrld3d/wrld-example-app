@@ -29,6 +29,7 @@
 #import "WRLDMenuOptionTableViewCell.h"
 #import "WRLDMoreResultsTableViewCell.h"
 #import "WRLDSuggestionTableViewCell.h"
+#import "WRLDFadeableTableView.h"
 #import "WRLDFadeableView.h"
 #import "WRLDMenuObserver+Private.h"
 #import "WRLDMenuTableSectionViewModel.h"
