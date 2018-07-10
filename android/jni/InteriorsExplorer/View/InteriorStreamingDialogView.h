@@ -15,16 +15,17 @@ namespace ExampleApp
             class InteriorStreamingDialogView : public IInteriorStreamingDialogView
             {
             public:
-                AndroidNativeState& m_nativeState;
-                jclass m_uiViewClass;
-                jobject m_uiView;
-
                 InteriorStreamingDialogView(AndroidNativeState& nativeState);
 
                 ~InteriorStreamingDialogView();
 
                 void Show();
                 void Hide(bool interiorLoaded);
+
+            private:
+                AndroidNativeState& m_nativeState;
+                jclass m_uiViewClass;
+                jobject m_uiView;
             };
 
         }
