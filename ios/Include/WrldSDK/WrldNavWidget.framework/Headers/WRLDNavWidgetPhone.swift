@@ -223,7 +223,7 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
                 height += topStackView.bounds.size.height
                 break
             case .active:
-                height = topSetupJourneyPanel.bounds.size.height
+                height = topInstructionPanel.bounds.size.height
                 break
             }
         }

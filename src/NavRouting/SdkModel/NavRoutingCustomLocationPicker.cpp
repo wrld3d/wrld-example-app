@@ -18,6 +18,8 @@ namespace ExampleApp
             )
             : m_navRoutingModel(navRoutingModel)
             , m_cameraLocationPicker(cameraLocationPicker)
+            , m_isSearching(false)
+            , m_isStartLocation(false)
             {
             }
 

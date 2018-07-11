@@ -207,6 +207,8 @@ set(resources ${resources}
         Resources/SplashScreen/Icon-60@3x.png
         Resources/SplashScreen/Icon-76.png
         Resources/SplashScreen/Icon-76@2x.png
+        Resources/SplashScreen/Icon-83.5@2x.png
+        Resources/SplashScreen/Icon-1024.png
         Resources/SplashScreen/Icon-Small-40.png
         Resources/SplashScreen/Icon-Small-40@2x.png
         Resources/SplashScreen/Icon-Small-40@3x.png
