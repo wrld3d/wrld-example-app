@@ -31,7 +31,6 @@ namespace ExampleApp
 
             bool NavRoutingModel::SetStartLocationFromCurrentPosition()
             {
-                NavRoutingLocationModel start;
                 m_isUsingCurrentLocationAsStartPoint = m_locationFinder.TryGetCurrentLocation(m_startLocation);
 
                 if(m_isUsingCurrentLocationAsStartPoint)
@@ -44,9 +43,7 @@ namespace ExampleApp
 
             void NavRoutingModel::ClearStartLocation()
             {
-                m_startLocationIsSet = false;
-                m_isUsingCurrentLocationAsStartPoint = false;
-                m_startLocationClearedCallbacks.ExecuteCallbacks();
+                SetStartLocationFromCurrentPosition();
             }
 
             bool NavRoutingModel::TryGetStartLocation(NavRoutingLocationModel &out_startLocation) const
