@@ -29,6 +29,7 @@ import com.wrld.widgets.search.model.SearchProviderQueryResult;
 import com.wrld.widgets.search.model.SearchQueryModelListener;
 import com.wrld.widgets.search.model.SearchResult;
 import com.wrld.widgets.search.model.SearchResultsListener;
+import com.wrld.widgets.search.model.TextChangedListener;
 import com.wrld.widgets.search.view.MenuViewListener;
 import com.wrld.widgets.search.view.SearchResultsViewListener;
 
@@ -46,7 +47,8 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
                                         View.OnFocusChangeListener,
                                         MenuViewListener,
                                         SearchQueryModelListener,
-                                        SearchResultNavigationHandler
+                                        SearchResultNavigationHandler,
+                                        TextChangedListener
 {
     protected MainActivity m_activity;
     protected MyTestSearchProvider m_searchProvider;
@@ -101,7 +103,7 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         m_searchWidget.getSearchViewFocusObserver().addListener(this);
         m_searchWidget.getSearchResultsViewObserver().addListener(this);
         m_searchWidget.getSearchQueryModel().addListener(this);
-
+        m_searchWidget.getTextChangedObserver().addTextChangedListener(this);
 
         SearchManager searchManager = (SearchManager) m_activity.getSystemService(Context.SEARCH_SERVICE);
         SearchableInfo searchableInfo = searchManager.getSearchableInfo(m_activity.getComponentName());
@@ -132,6 +134,14 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
         SearchWidgetViewJniMethods.OnSearchResultSelected(
                 m_nativeCallerPointer,
                 widgetResult.getIndex());
+    }
+
+    @Override
+    public void textChanged(String newtext) {
+        SearchWidgetViewJniMethods.OnSearchbarTextChanged(
+                m_nativeCallerPointer,
+                newtext
+        );
     }
 
     @Override

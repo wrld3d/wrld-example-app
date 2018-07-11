@@ -30,6 +30,9 @@ namespace ExampleApp
 
                 virtual void InsertResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
                 virtual void RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback) = 0;
+                
+                virtual void InsertSearchbarTextChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
+                virtual void RemoveSearchbarTextChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback) = 0;
 
                 virtual void InsertOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
                 virtual void RemoveOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
