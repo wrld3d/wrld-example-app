@@ -218,7 +218,7 @@ namespace ExampleApp
                 else
                 {
                     iconKey = GetIconNameFromType(*pNextStep,
-                                                  *pNextNextStep,
+                                                  pNextNextStep,
                                                   &currentStep);
                     
                     if (pNextStep->IsMultiFloor)
@@ -268,6 +268,10 @@ namespace ExampleApp
                     {
                         return GetInstructionForEnterExitBuilding(step, *pNextStep);
                     }
+                    else if(pNextStep == NULL)
+                    {
+                        modifier = Modifiers::Straight;
+                    }
 
                     type = Direction::Turn;
                 }
@@ -301,7 +305,7 @@ namespace ExampleApp
             }
 
             std::string NavRouteInstructionHelper::GetIconNameFromType(const Eegeo::Routes::Webservice::RouteStep& step,
-                                                                       const Eegeo::Routes::Webservice::RouteStep& nextStep,
+                                                                       const Eegeo::Routes::Webservice::RouteStep* pNextStep,
                                                                        const Eegeo::Routes::Webservice::RouteStep* pPrevStep)
             {
                 std::string type = step.Directions.Type;
@@ -318,8 +322,8 @@ namespace ExampleApp
                     }
                 }
 
-                bool isMultilevel = step.IsMultiFloor&& pPrevStep != NULL;
-                bool goingUp = isMultilevel && nextStep.IndoorFloorId > pPrevStep->IndoorFloorId;
+                bool isMultilevel = step.IsMultiFloor && pPrevStep != NULL && pNextStep != NULL;
+                bool goingUp = isMultilevel && pNextStep->IndoorFloorId > pPrevStep->IndoorFloorId;
 
                 if(isMultilevel)
                 {
@@ -335,10 +339,14 @@ namespace ExampleApp
 
                 if(type == Direction::Entrance)
                 {
-                    if(nextStep.Directions.Type != Direction::Entrance)
+                    if(pNextStep != NULL && pNextStep->Directions.Type != Direction::Entrance)
                     {
-                        bool isEnteringBuilding = nextStep.IsIndoors;
+                        bool isEnteringBuilding = pNextStep->IsIndoors;
                         return isEnteringBuilding ? Direction::Enter : Direction::Exit;
+                    }
+                    else if(pNextStep == NULL)
+                    {
+                        modifier = Modifiers::Straight;
                     }
 
                     type = Direction::Turn;

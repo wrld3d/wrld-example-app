@@ -81,7 +81,7 @@ namespace ExampleApp
                                                                      const Eegeo::Routes::Webservice::RouteStep* pNextStep);
 
                 static std::string GetIconNameFromType(const Eegeo::Routes::Webservice::RouteStep& step,
-                                                       const Eegeo::Routes::Webservice::RouteStep& nextStep,
+                                                       const Eegeo::Routes::Webservice::RouteStep* pNextStep,
                                                        const Eegeo::Routes::Webservice::RouteStep* pPrevStep);
 
                 static bool TryGetNextValidStep(const Eegeo::Routes::Webservice::RouteData& route,
