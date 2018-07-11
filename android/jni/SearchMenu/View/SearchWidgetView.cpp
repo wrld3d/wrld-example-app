@@ -251,6 +251,19 @@ namespace ExampleApp
                 m_resultSelectedCallbacks.RemoveCallback(callback);
             }
 
+            void SearchWidgetView::OnSearchbarTextChanged(const std::string& newText)
+            {
+                m_onSearchbarTextChangedCallbacks.ExecuteCallbacks(newText);
+            }
+            void SearchWidgetView::InsertSearchbarTextChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+            {
+                m_onSearchbarTextChangedCallbacks.AddCallback(callback);
+            }
+            void SearchWidgetView::RemoveSearchbarTextChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+            {
+                m_onSearchbarTextChangedCallbacks.RemoveCallback(callback);
+            }
+
             void SearchWidgetView::OnNavigationRequest(int index)
             {
                 m_navigationRequestedCallbacks.ExecuteCallbacks(index);

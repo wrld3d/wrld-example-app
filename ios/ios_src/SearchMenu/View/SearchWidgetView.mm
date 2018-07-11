@@ -175,9 +175,19 @@ namespace ExampleApp
 
                 [m_pSearchModel.searchObserver addQueryCancelledEvent:m_onQueryCancelled];
                 
+                m_onSearchbarTextChanged = ^(NSString* newText)
+                {
+                    std::string stlString = std::string([newText UTF8String]);
+                    m_searchbarTextChangedCallbacks.ExecuteCallbacks(stlString);
+                };
+                
+                [m_pSearchWidgetView.observer addSearchbarTextChangedEvent:m_onSearchbarTextChanged];
+                
             }
             
             void SearchWidgetView::RemoveEventListeners(){
+                [m_pSearchWidgetView.observer removeSearchbarTextChangedEvent:m_onSearchbarTextChanged];
+                
                 [m_pSearchModel.searchObserver removeQueryCancelledEvent:m_onQueryCancelled];
 
                 [m_pSearchWidgetView.observer removeSearchResultsReceivedEvent:m_onResultsReceived];
@@ -327,6 +337,16 @@ namespace ExampleApp
             void SearchWidgetView::RemoveResultSelectedCallback(Eegeo::Helpers::ICallback1<int>& callback)
             {
                 m_resultSelectedCallbacks.RemoveCallback(callback);
+            }
+            
+            void SearchWidgetView::InsertSearchbarTextChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+            {
+                m_searchbarTextChangedCallbacks.AddCallback(callback);
+            }
+            
+            void SearchWidgetView::RemoveSearchbarTextChangedCallback(Eegeo::Helpers::ICallback1<const std::string&>& callback)
+            {
+                m_searchbarTextChangedCallbacks.RemoveCallback(callback);
             }
             
             void SearchWidgetView::InsertOnNavigationRequestedCallback(Eegeo::Helpers::ICallback1<const int>& callback)

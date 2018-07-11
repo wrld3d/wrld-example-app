@@ -37,6 +37,21 @@ JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_OnSe
     pView->OnNavigationRequest((int)index);
 }
 
+JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_OnSearchbarTextChanged(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jstring text)
+{
+    ASSERT_UI_THREAD
+
+    ExampleApp::SearchMenu::View::SearchWidgetView* pView = reinterpret_cast<ExampleApp::SearchMenu::View::SearchWidgetView*>(nativeObjectPtr);
+    const char* chars = jenv->GetStringUTFChars(text, 0);
+    std::string newText = chars;
+    jenv->ReleaseStringUTFChars(text, chars);
+
+    pView->OnSearchbarTextChanged(newText);
+}
+
 
 JNIEXPORT void JNICALL Java_com_eegeo_searchmenu_SearchWidgetViewJniMethods_SelectedItem(
         JNIEnv* jenv, jobject obj,
