@@ -29,15 +29,16 @@ namespace ExampleApp
 				m_pSearchResults = Eegeo_NEW(SearchResultsRepository)();
 				m_pSuggestions = Eegeo_NEW(SearchResultsRepository)();
 
+                m_pSearchWidgetView = Eegeo_NEW(SearchWidgetView)(
+                        nativeState,
+                        *m_pMyTestSearchProvider);
+
 				m_pSearchServices = Eegeo_NEW(SearchServices)(
 						*m_pMyTestSearchProvider,
 						*m_pSearchResults,
 						*m_pSuggestions,
+                        *m_pSearchWidgetView,
 						messageBus);
-
-				m_pSearchWidgetView = Eegeo_NEW(SearchWidgetView)(
-						nativeState,
-						*m_pMyTestSearchProvider);
 
 				m_pSearchWidgetController = Eegeo_NEW(SearchWidgetController)(
 						*m_pSearchWidgetView,
