@@ -34,12 +34,19 @@ namespace ExampleApp
             {
                 RouteLines routeLines;
                 const auto& coordinates = directionModel.GetPath();
-                
-                routeLines.push_back(CreatePolyline(coordinates,
-                                                    color,
-                                                    directionModel.GetIsIndoors(),
-                                                    directionModel.GetIndoorMapId().Value(),
-                                                    directionModel.GetIndoorMapFloorId()));
+
+                std::vector<Eegeo::Space::LatLong> uniqueCoordinates;
+                uniqueCoordinates.reserve(coordinates.size());
+                std::unique_copy (coordinates.begin(), coordinates.end(), std::back_inserter(uniqueCoordinates), IsEqual);
+
+                if(uniqueCoordinates.size()>1)
+                {
+                    routeLines.push_back(CreatePolyline(uniqueCoordinates,
+                                                        color,
+                                                        directionModel.GetIsIndoors(),
+                                                        directionModel.GetIndoorMapId().Value(),
+                                                        directionModel.GetIndoorMapFloorId()));
+                }
                 
                 return routeLines;
             }
