@@ -62,8 +62,8 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingShowRerouteDialogMessage&> m_navRoutingShowRerouteDialogMessageMessageHandler;
                 Eegeo::Helpers::TCallback1<NavWidgetController, const NavRoutingSetCalculatingRouteMessage&> m_navRoutingSetCalculatingRouteMessageHandler;
                 
-                Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_onNavigationStartPointFromSuggestionCallback;
-                Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_onNavigationEndPointFromSuggestionCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_onNavigationStartPointFromResultCallback;
+                Eegeo::Helpers::TCallback1<NavWidgetController, const int> m_onNavigationEndPointFromResultCallback;
                 Eegeo::Helpers::TCallback2<NavWidgetController, const bool, const bool> m_onSearchingForLocationCallback;
 
                 void OnCloseButtonClicked();
@@ -112,15 +112,15 @@ namespace ExampleApp
 
                 void OnNavRoutingShowRerouteDialog(const NavRoutingShowRerouteDialogMessage& message);
 
-                void OnNavigationStartPointFromSuggestion(const int& index);
+                void OnNavigationStartPointFromResult(const int& index);
 
-                void OnNavigationEndPointFromSuggestion(const int& index);
+                void OnNavigationEndPointFromResult(const int& index);
 
                 void OnSearchingForLocationChanged(const bool& isSearching, const bool& isStartLocation);
                 
                 void OnSetCalculateRouteSpinner(const NavRoutingSetCalculatingRouteMessage& message);
                 
-                SearchMenu::View::ISearchResultsRepository& m_suggestionsRepository;
+                SearchMenu::View::ISearchResultsRepository& m_searchResultsRepository;
 
             protected:
                 INavWidgetView& GetView() { return m_view; }
@@ -131,7 +131,7 @@ namespace ExampleApp
             public:
                 NavWidgetController(INavWidgetView& view,
                                     INavWidgetViewModel& viewModel,
-                                    SearchMenu::View::ISearchResultsRepository& suggestionsRepository,
+                                    SearchMenu::View::ISearchResultsRepository& searchResultsRepository,
                                     ExampleAppMessaging::TMessageBus& messageBus);
 
                 virtual ~NavWidgetController();

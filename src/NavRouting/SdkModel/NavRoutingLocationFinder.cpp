@@ -81,6 +81,11 @@ namespace ExampleApp
                     const SearchNavigationData &searchNavigationData,
                     NavRoutingLocationModel &outLocation)
             {
+                Eegeo::TtyHandler::TtyEnabled = true;
+                Eegeo_TTY("WTF: Got location nav data: %s", searchNavigationData.GetTitle().c_str());
+                Eegeo_TTY("WTF: - Indoor Id: %s", searchNavigationData.GetBuildingId().Value().c_str());
+                Eegeo_TTY("WTF: - floor index: %d", searchNavigationData.GetFloorIndex());
+
                 outLocation = NavRoutingLocationModel();
                 NavRoutingLocationModel locationModel;
                 if(searchNavigationData.IsInterior())

@@ -88,11 +88,13 @@ namespace ExampleApp
 
 		void MyTestSearchProvider::OnAutocompleteSuggestionsResponseReceived(const bool success, const TSearchResults& searchResults)
 		{
+			Eegeo_TTY("WTF: Autocomplete response: ");
             ResponseReceived(success, searchResults, m_onAutocompleteSuggestionsCompleted);
 		}
 
 		void MyTestSearchProvider::OnSearchResponseReceived(const bool success, const TSearchResults& searchResults)
 		{
+			Eegeo_TTY("WTF: Search result response: ");
             ResponseReceived(success, searchResults, m_onSearchCompleted);
 		}
 
@@ -103,6 +105,8 @@ namespace ExampleApp
 
 			AndroidSafeNativeThreadAttachment attached(m_nativeState);
 			JNIEnv* env = attached.envForThread;
+
+			Eegeo_TTY("WTF: Success :%d (results: %d)", success, searchResults.size());
 
 			jclass javaClass = Helpers::JniHelper::LoadClassLocalRef(
 					m_nativeState, env,

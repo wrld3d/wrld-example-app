@@ -18,7 +18,7 @@ namespace ExampleApp
                 AndroidNativeState& nativeState,
                 INavWidgetViewModel& navWidgetViewModel,
                 SearchProviders::MyTestSearchProvider& navSearchProvider,
-                SearchMenu::View::ISearchResultsRepository& suggestionsRepository,
+                SearchMenu::View::ISearchResultsRepository& searchResultsRepository,
                 Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& navWidgetViewTopHeightChangedCallbacks,
                 Eegeo::Helpers::CallbackCollection1<INavWidgetView::THeight>& navWidgetViewBottomHeightChangedCallbacks,
                 ExampleAppMessaging::TMessageBus& messageBus)
@@ -37,7 +37,7 @@ namespace ExampleApp
 
                 m_pController = Eegeo_NEW(NavWidgetController)(*m_pView,
                                                                navWidgetViewModel,
-                                                               suggestionsRepository,
+                                                               searchResultsRepository,
                                                                messageBus);
             }
 

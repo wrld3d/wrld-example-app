@@ -170,24 +170,30 @@ namespace ExampleApp
                                                                      const Search::SdkModel::SearchQuery& query,
                                                                      const std::vector<Search::SdkModel::SearchResultModel>& results)
                 {
-                    std::vector<Search::SdkModel::SearchResultModel> filtered;
-                    filtered.reserve(results.size());
-                    
-                    for (std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin();
-                         it != results.end();
-                         it++)
+                    if(didSucceed)
                     {
-                        const Search::SdkModel::SearchResultModel& searchResult = *it;
-                        filtered.push_back(searchResult);
+                        std::vector<Search::SdkModel::SearchResultModel> filtered;
+                        filtered.reserve(results.size());
+
+                        for (std::vector<Search::SdkModel::SearchResultModel>::const_iterator it = results.begin();
+                             it != results.end();
+                             it++)
+                        {
+                            const Search::SdkModel::SearchResultModel &searchResult = *it;
+                            filtered.push_back(searchResult);
+                        }
+
+                        m_combinedResults.insert(m_combinedResults.end(), filtered.begin(),
+                                                 filtered.end());
                     }
-                    
-                    m_combinedResults.insert(m_combinedResults.end(), filtered.begin(), filtered.end());
-                    
+
+
                     if( --m_pendingResultsLeft <= 0)
                     {
                         m_hasActiveQuery = false;
                         m_pendingResultsLeft = 0;
-                        ExecutQueryResponseReceivedCallbacks(didSucceed, query, m_combinedResults);
+                        bool anySuccess = m_combinedResults.size() > 0;
+                        ExecutQueryResponseReceivedCallbacks(anySuccess, query, m_combinedResults);
                         m_combinedResults.clear();
                     }
                 }

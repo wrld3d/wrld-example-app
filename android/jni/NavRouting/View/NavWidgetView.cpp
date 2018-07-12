@@ -63,8 +63,11 @@ namespace ExampleApp
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
-                jmethodID methodID = env->GetMethodID(m_uiViewClass, "addLocationSearchProvider", "(Lcom/wrld/widgets/search/model/SuggestionProvider;)V");
+                jmethodID methodID = env->GetMethodID(m_uiViewClass, "addLocationSuggestionProvider", "(Lcom/wrld/widgets/search/model/SuggestionProvider;)V");
                 env->CallVoidMethod(m_uiView, methodID, navSearchProvider.GetJavaInstance());
+
+                jmethodID searchMethodID = env->GetMethodID(m_uiViewClass, "addLocationSearchProvider", "(Lcom/wrld/widgets/search/model/SearchProvider;)V");
+                env->CallVoidMethod(m_uiView, searchMethodID, navSearchProvider.GetJavaInstance());
             }
 
             void NavWidgetView::RemoveSuggestionProvider(SearchProviders::MyTestSearchProvider& navSearchProvider)
@@ -74,8 +77,11 @@ namespace ExampleApp
                 AndroidSafeNativeThreadAttachment attached(m_nativeState);
                 JNIEnv* env = attached.envForThread;
 
-                jmethodID methodID = env->GetMethodID(m_uiViewClass, "removeLocationSearchProvider", "(Lcom/wrld/widgets/search/model/SuggestionProvider;)V");
+                jmethodID methodID = env->GetMethodID(m_uiViewClass, "removeLocationSuggestionProvider", "(Lcom/wrld/widgets/search/model/SuggestionProvider;)V");
                 env->CallVoidMethod(m_uiView, methodID, navSearchProvider.GetJavaInstance());
+
+                jmethodID searchMethodID = env->GetMethodID(m_uiViewClass, "removeLocationSearchProvider", "(Lcom/wrld/widgets/search/model/SearchProvider;)V");
+                env->CallVoidMethod(m_uiView, searchMethodID, navSearchProvider.GetJavaInstance());
             }
 
             void NavWidgetView::Show()
@@ -558,14 +564,14 @@ namespace ExampleApp
                 return m_bottomViewHeight;
             }
 
-            void NavWidgetView::SetStartPointFromSuggestionIndex(int index)
+            void NavWidgetView::SetStartPointFromResultIndex(int index)
             {
-                m_navigationStartPointFromSuggestionCallbacks.ExecuteCallbacks(index);
+                m_navigationStartPointFromResultCallbacks.ExecuteCallbacks(index);
             }
 
-            void NavWidgetView::SetEndPointFromSuggestionIndex(int index)
+            void NavWidgetView::SetEndPointFromResultIndex(int index)
             {
-                m_navigationEndPointFromSuggestionCallbacks.ExecuteCallbacks(index);
+                m_navigationEndPointFromResultCallbacks.ExecuteCallbacks(index);
             }
 
             void NavWidgetView::SetSearchingForLocation(bool isSearching, bool isStartLocation)
@@ -583,24 +589,24 @@ namespace ExampleApp
                 m_searchingForLocationCallbacks.RemoveCallback(callback);
             }
 
-            void NavWidgetView::InsertOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            void NavWidgetView::InsertOnNavigationStartPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback)
             {
-                m_navigationStartPointFromSuggestionCallbacks.AddCallback(callback);
+                m_navigationStartPointFromResultCallbacks.AddCallback(callback);
             }
 
-            void NavWidgetView::RemoveOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            void NavWidgetView::RemoveOnNavigationStartPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback)
             {
-                m_navigationStartPointFromSuggestionCallbacks.AddCallback(callback);
+                m_navigationStartPointFromResultCallbacks.AddCallback(callback);
             }
 
-            void NavWidgetView::InsertOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            void NavWidgetView::InsertOnNavigationEndPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback)
             {
-                m_navigationEndPointFromSuggestionCallbacks.AddCallback(callback);
+                m_navigationEndPointFromResultCallbacks.AddCallback(callback);
             }
 
-            void NavWidgetView::RemoveOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback)
+            void NavWidgetView::RemoveOnNavigationEndPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback)
             {
-                m_navigationEndPointFromSuggestionCallbacks.RemoveCallback(callback);
+                m_navigationEndPointFromResultCallbacks.RemoveCallback(callback);
             }
 
             jclass NavWidgetView::CreateJavaClass(const std::string& viewClass)
