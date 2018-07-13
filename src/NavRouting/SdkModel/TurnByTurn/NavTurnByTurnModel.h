@@ -70,6 +70,7 @@ namespace ExampleApp
                 private:
 
                     void UpdateTurnByTurn();
+                    void DisableTurnByTurn();
 
                     bool IsTooFarFromPath(double distanceToRouteAtCurrentPoint);
                     bool HasLostLocationService();
@@ -97,6 +98,7 @@ namespace ExampleApp
                     int m_currentStepIndex;
                     int m_indexOfPathSegmentStartVertex;
                     bool m_enabled;
+                    bool m_shouldDisable;
 
                 };
 
