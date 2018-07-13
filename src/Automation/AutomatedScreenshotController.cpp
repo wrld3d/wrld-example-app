@@ -229,12 +229,25 @@ namespace ExampleApp
             const long long MsToWaitForCameraToTransitionToPoi = 5000;
             const long long MsWaitForPoiToOpen = 5000;
 
+
+
             m_searchQueryPerformer.PerformSearchQuery(query, false, false);
             return Seq(WaitMs(MsToWaitForSearchResults),
-                       Act([=]() { m_messageBus.Publish(SelectMenuItemMessage(searchMenuPinIx)); }),
+                       Act([=]() {
+                           m_messageBus.Publish(SelectMenuItemMessage(searchMenuPinIx));
+                       }),
                        WaitMs(MsToWaitForCameraToTransitionToPoi),
-                       Act([=]() { m_worldPinsModule.GetWorldPinsService().HandleTouchTap({Eegeo::v2(m_screenProperties.GetScreenWidth()/2, m_screenProperties.GetScreenHeight()/2)}); }),
-                       WaitMs(MsWaitForPoiToOpen));
+                       Act([=]() {
+                           const float x =  m_screenProperties.GetScreenWidth()/2.f;
+                           const float y = m_screenProperties.GetScreenHeight()*(2.f/3.f);
+                           m_worldPinsModule.GetWorldPinsService().HandleTouchTap({x, y});
+                       }),
+                       WaitMs(MsWaitForPoiToOpen),
+                       Act([=]() {
+                           m_searchQueryPerformer.RequestClear();
+                           m_searchQueryPerformer.RemoveSearchQueryResults();
+                       })
+            );
         }
 
         const std::array<AutomatedScreenshotController::SceneSetupFunction, AutomatedScreenshotController::NumScenes> AutomatedScreenshotController::States() const
@@ -260,12 +273,12 @@ namespace ExampleApp
                     const long long MsToWaitForCameraToEnterInterior = 3000;
                     const Eegeo::Resources::Interiors::InteriorId WestportHouseInteriorId("westport_house");
                     const Eegeo::Space::LatLong location(Eegeo::Space::LatLong::FromDegrees(56.460108, -2.978094));
-                    const float altitude = 388.7f;
+                    const float distanceFromInterest = 200.f;
                     const PlaceJumps::View::PlaceJumpModel WestportHouse(
                             "WestportHouse",
                             location,
                             312.8f,
-                            altitude,
+                            distanceFromInterest,
                             "");
 
                     m_placeJumpController.JumpTo(WestportHouse);
@@ -274,10 +287,18 @@ namespace ExampleApp
                                Act([=]() { m_interiorSelectionModel.SelectInteriorId(WestportHouseInteriorId); }),
                                WaitMs(MsToWaitForCameraToEnterInterior),
                                Act([=]() {
-                                   m_cameraTransitionService.StartTransitionTo(location.ToECEF(), altitude, WestportHouseInteriorId, 0, true);
+                                   m_cameraTransitionService.StartTransitionTo(location.ToECEF(), distanceFromInterest, WestportHouseInteriorId, 2, true);
                                }),
                                WaitForCameraTransition(&m_cameraTransitionService),
-                               WaitMs(2000));
+                               Act([=]() {
+                                   m_searchQueryPerformer.PerformSearchQuery("General", true, true);
+                               }),
+                               WaitMs(8000),
+                               Act([=]() {
+                                   m_searchQueryPerformer.RequestClear();
+                                   m_searchQueryPerformer.RemoveSearchQueryResults();
+                               })
+                    );
                 },
 
                 [this]() {

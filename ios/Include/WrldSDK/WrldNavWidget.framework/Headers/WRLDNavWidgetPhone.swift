@@ -182,7 +182,7 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
             case .notReady:
                 setTopSetupJourneyVisibility(visible:  true, animate: animate)
                 setTopInstructionVisibility (visible: false, animate: animate)
-                setBottomVisibility         (visible:  true, animate: animate)
+                setBottomVisibility         (visible:  false, animate: animate)
                 break;
             case .ready:
                 setTopSetupJourneyVisibility(visible:  true, animate: animate)

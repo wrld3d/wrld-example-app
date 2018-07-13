@@ -9,6 +9,8 @@ namespace ExampleApp
     namespace SearchProviders
     {
         SearchProvider::SearchProvider()
+        : m_pCurrentRequest(nullptr)
+        , m_pCurrentSuggestion(nullptr)
         {
         }
 

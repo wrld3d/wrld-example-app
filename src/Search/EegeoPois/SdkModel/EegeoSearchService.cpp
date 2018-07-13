@@ -97,7 +97,10 @@ namespace ExampleApp
                     }
                     
                     m_hasActiveQuery = false;
-                    ExecutQueryResponseReceivedCallbacks(m_pCurrentRequest->IsSucceeded(), m_currentQueryModel, queryResults);
+                    if (m_pCurrentRequest != NULL)
+                    {
+                        ExecutQueryResponseReceivedCallbacks(m_pCurrentRequest->IsSucceeded(), m_currentQueryModel, queryResults);
+                    }
                 }
                 
                 void EegeoSearchService::HandleNetworkCapabilitiesChanged()

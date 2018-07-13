@@ -78,7 +78,10 @@ namespace ExampleApp
             
             void SearchResultPoiController::OnClosePoiMessageRecieved(const Automation::ClosePoiMessage& message)
             {
-                m_viewModel.Close();
+                if (m_viewModel.IsOpen())
+                {
+                    m_viewModel.Close();
+                }
             }
 
             SearchResultPoiController::SearchResultPoiController(ISearchResultPoiView& view,

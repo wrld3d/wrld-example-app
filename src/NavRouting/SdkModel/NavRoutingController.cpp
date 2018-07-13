@@ -138,6 +138,11 @@ namespace ExampleApp
 
             void NavRoutingController::OnEndLocationSet(const NavRoutingLocationModel& endLocation)
             {
+                if(m_routingModel.IsUsingCurrentPositionAsStartLocation())
+                {
+                    m_routingModel.SetStartLocationFromCurrentPosition();
+                }
+                
                 m_messageBus.Publish(NavRoutingEndLocationSetMessage(endLocation));
             }
 
