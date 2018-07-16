@@ -21,6 +21,7 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IBackButtonListener;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.searchmenu.SearchWidgetResult;
+import com.eegeo.searchproviders.MyTestSearchProvider;
 import com.wrld.widgets.navigation.model.WrldNavEvent;
 import com.wrld.widgets.navigation.model.WrldNavLocation;
 import com.wrld.widgets.navigation.model.WrldNavMode;
@@ -74,6 +75,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     private ViewPropertyAnimator m_searchLocationViewAnimation;
     private SearchResultsListener m_autocompleteListener;
     private SearchResultsListener m_searchResultListener;
+    private MyTestSearchProvider m_locationSearchProvider;
 
     private final int m_searchNavMargin;
 
@@ -209,12 +211,18 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_searchWidget.removeSuggestionProvider(locationSuggestionProvider);
     }
 
-    public void addLocationSearchProvider(SearchProvider locationSearchProvider) {
-        m_searchWidget.addSearchProvider(locationSearchProvider);
-    }
+    public void setLocationSearchProvider(MyTestSearchProvider locationSearchProvider) {
+        if(m_locationSearchProvider != null)
+        {
+            m_searchWidget.removeSearchProvider(m_locationSearchProvider);
+            m_locationSearchProvider = null;
+        }
 
-    public void removeLocationSearchProvider(SearchProvider locationSearchProvider) {
-        m_searchWidget.removeSearchProvider(locationSearchProvider);
+        m_locationSearchProvider = locationSearchProvider;
+
+        if(m_locationSearchProvider != null) {
+            m_searchWidget.addSearchProvider(locationSearchProvider);
+        }
     }
 
     private int calculateVisibleTopHeight()
@@ -513,6 +521,8 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
             showSearchHint();
         }
 
+        m_locationSearchProvider.showNavButtons(false);
+
     }
 
     public void endSearchForLocation() {
@@ -523,6 +533,8 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         m_model.sendNavEvent(WrldNavEvent.WidgetAnimateIn);
         NavWidgetViewJniMethods.SetSearchingForLocation(m_nativeCallerPointer, false, m_searchingForStartLocation);
         dismissSearchHint();
+
+        m_locationSearchProvider.showNavButtons(true);
     }
 
     private void setSearchLocationVisibility(final boolean visible, boolean animate) {

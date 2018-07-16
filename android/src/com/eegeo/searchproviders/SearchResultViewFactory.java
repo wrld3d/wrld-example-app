@@ -20,16 +20,25 @@ public class SearchResultViewFactory implements ISearchResultViewFactory
     private Activity m_activity;
     private boolean m_navigationEnabled;
     SearchResultNavigationHandler m_navigationHandler;
+    private boolean m_showNavButton;
 
     public SearchResultViewFactory(int layoutId, Activity activity) {
         commonInit(layoutId, activity);
         m_navigationEnabled = false;
+        m_showNavButton = false;
     }
 
     public SearchResultViewFactory(int layoutId, Activity activity, SearchResultNavigationHandler navigationHandler) {
         commonInit(layoutId, activity);
         m_navigationEnabled = true;
+        m_showNavButton = true;
         m_navigationHandler = navigationHandler;
+    }
+
+    public void showNavButton(boolean enabled) {
+        if(m_navigationEnabled) {
+            m_showNavButton = enabled;
+        }
     }
 
     private void commonInit(int layoutId, Activity activity){
@@ -83,6 +92,7 @@ public class SearchResultViewFactory implements ISearchResultViewFactory
 
     private class SearchResultNavigationViewHolder extends SearchResultViewHolder
     {
+        private View m_navButton;
         private SearchResult m_currentResult;
 
         @Override
@@ -90,14 +100,15 @@ public class SearchResultViewFactory implements ISearchResultViewFactory
         {
             super.initialise(view);
 
-            View navButton = view.findViewById(com.eegeo.mobileexampleapp.R.id.search_result_navigation_button);
+            m_navButton = view.findViewById(com.eegeo.mobileexampleapp.R.id.search_result_navigation_button);
 
-            navButton.setOnClickListener(new View.OnClickListener() {
+            m_navButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     m_navigationHandler.navigateTo(m_currentResult);
                 }
             });
+
         }
 
         @Override
@@ -107,6 +118,9 @@ public class SearchResultViewFactory implements ISearchResultViewFactory
                              boolean lastResultInSet)
         {
             m_currentResult = result;
+
+            m_navButton.setVisibility(m_showNavButton ? View.VISIBLE : View.GONE);
+
             super.populate(result, query, firstResultInSet, lastResultInSet);
         }
     }

@@ -22,6 +22,7 @@
 #include "NavRouteInteriorModelHelper.h"
 #include "NavRoutingShowRerouteDialogMessage.h"
 #include "INavRoutingCustomLocationPicker.h"
+#include "ISearchQueryPerformer.h"
 
 namespace ExampleApp
 {
@@ -34,13 +35,15 @@ namespace ExampleApp
                                                        INavRoutingLocationFinder& locationFinder,
                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                                       INavRoutingCustomLocationPicker& customLocationPicker)
+                                                       INavRoutingCustomLocationPicker& customLocationPicker,
+                                                       Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
             : m_routingModel(routingModel)
             , m_turnByTurnModel(turnByTurnModel)
             , m_locationFinder(locationFinder)
             , m_messageBus(messageBus)
             , m_worldPinsService(worldPinsService)
             , m_customLocationPicker(customLocationPicker)
+            , m_searchQueryPerformer(searchQueryPerformer)
             , m_isRerouting(false)
             , m_waitingForRerouteResponse(false)
             , m_startLocationSetCallback(this, &NavRoutingController::OnStartLocationSet)
@@ -375,6 +378,9 @@ namespace ExampleApp
 
             void NavRoutingController::OnSearchForLocation(const NavRoutingSearchForLocationMessage& message)
             {
+                m_searchQueryPerformer.RequestClear();
+                m_searchQueryPerformer.RemoveSearchQueryResults();
+
                 if(message.IsSearching())
                 {
                     m_customLocationPicker.StartSearching(message.IsStartLocation());

@@ -414,6 +414,8 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
     {
         m_searchInProgress = true;
         pushControlsOfScreenIfNeeded();
+
+        m_searchProvider.showNavButtons(true);
     }
 
     @Override

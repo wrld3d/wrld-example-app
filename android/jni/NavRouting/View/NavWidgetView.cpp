@@ -66,7 +66,7 @@ namespace ExampleApp
                 jmethodID methodID = env->GetMethodID(m_uiViewClass, "addLocationSuggestionProvider", "(Lcom/wrld/widgets/search/model/SuggestionProvider;)V");
                 env->CallVoidMethod(m_uiView, methodID, navSearchProvider.GetJavaInstance());
 
-                jmethodID searchMethodID = env->GetMethodID(m_uiViewClass, "addLocationSearchProvider", "(Lcom/wrld/widgets/search/model/SearchProvider;)V");
+                jmethodID searchMethodID = env->GetMethodID(m_uiViewClass, "setLocationSearchProvider", "(Lcom/eegeo/searchproviders/MyTestSearchProvider;)V");
                 env->CallVoidMethod(m_uiView, searchMethodID, navSearchProvider.GetJavaInstance());
             }
 
