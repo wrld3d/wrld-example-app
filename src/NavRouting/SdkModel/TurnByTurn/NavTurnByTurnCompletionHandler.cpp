@@ -68,11 +68,6 @@ namespace ExampleApp
                         if (m_turnByTurnModel.GetDistanceToNextStep() <= distanceThresholdToComplete)
                         {
                             m_turnByTurnModel.Stop();
-                            if(m_navRoutingModel.IsUsingCurrentPositionAsStartLocation())
-                            {
-                                m_navRoutingModel.ClearEndLocation();
-                                m_navRoutingModel.SetStartLocationFromCurrentPosition();
-                            }
                         }
                     }
                 }
