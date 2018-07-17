@@ -71,7 +71,7 @@ android {
             res.srcDirs = ['res']
             java.srcDirs = ['src']
             assets.srcDirs = ['assets']
-            jniLibs.srcDirs = ['libs', 'libs/indooratlas']
+            jniLibs.srcDirs = ['libs']
         }
 
         androidTest {

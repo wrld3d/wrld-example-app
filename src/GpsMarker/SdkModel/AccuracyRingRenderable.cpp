@@ -9,6 +9,13 @@ namespace ExampleApp
 {
     namespace GpsMarker
     {
+        namespace
+        {
+            const int StencilClear = 2;
+            const int StencilOuterLayer = 3;
+            const int StencilInnerLayer = 4;
+        }
+
         namespace SdkModel
         {
             AccuracyRingRenderable::AccuracyRingRenderable(
@@ -51,7 +58,7 @@ namespace ExampleApp
                 glState.ColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
                 glState.Blend.Disable();
                 glState.StencilTest.Enable();
-                glState.StencilFunc(GL_ALWAYS, 0, 0xFF);
+                glState.StencilFunc(GL_ALWAYS, StencilClear, 0xFF);
                 glState.StencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
 
                 m_quadRenderable.Render(glState);
@@ -101,7 +108,7 @@ namespace ExampleApp
 
                 glState.StencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
                 glState.ColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-                glState.StencilFunc(GL_EQUAL, 1, 0xFF);
+                glState.StencilFunc(GL_EQUAL, StencilOuterLayer, 0xFF);
                 glState.BlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                 glState.BlendEquation(GL_FUNC_ADD);
 
@@ -110,7 +117,7 @@ namespace ExampleApp
                 glState.Blend.Enable();
                 glState.BlendFunc(GL_DST_COLOR, GL_SRC_ALPHA);
                 glState.BlendEquation(GL_FUNC_ADD);
-                glState.StencilFunc(GL_EQUAL, 2, 0xFF);
+                glState.StencilFunc(GL_EQUAL, StencilInnerLayer, 0xFF);
 
                 m_colorMaterial.SetColor(innerCol);
                 m_quadRenderable.Render(glState);
