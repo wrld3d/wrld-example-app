@@ -67,13 +67,13 @@ To run this example app, you must place the API key in the application configura
 This app uses third-party search service providers to allow users to search for places like caf&eacute;s, restaurants, and bars and have the results show up on the map. To enable this, you will to supply the credentials for those services.
 
 1.  Obtain [Yelp credentials](https://www.yelp.com/developers) to enable Yelp search results in the app. Place them in the application config file appropriate for the platform you are building:
-    * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L18-L21).
-    * [Android app config](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L18-L21).
-    * [Windows app config (deprecated)](https://github.com/wrld3d/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L18-L21).
+    * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L18).
+    * [Android app config](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L18).
+    * [Windows app config (deprecated)](https://github.com/wrld3d/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L18).
 2.  Obtain a [GeoNames username](http://www.geonames.org/login) to enable GeoNames search results in the app. Place it in the application config file appropriate for the platform you are building:
-    * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L22).
-    * [Android app config](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L22).
-    * [Windows app config (deprecated)](https://github.com/wrld3d/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L22).
+    * [iOS app config](https://github.com/wrld3d/wrld-example-app/blob/master/ios/Resources/ApplicationConfigs/standard_config.json#L19).
+    * [Android app config](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L19).
+    * [Windows app config (deprecated)](https://github.com/wrld3d/wrld-example-app/blob/master/windows/Resources/ApplicationConfigs/standard_config.json#L19).
 
 ## Features
 

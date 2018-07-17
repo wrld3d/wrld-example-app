@@ -35,6 +35,7 @@ namespace ExampleApp
                 , m_interiorsModelRepository(interiorsModelRepository)
                 , m_closestPointOnRoute(0,0)
                 , m_enabled(false)
+                , m_shouldDisable(false)
                 , m_remainingDuration(0.0)
                 , m_currentStepIndex(0)
                 , m_paramAlongStep(0.0)
@@ -56,6 +57,12 @@ namespace ExampleApp
                     {
                         return;
                     }
+
+                    if (m_shouldDisable)
+                    {
+                        DisableTurnByTurn();
+                        return;
+                    }
                     
                     if(HasLostLocationService())
                     {
@@ -69,6 +76,13 @@ namespace ExampleApp
                         m_updateTime = 0;
                         UpdateTurnByTurn();
                     }
+                }
+
+                void NavTurnByTurnModel::DisableTurnByTurn()
+                {
+                    m_enabled = false;
+                    m_shouldDisable = false;
+                    m_stoppedCallbacks.ExecuteCallbacks();
                 }
 
                 void NavTurnByTurnModel::UpdateTurnByTurn() {
@@ -178,6 +192,7 @@ namespace ExampleApp
                     m_indexOfPathSegmentStartVertex = 0;
                     m_secondsElapsedSinceOffRoute = 0.f;
                     m_enabled = true;
+                    m_shouldDisable = false;
 
                     m_startedCallbacks.ExecuteCallbacks();
                 }
@@ -186,9 +201,7 @@ namespace ExampleApp
                 {
                     if(TurnByTurnEnabled())
                     {
-                        m_enabled = false;
-
-                        m_stoppedCallbacks.ExecuteCallbacks();
+                        m_shouldDisable = true;
                     }
                 }
 
