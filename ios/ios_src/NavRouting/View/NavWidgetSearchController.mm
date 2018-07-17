@@ -9,7 +9,6 @@
 @interface NavWidgetSearchController()
 @property BOOL isSearchingForStartPoint;
 @property ResultSelectedEvent selectedResultEvent;
-@property QueryEvent navSearchRunEvent;
 @end;
 
 @implementation NavWidgetSearchController
@@ -34,13 +33,9 @@
                 [self navSuggestionSelected: (int)selectedWidgetResult.index];
             }
         };
-        
-        self.navSearchRunEvent = ^(WRLDSearchQuery *query) {
-            [self hideSearchView];
-        };
+    
         
         m_pSearchView->AddSelectedResultCallback(self.selectedResultEvent);
-        m_pSearchView->AddSearchStartedCallback(self.navSearchRunEvent);        
         m_pSearchView->AddCloseButtonTarget(self, @selector(closeSearchHandler:));
     }
     return self;
@@ -54,7 +49,6 @@
 - (void) dealloc
 {
     m_pSearchView->RemoveCloseButtonTarget(self, @selector(closeSearchHandler:));
-    m_pSearchView->RemoveSearchStartedCallback(self.navSearchRunEvent);
     m_pSearchView->RemoveSelectedResultCallback(self.selectedResultEvent);
     [super dealloc];
 }
@@ -63,11 +57,11 @@
 {
     if(self.isSearchingForStartPoint)
     {
-        m_pNavWidgetView->SetStartPointFromSuggestionIndex(index);
+        m_pNavWidgetView->SetStartPointFromResultIndex(index);
     }
     else
     {
-        m_pNavWidgetView->SetEndPointFromSuggestionIndex(index);
+        m_pNavWidgetView->SetEndPointFromResultIndex(index);
     }
 }
 
