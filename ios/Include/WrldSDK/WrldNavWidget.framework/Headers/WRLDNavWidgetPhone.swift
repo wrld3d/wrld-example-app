@@ -279,9 +279,9 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
     {
         updateBottomStack()
         
-        if(!_dontCollapseTop && bottomToggleButton.toggleState == true)
+        if(!_dontCollapseTop)
         {
-            topToggleButton.toggleState = false
+            topToggleButton.toggleState = !bottomToggleButton.toggleState
             updateTopStack()
         }
     }
