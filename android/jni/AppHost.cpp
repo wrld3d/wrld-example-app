@@ -567,7 +567,7 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
                                     m_nativeState,
                                     app.NavUIModule().GetNavWidgetViewModel(),
                                     m_pSearchWidgetViewModule->GetSearchProvider(),
-                                    m_pSearchWidgetViewModule->GetSuggestionsRepository(),
+                                    m_pSearchWidgetViewModule->GetSearchResultsRepository(),
                                     m_navWidgetViewTopHeightChangedCallbacks,
                                     m_navWidgetViewBottomHeightChangedCallbacks,
                                     m_messageBus);

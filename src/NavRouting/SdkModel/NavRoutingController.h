@@ -24,6 +24,7 @@
 #include "NavRoutingEndLocationSetFromSearchMessage.h"
 #include "NavRoutingSearchForLocationMessage.h"
 #include "AppCamera.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -39,7 +40,8 @@ namespace ExampleApp
                                      INavRoutingLocationFinder& locationFinder,
                                      ExampleAppMessaging::TMessageBus& messageBus,
                                      WorldPins::SdkModel::IWorldPinsService& worldPinsService,
-                                     INavRoutingCustomLocationPicker& m_customLocationPicker);
+                                     INavRoutingCustomLocationPicker& m_customLocationPicker,
+                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer);
 
                 ~NavRoutingController();
 
@@ -53,6 +55,7 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& m_messageBus;
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                 INavRoutingCustomLocationPicker& m_customLocationPicker;
+                Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
 
                 bool m_isRerouting;
                 bool m_waitingForRerouteResponse;

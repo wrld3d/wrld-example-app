@@ -42,10 +42,10 @@ public class MyTestSearchProvider implements SearchProvider, SuggestionProvider,
 	{
 		m_nativeCallerPointer = nativeCallerPointer;
 
-		if(navigationEnabled){
+		if(navigationEnabled) {
 			m_resultFactory = new SearchResultViewFactory(R.layout.search_result_navigation, activity, this);
 		}
-		else{
+		else {
 			m_resultFactory = new SearchResultViewFactory(com.wrld.widgets.search.R.layout.search_result, activity);
 		}
 
@@ -55,6 +55,10 @@ public class MyTestSearchProvider implements SearchProvider, SuggestionProvider,
 		m_suggestion_callbacks = new HashSet<>();
 
 		m_navRequestHandlers = new ArrayList<>();
+	}
+
+	public void showNavButtons(boolean enabled) {
+		m_resultFactory.showNavButton(enabled);
 	}
 
 	@Override

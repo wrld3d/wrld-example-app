@@ -38,7 +38,8 @@ namespace ExampleApp
                                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                 GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,
                                                 WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController,
-                                                AppCamera::SdkModel::IAppCameraLocationPicker& locationPicker)
+                                                AppCamera::SdkModel::IAppCameraLocationPicker& locationPicker,
+                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
             {
                 const std::string navUIOptionText = "Open Navigation";
 
@@ -96,7 +97,8 @@ namespace ExampleApp
                                                                        *m_pNavRoutingLocationFinder,
                                                                        messageBus,
                                                                        worldPinsService,
-                                                                       *m_pNavRoutingCustomLocationPicker);
+                                                                       *m_pNavRoutingCustomLocationPicker,
+                                                                       searchQueryPerformer);
 
                 
                 m_pRoutingCameraController = Eegeo_NEW(NavRoutingCameraController)(*m_pNavRoutingModel,

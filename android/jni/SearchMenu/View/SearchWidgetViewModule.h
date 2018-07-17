@@ -39,6 +39,7 @@ namespace ExampleApp
 				SearchWidgetController& GetSearchWidgetController() const;
 				SearchProviders::MyTestSearchProvider& GetSearchProvider() const;
 				ISearchResultsRepository& GetSuggestionsRepository() const;
+				ISearchResultsRepository& GetSearchResultsRepository() const;
 				~SearchWidgetViewModule();
 			};
     	}

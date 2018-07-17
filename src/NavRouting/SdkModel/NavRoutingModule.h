@@ -20,6 +20,7 @@
 #include "NavRoutingWorldPinsVisibilityHandler.h"
 #include "AppCamera.h"
 #include "MapCamera.h"
+#include "Search.h"
 
 namespace ExampleApp
 {
@@ -45,7 +46,8 @@ namespace ExampleApp
                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                  GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,
                                  WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController,
-                                 AppCamera::SdkModel::IAppCameraLocationPicker& locationPicker);
+                                 AppCamera::SdkModel::IAppCameraLocationPicker& locationPicker,
+                                 Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer);
 
                 ~NavRoutingModule();
 

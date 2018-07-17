@@ -35,8 +35,8 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection1<THeight>& m_navWidgetViewTopHeightChangedCallbacks;
                 Eegeo::Helpers::CallbackCollection1<THeight>& m_navWidgetViewBottomHeightChangedCallbacks;
 
-                Eegeo::Helpers::CallbackCollection1<const int> m_navigationStartPointFromSuggestionCallbacks;
-                Eegeo::Helpers::CallbackCollection1<const int> m_navigationEndPointFromSuggestionCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const int> m_navigationStartPointFromResultCallbacks;
+                Eegeo::Helpers::CallbackCollection1<const int> m_navigationEndPointFromResultCallbacks;
                 Eegeo::Helpers::CallbackCollection2<const bool, const bool> m_searchingForLocationCallbacks;
 
                 jclass m_uiViewClass;
@@ -152,19 +152,19 @@ namespace ExampleApp
 
                 THeight GetBottomViewHeight() override;
 
-                void SetStartPointFromSuggestionIndex(int index) override;
+                void SetStartPointFromResultIndex(int index) override;
 
-                void SetEndPointFromSuggestionIndex(int index) override;
+                void SetEndPointFromResultIndex(int index) override;
 
                 void SetSearchingForLocation(bool isSearching, bool isStartLocation);
 
-                void InsertOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
+                void InsertOnNavigationStartPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback) override;
 
-                void RemoveOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
+                void RemoveOnNavigationStartPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback) override;
 
-                void InsertOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
+                void InsertOnNavigationEndPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback) override;
 
-                void RemoveOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) override;
+                void RemoveOnNavigationEndPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback) override;
 
                 void InsertOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool>& callback) override;
 

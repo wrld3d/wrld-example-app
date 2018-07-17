@@ -19,6 +19,7 @@ namespace ExampleApp
                 UIView* m_pResultsView;
                 WRLDSearchModel* m_pSearchModel;
                 WRLDSuggestionProviderHandle* m_pSuggestionProviderHandle;
+                WRLDSearchProviderHandle* m_pSearchProviderHandle;
                 
                 QueryEvent m_autocompleteCancelledEvent;
                 QueryEvent m_autocompleteCompletedEvent;
@@ -32,6 +33,8 @@ namespace ExampleApp
                 BOOL m_hasShownHint;
                 
                 CGFloat m_animationTimeInSeconds = 0.2f;
+                
+                void (^m_willPopulateResultCell) (WRLDSearchResultTableViewCell*);
                 
                 void ShowSearchHint();
                 void HideSearchHint();
@@ -50,8 +53,6 @@ namespace ExampleApp
                 void RemoveCloseButtonTarget(id target, SEL selector);
                 void AddSelectedResultCallback(ResultSelectedEvent resultSelectedEvent);
                 void RemoveSelectedResultCallback(ResultSelectedEvent resultSelectedEvent);
-                void AddSearchStartedCallback(QueryEvent queryEvent);
-                void RemoveSearchStartedCallback(QueryEvent queryEvent);
             };
         }
     }

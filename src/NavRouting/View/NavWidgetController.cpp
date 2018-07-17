@@ -173,16 +173,16 @@ namespace ExampleApp
                 m_view.ShowRerouteDialog(message.GetMessage());
             }
 
-            void NavWidgetController::OnNavigationStartPointFromSuggestion(const int& index)
+            void NavWidgetController::OnNavigationStartPointFromResult(const int& index)
             {
-                const SearchMenu::View::SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_suggestionsRepository.GetSdkSearchResultByIndex(index);
+                const SearchMenu::View::SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_searchResultsRepository.GetSdkSearchResultByIndex(index);
                 const NavRouting::SearchNavigationData searchNavigationData(sdkSearchResult);
                 m_messageBus.Publish(NavRoutingStartLocationSetFromSearchMessage(searchNavigationData));
             }
 
-            void NavWidgetController::OnNavigationEndPointFromSuggestion(const int& index)
+            void NavWidgetController::OnNavigationEndPointFromResult(const int& index)
             {
-                const SearchMenu::View::SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_suggestionsRepository.GetSdkSearchResultByIndex(index);
+                const SearchMenu::View::SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_searchResultsRepository.GetSdkSearchResultByIndex(index);
                 const NavRouting::SearchNavigationData searchNavigationData(sdkSearchResult);
                 m_messageBus.Publish(NavRoutingEndLocationSetFromSearchMessage(searchNavigationData));
             }
@@ -207,7 +207,7 @@ namespace ExampleApp
 
             NavWidgetController::NavWidgetController(INavWidgetView& view,
                                                      INavWidgetViewModel& viewModel,
-                                                     SearchMenu::View::ISearchResultsRepository& suggestionsRepository,
+                                                     SearchMenu::View::ISearchResultsRepository& searchResultsRepository,
                                                      ExampleAppMessaging::TMessageBus& messageBus)
                     : m_view(view)
                     , m_viewModel(viewModel)
@@ -236,9 +236,9 @@ namespace ExampleApp
                     , m_navRoutingModeSetMessageHandler(this, &NavWidgetController::OnNavRoutingModeSet)
                     , m_navRoutingViewOpenMessageHandler(this, &NavWidgetController::OnNavRoutingViewOpen)
                     , m_navRoutingShowRerouteDialogMessageMessageHandler(this, &NavWidgetController::OnNavRoutingShowRerouteDialog)
-                    , m_suggestionsRepository(suggestionsRepository)
-                    , m_onNavigationStartPointFromSuggestionCallback(this, &NavWidgetController::OnNavigationStartPointFromSuggestion)
-                    , m_onNavigationEndPointFromSuggestionCallback(this, &NavWidgetController::OnNavigationEndPointFromSuggestion)
+                    , m_searchResultsRepository(searchResultsRepository)
+                    , m_onNavigationStartPointFromResultCallback(this, &NavWidgetController::OnNavigationStartPointFromResult)
+                    , m_onNavigationEndPointFromResultCallback(this, &NavWidgetController::OnNavigationEndPointFromResult)
                     , m_navRoutingSetCalculatingRouteMessageHandler(this, &NavWidgetController::OnSetCalculateRouteSpinner)
                     , m_onSearchingForLocationCallback(this, &NavWidgetController::OnSearchingForLocationChanged)
             {
@@ -268,16 +268,16 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_navRoutingShowRerouteDialogMessageMessageHandler);
                 m_messageBus.SubscribeUi(m_navRoutingSetCalculatingRouteMessageHandler);
                 
-                m_view.InsertOnNavigationStartPointSetFromSuggestion(m_onNavigationStartPointFromSuggestionCallback);
-                m_view.InsertOnNavigationEndPointSetFromSuggestion(m_onNavigationEndPointFromSuggestionCallback);
+                m_view.InsertOnNavigationStartPointSetFromResult(m_onNavigationStartPointFromResultCallback);
+                m_view.InsertOnNavigationEndPointSetFromResult(m_onNavigationEndPointFromResultCallback);
                 m_view.InsertOnSearchForLocationChanged(m_onSearchingForLocationCallback);
             }
 
             NavWidgetController::~NavWidgetController()
             {
                 m_view.RemoveOnSearchForLocationChanged(m_onSearchingForLocationCallback);
-                m_view.RemoveOnNavigationEndPointSetFromSuggestion(m_onNavigationEndPointFromSuggestionCallback);
-                m_view.RemoveOnNavigationStartPointSetFromSuggestion(m_onNavigationStartPointFromSuggestionCallback);
+                m_view.RemoveOnNavigationEndPointSetFromResult(m_onNavigationEndPointFromResultCallback);
+                m_view.RemoveOnNavigationStartPointSetFromResult(m_onNavigationStartPointFromResultCallback);
             
                 m_messageBus.UnsubscribeUi(m_navRoutingSetCalculatingRouteMessageHandler);
                 m_messageBus.UnsubscribeUi(m_navRoutingShowRerouteDialogMessageMessageHandler);

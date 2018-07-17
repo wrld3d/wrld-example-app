@@ -84,15 +84,15 @@ namespace ExampleApp
                 virtual THeight GetTopViewHeight() = 0;
                 virtual THeight GetBottomViewHeight() = 0;
 
-                virtual void SetStartPointFromSuggestionIndex(int index) = 0;
+                virtual void SetStartPointFromResultIndex(int index) = 0;
 
-                virtual void SetEndPointFromSuggestionIndex(int index) = 0;
+                virtual void SetEndPointFromResultIndex(int index) = 0;
 
-                virtual void InsertOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
-                virtual void RemoveOnNavigationStartPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
+                virtual void InsertOnNavigationStartPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
+                virtual void RemoveOnNavigationStartPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
 
-                virtual void InsertOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
-                virtual void RemoveOnNavigationEndPointSetFromSuggestion(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
+                virtual void InsertOnNavigationEndPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
+                virtual void RemoveOnNavigationEndPointSetFromResult(Eegeo::Helpers::ICallback1<const int>& callback) = 0;
 
                 virtual void InsertOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool>& callback) = 0;
                 virtual void RemoveOnSearchForLocationChanged(Eegeo::Helpers::ICallback2<const bool, const bool>& callback) = 0;

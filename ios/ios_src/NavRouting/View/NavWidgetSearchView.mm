@@ -8,6 +8,7 @@
 #import "UIButton+DefaultStates.h"
 #import "UIColors.h"
 #import "ImageHelpers.h"
+#import "WidgetSearchResultTableViewCell.h"
 
 namespace ExampleApp
 {
@@ -43,7 +44,24 @@ namespace ExampleApp
                 
                 m_pSuggestionProviderHandle = [m_pSearchModel addSuggestionProvider: navLocationFinder];
                 [m_pSearchWidgetView displaySuggestionProvider: m_pSuggestionProviderHandle];
-                m_pSearchWidgetView.resultsVisible = NO;
+                
+                m_pSearchProviderHandle = [m_pSearchModel addSearchProvider: navLocationFinder];
+                [m_pSearchWidgetView displaySearchProvider:m_pSearchProviderHandle];
+                
+                NSBundle* pResourceBundle = [NSBundle bundleForClass:[WidgetSearchResultTableViewCell class]];
+                UINib* pNib = [UINib nibWithNibName: @"WidgetSearchResultTableViewCell" bundle:pResourceBundle];
+                
+                [m_pSearchWidgetView registerNib:pNib forUseWithResultsTableCellIdentifier:@"WidgetSearchResultTableViewCell"];
+                
+                m_willPopulateResultCell = ^(WRLDSearchResultTableViewCell *pCell)
+                {
+                    if([pCell isKindOfClass:[WidgetSearchResultTableViewCell class]])
+                    {
+                        WidgetSearchResultTableViewCell* pCastCell = (WidgetSearchResultTableViewCell*) pCell;
+                        [pCastCell setNavigationHidden: YES];
+                    }
+                };
+                [m_pSearchWidgetView.searchResultContentObserver addWillPopulateEvent:m_willPopulateResultCell];
                 
                 m_pSearchHintContainer = [[[UIView alloc] init] autorelease];
                 m_pSearchHintContainer.backgroundColor = [UIColor whiteColor];
@@ -75,16 +93,21 @@ namespace ExampleApp
                 
                 m_pResultsView = [[[UIView alloc] init] autorelease];
                 m_pSearchWidgetView.suggestionsContainer = m_pResultsView;
+                m_pSearchWidgetView.resultsContainer = m_pResultsView;
                 
                 m_pContainer = [[NavSearchContainerView alloc] initWithSubviews: m_pSearchWidgetView :m_pResultsView :m_pBackButton :m_pSearchHintContainer];
             }
             
             NavWidgetSearchView::~NavWidgetSearchView()
             {
+                [m_pSearchWidgetView.searchResultContentObserver removeWillPopulateEvent:m_willPopulateResultCell];
+                
                 [m_pSearchModel.suggestionObserver removeQueryCancelledEvent: m_autocompleteCancelledEvent];
                 [m_pSearchModel.suggestionObserver removeQueryCompletedEvent: m_autocompleteCompletedEvent];
                 
                 [m_pSearchWidgetView stopDisplayingSuggestionProvider: m_pSuggestionProviderHandle];
+                [m_pSearchWidgetView stopDisplayingSearchProvider:
+                    m_pSearchProviderHandle];
             }
             
             UIView* NavWidgetSearchView::GetUIView()
@@ -179,22 +202,12 @@ namespace ExampleApp
             
             void NavWidgetSearchView::AddSelectedResultCallback(ResultSelectedEvent resultSelectedEvent)
             {
-                [m_pSearchWidgetView.suggestionSelectionObserver addResultSelectedEvent: resultSelectedEvent];
+                [m_pSearchWidgetView.searchSelectionObserver addResultSelectedEvent: resultSelectedEvent];
             }
             
             void NavWidgetSearchView::RemoveSelectedResultCallback(ResultSelectedEvent resultSelectedEvent)
             {
-                [m_pSearchWidgetView.suggestionSelectionObserver removeResultSelectedEvent: resultSelectedEvent];
-            }
-            
-            void NavWidgetSearchView::AddSearchStartedCallback(QueryEvent queryEvent)
-            {
-                [m_pSearchModel.searchObserver addQueryStartingEvent: queryEvent];
-            }
-            
-            void NavWidgetSearchView::RemoveSearchStartedCallback(QueryEvent queryEvent)
-            {
-                [m_pSearchModel.searchObserver removeQueryStartingEvent: queryEvent];
+                [m_pSearchWidgetView.searchSelectionObserver removeResultSelectedEvent: resultSelectedEvent];
             }
         }
     }
