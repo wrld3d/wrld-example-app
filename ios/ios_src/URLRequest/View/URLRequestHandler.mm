@@ -39,13 +39,17 @@ namespace ExampleApp
             void URLRequestHandler::RequestExternalURL(const std::string& url)
             {
                 NSString *urlLink = [NSString stringWithUTF8String:url.c_str()];
-                NSString *escaped = [urlLink stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+                NSString *escaped = [urlLink stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
                 
                 NSURL* escapedUrl = [NSURL URLWithString:escaped];
+                NSString* hostLink = [escapedUrl host];
+                if(hostLink != NULL)
+                {
+                    m_linkOutObserver.OnLinkOut([[escapedUrl host] UTF8String]);
+                    
+                    [[UIApplication sharedApplication] openURL:escapedUrl];
+                }
                 
-                m_linkOutObserver.OnLinkOut([[escapedUrl host] UTF8String]);
-                
-                [[UIApplication sharedApplication] openURL:escapedUrl];
             }
             
             void URLRequestHandler::RequestDeeplinkURL(const std::string& deeplinkUrl, const std::string& httpFallbackUrl)
