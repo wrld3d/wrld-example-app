@@ -1,19 +1,23 @@
 {
 	"label_name_to_tag": [{
 		"name": "restroom",
-		"tag": "toilets"
+		"tag": "bathroom"
 	},
 	{
 		"name": "men's bathroom",
-		"tag": "toilets"
+		"tag": "bathroom"
 	},
 	{
 		"name": "women's bathroom",
-		"tag": "toilets"
+		"tag": "bathroom"
 	},
 	{
 		"name": "bathroom",
-		"tag": "toilets"
+		"tag": "bathroom"
+	},
+	{
+		"name": "toilets",
+		"tag": "bathroom"
 	},
 	{
 		"name": "elevator",
@@ -28,7 +32,7 @@
 		"tag": "stairs"
 	}],
 	"tag_to_label_anchor_category": [{
-		"tag": "toilets",
+		"tag": "bathroom",
 		"label_anchor_category": "interior_facility_toilets"
 	},
 	{
