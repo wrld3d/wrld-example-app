@@ -14,6 +14,7 @@
 #include "SearchTags.h"
 #include "YelpCategoryMapperUpdater.h"
 #include "SearchTagToYelpCategoryMapper.h"
+#include "AppCamera.h"
 
 namespace ExampleApp
 {
@@ -40,7 +41,8 @@ namespace ExampleApp
                     const Search::SdkModel::SearchTags& searchTags,
                     const std::string& yelpApiKey,
                     Eegeo::Helpers::IFileIO& fileIO,
-                    Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater);
+                    Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
+                    ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController);
 
                 ~YelpSearchServiceModule();
 

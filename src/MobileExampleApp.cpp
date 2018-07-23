@@ -521,6 +521,14 @@ namespace ExampleApp
         m_pOptionsModule = Eegeo_NEW(ExampleApp::Options::OptionsModule)(m_identityProvider,
                                                                          m_messageBus,
                                                                          m_networkCapabilities);
+        
+        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
+        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
+        
+        m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)(
+                                                                             interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                             interiorsPresentationModule.GetInteriorTransitionModel(),
+                                                                             m_pWorld->GetFeatureInteractionModule().GetCollisionModule().GetFeatureRayCastingService());
 
         const bool useGeoName = true;
         if(useGeoName)
@@ -541,7 +549,7 @@ namespace ExampleApp
                 searchTags,
                 m_applicationConfiguration.EegeoSearchServiceUrl(),
                 m_pWorld->GetApiTokenModel(),
-                world.GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel()
+                mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel()
         );
 
         const bool useEegeoPois = true;
@@ -560,20 +568,14 @@ namespace ExampleApp
                                                                                                                                       searchTags,
                                                                                                                                       m_applicationConfiguration.YelpApiKey(),
                                                                                                                                       m_platformAbstractions.GetFileIO(),
-                                                                                                                                      m_yelpCategoryMapperUpdater
+                                                                                                                                      m_yelpCategoryMapperUpdater,
+                                                                                                                                      m_pAppCameraModule->GetController()
                                                                                                                                       );
         }
 
-        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorInteractionModel());
+        m_pSearchServiceModule = Eegeo_NEW(Search::Combined::SdkModel::CombinedSearchServiceModule)(m_searchServiceModules, mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel());
 
-        Eegeo::Modules::Map::MapModule& mapModule = world.GetMapModule();
-
-        Eegeo::Modules::Map::Layers::InteriorsPresentationModule& interiorsPresentationModule = mapModule.GetInteriorsPresentationModule();
-
-        m_pAppCameraModule = Eegeo_NEW(AppCamera::SdkModel::AppCameraModule)(
-                interiorsPresentationModule.GetInteriorInteractionModel(),
-                interiorsPresentationModule.GetInteriorTransitionModel(),
-                m_pWorld->GetFeatureInteractionModule().GetCollisionModule().GetFeatureRayCastingService());
+        
 
         Eegeo::Modules::Map::CityThemesModule& cityThemesModule = world.GetCityThemesModule();
 

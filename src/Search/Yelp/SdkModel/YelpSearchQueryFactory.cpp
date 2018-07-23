@@ -7,8 +7,9 @@
 #include "YelpSearchQuery.h"
 #include "YelpSearchConstants.h"
 #include "YelpCategoryModel.h"
-
-
+#include "IAppCameraController.h"
+#include "CameraState.h"
+#include "RenderCamera.h"
 #include "urlencode.h"
 #include <sstream>
 #include <iomanip>
@@ -41,13 +42,24 @@ namespace ExampleApp
                         return url;
                     }
                     
+                    int GetSearchRadius(ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController)
+                    {
+                        const float SearchRadiusMin = 50.0f;
+                        const float SearchRadiusMax = 40000.0f;
+                        double distanceToInterest = (cameraController.GetCameraState().InterestPointEcef() - cameraController.GetCameraState().LocationEcef()).Length();
+                        float radius = (distanceToInterest * Eegeo::Math::Tan(cameraController.GetRenderCamera().GetFOV()));
+                        return static_cast<int>(Eegeo::Clamp(radius, SearchRadiusMin, SearchRadiusMax));
+                    }
+                    
                     
                 }
                 YelpSearchQueryFactory::YelpSearchQueryFactory(
                     const std::string& yelpApiKey,
                     SdkModel::SearchTagToYelpCategoryMapper& searchTagToYelpCategoryMap,
-                    Eegeo::Web::IWebLoadRequestFactory& webRequestFactory)
+                    Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                    ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController)
                 : m_webRequestFactory(webRequestFactory)
+                , m_cameraController(cameraController)
                 , m_yelpApiKey(yelpApiKey)
                 , m_searchTagToYelpCategoryMap(searchTagToYelpCategoryMap)
                 , m_apiUrl("https://api.yelp.com/v3/businesses/search")
@@ -105,6 +117,12 @@ namespace ExampleApp
                     params["latitude"] = latitude;
                     params["longitude"] = longitude;
                     params["limit"] = searchLimit;
+                    
+                    int radius = GetSearchRadius(m_cameraController);
+                    conversionStream.clear();
+                    conversionStream.str("");
+                    conversionStream << radius;
+                    params["radius"] = conversionStream.str();
                     
                     std::stringstream requestUrl;
                     requestUrl << m_apiUrl << "?" << UrlGetParamsEncoder(params);

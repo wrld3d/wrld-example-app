@@ -10,6 +10,7 @@
 #include "Yelp.h"
 #include "IWebLoadRequestFactory.h"
 #include "SearchTagToYelpCategoryMapper.h"
+#include "AppCamera.h"
 
 
 namespace ExampleApp
@@ -26,7 +27,8 @@ namespace ExampleApp
                     YelpSearchQueryFactory(
                         const std::string& yelpApiKey,
                         SdkModel::SearchTagToYelpCategoryMapper& searchTagToYelpCategoryMap,
-                        Eegeo::Web::IWebLoadRequestFactory& webRequestFactory);
+                        Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                        ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController);
                     
                     ~YelpSearchQueryFactory();
                     
@@ -39,6 +41,7 @@ namespace ExampleApp
                     
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
                     SdkModel::SearchTagToYelpCategoryMapper& m_searchTagToYelpCategoryMap;
+                    ExampleApp::AppCamera::SdkModel::IAppCameraController& m_cameraController;
                 };
             }
         }

@@ -25,7 +25,8 @@ namespace ExampleApp
                 const Search::SdkModel::SearchTags& searchTags,
                 const std::string& yelpApiKey,
                 Eegeo::Helpers::IFileIO& fileIO,
-                Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater)
+                Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
+                ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController)
             : m_pSearchService(NULL)
             , m_pSearchQueryFactory(NULL)
             , m_pYelpBusinessQueryFactory(NULL)
@@ -61,7 +62,8 @@ namespace ExampleApp
                 m_pSearchQueryFactory = Eegeo_NEW(Yelp::SdkModel::YelpSearchQueryFactory)(
                     yelpApiKey,
                     *m_pSearchTagToYelpCategoryMapper,
-                    webRequestFactory);
+                    webRequestFactory,
+                    cameraController);
                 
                 m_pYelpBusinessQueryFactory = Eegeo_NEW(Yelp::SdkModel::YelpBusinessQueryFactory)(
                                                                                                   yelpApiKey,
