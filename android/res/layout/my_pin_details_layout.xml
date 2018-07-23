@@ -36,8 +36,8 @@
     <!--container-->
     <RelativeLayout
         android:id="@+id/my_pin_details_view_container"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_centerInParent="true"
         app:layout_constraintLeft_toLeftOf="@+id/left_guideline"
         app:layout_constraintRight_toRightOf="@+id/right_guideline"
