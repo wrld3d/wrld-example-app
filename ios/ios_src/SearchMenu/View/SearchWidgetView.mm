@@ -49,8 +49,8 @@ namespace ExampleApp
                 CGFloat iPhoneWidgetWidth = screenWidth - 2*iphoneMargin;
                 CGFloat iPadWidgetWidth = 375;
                 
-                CGFloat heightIphone = screenRect.size.height - 2*iphoneMargin;
-                CGFloat heightIpad = screenRect.size.height - 2*iPadMargin;
+                CGFloat heightIphone = screenRect.size.height - 2*iphoneMargin - safeInsets.bottom;
+                CGFloat heightIpad = screenRect.size.height - 2*iPadMargin - safeInsets.bottom;
 
                 CGRect iPadFrame = CGRectMake(iPadMargin, safeInsets.top,  iPadWidgetWidth , heightIpad) ;
                 CGRect iPhoneFrame = CGRectMake(iphoneMargin, safeInsets.top, iPhoneWidgetWidth , heightIphone);
