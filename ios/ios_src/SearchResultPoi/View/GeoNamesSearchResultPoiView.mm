@@ -11,6 +11,7 @@
 #include "GeoNamesSearchResultPoiView.h"
 #include "App.h"
 #include "UIHelpers.h"
+#include "ViewController.h"
 
 #import "UIButton+DefaultStates.h"
 #import "UIView+TouchExclusivity.h"
@@ -146,13 +147,12 @@ namespace
 
 - (void) layoutSubviews
 {
-    const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
-    const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const float boundsOccupyMultiplierHeight = 0.9f;
-    const float mainWindowWidth = std::min(boundsWidth, 348.f);
-    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplierHeight;
-    const float mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f);
-    const float mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f);
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    ViewController *viewController = (ViewController *)window.rootViewController;
+    self.frame = [viewController largePopoverFrame];
+    
+    CGFloat mainWindowWidth = self.frame.size.width;
+    CGFloat mainWindowHeight = self.frame.size.height;
     
     const float closeButtonSectionOffsetY = mainWindowHeight - 46.f;
     
@@ -171,12 +171,7 @@ namespace
     float currentCardYPos = 0.f;
     
     currentCardYPos += topMargin;
-    
-    self.frame = CGRectMake(mainWindowX,
-                            mainWindowY,
-                            mainWindowWidth,
-                            mainWindowHeight);
-    
+        
     self.pControlContainer.frame = CGRectMake(0.f,
                                               0.f,
                                               mainWindowWidth,

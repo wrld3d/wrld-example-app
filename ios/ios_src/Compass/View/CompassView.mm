@@ -6,6 +6,7 @@
 #include "ImageHelpers.h"
 #include "CompassViewInterop.h"
 #include "UIHelpers.h"
+#include "ViewController.h"
 
 static const float CompassOuterShapeInactiveAlpha = 0.5f;
 static const float CompassOuterShapeActiveAlpha = 1.0f;
@@ -57,6 +58,10 @@ enum CompassViewState
         m_compassViewState = Disabled;
         m_positionState = CompassPositionStateDefault;
         
+        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+        ViewController *viewController = (ViewController *)window.rootViewController;
+        UIEdgeInsets safeInsets = [viewController safeInsets];
+        
         //control positioning
         m_width = 80.f;
         m_height = 80.f;
@@ -66,7 +71,7 @@ enum CompassViewState
         
         m_navWidgetBottomHeight = 0.0f;
         
-        m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_innerHeight - (m_height - m_innerHeight)/2;
+        m_yPosBase = m_yPosActive = m_screenHeight - (8 * m_pixelScale) - m_innerHeight - (m_height - m_innerHeight)/2 - safeInsets.bottom;
         m_yPosInactive = m_screenHeight + m_height;
         
         self.frame = CGRectMake(((m_screenWidth * 0.5f) - (m_innerWidth * 0.5f)), m_yPosInactive, m_width, m_height);
