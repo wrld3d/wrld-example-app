@@ -1,19 +1,4 @@
 set(resources ${resources}
-        Resources/NavRoutingCalculatingRoute.xib
-        Resources/NavRoutingRerouteDialog.xib
-        Resources/WidgetSearchResultTableViewCell.xib
-        resources/RecalculateSpinner.png
-        resources/RecalculateSpinner@2x.png
-        resources/RecalculateSpinner@3x.png
-        Resources/ReportPinIcon.png
-        Resources/ReportPinIcon@2x.png
-        Resources/ReportPinIcon@3x.png
-        Resources/BinButton.png
-        Resources/BinButton@2x.png
-        Resources/BinButton@3x.png
-        Resources/BinButton_Down.png
-        Resources/BinButton_Down@2x.png
-        Resources/BinButton_Down@3x.png
         Resources/Alert_Tutorial_icon.png
         Resources/Alert_Tutorial_icon@2x.png
         Resources/Alert_Tutorial_icon@3x.png
@@ -25,239 +10,6 @@ set(resources ${resources}
         Resources/Arrow.png
         Resources/Arrow@2x.png
         Resources/Arrow@3x.png
-        Resources/CMakeLists.txt
-	    Resources/Close_Blue.png
-	    Resources/Close_Blue@2x.png
-	    Resources/Close_Blue@3x.png
-        Resources/CompassNew.png
-        Resources/CompassNew@0.75x.png
-        Resources/CompassNew@1.5x.png
-        Resources/CompassNew@2x.png
-        Resources/CompassNew@3x.png
-        Resources/CompassNew@4x.png
-        Resources/CompassNewLocate.png
-        Resources/CompassNewLocate@0.75x.png
-        Resources/CompassNewLocate@1.5x.png
-        Resources/CompassNewLocate@2x.png
-        Resources/CompassNewLocate@3x.png
-        Resources/CompassNewLocate@4x.png
-        Resources/CompassNewLocate_Down.png
-        Resources/CompassNewLocate_Down@0.75x.png
-        Resources/CompassNewLocate_Down@1.5x.png
-        Resources/CompassNewLocate_Down@2x.png
-        Resources/CompassNewLocate_Down@3x.png
-        Resources/CompassNewLocate_Down@4x.png
-        Resources/CompassNewLocked.png
-        Resources/CompassNewLocked@0.75x.png
-        Resources/CompassNewLocked@1.5x.png
-        Resources/CompassNewLocked@2x.png
-        Resources/CompassNewLocked@3x.png
-        Resources/CompassNewLocked@4x.png
-        Resources/CompassNewLocked_Down.png
-        Resources/CompassNewLocked_Down@0.75x.png
-        Resources/CompassNewLocked_Down@1.5x.png
-        Resources/CompassNewLocked_Down@2x.png
-        Resources/CompassNewLocked_Down@3x.png
-        Resources/CompassNewLocked_Down@4x.png
-        Resources/CompassNewUnlocked.png
-        Resources/CompassNewUnlocked@0.75x.png
-        Resources/CompassNewUnlocked@1.5x.png
-        Resources/CompassNewUnlocked@2x.png
-        Resources/CompassNewUnlocked@3x.png
-        Resources/CompassNewUnlocked@4x.png
-        Resources/CompassNewUnlocked_Down.png
-        Resources/CompassNewUnlocked_Down@0.75x.png
-        Resources/CompassNewUnlocked_Down@1.5x.png
-        Resources/CompassNewUnlocked_Down@2x.png
-        Resources/CompassNewUnlocked_Down@3x.png
-        Resources/CompassNewUnlocked_Down@4x.png
-        Resources/ButtonGallery.png
-        Resources/ButtonGallery@2x.png
-        Resources/ButtonGallery@3x.png
-        Resources/ButtonGallery_Down.png
-        Resources/ButtonGallery_Down@2x.png
-        Resources/ButtonGallery_Down@3x.png
-        Resources/ButtonPhoto.png
-        Resources/ButtonPhoto@2x.png
-        Resources/ButtonPhoto@3x.png
-        Resources/ButtonPhoto_Down.png
-        Resources/ButtonPhoto_Down@2x.png
-        Resources/ButtonPhoto_Down@3x.png
-        Resources/LargeTick_Blue.png
-        Resources/LargeTick_Blue@2x.png
-        Resources/LargeTick_Blue@3x.png
-        Resources/LargeTick_White.png
-        Resources/LargeTick_White@2x.png
-        Resources/LargeTick_White@3x.png
-        Resources/ShareIcon.png
-        Resources/ShareIcon@2x.png
-        Resources/ShareIcon@3x.png
-        Resources/EmbeddedTheme
-        Resources/EmbeddedTheme/Default_water_reflection_cube_map_cubemap.pvr
-        Resources/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
-        Resources/EmbeddedTheme/SanFrancisco_SanFran_roadDiffuse_repeat.pvr
-        Resources/EmbeddedTheme/SanFrancisco_SanFran_wallDiffuse.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture0.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture0_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture1.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture10.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture10_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture11.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture11_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture12.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture12_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture13.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture13_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture14.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture14_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture15.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture15_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture16.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture16_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture17.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture17_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture18.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture18_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture1_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture2.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture2_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture3.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture3_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture4.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture4_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture5.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture5_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture6.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture6_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture7.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture7_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture8.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture8_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture9.pvr
-        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture9_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_VehicleModels_recce_trams.pvr
-        Resources/EmbeddedTheme/SanFrancisco_Water_01.pvr
-        Resources/EmbeddedTheme/SanFrancisco_Water_01_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_Water_02.pvr
-        Resources/EmbeddedTheme/SanFrancisco_Water_02_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_Water_03.pvr
-        Resources/EmbeddedTheme/SanFrancisco_Water_03_LOD.pvr
-        Resources/EmbeddedTheme/SanFrancisco_ldn_trains_01.pvr
-        Resources/EmbeddedTheme/SanFrancisco_placeholder_no_data.pvr
-        Resources/EmbeddedTheme/SanFrancisco_sf_planes_01.pvr
-        Resources/EmbeddedTheme/SanFrancisco_sf_vehicles_01.pvr
-        Resources/EmbeddedTheme/SanFrancisco_trees_01.pvr
-        Resources/EmbeddedTheme/SanFrancisco_trees_top_01.pvr
-        Resources/EmbeddedTheme/SanFrancisco_water_normalmap.pvr
-        Resources/EmbeddedTheme/SanFrancisco_water_reflectionmap.pvr
-	    Resources/FullSwitchOff.png
-	    Resources/FullSwitchOff@2x.png
-	    Resources/FullSwitchOff@3x.png
-	    Resources/FullSwitchOn.png
-	    Resources/FullSwitchOn@2x.png
-	    Resources/FullSwitchOn@3x.png
-        Resources/Geosphere_01.pod
-        Resources/IPAexGothic_sdf.fnt
-        Resources/IPAexGothic_sdf_0.png
-        Resources/IPAexGothic_sdf_1.png
-        Resources/IPAexGothic_sdf_2.png
-        Resources/IPAexGothic_sdf_3.png
-        Resources/IPAexGothic_sdf_4.png
-        Resources/IPAexGothic_sdf_5.png
-        Resources/IPAexGothic_sdf_6.png
-        Resources/IPAexGothic_sdf_7.png
-        Resources/Interiors
-        Resources/Interiors/label_category_mapping.json
-        Resources/Labels
-        Resources/Labels/label_category_icon_map.json
-        Resources/Labels/label_style_sheet.json
-        Resources/PlaceholderCube
-        Resources/PlaceholderCube/placeholder_cube_negX.png
-        Resources/PlaceholderCube/placeholder_cube_negY.png
-        Resources/PlaceholderCube/placeholder_cube_negZ.png
-        Resources/PlaceholderCube/placeholder_cube_posX.png
-        Resources/PlaceholderCube/placeholder_cube_posY.png
-        Resources/PlaceholderCube/placeholder_cube_posZ.png
-        Resources/SearchResultOnMap
-        Resources/SearchResultOnMap/pin_sheet.json
-        Resources/SearchResultOnMap/pin_sheet_0.png
-        Resources/SearchResultOnMap/pin_sheet_0@2x.png
-        Resources/SearchResultOnMap/pin_sheet_0@3x.png
-        Resources/SearchResults_Fade.png
-        Resources/SearchResults_Fade@0.75x.png
-        Resources/SearchResults_Fade@1.5x.png
-        Resources/SearchResults_Fade@2x.png
-        Resources/SearchResults_Fade@3x.png
-        Resources/SearchResults_ScrollButton.png
-        Resources/SearchResults_ScrollButton@0.75x.png
-        Resources/SearchResults_ScrollButton@1.5x.png
-        Resources/SearchResults_ScrollButton@2x.png
-        Resources/SearchResults_ScrollButton@3x.png
-        Resources/SearchResults_ScrollButton_Down.png
-        Resources/SearchResults_ScrollButton_Down@0.75x.png
-        Resources/SearchResults_ScrollButton_Down@1.5x.png
-        Resources/SearchResults_ScrollButton_Down@2x.png
-        Resources/SearchResults_ScrollButton_Down@3x.png
-        Resources/Sphere.POD
-        Resources/Sphere_8bit.pvr
-        Resources/Sphere_Night_8bit.pvr
-        Resources/SplashScreen
-        Resources/SplashScreen/Icon-60.png
-        Resources/SplashScreen/Icon-60@2x.png
-        Resources/SplashScreen/Icon-60@3x.png
-        Resources/SplashScreen/Icon-76.png
-        Resources/SplashScreen/Icon-76@2x.png
-        Resources/SplashScreen/Icon-83.5@2x.png
-        Resources/SplashScreen/Icon-1024.png
-        Resources/SplashScreen/Icon-Small-40.png
-        Resources/SplashScreen/Icon-Small-40@2x.png
-        Resources/SplashScreen/Icon-Small-40@3x.png
-        Resources/SplashScreen/Icon-Small.png
-        Resources/SplashScreen/Icon-Small@2x.png
-        Resources/SplashScreen/Icon-Small@3x.png
-        Resources/SplashScreen/SplashScreen.png
-        Resources/SplashScreen/SplashScreen@2x.png
-        Resources/SplashScreen/SplashScreen@3x.png
-        Resources/Stalk.POD
-        Resources/Thumbs.db
-        Resources/Yelp
-        Resources/Yelp/reviewsFromYelpRED.png
-        Resources/Yelp/reviewsFromYelpRED@2x.png
-        Resources/Yelp/reviewsFromYelpRED@3x.png
-        Resources/Yelp/stars_0_0.png
-        Resources/Yelp/stars_0_0@2x.png
-        Resources/Yelp/stars_0_0@3x.png
-        Resources/Yelp/stars_1_0.png
-        Resources/Yelp/stars_1_0@2x.png
-        Resources/Yelp/stars_1_0@3x.png
-        Resources/Yelp/stars_1_5.png
-        Resources/Yelp/stars_1_5@2x.png
-        Resources/Yelp/stars_1_5@3x.png
-        Resources/Yelp/stars_2_0.png
-        Resources/Yelp/stars_2_0@2x.png
-        Resources/Yelp/stars_2_0@3x.png
-        Resources/Yelp/stars_2_5.png
-        Resources/Yelp/stars_2_5@2x.png
-        Resources/Yelp/stars_2_5@3x.png
-        Resources/Yelp/stars_3_0.png
-        Resources/Yelp/stars_3_0@2x.png
-        Resources/Yelp/stars_3_0@3x.png
-        Resources/Yelp/stars_3_5.png
-        Resources/Yelp/stars_3_5@2x.png
-        Resources/Yelp/stars_3_5@3x.png
-        Resources/Yelp/stars_4_0.png
-        Resources/Yelp/stars_4_0@2x.png
-        Resources/Yelp/stars_4_0@3x.png
-        Resources/Yelp/stars_4_5.png
-        Resources/Yelp/stars_4_5@2x.png
-        Resources/Yelp/stars_4_5@3x.png
-        Resources/Yelp/stars_5_0.png
-        Resources/Yelp/stars_5_0@2x.png
-        Resources/Yelp/stars_5_0@3x.png
-        Resources/Yelp/yelp_logo.png
-        Resources/Yelp/yelp_logo@2x.png
-        Resources/Yelp/yelp_logo@3x.png
-        Resources/Yelp/yelp_logo_100x50.png
         Resources/arrow1.png
         Resources/arrow1@2x.png
         Resources/arrow1@3x.png
@@ -285,6 +37,12 @@ set(resources ${resources}
         Resources/arrow3_up_blue.png
         Resources/arrow3_up_blue@2x.png
         Resources/arrow3_up_blue@3x.png
+        Resources/BinButton.png
+        Resources/BinButton@2x.png
+        Resources/BinButton@3x.png
+        Resources/BinButton_Down.png
+        Resources/BinButton_Down@2x.png
+        Resources/BinButton_Down@3x.png
         Resources/button_add_pin_off.png
         Resources/button_add_pin_off@0.75x.png
         Resources/button_add_pin_off@1.5x.png
@@ -401,12 +159,70 @@ set(resources ${resources}
         Resources/button_unflatten_on.png
         Resources/button_unflatten_on@2x.png
         Resources/button_unflatten_on@3x.png
+        Resources/ButtonGallery.png
+        Resources/ButtonGallery@2x.png
+        Resources/ButtonGallery@3x.png
+        Resources/ButtonGallery_Down.png
+        Resources/ButtonGallery_Down@2x.png
+        Resources/ButtonGallery_Down@3x.png
+        Resources/ButtonPhoto.png
+        Resources/ButtonPhoto@2x.png
+        Resources/ButtonPhoto@3x.png
+        Resources/ButtonPhoto_Down.png
+        Resources/ButtonPhoto_Down@2x.png
+        Resources/ButtonPhoto_Down@3x.png
+        Resources/Close_Blue.png
+        Resources/Close_Blue@2x.png
+        Resources/Close_Blue@3x.png
+        Resources/CMakeLists.txt
         Resources/compass_point_off.png
         Resources/compass_point_off@2x.png
         Resources/compass_point_off@3x.png
         Resources/compass_point_on.png
         Resources/compass_point_on@2x.png
         Resources/compass_point_on@3x.png
+        Resources/CompassNew.png
+        Resources/CompassNew@0.75x.png
+        Resources/CompassNew@1.5x.png
+        Resources/CompassNew@2x.png
+        Resources/CompassNew@3x.png
+        Resources/CompassNew@4x.png
+        Resources/CompassNewLocate.png
+        Resources/CompassNewLocate@0.75x.png
+        Resources/CompassNewLocate@1.5x.png
+        Resources/CompassNewLocate@2x.png
+        Resources/CompassNewLocate@3x.png
+        Resources/CompassNewLocate@4x.png
+        Resources/CompassNewLocate_Down.png
+        Resources/CompassNewLocate_Down@0.75x.png
+        Resources/CompassNewLocate_Down@1.5x.png
+        Resources/CompassNewLocate_Down@2x.png
+        Resources/CompassNewLocate_Down@3x.png
+        Resources/CompassNewLocate_Down@4x.png
+        Resources/CompassNewLocked.png
+        Resources/CompassNewLocked@0.75x.png
+        Resources/CompassNewLocked@1.5x.png
+        Resources/CompassNewLocked@2x.png
+        Resources/CompassNewLocked@3x.png
+        Resources/CompassNewLocked@4x.png
+        Resources/CompassNewLocked_Down.png
+        Resources/CompassNewLocked_Down@0.75x.png
+        Resources/CompassNewLocked_Down@1.5x.png
+        Resources/CompassNewLocked_Down@2x.png
+        Resources/CompassNewLocked_Down@3x.png
+        Resources/CompassNewLocked_Down@4x.png
+        Resources/CompassNewUnlocked.png
+        Resources/CompassNewUnlocked@0.75x.png
+        Resources/CompassNewUnlocked@1.5x.png
+        Resources/CompassNewUnlocked@2x.png
+        Resources/CompassNewUnlocked@3x.png
+        Resources/CompassNewUnlocked@4x.png
+        Resources/CompassNewUnlocked_Down.png
+        Resources/CompassNewUnlocked_Down@0.75x.png
+        Resources/CompassNewUnlocked_Down@1.5x.png
+        Resources/CompassNewUnlocked_Down@2x.png
+        Resources/CompassNewUnlocked_Down@3x.png
+        Resources/CompassNewUnlocked_Down@4x.png
         Resources/contact_icon_email.png
         Resources/contact_icon_email@0.75x.png
         Resources/contact_icon_email@1.5x.png
@@ -459,6 +275,7 @@ set(resources ${resources}
         Resources/detail_icon_web_link_active@2x.png
         Resources/detail_icon_web_link_active@3x.png
         Resources/dummy_transparent.png
+        Resources/dummy_transparent.txt
         Resources/eegeo_logo.png
         Resources/eegeo_logo@2x.png
         Resources/eegeo_logo@3x.png
@@ -469,6 +286,64 @@ set(resources ${resources}
         Resources/eegeo_logo_tablet@2x.png
         Resources/eegeo_logo_tablet@3x.png
         Resources/embedded_manifest.bin
+        Resources/EmbeddedTheme
+        Resources/EmbeddedTheme/Default_water_reflection_cube_map_cubemap.pvr
+        Resources/EmbeddedTheme/London_London_railDiffuse_repeat.pvr
+        Resources/EmbeddedTheme/SanFrancisco_ldn_trains_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_placeholder_no_data.pvr
+        Resources/EmbeddedTheme/SanFrancisco_SanFran_roadDiffuse_repeat.pvr
+        Resources/EmbeddedTheme/SanFrancisco_SanFran_wallDiffuse.pvr
+        Resources/EmbeddedTheme/SanFrancisco_sf_planes_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_sf_vehicles_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture0.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture0_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture1.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture1_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture10.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture10_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture11.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture11_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture12.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture12_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture13.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture13_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture14.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture14_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture15.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture15_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture16.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture16_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture17.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture17_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture18.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture18_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture2.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture2_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture3.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture3_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture4.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture4_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture5.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture5_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture6.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture6_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture7.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture7_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture8.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture8_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture9.pvr
+        Resources/EmbeddedTheme/SanFrancisco_TerrainTexture9_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_trees_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_trees_top_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_VehicleModels_recce_trams.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_01.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_01_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_02.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_02_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_03.pvr
+        Resources/EmbeddedTheme/SanFrancisco_Water_03_LOD.pvr
+        Resources/EmbeddedTheme/SanFrancisco_water_normalmap.pvr
+        Resources/EmbeddedTheme/SanFrancisco_water_reflectionmap.pvr
         Resources/exit_blue_x_button.png
         Resources/exit_blue_x_button@0.75x.png
         Resources/exit_blue_x_button@1.5x.png
@@ -491,10 +366,19 @@ set(resources ${resources}
         Resources/floor_selection_top.png
         Resources/floor_selection_top@2x.png
         Resources/floor_selection_top@3x.png
+        Resources/FullSwitchOff.png
+        Resources/FullSwitchOff@2x.png
+        Resources/FullSwitchOff@3x.png
+        Resources/FullSwitchOn.png
+        Resources/FullSwitchOn@2x.png
+        Resources/FullSwitchOn@3x.png
+        Resources/Geosphere_01.pod
         Resources/gps_marker.png
         Resources/gps_marker@2x.png
         Resources/gps_marker@3x.png
         Resources/icon1_1.png
+        Resources/icon1_1@2x.png
+        Resources/icon1_1@3x.png
         Resources/icon1_10.png
         Resources/icon1_10@2x.png
         Resources/icon1_10@3x.png
@@ -525,14 +409,12 @@ set(resources ${resources}
         Resources/icon1_19.png
         Resources/icon1_19@2x.png
         Resources/icon1_19@3x.png
-        Resources/icon1_1@2x.png
-        Resources/icon1_1@3x.png
         Resources/icon1_2.png
+        Resources/icon1_2@2x.png
+        Resources/icon1_2@3x.png
         Resources/icon1_20.png
         Resources/icon1_20@2x.png
         Resources/icon1_20@3x.png
-        Resources/icon1_2@2x.png
-        Resources/icon1_2@3x.png
         Resources/icon1_3.png
         Resources/icon1_3@2x.png
         Resources/icon1_3@3x.png
@@ -983,6 +865,9 @@ set(resources ${resources}
         Resources/icon1_payphone.png
         Resources/icon1_payphone@2x.png
         Resources/icon1_payphone@3x.png
+        Resources/icon1_penguin.png
+        Resources/icon1_penguin@2x.png
+        Resources/icon1_penguin@3x.png
         Resources/icon1_person.png
         Resources/icon1_person@2x.png
         Resources/icon1_person@3x.png
@@ -1218,6 +1103,26 @@ set(resources ${resources}
         Resources/interior_exit_down.png
         Resources/interior_exit_down@2x.png
         Resources/interior_exit_down@3x.png
+        Resources/Interiors
+        Resources/Interiors/label_category_mapping.json
+        Resources/IPAexGothic_sdf.fnt
+        Resources/IPAexGothic_sdf_0.png
+        Resources/IPAexGothic_sdf_1.png
+        Resources/IPAexGothic_sdf_2.png
+        Resources/IPAexGothic_sdf_3.png
+        Resources/IPAexGothic_sdf_4.png
+        Resources/IPAexGothic_sdf_5.png
+        Resources/IPAexGothic_sdf_6.png
+        Resources/IPAexGothic_sdf_7.png
+        Resources/Labels
+        Resources/Labels/label_category_icon_map.json
+        Resources/Labels/label_style_sheet.json
+        Resources/LargeTick_Blue.png
+        Resources/LargeTick_Blue@2x.png
+        Resources/LargeTick_Blue@3x.png
+        Resources/LargeTick_White.png
+        Resources/LargeTick_White@2x.png
+        Resources/LargeTick_White@3x.png
         Resources/menu_background1.png
         Resources/menu_background1@2x.png
         Resources/menu_background1@3x.png
@@ -1242,11 +1147,14 @@ set(resources ${resources}
         Resources/nav_search_back_button_down.png
         Resources/nav_search_back_button_down@2x.png
         Resources/nav_search_back_button_down@3x.png
-        Resources/opensans_semibold_sdf.fnt
-        Resources/opensans_semibold_sdf_0.png
+        Resources/NavRoutingCalculatingRoute.xib
+        Resources/NavRoutingRerouteDialog.xib
         Resources/notosans_sdf_china_region.fnt
         Resources/notosans_sdf_china_region_0.png
         Resources/notosans_sdf_china_region_1.png
+        Resources/opensans_semibold_sdf.fnt
+        Resources/opensans_semibold_sdf_0.png
+        Resources/page_not_found.html
         Resources/place_pin_background.png
         Resources/place_pin_background@2x.png
         Resources/place_pin_background@3x.png
@@ -1254,6 +1162,13 @@ set(resources ${resources}
         Resources/place_pin_right@2x.png
         Resources/place_pin_right@3x.png
         Resources/placeholder.pvr
+        Resources/PlaceholderCube
+        Resources/PlaceholderCube/placeholder_cube_negX.png
+        Resources/PlaceholderCube/placeholder_cube_negY.png
+        Resources/PlaceholderCube/placeholder_cube_negZ.png
+        Resources/PlaceholderCube/placeholder_cube_posX.png
+        Resources/PlaceholderCube/placeholder_cube_posY.png
+        Resources/PlaceholderCube/placeholder_cube_posZ.png
         Resources/placejumps.json
         Resources/poi_address.png
         Resources/poi_address@0.75x.png
@@ -1291,12 +1206,15 @@ set(resources ${resources}
         Resources/poi_tag_active@1.5x.png
         Resources/poi_tag_active@2x.png
         Resources/poi_tag_active@3x.png
+        Resources/RecalculateSpinner.png
+        Resources/RecalculateSpinner@2x.png
+        Resources/RecalculateSpinner@3x.png
+        Resources/ReportPinIcon.png
+        Resources/ReportPinIcon@2x.png
+        Resources/ReportPinIcon@3x.png
         Resources/results_anchor_arrow.png
         Resources/results_anchor_arrow@2x.png
         Resources/results_anchor_arrow@3x.png
-        Resources/searchbox_Destination.png
-        Resources/searchbox_Destination@2x.png
-        Resources/searchbox_Destination@3x.png
         Resources/search_mag_glass_off.png
         Resources/search_mag_glass_off@2x.png
         Resources/search_mag_glass_off@3x.png
@@ -1315,35 +1233,122 @@ set(resources ${resources}
         Resources/search_results_bar_small.png
         Resources/search_results_bar_small@2x.png
         Resources/search_results_bar_small@3x.png
-        Resources/search_results_directions_down.png
-        Resources/search_results_directions_down@0.75x.png
-        Resources/search_results_directions_down@1.5x.png
-        Resources/search_results_directions_down@2x.png
-        Resources/search_results_directions_down@3x.png
-        Resources/search_results_directions_down@4x.png
         Resources/search_results_directions.png
         Resources/search_results_directions@0.75x.png
         Resources/search_results_directions@1.5x.png
         Resources/search_results_directions@2x.png
         Resources/search_results_directions@3x.png
         Resources/search_results_directions@4x.png
+        Resources/search_results_directions_down.png
+        Resources/search_results_directions_down@0.75x.png
+        Resources/search_results_directions_down@1.5x.png
+        Resources/search_results_directions_down@2x.png
+        Resources/search_results_directions_down@3x.png
+        Resources/search_results_directions_down@4x.png
         Resources/search_results_spinner.png
         Resources/search_results_spinner@2x.png
         Resources/search_results_spinner@3x.png
-        Resources/streaming_dialog_spinner.png
-        Resources/streaming_dialog_spinner@2x.png
-        Resources/streaming_dialog_spinner@3x.png
+        Resources/search_tags.json
+        Resources/searchbox_Destination.png
+        Resources/searchbox_Destination@2x.png
+        Resources/searchbox_Destination@3x.png
+        Resources/SearchResultOnMap
+        Resources/SearchResultOnMap/pin_sheet.json
+        Resources/SearchResultOnMap/pin_sheet_0.png
+        Resources/SearchResultOnMap/pin_sheet_0@2x.png
+        Resources/SearchResultOnMap/pin_sheet_0@3x.png
+        Resources/SearchResults_Fade.png
+        Resources/SearchResults_Fade@0.75x.png
+        Resources/SearchResults_Fade@1.5x.png
+        Resources/SearchResults_Fade@2x.png
+        Resources/SearchResults_Fade@3x.png
+        Resources/SearchResults_ScrollButton.png
+        Resources/SearchResults_ScrollButton@0.75x.png
+        Resources/SearchResults_ScrollButton@1.5x.png
+        Resources/SearchResults_ScrollButton@2x.png
+        Resources/SearchResults_ScrollButton@3x.png
+        Resources/SearchResults_ScrollButton_Down.png
+        Resources/SearchResults_ScrollButton_Down@0.75x.png
+        Resources/SearchResults_ScrollButton_Down@1.5x.png
+        Resources/SearchResults_ScrollButton_Down@2x.png
+        Resources/SearchResults_ScrollButton_Down@3x.png
+        Resources/ShareIcon.png
+        Resources/ShareIcon@2x.png
+        Resources/ShareIcon@3x.png
+        Resources/Sphere.POD
+        Resources/Sphere_8bit.pvr
+        Resources/Sphere_Night_8bit.pvr
+        Resources/SplashScreen
+        Resources/SplashScreen/Icon-1024.png
+        Resources/SplashScreen/Icon-60.png
+        Resources/SplashScreen/Icon-60@2x.png
+        Resources/SplashScreen/Icon-60@3x.png
+        Resources/SplashScreen/Icon-76.png
+        Resources/SplashScreen/Icon-76@2x.png
+        Resources/SplashScreen/Icon-83.5@2x.png
+        Resources/SplashScreen/Icon-Small.png
+        Resources/SplashScreen/Icon-Small@2x.png
+        Resources/SplashScreen/Icon-Small@3x.png
+        Resources/SplashScreen/Icon-Small-40.png
+        Resources/SplashScreen/Icon-Small-40@2x.png
+        Resources/SplashScreen/Icon-Small-40@3x.png
+        Resources/SplashScreen/SplashScreen.png
+        Resources/SplashScreen/SplashScreen@2x.png
+        Resources/SplashScreen/SplashScreen@3x.png
+        Resources/Stalk.POD
         Resources/streaming_dialog_loaded.png
         Resources/streaming_dialog_loaded@2x.png
         Resources/streaming_dialog_loaded@3x.png
-        Resources/search_tags.json
+        Resources/streaming_dialog_spinner.png
+        Resources/streaming_dialog_spinner@2x.png
+        Resources/streaming_dialog_spinner@3x.png
         Resources/sub_menu_arrow_off.png
         Resources/sub_menu_arrow_off@2x.png
         Resources/sub_menu_arrow_off@3x.png
         Resources/sub_menu_arrow_on.png
         Resources/sub_menu_arrow_on@2x.png
         Resources/sub_menu_arrow_on@3x.png
+        Resources/Thumbs.db
         Resources/weatherstates.json
+        Resources/WidgetSearchResultTableViewCell.xib
+        Resources/Yelp
+        Resources/Yelp/reviewsFromYelpRED.png
+        Resources/Yelp/reviewsFromYelpRED@2x.png
+        Resources/Yelp/reviewsFromYelpRED@3x.png
+        Resources/Yelp/stars_0_0.png
+        Resources/Yelp/stars_0_0@2x.png
+        Resources/Yelp/stars_0_0@3x.png
+        Resources/Yelp/stars_1_0.png
+        Resources/Yelp/stars_1_0@2x.png
+        Resources/Yelp/stars_1_0@3x.png
+        Resources/Yelp/stars_1_5.png
+        Resources/Yelp/stars_1_5@2x.png
+        Resources/Yelp/stars_1_5@3x.png
+        Resources/Yelp/stars_2_0.png
+        Resources/Yelp/stars_2_0@2x.png
+        Resources/Yelp/stars_2_0@3x.png
+        Resources/Yelp/stars_2_5.png
+        Resources/Yelp/stars_2_5@2x.png
+        Resources/Yelp/stars_2_5@3x.png
+        Resources/Yelp/stars_3_0.png
+        Resources/Yelp/stars_3_0@2x.png
+        Resources/Yelp/stars_3_0@3x.png
+        Resources/Yelp/stars_3_5.png
+        Resources/Yelp/stars_3_5@2x.png
+        Resources/Yelp/stars_3_5@3x.png
+        Resources/Yelp/stars_4_0.png
+        Resources/Yelp/stars_4_0@2x.png
+        Resources/Yelp/stars_4_0@3x.png
+        Resources/Yelp/stars_4_5.png
+        Resources/Yelp/stars_4_5@2x.png
+        Resources/Yelp/stars_4_5@3x.png
+        Resources/Yelp/stars_5_0.png
+        Resources/Yelp/stars_5_0@2x.png
+        Resources/Yelp/stars_5_0@3x.png
+        Resources/Yelp/yelp_logo.png
+        Resources/Yelp/yelp_logo@2x.png
+        Resources/Yelp/yelp_logo@3x.png
+        Resources/Yelp/yelp_logo_100x50.png
         Resources/yelp_map.json
         Resources/yelp_powered_btn_light.png
         Resources/yelp_powered_btn_light@2x.png
@@ -1352,5 +1357,4 @@ set(resources ${resources}
         Resources/yelp_review_btn_light@2x.png
         Resources/yelp_review_btn_light@3x.png
         ExampleApp/Images.xcassets
-	Resources/page_not_found.html
 )

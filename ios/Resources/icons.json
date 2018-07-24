@@ -653,6 +653,10 @@
             "file": "icon1_payphone.png"
         }, 
         {
+            "name": "penguin", 
+            "file": "icon1_penguin.png"
+        }, 
+        {
             "name": "person", 
             "file": "icon1_person.png"
         }, 
