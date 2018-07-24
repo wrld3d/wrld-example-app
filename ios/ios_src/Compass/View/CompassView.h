@@ -30,7 +30,7 @@
 
     float m_compassPointNaturalOffsetX;
     float m_compassPointNaturalOffsetY;
-    
+    bool m_animatingOnScreen;
     UIViewController* m_rootViewController;
 }
 

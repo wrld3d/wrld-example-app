@@ -293,10 +293,12 @@ enum CompassViewState
 {
     CGRect f = self.frame;
     f.origin.y = y;
+    m_animatingOnScreen = false;
     
     if(y != m_yPosInactive)
     {
         self.hidden = false;
+        m_animatingOnScreen = true;
     }
     
     [UIView animateWithDuration:m_stateChangeAnimationTimeSeconds animations:^
@@ -304,7 +306,10 @@ enum CompassViewState
          self.frame = f;
      } completion:^(BOOL finished)
      {
-         self.hidden = (y == m_yPosInactive);
+         if(m_animatingOnScreen == false)
+         {
+             self.hidden = (y == m_yPosInactive);
+         }
      }
      ];
 }
