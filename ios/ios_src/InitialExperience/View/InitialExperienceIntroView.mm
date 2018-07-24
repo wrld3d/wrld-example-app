@@ -5,6 +5,7 @@
 #include "UIColors.h"
 #include "ImageHelpers.h"
 #include "UIHelpers.h"
+#include "ViewController.h"
 
 @implementation InitialExperienceIntroView
 
@@ -81,6 +82,7 @@ namespace
         self.pWelcomeDescription.textColor = ExampleApp::Helpers::ColorPalette::White;
         self.pWelcomeDescription.text = @"Design your maps at wrld3d.com";
         [self.pWelcomeDescription setFont:[UIFont fontWithName:@"Helvetica Neue" size:useSmallScreen ? 22.f/m_pixelScale : 30.0f/m_pixelScale]];
+        self.pWelcomeDescription.adjustsFontSizeToFitWidth = true;
         [self.pBannerBarContainer addSubview:self.pWelcomeDescription];
         
         self.pSearchMenuDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
@@ -252,9 +254,13 @@ namespace
 
 - (void) layoutSubviews
 {
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    ViewController *rootViewController = (ViewController *)window.rootViewController;
+    UIEdgeInsets safeInsets = [rootViewController safeInsets];
+
     m_screenWidth = self.superview.bounds.size.width;
-    m_screenHeight = self.superview.bounds.size.height;
-    [self setFrame:CGRectMake(0, 0, m_screenWidth, m_screenHeight)];
+    m_screenHeight = self.superview.bounds.size.height - safeInsets.bottom - safeInsets.top;
+    [self setFrame:CGRectMake(0, safeInsets.top, m_screenWidth, m_screenHeight)];
     [self.pBackgroundContainer setFrame:CGRectMake(0, 0, m_screenWidth, m_screenHeight)];
     
     const bool useSmallScreen = ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
@@ -271,8 +277,7 @@ namespace
     [self.pBannerBarBackground setFrame:CGRectMake(0, bannerOutlineSize/m_pixelScale, m_screenWidth, bannerHeight)];
     float welcomeTextWidth = [self.pWelcomeText.text boundingRectWithSize:self.pWelcomeText.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:self.pWelcomeText.font } context:nil].size.width;
     [self.pWelcomeText setFrame:CGRectMake((m_screenWidth - welcomeTextWidth)/2, welcomeTextYOffset, m_screenWidth, bannerHeightWithOutline)];
-    float welcomeDescriptionWidth = [self.pWelcomeDescription.text boundingRectWithSize:self.pWelcomeDescription.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName:self.pWelcomeDescription.font } context:nil].size.width;
-    [self.pWelcomeDescription setFrame:CGRectMake((m_screenWidth - welcomeDescriptionWidth)/2, welcomeDescriptionYOffset, m_screenWidth, bannerHeightWithOutline)];
+    [self.pWelcomeDescription setFrame:CGRectMake([rootViewController largePopoverFrame].origin.x, welcomeDescriptionYOffset, [rootViewController largePopoverFrame].size.width, bannerHeightWithOutline)];
     
     [self layoutDialogSubview: self.pSearchMenuDialogContainer
                       content: self.pSearchMenuDialogContent
@@ -282,7 +287,7 @@ namespace
                         arrow: self.pSearchMenuDialogArrow
                  arrowOutline: self.pSearchMenuDialogArrowOutline
                             x: useSmallScreen ? 20 : 430
-                            y: useSmallScreen ? 85 : 20
+                            y: useSmallScreen ? 60 : 0
               alignHorizontal: AlignHorizontal::Left
                 alignVertical: AlignVertical::Top
                     arrowEdge: useSmallScreen ? ArrowEdge::Top : ArrowEdge::Left
