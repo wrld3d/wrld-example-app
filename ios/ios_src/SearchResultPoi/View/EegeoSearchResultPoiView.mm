@@ -78,10 +78,10 @@
         self.pTagIconContainer.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         [self.pTitleCardContainer addSubview: self.pTagIconContainer];
         
-        self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        self.pTitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor];
         [self.pTitleCardContainer addSubview: self.pTitleLabel];
         
-        self.pSubtitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        self.pSubtitleLabel = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextTitleColor];
         [self.pTitleCardContainer addSubview: self.pSubtitleLabel];
         
         self.pTitleCardHeaderLine = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
@@ -150,22 +150,22 @@
         self.pPoiImageLoadingSpinner.center = CGPointMake(0.0f, 0.0f);
         [self.pPreviewImage addSubview: self.pPoiImageLoadingSpinner];
         
-        self.pAddressContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        self.pAddressContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor];
         [self.pDetailsCardContainer addSubview: self.pAddressContent];
         
-        self.pDescriptionContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        self.pDescriptionContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor];
         [self.pDescriptionCardContainer addSubview: self.pDescriptionContent];
         
-        self.pTagsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        self.pTagsContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextCopyColor];
         [self.pTagsCardContainer addSubview: self.pTagsContent];
         
-        self.pPhoneContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextLinkColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        self.pPhoneContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextLinkColor];
         UITapGestureRecognizer* phoneTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnPhone:)];
         [self.pPhoneContent setUserInteractionEnabled:YES];
         [self.pPhoneContent addGestureRecognizer:phoneTappedGesture];
         [self.pDetailsCardContainer addSubview: self.pPhoneContent];
         
-        self.pWebContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextLinkColor :ExampleApp::Helpers::ColorPalette::UiBackgroundColor];
+        self.pWebContent = [self createLabel :ExampleApp::Helpers::ColorPalette::UiTextLinkColor];
         UITapGestureRecognizer* webTappedGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userTappedOnLink:)];
         [self.pWebContent setUserInteractionEnabled:YES];
         [self.pWebContent addGestureRecognizer:webTappedGesture];
@@ -958,11 +958,11 @@
      }];
 }
 
-- (UILabel*) createLabel:(UIColor*)textColor :(UIColor*)backgroundColor
+- (UILabel*) createLabel:(UIColor*)textColor
 {
     UILabel* pLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
     pLabel.textColor = textColor;
-    pLabel.backgroundColor = backgroundColor;
+    pLabel.backgroundColor = [UIColor clearColor];
     pLabel.textAlignment = NSTextAlignmentLeft;
     return pLabel;
 }
