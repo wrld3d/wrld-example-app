@@ -272,7 +272,7 @@ namespace ExampleApp
                                                                                                    startLocationLongitude,
                                                                                                    startLocationAltitude);
                 
-                const bool tryStartAtGpsLocation = ParseBoolOrDefault(document, TryStartAtGpsLocation, m_defaultConfig.TryStartAtGpsLocation());
+                const bool tryStartAtGpsLocation = ParseBoolOrDefault(document, TryStartAtGpsLocation, false);
                 
                 const bool performStartUpSearch = ParseBoolOrDefault(document, PerformStartUpSearch, m_defaultConfig.ShouldPerformStartUpSearch());
                 const std::string& startUpSearchTag = ParseStringOrDefault(document, StartUpSearchTag, m_defaultConfig.StartUpSearchTag());
