@@ -31,6 +31,7 @@
 			android:layout_height="36dp"
 			android:layout_centerVertical="true"
 			android:layout_alignParentRight="true"
+			style="?android:attr/borderlessButtonStyle"
 			android:background="@drawable/button_pin_close_states"/>
 
 	</RelativeLayout>

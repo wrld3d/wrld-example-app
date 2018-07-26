@@ -39,6 +39,7 @@
 			android:layout_width="36dp"
 			android:layout_height="36dp"
 			android:gravity="right|center_vertical"
+			style="?android:attr/borderlessButtonStyle"
 			android:background="@drawable/button_pin_close_states"/>
 
 	</LinearLayout>
