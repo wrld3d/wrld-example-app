@@ -72,13 +72,19 @@
         self.pClearCacheButton = [[[UIButton alloc] init] autorelease];
         [self.pClearCacheButton setTitle:@"OK" forState:UIControlStateNormal];
         [self.pClearCacheButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
-        self.pClearCacheButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
+        [self.pClearCacheButton setDefaultStatesWithNormalImageName:@""
+                                                 highlightImageName:@""
+                                              normalBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor
+                                           highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColorAlt];
         [self.pClearCacheButton addTarget:self action:@selector(cacheClearSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
         [self.pContentContainer addSubview:self.pClearCacheButton];
         
         self.pReplayTutorialsButton = [[[UIButton alloc] init] autorelease];
         [self.pReplayTutorialsButton addTarget:self action:@selector(replayTutorialsSelectionHandler) forControlEvents:UIControlEventTouchUpInside];
-        self.pReplayTutorialsButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UISeparatorColor;
+        [self.pReplayTutorialsButton setDefaultStatesWithNormalImageName:@""
+                                                      highlightImageName:@""
+                                                   normalBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor
+                                                highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColorAlt];
         [self.pReplayTutorialsButton setTitle:@"OK" forState:UIControlStateNormal];
         [self.pReplayTutorialsButton.titleLabel setFont:[UIFont systemFontOfSize:14]];
         [self.pContentContainer addSubview:self.pReplayTutorialsButton];

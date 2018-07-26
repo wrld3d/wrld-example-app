@@ -44,13 +44,19 @@
 
         // cancel button
         self.pCancelButton = [[[UIButton alloc] initWithFrame: CGRectMake(0, 0, buttonSize, buttonSize)] autorelease];
-        [self.pCancelButton setDefaultStatesWithImageNames:@"button_close_place_pin_off" :@"button_close_place_pin_on"];
+        [self.pCancelButton setDefaultStatesWithNormalImageName:@"button_close_place_pin_off"
+                                             highlightImageName:@"button_close_place_pin_off"
+                                          normalBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor
+                                       highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColorAlt];
         [self.pCancelButton addTarget:self action:@selector(onCancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview: self.pCancelButton];
 
         // confirm button
         self.pConfirmButton = [[[UIButton alloc] initWithFrame: CGRectMake(containerWidth - buttonSize, 0, buttonSize, buttonSize)] autorelease];
-        [self.pConfirmButton setDefaultStatesWithImageNames:@"button_ok_place_pin_off" :@"button_ok_place_pin_on"];
+        [self.pConfirmButton setDefaultStatesWithNormalImageName:@"button_ok_place_pin_off"
+                                              highlightImageName:@"button_ok_place_pin_off"
+                                           normalBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor
+                                        highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColorAlt];
         [self.pConfirmButton addTarget:self action:@selector(onOkayButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview: self.pConfirmButton];
         

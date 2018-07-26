@@ -44,13 +44,9 @@ set(resources ${resources}
         Resources/BinButton_Down@2x.png
         Resources/BinButton_Down@3x.png
         Resources/button_add_pin_off.png
-        Resources/button_add_pin_off@0.75x.png
-        Resources/button_add_pin_off@1.5x.png
         Resources/button_add_pin_off@2x.png
         Resources/button_add_pin_off@3x.png
         Resources/button_add_pin_on.png
-        Resources/button_add_pin_on@0.75x.png
-        Resources/button_add_pin_on@1.5x.png
         Resources/button_add_pin_on@2x.png
         Resources/button_add_pin_on@3x.png
         Resources/button_checkbox_off.png
@@ -132,13 +128,9 @@ set(resources ${resources}
         Resources/button_photo_on@2x.png
         Resources/button_photo_on@3x.png
         Resources/button_remove_pin_off.png
-        Resources/button_remove_pin_off@0.75x.png
-        Resources/button_remove_pin_off@1.5x.png
         Resources/button_remove_pin_off@2x.png
         Resources/button_remove_pin_off@3x.png
         Resources/button_remove_pin_on.png
-        Resources/button_remove_pin_on@0.75x.png
-        Resources/button_remove_pin_on@1.5x.png
         Resources/button_remove_pin_on@2x.png
         Resources/button_remove_pin_on@3x.png
         Resources/button_search_off.png
@@ -182,60 +174,40 @@ set(resources ${resources}
         Resources/compass_point_on@2x.png
         Resources/compass_point_on@3x.png
         Resources/CompassNew.png
-        Resources/CompassNew@0.75x.png
-        Resources/CompassNew@1.5x.png
         Resources/CompassNew@2x.png
         Resources/CompassNew@3x.png
         Resources/CompassNew@4x.png
         Resources/CompassNewLocate.png
-        Resources/CompassNewLocate@0.75x.png
-        Resources/CompassNewLocate@1.5x.png
         Resources/CompassNewLocate@2x.png
         Resources/CompassNewLocate@3x.png
         Resources/CompassNewLocate@4x.png
         Resources/CompassNewLocate_Down.png
-        Resources/CompassNewLocate_Down@0.75x.png
-        Resources/CompassNewLocate_Down@1.5x.png
         Resources/CompassNewLocate_Down@2x.png
         Resources/CompassNewLocate_Down@3x.png
         Resources/CompassNewLocate_Down@4x.png
         Resources/CompassNewLocked.png
-        Resources/CompassNewLocked@0.75x.png
-        Resources/CompassNewLocked@1.5x.png
         Resources/CompassNewLocked@2x.png
         Resources/CompassNewLocked@3x.png
         Resources/CompassNewLocked@4x.png
         Resources/CompassNewLocked_Down.png
-        Resources/CompassNewLocked_Down@0.75x.png
-        Resources/CompassNewLocked_Down@1.5x.png
         Resources/CompassNewLocked_Down@2x.png
         Resources/CompassNewLocked_Down@3x.png
         Resources/CompassNewLocked_Down@4x.png
         Resources/CompassNewUnlocked.png
-        Resources/CompassNewUnlocked@0.75x.png
-        Resources/CompassNewUnlocked@1.5x.png
         Resources/CompassNewUnlocked@2x.png
         Resources/CompassNewUnlocked@3x.png
         Resources/CompassNewUnlocked@4x.png
         Resources/CompassNewUnlocked_Down.png
-        Resources/CompassNewUnlocked_Down@0.75x.png
-        Resources/CompassNewUnlocked_Down@1.5x.png
         Resources/CompassNewUnlocked_Down@2x.png
         Resources/CompassNewUnlocked_Down@3x.png
         Resources/CompassNewUnlocked_Down@4x.png
         Resources/contact_icon_email.png
-        Resources/contact_icon_email@0.75x.png
-        Resources/contact_icon_email@1.5x.png
         Resources/contact_icon_email@2x.png
         Resources/contact_icon_email@3x.png
         Resources/contact_icon_facebook.png
         Resources/contact_icon_facebook.png@2x.png
-        Resources/contact_icon_facebook@0.75x.png
-        Resources/contact_icon_facebook@1.5x.png
         Resources/contact_icon_facebook@3x.png
         Resources/contact_icon_twitter.png
-        Resources/contact_icon_twitter@0.75x.png
-        Resources/contact_icon_twitter@1.5x.png
         Resources/contact_icon_twitter@2x.png
         Resources/contact_icon_twitter@3x.png
         Resources/default_water_reflection_cube_map_negX.png
@@ -245,33 +217,21 @@ set(resources ${resources}
         Resources/default_water_reflection_cube_map_posY.png
         Resources/default_water_reflection_cube_map_posZ.png
         Resources/detail_icon_description.png
-        Resources/detail_icon_description@0.75x.png
-        Resources/detail_icon_description@1.5x.png
         Resources/detail_icon_description@2x.png
         Resources/detail_icon_description@3x.png
         Resources/detail_icon_description_active.png
-        Resources/detail_icon_description_active@0.75x.png
-        Resources/detail_icon_description_active@1.5x.png
         Resources/detail_icon_description_active@2x.png
         Resources/detail_icon_description_active@3x.png
         Resources/detail_icon_email.png
-        Resources/detail_icon_email@0.75x.png
-        Resources/detail_icon_email@1.5x.png
         Resources/detail_icon_email@2x.png
         Resources/detail_icon_email@3x.png
         Resources/detail_icon_email_active.png
-        Resources/detail_icon_email_active@0.75x.png
-        Resources/detail_icon_email_active@1.5x.png
         Resources/detail_icon_email_active@2x.png
         Resources/detail_icon_email_active@3x.png
         Resources/detail_icon_web_link.png
-        Resources/detail_icon_web_link@0.75x.png
-        Resources/detail_icon_web_link@1.5x.png
         Resources/detail_icon_web_link@2x.png
         Resources/detail_icon_web_link@3x.png
         Resources/detail_icon_web_link_active.png
-        Resources/detail_icon_web_link_active@0.75x.png
-        Resources/detail_icon_web_link_active@1.5x.png
         Resources/detail_icon_web_link_active@2x.png
         Resources/detail_icon_web_link_active@3x.png
         Resources/dummy_transparent.png
@@ -345,13 +305,9 @@ set(resources ${resources}
         Resources/EmbeddedTheme/SanFrancisco_water_normalmap.pvr
         Resources/EmbeddedTheme/SanFrancisco_water_reflectionmap.pvr
         Resources/exit_blue_x_button.png
-        Resources/exit_blue_x_button@0.75x.png
-        Resources/exit_blue_x_button@1.5x.png
         Resources/exit_blue_x_button@2x.png
         Resources/exit_blue_x_button@3x.png
         Resources/exit_dark_blue_x_button.png
-        Resources/exit_dark_blue_x_button@0.75x.png
-        Resources/exit_dark_blue_x_button@1.5x.png
         Resources/exit_dark_blue_x_button@2x.png
         Resources/exit_dark_blue_x_button@3x.png
         Resources/floor_selection_bottom.png
@@ -1171,39 +1127,27 @@ set(resources ${resources}
         Resources/PlaceholderCube/placeholder_cube_posZ.png
         Resources/placejumps.json
         Resources/poi_address.png
-        Resources/poi_address@0.75x.png
-        Resources/poi_address@1.5x.png
         Resources/poi_address@2x.png
         Resources/poi_address@3x.png
         Resources/poi_address_active.png
-        Resources/poi_address_active@0.75x.png
-        Resources/poi_address_active@1.5x.png
         Resources/poi_address_active@2x.png
         Resources/poi_address_active@3x.png
         Resources/poi_marker.png
         Resources/poi_marker@2x.png
         Resources/poi_marker@3x.png
         Resources/poi_phone.png
-        Resources/poi_phone@0.75x.png
-        Resources/poi_phone@1.5x.png
         Resources/poi_phone@2x.png
         Resources/poi_phone@3x.png
         Resources/poi_phone_active.png
-        Resources/poi_phone_active@0.75x.png
-        Resources/poi_phone_active@1.5x.png
         Resources/poi_phone_active@2x.png
         Resources/poi_phone_active@3x.png
         Resources/poi_placeholder.png
         Resources/poi_placeholder@2x.png
         Resources/poi_placeholder@3x.png
         Resources/poi_tag.png
-        Resources/poi_tag@0.75x.png
-        Resources/poi_tag@1.5x.png
         Resources/poi_tag@2x.png
         Resources/poi_tag@3x.png
         Resources/poi_tag_active.png
-        Resources/poi_tag_active@0.75x.png
-        Resources/poi_tag_active@1.5x.png
         Resources/poi_tag_active@2x.png
         Resources/poi_tag_active@3x.png
         Resources/RecalculateSpinner.png
@@ -1234,14 +1178,10 @@ set(resources ${resources}
         Resources/search_results_bar_small@2x.png
         Resources/search_results_bar_small@3x.png
         Resources/search_results_directions.png
-        Resources/search_results_directions@0.75x.png
-        Resources/search_results_directions@1.5x.png
         Resources/search_results_directions@2x.png
         Resources/search_results_directions@3x.png
         Resources/search_results_directions@4x.png
         Resources/search_results_directions_down.png
-        Resources/search_results_directions_down@0.75x.png
-        Resources/search_results_directions_down@1.5x.png
         Resources/search_results_directions_down@2x.png
         Resources/search_results_directions_down@3x.png
         Resources/search_results_directions_down@4x.png
@@ -1258,18 +1198,12 @@ set(resources ${resources}
         Resources/SearchResultOnMap/pin_sheet_0@2x.png
         Resources/SearchResultOnMap/pin_sheet_0@3x.png
         Resources/SearchResults_Fade.png
-        Resources/SearchResults_Fade@0.75x.png
-        Resources/SearchResults_Fade@1.5x.png
         Resources/SearchResults_Fade@2x.png
         Resources/SearchResults_Fade@3x.png
         Resources/SearchResults_ScrollButton.png
-        Resources/SearchResults_ScrollButton@0.75x.png
-        Resources/SearchResults_ScrollButton@1.5x.png
         Resources/SearchResults_ScrollButton@2x.png
         Resources/SearchResults_ScrollButton@3x.png
         Resources/SearchResults_ScrollButton_Down.png
-        Resources/SearchResults_ScrollButton_Down@0.75x.png
-        Resources/SearchResults_ScrollButton_Down@1.5x.png
         Resources/SearchResults_ScrollButton_Down@2x.png
         Resources/SearchResults_ScrollButton_Down@3x.png
         Resources/ShareIcon.png

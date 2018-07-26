@@ -9,9 +9,9 @@
 
 - (void)setDefaultStates
 {
-    [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::UiBorderColor)
-                    forState:UIControlStateNormal];
     [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::ButtonPressColor)
+                    forState:UIControlStateNormal];
+    [self setBackgroundImage:ExampleApp::Helpers::ImageHelpers::ImageFromColor(ExampleApp::Helpers::ColorPalette::ButtonPressColorAlt)
                     forState:UIControlStateHighlighted];
 }
 
@@ -30,7 +30,10 @@
                                       :(NSString*)highlightImageName
 {
   
-    [self setDefaultStatesWithNormalImageName:normalImageName highlightImageName:highlightImageName normalBackgroundColor:ExampleApp::Helpers::ColorPalette::UiBorderColor highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor];
+    [self setDefaultStatesWithNormalImageName:normalImageName
+                           highlightImageName:highlightImageName
+                        normalBackgroundColor:ExampleApp::Helpers::ColorPalette::UiBackgroundColor
+                     highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor];
 }
 
 

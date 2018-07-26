@@ -37,9 +37,9 @@ namespace
     if(self)
     {
         self->m_pRemovePinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
-        self->m_pRemovePinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") retain];
+        self->m_pRemovePinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
         self->m_pAddPinButtonImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
-        self->m_pAddPinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_on") retain];
+        self->m_pAddPinButtonHighlightImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
         
         m_pController = [UIViewController alloc];
         [m_pController setView:self];
@@ -120,7 +120,7 @@ namespace
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pCloseButton.contentMode = UIViewContentModeScaleAspectFit;
         self.pCloseButton.clipsToBounds = YES;
-        [self.pCloseButton setDefaultStatesWithImageNames:@"exit_blue_x_button" :@"exit_dark_blue_x_button"];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
@@ -130,8 +130,10 @@ namespace
         
         self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pPinButton setTitle:@"Save Location" forState:UIControlStateNormal];
-        [self.pPinButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBorderColor forState:UIControlStateHighlighted];
-        [self.pPinButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
+        [self.pPinButton setDefaultStatesWithNormalImageName:@"button_close_off"
+                                          highlightImageName:@"button_close_off"
+                                       normalBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor
+                                    highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColorAlt];
         [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pDropPinContainer addSubview: self.pPinButton];
         
