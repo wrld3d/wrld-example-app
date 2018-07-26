@@ -23,7 +23,7 @@
     <color name="ui_background">#FFFFFF</color>
     <color name="ui_border">#1256be</color>
     <color name="button_press">#CDFC0D</color>
-    <color name="menu_button_press">#FFCDFC0D</color>
+    <color name="menu_button_press">#002B63</color>
     <color name="menu_text_press">#002E63</color>
     
     <color name="table_header_press">#82EBFF</color>
