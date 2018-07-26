@@ -13,6 +13,7 @@ namespace ExampleApp
             extern UIColor* UiBorderColor;
             
             extern UIColor* ButtonPressColor;
+            extern UIColor* ButtonPressColorAlt;
             
             extern UIColor* ModalBackgroundColor;
             

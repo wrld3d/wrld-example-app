@@ -2,6 +2,7 @@
 
 #import "HeaderView.h"
 #import "UIColors.h"
+#import "UIButton+DefaultStates.h"
 
 @implementation HeaderView
 
@@ -21,12 +22,8 @@ const CGFloat seperatorHieght = 1;
         [self addSubview:self.pTitleLabel];
         
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
-        self.pCloseButton.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
-        self.pCloseButton.imageView.backgroundColor = ExampleApp::Helpers::ColorPalette::UiBackgroundColor;
         
-        UIImage *closeImage = [UIImage imageNamed:@"Close_Blue"];
-        
-        [self.pCloseButton setImage:closeImage forState:UIControlStateNormal];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
         [self.pCloseButton addTarget:self action:@selector(onCloseButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:self.pCloseButton];

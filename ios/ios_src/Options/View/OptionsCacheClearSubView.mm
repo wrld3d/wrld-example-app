@@ -27,9 +27,14 @@
         
         self.pCancelButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pCancelButton setTitle:@"No" forState:UIControlStateNormal];
-        self.pCancelButton.backgroundColor = UIColor.whiteColor;
-        [self.pCancelButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBorderColor
+        [self.pCancelButton setDefaultStatesWithNormalImageName:@""
+                                             highlightImageName:@""
+                                          normalBackgroundColor:ExampleApp::Helpers::ColorPalette::UiBackgroundColor
+                                       highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor];
+        [self.pCancelButton setTitleColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor
                                  forState:UIControlStateNormal];
+        [self.pCancelButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBackgroundColor
+                                 forState:UIControlStateHighlighted];
         self.pCancelButton.layer.borderWidth = 1.0f;
         self.pCancelButton.layer.borderColor = ExampleApp::Helpers::ColorPalette::UiBorderColor.CGColor;
         
@@ -38,7 +43,10 @@
         
         self.pConfirmButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pConfirmButton setTitle:@"Yes" forState:UIControlStateNormal];
-        self.pConfirmButton.backgroundColor  = ExampleApp::Helpers::ColorPalette::UiBorderColor;
+        [self.pConfirmButton setDefaultStatesWithNormalImageName:@""
+                                              highlightImageName:@""
+                                           normalBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor
+                                        highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColorAlt];
         [self.pConfirmButton addTarget:self action:@selector(handleConfirmClicked) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview: self.pConfirmButton];
         

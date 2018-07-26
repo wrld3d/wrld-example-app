@@ -35,9 +35,9 @@
         m_showDirectionsButton = showDirectionsButton;
         
         self->m_pRemovePinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
-        self->m_pRemovePinHighlightButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_on") retain];
+        self->m_pRemovePinHighlightButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_remove_pin_off") retain];
         self->m_pAddPinButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
-        self->m_pAddPinHighlightButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_on") retain];
+        self->m_pAddPinHighlightButtonBackgroundImage = [ExampleApp::Helpers::ImageHelpers::LoadImage(@"button_add_pin_off") retain];
         
         m_pInterop = pInterop;
         self.alpha = 0.f;
@@ -111,7 +111,7 @@
         self.pCloseButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pCloseButton.contentMode = UIViewContentModeScaleAspectFit;
         self.pCloseButton.clipsToBounds = YES;
-        [self.pCloseButton setDefaultStatesWithImageNames:@"exit_blue_x_button" :@"exit_dark_blue_x_button"];
+        [self.pCloseButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
         [self.pCloseButton addTarget:self action:@selector(handleClosedButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pCloseButtonContainer addSubview: self.pCloseButton];
         
@@ -121,8 +121,10 @@
         
         self.pPinButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pPinButton setTitle:@"Drop Pin" forState:UIControlStateNormal];
-        [self.pPinButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBorderColor forState:UIControlStateHighlighted];
-        [self.pPinButton setDefaultStatesWithImageNames:@"button_close_off" :@"button_close_on"];
+        [self.pPinButton setDefaultStatesWithNormalImageName:@"button_close_off"
+                                          highlightImageName:@"button_close_off"
+                                       normalBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColor
+                                    highlightBackgroundColor:ExampleApp::Helpers::ColorPalette::ButtonPressColorAlt];
         [self.pPinButton addTarget:self action:@selector(handlePinButtonSelected) forControlEvents:UIControlEventTouchUpInside];
         [self.pDropPinContainer addSubview: self.pPinButton];
         
@@ -133,7 +135,6 @@
         
         self.pDirectionsButton = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         [self.pDirectionsButton setTitle:@"   Directions" forState:UIControlStateNormal];
-        [self.pDirectionsButton setTitleColor:ExampleApp::Helpers::ColorPalette::UiBorderColor forState:UIControlStateHighlighted];
         {
             NSBundle* bundle = [NSBundle bundleWithIdentifier:@"com.wrld.WrldNav"];
             UIImage* image = [UIImage imageNamed:@"start_icon" inBundle:bundle compatibleWithTraitCollection:nil];
