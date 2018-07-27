@@ -178,6 +178,24 @@ namespace
         EXAMPLE_LOG("Found a valid config.");
         return true;
     }
+
+    void FlushGLErrors()
+    {
+        EGLint eglError = eglGetError();
+        while(eglError!=EGL_SUCCESS)
+        {
+            Eegeo_TTY("eglError (0x%x) at %s (%d)\n", eglError, __FILE__, __LINE__);
+            eglError = eglGetError();
+        }
+
+        GLint glError = glGetError();
+        while(glError!=0)
+        {
+            Eegeo_TTY("glError (0x%x) at %s (%d)\n", glError, __FILE__, __LINE__);
+            glError = glGetError();
+        }
+    }
+
 }
 
 bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
@@ -242,6 +260,9 @@ bool GlDisplayService::TryBindDisplay(ANativeWindow& window)
 
     Eegeo_GL(eglQuerySurface(m_display, surface, EGL_WIDTH, &w));
     Eegeo_GL(eglQuerySurface(m_display, surface, EGL_HEIGHT, &h));
+
+    // Re: MPLY-8466. Some devices fire an erroneous GL_OUT_OF_MEMORY after calling this, despite a successful result.
+    FlushGLErrors();
 
     m_surface = surface;
 
