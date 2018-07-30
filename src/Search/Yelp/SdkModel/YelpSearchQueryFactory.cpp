@@ -44,7 +44,7 @@ namespace ExampleApp
                     
                     int GetSearchRadius(ExampleApp::AppCamera::SdkModel::IAppCameraController& cameraController)
                     {
-                        const float SearchRadiusMin = 50.0f;
+                        const float SearchRadiusMin = 250.0f;
                         const float SearchRadiusMax = 40000.0f;
                         double distanceToInterest = (cameraController.GetCameraState().InterestPointEcef() - cameraController.GetCameraState().LocationEcef()).Length();
                         float radius = (distanceToInterest * Eegeo::Math::Tan(cameraController.GetRenderCamera().GetFOV()));
