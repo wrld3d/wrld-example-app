@@ -246,6 +246,7 @@ public class BackgroundThreadActivity extends MainActivity
     public void surfaceChanged(final SurfaceHolder holder, int format, int width, int height)
     {
         m_surfaceHolder = holder;
+        m_rotationInitialised = !setDisplayOrientationBasedOnDeviceProperties();
         if (!m_rotationInitialised)
         {
             return;
