@@ -21,7 +21,7 @@
     m_currentResult = searchResult;
     [WRLDLabelTextHighlighter applyAttributedTextTo: self.titleLabel
                                            fullText: searchResult.title
-                                  regularAttributes: self.titleLabelRegularAttrs
+                                  regularAttributes: self.titleLabelHighlightAttrs
                                       highlightText: query.queryString
                                 highlightAttributes: self.titleLabelHighlightAttrs];
 
@@ -29,7 +29,7 @@
                                            fullText: searchResult.subTitle
                                   regularAttributes: self.descriptionLabelRegularAttrs
                                       highlightText: query.queryString
-                                highlightAttributes: self.descriptionLabelHighlightAttrs];
+                                highlightAttributes: self.descriptionLabelRegularAttrs];
 
     if(self.iconImageView && searchResult.iconKey)
     {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,6 +10,11 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Assistant-Regular.ttf">
+            <string>Assistant-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -25,12 +30,12 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="EHf-7L-7Jr"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <fontDescription key="fontDescription" name="Assistant-Regular" family="Assistant" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Result Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HZD-pK-NuF">
-                        <rect key="frame" x="50" y="32" width="275" height="14"/>
+                        <rect key="frame" x="50" y="34" width="275" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="qtb-oy-n26"/>
                         </constraints>
@@ -86,7 +91,7 @@
                     <constraint firstItem="lEH-Pm-Dp7" firstAttribute="trailing" secondItem="vds-wd-o4k" secondAttribute="trailing" id="BkK-zW-PWK"/>
                     <constraint firstItem="lEH-Pm-Dp7" firstAttribute="bottom" secondItem="vds-wd-o4k" secondAttribute="bottom" id="FdK-xL-5Nb"/>
                     <constraint firstItem="HZD-pK-NuF" firstAttribute="trailing" secondItem="CgB-yw-eRF" secondAttribute="trailing" id="G4q-Ar-Urw"/>
-                    <constraint firstItem="HZD-pK-NuF" firstAttribute="top" secondItem="vds-wd-o4k" secondAttribute="centerY" id="M2f-4f-bOQ"/>
+                    <constraint firstItem="HZD-pK-NuF" firstAttribute="top" secondItem="vds-wd-o4k" secondAttribute="centerY" constant="2" id="M2f-4f-bOQ"/>
                     <constraint firstItem="CFW-dU-Qor" firstAttribute="top" secondItem="vds-wd-o4k" secondAttribute="top" id="OOa-EI-2Kp"/>
                     <constraint firstItem="CFW-dU-Qor" firstAttribute="leading" secondItem="vds-wd-o4k" secondAttribute="leading" id="Ub1-bz-ahw"/>
                     <constraint firstItem="lEH-Pm-Dp7" firstAttribute="top" secondItem="vds-wd-o4k" secondAttribute="top" id="WYR-1R-IUq"/>
