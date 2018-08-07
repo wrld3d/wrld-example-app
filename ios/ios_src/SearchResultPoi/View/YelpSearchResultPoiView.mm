@@ -343,7 +343,7 @@ namespace
 {
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     ViewController *viewController = (ViewController *)window.rootViewController;
-    self.frame = [viewController largePopoverFrame];
+    self.frame = [viewController largePopoverFrameWithConstrainedWidth:true];
     
     CGFloat mainWindowWidth = self.frame.size.width;
     CGFloat mainWindowHeight = self.frame.size.height;
@@ -469,12 +469,8 @@ namespace
     float currentLabelY = 0.f;
     float detailsCardY = 0.f;
     
-    
-    const float boundsWidth = static_cast<float>(self.superview.bounds.size.width);
-    const float boundsHeight = static_cast<float>(self.superview.bounds.size.height);
-    const float boundsOccupyMultiplier = 0.9f;
-    const float mainWindowWidth = std::min(boundsWidth * boundsOccupyMultiplier, 348.f);
-    const float mainWindowHeight = boundsHeight * boundsOccupyMultiplier;
+    CGFloat mainWindowWidth = self.frame.size.width;
+    CGFloat mainWindowHeight = self.frame.size.height;
     const float detailsImageSize = 18.f;
     const float detailsImageToTextMargin = 6.f;
     const float headerMargin = 10.f;

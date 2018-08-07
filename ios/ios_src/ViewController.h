@@ -23,7 +23,7 @@
     }
 }
 
--(CGRect) largePopoverFrame
+-(CGRect) largePopoverFrameWithConstrainedWidth:(bool)shouldCapWidth
 {
     UIEdgeInsets safeInsets = [self safeInsets];
     
@@ -31,14 +31,19 @@
     CGFloat bottomMargin = 30;
     CGFloat topMargin = 10;
     
-    const CGFloat boundsWidth = self.view.bounds.size.width - 2*sideMargin;
+    CGFloat boundsWidth = self.view.bounds.size.width - 2*sideMargin;
+
     const CGFloat boundsHeight = self.view.bounds.size.height - safeInsets.top - safeInsets.bottom - bottomMargin - topMargin;
     
     const bool useFullScreenSize = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone;
     
     const CGFloat boundsOccupyWidthMultiplier = useFullScreenSize ? 1.0f : (0.4f);
     const CGFloat boundsOccupyHeightMultiplier = useFullScreenSize ? 1.0f : (0.9);
-    const CGFloat mainWindowWidth = boundsWidth * boundsOccupyWidthMultiplier;
+    CGFloat mainWindowWidth = boundsWidth * boundsOccupyWidthMultiplier;
+    if(shouldCapWidth)
+    {
+        mainWindowWidth = MIN(boundsWidth * boundsOccupyWidthMultiplier, 348.f);
+    }
     const CGFloat mainWindowHeight = boundsHeight * boundsOccupyHeightMultiplier;
     const CGFloat mainWindowX = (boundsWidth * 0.5f) - (mainWindowWidth * 0.5f) ;
     const CGFloat mainWindowY = (boundsHeight * 0.5f) - (mainWindowHeight * 0.5f)  ;
@@ -47,6 +52,11 @@
                       mainWindowY + safeInsets.top + topMargin,
                       mainWindowWidth,
                       mainWindowHeight);
+}
+
+-(CGRect) largePopoverFrame
+{
+    return [self largePopoverFrameWithConstrainedWidth:false];
 }
 
 @end
