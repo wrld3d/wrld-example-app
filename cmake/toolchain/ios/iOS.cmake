@@ -29,11 +29,10 @@
 #  A macro used to find executable programs on the host system, not within the iOS environment.
 #  Thanks to the android-cmake project for providing the command
 
-cmake_minimum_required(VERSION 3.2)
-# todo - 
+
 # 3.12 required for legacy build system support with Xcode 10:
 # https://gitlab.kitware.com/cmake/cmake/issues/18099
-#cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.12)
 
 # Informational Xcode version
 message(STATUS "Xcode version:" )

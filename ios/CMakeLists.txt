@@ -1,8 +1,6 @@
-cmake_minimum_required(VERSION 3.2)
-# todo - 
 # 3.12 required for legacy build system support with Xcode 10:
 # https://gitlab.kitware.com/cmake/cmake/issues/18099
-#cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.12)
 
 set(CMAKE_TOOLCHAIN_FILE "../cmake/toolchain/ios/iOS.cmake")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/templates/ios)
