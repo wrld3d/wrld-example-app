@@ -49,13 +49,7 @@ if [ $resultcode -ne 0 ]; then
     exit $resultcode
 fi
 
-(cd $projectPath && python ../embed_frameworks.py "$xcodeTarget")
 
-resultcode=$?
-if [ $resultcode -ne 0 ]; then
-    echo "FAILED TO EMBED SEARCH WIDGET IN PROJECT"
-    exit $resultcode
-fi
 
 #(cd $projectPath && xcodebuild -target $xcodeTarget -arch "i386" -sdk "iphonesimulator")
 #resultcode=$?
