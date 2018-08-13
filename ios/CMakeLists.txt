@@ -1,4 +1,8 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.2)
+# todo - 
+# 3.12 required for legacy build system support with Xcode 10:
+# https://gitlab.kitware.com/cmake/cmake/issues/18099
+#cmake_minimum_required(VERSION 3.12)
 
 set(CMAKE_TOOLCHAIN_FILE "../cmake/toolchain/ios/iOS.cmake")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/templates/ios)
@@ -11,6 +15,10 @@ if(NOT ${IOS})
 	message(FATAL_ERROR "Incorrect toolchain set: ${CMAKE_TOOLCHAIN_FILE}")
 endif(NOT ${IOS})
 
+if (NOT DEFINED DEVELOPMENT_TEAM)
+  message (STATUS "No DEVELOPMENT_TEAM specified - if code signing for running on an iOS devicde is required, pass a valid development team id with -DDEVELOPMENT_TEAM=<YOUR_APPLE_DEVELOPER_TEAM_ID>")
+endif()
+
 if(NOT TARGET_NAME)
   set(TARGET_NAME "ExampleApp")
   message("Using default target: ${TARGET_NAME}")
@@ -19,6 +27,10 @@ endif(NOT TARGET_NAME)
 
 project(${TARGET_NAME})
 set(executable_name ${TARGET_NAME})
+
+
+include(EmbedFramework)
+
 
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
   include("${CMAKE_CURRENT_SOURCE_DIR}/Include/eegeo/CMakeLists.txt")
@@ -43,43 +55,50 @@ set(EEGEO_PLIST_BUNDLE_SHORT_VERSION_STRING "\${PRODUCT_VERSION}")
 set(EEGEO_PLIST_BUNDLE_DISPLAY_NAME "WRLD")
 
 # compiler/linker settings
-set(CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphoneos;-iphonesimulator")
-set(CMAKE_)
-set(CMAKE_OSX_ARCHITECTURES "armv7;arm64;i386")
 set(IOS_WARNING_FLAGS "-Wmost -Werror -Wno-four-char-constants -Wno-unknown-pragmas -Wno-reorder")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ ${IOS_WARNING_FLAGS}")
-set(eegeo_sdk_libs "-lapps-on-maps-cpp11 -lapps-on-maps-cpp11-sim -lsdk-extensions-sqlite-cpp11 -lsdk-extensions-sqlite-cpp11-sim")
+
+set(static_libs 
+  apps-on-maps-cpp11
+  apps-on-maps-cpp11-sim
+  sdk-extensions-sqlite-cpp11
+  sdk-extensions-sqlite-cpp11-sim
+  turbojpeg
+  z
+  curl
+  uv
+  Flurry_6.0.0
+  )
 
 set(ios_frameworks 
-  "-framework CoreLocation
-  -framework CoreFoundation 
-  -framework MobileCoreServices 
-  -framework SystemConfiguration 
-  -framework CFNetwork 
-  -framework GLKit 
-  -framework OpenGLES 
-  -framework UIKit 
-  -framework Foundation 
-  -framework QuartzCore 
-  -framework AVFoundation 
-  -framework CoreGraphics 
-  -framework CoreData
-  -framework Security
-  -framework CoreMotion
-  -framework CoreBluetooth
-  -framework IndoorAtlas
-  -framework SLIndoorLocation
-  -framework WRLDSearchWidget
-  -framework WrldNav
-  -framework WrldNavWidget
-  -framework WrldUtils
-  -framework HockeySDK")
+  CoreLocation
+  CoreFoundation 
+  MobileCoreServices 
+  SystemConfiguration 
+  CFNetwork 
+  GLKit 
+  OpenGLES 
+  UIKit 
+  Foundation 
+  QuartzCore 
+  AVFoundation 
+  CoreGraphics 
+  CoreData
+  Security
+  CoreMotion
+  CoreBluetooth
+  IndoorAtlas
+  SLIndoorLocation
+  HockeySDK
+  WRLDSearchWidget
+  WrldNav
+  WrldNavWidget
+  WrldUtils
+  )
 
-set(linker_search_paths "-LInclude/eegeo -LInclude")
+
 set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab ${CMAKE_CURRENT_SOURCE_DIR}/Include/WrldSearchWidget ${CMAKE_CURRENT_SOURCE_DIR}/Include/HockeySDK-iOS/HockeySDK.embeddedframework ${CMAKE_CURRENT_SOURCE_DIR}/Include/WrldSDK")
-set(libs "${eegeo_sdk_libs} -lturbojpeg -lz -lcurl -luv -lFlurry_6.0.0")
-set(CMAKE_EXE_LINKER_FLAGS "${ios_frameworks} ${linker_search_paths} ${libs}")
 
 include_directories(${headers})
 
@@ -96,13 +115,32 @@ ${executable_name}
 PROPERTIES 
 RESOURCE "${allresources}"
 )
+
+
+
+
+foreach (FRAMEWORK_NAME ${ios_frameworks})
+  list(APPEND linked_ios_frameworks "-framework ${FRAMEWORK_NAME}")
+endforeach (FRAMEWORK_NAME)
+
+foreach (LIB_NAME ${static_libs})
+  list(APPEND linked_static_libs "-l${LIB_NAME}")
+endforeach (LIB_NAME)
+
+
+
+target_link_libraries(${executable_name} ${linked_ios_frameworks})
+target_link_libraries(${executable_name} ${linked_static_libs})
+
   
 option(AUTOMATED_SCREENSHOTS "Build for screenshot automation." OFF)
 if(AUTOMATED_SCREENSHOTS)
   add_definitions(-DAUTOMATED_SCREENSHOTS)
 endif(AUTOMATED_SCREENSHOTS)
 
+
 # project settings
+set_xcode_property (${executable_name} LIBRARY_SEARCH_PATHS "Include/eegeo Include")
 set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=Debug] "dwarf")
 set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=MinSizeRel] "dwarf-with-dsym")
 set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=RelWithDebInfo] "dwarf-with-dsym")
@@ -110,7 +148,7 @@ set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=Release]
 
 set_xcode_property (${executable_name} GCC_TREAT_WARNINGS_AS_ERRORS "YES")
 set_xcode_property (${executable_name} CODE_SIGN_IDENTITY "iPhone Developer")
-set_xcode_property (${executable_name} DEVELOPMENT_TEAM "")
+set_xcode_property (${executable_name} DEVELOPMENT_TEAM "${DEVELOPMENT_TEAM}")
 set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "9.0")
 set_xcode_property (${executable_name} TARGETED_DEVICE_FAMILY "1,2")
 set_xcode_property (${executable_name} ENABLE_BITCODE "No")
@@ -170,4 +208,15 @@ set_target_properties(${PROJECT_NAME} PROPERTIES XCODE_ATTRIBUTE_ONLY_ACTIVE_ARC
 set_target_properties(${PROJECT_NAME} PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/build/Debug-iphoneos/
   RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/build/Release-iphoneos/)
+
+
+
+
+embed_framework(${executable_name} WRLDSearchWidget Include/WrldSearchWidget)
+embed_framework(${executable_name} WrldNav Include/WrldSDK)
+embed_framework(${executable_name} WrldNavWidget Include/WrldSDK)
+embed_framework(${executable_name} WrldUtils Include/WrldSDK)
+
+
+
 

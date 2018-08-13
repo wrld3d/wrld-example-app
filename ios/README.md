@@ -10,9 +10,10 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 ## Requirements
 
-- [Xcode](https://developer.apple.com/xcode/) (7.2 tested)
-- [CMake](https://cmake.org/) (3.1.1  or higher)
+- [Xcode](https://developer.apple.com/xcode/) (9.3 tested)
+- [CMake](https://cmake.org/) (3.2.0  or higher)
 - [Senion SDK](https://senion.com/)
+- For building and running on an iOS device, an Apple Developer Team ID from your [Apple Developer Account](https://developer.apple.com/account/#/membership/)
 
 ## Setup
 
@@ -20,10 +21,9 @@ Before you begin, ensure you have completed the initial steps as described in th
 	*	We recommend you run this step frequently to keep your SDK version up to date.
 2.  Copy your Senion SDK framework file into the [wrld-example-app/ios/Include/SenionLab/](https://github.com/wrld3d/wrld-example-app/tree/master/ios/Include/SenionLab) directory
 3.  In the `ios` directory, run `mkdir build` to create a build directory.
-4.  In the `ios/build` directory, run `cmake -G Xcode ..` to generate a project file.
-5.  Still in the `ios/build` directory, run `python ../embed_frameworks.py` to set the embed framework build phases in the project file.
-6.  Open the `ExampleApp.xcodeproj` project file in Xcode.
-7.  Build and run the ExampleApp target.
+4.  In the `ios/build` directory, run cmake to generate an Xcode project, also specifying your Apple Development Team id: `cmake -G Xcode -DDEVELOPMENT_TEAM=<YOUR_APPLE_DEVELOPMENT_TEAM_ID> ..`.
+5.  Open the `ExampleApp.xcodeproj` project file in Xcode.
+6.  Build and run the ExampleApp target.
 
 ## Building from the command line
 
