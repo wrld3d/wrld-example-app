@@ -25,6 +25,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.app.Activity;
@@ -35,11 +36,17 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.view.View;
 import android.app.SearchManager;
+import android.webkit.CookieManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.Constants;
 import net.hockeyapp.android.CrashManagerListener;
 import net.hockeyapp.android.NativeCrashManager;
+
+import static android.view.View.GONE;
 
 
 public class BackgroundThreadActivity extends MainActivity
@@ -60,6 +67,7 @@ public class BackgroundThreadActivity extends MainActivity
     private boolean m_rotationInitialised = false;
     private boolean m_locationPermissionRecieved;
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 52;
+    private WebView m_samlAuthWebView;
 
     static
     {
@@ -150,6 +158,50 @@ public class BackgroundThreadActivity extends MainActivity
                 }
             }
         });
+
+        m_samlAuthWebView = (WebView)findViewById(R.id.samlwebview);
+
+        // todo - should move this to a more appropriate place / its own view controller
+        WebSettings samlAuthSettings = m_samlAuthWebView.getSettings();
+
+        samlAuthSettings.setJavaScriptEnabled(true);
+        samlAuthSettings.setDomStorageEnabled(true);
+
+        m_samlAuthWebView.setWebViewClient(new WebViewClient()
+        {
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl)
+            {
+                /*
+                 * A lot of the examples suggest something like this:
+                 * if(errorCode==404)
+                 * However this does not give the expected results, instead use the defined constants:
+                 * ERROR_HOST_LOOKUP
+                 * ERROR_FILE_NOT_FOUND
+                 */
+
+                view.loadUrl("file:///android_asset/page_not_found.html");
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url)
+            {
+                // check cookies
+                CookieManager cookieManager = CookieManager.getInstance();
+
+                String cookies = " " + cookieManager.getCookie(url);
+                Log.println(Log.WARN, "CookieDebug", cookies);
+                if(cookies.contains("wrld-saml-wea-app-token")) // todo - this should be configurable.
+                {
+                    // cookie is present, hide webview.
+                    m_samlAuthWebView.setVisibility(GONE);
+                }
+
+            }
+        });
+
+        // Load SAML Auth Page. todo - put this in a config file.
+        m_samlAuthWebView.loadUrl("http://<YOUR-DESKTOP-IP-GOES-HERE>:3000");
 
 
     }

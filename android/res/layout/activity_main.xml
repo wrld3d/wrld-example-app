@@ -6,7 +6,7 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
-    <com.eegeo.entrypointinfrastructure.EegeoSurfaceView
+	<com.eegeo.entrypointinfrastructure.EegeoSurfaceView
         android:id="@+id/surface"
     	android:layout_width="fill_parent" 
     	android:layout_height="fill_parent"/>
@@ -17,6 +17,14 @@
     	android:layout_width="fill_parent" 
     	android:layout_height="fill_parent"
     	android:clipChildren="false"
-   		android:clipToPadding="false"/>
+   		android:clipToPadding="false">
+
+		<WebView
+			android:id="@+id/samlwebview"
+			android:layout_width="match_parent"
+			android:layout_height="520dp"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentStart="true" />
+	</RelativeLayout>
 
 </RelativeLayout>

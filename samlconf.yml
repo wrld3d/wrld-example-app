@@ -1,0 +1,21 @@
+production:
+ saml_sp_url_base: "http://localhost:3000"
+ saml_authentication_success_url: "http://<YOUR-IP-HERE>:3000"
+ saml_nameid_cookies: 
+  - "wrld-saml-wea-app-token"
+ saml_nameid_cookie_timeout: 60
+ saml_idp_entity_id: "https://capriza.github.io/samling/samling.html"
+ saml_idp_sso_target_url: "https://capriza.github.io/samling/samling.html"
+ saml_idp_slo_target_url: "https://capriza.github.io/samling/samling.html"
+ saml_idp_cert_fingerprint: "B7:11:A4:22:A0:57:9D:A6:30:06:3C:BF:AC:44:8F:90:BE:5A:E2:3F"
+ 
+development:
+ saml_sp_url_base: "http://localhost:3000"
+ saml_authentication_success_url: "http://<YOUR-IP-HERE>:3000"
+ saml_nameid_cookies: 
+  - "wrld-saml-wea-app-token"
+ saml_nameid_cookie_timeout: 60
+ saml_idp_entity_id: "https://capriza.github.io/samling/samling.html"
+ saml_idp_sso_target_url: "https://capriza.github.io/samling/samling.html"
+ saml_idp_slo_target_url: "https://capriza.github.io/samling/samling.html"
+ saml_idp_cert_fingerprint: "B7:11:A4:22:A0:57:9D:A6:30:06:3C:BF:AC:44:8F:90:BE:5A:E2:3F"
