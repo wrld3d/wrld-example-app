@@ -1,5 +1,7 @@
 # SAML Authentication (Android-Only) Example
 
+**Not intended for use in a production environment. Illustrative purposes only.**
+
 ### Requirements
 
 This is a branch intended for use alongside the [WRLD SAML SP](https://github.com/wrld3d/wrld-saml-sp). 
