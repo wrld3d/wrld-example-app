@@ -96,7 +96,17 @@ set(ios_frameworks
   )
 
 
-set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab ${CMAKE_CURRENT_SOURCE_DIR}/Include/WrldSearchWidget ${CMAKE_CURRENT_SOURCE_DIR}/Include/HockeySDK-iOS/HockeySDK.embeddedframework ${CMAKE_CURRENT_SOURCE_DIR}/Include/WrldSDK")
+if (CMAKE_SYSTEM_VERSION VERSION_LESS "12.0")
+  set (wrld_sdk_frameworks_dir Include/WrldSDK/iphoneos11.3)
+else()
+  set (wrld_sdk_frameworks_dir Include/WrldSDK/iphoneos12.0)
+endif()
+
+message (STATUS "Using WRLD frameworks from: ${wrld_sdk_frameworks_dir}")
+
+
+
+set(framework_search_paths "${CMAKE_CURRENT_SOURCE_DIR}/Include/IndoorAtlas ${CMAKE_CURRENT_SOURCE_DIR}/Include/SenionLab ${CMAKE_CURRENT_SOURCE_DIR}/Include/WrldSearchWidget ${CMAKE_CURRENT_SOURCE_DIR}/Include/HockeySDK-iOS/HockeySDK.embeddedframework ${CMAKE_CURRENT_SOURCE_DIR}/${wrld_sdk_frameworks_dir}")
 
 include_directories(${headers})
 
@@ -211,9 +221,9 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 
 embed_framework(${executable_name} WRLDSearchWidget Include/WrldSearchWidget)
-embed_framework(${executable_name} WrldNav Include/WrldSDK)
-embed_framework(${executable_name} WrldNavWidget Include/WrldSDK)
-embed_framework(${executable_name} WrldUtils Include/WrldSDK)
+embed_framework(${executable_name} WrldNav ${wrld_sdk_frameworks_dir})
+embed_framework(${executable_name} WrldNavWidget ${wrld_sdk_frameworks_dir})
+embed_framework(${executable_name} WrldUtils ${wrld_sdk_frameworks_dir})
 
 
 
