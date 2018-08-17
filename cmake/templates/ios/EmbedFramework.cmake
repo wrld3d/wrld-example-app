@@ -29,6 +29,19 @@ function(embed_framework target_name framework_name framework_src_dir)
       \"
   )
 
+  # Remove Headers from Framework in app bundle
+  add_custom_command(
+      TARGET ${target_name}
+      POST_BUILD COMMAND /bin/sh -c
+      \"
+      ${CMAKE_COMMAND} -E remove_directory "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}/${framework_name}.framework/Headers/" \&\>/dev/null \;
+      if [ $$\? -ne 0 ] \; then
+          echo "Failed to remove Headers from framework ${framework_name}" \;
+          exit 1 \;
+      fi
+      \"
+  )
+
   # Codesign framework
   add_custom_command(
       TARGET ${target_name}
