@@ -17,6 +17,18 @@ if (NOT DEFINED DEVELOPMENT_TEAM)
   message (STATUS "No DEVELOPMENT_TEAM specified - if code signing for running on an iOS devicde is required, pass a valid development team id with -DDEVELOPMENT_TEAM=<YOUR_APPLE_DEVELOPER_TEAM_ID>")
 endif()
 
+
+if (NOT DEFINED CODESIGN_EMBEDDED_FRAMEWORKS)
+  if (DEFINED DEVELOPMENT_TEAM)
+    set(CODESIGN_EMBEDDED_FRAMEWORKS 1)
+  else()
+    # for CI - enterprise signed apps resign framework. Skipping manual codesigning of embedded frameworks to avoid ambiguous codesign identity match with "iPhone Developer"
+    set(CODESIGN_EMBEDDED_FRAMEWORKS 0)
+  endif()
+endif()
+
+message (STATUS "using CODESIGN_EMBEDDED_FRAMEWORKS ${CODESIGN_EMBEDDED_FRAMEWORKS}")
+
 if(NOT TARGET_NAME)
   set(TARGET_NAME "ExampleApp")
   message("Using default target: ${TARGET_NAME}")
@@ -220,10 +232,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 
 
-embed_framework(${executable_name} WRLDSearchWidget Include/WrldSearchWidget)
-embed_framework(${executable_name} WrldNav ${wrld_sdk_frameworks_dir})
-embed_framework(${executable_name} WrldNavWidget ${wrld_sdk_frameworks_dir})
-embed_framework(${executable_name} WrldUtils ${wrld_sdk_frameworks_dir})
+embed_framework(${executable_name} WRLDSearchWidget Include/WrldSearchWidget ${CODESIGN_EMBEDDED_FRAMEWORKS})
+embed_framework(${executable_name} WrldNav ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS})
+embed_framework(${executable_name} WrldNavWidget ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS})
+embed_framework(${executable_name} WrldUtils ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS})
 
 
 

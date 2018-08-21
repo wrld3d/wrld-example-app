@@ -1,7 +1,7 @@
 
 
 # Copy and sign custom frameworks - equivalent to 'Embed framework' in Xcode IDE.
-function(embed_framework target_name framework_name framework_src_dir)
+function(embed_framework target_name framework_name framework_src_dir codesign_framework)
 
   # Create Frameworks folder in app bundle
   add_custom_command(
@@ -40,18 +40,20 @@ function(embed_framework target_name framework_name framework_src_dir)
   )
 
   # Codesign framework
-  add_custom_command(
-      TARGET ${target_name}
-      POST_BUILD COMMAND /bin/sh -c
-      \"
-      if codesign --force --verbose "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}/${framework_name}.framework" --sign '\${CODE_SIGN_IDENTITY}\'  \; then
-        echo "codesign framework ${framework_name} succeeded" \;
-      else
-        echo "Failed to codesign framework ${framework_name}" \;
-        exit 1 \;
-      fi
-      \"
-  )
+  if (${codesign_framework})
+    add_custom_command(
+        TARGET ${target_name}
+        POST_BUILD COMMAND /bin/sh -c
+        \"
+        if codesign --force --verbose "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}/${framework_name}.framework" --sign '\${CODE_SIGN_IDENTITY}\'  \; then
+          echo "codesign framework ${framework_name} succeeded" \;
+        else
+          echo "Failed to codesign framework ${framework_name}" \;
+          exit 1 \;
+        fi
+        \"
+    )
+  endif()
 
 endfunction()
 
