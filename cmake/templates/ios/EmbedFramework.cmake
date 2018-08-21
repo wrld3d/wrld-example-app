@@ -8,8 +8,7 @@ function(embed_framework target_name framework_name framework_src_dir)
       TARGET ${target_name}
       POST_BUILD COMMAND /bin/sh -c
       \"
-      ${CMAKE_COMMAND} -E make_directory "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}" \&\>/dev/null \; 
-      if [ $$\? -ne 0 ] \; then
+      if ! ${CMAKE_COMMAND} -E make_directory "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}" \&\>/dev/null \; then
           echo "Failed to create Frameworks directory in app bundle" \;
           exit 1 \;
       fi
@@ -21,8 +20,7 @@ function(embed_framework target_name framework_name framework_src_dir)
       TARGET ${target_name}
       POST_BUILD COMMAND /bin/sh -c
       \"
-      ${CMAKE_COMMAND} -E copy_directory "\${PROJECT_DIR}/${framework_src_dir}/${framework_name}.framework" "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}/${framework_name}.framework" \&\>/dev/null \;
-      if [ $$\? -ne 0 ] \; then
+      if ! ${CMAKE_COMMAND} -E copy_directory "\${PROJECT_DIR}/${framework_src_dir}/${framework_name}.framework" "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}/${framework_name}.framework" \&\>/dev/null \; then
           echo "Failed to copy framework ${framework_name} to app bundle" \;
           exit 1 \;
       fi
@@ -34,8 +32,7 @@ function(embed_framework target_name framework_name framework_src_dir)
       TARGET ${target_name}
       POST_BUILD COMMAND /bin/sh -c
       \"
-      ${CMAKE_COMMAND} -E remove_directory "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}/${framework_name}.framework/Headers/" \&\>/dev/null \;
-      if [ $$\? -ne 0 ] \; then
+      if ! ${CMAKE_COMMAND} -E remove_directory "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}/${framework_name}.framework/Headers/" \&\>/dev/null \; then
           echo "Failed to remove Headers from framework ${framework_name}" \;
           exit 1 \;
       fi
@@ -47,10 +44,11 @@ function(embed_framework target_name framework_name framework_src_dir)
       TARGET ${target_name}
       POST_BUILD COMMAND /bin/sh -c
       \"
-      codesign --force --verbose "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}/${framework_name}.framework" --sign '\${CODE_SIGN_IDENTITY}\' \;
-      if [ $$\? -ne 0 ] \; then
-          echo "Failed to codesign framework ${framework_name}" \;
-          exit 1 \;
+      if codesign --force --verbose "\${CONFIGURATION_BUILD_DIR}/\${FRAMEWORKS_FOLDER_PATH}/${framework_name}.framework" --sign '\${CODE_SIGN_IDENTITY}\'  \; then
+        echo "codesign framework ${framework_name} succeeded" \;
+      else
+        echo "Failed to codesign framework ${framework_name}" \;
+        exit 1 \;
       fi
       \"
   )
