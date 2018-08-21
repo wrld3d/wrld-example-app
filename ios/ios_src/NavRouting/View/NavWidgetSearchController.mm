@@ -26,12 +26,12 @@
         _isSearchingForStartPoint = NO;
         
         self.selectedResultEvent = ^(id<WRLDSearchResultModel> selectedResultModel) {
-            [self hideSearchView];
             WidgetSearchResultModel* selectedWidgetResult = (WidgetSearchResultModel*) selectedResultModel;
             if(selectedWidgetResult != nil)
             {
                 [self navSuggestionSelected: (int)selectedWidgetResult.index];
             }
+            [self hideSearchView];
         };
     
         

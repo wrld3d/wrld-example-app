@@ -23,6 +23,8 @@ namespace ExampleApp
                 
                 virtual ISearchResultsRepository& GetSuggestionsRepository() const = 0;
                 
+                virtual ISearchResultsRepository& GetSearchResultsRepository() const = 0;
+                
                 virtual WidgetSearchProvider* GetSuggestionProvider() const = 0;
             };
         }

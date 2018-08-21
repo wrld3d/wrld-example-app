@@ -352,7 +352,7 @@ void AppHost::CreateApplicationViewModules(const Eegeo::Rendering::ScreenPropert
     m_pNavUIViewModule = Eegeo_NEW(ExampleApp::NavRouting::View::NavWidgetViewModule)(navUIModule.GetObservableOpenableControl(),
                                                                                       navUIModule.GetNavWidgetViewModel(),
                                                                                       m_pSearchWidgetViewModule->GetSuggestionProvider(),
-                                                                                      m_pSearchWidgetViewModule->GetSuggestionsRepository(),
+                                                                                      m_pSearchWidgetViewModule->GetSearchResultsRepository(),
                                                                                       m_messageBus);
 
     m_pTagSearchViewModule = ExampleApp::TagSearch::View::TagSearchViewModule::Create(

@@ -50,6 +50,7 @@ namespace ExampleApp
                 SearchWidgetContainerView& GetSearchWidgetView() const;
                 SearchWidgetController& GetSearchWidgetController() const;
                 ISearchResultsRepository& GetSuggestionsRepository() const;
+                ISearchResultsRepository& GetSearchResultsRepository() const;
                 WidgetSearchProvider* GetSuggestionProvider() const;
 
             };

@@ -67,6 +67,11 @@ namespace ExampleApp
             {
                 return *m_pSuggestions;
             }
+                        
+            ISearchResultsRepository& SearchWidgetViewModule::GetSearchResultsRepository() const
+            {
+                return *m_pSearchResults;
+            }
             
             SearchWidgetViewModule::~SearchWidgetViewModule()
             {
