@@ -72,8 +72,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -x objective-c++ ${IOS_WARNING_FLAGS}")
 set(static_libs 
   apps-on-maps-cpp11
   apps-on-maps-cpp11-sim
-  sdk-extensions-sqlite-cpp11
-  sdk-extensions-sqlite-cpp11-sim
   turbojpeg
   z
   curl
