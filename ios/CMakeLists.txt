@@ -77,6 +77,7 @@ set(static_libs
   curl
   uv
   Flurry_6.0.0
+  sqlite3
   )
 
 set(ios_frameworks 
@@ -149,6 +150,7 @@ endforeach (LIB_NAME)
 
 target_link_libraries(${executable_name} ${linked_ios_frameworks})
 target_link_libraries(${executable_name} ${linked_static_libs})
+
 
   
 option(AUTOMATED_SCREENSHOTS "Build for screenshot automation." OFF)
