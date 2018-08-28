@@ -50,24 +50,32 @@ namespace ExampleApp
                     
                     if (!json.Parse<0>(selectedSearchResult.GetJsonData().c_str()).HasParseError())
                     {
-                        if( json.HasMember("highlight")  )
+                        if(json.HasMember("highlight"))
                         {
-                            const rapidjson::Value& area_highlight = json["highlight"];
-                            if(area_highlight.IsString())
+                            const rapidjson::Value& areaHighlight = json["highlight"];
+                            if(areaHighlight.IsString())
                             {
-                                entities.push_back(json["highlight"].GetString());
+                                entities.push_back(areaHighlight.GetString());
                             }
                             else
                             {
-                                std::vector<std::string> areaHighlights = GetEntityIdsFromJsonArray(area_highlight);
+                                std::vector<std::string> areaHighlights = GetEntityIdsFromJsonArray(areaHighlight);
                                 entities.insert(std::end(entities), std::begin(areaHighlights), std::end(areaHighlights));
                             }
                         }
                         
-                        if(  json.HasMember("entity_highlight")  )
+                        if(json.HasMember("entity_highlight")  )
                         {
-                            std::vector<std::string> entityHighlights = GetEntityIdsFromJsonArray(json["entity_highlight"]);
-                            entities.insert(std::end(entities), std::begin(entityHighlights), std::end(entityHighlights));
+                            const rapidjson::Value& entityHighlight = json["entity_highlight"];
+                            if(entityHighlight.IsString())
+                            {
+                                entities.push_back(entityHighlight.GetString());
+                            }
+                            else
+                            {
+                                std::vector<std::string> entityHighlights = GetEntityIdsFromJsonArray(entityHighlight);
+                                entities.insert(std::end(entities), std::begin(entityHighlights), std::end(entityHighlights));
+                            }
                         }
                     }
                     
