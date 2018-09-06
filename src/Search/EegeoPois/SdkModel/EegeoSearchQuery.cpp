@@ -32,7 +32,7 @@ namespace ExampleApp
                 , m_webRequestCompleteCallback(this, &EegeoSearchQuery::OnWebResponseReceived)
                 {
                     float minimumScore = 0.25;
-                    const int maximumNumberOfResults = 60;
+                    const int maximumNumberOfResults = 150;
                     float radius = query.Radius() * 1.5f;
 
                     std::string encodedQuery;

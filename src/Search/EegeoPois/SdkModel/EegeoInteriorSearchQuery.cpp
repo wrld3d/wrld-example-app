@@ -34,7 +34,7 @@ namespace ExampleApp
                 , m_webRequestCompleteCallback(this, &EegeoInteriorSearchQuery::OnWebResponseReceived)
                 {
                     Eegeo_ASSERT(query.IsTag(), "Only support tag indoor queries");
-                    const int maximumNumberOfResults = 60;
+                    const int maximumNumberOfResults = 150;
                     
                     std::string encodedQuery;
                     urlEncoder.UrlEncode(query.Query(), encodedQuery);
