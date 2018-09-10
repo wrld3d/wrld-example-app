@@ -56,7 +56,7 @@ android {
                 cppFlags "-Wall", "-Wno-unknown-pragmas", "-Wno-sign-compare", "-Wno-format-security",
                          "-Wno-reorder", "-Wno-expansion-to-defined", "-frtti", "-fexceptions", "-std=c++11",
                          "-D__STDC_FORMAT_MACROS"
-                arguments "-DANDROID=1", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_MODE=arm"
+                arguments "-DANDROID=1", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_MODE=arm", "-DANDROID_STL=gnustl_static"
             }
 
             ndk {
