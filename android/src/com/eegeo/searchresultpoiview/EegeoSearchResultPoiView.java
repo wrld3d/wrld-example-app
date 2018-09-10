@@ -129,6 +129,8 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
+        
+        m_webView.getSettings().setJavaScriptEnabled(true);
         m_webView.setWebViewClient(new WebViewClient()
         {
             @Override
@@ -145,7 +147,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
                 view.loadUrl("file:///android_asset/page_not_found.html");
             }
         });
-        
+
         m_closeButton.setOnClickListener(this);
         m_togglePinnedButton.setOnClickListener(this);
         m_directionsButton.setOnClickListener(this);
