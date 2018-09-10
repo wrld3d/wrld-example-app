@@ -89,6 +89,18 @@
             "file": "icon1_accommodation.png"
         }, 
         {
+            "name": "air_quality", 
+            "file": "icon1_air_quality.png"
+        }, 
+        {
+            "name": "air_quality_alert", 
+            "file": "icon1_air_quality_alert.png"
+        }, 
+        {
+            "name": "air_quality_good", 
+            "file": "icon1_air_quality_good.png"
+        }, 
+        {
             "name": "airport", 
             "file": "icon1_airport.png"
         }, 
@@ -243,6 +255,14 @@
         {
             "name": "desk", 
             "file": "icon1_desk.png"
+        }, 
+        {
+            "name": "desk_available", 
+            "file": "icon1_desk_available.png"
+        }, 
+        {
+            "name": "desk_occupied", 
+            "file": "icon1_desk_occupied.png"
         }, 
         {
             "name": "digital_sign", 
@@ -519,6 +539,22 @@
         {
             "name": "hotel", 
             "file": "icon1_hotel.png"
+        }, 
+        {
+            "name": "humidity", 
+            "file": "icon1_humidity.png"
+        }, 
+        {
+            "name": "humidity_high", 
+            "file": "icon1_humidity_high.png"
+        }, 
+        {
+            "name": "humidity_low", 
+            "file": "icon1_humidity_low.png"
+        }, 
+        {
+            "name": "humidity_ok", 
+            "file": "icon1_humidity_ok.png"
         }, 
         {
             "name": "hvac_unit", 
@@ -831,6 +867,14 @@
         {
             "name": "telephone_booth", 
             "file": "icon1_telephone_booth.png"
+        }, 
+        {
+            "name": "temperature_high", 
+            "file": "icon1_temperature_high.png"
+        }, 
+        {
+            "name": "temperature_low", 
+            "file": "icon1_temperature_low.png"
         }, 
         {
             "name": "temperature_sensor", 
