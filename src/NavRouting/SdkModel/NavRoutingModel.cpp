@@ -12,6 +12,7 @@ namespace ExampleApp
             NavRoutingModel::NavRoutingModel(NavRoutingLocationFinder& locationFinder)
             : m_locationFinder(locationFinder)
             , m_isUsingCurrentLocationAsStartPoint(false)
+            , m_hasAssignedDefaultStartPoint(false)
             , m_startLocationIsSet(false)
             , m_endLocationIsSet(false)
             , m_routeIsSet(false)
@@ -21,21 +22,51 @@ namespace ExampleApp
 
             }
 
-            void NavRoutingModel::SetStartLocation(const NavRoutingLocationModel& locationModel)
+            void NavRoutingModel::SetDefaultStartingLocation(
+                    const NavRoutingLocationModel &locationModel)
+            {
+                m_defaultStartLocation = locationModel;
+                m_hasAssignedDefaultStartPoint = true;
+            }
+
+            void NavRoutingModel::SetStartLocationFromCustomLocation(
+                    const NavRoutingLocationModel &locationModel)
             {
                 m_startLocation = locationModel;
                 m_startLocationIsSet = true;
                 m_isUsingCurrentLocationAsStartPoint = false;
+                Eegeo::TtyHandler::TtyEnabled = true;
+                Eegeo_TTY("Start Location: %f %f", m_startLocation.GetLatLon().GetLatitudeInDegrees(), m_startLocation.GetLatLon().GetLongitudeInDegrees());
+                Eegeo::TtyHandler::TtyEnabled = false;
                 m_startLocationSetCallbacks.ExecuteCallbacks(m_startLocation);
             }
 
-            bool NavRoutingModel::SetStartLocationFromCurrentPosition()
+            bool NavRoutingModel::SetStartLocationFromDefaultLocation()
+            {
+                if(m_hasAssignedDefaultStartPoint)
+                {
+                    m_startLocation = m_defaultStartLocation;
+                    m_startLocationIsSet = true;
+                    m_startLocationSetCallbacks.ExecuteCallbacks(m_startLocation);
+                    Eegeo::TtyHandler::TtyEnabled = true;
+                    Eegeo_TTY("Start Location: %f %f", m_startLocation.GetLatLon().GetLatitudeInDegrees(), m_startLocation.GetLatLon().GetLongitudeInDegrees());
+                    Eegeo::TtyHandler::TtyEnabled = false;
+                    return true;
+                }
+
+                return SetStartLocationFromCurrentLocation();
+            }
+
+            bool NavRoutingModel::SetStartLocationFromCurrentLocation()
             {
                 m_isUsingCurrentLocationAsStartPoint = m_locationFinder.TryGetCurrentLocation(m_startLocation);
 
                 if(m_isUsingCurrentLocationAsStartPoint)
                 {
                     m_startLocationIsSet = true;
+                    Eegeo::TtyHandler::TtyEnabled = true;
+                    Eegeo_TTY("Start Location: %f %f", m_startLocation.GetLatLon().GetLatitudeInDegrees(), m_startLocation.GetLatLon().GetLongitudeInDegrees());
+                    Eegeo::TtyHandler::TtyEnabled = false;
                     m_startLocationSetCallbacks.ExecuteCallbacks(m_startLocation);
                 }
                 return m_isUsingCurrentLocationAsStartPoint;
@@ -43,7 +74,7 @@ namespace ExampleApp
 
             void NavRoutingModel::ClearStartLocation()
             {
-                SetStartLocationFromCurrentPosition();
+                SetStartLocationFromDefaultLocation();
             }
 
             bool NavRoutingModel::TryGetStartLocation(NavRoutingLocationModel &out_startLocation) const

@@ -28,7 +28,8 @@ namespace ExampleApp
                                Eegeo::Location::NavigationService& navigationService,
                                Eegeo::Web::ApiTokenService& apiTokenService,
                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                               const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
+                               const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                               NavRouting::SdkModel::INavRoutingModel& navRoutingModel);
                 
                 ~MapsceneModule();
                 

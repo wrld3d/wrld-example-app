@@ -54,7 +54,8 @@ namespace ExampleApp
 			const std::vector<std::vector<std::string>>& customKeyboardLayout,
             const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig>& outdoorSearchMenuItems,
             bool overrideIndoorSearchMenuItems,
-            bool navigationEnabled
+            bool navigationEnabled,
+            const NavRouting::SdkModel::NavRoutingLocationModel& navDefaultStartPoint
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -104,6 +105,7 @@ namespace ExampleApp
         , m_outdoorSearchMenuItems(outdoorSearchMenuItems)
         , m_overrideIndoorSearchMenuItems(overrideIndoorSearchMenuItems)
         , m_navigationEnabled(navigationEnabled)
+        , m_navDefaultStartPoint(navDefaultStartPoint)
         {
         }
         
@@ -356,6 +358,11 @@ namespace ExampleApp
 
         bool ApplicationConfiguration::NavigationEnabled() const {
             return m_navigationEnabled;
+        }
+
+        const NavRouting::SdkModel::NavRoutingLocationModel& ApplicationConfiguration::NavigationDefaultStartPoint() const
+        {
+            return m_navDefaultStartPoint;
         }
     }
 }

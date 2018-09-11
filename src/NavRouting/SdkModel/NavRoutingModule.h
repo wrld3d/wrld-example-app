@@ -56,6 +56,7 @@ namespace ExampleApp
                 INavRouteDrawingController& GetRouteDrawingController();
                 INavRoutingServiceController& GetRoutingServiceController();
                 INavRoutingCustomLocationPicker& GetCustomLocationPicker();
+                INavRoutingModel& GetNavRoutingModel();
 
                 Menu::View::IMenuModel& GetNavMenuModel() const;
                 

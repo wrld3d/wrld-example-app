@@ -25,7 +25,7 @@ namespace ExampleApp
             void NavWidgetMenuOption::Select()
             {
                 m_routingModel.ClearEndLocation();
-                if (!m_routingModel.SetStartLocationFromCurrentPosition()) {
+                if (!m_routingModel.SetStartLocationFromDefaultLocation()) {
                     m_routingModel.ClearStartLocation();
                 }
 

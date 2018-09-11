@@ -34,7 +34,8 @@ namespace ExampleApp
                                            Eegeo::Location::NavigationService& navigationService,
                                            Eegeo::Web::ApiTokenService& apiTokenService,
                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                           const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel)
+                                           const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                           NavRouting::SdkModel::INavRoutingModel& navRoutingModel)
             :m_webRequestFactory(webRequestFactory)
             ,m_configRequestCompleteCallback(this, &MapsceneLoader::HandleConfigResponse)
             ,m_failAlertHandler(this, &MapsceneLoader::OnFailAlertBoxDismissed)
@@ -61,6 +62,7 @@ namespace ExampleApp
             ,m_shouldPerformStartupSearch(false)
             ,m_shouldDisableStartupSearch(false)
             ,m_startAtGPSLocation(false)
+            ,m_navRoutingModel(navRoutingModel)
             ,m_startupSearchCameraTransitionCompleteCallback(this, &MapsceneLoader::HandleStartupSearchCameraTransitionComplete)
             {
                 m_manifestNotifier.AddManifestLoadedObserver(m_newManifestCallback);
@@ -169,6 +171,11 @@ namespace ExampleApp
                             {
                                 m_searchQueryPerformer.RemoveSearchQueryResults();
                             }
+                        }
+
+                        if(applicationConfig.NavigationDefaultStartPoint().GetName().size() > 0)
+                        {
+                            m_navRoutingModel.SetDefaultStartingLocation(applicationConfig.NavigationDefaultStartPoint());
                         }
                     }
                     else

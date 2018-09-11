@@ -16,6 +16,7 @@
 #include "Location.h"
 #include "AppModes.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "INavRoutingModel.h"
 
 namespace ExampleApp
 {
@@ -40,7 +41,8 @@ namespace ExampleApp
                                Eegeo::Location::NavigationService& navigationService,
                                Eegeo::Web::ApiTokenService& apiTokenService,
                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                               const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
+                               const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                               NavRouting::SdkModel::INavRoutingModel& navRoutingModel);
                 ~MapsceneLoader();
                 
                 void LoadMapscene(const std::string& path, bool shouldDisableStartupSearch);
@@ -81,6 +83,7 @@ namespace ExampleApp
                 AboutPage::View::IAboutPageViewModel& m_aboutPageViewModule;
                 Eegeo::Location::NavigationService& m_navigationService;
                 Eegeo::Web::ApiTokenService& m_apiTokenService;
+                NavRouting::SdkModel::INavRoutingModel& m_navRoutingModel;
                 std::string m_previouslyLoadedCoverageTreeUrl;
                 std::string m_previouslyLoadedThemeManifestUrl;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;

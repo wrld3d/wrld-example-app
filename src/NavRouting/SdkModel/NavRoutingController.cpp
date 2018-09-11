@@ -143,7 +143,7 @@ namespace ExampleApp
             {
                 if(m_routingModel.IsUsingCurrentPositionAsStartLocation())
                 {
-                    m_routingModel.SetStartLocationFromCurrentPosition();
+                    m_routingModel.SetStartLocationFromDefaultLocation();
                 }
                 
                 m_messageBus.Publish(NavRoutingEndLocationSetMessage(endLocation));
@@ -227,7 +227,7 @@ namespace ExampleApp
 
                 if(hasEndLocation)
                 {
-                    m_routingModel.SetStartLocation(startLocation);
+                    m_routingModel.SetStartLocationFromCustomLocation(startLocation);
                 }
                 else
                 {
@@ -262,7 +262,7 @@ namespace ExampleApp
                         m_turnByTurnModel.Stop();
                         if(m_routingModel.IsUsingCurrentPositionAsStartLocation())
                         {
-                            m_routingModel.SetStartLocationFromCurrentPosition();
+                            m_routingModel.SetStartLocationFromDefaultLocation();
                         }
                         break;
                     case NavRoutingMode::Ready:
@@ -301,7 +301,7 @@ namespace ExampleApp
 
                     if (m_locationFinder.TryGetCurrentLocation(startLocation))
                     {
-                        m_routingModel.SetStartLocation(startLocation);
+                        m_routingModel.SetStartLocationFromCustomLocation(startLocation);
                         m_isRerouting = true;
                     }
                 }
@@ -314,7 +314,7 @@ namespace ExampleApp
             {
                 NavRoutingLocationModel endLocation;
 
-                if (!m_routingModel.SetStartLocationFromCurrentPosition())
+                if (!m_routingModel.SetStartLocationFromDefaultLocation())
                 {
                     return;
                 }
@@ -356,7 +356,7 @@ namespace ExampleApp
                 {
                     return;
                 }
-                m_routingModel.SetStartLocation(startLocation);
+                m_routingModel.SetStartLocationFromCustomLocation(startLocation);
             }
             
             void NavRoutingController::OnEndLocationSetFromSearch(const NavRoutingEndLocationSetFromSearchMessage& message)

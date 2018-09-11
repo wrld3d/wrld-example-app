@@ -17,6 +17,7 @@ namespace ExampleApp
         {
             class NavRoutingModel : public INavRoutingModel, private Eegeo::NonCopyable
             {
+                NavRoutingLocationModel m_defaultStartLocation;
                 NavRoutingLocationModel m_startLocation;
                 bool m_startLocationIsSet;
                 NavRoutingLocationModel m_endLocation;
@@ -28,7 +29,10 @@ namespace ExampleApp
                 double m_remainingRouteDuration;
                 NavRoutingMode m_navMode;
                 NavRoutingLocationFinder& m_locationFinder;
+                bool m_hasAssignedDefaultStartPoint;
                 bool m_isUsingCurrentLocationAsStartPoint;
+
+                bool SetStartLocationFromCurrentLocation();
 
                 Eegeo::Helpers::CallbackCollection1<const NavRoutingLocationModel&> m_startLocationSetCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_startLocationClearedCallbacks;
@@ -46,9 +50,12 @@ namespace ExampleApp
             public:
                 NavRoutingModel(NavRoutingLocationFinder& locationFinder);
 
-                void SetStartLocation(const NavRoutingLocationModel& locationModel) override;
+                void SetDefaultStartingLocation(const NavRoutingLocationModel& locationModel) override;
 
-                bool SetStartLocationFromCurrentPosition() override;
+                void SetStartLocationFromCustomLocation(
+                        const NavRoutingLocationModel &locationModel) override;
+
+                bool SetStartLocationFromDefaultLocation() override;
 
                 void ClearStartLocation() override;
 

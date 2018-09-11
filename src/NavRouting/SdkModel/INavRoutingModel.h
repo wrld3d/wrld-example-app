@@ -20,9 +20,13 @@ namespace ExampleApp
             public:
                 virtual ~INavRoutingModel() {}
 
-                virtual void SetStartLocation(const NavRoutingLocationModel& locationModel) = 0;
+                virtual void SetDefaultStartingLocation(
+                        const NavRoutingLocationModel& locationModel) = 0;
 
-                virtual bool SetStartLocationFromCurrentPosition() = 0;
+                virtual void SetStartLocationFromCustomLocation(
+                        const NavRoutingLocationModel &locationModel) = 0;
+
+                virtual bool SetStartLocationFromDefaultLocation() = 0;
 
                 virtual void ClearStartLocation() = 0;
 

@@ -22,7 +22,8 @@ namespace ExampleApp
                                                                            Eegeo::Location::NavigationService& navigationService,
                                                                            Eegeo::Web::ApiTokenService& apiTokenService,
                                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                           const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel)
+                                                                           const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                                                           NavRouting::SdkModel::INavRoutingModel& navRoutingModel)
             {
                 m_pMapsceneLoader = Eegeo_NEW(MapsceneLoader)(cameraTransitionController,
                                                               webFactory,
@@ -38,7 +39,8 @@ namespace ExampleApp
                                                               navigationService,
                                                               apiTokenService,
                                                               interiorSelectionModel,
-                                                              appModeModel);
+                                                              appModeModel,
+                                                              navRoutingModel);
             }
             
             ExampleApp::Mapscene::SdkModel::MapsceneModule::~MapsceneModule()

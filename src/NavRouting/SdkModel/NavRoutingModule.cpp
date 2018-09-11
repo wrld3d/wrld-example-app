@@ -30,7 +30,7 @@ namespace ExampleApp
                                                 Eegeo::Location::NavigationService& navigationService,
                                                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
                                                 CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
-                                               Eegeo::Camera::MapCamera::MapCameraDistanceFromBoundsCalculator& cameraDistanceFromBoundsCalculator,
+                                                Eegeo::Camera::MapCamera::MapCameraDistanceFromBoundsCalculator& cameraDistanceFromBoundsCalculator,
                                                 Compass::SdkModel::ICompassModel& compassModel,
                                                 ExampleAppMessaging::TMessageBus& messageBus,
                                                 Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
@@ -48,7 +48,7 @@ namespace ExampleApp
                                                                                   alertBoxFactory);
 
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)(*m_pNavRoutingLocationFinder);
-                
+
                 NavRoutingPolylineConfig polylineConfig = NavRoutingPolylineConfig();
                 m_pNavRoutingPolylineFactory = Eegeo_NEW(NavRoutingPolylineFactory)(shapeService,
                                                                                     polylineConfig);
@@ -163,6 +163,10 @@ namespace ExampleApp
             Menu::View::IMenuModel& NavRoutingModule::GetNavMenuModel() const
             {
                 return *m_pMenuModel;
+            }
+
+            INavRoutingModel& NavRoutingModule::GetNavRoutingModel(){
+                return *m_pNavRoutingModel;
             }
         }
     }

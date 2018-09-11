@@ -444,7 +444,8 @@ namespace ExampleApp
                                                                           *m_pNavigationService,
                                                                           m_pWorld->GetApiTokenService(),
                                                                           interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                          *m_pAppModeModel);
+                                                                          *m_pAppModeModel,
+                                                                          m_pNavRoutingModule->GetNavRoutingModel());
 
         m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(
             *m_pCameraTransitionController,

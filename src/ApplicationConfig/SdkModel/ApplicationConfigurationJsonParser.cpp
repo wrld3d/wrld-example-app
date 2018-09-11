@@ -75,6 +75,11 @@ namespace ExampleApp
                 const std::string OutdoorSearchMenuItems = "outdoor_search_menu_items";
                 const std::string OverrideIndoorSearchMenuItems = "override_indoor_search_menu_items";
                 const std::string EnableNavigation = "enable_navigation";
+                const std::string NavigationStartPointName = "nav_start_point_name";
+                const std::string NavigationStartLatitude = "nav_start_latitude";
+                const std::string NavigationStartLongitude = "nav_start_longitude";
+                const std::string NavigationStartIndoorId = "nav_start_location_indoor_id";
+                const std::string NavigationStartFloorId = "nav_start_location_floor_index";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -350,6 +355,21 @@ namespace ExampleApp
                 bool navigationEnabled = ParseBoolOrDefault(document, EnableNavigation,
                                                            m_defaultConfig.NavigationEnabled());
 
+                const std::string navStartPointName = ParseStringOrDefault(document, NavigationStartPointName, m_defaultConfig.NavigationDefaultStartPoint().GetName());
+                const double navStartPointNameLat = ParseDoubleOrDefault(document, NavigationStartLatitude, m_defaultConfig.NavigationDefaultStartPoint().GetLatLon().GetLatitudeInDegrees());
+                const double navStartPointNameLng = ParseDoubleOrDefault(document, NavigationStartLongitude, m_defaultConfig.NavigationDefaultStartPoint().GetLatLon().GetLongitudeInDegrees());
+                const Eegeo::Space::LatLong& navStartPoint = Eegeo::Space::LatLong::FromDegrees(navStartPointNameLat, navStartPointNameLng);
+                const std::string navStartPointIndoorMapId = ParseStringOrDefault(document, NavigationStartIndoorId, m_defaultConfig.NavigationDefaultStartPoint().GetIndoorMapId().Value());
+                const int navStartPointIndoorMapFloorId = ParseIntOrDefault(document, NavigationStartFloorId, m_defaultConfig.NavigationDefaultStartPoint().GetIndoorMapFloorId());
+
+                const NavRouting::SdkModel::NavRoutingLocationModel& defaultNavigationStartPoint = NavRouting::SdkModel::NavRoutingLocationModel(
+                        navStartPointName,
+                        navStartPoint,
+                        navStartPointIndoorMapId.size() > 0,
+                        navStartPointIndoorMapId,
+                        navStartPointIndoorMapFloorId
+                );
+
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -398,7 +418,8 @@ namespace ExampleApp
                     customKeyboardLayout,
                     outdoorSearchMenuItems,
                     overrideIndoorSearchMenuItems,
-                    navigationEnabled
+                    navigationEnabled,
+                    defaultNavigationStartPoint
                 );
             }
             

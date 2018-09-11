@@ -4,6 +4,7 @@
 
 #include <string>
 #include <map>
+#include <NavRouting/SdkModel/NavRoutingLocationModel.h>
 #include "ApplicationConfig.h"
 #include "LatLongAltitude.h"
 #include "ApplicationInteriorTrackingInfo.h"
@@ -78,6 +79,8 @@ namespace ExampleApp
 
 			bool m_navigationEnabled;
 
+			NavRouting::SdkModel::NavRoutingLocationModel m_navDefaultStartPoint;
+
         public:
             
 			ApplicationConfiguration(
@@ -128,7 +131,8 @@ namespace ExampleApp
 				const std::vector<std::vector<std::string>>& customKeyboardLayout,
                 const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig>& outdoorSearchMenuItems,
                 bool overrideIndoorSearchMenuItems,
-				bool navigationEnabled
+				bool navigationEnabled,
+                const NavRouting::SdkModel::NavRoutingLocationModel& navDefaultStartPoint
             );
             
             std::string Name() const;
@@ -219,6 +223,8 @@ namespace ExampleApp
             bool OverrideIndoorSearchMenuItems() const;
 
 			bool NavigationEnabled() const;
+
+			const NavRouting::SdkModel::NavRoutingLocationModel& NavigationDefaultStartPoint() const;
         };
     }
 }

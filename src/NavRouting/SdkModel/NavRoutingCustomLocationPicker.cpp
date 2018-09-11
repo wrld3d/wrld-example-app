@@ -58,7 +58,7 @@ namespace ExampleApp
                                                       result.GetIndoorFloorNumber());
                 if(m_isStartLocation)
                 {
-                    m_navRoutingModel.SetStartLocation(locationModel);
+                    m_navRoutingModel.SetStartLocationFromCustomLocation(locationModel);
                 }
                 else
                 {
