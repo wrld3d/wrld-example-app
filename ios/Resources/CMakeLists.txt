@@ -332,6 +332,11 @@ set(resources ${resources}
         Resources/gps_marker.png
         Resources/gps_marker@2x.png
         Resources/gps_marker@3x.png
+        Resources/SearchResultOnMap
+        Resources/SearchResultOnMap/pin_sheet.json
+        Resources/SearchResultOnMap/pin_sheet_0.png
+        Resources/SearchResultOnMap/pin_sheet_0@2x.png
+        Resources/SearchResultOnMap/pin_sheet_0@3x.png
         Resources/icon1_1.png
         Resources/icon1_1@2x.png
         Resources/icon1_1@3x.png
@@ -398,6 +403,15 @@ set(resources ${resources}
         Resources/icon1_accommodation.png
         Resources/icon1_accommodation@2x.png
         Resources/icon1_accommodation@3x.png
+        Resources/icon1_air_quality.png
+        Resources/icon1_air_quality@2x.png
+        Resources/icon1_air_quality@3x.png
+        Resources/icon1_air_quality_alert.png
+        Resources/icon1_air_quality_alert@2x.png
+        Resources/icon1_air_quality_alert@3x.png
+        Resources/icon1_air_quality_good.png
+        Resources/icon1_air_quality_good@2x.png
+        Resources/icon1_air_quality_good@3x.png
         Resources/icon1_airport.png
         Resources/icon1_airport@2x.png
         Resources/icon1_airport@3x.png
@@ -515,6 +529,12 @@ set(resources ${resources}
         Resources/icon1_desk.png
         Resources/icon1_desk@2x.png
         Resources/icon1_desk@3x.png
+        Resources/icon1_desk_available.png
+        Resources/icon1_desk_available@2x.png
+        Resources/icon1_desk_available@3x.png
+        Resources/icon1_desk_occupied.png
+        Resources/icon1_desk_occupied@2x.png
+        Resources/icon1_desk_occupied@3x.png
         Resources/icon1_digital_sign.png
         Resources/icon1_digital_sign@2x.png
         Resources/icon1_digital_sign@3x.png
@@ -722,6 +742,18 @@ set(resources ${resources}
         Resources/icon1_hotel.png
         Resources/icon1_hotel@2x.png
         Resources/icon1_hotel@3x.png
+        Resources/icon1_humidity.png
+        Resources/icon1_humidity@2x.png
+        Resources/icon1_humidity@3x.png
+        Resources/icon1_humidity_high.png
+        Resources/icon1_humidity_high@2x.png
+        Resources/icon1_humidity_high@3x.png
+        Resources/icon1_humidity_low.png
+        Resources/icon1_humidity_low@2x.png
+        Resources/icon1_humidity_low@3x.png
+        Resources/icon1_humidity_ok.png
+        Resources/icon1_humidity_ok@2x.png
+        Resources/icon1_humidity_ok@3x.png
         Resources/icon1_hvac_unit.png
         Resources/icon1_hvac_unit@2x.png
         Resources/icon1_hvac_unit@3x.png
@@ -956,6 +988,12 @@ set(resources ${resources}
         Resources/icon1_telephone_booth.png
         Resources/icon1_telephone_booth@2x.png
         Resources/icon1_telephone_booth@3x.png
+        Resources/icon1_temperature_high.png
+        Resources/icon1_temperature_high@2x.png
+        Resources/icon1_temperature_high@3x.png
+        Resources/icon1_temperature_low.png
+        Resources/icon1_temperature_low@2x.png
+        Resources/icon1_temperature_low@3x.png
         Resources/icon1_temperature_sensor.png
         Resources/icon1_temperature_sensor@2x.png
         Resources/icon1_temperature_sensor@3x.png
