@@ -16,7 +16,9 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore.Images;
 import android.support.v4.app.ActivityCompat;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -120,6 +122,9 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         m_title = (EditText)m_view.findViewById(R.id.poi_creation_details_title_edit_text);
         m_description = (EditText)m_view.findViewById(R.id.poi_creation_details_description);
         m_shouldShareButton = (ToggleButton)m_view.findViewById(R.id.poi_creation_details_share_togglebutton);
+
+        addStringRemovalListener(m_title, "￼|\n|\r");
+        addStringRemovalListener(m_description, "￼");
 
         ScreenDimensions dims = new ScreenDimensions(m_activity);
         MarginLayoutParams margins = (MarginLayoutParams)mainGroup.getLayoutParams();
@@ -529,4 +534,30 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
                 .setPositiveButton(context.getResources().getString(R.string.ok_text), dialogClickListener)
                 .setNegativeButton(context.getResources().getString(R.string.cancel_text), dialogClickListener).show();
     }
+
+    private void addStringRemovalListener(final EditText text, final String regExString)
+    {
+        text.addTextChangedListener(new TextWatcher() {
+            boolean ignore = false;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(ignore)
+                    return;
+                ignore = true;
+                text.setText(s.toString().replaceAll(regExString, ""));
+                ignore = false;
+            }
+        });
+    }
+
 }
