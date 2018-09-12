@@ -21,6 +21,7 @@
 #include "AppCamera.h"
 #include "MapCamera.h"
 #include "Search.h"
+#include "InteriorEntityHighlightController.h"
 
 namespace ExampleApp
 {
@@ -47,7 +48,8 @@ namespace ExampleApp
                                  GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,
                                  WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController,
                                  AppCamera::SdkModel::IAppCameraLocationPicker& locationPicker,
-                                 Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer);
+                                 Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                 InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController& interiorEntityHighlightController);
 
                 ~NavRoutingModule();
 

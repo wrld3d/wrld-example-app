@@ -41,6 +41,8 @@ namespace ExampleApp
                     ~InteriorEntityHighlightController();
                     
                     void HighlightResultWithId(const std::string& id);
+                    void HighlightSearchResult(const Search::SdkModel::SearchResultModel &result);
+                    void RemoveHighlights();
                     
                 private:
                     void OnSearchQueryResponseReceived(const Search::SearchQueryResponseReceivedMessage& message);
@@ -50,14 +52,12 @@ namespace ExampleApp
                     void OnInteriorAddedToSceneGraph(const Eegeo::Resources::Interiors::InteriorsCellResource& callback);
                     void OnInteriorLabelsBuilt();
                     void OnAvailabilityChanged();
-                    
-                    void RemoveHighlights();
+
                     void AddHighlight(Eegeo::Rendering::Renderables::InteriorHighlightRenderable& renderable);
                     
                     std::vector<Search::SdkModel::SearchResultModel> GetCurrentSearchResults();
                     void ApplyHighlightsForCurrentResults();
                     void ApplyHighlights(const std::vector<Search::SdkModel::SearchResultModel>& results);
-                    void HighlightSearchResult(const Search::SdkModel::SearchResultModel &result);
                     void ActivateLabels(bool active);
                     
                     bool HideLabelAlwaysPredicate(const Eegeo::Labels::IAnchoredLabel& anchoredLabel) const;

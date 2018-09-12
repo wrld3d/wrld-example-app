@@ -150,7 +150,7 @@ namespace ExampleApp
             {
                 const SearchServicesResult::TSdkSearchResult& sdkSearchResult = m_resultsRepository.GetSdkSearchResultByIndex(index);
                 const NavRouting::SearchNavigationData searchNavigationData(sdkSearchResult);
-                m_messageBus.Publish(NavRouting::NavigateToMessage(searchNavigationData));
+                m_messageBus.Publish(NavRouting::NavigateToMessage(searchNavigationData, sdkSearchResult));
             }
             
             void SearchWidgetController::OnSearchResultsLoaded(const Search::SearchQueryResponseReceivedMessage& message)

@@ -6,8 +6,9 @@ namespace ExampleApp
 {
     namespace NavRouting
     {
-        NavigateToMessage::NavigateToMessage(SearchNavigationData data)
+        NavigateToMessage::NavigateToMessage(const SearchNavigationData data, const Search::SdkModel::SearchResultModel& searchResultModel)
         : m_data(data)
+        , m_searchResultModel(searchResultModel)
         {
 
         }
@@ -15,6 +16,11 @@ namespace ExampleApp
         const SearchNavigationData& NavigateToMessage::GetSearchData() const
         {
             return m_data;
+        }
+
+        const Search::SdkModel::SearchResultModel& NavigateToMessage::GetSearchResultModel() const
+        {
+            return m_searchResultModel;
         }
     }
 }

@@ -37,6 +37,7 @@ namespace ExampleApp
             public:
                 NavRoutingController(INavRoutingModel& routingModel,
                                      TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
+                                     TurnByTurn::INavTurnByTurnCompletionHandler& turnByTurnCompletionHandler,
                                      INavRoutingLocationFinder& locationFinder,
                                      ExampleAppMessaging::TMessageBus& messageBus,
                                      WorldPins::SdkModel::IWorldPinsService& worldPinsService,
@@ -56,6 +57,7 @@ namespace ExampleApp
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                 INavRoutingCustomLocationPicker& m_customLocationPicker;
                 Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
+                TurnByTurn::INavTurnByTurnCompletionHandler& m_navTurnByTurnCompletionHandler;
 
                 bool m_isRerouting;
                 bool m_waitingForRerouteResponse;

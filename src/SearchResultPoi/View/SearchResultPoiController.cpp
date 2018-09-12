@@ -50,7 +50,7 @@ namespace ExampleApp
             void SearchResultPoiController::OnDirectionsButtonClicked(Search::SdkModel::SearchResultModel& searchResultModel)
             {
                 const NavRouting::SearchNavigationData searchNavigationData(searchResultModel);
-                m_messageBus.Publish(NavRouting::NavigateToMessage(searchNavigationData));
+                m_messageBus.Publish(NavRouting::NavigateToMessage(searchNavigationData, searchResultModel));
             }
             
             void SearchResultPoiController::OnSearchResultImageLoaded(const SearchResultPoiViewImageDownloadCompletedMessage& message)

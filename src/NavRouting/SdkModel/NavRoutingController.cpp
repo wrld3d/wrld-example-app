@@ -23,6 +23,7 @@
 #include "NavRoutingShowRerouteDialogMessage.h"
 #include "INavRoutingCustomLocationPicker.h"
 #include "ISearchQueryPerformer.h"
+#include "INavTurnByTurnCompletionHandler.h"
 
 namespace ExampleApp
 {
@@ -32,6 +33,7 @@ namespace ExampleApp
         {
             NavRoutingController::NavRoutingController(INavRoutingModel& routingModel,
                                                        TurnByTurn::INavTurnByTurnModel& turnByTurnModel,
+                                                       TurnByTurn::INavTurnByTurnCompletionHandler& turnByTurnCompletionHandler,
                                                        INavRoutingLocationFinder& locationFinder,
                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
@@ -72,6 +74,7 @@ namespace ExampleApp
             , m_searchForLocationMessageHandler(this, &NavRoutingController::OnSearchForLocation)
             , m_interiorLocationLostCallback(this, &NavRoutingController::OnInteritorLocationLost)
             , m_hasUpdatedSelectedDirection(false)
+            , m_navTurnByTurnCompletionHandler(turnByTurnCompletionHandler)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
                 m_routingModel.InsertStartLocationClearedCallback(m_startLocationClearedCallback);
@@ -326,6 +329,7 @@ namespace ExampleApp
                 }
 
                 m_routingModel.SetEndLocation(endLocation);
+                m_navTurnByTurnCompletionHandler.HighlightOnCompletion(message.GetSearchResultModel());
                 
                 OpenViewWithModel(m_routingModel);
             }

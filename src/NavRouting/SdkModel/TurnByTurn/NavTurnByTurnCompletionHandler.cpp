@@ -4,6 +4,7 @@
 #include "INavTurnByTurnModel.h"
 #include "INavRoutingModel.h"
 #include "ILocationService.h"
+#include "SearchResultModel.h"
 
 namespace ExampleApp
 {
@@ -16,6 +17,7 @@ namespace ExampleApp
                 NavTurnByTurnCompletionHandler::NavTurnByTurnCompletionHandler(INavTurnByTurnModel& turnByTurnModel,
                                                                                INavRoutingModel& navRoutingModel,
                                                                                Eegeo::Location::ILocationService& locationService,
+                                                                               InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController& interiorEntityHighlightController,
                                                                                float accuracyMultiplier,
                                                                                float minDistanceToFinish)
                 : m_turnByTurnModel(turnByTurnModel)
@@ -26,6 +28,7 @@ namespace ExampleApp
                 , m_directionCount(0)
                 , m_turnByTurnStartedCallback(this, &NavTurnByTurnCompletionHandler::HandleTurnByTurnStarted)
                 , m_turnByTurnUpdatedCallback(this, &NavTurnByTurnCompletionHandler::HandleTurnByTurnUpdated)
+                , m_interiorEntityHighlightController(interiorEntityHighlightController)
                 {
                     m_turnByTurnModel.InsertStartedCallback(m_turnByTurnStartedCallback);
                     m_turnByTurnModel.InsertUpdatedCallback(m_turnByTurnUpdatedCallback);
@@ -35,6 +38,12 @@ namespace ExampleApp
                 {
                     m_turnByTurnModel.RemoveUpdatedCallback(m_turnByTurnUpdatedCallback);
                     m_turnByTurnModel.RemoveStartedCallback(m_turnByTurnStartedCallback);
+                }
+
+
+                void NavTurnByTurnCompletionHandler::HighlightOnCompletion(const Search::SdkModel::SearchResultModel& m_searchResultModel)
+                {
+                    m_completionHighlightModel = m_searchResultModel;
                 }
                 
                 void NavTurnByTurnCompletionHandler::HandleTurnByTurnStarted()
@@ -63,6 +72,7 @@ namespace ExampleApp
                             {
                                 distanceThresholdToComplete = distanceBasedOnAccuracy;
                             }
+                            m_interiorEntityHighlightController.HighlightSearchResult(m_completionHighlightModel);
                         }
                         
                         if (m_turnByTurnModel.GetDistanceToNextStep() <= distanceThresholdToComplete)

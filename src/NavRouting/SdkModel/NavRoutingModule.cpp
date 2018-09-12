@@ -39,7 +39,8 @@ namespace ExampleApp
                                                 GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,
                                                 WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController,
                                                 AppCamera::SdkModel::IAppCameraLocationPicker& locationPicker,
-                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
+                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                                InteriorsExplorer::SdkModel::Highlights::InteriorEntityHighlightController& interiorEntityHighlightController)
             {
                 const std::string navUIOptionText = "Open Navigation";
 
@@ -81,6 +82,7 @@ namespace ExampleApp
                 m_pTurnByTurnCompletionHandler = Eegeo_NEW(TurnByTurn::NavTurnByTurnCompletionHandler)(*m_pTurnByTurnModel,
                                                                                                        *m_pNavRoutingModel,
                                                                                                        locationService,
+                                                                                                       interiorEntityHighlightController,
                                                                                                        turnByTurnConfig.accuracyMultiplierToCompleteNavigation,
                                                                                                        turnByTurnConfig.minDistanceToCompleteNavigation);
                 
@@ -94,6 +96,7 @@ namespace ExampleApp
 
                 m_pRoutingController = Eegeo_NEW(NavRoutingController)(*m_pNavRoutingModel,
                                                                        *m_pTurnByTurnModel,
+                                                                       *m_pTurnByTurnCompletionHandler,
                                                                        *m_pNavRoutingLocationFinder,
                                                                        messageBus,
                                                                        worldPinsService,

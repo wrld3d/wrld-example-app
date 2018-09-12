@@ -12,11 +12,13 @@ namespace ExampleApp
         {
         private:
             const SearchNavigationData m_data;
+            const Search::SdkModel::SearchResultModel m_searchResultModel;
 
         public:
-            NavigateToMessage(SearchNavigationData data);
+            NavigateToMessage(const SearchNavigationData data, const Search::SdkModel::SearchResultModel& searchResultModel);
 
             const SearchNavigationData& GetSearchData() const;
+            const Search::SdkModel::SearchResultModel& GetSearchResultModel() const;
         };
     }
 }
