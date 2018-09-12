@@ -68,6 +68,8 @@
 #include "SurfaceScreenshotService.h"
 #include "INavWidgetViewModule.h"
 #include "INavWidgetView.h"
+#include "ILocationService.h"
+#include "InteriorsLocationServiceController.h"
 
 class AppHost : public Eegeo::IEegeoErrorHandler, protected Eegeo::NonCopyable
 {
@@ -181,6 +183,10 @@ private:
     ExampleApp::Automation::SdkModel::AndroidAutomatedScreenshotController* m_pAndroidAutomatedScreenshotController;
     ExampleApp::Automation::SdkModel::SurfaceScreenshotService m_surfaceScreenshotService;
     ExampleApp::Automation::SdkModel::AndroidScreenshotService m_screenshotService;
+
+
+    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pDefaultLocationService;
+    Eegeo::Location::ILocationService* m_pFixedIndoorLocationService;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();

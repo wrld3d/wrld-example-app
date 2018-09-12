@@ -16,6 +16,10 @@
 #include "Location.h"
 #include "AppModes.h"
 #include "ISingleOptionAlertBoxDismissedHandler.h"
+#include "CurrentLocationService.h"
+#include "MapModule.h"
+#include "ILocationService.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -40,7 +44,10 @@ namespace ExampleApp
                                Eegeo::Location::NavigationService& navigationService,
                                Eegeo::Web::ApiTokenService& apiTokenService,
                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                               const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
+                               const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                               Eegeo::Modules::Map::MapModule& mapModule,
+                               Eegeo::Helpers::CurrentLocationService::CurrentLocationService& defaultLocationService,
+                               InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel);
                 ~MapsceneLoader();
                 
                 void LoadMapscene(const std::string& path, bool shouldDisableStartupSearch);
@@ -85,6 +92,11 @@ namespace ExampleApp
                 std::string m_previouslyLoadedThemeManifestUrl;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                 const ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
+                Eegeo::Modules::Map::MapModule& m_mapModule;
+                Eegeo::Helpers::CurrentLocationService::CurrentLocationService& m_defaultLocationService;
+                InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
+                
+                Eegeo::Location::ILocationService* m_pFixedIndoorLocationService;
             };
         }
     }

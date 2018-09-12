@@ -356,6 +356,16 @@ namespace ExampleApp
                 return m_interiorExplorerEnabled;
             }
 
+            bool InteriorsExplorerModel::IsIPSEnabled() const
+            {
+                return m_isIPSEnabled;
+            }
+
+            void InteriorsExplorerModel::SetIPSEnabled(bool enabled)
+            {
+                m_isIPSEnabled = enabled;
+            }
+
         }
     }
 }

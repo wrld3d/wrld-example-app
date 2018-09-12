@@ -22,7 +22,10 @@ namespace ExampleApp
                                                                            Eegeo::Location::NavigationService& navigationService,
                                                                            Eegeo::Web::ApiTokenService& apiTokenService,
                                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                           const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel)
+                                                                           const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                                                                           Eegeo::Modules::Map::MapModule& mapModule,
+                                                                           Eegeo::Helpers::CurrentLocationService::CurrentLocationService& defaultLocationService,
+                                                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel)
             {
                 m_pMapsceneLoader = Eegeo_NEW(MapsceneLoader)(cameraTransitionController,
                                                               webFactory,
@@ -38,7 +41,10 @@ namespace ExampleApp
                                                               navigationService,
                                                               apiTokenService,
                                                               interiorSelectionModel,
-                                                              appModeModel);
+                                                              appModeModel,
+                                                              mapModule,
+                                                              defaultLocationService,
+                                                              interiorsExplorerModel);
             }
             
             ExampleApp::Mapscene::SdkModel::MapsceneModule::~MapsceneModule()

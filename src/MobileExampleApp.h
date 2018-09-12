@@ -233,6 +233,7 @@ namespace ExampleApp
                          Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                          Eegeo::Rendering::ScreenProperties& screenProperties,
                          Eegeo::Location::ILocationService& locationService,
+                         Eegeo::Helpers::CurrentLocationService::CurrentLocationService& defaultLocationService,
                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
                          const Eegeo::Config::PlatformConfig& platformConfig,
                          Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,

@@ -3,6 +3,7 @@
 #pragma once
 #include "Mapscene.h"
 #include "MapsceneLoader.h"
+#include "InteriorsExplorer.h"
 
 namespace ExampleApp
 {
@@ -28,7 +29,10 @@ namespace ExampleApp
                                Eegeo::Location::NavigationService& navigationService,
                                Eegeo::Web::ApiTokenService& apiTokenService,
                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                               const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel);
+                               const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
+                               Eegeo::Modules::Map::MapModule& mapModule,
+                               Eegeo::Helpers::CurrentLocationService::CurrentLocationService& defaultLocationService,
+                               InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel);
                 
                 ~MapsceneModule();
                 

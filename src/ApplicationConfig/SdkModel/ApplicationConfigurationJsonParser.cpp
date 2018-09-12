@@ -132,6 +132,26 @@ namespace ExampleApp
                     }
                     return defaultValue;
                 }
+                
+                int ParseIntOrDefault(const rapidjson::Value& document, const std::string& key, int defaultValue)
+                {
+                    if (document.HasMember(key.c_str()))
+                    {
+                        if(document[key.c_str()].IsInt())
+                        {
+                            return document[key.c_str()].GetInt();
+                        }
+                        else if(document[key.c_str()].IsString())
+                        {
+                            int valueFromString;
+                            if(Eegeo::Helpers::TryParseInt(document[key.c_str()].GetString(), valueFromString))
+                            {
+                                return valueFromString;
+                            }
+                        }
+                    }
+                    return defaultValue;
+                }
 
                 int ParseIntOrDefault(rapidjson::Document& document, const std::string& key, int defaultValue)
                 {
@@ -155,9 +175,9 @@ namespace ExampleApp
 
                 Eegeo::Space::LatLong ParseLatLong(const rapidjson::Value& latlong)
                 {
-                    return Eegeo::Space::LatLong::FromDegrees(
-                            latlong.HasMember(Latitude.c_str()) && latlong[Latitude.c_str()].IsNumber() ? latlong[Latitude.c_str()].GetDouble() : 0.0,
-                            latlong.HasMember(Longitude.c_str()) && latlong[Longitude.c_str()].IsNumber() ? latlong[Longitude.c_str()].GetDouble() : 0.0);
+                    const double lat = ParseDoubleOrDefault(latlong, Latitude, 0.0);
+                    const double lng = ParseDoubleOrDefault(latlong, Longitude, 0.0);
+                    return Eegeo::Space::LatLong::FromDegrees(lat, lng);
                 }
 
                 Eegeo::Space::LatLongAltitude ParseLatLongAltitude(const rapidjson::Value& location)
@@ -186,21 +206,21 @@ namespace ExampleApp
                 SdkModel::ApplicationFixedIndoorLocation ParseFixedIndoorLocation(const rapidjson::Value& fixedIndoorLocation)
                 {
                     const rapidjson::Value empty(rapidjson::kObjectType);
+                    
+                    const int buildingFloorIndex = ParseIntOrDefault(fixedIndoorLocation, BuildingFloorIndex.c_str(), 0);
+                    const double orientation = ParseDoubleOrDefault(fixedIndoorLocation, OrientationDegrees.c_str(), 180.0);
+                    const double locationDistance = ParseDoubleOrDefault(fixedIndoorLocation, LocationDistance.c_str(), 500.0);
+                    
+                    const Eegeo::Space::LatLong& latLng = ParseLatLong(fixedIndoorLocation.HasMember(LocationDegrees.c_str()) ? fixedIndoorLocation[LocationDegrees.c_str()] : empty);
 
                     return SdkModel::ApplicationFixedIndoorLocation(
-                        ParseLatLong(fixedIndoorLocation.HasMember(LocationDegrees.c_str()) ? fixedIndoorLocation[LocationDegrees.c_str()] : empty),
+                        latLng,
                         fixedIndoorLocation.HasMember(InteriorId.c_str()) && fixedIndoorLocation[InteriorId.c_str()].IsString()
                             ? fixedIndoorLocation[InteriorId.c_str()].GetString()
                             : "",
-                        fixedIndoorLocation.HasMember(BuildingFloorIndex.c_str()) && fixedIndoorLocation[BuildingFloorIndex.c_str()].IsInt()
-                            ? fixedIndoorLocation[BuildingFloorIndex.c_str()].GetInt()
-                            : 0,
-                        fixedIndoorLocation.HasMember(OrientationDegrees.c_str()) && fixedIndoorLocation[OrientationDegrees.c_str()].IsNumber()
-                            ? fixedIndoorLocation[OrientationDegrees.c_str()].GetDouble()
-                            : 180.0,
-                        fixedIndoorLocation.HasMember(LocationDistance.c_str()) && fixedIndoorLocation[LocationDistance.c_str()].IsNumber()
-                            ? fixedIndoorLocation[LocationDistance.c_str()].GetDouble()
-                            : 500.0);
+                        buildingFloorIndex,
+                        orientation,
+                        locationDistance);
                 }
 
                 const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> ParseMenuItems(rapidjson::Document& document, const std::string& menuItem)

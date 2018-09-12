@@ -59,6 +59,7 @@
 #include "iOSAutomatedScreenshotController.h"
 #include "NavWidgetViewIncludes.h"
 #include "NavWidgetViewModule.h"
+#include "ILocationService.h"
 
 @class ViewController;
 class AppInputDelegate;
@@ -158,6 +159,9 @@ private:
     Eegeo::Input::AlwaysActiveUserIdleService m_userIdleService;
     ExampleApp::Automation::SdkModel::iOSScreenshotService m_screenshotService;
     ExampleApp::Automation::SdkModel::iOSAutomatedScreenshotController* m_piOSAutomatedScreenshotController;
+    
+    Eegeo::Location::ILocationService* m_pFixedIndoorLocationService;
+    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pDefaultLocationService;
 
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();

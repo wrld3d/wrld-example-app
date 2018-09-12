@@ -200,6 +200,7 @@ namespace ExampleApp
                                        Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                                        Eegeo::Rendering::ScreenProperties& screenProperties,
                                        Eegeo::Location::ILocationService& locationService,
+                                       Eegeo::Helpers::CurrentLocationService::CurrentLocationService& defaultLocationService,
                                        Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                        const Eegeo::Config::PlatformConfig& platformConfig,
                                        Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
@@ -444,7 +445,10 @@ namespace ExampleApp
                                                                           *m_pNavigationService,
                                                                           m_pWorld->GetApiTokenService(),
                                                                           interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                          *m_pAppModeModel);
+                                                                          *m_pAppModeModel,
+                                                                          mapModule,
+                                                                          defaultLocationService,
+                                                                          m_pInteriorsExplorerModule->GetInteriorsExplorerModel());
 
         m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(
             *m_pCameraTransitionController,
