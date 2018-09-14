@@ -223,8 +223,11 @@
         
         self.pWebView = [[[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)] autorelease];
         self.pWebView.scalesPageToFit = YES;
+        self.pWebView.contentMode = UIViewContentModeScaleAspectFit;
         self.pWebView.delegate = self;
         self.pWebView.scrollView.delegate = self;
+        self.pWebView.opaque = NO;
+        self.pWebView.backgroundColor = [UIColor clearColor];
         
         [self setTouchExclusivity: self];
         
@@ -793,24 +796,26 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if(!m_webPageHeightSpecified)
-    {
-        CGRect frame = self.pWebView.frame;
-        frame.size.height = 1;
-        self.pWebView.frame = frame;
-        CGSize fittingSize = [self.pWebView sizeThatFits:CGSizeZero];
-        CGFloat scale = frame.size.width/fittingSize.width;
-        CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
-        frame.size = fittingSize;
-        self.pWebView.layer.anchorPoint = CGPointMake(0.0f, 0.0f);
-        self.pWebView.frame = frame;
-        self.pWebView.transform = transform;
-        m_webViewHeight = fittingSize.height*scale;
+    CGRect frame = self.pWebView.frame;
+    frame.size.height = 1;
+    self.pWebView.frame = frame;
         
-        self.pWebView.scrollView.scrollEnabled = NO;
+    CGFloat width = [[self.pWebView stringByEvaluatingJavaScriptFromString:@"document.documentElement.scrollWidth"] floatValue];
+    CGFloat height = [[self.pWebView stringByEvaluatingJavaScriptFromString:@"document.documentElement.scrollHeight"] floatValue];
+    CGSize fittingSize = CGSizeMake(width, height);
         
-        [self performDynamicContentLayout];
-    }
+    CGFloat scale = (frame.size.width/fittingSize.width);
+    CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
+    frame.size = fittingSize;
+    self.pWebView.layer.anchorPoint = CGPointMake(0.0f, 0.0f);
+    self.pWebView.frame = frame;
+    self.pWebView.transform = transform;
+    m_webViewHeight = fittingSize.height*scale;
+        
+    self.pWebView.scrollView.scrollEnabled = NO;
+        
+    [self performDynamicContentLayout];
+    
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
