@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
 
 #include "MapsceneModule.h"
+#include "ILocationProvider.h"
 
 namespace ExampleApp
 {
@@ -24,8 +25,7 @@ namespace ExampleApp
                                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                            const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                            Eegeo::Modules::Map::MapModule& mapModule,
-                                                                           Eegeo::Helpers::CurrentLocationService::CurrentLocationService& defaultLocationService,
-                                                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel)
+                                                                           LocationProvider::ILocationProvider& locationProvider)
             {
                 m_pMapsceneLoader = Eegeo_NEW(MapsceneLoader)(cameraTransitionController,
                                                               webFactory,
@@ -43,8 +43,7 @@ namespace ExampleApp
                                                               interiorSelectionModel,
                                                               appModeModel,
                                                               mapModule,
-                                                              defaultLocationService,
-                                                              interiorsExplorerModel);
+                                                              locationProvider);
             }
             
             ExampleApp::Mapscene::SdkModel::MapsceneModule::~MapsceneModule()

@@ -19,13 +19,11 @@ namespace ExampleApp
 
             InteriorsLocationServiceProvider::InteriorsLocationServiceProvider(InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                               Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
-                                                                               Eegeo::Location::ILocationService& defaultLocationService,
+                                                                               ExampleApp::LocationProvider::ILocationProvider& locationProvider,
                                                                                std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices,
                                                                                Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                                                ExampleAppMessaging::TMessageBus& messageBus)
-            : m_currentLocationService(currentLocationService)
-            , m_defaultLocationService(defaultLocationService)
+            : m_locationProvider(locationProvider)
             , m_interiorLocationServices(interiorLocationServices)
             , m_interiorsExplorerModel(interiorsExplorerModel)
             , m_interiorSelectionModel(interiorSelectionModel)
@@ -49,7 +47,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
                 std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> interiorTrackingInfoList;
                 
-                if(interiorId.IsValid() && m_interiorsExplorerModel.IsIPSEnabled())
+                if(interiorId.IsValid())
                 {
                     InteriorsPosition::TryAndGetInteriorTrackingInfo(interiorTrackingInfoList, interiorId, m_interiorMetaDataRepository);
                 }
@@ -75,7 +73,7 @@ namespace ExampleApp
                         Eegeo_TTY(interiorLocationServiceUseMessage.str().c_str());
 
                         indoorPositionTypeMessage << trackingInfo.GetType();
-                        m_currentLocationService.SetLocationService(interiorLocationService->second);
+                        m_locationProvider.UseIPSLocationService(interiorLocationService->second);
                         m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(indoorPositionTypeMessage.str()));
                     }
                 }
@@ -89,7 +87,7 @@ namespace ExampleApp
             void InteriorsLocationServiceProvider::OnInteriorExplorerExit()
             {
                 Eegeo_TTY("using default location service");
-                m_currentLocationService.SetLocationService(m_defaultLocationService);
+                m_locationProvider.UseNativeLocationService();
                 m_messageBus.Publish(AboutPage::AboutPageIndoorPositionTypeMessage(NoIndoorPositioning));
             }
         }

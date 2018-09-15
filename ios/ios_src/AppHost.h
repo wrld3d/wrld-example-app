@@ -118,7 +118,6 @@ private:
     
     ExampleApp::InteriorsPosition::SdkModel::IndoorAtlas::IndoorAtlasLocationModule* m_pIndoorAtlasLocationModule;
     ExampleApp::SenionLab::SenionLabLocationModule* m_pSenionLabLocationModule;
-    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
     ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule* m_pInteriorsLocationServiceModule;
 
     ExampleApp::TagSearch::View::ITagSearchViewModule* m_pTagSearchViewModule;
@@ -159,9 +158,6 @@ private:
     Eegeo::Input::AlwaysActiveUserIdleService m_userIdleService;
     ExampleApp::Automation::SdkModel::iOSScreenshotService m_screenshotService;
     ExampleApp::Automation::SdkModel::iOSAutomatedScreenshotController* m_piOSAutomatedScreenshotController;
-    
-    Eegeo::Location::ILocationService* m_pFixedIndoorLocationService;
-    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pDefaultLocationService;
 
     void CreateApplicationViewModules(const Eegeo::Rendering::ScreenProperties& screenProperties);
     void DestroyApplicationViewModules();

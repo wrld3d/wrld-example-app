@@ -138,6 +138,7 @@
 #include "MapCameraDistanceFromBoundsCalculator.h"
 #include "ReactionHideOtherScreenControls.h"
 #include "ReactionPushScreenControl.h"
+#include "LocationProvider.h"
 
 namespace ExampleApp
 {
@@ -199,8 +200,7 @@ namespace ExampleApp
                                        const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                                        Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                                        Eegeo::Rendering::ScreenProperties& screenProperties,
-                                       Eegeo::Location::ILocationService& locationService,
-                                       Eegeo::Helpers::CurrentLocationService::CurrentLocationService& defaultLocationService,
+                                       Eegeo::Location::ILocationService& platformLocationService,
                                        Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                        const Eegeo::Config::PlatformConfig& platformConfig,
                                        Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
@@ -282,6 +282,9 @@ namespace ExampleApp
     , m_pAutomatedScreenshotController(NULL)
     , m_screenshotService(screenshotService)
 	, m_onUiCreatedCallback(this, &MobileExampleApp::OnUiCreated)
+    , m_platformLocationService(platformLocationService)
+    , m_pCurrentLocationService(NULL)
+    , m_pLocationProvider(NULL)
     {
         if (m_applicationConfiguration.IsInKioskMode())
         {
@@ -290,11 +293,13 @@ namespace ExampleApp
 
         m_metricsService.BeginSession(m_applicationConfiguration.FlurryAppKey(), EEGEO_PLATFORM_VERSION_NUMBER);
 
+        m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(m_platformLocationService);
+
         m_pWorld = Eegeo_NEW(Eegeo::EegeoWorld)(applicationConfiguration.EegeoApiKey(),
                                                 m_platformAbstractions,
                                                 jpegLoader,
                                                 screenProperties,
-                                                locationService,
+                                                *m_pCurrentLocationService,
                                                 nativeUIFactories,
                                                 Eegeo::EnvironmentCharacterSet::UseFontModuleConfig,
                                                 platformConfig,
@@ -303,7 +308,10 @@ namespace ExampleApp
                                                 );
         
         m_pWorld->GetMapModule().GetLabelsModule().GetLabelOptionsModel().SetOcclusionMode(Eegeo::Labels::OcclusionResolverMode::Always);
-        
+
+        m_pLocationProvider = Eegeo_NEW(LocationProvider::LocationProvider)(m_platformLocationService, m_pWorld->GetMapModule());
+        m_pCurrentLocationService->SetLocationService(*m_pLocationProvider);
+
         m_pConnectivityChangedObserver = Eegeo_NEW(Net::SdkModel::ConnectivityChangedObserver)(m_pWorld->GetWebConnectivityValidator(), messageBus);
 
         Eegeo::Modules::Map::Layers::TerrainModelModule& terrainModelModule = m_pWorld->GetTerrainModelModule();
@@ -447,8 +455,7 @@ namespace ExampleApp
                                                                           interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                           *m_pAppModeModel,
                                                                           mapModule,
-                                                                          defaultLocationService,
-                                                                          m_pInteriorsExplorerModule->GetInteriorsExplorerModel());
+                                                                          *m_pLocationProvider);
 
         m_pDeepLinkModule = Eegeo_NEW(DeepLink::SdkModel::DeepLinkModule)(
             *m_pCameraTransitionController,
@@ -506,7 +513,13 @@ namespace ExampleApp
 
         Eegeo_DELETE m_pConnectivityChangedObserver;
 
+        m_pCurrentLocationService->SetLocationService(m_platformLocationService);
+
+        Eegeo_DELETE m_pLocationProvider;
+
         Eegeo_DELETE m_pWorld;
+
+        Eegeo_DELETE m_pCurrentLocationService;
     }
 
     void MobileExampleApp::CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
@@ -1174,6 +1187,8 @@ namespace ExampleApp
 
         const Eegeo::dv3& interestPoint = m_pGlobeCameraController->GetEcefInterestPoint();
         m_pInitialLocationModel->SetInterestLocation(Eegeo::Space::LatLongAltitude::FromECEF(interestPoint));
+
+        m_pCurrentLocationService->StopListening();
     }
 
     void MobileExampleApp::OnResume()

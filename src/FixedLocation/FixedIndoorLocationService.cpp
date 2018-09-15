@@ -11,19 +11,26 @@ namespace Eegeo
 {
     namespace FixedLocation
     {
-        FixedIndoorLocationService::FixedIndoorLocationService(const Space::LatLong& location,
-                                                               const Resources::Interiors::InteriorId & interiorId,
-                                                               const int floorIndex,
-                                                               const double headingDegrees,
-                                                               const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+        FixedIndoorLocationService::FixedIndoorLocationService(const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
-        : m_location(location)
-        , m_interiorId(interiorId)
-        , m_floorIndex(floorIndex)
-        , m_headingDegrees(headingDegrees)
-        , m_environmentFlatteningService(environmentFlatteningService)
-        , m_interiorInteractionModel(interiorInteractionModel)
+                : m_location(Eegeo::Space::LatLong(0, 0))
+                , m_interiorId("")
+                , m_floorIndex(0)
+                , m_headingDegrees(0)
+                , m_environmentFlatteningService(environmentFlatteningService)
+                , m_interiorInteractionModel(interiorInteractionModel)
         {
+        }
+
+        void FixedIndoorLocationService::SetFixedLocation(const Space::LatLong& location,
+                                                          const Resources::Interiors::InteriorId & interiorId,
+                                                          const int floorIndex,
+                                                          const double headingDegrees)
+        {
+            m_location = location;
+            m_interiorId = interiorId;
+            m_floorIndex = floorIndex;
+            m_headingDegrees = headingDegrees;
         }
 
         Eegeo::Resources::Interiors::InteriorId FixedIndoorLocationService::GetInteriorId()

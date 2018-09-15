@@ -66,9 +66,6 @@ namespace ExampleApp
                 
                 bool IsEnabled() const;
 
-                bool IsIPSEnabled() const;
-                void SetIPSEnabled(bool enabled);
-
             private:
                 
                 void HandleInteractionModelStateChanged();
@@ -104,8 +101,6 @@ namespace ExampleApp
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerEnteredCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerExitedCallbacks;
                 Eegeo::Helpers::CallbackCollection0 m_interiorExplorerFloorSelectionDraggedCallbacks;
-
-                bool m_isIPSEnabled;
             };
         }
     }

@@ -14,12 +14,14 @@ namespace Eegeo
         class FixedIndoorLocationService : public Location::ILocationService
         {
         public:
-            FixedIndoorLocationService(const Space::LatLong& location,
-                                       const Resources::Interiors::InteriorId& interiorId,
-                                       const int floorIndex,
-				                       const double headingDegrees,
-                                       const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
+
+            FixedIndoorLocationService(const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                        const Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel);
+
+            void SetFixedLocation(const Space::LatLong& location,
+                                  const Resources::Interiors::InteriorId& interiorId,
+                                  const int floorIndex,
+                                  const double headingDegrees);
 
             const bool GetIsAuthorized() const { return true; }
             bool IsIndoors() { return true; };

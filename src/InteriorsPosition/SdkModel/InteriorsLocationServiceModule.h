@@ -21,8 +21,7 @@ namespace ExampleApp
             public:
                 InteriorsLocationServiceModule(InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                               Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
-                                               Eegeo::Location::ILocationService& defaultLocationService,
+                                               ExampleApp::LocationProvider::ILocationProvider& locationProvider,
                                                std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices,
                                                Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,

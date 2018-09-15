@@ -18,13 +18,13 @@ namespace ExampleApp
             class InteriorsLocationServiceController
             {
             public:
-                InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
+                InteriorsLocationServiceController(Eegeo::Location::ILocationService& locationService,
                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                    Compass::SdkModel::ICompassModel& compassModel,
                                                    float locationDistance);
 
-                InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
+                InteriorsLocationServiceController(Eegeo::Location::ILocationService& locationService,
                                                     Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                     CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                     Compass::SdkModel::ICompassModel& compassModel);
@@ -34,7 +34,7 @@ namespace ExampleApp
                 void Update();
                 
             private:
-                Eegeo::Helpers::CurrentLocationService::CurrentLocationService& m_currentLocationService;
+                Eegeo::Location::ILocationService& m_locationService;
                 
                 Eegeo::Resources::Interiors::InteriorInteractionModel& m_interiorInteractionModel;
                 

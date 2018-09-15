@@ -70,7 +70,7 @@
 #include "AutomatedScreenshotController.h"
 #include "UiCreatedMessage.h"
 #include "INavWidgetView.h"
-#include "FixedIndoorLocationService.h"
+#include "ILocationProvider.h"
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;
@@ -99,7 +99,6 @@ AppHost::AppHost(
     :m_isPaused(false)
     ,m_pJpegLoader(NULL)
     ,m_pAndroidLocationService(NULL)
-    ,m_pCurrentLocationService(NULL)
     ,m_pAndroidConnectivityService(NULL)
     ,m_nativeState(nativeState)
     ,m_androidInputBoxFactory(&nativeState)
@@ -135,7 +134,6 @@ AppHost::AppHost(
     ,m_pAndroidAutomatedScreenshotController(NULL)
     ,m_surfaceScreenshotService(screenProperties)
     ,m_screenshotService(m_nativeState, m_surfaceScreenshotService)
-    ,m_pDefaultLocationService(NULL)
 {
     ASSERT_NATIVE_THREAD
 
@@ -145,9 +143,6 @@ AppHost::AppHost(
     Eegeo::AssertHandler::BreakOnAssert = true;
 
     m_pAndroidLocationService = Eegeo_NEW(AndroidLocationService)(&nativeState);
-    m_pDefaultLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_pAndroidLocationService);
-    Eegeo::Location::ILocationService* pBaseDefaultService = m_pDefaultLocationService;
-    m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*pBaseDefaultService);
     m_pAndroidConnectivityService = Eegeo_NEW(AndroidConnectivityService)(&nativeState);
 
     m_pJpegLoader = Eegeo_NEW(Eegeo::Helpers::Jpeg::JpegLoader)();
@@ -198,8 +193,7 @@ AppHost::AppHost(
     			 applicationConfiguration,
                  *m_pAndroidPlatformAbstractionModule,
                  screenProperties,
-                 *m_pCurrentLocationService,
-                 *m_pDefaultLocationService,
+                 *m_pAndroidLocationService,
                  m_androidNativeUIFactories,
                  platformConfiguration,
                  *m_pJpegLoader,
@@ -214,19 +208,10 @@ AppHost::AppHost(
                  m_userIdleService,
                  m_screenshotService);
 
+    ExampleApp::LocationProvider::ILocationProvider& locationProvider = m_pApp->GetLocationProvider();
     if (applicationConfiguration.IsFixedIndoorLocationEnabled())
     {
-        const ExampleApp::ApplicationConfig::SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation = applicationConfiguration.FixedIndoorLocation();
-        const Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
-        m_pFixedIndoorLocationService = Eegeo_NEW(Eegeo::FixedLocation::FixedIndoorLocationService)(
-                fixedIndoorLocation.GetLocation(),
-                fixedIndoorLocation.GetInteriorId(),
-                fixedIndoorLocation.GetBuildingFloorIndex(),
-                fixedIndoorLocation.GetOrientationDegrees(),
-                mapModule.GetEnvironmentFlatteningService(),
-                mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel());
-        m_pDefaultLocationService->SetLocationService(*m_pFixedIndoorLocationService);
-        m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel().SetIPSEnabled(false);
+        locationProvider.EnableFixedLocation(applicationConfiguration.FixedIndoorLocation());
     }
 
     Eegeo::Modules::Map::MapModule& mapModule = m_pApp->World().GetMapModule();
@@ -235,7 +220,7 @@ AppHost::AppHost(
                                                                                                                         interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                         interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                         mapModule.GetEnvironmentFlatteningService(),
-                                                                                                                        *m_pDefaultLocationService,
+                                                                                                                        locationProvider,
                                                                                                                         mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                                                                         m_messageBus,
                                                                                                                         m_nativeState);
@@ -244,7 +229,7 @@ AppHost::AppHost(
                                                                                                                               interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                               mapModule.GetEnvironmentFlatteningService(),
-                                                                                                                              *m_pDefaultLocationService,
+                                                                                                                              locationProvider,
                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
 																															  m_messageBus,
                                                                                                                               m_nativeState);
@@ -253,8 +238,7 @@ AppHost::AppHost(
                                                                                              {"IndoorAtlas", m_pIndoorAtlasLocationModule->GetLocationService()}};
     m_pInteriorsLocationServiceModule = Eegeo_NEW(ExampleApp::InteriorsPosition::SdkModel::InteriorsLocationServiceModule)(m_pApp->InteriorsExplorerModule().GetInteriorsExplorerModel(),
                                                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
-                                                                                                                           *m_pCurrentLocationService,
-                                                                                                                           *m_pDefaultLocationService,
+                                                                                                                           locationProvider,
                                                                                                                            interiorLocationServices,
                                                                                                                            mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
 																														   interiorsPresentationModule.GetInteriorInteractionModel(),
@@ -294,7 +278,7 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pModalBackgroundNativeViewModule;
     m_pModalBackgroundNativeViewModule = NULL;
 
-    m_pCurrentLocationService->SetLocationService(*m_pAndroidLocationService);
+    m_pApp->GetLocationProvider().UseNativeLocationService();
 
 	Eegeo_DELETE m_pInteriorsLocationServiceModule;
 	m_pInteriorsLocationServiceModule = NULL;
@@ -304,12 +288,6 @@ AppHost::~AppHost()
 
 	Eegeo_DELETE m_pSenionLabLocationModule;
 	m_pSenionLabLocationModule = NULL;
-
-    if(m_pApp->GetApplicationConfiguration().IsFixedIndoorLocationEnabled())
-    {
-        Eegeo_DELETE(m_pFixedIndoorLocationService);
-        m_pFixedIndoorLocationService = NULL;
-    }
 
     Eegeo_DELETE m_pApp;
     m_pApp = NULL;
@@ -341,12 +319,6 @@ AppHost::~AppHost()
     Eegeo_DELETE m_pAndroidConnectivityService;
     m_pAndroidConnectivityService = NULL;
 
-    Eegeo_DELETE m_pCurrentLocationService;
-    m_pCurrentLocationService = NULL;
-
-    Eegeo_DELETE m_pDefaultLocationService;
-    m_pDefaultLocationService = NULL;
-
     Eegeo_DELETE m_pAndroidLocationService;
     m_pAndroidLocationService = NULL;
 }
@@ -371,7 +343,6 @@ void AppHost::OnPause()
 
     m_isPaused = true;
     m_pApp->OnPause();
-    m_pCurrentLocationService->StopListening();
 
     if (m_pSenionLabBroadcastReceiver != NULL)
     {

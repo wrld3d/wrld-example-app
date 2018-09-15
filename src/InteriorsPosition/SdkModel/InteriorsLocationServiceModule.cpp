@@ -10,8 +10,7 @@ namespace ExampleApp
         {
             InteriorsLocationServiceModule::InteriorsLocationServiceModule(InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                           Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
-                                                                           Eegeo::Location::ILocationService& defaultLocationService,
+                                                                           ExampleApp::LocationProvider::ILocationProvider& locationProvider,
                                                                            std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices,
                                                                            Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                                            Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
@@ -19,15 +18,14 @@ namespace ExampleApp
                                                                            Compass::SdkModel::ICompassModel& compassModel,
                                                                            ExampleAppMessaging::TMessageBus& messageBus)
             {
-                m_pController = Eegeo_NEW(InteriorsLocationServiceController)(currentLocationService,
+                m_pController = Eegeo_NEW(InteriorsLocationServiceController)(locationProvider,
                                                                               interiorInteractionModel,
                                                                               cameraTransitionController,
                                                                               compassModel);
                 
                 m_pProvider = Eegeo_NEW(InteriorsLocationServiceProvider)(interiorsExplorerModel,
                                                                           interiorSelectionModel,
-                                                                          currentLocationService,
-                                                                          defaultLocationService,
+                                                                          locationProvider,
                                                                           interiorLocationServices,
                                                                           interiorMetaDataRepository,
                                                                           messageBus);

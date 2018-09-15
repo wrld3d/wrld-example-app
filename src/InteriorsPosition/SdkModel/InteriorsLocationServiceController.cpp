@@ -11,12 +11,12 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            InteriorsLocationServiceController::InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
+            InteriorsLocationServiceController::InteriorsLocationServiceController(Eegeo::Location::ILocationService& locationService,
                                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                                                    Compass::SdkModel::ICompassModel& compassModel,
                                                                                    float locationDistance)
-                : m_currentLocationService(currentLocationService)
+                : m_locationService(locationService)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_cameraTransitionController(cameraTransitionController)
                 , m_compassModel(compassModel)
@@ -25,11 +25,11 @@ namespace ExampleApp
             {
             }
 
-            InteriorsLocationServiceController::InteriorsLocationServiceController(Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
+            InteriorsLocationServiceController::InteriorsLocationServiceController(Eegeo::Location::ILocationService& locationService,
                                                                                    Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                    CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                                                    Compass::SdkModel::ICompassModel& compassModel)
-                : m_currentLocationService(currentLocationService)
+                : m_locationService(locationService)
                 , m_interiorInteractionModel(interiorInteractionModel)
                 , m_cameraTransitionController(cameraTransitionController)
                 , m_compassModel(compassModel)
@@ -50,15 +50,15 @@ namespace ExampleApp
                     int currentVisibleFloorIndex = m_interiorInteractionModel.GetSelectedFloorIndex();
                     
                     int floorIndex = 0;
-                    if(m_currentLocationService.GetFloorIndex(floorIndex) && floorIndex >= 0 && currentVisibleFloorIndex != floorIndex)
+                    if(m_locationService.GetFloorIndex(floorIndex) && floorIndex >= 0 && currentVisibleFloorIndex != floorIndex)
                     {
                         Eegeo::Space::LatLong latLong(0, 0);
-                        if(m_currentLocationService.GetLocation(latLong))
+                        if(m_locationService.GetLocation(latLong))
                         {
                             m_cameraTransitionController.StartTransitionTo(latLong.ToECEF(),
                                 m_locationDistance,
-                                0.0,                    
-                                m_currentLocationService.GetInteriorId(),                                
+                                0.0,
+                                m_locationService.GetInteriorId(),
                                 floorIndex,                                
                                 true,                                
                                 false,                                

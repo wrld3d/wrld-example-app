@@ -13,8 +13,6 @@
 #include "NavigationService.h"
 #include "CityThemeData.h"
 #include "IAppModeModel.h"
-#include "FixedIndoorLocationService.h"
-#include "InteriorsExplorerModel.h"
 
 namespace ExampleApp
 {
@@ -38,8 +36,7 @@ namespace ExampleApp
                                            Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                            const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                            Eegeo::Modules::Map::MapModule& mapModule,
-                                           Eegeo::Helpers::CurrentLocationService::CurrentLocationService& defaultLocationService,
-                                           InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel)
+                                           LocationProvider::ILocationProvider& locationProvider)
             :m_webRequestFactory(webRequestFactory)
             ,m_configRequestCompleteCallback(this, &MapsceneLoader::HandleConfigResponse)
             ,m_failAlertHandler(this, &MapsceneLoader::OnFailAlertBoxDismissed)
@@ -67,10 +64,7 @@ namespace ExampleApp
             ,m_shouldDisableStartupSearch(false)
             ,m_startAtGPSLocation(false)
             ,m_startupSearchCameraTransitionCompleteCallback(this, &MapsceneLoader::HandleStartupSearchCameraTransitionComplete)
-            ,m_defaultLocationService(defaultLocationService)
-            ,m_mapModule(mapModule)
-            ,m_pFixedIndoorLocationService(NULL)
-            ,m_interiorsExplorerModel(interiorsExplorerModel)
+            ,m_locationProvider(locationProvider)
             {
                 m_manifestNotifier.AddManifestLoadedObserver(m_newManifestCallback);
                 m_cityThemeService.SubscribeSharedThemeDataChanged(m_newThemeDataCallback);
@@ -80,7 +74,6 @@ namespace ExampleApp
             
             MapsceneLoader::~MapsceneLoader()
             {
-                Eegeo_DELETE(m_pFixedIndoorLocationService);
                 m_cityThemeService.UnsubscribeSharedThemeDataChanged(m_newThemeDataCallback);
                 m_manifestNotifier.RemoveManifestLoadedObserver(m_newManifestCallback);
                 m_cameraTransitionController.RemoveTransitionFailedCallback(m_startupSearchCameraTransitionCompleteCallback);
@@ -183,16 +176,10 @@ namespace ExampleApp
                         
                         if (applicationConfig.IsFixedIndoorLocationEnabled())
                         {
-                            const ExampleApp::ApplicationConfig::SdkModel::ApplicationFixedIndoorLocation& fixedIndoorLocation = applicationConfig.FixedIndoorLocation();
-                            m_pFixedIndoorLocationService = Eegeo_NEW(Eegeo::FixedLocation::FixedIndoorLocationService)(
-                                                                                                                        fixedIndoorLocation.GetLocation(),
-                                                                                                                        fixedIndoorLocation.GetInteriorId(),
-                                                                                                                        fixedIndoorLocation.GetBuildingFloorIndex(),
-                                                                                                                        fixedIndoorLocation.GetOrientationDegrees(),
-                                                                                                                        m_mapModule.GetEnvironmentFlatteningService(),
-                                                                                                                        m_mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel());
-                            m_defaultLocationService.SetLocationService(*m_pFixedIndoorLocationService);
-                            m_interiorsExplorerModel.SetIPSEnabled(false);
+                            m_locationProvider.EnableFixedLocation(applicationConfig.FixedIndoorLocation());
+                        } else
+                        {
+                            m_locationProvider.DisableFixedLocation();
                         }
                     }
                     else

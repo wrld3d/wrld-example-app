@@ -58,7 +58,6 @@
 #include "TagSearchViewIncludes.h"
 #include "AlwaysActiveUserIdleService.h"
 #include "ISurveyViewModule.h"
-#include "CurrentLocationService.h"
 #include "SenionLabLocationModule.h"
 #include "IndoorAtlasLocationModule.h"
 #include "InteriorsLocationServiceModule.h"
@@ -116,7 +115,6 @@ private:
     bool m_isPaused;
     Eegeo::Helpers::Jpeg::IJpegLoader* m_pJpegLoader;
     Eegeo::Android::AndroidLocationService* m_pAndroidLocationService;
-    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
     Eegeo::Android::AndroidConnectivityService* m_pAndroidConnectivityService;
 
     AndroidNativeState& m_nativeState;
@@ -183,10 +181,6 @@ private:
     ExampleApp::Automation::SdkModel::AndroidAutomatedScreenshotController* m_pAndroidAutomatedScreenshotController;
     ExampleApp::Automation::SdkModel::SurfaceScreenshotService m_surfaceScreenshotService;
     ExampleApp::Automation::SdkModel::AndroidScreenshotService m_screenshotService;
-
-
-    Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pDefaultLocationService;
-    Eegeo::Location::ILocationService* m_pFixedIndoorLocationService;
 
     void DispatchRevealUiMessageToUiThreadFromNativeThread();
     void DispatchUiCreatedMessageToNativeThreadFromUiThread();

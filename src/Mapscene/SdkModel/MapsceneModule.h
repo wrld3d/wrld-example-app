@@ -1,9 +1,10 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
 
 #pragma once
+
 #include "Mapscene.h"
 #include "MapsceneLoader.h"
-#include "InteriorsExplorer.h"
+#include "ILocationProvider.h"
 
 namespace ExampleApp
 {
@@ -31,8 +32,7 @@ namespace ExampleApp
                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                const ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                Eegeo::Modules::Map::MapModule& mapModule,
-                               Eegeo::Helpers::CurrentLocationService::CurrentLocationService& defaultLocationService,
-                               InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel);
+                               LocationProvider::ILocationProvider& locationProvider);
                 
                 ~MapsceneModule();
                 

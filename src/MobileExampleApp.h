@@ -97,6 +97,7 @@
 #include "ICallback.h"
 #include "UiCreatedMessage.h"
 #include "MapCamera.h"
+#include "ILocationProvider.h"
 
 namespace ExampleApp
 {
@@ -200,6 +201,10 @@ namespace ExampleApp
 
 		Eegeo::Helpers::TCallback1<MobileExampleApp, const UiCreatedMessage&> m_onUiCreatedCallback;
 
+        Eegeo::Location::ILocationService& m_platformLocationService;
+        Eegeo::Helpers::CurrentLocationService::CurrentLocationService* m_pCurrentLocationService;
+        LocationProvider::ILocationProvider * m_pLocationProvider;
+
         void CreateApplicationModelModules(Eegeo::UI::NativeUIFactories& nativeUIFactories,
                                            const bool interiorsAffectedByFlattening,
                                            const bool createBlueSphereViews);
@@ -232,8 +237,7 @@ namespace ExampleApp
         MobileExampleApp(const ExampleApp::ApplicationConfig::ApplicationConfiguration& applicationConfiguration,
                          Eegeo::Modules::IPlatformAbstractionModule& platformAbstractions,
                          Eegeo::Rendering::ScreenProperties& screenProperties,
-                         Eegeo::Location::ILocationService& locationService,
-                         Eegeo::Helpers::CurrentLocationService::CurrentLocationService& defaultLocationService,
+                         Eegeo::Location::ILocationService& nativeLocationService,
                          Eegeo::UI::NativeUIFactories& nativeUIFactories,
                          const Eegeo::Config::PlatformConfig& platformConfig,
                          Eegeo::Helpers::Jpeg::IJpegLoader& jpegLoader,
@@ -425,6 +429,11 @@ namespace ExampleApp
         Eegeo::Location::NavigationService& GetNavigationService() const
         {
             return *m_pNavigationService;
+        }
+
+        LocationProvider::ILocationProvider& GetLocationProvider() const
+        {
+            return *m_pLocationProvider;
         }
 
         void OnPause();

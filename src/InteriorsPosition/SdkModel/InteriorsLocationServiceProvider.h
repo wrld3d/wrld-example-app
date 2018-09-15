@@ -11,6 +11,7 @@
 #include "InteriorMetaDataRepository.h"
 #include "ApplicationInteriorTrackingInfo.h"
 #include "AboutPageViewModel.h"
+#include "ILocationProvider.h"
 
 namespace ExampleApp
 {
@@ -23,19 +24,15 @@ namespace ExampleApp
             public:
                 InteriorsLocationServiceProvider(InteriorsExplorer::SdkModel::InteriorsExplorerModel& interiorsExplorerModel,
                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                 Eegeo::Helpers::CurrentLocationService::CurrentLocationService& currentLocationService,
-                                                 Eegeo::Location::ILocationService& defaultLocationService,
+                                                 ExampleApp::LocationProvider::ILocationProvider& locationProvider,
                                                  std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices,
                                                  Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
                                                  ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~InteriorsLocationServiceProvider();
-                
-                const Eegeo::Helpers::CurrentLocationService::CurrentLocationService& GetCurrentLocationService() { return m_currentLocationService; }
-                
+
             private:
-                Eegeo::Helpers::CurrentLocationService::CurrentLocationService& m_currentLocationService;
-                Eegeo::Location::ILocationService& m_defaultLocationService;
+                ExampleApp::LocationProvider::ILocationProvider& m_locationProvider;
                 std::map<std::string, Eegeo::Location::ILocationService&> m_interiorLocationServices;
 
                 InteriorsExplorer::SdkModel::InteriorsExplorerModel& m_interiorsExplorerModel;
