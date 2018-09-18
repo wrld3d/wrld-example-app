@@ -40,10 +40,7 @@ if [ $p == "ios" ]; then
     resultcode=$?
     popd
 elif [ $p == "android" ]; then
-    echo "Building Android examples..."
-    rm -rf "./android/libs/eegeo"
-    rm -rf "./android/obj"
-    rm -rf "./android/bin"
+    echo "Building Android example..."
     ./update.platform.sh $allArguments
 
     if [ $? -ne 0 ] ; then
@@ -51,7 +48,7 @@ elif [ $p == "android" ]; then
     fi
     
     pushd android
-    ./build.sh $allArguments
+    ./build.sh
     resultcode=$?
     popd
 fi

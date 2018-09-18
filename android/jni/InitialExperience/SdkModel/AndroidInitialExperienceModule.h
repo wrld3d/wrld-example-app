@@ -30,7 +30,6 @@ namespace ExampleApp
                 std::vector<IInitialExperienceStep*> CreateSteps(WorldAreaLoader::SdkModel::IWorldAreaLoaderModel& worldAreaLoaderModel);
 
             private:
-                AndroidNativeState& m_nativeState;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
             };
         }

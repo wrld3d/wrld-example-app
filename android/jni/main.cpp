@@ -14,8 +14,10 @@
 #include "ApiKey.h"
 #include "Types.h"
 
+#define __STDC_FORMAT_MACROS
 #include "client/linux/handler/exception_handler.h"
 #include "client/linux/handler/minidump_descriptor.h"
+
 
 using namespace Eegeo::Android;
 using namespace Eegeo::Android::Input;

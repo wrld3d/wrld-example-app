@@ -12,7 +12,7 @@ namespace ExampleApp
     {
         namespace View
         {
-            class IInteriorsExplorerViewModule : public Eegeo::NonCopyable
+            class IInteriorsExplorerViewModule
             {
             public:
                 virtual ~IInteriorsExplorerViewModule() {}

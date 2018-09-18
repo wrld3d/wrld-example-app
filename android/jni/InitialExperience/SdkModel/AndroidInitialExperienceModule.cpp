@@ -16,7 +16,6 @@ namespace ExampleApp
                 ExampleAppMessaging::TMessageBus& messageBus
             )
                 : InitialExperienceModuleBase(persistentSettings)
-                , m_nativeState(nativeState)
             	, m_messageBus(messageBus)
             {
 

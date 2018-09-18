@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.1.4'
     }
 }
 
@@ -53,10 +53,11 @@ android {
 
         externalNativeBuild {
             cmake {
-                cppFlags "-Wall", "-Wno-unknown-pragmas", "-Wno-sign-compare", "-Wno-format-security",
-                         "-Wno-reorder", "-Wno-expansion-to-defined", "-frtti", "-fexceptions", "-std=c++11",
-                         "-D__STDC_FORMAT_MACROS"
-                arguments "-DANDROID=1", "-DANDROID_TOOLCHAIN=clang", "-DANDROID_ARM_MODE=arm", "-DANDROID_STL=gnustl_static"
+                cppFlags "-std=c++11", "-frtti", "-fexceptions", "-Wall", "-Werror",
+                "-Wno-reorder",
+                "-Wno-tautological-unsigned-zero-compare"
+                
+                arguments "-DANDROID=1", "-DANDROID_ARM_MODE=arm", "-DANDROID_STL=gnustl_static"
             }
 
             ndk {

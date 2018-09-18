@@ -1,47 +1,124 @@
 #!/bin/sh
 
-usage() { echo "Usage: $0 -p android"; echo "  -p -> platform, ios or android (required)"; 1>&2; exit 1; }
+script_name=${0##*/}
+base_dir=$(dirname "$0")
 
-projectPath=$(pwd)/./
-ndkbuild_arguments=""
 
-while getopts "p:" o; do
-    case "${o}" in
-        p)
-            p=${OPTARG}
-            if [ "$p" != "android" ]; then
-               usage
-            fi
-            ;;
+clean_build=0
+release_build=0
+version_code=1
+version_name="1.0"
+application_id="com.wrld.exampleapp"
+
+
+usage()
+{
+    echo -e "Usage\n\n${script_name} [options]\n" >&2
+    echo -e "Options\n" >&2
+    echo -e "-c,--clean\t\t\tPerform clean task prior to build." >&2
+    echo -e "-r,--release\t\t\tCreate Release build (default is Debug)." >&2
+    echo -e "-h,--help\t\t\tDisplay this usage message." >&2
+    echo -e "--version-code\t\t\tVersion code of app, default ${version_code}." >&2
+    echo -e "--version-name\t\t\tVersion name of app, default ${version_name}." >&2
+    echo -e "--application-id\t\tBundle identifier of app, default ${application_id}." >&2
+    echo -e "--external-signing\t\tRelative path to external apk signing credentials, default no signing." >&2
+}
+
+
+
+while [[ $# -gt 0 ]]
+do
+    option="$1"
+
+    case $option in
+        -c|--clean)
+        clean_build=1
+        shift
+        ;;
+        -r|--release)
+        release_build=1
+        shift
+        ;;
+        -h|--help)
+        shift
+        usage
+        exit 0
+        ;;
+        --version-code)
+        version_code="$2"
+        shift
+        shift
+        ;;
+        --version-name)
+        version_name="$2"
+        shift
+        shift
+        ;;
+        --application-id)
+        application_id="$2"
+        shift
+        shift
+        ;;
+        --external-signing)
+        external_signing="$2"
+        shift
+        shift
+        ;;
         *)
-            usage
-            ;;
+        echo -e "Invalid argument: $1" >&2
+        usage
+        exit 1
+        ;;
     esac
 done
-shift $((OPTIND-1))
 
-if [ -z "${p}" ]; then
-    usage
-fi
+abort()
+{
+  echo "Aborting after error -> exit(1)" >&2
+  exit 1
+}
 
-# running on msys (basically the git provided shell we use on windows)
-if [ "$OSTYPE" == "msys" ]; then
-    cpu_count=$NUMBER_OF_PROCESSORS        
-    cmd "/C ndk-build.cmd -j${cpu_count}${ndkbuild_arguments}"
-else
-    cpu_count=$(sysctl -n hw.ncpu)
-    echo "compile_android.step.sh (osx): cpu count: ${cpu_count}"
-    ndk-build -j$cpu_count$ndkbuild_arguments
-fi
+trap 'abort' 0
 
-resultcode=$?
-
-echo
-if [ $resultcode = 0 ] ; then
-  echo "COMPILE ANDROID PROJECT SUCCEEDED"
-else
-  echo "COMPILE ANDROID PROJECT FAILED"
-fi
+set -e
 
 
-exit $resultcode
+pushd $base_dir
+
+    if [ ${clean_build} -ne 0 ] ; then
+        echo "Performing clean" >&2
+        ./gradlew :clean
+        resultcode=$?
+        if [ ${resultcode} -ne 0 ] ; then
+            echo "Error performing gradle build" >&2
+            exit ${resultcode}
+        fi
+        
+    fi
+    
+    if [ ${release_build} -ne 0 ] ; then
+        build_task=":assembleNormalDebug"
+    else
+        build_task=":assembleNormalRelease"
+    fi
+    
+    gradle_arguments="-PversionCode=${version_code} -PversionName=${version_name} -PapplicationId=${application_id}"
+    
+    if [ -n "$external_signing" ]; then
+        gradle_arguments="${gradle_arguments} -Pexternal.signing=${external_signing}"
+    fi
+
+    ./gradlew ${gradle_arguments} ${build_task}
+    resultcode=$?
+
+    if [ ${resultcode} -ne 0 ] ; then
+        echo "Error performing gradle build" >&2
+        exit ${resultcode}
+    fi
+popd
+
+trap : 0
+echo -e "\n$0 SUCCEEDED\n" >&2
+
+
+exit 0
