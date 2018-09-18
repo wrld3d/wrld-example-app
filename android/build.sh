@@ -97,9 +97,9 @@ pushd $base_dir
     fi
     
     if [ ${release_build} -ne 0 ] ; then
-        build_task=":assembleNormalDebug"
-    else
         build_task=":assembleNormalRelease"
+    else
+        build_task=":assembleNormalDebug"
     fi
     
     gradle_arguments="-PversionCode=${version_code} -PversionName=${version_name} -PapplicationId=${application_id}"
