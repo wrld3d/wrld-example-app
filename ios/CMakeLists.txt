@@ -17,21 +17,33 @@ if (NOT DEFINED DEVELOPMENT_TEAM)
   message (STATUS "No DEVELOPMENT_TEAM specified - if code signing for running on an iOS devicde is required, pass a valid development team id with -DDEVELOPMENT_TEAM=<YOUR_APPLE_DEVELOPER_TEAM_ID>")
 endif()
 
+message (STATUS "Using DEVELOPMENT_TEAM: ${DEVELOPMENT_TEAM}")
 
-if (NOT DEFINED CODESIGN_EMBEDDED_FRAMEWORKS)
-  if (DEFINED DEVELOPMENT_TEAM)
-    set(CODESIGN_EMBEDDED_FRAMEWORKS 1)
-  else()
-    # for CI - enterprise signed apps resign framework. Skipping manual codesigning of embedded frameworks to avoid ambiguous codesign identity match with "iPhone Developer"
-    set(CODESIGN_EMBEDDED_FRAMEWORKS 0)
-  endif()
+execute_process(
+  COMMAND ${CMAKE_CURRENT_LIST_DIR}/find_codesign_identity.sh "${DEVELOPMENT_TEAM}"
+  OUTPUT_VARIABLE FRAMEWORK_CODE_SIGN_IDENTITY
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  RESULT_VARIABLE FIND_CODESIGN_IDENTITY_RESULT
+)
+
+if (FIND_CODESIGN_IDENTITY_RESULT)
+  execute_process(
+    COMMAND security find-identity -p codesigning
+    OUTPUT_VARIABLE AVAILABLE_CODE_SIGN_IDENTITIES
+  )
+
+  message (SEND_ERROR "Failed to find valid codesign identity matching DEVELOPMENT_TEAM '${DEVELOPMENT_TEAM}' for 'iPhone Developer'. Available codesigning identities in keychain are:")
+  message (SEND_ERROR "${AVAILABLE_CODE_SIGN_IDENTITIES}")
+  message (FATAL_ERROR "Please resolve missing codesign identity before continuing.")
+
 endif()
 
-message (STATUS "using CODESIGN_EMBEDDED_FRAMEWORKS ${CODESIGN_EMBEDDED_FRAMEWORKS}")
+message (STATUS "Using FRAMEWORK_CODE_SIGN_IDENTITY: ${FRAMEWORK_CODE_SIGN_IDENTITY}")
+
 
 if(NOT TARGET_NAME)
   set(TARGET_NAME "ExampleApp")
-  message("Using default target: ${TARGET_NAME}")
+  message(STATUS "Using default target: ${TARGET_NAME}")
 endif(NOT TARGET_NAME)
 
 
@@ -232,10 +244,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 
 
-embed_framework(${executable_name} WRLDSearchWidget Include/WrldSearchWidget ${CODESIGN_EMBEDDED_FRAMEWORKS})
-embed_framework(${executable_name} WrldNav ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS})
-embed_framework(${executable_name} WrldNavWidget ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS})
-embed_framework(${executable_name} WrldUtils ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS})
+embed_framework(${executable_name} WRLDSearchWidget Include/WrldSearchWidget ${FRAMEWORK_CODE_SIGN_IDENTITY})
+embed_framework(${executable_name} WrldNav ${wrld_sdk_frameworks_dir} ${FRAMEWORK_CODE_SIGN_IDENTITY})
+embed_framework(${executable_name} WrldNavWidget ${wrld_sdk_frameworks_dir} ${FRAMEWORK_CODE_SIGN_IDENTITY})
+embed_framework(${executable_name} WrldUtils ${wrld_sdk_frameworks_dir} ${FRAMEWORK_CODE_SIGN_IDENTITY})
 
 
 
