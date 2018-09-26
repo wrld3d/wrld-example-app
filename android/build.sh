@@ -74,11 +74,11 @@ done
 
 abort()
 {
-  echo "Aborting after error -> exit(1)" >&2
+  echo "FAILED: $1 LINE $2" >&2
   exit 1
 }
 
-trap 'abort' 0
+trap 'abort $0 $LINENO' 0
 
 set -e
 
