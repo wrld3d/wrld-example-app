@@ -110,9 +110,11 @@ do
     esac
 done
 
+
+
 abort()
 {
-  echo "Aborting after error -> exit(1)" >&2
+  echo "Aborting ${0} after error -> exit(1)" >&2
   exit 1
 }
 
@@ -187,7 +189,13 @@ BUILD_VERSION=$build_version \
     echo "Calling: xcodebuild $xcodebuild_args" >&2
 
     if [ ${pretty_print} -ne 0 ] ; then
-        set -o pipefail && xcodebuild $xcodebuild_args | xcpretty
+        xcodebuild $xcodebuild_args | tee xcodebuild.log | xcpretty && xcodebuild_result=${PIPESTATUS[0]}
+        if [ $xcodebuild_result -ne 0 ] ; then 
+            echo "xcodebuild failed with result $xcodebuild_result" >&2
+            echo "Displaying last 100 lines of xcodebuild log $(pwd)/xcodebuild.log" >&2
+            tail -n 100 xcodebuild.log >&2
+            exit 1
+        fi
     else
         xcodebuild $xcodebuild_args
     fi
@@ -195,8 +203,9 @@ BUILD_VERSION=$build_version \
     if [ ${archive} -ne 0 ] ; then
         mkdir -p "$xcode_target/"
         dsym_zip="$xcode_target/$product_name.dsym.zip"
-        echo "zipping dSYM to: ${dsym_zip}"
+        echo "zipping dSYM to: ${dsym_zip}" >&2
         zip -r "$dsym_zip" "./$xcode_archive/dSYMs/${product_name}.app.dSYM"
+        rm -rf "./$xcode_archive/dSYMs/${product_name}.app.dSYM"
     fi
 
 popd
