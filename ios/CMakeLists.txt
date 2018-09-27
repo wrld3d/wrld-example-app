@@ -2,6 +2,8 @@
 # https://gitlab.kitware.com/cmake/cmake/issues/18099
 cmake_minimum_required(VERSION 3.12)
 
+option(RESOLVE_CODE_SIGN_IDENTITY "Resolve codesign identity from possibly ambiguous identities in keychain." OFF)
+
 set(CMAKE_TOOLCHAIN_FILE "../cmake/toolchain/ios/iOS.cmake")
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/templates/ios)
 
@@ -15,23 +17,44 @@ endif(NOT ${IOS})
 
 if (NOT DEFINED DEVELOPMENT_TEAM)
   message (STATUS "No DEVELOPMENT_TEAM specified - if code signing for running on an iOS devicde is required, pass a valid development team id with -DDEVELOPMENT_TEAM=<YOUR_APPLE_DEVELOPER_TEAM_ID>")
+  set(CODESIGN_EMBEDDED_FRAMEWORKS 0)
+else()
+  set(CODESIGN_EMBEDDED_FRAMEWORKS 1)
 endif()
 
+message (STATUS "Using DEVELOPMENT_TEAM: ${DEVELOPMENT_TEAM}")
 
-if (NOT DEFINED CODESIGN_EMBEDDED_FRAMEWORKS)
-  if (DEFINED DEVELOPMENT_TEAM)
-    set(CODESIGN_EMBEDDED_FRAMEWORKS 1)
-  else()
-    # for CI - enterprise signed apps resign framework. Skipping manual codesigning of embedded frameworks to avoid ambiguous codesign identity match with "iPhone Developer"
-    set(CODESIGN_EMBEDDED_FRAMEWORKS 0)
+if (RESOLVE_CODE_SIGN_IDENTITY)
+  message (STATUS "RESOLVE_CODE_SIGN_IDENTITY enabled - attempting to find codesign identity matching DEVELOPMENT_TEAM '${DEVELOPMENT_TEAM}' for 'iPhone Developer'")
+
+  execute_process(
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/templates/ios/find_codesign_identity.sh "${DEVELOPMENT_TEAM}"
+    OUTPUT_VARIABLE FRAMEWORK_CODE_SIGN_IDENTITY
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    RESULT_VARIABLE FIND_CODESIGN_IDENTITY_RESULT
+  )
+
+  if (FIND_CODESIGN_IDENTITY_RESULT)
+    execute_process(
+      COMMAND security find-identity -p codesigning
+      OUTPUT_VARIABLE AVAILABLE_CODE_SIGN_IDENTITIES
+    )
+
+    message (SEND_ERROR "Failed to find valid codesign identity matching DEVELOPMENT_TEAM '${DEVELOPMENT_TEAM}' for 'iPhone Developer'. Available codesigning identities in keychain are:")
+    message (SEND_ERROR "${AVAILABLE_CODE_SIGN_IDENTITIES}")
+    message (FATAL_ERROR "Please resolve missing codesign identity before continuing.")
+
   endif()
+else()
+  set(FRAMEWORK_CODE_SIGN_IDENTITY "iPhone Developer")
 endif()
 
-message (STATUS "using CODESIGN_EMBEDDED_FRAMEWORKS ${CODESIGN_EMBEDDED_FRAMEWORKS}")
+message (STATUS "Using FRAMEWORK_CODE_SIGN_IDENTITY: ${FRAMEWORK_CODE_SIGN_IDENTITY}")
+
 
 if(NOT TARGET_NAME)
   set(TARGET_NAME "ExampleApp")
-  message("Using default target: ${TARGET_NAME}")
+  message(STATUS "Using default target: ${TARGET_NAME}")
 endif(NOT TARGET_NAME)
 
 
@@ -232,10 +255,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 
 
-embed_framework(${executable_name} WRLDSearchWidget Include/WrldSearchWidget ${CODESIGN_EMBEDDED_FRAMEWORKS})
-embed_framework(${executable_name} WrldNav ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS})
-embed_framework(${executable_name} WrldNavWidget ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS})
-embed_framework(${executable_name} WrldUtils ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS})
+embed_framework(${executable_name} WRLDSearchWidget Include/WrldSearchWidget ${CODESIGN_EMBEDDED_FRAMEWORKS} ${FRAMEWORK_CODE_SIGN_IDENTITY})
+embed_framework(${executable_name} WrldNav ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS} ${FRAMEWORK_CODE_SIGN_IDENTITY})
+embed_framework(${executable_name} WrldNavWidget ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS} ${FRAMEWORK_CODE_SIGN_IDENTITY})
+embed_framework(${executable_name} WrldUtils ${wrld_sdk_frameworks_dir} ${CODESIGN_EMBEDDED_FRAMEWORKS} ${FRAMEWORK_CODE_SIGN_IDENTITY})
 
 
 

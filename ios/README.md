@@ -21,7 +21,7 @@ Before you begin, ensure you have completed the initial steps as described in th
 	*	We recommend you run this step frequently to keep your SDK version up to date.
 2.  Copy your Senion SDK framework file into the [wrld-example-app/ios/Include/SenionLab/](https://github.com/wrld3d/wrld-example-app/tree/master/ios/Include/SenionLab) directory
 3.  In the `ios` directory, run `mkdir build` to create a build directory.
-4.  In the `ios/build` directory, run cmake to generate an Xcode project, also specifying your Apple Development Team id: `cmake -G Xcode -DDEVELOPMENT_TEAM=<YOUR_APPLE_DEVELOPMENT_TEAM_ID> ..`.
+4.  In the `ios/build` directory, run cmake to generate an Xcode project, also specifying your Apple Development Team id: `cmake -DDEVELOPMENT_TEAM=<YOUR_APPLE_DEVELOPMENT_TEAM_ID> -G Xcode ..`.
 5.  Open the `ExampleApp.xcodeproj` project file in Xcode.
 6.  Build and run the ExampleApp target.
 
@@ -32,3 +32,10 @@ There is a script included in the repo to build the app from the command line. Y
 To build from the command line, you will need to install the Xcode Command Line Tools by running the command: `xcode-select --install`
 
 Then run `./build.sh -p ios` from the root of this repository to build the project.
+
+## Troubleshooting
+
+When building the app for deployment to physical iOS devices, the app needs codesigning with your iOS development certificate.
+
+In some cases, multiple certificates with name prefix 'iPhone Developer' may be present in your login keychain, which creates ambiguity over which identity to use when signing embedded frameworks. A cmake option has been added that attempts to resolve such ambiguities. To enable, pass `-DRESOLVE_CODE_SIGN_IDENTITY=ON` as a cmake argument, i.e. `cmake -DDEVELOPMENT_TEAM=<YOUR_APPLE_DEVELOPMENT_TEAM_ID> -DRESOLVE_CODE_SIGN_IDENTITY=ON -G Xcode ..`.
+

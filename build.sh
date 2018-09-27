@@ -26,9 +26,7 @@ if [ -z "${p}" ]; then
 fi
 
 if [ $p == "ios" ]; then
-    echo "Building iOS examples..."
-    rm -rf "./ios/Include/eegeo"
-    rm -rf "./ios/build"
+    echo "Building iOS example..."
     ./update.platform.sh $allArguments
 
     if [ $? -ne 0 ] ; then
@@ -36,7 +34,7 @@ if [ $p == "ios" ]; then
     fi    
     
     pushd ios
-    ./build.sh $allArguments
+    ./build.sh --clean --simulator
     resultcode=$?
     popd
 elif [ $p == "android" ]; then
