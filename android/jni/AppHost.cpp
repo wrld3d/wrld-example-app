@@ -220,7 +220,7 @@ AppHost::AppHost(
                                                                                                                         interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                         interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                         mapModule.GetEnvironmentFlatteningService(),
-                                                                                                                        locationProvider,
+                                                                                                                        *m_pAndroidLocationService,
                                                                                                                         mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                                                                         m_messageBus,
                                                                                                                         m_nativeState);
@@ -229,7 +229,7 @@ AppHost::AppHost(
                                                                                                                               interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                               mapModule.GetEnvironmentFlatteningService(),
-                                                                                                                              locationProvider,
+                                                                                                                              *m_pAndroidLocationService,
                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
 																															  m_messageBus,
                                                                                                                               m_nativeState);

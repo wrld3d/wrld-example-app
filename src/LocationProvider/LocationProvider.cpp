@@ -16,7 +16,8 @@ namespace ExampleApp
             m_pFixedIndoorLocationService = Eegeo_NEW(Eegeo::FixedLocation::FixedIndoorLocationService)(
                     mapModule.GetEnvironmentFlatteningService(),
                     mapModule.GetInteriorsPresentationModule().GetInteriorInteractionModel());
-            m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*m_pUnfixedLocationService);
+            // Cast here to avoid copy constructor
+            m_pCurrentLocationService = Eegeo_NEW(Eegeo::Helpers::CurrentLocationService::CurrentLocationService)(*static_cast<Eegeo::Location::ILocationService*>(m_pUnfixedLocationService));
         }
 
         LocationProvider::~LocationProvider()

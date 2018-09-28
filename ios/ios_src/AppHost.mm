@@ -176,7 +176,7 @@ AppHost::AppHost(
                                                                                                                               interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                               mapModule.GetEnvironmentFlatteningService(),
-                                                                                                                              locationProvider,
+                                                                                                                              *m_piOSLocationService,
                                                                                                                               mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                                                                               m_iOSAlertBoxFactory,
                                                                                                                               m_messageBus);
@@ -185,7 +185,7 @@ AppHost::AppHost(
                                                                                            interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                            mapModule.GetEnvironmentFlatteningService(),                                                                                                                                                                                                                                                                
-                                                                                           locationProvider,
+                                                                                           *m_piOSLocationService,
                                                                                            mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                                            m_iOSAlertBoxFactory,
                                                                                            m_messageBus);
