@@ -25,12 +25,14 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
     @IBOutlet weak var bottomToggleButton: WRLDUtilsToggleButton!
     @IBOutlet weak var timeToDestinationView: WRLDNavTimeToDestinationView!
     @IBOutlet weak var directionsView: WRLDNavDirectionsView!
+    @IBOutlet var bottomPanelMask: UIView!
     
     @IBOutlet weak var setupJourneySafeArea: NSLayoutConstraint!
     @IBOutlet weak var instructionsPanelSafeArea: NSLayoutConstraint!
     
     var _hideViews: Bool = false
     var _dontCollapseTop: Bool = false
+    var _safeAreaBottom: Int = 0
     
     public override init(frame: CGRect)
     {
@@ -68,10 +70,14 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
         if #available(iOS 11.0, *) {
             setupJourneySafeArea.constant = 0
             instructionsPanelSafeArea.constant = 0
+            _safeAreaBottom = Int((UIApplication.shared.keyWindow?.safeAreaInsets.bottom)!)
         } else {
             setupJourneySafeArea.constant = UIApplication.shared.statusBarFrame.height
             instructionsPanelSafeArea.constant = UIApplication.shared.statusBarFrame.height
         }
+        
+        bottomPanelMask.translatesAutoresizingMaskIntoConstraints = true
+        view.addSubview(bottomPanelMask)
     }
     
     public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool
@@ -149,11 +155,14 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
         let ht = Int(view.frame.size.height)
         let frameWidth: Int = Int(view.frame.size.width)
         let frameHeight: Int = 312
-        let openFrame   = CGRect(x: 0, y: ht-frameHeight, width: frameWidth, height: frameHeight)
-        let closedFrame = CGRect(x: 0, y:             ht, width: frameWidth, height: frameHeight)
+        let openFrame   = CGRect(x: 0, y: ht-_safeAreaBottom - frameHeight, width: frameWidth, height: frameHeight)
+        let closedFrame = CGRect(x: 0, y:             ht-_safeAreaBottom, width: frameWidth, height: frameHeight)
+        let openMaskFrame = CGRect(x: 0, y: ht-_safeAreaBottom, width: frameWidth, height: _safeAreaBottom)
+        let closedMaskFrame = CGRect(x: 0, y: ht, width: frameWidth, height: _safeAreaBottom)
         
         let block = {
             self.bottomPanel.frame  = (visible) ? (openFrame) : (closedFrame)
+            self.bottomPanelMask.frame = (visible) ? (openMaskFrame) : (closedMaskFrame)
         };
         
         if(animate == true)
