@@ -27,27 +27,42 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CLIENT_LINUX_DUMP_WRITER_COMMON_RAW_CONTEXT_CPU_H
-#define CLIENT_LINUX_DUMP_WRITER_COMMON_RAW_CONTEXT_CPU_H
+#ifndef CLIENT_LINUX_MINIDUMP_WRITER_MICRODUMP_WRITER_H_
+#define CLIENT_LINUX_MINIDUMP_WRITER_MICRODUMP_WRITER_H_
 
-#include "google_breakpad/common/minidump_format.h"
+#include <stdint.h>
+#include <sys/types.h>
+
+#include "client/linux/dump_writer_common/mapping_info.h"
 
 namespace google_breakpad {
 
-#if defined(__i386__)
-typedef MDRawContextX86 RawContextCPU;
-#elif defined(__x86_64)
-typedef MDRawContextAMD64 RawContextCPU;
-#elif defined(__ARM_EABI__)
-typedef MDRawContextARM RawContextCPU;
-#elif defined(__aarch64__)
-typedef MDRawContextARM64_Old RawContextCPU;
-#elif defined(__mips__)
-typedef MDRawContextMIPS RawContextCPU;
-#else
-#error "This code has not been ported to your platform yet."
-#endif
+struct MicrodumpExtraInfo;
+
+// Writes a microdump (a reduced dump containing only the state of the crashing
+// thread) on the console (logcat on Android). These functions do not malloc nor
+// use libc functions which may. Thus, it can be used in contexts where the
+// state of the heap may be corrupt.
+// Args:
+//   crashing_process: the pid of the crashing process. This must be trusted.
+//   blob: a blob of data from the crashing process. See exception_handler.h
+//   blob_size: the length of |blob| in bytes.
+//   mappings: a list of additional mappings provided by the application.
+//   build_fingerprint: a (optional) C string which determines the OS
+//     build fingerprint (e.g., aosp/occam/mako:5.1.1/LMY47W/1234:eng/dev-keys).
+//   product_info: a (optional) C string which determines the product name and
+//     version (e.g., WebView:42.0.2311.136).
+//
+// Returns true iff successful.
+bool WriteMicrodump(pid_t crashing_process,
+                    const void* blob,
+                    size_t blob_size,
+                    const MappingList& mappings,
+                    bool skip_dump_if_main_module_not_referenced,
+                    uintptr_t address_within_main_module,
+                    bool sanitize_stack,
+                    const MicrodumpExtraInfo& microdump_extra_info);
 
 }  // namespace google_breakpad
 
-#endif  // CLIENT_LINUX_DUMP_WRITER_COMMON_RAW_CONTEXT_CPU_H
+#endif  // CLIENT_LINUX_MINIDUMP_WRITER_MICRODUMP_WRITER_H_

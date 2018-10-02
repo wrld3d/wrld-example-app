@@ -1,4 +1,4 @@
-// Copyright (c) 2014, Google Inc.
+// Copyright (c) 2012, Google Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,27 +27,29 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CLIENT_LINUX_DUMP_WRITER_COMMON_RAW_CONTEXT_CPU_H
-#define CLIENT_LINUX_DUMP_WRITER_COMMON_RAW_CONTEXT_CPU_H
+#ifndef CLIENT_LINUX_LOG_LOG_H_
+#define CLIENT_LINUX_LOG_LOG_H_
 
-#include "google_breakpad/common/minidump_format.h"
+#include <stddef.h>
 
-namespace google_breakpad {
+namespace logger {
 
-#if defined(__i386__)
-typedef MDRawContextX86 RawContextCPU;
-#elif defined(__x86_64)
-typedef MDRawContextAMD64 RawContextCPU;
-#elif defined(__ARM_EABI__)
-typedef MDRawContextARM RawContextCPU;
-#elif defined(__aarch64__)
-typedef MDRawContextARM64_Old RawContextCPU;
-#elif defined(__mips__)
-typedef MDRawContextMIPS RawContextCPU;
-#else
-#error "This code has not been ported to your platform yet."
+int write(const char* buf, size_t nbytes);
+
+// In the case of Android the log can be written to the default system log
+// (default behavior of write() above, or to the crash log (see
+// writeToCrashLog() below).
+#if defined(__ANDROID__)
+
+// The logger must be initialized in a non-compromised context.
+void initializeCrashLogWriter();
+
+// Once initialized, writeToCrashLog is safe to use in a compromised context,
+// even if the initialization failed, in which case this will silently fall
+// back on write().
+int writeToCrashLog(const char* buf);
 #endif
 
-}  // namespace google_breakpad
+}  // namespace logger
 
-#endif  // CLIENT_LINUX_DUMP_WRITER_COMMON_RAW_CONTEXT_CPU_H
+#endif  // CLIENT_LINUX_LOG_LOG_H_

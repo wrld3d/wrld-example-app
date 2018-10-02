@@ -1,4 +1,4 @@
-// Copyright (c) 2014, Google Inc.
+// Copyright 2017, Google Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -27,27 +27,18 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef CLIENT_LINUX_DUMP_WRITER_COMMON_RAW_CONTEXT_CPU_H
-#define CLIENT_LINUX_DUMP_WRITER_COMMON_RAW_CONTEXT_CPU_H
+#ifndef GOOGLE_BREAKPAD_COMMON_PATH_HELPER_H
+#define GOOGLE_BREAKPAD_COMMON_PATH_HELPER_H
 
-#include "google_breakpad/common/minidump_format.h"
+#include <string>
+
+#include "common/using_std_string.h"
 
 namespace google_breakpad {
 
-#if defined(__i386__)
-typedef MDRawContextX86 RawContextCPU;
-#elif defined(__x86_64)
-typedef MDRawContextAMD64 RawContextCPU;
-#elif defined(__ARM_EABI__)
-typedef MDRawContextARM RawContextCPU;
-#elif defined(__aarch64__)
-typedef MDRawContextARM64_Old RawContextCPU;
-#elif defined(__mips__)
-typedef MDRawContextMIPS RawContextCPU;
-#else
-#error "This code has not been ported to your platform yet."
-#endif
+string BaseName(const string& path);
+string DirName(const string& path);
 
 }  // namespace google_breakpad
 
-#endif  // CLIENT_LINUX_DUMP_WRITER_COMMON_RAW_CONTEXT_CPU_H
+#endif  // GOOGLE_BREAKPAD_COMMON_PATH_HELPER_H

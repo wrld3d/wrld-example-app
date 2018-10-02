@@ -47,15 +47,20 @@ elif [ "$p" == "windows" ]; then
 fi
 
 if [ "$p" == "windows" ]; then
-   srcPackageName="$srcPackageName.tar.gz"
-else
-   srcPackageName="$srcPackageName.cpp11.tar.gz"
+    srcPackageName="$srcPackageName.tar.gz"
+elif [ "$p" == "android" ]; then
+    srcPackageName="$srcPackageName.cpp11.c++_static.tar.gz"
+else 
+    srcPackageName="$srcPackageName.cpp11.tar.gz"
 fi
 
 echo "Updating $p platform..."
 rm -f ./$destPackageName
 rm -rf $includeDestination
-curl $baseUrl$srcPackageName > ./$destPackageName
+
+src_url=$(echo $baseUrl$srcPackageName | sed "s:+:%2B:g")
+
+curl $src_url > ./$destPackageName
 
 statuscode=$?
 if [ $statuscode -ne 0 ] ; then

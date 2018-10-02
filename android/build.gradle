@@ -39,12 +39,12 @@ def getApplicationIdFromProjectProperty = { ->
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId getApplicationIdFromProjectProperty()
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         multiDexEnabled true
         versionCode getVersionCodeFromProjectProperty()
         versionName getVersionNameFromProjectProperty()
@@ -57,7 +57,7 @@ android {
                 "-Wno-reorder",
                 "-Wno-tautological-unsigned-zero-compare"
                 
-                arguments "-DANDROID=1", "-DANDROID_ARM_MODE=arm", "-DANDROID_STL=gnustl_static"
+                arguments "-DANDROID_ARM_MODE=arm", "-DANDROID_STL=c++_static"
             }
 
             ndk {
