@@ -8,6 +8,7 @@
 #include "App.h"
 #include "MathFunc.h"
 #include "InteriorsExplorerFloorItemView.h"
+#include "ViewController.h"
 
 #import "ImmediatePanGestureRecognizer.h"
 #import "UIButton+DefaultStates.h"
@@ -32,6 +33,10 @@ namespace
     
     CGFloat m_navigationViewStateFloorPanelTopBound;
     CGFloat m_navigationViewStateFloorPanelBottomBound;
+    
+    int m_iPhoneXoffset;
+    
+    UIViewController *m_rootViewController;
     
     InteriorExplorerViewState m_viewState;
     
@@ -64,7 +69,7 @@ namespace
         m_screenWidth = width/pixelScale;
         m_screenHeight = height/pixelScale;
 
-        m_minSpaceForViewInPoints = 250;
+        m_minSpaceForViewInPoints = 200;
         
         m_onScreenIfSpaceAvailable = NO;
         m_hasEnoughScreenSpaceToAppear = YES;
@@ -198,6 +203,10 @@ namespace
         m_halfButtonHeight=static_cast<float>(self.pFloorChangeButton.frame.size.height/2.0f);
         
         m_isSliderAnimPlaying = false;
+        
+        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+        m_rootViewController = (ViewController *)window.rootViewController;
+        m_iPhoneXoffset = [m_rootViewController safeInsets].bottom*(2.0f/3.0f);
         
         [self hideFloorLabels];
         [self setHidden:YES];
@@ -776,7 +785,8 @@ static NSString *CellIdentifier = @"floorCell";
     if(state != m_viewState)
     {
         m_viewState = state;
-        if(m_viewState == InteriorExplorerViewStateDefault)
+        const bool isTablet = !ExampleApp::Helpers::UIHelpers::UsePhoneLayout();
+        if(m_viewState == InteriorExplorerViewStateDefault || isTablet)
         {
             m_floorPanelTopBound = &m_defaultViewStateFloorPanelTopBound;
             m_floorPanelBottomBound = &m_defaultViewStateFloorPanelBottomBound;
@@ -792,12 +802,16 @@ static NSString *CellIdentifier = @"floorCell";
 
 - (void) setNavigationModeFloorPanelTopBound: (CGFloat) topBound
 {
-    m_navigationViewStateFloorPanelTopBound = topBound + m_halfButtonHeight;
+    bool navWidgetOffScreen = topBound == 0;
+    navWidgetOffScreen ? [self setViewState:InteriorExplorerViewState::InteriorExplorerViewStateDefault]:[self setViewState:InteriorExplorerViewState::InteriorExplorerViewStateNavigation];
+    m_navigationViewStateFloorPanelTopBound = topBound + m_halfButtonHeight + m_iPhoneXoffset;
 }
 
 - (void) setNavigationModeFloorPanelBottomBound: (CGFloat) bottomBound
 {
-    m_navigationViewStateFloorPanelBottomBound = m_screenHeight - bottomBound - m_halfButtonHeight;
+    m_navigationViewStateFloorPanelBottomBound = m_screenHeight - bottomBound - m_halfButtonHeight - m_iPhoneXoffset;
+    if(m_navigationViewStateFloorPanelBottomBound >= m_screenHeight * 0.75f) 
+        m_navigationViewStateFloorPanelBottomBound = m_screenHeight * 0.75f;
 }
 
 
