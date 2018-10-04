@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.0'
     }
 }
 
@@ -19,6 +19,12 @@ allprojects {
         }
     }
 }
+
+task wrapper(type: Wrapper) {
+    // generate gradlew wrapper files for specified version of gradle
+    gradleVersion = '4.6'
+}
+
 
 def getVersionCodeFromProjectProperty = { ->
     def code = project.hasProperty('versionCode') ? versionCode.toInteger() : 1
@@ -64,6 +70,10 @@ android {
                 abiFilters "armeabi-v7a", "arm64-v8a"
             }
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     sourceSets {
