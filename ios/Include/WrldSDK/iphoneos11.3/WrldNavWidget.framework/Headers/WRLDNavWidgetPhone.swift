@@ -165,6 +165,12 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
             self.bottomPanelMask.frame = (visible) ? (openMaskFrame) : (closedMaskFrame)
         };
         
+        if(visible == false && self.bottomToggleButton.toggleState == true)
+        {
+            self.bottomToggleButton.toggleState = false;
+            updateBottomStack();
+        }
+        
         if(animate == true)
         {
             UIView.animate(withDuration: 0.3, animations:block)
