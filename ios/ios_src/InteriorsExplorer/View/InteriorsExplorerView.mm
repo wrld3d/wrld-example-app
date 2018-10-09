@@ -36,6 +36,8 @@ namespace
     
     int m_iPhoneXoffset;
     
+    int m_currentlySelectedFloorIndex;
+    
     UIViewController *m_rootViewController;
     
     InteriorExplorerViewState m_viewState;
@@ -208,6 +210,8 @@ namespace
         m_rootViewController = (ViewController *)window.rootViewController;
         m_iPhoneXoffset = [m_rootViewController safeInsets].bottom*(2.0f/3.0f);
         
+        m_currentlySelectedFloorIndex = 0;
+        
         [self hideFloorLabels];
         [self setHidden:YES];
         [self setArrowState:NO :NO];
@@ -308,6 +312,7 @@ namespace
 - (void) updateFloors: (const std::vector<std::string>&) floorShortNames withCurrentFloor: (int) currentlySelectedFloorIndex;
 {
     m_floorSelection = 0.0;
+    m_currentlySelectedFloorIndex = currentlySelectedFloorIndex;
     m_tableViewFloorNames = floorShortNames;
     std::reverse(m_tableViewFloorNames.begin(), m_tableViewFloorNames.end());
     
@@ -647,6 +652,7 @@ namespace
 
 - (void) moveButtonToFloorIndex:(int)floorIndex :(BOOL)shouldAnimate
 {
+    m_currentlySelectedFloorIndex = floorIndex;
     int row = static_cast<int>((m_tableViewFloorNames.size()-1)-floorIndex);
     NSIndexPath* ipath = [NSIndexPath indexPathForRow:row inSection:0];
     
@@ -761,6 +767,10 @@ static NSString *CellIdentifier = @"floorCell";
     BOOL bottom = (floorIndex==floorCount-1);
     
     [cell setFloor:nameString :top :bottom];
+    if(!m_draggingFloorButton)
+    {
+        [self moveButtonToFloorIndex:m_currentlySelectedFloorIndex :NO];
+    }
     
     return cell;
 }
