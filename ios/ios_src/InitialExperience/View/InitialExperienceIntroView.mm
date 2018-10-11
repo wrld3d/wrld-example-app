@@ -83,6 +83,7 @@ namespace
         self.pWelcomeDescription.text = @"Design your maps at wrld3d.com";
         [self.pWelcomeDescription setFont:[UIFont fontWithName:@"Helvetica Neue" size:useSmallScreen ? 22.f/m_pixelScale : 30.0f/m_pixelScale]];
         self.pWelcomeDescription.adjustsFontSizeToFitWidth = true;
+        self.pWelcomeDescription.textAlignment = NSTextAlignmentCenter;
         [self.pBannerBarContainer addSubview:self.pWelcomeDescription];
         
         self.pSearchMenuDialogContainer = [[[UIView alloc] initWithFrame:CGRectMake(0.f, 0.f, 0.f, 0.f)] autorelease];
