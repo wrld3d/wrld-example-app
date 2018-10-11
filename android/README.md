@@ -17,7 +17,13 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 ## Requirements
 
-- [Android Studio](https://developer.android.com/studio/).
+## Requirements
+
+* [Android Studio](https://developer.android.com/studio/archive) (3.0+ tested)
+* Gradle: (4.4, set within the `Project` tab of the `Project Structure` window inside Android Studio)
+* Android Plugin for Gradle: (3.1.1, set within [build.gradle](https://github.com/wrld3d/swallow-app/blob/master/android/build.gradle))
+* [Android SDK Tools](https://developer.android.com/studio/releases/sdk-tools): (25.2.3.1 or later)
+* [Android NDK](https://developer.android.com/ndk/downloads/older_releases): (11c or later)
 - [Senion SDK](https://senion.com/)
 
 ## Building
