@@ -161,7 +161,7 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 			m_unauthorizedGpsAlertShown = true;
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(m_activity);
 			alertDialogBuilder.setTitle("Location Services disabled")
-					.setMessage("GPS Compass inaccessable: Location Services are not enabled for this application. You can change this in your device settings.")
+					.setMessage("GPS Compass inaccessible: Location Services are not enabled for this application. You can change this in your device settings.")
 					.setCancelable(false)
 					.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 
