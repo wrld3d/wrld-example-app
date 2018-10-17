@@ -14,9 +14,6 @@ Before you begin, ensure you have completed the initial steps as described in th
 * [Speeding up build times](#speeding-up-build-times)
 * [Troubleshooting](#troubleshooting)
 
-
-## Requirements
-
 ## Requirements
 
 * [Android Studio](https://developer.android.com/studio/archive) (3.0+ tested)
@@ -26,16 +23,20 @@ Before you begin, ensure you have completed the initial steps as described in th
 * [Android NDK](https://developer.android.com/ndk/downloads/older_releases): (11c or later)
 - [Senion SDK](https://senion.com/)
 
+## Obtaining and setting your API Key
+
+1. Sign in to your WRLD account [here](https://www.wrld3d.com/).
+
+2. Navigate to your [account page](https://accounts.wrld3d.com/users/sign_in?service=https%3A%2F%2Faccounts.wrld3d.com%2F%23apikeys).
+
+3. Here you can copy the API key of your app, and create a new app if you don't already have one.
+
+4. Paste your API key [here](https://github.com/wrld3d/wrld-example-app/blob/master/android/assets/ApplicationConfigs/standard_config.json#L3).
+
 ## Building
 
 1. Download the latest WRLD Android SDK by running `./update.platform.sh -p android` in the root directory of this repository. We recommend you run this step frequently to keep your SDK version up to date.
 2. Copy your Senion SDK JAR file into your local checkout directory of [wrld-example-app/android/libs](https://github.com/wrld3d/wrld-example-app/tree/master/android/libs).
-3. To create a debug build for Android run:
-
-  `./android/build.sh`
-
-
-See `./android/build.sh --help` for further build options.
 
 ## Building interactively in Android Studio
 
