@@ -9,8 +9,7 @@ namespace ExampleApp
     //! defines a path to the app config file, which is used to provide the EegeoApiKey and other credentials
     static const std::string ApplicationConfigurationPath = "ApplicationConfigs/standard_config.json";
 
-    //! REQUIRED: You must obtain an API key for the eeGeo SDK from https://www.eegeo.com/developers/ and set is as the value of "EegeoApiKey" in the config file
-    
+    //! REQUIRED: You must obtain an API key for the WRLD SDK from https://www.wrld3d.com/developers and set it as the value of "EegeoApiKey" in the config file: "ApplicationConfigs/standard_config.json"    
     //! Optional: If 'useYelp' is true in AppHost you may wish to obtain a Yelp API key from https://www.yelp.com/developers for POI search provision.
     //! If so, set credentials using the following keys in the app config file:
     //! YelpConsumerKey
