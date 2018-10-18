@@ -16,14 +16,11 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 ## Requirements
 
-* [Android Studio](https://developer.android.com/studio/archive) (3.0+ tested)
-* Gradle: (4.4, set within the `Project` tab of the `Project Structure` window inside Android Studio)
-* Android Plugin for Gradle: (3.1.1, set within [build.gradle](https://github.com/wrld3d/swallow-app/blob/master/android/build.gradle))
-* [Android SDK Tools](https://developer.android.com/studio/releases/sdk-tools): (25.2.3.1 or later)
-* [Android NDK](https://developer.android.com/ndk/downloads/older_releases): (11c or later)
-- [Senion SDK](https://senion.com/)
+* [Android Studio](https://developer.android.com/studio/archive) (3.1.1 or later)
+* [Android NDK](https://developer.android.com/ndk/downloads/) (>= 17c)
+* [Senion SDK](https://senion.com/)
 
-## Obtaining and setting your API Key
+## Obtaining and setting your WRLD API Key
 
 1. Sign in to your WRLD account [here](https://www.wrld3d.com/).
 
@@ -37,6 +34,14 @@ Before you begin, ensure you have completed the initial steps as described in th
 
 1. Download the latest WRLD Android SDK by running `./update.platform.sh -p android` in the root directory of this repository. We recommend you run this step frequently to keep your SDK version up to date.
 2. Copy your Senion SDK JAR file into your local checkout directory of [wrld-example-app/android/libs](https://github.com/wrld3d/wrld-example-app/tree/master/android/libs).
+3. Make sure your ANDROID_HOME and ANDROID_NDK_HOME are set to the correct paths. The default Android Studio installation paths on Windows are `\Users\username\AppData\Local\Android\sdk` and `\Users\username\AppData\Local\Android\sdk\ndk-bundle`.
+On MacOS they are located at `/Users/<username>/Library/Android/sdk` and `/Users/<username>/Library/Android/sdk/ndk-bundle`.
+4. To create a debug build for Android run:
+
+  `./android/build.sh`
+
+
+See `./android/build.sh --help` for further build options.
 
 ## Building interactively in Android Studio
 
