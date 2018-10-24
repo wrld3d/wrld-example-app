@@ -553,11 +553,18 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
             public void afterTextChanged(Editable s) {
                 if(ignore)
                     return;
+                int currentTextPosition = text.getSelectionStart();
                 ignore = true;
                 text.setText(s.toString().replaceAll(regExString, ""));
+                int length = text.getText().length();
+                if(currentTextPosition > length) {
+                    text.setSelection(length);
+                }
+                else {
+                    text.setSelection(currentTextPosition);
+                }
                 ignore = false;
             }
         });
     }
-
 }
