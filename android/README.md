@@ -36,7 +36,8 @@ Before you begin, ensure you have completed the initial steps as described in th
 2. Copy your Senion SDK JAR file into your local checkout directory of [wrld-example-app/android/libs](https://github.com/wrld3d/wrld-example-app/tree/master/android/libs).
 3. Make sure your ANDROID_HOME and ANDROID_NDK_HOME are set to the correct paths. The default Android Studio installation paths on Windows are `\Users\username\AppData\Local\Android\sdk` and `\Users\username\AppData\Local\Android\sdk\ndk-bundle`.
 On MacOS they are located at `/Users/<username>/Library/Android/sdk` and `/Users/<username>/Library/Android/sdk/ndk-bundle`.
-4. To create a debug build for Android run:
+4. Make sure your JAVA_HOME is set. Instructions for this can be found on the [oracle](https://docs.oracle.com/cd/E19182-01/821-0917/inst_jdk_javahome_t/index.html) website.
+5. To create a debug build for Android run:
 
   `./android/build.sh`
 
