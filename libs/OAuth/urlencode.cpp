@@ -1,6 +1,11 @@
 #include "urlencode.h"
 #include <cassert>
 
+// + WRLD
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wtautological-unsigned-zero-compare"
+// - WRLD
+
 std::string char2hex( char dec )
 {
 	char dig1 = (dec&0xF0)>>4;
@@ -15,6 +20,10 @@ std::string char2hex( char dec )
 	r.append( &dig2, 1);
 	return r;
 }
+
+// + WRLD
+#pragma clang diagnostic pop
+// - WRLD
 
 std::string urlencode( const std::string &c, URLEncodeType enctype)
 {
