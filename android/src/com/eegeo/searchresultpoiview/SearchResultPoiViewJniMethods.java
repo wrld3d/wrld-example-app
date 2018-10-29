@@ -9,4 +9,6 @@ public class SearchResultPoiViewJniMethods
     public static native void TogglePinnedButtonClicked(long nativeCallerPointer);
 
     public static native void DirectionsButtonClicked(long nativeCallerPointer);
+
+    public static native boolean isJavascriptWhitelisted(long nativeCallerPointer, String url);
 }

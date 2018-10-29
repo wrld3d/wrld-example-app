@@ -129,6 +129,7 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         
         m_view.setVisibility(View.GONE);
         m_uiRoot.addView(m_view);
+
         m_webView.setWebViewClient(new WebViewClient()
         {
             @Override
@@ -349,11 +350,13 @@ public class EegeoSearchResultPoiView implements View.OnClickListener, IBackButt
         	m_dropPinText.setText("Remove Pin");
         }
         
-        if(!customViewUrl.equals(""))
-        {
+        if(!customViewUrl.equals("")) {
             m_webView.getSettings().setUseWideViewPort(true);
             m_webView.getSettings().setLoadWithOverviewMode(true);
             m_webView.loadUrl(customViewUrl);
+
+            boolean canUseJavascript = SearchResultPoiViewJniMethods.isJavascriptWhitelisted(m_nativeCallerPointer, customViewUrl);
+            m_webView.getSettings().setJavaScriptEnabled(canUseJavascript);
 
             if(customViewHeight != -1) {
                 final int viewHeight = customViewHeight;

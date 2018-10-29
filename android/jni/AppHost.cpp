@@ -574,10 +574,12 @@ void AppHost::CreateApplicationViewModulesFromUiThread()
 
     // Pop-up layer.
     bool showDirectionsButton = m_pApp->GetApplicationConfiguration().NavigationEnabled();
+    std::string javascriptWhitelistURL = m_pApp->GetApplicationConfiguration().JavascriptWhitelistUrl();
     m_pSearchResultPoiViewModule = Eegeo_NEW(ExampleApp::SearchResultPoi::View::SearchResultPoiViewModule)(
                                m_nativeState,
                                app.SearchResultPoiModule().GetSearchResultPoiViewModel(),
                                showDirectionsButton,
+                               javascriptWhitelistURL,
                                m_messageBus,
                                *m_pAndroidFlurryMetricsService
                            );

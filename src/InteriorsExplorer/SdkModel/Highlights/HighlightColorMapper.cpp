@@ -10,20 +10,22 @@ namespace ExampleApp
         {
             namespace Highlights
             {
-                Eegeo::v4 HighlightColorMapper::GetColorFromValue(rapidjson::Value& value) const
-                {
-                    assert(value.IsArray());
-                    Eegeo::v4 highlightColor = m_defaultColor;
-                    
-                    if (value.Size() == 4)
-                    {
-                        highlightColor.Set(value[0].GetDouble()/255.0,
-                                           value[1].GetDouble()/255.0,
-                                           value[2].GetDouble()/255.0,
-                                           value[3].GetDouble()/255.0);
+                Eegeo::v4 HighlightColorMapper::GetColorFromValue(rapidjson::Value& value) const {
+                    if (value.IsArray()) {
+                        Eegeo::v4 highlightColor = m_defaultColor;
+
+                        if (value.Size() == 4) {
+                            highlightColor.Set(value[0].GetDouble() / 255.0,
+                                               value[1].GetDouble() / 255.0,
+                                               value[2].GetDouble() / 255.0,
+                                               value[3].GetDouble() / 255.0);
+                        }
+
+                        return highlightColor;
                     }
-                    
-                    return highlightColor;
+                    else {
+                        return m_defaultColor;
+                    }
                 }
                 
                 Eegeo::v4 HighlightColorMapper::GetColor(const Search::SdkModel::SearchResultModel& result, const std::string highlightColorData) const

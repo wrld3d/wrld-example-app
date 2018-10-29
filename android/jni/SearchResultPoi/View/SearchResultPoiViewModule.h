@@ -27,6 +27,7 @@ namespace ExampleApp
                     AndroidNativeState& nativeState,
                     ISearchResultPoiViewModel& searchResultPoiViewModel,
                     bool showDirectionsButton,
+                    std::string javascriptWhitelistURL,
                     ExampleAppMessaging::TMessageBus& messageBus,
                     Metrics::IMetricsService& metricsService
                 );

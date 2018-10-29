@@ -37,6 +37,7 @@ namespace ExampleApp
                 const std::string MyPinsWebServiceUrl = "mypins_web_service_url";
                 const std::string MyPinsWebServiceAuthToken = "mypins_web_service_auth_token";
                 const std::string MyPinsPoiSetId = "mypins_poi_set_id";
+                const std::string JavascriptWhitelistUrl = "javascript_whitelist_url";
                 const std::string IsKioskTouchInputEnabled = "is_kiosk_touch_input_enabled";
                 const std::string IsInKioskMode = "is_in_kiosk_mode";
                 const std::string StartAppInFullscreen = "start_app_in_fullscreen";
@@ -310,6 +311,8 @@ namespace ExampleApp
                 const std::string& myPinsWebServiceUrl = ParseStringOrDefault(document, MyPinsWebServiceUrl, m_defaultConfig.MyPinsWebServiceUrl());
                 const std::string& myPinsWebServiceAuthToken = ParseStringOrDefault(document, MyPinsWebServiceAuthToken, m_defaultConfig.MyPinsWebServiceAuthToken());
                 const std::string& myPinsPoiSetId = ParseStringOrDefault(document, MyPinsPoiSetId, m_defaultConfig.MyPinsPoiSetId());
+                const std::string& javascriptWhitelistUrl = ParseStringOrDefault(document, JavascriptWhitelistUrl, m_defaultConfig.JavascriptWhitelistUrl());
+                
                 bool isKioskTouchInputEnabled = ParseBoolOrDefault(document, IsKioskTouchInputEnabled, m_defaultConfig.IsKioskTouchInputEnabled());
                 bool isInKioskMode = ParseBoolOrDefault(document, IsInKioskMode, m_defaultConfig.IsInKioskMode());
                 bool startFullscreen = ParseBoolOrDefault(document, StartAppInFullscreen, m_defaultConfig.ShouldStartFullscreen());
@@ -396,6 +399,7 @@ namespace ExampleApp
                     myPinsWebServiceUrl,
                     myPinsWebServiceAuthToken,
                     myPinsPoiSetId,
+                    javascriptWhitelistUrl,
                     isKioskTouchInputEnabled,
                     isInKioskMode,
                     useJapaneseFont,

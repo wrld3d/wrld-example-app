@@ -21,6 +21,7 @@
     "mypins_web_service_url": "",
     "mypins_web_service_auth_token": "",
     "mypins_poi_set_id": "",
+    "javascript_whitelist_url": "wrld-data-service.s3-us-west-2.amazonaws.com",
     "use_japanese_font": false,
     "use_chinese_font": false,
     "hockey_app_id":"",

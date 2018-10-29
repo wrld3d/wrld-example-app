@@ -7,7 +7,7 @@
 #include "ISearchResultPoiView.h"
 #include "AndroidNativeState.h"
 #include "CallbackCollection.h"
-
+#include "WhitelistUrlHelpersNative.h"
 
 namespace ExampleApp
 {
@@ -28,7 +28,7 @@ namespace ExampleApp
                 Search::SdkModel::SearchResultModel m_model;
 
             public:
-                SearchResultPoiView(AndroidNativeState& nativeState, bool showDirectionsButton);
+                SearchResultPoiView(AndroidNativeState& nativeState, bool showDirectionsButton, std::string javascriptWhitlistURL);
 
                 ~SearchResultPoiView();
 
@@ -60,6 +60,8 @@ namespace ExampleApp
 
                 void HandleDirectionsClicked();
 
+                bool IsJavascriptWhitelisted(std::string url);
+
             private:
                 void CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned);
 
@@ -74,6 +76,7 @@ namespace ExampleApp
                 jobjectArray CreateJavaArray(const std::vector<std::string>& stringVector);
 
                 bool m_showDirectionsButton;
+                Helpers::WhitelistUrlHelpersNative  m_javascriptWhitelistHelper;
             };
         }
     }

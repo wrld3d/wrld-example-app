@@ -32,6 +32,7 @@ namespace ExampleApp
             const std::string& myPinsWebServiceUrl,
             const std::string& myPinsWebServiceAuthToken,
             const std::string& myPinsPoiSetId,
+            const std::string& javascriptWhitelistUrl,
             const bool isKioskTouchInputEnabled,
             const bool isInKioskMode,
             const bool useJapaneseFont,
@@ -81,6 +82,7 @@ namespace ExampleApp
         , m_myPinsWebServiceUrl(myPinsWebServiceUrl)
         , m_myPinsWebServiceAuthToken(myPinsWebServiceAuthToken)
         , m_myPinsPoiSetId(myPinsPoiSetId)
+        , m_javascriptWhitelistUrl(javascriptWhitelistUrl)
         , m_isKioskTouchInputEnabled(isKioskTouchInputEnabled)
         , m_isInKioskMode(isInKioskMode)
         , m_useJapaneseFont(useJapaneseFont)
@@ -230,6 +232,11 @@ namespace ExampleApp
         bool ApplicationConfiguration::IsKioskTouchInputEnabled() const
         {
             return m_isKioskTouchInputEnabled;
+        }
+        
+        std::string ApplicationConfiguration::JavascriptWhitelistUrl() const
+        {
+            return m_javascriptWhitelistUrl;
         }
 
         bool ApplicationConfiguration::IsInKioskMode() const

@@ -17,4 +17,12 @@ extern "C"
     JNIEXPORT void JNICALL Java_com_eegeo_searchresultpoiview_SearchResultPoiViewJniMethods_DirectionsButtonClicked(
         JNIEnv* jenv, jobject obj,
         jlong nativeObjectPtr);
+
+
+    JNIEXPORT jboolean JNICALL Java_com_eegeo_searchresultpoiview_SearchResultPoiViewJniMethods_isJavascriptWhitelisted(
+        JNIEnv* jenv, jobject obj,
+        jlong nativeObjectPtr,
+        jstring url);
+
+
 }

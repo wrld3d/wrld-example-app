@@ -139,6 +139,7 @@
 #include "ReactionHideOtherScreenControls.h"
 #include "ReactionPushScreenControl.h"
 #include "LocationProvider.h"
+#include "WhitelistUrlHelpersNative.h"
 
 namespace ExampleApp
 {

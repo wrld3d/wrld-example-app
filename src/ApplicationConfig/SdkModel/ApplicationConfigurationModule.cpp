@@ -63,7 +63,8 @@ namespace ExampleApp
                     const std::string timerSurveyUrl = "";
                     
                     const std::string hockeyAppId = "";
-
+                    const std::string javascriptWhitelistUrl = "";
+                    
                     const std::vector<std::vector<std::string>> customKeyboardLayout = {};
                     
                     const std::string startLocationIndoorId = "";
@@ -97,6 +98,7 @@ namespace ExampleApp
                         emptyMyPinsWebServiceUrl,
                         emptyMyPinsWebServiceAuthToken,
                         emptyMyPinsPoiSetId,
+                        javascriptWhitelistUrl,
                         isKioskTouchInputEnabled,
                         isInKioskMode,
                         useJapaneseFont,

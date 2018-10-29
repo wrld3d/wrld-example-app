@@ -16,6 +16,8 @@ set(currsources
   ../src/Helpers/SizeHelpers.h
   ../src/Helpers/StateMachine.cpp
   ../src/Helpers/StateMachine.h
+  ../src/Helpers/WhitelistUrlHelpersNative.cpp
+  ../src/Helpers/WhitelistUrlHelpersNative.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\Helpers FILES ${currsources})

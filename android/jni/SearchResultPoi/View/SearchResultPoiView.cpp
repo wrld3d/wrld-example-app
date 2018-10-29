@@ -14,13 +14,15 @@ namespace ExampleApp
     {
         namespace View
         {
-            SearchResultPoiView::SearchResultPoiView(AndroidNativeState& nativeState, bool showDirectionsButton)
+            SearchResultPoiView::SearchResultPoiView(AndroidNativeState& nativeState, bool showDirectionsButton,std::string javascriptWhitlistURL)
                 : m_nativeState(nativeState)
             	, m_uiViewClass(NULL)
                 , m_uiView(NULL)
                 , m_showDirectionsButton(showDirectionsButton)
+                , m_javascriptWhitelistHelper(javascriptWhitlistURL)
             {
                 ASSERT_UI_THREAD
+
             }
 
             SearchResultPoiView::~SearchResultPoiView()
@@ -104,6 +106,8 @@ namespace ExampleApp
             	// TJ: Stubbed for Droid implementation
             }
 
+
+
             void SearchResultPoiView::InsertClosedCallback(Eegeo::Helpers::ICallback0& callback)
             {
                 ASSERT_UI_THREAD
@@ -165,6 +169,12 @@ namespace ExampleApp
 				ASSERT_UI_THREAD
 
 				m_directionsCallbacks.ExecuteCallbacks(m_model);
+			}
+
+			bool SearchResultPoiView::IsJavascriptWhitelisted(std::string url){
+                ASSERT_UI_THREAD
+
+				return m_javascriptWhitelistHelper.IsWhitelistedUrl(url);
 			}
 
             void SearchResultPoiView::CreateAndShowYelpPoiView(const Search::SdkModel::SearchResultModel& model, bool isPinned)
