@@ -3,7 +3,9 @@
 
 // + WRLD
 #pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunknown-warning-option"
 #pragma clang diagnostic ignored "-Wtautological-unsigned-zero-compare"
+
 // - WRLD
 
 std::string char2hex( char dec )
