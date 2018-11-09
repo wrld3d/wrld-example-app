@@ -3,6 +3,7 @@
 package com.eegeo.searchproviders;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.support.v4.content.res.ResourcesCompat;
 
 import com.eegeo.mobileexampleapp.R;
@@ -50,7 +51,8 @@ public class MyTestSearchProvider implements SearchProvider, SuggestionProvider,
 		}
 
 		int textHighlightColor = ResourcesCompat.getColor(activity.getResources(), R.color.search_widget_text_primary, null);
-		m_suggestionResultFactory = new DefaultSuggestionViewFactory(R.layout.search_suggestion, new TextHighlighter(textHighlightColor));
+		Typeface searchViewTextTypeface = ResourcesCompat.getFont(activity, R.font.open_sans_semibold);
+		m_suggestionResultFactory = new DefaultSuggestionViewFactory(R.layout.search_suggestion, new TextHighlighter(textHighlightColor, searchViewTextTypeface));
 		m_callbacks           = new HashSet<>();
 		m_suggestion_callbacks = new HashSet<>();
 
