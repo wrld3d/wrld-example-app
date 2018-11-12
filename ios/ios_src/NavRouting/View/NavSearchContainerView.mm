@@ -2,6 +2,7 @@
 
 #import "NavSearchContainerView.h"
 #import <WrldSearchWidget/WrldSearchWidget.h>
+#include "ViewController.h"
 
 @interface NavSearchContainerView()
 - (BOOL) consumesTouch:(UITouch *)touch;
@@ -18,9 +19,20 @@
 
 - (instancetype) initWithSubviews: (WRLDSearchWidgetView*) searchView :(UIView*) resultsView :(UIView*) backButton :(UIView*) searchHintContainer
 {
+    UIViewController *rootViewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    UIEdgeInsets safeInsets = [rootViewController safeInsets];
+    
+    CGRect screenRect = rootViewController.view.bounds;
+    
+    CGFloat iphoneMargin = 20;
+    CGFloat iPadMargin = 20;
+    
+    CGFloat heightIphone = screenRect.size.height - 2*iphoneMargin - safeInsets.bottom;
+    CGFloat heightIpad = screenRect.size.height - 2*iPadMargin - safeInsets.bottom;
+    
     CGRect searchFrame = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) ?
-    CGRectMake(20, -50, 375, 300) :   // ipad
-    CGRectMake(10, -50, CGRectGetWidth([[UIScreen mainScreen] bounds]) - 20, 300); // iphone
+    CGRectMake(20, -50, 375, heightIpad) :   // ipad
+    CGRectMake(10, -50,CGRectGetWidth([[UIScreen mainScreen] bounds]) - 20, heightIphone); // iphone
     
     if(self == [super initWithFrame:searchFrame])
     {
