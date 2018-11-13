@@ -84,11 +84,12 @@ namespace ExampleApp
 
 			void SearchServices::OnSearchWithContext(const std::string& searchQuery, const QueryContext& context)
 			{
+                bool samePreviousSearchText = context.TagText() == m_lastSearchContext.TagText();
                 m_lastSearchContext = context;
                 
 				std::string effectiveQuery = context.IsTag() ? context.TagText() : searchQuery;
                 
-                m_rerunLastTagSearch = context.IsTag();
+                m_rerunLastTagSearch = context.IsTag() && samePreviousSearchText;
 
 				m_messageBus.Publish(SearchMenuSearchWithContextMessage(effectiveQuery, context));
 			}
