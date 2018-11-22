@@ -24,7 +24,6 @@ public class WRLDNavWidgetTablet: WRLDNavWidgetBase
     //-- Bottom - Time to Destination --------------------------------------------------------------
     @IBOutlet var bottomPanelView: UIView!
     @IBOutlet weak var bottomStack: UIStackView!
-    @IBOutlet weak var bottomToggleButton: WRLDUtilsToggleButton!
     @IBOutlet weak var bottomTimeToDestinationView: WRLDNavTimeToDestinationView!
     
     var m_bottomPanelHeight: CGFloat = 0
@@ -59,7 +58,6 @@ public class WRLDNavWidgetTablet: WRLDNavWidgetBase
         applyShadow(view: nextDirectionView)
         applyShadow(view: leftInfoViews)
         applyShadow(view: directionsView)
-        applyShadow(view: bottomToggleButton)
         applyShadow(view: stepByStepDirectionsView)
 
         leftPanelView.translatesAutoresizingMaskIntoConstraints = true
@@ -290,7 +288,6 @@ public class WRLDNavWidgetTablet: WRLDNavWidgetBase
     {
         UIView.animate(withDuration: 0.3, animations:
             {
-                self.bottomTimeToDestinationView.isHidden = !(self.bottomToggleButton.toggleState)
                 self.view.setNeedsLayout()
                 self.view.layoutIfNeeded()
                 self.bottomPanelVisibleHeight = self.bottomStack.bounds.size.height
@@ -304,19 +301,13 @@ public class WRLDNavWidgetTablet: WRLDNavWidgetBase
     {
         if m_isStepByStepNavListShowing
         {
-            let bottomToggleButtonHeight = self.bottomToggleButton.frame.size.height
-            let bottomHeight = self.bottomTimeToDestinationView.isHidden ? bottomToggleButtonHeight : m_bottomPanelHeight
+            let bottomHeight = m_bottomPanelHeight
             let frameHeight: Int = Int(self.view.frame.size.height - bottomHeight)
             let frameWidth: Int = Int(self.view.frame.size.width)
             let newFrame   = CGRect(x: 0, y: 0, width: frameWidth, height: frameHeight)
             self.topPanelView.frame = newFrame
             self.topPanelView.setNeedsLayout()
         }
-    }
-    
-    @IBAction func bottomToggleButtonValueChanged(_ sender: Any)
-    {
-        updateBottomStack()
     }
     
     @objc public override func setViewVisibility(animate: Bool, hideViews: Bool)
