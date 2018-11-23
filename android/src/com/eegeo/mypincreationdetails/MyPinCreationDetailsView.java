@@ -45,6 +45,8 @@ import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MyPinCreationDetailsView implements View.OnClickListener, IActivityIntentResultHandler, IRuntimePermissionResultHandler
 {
@@ -123,8 +125,8 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
         m_description = (EditText)m_view.findViewById(R.id.poi_creation_details_description);
         m_shouldShareButton = (ToggleButton)m_view.findViewById(R.id.poi_creation_details_share_togglebutton);
 
-        addStringRemovalListener(m_title, "￼|\n|\r");
-        addStringRemovalListener(m_description, "￼");
+        addStringRemovalListener(m_title, Pattern.compile("[￼\n\r]+"));
+        addStringRemovalListener(m_description, Pattern.compile("[￼]+"));
 
         ScreenDimensions dims = new ScreenDimensions(m_activity);
         MarginLayoutParams margins = (MarginLayoutParams)mainGroup.getLayoutParams();
@@ -535,10 +537,10 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
                 .setNegativeButton(context.getResources().getString(R.string.cancel_text), dialogClickListener).show();
     }
 
-    private void addStringRemovalListener(final EditText text, final String regExString)
+    private void addStringRemovalListener(final EditText text, final Pattern pattern)
     {
         text.addTextChangedListener(new TextWatcher() {
-            boolean ignore = false;
+            boolean reentryGuard = false;
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -550,20 +552,23 @@ public class MyPinCreationDetailsView implements View.OnClickListener, IActivity
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-                if(ignore)
+            public void afterTextChanged(Editable editable) {
+                if (reentryGuard) {
                     return;
-                int currentTextPosition = text.getSelectionStart();
-                ignore = true;
-                text.setText(s.toString().replaceAll(regExString, ""));
-                int length = text.getText().length();
-                if(currentTextPosition > length) {
-                    text.setSelection(length);
                 }
-                else {
-                    text.setSelection(currentTextPosition);
+
+                final String input = editable.toString();
+                final Matcher matcher = pattern.matcher(input);
+                if (matcher.find()) {
+                    final String output = matcher.replaceAll("");
+                    final int selectionStart = text.getSelectionStart();
+                    final int charsRemovedCount = input.length() - output.length();
+
+                    reentryGuard = true;
+                    text.setText(output);
+                    text.setSelection(selectionStart - charsRemovedCount);
+                    reentryGuard = false;
                 }
-                ignore = false;
             }
         });
     }
