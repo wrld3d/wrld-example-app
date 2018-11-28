@@ -2,20 +2,19 @@
 
 package com.eegeo.watermark;
 
-import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.eegeo.mobileexampleapp.R;
-
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RelativeLayout;
+
+import com.eegeo.entrypointinfrastructure.MainActivity;
+import com.eegeo.mobileexampleapp.R;
 
 public class WatermarkView implements View.OnClickListener
 {
@@ -55,18 +54,15 @@ public class WatermarkView implements View.OnClickListener
             @Override
             public void onAnimationCancel(Animator animation)
             {
+                refreshImage();
                 animation.removeAllListeners();
             }
 
             @Override
             public void onAnimationEnd(Animator animator)
             {
-                String uri = "drawable/" + m_imageAssetUrl;
-                int imageResource = m_activity.getResources().getIdentifier(uri, null, m_activity.getPackageName());
-                m_view.setBackgroundResource(imageResource);
-                m_currentBackgroundDrawable = ContextCompat.getDrawable(m_activity, imageResource);
+                refreshImage();
 
-                refreshPositions();
                 m_view.setY(m_yPosInactive);
                 animateToActive();
 
@@ -208,15 +204,9 @@ public class WatermarkView implements View.OnClickListener
         }
         else
         {
-            String uri = "drawable/" + m_imageAssetUrl;
-            int imageResource = m_activity.getResources().getIdentifier(uri, null, m_activity.getPackageName());
-            m_view.setBackgroundResource(imageResource);
-            m_currentBackgroundDrawable = ContextCompat.getDrawable(m_activity, imageResource);
-
-            refreshPositions();
+            refreshImage();
             m_view.setY(m_yPosInactive);
         }
-
     }
 
     private DialogInterface.OnClickListener createClickListener(final boolean shouldPreload)
@@ -247,11 +237,21 @@ public class WatermarkView implements View.OnClickListener
     {
         m_alignAlongBottom = alignAlongBottom;
         m_alignBelowFloorDisplay = alignBelowFloorDisplay;
+        refreshPositions();
     }
 
     public void setInteriorStylingState(final boolean shouldUseInteriorStyling)
     {
         m_view.setAlpha(shouldUseInteriorStyling ? InteriorStylingEnabledAlpha : InteriorStylingDisabledAlpha);
+    }
+
+    private void refreshImage()
+    {
+        String uri = "drawable/" + m_imageAssetUrl;
+        int imageResource = m_activity.getResources().getIdentifier(uri, null, m_activity.getPackageName());
+        m_view.setBackgroundResource(imageResource);
+        m_currentBackgroundDrawable = ContextCompat.getDrawable(m_activity, imageResource);
+        refreshPositions();
     }
 
     private void refreshPositions()
