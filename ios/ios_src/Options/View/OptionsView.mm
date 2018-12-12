@@ -94,10 +94,7 @@
         self.pReplayTutorialsMessage = [[[MessageView alloc] initWithFrame:self.bounds title:@"Replay Tutorials" message:@"The help panels will be visible again when you enter or leave a building."] autorelease];
         self.pReplayTutorialsMessage.hidden = true;
         [self addSubview:self.pReplayTutorialsMessage];
-        [self.pReplayTutorialsMessage addTarget:self
-                                         action:@selector(handleReplayMessageClosed)
-                               forControlEvents:UIControlEventTouchUpInside];
-       
+
         [self setTouchExclusivity:self];
     }
     
@@ -280,10 +277,6 @@
 {
     m_pInterop->HandleReplayTutorialsSelected();
     [self.pReplayTutorialsMessage show];
-}
-
--(void) handleReplayMessageClosed {
-    m_pInterop->HandleCloseSelected();
 }
 
 - (void)clearCacheSelectionConfirmedHandler
