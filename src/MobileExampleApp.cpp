@@ -917,7 +917,7 @@ namespace ExampleApp
 
         if(m_applicationConfiguration.NavigationEnabled())
         {
-            m_pSearchMenuModule->AddMenuSection("Navigation", m_pNavRoutingModule->GetNavMenuModel(), false);
+            m_pSearchMenuModule->AddMenuSection("Directions", m_pNavRoutingModule->GetNavMenuModel(), false);
         }
 
         m_pSearchMenuModule->AddMenuSection("Options", m_pOptionsMenuModule->GetOptionsMenuModel(), false);
