@@ -77,7 +77,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
     private SearchResultsListener m_searchResultListener;
     private MyTestSearchProvider m_locationSearchProvider;
 
-    private final int m_searchNavMargin;
+    private final int m_searchNavTopMargin;
 
     public NavWidgetView(MainActivity activity, long nativeCallerPointer)
     {
@@ -88,7 +88,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
 
         m_view = m_activity.getLayoutInflater().inflate(R.layout.nav_widget_layout, m_uiRoot, false);
 
-        m_searchNavMargin = (int)activity.getResources().getDimension(R.dimen.nav_search_margin);
+        m_searchNavTopMargin = (int)activity.getResources().getDimension(R.dimen.nav_search_top_margin);
 
         m_uiRoot.addView(m_view);
         m_activity.addBackButtonPressedListener(this);
@@ -544,7 +544,7 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
         }
 
         int panelHeight = m_searchLocationView.getHeight();
-        float targetY = visible ? m_searchNavMargin : -panelHeight;
+        float targetY = visible ? m_searchNavTopMargin : -panelHeight;
         if(animate) {
             m_searchLocationViewAnimation = m_searchLocationView.animate()
                     .y(targetY)

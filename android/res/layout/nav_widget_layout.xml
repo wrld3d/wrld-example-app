@@ -14,10 +14,9 @@
         android:id="@+id/wrld_nav_search_widget_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/nav_search_margin"
+        android:layout_marginTop="@dimen/nav_search_top_margin"
         android:paddingLeft="@dimen/nav_search_margin"
         android:paddingRight="@dimen/nav_search_margin"
-        android:paddingEnd="@dimen/nav_search_margin"
         android:layout_alignParentTop="true"/>
 
     <LinearLayout
@@ -27,9 +26,8 @@
         android:padding="@dimen/wrld_nav_small_margin"
         android:orientation="horizontal"
         android:background="@drawable/nav_search_hint_back"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/wrld_nav_search_widget_view"
         android:layout_marginStart="@dimen/nav_search_hint_margin"
-        android:layout_marginTop="@dimen/nav_search_hint_top_margin"
         android:elevation="@dimen/wrld_nav_large_margin">
 
         <ImageView
