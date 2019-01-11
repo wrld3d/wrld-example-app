@@ -43,6 +43,7 @@ namespace ExampleApp
                                  Compass::SdkModel::ICompassModel& compassModel,
                                  ExampleAppMessaging::TMessageBus& messageBus,
                                  Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
+                                 Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                  Eegeo::Markers::IMarkerService& markerService,
                                  WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                  GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,

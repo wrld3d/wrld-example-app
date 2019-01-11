@@ -35,6 +35,7 @@ namespace ExampleApp
                                                 Compass::SdkModel::ICompassModel& compassModel,
                                                 ExampleAppMessaging::TMessageBus& messageBus,
                                                 Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
+                                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                 Eegeo::Markers::IMarkerService& markerService,
                                                 WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                 GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,
@@ -106,7 +107,8 @@ namespace ExampleApp
                                                                        worldPinsService,
                                                                        *m_pNavRoutingCustomLocationPicker,
                                                                        searchQueryPerformer,
-                                                                       *m_pNavRoutingHighlightsController);
+                                                                       *m_pNavRoutingHighlightsController,
+                                                                       interiorInteractionModel);
 
                 
                 m_pRoutingCameraController = Eegeo_NEW(NavRoutingCameraController)(*m_pNavRoutingModel,

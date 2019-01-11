@@ -882,6 +882,7 @@ namespace ExampleApp
                                                                                             m_pCompassModule->GetCompassModel(),
                                                                                             m_messageBus,
                                                                                             interiorsModelModule.GetInteriorsModelRepository(),
+                                                                                            interiorsModelModule.GetInteriorInteractionModel(),
                                                                                             mapModule.GetMarkersModule().GetMarkerService(),
                                                                                             m_pWorldPinsModule->GetWorldPinsService(),
                                                                                             m_pGpsMarkerModule->GetGpsMarkerModel(),

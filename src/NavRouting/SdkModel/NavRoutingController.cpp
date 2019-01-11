@@ -38,7 +38,8 @@ namespace ExampleApp
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                        INavRoutingCustomLocationPicker& customLocationPicker,
                                                        Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
-                                                       INavRoutingHighlightsController& highlightsController)
+                                                       INavRoutingHighlightsController& highlightsController,
+                                                       Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel)
             : m_routingModel(routingModel)
             , m_turnByTurnModel(turnByTurnModel)
             , m_locationFinder(locationFinder)
@@ -47,8 +48,10 @@ namespace ExampleApp
             , m_customLocationPicker(customLocationPicker)
             , m_searchQueryPerformer(searchQueryPerformer)
             , m_highlightsController(highlightsController)
+            , m_interiorInteractionModel(interiorInteractionModel)
             , m_isRerouting(false)
             , m_waitingForRerouteResponse(false)
+            , m_isSearching(false)
             , m_startLocationSetCallback(this, &NavRoutingController::OnStartLocationSet)
             , m_startLocationClearedCallback(this, &NavRoutingController::OnStartLocationCleared)
             , m_endLocationSetCallback(this, &NavRoutingController::OnEndLocationSet)
@@ -74,6 +77,7 @@ namespace ExampleApp
             , m_endLocationSetFromSearchMessageHandler(this, &NavRoutingController::OnEndLocationSetFromSearch)
             , m_searchForLocationMessageHandler(this, &NavRoutingController::OnSearchForLocation)
             , m_interiorLocationLostCallback(this, &NavRoutingController::OnInteritorLocationLost)
+            , m_interiorInteractionModelChangedHandler(this, &NavRoutingController::OnInteriorChanged)
             , m_hasUpdatedSelectedDirection(false)
             {
                 m_routingModel.InsertStartLocationSetCallback(m_startLocationSetCallback);
@@ -101,10 +105,12 @@ namespace ExampleApp
                 m_messageBus.SubscribeNative(m_searchForLocationMessageHandler);
                 m_turnByTurnModel.InsertShouldRerouteCallback(m_shouldRerouteCallback);
                 m_turnByTurnModel.InsertInteriorLocationLostCallback(m_interiorLocationLostCallback);
+                m_interiorInteractionModel.RegisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
             }
 
             NavRoutingController::~NavRoutingController()
             {
+                m_interiorInteractionModel.UnregisterModelChangedCallback(m_interiorInteractionModelChangedHandler);
                 m_turnByTurnModel.RemoveInteriorLocationLostCallback(m_interiorLocationLostCallback);
                 m_turnByTurnModel.RemoveShouldRerouteCallback(m_shouldRerouteCallback);
                 m_messageBus.UnsubscribeNative(m_searchForLocationMessageHandler);
@@ -393,11 +399,13 @@ namespace ExampleApp
                 {
                     m_highlightsController.ClearHighlights();
                     m_customLocationPicker.StartSearching(message.IsStartLocation());
+                    m_isSearching = true;
                 }
                 else
                 {
                     m_customLocationPicker.StopSearching();
                     m_highlightsController.RefreshHighlights();
+                    m_isSearching = false;
                 }
 
             }
@@ -405,6 +413,14 @@ namespace ExampleApp
             void NavRoutingController::Update()
             {
                 m_hasUpdatedSelectedDirection = false;
+            }
+
+            void NavRoutingController::OnInteriorChanged()
+            {
+                if (!m_isSearching)
+                {
+                    m_highlightsController.RefreshHighlights();
+                }
             }
 
         }
