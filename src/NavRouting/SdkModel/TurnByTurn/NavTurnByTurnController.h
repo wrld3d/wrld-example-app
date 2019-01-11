@@ -36,11 +36,11 @@ namespace ExampleApp
 
                     Eegeo::Helpers::TCallback0<NavTurnByTurnController> m_turnByTurnStartedCallback;
                     Eegeo::Helpers::TCallback0<NavTurnByTurnController> m_turnByTurnStoppedCallback;
-                    Eegeo::Helpers::TCallback0<NavTurnByTurnController> m_turnByTurnUpdatedCallback;
+                    Eegeo::Helpers::TCallback0<NavTurnByTurnController> m_turnByTurnWillUpdateCallback;
 
                     void HandleTurnByTurnStarted();
                     void HandleTurnByTurnStopped();
-                    void HandleTurnByTurnUpdated();
+                    void HandleTurnByTurnWillUpdate();
 
                 };
 

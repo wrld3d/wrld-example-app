@@ -40,6 +40,8 @@ namespace ExampleApp
                     virtual void RemoveStartedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                     virtual void InsertStoppedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                     virtual void RemoveStoppedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                    virtual void InsertWillUpdateCallback(Eegeo::Helpers::ICallback0& callback) = 0;
+                    virtual void RemoveWillUpdateCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                     virtual void InsertUpdatedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                     virtual void RemoveUpdatedCallback(Eegeo::Helpers::ICallback0& callback) = 0;
                     virtual void InsertShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback) = 0;

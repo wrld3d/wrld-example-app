@@ -60,6 +60,8 @@ namespace ExampleApp
                     void RemoveStartedCallback(Eegeo::Helpers::ICallback0& callback);
                     void InsertStoppedCallback(Eegeo::Helpers::ICallback0& callback);
                     void RemoveStoppedCallback(Eegeo::Helpers::ICallback0& callback);
+                    void InsertWillUpdateCallback(Eegeo::Helpers::ICallback0& callback);
+                    void RemoveWillUpdateCallback(Eegeo::Helpers::ICallback0& callback);
                     void InsertUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
                     void RemoveUpdatedCallback(Eegeo::Helpers::ICallback0& callback);
                     void InsertShouldRerouteCallback(Eegeo::Helpers::ICallback0& callback);
@@ -82,6 +84,7 @@ namespace ExampleApp
 
                     Eegeo::Helpers::CallbackCollection0 m_startedCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_stoppedCallbacks;
+                    Eegeo::Helpers::CallbackCollection0 m_willUpdateCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_updateCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_shouldRerouteCallbacks;
                     Eegeo::Helpers::CallbackCollection0 m_interiorLocationLostCallbacks;

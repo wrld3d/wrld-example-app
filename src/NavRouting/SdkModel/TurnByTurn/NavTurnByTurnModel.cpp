@@ -171,6 +171,7 @@ namespace ExampleApp
 
                     m_indexOfPathSegmentStartVertex = pointOnRouteResult.GetPointOnPathForClosestRouteStep().GetIndexOfPathSegmentStartVertex();
                     
+                    m_willUpdateCallbacks.ExecuteCallbacks();
                     m_updateCallbacks.ExecuteCallbacks();
                 }
 
@@ -223,6 +224,16 @@ namespace ExampleApp
                 void NavTurnByTurnModel::RemoveStoppedCallback(Eegeo::Helpers::ICallback0& callback)
                 {
                     m_stoppedCallbacks.RemoveCallback(callback);
+                }
+
+                void NavTurnByTurnModel::InsertWillUpdateCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_willUpdateCallbacks.AddCallback(callback);
+                }
+
+                void NavTurnByTurnModel::RemoveWillUpdateCallback(Eegeo::Helpers::ICallback0& callback)
+                {
+                    m_willUpdateCallbacks.RemoveCallback(callback);
                 }
 
                 void NavTurnByTurnModel::InsertUpdatedCallback(Eegeo::Helpers::ICallback0& callback)

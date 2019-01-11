@@ -52,16 +52,16 @@ namespace ExampleApp
                 , m_gpsMarkerModel(gpsMarkerModel)
                 , m_turnByTurnStartedCallback(this, &NavTurnByTurnController::HandleTurnByTurnStarted)
                 , m_turnByTurnStoppedCallback(this, &NavTurnByTurnController::HandleTurnByTurnStopped)
-                , m_turnByTurnUpdatedCallback(this, &NavTurnByTurnController::HandleTurnByTurnUpdated)
+                , m_turnByTurnWillUpdateCallback(this, &NavTurnByTurnController::HandleTurnByTurnWillUpdate)
                 {
                     m_turnByTurnModel.InsertStartedCallback(m_turnByTurnStartedCallback);
                     m_turnByTurnModel.InsertStoppedCallback(m_turnByTurnStoppedCallback);
-                    m_turnByTurnModel.InsertUpdatedCallback(m_turnByTurnUpdatedCallback);
+                    m_turnByTurnModel.InsertWillUpdateCallback(m_turnByTurnWillUpdateCallback);
                 }
 
                 NavTurnByTurnController::~NavTurnByTurnController()
                 {
-                    m_turnByTurnModel.RemoveUpdatedCallback(m_turnByTurnUpdatedCallback);
+                    m_turnByTurnModel.RemoveWillUpdateCallback(m_turnByTurnWillUpdateCallback);
                     m_turnByTurnModel.RemoveStoppedCallback(m_turnByTurnStoppedCallback);
                     m_turnByTurnModel.RemoveStartedCallback(m_turnByTurnStartedCallback);
                 }
@@ -94,7 +94,7 @@ namespace ExampleApp
                     }
                 }
 
-                void NavTurnByTurnController::HandleTurnByTurnUpdated()
+                void NavTurnByTurnController::HandleTurnByTurnWillUpdate()
                 {
                     SdkModel::NavRoutingRouteModel currentRouteModel;
                     if(!m_navRoutingModel.TryGetRoute(currentRouteModel)) {
