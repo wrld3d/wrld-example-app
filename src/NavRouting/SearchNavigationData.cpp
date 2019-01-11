@@ -10,6 +10,7 @@ namespace ExampleApp
         , m_isIndoors(searchResult.IsInterior())
         , m_indoorMapId(searchResult.GetBuildingId())
         , m_indoorMapFloorIndex(searchResult.GetFloor())
+        , m_jsonData(searchResult.GetJsonData())
         {
 
         }
@@ -36,6 +37,11 @@ namespace ExampleApp
         const int SearchNavigationData::GetFloorIndex() const
         {
             return m_indoorMapFloorIndex;
+        }
+
+        const std::string& SearchNavigationData::GetJsonData() const
+        {
+            return m_jsonData;
         }
     }
 }

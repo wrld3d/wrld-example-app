@@ -39,6 +39,24 @@ namespace ExampleApp
 
             }
 
+            NavRoutingLocationModel::NavRoutingLocationModel(const std::string& name,
+                                                             const Eegeo::Space::LatLong& latLon,
+                                                             const bool isIndoors,
+                                                             const Eegeo::Resources::Interiors::InteriorId& indoorMapId,
+                                                             const int indoorMapFloorId,
+                                                             const std::vector<std::string>& entityIds,
+                                                             const Eegeo::v4& highlightColor)
+            : m_name(name)
+            , m_latLon(latLon)
+            , m_isIndoors(isIndoors)
+            , m_indoorMapId(indoorMapId)
+            , m_indoorMapFloorId(indoorMapFloorId)
+            , m_entityIds(entityIds)
+            , m_highlightColor(highlightColor)
+            {
+
+            }
+
             const std::string& NavRoutingLocationModel::GetName() const
             {
                 return m_name;
@@ -62,6 +80,16 @@ namespace ExampleApp
             const int NavRoutingLocationModel::GetIndoorMapFloorId() const
             {
                 return m_indoorMapFloorId;
+            }
+
+            const std::vector<std::string>& NavRoutingLocationModel::GetEntityIds() const
+            {
+                return m_entityIds;
+            }
+
+            const Eegeo::v4& NavRoutingLocationModel::GetHighlightColor() const
+            {
+                return m_highlightColor;
             }
         }
     }

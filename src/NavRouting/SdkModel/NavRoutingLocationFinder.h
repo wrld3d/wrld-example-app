@@ -8,6 +8,7 @@
 #include "SearchResultModel.h"
 #include "ILocationService.h"
 #include "IAlertBoxFactory.h"
+#include "IHighlightColorMapper.h"
 
 namespace ExampleApp
 {
@@ -22,6 +23,7 @@ namespace ExampleApp
                 Eegeo::Resources::Interiors::InteriorsModelRepository& m_interiorsModelRepository;
                 Eegeo::UI::NativeAlerts::IAlertBoxFactory& m_alertBoxFactory;
                 Eegeo::UI::NativeAlerts::TSingleOptionAlertBoxDismissedHandler<NavRoutingLocationFinder> m_failAlertHandler;
+                const InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper& m_highlightColorMapper;
 
                 void OnFailAlertBoxDismissed();
 
@@ -29,7 +31,8 @@ namespace ExampleApp
                 NavRoutingLocationFinder(
                         Eegeo::Location::ILocationService& locationService,
                         Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
+                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                        const InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper& highlightColorMapper);
 
                 bool TryGetCurrentLocation(NavRoutingLocationModel &outLocation);
                 bool TryGetLocationFromSearchNavigationData(

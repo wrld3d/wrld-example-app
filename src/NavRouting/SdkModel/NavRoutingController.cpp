@@ -23,6 +23,7 @@
 #include "NavRoutingShowRerouteDialogMessage.h"
 #include "INavRoutingCustomLocationPicker.h"
 #include "ISearchQueryPerformer.h"
+#include "INavRoutingHighlightsController.h"
 
 namespace ExampleApp
 {
@@ -36,7 +37,8 @@ namespace ExampleApp
                                                        ExampleAppMessaging::TMessageBus& messageBus,
                                                        WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                                        INavRoutingCustomLocationPicker& customLocationPicker,
-                                                       Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
+                                                       Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                                       INavRoutingHighlightsController& highlightsController)
             : m_routingModel(routingModel)
             , m_turnByTurnModel(turnByTurnModel)
             , m_locationFinder(locationFinder)
@@ -44,6 +46,7 @@ namespace ExampleApp
             , m_worldPinsService(worldPinsService)
             , m_customLocationPicker(customLocationPicker)
             , m_searchQueryPerformer(searchQueryPerformer)
+            , m_highlightsController(highlightsController)
             , m_isRerouting(false)
             , m_waitingForRerouteResponse(false)
             , m_startLocationSetCallback(this, &NavRoutingController::OnStartLocationSet)
@@ -132,11 +135,13 @@ namespace ExampleApp
             void NavRoutingController::OnStartLocationSet(const NavRoutingLocationModel& startLocation)
             {
                 m_messageBus.Publish(NavRoutingStartLocationSetMessage(startLocation));
+                m_highlightsController.RefreshHighlights();
             }
 
             void NavRoutingController::OnStartLocationCleared()
             {
                 m_messageBus.Publish(NavRoutingStartLocationClearedMessage());
+                m_highlightsController.RefreshHighlights();
             }
 
             void NavRoutingController::OnEndLocationSet(const NavRoutingLocationModel& endLocation)
@@ -147,11 +152,13 @@ namespace ExampleApp
                 }
                 
                 m_messageBus.Publish(NavRoutingEndLocationSetMessage(endLocation));
+                m_highlightsController.RefreshHighlights();
             }
 
             void NavRoutingController::OnEndLocationCleared()
             {
                 m_messageBus.Publish(NavRoutingEndLocationClearedMessage());
+                m_highlightsController.RefreshHighlights();
             }
 
             void NavRoutingController::OnRouteSet(const NavRoutingRouteModel& routeModel)
@@ -210,6 +217,7 @@ namespace ExampleApp
             void NavRoutingController::OnNavWidgetViewClosed(const NavRoutingViewClosedMessage& message)
             {
                 m_routingModel.ClearRoute();
+                m_highlightsController.ClearHighlights();
             }
 
             void NavRoutingController::OnStartEndLocationSwapped(const NavRoutingViewStartEndLocationSwappedMessage& message)
@@ -383,11 +391,13 @@ namespace ExampleApp
 
                 if(message.IsSearching())
                 {
+                    m_highlightsController.ClearHighlights();
                     m_customLocationPicker.StartSearching(message.IsStartLocation());
                 }
                 else
                 {
                     m_customLocationPicker.StopSearching();
+                    m_highlightsController.RefreshHighlights();
                 }
 
             }

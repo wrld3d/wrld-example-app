@@ -17,6 +17,7 @@
 #include "NavWidgetMenuOption.h"
 #include "NavTurnByTurnCompletionHandler.h"
 #include "NavRoutingCustomLocationPicker.h"
+#include "NavRoutingHighlightsController.h"
 
 namespace ExampleApp
 {
@@ -39,13 +40,16 @@ namespace ExampleApp
                                                 GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,
                                                 WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController,
                                                 AppCamera::SdkModel::IAppCameraLocationPicker& locationPicker,
-                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer)
+                                                Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                                const InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper& highlightColorMapper,
+                                                Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& interiorsHighlightService)
             {
                 const std::string navUIOptionText = "Open Navigation";
 
                 m_pNavRoutingLocationFinder = Eegeo_NEW(NavRoutingLocationFinder)(locationService,
                                                                                   interiorsModelRepository,
-                                                                                  alertBoxFactory);
+                                                                                  alertBoxFactory,
+                                                                                  highlightColorMapper);
 
                 m_pNavRoutingModel = Eegeo_NEW(NavRoutingModel)(*m_pNavRoutingLocationFinder);
                 
@@ -92,13 +96,17 @@ namespace ExampleApp
                         *m_pNavRoutingModel,
                         locationPicker);
 
+                m_pNavRoutingHighlightsController = Eegeo_NEW(NavRoutingHighlightsController)(*m_pNavRoutingModel,
+                                                                                              interiorsHighlightService);
+
                 m_pRoutingController = Eegeo_NEW(NavRoutingController)(*m_pNavRoutingModel,
                                                                        *m_pTurnByTurnModel,
                                                                        *m_pNavRoutingLocationFinder,
                                                                        messageBus,
                                                                        worldPinsService,
                                                                        *m_pNavRoutingCustomLocationPicker,
-                                                                       searchQueryPerformer);
+                                                                       searchQueryPerformer,
+                                                                       *m_pNavRoutingHighlightsController);
 
                 
                 m_pRoutingCameraController = Eegeo_NEW(NavRoutingCameraController)(*m_pNavRoutingModel,

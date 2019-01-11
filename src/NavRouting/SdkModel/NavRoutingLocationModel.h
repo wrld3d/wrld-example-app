@@ -30,11 +30,21 @@ namespace ExampleApp
                                         const Eegeo::Resources::Interiors::InteriorId& indoorMapId,
                                         const int indoorMapFloorId);
 
+                NavRoutingLocationModel(const std::string& name,
+                                        const Eegeo::Space::LatLong& latLon,
+                                        const bool isIndoors,
+                                        const Eegeo::Resources::Interiors::InteriorId& indoorMapId,
+                                        const int indoorMapFloorId,
+                                        const std::vector<std::string>& entityIds,
+                                        const Eegeo::v4& highlightColor);
+
                 const std::string& GetName() const;
                 const Eegeo::Space::LatLong& GetLatLon() const;
                 const bool GetIsIndoors() const;
                 const Eegeo::Resources::Interiors::InteriorId& GetIndoorMapId() const;
                 const int GetIndoorMapFloorId() const;
+                const std::vector<std::string>& GetEntityIds() const;
+                const Eegeo::v4& GetHighlightColor() const;
 
             private:
 
@@ -43,6 +53,8 @@ namespace ExampleApp
                 bool m_isIndoors;
                 Eegeo::Resources::Interiors::InteriorId m_indoorMapId;
                 int m_indoorMapFloorId;
+                std::vector<std::string> m_entityIds;
+                Eegeo::v4 m_highlightColor;
             };
         }
     }

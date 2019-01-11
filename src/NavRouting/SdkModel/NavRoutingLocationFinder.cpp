@@ -5,6 +5,7 @@
 #include "NavRouteInteriorModelHelper.h"
 #include "SearchResultModel.h"
 #include "NavigateToMessage.h"
+#include "InteriorEntityHighlightHelpers.h"
 
 namespace ExampleApp
 {
@@ -15,10 +16,12 @@ namespace ExampleApp
             NavRoutingLocationFinder::NavRoutingLocationFinder(
                     Eegeo::Location::ILocationService& locationService,
                     Eegeo::Resources::Interiors::InteriorsModelRepository& interiorsModelRepository,
-                    Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
+                    Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                    const InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper& highlightColorMapper)
                     : m_locationService(locationService)
                     , m_interiorsModelRepository(interiorsModelRepository)
                     , m_alertBoxFactory(alertBoxFactory)
+                    , m_highlightColorMapper(highlightColorMapper)
                     , m_failAlertHandler(this, &NavRoutingLocationFinder::OnFailAlertBoxDismissed)
             {
 
@@ -83,8 +86,15 @@ namespace ExampleApp
             {
                 outLocation = NavRoutingLocationModel();
                 NavRoutingLocationModel locationModel;
+
+                std::vector<std::string> entityIds;
+                Eegeo::v4 highlightColor;
+
                 if(searchNavigationData.IsInterior())
                 {
+                    entityIds = InteriorsExplorer::SdkModel::Highlights::GetEntityIdsFromSearchResultJson(searchNavigationData.GetJsonData());
+                    highlightColor = m_highlightColorMapper.GetColorsFromJson(searchNavigationData.GetJsonData()).front();
+
                     int indoorMapFloorId = 0;
                     const auto& indoorMapId = searchNavigationData.GetBuildingId().Value();
                     const bool interiorDetailsAvailable = NavRouteInteriorModelHelper::TryGetIndoorMapFloorId(m_interiorsModelRepository,
@@ -103,7 +113,9 @@ namespace ExampleApp
                                                           searchNavigationData.GetLocation(),
                                                           searchNavigationData.IsInterior(),
                                                           searchNavigationData.GetBuildingId(),
-                                                          indoorMapFloorId);
+                                                          indoorMapFloorId,
+                                                          entityIds,
+                                                          highlightColor);
                 }
                 else
                 {
@@ -111,7 +123,9 @@ namespace ExampleApp
                                                           searchNavigationData.GetLocation(),
                                                           searchNavigationData.IsInterior(),
                                                           searchNavigationData.GetBuildingId(),
-                                                          searchNavigationData.GetFloorIndex());
+                                                          searchNavigationData.GetFloorIndex(),
+                                                          entityIds,
+                                                          highlightColor);
                 }
                 return true;
             }

@@ -16,6 +16,7 @@ namespace ExampleApp
             const bool m_isIndoors;
             const Eegeo::Resources::Interiors::InteriorId& m_indoorMapId;
             const int m_indoorMapFloorIndex;
+            const std::string& m_jsonData;
 
         public:
             SearchNavigationData(const Search::SdkModel::SearchResultModel& searchResult);
@@ -25,6 +26,7 @@ namespace ExampleApp
             const bool IsInterior() const;
             const Eegeo::Resources::Interiors::InteriorId& GetBuildingId() const;
             const int GetFloorIndex() const;
+            const std::string& GetJsonData() const;
         };
     }
 }

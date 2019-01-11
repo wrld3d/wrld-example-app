@@ -7,6 +7,7 @@ set(currsources
   ../src/NavRouting/SdkModel/INavRoutingLocationFinder.h
   ../src/NavRouting/SdkModel/INavRoutingPolylineFactory.h
   ../src/NavRouting/SdkModel/INavRoutingServiceController.h
+  ../src/NavRouting/SdkModel/INavRoutingHighlightsController.h
   ../src/NavRouting/SdkModel/NavRouteInstructionHelper.cpp
   ../src/NavRouting/SdkModel/NavRouteInstructionHelper.h
   ../src/NavRouting/SdkModel/NavRouteInteriorModelHelper.cpp
@@ -19,6 +20,8 @@ set(currsources
   ../src/NavRouting/SdkModel/NavRoutingController.h
   ../src/NavRouting/SdkModel/NavRoutingDirectionModel.cpp
   ../src/NavRouting/SdkModel/NavRoutingDirectionModel.h
+  ../src/NavRouting/SdkModel/NavRoutingHighlightsController.cpp
+  ../src/NavRouting/SdkModel/NavRoutingHighlightsController.h
   ../src/NavRouting/SdkModel/NavRoutingLocationFinder.cpp
   ../src/NavRouting/SdkModel/NavRoutingLocationFinder.h
   ../src/NavRouting/SdkModel/NavRoutingLocationModel.cpp

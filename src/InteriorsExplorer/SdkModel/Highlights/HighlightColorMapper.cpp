@@ -43,14 +43,19 @@ namespace ExampleApp
                 
                 std::vector<Eegeo::v4> HighlightColorMapper::GetColors(const Search::SdkModel::SearchResultModel& result) const
                 {
+                    return GetColorsFromJson(result.GetJsonData());
+                }
+
+                std::vector<Eegeo::v4> HighlightColorMapper::GetColorsFromJson(const std::string& jsonData) const
+                {
                     rapidjson::Document json;
                     
                     std::vector<Eegeo::v4>highlightColors;
                     
                     auto highlightColorTag = "highlight_color";
                     auto entityHighlightColorTag = "entity_highlight_color";
-                    
-                    if (!json.Parse<0>(result.GetJsonData().c_str()).HasParseError() )
+
+                    if (!json.Parse<0>(jsonData.c_str()).HasParseError() )
                     {
 
                         if(json.HasMember("highlight"))

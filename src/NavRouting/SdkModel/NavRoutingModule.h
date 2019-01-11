@@ -21,6 +21,7 @@
 #include "AppCamera.h"
 #include "MapCamera.h"
 #include "Search.h"
+#include "IHighlightColorMapper.h"
 
 namespace ExampleApp
 {
@@ -47,7 +48,9 @@ namespace ExampleApp
                                  GpsMarker::SdkModel::GpsMarkerModel& gpsMarkerModel,
                                  WorldPins::SdkModel::IWorldPinsVisibilityController& worldPinsVisibilityController,
                                  AppCamera::SdkModel::IAppCameraLocationPicker& locationPicker,
-                                 Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer);
+                                 Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                 const InteriorsExplorer::SdkModel::Highlights::IHighlightColorMapper& highlightColorMapper,
+                                 Eegeo::Resources::Interiors::Highlights::IInteriorsHighlightService& interiorsHighlightService);
 
                 ~NavRoutingModule();
 
@@ -69,6 +72,7 @@ namespace ExampleApp
                 NavWidgetRouteDrawingHandler* m_pRouteDrawingHandler;
                 NavRoutingLocationFinder* m_pNavRoutingLocationFinder;
                 INavRoutingCustomLocationPicker* m_pNavRoutingCustomLocationPicker;
+                INavRoutingHighlightsController* m_pNavRoutingHighlightsController;
                 NavRoutingController* m_pRoutingController;
                 NavRoutingCameraController* m_pRoutingCameraController;
                 NavRoutingWorldPinsVisibilityHandler* m_pRoutingWorldPinsVisibilityHandler;

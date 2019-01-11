@@ -20,6 +20,7 @@
 #include "IAnchoredLabel.h"
 #include "document.h"
 #include "IInteriorsHighlightService.h"
+#include "InteriorEntityHighlightHelpers.h"
 
 namespace ExampleApp
 {
@@ -29,59 +30,6 @@ namespace ExampleApp
         {
             namespace Highlights
             {
-                std::vector<std::string> GetEntityIdsFromJsonArray(const rapidjson::Value& jsonArray)
-                {
-                    assert(jsonArray.IsArray());
-                    std::vector<std::string> entities;
-                    
-                    for (int i  = 0; i < jsonArray.Size(); i++)
-                    {
-                        assert(jsonArray[i].IsString());
-                        entities.push_back(jsonArray[i].GetString());
-                    }
-                    
-                    return entities;
-                }
-                
-                std::vector<std::string> GetEntityIdsFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult)
-                {
-                    rapidjson::Document json;
-                    std::vector<std::string> entities;
-                    
-                    if (!json.Parse<0>(selectedSearchResult.GetJsonData().c_str()).HasParseError())
-                    {
-                        if(json.HasMember("highlight"))
-                        {
-                            const rapidjson::Value& areaHighlight = json["highlight"];
-                            if(areaHighlight.IsString())
-                            {
-                                entities.push_back(areaHighlight.GetString());
-                            }
-                            else
-                            {
-                                std::vector<std::string> areaHighlights = GetEntityIdsFromJsonArray(areaHighlight);
-                                entities.insert(std::end(entities), std::begin(areaHighlights), std::end(areaHighlights));
-                            }
-                        }
-                        
-                        if(json.HasMember("entity_highlight")  )
-                        {
-                            const rapidjson::Value& entityHighlight = json["entity_highlight"];
-                            if(entityHighlight.IsString())
-                            {
-                                entities.push_back(entityHighlight.GetString());
-                            }
-                            else
-                            {
-                                std::vector<std::string> entityHighlights = GetEntityIdsFromJsonArray(entityHighlight);
-                                entities.insert(std::end(entities), std::begin(entityHighlights), std::end(entityHighlights));
-                            }
-                        }
-                    }
-                    
-                    return entities;
-                }
-                
                 InteriorEntityHighlightController::InteriorEntityHighlightController(Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                                                                Eegeo::Resources::Interiors::InteriorsCellResourceObserver& interiorsCellResourceObserver,
                                                                                                Search::SdkModel::ISearchService& searchService,

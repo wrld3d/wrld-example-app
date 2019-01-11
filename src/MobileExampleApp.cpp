@@ -887,7 +887,9 @@ namespace ExampleApp
                                                                                             m_pGpsMarkerModule->GetGpsMarkerModel(),
                                                                                             m_pWorldPinsModule->GetWorldPinsVisibilityController(),
                                                                                             m_pAppCameraModule->GetLocationPicker(),
-                                                                                            m_pSearchModule->GetSearchQueryPerformer());
+                                                                                            m_pSearchModule->GetSearchQueryPerformer(),
+                                                                                            *m_pHighlightColorMapper,
+                                                                                            highlightService);
         
         m_pInteriorCameraWrapper = Eegeo_NEW(AppCamera::SdkModel::AppInteriorCameraWrapper)(m_pInteriorsExplorerModule->GetInteriorsGpsCameraController(),
                                                                                             m_pInteriorsExplorerModule->GetInteriorsCameraController());

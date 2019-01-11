@@ -41,7 +41,8 @@ namespace ExampleApp
                                      ExampleAppMessaging::TMessageBus& messageBus,
                                      WorldPins::SdkModel::IWorldPinsService& worldPinsService,
                                      INavRoutingCustomLocationPicker& m_customLocationPicker,
-                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer);
+                                     Search::SdkModel::ISearchQueryPerformer& searchQueryPerformer,
+                                     INavRoutingHighlightsController& highlightsController);
 
                 ~NavRoutingController();
 
@@ -56,6 +57,7 @@ namespace ExampleApp
                 WorldPins::SdkModel::IWorldPinsService& m_worldPinsService;
                 INavRoutingCustomLocationPicker& m_customLocationPicker;
                 Search::SdkModel::ISearchQueryPerformer& m_searchQueryPerformer;
+                INavRoutingHighlightsController& m_highlightsController;
 
                 bool m_isRerouting;
                 bool m_waitingForRerouteResponse;

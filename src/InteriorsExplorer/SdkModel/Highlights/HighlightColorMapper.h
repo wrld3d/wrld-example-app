@@ -22,6 +22,7 @@ namespace ExampleApp
                     
                     Eegeo::v4 GetColor(const Search::SdkModel::SearchResultModel& result, const std::string highlightColor) const;
                     std::vector<Eegeo::v4> GetColors(const Search::SdkModel::SearchResultModel& result) const;
+                    std::vector<Eegeo::v4> GetColorsFromJson(const std::string& jsonData) const;
                 private:
                     const Eegeo::v4 m_defaultColor;
                     Eegeo::v4 GetColorFromValue(rapidjson::Value& value) const;
