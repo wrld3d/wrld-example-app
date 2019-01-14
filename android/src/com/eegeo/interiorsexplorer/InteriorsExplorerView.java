@@ -662,7 +662,13 @@ public class InteriorsExplorerView implements OnPauseListener, View.OnClickListe
 
     public void setNavigationModeUpperBound(final int upperBound)
     {
-        m_rightPanelTopSpacingNavMode = upperBound + m_activity.dipAsPx(16);
+        if (upperBound == 0) {
+            m_rightPanelTopSpacingNavMode = m_rightPanelTopSpacingDefault;
+        }
+        else {
+            m_rightPanelTopSpacingNavMode = upperBound + m_activity.dipAsPx(16);
+        }
+
         if(m_viewState == InteriorsExplorerViewState.Navigation) {
             updateUpperBound();
         }
