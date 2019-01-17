@@ -126,14 +126,20 @@ public class WRLDNavTimeToDestinationView: UIView, WRLDNavModelObserverProtocol
                 startEndButton.isHidden = true
                 break;
             case .ready:
-                startEndButton.setTitle("  Start", for: .normal)
-                startEndButton.isHidden = false
-                startEndButton.setImage(m_startIcon, for: .normal)
+                UIView.performWithoutAnimation {
+                    startEndButton.setTitle("Start", for: .normal)
+                    startEndButton.isHidden = false
+                    startEndButton.setImage(m_startIcon, for: .normal)
+                    startEndButton.layoutIfNeeded()
+                }
                 break;
             case .active:
-                startEndButton.setTitle("  End", for: .normal)
-                startEndButton.isHidden = false
-                startEndButton.setImage(m_endIcon, for: .normal)
+                UIView.performWithoutAnimation {
+                    startEndButton.setTitle("End", for: .normal)
+                    startEndButton.isHidden = false
+                    startEndButton.setImage(m_endIcon, for: .normal)
+                    startEndButton.layoutIfNeeded()
+                }
                 break;
             }
         }
