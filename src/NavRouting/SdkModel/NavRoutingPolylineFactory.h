@@ -17,7 +17,7 @@ namespace ExampleApp
             {
             public:
                 float routeThickness = 17.5f;
-                float miterLimit = 17.5f;
+                float miterLimit = 10.0f;
                 double routeElevation = 0;
                 Eegeo::Positioning::ElevationMode::Type routeElevationMode = Eegeo::Positioning::ElevationMode::Type::HeightAboveGround;
                 bool shouldScaleWithMap = false;
@@ -28,45 +28,36 @@ namespace ExampleApp
             public:
                 NavRoutingPolylineFactory(PolyLineArgs::IShapeService& shapeService,
                                           const NavRoutingPolylineConfig& polylineConfig);
-                
-                RouteLines CreateLinesForRouteDirection(const NavRoutingDirectionModel& directionModel,
-                                                        const Eegeo::v4& color) override;
-                
-                RouteLines CreateLinesForRouteDirection(const NavRoutingDirectionModel& directionModel,
-                                                        const Eegeo::v4& forwardColor,
-                                                        const Eegeo::v4& backwardColor,
-                                                        int splitIndex,
-                                                        const Eegeo::Space::LatLong& closestPointOnRoute) override;
-                
-                RouteLines CreateLinesForFloorTransition(const std::vector<Eegeo::Space::LatLong>& coordinates,
-                                                         const std::string& indoorMapId,
-                                                         int floorBefore,
-                                                         int floorAfter,
-                                                         const Eegeo::v4& color) override;
+
+                std::vector<NavRoutingPolylineCreateParams> CreateLinesForRouteDirection(
+                    const NavRoutingDirectionModel& directionModel,
+                    const Eegeo::v4& color) override;
+
+                std::vector<NavRoutingPolylineCreateParams> CreateLinesForRouteDirection(
+                    const NavRoutingDirectionModel& directionModel,
+                    const Eegeo::v4& forwardColor,
+                    const Eegeo::v4& backwardColor,
+                    int splitIndex,
+                    const Eegeo::Space::LatLong& closestPointOnRoute) override;
+
+                std::vector<NavRoutingPolylineCreateParams> CreateLinesForFloorTransition(
+                    const std::vector<Eegeo::Space::LatLong>& coordinates,
+                    const std::string& indoorMapId,
+                    int floorBefore,
+                    int floorAfter,
+                    const Eegeo::v4& color) override;
+
+                RoutePolylineIdVector CreatePolylines(const std::vector<NavRoutingPolylineCreateParams>& polylineCreateParams) override ;
                 
             private:
                 PolyLineArgs::IShapeService& m_shapeService;
-                
-                float m_routeThickness;
-                float m_miterLimit;
-                double m_routeElevation;
-                Eegeo::Positioning::ElevationMode::Type m_routeElevationMode;
-                bool m_shouldScaleWithMap;
-                
-                PolyLineArgs::ShapeModel::IdType MakeVerticalLine(const std::vector<Eegeo::Space::LatLong>& coordinates,
-                                                                  const std::string& indoorMapId,
-                                                                  int floor,
-                                                                  double heightStart,
-                                                                  double heightEnd,
-                                                                  const Eegeo::v4& color);
-                
-                PolyLineArgs::ShapeModel::IdType CreatePolyline(const std::vector<Eegeo::Space::LatLong>& coordinates,
-                                                                const Eegeo::v4& color,
-                                                                bool isIndoors = false,
-                                                                const std::string& indoorMapId = "",
-                                                                int indoorMapFloorId = 0,
-                                                                bool hasPerPointElevation = false,
-                                                                const std::vector<double>& perPointElevations = std::vector<double>());
+                const NavRoutingPolylineConfig m_polylineConfig;
+
+                RoutePolylineIdVector CreateAmalgamatedPolylinesForRange(
+                    const std::vector<NavRoutingPolylineCreateParams>& polylineCreateParams,
+                    const int rangeStartIndex,
+                    const int rangeEndIndex
+                );
             };
         }
     }

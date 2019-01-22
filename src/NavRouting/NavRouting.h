@@ -38,9 +38,11 @@ namespace ExampleApp
             class NavRoutingController;
             class NavRoutingCameraController;
             class INavRoutingCustomLocationPicker;
+            class NavRoutingPolylineCreateParams;
 
             typedef Eegeo::Shapes::Polylines::PolylineShapeArgs PolyLineArgs;
-            typedef std::vector<PolyLineArgs::ShapeModel::IdType> RouteLines;
+            typedef std::vector<PolyLineArgs::ShapeModel::IdType> RoutePolylineIdVector;
+            typedef std::vector<NavRoutingPolylineCreateParams> NavRoutingPolylineCreateParamsVector;
             typedef Eegeo::Helpers::ICallback1<const std::vector<Eegeo::Routes::Webservice::RouteData>> RoutesReceivedCallback;
             typedef Eegeo::Helpers::ICallback0 RouteFailedCallback;
 

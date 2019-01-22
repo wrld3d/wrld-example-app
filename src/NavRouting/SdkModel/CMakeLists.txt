@@ -45,6 +45,7 @@ set(currsources
   ../src/NavRouting/SdkModel/NavRoutingCustomLocationPicker.cpp
   ../src/NavRouting/SdkModel/NavRoutingCustomLocationPicker.h
   ../src/NavRouting/SdkModel/INavRoutingCustomLocationPicker.h
+  ../src/NavRouting/SdkModel/NavRoutingPolylineCreateParams.h
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\NavRouting\\SdkModel FILES ${currsources})

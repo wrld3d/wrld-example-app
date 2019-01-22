@@ -14,7 +14,7 @@
 #include "IMarkerService.h"
 
 #include <vector>
-#include <unordered_map>
+#include <map>
 
 namespace ExampleApp
 {
@@ -49,26 +49,30 @@ namespace ExampleApp
                 INavRoutingModel& m_navRoutingModel;
                 INavRoutingPolylineFactory& m_polylineFactory;
                 PolyLineArgs::IShapeService& m_shapeService;
-                std::unordered_map<int, RouteLines> m_routes;
+                std::map<int, NavRoutingPolylineCreateParamsVector> m_routeStepToPolylineCreateParams;
+
+                RoutePolylineIdVector m_polylineIds;
                 
                 std::map<std::string, std::string> m_directionIconToPinIcon;
                 
                 Eegeo::Markers::IMarkerService& m_markerService;
                 std::vector<Eegeo::Markers::IMarker::IdType> m_markerIDs;
                 
-                void DrawRouteForStep(int step,
-                                      const std::vector<NavRoutingDirectionModel>& directions,
-                                      const Eegeo::v4& color);
+                void AddLineCreationParamsForStep(int step,
+                                                  const std::vector<NavRoutingDirectionModel> &directions,
+                                                  const Eegeo::v4 &color);
                 
-                void DrawRouteForStep(int step,
-                                      const std::vector<NavRoutingDirectionModel>& directions,
-                                      const Eegeo::v4& forwardColor,
-                                      const Eegeo::v4& backwardColor,
-                                      int splitIndex,
-                                      const Eegeo::Space::LatLong& closestPointOnRoute);
-                
-                void DestroyLines(RouteLines lines);
-                
+                void AddLineCreationParamsForStep(int step,
+                                                  const std::vector<NavRoutingDirectionModel> &directions,
+                                                  const Eegeo::v4 &forwardColor,
+                                                  const Eegeo::v4 &backwardColor,
+                                                  int splitIndex,
+                                                  const Eegeo::Space::LatLong &closestPointOnRoute);
+
+                void DestroyPolylines();
+                void RefreshPolylines();
+
+
                 void AddPin(bool interior,
                             const std::string& buildingID,
                             const int& buildingfloor,
