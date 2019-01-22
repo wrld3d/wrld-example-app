@@ -123,17 +123,17 @@ namespace ExampleApp
                     return true;
                 }
 
-                std::vector<std::pair<int, int>> BuildAmalgamationRanges(const std::vector<NavRoutingPolylineCreateParams>& polylineCreateParams)
+                std::vector<std::pair<size_t, size_t>> BuildAmalgamationRanges(const std::vector<NavRoutingPolylineCreateParams>& polylineCreateParams)
                 {
-                    std::vector<std::pair<int, int>> ranges;
+                    std::vector<std::pair<size_t, size_t>> ranges;
 
                     if (polylineCreateParams.empty())
                     {
                         return ranges;
                     }
 
-                    int rangeStart = 0;
-                    for (int i = 1; i < polylineCreateParams.size(); ++i)
+                    size_t rangeStart = 0;
+                    for (size_t i = 1; i < polylineCreateParams.size(); ++i)
                     {
                         const auto &a = polylineCreateParams[i - 1];
                         const auto &b = polylineCreateParams[i];
