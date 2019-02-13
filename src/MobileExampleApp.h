@@ -91,6 +91,7 @@
 #include "MapsceneModule.h"
 #include "NavUIModule.h"
 #include "NavRoutingModule.h"
+#include "OfflineRouting.h"
 #include "IAboutPageMenuModule.h"
 #include "IOptionsMenuModule.h"
 #include "InteriorEntityHighlightController.h"
@@ -131,6 +132,7 @@ namespace ExampleApp
         ExampleApp::SearchMenu::SdkModel::ISearchMenuModule* m_pSearchMenuModule;
         ExampleApp::NavRouting::SdkModel::NavRoutingModule* m_pNavRoutingModule;
         ExampleApp::NavRouting::View::NavUIModule* m_pNavUIModule;
+        ExampleApp::OfflineRouting::SdkModel::IOfflineRoutingModule* m_pOfflineRoutingModule;
         ExampleApp::SearchResultSection::SdkModel::ISearchResultSectionModule* m_pSearchResultSectionModule;
         ExampleApp::Modality::View::IModalityModule* m_pModalityModule;
         ExampleApp::TagSearch::SdkModel::ITagSearchModule* m_pTagSearchModule;

@@ -140,6 +140,7 @@
 #include "ReactionPushScreenControl.h"
 #include "LocationProvider.h"
 #include "WhitelistUrlHelpersNative.h"
+#include "OfflineRoutingModule.h"
 
 namespace ExampleApp
 {
@@ -872,8 +873,10 @@ namespace ExampleApp
 
         auto& polylineShapesModule = world.GetShapesModule().GetPolylineShapesModule();
 
+        m_pOfflineRoutingModule = Eegeo_NEW(ExampleApp::OfflineRouting::SdkModel::OfflineRoutingModule)(world.GetRoutesModule().GetRoutingWebservice());
+
         m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(polylineShapesModule.GetShapeService(),
-                                                                                            world.GetRoutesModule().GetRoutingWebservice(),
+                                                                                            m_pOfflineRoutingModule->GetOfflineRoutingService(),
                                                                                             world.GetLocationService(),
                                                                                             *m_pNavigationService,
                                                                                             m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
@@ -1024,6 +1027,8 @@ namespace ExampleApp
         Eegeo_DELETE m_pModalityModule;
         
         Eegeo_DELETE m_pNavRoutingModule;
+
+        Eegeo_DELETE m_pOfflineRoutingModule;
 
         Eegeo_DELETE m_pCompassModule;
 
