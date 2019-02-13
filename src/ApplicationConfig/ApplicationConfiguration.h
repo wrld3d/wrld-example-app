@@ -79,6 +79,10 @@ namespace ExampleApp
 
 			bool m_navigationEnabled;
 
+            std::string m_indoorMapsServiceUrl;
+            std::string m_indoorMapsServiceToken;
+            std::string m_indoorMapsServiceUuid;
+
         public:
             
 			ApplicationConfiguration(
@@ -130,7 +134,10 @@ namespace ExampleApp
 				const std::vector<std::vector<std::string>>& customKeyboardLayout,
                 const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig>& outdoorSearchMenuItems,
                 bool overrideIndoorSearchMenuItems,
-				bool navigationEnabled
+				bool navigationEnabled,
+                const std::string& indoorMapsServiceUrl,
+                const std::string& indoorMapsServiceToken,
+                const std::string& indoorMapsServiceUuid
             );
             
             std::string Name() const;
@@ -223,6 +230,10 @@ namespace ExampleApp
             bool OverrideIndoorSearchMenuItems() const;
 
 			bool NavigationEnabled() const;
+
+            const std::string IndoorMapsServiceUrl() const;
+            const std::string IndoorMapsServiceToken() const;
+            const std::string IndoorMapsServiceUuid() const;
         };
     }
 }
