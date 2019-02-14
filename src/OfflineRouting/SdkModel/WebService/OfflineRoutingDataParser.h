@@ -22,7 +22,7 @@ namespace ExampleApp
                     ~OfflineRoutingDataParser() {}
 
                     bool TryParseVersions(const std::string& jsonString,
-                                          std::vector<OfflineRoutingIndoorVersion>& result);
+                                          std::vector<OfflineRoutingIndoorVersion>& out_versions);
                 };
             }
         }

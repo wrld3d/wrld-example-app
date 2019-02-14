@@ -22,7 +22,7 @@ namespace ExampleApp
                     std::string createdAt;
                     std::string buildStatus;
                     std::string webManifestUrl;
-                    std::string mobileUanifestUrl;
+                    std::string mobileManifestUrl;
 
                     OfflineRoutingIndoorVersion()
                             : buildId("")
@@ -30,7 +30,7 @@ namespace ExampleApp
                             , createdAt("")
                             , buildStatus("")
                             , webManifestUrl("")
-                            , mobileUanifestUrl("")
+                            , mobileManifestUrl("")
                     {
                     }
                 };
