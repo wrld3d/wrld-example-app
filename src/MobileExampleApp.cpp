@@ -873,7 +873,11 @@ namespace ExampleApp
 
         auto& polylineShapesModule = world.GetShapesModule().GetPolylineShapesModule();
 
-        m_pOfflineRoutingModule = Eegeo_NEW(ExampleApp::OfflineRouting::SdkModel::OfflineRoutingModule)(world.GetRoutesModule().GetRoutingWebservice());
+        m_pOfflineRoutingModule = Eegeo_NEW(ExampleApp::OfflineRouting::SdkModel::OfflineRoutingModule)(world.GetRoutesModule().GetRoutingWebservice(),
+                                                                                                        world.GetPlatformAbstractionModule().GetPlatformWebLoadRequestFactory(),
+                                                                                                        m_applicationConfiguration.IndoorMapsServiceUrl(),
+                                                                                                        m_applicationConfiguration.IndoorMapsServiceToken(),
+                                                                                                        m_applicationConfiguration.IndoorMapsServiceUuid());
 
         m_pNavRoutingModule = Eegeo_NEW(ExampleApp::NavRouting::SdkModel::NavRoutingModule)(polylineShapesModule.GetShapeService(),
                                                                                             m_pOfflineRoutingModule->GetOfflineRoutingService(),

@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "ICallback.h"
+
 namespace ExampleApp
 {
     namespace OfflineRouting
@@ -10,6 +12,18 @@ namespace ExampleApp
         {
             class IOfflineRoutingModule;
             class OfflineRoutingModule;
+
+            namespace Webservice
+            {
+                class IOfflineRoutingDataWebService;
+                class OfflineRoutingDataWebService;
+                struct OfflineRoutingVersionsRequestResponse;
+                struct OfflineRoutingDataRequestResponse;
+
+                typedef int OfflineRoutingWebserviceRequestId;
+                typedef Eegeo::Helpers::ICallback1<const OfflineRoutingVersionsRequestResponse> OfflineRoutingVersionsRequestCompletedCallback;
+                typedef Eegeo::Helpers::ICallback1<const OfflineRoutingDataRequestResponse> OfflineRoutingDataRequestCompletedCallback;
+            }
         }
     }
 }
