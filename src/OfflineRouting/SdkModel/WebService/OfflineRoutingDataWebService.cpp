@@ -4,6 +4,8 @@
 #include "InteriorId.h"
 #include "IWebLoadRequest.h"
 #include "IWebLoadRequestFactory.h"
+#include "IOfflineRoutingDataParser.h"
+#include "OfflineRoutingVersionsRequestResponse.h"
 
 #include <sstream>
 
@@ -37,9 +39,11 @@ namespace ExampleApp
                 }
 
                 OfflineRoutingDataWebService::OfflineRoutingDataWebService(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                                                                           IOfflineRoutingDataParser& dataParser,
                                                                            const std::string& serviceUrlBase,
                                                                            const std::string& apiDevToken)
                 : m_webRequestFactory(webRequestFactory)
+                , m_dataParser(dataParser)
                 , m_apiDevToken(apiDevToken)
                 , m_webLoadFinishedHandler(this, &OfflineRoutingDataWebService::OnRequestComplete)
                 , m_serviceUrlBase(serviceUrlBase)
@@ -158,10 +162,10 @@ namespace ExampleApp
                     switch (requestType)
                     {
                         case WebRequestType::VersionsRequest:
-                            NotifyVersionsRequestCompleted(requestId, requestSucceeded, responseString);
+                            NotifyVersionsRequestCompleted(requestId, responseString);
                             break;
                         case WebRequestType::NavigationDataRequest:
-                            NotifyDataRequestCompleted(requestId, requestSucceeded, responseString);
+                            NotifyDataRequestCompleted(requestId, responseString);
                             break;
                     }
 
@@ -169,15 +173,16 @@ namespace ExampleApp
                 }
 
                 void OfflineRoutingDataWebService::NotifyVersionsRequestCompleted(OfflineRoutingWebserviceRequestId requestId,
-                                                                                  bool requestSucceeded,
                                                                                   const std::string& responseString)
                 {
-                    //TODO parse
-                    //TODO callback
+                    std::vector<OfflineRoutingIndoorVersion> results;
+                    bool requestSucceeded = m_dataParser.TryParseVersions(responseString, results);
+
+                    const OfflineRoutingVersionsRequestResponse response(requestId, requestSucceeded, results);
+                    m_versionsRequestCompletedCallbacks.ExecuteCallbacks(response);
                 }
 
                 void OfflineRoutingDataWebService::NotifyDataRequestCompleted(OfflineRoutingWebserviceRequestId requestId,
-                                                                              bool requestSucceeded,
                                                                               const std::string& responseString)
                 {
                     //TODO parse

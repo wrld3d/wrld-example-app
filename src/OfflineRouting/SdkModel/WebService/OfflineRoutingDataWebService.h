@@ -25,6 +25,7 @@ namespace ExampleApp
                 {
                 public:
                     OfflineRoutingDataWebService(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                                                 IOfflineRoutingDataParser& dataParser,
                                                  const std::string& serviceUrlBase,
                                                  const std::string& apiDevToken);
 
@@ -47,13 +48,12 @@ namespace ExampleApp
                     OfflineRoutingWebserviceRequestId NextRequestId();
 
                     void NotifyVersionsRequestCompleted(OfflineRoutingWebserviceRequestId requestId,
-                                                        bool requestSucceeded,
                                                         const std::string& responseString);
                     void NotifyDataRequestCompleted(OfflineRoutingWebserviceRequestId requestId,
-                                                    bool requestSucceeded,
                                                     const std::string& responseString);
 
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
+                    IOfflineRoutingDataParser& m_dataParser;
 
                     std::map<OfflineRoutingWebserviceRequestId, Eegeo::Web::IWebLoadRequest*> m_webRequests;
                     Eegeo::Web::TWebLoadRequestCompletionCallback<OfflineRoutingDataWebService> m_webLoadFinishedHandler;

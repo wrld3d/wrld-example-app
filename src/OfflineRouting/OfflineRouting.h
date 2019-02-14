@@ -15,8 +15,11 @@ namespace ExampleApp
 
             namespace Webservice
             {
+                class IOfflineRoutingDataParser;
+                class OfflineRoutingDataParser;
                 class IOfflineRoutingDataWebService;
                 class OfflineRoutingDataWebService;
+                struct OfflineRoutingIndoorVersion;
                 struct OfflineRoutingVersionsRequestResponse;
                 struct OfflineRoutingDataRequestResponse;
 
