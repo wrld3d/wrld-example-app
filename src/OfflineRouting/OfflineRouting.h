@@ -12,6 +12,8 @@ namespace ExampleApp
         {
             class IOfflineRoutingModule;
             class OfflineRoutingModule;
+            class OfflineRoutingController;
+            class OfflineRoutingService;
 
             namespace Webservice
             {
@@ -26,8 +28,8 @@ namespace ExampleApp
                 struct OfflineRoutingDataRequestResponse;
 
                 typedef int OfflineRoutingWebserviceRequestId;
-                typedef Eegeo::Helpers::ICallback1<const OfflineRoutingVersionsRequestResponse> OfflineRoutingVersionsRequestCompletedCallback;
-                typedef Eegeo::Helpers::ICallback1<const OfflineRoutingDataRequestResponse> OfflineRoutingDataRequestCompletedCallback;
+                typedef Eegeo::Helpers::ICallback1<const OfflineRoutingVersionsRequestResponse&> OfflineRoutingVersionsRequestCompletedCallback;
+                typedef Eegeo::Helpers::ICallback1<const OfflineRoutingDataRequestResponse&> OfflineRoutingDataRequestCompletedCallback;
             }
         }
     }

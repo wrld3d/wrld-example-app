@@ -4,6 +4,7 @@
 
 #include "OfflineRouting.h"
 #include "OfflineRoutingIndoorVersion.h"
+#include "InteriorId.h"
 
 #include <vector>
 
@@ -19,11 +20,16 @@ namespace ExampleApp
                 {
                     OfflineRoutingWebserviceRequestId id;
                     bool succeeded;
+                    Eegeo::Resources::Interiors::InteriorId interiorId;
                     std::vector<OfflineRoutingIndoorVersion> results;
 
-                    OfflineRoutingVersionsRequestResponse(OfflineRoutingWebserviceRequestId requestId, bool requestSucceeded, const std::vector<OfflineRoutingIndoorVersion>& requestResults)
+                    OfflineRoutingVersionsRequestResponse(OfflineRoutingWebserviceRequestId requestId,
+                                                          bool requestSucceeded,
+                                                          const Eegeo::Resources::Interiors::InteriorId& requestInteriorId,
+                                                          const std::vector<OfflineRoutingIndoorVersion>& requestResults)
                     : id(requestId)
                     , succeeded(requestSucceeded)
+                    , interiorId(requestInteriorId)
                     , results(requestResults)
                     {
                     }

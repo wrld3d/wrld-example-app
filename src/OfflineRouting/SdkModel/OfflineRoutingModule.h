@@ -32,7 +32,9 @@ namespace ExampleApp
 
             private:
                 Webservice::IOfflineRoutingDataParser* m_pOfflineRoutingDataParser;
-                Eegeo::Routes::Webservice::IRoutingWebservice* m_pOfflineRoutingService;
+                Webservice::IOfflineRoutingDataWebService* m_pOfflineRoutingDataWebService;
+                OfflineRoutingService* m_pOfflineRoutingService;
+                OfflineRoutingController* m_pOfflineRoutingController;
             };
         }
     }

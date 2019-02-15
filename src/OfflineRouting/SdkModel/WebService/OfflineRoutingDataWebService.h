@@ -48,8 +48,11 @@ namespace ExampleApp
                     OfflineRoutingWebserviceRequestId NextRequestId();
 
                     void NotifyVersionsRequestCompleted(OfflineRoutingWebserviceRequestId requestId,
+                                                        const Eegeo::Resources::Interiors::InteriorId& requestInteriorId,
                                                         const std::string& responseString);
                     void NotifyDataRequestCompleted(OfflineRoutingWebserviceRequestId requestId,
+                                                    const Eegeo::Resources::Interiors::InteriorId& requestInteriorId,
+                                                    const std::string& requestBuildId,
                                                     const std::string& responseString);
 
                     Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
@@ -57,8 +60,8 @@ namespace ExampleApp
 
                     std::map<OfflineRoutingWebserviceRequestId, Eegeo::Web::IWebLoadRequest*> m_webRequests;
                     Eegeo::Web::TWebLoadRequestCompletionCallback<OfflineRoutingDataWebService> m_webLoadFinishedHandler;
-                    Eegeo::Helpers::CallbackCollection1<const OfflineRoutingVersionsRequestResponse> m_versionsRequestCompletedCallbacks;
-                    Eegeo::Helpers::CallbackCollection1<const OfflineRoutingDataRequestResponse> m_dataRequestCompletedCallbacks;
+                    Eegeo::Helpers::CallbackCollection1<const OfflineRoutingVersionsRequestResponse&> m_versionsRequestCompletedCallbacks;
+                    Eegeo::Helpers::CallbackCollection1<const OfflineRoutingDataRequestResponse&> m_dataRequestCompletedCallbacks;
 
                     const std::string m_serviceUrlBase;
                     const std::string m_apiDevToken;

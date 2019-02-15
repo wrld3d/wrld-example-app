@@ -4,6 +4,7 @@
 #include "OfflineRoutingService.h"
 #include "OfflineRoutingDataParser.h"
 #include "OfflineRoutingDataWebService.h"
+#include "OfflineRoutingController.h"
 
 namespace ExampleApp
 {
@@ -18,19 +19,22 @@ namespace ExampleApp
                                                        const Eegeo::Resources::Interiors::InteriorId& interiorId)
             {
                 m_pOfflineRoutingDataParser = Eegeo_NEW(Webservice::OfflineRoutingDataParser)();
-                m_pOfflineRoutingService = Eegeo_NEW(OfflineRoutingService)(routingWebservice);
-                Webservice::OfflineRoutingDataWebService* pTest = Eegeo_NEW(Webservice::OfflineRoutingDataWebService)(webRequestFactory,
-                                                                                                                      *m_pOfflineRoutingDataParser,
-                                                                                                                      serviceUrlBase,
-                                                                                                                      apiDevToken);
+                m_pOfflineRoutingDataWebService = Eegeo_NEW(Webservice::OfflineRoutingDataWebService)(webRequestFactory,
+                                                                                                      *m_pOfflineRoutingDataParser,
+                                                                                                      serviceUrlBase,
+                                                                                                      apiDevToken);
 
-                pTest->RequestVersionsForInterior(interiorId);
-                pTest->RequestNavigationDataForInterior(interiorId, "EIM-4c79355e-6fe2-4575-89d9-faf9212cabc3_2019_02_13_15_34_39");
+                m_pOfflineRoutingService = Eegeo_NEW(OfflineRoutingService)(routingWebservice);
+                m_pOfflineRoutingController = Eegeo_NEW(OfflineRoutingController)(*m_pOfflineRoutingDataWebService);
+
+                m_pOfflineRoutingController->LoadInteriorData(interiorId); //Test data load
             }
 
             OfflineRoutingModule::~OfflineRoutingModule()
             {
+                Eegeo_DELETE m_pOfflineRoutingController;
                 Eegeo_DELETE m_pOfflineRoutingService;
+                Eegeo_DELETE m_pOfflineRoutingDataWebService;
                 Eegeo_DELETE m_pOfflineRoutingDataParser;
             }
 

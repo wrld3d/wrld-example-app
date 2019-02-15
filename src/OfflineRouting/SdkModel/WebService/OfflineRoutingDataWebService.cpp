@@ -31,12 +31,19 @@ namespace ExampleApp
 
                     struct WebRequestUserData
                     {
-                        OfflineRoutingWebserviceRequestId Id;
-                        WebRequestType Type;
+                        OfflineRoutingWebserviceRequestId id;
+                        WebRequestType type;
+                        Eegeo::Resources::Interiors::InteriorId interiorId;
+                        std::string buildId;
 
-                        WebRequestUserData(OfflineRoutingWebserviceRequestId id, WebRequestType type)
-                        : Id(id)
-                        , Type(type)
+                        WebRequestUserData(OfflineRoutingWebserviceRequestId requestId,
+                                           WebRequestType requestType,
+                                           const Eegeo::Resources::Interiors::InteriorId& requestInteriorId,
+                                           const std::string& requestBuildId)
+                        : id(requestId)
+                        , type(requestType)
+                        , interiorId(requestInteriorId)
+                        , buildId(requestBuildId)
                         {
                         }
                     };
@@ -61,7 +68,7 @@ namespace ExampleApp
                     Eegeo_ASSERT(indoorId.IsValid());
                     auto requestId = NextRequestId();
 
-                    WebRequestUserData* pUserData = Eegeo_NEW(WebRequestUserData)(requestId, WebRequestType::VersionsRequest);
+                    WebRequestUserData* pUserData = Eegeo_NEW(WebRequestUserData)(requestId, WebRequestType::VersionsRequest, indoorId, "");
 
                     std::stringstream ss;
                     ss << m_serviceUrlBase << "indoor-maps/" << indoorId.Value() << "/versions/";
@@ -81,13 +88,13 @@ namespace ExampleApp
                 }
 
                 OfflineRoutingWebserviceRequestId OfflineRoutingDataWebService::RequestNavigationDataForInterior(const Eegeo::Resources::Interiors::InteriorId& indoorId,
-                                                                                                           const std::string& buildId)
+                                                                                                                 const std::string& buildId)
                 {
                     Eegeo_ASSERT(indoorId.IsValid());
                     Eegeo_ASSERT(!buildId.empty());
                     auto requestId = NextRequestId();
 
-                    WebRequestUserData* pUserData = Eegeo_NEW(WebRequestUserData)(requestId, WebRequestType::NavigationDataRequest);
+                    WebRequestUserData* pUserData = Eegeo_NEW(WebRequestUserData)(requestId, WebRequestType::NavigationDataRequest, indoorId, buildId);
 
                     std::stringstream ss;
                     ss << m_serviceUrlBase << "indoor-maps/" << indoorId.Value() << "/versions/" << buildId << "/navigation-data";
@@ -150,8 +157,10 @@ namespace ExampleApp
 
                     WebRequestUserData* pUserData(static_cast<WebRequestUserData*>(webResponse.GetUserData()));
 
-                    OfflineRoutingWebserviceRequestId requestId = pUserData->Id;
-                    WebRequestType requestType = pUserData->Type;
+                    OfflineRoutingWebserviceRequestId requestId = pUserData->id;
+                    WebRequestType requestType = pUserData->type;
+                    Eegeo::Resources::Interiors::InteriorId interiorId = pUserData->interiorId;
+                    std::string buildId = pUserData->buildId;
                     Eegeo_DELETE pUserData;
 
                     std::string responseString;
@@ -166,10 +175,10 @@ namespace ExampleApp
                     switch (requestType)
                     {
                         case WebRequestType::VersionsRequest:
-                            NotifyVersionsRequestCompleted(requestId, responseString);
+                            NotifyVersionsRequestCompleted(requestId, interiorId, responseString);
                             break;
                         case WebRequestType::NavigationDataRequest:
-                            NotifyDataRequestCompleted(requestId, responseString);
+                            NotifyDataRequestCompleted(requestId, interiorId, buildId, responseString);
                             break;
                     }
 
@@ -177,16 +186,19 @@ namespace ExampleApp
                 }
 
                 void OfflineRoutingDataWebService::NotifyVersionsRequestCompleted(OfflineRoutingWebserviceRequestId requestId,
+                                                                                  const Eegeo::Resources::Interiors::InteriorId& requestInteriorId,
                                                                                   const std::string& responseString)
                 {
                     std::vector<OfflineRoutingIndoorVersion> results;
                     bool requestSucceeded = m_dataParser.TryParseVersions(responseString, results);
 
-                    const OfflineRoutingVersionsRequestResponse response(requestId, requestSucceeded, results);
+                    const OfflineRoutingVersionsRequestResponse response(requestId, requestSucceeded, requestInteriorId, results);
                     m_versionsRequestCompletedCallbacks.ExecuteCallbacks(response);
                 }
 
                 void OfflineRoutingDataWebService::NotifyDataRequestCompleted(OfflineRoutingWebserviceRequestId requestId,
+                                                                              const Eegeo::Resources::Interiors::InteriorId& requestInteriorId,
+                                                                              const std::string& requestBuildId,
                                                                               const std::string& responseString)
                 {
                     std::vector<OfflineRoutingFloorData> floorData;
@@ -196,7 +208,7 @@ namespace ExampleApp
                     bool multiFloorDataParseSucceeded = m_dataParser.TryParseMultiFloorData(responseString, multiFloorData);
 
                     bool requestSucceeded = floorDataParseSucceeded && multiFloorDataParseSucceeded;
-                    const OfflineRoutingDataRequestResponse response(requestId, requestSucceeded, floorData, multiFloorData);
+                    const OfflineRoutingDataRequestResponse response(requestId, requestSucceeded, requestInteriorId, requestBuildId, floorData, multiFloorData);
                     m_dataRequestCompletedCallbacks.ExecuteCallbacks(response);
                 }
 
