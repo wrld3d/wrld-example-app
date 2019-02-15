@@ -1,9 +1,8 @@
-// Copyright eeGeo Ltd (2012-2018), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2019), All Rights Reserved
 
 #pragma once
 
 #include "OfflineRouting.h"
-#include "Interiors.h"
 
 #include <string>
 
@@ -25,12 +24,12 @@ namespace ExampleApp
                     std::string mobileManifestUrl;
 
                     OfflineRoutingIndoorVersion()
-                            : buildId("")
-                            , submissionComment("")
-                            , createdAt("")
-                            , buildStatus("")
-                            , webManifestUrl("")
-                            , mobileManifestUrl("")
+                    : buildId("")
+                    , submissionComment("")
+                    , createdAt("")
+                    , buildStatus("")
+                    , webManifestUrl("")
+                    , mobileManifestUrl("")
                     {
                     }
                 };

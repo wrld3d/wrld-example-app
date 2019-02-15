@@ -1,0 +1,36 @@
+// Copyright eeGeo Ltd (2012-2019), All Rights Reserved
+
+#pragma once
+
+#include "OfflineRouting.h"
+#include "LatLongAltitude.h"
+
+#include <string>
+#include <vector>
+
+namespace ExampleApp
+{
+    namespace OfflineRouting
+    {
+        namespace SdkModel
+        {
+            namespace Webservice
+            {
+                struct OfflineRoutingFloorPathData
+                {
+                    int id;
+                    std::string type;
+                    std::string name;
+                    std::vector<Eegeo::Space::LatLong> coordinates;
+
+                    OfflineRoutingFloorPathData()
+                    : id(0)
+                    , type("")
+                    , name("")
+                    {
+                    }
+                };
+            }
+        }
+    }
+}

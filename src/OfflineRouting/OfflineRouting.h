@@ -20,6 +20,9 @@ namespace ExampleApp
                 class IOfflineRoutingDataWebService;
                 class OfflineRoutingDataWebService;
                 struct OfflineRoutingIndoorVersion;
+                struct OfflineRoutingFloorData;
+                struct OfflineRoutingFloorPathData;
+                struct OfflineRoutingMultiFloorData;
                 struct OfflineRoutingVersionsRequestResponse;
                 struct OfflineRoutingDataRequestResponse;
 

@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2018), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2019), All Rights Reserved
 
 #pragma once
 
@@ -22,9 +22,9 @@ namespace ExampleApp
                     std::vector<OfflineRoutingIndoorVersion> results;
 
                     OfflineRoutingVersionsRequestResponse(OfflineRoutingWebserviceRequestId requestId, bool requestSucceeded, const std::vector<OfflineRoutingIndoorVersion>& requestResults)
-                            : id(requestId)
-                            , succeeded(requestSucceeded)
-                            , results(requestResults)
+                    : id(requestId)
+                    , succeeded(requestSucceeded)
+                    , results(requestResults)
                     {
                     }
                 };

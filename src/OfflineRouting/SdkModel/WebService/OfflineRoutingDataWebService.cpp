@@ -1,4 +1,4 @@
-// Copyright eeGeo Ltd (2012-2018), All Rights Reserved
+// Copyright eeGeo Ltd (2012-2019), All Rights Reserved
 
 #include "OfflineRoutingDataWebService.h"
 #include "InteriorId.h"
@@ -6,6 +6,10 @@
 #include "IWebLoadRequestFactory.h"
 #include "IOfflineRoutingDataParser.h"
 #include "OfflineRoutingVersionsRequestResponse.h"
+#include "OfflineRoutingDataRequestResponse.h"
+#include "OfflineRoutingIndoorVersion.h"
+#include "OfflineRoutingFloorData.h"
+#include "OfflineRoutingMultiFloorData.h"
 
 #include <sstream>
 
@@ -185,8 +189,15 @@ namespace ExampleApp
                 void OfflineRoutingDataWebService::NotifyDataRequestCompleted(OfflineRoutingWebserviceRequestId requestId,
                                                                               const std::string& responseString)
                 {
-                    //TODO parse
-                    //TODO callback
+                    std::vector<OfflineRoutingFloorData> floorData;
+                    bool floorDataParseSucceeded = m_dataParser.TryParseFloorData(responseString, floorData);
+
+                    std::vector<OfflineRoutingMultiFloorData> multiFloorData;
+                    bool multiFloorDataParseSucceeded = m_dataParser.TryParseMultiFloorData(responseString, multiFloorData);
+
+                    bool requestSucceeded = floorDataParseSucceeded && multiFloorDataParseSucceeded;
+                    const OfflineRoutingDataRequestResponse response(requestId, requestSucceeded, floorData, multiFloorData);
+                    m_dataRequestCompletedCallbacks.ExecuteCallbacks(response);
                 }
 
                 OfflineRoutingWebserviceRequestId OfflineRoutingDataWebService::NextRequestId()
