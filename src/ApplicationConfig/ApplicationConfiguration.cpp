@@ -55,7 +55,10 @@ namespace ExampleApp
 			const std::vector<std::vector<std::string>>& customKeyboardLayout,
             const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig>& outdoorSearchMenuItems,
             bool overrideIndoorSearchMenuItems,
-            bool navigationEnabled
+            bool navigationEnabled,
+            const std::string& indoorMapsServiceUrl,
+            const std::string& indoorMapsServiceToken,
+            const std::string& indoorMapsServiceUuid
             )
         : m_name(name)
         , m_eegeoApiKey(eegeoApiKey)
@@ -106,6 +109,9 @@ namespace ExampleApp
         , m_outdoorSearchMenuItems(outdoorSearchMenuItems)
         , m_overrideIndoorSearchMenuItems(overrideIndoorSearchMenuItems)
         , m_navigationEnabled(navigationEnabled)
+        , m_indoorMapsServiceUrl(indoorMapsServiceUrl)
+        , m_indoorMapsServiceToken(indoorMapsServiceToken)
+        , m_indoorMapsServiceUuid(indoorMapsServiceUuid)
         {
         }
         
@@ -363,6 +369,21 @@ namespace ExampleApp
 
         bool ApplicationConfiguration::NavigationEnabled() const {
             return m_navigationEnabled;
+        }
+
+        const std::string ApplicationConfiguration::IndoorMapsServiceUrl() const
+        {
+            return m_indoorMapsServiceUrl;
+        }
+
+        const std::string ApplicationConfiguration::IndoorMapsServiceToken() const
+        {
+            return m_indoorMapsServiceToken;
+        }
+
+        const std::string ApplicationConfiguration::IndoorMapsServiceUuid() const
+        {
+            return m_indoorMapsServiceUuid;
         }
     }
 }

@@ -25,6 +25,9 @@
     "use_japanese_font": false,
     "use_chinese_font": false,
     "hockey_app_id":"",
+    "indoor_maps_service_url": "",
+    "indoor_maps_service_token": "",
+    "indoor_maps_service_uuid": "",
     "timer_survey_url":"",
     "enable_navigation": false,
     "compass_camera_offset": {

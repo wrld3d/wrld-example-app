@@ -73,6 +73,11 @@ namespace ExampleApp
                     const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> outdoorSearchMenuItems;
                     bool overrideIndoorSearchMenuItems = false;
                     bool showPoiDirectionsButton = false;
+
+                    const std::string emptyIndoorMapsServiceUrl;
+                    const std::string emptyIndoorMapsServiceToken;
+                    const std::string emptyIndoorMapsServiceUuid;
+
                     return ApplicationConfiguration("Eegeo Example App",
                         emptyEegeoApiKey,
                         productVersion,
@@ -121,7 +126,10 @@ namespace ExampleApp
                         customKeyboardLayout,
                         outdoorSearchMenuItems,
                         overrideIndoorSearchMenuItems,
-                        showPoiDirectionsButton);
+                        showPoiDirectionsButton,
+                        emptyIndoorMapsServiceUrl,
+                        emptyIndoorMapsServiceToken,
+                        emptyIndoorMapsServiceUuid);
                 }
 
                 const std::string defaultFontFilename = "opensans_semibold_sdf.fnt";

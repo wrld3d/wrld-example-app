@@ -76,6 +76,9 @@ namespace ExampleApp
                 const std::string OutdoorSearchMenuItems = "outdoor_search_menu_items";
                 const std::string OverrideIndoorSearchMenuItems = "override_indoor_search_menu_items";
                 const std::string EnableNavigation = "enable_navigation";
+                const std::string IndoorMapsServiceUrl = "indoor_maps_service_url";
+                const std::string IndoorMapsServiceToken = "indoor_maps_service_token";
+                const std::string IndoorMapsServiceUuid = "indoor_maps_service_uuid";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -373,6 +376,10 @@ namespace ExampleApp
                 bool navigationEnabled = ParseBoolOrDefault(document, EnableNavigation,
                                                            m_defaultConfig.NavigationEnabled());
 
+                const std::string indoorMapsServiceUrl = ParseStringOrDefault(document, IndoorMapsServiceUrl, m_defaultConfig.IndoorMapsServiceUrl());
+                const std::string indoorMapsServiceToken = ParseStringOrDefault(document, IndoorMapsServiceToken, m_defaultConfig.IndoorMapsServiceToken());
+                const std::string indoorMapsServiceUuid = ParseStringOrDefault(document, IndoorMapsServiceUuid, m_defaultConfig.IndoorMapsServiceUuid());
+
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -422,7 +429,10 @@ namespace ExampleApp
                     customKeyboardLayout,
                     outdoorSearchMenuItems,
                     overrideIndoorSearchMenuItems,
-                    navigationEnabled
+                    navigationEnabled,
+                    indoorMapsServiceUrl,
+                    indoorMapsServiceToken,
+                    indoorMapsServiceUuid
                 );
             }
             
