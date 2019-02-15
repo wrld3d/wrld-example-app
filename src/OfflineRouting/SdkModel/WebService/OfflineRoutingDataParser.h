@@ -3,14 +3,11 @@
 #pragma once
 
 #include "Types.h"
-#include "document.h"
 #include "OfflineRouting.h"
 #include "IOfflineRoutingDataParser.h"
-#include "OfflineRoutingIndoorVersion.h"
-#include "OfflineRoutingFloorData.h"
-#include "OfflineRoutingFloorPathData.h"
 
-#include <functional>
+#include <string>
+#include <vector>
 
 namespace ExampleApp
 {
@@ -26,13 +23,13 @@ namespace ExampleApp
                     ~OfflineRoutingDataParser() {}
 
                     bool TryParseVersions(const std::string& jsonString,
-                                          std::vector<OfflineRoutingIndoorVersion>& out_versions);
+                                          std::vector<OfflineRoutingIndoorVersion>& out_versions) override;
 
                     bool TryParseFloorData(const std::string& jsonString,
-                                           std::vector<OfflineRoutingFloorData>& out_floorData);
+                                           std::vector<OfflineRoutingFloorData>& out_floorData) override;
 
                     bool TryParseMultiFloorData(const std::string& jsonString,
-                                                std::vector<OfflineRoutingFloorPathData>& out_multiFloorData);
+                                                std::vector<OfflineRoutingFloorPathData>& out_multiFloorData) override;
                 };
             }
         }

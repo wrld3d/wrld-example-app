@@ -1,12 +1,15 @@
 // Copyright eeGeo Ltd (2012-2019), All Rights Reserved
 
 #include "OfflineRoutingDataParser.h"
-#include "OfflineRoutingIndoorVersion.h"
 #include "StringHelpers.h"
 #include "LatLongAltitude.h"
+#include "OfflineRoutingFloorData.h"
 #include "OfflineRoutingFloorPathData.h"
+#include "OfflineRoutingIndoorVersion.h"
+#include "document.h"
 
 #include <vector>
+#include <functional>
 
 namespace ExampleApp
 {
@@ -64,11 +67,11 @@ namespace ExampleApp
                         return false;
                     }
 
-                    bool TryParseIntWithKey(const rapidjson::Value& json, const std::string& name, int& out_integer)
+                    bool TryParseIntWithKey(const rapidjson::Value& json, const std::string& key, int& out_integer)
                     {
-                        if(json.HasMember(name.c_str()))
+                        if(json.HasMember(key.c_str()))
                         {
-                            return TryParseInt(json[name.c_str()], out_integer);
+                            return TryParseInt(json[key.c_str()], out_integer);
                         }
 
                         return false;
@@ -135,7 +138,7 @@ namespace ExampleApp
 
                     bool TryParseDoubleArray(const rapidjson::Value& json, std::vector<double>& out_doubleArray)
                     {
-                        return TryParseObjectArray<double >(json, TryParseDouble, out_doubleArray);
+                        return TryParseObjectArray<double>(json, TryParseDouble, out_doubleArray);
                     }
 
                     bool TryParseCoordinates(const rapidjson::Value& json, std::vector<Eegeo::Space::LatLong>& out_coordinates)

@@ -5,6 +5,7 @@
 #include "OfflineRoutingDataParser.h"
 #include "OfflineRoutingDataWebService.h"
 #include "OfflineRoutingController.h"
+#include "InteriorId.h"
 
 namespace ExampleApp
 {
@@ -27,7 +28,10 @@ namespace ExampleApp
                 m_pOfflineRoutingService = Eegeo_NEW(OfflineRoutingService)(routingWebservice);
                 m_pOfflineRoutingController = Eegeo_NEW(OfflineRoutingController)(*m_pOfflineRoutingDataWebService);
 
-                m_pOfflineRoutingController->LoadInteriorData(interiorId); //Test data load
+                if (interiorId.IsValid())
+                {
+                    m_pOfflineRoutingController->LoadInteriorData(interiorId); //Test data load
+                }
             }
 
             OfflineRoutingModule::~OfflineRoutingModule()

@@ -24,12 +24,6 @@ namespace ExampleApp
                     std::string mobileManifestUrl;
 
                     OfflineRoutingIndoorVersion()
-                    : buildId("")
-                    , submissionComment("")
-                    , createdAt("")
-                    , buildStatus("")
-                    , webManifestUrl("")
-                    , mobileManifestUrl("")
                     {
                     }
                 };

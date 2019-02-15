@@ -27,8 +27,6 @@ namespace ExampleApp
 
                     OfflineRoutingFloorPathData()
                     : id(0)
-                    , type("")
-                    , name("")
                     , isMultiFloor(false)
                     {
                     }

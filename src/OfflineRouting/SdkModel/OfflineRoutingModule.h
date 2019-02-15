@@ -28,7 +28,7 @@ namespace ExampleApp
 
                 ~OfflineRoutingModule();
 
-                Eegeo::Routes::Webservice::IRoutingWebservice& GetOfflineRoutingService();
+                Eegeo::Routes::Webservice::IRoutingWebservice& GetOfflineRoutingService() override;
 
             private:
                 Webservice::IOfflineRoutingDataParser* m_pOfflineRoutingDataParser;

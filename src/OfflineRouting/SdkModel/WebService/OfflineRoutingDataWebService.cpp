@@ -7,9 +7,6 @@
 #include "IOfflineRoutingDataParser.h"
 #include "OfflineRoutingVersionsRequestResponse.h"
 #include "OfflineRoutingDataRequestResponse.h"
-#include "OfflineRoutingIndoorVersion.h"
-#include "OfflineRoutingFloorData.h"
-#include "OfflineRoutingFloorPathData.h"
 
 #include <sstream>
 

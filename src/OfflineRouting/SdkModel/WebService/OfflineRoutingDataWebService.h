@@ -31,17 +31,17 @@ namespace ExampleApp
 
                     ~OfflineRoutingDataWebService() {}
 
-                    OfflineRoutingWebserviceRequestId RequestVersionsForInterior(const Eegeo::Resources::Interiors::InteriorId& indoorId);
+                    OfflineRoutingWebserviceRequestId RequestVersionsForInterior(const Eegeo::Resources::Interiors::InteriorId& indoorId) override;
 
                     OfflineRoutingWebserviceRequestId RequestNavigationDataForInterior(const Eegeo::Resources::Interiors::InteriorId& indoorId,
-                                                                                       const std::string& buildId);
-                    void CancelRequest(OfflineRoutingWebserviceRequestId requestId);
+                                                                                       const std::string& buildId) override;
+                    void CancelRequest(OfflineRoutingWebserviceRequestId requestId) override;
 
-                    void RegisterVersionsRequestCompletedCallback(OfflineRoutingVersionsRequestCompletedCallback& callback);
-                    void UnregisterVersionsRequestCompletedCallback(OfflineRoutingVersionsRequestCompletedCallback& callback);
+                    void RegisterVersionsRequestCompletedCallback(OfflineRoutingVersionsRequestCompletedCallback& callback) override;
+                    void UnregisterVersionsRequestCompletedCallback(OfflineRoutingVersionsRequestCompletedCallback& callback) override;
 
-                    void RegisterDataRequestCompletedCallback(OfflineRoutingDataRequestCompletedCallback& callback);
-                    void UnregisterDataRequestCompletedCallback(OfflineRoutingDataRequestCompletedCallback& callback);
+                    void RegisterDataRequestCompletedCallback(OfflineRoutingDataRequestCompletedCallback& callback) override;
+                    void UnregisterDataRequestCompletedCallback(OfflineRoutingDataRequestCompletedCallback& callback) override;
 
                 private:
                     void OnRequestComplete(Eegeo::Web::IWebResponse& webResponse);

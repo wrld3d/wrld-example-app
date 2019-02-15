@@ -20,11 +20,11 @@ namespace ExampleApp
 
                 ~OfflineRoutingService() {}
 
-                Eegeo::Routes::Webservice::RoutingQueryId BeginRoutingQuery(const Eegeo::Routes::Webservice::RoutingQueryOptions& options);
-                void CancelQuery(Eegeo::Routes::Webservice::RoutingQueryId routingQueryId);
+                Eegeo::Routes::Webservice::RoutingQueryId BeginRoutingQuery(const Eegeo::Routes::Webservice::RoutingQueryOptions& options) override;
+                void CancelQuery(Eegeo::Routes::Webservice::RoutingQueryId routingQueryId) override;
 
-                void RegisterQueryCompletedCallback(Eegeo::Routes::Webservice::RoutingQueryCompletedCallback& callback);
-                void UnregisterQueryCompletedCallback(Eegeo::Routes::Webservice::RoutingQueryCompletedCallback& callback);
+                void RegisterQueryCompletedCallback(Eegeo::Routes::Webservice::RoutingQueryCompletedCallback& callback) override;
+                void UnregisterQueryCompletedCallback(Eegeo::Routes::Webservice::RoutingQueryCompletedCallback& callback) override;
 
             private:
                 Eegeo::Routes::Webservice::IRoutingWebservice& m_routingWebservice;
