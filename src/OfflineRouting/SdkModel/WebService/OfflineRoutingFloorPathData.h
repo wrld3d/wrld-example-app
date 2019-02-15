@@ -21,12 +21,15 @@ namespace ExampleApp
                     int id;
                     std::string type;
                     std::string name;
+                    bool isMultiFloor;
+                    std::vector<int> levels;
                     std::vector<Eegeo::Space::LatLong> coordinates;
 
                     OfflineRoutingFloorPathData()
                     : id(0)
                     , type("")
                     , name("")
+                    , isMultiFloor(false)
                     {
                     }
                 };

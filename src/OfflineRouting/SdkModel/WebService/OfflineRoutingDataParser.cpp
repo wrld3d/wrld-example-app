@@ -215,75 +215,7 @@ namespace ExampleApp
                         int id = 0;
                         std::string type;
                         std::string name;
-                        std::vector<Eegeo::Space::LatLong> coordinates;
-
-                        if (!json.HasMember(PropertiesKey.c_str()))
-                        {
-                            return false;
-                        }
-
-                        const rapidjson::Value& propertiesJson = json[PropertiesKey.c_str()];
-
-                        if (!json.HasMember(GeometryKey.c_str()))
-                        {
-                            return false;
-                        }
-
-                        const rapidjson::Value& geometryJson = json[GeometryKey.c_str()];
-
-                        if (!TryParseIntWithKey(propertiesJson, IdKey, id))
-                        {
-                            return false;
-                        }
-
-                        if (!TryParseString(propertiesJson, TypeKey, type))
-                        {
-                            return false;
-                        }
-
-                        if (!TryParseString(propertiesJson, NameKey, name))
-                        {
-                            return false;
-                        }
-
-                        if (!TryParseCoordinates(geometryJson, coordinates))
-                        {
-                            return false;
-                        }
-
-                        out_floorData.id = id;
-                        out_floorData.type = type;
-                        out_floorData.name = name;
-                        out_floorData.coordinates = coordinates;
-
-                        return true;
-                    }
-
-                    bool TryParseFloorDataFromJsonObject(const rapidjson::Value& json, OfflineRoutingFloorData& out_floorData)
-                    {
-                        int floorId;
-                        std::vector<OfflineRoutingFloorPathData> floorPaths;
-
-                        if (!TryParseIntWithKey(json, FloorIdKey, floorId))
-                        {
-                            return false;
-                        }
-
-                        if (!TryParseObjectArray<OfflineRoutingFloorPathData>(json, FloorPathsKey, TryParseFloorPathDataFromJsonObject, floorPaths))
-                        {
-                            return false;
-                        }
-
-                        out_floorData.floorId = floorId;
-                        out_floorData.floorPaths = floorPaths;
-                        return true;
-                    }
-
-                    bool TryParseMultiFloorDataFromJsonObject(const rapidjson::Value& json, OfflineRoutingMultiFloorData& out_multiFloorData)
-                    {
-                        int id = 0;
-                        std::string type;
-                        std::string name;
+                        bool isMultiFloor = false;
                         std::vector<int> levels;
                         std::vector<Eegeo::Space::LatLong> coordinates;
 
@@ -316,22 +248,48 @@ namespace ExampleApp
                             return false;
                         }
 
-                        if (!TryParseObjectArray<int>(json, LevelsKey, TryParseInt, levels))
-                        {
-                            return false;
-                        }
-
                         if (!TryParseCoordinates(geometryJson, coordinates))
                         {
                             return false;
                         }
 
-                        out_multiFloorData.id = id;
-                        out_multiFloorData.type = type;
-                        out_multiFloorData.name = name;
-                        out_multiFloorData.levels = levels;
-                        out_multiFloorData.coordinates = coordinates;
+                        if (json.HasMember(LevelsKey.c_str()))
+                        {
+                            isMultiFloor = true;
 
+                            if (!TryParseObjectArray<int>(json, LevelsKey, TryParseInt, levels))
+                            {
+                                return false;
+                            }
+                        }
+
+                        out_floorData.id = id;
+                        out_floorData.type = type;
+                        out_floorData.name = name;
+                        out_floorData.isMultiFloor = isMultiFloor;
+                        out_floorData.levels = levels;
+                        out_floorData.coordinates = coordinates;
+
+                        return true;
+                    }
+
+                    bool TryParseFloorDataFromJsonObject(const rapidjson::Value& json, OfflineRoutingFloorData& out_floorData)
+                    {
+                        int floorId;
+                        std::vector<OfflineRoutingFloorPathData> floorPaths;
+
+                        if (!TryParseIntWithKey(json, FloorIdKey, floorId))
+                        {
+                            return false;
+                        }
+
+                        if (!TryParseObjectArray<OfflineRoutingFloorPathData>(json, FloorPathsKey, TryParseFloorPathDataFromJsonObject, floorPaths))
+                        {
+                            return false;
+                        }
+
+                        out_floorData.floorId = floorId;
+                        out_floorData.floorPaths = floorPaths;
                         return true;
                     }
                 }
@@ -366,15 +324,15 @@ namespace ExampleApp
                 }
 
                 bool OfflineRoutingDataParser::TryParseMultiFloorData(const std::string& jsonString,
-                                                                      std::vector<OfflineRoutingMultiFloorData>& out_multiFloorData)
+                                                                      std::vector<OfflineRoutingFloorPathData>& out_multiFloorData)
                 {
                     rapidjson::Document document;
                     if (!document.Parse<0>(jsonString.c_str()).HasParseError())
                     {
-                        return TryParseObjectArray<OfflineRoutingMultiFloorData>(document,
-                                                                                 InterFloorDataKey,
-                                                                                 TryParseMultiFloorDataFromJsonObject,
-                                                                                 out_multiFloorData);
+                        return TryParseObjectArray<OfflineRoutingFloorPathData>(document,
+                                                                                InterFloorDataKey,
+                                                                                TryParseFloorPathDataFromJsonObject,
+                                                                                out_multiFloorData);
                     }
 
                     return false;

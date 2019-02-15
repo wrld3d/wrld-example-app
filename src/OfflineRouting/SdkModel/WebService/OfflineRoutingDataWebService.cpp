@@ -9,7 +9,7 @@
 #include "OfflineRoutingDataRequestResponse.h"
 #include "OfflineRoutingIndoorVersion.h"
 #include "OfflineRoutingFloorData.h"
-#include "OfflineRoutingMultiFloorData.h"
+#include "OfflineRoutingFloorPathData.h"
 
 #include <sstream>
 
@@ -192,7 +192,7 @@ namespace ExampleApp
                     std::vector<OfflineRoutingFloorData> floorData;
                     bool floorDataParseSucceeded = m_dataParser.TryParseFloorData(responseString, floorData);
 
-                    std::vector<OfflineRoutingMultiFloorData> multiFloorData;
+                    std::vector<OfflineRoutingFloorPathData> multiFloorData;
                     bool multiFloorDataParseSucceeded = m_dataParser.TryParseMultiFloorData(responseString, multiFloorData);
 
                     bool requestSucceeded = floorDataParseSucceeded && multiFloorDataParseSucceeded;

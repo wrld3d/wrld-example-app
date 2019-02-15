@@ -8,7 +8,7 @@
 #include "IOfflineRoutingDataParser.h"
 #include "OfflineRoutingIndoorVersion.h"
 #include "OfflineRoutingFloorData.h"
-#include "OfflineRoutingMultiFloorData.h"
+#include "OfflineRoutingFloorPathData.h"
 
 #include <functional>
 
@@ -32,7 +32,7 @@ namespace ExampleApp
                                            std::vector<OfflineRoutingFloorData>& out_floorData);
 
                     bool TryParseMultiFloorData(const std::string& jsonString,
-                                                std::vector<OfflineRoutingMultiFloorData>& out_multiFloorData);
+                                                std::vector<OfflineRoutingFloorPathData>& out_multiFloorData);
                 };
             }
         }

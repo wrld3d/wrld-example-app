@@ -19,12 +19,12 @@ namespace ExampleApp
                     OfflineRoutingWebserviceRequestId id;
                     bool succeeded;
                     std::vector<OfflineRoutingFloorData> floorData;
-                    std::vector<OfflineRoutingMultiFloorData> multiFloorData;
+                    std::vector<OfflineRoutingFloorPathData> multiFloorData;
 
                     OfflineRoutingDataRequestResponse(OfflineRoutingWebserviceRequestId requestId,
                                                       bool requestSucceeded,
                                                       const std::vector<OfflineRoutingFloorData>& floorDataResults,
-                                                      const std::vector<OfflineRoutingMultiFloorData>& multiFloorDataResults)
+                                                      const std::vector<OfflineRoutingFloorPathData>& multiFloorDataResults)
                     : id(requestId)
                     , succeeded(requestSucceeded)
                     , floorData(floorDataResults)

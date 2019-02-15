@@ -22,7 +22,6 @@ namespace ExampleApp
                 struct OfflineRoutingIndoorVersion;
                 struct OfflineRoutingFloorData;
                 struct OfflineRoutingFloorPathData;
-                struct OfflineRoutingMultiFloorData;
                 struct OfflineRoutingVersionsRequestResponse;
                 struct OfflineRoutingDataRequestResponse;
 

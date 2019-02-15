@@ -28,7 +28,7 @@ namespace ExampleApp
                                                    std::vector<OfflineRoutingFloorData>& out_floorData) = 0;
 
                     virtual bool TryParseMultiFloorData(const std::string& jsonString,
-                                                        std::vector<OfflineRoutingMultiFloorData>& out_multiFloorData) = 0;
+                                                        std::vector<OfflineRoutingFloorPathData>& out_multiFloorData) = 0;
                 };
             }
         }

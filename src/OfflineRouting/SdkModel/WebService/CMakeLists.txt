@@ -12,7 +12,6 @@ set(currsources
   ../src/OfflineRouting/SdkModel/Webservice/OfflineRoutingFloorData.h
   ../src/OfflineRouting/SdkModel/Webservice/OfflineRoutingFloorPathData.h
   ../src/OfflineRouting/SdkModel/Webservice/OfflineRoutingIndoorVersion.h
-  ../src/OfflineRouting/SdkModel/Webservice/OfflineRoutingMultiFloorData.h
   ../src/OfflineRouting/SdkModel/Webservice/OfflineRoutingVersionsRequestResponse.h
 )
 set(sources ${sources} ${currsources})
