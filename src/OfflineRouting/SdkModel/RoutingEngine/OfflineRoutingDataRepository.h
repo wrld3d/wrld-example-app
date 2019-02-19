@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Types.h"
+#include "VectorMath.h"
 #include "OfflineRouting.h"
 #include "IOfflineRoutingDataRepository.h"
 #include "OfflineRoutingGraphNode.h"
@@ -25,6 +26,7 @@ namespace ExampleApp
                     ~OfflineRoutingDataRepository() {}
 
                     void AddGraphNode(const OfflineRoutingGraphNode& node) override;
+                    void AddGraphNodes(const std::vector<OfflineRoutingGraphNode>& nodes) override;
                     void AddFeature(const OfflineRoutingFeature& feature) override;
 
                     bool HasGraphNode(const OfflineRoutingGraphNodeId& id) const override;
@@ -34,6 +36,8 @@ namespace ExampleApp
                     const OfflineRoutingFeature& GetFeature(const OfflineRoutingFeatureId& id) const override;
 
                 private:
+                    std::vector<OfflineRoutingGraphNodeId> FindNodesAtDistance(Eegeo::dv3 point, double distance);
+                    void VerifyNodeEdges(OfflineRoutingGraphNodeId nodeId);
 
                     typedef std::unordered_map<OfflineRoutingFeatureId, OfflineRoutingFeature> OfflineRoutingFeatures;
                     typedef std::unordered_map<OfflineRoutingGraphNodeId, OfflineRoutingGraphNode> OfflineRoutingGraphNodes;

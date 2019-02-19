@@ -23,8 +23,8 @@ namespace ExampleApp
                 {
                 }
 
-                bool OfflineRoutingEngine::TryGetLatestBuildIdForInterior(const Eegeo::Resources::Interiors::InteriorId& indoorId,
-                                                                          std::string& out_buildId)
+                bool OfflineRoutingEngine::TryGetLocalBuildIdForInterior(const Eegeo::Resources::Interiors::InteriorId &indoorId,
+                                                                         std::string &out_buildId)
                 {
                     return false; //TODO check local storage
                 }
@@ -34,25 +34,44 @@ namespace ExampleApp
                                                                        const std::vector<Webservice::OfflineRoutingFloorData>& floorData,
                                                                        const std::vector<Webservice::OfflineRoutingFloorPathData>& multiFloorData)
                 {
+                    AddFloorData(indoorId, floorData);
+                    AddMultiFloorData(indoorId, multiFloorData);
+                }
+
+                void OfflineRoutingEngine::AddFloorData(const Eegeo::Resources::Interiors::InteriorId& indoorId, const std::vector<Webservice::OfflineRoutingFloorData>& floorData)
+                {
                     for (const auto& data: floorData)
                     {
                         for (const auto& pathData: data.floorPaths)
                         {
                             OfflineRoutingFeature feature = m_offlineRoutingDataBuilder.BuildFeature(pathData.type,
                                                                                                      pathData.name,
-                                                                                                     data.floorId,
                                                                                                      indoorId);
                             m_offlineRoutingDataRepository.AddFeature(feature);
 
-                            std::vector<OfflineRoutingGraphNode> graphNodes = m_offlineRoutingDataBuilder.BuildGraphNodes(pathData.coordinates,
-                                                                                                                          data.floorId,
-                                                                                                                          feature.id,
-                                                                                                                          indoorId);
-                            for (const auto& node: graphNodes)
-                            {
-                                m_offlineRoutingDataRepository.AddGraphNode(node);
-                            }
+                            auto graphNodes = m_offlineRoutingDataBuilder.BuildGraphNodes(pathData.coordinates,
+                                                                                          data.floorId,
+                                                                                          feature.GetId(),
+                                                                                          indoorId);
+                            m_offlineRoutingDataRepository.AddGraphNodes(graphNodes);
                         }
+                    }
+                }
+
+                void OfflineRoutingEngine::AddMultiFloorData(const Eegeo::Resources::Interiors::InteriorId& indoorId, const std::vector<Webservice::OfflineRoutingFloorPathData>& multiFloorData)
+                {
+                    for (const auto& pathData: multiFloorData)
+                    {
+                        OfflineRoutingFeature feature = m_offlineRoutingDataBuilder.BuildFeature(pathData.type,
+                                                                                                 pathData.name,
+                                                                                                 indoorId);
+                        m_offlineRoutingDataRepository.AddFeature(feature);
+
+                        auto graphNodes = m_offlineRoutingDataBuilder.BuildMultiFloorGraphNodes(pathData.coordinates,
+                                                                                                pathData.levels,
+                                                                                                feature.GetId(),
+                                                                                                indoorId);
+                        m_offlineRoutingDataRepository.AddGraphNodes(graphNodes);
                     }
                 }
             }

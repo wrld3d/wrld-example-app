@@ -9,8 +9,6 @@
 
 #include <string>
 
-#include "Logger.h"
-
 namespace ExampleApp
 {
     namespace OfflineRouting
@@ -79,7 +77,7 @@ namespace ExampleApp
                 {
                     bool shouldLoadData = false;
                     std::string localBuildId;
-                    if (m_offlineRoutingEngine.TryGetLatestBuildIdForInterior(versionsRequestResponse.interiorId, localBuildId))
+                    if (m_offlineRoutingEngine.TryGetLocalBuildIdForInterior(versionsRequestResponse.interiorId, localBuildId))
                     {
                         if (localBuildId != latestVersion.buildId)
                         {
@@ -105,8 +103,6 @@ namespace ExampleApp
                                                                    dataRequestResponse.buildId,
                                                                    dataRequestResponse.floorData,
                                                                    dataRequestResponse.multiFloorData);
-
-                EXAMPLE_LOG("%s", dataRequestResponse.buildId.c_str());
             }
         }
     }

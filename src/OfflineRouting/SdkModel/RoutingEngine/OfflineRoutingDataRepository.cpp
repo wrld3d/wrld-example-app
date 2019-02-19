@@ -14,21 +14,36 @@ namespace ExampleApp
         {
             namespace RoutingEngine
             {
+                namespace
+                {
+                    const double MinimumDistance = 0.00001;
+                }
+
                 OfflineRoutingDataRepository::OfflineRoutingDataRepository()
                 {}
 
                 void OfflineRoutingDataRepository::AddGraphNode(const OfflineRoutingGraphNode& node)
                 {
-                    Eegeo_ASSERT(!(HasGraphNode(node.id)), "Already have data for node %d", node.id);
+                    Eegeo_ASSERT(!(HasGraphNode(node.GetId())), "Already have data for node %d", node.GetId());
 
-                    m_interiorGraphNodes[node.id] = node;
+                    m_interiorGraphNodes[node.GetId()] = node;
+
+                    VerifyNodeEdges(node.GetId());
+                }
+
+                void OfflineRoutingDataRepository::AddGraphNodes(const std::vector<OfflineRoutingGraphNode>& nodes)
+                {
+                    for (const auto& node: nodes)
+                    {
+                        AddGraphNode(node);
+                    }
                 }
 
                 void OfflineRoutingDataRepository::AddFeature(const OfflineRoutingFeature& feature)
                 {
-                    Eegeo_ASSERT(!(HasFeature(feature.id)), "Already have data for feature %d", feature.id);
+                    Eegeo_ASSERT(!(HasFeature(feature.GetId())), "Already have data for feature %d", feature.GetId());
 
-                    m_interiorFeatures[feature.id] = feature;
+                    m_interiorFeatures[feature.GetId()] = feature;
                 }
 
                 bool OfflineRoutingDataRepository::HasGraphNode(const OfflineRoutingGraphNodeId& id) const
@@ -51,6 +66,41 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT((HasFeature(id)), "Does not have data for feature %d", id);
                     return m_interiorFeatures.at(id);
+                }
+
+                std::vector<OfflineRoutingGraphNodeId> OfflineRoutingDataRepository::FindNodesAtDistance(Eegeo::dv3 point, double distance)
+                {
+                    std::vector<OfflineRoutingGraphNodeId> nodesWithinDistance;
+                    for (auto& it : m_interiorGraphNodes)
+                    {
+                        auto& node = it.second;
+
+                        if (point.SquareDistanceTo(node.GetPoint()) < distance)
+                        {
+                            nodesWithinDistance.push_back(node.GetId());
+                        }
+                    }
+
+                    return nodesWithinDistance;
+                }
+
+                void OfflineRoutingDataRepository::VerifyNodeEdges(OfflineRoutingGraphNodeId nodeId)
+                {
+                    auto& node = m_interiorGraphNodes.at(nodeId);
+
+                    auto connectedNodesIds = FindNodesAtDistance(node.GetPoint(), MinimumDistance);
+
+                    for (auto connectedNodesId : connectedNodesIds)
+                    {
+                        if (connectedNodesId == nodeId)
+                        {
+                            continue;
+                        }
+
+                        auto& connectedNode = m_interiorGraphNodes.at(connectedNodesId);
+                        node.AddNodeEdge(connectedNodesId);
+                        connectedNode.AddNodeEdge(nodeId);
+                    }
                 }
             }
         }

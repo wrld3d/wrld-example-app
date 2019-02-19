@@ -17,26 +17,29 @@ namespace ExampleApp
             {
                 struct OfflineRoutingFeature
                 {
-                    OfflineRoutingFeatureId id;
-                    std::string type;
-                    std::string name;
-                    int floorId;
-                    Eegeo::Resources::Interiors::InteriorId indoorId;
-
                     OfflineRoutingFeature()
                     {}
 
                     OfflineRoutingFeature(const OfflineRoutingFeatureId featureId,
                                           const std::string& featureType,
                                           const std::string& featureName,
-                                          const int featureFloorId,
                                           const Eegeo::Resources::Interiors::InteriorId& featureIndoorId)
-                    : id(featureId)
-                    , type(featureType)
-                    , name(featureName)
-                    , floorId(featureFloorId)
-                    , indoorId(featureIndoorId)
+                    : m_id(featureId)
+                    , m_type(featureType)
+                    , m_name(featureName)
+                    , m_indoorId(featureIndoorId)
                     {}
+
+                    const OfflineRoutingFeatureId GetId() const { return m_id; }
+                    const std::string& GetType() const { return m_type; }
+                    const std::string& GetName() const { return m_name; }
+                    const Eegeo::Resources::Interiors::InteriorId& GetInteriorId() const { return m_indoorId; }
+
+                private:
+                    OfflineRoutingFeatureId m_id;
+                    std::string m_type;
+                    std::string m_name;
+                    Eegeo::Resources::Interiors::InteriorId m_indoorId;
                 };
             }
         }

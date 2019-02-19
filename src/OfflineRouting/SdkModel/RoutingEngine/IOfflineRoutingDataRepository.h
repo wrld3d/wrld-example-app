@@ -4,6 +4,8 @@
 
 #include "OfflineRouting.h"
 
+#include <vector>
+
 namespace ExampleApp
 {
     namespace OfflineRouting
@@ -18,6 +20,7 @@ namespace ExampleApp
                     virtual ~IOfflineRoutingDataRepository() {}
 
                     virtual void AddGraphNode(const OfflineRoutingGraphNode& node) = 0;
+                    virtual void AddGraphNodes(const std::vector<OfflineRoutingGraphNode>& nodes) = 0;
                     virtual void AddFeature(const OfflineRoutingFeature& feature) = 0;
 
                     virtual bool HasGraphNode(const OfflineRoutingGraphNodeId& id) const = 0;

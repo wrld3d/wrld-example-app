@@ -21,8 +21,8 @@ namespace ExampleApp
                 public:
                     virtual ~IOfflineRoutingEngine() {}
 
-                    virtual bool TryGetLatestBuildIdForInterior(const Eegeo::Resources::Interiors::InteriorId& indoorId,
-                                                                std::string& out_buildId) = 0;
+                    virtual bool TryGetLocalBuildIdForInterior(const Eegeo::Resources::Interiors::InteriorId &indoorId,
+                                                               std::string &out_buildId) = 0;
 
                     virtual void LoadGraphFromNavigationData(const Eegeo::Resources::Interiors::InteriorId& indoorId,
                                                              const std::string& buildId,

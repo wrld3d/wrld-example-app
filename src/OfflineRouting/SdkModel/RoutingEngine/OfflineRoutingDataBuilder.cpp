@@ -3,6 +3,7 @@
 #include "OfflineRoutingDataBuilder.h"
 #include "OfflineRoutingFeature.h"
 #include "OfflineRoutingGraphNode.h"
+#include "Types.h"
 
 namespace ExampleApp
 {
@@ -15,6 +16,27 @@ namespace ExampleApp
                 namespace
                 {
                     const int FloorHeight = 10;
+
+                    OfflineRoutingGraphNode GetGraphNode(const OfflineRoutingGraphNodeId nodeId,
+                                                         const Eegeo::Space::LatLong& coordinate,
+                                                         const int floorId,
+                                                         const size_t iteratorPos,
+                                                         const OfflineRoutingFeatureId& featureId,
+                                                         const Eegeo::Resources::Interiors::InteriorId& indoorId,
+                                                         std::vector<OfflineRoutingGraphNode>& graphNodes)
+                    {
+                        Eegeo::Space::LatLongAltitude point(coordinate.GetLatitude(), coordinate.GetLongitude(), floorId * FloorHeight);
+                        std::vector<OfflineRoutingGraphNodeId> edges;
+
+                        if (iteratorPos > 0)
+                        {
+                            auto& previousNode = graphNodes.at(iteratorPos-1);
+                            previousNode.AddNodeEdge(nodeId);
+                            edges.push_back(previousNode.GetId());
+                        }
+
+                        return OfflineRoutingGraphNode(nodeId, point.ToECEF(), edges, floorId, featureId, indoorId);
+                    }
                 }
 
                 OfflineRoutingDataBuilder::OfflineRoutingDataBuilder()
@@ -35,30 +57,53 @@ namespace ExampleApp
                     for (std::vector<OfflineRoutingGraphNode>::size_type i = 0; i < nodeCount; i++)
                     {
                         const auto& coordinate = coordinates.at(i);
-                        Eegeo::Space::LatLongAltitude point(coordinate.GetLatitude(), coordinate.GetLongitude(), floorId * FloorHeight);
-                        std::vector<OfflineRoutingGraphNodeId> edges;
-                        auto nodeId = NextGraphNodeId();
 
-                        if (i > 0)
-                        {
-                            auto& previousNode = graphNodes.at(i-1);
-                            previousNode.nodeEdges.push_back(nodeId);
-                            edges.push_back(previousNode.id);
-                        }
-
-                        graphNodes.emplace_back(nodeId, point.ToECEF(), edges, floorId, featureId, indoorId);
+                        graphNodes.emplace_back(GetGraphNode(NextGraphNodeId(),
+                                                             coordinate,
+                                                             floorId,
+                                                             i,
+                                                             featureId,
+                                                             indoorId,
+                                                             graphNodes));
                     }
 
+                    return graphNodes;
+                }
+
+                std::vector<OfflineRoutingGraphNode> OfflineRoutingDataBuilder::BuildMultiFloorGraphNodes(const std::vector<Eegeo::Space::LatLong>& coordinates,
+                                                                                                          std::vector<int> floorIds,
+                                                                                                          const OfflineRoutingFeatureId& featureId,
+                                                                                                          const Eegeo::Resources::Interiors::InteriorId& indoorId)
+                {
+                    Eegeo_ASSERT(coordinates.size() == floorIds.size(), "Invalid multi floor data. Floor count does not match coordinate count");
+
+                    auto size = coordinates.size();
+
+                    std::vector<OfflineRoutingGraphNode> graphNodes;
+                    graphNodes.reserve(size);
+
+                    for (size_t i = 0; i < size; ++i)
+                    {
+                        const auto& coordinate = coordinates.at(i);
+                        const auto floorId = floorIds.at(i);
+
+                        graphNodes.emplace_back(GetGraphNode(NextGraphNodeId(),
+                                                             coordinate,
+                                                             floorId,
+                                                             i,
+                                                             featureId,
+                                                             indoorId,
+                                                             graphNodes));
+                    }
 
                     return graphNodes;
                 }
 
                 OfflineRoutingFeature OfflineRoutingDataBuilder::BuildFeature(const std::string& type,
                                                                               const std::string& name,
-                                                                              int floorId,
                                                                               const Eegeo::Resources::Interiors::InteriorId& indoorId)
                 {
-                    return OfflineRoutingFeature(NextFeatureId(), type, name, floorId, indoorId);
+                    return OfflineRoutingFeature(NextFeatureId(), type, name, indoorId);
                 }
 
                 OfflineRoutingFeatureId OfflineRoutingDataBuilder::NextFeatureId()

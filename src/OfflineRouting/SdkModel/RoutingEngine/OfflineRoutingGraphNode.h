@@ -7,6 +7,7 @@
 #include "InteriorId.h"
 
 #include <vector>
+#include <algorithm>
 
 namespace ExampleApp
 {
@@ -18,13 +19,6 @@ namespace ExampleApp
             {
                 struct OfflineRoutingGraphNode
                 {
-                    OfflineRoutingGraphNodeId id;
-                    Eegeo::dv3 point;
-                    std::vector<OfflineRoutingGraphNodeId> nodeEdges;
-                    int floorId;
-                    OfflineRoutingFeatureId featureId;
-                    Eegeo::Resources::Interiors::InteriorId indoorId;
-
                     OfflineRoutingGraphNode()
                     : id(0)
                     , point(Eegeo::dv3::Zero())
@@ -45,6 +39,29 @@ namespace ExampleApp
                     , featureId(routingFeatureId)
                     , indoorId(nodeIndoorId)
                     {}
+
+                    const OfflineRoutingGraphNodeId GetId() const { return id; }
+                    const Eegeo::dv3 GetPoint() const { return point; }
+                    const std::vector<OfflineRoutingGraphNodeId>& GetEdges() const { return nodeEdges; }
+                    const int GetFloorId() const { return floorId; }
+                    const OfflineRoutingFeatureId GetFeatureId() const { return featureId; }
+                    const Eegeo::Resources::Interiors::InteriorId& GetInteriorId() const { return indoorId; }
+
+                    void AddNodeEdge(const OfflineRoutingGraphNodeId edgeId)
+                    {
+                        if(std::find(nodeEdges.begin(), nodeEdges.end(), edgeId) == nodeEdges.end())
+                        {
+                            nodeEdges.push_back(edgeId);
+                        }
+                    }
+
+                private:
+                    OfflineRoutingGraphNodeId id;
+                    Eegeo::dv3 point;
+                    std::vector<OfflineRoutingGraphNodeId> nodeEdges;
+                    int floorId;
+                    OfflineRoutingFeatureId featureId;
+                    Eegeo::Resources::Interiors::InteriorId indoorId;
                 };
             }
         }

@@ -27,9 +27,13 @@ namespace ExampleApp
                                                                                  const OfflineRoutingFeatureId& featureId,
                                                                                  const Eegeo::Resources::Interiors::InteriorId& indoorId) = 0;
 
+                    virtual std::vector<OfflineRoutingGraphNode> BuildMultiFloorGraphNodes(const std::vector<Eegeo::Space::LatLong>& coordinates,
+                                                                                           std::vector<int> floorIds,
+                                                                                           const OfflineRoutingFeatureId& featureId,
+                                                                                           const Eegeo::Resources::Interiors::InteriorId& indoorId) = 0;
+
                     virtual OfflineRoutingFeature BuildFeature(const std::string& type,
                                                                const std::string& name,
-                                                               int floorId,
                                                                const Eegeo::Resources::Interiors::InteriorId& indoorId) = 0;
                 };
             }

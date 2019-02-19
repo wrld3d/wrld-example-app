@@ -25,8 +25,8 @@ namespace ExampleApp
 
                     ~OfflineRoutingEngine() {}
 
-                    bool TryGetLatestBuildIdForInterior(const Eegeo::Resources::Interiors::InteriorId& indoorId,
-                                                        std::string& out_buildId) override;
+                    bool TryGetLocalBuildIdForInterior(const Eegeo::Resources::Interiors::InteriorId &indoorId,
+                                                       std::string &out_buildId) override;
 
                     void LoadGraphFromNavigationData(const Eegeo::Resources::Interiors::InteriorId& indoorId,
                                                      const std::string& buildId,
@@ -34,6 +34,9 @@ namespace ExampleApp
                                                      const std::vector<Webservice::OfflineRoutingFloorPathData>& multiFloorData) override;
 
                 private:
+                    void AddFloorData(const Eegeo::Resources::Interiors::InteriorId& indoorId, const std::vector<Webservice::OfflineRoutingFloorData>& floorData);
+                    void AddMultiFloorData(const Eegeo::Resources::Interiors::InteriorId& indoorId, const std::vector<Webservice::OfflineRoutingFloorPathData>& multiFloorData);
+
                     IOfflineRoutingDataRepository& m_offlineRoutingDataRepository;
                     IOfflineRoutingDataBuilder& m_offlineRoutingDataBuilder;
                 };
