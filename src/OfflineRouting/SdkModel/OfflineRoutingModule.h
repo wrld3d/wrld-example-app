@@ -5,7 +5,6 @@
 #include "Types.h"
 #include "OfflineRouting.h"
 #include "IOfflineRoutingModule.h"
-#include "IRoutingWebservice.h"
 #include "Web.h"
 #include "Interiors.h"
 
@@ -33,6 +32,11 @@ namespace ExampleApp
             private:
                 Webservice::IOfflineRoutingDataParser* m_pOfflineRoutingDataParser;
                 Webservice::IOfflineRoutingDataWebService* m_pOfflineRoutingDataWebService;
+
+                RoutingEngine::IOfflineRoutingDataRepository* m_pOfflineRoutingDataRepository;
+                RoutingEngine::IOfflineRoutingDataBuilder* m_pOfflineRoutingDataBuilder;
+                RoutingEngine::IOfflineRoutingEngine* m_pOfflineRoutingEngine;
+
                 OfflineRoutingService* m_pOfflineRoutingService;
                 OfflineRoutingController* m_pOfflineRoutingController;
             };

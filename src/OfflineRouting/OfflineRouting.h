@@ -4,6 +4,8 @@
 
 #include "ICallback.h"
 
+#include <unordered_map>
+
 namespace ExampleApp
 {
     namespace OfflineRouting
@@ -14,6 +16,18 @@ namespace ExampleApp
             class OfflineRoutingModule;
             class OfflineRoutingController;
             class OfflineRoutingService;
+
+            namespace RoutingEngine
+            {
+                class IOfflineRoutingEngine;
+                class IOfflineRoutingDataBuilder;
+                class IOfflineRoutingDataRepository;
+                struct OfflineRoutingFeature;
+                struct OfflineRoutingGraphNode;
+
+                typedef int OfflineRoutingFeatureId;
+                typedef int OfflineRoutingGraphNodeId;
+            }
 
             namespace Webservice
             {

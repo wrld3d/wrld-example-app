@@ -16,7 +16,7 @@ namespace ExampleApp
             class OfflineRoutingController : private Eegeo::NonCopyable
             {
             public:
-                OfflineRoutingController(Webservice::IOfflineRoutingDataWebService& dataWebService);
+                OfflineRoutingController(RoutingEngine::IOfflineRoutingEngine& offlineRoutingEngine, Webservice::IOfflineRoutingDataWebService& dataWebService);
 
                 ~OfflineRoutingController();
 
@@ -26,6 +26,7 @@ namespace ExampleApp
                 void OnVersionsRequestCompleted(const Webservice::OfflineRoutingVersionsRequestResponse& versionsRequestResponse);
                 void OnDataRequestCompleted(const Webservice::OfflineRoutingDataRequestResponse& dataRequestResponse);
 
+                RoutingEngine::IOfflineRoutingEngine& m_offlineRoutingEngine;
                 Webservice::IOfflineRoutingDataWebService& m_dataWebService;
 
                 Eegeo::Helpers::TCallback1<OfflineRoutingController, const Webservice::OfflineRoutingVersionsRequestResponse&> m_versionsRequestCompletedCallback;

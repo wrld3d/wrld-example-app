@@ -12,4 +12,5 @@ set(currsources
 )
 set(sources ${sources} ${currsources})
 source_group(\\src\\OfflineRouting\\SdkModel FILES ${currsources})
+include(../src/OfflineRouting/SdkModel/RoutingEngine/CMakeLists.txt)
 include(../src/OfflineRouting/SdkModel/Webservice/CMakeLists.txt)
