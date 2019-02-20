@@ -8,6 +8,7 @@
 #include "IOfflineRoutingDataRepository.h"
 #include "OfflineRoutingGraphNode.h"
 #include "OfflineRoutingFeature.h"
+#include "OfflineRoutingDataSearchService.h"
 
 #include <unordered_map>
 
@@ -22,7 +23,7 @@ namespace ExampleApp
                 class OfflineRoutingDataRepository : public IOfflineRoutingDataRepository, private Eegeo::NonCopyable
                 {
                 public:
-                    OfflineRoutingDataRepository();
+                    OfflineRoutingDataRepository(OfflineRoutingDataSearchService& dataSearchService);
                     ~OfflineRoutingDataRepository() {}
 
                     void AddGraphNode(const OfflineRoutingGraphNode& node) override;
@@ -35,8 +36,9 @@ namespace ExampleApp
                     const OfflineRoutingGraphNode& GetGraphNode(const OfflineRoutingGraphNodeId& id) const override;
                     const OfflineRoutingFeature& GetFeature(const OfflineRoutingFeatureId& id) const override;
 
+                    void BuildGraph() override;
+
                 private:
-                    std::vector<OfflineRoutingGraphNodeId> FindNodesWithinDistance(Eegeo::dv3 point, double distance);
                     void JoinNodesWithinMinimumDistance(OfflineRoutingGraphNodeId nodeId);
 
                     typedef std::unordered_map<OfflineRoutingFeatureId, OfflineRoutingFeature> OfflineRoutingFeatures;
@@ -44,6 +46,8 @@ namespace ExampleApp
 
                     OfflineRoutingFeatures m_interiorFeatures;
                     OfflineRoutingGraphNodes m_interiorGraphNodes;
+
+                    OfflineRoutingDataSearchService& m_dataSearchService;
                 };
             }
         }

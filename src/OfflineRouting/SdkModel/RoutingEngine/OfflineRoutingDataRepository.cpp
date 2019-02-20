@@ -24,7 +24,8 @@ namespace ExampleApp
                     const double MinimumDistanceInMeters = 0.00001;
                 }
 
-                OfflineRoutingDataRepository::OfflineRoutingDataRepository()
+                OfflineRoutingDataRepository::OfflineRoutingDataRepository(OfflineRoutingDataSearchService& dataSearchService)
+                : m_dataSearchService(dataSearchService)
                 {}
 
                 void OfflineRoutingDataRepository::AddGraphNode(const OfflineRoutingGraphNode& node)
@@ -32,8 +33,6 @@ namespace ExampleApp
                     Eegeo_ASSERT(!(HasGraphNode(node.GetId())), "Already have data for node %d", node.GetId());
 
                     m_interiorGraphNodes[node.GetId()] = node;
-
-                    JoinNodesWithinMinimumDistance(node.GetId());
                 }
 
                 void OfflineRoutingDataRepository::AddGraphNodes(const std::vector<OfflineRoutingGraphNode>& nodes)
@@ -73,22 +72,6 @@ namespace ExampleApp
                     return m_interiorFeatures.at(id);
                 }
 
-                std::vector<OfflineRoutingGraphNodeId> OfflineRoutingDataRepository::FindNodesWithinDistance(Eegeo::dv3 point, double distance)
-                {
-                    std::vector<OfflineRoutingGraphNodeId> nodesWithinDistance;
-                    for (auto& it : m_interiorGraphNodes)
-                    {
-                        auto& node = it.second;
-
-                        if (point.SquareDistanceTo(node.GetPoint()) < distance)
-                        {
-                            nodesWithinDistance.push_back(node.GetId());
-                        }
-                    }
-
-                    return nodesWithinDistance;
-                }
-
                 void OfflineRoutingDataRepository::JoinNodesWithinMinimumDistance(OfflineRoutingGraphNodeId nodeId)
                 {
                     /* At this point we probably have multiple disjointed graphs for each line strings
@@ -98,7 +81,7 @@ namespace ExampleApp
                      */
                     auto& node = m_interiorGraphNodes.at(nodeId);
 
-                    auto connectedNodesIds = FindNodesWithinDistance(node.GetPoint(), MinimumDistanceInMeters);
+                    auto connectedNodesIds = m_dataSearchService.FindNodesWithinDistance(node.GetPoint(), MinimumDistanceInMeters);
 
                     for (auto connectedNodesId : connectedNodesIds)
                     {
@@ -110,6 +93,16 @@ namespace ExampleApp
                         auto& connectedNode = m_interiorGraphNodes.at(connectedNodesId);
                         node.AddNodeEdge(connectedNodesId);
                         connectedNode.AddNodeEdge(nodeId);
+                    }
+                }
+
+                void OfflineRoutingDataRepository::BuildGraph()
+                {
+                    m_dataSearchService.BuildSearchTree(m_interiorGraphNodes);
+
+                    for (auto &it : m_interiorGraphNodes)
+                    {
+                        JoinNodesWithinMinimumDistance(it.first);
                     }
                 }
             }

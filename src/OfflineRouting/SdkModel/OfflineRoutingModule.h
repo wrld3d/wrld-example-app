@@ -7,6 +7,7 @@
 #include "IOfflineRoutingModule.h"
 #include "Web.h"
 #include "Interiors.h"
+#include "OfflineRoutingDataSearchService.h"
 
 #include <string>
 
@@ -33,6 +34,7 @@ namespace ExampleApp
                 Webservice::IOfflineRoutingDataParser* m_pOfflineRoutingDataParser;
                 Webservice::IOfflineRoutingDataWebService* m_pOfflineRoutingDataWebService;
 
+                RoutingEngine::OfflineRoutingDataSearchService* m_pOfflineRoutingDataSearchService;
                 RoutingEngine::IOfflineRoutingDataRepository* m_pOfflineRoutingDataRepository;
                 RoutingEngine::IOfflineRoutingDataBuilder* m_pOfflineRoutingDataBuilder;
                 RoutingEngine::IOfflineRoutingEngine* m_pOfflineRoutingEngine;

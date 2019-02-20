@@ -28,7 +28,8 @@ namespace ExampleApp
                                                                                                       serviceUrlBase,
                                                                                                       apiDevToken);
 
-                m_pOfflineRoutingDataRepository = Eegeo_NEW(RoutingEngine::OfflineRoutingDataRepository)();
+                m_pOfflineRoutingDataSearchService = Eegeo_NEW(RoutingEngine::OfflineRoutingDataSearchService)();
+                m_pOfflineRoutingDataRepository = Eegeo_NEW(RoutingEngine::OfflineRoutingDataRepository)(*m_pOfflineRoutingDataSearchService);
                 m_pOfflineRoutingDataBuilder = Eegeo_NEW(RoutingEngine::OfflineRoutingDataBuilder)();
                 m_pOfflineRoutingEngine = Eegeo_NEW(RoutingEngine::OfflineRoutingEngine)(*m_pOfflineRoutingDataRepository, *m_pOfflineRoutingDataBuilder);
 
@@ -48,6 +49,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pOfflineRoutingEngine;
                 Eegeo_DELETE m_pOfflineRoutingDataBuilder;
                 Eegeo_DELETE m_pOfflineRoutingDataRepository;
+                Eegeo_DELETE m_pOfflineRoutingDataSearchService;
                 Eegeo_DELETE m_pOfflineRoutingDataWebService;
                 Eegeo_DELETE m_pOfflineRoutingDataParser;
             }
