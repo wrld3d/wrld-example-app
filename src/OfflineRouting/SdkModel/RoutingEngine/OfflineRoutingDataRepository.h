@@ -36,8 +36,8 @@ namespace ExampleApp
                     const OfflineRoutingFeature& GetFeature(const OfflineRoutingFeatureId& id) const override;
 
                 private:
-                    std::vector<OfflineRoutingGraphNodeId> FindNodesAtDistance(Eegeo::dv3 point, double distance);
-                    void VerifyNodeEdges(OfflineRoutingGraphNodeId nodeId);
+                    std::vector<OfflineRoutingGraphNodeId> FindNodesWithinDistance(Eegeo::dv3 point, double distance);
+                    void JoinNodesWithinMinimumDistance(OfflineRoutingGraphNodeId nodeId);
 
                     typedef std::unordered_map<OfflineRoutingFeatureId, OfflineRoutingFeature> OfflineRoutingFeatures;
                     typedef std::unordered_map<OfflineRoutingGraphNodeId, OfflineRoutingGraphNode> OfflineRoutingGraphNodes;

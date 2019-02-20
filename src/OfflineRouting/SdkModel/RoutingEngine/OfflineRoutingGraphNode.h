@@ -5,6 +5,7 @@
 #include "OfflineRouting.h"
 #include "VectorMath.h"
 #include "InteriorId.h"
+#include "Types.h"
 
 #include <vector>
 #include <algorithm>
@@ -20,10 +21,10 @@ namespace ExampleApp
                 struct OfflineRoutingGraphNode
                 {
                     OfflineRoutingGraphNode()
-                    : id(0)
-                    , point(Eegeo::dv3::Zero())
-                    , floorId(0)
-                    , featureId(0)
+                    : m_id(0)
+                    , m_point(Eegeo::dv3::Zero())
+                    , m_floorId(0)
+                    , m_featureId(0)
                     {}
 
                     OfflineRoutingGraphNode(const OfflineRoutingGraphNodeId nodeId,
@@ -32,36 +33,38 @@ namespace ExampleApp
                                             const int nodeFloorId,
                                             const OfflineRoutingFeatureId routingFeatureId,
                                             const Eegeo::Resources::Interiors::InteriorId& nodeIndoorId)
-                    : id(nodeId)
-                    , point(ecefPoint)
-                    , nodeEdges(graphNodeEdges)
-                    , floorId(nodeFloorId)
-                    , featureId(routingFeatureId)
-                    , indoorId(nodeIndoorId)
+                    : m_id(nodeId)
+                    , m_point(ecefPoint)
+                    , m_nodeEdges(graphNodeEdges)
+                    , m_floorId(nodeFloorId)
+                    , m_featureId(routingFeatureId)
+                    , m_indoorId(nodeIndoorId)
                     {}
 
-                    const OfflineRoutingGraphNodeId GetId() const { return id; }
-                    const Eegeo::dv3 GetPoint() const { return point; }
-                    const std::vector<OfflineRoutingGraphNodeId>& GetEdges() const { return nodeEdges; }
-                    const int GetFloorId() const { return floorId; }
-                    const OfflineRoutingFeatureId GetFeatureId() const { return featureId; }
-                    const Eegeo::Resources::Interiors::InteriorId& GetInteriorId() const { return indoorId; }
+                    const OfflineRoutingGraphNodeId GetId() const { return m_id; }
+                    const Eegeo::dv3 GetPoint() const { return m_point; }
+                    const std::vector<OfflineRoutingGraphNodeId>& GetEdges() const { return m_nodeEdges; }
+                    const int GetFloorId() const { return m_floorId; }
+                    const OfflineRoutingFeatureId GetFeatureId() const { return m_featureId; }
+                    const Eegeo::Resources::Interiors::InteriorId& GetInteriorId() const { return m_indoorId; }
 
                     void AddNodeEdge(const OfflineRoutingGraphNodeId edgeId)
                     {
-                        if(std::find(nodeEdges.begin(), nodeEdges.end(), edgeId) == nodeEdges.end())
+                        Eegeo_ASSERT(edgeId != GetId(), "OfflineRoutingGraphNode cannot add itself as edge.");
+
+                        if(std::find(m_nodeEdges.begin(), m_nodeEdges.end(), edgeId) == m_nodeEdges.end())
                         {
-                            nodeEdges.push_back(edgeId);
+                            m_nodeEdges.push_back(edgeId);
                         }
                     }
 
                 private:
-                    OfflineRoutingGraphNodeId id;
-                    Eegeo::dv3 point;
-                    std::vector<OfflineRoutingGraphNodeId> nodeEdges;
-                    int floorId;
-                    OfflineRoutingFeatureId featureId;
-                    Eegeo::Resources::Interiors::InteriorId indoorId;
+                    OfflineRoutingGraphNodeId m_id;
+                    Eegeo::dv3 m_point;
+                    std::vector<OfflineRoutingGraphNodeId> m_nodeEdges;
+                    int m_floorId;
+                    OfflineRoutingFeatureId m_featureId;
+                    Eegeo::Resources::Interiors::InteriorId m_indoorId;
                 };
             }
         }

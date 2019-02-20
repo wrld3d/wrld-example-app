@@ -75,18 +75,14 @@ namespace ExampleApp
                 Webservice::OfflineRoutingIndoorVersion latestVersion;
                 if (TryGetLatestVersion(versionsRequestResponse.results, latestVersion))
                 {
-                    bool shouldLoadData = false;
+                    bool shouldLoadData = true;
                     std::string localBuildId;
                     if (m_offlineRoutingEngine.TryGetLocalBuildIdForInterior(versionsRequestResponse.interiorId, localBuildId))
                     {
-                        if (localBuildId != latestVersion.buildId)
+                        if (localBuildId == latestVersion.buildId)
                         {
-                            shouldLoadData = true;
+                            shouldLoadData = false;
                         }
-                    }
-                    else
-                    {
-                        shouldLoadData = true;
                     }
 
                     if (shouldLoadData)

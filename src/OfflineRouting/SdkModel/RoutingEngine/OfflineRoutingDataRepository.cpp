@@ -16,7 +16,12 @@ namespace ExampleApp
             {
                 namespace
                 {
-                    const double MinimumDistance = 0.00001;
+                    /* The line strings in geojson might not have exactly same LatLongs when connecting
+                     * with another line string. This results in nodes not joining up. So if the
+                     * distance between nodes is negligible then we join them together so make sure
+                     * the graph is properly connected.
+                     */
+                    const double MinimumDistanceInMeters = 0.00001;
                 }
 
                 OfflineRoutingDataRepository::OfflineRoutingDataRepository()
@@ -28,7 +33,7 @@ namespace ExampleApp
 
                     m_interiorGraphNodes[node.GetId()] = node;
 
-                    VerifyNodeEdges(node.GetId());
+                    JoinNodesWithinMinimumDistance(node.GetId());
                 }
 
                 void OfflineRoutingDataRepository::AddGraphNodes(const std::vector<OfflineRoutingGraphNode>& nodes)
@@ -68,7 +73,7 @@ namespace ExampleApp
                     return m_interiorFeatures.at(id);
                 }
 
-                std::vector<OfflineRoutingGraphNodeId> OfflineRoutingDataRepository::FindNodesAtDistance(Eegeo::dv3 point, double distance)
+                std::vector<OfflineRoutingGraphNodeId> OfflineRoutingDataRepository::FindNodesWithinDistance(Eegeo::dv3 point, double distance)
                 {
                     std::vector<OfflineRoutingGraphNodeId> nodesWithinDistance;
                     for (auto& it : m_interiorGraphNodes)
@@ -84,11 +89,16 @@ namespace ExampleApp
                     return nodesWithinDistance;
                 }
 
-                void OfflineRoutingDataRepository::VerifyNodeEdges(OfflineRoutingGraphNodeId nodeId)
+                void OfflineRoutingDataRepository::JoinNodesWithinMinimumDistance(OfflineRoutingGraphNodeId nodeId)
                 {
+                    /* At this point we probably have multiple disjointed graphs for each line strings
+                     * We want to find all the nodes are essentially at the same place and create
+                     * connections between them so that they can become a single cohesive graph that
+                     * can be used to find paths.
+                     */
                     auto& node = m_interiorGraphNodes.at(nodeId);
 
-                    auto connectedNodesIds = FindNodesAtDistance(node.GetPoint(), MinimumDistance);
+                    auto connectedNodesIds = FindNodesWithinDistance(node.GetPoint(), MinimumDistanceInMeters);
 
                     for (auto connectedNodesId : connectedNodesIds)
                     {

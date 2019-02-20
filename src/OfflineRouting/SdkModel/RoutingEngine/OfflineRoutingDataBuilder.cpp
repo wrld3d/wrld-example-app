@@ -15,8 +15,6 @@ namespace ExampleApp
             {
                 namespace
                 {
-                    const int FloorHeight = 10;
-
                     OfflineRoutingGraphNode GetGraphNode(const OfflineRoutingGraphNodeId nodeId,
                                                          const Eegeo::Space::LatLong& coordinate,
                                                          const int floorId,
@@ -25,7 +23,6 @@ namespace ExampleApp
                                                          const Eegeo::Resources::Interiors::InteriorId& indoorId,
                                                          std::vector<OfflineRoutingGraphNode>& graphNodes)
                     {
-                        Eegeo::Space::LatLongAltitude point(coordinate.GetLatitude(), coordinate.GetLongitude(), floorId * FloorHeight);
                         std::vector<OfflineRoutingGraphNodeId> edges;
 
                         if (iteratorPos > 0)
@@ -35,7 +32,8 @@ namespace ExampleApp
                             edges.push_back(previousNode.GetId());
                         }
 
-                        return OfflineRoutingGraphNode(nodeId, point.ToECEF(), edges, floorId, featureId, indoorId);
+                        auto point = Eegeo::Space::LatLongAltitude::FromLatLong(coordinate, floorId * INTERIOR_FLOOR_HEIGHT).ToECEF();
+                        return OfflineRoutingGraphNode(nodeId, point, edges, floorId, featureId, indoorId);
                     }
                 }
 

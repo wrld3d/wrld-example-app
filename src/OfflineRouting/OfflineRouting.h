@@ -4,8 +4,6 @@
 
 #include "ICallback.h"
 
-#include <unordered_map>
-
 namespace ExampleApp
 {
     namespace OfflineRouting
@@ -25,8 +23,10 @@ namespace ExampleApp
                 struct OfflineRoutingFeature;
                 struct OfflineRoutingGraphNode;
 
-                typedef int OfflineRoutingFeatureId;
-                typedef int OfflineRoutingGraphNodeId;
+                typedef unsigned int OfflineRoutingFeatureId;
+                typedef unsigned int OfflineRoutingGraphNodeId;
+
+                const float INTERIOR_FLOOR_HEIGHT = 5.0f;
             }
 
             namespace Webservice
