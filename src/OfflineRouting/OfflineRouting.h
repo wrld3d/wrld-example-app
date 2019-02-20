@@ -15,6 +15,20 @@ namespace ExampleApp
             class OfflineRoutingController;
             class OfflineRoutingService;
 
+            namespace RoutingEngine
+            {
+                class IOfflineRoutingEngine;
+                class IOfflineRoutingDataBuilder;
+                class IOfflineRoutingDataRepository;
+                struct OfflineRoutingFeature;
+                struct OfflineRoutingGraphNode;
+
+                typedef unsigned int OfflineRoutingFeatureId;
+                typedef unsigned int OfflineRoutingGraphNodeId;
+
+                const float INTERIOR_FLOOR_HEIGHT = 5.0f;
+            }
+
             namespace Webservice
             {
                 class IOfflineRoutingDataParser;

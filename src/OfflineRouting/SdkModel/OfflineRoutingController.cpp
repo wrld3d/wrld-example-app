@@ -1,14 +1,13 @@
 // Copyright eeGeo Ltd (2012-2019), All Rights Reserved
 
 #include "OfflineRoutingController.h"
+#include "IOfflineRoutingEngine.h"
 #include "IOfflineRoutingDataWebService.h"
 #include "OfflineRoutingIndoorVersion.h"
 #include "OfflineRoutingDataRequestResponse.h"
 #include "OfflineRoutingVersionsRequestResponse.h"
 
 #include <string>
-
-#include "Logger.h"
 
 namespace ExampleApp
 {
@@ -49,8 +48,10 @@ namespace ExampleApp
                 }
             }
 
-            OfflineRoutingController::OfflineRoutingController(Webservice::IOfflineRoutingDataWebService& dataWebService)
-            : m_dataWebService(dataWebService)
+            OfflineRoutingController::OfflineRoutingController(RoutingEngine::IOfflineRoutingEngine& offlineRoutingEngine,
+                                                               Webservice::IOfflineRoutingDataWebService& dataWebService)
+            : m_offlineRoutingEngine(offlineRoutingEngine)
+            , m_dataWebService(dataWebService)
             , m_versionsRequestCompletedCallback(this, &OfflineRoutingController::OnVersionsRequestCompleted)
             , m_dataRequestCompletedCallback(this, &OfflineRoutingController::OnDataRequestCompleted)
             {
@@ -74,13 +75,30 @@ namespace ExampleApp
                 Webservice::OfflineRoutingIndoorVersion latestVersion;
                 if (TryGetLatestVersion(versionsRequestResponse.results, latestVersion))
                 {
-                    m_dataWebService.RequestNavigationDataForInterior(versionsRequestResponse.interiorId, latestVersion.buildId);
+                    bool shouldLoadData = true;
+                    std::string localBuildId;
+                    if (m_offlineRoutingEngine.TryGetLocalBuildIdForInterior(versionsRequestResponse.interiorId, localBuildId))
+                    {
+                        if (localBuildId == latestVersion.buildId)
+                        {
+                            shouldLoadData = false;
+                        }
+                    }
+
+                    if (shouldLoadData)
+                    {
+                        m_dataWebService.RequestNavigationDataForInterior(versionsRequestResponse.interiorId, latestVersion.buildId);
+                    }
+
                 }
             }
 
             void OfflineRoutingController::OnDataRequestCompleted(const Webservice::OfflineRoutingDataRequestResponse& dataRequestResponse)
             {
-                EXAMPLE_LOG("%s", dataRequestResponse.buildId.c_str());
+                m_offlineRoutingEngine.LoadGraphFromNavigationData(dataRequestResponse.interiorId,
+                                                                   dataRequestResponse.buildId,
+                                                                   dataRequestResponse.floorData,
+                                                                   dataRequestResponse.multiFloorData);
             }
         }
     }
