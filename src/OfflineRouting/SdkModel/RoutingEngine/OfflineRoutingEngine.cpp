@@ -36,6 +36,7 @@ namespace ExampleApp
                 {
                     AddFloorData(indoorId, floorData);
                     AddMultiFloorData(indoorId, multiFloorData);
+                    m_offlineRoutingDataRepository.BuildGraph();
                 }
 
                 void OfflineRoutingEngine::AddFloorData(const Eegeo::Resources::Interiors::InteriorId& indoorId, const std::vector<Webservice::OfflineRoutingFloorData>& floorData)

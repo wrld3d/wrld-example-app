@@ -20,6 +20,7 @@ namespace ExampleApp
                 class IOfflineRoutingEngine;
                 class IOfflineRoutingDataBuilder;
                 class IOfflineRoutingDataRepository;
+                class IOfflineRoutingDataSearchService;
                 struct OfflineRoutingFeature;
                 struct OfflineRoutingGraphNode;
 
