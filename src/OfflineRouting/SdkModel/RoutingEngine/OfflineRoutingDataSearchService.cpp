@@ -75,7 +75,7 @@ namespace ExampleApp
                     m_pKDTreeAdapter = Eegeo_NEW(KDTreeAdapter)();
                     m_pSearchServiceKDTree = Eegeo_NEW(SearchServiceKDTree)(KDTREE_DIMENSIONS,
                                                                             *m_pKDTreeAdapter,
-                                                                            nanoflann::KDTreeSingleIndexAdaptorParams(10) );
+                                                                            nanoflann::KDTreeSingleIndexAdaptorParams());
                 }
 
                 OfflineRoutingDataSearchService::~OfflineRoutingDataSearchService()
@@ -92,18 +92,18 @@ namespace ExampleApp
 
                 std::vector<OfflineRoutingGraphNodeId> OfflineRoutingDataSearchService::FindNodesWithinDistance(const Eegeo::dv3& point, double distance)
                 {
-                    std::vector<std::pair<size_t, double>> ret_matches;
+                    std::vector<std::pair<size_t, double>> retMatches;
 
                     nanoflann::SearchParams params;
-                    const double query_pt[3] = { point.x, point.y, point.z};
-                    const size_t nMatches = m_pSearchServiceKDTree->radiusSearch(&query_pt[0], distance, ret_matches, params);
+                    const double queryPoint[3] = { point.x, point.y, point.z};
+                    const size_t nMatches = m_pSearchServiceKDTree->radiusSearch(&queryPoint[0], distance, retMatches, params);
 
                     std::vector<OfflineRoutingGraphNodeId> nodes;
                     nodes.reserve(nMatches);
 
                     for (size_t i = 0; i < nMatches; i++)
                     {
-                        const auto& treeNode = m_pKDTreeAdapter->GetNode(ret_matches[i].first);
+                        const auto& treeNode = m_pKDTreeAdapter->GetNode(retMatches[i].first);
                         nodes.push_back(treeNode.id);
                     }
 
@@ -112,7 +112,21 @@ namespace ExampleApp
 
                 OfflineRoutingGraphNodeId OfflineRoutingDataSearchService::FindNearestNode(const Eegeo::dv3& point)
                 {
-                    return 0;
+                    size_t numResults = 1;
+                    std::vector<size_t>   retIndex(numResults);
+                    std::vector<double > outDistanceSqr(numResults);
+                    const double queryPoint[3] = { point.x, point.y, point.z};
+
+                    numResults = m_pSearchServiceKDTree->knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistanceSqr[0]);
+
+                    if (numResults > 0)
+                    {
+                        return m_pKDTreeAdapter->GetNode(retIndex[0]).id;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                 }
             }
         }
