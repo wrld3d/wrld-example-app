@@ -113,15 +113,15 @@ namespace ExampleApp
                 OfflineRoutingGraphNodeId OfflineRoutingDataSearchService::FindNearestNode(const Eegeo::dv3& point)
                 {
                     size_t numResults = 1;
-                    std::vector<size_t>   retIndex(numResults);
-                    std::vector<double > outDistanceSqr(numResults);
+                    size_t retIndex;
+                    double outDistanceSqr;
                     const double queryPoint[3] = { point.x, point.y, point.z};
 
-                    numResults = m_pSearchServiceKDTree->knnSearch(&queryPoint[0], numResults, &retIndex[0], &outDistanceSqr[0]);
+                    numResults = m_pSearchServiceKDTree->knnSearch(&queryPoint[0], numResults, &retIndex, &outDistanceSqr);
 
                     if (numResults > 0)
                     {
-                        return m_pKDTreeAdapter->GetNode(retIndex[0]).id;
+                        return m_pKDTreeAdapter->GetNode(retIndex).id;
                     }
                     else
                     {
