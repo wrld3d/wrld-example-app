@@ -26,8 +26,8 @@ namespace ExampleApp
                                           const std::string& featureName,
                                           const Eegeo::Resources::Interiors::InteriorId& featureIndoorId,
                                           bool isMultiFloor,
-                                          std::vector<OfflineRoutingGraphNodeId> featureNodes,
-                                          Eegeo::Geometry::Point3Spline featureSpline)
+                                          const std::vector<OfflineRoutingGraphNodeId>& featureNodes,
+                                          const Eegeo::Geometry::Point3Spline& featureSpline)
                     : m_id(featureId)
                     , m_type(featureType)
                     , m_name(featureName)
