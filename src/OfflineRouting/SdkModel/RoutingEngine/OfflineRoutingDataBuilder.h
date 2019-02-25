@@ -34,9 +34,10 @@ namespace ExampleApp
                                                                                    const OfflineRoutingFeatureId& featureId,
                                                                                    const Eegeo::Resources::Interiors::InteriorId& indoorId) override;
 
-                    OfflineRoutingFeature BuildFeature(const std::string& type,
-                                                       const std::string& name,
-                                                       const Eegeo::Resources::Interiors::InteriorId& indoorId) override;
+                    OfflineRoutingFeatureBuilder GetFeatureBuilder(const std::string& type,
+                                                                   const std::string& name,
+                                                                   const Eegeo::Resources::Interiors::InteriorId& indoorId,
+                                                                   bool isMultiFloor) override;
 
                 private:
                     OfflineRoutingFeatureId NextFeatureId();

@@ -4,7 +4,9 @@
 #include "OfflineRoutingFloorData.h"
 #include "OfflineRoutingFloorPathData.h"
 #include "IOfflineRoutingDataRepository.h"
+#include "IOfflineRoutingGraphPositioner.h"
 #include "IOfflineRoutingDataBuilder.h"
+#include "OfflineRoutingFeatureBuilder.h"
 #include "OfflineRoutingFeature.h"
 #include "OfflineRoutingGraphNode.h"
 
@@ -17,8 +19,10 @@ namespace ExampleApp
             namespace RoutingEngine
             {
                 OfflineRoutingEngine::OfflineRoutingEngine(IOfflineRoutingDataRepository& offlineRoutingDataRepository,
+                                                           IOfflineRoutingGraphPositioner& offlineRoutingGraphPositioner,
                                                            IOfflineRoutingDataBuilder& offlineRoutingDataBuilder)
                 : m_offlineRoutingDataRepository(offlineRoutingDataRepository)
+                , m_offlineRoutingGraphPositioner(offlineRoutingGraphPositioner)
                 , m_offlineRoutingDataBuilder(offlineRoutingDataBuilder)
                 {
                 }
@@ -45,16 +49,19 @@ namespace ExampleApp
                     {
                         for (const auto& pathData: data.floorPaths)
                         {
-                            OfflineRoutingFeature feature = m_offlineRoutingDataBuilder.BuildFeature(pathData.type,
-                                                                                                     pathData.name,
-                                                                                                     indoorId);
-                            m_offlineRoutingDataRepository.AddFeature(feature);
+                            auto featureBuilder = m_offlineRoutingDataBuilder.GetFeatureBuilder(pathData.type,
+                                                                                                pathData.name,
+                                                                                                indoorId,
+                                                                                                false);
 
                             auto graphNodes = m_offlineRoutingDataBuilder.BuildGraphNodes(pathData.coordinates,
                                                                                           data.floorId,
-                                                                                          feature.GetId(),
+                                                                                          featureBuilder.GetId(),
                                                                                           indoorId);
+                            featureBuilder.LinkNodes(graphNodes);
+
                             m_offlineRoutingDataRepository.AddGraphNodes(graphNodes);
+                            m_offlineRoutingDataRepository.AddFeature(featureBuilder.Build());
                         }
                     }
                 }
@@ -63,16 +70,19 @@ namespace ExampleApp
                 {
                     for (const auto& pathData: multiFloorData)
                     {
-                        OfflineRoutingFeature feature = m_offlineRoutingDataBuilder.BuildFeature(pathData.type,
-                                                                                                 pathData.name,
-                                                                                                 indoorId);
-                        m_offlineRoutingDataRepository.AddFeature(feature);
+                        auto featureBuilder = m_offlineRoutingDataBuilder.GetFeatureBuilder(pathData.type,
+                                                                                            pathData.name,
+                                                                                            indoorId,
+                                                                                            true);
 
                         auto graphNodes = m_offlineRoutingDataBuilder.BuildMultiFloorGraphNodes(pathData.coordinates,
                                                                                                 pathData.levels,
-                                                                                                feature.GetId(),
+                                                                                                featureBuilder.GetId(),
                                                                                                 indoorId);
+                        featureBuilder.LinkNodes(graphNodes);
+
                         m_offlineRoutingDataRepository.AddGraphNodes(graphNodes);
+                        m_offlineRoutingDataRepository.AddFeature(featureBuilder.Build());
                     }
                 }
             }

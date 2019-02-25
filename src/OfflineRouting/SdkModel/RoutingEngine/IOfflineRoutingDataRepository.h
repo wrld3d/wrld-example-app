@@ -29,6 +29,9 @@ namespace ExampleApp
                     virtual const OfflineRoutingGraphNode& GetGraphNode(const OfflineRoutingGraphNodeId& id) const = 0;
                     virtual const OfflineRoutingFeature& GetFeature(const OfflineRoutingFeatureId& id) const = 0;
 
+                    virtual const OfflineRoutingGraphNodes& GetGraph() const = 0;
+                    virtual const OfflineRoutingFeatures& GetFeatures() const = 0;
+
                     virtual void BuildGraph() = 0;
                 };
             }

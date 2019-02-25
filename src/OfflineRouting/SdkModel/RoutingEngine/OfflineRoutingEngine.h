@@ -21,6 +21,7 @@ namespace ExampleApp
                 {
                 public:
                     OfflineRoutingEngine(IOfflineRoutingDataRepository& offlineRoutingDataRepository,
+                                         IOfflineRoutingGraphPositioner& offlineRoutingGraphPositioner,
                                          IOfflineRoutingDataBuilder& offlineRoutingDataBuilder);
 
                     ~OfflineRoutingEngine() {}
@@ -38,6 +39,7 @@ namespace ExampleApp
                     void AddMultiFloorData(const Eegeo::Resources::Interiors::InteriorId& indoorId, const std::vector<Webservice::OfflineRoutingFloorPathData>& multiFloorData);
 
                     IOfflineRoutingDataRepository& m_offlineRoutingDataRepository;
+                    IOfflineRoutingGraphPositioner& m_offlineRoutingGraphPositioner;
                     IOfflineRoutingDataBuilder& m_offlineRoutingDataBuilder;
                 };
             }

@@ -14,16 +14,6 @@ namespace ExampleApp
         {
             namespace RoutingEngine
             {
-                namespace
-                {
-                    /* The line strings in geojson might not have exactly same LatLongs when connecting
-                     * with another line string. This results in nodes not joining up. So if the
-                     * distance between nodes is negligible then we join them together so make sure
-                     * the graph is properly connected.
-                     */
-                    const double MinimumDistanceInMeters = 0.00001;
-                }
-
                 OfflineRoutingDataRepository::OfflineRoutingDataRepository(OfflineRoutingDataSearchService& dataSearchService)
                 : m_dataSearchService(dataSearchService)
                 {}
@@ -70,6 +60,16 @@ namespace ExampleApp
                 {
                     Eegeo_ASSERT((HasFeature(id)), "Does not have data for feature %d", id);
                     return m_interiorFeatures.at(id);
+                }
+
+                const OfflineRoutingGraphNodes& OfflineRoutingDataRepository::GetGraph() const
+                {
+                    return m_interiorGraphNodes;
+                }
+
+                const OfflineRoutingFeatures& OfflineRoutingDataRepository::GetFeatures() const
+                {
+                    return m_interiorFeatures;
                 }
 
                 void OfflineRoutingDataRepository::JoinNodesWithinMinimumDistance(OfflineRoutingGraphNodeId nodeId)
