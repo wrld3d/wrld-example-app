@@ -1,7 +1,7 @@
 // Copyright eeGeo Ltd (2012-2019), All Rights Reserved
 
 #include "OfflineRoutingDataBuilder.h"
-#include "OfflineRoutingFeature.h"
+#include "OfflineRoutingFeatureBuilder.h"
 #include "OfflineRoutingGraphNode.h"
 #include "Types.h"
 
@@ -97,11 +97,12 @@ namespace ExampleApp
                     return graphNodes;
                 }
 
-                OfflineRoutingFeature OfflineRoutingDataBuilder::BuildFeature(const std::string& type,
-                                                                              const std::string& name,
-                                                                              const Eegeo::Resources::Interiors::InteriorId& indoorId)
+                OfflineRoutingFeatureBuilder OfflineRoutingDataBuilder::GetFeatureBuilder(const std::string& type,
+                                                                                          const std::string& name,
+                                                                                          const Eegeo::Resources::Interiors::InteriorId& indoorId,
+                                                                                          bool isMultiFloor)
                 {
-                    return OfflineRoutingFeature(NextFeatureId(), type, name, indoorId);
+                    return OfflineRoutingFeatureBuilder(NextFeatureId(), type, name, indoorId, isMultiFloor);
                 }
 
                 OfflineRoutingFeatureId OfflineRoutingDataBuilder::NextFeatureId()

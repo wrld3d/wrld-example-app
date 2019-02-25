@@ -10,8 +10,6 @@
 #include "OfflineRoutingFeature.h"
 #include "OfflineRoutingDataSearchService.h"
 
-#include <unordered_map>
-
 namespace ExampleApp
 {
     namespace OfflineRouting
@@ -36,13 +34,13 @@ namespace ExampleApp
                     const OfflineRoutingGraphNode& GetGraphNode(const OfflineRoutingGraphNodeId& id) const override;
                     const OfflineRoutingFeature& GetFeature(const OfflineRoutingFeatureId& id) const override;
 
+                    const OfflineRoutingGraphNodes& GetGraph() const override;
+                    const OfflineRoutingFeatures& GetFeatures() const override;
+
                     void BuildGraph() override;
 
                 private:
                     void JoinNodesWithinMinimumDistance(OfflineRoutingGraphNodeId nodeId);
-
-                    typedef std::unordered_map<OfflineRoutingFeatureId, OfflineRoutingFeature> OfflineRoutingFeatures;
-                    typedef std::unordered_map<OfflineRoutingGraphNodeId, OfflineRoutingGraphNode> OfflineRoutingGraphNodes;
 
                     OfflineRoutingFeatures m_interiorFeatures;
                     OfflineRoutingGraphNodes m_interiorGraphNodes;

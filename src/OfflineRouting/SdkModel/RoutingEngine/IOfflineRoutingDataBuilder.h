@@ -32,9 +32,10 @@ namespace ExampleApp
                                                                                            const OfflineRoutingFeatureId& featureId,
                                                                                            const Eegeo::Resources::Interiors::InteriorId& indoorId) = 0;
 
-                    virtual OfflineRoutingFeature BuildFeature(const std::string& type,
-                                                               const std::string& name,
-                                                               const Eegeo::Resources::Interiors::InteriorId& indoorId) = 0;
+                    virtual OfflineRoutingFeatureBuilder GetFeatureBuilder(const std::string& type,
+                                                                           const std::string& name,
+                                                                           const Eegeo::Resources::Interiors::InteriorId& indoorId,
+                                                                           bool isMultiFloor) = 0;
                 };
             }
         }

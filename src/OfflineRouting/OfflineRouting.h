@@ -4,6 +4,8 @@
 
 #include "ICallback.h"
 
+#include <unordered_map>
+
 namespace ExampleApp
 {
     namespace OfflineRouting
@@ -20,14 +22,27 @@ namespace ExampleApp
                 class IOfflineRoutingEngine;
                 class IOfflineRoutingDataBuilder;
                 class IOfflineRoutingDataRepository;
+                class IOfflineRoutingGraphPositioner;
                 class IOfflineRoutingDataSearchService;
+                class OfflineRoutingFeatureBuilder;
                 struct OfflineRoutingFeature;
                 struct OfflineRoutingGraphNode;
+                struct OfflineRoutingPointOnGraph;
 
                 typedef unsigned int OfflineRoutingFeatureId;
                 typedef unsigned int OfflineRoutingGraphNodeId;
 
+                typedef std::unordered_map<OfflineRoutingFeatureId, OfflineRoutingFeature> OfflineRoutingFeatures;
+                typedef std::unordered_map<OfflineRoutingGraphNodeId, OfflineRoutingGraphNode> OfflineRoutingGraphNodes;
+
                 const float INTERIOR_FLOOR_HEIGHT = 5.0f;
+
+                /* The line strings in geojson might not have exactly same LatLongs when connecting
+                 * with another line string. This results in nodes not joining up. So if the
+                 * distance between nodes is negligible then we join them together so make sure
+                 * the graph is properly connected.
+                 */
+                const double MinimumDistanceInMeters = 0.00001;
             }
 
             namespace Webservice
