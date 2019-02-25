@@ -19,10 +19,8 @@ namespace ExampleApp
             namespace RoutingEngine
             {
                 OfflineRoutingEngine::OfflineRoutingEngine(IOfflineRoutingDataRepository& offlineRoutingDataRepository,
-                                                           IOfflineRoutingGraphPositioner& offlineRoutingGraphPositioner,
                                                            IOfflineRoutingDataBuilder& offlineRoutingDataBuilder)
                 : m_offlineRoutingDataRepository(offlineRoutingDataRepository)
-                , m_offlineRoutingGraphPositioner(offlineRoutingGraphPositioner)
                 , m_offlineRoutingDataBuilder(offlineRoutingDataBuilder)
                 {
                 }
