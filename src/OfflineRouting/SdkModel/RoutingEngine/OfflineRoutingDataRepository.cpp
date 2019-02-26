@@ -96,14 +96,20 @@ namespace ExampleApp
                     }
                 }
 
-                void OfflineRoutingDataRepository::BuildGraph()
+                OfflineRoutingGraphBuildResults OfflineRoutingDataRepository::BuildGraph()
                 {
                     m_dataSearchService.BuildSearchTree(m_interiorGraphNodes);
+
+                    size_t totalEdges = 0;
 
                     for (auto &it : m_interiorGraphNodes)
                     {
                         JoinNodesWithinMinimumDistance(it.first);
+                        totalEdges += it.second.GetEdges().size();
                     }
+
+                    const auto size = m_interiorGraphNodes.size();
+                    return OfflineRoutingGraphBuildResults(size, totalEdges / size);
                 }
             }
         }

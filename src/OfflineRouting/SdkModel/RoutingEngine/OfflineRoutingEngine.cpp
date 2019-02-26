@@ -6,9 +6,11 @@
 #include "IOfflineRoutingDataRepository.h"
 #include "IOfflineRoutingGraphPositioner.h"
 #include "IOfflineRoutingDataBuilder.h"
+#include "IOfflineRoutingPathFinder.h"
 #include "OfflineRoutingFeatureBuilder.h"
 #include "OfflineRoutingFeature.h"
 #include "OfflineRoutingGraphNode.h"
+#include "OfflineRoutingFindPathResult.h"
 
 namespace ExampleApp
 {
@@ -19,9 +21,11 @@ namespace ExampleApp
             namespace RoutingEngine
             {
                 OfflineRoutingEngine::OfflineRoutingEngine(IOfflineRoutingDataRepository& offlineRoutingDataRepository,
-                                                           IOfflineRoutingDataBuilder& offlineRoutingDataBuilder)
+                                                           IOfflineRoutingDataBuilder& offlineRoutingDataBuilder,
+                                                           IOfflineRoutingPathFinder& offlineRoutingPathFinder)
                 : m_offlineRoutingDataRepository(offlineRoutingDataRepository)
                 , m_offlineRoutingDataBuilder(offlineRoutingDataBuilder)
+                , m_offlineRoutingPathFinder(offlineRoutingPathFinder)
                 {
                 }
 
@@ -38,7 +42,8 @@ namespace ExampleApp
                 {
                     AddFloorData(indoorId, floorData);
                     AddMultiFloorData(indoorId, multiFloorData);
-                    m_offlineRoutingDataRepository.BuildGraph();
+                    auto buildResult = m_offlineRoutingDataRepository.BuildGraph();
+                    m_offlineRoutingPathFinder.CreatePathFinderFromGraph(buildResult.graphSize, buildResult.averageEdges);
                 }
 
                 void OfflineRoutingEngine::AddFloorData(const Eegeo::Resources::Interiors::InteriorId& indoorId, const std::vector<Webservice::OfflineRoutingFloorData>& floorData)

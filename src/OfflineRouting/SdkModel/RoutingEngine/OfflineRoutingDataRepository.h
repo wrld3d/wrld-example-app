@@ -37,7 +37,7 @@ namespace ExampleApp
                     const OfflineRoutingGraphNodes& GetGraph() const override;
                     const OfflineRoutingFeatures& GetFeatures() const override;
 
-                    void BuildGraph() override;
+                    OfflineRoutingGraphBuildResults BuildGraph() override;
 
                 private:
                     void JoinNodesWithinMinimumDistance(OfflineRoutingGraphNodeId nodeId);

@@ -42,7 +42,7 @@ namespace ExampleApp
                     {}
 
                     const OfflineRoutingGraphNodeId GetId() const { return m_id; }
-                    const Eegeo::dv3 GetPoint() const { return m_point; }
+                    const Eegeo::dv3& GetPoint() const { return m_point; }
                     const std::vector<OfflineRoutingGraphNodeId>& GetEdges() const { return m_nodeEdges; }
                     const int GetFloorId() const { return m_floorId; }
                     const OfflineRoutingFeatureId GetFeatureId() const { return m_featureId; }

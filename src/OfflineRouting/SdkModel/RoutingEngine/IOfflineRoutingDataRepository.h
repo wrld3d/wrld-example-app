@@ -14,6 +14,25 @@ namespace ExampleApp
         {
             namespace RoutingEngine
             {
+                namespace
+                {
+                    struct OfflineRoutingGraphBuildResults
+                    {
+                        OfflineRoutingGraphBuildResults()
+                        : graphSize(0)
+                        , averageEdges(0)
+                        {}
+
+                        OfflineRoutingGraphBuildResults(size_t size, size_t edges)
+                        : graphSize(size)
+                        , averageEdges(edges)
+                        {}
+
+                        const size_t graphSize;
+                        const size_t averageEdges;
+                    };
+                }
+
                 class IOfflineRoutingDataRepository
                 {
                 public:
@@ -32,7 +51,7 @@ namespace ExampleApp
                     virtual const OfflineRoutingGraphNodes& GetGraph() const = 0;
                     virtual const OfflineRoutingFeatures& GetFeatures() const = 0;
 
-                    virtual void BuildGraph() = 0;
+                    virtual OfflineRoutingGraphBuildResults BuildGraph() = 0;
                 };
             }
         }

@@ -8,6 +8,7 @@
 #include "OfflineRoutingDataBuilder.h"
 #include "OfflineRoutingDataRepository.h"
 #include "OfflineRoutingGraphPositioner.h"
+#include "OfflineRoutingPathFinder.h"
 #include "OfflineRoutingEngine.h"
 #include "InteriorId.h"
 
@@ -33,8 +34,10 @@ namespace ExampleApp
                 m_pOfflineRoutingDataRepository = Eegeo_NEW(RoutingEngine::OfflineRoutingDataRepository)(*m_pOfflineRoutingDataSearchService);
                 m_pOfflineRoutingDataBuilder = Eegeo_NEW(RoutingEngine::OfflineRoutingDataBuilder)();
                 m_pOfflineRoutingGraphPositioner = Eegeo_NEW(RoutingEngine::OfflineRoutingGraphPositioner)(*m_pOfflineRoutingDataRepository);
+                m_pOfflineRoutingPathFinder = Eegeo_NEW(RoutingEngine::OfflineRoutingPathFinder)(*m_pOfflineRoutingDataRepository);
                 m_pOfflineRoutingEngine = Eegeo_NEW(RoutingEngine::OfflineRoutingEngine)(*m_pOfflineRoutingDataRepository,
-                                                                                         *m_pOfflineRoutingDataBuilder);
+                                                                                         *m_pOfflineRoutingDataBuilder,
+                                                                                         *m_pOfflineRoutingPathFinder);
 
                 m_pOfflineRoutingService = Eegeo_NEW(OfflineRoutingService)(routingWebservice);
                 m_pOfflineRoutingController = Eegeo_NEW(OfflineRoutingController)(*m_pOfflineRoutingEngine, *m_pOfflineRoutingDataWebService);
@@ -50,6 +53,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pOfflineRoutingController;
                 Eegeo_DELETE m_pOfflineRoutingService;
                 Eegeo_DELETE m_pOfflineRoutingEngine;
+                Eegeo_DELETE m_pOfflineRoutingPathFinder;
                 Eegeo_DELETE m_pOfflineRoutingGraphPositioner;
                 Eegeo_DELETE m_pOfflineRoutingDataBuilder;
                 Eegeo_DELETE m_pOfflineRoutingDataRepository;
