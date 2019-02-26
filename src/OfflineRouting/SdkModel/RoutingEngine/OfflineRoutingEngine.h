@@ -21,8 +21,7 @@ namespace ExampleApp
                 {
                 public:
                     OfflineRoutingEngine(IOfflineRoutingDataRepository& offlineRoutingDataRepository,
-                                         IOfflineRoutingDataBuilder& offlineRoutingDataBuilder,
-                                         IOfflineRoutingPathFinder& offlineRoutingPathFinder);
+                                         IOfflineRoutingDataBuilder& offlineRoutingDataBuilder);
 
                     ~OfflineRoutingEngine() {}
 
@@ -40,7 +39,6 @@ namespace ExampleApp
 
                     IOfflineRoutingDataRepository& m_offlineRoutingDataRepository;
                     IOfflineRoutingDataBuilder& m_offlineRoutingDataBuilder;
-                    IOfflineRoutingPathFinder& m_offlineRoutingPathFinder;
                 };
             }
         }

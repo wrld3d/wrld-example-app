@@ -22,35 +22,38 @@ namespace ExampleApp
 
                     float Distance(const Eegeo::dv3& a, const Eegeo::dv3& b)
                     {
-                        double distance = a.SquareDistanceTo(b);
-
-                        if (distance < MinimumDistanceInMeters)
-                        {
-                            return 0;
-                        }
-
-                        return Eegeo::Math::Sqrtf(static_cast<float>(distance));
+                        return Eegeo::Math::Sqrtf(static_cast<float>(a.SquareDistanceTo(b)));
                     }
                 }
 
-                OfflineRoutingPathFinder::OfflineRoutingPathFinder(const IOfflineRoutingDataRepository& offlineRoutingDataRepository)
+                OfflineRoutingPathFinder::OfflineRoutingPathFinder(IOfflineRoutingDataRepository& offlineRoutingDataRepository)
                 : m_offlineRoutingDataRepository(offlineRoutingDataRepository)
                 , m_pPather(NULL)
-                {}
+                , m_graphBuiltCallback(this, &OfflineRoutingPathFinder::OnGraphBuilt)
+                {
+                    m_offlineRoutingDataRepository.RegisterGraphBuiltCallback(m_graphBuiltCallback);
+                }
 
                 OfflineRoutingPathFinder::~OfflineRoutingPathFinder()
                 {
+                    m_offlineRoutingDataRepository.UnregisterGraphBuiltCallback(m_graphBuiltCallback);
+
                     if (m_pPather != NULL)
                     {
                         Eegeo_DELETE m_pPather;
                     }
                 }
 
-                void OfflineRoutingPathFinder::CreatePathFinderFromGraph(size_t size, size_t avgAdjacentNodes)
+                void OfflineRoutingPathFinder::CreatePathFinder(size_t size, size_t avgAdjacentNodes)
                 {
                     if (size == 0)
                     {
                         return;
+                    }
+
+                    if (m_pPather != NULL)
+                    {
+                        Eegeo_DELETE m_pPather;
                     }
 
                     auto stateSize = size <= STATE_ALLOCATION_RATIO ? size : size / STATE_ALLOCATION_RATIO;
@@ -106,6 +109,11 @@ namespace ExampleApp
                                                         m_goalPoint,
                                                         pathNodes,
                                                         totalCost);
+                }
+
+                void OfflineRoutingPathFinder::OnGraphBuilt(const OfflineRoutingGraphBuildResults& graphBuildResults)
+                {
+                    CreatePathFinder(graphBuildResults.graphSize, graphBuildResults.averageEdges);
                 }
 
                 const Eegeo::dv3& OfflineRoutingPathFinder::GetPointFromState(void* state)

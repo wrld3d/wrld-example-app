@@ -5,6 +5,7 @@
 #include "OfflineRouting.h"
 #include "IOfflineRoutingPathFinder.h"
 #include "OfflineRoutingPointOnGraph.h"
+#include "OfflineRoutingGraphBuildResults.h"
 #include "Types.h"
 
 #include "micropather.h"
@@ -20,16 +21,10 @@ namespace ExampleApp
                 class OfflineRoutingPathFinder : public IOfflineRoutingPathFinder, public micropather::Graph, private Eegeo::NonCopyable
                 {
                 public:
-                    OfflineRoutingPathFinder(const IOfflineRoutingDataRepository& offlineRoutingDataRepository);
+                    OfflineRoutingPathFinder(IOfflineRoutingDataRepository& offlineRoutingDataRepository);
                     ~OfflineRoutingPathFinder();
 
-                    void CreatePathFinderFromGraph(size_t size, size_t avgAdjacentNodes) override;
-
                     OfflineRoutingFindPathResult FindPath(const OfflineRoutingPointOnGraph& startPoint, const OfflineRoutingPointOnGraph& goalPoint) override;
-
-                    const Eegeo::dv3& GetPointFromState(void* state);
-                    OfflineRoutingGraphNodeId GetIdFromState(void* state);
-                    const std::vector<OfflineRoutingGraphNodeId>& GetAdjacentNodes(void* state);
 
                     //micropather graph implementation
                     float LeastCostEstimate( void* stateStart, void* stateEnd ) override;
@@ -38,7 +33,16 @@ namespace ExampleApp
 
 
                 private:
-                    const IOfflineRoutingDataRepository& m_offlineRoutingDataRepository;
+                    void OnGraphBuilt(const OfflineRoutingGraphBuildResults& graphBuildResults);
+
+                    void CreatePathFinder(size_t size, size_t avgAdjacentNodes);
+                    const Eegeo::dv3& GetPointFromState(void* state);
+                    OfflineRoutingGraphNodeId GetIdFromState(void* state);
+                    const std::vector<OfflineRoutingGraphNodeId>& GetAdjacentNodes(void* state);
+
+                    IOfflineRoutingDataRepository& m_offlineRoutingDataRepository;
+
+                    Eegeo::Helpers::TCallback1<OfflineRoutingPathFinder, const OfflineRoutingGraphBuildResults&> m_graphBuiltCallback;
 
                     micropather::MicroPather* m_pPather;
                     OfflineRoutingPointOnGraph m_startPoint;

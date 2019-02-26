@@ -8,7 +8,9 @@
 #include "IOfflineRoutingDataRepository.h"
 #include "OfflineRoutingGraphNode.h"
 #include "OfflineRoutingFeature.h"
+#include "OfflineRoutingGraphBuildResults.h"
 #include "OfflineRoutingDataSearchService.h"
+#include "CallbackCollection.h"
 
 namespace ExampleApp
 {
@@ -37,7 +39,10 @@ namespace ExampleApp
                     const OfflineRoutingGraphNodes& GetGraph() const override;
                     const OfflineRoutingFeatures& GetFeatures() const override;
 
-                    OfflineRoutingGraphBuildResults BuildGraph() override;
+                    void BuildGraph() override;
+
+                    void RegisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback) override;
+                    void UnregisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback) override;
 
                 private:
                     void JoinNodesWithinMinimumDistance(OfflineRoutingGraphNodeId nodeId);
@@ -46,6 +51,8 @@ namespace ExampleApp
                     OfflineRoutingGraphNodes m_interiorGraphNodes;
 
                     OfflineRoutingDataSearchService& m_dataSearchService;
+
+                    Eegeo::Helpers::CallbackCollection1<const OfflineRoutingGraphBuildResults&> m_graphBuiltCallbacks;
                 };
             }
         }

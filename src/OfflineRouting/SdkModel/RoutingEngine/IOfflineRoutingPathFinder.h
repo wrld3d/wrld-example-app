@@ -17,8 +17,6 @@ namespace ExampleApp
                 public:
                     virtual ~IOfflineRoutingPathFinder() {}
 
-                    virtual void CreatePathFinderFromGraph(size_t size, size_t avgAdjacentNodes) = 0;
-
                     virtual OfflineRoutingFindPathResult FindPath(const OfflineRoutingPointOnGraph& startPoint, const OfflineRoutingPointOnGraph& goalPoint) = 0;
                 };
             }

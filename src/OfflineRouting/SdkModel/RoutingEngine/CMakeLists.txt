@@ -20,6 +20,7 @@ set(currsources
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingFeatureBuilder.cpp
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingFeatureBuilder.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingFindPathResult.h
+  ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingGraphBuildResults.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingGraphNode.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingGraphPositioner.cpp
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingGraphPositioner.h

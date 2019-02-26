@@ -96,7 +96,7 @@ namespace ExampleApp
                     }
                 }
 
-                OfflineRoutingGraphBuildResults OfflineRoutingDataRepository::BuildGraph()
+                void OfflineRoutingDataRepository::BuildGraph()
                 {
                     m_dataSearchService.BuildSearchTree(m_interiorGraphNodes);
 
@@ -109,7 +109,18 @@ namespace ExampleApp
                     }
 
                     const auto size = m_interiorGraphNodes.size();
-                    return OfflineRoutingGraphBuildResults(size, totalEdges / size);
+                    auto results = OfflineRoutingGraphBuildResults(size, totalEdges / size);
+                    m_graphBuiltCallbacks.ExecuteCallbacks(results);
+                }
+
+                void OfflineRoutingDataRepository::RegisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback)
+                {
+                    m_graphBuiltCallbacks.AddCallback(callback);
+                }
+
+                void OfflineRoutingDataRepository::UnregisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback)
+                {
+                    m_graphBuiltCallbacks.RemoveCallback(callback);
                 }
             }
         }

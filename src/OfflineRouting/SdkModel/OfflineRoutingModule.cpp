@@ -36,8 +36,7 @@ namespace ExampleApp
                 m_pOfflineRoutingGraphPositioner = Eegeo_NEW(RoutingEngine::OfflineRoutingGraphPositioner)(*m_pOfflineRoutingDataRepository);
                 m_pOfflineRoutingPathFinder = Eegeo_NEW(RoutingEngine::OfflineRoutingPathFinder)(*m_pOfflineRoutingDataRepository);
                 m_pOfflineRoutingEngine = Eegeo_NEW(RoutingEngine::OfflineRoutingEngine)(*m_pOfflineRoutingDataRepository,
-                                                                                         *m_pOfflineRoutingDataBuilder,
-                                                                                         *m_pOfflineRoutingPathFinder);
+                                                                                         *m_pOfflineRoutingDataBuilder);
 
                 m_pOfflineRoutingService = Eegeo_NEW(OfflineRoutingService)(routingWebservice);
                 m_pOfflineRoutingController = Eegeo_NEW(OfflineRoutingController)(*m_pOfflineRoutingEngine, *m_pOfflineRoutingDataWebService);
