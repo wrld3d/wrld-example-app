@@ -14,18 +14,17 @@ namespace ExampleApp
             {
                 struct OfflineRoutingGraphBuildResults
                 {
-                    OfflineRoutingGraphBuildResults()
-                            : graphSize(0)
-                            , averageEdges(0)
+                    OfflineRoutingGraphBuildResults(size_t graphSize, size_t averageEdges)
+                    : m_graphSize(graphSize)
+                    , m_averageEdges(averageEdges)
                     {}
 
-                    OfflineRoutingGraphBuildResults(size_t size, size_t edges)
-                            : graphSize(size)
-                            , averageEdges(edges)
-                    {}
+                    const size_t GetGraphSize() const { return m_graphSize; }
+                    const size_t GetAverageEdges() const { return m_averageEdges; }
 
-                    const size_t graphSize;
-                    const size_t averageEdges;
+                private:
+                    const size_t m_graphSize;
+                    const size_t m_averageEdges;
                 };
             }
         }

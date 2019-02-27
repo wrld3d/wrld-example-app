@@ -5,10 +5,8 @@
 #include "OfflineRouting.h"
 #include "VectorMath.h"
 #include "InteriorId.h"
-#include "Types.h"
 
 #include <vector>
-#include <algorithm>
 
 namespace ExampleApp
 {

@@ -4,7 +4,7 @@
 #include "OfflineRoutingFindPathResult.h"
 #include "IOfflineRoutingDataRepository.h"
 #include "OfflineRoutingGraphNode.h"
-#include "VectorMath.h"
+#include "OfflineRoutingGraphBuildResults.h"
 #include "MathFunc.h"
 
 namespace ExampleApp
@@ -113,7 +113,7 @@ namespace ExampleApp
 
                 void OfflineRoutingPathFinder::OnGraphBuilt(const OfflineRoutingGraphBuildResults& graphBuildResults)
                 {
-                    CreatePathFinder(graphBuildResults.graphSize, graphBuildResults.averageEdges);
+                    CreatePathFinder(graphBuildResults.GetGraphSize(), graphBuildResults.GetAverageEdges());
                 }
 
                 const Eegeo::dv3& OfflineRoutingPathFinder::GetPointFromState(void* state)

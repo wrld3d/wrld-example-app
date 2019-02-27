@@ -1,8 +1,7 @@
 // Copyright eeGeo Ltd (2012-2019), All Rights Reserved
 
 #include "OfflineRoutingDataRepository.h"
-#include "OfflineRoutingGraphNode.h"
-#include "OfflineRoutingFeature.h"
+#include "OfflineRoutingGraphBuildResults.h"
 #include "InteriorId.h"
 #include "Types.h"
 

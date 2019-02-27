@@ -6,6 +6,7 @@
 #include "Interiors.h"
 #include "LatLongAltitude.h"
 #include "IOfflineRoutingDataBuilder.h"
+#include "Types.h"
 
 #include <string>
 #include <vector>

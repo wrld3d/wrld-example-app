@@ -8,8 +8,6 @@
 #include "Interiors.h"
 #include "Types.h"
 
-#include <vector>
-
 namespace ExampleApp
 {
     namespace OfflineRouting

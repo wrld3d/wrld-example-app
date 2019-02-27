@@ -3,7 +3,6 @@
 #pragma once
 
 #include "OfflineRouting.h"
-#include "VectorMath.h"
 #include "OfflineRoutingPointOnGraph.h"
 
 #include <vector>

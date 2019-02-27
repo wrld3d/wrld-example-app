@@ -3,12 +3,10 @@
 #pragma once
 
 #include "Types.h"
-#include "VectorMath.h"
 #include "OfflineRouting.h"
 #include "IOfflineRoutingDataRepository.h"
 #include "OfflineRoutingGraphNode.h"
 #include "OfflineRoutingFeature.h"
-#include "OfflineRoutingGraphBuildResults.h"
 #include "OfflineRoutingDataSearchService.h"
 #include "CallbackCollection.h"
 

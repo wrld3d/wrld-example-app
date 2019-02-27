@@ -5,7 +5,7 @@
 #include "OfflineRouting.h"
 #include "IOfflineRoutingPathFinder.h"
 #include "OfflineRoutingPointOnGraph.h"
-#include "OfflineRoutingGraphBuildResults.h"
+#include "VectorMath.h"
 #include "Types.h"
 
 #include "micropather.h"

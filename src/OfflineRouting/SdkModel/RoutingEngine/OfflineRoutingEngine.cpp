@@ -4,13 +4,10 @@
 #include "OfflineRoutingFloorData.h"
 #include "OfflineRoutingFloorPathData.h"
 #include "IOfflineRoutingDataRepository.h"
-#include "IOfflineRoutingGraphPositioner.h"
 #include "IOfflineRoutingDataBuilder.h"
-#include "IOfflineRoutingPathFinder.h"
 #include "OfflineRoutingFeatureBuilder.h"
 #include "OfflineRoutingFeature.h"
 #include "OfflineRoutingGraphNode.h"
-#include "OfflineRoutingFindPathResult.h"
 
 namespace ExampleApp
 {
