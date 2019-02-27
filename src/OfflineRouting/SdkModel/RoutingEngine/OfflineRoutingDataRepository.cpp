@@ -101,10 +101,10 @@ namespace ExampleApp
 
                     size_t totalEdges = 0;
 
-                    for (auto &it : m_interiorGraphNodes)
+                    for (const auto &graphPair : m_interiorGraphNodes)
                     {
-                        JoinNodesWithinMinimumDistance(it.first);
-                        totalEdges += it.second.GetEdges().size();
+                        JoinNodesWithinMinimumDistance(graphPair.first);
+                        totalEdges += graphPair.second.GetEdges().size();
                     }
 
                     const auto size = m_interiorGraphNodes.size();

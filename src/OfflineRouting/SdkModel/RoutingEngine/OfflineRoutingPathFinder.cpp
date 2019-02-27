@@ -20,6 +20,8 @@ namespace ExampleApp
                     const int STATE_ALLOCATION_RATIO = 4;
                     const bool SHOULD_CACHE_GRAPH_WEIGHTS = true;
 
+                    const OfflineRoutingGraphNodeId START_END_POINT_NODE_ID = 0;
+
                     float Distance(const Eegeo::dv3& a, const Eegeo::dv3& b)
                     {
                         return Eegeo::Math::Sqrtf(static_cast<float>(a.SquareDistanceTo(b)));
@@ -28,7 +30,7 @@ namespace ExampleApp
 
                 OfflineRoutingPathFinder::OfflineRoutingPathFinder(IOfflineRoutingDataRepository& offlineRoutingDataRepository)
                 : m_offlineRoutingDataRepository(offlineRoutingDataRepository)
-                , m_pPather(NULL)
+                , m_pPather(nullptr)
                 , m_graphBuiltCallback(this, &OfflineRoutingPathFinder::OnGraphBuilt)
                 {
                     m_offlineRoutingDataRepository.RegisterGraphBuiltCallback(m_graphBuiltCallback);
@@ -38,10 +40,7 @@ namespace ExampleApp
                 {
                     m_offlineRoutingDataRepository.UnregisterGraphBuiltCallback(m_graphBuiltCallback);
 
-                    if (m_pPather != NULL)
-                    {
-                        Eegeo_DELETE m_pPather;
-                    }
+                    Eegeo_DELETE m_pPather;
                 }
 
                 void OfflineRoutingPathFinder::CreatePathFinder(size_t size, size_t avgAdjacentNodes)
@@ -51,10 +50,7 @@ namespace ExampleApp
                         return;
                     }
 
-                    if (m_pPather != NULL)
-                    {
-                        Eegeo_DELETE m_pPather;
-                    }
+                    Eegeo_DELETE m_pPather;
 
                     auto stateSize = size <= STATE_ALLOCATION_RATIO ? size : size / STATE_ALLOCATION_RATIO;
                     m_pPather = Eegeo_NEW(micropather::MicroPather)(this,
@@ -65,7 +61,7 @@ namespace ExampleApp
 
                 OfflineRoutingFindPathResult OfflineRoutingPathFinder::FindPath(const OfflineRoutingPointOnGraph& startPoint, const OfflineRoutingPointOnGraph& goalPoint)
                 {
-                    if (m_pPather == NULL)
+                    if (m_pPather == nullptr)
                     {
                         return OfflineRoutingFindPathResult();
                     }
@@ -98,7 +94,7 @@ namespace ExampleApp
                     for (int i = 0; i < path.size(); i++)
                     {
                         const auto id = GetIdFromState(path[i]);
-                        if (id != 0)
+                        if (id != START_END_POINT_NODE_ID)
                         {
                             pathNodes.emplace_back(id);
                         }
@@ -123,24 +119,20 @@ namespace ExampleApp
                         const OfflineRoutingPointOnGraph* node = (OfflineRoutingPointOnGraph*) state;
                         return node->GetPoint();
                     }
-                    else
-                    {
-                        const OfflineRoutingGraphNode* node = (OfflineRoutingGraphNode*) state;
-                        return node->GetPoint();
-                    }
+
+                    const OfflineRoutingGraphNode* node = (OfflineRoutingGraphNode*) state;
+                    return node->GetPoint();
                 }
 
                 OfflineRoutingGraphNodeId OfflineRoutingPathFinder::GetIdFromState(void* state)
                 {
                     if (state == (&m_startPoint) || state == (&m_goalPoint))
                     {
-                        return 0;
+                        return START_END_POINT_NODE_ID;
                     }
-                    else
-                    {
-                        const OfflineRoutingGraphNode* node = (OfflineRoutingGraphNode*) state;
-                        return node->GetId();
-                    }
+
+                    const OfflineRoutingGraphNode* node = (OfflineRoutingGraphNode*) state;
+                    return node->GetId();
                 }
 
                 const std::vector<OfflineRoutingGraphNodeId>& OfflineRoutingPathFinder::GetAdjacentNodes(void* state)
@@ -150,11 +142,9 @@ namespace ExampleApp
                         const OfflineRoutingPointOnGraph* node = (OfflineRoutingPointOnGraph*) state;
                         return node->GetLinkedEdges();
                     }
-                    else
-                    {
-                        const OfflineRoutingGraphNode* node = (OfflineRoutingGraphNode*) state;
-                        return node->GetEdges();
-                    }
+
+                    const OfflineRoutingGraphNode* node = (OfflineRoutingGraphNode*) state;
+                    return node->GetEdges();
                 }
 
                 float OfflineRoutingPathFinder::LeastCostEstimate( void* stateStart, void* stateEnd )
@@ -176,7 +166,7 @@ namespace ExampleApp
 
                     const auto stateNodeId = GetIdFromState(state);
 
-                    if (stateNodeId != 0)
+                    if (stateNodeId != START_END_POINT_NODE_ID)
                     {
                         const auto& goalNodeEdges = m_goalPoint.GetLinkedEdges();
                         if(std::find(goalNodeEdges.begin(), goalNodeEdges.end(), stateNodeId) != goalNodeEdges.end())
