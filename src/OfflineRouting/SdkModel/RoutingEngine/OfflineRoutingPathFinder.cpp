@@ -19,13 +19,6 @@ namespace ExampleApp
                 {
                     const int STATE_ALLOCATION_RATIO = 4;
                     const bool SHOULD_CACHE_GRAPH_WEIGHTS = true;
-
-                    const OfflineRoutingGraphNodeId START_END_POINT_NODE_ID = 0;
-
-                    float Distance(const Eegeo::dv3& a, const Eegeo::dv3& b)
-                    {
-                        return Eegeo::Math::Sqrtf(static_cast<float>(a.SquareDistanceTo(b)));
-                    }
                 }
 
                 OfflineRoutingPathFinder::OfflineRoutingPathFinder(IOfflineRoutingDataRepository& offlineRoutingDataRepository)
@@ -33,6 +26,8 @@ namespace ExampleApp
                 , m_pPather(nullptr)
                 , m_graphBuiltCallback(this, &OfflineRoutingPathFinder::OnGraphBuilt)
                 {
+                    m_pMicroPatherGraph = Eegeo_NEW(OfflineRoutingMicroPatherGraph)(offlineRoutingDataRepository);
+
                     m_offlineRoutingDataRepository.RegisterGraphBuiltCallback(m_graphBuiltCallback);
                 }
 
@@ -41,6 +36,7 @@ namespace ExampleApp
                     m_offlineRoutingDataRepository.UnregisterGraphBuiltCallback(m_graphBuiltCallback);
 
                     Eegeo_DELETE m_pPather;
+                    Eegeo_DELETE m_pMicroPatherGraph;
                 }
 
                 void OfflineRoutingPathFinder::CreatePathFinder(size_t size, size_t avgAdjacentNodes)
@@ -53,7 +49,7 @@ namespace ExampleApp
                     Eegeo_DELETE m_pPather;
 
                     auto stateSize = size <= STATE_ALLOCATION_RATIO ? size : size / STATE_ALLOCATION_RATIO;
-                    m_pPather = Eegeo_NEW(micropather::MicroPather)(this,
+                    m_pPather = Eegeo_NEW(micropather::MicroPather)(m_pMicroPatherGraph,
                                                                     static_cast<unsigned int>(stateSize),
                                                                     static_cast<unsigned int>(avgAdjacentNodes),
                                                                     SHOULD_CACHE_GRAPH_WEIGHTS);
@@ -76,12 +72,17 @@ namespace ExampleApp
                         return OfflineRoutingFindPathResult();
                     }
 
-                    m_startPoint = startPoint;
-                    m_goalPoint = goalPoint;
+                    m_pMicroPatherGraph->SetStartPoint(startPoint);
+                    m_pMicroPatherGraph->SetEndPoint(goalPoint);
 
                     micropather::MPVector< void* > path;
                     float totalCost = 0;
-                    int result = m_pPather->Solve( &m_startPoint, &m_goalPoint, &path, &totalCost);
+                    auto* pStartPoint = &m_pMicroPatherGraph->GetStartPoint();
+                    auto* pEndPoint = &m_pMicroPatherGraph->GetEndPoint();
+                    int result = m_pPather->Solve( const_cast<void*>(static_cast<const void*>(pStartPoint)),
+                                                   const_cast<void*>(static_cast<const void*>(pEndPoint)),
+                                                   &path,
+                                                   &totalCost);
 
                     if (result != micropather::MicroPather::SOLVED)
                     {
@@ -93,16 +94,16 @@ namespace ExampleApp
 
                     for (int i = 0; i < path.size(); i++)
                     {
-                        const auto id = GetIdFromState(path[i]);
-                        if (id != START_END_POINT_NODE_ID)
+                        const auto id = m_pMicroPatherGraph->GetIdFromState(path[i]);
+                        if (id != PATHER_START_END_POINT_NODE_ID)
                         {
                             pathNodes.emplace_back(id);
                         }
                     }
 
                     return OfflineRoutingFindPathResult(true,
-                                                        m_startPoint,
-                                                        m_goalPoint,
+                                                        m_pMicroPatherGraph->GetStartPoint(),
+                                                        m_pMicroPatherGraph->GetEndPoint(),
                                                         pathNodes,
                                                         totalCost);
                 }
@@ -111,75 +112,6 @@ namespace ExampleApp
                 {
                     CreatePathFinder(graphBuildResults.GetGraphSize(), graphBuildResults.GetAverageEdges());
                 }
-
-                const Eegeo::dv3& OfflineRoutingPathFinder::GetPointFromState(void* state)
-                {
-                    if (state == (&m_startPoint) || state == (&m_goalPoint))
-                    {
-                        const OfflineRoutingPointOnGraph* node = (OfflineRoutingPointOnGraph*) state;
-                        return node->GetPoint();
-                    }
-
-                    const OfflineRoutingGraphNode* node = (OfflineRoutingGraphNode*) state;
-                    return node->GetPoint();
-                }
-
-                OfflineRoutingGraphNodeId OfflineRoutingPathFinder::GetIdFromState(void* state)
-                {
-                    if (state == (&m_startPoint) || state == (&m_goalPoint))
-                    {
-                        return START_END_POINT_NODE_ID;
-                    }
-
-                    const OfflineRoutingGraphNode* node = (OfflineRoutingGraphNode*) state;
-                    return node->GetId();
-                }
-
-                const std::vector<OfflineRoutingGraphNodeId>& OfflineRoutingPathFinder::GetAdjacentNodes(void* state)
-                {
-                    if (state == (&m_startPoint) || state == (&m_goalPoint))
-                    {
-                        const OfflineRoutingPointOnGraph* node = (OfflineRoutingPointOnGraph*) state;
-                        return node->GetLinkedEdges();
-                    }
-
-                    const OfflineRoutingGraphNode* node = (OfflineRoutingGraphNode*) state;
-                    return node->GetEdges();
-                }
-
-                float OfflineRoutingPathFinder::LeastCostEstimate( void* stateStart, void* stateEnd )
-                {
-                    return Distance(GetPointFromState(stateStart), GetPointFromState(stateEnd));
-                }
-
-                void OfflineRoutingPathFinder::AdjacentCost( void* state, MP_VECTOR<micropather::StateCost> *adjacent )
-                {
-                    const auto& adjacentNodes = GetAdjacentNodes(state);
-                    const auto& statePoint = GetPointFromState(state);
-
-                    for (const auto& nodeId : adjacentNodes)
-                    {
-                        const auto& node = m_offlineRoutingDataRepository.GetGraphNode(nodeId);
-                        micropather::StateCost stateCost = {(void*)&node, Distance(statePoint, node.GetPoint())};
-                        adjacent->push_back(stateCost);
-                    }
-
-                    const auto stateNodeId = GetIdFromState(state);
-
-                    if (stateNodeId != START_END_POINT_NODE_ID)
-                    {
-                        const auto& goalNodeEdges = m_goalPoint.GetLinkedEdges();
-                        if(std::find(goalNodeEdges.begin(), goalNodeEdges.end(), stateNodeId) != goalNodeEdges.end())
-                        {
-                            //This node can be linked to the final node
-                            micropather::StateCost stateCost = {&m_goalPoint, Distance(statePoint, m_goalPoint.GetPoint())};
-                            adjacent->push_back(stateCost);
-                        }
-                    }
-                }
-
-                void OfflineRoutingPathFinder::PrintStateInfo( void* state )
-                {}
             }
         }
     }

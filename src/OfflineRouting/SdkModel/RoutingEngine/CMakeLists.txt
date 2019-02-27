@@ -24,6 +24,8 @@ set(currsources
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingGraphNode.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingGraphPositioner.cpp
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingGraphPositioner.h
+  ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingMicroPatherGraph.cpp
+  ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingMicroPatherGraph.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingPathFinder.cpp
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingPathFinder.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingPointOnGraph.h

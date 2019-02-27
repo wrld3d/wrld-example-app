@@ -42,6 +42,8 @@ namespace ExampleApp
 
                 const float INTERIOR_FLOOR_HEIGHT = 5.0f;
 
+                const OfflineRoutingGraphNodeId PATHER_START_END_POINT_NODE_ID = 0;
+
                 /* The line strings in geojson might not have exactly same LatLongs when connecting
                  * with another line string. This results in nodes not joining up. So if the
                  * distance between nodes is negligible then we join them together so make sure
