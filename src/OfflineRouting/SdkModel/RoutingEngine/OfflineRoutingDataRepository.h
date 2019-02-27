@@ -3,12 +3,12 @@
 #pragma once
 
 #include "Types.h"
-#include "VectorMath.h"
 #include "OfflineRouting.h"
 #include "IOfflineRoutingDataRepository.h"
 #include "OfflineRoutingGraphNode.h"
 #include "OfflineRoutingFeature.h"
 #include "OfflineRoutingDataSearchService.h"
+#include "CallbackCollection.h"
 
 namespace ExampleApp
 {
@@ -39,6 +39,9 @@ namespace ExampleApp
 
                     void BuildGraph() override;
 
+                    void RegisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback) override;
+                    void UnregisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback) override;
+
                 private:
                     void JoinNodesWithinMinimumDistance(OfflineRoutingGraphNodeId nodeId);
 
@@ -46,6 +49,8 @@ namespace ExampleApp
                     OfflineRoutingGraphNodes m_interiorGraphNodes;
 
                     OfflineRoutingDataSearchService& m_dataSearchService;
+
+                    Eegeo::Helpers::CallbackCollection1<const OfflineRoutingGraphBuildResults&> m_graphBuiltCallbacks;
                 };
             }
         }

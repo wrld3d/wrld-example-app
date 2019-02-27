@@ -3,8 +3,6 @@
 #include "OfflineRoutingDataSearchService.h"
 #include "OfflineRoutingGraphNode.h"
 
-#include <vector>
-
 namespace ExampleApp
 {
     namespace OfflineRouting

@@ -4,7 +4,6 @@
 #include "OfflineRoutingFloorData.h"
 #include "OfflineRoutingFloorPathData.h"
 #include "IOfflineRoutingDataRepository.h"
-#include "IOfflineRoutingGraphPositioner.h"
 #include "IOfflineRoutingDataBuilder.h"
 #include "OfflineRoutingFeatureBuilder.h"
 #include "OfflineRoutingFeature.h"

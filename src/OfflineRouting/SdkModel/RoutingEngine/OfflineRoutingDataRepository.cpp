@@ -1,8 +1,7 @@
 // Copyright eeGeo Ltd (2012-2019), All Rights Reserved
 
 #include "OfflineRoutingDataRepository.h"
-#include "OfflineRoutingGraphNode.h"
-#include "OfflineRoutingFeature.h"
+#include "OfflineRoutingGraphBuildResults.h"
 #include "InteriorId.h"
 #include "Types.h"
 
@@ -100,10 +99,27 @@ namespace ExampleApp
                 {
                     m_dataSearchService.BuildSearchTree(m_interiorGraphNodes);
 
-                    for (auto &it : m_interiorGraphNodes)
+                    size_t totalEdges = 0;
+
+                    for (const auto &graphPair : m_interiorGraphNodes)
                     {
-                        JoinNodesWithinMinimumDistance(it.first);
+                        JoinNodesWithinMinimumDistance(graphPair.first);
+                        totalEdges += graphPair.second.GetEdges().size();
                     }
+
+                    const auto size = m_interiorGraphNodes.size();
+                    auto results = OfflineRoutingGraphBuildResults(size, totalEdges / size);
+                    m_graphBuiltCallbacks.ExecuteCallbacks(results);
+                }
+
+                void OfflineRoutingDataRepository::RegisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback)
+                {
+                    m_graphBuiltCallbacks.AddCallback(callback);
+                }
+
+                void OfflineRoutingDataRepository::UnregisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback)
+                {
+                    m_graphBuiltCallbacks.RemoveCallback(callback);
                 }
             }
         }

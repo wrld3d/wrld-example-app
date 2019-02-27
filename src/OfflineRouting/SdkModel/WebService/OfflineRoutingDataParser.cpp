@@ -9,7 +9,6 @@
 #include "document.h"
 
 #include <vector>
-#include <functional>
 
 namespace ExampleApp
 {

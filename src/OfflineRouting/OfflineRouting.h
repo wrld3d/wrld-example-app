@@ -24,16 +24,21 @@ namespace ExampleApp
                 class IOfflineRoutingDataRepository;
                 class IOfflineRoutingGraphPositioner;
                 class IOfflineRoutingDataSearchService;
+                class IOfflineRoutingPathFinder;
                 class OfflineRoutingFeatureBuilder;
                 struct OfflineRoutingFeature;
                 struct OfflineRoutingGraphNode;
                 struct OfflineRoutingPointOnGraph;
+                struct OfflineRoutingFindPathResult;
+                struct OfflineRoutingGraphBuildResults;
 
                 typedef unsigned int OfflineRoutingFeatureId;
                 typedef unsigned int OfflineRoutingGraphNodeId;
 
                 typedef std::unordered_map<OfflineRoutingFeatureId, OfflineRoutingFeature> OfflineRoutingFeatures;
                 typedef std::unordered_map<OfflineRoutingGraphNodeId, OfflineRoutingGraphNode> OfflineRoutingGraphNodes;
+
+                typedef Eegeo::Helpers::ICallback1<const OfflineRoutingGraphBuildResults&> OfflineRoutingDataRepositoryBuildCompletedCallback;
 
                 const float INTERIOR_FLOOR_HEIGHT = 5.0f;
 

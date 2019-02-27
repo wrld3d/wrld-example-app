@@ -38,6 +38,7 @@ namespace ExampleApp
                 RoutingEngine::IOfflineRoutingDataRepository* m_pOfflineRoutingDataRepository;
                 RoutingEngine::IOfflineRoutingDataBuilder* m_pOfflineRoutingDataBuilder;
                 RoutingEngine::IOfflineRoutingGraphPositioner* m_pOfflineRoutingGraphPositioner;
+                RoutingEngine::IOfflineRoutingPathFinder* m_pOfflineRoutingPathFinder;
                 RoutingEngine::IOfflineRoutingEngine* m_pOfflineRoutingEngine;
 
                 OfflineRoutingService* m_pOfflineRoutingService;

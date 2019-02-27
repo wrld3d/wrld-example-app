@@ -33,6 +33,9 @@ namespace ExampleApp
                     virtual const OfflineRoutingFeatures& GetFeatures() const = 0;
 
                     virtual void BuildGraph() = 0;
+
+                    virtual void RegisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback) = 0;
+                    virtual void UnregisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback) = 0;
                 };
             }
         }

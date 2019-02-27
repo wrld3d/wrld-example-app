@@ -9,6 +9,7 @@
 #include "SingleSphere.h"
 
 #include <limits>
+#include <vector>
 
 namespace ExampleApp
 {
