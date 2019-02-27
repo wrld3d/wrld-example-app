@@ -18,6 +18,8 @@ namespace ExampleApp
                 virtual ~IOfflineRoutingModule() {}
                 
                 virtual Eegeo::Routes::Webservice::IRoutingWebservice& GetOfflineRoutingService() = 0;
+
+                virtual void Update(float dt) = 0;
             };
         }
     }

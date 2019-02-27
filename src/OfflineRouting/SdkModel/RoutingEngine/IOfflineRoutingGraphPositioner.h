@@ -3,8 +3,8 @@
 #pragma once
 
 #include "OfflineRouting.h"
-#include "VectorMath.h"
 #include "Interiors.h"
+#include "LatLongAltitude.h"
 
 #include <vector>
 
@@ -21,8 +21,7 @@ namespace ExampleApp
                 public:
                     virtual ~IOfflineRoutingGraphPositioner() {}
 
-                    virtual OfflineRoutingPointOnGraph FindPointOnGraph(const Eegeo::dv3& point,
-                                                                        const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                    virtual OfflineRoutingPointOnGraph FindPointOnGraph(const Eegeo::Space::LatLong& point,
                                                                         const int floorId,
                                                                         const double maxDistance) = 0;
                 };

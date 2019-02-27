@@ -18,8 +18,7 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            OfflineRoutingModule::OfflineRoutingModule(Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
-                                                       Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+            OfflineRoutingModule::OfflineRoutingModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                        const std::string& serviceUrlBase,
                                                        const std::string& apiDevToken,
                                                        const Eegeo::Resources::Interiors::InteriorId& interiorId)
@@ -38,7 +37,8 @@ namespace ExampleApp
                 m_pOfflineRoutingEngine = Eegeo_NEW(RoutingEngine::OfflineRoutingEngine)(*m_pOfflineRoutingDataRepository,
                                                                                          *m_pOfflineRoutingDataBuilder);
 
-                m_pOfflineRoutingService = Eegeo_NEW(OfflineRoutingService)(routingWebservice);
+                m_pOfflineRoutingService = Eegeo_NEW(OfflineRoutingService)(*m_pOfflineRoutingGraphPositioner,
+                                                                            *m_pOfflineRoutingPathFinder);
                 m_pOfflineRoutingController = Eegeo_NEW(OfflineRoutingController)(*m_pOfflineRoutingEngine, *m_pOfflineRoutingDataWebService);
 
                 if (interiorId.IsValid())
@@ -64,6 +64,11 @@ namespace ExampleApp
             Eegeo::Routes::Webservice::IRoutingWebservice& OfflineRoutingModule::GetOfflineRoutingService()
             {
                 return *m_pOfflineRoutingService;
+            }
+
+            void OfflineRoutingModule::Update(float dt)
+            {
+                m_pOfflineRoutingService->Update(dt);
             }
         }
     }

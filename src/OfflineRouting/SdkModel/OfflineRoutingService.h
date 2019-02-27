@@ -5,7 +5,12 @@
 #include "Types.h"
 #include "Routes.h"
 #include "OfflineRouting.h"
+#include "RoutingQueryOptions.h"
 #include "IRoutingWebservice.h"
+#include "RoutingQueryIdGenerator.h"
+#include "CallbackCollection.h"
+
+#include <unordered_map>
 
 namespace ExampleApp
 {
@@ -16,7 +21,8 @@ namespace ExampleApp
             class OfflineRoutingService : public Eegeo::Routes::Webservice::IRoutingWebservice, private Eegeo::NonCopyable
             {
             public:
-                OfflineRoutingService(Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice);
+                OfflineRoutingService(RoutingEngine::IOfflineRoutingGraphPositioner& offlineRoutingGraphPositioner,
+                                      RoutingEngine::IOfflineRoutingPathFinder& offlineRoutingPathFinder);
 
                 ~OfflineRoutingService() {}
 
@@ -26,8 +32,28 @@ namespace ExampleApp
                 void RegisterQueryCompletedCallback(Eegeo::Routes::Webservice::RoutingQueryCompletedCallback& callback) override;
                 void UnregisterQueryCompletedCallback(Eegeo::Routes::Webservice::RoutingQueryCompletedCallback& callback) override;
 
+                void Update(float dt);
+
             private:
-                Eegeo::Routes::Webservice::IRoutingWebservice& m_routingWebservice;
+                bool TryFindPointsOnGraph(const std::vector<Eegeo::Routes::Webservice::RoutingQueryWaypoint>& waypoints,
+                                          std::vector<RoutingEngine::OfflineRoutingPointOnGraph>& pointsOnGraph);
+                bool TryFindPaths(const std::vector<RoutingEngine::OfflineRoutingPointOnGraph> queryPoints,
+                                  std::vector<RoutingEngine::OfflineRoutingFindPathResult>& pathResults);
+                void BuildRouteData(const std::vector<RoutingEngine::OfflineRoutingFindPathResult>& pathResults,
+                                    std::vector<Eegeo::Routes::Webservice::RouteData>& routes);
+                void ProcessQueries();
+
+                void NotifyQuerySuccess(Eegeo::Routes::Webservice::RoutingQueryId routingQueryId,
+                                         const std::vector<Eegeo::Routes::Webservice::RouteData>& routeData);
+                void NotifyQueryFailed(Eegeo::Routes::Webservice::RoutingQueryId routingQueryId);
+
+                RoutingEngine::IOfflineRoutingGraphPositioner& m_offlineRoutingGraphPositioner;
+                RoutingEngine::IOfflineRoutingPathFinder& m_offlineRoutingPathFinder;
+
+                std::unordered_map<Eegeo::Routes::Webservice::RoutingQueryId, Eegeo::Routes::Webservice::RoutingQueryOptions> m_queriesToProcess;
+
+                Eegeo::Routes::Webservice::RoutingQueryIdGenerator m_routingQueryIdGenerator;
+                Eegeo::Helpers::CallbackCollection1<const Eegeo::Routes::Webservice::RoutingQueryResponse> m_queryCompletedCallbacks;
             };
         }
     }
