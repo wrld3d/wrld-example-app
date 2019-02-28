@@ -18,7 +18,7 @@ namespace ExampleApp
                 namespace
                 {
                     const int STATE_ALLOCATION_RATIO = 4;
-                    const bool SHOULD_CACHE_GRAPH_WEIGHTS = true;
+                    const bool SHOULD_CACHE_GRAPH_WEIGHTS = false;
                 }
 
                 OfflineRoutingPathFinder::OfflineRoutingPathFinder(IOfflineRoutingDataRepository& offlineRoutingDataRepository)
@@ -101,6 +101,7 @@ namespace ExampleApp
                         }
                     }
 
+                    m_pPather->Reset();
                     return OfflineRoutingFindPathResult(true,
                                                         m_pMicroPatherGraph->GetStartPoint(),
                                                         m_pMicroPatherGraph->GetEndPoint(),

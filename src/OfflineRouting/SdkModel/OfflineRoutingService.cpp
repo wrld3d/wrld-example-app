@@ -3,6 +3,7 @@
 #include "OfflineRoutingService.h"
 #include "IOfflineRoutingGraphPositioner.h"
 #include "IOfflineRoutingPathFinder.h"
+#include "IOfflineRoutingServiceRouteDataBuilder.h"
 #include "OfflineRoutingPointOnGraph.h"
 #include "RoutingQueryOptions.h"
 #include "RoutingQueryResponse.h"
@@ -38,9 +39,11 @@ namespace ExampleApp
             }
 
             OfflineRoutingService::OfflineRoutingService(RoutingEngine::IOfflineRoutingGraphPositioner& offlineRoutingGraphPositioner,
-                                                         RoutingEngine::IOfflineRoutingPathFinder& offlineRoutingPathFinder)
+                                                         RoutingEngine::IOfflineRoutingPathFinder& offlineRoutingPathFinder,
+                                                         IOfflineRoutingServiceRouteDataBuilder& routeDataBuilder)
             : m_offlineRoutingGraphPositioner(offlineRoutingGraphPositioner)
             , m_offlineRoutingPathFinder(offlineRoutingPathFinder)
+            , m_routeDataBuilder(routeDataBuilder)
             {
             }
 
@@ -116,48 +119,6 @@ namespace ExampleApp
                 return true;
             }
 
-            void OfflineRoutingService::BuildRouteData(const std::vector<RoutingEngine::OfflineRoutingFindPathResult>& pathResults,
-                                                       std::vector<Eegeo::Routes::Webservice::RouteData>& routes)
-            {
-                double distance = 0;
-                std::vector<Eegeo::Routes::Webservice::RouteSection> sections;
-
-                //TODO remove from here, also calculate based on transportation mode
-                double speed = 1; //meter/second or meter/min? need to lookup
-
-                for (const auto& pathResult : pathResults)
-                {
-                    std::vector<Eegeo::Space::LatLong> path;
-                    std::string IndoorId;
-                    std::string Name;
-
-                    path.push_back(Eegeo::Space::LatLong::FromECEF(pathResult.GetStartPoint().GetPoint()));
-
-                    std::vector<Eegeo::Routes::Webservice::RouteStep> steps;
-
-                    Eegeo::Routes::Webservice::RouteDirections directions = {{0, 0}};
-
-                    Eegeo::Routes::Webservice::RouteStep step = { path,
-                                                                  Eegeo::Routes::Webservice::TransportationMode::Walking,
-                                                                  pathResult.GetStartPoint().GetInteriorId().Value(),
-                                                                  "Depart",
-                                                                  directions,
-                                                                  1,
-                                                                  1,
-                                                                  pathResult.GetStartPoint().GetFloorId(),
-                                                                  true,
-                                                                  false };
-                    steps.push_back(step);
-
-                    Eegeo::Routes::Webservice::RouteSection section = {steps, pathResult.GetPathDistance() / speed, pathResult.GetPathDistance()};
-                    sections.push_back(section);
-
-                    distance += pathResult.GetPathDistance();
-                }
-
-                routes.push_back({sections, distance / speed, distance});
-            }
-
             void OfflineRoutingService::ProcessQueries()
             {
                 for (const auto& query : m_queriesToProcess)
@@ -197,9 +158,7 @@ namespace ExampleApp
 
                     Eegeo_ASSERT(pathResults.size() == (queryPoints.size()-1));
 
-                    std::vector<Eegeo::Routes::Webservice::RouteData> routeData;
-                    BuildRouteData(pathResults, routeData);
-
+                    std::vector<Eegeo::Routes::Webservice::RouteData> routeData = m_routeDataBuilder.BuildRouteData(pathResults, options.transportationMode);
                     NotifyQuerySuccess(routingQueryId, routeData);
                 }
 

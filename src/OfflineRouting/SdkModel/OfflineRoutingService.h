@@ -22,7 +22,8 @@ namespace ExampleApp
             {
             public:
                 OfflineRoutingService(RoutingEngine::IOfflineRoutingGraphPositioner& offlineRoutingGraphPositioner,
-                                      RoutingEngine::IOfflineRoutingPathFinder& offlineRoutingPathFinder);
+                                      RoutingEngine::IOfflineRoutingPathFinder& offlineRoutingPathFinder,
+                                      IOfflineRoutingServiceRouteDataBuilder& routeDataBuilder);
 
                 ~OfflineRoutingService() {}
 
@@ -37,10 +38,10 @@ namespace ExampleApp
             private:
                 bool TryFindPointsOnGraph(const std::vector<Eegeo::Routes::Webservice::RoutingQueryWaypoint>& waypoints,
                                           std::vector<RoutingEngine::OfflineRoutingPointOnGraph>& pointsOnGraph);
+
                 bool TryFindPaths(const std::vector<RoutingEngine::OfflineRoutingPointOnGraph> queryPoints,
                                   std::vector<RoutingEngine::OfflineRoutingFindPathResult>& pathResults);
-                void BuildRouteData(const std::vector<RoutingEngine::OfflineRoutingFindPathResult>& pathResults,
-                                    std::vector<Eegeo::Routes::Webservice::RouteData>& routes);
+
                 void ProcessQueries();
 
                 void NotifyQuerySuccess(Eegeo::Routes::Webservice::RoutingQueryId routingQueryId,
@@ -49,6 +50,7 @@ namespace ExampleApp
 
                 RoutingEngine::IOfflineRoutingGraphPositioner& m_offlineRoutingGraphPositioner;
                 RoutingEngine::IOfflineRoutingPathFinder& m_offlineRoutingPathFinder;
+                IOfflineRoutingServiceRouteDataBuilder& m_routeDataBuilder;
 
                 std::unordered_map<Eegeo::Routes::Webservice::RoutingQueryId, Eegeo::Routes::Webservice::RoutingQueryOptions> m_queriesToProcess;
 

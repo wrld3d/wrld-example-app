@@ -16,6 +16,7 @@ namespace ExampleApp
             class OfflineRoutingModule;
             class OfflineRoutingController;
             class OfflineRoutingService;
+            class IOfflineRoutingServiceRouteDataBuilder;
 
             namespace RoutingEngine
             {
