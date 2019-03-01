@@ -22,11 +22,22 @@ namespace ExampleApp
             {
                 const std::string DIRECTION_TYPE_DEPART = "depart";
                 const std::string DIRECTION_TYPE_ARRIVE = "arrive";
+                const std::string DIRECTION_TYPE_TURN = "turn";
+                const std::string DIRECTION_TYPE_NEW_NAME = "new name";
 
                 const double WALKING_SPEED_IN_METER_PER_SECOND = 1.4;
                 const double DRIVING_SPEED_IN_METER_PER_SECOND = 10;
 
-                struct RouteEdge {
+                enum DirectionType
+                {
+                    Depart,
+                    Turn,
+                    NewName,
+                    Arrive
+                };
+
+                struct RouteEdge
+                {
                     const Eegeo::Space::LatLong startPoint;
                     const Eegeo::Space::LatLong endPoint;
                     const int floorId;
@@ -45,6 +56,28 @@ namespace ExampleApp
                     {
                     }
                 };
+
+                const std::string GetDirectionType(DirectionType directionType)
+                {
+                    switch (directionType)
+                    {
+                        case DirectionType::Depart:
+                            return DIRECTION_TYPE_DEPART;
+                        case DirectionType::Arrive:
+                            return DIRECTION_TYPE_ARRIVE;
+                        case DirectionType::Turn:
+                            return DIRECTION_TYPE_TURN;
+                        case DirectionType::NewName:
+                            return DIRECTION_TYPE_NEW_NAME;
+                        default:
+                            return "";
+                    }
+                }
+
+                const std::string GetDirectionModifier(DirectionType directionType)
+                {
+                    return "";
+                }
 
                 Eegeo::Space::LatLong GetLatLongFromEcef(const Eegeo::dv3& ecefPoint)
                 {
@@ -115,40 +148,69 @@ namespace ExampleApp
                 Eegeo::Routes::Webservice::RouteStep BuildRouteStep(const std::vector<RouteEdge>& routeEdges,
                                                                     const Eegeo::Routes::Webservice::TransportationMode& transportationMode,
                                                                     const RoutingEngine::IOfflineRoutingDataRepository& offlineRoutingDataRepository,
+                                                                    const DirectionType currentDirectionType,
+                                                                    DirectionType& nextDirectionType,
                                                                     size_t& pathEdgesIterator)
                 {
                     const double speed = GetSpeedForTransportationMode(transportationMode);
                     const auto& stepStartEdge = routeEdges.at(pathEdgesIterator);
                     const auto& stepPosition = stepStartEdge.startPoint;
-                    const auto& directionType = pathEdgesIterator == 0 ? DIRECTION_TYPE_DEPART : "Test"; //TODO get proper type
-                    const auto& directionModifier = ""; //TODO get proper modifier
-
+                    const auto& directionType = GetDirectionType(currentDirectionType);
+                    const auto& directionModifier = GetDirectionModifier(currentDirectionType);
 
                     double bearingBefore = pathEdgesIterator == 0 ? 0 : routeEdges.at(pathEdgesIterator-1).bearing;
                     double bearingAfter = stepStartEdge.bearing;
                     double stepDistance = 0;
 
+                    auto lastProcessedEdge = pathEdgesIterator;
+
                     std::vector<Eegeo::Space::LatLong> stepPath;
-                    //TODO loop to generate a path
-                    const auto& currentEdge = routeEdges.at(pathEdgesIterator);
-                    auto currentFeatureId = currentEdge.featureId;
 
-                    stepPath.push_back(currentEdge.startPoint);
-                    stepPath.push_back(currentEdge.endPoint);
-
-                    stepDistance += Distance(currentEdge.startPoint.ToECEF(), currentEdge.endPoint.ToECEF());
-
-                    Eegeo::Routes::Webservice::RouteDirections stepDirections = {
-                            stepPosition,
-                            directionType,
-                            directionModifier,
-                            bearingBefore,
-                            bearingAfter,
-                    };
-
+                    stepPath.push_back(stepStartEdge.startPoint);
+                    stepPath.push_back(stepStartEdge.endPoint);
                     pathEdgesIterator++;
 
-                    const auto& stepFeature = offlineRoutingDataRepository.GetFeature(currentFeatureId);
+                    //TODO loop to generate a path
+                    while (pathEdgesIterator < routeEdges.size())
+                    {
+                        const auto& previousEdge = routeEdges.at(pathEdgesIterator-1);
+                        const auto& currentEdge = routeEdges.at(pathEdgesIterator);
+
+                        if (previousEdge.featureId != currentEdge.featureId)
+                        {
+                            const auto& previousFeature = offlineRoutingDataRepository.GetFeature(previousEdge.featureId);
+                            const auto& currentFeature = offlineRoutingDataRepository.GetFeature(currentEdge.featureId);
+
+                            if (previousFeature.GetIsMultiFloor() != currentFeature.GetIsMultiFloor())
+                            {
+                                nextDirectionType = DirectionType::NewName;
+                                break;
+                            }
+
+                            if (previousFeature.GetName() != currentFeature.GetName())
+                            {
+                                nextDirectionType = DirectionType::NewName;
+                                break;
+                            }
+                        }
+
+                        stepDistance += Distance(currentEdge.startPoint.ToECEF(), currentEdge.endPoint.ToECEF());
+                        stepPath.push_back(currentEdge.endPoint);
+                        lastProcessedEdge = pathEdgesIterator;
+                        pathEdgesIterator++;
+                    }
+
+                    const auto& currentEdge = routeEdges.at(lastProcessedEdge);
+                    const auto& stepFeature = offlineRoutingDataRepository.GetFeature(currentEdge.featureId);
+
+                    Eegeo::Routes::Webservice::RouteDirections stepDirections =
+                    {
+                        stepPosition,
+                        directionType,
+                        directionModifier,
+                        bearingBefore,
+                        bearingAfter,
+                    };
 
                     return { stepPath,
                              transportationMode,
@@ -205,14 +267,19 @@ namespace ExampleApp
 
                 std::vector<Eegeo::Routes::Webservice::RouteStep> routeSteps;
                 size_t pathEdgesIterator = 0;
+                DirectionType currentDirectionType = DirectionType::Depart;
 
                 while (pathEdgesIterator < pathEdges.size())
                 {
+                    DirectionType nextDirectionType;
                     Eegeo::Routes::Webservice::RouteStep step = BuildRouteStep(pathEdges,
                                                                                transportationMode,
                                                                                m_offlineRoutingDataRepository,
+                                                                               currentDirectionType,
+                                                                               nextDirectionType,
                                                                                pathEdgesIterator);
                     routeSteps.push_back(step);
+                    currentDirectionType = nextDirectionType;
                 }
 
                 Eegeo::Routes::Webservice::RouteDirections endDirections = {
