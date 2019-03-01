@@ -6,6 +6,7 @@
 #include "OfflineRoutingGraphNode.h"
 #include "OfflineRoutingFeature.h"
 #include "LatLongAltitude.h"
+#include "SpaceHelpers.h"
 #include "VectorMath.h"
 #include "RouteData.h"
 #include "MathFunc.h"
@@ -20,13 +21,22 @@ namespace ExampleApp
         {
             namespace
             {
-                const std::string DIRECTION_TYPE_DEPART = "depart";
-                const std::string DIRECTION_TYPE_ARRIVE = "arrive";
-                const std::string DIRECTION_TYPE_TURN = "turn";
-                const std::string DIRECTION_TYPE_NEW_NAME = "new name";
+                static const char* DIRECTION_TYPE_DEPART = "depart";
+                static const char* DIRECTION_TYPE_ARRIVE = "arrive";
+                static const char* DIRECTION_TYPE_TURN = "turn";
+                static const char* DIRECTION_TYPE_NEW_NAME = "new name";
+
+                static const char* DIRECTION_MODIFIER_LEFT = "left";
+                static const char* DIRECTION_MODIFIER_RIGHT = "right";
+                static const char* DIRECTION_MODIFIER_SLIGHT_LEFT = "slight left";
+                static const char* DIRECTION_MODIFIER_SLIGHT_RIGHT = "slight right";
+                static const char* DIRECTION_MODIFIER_STRAIGHT = "straight";
 
                 const double WALKING_SPEED_IN_METER_PER_SECOND = 1.4;
                 const double DRIVING_SPEED_IN_METER_PER_SECOND = 10;
+
+                const double BEARING_SLIGHT_TURN_THRESHOLD = 30;
+                const double BEARING_TURN_THRESHOLD = 60;
 
                 enum DirectionType
                 {
@@ -52,7 +62,7 @@ namespace ExampleApp
                     , endPoint(edgeEnd)
                     , floorId(edgeFloorId)
                     , featureId(edgeFeatureId)
-                    , bearing(edgeStart.BearingToInRadians(edgeEnd.GetLatitude(), edgeEnd.GetLongitude()))
+                    , bearing(Eegeo::Math::Rad2Deg(edgeStart.BearingToInRadians(edgeEnd.GetLatitude(), edgeEnd.GetLongitude())))
                     {
                     }
                 };
@@ -74,9 +84,48 @@ namespace ExampleApp
                     }
                 }
 
-                const std::string GetDirectionModifier(DirectionType directionType)
+                const std::string GetDirectionModifier(DirectionType directionType, double oldBearing, double newBearing)
                 {
-                    return "";
+                    std::string modifier = DIRECTION_MODIFIER_STRAIGHT;
+
+                    double diff = Eegeo::Space::SpaceHelpers::AngleDifferenceDegrees(newBearing, oldBearing);
+
+                    if (Eegeo::Math::Abs(static_cast<float >(diff)) > BEARING_TURN_THRESHOLD)
+                    {
+                        if (diff > 0)
+                        {
+                            modifier = DIRECTION_MODIFIER_LEFT;
+                        }
+                        else
+                        {
+                            modifier = DIRECTION_MODIFIER_RIGHT;
+                        }
+                    }
+                    else if (Eegeo::Math::Abs(static_cast<float >(diff)) > BEARING_SLIGHT_TURN_THRESHOLD)
+                    {
+                        if (diff > 0)
+                        {
+                            modifier = DIRECTION_MODIFIER_SLIGHT_LEFT;
+                        }
+                        else
+                        {
+                            modifier = DIRECTION_MODIFIER_SLIGHT_RIGHT;
+                        }
+                    }
+
+                    switch (directionType)
+                    {
+                        case DirectionType::Depart:
+                            return modifier;
+                        case DirectionType::Arrive:
+                            return "";
+                        case DirectionType::Turn:
+                            return modifier;
+                        case DirectionType::NewName:
+                            return modifier;
+                        default:
+                            return "";
+                    }
                 }
 
                 Eegeo::Space::LatLong GetLatLongFromEcef(const Eegeo::dv3& ecefPoint)
@@ -155,12 +204,13 @@ namespace ExampleApp
                     const double speed = GetSpeedForTransportationMode(transportationMode);
                     const auto& stepStartEdge = routeEdges.at(pathEdgesIterator);
                     const auto& stepPosition = stepStartEdge.startPoint;
-                    const auto& directionType = GetDirectionType(currentDirectionType);
-                    const auto& directionModifier = GetDirectionModifier(currentDirectionType);
 
                     double bearingBefore = pathEdgesIterator == 0 ? 0 : routeEdges.at(pathEdgesIterator-1).bearing;
                     double bearingAfter = stepStartEdge.bearing;
                     double stepDistance = 0;
+
+                    const auto& directionType = GetDirectionType(currentDirectionType);
+                    const auto& directionModifier = GetDirectionModifier(currentDirectionType, bearingBefore, bearingAfter);
 
                     auto lastProcessedEdge = pathEdgesIterator;
 
@@ -170,7 +220,6 @@ namespace ExampleApp
                     stepPath.push_back(stepStartEdge.endPoint);
                     pathEdgesIterator++;
 
-                    //TODO loop to generate a path
                     while (pathEdgesIterator < routeEdges.size())
                     {
                         const auto& previousEdge = routeEdges.at(pathEdgesIterator-1);
@@ -194,7 +243,16 @@ namespace ExampleApp
                             }
                         }
 
+                        double bearingDifference = Eegeo::Space::SpaceHelpers::AngleDifferenceDegrees(currentEdge.bearing, previousEdge.bearing);
+
+                        if (Eegeo::Math::Abs(static_cast<float>(bearingDifference)) > BEARING_SLIGHT_TURN_THRESHOLD)
+                        {
+                            nextDirectionType = DirectionType::Turn;
+                            break;
+                        }
+
                         stepDistance += Distance(currentEdge.startPoint.ToECEF(), currentEdge.endPoint.ToECEF());
+                        bearingAfter = currentEdge.bearing;
                         stepPath.push_back(currentEdge.endPoint);
                         lastProcessedEdge = pathEdgesIterator;
                         pathEdgesIterator++;
