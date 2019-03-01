@@ -18,19 +18,19 @@ namespace ExampleApp
             class OfflineRoutingServiceRouteDataBuilder : public IOfflineRoutingServiceRouteDataBuilder, private Eegeo::NonCopyable
             {
             public:
-                OfflineRoutingServiceRouteDataBuilder(RoutingEngine::IOfflineRoutingDataRepository& offlineRoutingDataRepository);
+                OfflineRoutingServiceRouteDataBuilder(const RoutingEngine::IOfflineRoutingDataRepository& offlineRoutingDataRepository);
                 ~OfflineRoutingServiceRouteDataBuilder() {}
 
                 std::vector<Eegeo::Routes::Webservice::RouteData> BuildRouteData(const std::vector<RoutingEngine::OfflineRoutingFindPathResult>& pathResults,
                                                                                  const Eegeo::Routes::Webservice::TransportationMode& transportationMode) override;
 
             private:
-                std::vector<Eegeo::Routes::Webservice::RouteStep> GetRouteSteps(const RoutingEngine::OfflineRoutingPointOnGraph& startPoint,
-                                                                                const RoutingEngine::OfflineRoutingPointOnGraph& endPoint,
-                                                                                const std::vector<RoutingEngine::OfflineRoutingGraphNodeId>& pathNodes,
-                                                                                const Eegeo::Routes::Webservice::TransportationMode& transportationMode);
+                std::vector<Eegeo::Routes::Webservice::RouteStep> BuildRouteSteps(const RoutingEngine::OfflineRoutingPointOnGraph& startPoint,
+                                                                                  const RoutingEngine::OfflineRoutingPointOnGraph& endPoint,
+                                                                                  const std::vector<RoutingEngine::OfflineRoutingGraphNodeId>& pathNodes,
+                                                                                  const Eegeo::Routes::Webservice::TransportationMode& transportationMode);
 
-                RoutingEngine::IOfflineRoutingDataRepository& m_offlineRoutingDataRepository;
+                const RoutingEngine::IOfflineRoutingDataRepository& m_offlineRoutingDataRepository;
             };
         }
     }
