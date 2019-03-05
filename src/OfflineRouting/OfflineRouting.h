@@ -16,6 +16,7 @@ namespace ExampleApp
             class OfflineRoutingModule;
             class OfflineRoutingController;
             class OfflineRoutingService;
+            class IOfflineRoutingServiceRouteDataBuilder;
 
             namespace RoutingEngine
             {
@@ -50,6 +51,9 @@ namespace ExampleApp
                  * the graph is properly connected.
                  */
                 const double MinimumDistanceInMeters = 0.00001;
+
+                const float WALKING_SPEED_IN_METER_PER_SECOND = 1.4;
+                const float DRIVING_SPEED_IN_METER_PER_SECOND = 10;
             }
 
             namespace Webservice

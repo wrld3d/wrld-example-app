@@ -33,12 +33,15 @@ namespace ExampleApp
                     std::vector<OfflineRoutingGraphNode> BuildMultiFloorGraphNodes(const std::vector<Eegeo::Space::LatLong>& coordinates,
                                                                                    std::vector<int> floorIds,
                                                                                    const OfflineRoutingFeatureId& featureId,
-                                                                                   const Eegeo::Resources::Interiors::InteriorId& indoorId) override;
+                                                                                   const Eegeo::Resources::Interiors::InteriorId& indoorId,
+                                                                                   bool isOneWay) override;
 
                     OfflineRoutingFeatureBuilder GetFeatureBuilder(const std::string& type,
                                                                    const std::string& name,
                                                                    const Eegeo::Resources::Interiors::InteriorId& indoorId,
-                                                                   bool isMultiFloor) override;
+                                                                   bool isMultiFloor,
+                                                                   bool isOneWay,
+                                                                   int durationMultiplier) override;
 
                 private:
                     OfflineRoutingFeatureId NextFeatureId();

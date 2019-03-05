@@ -72,6 +72,11 @@ namespace ExampleApp
 
             void OfflineRoutingController::OnVersionsRequestCompleted(const Webservice::OfflineRoutingVersionsRequestResponse& versionsRequestResponse)
             {
+                if (!versionsRequestResponse.succeeded)
+                {
+                    return;
+                }
+
                 Webservice::OfflineRoutingIndoorVersion latestVersion;
                 if (TryGetLatestVersion(versionsRequestResponse.results, latestVersion))
                 {
@@ -95,6 +100,11 @@ namespace ExampleApp
 
             void OfflineRoutingController::OnDataRequestCompleted(const Webservice::OfflineRoutingDataRequestResponse& dataRequestResponse)
             {
+                if (!dataRequestResponse.succeeded)
+                {
+                    return;
+                }
+
                 m_offlineRoutingEngine.LoadGraphFromNavigationData(dataRequestResponse.interiorId,
                                                                    dataRequestResponse.buildId,
                                                                    dataRequestResponse.floorData,

@@ -23,6 +23,8 @@ namespace ExampleApp
                     const std::string IdKey = "id";
                     const std::string TypeKey = "type";
                     const std::string NameKey = "name";
+                    const std::string OneWayKey = "oneway";
+                    const std::string DurationMultiplierKey = "duration_multiplier";
                     const std::string LevelsKey = "levels";
                     const std::string CoordinatesKey = "coordinates";
                     const std::string PropertiesKey = "properties";
@@ -61,6 +63,31 @@ namespace ExampleApp
                         else if(json.IsString())
                         {
                             return Eegeo::Helpers::TryParseInt(json.GetString(), out_integer);
+                        }
+
+                        return false;
+                    }
+
+                    bool TryParseBool(const rapidjson::Value& json, bool& out_bool)
+                    {
+                        if (json.IsBool())
+                        {
+                            out_bool = json.GetBool();
+                            return true;
+                        }
+                        else if(json.IsString())
+                        {
+                            std::string documentString = json.GetString();
+                            if(documentString == "true")
+                            {
+                                out_bool = true;
+                                return true;
+                            }
+                            else if(documentString == "false")
+                            {
+                                out_bool = false;
+                                return true;
+                            }
                         }
 
                         return false;
@@ -192,15 +219,8 @@ namespace ExampleApp
                             return false;
                         }
 
-                        if (!TryParseString(json, WebManifestUrlKey, webManifestUrl))
-                        {
-                            return false;
-                        }
-
-                        if (!TryParseString(json, MobileManifestUrlKey, mobileManifestUrl))
-                        {
-                            return false;
-                        }
+                        TryParseString(json, WebManifestUrlKey, webManifestUrl);
+                        TryParseString(json, MobileManifestUrlKey, mobileManifestUrl);
 
                         out_version.buildId = buildId;
                         out_version.submissionComment = submissionComment;
@@ -220,6 +240,8 @@ namespace ExampleApp
                         bool isMultiFloor = false;
                         std::vector<int> levels;
                         std::vector<Eegeo::Space::LatLong> coordinates;
+                        bool isOneWay = false;
+                        int durationMultiplier = 1;
 
                         if (!json.HasMember(PropertiesKey.c_str()))
                         {
@@ -245,9 +267,28 @@ namespace ExampleApp
                             return false;
                         }
 
-                        if (!TryParseString(propertiesJson, NameKey, name))
+                        if (propertiesJson.HasMember(NameKey.c_str()))
                         {
-                            return false;
+                            if (!TryParseString(propertiesJson, NameKey, name))
+                            {
+                                return false;
+                            }
+                        }
+
+                        if (propertiesJson.HasMember(DurationMultiplierKey.c_str()))
+                        {
+                            if (!TryParseIntWithKey(propertiesJson, DurationMultiplierKey, durationMultiplier))
+                            {
+                                return false;
+                            }
+                        }
+
+                        if (propertiesJson.HasMember(OneWayKey.c_str()))
+                        {
+                            if (!TryParseBool(propertiesJson[OneWayKey.c_str()], isOneWay))
+                            {
+                                return false;
+                            }
                         }
 
                         if (!TryParseCoordinates(geometryJson, coordinates))
@@ -271,6 +312,8 @@ namespace ExampleApp
                         out_floorData.isMultiFloor = isMultiFloor;
                         out_floorData.levels = levels;
                         out_floorData.coordinates = coordinates;
+                        out_floorData.isOneWay = isOneWay;
+                        out_floorData.durationMultiplier = durationMultiplier;
 
                         return true;
                     }

@@ -20,8 +20,7 @@ namespace ExampleApp
             class OfflineRoutingModule : public IOfflineRoutingModule, private Eegeo::NonCopyable
             {
             public:
-                OfflineRoutingModule(Eegeo::Routes::Webservice::IRoutingWebservice& routingWebservice,
-                                     Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                OfflineRoutingModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                      const std::string& serviceUrlBase,
                                      const std::string& apiDevToken,
                                      const Eegeo::Resources::Interiors::InteriorId& interiorId);
@@ -29,6 +28,8 @@ namespace ExampleApp
                 ~OfflineRoutingModule();
 
                 Eegeo::Routes::Webservice::IRoutingWebservice& GetOfflineRoutingService() override;
+
+                void Update(float dt) override;
 
             private:
                 Webservice::IOfflineRoutingDataParser* m_pOfflineRoutingDataParser;
@@ -41,6 +42,7 @@ namespace ExampleApp
                 RoutingEngine::IOfflineRoutingPathFinder* m_pOfflineRoutingPathFinder;
                 RoutingEngine::IOfflineRoutingEngine* m_pOfflineRoutingEngine;
 
+                IOfflineRoutingServiceRouteDataBuilder* m_pOfflineRoutingServiceRouteDataBuilder;
                 OfflineRoutingService* m_pOfflineRoutingService;
                 OfflineRoutingController* m_pOfflineRoutingController;
             };

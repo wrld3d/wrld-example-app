@@ -18,7 +18,7 @@ namespace ExampleApp
                 namespace
                 {
                     const int STATE_ALLOCATION_RATIO = 4;
-                    const bool SHOULD_CACHE_GRAPH_WEIGHTS = true;
+                    const bool SHOULD_CACHE_GRAPH_WEIGHTS = false;
                 }
 
                 OfflineRoutingPathFinder::OfflineRoutingPathFinder(IOfflineRoutingDataRepository& offlineRoutingDataRepository)
@@ -55,7 +55,9 @@ namespace ExampleApp
                                                                     SHOULD_CACHE_GRAPH_WEIGHTS);
                 }
 
-                OfflineRoutingFindPathResult OfflineRoutingPathFinder::FindPath(const OfflineRoutingPointOnGraph& startPoint, const OfflineRoutingPointOnGraph& goalPoint)
+                OfflineRoutingFindPathResult OfflineRoutingPathFinder::FindPath(const OfflineRoutingPointOnGraph& startPoint,
+                                                                                const OfflineRoutingPointOnGraph& goalPoint,
+                                                                                const Eegeo::Routes::Webservice::TransportationMode& transportationMode)
                 {
                     if (m_pPather == nullptr)
                     {
@@ -74,6 +76,7 @@ namespace ExampleApp
 
                     m_pMicroPatherGraph->SetStartPoint(startPoint);
                     m_pMicroPatherGraph->SetEndPoint(goalPoint);
+                    m_pMicroPatherGraph->SetTransportationMode(transportationMode);
 
                     micropather::MPVector< void* > path;
                     float totalCost = 0;
@@ -101,6 +104,7 @@ namespace ExampleApp
                         }
                     }
 
+                    m_pPather->Reset();
                     return OfflineRoutingFindPathResult(true,
                                                         m_pMicroPatherGraph->GetStartPoint(),
                                                         m_pMicroPatherGraph->GetEndPoint(),

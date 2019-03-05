@@ -6,6 +6,7 @@
 #include "IOfflineRoutingPathFinder.h"
 #include "OfflineRoutingPointOnGraph.h"
 #include "VectorMath.h"
+#include "RouteData.h"
 #include "Types.h"
 
 #include "micropather.h"
@@ -25,7 +26,9 @@ namespace ExampleApp
                     OfflineRoutingPathFinder(IOfflineRoutingDataRepository& offlineRoutingDataRepository);
                     ~OfflineRoutingPathFinder();
 
-                    OfflineRoutingFindPathResult FindPath(const OfflineRoutingPointOnGraph& startPoint, const OfflineRoutingPointOnGraph& goalPoint) override;
+                    OfflineRoutingFindPathResult FindPath(const OfflineRoutingPointOnGraph& startPoint,
+                                                          const OfflineRoutingPointOnGraph& goalPoint,
+                                                          const Eegeo::Routes::Webservice::TransportationMode& transportationMode) override;
 
                 private:
                     void OnGraphBuilt(const OfflineRoutingGraphBuildResults& graphBuildResults);

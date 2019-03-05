@@ -5,6 +5,7 @@
 #include "OfflineRoutingPointOnGraph.h"
 #include "OfflineRoutingGraphNode.h"
 #include "OfflineRoutingFeature.h"
+#include "OfflineRoutingHelpers.h"
 #include "InteriorId.h"
 #include "SingleSphere.h"
 
@@ -23,22 +24,17 @@ namespace ExampleApp
                 : m_offlineRoutingDataRepository(offlineRoutingDataRepository)
                 {}
 
-                OfflineRoutingPointOnGraph OfflineRoutingGraphPositioner::FindPointOnGraph(const Eegeo::dv3& point,
-                                                                                           const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                OfflineRoutingPointOnGraph OfflineRoutingGraphPositioner::FindPointOnGraph(const Eegeo::Space::LatLong& point,
                                                                                            const int floorId,
                                                                                            const double maxDistance)
                 {
-                    if (!interiorId.IsValid())
-                    {
-                        return OfflineRoutingPointOnGraph();
-                    }
-
                     double bestDistance = std::numeric_limits<double>::max();
                     float bestParameterisedSplineDistance = 0.f;
                     Eegeo::dv3 bestPointOnSpline = Eegeo::dv3::Zero();
                     OfflineRoutingFeatureId bestFeatureId = 0;
 
-                    const Eegeo::Geometry::SingleSphere sphere = { point.ToSingle(), static_cast<float>(maxDistance) };
+                    Eegeo::v3 ecefPoint = Helpers::GetEcefPointFromLatlong(point, floorId).ToSingle();
+                    const Eegeo::Geometry::SingleSphere sphere = { ecefPoint, static_cast<float>(maxDistance) };
 
                     const OfflineRoutingFeatures& features = m_offlineRoutingDataRepository.GetFeatures();
 
@@ -46,11 +42,6 @@ namespace ExampleApp
                     {
                         const auto& feature = featureIt.second;
                         if (feature.GetIsMultiFloor())
-                        {
-                            continue;
-                        }
-
-                        if (feature.GetInteriorId() != interiorId)
                         {
                             continue;
                         }
@@ -75,7 +66,7 @@ namespace ExampleApp
                         }
 
                         float t = 0.f;
-                        const float distanceToPoint = featureSpline.DistanceToPoint(point.ToSingle(), t);
+                        const float distanceToPoint = featureSpline.DistanceToPoint(ecefPoint, t);
                         if (distanceToPoint >= maxDistance)
                         {
                             continue;
@@ -134,7 +125,7 @@ namespace ExampleApp
                                                       nodeEdges,
                                                       floorId,
                                                       bestFeatureId,
-                                                      interiorId,
+                                                      closestFeature.GetInteriorId(),
                                                       isPositionedOnNode);
 
                 }

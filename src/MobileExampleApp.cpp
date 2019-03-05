@@ -873,8 +873,7 @@ namespace ExampleApp
 
         auto& polylineShapesModule = world.GetShapesModule().GetPolylineShapesModule();
 
-        m_pOfflineRoutingModule = Eegeo_NEW(ExampleApp::OfflineRouting::SdkModel::OfflineRoutingModule)(world.GetRoutesModule().GetRoutingWebservice(),
-                                                                                                        world.GetPlatformAbstractionModule().GetPlatformWebLoadRequestFactory(),
+        m_pOfflineRoutingModule = Eegeo_NEW(ExampleApp::OfflineRouting::SdkModel::OfflineRoutingModule)(world.GetPlatformAbstractionModule().GetPlatformWebLoadRequestFactory(),
                                                                                                         m_applicationConfiguration.IndoorMapsServiceUrl(),
                                                                                                         m_applicationConfiguration.IndoorMapsServiceToken(),
                                                                                                         m_applicationConfiguration.IndoorMapsServiceUuid());
@@ -1286,6 +1285,7 @@ namespace ExampleApp
         UpdateLoadingScreen(dt);
         
         m_pSurveyTimer->Update();
+        m_pOfflineRoutingModule->Update(dt);
     }
 
     void MobileExampleApp::Draw (float dt)

@@ -49,7 +49,9 @@ namespace ExampleApp
                             auto featureBuilder = m_offlineRoutingDataBuilder.GetFeatureBuilder(pathData.type,
                                                                                                 pathData.name,
                                                                                                 indoorId,
-                                                                                                false);
+                                                                                                pathData.isMultiFloor,
+                                                                                                pathData.isOneWay,
+                                                                                                pathData.durationMultiplier);
 
                             auto graphNodes = m_offlineRoutingDataBuilder.BuildGraphNodes(pathData.coordinates,
                                                                                           data.floorId,
@@ -70,12 +72,15 @@ namespace ExampleApp
                         auto featureBuilder = m_offlineRoutingDataBuilder.GetFeatureBuilder(pathData.type,
                                                                                             pathData.name,
                                                                                             indoorId,
-                                                                                            true);
+                                                                                            pathData.isMultiFloor,
+                                                                                            pathData.isOneWay,
+                                                                                            pathData.durationMultiplier);
 
                         auto graphNodes = m_offlineRoutingDataBuilder.BuildMultiFloorGraphNodes(pathData.coordinates,
                                                                                                 pathData.levels,
                                                                                                 featureBuilder.GetId(),
-                                                                                                indoorId);
+                                                                                                indoorId,
+                                                                                                pathData.isOneWay);
                         featureBuilder.LinkNodes(graphNodes);
 
                         m_offlineRoutingDataRepository.AddGraphNodes(graphNodes);

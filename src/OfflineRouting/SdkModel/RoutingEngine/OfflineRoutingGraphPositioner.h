@@ -4,6 +4,7 @@
 
 #include "OfflineRouting.h"
 #include "IOfflineRoutingGraphPositioner.h"
+#include "LatLongAltitude.h"
 #include "VectorMath.h"
 #include "Interiors.h"
 #include "Types.h"
@@ -22,8 +23,7 @@ namespace ExampleApp
                     OfflineRoutingGraphPositioner(const IOfflineRoutingDataRepository& offlineRoutingDataRepository);
                     ~OfflineRoutingGraphPositioner() {}
 
-                    OfflineRoutingPointOnGraph FindPointOnGraph(const Eegeo::dv3& point,
-                                                                const Eegeo::Resources::Interiors::InteriorId& interiorId,
+                    OfflineRoutingPointOnGraph FindPointOnGraph(const Eegeo::Space::LatLong& point,
                                                                 const int floorId,
                                                                 const double maxDistance) override;
 

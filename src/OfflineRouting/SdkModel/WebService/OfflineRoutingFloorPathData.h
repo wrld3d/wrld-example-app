@@ -24,10 +24,14 @@ namespace ExampleApp
                     bool isMultiFloor;
                     std::vector<int> levels;
                     std::vector<Eegeo::Space::LatLong> coordinates;
+                    bool isOneWay;
+                    int durationMultiplier;
 
                     OfflineRoutingFloorPathData()
                     : id(0)
                     , isMultiFloor(false)
+                    , isOneWay(false)
+                    , durationMultiplier(1)
                     {
                     }
                 };

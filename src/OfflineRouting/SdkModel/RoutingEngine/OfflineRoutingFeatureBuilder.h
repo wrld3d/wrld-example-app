@@ -24,7 +24,9 @@ namespace ExampleApp
                                                  const std::string& featureType,
                                                  const std::string& featureName,
                                                  const Eegeo::Resources::Interiors::InteriorId& featureIndoorId,
-                                                 bool isMultiFloor);
+                                                 bool isMultiFloor,
+                                                 bool isOneWay,
+                                                 int durationMultiplier);
 
                     const OfflineRoutingFeatureId GetId() const;
 
@@ -40,6 +42,8 @@ namespace ExampleApp
                     bool m_isMultiFloor;
                     std::vector<OfflineRoutingGraphNodeId> m_featureNodes;
                     std::vector<Eegeo::v3> m_featureSplinePoints;
+                    bool m_isOneWay;
+                    int m_durationMultiplier;
                 };
             }
         }

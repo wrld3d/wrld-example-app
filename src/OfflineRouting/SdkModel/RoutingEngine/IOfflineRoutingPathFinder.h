@@ -3,6 +3,7 @@
 #pragma once
 
 #include "OfflineRouting.h"
+#include "RouteData.h"
 
 namespace ExampleApp
 {
@@ -17,7 +18,9 @@ namespace ExampleApp
                 public:
                     virtual ~IOfflineRoutingPathFinder() {}
 
-                    virtual OfflineRoutingFindPathResult FindPath(const OfflineRoutingPointOnGraph& startPoint, const OfflineRoutingPointOnGraph& goalPoint) = 0;
+                    virtual OfflineRoutingFindPathResult FindPath(const OfflineRoutingPointOnGraph& startPoint,
+                                                                  const OfflineRoutingPointOnGraph& goalPoint,
+                                                                  const Eegeo::Routes::Webservice::TransportationMode& transportationMode) = 0;
                 };
             }
         }

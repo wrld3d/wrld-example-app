@@ -19,6 +19,10 @@ namespace ExampleApp
                 struct OfflineRoutingFeature
                 {
                     OfflineRoutingFeature()
+                    : m_id(0)
+                    , m_isMultiFloor(false)
+                    , m_isOneWay(false)
+                    , m_durationMultiplier(1)
                     {}
 
                     OfflineRoutingFeature(const OfflineRoutingFeatureId featureId,
@@ -27,7 +31,9 @@ namespace ExampleApp
                                           const Eegeo::Resources::Interiors::InteriorId& featureIndoorId,
                                           bool isMultiFloor,
                                           const std::vector<OfflineRoutingGraphNodeId>& featureNodes,
-                                          const Eegeo::Geometry::Point3Spline& featureSpline)
+                                          const Eegeo::Geometry::Point3Spline& featureSpline,
+                                          bool isOneWay,
+                                          int durationMultiplier)
                     : m_id(featureId)
                     , m_type(featureType)
                     , m_name(featureName)
@@ -35,6 +41,8 @@ namespace ExampleApp
                     , m_isMultiFloor(isMultiFloor)
                     , m_featureNodes(featureNodes)
                     , m_featureSpline(featureSpline)
+                    , m_isOneWay(isOneWay)
+                    , m_durationMultiplier(durationMultiplier)
                     {}
 
                     const OfflineRoutingFeatureId GetId() const { return m_id; }
@@ -44,6 +52,8 @@ namespace ExampleApp
                     const bool GetIsMultiFloor() const { return m_isMultiFloor; }
                     const std::vector<OfflineRoutingGraphNodeId>& GetLinkedNodes() const { return m_featureNodes; }
                     const Eegeo::Geometry::Point3Spline& GetSpline() const { return m_featureSpline; }
+                    const bool GetIsOneWay() const { return m_isOneWay; }
+                    const int GetDurationMultiplier() const { return m_durationMultiplier; }
 
                 private:
                     OfflineRoutingFeatureId m_id;
@@ -53,6 +63,8 @@ namespace ExampleApp
                     bool m_isMultiFloor;
                     std::vector<OfflineRoutingGraphNodeId> m_featureNodes;
                     Eegeo::Geometry::Point3Spline m_featureSpline;
+                    bool m_isOneWay;
+                    int m_durationMultiplier;
                 };
             }
         }

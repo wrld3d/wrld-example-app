@@ -14,15 +14,19 @@ namespace ExampleApp
             namespace RoutingEngine
             {
                 OfflineRoutingFeatureBuilder::OfflineRoutingFeatureBuilder(const OfflineRoutingFeatureId featureId,
-                                             const std::string& featureType,
-                                             const std::string& featureName,
-                                             const Eegeo::Resources::Interiors::InteriorId& featureIndoorId,
-                                             bool isMultiFloor)
+                                                                           const std::string& featureType,
+                                                                           const std::string& featureName,
+                                                                           const Eegeo::Resources::Interiors::InteriorId& featureIndoorId,
+                                                                           bool isMultiFloor,
+                                                                           bool isOneWay,
+                                                                           int durationMultiplier)
                 : m_id(featureId)
                 , m_type(featureType)
                 , m_name(featureName)
                 , m_indoorId(featureIndoorId)
                 , m_isMultiFloor(isMultiFloor)
+                , m_isOneWay(isOneWay)
+                , m_durationMultiplier(durationMultiplier)
                 {}
 
                 const OfflineRoutingFeatureId OfflineRoutingFeatureBuilder::GetId() const
@@ -52,7 +56,9 @@ namespace ExampleApp
                                                  m_indoorId,
                                                  m_isMultiFloor,
                                                  m_featureNodes,
-                                                 Eegeo::Geometry::Point3Spline::BuildFromPoints(m_featureSplinePoints));
+                                                 Eegeo::Geometry::Point3Spline::BuildFromPoints(m_featureSplinePoints),
+                                                 m_isOneWay,
+                                                 m_durationMultiplier);
                 }
             }
         }

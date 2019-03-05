@@ -5,6 +5,7 @@
 #include "OfflineRouting.h"
 #include "OfflineRoutingPointOnGraph.h"
 #include "VectorMath.h"
+#include "RouteData.h"
 #include "Types.h"
 
 #include "micropather.h"
@@ -25,6 +26,7 @@ namespace ExampleApp
 
                     void SetStartPoint(const OfflineRoutingPointOnGraph& startPoint);
                     void SetEndPoint(const OfflineRoutingPointOnGraph& goalPoint);
+                    void SetTransportationMode(const Eegeo::Routes::Webservice::TransportationMode& transportationMode);
 
                     const OfflineRoutingPointOnGraph& GetStartPoint();
                     const OfflineRoutingPointOnGraph& GetEndPoint();
@@ -44,6 +46,7 @@ namespace ExampleApp
 
                     OfflineRoutingPointOnGraph m_startPoint;
                     OfflineRoutingPointOnGraph m_goalPoint;
+                    Eegeo::Routes::Webservice::TransportationMode m_transportationMode;
                 };
             }
         }
