@@ -24,7 +24,6 @@ namespace ExampleApp
             : m_pSearchModel(searchModel)
             , m_tagCollection(messageBus)
             , m_hasSearchResults(false)
-            , m_hasPopulatedData(false)
             , m_isNavigationHidden(!isNavigationEnabled)
             {
                 m_pMenuModel = [[WRLDSearchMenuModel alloc] init];
@@ -231,12 +230,9 @@ namespace ExampleApp
 
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections)
             {
-                if(m_hasPopulatedData != true){
-                    PopulateMenuData(sections);
-                    m_hasPopulatedData = true;
-                    return;
-                }
-                
+                ClearMenuData();
+                PopulateMenuData(sections);
+
                 const size_t numSections = sections.size();
                 
                 for (int sectionIndex = 0; sectionIndex < numSections; sectionIndex++)
@@ -255,6 +251,14 @@ namespace ExampleApp
                 }
             }
             
+            void SearchWidgetView::ClearMenuData(){
+                id optionNames = [m_menuGroups allKeys];
+                for(id optionName in optionNames) {
+                    [m_menuOptions[optionName] removeAllChildren];
+                    [m_menuGroups[optionName] removeAllOptions];
+                }
+            }
+
             void SearchWidgetView::PopulateMenuData(Menu::View::TSections& sections){
                 const size_t numSections = sections.size();
                 

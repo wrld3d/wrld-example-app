@@ -10,10 +10,18 @@ namespace ExampleApp
 {
     namespace OfflineRouting
     {
+        enum OfflineRoutingInitialisationState
+        {
+            Initialising,
+            Ready,
+            InitialisationFailed
+        };
+
         namespace SdkModel
         {
             class IOfflineRoutingModule;
             class OfflineRoutingModule;
+            class IOfflineRoutingController;
             class OfflineRoutingController;
             class OfflineRoutingService;
             class IOfflineRoutingServiceRouteDataBuilder;
@@ -54,6 +62,8 @@ namespace ExampleApp
 
                 const float WALKING_SPEED_IN_METER_PER_SECOND = 1.4;
                 const float DRIVING_SPEED_IN_METER_PER_SECOND = 10;
+
+                const double POINT_ON_GRAPH_SEARCH_RADIUS_METERS = 30;
             }
 
             namespace Webservice

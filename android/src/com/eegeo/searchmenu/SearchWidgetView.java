@@ -192,11 +192,6 @@ public class SearchWidgetView implements OnMenuOptionSelectedCallback,
             final int[] optionSizes,
             final String[] childJsons) {
 
-        if(m_hasPopulatedData==true){
-            updateData(optionNames,optionSizes,childJsons);
-            return;
-        }
-
         m_hasPopulatedData = true;
 
         m_searchWidget.clearMenu();

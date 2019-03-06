@@ -2,6 +2,7 @@ set(headers ${headers} ../src/OfflineRouting/SdkModel
 )
 set(currsources
   ../src/OfflineRouting/SdkModel/CMakeLists.txt
+  ../src/OfflineRouting/SdkModel/IOfflineRoutingController.h
   ../src/OfflineRouting/SdkModel/IOfflineRoutingModule.h
   ../src/OfflineRouting/SdkModel/IOfflineRoutingServiceRouteDataBuilder.h
   ../src/OfflineRouting/SdkModel/OfflineRoutingController.cpp

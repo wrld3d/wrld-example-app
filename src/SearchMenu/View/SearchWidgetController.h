@@ -31,6 +31,7 @@ namespace ExampleApp
                 Menu::View::IMenuViewModel& m_viewModel;
                 ExampleAppMessaging::TMessageBus& m_messageBus;
 				ISearchResultsRepository& m_resultsRepository;
+                size_t m_sectionCount;
 
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onViewOpenedCallback;
                 Eegeo::Helpers::TCallback0<SearchWidgetController> m_onViewClosedCallback;

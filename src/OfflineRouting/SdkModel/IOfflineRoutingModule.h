@@ -19,6 +19,8 @@ namespace ExampleApp
                 
                 virtual Eegeo::Routes::Webservice::IRoutingWebservice& GetOfflineRoutingService() = 0;
 
+                virtual const IOfflineRoutingController& GetOfflineRoutingController() const = 0;
+
                 virtual void Update(float dt) = 0;
             };
         }

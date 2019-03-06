@@ -141,6 +141,7 @@
 #include "LocationProvider.h"
 #include "WhitelistUrlHelpersNative.h"
 #include "OfflineRoutingModule.h"
+#include "IOfflineRoutingController.h"
 
 namespace ExampleApp
 {
@@ -194,6 +195,21 @@ namespace ExampleApp
             else
             {
                 repository.ForceRefresh();
+            }
+        }
+
+        void RemoveMenuSection(Menu::View::IMenuViewModel& menuViewModel, const std::string& sectionName)
+        {
+            size_t count = menuViewModel.SectionsCount();
+
+            for (size_t i = 0; i < count; i++)
+            {
+                auto& section = menuViewModel.GetMenuSection(static_cast<int>(i));
+                if (section.Name() == sectionName)
+                {
+                    menuViewModel.RemoveSection(section);
+                    break;
+                }
             }
         }
     }
@@ -874,6 +890,8 @@ namespace ExampleApp
         auto& polylineShapesModule = world.GetShapesModule().GetPolylineShapesModule();
 
         m_pOfflineRoutingModule = Eegeo_NEW(ExampleApp::OfflineRouting::SdkModel::OfflineRoutingModule)(world.GetPlatformAbstractionModule().GetPlatformWebLoadRequestFactory(),
+                                                                                                        m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
+                                                                                                        m_networkCapabilities,
                                                                                                         m_applicationConfiguration.IndoorMapsServiceUrl(),
                                                                                                         m_applicationConfiguration.IndoorMapsServiceToken(),
                                                                                                         m_applicationConfiguration.IndoorMapsServiceUuid());
@@ -1350,10 +1368,20 @@ namespace ExampleApp
 
         Eegeo::EegeoWorld& eegeoWorld = World();
 
-        if (!eegeoWorld.Initialising() && !m_pLoadingScreen->IsDismissed())
+        const auto& offlineRoutingController = m_pOfflineRoutingModule->GetOfflineRoutingController();
+        const auto offlineRoutingInitialisationState = offlineRoutingController.GetInitialisationState();
+        bool isOfflineRoutineInitialising = offlineRoutingInitialisationState == OfflineRouting::OfflineRoutingInitialisationState::Initialising;
+
+        if (!eegeoWorld.Initialising() && !m_pLoadingScreen->IsDismissed() && !isOfflineRoutineInitialising)
         {
             m_pNavigationService->SetGpsMode(Eegeo::Location::NavigationService::GpsModeOff);
             m_pLoadingScreen->Dismiss();
+
+            bool hasInitialisationFailed = offlineRoutingInitialisationState == OfflineRouting::OfflineRoutingInitialisationState::InitialisationFailed;
+            if(m_applicationConfiguration.NavigationEnabled() && hasInitialisationFailed)
+            {
+                RemoveMenuSection(m_pSearchMenuModule->GetSearchMenuViewModel(), "Directions");
+            }
         }
 
         m_pLoadingScreen->SetProgress(eegeoWorld.GetInitialisationProgress());

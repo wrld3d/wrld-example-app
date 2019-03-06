@@ -8,6 +8,8 @@
 #include "Web.h"
 #include "Interiors.h"
 #include "OfflineRoutingDataSearchService.h"
+#include "IAlertBoxFactory.h"
+#include "INetworkCapabilities.h"
 
 #include <string>
 
@@ -21,6 +23,8 @@ namespace ExampleApp
             {
             public:
                 OfflineRoutingModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                                     Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                     const Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                      const std::string& serviceUrlBase,
                                      const std::string& apiDevToken,
                                      const Eegeo::Resources::Interiors::InteriorId& interiorId);
@@ -28,6 +32,8 @@ namespace ExampleApp
                 ~OfflineRoutingModule();
 
                 Eegeo::Routes::Webservice::IRoutingWebservice& GetOfflineRoutingService() override;
+
+                const IOfflineRoutingController& GetOfflineRoutingController() const override;
 
                 void Update(float dt) override;
 

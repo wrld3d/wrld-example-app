@@ -70,7 +70,9 @@ namespace ExampleApp
                 m_messageBus.SubscribeUi(m_deepLinkRequestedHandler);
                 m_messageBus.SubscribeUi(m_onAppModeChanged);
 
-                for(size_t i = 0; i < m_viewModel.SectionsCount(); ++ i)
+                m_sectionCount = m_viewModel.SectionsCount();
+
+                for(size_t i = 0; i < m_sectionCount; ++ i)
                 {
                     Menu::View::IMenuSectionViewModel& section(m_viewModel.GetMenuSection(static_cast<int>(i)));
 					SetGroupStart(section);
@@ -259,17 +261,24 @@ namespace ExampleApp
 
             void SearchWidgetController::RefreshPresentation()
             {
+                //This is a hacky fix. Correct way to fix this is to merge improvements made in swallow but that is
+                //problematic because of swallow specific changes
+                if (m_sectionCount != m_viewModel.SectionsCount())
+                {
+                    m_menuContentsChanged = true;
+                }
+
                 if (!m_menuContentsChanged)
                 {
                     return;
                 }
                 m_menuContentsChanged = false;
 
-                const size_t numSections = m_viewModel.SectionsCount();
+                m_sectionCount = m_viewModel.SectionsCount();
                 Menu::View::TSections sections;
-                sections.reserve(numSections);
+                sections.reserve(m_sectionCount);
 
-                for(size_t groupIndex = 0; groupIndex < numSections; groupIndex++)
+                for(size_t groupIndex = 0; groupIndex < m_sectionCount; groupIndex++)
                 {
                     Menu::View::IMenuSectionViewModel& section = m_viewModel.GetMenuSection(static_cast<int>(groupIndex));
 

@@ -36,8 +36,6 @@ namespace ExampleApp
                 NSMutableDictionary* m_pMenuGroups;
                 NSMutableDictionary* m_pMenuOptions;
                 
-                bool m_hasPopulatedData;
-                
                 void (^m_onResultSelection) (id<WRLDSearchResultModel>);
                 void (^m_willPopulateResultCell) (WRLDSearchResultTableViewCell*);
                 void (^m_onMenuSelection) (NSObject*);
@@ -133,6 +131,8 @@ namespace ExampleApp
                 void AddMenuChildren(WRLDMenuOption* option,
                                      const Menu::View::IMenuSectionViewModel& section,
                                      int sectionIndex);
+
+                void ClearMenuData();
             };
         }
     }

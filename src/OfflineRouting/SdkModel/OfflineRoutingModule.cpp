@@ -20,6 +20,8 @@ namespace ExampleApp
         namespace SdkModel
         {
             OfflineRoutingModule::OfflineRoutingModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
+                                                       Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                                       const Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                                        const std::string& serviceUrlBase,
                                                        const std::string& apiDevToken,
                                                        const Eegeo::Resources::Interiors::InteriorId& interiorId)
@@ -42,12 +44,13 @@ namespace ExampleApp
                 m_pOfflineRoutingService = Eegeo_NEW(OfflineRoutingService)(*m_pOfflineRoutingGraphPositioner,
                                                                             *m_pOfflineRoutingPathFinder,
                                                                             *m_pOfflineRoutingServiceRouteDataBuilder);
-                m_pOfflineRoutingController = Eegeo_NEW(OfflineRoutingController)(*m_pOfflineRoutingEngine, *m_pOfflineRoutingDataWebService);
 
-                if (interiorId.IsValid())
-                {
-                    m_pOfflineRoutingController->LoadInteriorData(interiorId); //Test data load
-                }
+                m_pOfflineRoutingController = Eegeo_NEW(OfflineRoutingController)(*m_pOfflineRoutingEngine,
+                                                                                  *m_pOfflineRoutingDataWebService,
+                                                                                  alertBoxFactory,
+                                                                                  networkCapabilities);
+
+                m_pOfflineRoutingController->LoadInteriorData(interiorId);
             }
 
             OfflineRoutingModule::~OfflineRoutingModule()
@@ -68,6 +71,11 @@ namespace ExampleApp
             Eegeo::Routes::Webservice::IRoutingWebservice& OfflineRoutingModule::GetOfflineRoutingService()
             {
                 return *m_pOfflineRoutingService;
+            }
+
+            const IOfflineRoutingController& OfflineRoutingModule::GetOfflineRoutingController() const
+            {
+                return *m_pOfflineRoutingController;
             }
 
             void OfflineRoutingModule::Update(float dt)

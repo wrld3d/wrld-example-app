@@ -87,7 +87,9 @@ namespace ExampleApp
 
                 for (const auto& waypoint: waypoints)
                 {
-                    const auto& pointOnGraph = m_offlineRoutingGraphPositioner.FindPointOnGraph(waypoint.LatLong, waypoint.FloorNumber, 10);
+                    const auto& pointOnGraph = m_offlineRoutingGraphPositioner.FindPointOnGraph(waypoint.LatLong,
+                                                                                                waypoint.FloorNumber,
+                                                                                                RoutingEngine::POINT_ON_GRAPH_SEARCH_RADIUS_METERS);
 
                     if (!pointOnGraph.GetIsPointValid())
                     {
