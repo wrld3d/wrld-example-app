@@ -230,7 +230,6 @@ namespace ExampleApp
 
             void SearchWidgetView::UpdateMenuSectionViews(Menu::View::TSections& sections)
             {
-                ClearMenuData();
                 PopulateMenuData(sections);
 
                 const size_t numSections = sections.size();
@@ -251,16 +250,10 @@ namespace ExampleApp
                 }
             }
             
-            void SearchWidgetView::ClearMenuData(){
-                id optionNames = [m_menuGroups allKeys];
-                for(id optionName in optionNames) {
-                    [m_menuOptions[optionName] removeAllChildren];
-                    [m_menuGroups[optionName] removeAllOptions];
-                }
-            }
-
             void SearchWidgetView::PopulateMenuData(Menu::View::TSections& sections){
                 const size_t numSections = sections.size();
+                
+                [m_pMenuModel removeAllGroups];
                 
                 WRLDMenuGroup* group = NULL;
                 

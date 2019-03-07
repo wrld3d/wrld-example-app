@@ -131,8 +131,6 @@ namespace ExampleApp
                 void AddMenuChildren(WRLDMenuOption* option,
                                      const Menu::View::IMenuSectionViewModel& section,
                                      int sectionIndex);
-
-                void ClearMenuData();
             };
         }
     }
