@@ -19,6 +19,7 @@ namespace ExampleApp
                 NotReady = 0,
                 Ready,
                 Active,
+                ReadyNoTurnByTurn,
             };
 
             struct NavRouteDrawingVertexData;

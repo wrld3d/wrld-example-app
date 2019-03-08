@@ -49,7 +49,7 @@ namespace ExampleApp
 
             void NavWidgetViewModel::SetNavMode(SdkModel::NavRoutingMode mode)
             {
-                if(mode == SdkModel::NavRoutingMode::Ready || mode == SdkModel::NavRoutingMode::Active)
+                if(mode == SdkModel::NavRoutingMode::Ready || mode == SdkModel::NavRoutingMode::Active || mode == SdkModel::NavRoutingMode::ReadyNoTurnByTurn)
                 {
                     m_compassStateProvider.SetState(Compass::View::CompassScreenControl::DisplayMode::Navigation);
                 }

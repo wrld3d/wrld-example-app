@@ -268,6 +268,7 @@ namespace ExampleApp
                 jfieldID readyFieldId = env->GetStaticFieldID(navModeClass, "Ready", "Lcom/wrld/widgets/navigation/model/WrldNavMode;");
                 jfieldID activeFieldId = env->GetStaticFieldID(navModeClass, "Active", "Lcom/wrld/widgets/navigation/model/WrldNavMode;");
                 jfieldID notReadyFieldId = env->GetStaticFieldID(navModeClass, "NotReady", "Lcom/wrld/widgets/navigation/model/WrldNavMode;");
+                jfieldID readyNoTurnByTurnFieldId = env->GetStaticFieldID(navModeClass, "ReadyNoTurnByTurn", "Lcom/wrld/widgets/navigation/model/WrldNavMode;");
 
                 jobject modeObject;
 
@@ -278,6 +279,9 @@ namespace ExampleApp
                         break;
                     case SdkModel::NavRoutingMode::Active:
                         modeObject = env->GetStaticObjectField(navModeClass, activeFieldId);
+                        break;
+                    case SdkModel::NavRoutingMode::ReadyNoTurnByTurn:
+                        modeObject = env->GetStaticObjectField(navModeClass, readyNoTurnByTurnFieldId);
                         break;
                     default:
                         modeObject = env->GetStaticObjectField(navModeClass, notReadyFieldId);

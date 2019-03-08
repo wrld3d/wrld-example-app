@@ -177,7 +177,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    m_routingModel.SetNavMode(Ready);
+                    m_routingModel.SetNavMode(ReadyNoTurnByTurn);
                 }
                 m_routingModel.SetRemainingRouteDuration(routeModel.GetDuration());
                 m_worldPinsService.DeselectPin();
