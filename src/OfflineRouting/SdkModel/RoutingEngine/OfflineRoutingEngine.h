@@ -5,6 +5,7 @@
 #include "Types.h"
 #include "OfflineRouting.h"
 #include "IOfflineRoutingEngine.h"
+#include "IPersistentSettingsModel.h"
 
 #include <string>
 #include <vector>
@@ -21,12 +22,16 @@ namespace ExampleApp
                 {
                 public:
                     OfflineRoutingEngine(IOfflineRoutingDataRepository& offlineRoutingDataRepository,
-                                         IOfflineRoutingDataBuilder& offlineRoutingDataBuilder);
+                                         IOfflineRoutingDataBuilder& offlineRoutingDataBuilder,
+                                         IOfflineRoutingFileIO& offlineRoutingFileIO,
+                                         PersistentSettings::IPersistentSettingsModel& persistentSettings);
 
                     ~OfflineRoutingEngine() {}
 
                     bool TryGetLocalBuildIdForInterior(const Eegeo::Resources::Interiors::InteriorId &indoorId,
                                                        std::string &out_buildId) override;
+
+                    bool TryLoadDataFromStorage(const Eegeo::Resources::Interiors::InteriorId &indoorId) override;
 
                     void LoadGraphFromNavigationData(const Eegeo::Resources::Interiors::InteriorId& indoorId,
                                                      const std::string& buildId,
@@ -39,6 +44,8 @@ namespace ExampleApp
 
                     IOfflineRoutingDataRepository& m_offlineRoutingDataRepository;
                     IOfflineRoutingDataBuilder& m_offlineRoutingDataBuilder;
+                    IOfflineRoutingFileIO& m_offlineRoutingFileIO;
+                    PersistentSettings::IPersistentSettingsModel& m_persistentSettings;
                 };
             }
         }

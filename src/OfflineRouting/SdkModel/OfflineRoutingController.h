@@ -25,11 +25,10 @@ namespace ExampleApp
                 OfflineRoutingController(RoutingEngine::IOfflineRoutingEngine& offlineRoutingEngine,
                                          Webservice::IOfflineRoutingDataWebService& dataWebService,
                                          Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                         const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                          const Net::SdkModel::INetworkCapabilities& networkCapabilities);
 
                 ~OfflineRoutingController();
-
-                void LoadInteriorData(const Eegeo::Resources::Interiors::InteriorId& interiorId);
 
                 OfflineRoutingInitialisationState GetInitialisationState() const override;
 
@@ -38,6 +37,7 @@ namespace ExampleApp
                 void OnDataRequestCompleted(const Webservice::OfflineRoutingDataRequestResponse& dataRequestResponse);
                 void OnFailAlertBoxDismissed();
 
+                void LoadInteriorData(const Eegeo::Resources::Interiors::InteriorId& interiorId);
                 bool CanLoadFromInternet();
                 void ShowFailureMessage(const std::string& title, const std::string& message);
 

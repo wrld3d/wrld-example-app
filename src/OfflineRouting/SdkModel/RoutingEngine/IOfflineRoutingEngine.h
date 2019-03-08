@@ -24,6 +24,8 @@ namespace ExampleApp
                     virtual bool TryGetLocalBuildIdForInterior(const Eegeo::Resources::Interiors::InteriorId &indoorId,
                                                                std::string &out_buildId) = 0;
 
+                    virtual bool TryLoadDataFromStorage(const Eegeo::Resources::Interiors::InteriorId &indoorId) = 0;
+
                     virtual void LoadGraphFromNavigationData(const Eegeo::Resources::Interiors::InteriorId& indoorId,
                                                              const std::string& buildId,
                                                              const std::vector<Webservice::OfflineRoutingFloorData>& floorData,

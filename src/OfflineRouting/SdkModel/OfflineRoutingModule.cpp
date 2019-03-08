@@ -10,6 +10,7 @@
 #include "OfflineRoutingDataRepository.h"
 #include "OfflineRoutingGraphPositioner.h"
 #include "OfflineRoutingPathFinder.h"
+#include "OfflineRoutingFileIO.h"
 #include "OfflineRoutingEngine.h"
 #include "InteriorId.h"
 
@@ -21,6 +22,8 @@ namespace ExampleApp
         {
             OfflineRoutingModule::OfflineRoutingModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                        Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                                       PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                                       Eegeo::Helpers::IFileIO& fileIO,
                                                        const Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                                        const std::string& serviceUrlBase,
                                                        const std::string& apiDevToken,
@@ -37,8 +40,11 @@ namespace ExampleApp
                 m_pOfflineRoutingDataBuilder = Eegeo_NEW(RoutingEngine::OfflineRoutingDataBuilder)();
                 m_pOfflineRoutingGraphPositioner = Eegeo_NEW(RoutingEngine::OfflineRoutingGraphPositioner)(*m_pOfflineRoutingDataRepository);
                 m_pOfflineRoutingPathFinder = Eegeo_NEW(RoutingEngine::OfflineRoutingPathFinder)(*m_pOfflineRoutingDataRepository);
+                m_pOfflineRoutingFileIO = Eegeo_NEW(RoutingEngine::OfflineRoutingFileIO)(fileIO);
                 m_pOfflineRoutingEngine = Eegeo_NEW(RoutingEngine::OfflineRoutingEngine)(*m_pOfflineRoutingDataRepository,
-                                                                                         *m_pOfflineRoutingDataBuilder);
+                                                                                         *m_pOfflineRoutingDataBuilder,
+                                                                                         *m_pOfflineRoutingFileIO,
+                                                                                         persistentSettings);
 
                 m_pOfflineRoutingServiceRouteDataBuilder = Eegeo_NEW(OfflineRoutingServiceRouteDataBuilder)(*m_pOfflineRoutingDataRepository);
                 m_pOfflineRoutingService = Eegeo_NEW(OfflineRoutingService)(*m_pOfflineRoutingGraphPositioner,
@@ -48,9 +54,8 @@ namespace ExampleApp
                 m_pOfflineRoutingController = Eegeo_NEW(OfflineRoutingController)(*m_pOfflineRoutingEngine,
                                                                                   *m_pOfflineRoutingDataWebService,
                                                                                   alertBoxFactory,
+                                                                                  interiorId,
                                                                                   networkCapabilities);
-
-                m_pOfflineRoutingController->LoadInteriorData(interiorId);
             }
 
             OfflineRoutingModule::~OfflineRoutingModule()
@@ -59,6 +64,7 @@ namespace ExampleApp
                 Eegeo_DELETE m_pOfflineRoutingService;
                 Eegeo_DELETE m_pOfflineRoutingServiceRouteDataBuilder;
                 Eegeo_DELETE m_pOfflineRoutingEngine;
+                Eegeo_DELETE m_pOfflineRoutingFileIO;
                 Eegeo_DELETE m_pOfflineRoutingPathFinder;
                 Eegeo_DELETE m_pOfflineRoutingGraphPositioner;
                 Eegeo_DELETE m_pOfflineRoutingDataBuilder;

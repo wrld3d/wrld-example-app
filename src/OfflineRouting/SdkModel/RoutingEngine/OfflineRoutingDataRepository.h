@@ -27,6 +27,7 @@ namespace ExampleApp
                     void AddGraphNode(const OfflineRoutingGraphNode& node) override;
                     void AddGraphNodes(const std::vector<OfflineRoutingGraphNode>& nodes) override;
                     void AddFeature(const OfflineRoutingFeature& feature) override;
+                    void AddFeatures(const std::vector<OfflineRoutingFeature>& features) override;
 
                     bool HasGraphNode(const OfflineRoutingGraphNodeId& id) const override;
                     bool HasFeature(const OfflineRoutingFeatureId& id) const override;
@@ -37,7 +38,7 @@ namespace ExampleApp
                     const OfflineRoutingGraphNodes& GetGraph() const override;
                     const OfflineRoutingFeatures& GetFeatures() const override;
 
-                    void BuildGraph() override;
+                    void BuildGraph(bool featureNodesAlreadyLinked) override;
 
                     void RegisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback) override;
                     void UnregisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback) override;

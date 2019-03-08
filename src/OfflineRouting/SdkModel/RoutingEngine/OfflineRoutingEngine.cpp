@@ -6,6 +6,7 @@
 #include "IOfflineRoutingDataRepository.h"
 #include "IOfflineRoutingDataBuilder.h"
 #include "OfflineRoutingFeatureBuilder.h"
+#include "IOfflineRoutingFileIO.h"
 #include "OfflineRoutingFeature.h"
 #include "OfflineRoutingGraphNode.h"
 
@@ -17,17 +18,46 @@ namespace ExampleApp
         {
             namespace RoutingEngine
             {
+                namespace
+                {
+                    const std::string STORED_GRAPH_BUILD_ID_KEY = "Local_BuildId_For_Interior_";
+                }
+
                 OfflineRoutingEngine::OfflineRoutingEngine(IOfflineRoutingDataRepository& offlineRoutingDataRepository,
-                                                           IOfflineRoutingDataBuilder& offlineRoutingDataBuilder)
+                                                           IOfflineRoutingDataBuilder& offlineRoutingDataBuilder,
+                                                           IOfflineRoutingFileIO& offlineRoutingFileIO,
+                                                           PersistentSettings::IPersistentSettingsModel& persistentSettings)
                 : m_offlineRoutingDataRepository(offlineRoutingDataRepository)
                 , m_offlineRoutingDataBuilder(offlineRoutingDataBuilder)
+                , m_offlineRoutingFileIO(offlineRoutingFileIO)
+                , m_persistentSettings(persistentSettings)
                 {
                 }
 
                 bool OfflineRoutingEngine::TryGetLocalBuildIdForInterior(const Eegeo::Resources::Interiors::InteriorId &indoorId,
                                                                          std::string &out_buildId)
                 {
-                    return false; //TODO check local storage
+                    return m_persistentSettings.TryGetValue(STORED_GRAPH_BUILD_ID_KEY + indoorId.Value(), out_buildId);
+                }
+
+                bool OfflineRoutingEngine::TryLoadDataFromStorage(const Eegeo::Resources::Interiors::InteriorId &indoorId)
+                {
+                    std::string buildId;
+                    if (!TryGetLocalBuildIdForInterior(indoorId, buildId))
+                    {
+                        return false;
+                    }
+                    std::vector<OfflineRoutingFeature> features;
+                    std::vector<OfflineRoutingGraphNode> graphNodes;
+                    if (!m_offlineRoutingFileIO.LoadGraphFromStorage(indoorId, features, graphNodes))
+                    {
+                        return false;
+                    }
+
+                    m_offlineRoutingDataRepository.AddFeatures(features);
+                    m_offlineRoutingDataRepository.AddGraphNodes(graphNodes);
+                    m_offlineRoutingDataRepository.BuildGraph(true);
+                    return true;
                 }
 
                 void OfflineRoutingEngine::LoadGraphFromNavigationData(const Eegeo::Resources::Interiors::InteriorId& indoorId,
@@ -37,7 +67,9 @@ namespace ExampleApp
                 {
                     AddFloorData(indoorId, floorData);
                     AddMultiFloorData(indoorId, multiFloorData);
-                    m_offlineRoutingDataRepository.BuildGraph();
+                    m_offlineRoutingDataRepository.BuildGraph(false);
+                    m_offlineRoutingFileIO.SaveGraphToStorage(indoorId, m_offlineRoutingDataRepository.GetFeatures(), m_offlineRoutingDataRepository.GetGraph());
+                    m_persistentSettings.SetValue(STORED_GRAPH_BUILD_ID_KEY + indoorId.Value(), buildId);
                 }
 
                 void OfflineRoutingEngine::AddFloorData(const Eegeo::Resources::Interiors::InteriorId& indoorId, const std::vector<Webservice::OfflineRoutingFloorData>& floorData)

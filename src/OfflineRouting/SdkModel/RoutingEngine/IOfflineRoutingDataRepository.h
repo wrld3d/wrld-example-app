@@ -22,6 +22,7 @@ namespace ExampleApp
                     virtual void AddGraphNode(const OfflineRoutingGraphNode& node) = 0;
                     virtual void AddGraphNodes(const std::vector<OfflineRoutingGraphNode>& nodes) = 0;
                     virtual void AddFeature(const OfflineRoutingFeature& feature) = 0;
+                    virtual void AddFeatures(const std::vector<OfflineRoutingFeature>& features) = 0;
 
                     virtual bool HasGraphNode(const OfflineRoutingGraphNodeId& id) const = 0;
                     virtual bool HasFeature(const OfflineRoutingFeatureId& id) const = 0;
@@ -32,7 +33,7 @@ namespace ExampleApp
                     virtual const OfflineRoutingGraphNodes& GetGraph() const = 0;
                     virtual const OfflineRoutingFeatures& GetFeatures() const = 0;
 
-                    virtual void BuildGraph() = 0;
+                    virtual void BuildGraph(bool featureNodesAlreadyLinked) = 0;
 
                     virtual void RegisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback) = 0;
                     virtual void UnregisterGraphBuiltCallback(OfflineRoutingDataRepositoryBuildCompletedCallback& callback) = 0;

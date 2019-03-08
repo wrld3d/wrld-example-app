@@ -6,6 +6,7 @@ set(currsources
   ../src/OfflineRouting/SdkModel/RoutingEngine/IOfflineRoutingDataRepository.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/IOfflineRoutingDataSearchService.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/IOfflineRoutingEngine.h
+  ../src/OfflineRouting/SdkModel/RoutingEngine/IOfflineRoutingFileIO.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/IOfflineRoutingGraphPositioner.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/IOfflineRoutingPathFinder.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingDataBuilder.cpp
@@ -19,6 +20,8 @@ set(currsources
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingFeature.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingFeatureBuilder.cpp
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingFeatureBuilder.h
+  ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingFileIO.cpp
+  ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingFileIO.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingFindPathResult.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingGraphBuildResults.h
   ../src/OfflineRouting/SdkModel/RoutingEngine/OfflineRoutingGraphNode.h

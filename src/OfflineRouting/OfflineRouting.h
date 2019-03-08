@@ -29,6 +29,7 @@ namespace ExampleApp
             namespace RoutingEngine
             {
                 class IOfflineRoutingEngine;
+                class IOfflineRoutingFileIO;
                 class IOfflineRoutingDataBuilder;
                 class IOfflineRoutingDataRepository;
                 class IOfflineRoutingGraphPositioner;

@@ -10,6 +10,8 @@
 #include "OfflineRoutingDataSearchService.h"
 #include "IAlertBoxFactory.h"
 #include "INetworkCapabilities.h"
+#include "IPersistentSettingsModel.h"
+#include "IFileIO.h"
 
 #include <string>
 
@@ -24,6 +26,8 @@ namespace ExampleApp
             public:
                 OfflineRoutingModule(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                      Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                     PersistentSettings::IPersistentSettingsModel& persistentSettings,
+                                     Eegeo::Helpers::IFileIO& fileIO,
                                      const Net::SdkModel::INetworkCapabilities& networkCapabilities,
                                      const std::string& serviceUrlBase,
                                      const std::string& apiDevToken,
@@ -46,6 +50,7 @@ namespace ExampleApp
                 RoutingEngine::IOfflineRoutingDataBuilder* m_pOfflineRoutingDataBuilder;
                 RoutingEngine::IOfflineRoutingGraphPositioner* m_pOfflineRoutingGraphPositioner;
                 RoutingEngine::IOfflineRoutingPathFinder* m_pOfflineRoutingPathFinder;
+                RoutingEngine::IOfflineRoutingFileIO* m_pOfflineRoutingFileIO;
                 RoutingEngine::IOfflineRoutingEngine* m_pOfflineRoutingEngine;
 
                 IOfflineRoutingServiceRouteDataBuilder* m_pOfflineRoutingServiceRouteDataBuilder;

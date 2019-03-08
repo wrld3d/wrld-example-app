@@ -891,6 +891,8 @@ namespace ExampleApp
 
         m_pOfflineRoutingModule = Eegeo_NEW(ExampleApp::OfflineRouting::SdkModel::OfflineRoutingModule)(world.GetPlatformAbstractionModule().GetPlatformWebLoadRequestFactory(),
                                                                                                         m_pWorld->GetNativeUIFactories().AlertBoxFactory(),
+                                                                                                        m_persistentSettings,
+                                                                                                        m_platformAbstractions.GetFileIO(),
                                                                                                         m_networkCapabilities,
                                                                                                         m_applicationConfiguration.IndoorMapsServiceUrl(),
                                                                                                         m_applicationConfiguration.IndoorMapsServiceToken(),

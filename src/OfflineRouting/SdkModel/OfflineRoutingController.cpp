@@ -51,6 +51,7 @@ namespace ExampleApp
             OfflineRoutingController::OfflineRoutingController(RoutingEngine::IOfflineRoutingEngine& offlineRoutingEngine,
                                                                Webservice::IOfflineRoutingDataWebService& dataWebService,
                                                                Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory,
+                                                               const Eegeo::Resources::Interiors::InteriorId& interiorId,
                                                                const Net::SdkModel::INetworkCapabilities& networkCapabilities)
             : m_offlineRoutingEngine(offlineRoutingEngine)
             , m_dataWebService(dataWebService)
@@ -63,6 +64,8 @@ namespace ExampleApp
             {
                 m_dataWebService.RegisterVersionsRequestCompletedCallback(m_versionsRequestCompletedCallback);
                 m_dataWebService.RegisterDataRequestCompletedCallback(m_dataRequestCompletedCallback);
+
+                LoadInteriorData(interiorId);
             }
 
             OfflineRoutingController::~OfflineRoutingController()
@@ -85,8 +88,14 @@ namespace ExampleApp
                     return;
                 }
 
-                //TODO Load local and if no data found
-                ShowFailureMessage("No internet connection", "Unable to load navigation data. Navigation functionality is disabled. Please restart application with an active internet connection to load required data.");
+                if (m_offlineRoutingEngine.TryLoadDataFromStorage(interiorId))
+                {
+                    m_initialisationState = Ready;
+                }
+                else
+                {
+                    m_initialisationState = InitialisationFailed;
+                }
             }
 
             OfflineRoutingInitialisationState OfflineRoutingController::GetInitialisationState() const
@@ -98,40 +107,38 @@ namespace ExampleApp
             {
                 if (!versionsRequestResponse.succeeded)
                 {
-                    ShowFailureMessage("Version request failed", "Unable to get interior versions from service.");
+                    ShowFailureMessage("Version request failed", "Unable to get interior versions from service. Navigation functionality is disabled. Please restart application to load required data.");
                     return;
                 }
 
                 Webservice::OfflineRoutingIndoorVersion latestVersion;
                 if (!TryGetLatestVersion(versionsRequestResponse.results, latestVersion))
                 {
-                    ShowFailureMessage("Version request failed", "No valid navigation data available for the specified indoor map.");
+                    ShowFailureMessage("Version request failed", "No valid navigation data available for the specified indoor map. Navigation functionality is disabled. Please restart application to load required data.");
                     return;
                 }
 
-                bool shouldLoadData = true;
                 std::string localBuildId;
                 if (m_offlineRoutingEngine.TryGetLocalBuildIdForInterior(versionsRequestResponse.interiorId, localBuildId))
                 {
                     if (localBuildId == latestVersion.buildId)
                     {
-                        //TODO Load local data
-                        //shouldLoadData = !dataLoaded;
-                        shouldLoadData = true;
+                        if (m_offlineRoutingEngine.TryLoadDataFromStorage(versionsRequestResponse.interiorId))
+                        {
+                            m_initialisationState = Ready;
+                            return;
+                        }
                     }
                 }
 
-                if (shouldLoadData)
-                {
-                    m_dataWebService.RequestNavigationDataForInterior(versionsRequestResponse.interiorId, latestVersion.buildId);
-                }
+                m_dataWebService.RequestNavigationDataForInterior(versionsRequestResponse.interiorId, latestVersion.buildId);
             }
 
             void OfflineRoutingController::OnDataRequestCompleted(const Webservice::OfflineRoutingDataRequestResponse& dataRequestResponse)
             {
                 if (!dataRequestResponse.succeeded)
                 {
-                    ShowFailureMessage("Data request failed", "Unable to get navigation data from service.");
+                    ShowFailureMessage("Data request failed", "Unable to get navigation data from service. Navigation functionality is disabled. Please restart application to load required data.");
                     return;
                 }
 

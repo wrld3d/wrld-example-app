@@ -39,6 +39,14 @@ namespace ExampleApp
                     m_interiorFeatures[feature.GetId()] = feature;
                 }
 
+                void OfflineRoutingDataRepository::AddFeatures(const std::vector<OfflineRoutingFeature>& features)
+                {
+                    for (const auto& feature: features)
+                    {
+                        AddFeature(feature);
+                    }
+                }
+
                 bool OfflineRoutingDataRepository::HasGraphNode(const OfflineRoutingGraphNodeId& id) const
                 {
                     return m_interiorGraphNodes.find(id) != m_interiorGraphNodes.end();
@@ -95,7 +103,7 @@ namespace ExampleApp
                     }
                 }
 
-                void OfflineRoutingDataRepository::BuildGraph()
+                void OfflineRoutingDataRepository::BuildGraph(bool featureNodesAlreadyLinked)
                 {
                     m_dataSearchService.BuildSearchTree(m_interiorGraphNodes);
 
@@ -103,7 +111,11 @@ namespace ExampleApp
 
                     for (const auto &graphPair : m_interiorGraphNodes)
                     {
-                        JoinNodesWithinMinimumDistance(graphPair.first);
+                        if (!featureNodesAlreadyLinked)
+                        {
+                            JoinNodesWithinMinimumDistance(graphPair.first);
+                        }
+
                         totalEdges += graphPair.second.GetEdges().size();
                     }
 
