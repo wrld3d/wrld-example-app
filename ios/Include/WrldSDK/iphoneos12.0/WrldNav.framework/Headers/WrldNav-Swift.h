@@ -307,6 +307,7 @@ typedef SWIFT_ENUM(NSInteger, WRLDNavMode, closed) {
   WRLDNavModeNotReady = 0,
   WRLDNavModeReady = 1,
   WRLDNavModeActive = 2,
+  WRLDNavModeReadyNoTurnByTurn = 3,
 };
 
 @class WRLDNavRoute;

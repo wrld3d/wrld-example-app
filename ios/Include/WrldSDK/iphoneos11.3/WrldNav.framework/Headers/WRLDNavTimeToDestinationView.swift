@@ -122,7 +122,8 @@ public class WRLDNavTimeToDestinationView: UIView, WRLDNavModelObserverProtocol
         {
             switch(navMode)
             {
-            case .notReady:
+            case .notReady,
+                 .readyNoTurnByTurn:
                 startEndButton.isHidden = true
                 break;
             case .ready:

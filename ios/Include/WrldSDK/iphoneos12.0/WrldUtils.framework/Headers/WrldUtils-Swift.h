@@ -235,6 +235,18 @@ SWIFT_CLASS("_TtC9WrldUtils18WRLDUtilsImageView")
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class UIView;
+
+/// An image view with minimum size for hit detection.
+SWIFT_CLASS("_TtC9WrldUtils36WRLDUtilsImageViewWithMinimumHitArea")
+@interface WRLDUtilsImageViewWithMinimumHitArea : UIImageView
+- (UIView * _Nullable)hitTest:(CGPoint)point withEvent:(UIEvent * _Nullable)event SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)initWithImage:(UIImage * _Nullable)image OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithImage:(UIImage * _Nullable)image highlightedImage:(UIImage * _Nullable)highlightedImage OBJC_DESIGNATED_INITIALIZER SWIFT_AVAILABILITY(ios,introduced=3.0);
+- (nonnull instancetype)initWithFrame:(CGRect)frame OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+@end
+
 
 /// A text field that contains images to the left and right of the text field. These images can be
 /// loaded from a different bundle.

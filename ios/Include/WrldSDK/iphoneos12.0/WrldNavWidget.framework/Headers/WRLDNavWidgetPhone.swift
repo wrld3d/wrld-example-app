@@ -199,7 +199,8 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
                 setTopInstructionVisibility (visible: false, animate: animate)
                 setBottomVisibility         (visible:  false, animate: animate)
                 break;
-            case .ready:
+            case .ready,
+                 .readyNoTurnByTurn:
                 setTopSetupJourneyVisibility(visible:  true, animate: animate)
                 setTopInstructionVisibility (visible: false, animate: animate)
                 setBottomVisibility         (visible:  true, animate: animate)
@@ -233,7 +234,8 @@ public class WRLDNavWidgetPhone: WRLDNavWidgetBase
                 height += topToggleButton.bounds.height
                 height += topStackView.bounds.size.height
                 break
-            case .ready:
+            case .ready,
+                 .readyNoTurnByTurn:
                 height += topToggleButton.bounds.height
                 height += topStackView.bounds.size.height
                 break

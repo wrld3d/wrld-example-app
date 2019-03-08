@@ -266,7 +266,8 @@ public class WRLDNavWidgetTablet: WRLDNavWidgetBase
                 setDirectionsVisibility(visible: false, animate: animate)
                 setStepByStepDirectionsVisibility(visible: false, animate: animate)
                 break;
-            case .ready:
+            case .ready,
+                 .readyNoTurnByTurn:
                 setLeftVisibility  (visible:  true, animate: animate)
                 setTopVisibility   (visible: false, animate: animate)
                 setBottomVisibility(visible: false, animate: animate)

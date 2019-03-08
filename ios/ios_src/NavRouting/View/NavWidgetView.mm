@@ -170,6 +170,10 @@ namespace ExampleApp
                     case SdkModel::Active:
                     navMode = WRLDNavModeActive;
                     break;
+                        
+                    case SdkModel::ReadyNoTurnByTurn:
+                    navMode = WRLDNavModeReadyNoTurnByTurn;
+                    break;
                     
                     default:
                     navMode = WRLDNavModeNotReady;
