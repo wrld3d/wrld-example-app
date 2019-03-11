@@ -64,6 +64,10 @@ namespace ExampleApp
                 const float WALKING_SPEED_IN_METER_PER_SECOND = 1.4;
                 const float DRIVING_SPEED_IN_METER_PER_SECOND = 10;
 
+                const float ELEVATOR_FEATURE_TYPE_DURATION_MULTIPLIER = 1;
+                const float ESCALATOR_FEATURE_TYPE_DURATION_MULTIPLIER = 2;
+                const float STAIRS_FEATURE_TYPE_DURATION_MULTIPLIER = 3.5;
+
                 const double POINT_ON_GRAPH_SEARCH_RADIUS_METERS = 30;
             }
 

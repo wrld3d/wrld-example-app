@@ -74,6 +74,7 @@ namespace ExampleApp
                         return OfflineRoutingFindPathResult();
                     }
 
+                    m_pPather->Reset();
                     m_pMicroPatherGraph->SetStartPoint(startPoint);
                     m_pMicroPatherGraph->SetEndPoint(goalPoint);
                     m_pMicroPatherGraph->SetTransportationMode(transportationMode);
@@ -104,7 +105,6 @@ namespace ExampleApp
                         }
                     }
 
-                    m_pPather->Reset();
                     return OfflineRoutingFindPathResult(true,
                                                         m_pMicroPatherGraph->GetStartPoint(),
                                                         m_pMicroPatherGraph->GetEndPoint(),

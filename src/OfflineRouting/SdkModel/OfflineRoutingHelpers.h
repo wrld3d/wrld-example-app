@@ -6,6 +6,8 @@
 #include "VectorMath.h"
 #include "RouteData.h"
 
+#include <string>
+
 namespace ExampleApp
 {
     namespace OfflineRouting
@@ -23,6 +25,8 @@ namespace ExampleApp
                 Eegeo::dv3 GetEcefPointFromLatlong(const Eegeo::Space::LatLong& point, const int floorId);
 
                 float GetSpeedForTransportationMode(Eegeo::Routes::Webservice::TransportationMode transportationMode);
+
+                float GetDurationMultiplierForFeatureType(const std::string& featureType);
             }
         }
     }

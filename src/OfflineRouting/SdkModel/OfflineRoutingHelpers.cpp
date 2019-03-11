@@ -42,6 +42,26 @@ namespace ExampleApp
                             return RoutingEngine::WALKING_SPEED_IN_METER_PER_SECOND;
                     }
                 }
+
+                float GetDurationMultiplierForFeatureType(const std::string& featureType)
+                {
+                    if (featureType == "stairs")
+                    {
+                        return RoutingEngine::STAIRS_FEATURE_TYPE_DURATION_MULTIPLIER;
+                    }
+
+                    if (featureType == "escalator")
+                    {
+                        return RoutingEngine::ESCALATOR_FEATURE_TYPE_DURATION_MULTIPLIER;
+                    }
+
+                    if (featureType == "elevator")
+                    {
+                        return RoutingEngine::ELEVATOR_FEATURE_TYPE_DURATION_MULTIPLIER;
+                    }
+
+                    return 1;
+                }
             }
         }
     }

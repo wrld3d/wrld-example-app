@@ -55,6 +55,7 @@ namespace ExampleApp
                 void OfflineRoutingMicroPatherGraph::AdjacentCost( void* state, MP_VECTOR< micropather::StateCost > *adjacent )
                 {
                     float durationMultiplier = 1;
+                    float featureTypeMultiplier = 1;
                     const auto& currentNodeId = GetIdFromState(state);
 
                     if (currentNodeId != PATHER_START_END_POINT_NODE_ID)
@@ -65,6 +66,8 @@ namespace ExampleApp
                         {
                             durationMultiplier = currentFeature.GetDurationMultiplier();
                         }
+
+                        featureTypeMultiplier = Helpers::GetDurationMultiplierForFeatureType(currentFeature.GetType());
                     }
 
                     const auto& adjacentNodes = GetAdjacentNodes(state);
@@ -75,7 +78,7 @@ namespace ExampleApp
                         const auto* node = &m_offlineRoutingDataRepository.GetGraphNode(nodeId);
 
                         float duration = Helpers::Distance(statePoint, node->GetPoint()) / Helpers::GetSpeedForTransportationMode(m_transportationMode);
-                        float adjNodeEdgeCost = duration * durationMultiplier;
+                        float adjNodeEdgeCost = duration * durationMultiplier * featureTypeMultiplier;
                         micropather::StateCost stateCost = {const_cast<void*>(static_cast<const void*>(node)), adjNodeEdgeCost};
                         adjacent->push_back(stateCost);
                     }
