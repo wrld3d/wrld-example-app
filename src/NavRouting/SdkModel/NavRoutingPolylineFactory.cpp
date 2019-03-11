@@ -11,47 +11,178 @@ namespace ExampleApp
         {
             namespace
             {
-                bool IsEqual(const Eegeo::Space::LatLong& first, const Eegeo::Space::LatLong& second)
+                bool AreApproximatelyEqual(
+                    const Eegeo::Space::LatLong& first,
+                    const Eegeo::Space::LatLong& second
+                )
                 {
-                    return first.ToECEF().SquareDistanceTo(second.ToECEF()) <= 0.00000000001;
+                    // <= 1mm separation
+                    const double epsilonSq = 1e-6;
+                    return first.ToECEF().SquareDistanceTo(second.ToECEF()) <= epsilonSq;
+                }
+
+                bool AreCoordinateElevationPairApproximatelyEqual(
+                    std::pair<Eegeo::Space::LatLong, double>& a,
+                    std::pair<Eegeo::Space::LatLong, double>& b
+                    )
+                {
+                    const double elevationEpsilon = 1e-3;
+
+                    if (!AreApproximatelyEqual(a.first, b.first))
+                    {
+                        return false;
+                    }
+
+                    return std::abs(a.second - b.second) <= elevationEpsilon;
+                }
+
+                void RemoveCoincidentPoints(std::vector<Eegeo::Space::LatLong>& coordinates)
+                {
+                    coordinates.erase(
+                        std::unique(coordinates.begin(), coordinates.end(), AreApproximatelyEqual),
+                        coordinates.end());
+                }
+
+                void RemoveCoincidentPointsWithElevations(
+                    std::vector<Eegeo::Space::LatLong>& coordinates,
+                    std::vector<double>& perPointElevations
+                )
+                {
+                    Eegeo_ASSERT(coordinates.size() == perPointElevations.size());
+                    std::vector<std::pair<Eegeo::Space::LatLong, double>> zipped;
+                    zipped.reserve(coordinates.size());
+                    for (int i = 0; i < coordinates.size(); ++i)
+                    {
+                        zipped.push_back(std::make_pair(coordinates[i], perPointElevations[i]));
+                    }
+
+                    const auto newEnd = std::unique(zipped.begin(), zipped.end(), AreCoordinateElevationPairApproximatelyEqual);
+                    if (newEnd != zipped.end())
+                    {
+                        zipped.erase(newEnd, zipped.end());
+
+                        coordinates.clear();
+                        perPointElevations.clear();
+
+                        for (const auto& pair : zipped)
+                        {
+                            coordinates.push_back(pair.first);
+                            perPointElevations.push_back(pair.second);
+                        }
+                    }
+
+                }
+
+                NavRoutingPolylineCreateParams MakeNavRoutingPolylineCreateParams(
+                    const std::vector<Eegeo::Space::LatLong>& coordinates,
+                    const Eegeo::v4& color,
+                    const std::string& indoorMapId,
+                    int indoorMapFloorId
+                )
+                {
+                    return {coordinates, color, indoorMapId, indoorMapFloorId, {}};
+                }
+
+                NavRoutingPolylineCreateParams MakeNavRoutingPolylineCreateParamsForVerticalLine(
+                    const std::vector<Eegeo::Space::LatLong>& coordinates,
+                    const Eegeo::v4& color,
+                    const std::string& indoorMapId,
+                    int indoorMapFloorId,
+                    double heightStart,
+                    double heightEnd
+                )
+                {
+                    return {coordinates, color, indoorMapId, indoorMapFloorId, {heightStart, heightEnd}};
+                }
+
+
+                bool CanAmalgamate(
+                    const NavRoutingPolylineCreateParams& a,
+                    const NavRoutingPolylineCreateParams& b
+                )
+                {
+                    if (a.IsIndoor() != b.IsIndoor())
+                    {
+                        return false;
+                    }
+
+                    if (a.GetIndoorMapId() != b.GetIndoorMapId())
+                    {
+                        return false;
+                    }
+
+                    if (a.GetIndoorMapFloorId() != b.GetIndoorMapFloorId())
+                    {
+                        return false;
+                    }
+
+                    if (a.GetColor() != b.GetColor())
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+
+                std::vector<std::pair<int, int>> BuildAmalgamationRanges(const std::vector<NavRoutingPolylineCreateParams>& polylineCreateParams)
+                {
+                    std::vector<std::pair<int, int>> ranges;
+
+                    if (polylineCreateParams.empty())
+                    {
+                        return ranges;
+                    }
+
+                    int rangeStart = 0;
+                    for (int i = 1; i < polylineCreateParams.size(); ++i)
+                    {
+                        const auto &a = polylineCreateParams[i - 1];
+                        const auto &b = polylineCreateParams[i];
+
+                        if (!CanAmalgamate(a, b))
+                        {
+                            ranges.push_back(std::make_pair(rangeStart, i));
+                            rangeStart = i;
+                        }
+                    }
+                    ranges.push_back(std::make_pair(rangeStart, int(polylineCreateParams.size())));
+
+                    return ranges;
                 }
             }
             
-            NavRoutingPolylineFactory::NavRoutingPolylineFactory(PolyLineArgs::IShapeService& shapeService,
-                                                                 const NavRoutingPolylineConfig& polylineConfig)
+            NavRoutingPolylineFactory::NavRoutingPolylineFactory(
+                PolyLineArgs::IShapeService& shapeService,
+                const NavRoutingPolylineConfig& polylineConfig
+            )
             : m_shapeService(shapeService)
-            , m_routeThickness(polylineConfig.routeThickness)
-            , m_miterLimit(polylineConfig.miterLimit)
-            , m_routeElevation(polylineConfig.routeElevation)
-            , m_routeElevationMode(polylineConfig.routeElevationMode)
-            , m_shouldScaleWithMap(polylineConfig.shouldScaleWithMap)
+            , m_polylineConfig(polylineConfig)
             {
                 
             }
-            
-            RouteLines NavRoutingPolylineFactory::CreateLinesForRouteDirection(const NavRoutingDirectionModel& directionModel,
-                                                                               const Eegeo::v4& color)
-            {
-                RouteLines routeLines;
-                const auto& coordinates = directionModel.GetPath();
 
-                std::vector<Eegeo::Space::LatLong> uniqueCoordinates;
-                uniqueCoordinates.reserve(coordinates.size());
-                std::unique_copy (coordinates.begin(), coordinates.end(), std::back_inserter(uniqueCoordinates), IsEqual);
+            std::vector<NavRoutingPolylineCreateParams> NavRoutingPolylineFactory::CreateLinesForRouteDirection(
+                const NavRoutingDirectionModel& directionModel,
+                const Eegeo::v4& color
+                )
+            {
+                std::vector<NavRoutingPolylineCreateParams> results;
+                std::vector<Eegeo::Space::LatLong> uniqueCoordinates(directionModel.GetPath());
+                RemoveCoincidentPoints(uniqueCoordinates);
 
                 if(uniqueCoordinates.size()>1)
                 {
-                    routeLines.push_back(CreatePolyline(uniqueCoordinates,
-                                                        color,
-                                                        directionModel.GetIsIndoors(),
-                                                        directionModel.GetIndoorMapId().Value(),
-                                                        directionModel.GetIndoorMapFloorId()));
+                    results.push_back(MakeNavRoutingPolylineCreateParams(
+                        uniqueCoordinates,
+                        color,
+                        directionModel.GetIndoorMapId().Value(),
+                        directionModel.GetIndoorMapFloorId())
+                    );
                 }
                 
-                return routeLines;
+                return results;
             }
-            
-            RouteLines NavRoutingPolylineFactory::CreateLinesForRouteDirection(const NavRoutingDirectionModel& directionModel,
+
+            std::vector<NavRoutingPolylineCreateParams> NavRoutingPolylineFactory::CreateLinesForRouteDirection(const NavRoutingDirectionModel& directionModel,
                                                                                const Eegeo::v4& forwardColor,
                                                                                const Eegeo::v4& backwardColor,
                                                                                int splitIndex,
@@ -68,7 +199,7 @@ namespace ExampleApp
                 }
                 else
                 {
-                    RouteLines routeLines;
+                    std::vector<NavRoutingPolylineCreateParams> results;
                     std::vector<Eegeo::Space::LatLong> backwardPath;
                     std::vector<Eegeo::Space::LatLong> forwardPath;
                     
@@ -83,11 +214,6 @@ namespace ExampleApp
                     
                     for (int i = 0; i < coordinatesSize; i++)
                     {
-                        if (IsEqual(closestPointOnRoute, coordinates[i]))
-                        {
-                            continue;
-                        }
-                        
                         if(i<=splitIndex)
                         {
                             backwardPath.emplace_back(coordinates[i]);
@@ -100,38 +226,45 @@ namespace ExampleApp
                     
                     //Backward path ends with the split point
                     backwardPath.emplace_back(closestPointOnRoute);
-                    
+
+                    RemoveCoincidentPoints(backwardPath);
+                    RemoveCoincidentPoints(forwardPath);
+
                     if(backwardPath.size()>1)
                     {
-                        routeLines.emplace_back(CreatePolyline(backwardPath,
-                                                               backwardColor,
-                                                               directionModel.GetIsIndoors(),
-                                                               directionModel.GetIndoorMapId().Value(),
-                                                               directionModel.GetIndoorMapFloorId()));
+                        results.emplace_back(MakeNavRoutingPolylineCreateParams(
+                            backwardPath,
+                            backwardColor,
+                            directionModel.GetIndoorMapId().Value(),
+                            directionModel.GetIndoorMapFloorId())
+                        );
                     }
                     
                     if(forwardPath.size()>1)
                     {
-                        routeLines.emplace_back(CreatePolyline(forwardPath,
-                                                               forwardColor,
-                                                               directionModel.GetIsIndoors(),
-                                                               directionModel.GetIndoorMapId().Value(),
-                                                               directionModel.GetIndoorMapFloorId()));
+                        results.emplace_back(MakeNavRoutingPolylineCreateParams(
+                            forwardPath,
+                            forwardColor,
+                            directionModel.GetIndoorMapId().Value(),
+                            directionModel.GetIndoorMapFloorId())
+                        );
                     }
                     
-                    return routeLines;
+                    return results;
                 }
             }
-            
-            RouteLines NavRoutingPolylineFactory::CreateLinesForFloorTransition(const std::vector<Eegeo::Space::LatLong>& coordinates,
-                                                                                const std::string& indoorMapId,
-                                                                                int floorBefore,
-                                                                                int floorAfter,
-                                                                                const Eegeo::v4& color)
+
+            std::vector<NavRoutingPolylineCreateParams> NavRoutingPolylineFactory::CreateLinesForFloorTransition(
+                const std::vector<Eegeo::Space::LatLong>& coordinates,
+                const std::string& indoorMapId,
+                int floorBefore,
+                int floorAfter,
+                const Eegeo::v4& color
+            )
             {
                 double verticalLineHeight = 5.0;
                 double lineHeight = (floorAfter > floorBefore) ? verticalLineHeight : -verticalLineHeight;
-                RouteLines routeLines;
+                std::vector<NavRoutingPolylineCreateParams> results;
 
                 uint coordinateCount = static_cast<uint>(coordinates.size());
                 Eegeo_ASSERT(coordinateCount >= 2, "Can't make a floor transition line with a single point");
@@ -142,53 +275,100 @@ namespace ExampleApp
                 endCoords.push_back(coordinates.at(coordinateCount-2));
                 endCoords.push_back(coordinates.at(coordinateCount-1));
 
-                routeLines.push_back(MakeVerticalLine(startCoords, indoorMapId, floorBefore, 0, lineHeight, color));
-                routeLines.push_back(MakeVerticalLine(endCoords, indoorMapId, floorAfter, -lineHeight, 0, color));
-                return routeLines;
+                results.push_back(MakeNavRoutingPolylineCreateParamsForVerticalLine(startCoords, color, indoorMapId, floorBefore, 0, lineHeight));
+                results.push_back(MakeNavRoutingPolylineCreateParamsForVerticalLine(endCoords, color, indoorMapId, floorAfter, -lineHeight, 0));
+                return results;
             }
-            
-            PolyLineArgs::ShapeModel::IdType NavRoutingPolylineFactory::MakeVerticalLine(const std::vector<Eegeo::Space::LatLong>& coordinates,
-                                                                                         const std::string& indoorMapId,
-                                                                                         int floor,
-                                                                                         double heightStart,
-                                                                                         double heightEnd,
-                                                                                         const Eegeo::v4& color)
+
+            RoutePolylineIdVector NavRoutingPolylineFactory::CreatePolylines(const std::vector<NavRoutingPolylineCreateParams>& polylineCreateParams)
             {
-                std::vector<double> perPointElevations;
-                perPointElevations.push_back(heightStart);
-                perPointElevations.push_back(heightEnd);
-                
-                return CreatePolyline(coordinates, color, true, indoorMapId, floor, true, perPointElevations);
+                RoutePolylineIdVector result;
+
+                const auto& ranges = BuildAmalgamationRanges(polylineCreateParams);
+
+                for (const auto& range : ranges)
+                {
+                    const auto& polylineIds = CreateAmalgamatedPolylinesForRange(polylineCreateParams, range.first, range.second);
+                    result.insert(result.end(), polylineIds.begin(), polylineIds.end());
+                }
+
+                return result;
             }
-            
-            PolyLineArgs::ShapeModel::IdType NavRoutingPolylineFactory::CreatePolyline(const std::vector<Eegeo::Space::LatLong>& coordinates,
-                                                                                        const Eegeo::v4& color,
-                                                                                        bool isIndoors,
-                                                                                        const std::string& indoorMapId,
-                                                                                        int indoorMapFloorId,
-                                                                                        bool hasPerPointElevation,
-                                                                                        const std::vector<double>& perPointElevations)
+
+            RoutePolylineIdVector NavRoutingPolylineFactory::CreateAmalgamatedPolylinesForRange(
+                const std::vector<NavRoutingPolylineCreateParams>& polylineCreateParams,
+                const int rangeStartIndex,
+                const int rangeEndIndex
+            )
             {
-                Eegeo::Shapes::Polylines::PolylineShapeBuilder shapeBuilder;
-                shapeBuilder.SetCoordinates(coordinates)
-                            .SetFillColor(color)
-                            .SetThickness(m_routeThickness)
-                            .SetMiterLimit(m_miterLimit)
-                            .SetElevation(m_routeElevation)
-                            .SetElevationMode(m_routeElevationMode)
-                            .SetShouldScaleWithMap(m_shouldScaleWithMap);
-                
-                if (isIndoors)
+                Eegeo_ASSERT(rangeStartIndex < rangeEndIndex);
+                Eegeo_ASSERT(rangeStartIndex >= 0);
+                Eegeo_ASSERT(rangeEndIndex <= polylineCreateParams.size());
+
+                RoutePolylineIdVector result;
+
+                std::vector<Eegeo::Space::LatLong> joinedCoordinates;
+                std::vector<double> joinedPerPointElevations;
+                bool anyPerPointElevations = false;
+
+                for (int i = rangeStartIndex; i < rangeEndIndex; ++i)
                 {
-                    shapeBuilder.SetIndoorMap(indoorMapId, indoorMapFloorId);
+                    const auto& params = polylineCreateParams[i];
+                    const auto& coordinates = params.GetCoordinates();
+
+                    joinedCoordinates.insert(joinedCoordinates.end(), coordinates.begin(), coordinates.end());
+
+                    if (!params.GetPerPointElevations().empty())
+                    {
+                        anyPerPointElevations = true;
+                    }
                 }
-                
-                if (hasPerPointElevation)
+
+                if (anyPerPointElevations)
                 {
-                    shapeBuilder.SetPerPointElevations(perPointElevations);
+                    for (int i = rangeStartIndex; i < rangeEndIndex; ++i)
+                    {
+                        const auto& params = polylineCreateParams[i];
+                        const auto& perPointElevations = params.GetPerPointElevations();
+
+                        if (perPointElevations.empty())
+                        {
+                            // fill with zero
+                            joinedPerPointElevations.insert(joinedPerPointElevations.end(), params.GetCoordinates().size(), 0.0);
+                        }
+                        else
+                        {
+                            joinedPerPointElevations.insert(joinedPerPointElevations.end(), perPointElevations.begin(), perPointElevations.end());
+                        }
+                    }
+
+                    RemoveCoincidentPointsWithElevations(joinedCoordinates, joinedPerPointElevations);
                 }
-                
-                return m_shapeService.Create(shapeBuilder.Build());
+                else
+                {
+                    RemoveCoincidentPoints(joinedCoordinates);
+                }
+
+                if (joinedCoordinates.size() > 1)
+                {
+                    const auto& commonParams = polylineCreateParams[rangeStartIndex];
+                    const auto& polylineParams = Eegeo::Shapes::Polylines::PolylineShapeBuilder()
+                        .SetCoordinates(joinedCoordinates)
+                        .SetPerPointElevations(joinedPerPointElevations)
+                        .SetIndoorMap(commonParams.GetIndoorMapId(), commonParams.GetIndoorMapFloorId())
+                        .SetFillColor(commonParams.GetColor())
+                        .SetThickness(m_polylineConfig.routeThickness)
+                        .SetMiterLimit(m_polylineConfig.miterLimit)
+                        .SetElevation(m_polylineConfig.routeElevation)
+                        .SetElevationMode(m_polylineConfig.routeElevationMode)
+                        .SetShouldScaleWithMap(m_polylineConfig.shouldScaleWithMap)
+                        .Build();
+
+                    const auto& polylineId = m_shapeService.Create(polylineParams);
+                    result.push_back(polylineId);
+                }
+
+                return result;
             }
         }
     }

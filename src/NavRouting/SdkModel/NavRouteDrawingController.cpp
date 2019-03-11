@@ -84,10 +84,12 @@ namespace ExampleApp
                                    pinIconKey,
                                    0);
                         }
-                        
-                        DrawRouteForStep(i, directions, color);
+
+                        AddLineCreationParamsForStep(i, directions, color);
                         
                     }
+
+                    RefreshPolylines();
                     
                     AddPin(lastDirection.GetIsIndoors(),
                            lastDirection.GetIndoorMapId().Value(),
@@ -100,13 +102,9 @@ namespace ExampleApp
             
             void NavRouteDrawingController::ClearRoute()
             {
-                for(const auto& routeIt : m_routes)
-                {
-                    DestroyLines(routeIt.second);
-                }
-                
                 ClearPins();
-                m_routes.clear();
+                m_routeStepToPolylineCreateParams.clear();
+                DestroyPolylines();
             }
             
             void NavRouteDrawingController::SetRouteStepColor(int step,
@@ -115,12 +113,37 @@ namespace ExampleApp
                 NavRoutingRouteModel routeModel;
                 if(m_navRoutingModel.TryGetRoute(routeModel))
                 {
-                    if (m_routes.find(step)!=m_routes.end())
+                    if (m_routeStepToPolylineCreateParams.find(step)!=m_routeStepToPolylineCreateParams.end())
                     {
-                        DestroyLines(m_routes[step]);
-                        DrawRouteForStep(step, routeModel.GetDirections(), color);
+                        m_routeStepToPolylineCreateParams[step].clear();
+                        AddLineCreationParamsForStep(step, routeModel.GetDirections(), color);
                     }
                 }
+            }
+            void NavRouteDrawingController::DestroyPolylines()
+            {
+                for (const auto polylineId : m_polylineIds)
+                {
+                    m_shapeService.Destroy(polylineId);
+                }
+                m_polylineIds.clear();
+            }
+
+            void NavRouteDrawingController::RefreshPolylines()
+            {
+                DestroyPolylines();
+
+                Eegeo_ASSERT(m_polylineIds.empty());
+
+                NavRoutingPolylineCreateParamsVector allPolylineCreateParams;
+
+                for (const auto& pair : m_routeStepToPolylineCreateParams)
+                {
+                    const auto& createParams = pair.second;
+                    allPolylineCreateParams.insert(allPolylineCreateParams.end(), createParams.begin(), createParams.end());
+                }
+
+                m_polylineIds = m_polylineFactory.CreatePolylines(allPolylineCreateParams);
             }
 
             void NavRouteDrawingController::UpdateRouteStepProgress(int step,
@@ -132,25 +155,27 @@ namespace ExampleApp
                 NavRoutingRouteModel routeModel;
                 if(m_navRoutingModel.TryGetRoute(routeModel))
                 {
-                    if (m_routes.find(step)!=m_routes.end())
+                    if (m_routeStepToPolylineCreateParams.find(step) != m_routeStepToPolylineCreateParams.end())
                     {
-                        const auto& polylines = m_routes[step];
-                        
-                        DestroyLines(polylines);
-                        
-                        DrawRouteForStep(step,
-                                         routeModel.GetDirections(),
-                                         colorForUpcomingPath,
-                                         colorForCrossedPath,
-                                         splitIndex,
-                                         closestPointOnRoute);
+                        auto& polylineFactoryResults = m_routeStepToPolylineCreateParams[step];
+
+                        polylineFactoryResults.clear();
+
+                        AddLineCreationParamsForStep(step,
+                                                     routeModel.GetDirections(),
+                                                     colorForUpcomingPath,
+                                                     colorForCrossedPath,
+                                                     splitIndex,
+                                                     closestPointOnRoute);
                     }
                 }
+
+                RefreshPolylines();
             }
             
-            void NavRouteDrawingController::DrawRouteForStep(int step,
-                                                             const std::vector<NavRoutingDirectionModel>& directions,
-                                                             const Eegeo::v4& color)
+            void NavRouteDrawingController::AddLineCreationParamsForStep(int step,
+                                                                         const std::vector<NavRoutingDirectionModel> &directions,
+                                                                         const Eegeo::v4 &color)
             {
                 const NavRoutingDirectionModel& directionModel = directions[step];
                 
@@ -170,8 +195,8 @@ namespace ExampleApp
                     
                     const NavRoutingDirectionModel& directionBefore = directions[step-1];
                     const NavRoutingDirectionModel& directionAfter = directions[step+1];
-                    
-                    m_routes[step] = m_polylineFactory.CreateLinesForFloorTransition(directionModel.GetPath(),
+
+                    m_routeStepToPolylineCreateParams[step] = m_polylineFactory.CreateLinesForFloorTransition(directionModel.GetPath(),
                                                                                   directionModel.GetIndoorMapId().Value(),
                                                                                   directionBefore.GetIndoorMapFloorId(),
                                                                                   directionAfter.GetIndoorMapFloorId(),
@@ -179,16 +204,16 @@ namespace ExampleApp
                 }
                 else
                 {
-                    m_routes[step] = m_polylineFactory.CreateLinesForRouteDirection(directionModel, color);
+                    m_routeStepToPolylineCreateParams[step] = m_polylineFactory.CreateLinesForRouteDirection(directionModel, color);
                 }
             }
             
-            void NavRouteDrawingController::DrawRouteForStep(int step,
-                                                             const std::vector<NavRoutingDirectionModel>& directions,
-                                                             const Eegeo::v4& forwardColor,
-                                                             const Eegeo::v4& backwardColor,
-                                                             int splitIndex,
-                                                             const Eegeo::Space::LatLong& closestPointOnRoute)
+            void NavRouteDrawingController::AddLineCreationParamsForStep(int step,
+                                                                         const std::vector<NavRoutingDirectionModel> &directions,
+                                                                         const Eegeo::v4 &forwardColor,
+                                                                         const Eegeo::v4 &backwardColor,
+                                                                         int splitIndex,
+                                                                         const Eegeo::Space::LatLong &closestPointOnRoute)
             {
                 const NavRoutingDirectionModel& directionModel = directions[step];
                 
@@ -200,11 +225,12 @@ namespace ExampleApp
                 if (directionModel.GetIsMultiFloor())
                 {
                     bool hasReachedEnd = splitIndex == (directionModel.GetPath().size()-1);
-                    DrawRouteForStep(step, directions, hasReachedEnd? backwardColor : forwardColor);
+                    AddLineCreationParamsForStep(step, directions,
+                                                 hasReachedEnd ? backwardColor : forwardColor);
                 }
                 else
                 {
-                    m_routes[step] = m_polylineFactory.CreateLinesForRouteDirection(directionModel,
+                    m_routeStepToPolylineCreateParams[step] = m_polylineFactory.CreateLinesForRouteDirection(directionModel,
                                                                                     forwardColor,
                                                                                     backwardColor,
                                                                                     splitIndex,
@@ -212,16 +238,7 @@ namespace ExampleApp
                 }
             }
             
-            void NavRouteDrawingController::DestroyLines(RouteLines lines)
-            {
-                for (const auto& shapeId : lines)
-                {
-                    m_shapeService.Destroy(shapeId);
-                }
-                
-                lines.clear();
-            }
-            
+
             void NavRouteDrawingController::AddPin(bool interior,
                                                    const std::string& buildingID,
                                                    const int& buildingFloor,
