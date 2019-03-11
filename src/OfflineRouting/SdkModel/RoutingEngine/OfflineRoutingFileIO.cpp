@@ -31,7 +31,6 @@ namespace ExampleApp
                         valueObject.AddMember("id", static_cast<int>(feature.GetId()), allocator);
                         valueObject.AddMember("type", rapidjson::Value(feature.GetType().c_str(), allocator).Move(), allocator);
                         valueObject.AddMember("name", rapidjson::Value(feature.GetName().c_str(), allocator).Move(), allocator);
-                        valueObject.AddMember("indoorId", rapidjson::Value(feature.GetInteriorId().Value().c_str(), allocator).Move(), allocator);
                         valueObject.AddMember("isMultiFloor", feature.GetIsMultiFloor(), allocator);
                         valueObject.AddMember("isOneWay", feature.GetIsOneWay(), allocator);
                         valueObject.AddMember("durationMultiplier", feature.GetDurationMultiplier(), allocator);
@@ -81,7 +80,6 @@ namespace ExampleApp
                         valueObject.AddMember("id", static_cast<int>(node.GetId()), allocator);
                         valueObject.AddMember("floorId", node.GetFloorId(), allocator);
                         valueObject.AddMember("featureId", static_cast<int>(node.GetFeatureId()), allocator);
-                        valueObject.AddMember("indoorId", rapidjson::Value(node.GetInteriorId().Value().c_str(), allocator).Move(), allocator);
 
                         rapidjson::Value edgesArray(rapidjson::kArrayType);
                         edgesArray.SetArray();
@@ -98,12 +96,11 @@ namespace ExampleApp
                         out_value = valueObject;
                     }
 
-                    OfflineRoutingFeature ParseFeature(const rapidjson::Value& feature)
+                    OfflineRoutingFeature ParseFeature(const rapidjson::Value& feature, const Eegeo::Resources::Interiors::InteriorId& interiorId)
                     {
                         OfflineRoutingFeatureId id = static_cast<OfflineRoutingFeatureId>(feature["id"].GetInt());
                         std::string type = feature["type"].GetString();
                         std::string name = feature["name"].GetString();
-                        std::string indoorId = feature["indoorId"].GetString();
                         bool isMultiFloor = feature["isMultiFloor"].GetBool();
                         bool isOneWay = feature["isOneWay"].GetBool();
                         int durationMultiplier = feature["durationMultiplier"].GetInt();
@@ -136,7 +133,7 @@ namespace ExampleApp
                         return OfflineRoutingFeature(id,
                                                      type,
                                                      name,
-                                                     indoorId,
+                                                     interiorId,
                                                      isMultiFloor,
                                                      featureNodes,
                                                      Eegeo::Geometry::Point3Spline::BuildFromPoints(featureSpline),
@@ -144,7 +141,7 @@ namespace ExampleApp
                                                      durationMultiplier);
                     }
 
-                    std::vector<OfflineRoutingFeature> ParseFeatures(const rapidjson::Value& featuresArray)
+                    std::vector<OfflineRoutingFeature> ParseFeatures(const rapidjson::Value& featuresArray, const Eegeo::Resources::Interiors::InteriorId& interiorId)
                     {
                         Eegeo_ASSERT(featuresArray.IsArray(), "Features json is not of array type");
                         size_t numEntries = featuresArray.Size();
@@ -153,18 +150,17 @@ namespace ExampleApp
 
                         for(int i = 0; i < numEntries; ++i)
                         {
-                            parsedFeatures.emplace_back(ParseFeature(featuresArray[i]));
+                            parsedFeatures.emplace_back(ParseFeature(featuresArray[i], interiorId));
                         }
 
                         return parsedFeatures;
                     }
 
-                    OfflineRoutingGraphNode ParseGraphNode(const rapidjson::Value& graphNode)
+                    OfflineRoutingGraphNode ParseGraphNode(const rapidjson::Value& graphNode, const Eegeo::Resources::Interiors::InteriorId& interiorId)
                     {
                         OfflineRoutingGraphNodeId id = static_cast<OfflineRoutingGraphNodeId>(graphNode["id"].GetInt());
                         int floorId = graphNode["floorId"].GetInt();
                         OfflineRoutingFeatureId featureId = static_cast<OfflineRoutingFeatureId>(graphNode["featureId"].GetInt());
-                        std::string indoorId = graphNode["indoorId"].GetString();
 
                         const auto& pointJson = graphNode["point"];
                         double x = pointJson["x"].GetDouble();
@@ -187,10 +183,10 @@ namespace ExampleApp
                                                        nodeEdges,
                                                        floorId,
                                                        featureId,
-                                                       indoorId);
+                                                       interiorId);
                     }
 
-                    std::vector<OfflineRoutingGraphNode> ParseGraphNodes(const rapidjson::Value& graphNodesArray)
+                    std::vector<OfflineRoutingGraphNode> ParseGraphNodes(const rapidjson::Value& graphNodesArray, const Eegeo::Resources::Interiors::InteriorId& interiorId)
                     {
                         Eegeo_ASSERT(graphNodesArray.IsArray(), "Graph Nodes json is not of array type");
                         size_t numEntries = graphNodesArray.Size();
@@ -199,7 +195,7 @@ namespace ExampleApp
 
                         for(int i = 0; i < numEntries; ++i)
                         {
-                            parsedGraphNodes.emplace_back(ParseGraphNode(graphNodesArray[i]));
+                            parsedGraphNodes.emplace_back(ParseGraphNode(graphNodesArray[i], interiorId));
                         }
 
                         return parsedGraphNodes;
@@ -282,7 +278,8 @@ namespace ExampleApp
                                          (std::istreambuf_iterator<char>()));
 
                         rapidjson::Document jsonDoc;
-                        if (jsonDoc.Parse<0>(json.c_str()).HasParseError()) {
+                        if (jsonDoc.Parse<0>(json.c_str()).HasParseError())
+                        {
                             Eegeo_TTY("Parse error in Offline Nav JSON.\n");
                             return false;
                         }
@@ -292,8 +289,8 @@ namespace ExampleApp
                         const auto& features = jsonDoc[FeaturesJsonArrayName];
                         const auto& nodes = jsonDoc[NodesJsonArrayName];
 
-                        out_features = ParseFeatures(features);
-                        out_graphNodes = ParseGraphNodes(nodes);
+                        out_features = ParseFeatures(features, interiorId);
+                        out_graphNodes = ParseGraphNodes(nodes, interiorId);
                         return true;
                     }
 
