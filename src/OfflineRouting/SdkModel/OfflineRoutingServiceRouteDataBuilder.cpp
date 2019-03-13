@@ -185,6 +185,8 @@ namespace ExampleApp
                     const double speed = Helpers::GetSpeedForTransportationMode(transportationMode);
                     const auto& stepStartEdge = routeEdges.at(routeEdgesIterator);
                     const auto& stepPosition = stepStartEdge.startPoint;
+                    const auto& stepStartFeature = offlineRoutingDataRepository.GetFeature(stepStartEdge.featureId);
+                    const bool isMultiFloorStep = stepStartFeature.GetIsMultiFloor();
 
                     double bearingBefore = routeEdgesIterator == 0 ? 0 : routeEdges.at(routeEdgesIterator-1).bearing;
                     double bearingAfter = stepStartEdge.bearing;
@@ -227,7 +229,7 @@ namespace ExampleApp
 
                         double bearingDifference = Eegeo::Space::SpaceHelpers::AngleDifferenceDegrees(currentEdge.bearing, previousEdge.bearing);
 
-                        if (Eegeo::Math::Abs(static_cast<float>(bearingDifference)) > BEARING_SLIGHT_TURN_ANGLE_DEGREES)
+                        if (Eegeo::Math::Abs(static_cast<float>(bearingDifference)) > BEARING_SLIGHT_TURN_ANGLE_DEGREES && !isMultiFloorStep)
                         {
                             nextDirectionType = DirectionType::Turn;
                             break;
