@@ -61,6 +61,8 @@ namespace ExampleApp
                  */
                 const double MinimumDistanceInMeters = 0.00001;
 
+                const double MinimumDistanceInMetersForSnappingToGraph = 0.5;
+
                 const float WALKING_SPEED_IN_METER_PER_SECOND = 1.4;
                 const float DRIVING_SPEED_IN_METER_PER_SECOND = 10;
 
@@ -68,7 +70,7 @@ namespace ExampleApp
                 const float ESCALATOR_FEATURE_TYPE_DURATION_MULTIPLIER = 2;
                 const float STAIRS_FEATURE_TYPE_DURATION_MULTIPLIER = 3.5;
 
-                const double POINT_ON_GRAPH_SEARCH_RADIUS_METERS = 30;
+                const double POINT_ON_GRAPH_SEARCH_RADIUS_METERS = 50;
             }
 
             namespace Webservice

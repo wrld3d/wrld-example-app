@@ -97,7 +97,7 @@ namespace ExampleApp
                     for (const auto& nodeId : nodes)
                     {
                         const auto& node = m_offlineRoutingDataRepository.GetGraphNode(nodeId);
-                        if (bestPointOnSpline.SquareDistanceTo(node.GetPoint()) < MinimumDistanceInMeters)
+                        if (Helpers::Distance(bestPointOnSpline, node.GetPoint()) < MinimumDistanceInMetersForSnappingToGraph)
                         {
                             isPositionedOnNode = true;
                             nodeEdges.push_back(nodeId);

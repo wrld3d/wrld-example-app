@@ -133,11 +133,14 @@ namespace ExampleApp
                 {
                     std::vector<RouteEdge> routeEdges;
 
-                    const auto& startNode = offlineRoutingDataRepository.GetGraphNode(pathNodes.front());
-                    routeEdges.push_back({Helpers::GetLatLongFromEcef(startPoint.GetPoint()),
-                                          Helpers::GetLatLongFromEcef(startNode.GetPoint()),
-                                          startNode.GetFloorId(),
-                                          startNode.GetFeatureId()});
+                    if (!startPoint.GetIsPositionedOnNode())
+                    {
+                        const auto& startNode = offlineRoutingDataRepository.GetGraphNode(pathNodes.front());
+                        routeEdges.push_back({Helpers::GetLatLongFromEcef(startPoint.GetPoint()),
+                                              Helpers::GetLatLongFromEcef(startNode.GetPoint()),
+                                              startNode.GetFloorId(),
+                                              startNode.GetFeatureId()});
+                    }
 
                     for (size_t i = 1; i < pathNodes.size(); i++)
                     {
@@ -160,11 +163,14 @@ namespace ExampleApp
                                               edgeEnd.GetFeatureId()});
                     }
 
-                    const auto& endNode = offlineRoutingDataRepository.GetGraphNode(pathNodes.back());
-                    routeEdges.push_back({Helpers::GetLatLongFromEcef(endNode.GetPoint()),
-                                          Helpers::GetLatLongFromEcef(endPoint.GetPoint()),
-                                          endNode.GetFloorId(),
-                                          endNode.GetFeatureId()});
+                    if (!endPoint.GetIsPositionedOnNode())
+                    {
+                        const auto& endNode = offlineRoutingDataRepository.GetGraphNode(pathNodes.back());
+                        routeEdges.push_back({Helpers::GetLatLongFromEcef(endNode.GetPoint()),
+                                              Helpers::GetLatLongFromEcef(endPoint.GetPoint()),
+                                              endNode.GetFloorId(),
+                                              endNode.GetFeatureId()});
+                    }
 
                     return routeEdges;
                 }
