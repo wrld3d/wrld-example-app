@@ -29,7 +29,8 @@ namespace ExampleApp
                                                                                   const RoutingEngine::OfflineRoutingPointOnGraph& endPoint,
                                                                                   const std::vector<RoutingEngine::OfflineRoutingGraphNodeId>& pathNodes,
                                                                                   const Eegeo::Routes::Webservice::TransportationMode& transportationMode,
-                                                                                  double& out_distance);
+                                                                                  double& out_distance,
+                                                                                  double& out_duration);
 
                 const RoutingEngine::IOfflineRoutingDataRepository& m_offlineRoutingDataRepository;
             };

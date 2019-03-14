@@ -187,6 +187,7 @@ namespace ExampleApp
                     const auto& stepPosition = stepStartEdge.startPoint;
                     const auto& stepStartFeature = offlineRoutingDataRepository.GetFeature(stepStartEdge.featureId);
                     const bool isMultiFloorStep = stepStartFeature.GetIsMultiFloor();
+                    const double featureTypeMultiplier = Helpers::GetDurationMultiplierForFeatureType(stepStartFeature.GetType());
 
                     double bearingBefore = routeEdgesIterator == 0 ? 0 : routeEdges.at(routeEdgesIterator-1).bearing;
                     double bearingAfter = stepStartEdge.bearing;
@@ -244,6 +245,14 @@ namespace ExampleApp
 
                     const auto& currentEdge = routeEdges.at(lastProcessedEdge);
                     const auto& stepFeature = offlineRoutingDataRepository.GetFeature(currentEdge.featureId);
+                    double stepDuration = (stepDistance / speed) * featureTypeMultiplier;
+
+                    if (isMultiFloorStep)
+                    {
+                        auto floorChange = Eegeo::Math::Abs(currentEdge.floorId - stepStartEdge.floorId);
+                        stepDuration = ((floorChange * RoutingEngine::INTERIOR_FLOOR_HEIGHT) / speed) * featureTypeMultiplier;
+                    }
+
 
                     Eegeo::Routes::Webservice::RouteDirections stepDirections =
                     {
@@ -259,7 +268,7 @@ namespace ExampleApp
                              stepFeature.GetInteriorId().Value(),
                              stepFeature.GetName(),
                              stepDirections,
-                             stepDistance / speed,
+                             stepDuration,
                              stepDistance,
                              currentEdge.floorId,
                              true,
@@ -274,30 +283,33 @@ namespace ExampleApp
             std::vector<Eegeo::Routes::Webservice::RouteData> OfflineRoutingServiceRouteDataBuilder::BuildRouteData(const std::vector<RoutingEngine::OfflineRoutingFindPathResult>& pathResults,
                                                                                                                     const Eegeo::Routes::Webservice::TransportationMode& transportationMode)
             {
-                const double speed = Helpers::GetSpeedForTransportationMode(transportationMode);
                 std::vector<Eegeo::Routes::Webservice::RouteData> routeDataVector;
                 double distance = 0;
+                double duration = 0;
                 std::vector<Eegeo::Routes::Webservice::RouteSection> sections;
                 sections.reserve(pathResults.size());
 
                 for (const auto& pathResult : pathResults)
                 {
                     double out_distance = 0;
+                    double out_duration = 0;
                     const auto& routeSteps = BuildRouteSteps(pathResult.GetStartPoint(),
                                                              pathResult.GetEndPoint(),
                                                              pathResult.GetPathNodes(),
                                                              transportationMode,
-                                                             out_distance);
+                                                             out_distance,
+                                                             out_duration);
                     Eegeo::Routes::Webservice::RouteSection section = { routeSteps,
-                                                                        out_distance / speed,
+                                                                        out_duration,
                                                                         out_distance };
                     sections.push_back(section);
                     distance += out_distance;
+                    duration += out_duration;
                 }
 
 
                 //We only need one route data as we only return one path per query instead of multiple path like the routing service
-                Eegeo::Routes::Webservice::RouteData routeData = {sections, distance / speed, distance};
+                Eegeo::Routes::Webservice::RouteData routeData = {sections, duration, distance};
                 routeDataVector.push_back(routeData);
                 return routeDataVector;
             }
@@ -306,7 +318,8 @@ namespace ExampleApp
                                                                                                                      const RoutingEngine::OfflineRoutingPointOnGraph& endPoint,
                                                                                                                      const std::vector<RoutingEngine::OfflineRoutingGraphNodeId>& pathNodes,
                                                                                                                      const Eegeo::Routes::Webservice::TransportationMode& transportationMode,
-                                                                                                                     double& out_distance)
+                                                                                                                     double& out_distance,
+                                                                                                                     double& out_duration)
             {
                 auto pathEdges = BuildEdges(m_offlineRoutingDataRepository, startPoint, endPoint, pathNodes);
 
@@ -326,6 +339,7 @@ namespace ExampleApp
                     routeSteps.push_back(step);
                     currentDirectionType = nextDirectionType;
                     out_distance += step.Distance;
+                    out_duration += step.Duration;
                 }
 
                 Eegeo::Routes::Webservice::RouteDirections endDirections = {

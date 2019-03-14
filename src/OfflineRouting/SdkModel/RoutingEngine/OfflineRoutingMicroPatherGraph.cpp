@@ -91,7 +91,10 @@ namespace ExampleApp
                         if(std::find(goalNodeEdges.begin(), goalNodeEdges.end(), stateNodeId) != goalNodeEdges.end())
                         {
                             //This node can be linked to the final node
-                            micropather::StateCost stateCost = {&m_goalPoint, Helpers::Distance(statePoint, m_goalPoint.GetPoint())};
+                            float duration = Helpers::Distance(statePoint, m_goalPoint.GetPoint()) / Helpers::GetSpeedForTransportationMode(m_transportationMode);
+                            float adjNodeEdgeCost = duration * durationMultiplier * featureTypeMultiplier;
+
+                            micropather::StateCost stateCost = {&m_goalPoint, adjNodeEdgeCost};
                             adjacent->push_back(stateCost);
                         }
                     }
