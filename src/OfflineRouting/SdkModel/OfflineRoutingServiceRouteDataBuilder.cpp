@@ -189,9 +189,18 @@ namespace ExampleApp
                     const bool isMultiFloorStep = stepStartFeature.GetIsMultiFloor();
                     const double featureTypeMultiplier = Helpers::GetDurationMultiplierForFeatureType(stepStartFeature.GetType());
 
-                    double bearingBefore = routeEdgesIterator == 0 ? 0 : routeEdges.at(routeEdgesIterator-1).bearing;
+                    double bearingBefore = 0;
                     double bearingAfter = stepStartEdge.bearing;
                     double stepDistance = 0;
+
+                    int floorBefore = stepStartEdge.floorId;
+
+                    if (routeEdgesIterator != 0)
+                    {
+                        const auto& previousEdge = routeEdges.at(routeEdgesIterator-1);
+                        bearingBefore = previousEdge.bearing;
+                        floorBefore = previousEdge.floorId;
+                    }
 
                     const auto& directionType = GetDirectionType(currentDirectionType);
                     const auto& directionModifier = GetDirectionModifier(currentDirectionType, bearingBefore, bearingAfter);
@@ -249,7 +258,7 @@ namespace ExampleApp
 
                     if (isMultiFloorStep)
                     {
-                        auto floorChange = Eegeo::Math::Abs(currentEdge.floorId - stepStartEdge.floorId);
+                        auto floorChange = Eegeo::Math::Abs(currentEdge.floorId - floorBefore);
                         stepDuration = ((floorChange * RoutingEngine::INTERIOR_FLOOR_HEIGHT) / speed) * featureTypeMultiplier;
                     }
 
