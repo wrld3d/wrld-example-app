@@ -157,8 +157,16 @@ namespace ExampleApp
                         //Since we skipped the transition nodes, these should now match
                         Eegeo_ASSERT(edgeStart.GetFeatureId() == edgeEnd.GetFeatureId());
 
-                        routeEdges.push_back({Helpers::GetLatLongFromEcef(edgeStart.GetPoint()),
-                                              Helpers::GetLatLongFromEcef(edgeEnd.GetPoint()),
+                        auto edgeStartEcef = Helpers::GetLatLongFromEcef(edgeStart.GetPoint());
+                        auto edgeEndEcef = Helpers::GetLatLongFromEcef(edgeEnd.GetPoint());
+
+                        if ((i == (pathNodes.size() - 1)) && endPoint.GetIsPositionedOnNode())
+                        {
+                            edgeEndEcef = Helpers::GetLatLongFromEcef(endPoint.GetPoint());
+                        }
+
+                        routeEdges.push_back({edgeStartEcef,
+                                              edgeEndEcef,
                                               edgeEnd.GetFloorId(),
                                               edgeEnd.GetFeatureId()});
                     }
