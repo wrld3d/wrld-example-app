@@ -184,7 +184,7 @@ public abstract class MainActivity extends AppCompatActivity implements SurfaceH
 
     public abstract void onScreenshotsCompleted();
 
-    private void updateLastTouchTimeNano()
+    protected void updateLastTouchTimeNano()
     {
         synchronized (m_lastTouchTimeLock)
         {

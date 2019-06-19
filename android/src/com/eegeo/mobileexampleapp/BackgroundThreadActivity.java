@@ -165,6 +165,7 @@ public class BackgroundThreadActivity extends MainActivity
     @Override
     protected void onResume()
     {
+        updateLastTouchTimeNano();
         super.onResume();
     	if(hasValidHockeyAppId())
     	{
