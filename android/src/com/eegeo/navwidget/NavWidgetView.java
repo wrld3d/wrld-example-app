@@ -9,6 +9,7 @@ import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -464,6 +465,17 @@ public class NavWidgetView implements IBackButtonListener, WrldNavModelObserverL
                 break;
             case SelectedDirectionIndex:
                 NavWidgetViewJniMethods.SelectedDirectionIndexChanged(m_nativeCallerPointer, m_model.getSelectedDirectionIndex());
+                break;
+            case CurrentNavMode:
+                final boolean shouldDisableScreenTimeout = (m_model.getCurrentNavMode() == WrldNavMode.Active);
+                if (shouldDisableScreenTimeout)
+                {
+                    m_activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                }
+                else
+                {
+                    m_activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                }
                 break;
         }
     }
