@@ -196,6 +196,8 @@ enum CompassViewState
         [layer setStrokeColor:[[UIColor clearColor] CGColor]];
         [layer setFillColor:[[UIColor clearColor] CGColor]];
     }
+    
+    [self setScreenAnimates:false];
 }
 
 - (void) showGpsFollowView
@@ -206,6 +208,8 @@ enum CompassViewState
     {
         self.pOuterShape.image = m_pCompassLockedImage;
     }
+    
+    [self setScreenAnimates:true];
 }
 
 - (void) showGpsCompassModeView
@@ -217,6 +221,14 @@ enum CompassViewState
         self.pOuterShape.image = m_pCompassUnlockedImage;
         self.pOuterShape.transform = CGAffineTransformIdentity;
     }
+    
+    [self setScreenAnimates:true];
+}
+
+- (void) setScreenAnimates:(bool)mayAnimate
+{
+    UIViewController *viewController = [UIApplication sharedApplication].delegate.window.rootViewController;
+    [(ViewController*)viewController setScreenMayAnimateFromCompass:mayAnimate];
 }
 
 - (void) notifyGpsUnauthorized

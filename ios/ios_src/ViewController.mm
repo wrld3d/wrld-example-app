@@ -37,11 +37,13 @@ using namespace Eegeo::iOS;
     }
 
     App::Initialise();
-    GameDeviceType device = static_cast<GameDeviceType>(App::GetDevice());
-    NSInteger preferredFramerate = ExampleApp::Helpers::DeviceHelpers::GetPreferredFramerate(device);
-    [self setPreferredFramesPerSecond:preferredFramerate];
     
     m_previousTimestamp = CFAbsoluteTimeGetCurrent();
+    m_previousTouchTimestamp = CFAbsoluteTimeGetCurrent();
+    m_screenMayAnimateFromTouch = true;
+    m_screenMayAnimateFromCompass = true;
+    NSInteger preferredFramesPerSecond = [self calculatePreferredFramesPerSecond];
+    [self setPreferredFramesPerSecond: preferredFramesPerSecond];
     m_pAppRunner = NULL;
 }
 
@@ -72,6 +74,9 @@ using namespace Eegeo::iOS;
     GLKView* glkView = (GLKView *)self.view;
     glkView.context = [EAGLContext currentContext];
 
+    m_previousTouchTimestamp = CFAbsoluteTimeGetCurrent();
+    m_screenMayAnimateFromTouch = true;
+    [self updateFramerate];
     m_pAppRunner->Resume();
 }
 
@@ -113,6 +118,7 @@ using namespace Eegeo::iOS;
 
     CFTimeInterval timeNow = CFAbsoluteTimeGetCurrent();
     CFTimeInterval frameDuration = timeNow - m_previousTimestamp;
+    [self updateScreenMayAnimateFromTouch: timeNow];
     
     const CFTimeInterval maxFrameInterval = 1.0f/self.preferredFramesPerSecond;
     
@@ -126,9 +132,57 @@ using namespace Eegeo::iOS;
     m_previousTimestamp = timeNow;
 }
 
+- (void)updateScreenMayAnimateFromTouch:(CFTimeInterval)timeNow
+{
+    const float SecondsWithoutTouchBeforeReducingFramerate = 30.0f;
+    
+    if (m_screenMayAnimateFromTouch)
+    {
+        CFTimeInterval timeSinceLastTouch = timeNow - m_previousTouchTimestamp;
+        if (timeSinceLastTouch > SecondsWithoutTouchBeforeReducingFramerate)
+        {
+            m_screenMayAnimateFromTouch = false;
+            [self updateFramerate];
+            
+        }
+    }
+}
+
+- (void) setScreenMayAnimateFromCompass:(bool)mayAnimate
+{
+    if (mayAnimate != m_screenMayAnimateFromCompass)
+    {
+        m_screenMayAnimateFromCompass = mayAnimate;
+        [self updateFramerate];
+    }
+}
+
+- (NSInteger)calculatePreferredFramesPerSecond
+{
+    GameDeviceType device = static_cast<GameDeviceType>(App::GetDevice());
+    NSInteger normalFramerate = ExampleApp::Helpers::DeviceHelpers::GetPreferredFramerate(device);
+    NSInteger reducedFrameRate = 1;
+    
+    bool screenMayAnimate = m_screenMayAnimateFromTouch || m_screenMayAnimateFromCompass;
+    return screenMayAnimate ? normalFramerate : reducedFrameRate;
+}
+
+- (void)updateFramerate
+{
+    NSInteger preferredFramesPerSecond = [self calculatePreferredFramesPerSecond];
+    [self setPreferredFramesPerSecond: preferredFramesPerSecond];
+}
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
     shouldReceiveTouch:(UITouch *)touch
 {
+    if (!m_screenMayAnimateFromTouch)
+    {
+        m_screenMayAnimateFromTouch = true;
+        [self updateFramerate];
+    }
+    m_previousTouchTimestamp = CFAbsoluteTimeGetCurrent();
+    
     for (UIView *subview in [self view].subviews)
     {
 // TODO: Way around this?

@@ -50,6 +50,8 @@ enum CompassPositionState {CompassPositionStateDefault, CompassPositionStateNavi
 
 - (void) showGpsCompassModeView;
 
+- (void) setScreenAnimates:(bool)isPermitted;
+
 - (void) notifyGpsUnauthorized;
 
 - (void) setFullyOnScreen;

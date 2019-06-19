@@ -64,9 +64,14 @@
 @interface ViewController : GLKViewController <UIGestureRecognizerDelegate>
 {
     CFTimeInterval m_previousTimestamp;
+    CFTimeInterval m_previousTouchTimestamp;
     AppRunner* m_pAppRunner;
+    bool m_screenMayAnimateFromTouch;
+    bool m_screenMayAnimateFromCompass;
 }
 
 @property (nonatomic, retain) UIView* pBackingView;
+
+- (void) setScreenMayAnimateFromCompass:(bool)isPermitted;
 
 @end
