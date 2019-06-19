@@ -128,6 +128,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		m_compassDefault.setVisibility(View.VISIBLE);
 		m_compassLocked.setVisibility(View.INVISIBLE);
 		m_compassUnlocked.setVisibility(View.INVISIBLE);
+
+		setScreenAnimates(false);
 	}
 
 	public void showGpsFollowView()
@@ -138,6 +140,8 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		m_compassDefault.setVisibility(View.INVISIBLE);
 		m_compassLocked.setVisibility(View.VISIBLE);
 		m_compassUnlocked.setVisibility(View.INVISIBLE);
+
+		setScreenAnimates(true);
 	}
 
 	public void showGpsCompassModeView()
@@ -153,6 +157,12 @@ public class CompassView implements View.OnClickListener, IRuntimePermissionResu
 		m_compassUnlocked.animate()
 				.rotation(NeedleLockeRotationDegrees)
 				.setDuration(NeedleLockRotationAnimationMilliseconds);
+
+		setScreenAnimates(true);
+	}
+
+	private void setScreenAnimates(boolean mayAnimate) {
+		m_activity.setScreenMayAnimateFromCompass(mayAnimate);
 	}
 
 	public void notifyGpsUnauthorized()

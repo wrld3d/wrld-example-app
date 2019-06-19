@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <bool name="isPhone">true</bool>
+    <integer name="timeInMillisecondsBeforeReducingFramerate">20000</integer>
+    <integer name="reducedFramerate">1</integer>
 </resources>

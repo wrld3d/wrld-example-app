@@ -19,6 +19,7 @@ import com.wrld.widgets.search.WrldSearchWidget;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -60,6 +61,8 @@ public class BackgroundThreadActivity extends MainActivity
     private boolean m_rotationInitialised = false;
     private boolean m_locationPermissionRecieved;
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 52;
+    private int m_timeInMillisecondsBeforeReducingFramerate;
+    private float m_reducedFramerateIntervalSeconds;
 
     static
     {
@@ -151,7 +154,7 @@ public class BackgroundThreadActivity extends MainActivity
             }
         });
 
-
+        initializeFramerateThrottling();
     }
 
     public void runOnNativeThread(Runnable runnable)
@@ -347,6 +350,32 @@ public class BackgroundThreadActivity extends MainActivity
             return needsRotation;
         }
     }
+
+    private void initializeFramerateThrottling()
+    {
+        try
+        {
+            m_timeInMillisecondsBeforeReducingFramerate = getResources().getInteger(R.integer.timeInMillisecondsBeforeReducingFramerate);
+        }
+        catch (Resources.NotFoundException exception)
+        {
+            m_timeInMillisecondsBeforeReducingFramerate = 100000;
+        }
+
+        int reducedFramerate;
+
+        try
+        {
+            reducedFramerate = getResources().getInteger(R.integer.reducedFramerate);
+        }
+        catch (Resources.NotFoundException exception)
+        {
+            reducedFramerate = 1;
+        }
+
+        m_reducedFramerateIntervalSeconds = 1.0f / reducedFramerate;
+    }
+    
     
     private String readHockeyAppId()
     {    
@@ -369,7 +398,7 @@ public class BackgroundThreadActivity extends MainActivity
         
         return "";
     }
-    
+
     private boolean hasValidHockeyAppId()
     {
     	return m_hockeyAppId.length() == 32;
@@ -449,6 +478,27 @@ public class BackgroundThreadActivity extends MainActivity
             m_stoppedUpdatingPlatformBeforeTeardown = true;
         }
 
+        public final float GetFrameDelaySeconds(long timeNowNano)
+        {
+            float delay = m_frameThrottleDelaySeconds;
+
+            if (m_running)
+            {
+                long nanoDeltaSinceLastTouch = timeNowNano - getLastTouchTimeNano();
+                final float deltaMillisecondsSinceLastTouch = (float)((double)nanoDeltaSinceLastTouch / 1e6);
+
+                boolean screenMayAnimateFromCompass = getScreenMayAnimateFromCompass();
+                boolean screenMayAnimateFromTouch = deltaMillisecondsSinceLastTouch <= m_timeInMillisecondsBeforeReducingFramerate;
+                boolean screenMayAnimate = screenMayAnimateFromCompass || screenMayAnimateFromTouch;
+                if (!screenMayAnimate)
+                {
+                    delay = m_reducedFramerateIntervalSeconds;
+                }
+            }
+
+            return delay;
+        }
+
         public void run()
         {
             Looper.prepare();
@@ -462,8 +512,9 @@ public class BackgroundThreadActivity extends MainActivity
                     long timeNowNano = System.nanoTime();
                     long nanoDelta = timeNowNano - m_endOfLastFrameNano;
                     final float deltaSeconds = (float)((double)nanoDelta / 1e9);
+                    final float delay = GetFrameDelaySeconds(timeNowNano);
 
-                    if(deltaSeconds > m_frameThrottleDelaySeconds)
+                    if(deltaSeconds > delay)
                     {
                         if(m_running && m_locationPermissionRecieved)
                         {
@@ -483,6 +534,17 @@ public class BackgroundThreadActivity extends MainActivity
                         }
 
                         m_endOfLastFrameNano = timeNowNano;
+                    }
+                    else if (m_running)
+                    {
+                        float remainingDelay = delay - deltaSeconds;
+                        final float sleepResolution = 0.015f;
+
+                        if (remainingDelay > sleepResolution)
+                        {
+                            long sleepMilliseconds = (long)((remainingDelay - sleepResolution) * 1000);
+                            SystemClock.sleep(sleepMilliseconds);
+                        }
                     }
 
                     runOnNativeThread(this);

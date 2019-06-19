@@ -31,7 +31,12 @@ public abstract class MainActivity extends AppCompatActivity implements SurfaceH
     private RuntimePermissionDispatcher m_runtimePermissionDispatcher;
     private boolean m_touchEnabled;
     private LinkedList<OnPauseListener> m_onPauseListeners;
+    private long m_lastTouchTimeNano;
+    private final Object m_lastTouchTimeLock = new Object();
     private List<IBackButtonListener> m_backButtonListeners;
+
+    private boolean m_screenMayAnimateFromCompass;
+    private final Object m_screenMayAnimateFromCompassLock = new Object();
 
     public MainActivity()
     {
@@ -40,6 +45,7 @@ public abstract class MainActivity extends AppCompatActivity implements SurfaceH
         m_touchEnabled = true;
         m_onPauseListeners = new LinkedList<OnPauseListener>();
         m_backButtonListeners = new ArrayList<IBackButtonListener>();
+        updateLastTouchTimeNano();
     }
 
     public PhotoIntentDispatcher getPhotoIntentDispatcher()
@@ -141,6 +147,8 @@ public abstract class MainActivity extends AppCompatActivity implements SurfaceH
     @Override
     public boolean dispatchTouchEvent(MotionEvent event)
     {
+        updateLastTouchTimeNano();
+
     	if(m_touchEnabled)
     	{
     		return super.dispatchTouchEvent(event);
@@ -175,4 +183,37 @@ public abstract class MainActivity extends AppCompatActivity implements SurfaceH
     public abstract void dispatchUiCreatedMessageToNativeThreadFromUiThread(final long nativeCallerPointer);
 
     public abstract void onScreenshotsCompleted();
+
+    private void updateLastTouchTimeNano()
+    {
+        synchronized (m_lastTouchTimeLock)
+        {
+            m_lastTouchTimeNano = System.nanoTime();
+        }
+    }
+
+    protected long getLastTouchTimeNano()
+    {
+        synchronized (m_lastTouchTimeLock)
+        {
+            return m_lastTouchTimeNano;
+        }
+    }
+
+    public void setScreenMayAnimateFromCompass(boolean mayAnimate)
+    {
+        synchronized (m_screenMayAnimateFromCompassLock)
+        {
+            m_screenMayAnimateFromCompass = mayAnimate;
+        }
+    }
+
+    protected boolean getScreenMayAnimateFromCompass()
+    {
+        synchronized (m_screenMayAnimateFromCompassLock)
+        {
+            return m_screenMayAnimateFromCompass;
+        }
+    }
+    
 }
