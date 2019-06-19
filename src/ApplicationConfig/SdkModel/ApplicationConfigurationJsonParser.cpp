@@ -76,6 +76,7 @@ namespace ExampleApp
                 const std::string OutdoorSearchMenuItems = "outdoor_search_menu_items";
                 const std::string OverrideIndoorSearchMenuItems = "override_indoor_search_menu_items";
                 const std::string EnableNavigation = "enable_navigation";
+                const std::string TrafficEnabled = "traffic_enabled";
                 
                 std::string ParseStringOrDefault(rapidjson::Document& document, const std::string& key, const std::string& defaultValue)
                 {
@@ -373,6 +374,13 @@ namespace ExampleApp
                 bool navigationEnabled = ParseBoolOrDefault(document, EnableNavigation,
                                                            m_defaultConfig.NavigationEnabled());
 
+
+                const bool isTrafficEnabled = ParseBoolOrDefault(
+                    document,
+                    TrafficEnabled,
+                    m_defaultConfig.IsTrafficEnabled()
+                    );
+
                 return ApplicationConfiguration(
                     name,
                     eegeoApiKey,
@@ -422,7 +430,8 @@ namespace ExampleApp
                     customKeyboardLayout,
                     outdoorSearchMenuItems,
                     overrideIndoorSearchMenuItems,
-                    navigationEnabled
+                    navigationEnabled,
+                    isTrafficEnabled
                 );
             }
             

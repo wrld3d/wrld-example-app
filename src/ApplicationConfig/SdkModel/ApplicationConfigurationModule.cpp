@@ -73,6 +73,9 @@ namespace ExampleApp
                     const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> outdoorSearchMenuItems;
                     bool overrideIndoorSearchMenuItems = false;
                     bool showPoiDirectionsButton = false;
+
+                    bool trafficEnabled = true;
+
                     return ApplicationConfiguration("Eegeo Example App",
                         emptyEegeoApiKey,
                         productVersion,
@@ -121,7 +124,9 @@ namespace ExampleApp
                         customKeyboardLayout,
                         outdoorSearchMenuItems,
                         overrideIndoorSearchMenuItems,
-                        showPoiDirectionsButton);
+                        showPoiDirectionsButton,
+                        trafficEnabled
+                        );
                 }
 
                 const std::string defaultFontFilename = "opensans_semibold_sdf.fnt";
@@ -182,6 +187,8 @@ namespace ExampleApp
                 platformConfig.MapLayersConfig.DebugRenderingModuleConfig.DebugFontFilename = defaultFontFilename;
                 
                 platformConfig.MapLayersConfig.BlueSphereConfig.CreateViews = true;
+                platformConfig.MapLayersConfig.TrafficConfig.Enabled = appConfig.IsTrafficEnabled();
+
                 return platformConfig;
             }
             

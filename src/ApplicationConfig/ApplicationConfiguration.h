@@ -77,7 +77,8 @@ namespace ExampleApp
 			std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> m_outdoorSearchMenuItems;
             bool m_overrideIndoorSearchMenuItems;
 
-			bool m_navigationEnabled;
+            bool m_navigationEnabled;
+            bool m_trafficEnabled;
 
         public:
             
@@ -130,7 +131,8 @@ namespace ExampleApp
 				const std::vector<std::vector<std::string>>& customKeyboardLayout,
                 const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig>& outdoorSearchMenuItems,
                 bool overrideIndoorSearchMenuItems,
-				bool navigationEnabled
+				bool navigationEnabled,
+                bool trafficEnabled
             );
             
             std::string Name() const;
@@ -222,7 +224,8 @@ namespace ExampleApp
             const std::vector<SdkModel::ApplicationMenuItemTagSearchConfig> OutdoorSearchMenuItems() const;
             bool OverrideIndoorSearchMenuItems() const;
 
-			bool NavigationEnabled() const;
+            bool NavigationEnabled() const;
+            bool IsTrafficEnabled() const;
         };
     }
 }

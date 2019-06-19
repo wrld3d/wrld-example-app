@@ -27,6 +27,7 @@
     "hockey_app_id":"",
     "timer_survey_url":"",
     "enable_navigation": false,
+    "traffic_enabled": true,
     "compass_camera_offset": {
       "offset": 0.0,
       "offset_top_down": 0.0

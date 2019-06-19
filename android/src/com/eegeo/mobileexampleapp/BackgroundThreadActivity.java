@@ -61,7 +61,7 @@ public class BackgroundThreadActivity extends MainActivity
     private boolean m_rotationInitialised = false;
     private boolean m_locationPermissionRecieved;
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 52;
-    private int m_timeInMillisecondsBeforeReducingFramerate;
+    private int m_timeInMillisecondsBeforeReducingFramerate = -1;
     private float m_reducedFramerateIntervalSeconds;
 
     static
@@ -360,7 +360,7 @@ public class BackgroundThreadActivity extends MainActivity
         }
         catch (Resources.NotFoundException exception)
         {
-            m_timeInMillisecondsBeforeReducingFramerate = 100000;
+            m_timeInMillisecondsBeforeReducingFramerate = -1;
         }
 
         int reducedFramerate;
@@ -482,8 +482,9 @@ public class BackgroundThreadActivity extends MainActivity
         public final float GetFrameDelaySeconds(long timeNowNano)
         {
             float delay = m_frameThrottleDelaySeconds;
+            final boolean canIdleTimeout = m_timeInMillisecondsBeforeReducingFramerate >= 0;
 
-            if (m_running)
+            if (m_running && canIdleTimeout)
             {
                 long nanoDeltaSinceLastTouch = timeNowNano - getLastTouchTimeNano();
                 final float deltaMillisecondsSinceLastTouch = (float)((double)nanoDeltaSinceLastTouch / 1e6);
