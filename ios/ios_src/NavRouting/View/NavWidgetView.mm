@@ -183,9 +183,11 @@ namespace ExampleApp
                     if (navMode == WRLDNavModeActive)
                     {
                         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+                        [UIApplication sharedApplication].idleTimerDisabled = true;
                     }
                     else
                     {
+                        [UIApplication sharedApplication].idleTimerDisabled = false;
                         [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
                     }
                 }
