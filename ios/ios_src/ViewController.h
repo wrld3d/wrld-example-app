@@ -68,6 +68,7 @@
     AppRunner* m_pAppRunner;
     bool m_screenMayAnimateFromTouch;
     bool m_screenMayAnimateFromCompass;
+    int m_secondsWithoutTouchBeforeReducingFramerate;
 }
 
 @property (nonatomic, retain) UIView* pBackingView;

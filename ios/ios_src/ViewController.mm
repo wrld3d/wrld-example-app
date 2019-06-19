@@ -38,6 +38,18 @@ using namespace Eegeo::iOS;
 
     App::Initialise();
     
+    NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
+    Eegeo_ASSERT(infoDictionary != NULL, "could not find plist info");
+    NSString *secondsWithoutTouchBeforeReducingFramerateValue = [infoDictionary objectForKey:@"SecondsWithoutTouchBeforeReducingFramerate"];
+    if (secondsWithoutTouchBeforeReducingFramerateValue != NULL)
+    {
+        m_secondsWithoutTouchBeforeReducingFramerate = [secondsWithoutTouchBeforeReducingFramerateValue intValue];
+    }
+    else
+    {
+        m_secondsWithoutTouchBeforeReducingFramerate = -1;
+    }
+    
     m_previousTimestamp = CFAbsoluteTimeGetCurrent();
     m_previousTouchTimestamp = CFAbsoluteTimeGetCurrent();
     m_screenMayAnimateFromTouch = true;
@@ -134,12 +146,11 @@ using namespace Eegeo::iOS;
 
 - (void)updateScreenMayAnimateFromTouch:(CFTimeInterval)timeNow
 {
-    const float SecondsWithoutTouchBeforeReducingFramerate = 30.0f;
-    
-    if (m_screenMayAnimateFromTouch)
+    const bool canIdleTimeout = m_secondsWithoutTouchBeforeReducingFramerate >= 0;
+    if (canIdleTimeout && m_screenMayAnimateFromTouch)
     {
         CFTimeInterval timeSinceLastTouch = timeNow - m_previousTouchTimestamp;
-        if (timeSinceLastTouch > SecondsWithoutTouchBeforeReducingFramerate)
+        if (timeSinceLastTouch > m_secondsWithoutTouchBeforeReducingFramerate)
         {
             m_screenMayAnimateFromTouch = false;
             [self updateFramerate];

@@ -81,5 +81,7 @@
 	<string>iOS-MEA</string>
 	<key>UIRequiresFullScreen</key>
 	<true/>
+	<key>SecondsWithoutTouchBeforeReducingFramerate</key>
+	<string>-1</string>
 </dict>
 </plist>
