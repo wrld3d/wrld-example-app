@@ -53,7 +53,9 @@ using namespace Eegeo::iOS;
     m_previousTimestamp = CFAbsoluteTimeGetCurrent();
     m_previousTouchTimestamp = CFAbsoluteTimeGetCurrent();
     m_screenMayAnimateFromTouch = true;
-    m_screenMayAnimateFromCompass = true;
+    // see MPLY-10703 - need to assume that initial state of Compass is Disabled (so won't cause animation).
+    // May never get call to setScreenMayAnimateFromCompass from CompassView during app startup.
+    m_screenMayAnimateFromCompass = false;
     NSInteger preferredFramesPerSecond = [self calculatePreferredFramesPerSecond];
     [self setPreferredFramesPerSecond: preferredFramesPerSecond];
     m_pAppRunner = NULL;

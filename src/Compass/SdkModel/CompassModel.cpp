@@ -42,6 +42,7 @@ namespace ExampleApp
                 , m_alertBoxFactory(alertBoxFactory)
                 , m_failAlertHandler(this, &CompassModel::OnFailedToGetLocation)
                 , m_interiorFloorChangedCallback(this, &CompassModel::OnInteriorFloorChanged)
+                , m_gpsMode(GpsMode::GpsDisabled)
                 , m_exitInteriorTriggered(false)
                 , m_isInKioskMode(isInKioskMode)
             {
