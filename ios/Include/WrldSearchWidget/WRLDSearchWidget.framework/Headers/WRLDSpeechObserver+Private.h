@@ -12,7 +12,7 @@
 
 - (void)speechRecordingCompleted:(NSString*)transcript;
 
-- (void)sampleTaken:(CGFloat) sampleVolume;
+- (void)sampleTaken:(CGFloat) sampleVolume sampleDurationSeconds:(CGFloat)sampleDurationSeconds;
 
 - (void)microphoneAccessFailed;
 

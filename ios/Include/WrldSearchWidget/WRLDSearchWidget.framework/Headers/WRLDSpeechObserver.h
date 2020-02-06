@@ -23,7 +23,7 @@ typedef void (^VoiceRecordedEvent)(NSString* transcript);
  An method that is invoked frequently while audio is being recorded.
  @param sampleVolume a volume estimate for the audio sample.
  */
-typedef void (^SampleTakenEvent)(CGFloat sampleVolume);
+typedef void (^SampleTakenEvent)(CGFloat sampleVolume, CGFloat sampleDurationSeconds);
 
 /*!
  Dispatches events related to obtaining voice input for the WRLDSearchWidget.

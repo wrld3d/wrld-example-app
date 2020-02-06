@@ -41,6 +41,7 @@ public enum WRLDNavMode: Int
     case notReady //!< There is currently not a route configured.
     case ready    //!< A route is configured and we are ready to start.
     case active   //!< Navigation is currently running.
+    case readyNoTurnByTurn //!< A route is configured but turn by turn navigation is not allowed.
 }
 
 /**
