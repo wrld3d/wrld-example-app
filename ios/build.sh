@@ -201,11 +201,10 @@ BUILD_VERSION=$build_version \
     fi
     
     if [ ${archive} -ne 0 ] ; then
-        mkdir -p "$xcode_target/"
-        dsym_zip="$xcode_target/$product_name.dsym.zip"
-        echo "zipping dSYM to: ${dsym_zip}" >&2
-        zip -r "$dsym_zip" "./$xcode_archive/dSYMs/${product_name}.app.dSYM"
-        rm -rf "./$xcode_archive/dSYMs/${product_name}.app.dSYM"
+        readonly path_to_symbols_file="./$xcode_archive/dSYMs/${product_name}.app.dSYM"
+        if [ -z "$path_to_symbols_file" ] ; then
+            echo "Symbols are at: $path_to_symbols_file"
+        fi
     fi
 
 popd
