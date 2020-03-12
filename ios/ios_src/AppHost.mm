@@ -71,7 +71,6 @@
 #include "TagSearchViewModule.h"
 #include "InteriorsExplorerModel.h"
 #include "AppUrlDelegate.h"
-#include "InteriorMetaDataRepository.h"
 #include "InteriorMetaDataModule.h"
 #include "iOSAutomatedScreenshotController.h"
 #include "SearchResultPoiViewContainer.h"
@@ -177,7 +176,7 @@ AppHost::AppHost(
                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                               mapModule.GetEnvironmentFlatteningService(),
                                                                                                                               *m_piOSLocationService,
-                                                                                                                              mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                              mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataService(),
                                                                                                                               m_iOSAlertBoxFactory,
                                                                                                                               m_messageBus);
     
@@ -186,7 +185,7 @@ AppHost::AppHost(
                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                            mapModule.GetEnvironmentFlatteningService(),                                                                                                                                                                                                                                                                
                                                                                            *m_piOSLocationService,
-                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataService(),
                                                                                            m_iOSAlertBoxFactory,
                                                                                            m_messageBus);
     std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()},
@@ -195,7 +194,7 @@ AppHost::AppHost(
                                                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                            locationProvider,
                                                                                                                            interiorLocationServices,
-                                                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataService(),
                                                                                                                            interiorsPresentationModule.GetInteriorInteractionModel(),
                                                                                                                            m_pApp->CameraTransitionController(),
                                                                                                                            m_pApp->CompassModule().GetCompassModel(),

@@ -19,7 +19,7 @@ namespace ExampleApp
                                                                      const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                      const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                                      Eegeo::Location::ILocationService& defaultLocationService,
-                                                                     Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                                                     const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                                                      Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory,
                                                                      ExampleAppMessaging::TMessageBus& messageBus)
                 : m_pLocationController(NULL)
@@ -35,7 +35,7 @@ namespace ExampleApp
                     m_pLocationController = Eegeo_NEW(IndoorAtlasLocationController)(*m_pLocationManager,
                                                                                      appModeModel,
                                                                                      interiorSelectionModel,
-                                                                                     interiorMetaDataRepository,
+                                                                                     interiorMetaDataService,
                                                                                      messageBus);
                 }
         

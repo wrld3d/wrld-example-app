@@ -16,7 +16,7 @@ namespace ExampleApp
                                                          const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                          const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                                          Eegeo::Location::ILocationService& defaultLocationService,
-                                                         Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                                         const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                                          Eegeo::UI::NativeAlerts::iOS::iOSAlertBoxFactory& iOSAlertBoxFactory,
                                                          ExampleAppMessaging::TMessageBus& messageBus)
         : m_locationService(defaultLocationService, environmentFlatteningService, interiorInteractionModel)
@@ -24,7 +24,7 @@ namespace ExampleApp
         , m_locationController(m_locationManager,
                                appModeModel,
                                interiorSelectionModel,
-                               interiorMetaDataRepository,
+                               interiorMetaDataService,
                                messageBus)
         {
         }
