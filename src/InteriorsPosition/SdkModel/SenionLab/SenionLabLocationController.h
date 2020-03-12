@@ -7,7 +7,6 @@
 #include "AppModeModel.h"
 #include "InteriorsExplorer.h"
 #include "ApplicationConfiguration.h"
-#include "InteriorMetaDataRepository.h"
 #include "ApplicationInteriorTrackingInfo.h"
 #include "BidirectionalBus.h"
 
@@ -25,7 +24,7 @@ namespace ExampleApp
                     SenionLabLocationController(ISenionLabLocationManager& locationManager,
                                                 AppModes::SdkModel::IAppModeModel& appModeModel,
                                                 const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                                const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                                 ExampleAppMessaging::TMessageBus& messageBus);
                     ~SenionLabLocationController();
                     
@@ -34,7 +33,7 @@ namespace ExampleApp
                     ExampleApp::AppModes::SdkModel::IAppModeModel& m_appModeModel;
                     const Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
                     Eegeo::Helpers::TCallback0<SenionLabLocationController> m_appModeChangedCallback;
-                    Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& m_interiorMetaDataRepository;
+                    const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& m_interiorMetaDataService;
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     
                     void OnAppModeChanged();

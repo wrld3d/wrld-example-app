@@ -42,7 +42,6 @@ namespace ExampleApp
                                                              const bool interiorsAffectedByFlattening,
                                                              PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                                              Eegeo::Location::NavigationService& navigationService,
-                                                             Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
                                                              TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                                              Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory)
             : m_pInteriorSelectionController(NULL)

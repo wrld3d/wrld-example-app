@@ -221,7 +221,7 @@ AppHost::AppHost(
                                                                                                                         interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                         mapModule.GetEnvironmentFlatteningService(),
                                                                                                                         *m_pAndroidLocationService,
-                                                                                                                        mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                                                                        mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataService(),
                                                                                                                         m_messageBus,
                                                                                                                         m_nativeState);
 
@@ -230,8 +230,8 @@ AppHost::AppHost(
                                                                                                                               interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                               mapModule.GetEnvironmentFlatteningService(),
                                                                                                                               *m_pAndroidLocationService,
-                                                                                                                              mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
-																															  m_messageBus,
+                                                                                                                              mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataService(),
+                                                                                                                              m_messageBus,
                                                                                                                               m_nativeState);
 
     const std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices{{"Senion", m_pSenionLabLocationModule->GetLocationService()},
@@ -240,10 +240,10 @@ AppHost::AppHost(
                                                                                                                            interiorsPresentationModule.GetInteriorSelectionModel(),
                                                                                                                            locationProvider,
                                                                                                                            interiorLocationServices,
-                                                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
-																														   interiorsPresentationModule.GetInteriorInteractionModel(),
-																														   m_pApp->CameraTransitionController(),
-																														   m_pApp->CompassModule().GetCompassModel(),
+                                                                                                                           mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataService(),
+                                                                                                                           interiorsPresentationModule.GetInteriorInteractionModel(),
+                                                                                                                           m_pApp->CameraTransitionController(),
+                                                                                                                           m_pApp->CompassModule().GetCompassModel(),
                                                                                                                            m_messageBus);
 
     m_pModalBackgroundNativeViewModule = Eegeo_NEW(ExampleApp::ModalBackground::SdkModel::ModalBackgroundNativeViewModule)(

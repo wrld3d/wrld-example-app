@@ -23,7 +23,7 @@ namespace ExampleApp
                                        ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                                        Metrics::IMetricsService& metricsService,
                                        Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                       Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                                       Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                        Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
                                        std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries,
                                        Search::SdkModel::TagIconKey defaultIconKey
@@ -44,7 +44,7 @@ namespace ExampleApp
                 m_pTagSearchModule = TagSearch::SdkModel::TagSearchModule::Create(*m_pSearchQueryPerformer, messageBus, metricsService);
 
                 m_pInteriorMenuObserver = Eegeo_NEW(InteriorMenuObserver)(interiorSelectionModel,
-                                                                          interiorMetaDataRepo,
+                                                                          interiorMetaDataService,
                                                                           m_pTagSearchModule->GetTagSearchRepository(),
                                                                           yelpCategoryMapperUpdater,
                                                                           defaultFindMenuEntries,

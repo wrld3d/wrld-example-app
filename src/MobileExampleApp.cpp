@@ -641,7 +641,7 @@ namespace ExampleApp
                                                                     m_sdkDomainEventBus,
                                                                     m_metricsService,
                                                                     m_pWorld->GetMapModule().GetInteriorsPresentationModule().GetInteriorSelectionModel(),
-                                                                    mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
+                                                                    mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataService(),
                                                                     m_yelpCategoryMapperUpdater,
                                                                     defaultFindMenuItems,
                                                                     searchTags.defaultIconKey);
@@ -815,7 +815,6 @@ namespace ExampleApp
                                                                                                      interiorsAffectedByFlattening,
                                                                                                      m_persistentSettings,
                                                                                                      *m_pNavigationService,
-                                                                                                     mapModule.GetInteriorMetaDataModule().GetInteriorMetaDataRepository(),
                                                                                                      m_pTagSearchModule->GetTagSearchRepository(),
                                                                                                      m_pWorld->GetNativeUIFactories().AlertBoxFactory());
 

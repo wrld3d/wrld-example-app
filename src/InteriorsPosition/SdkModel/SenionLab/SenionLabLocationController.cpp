@@ -17,13 +17,13 @@ namespace ExampleApp
                 SenionLabLocationController::SenionLabLocationController(ISenionLabLocationManager& locationManager,
                                                                          ExampleApp::AppModes::SdkModel::IAppModeModel& appModeModel,
                                                                          const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                                         Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                                                         const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                                                          ExampleAppMessaging::TMessageBus& messageBus)
                 : m_locationManager(locationManager)
                 , m_appModeModel(appModeModel)
                 , m_interiorSelectionModel(interiorSelectionModel)
                 , m_appModeChangedCallback(this, &SenionLabLocationController::OnAppModeChanged)
-                , m_interiorMetaDataRepository(interiorMetaDataRepository)
+                , m_interiorMetaDataService(interiorMetaDataService)
                 , m_messageBus(messageBus)
                 {
                     m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
@@ -40,12 +40,12 @@ namespace ExampleApp
 
                     typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
 
-                    Eegeo::Resources::Interiors::InteriorId interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
+                    const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
                     TrackingInfoMap trackingInfoMap;
                     
                     if(interiorId.IsValid())
                     {
-                        InteriorsPosition::TryAndGetInteriorTrackingInfo(trackingInfoMap, interiorId, m_interiorMetaDataRepository);
+                        InteriorsPosition::TryAndGetInteriorTrackingInfo(trackingInfoMap, interiorId, m_interiorMetaDataService);
                     }
                     else
                     {

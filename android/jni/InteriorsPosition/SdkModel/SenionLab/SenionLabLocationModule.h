@@ -27,7 +27,7 @@ namespace ExampleApp
                                             const Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                             const Eegeo::Rendering::EnvironmentFlatteningService& environmentFlatteningService,
                                             Eegeo::Location::ILocationService& defaultLocationService,
-                                            Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                            const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                             ExampleAppMessaging::TMessageBus& messageBus,
                                             AndroidNativeState& nativeState);
                     ~SenionLabLocationModule();

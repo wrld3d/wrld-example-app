@@ -1,6 +1,7 @@
 // Copyright eeGeo Ltd (2012-2016), All Rights Reserved
 
 #include "IPSConfigurationParser.h"
+#include "IInteriorMetaDataService.h"
 
 namespace
 {
@@ -52,17 +53,25 @@ namespace ExampleApp
             interiorTrackingInfoList.insert(std::pair<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>(interiorId.Value(),interiorTrackingInfo));
         }
         
-        void TryAndGetInteriorTrackingInfo(std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList, Eegeo::Resources::Interiors::InteriorId& interiorId, Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository)
+        void TryAndGetInteriorTrackingInfo(
+            std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo>& interiorTrackingInfoList,
+            const Eegeo::Resources::Interiors::InteriorId& interiorId,
+            const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService
+            )
         {
-            if(!interiorMetaDataRepository.Contains(interiorId))
+            if (!interiorMetaDataService.Exists(interiorId.Value()))
             {
                 // This will return when trying to enter building before web request can be proccessed.
                 // Will need a proper fix. Talk to Tim or Michael.
                 return;
             }
-            const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataDto* dto = interiorMetaDataRepository.Get(interiorId);
-            std::string user_data = "";
-            user_data = dto->GetUserData();
+
+            std::string user_data;
+            if (!interiorMetaDataService.TryGetUserData(interiorId.Value(), user_data))
+            {
+                return;
+            }
+
             rapidjson::Document document;
             if (document.Parse<0>(user_data.c_str()).HasParseError())
             {

@@ -4,7 +4,6 @@
 
 #include "Types.h"
 #include "InteriorSelectionModel.h"
-#include "InteriorMetaDataRepository.h"
 #include "TagSearchRepository.h"
 #include "YelpCategoryMapperUpdater.h"
 #include "IModelRepository.h"
@@ -17,11 +16,11 @@ namespace ExampleApp
     {
         namespace SdkModel
         {
-            class InteriorMenuObserver : private Eegeo::NonCopyable, public Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository::ObserverType
+            class InteriorMenuObserver : private Eegeo::NonCopyable
             {
             public:
                 InteriorMenuObserver(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                     Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                                     Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                      TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                      Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
                                      std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries,
@@ -46,8 +45,8 @@ namespace ExampleApp
                     NoTransition
                 };
 
-                void OnItemAdded(const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository::ItemType& item);
-                void OnItemRemoved(const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository::ItemType& item);
+                void OnInteriorMetaDataAdded(const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataModelMessage& message);
+                void OnInteriorMetaDataRemoved(const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataModelMessage& message);
                 
                 void OnSelectionChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId);
                 
@@ -61,7 +60,7 @@ namespace ExampleApp
                 
                 TagSearch::View::ITagSearchRepository& m_tagSearchRepository;
                 Eegeo::Resources::Interiors::InteriorSelectionModel& m_interiorSelectionModel;
-                Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& m_interiorMetaDataRepo;
+                Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& m_interiorMetaDataService;
                 TagSearch::View::TagSearchRepository m_previousTagSearchRepository;
                 TransitionState HandleTransitionStates();
                 Search::Yelp::SdkModel::YelpCategoryMapperUpdater& m_yelpCategoryMapperUpdater;
@@ -77,6 +76,9 @@ namespace ExampleApp
                 std::vector<TagSearch::View::TagSearchModel> m_defaultFindMenuEntries;
                 
                 std::string m_defaultIconKey;
+
+                Eegeo::Helpers::TCallback1<InteriorMenuObserver, const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataModelMessage> m_interiorMetaDataAddedHandler;
+                Eegeo::Helpers::TCallback1<InteriorMenuObserver, const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataModelMessage> m_interiorMetaDataRemovedHandler;
             };
             
         }

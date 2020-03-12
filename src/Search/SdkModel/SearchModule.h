@@ -47,7 +47,7 @@ namespace ExampleApp
                              ExampleAppMessaging::TSdkModelDomainEventBus& sdkModelDomainEventBus,
                              Metrics::IMetricsService& metricsService,
                              Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                             Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                             Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                              Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
                              std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries,
                              Search::SdkModel::TagIconKey defaultIconKey);

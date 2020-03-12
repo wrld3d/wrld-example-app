@@ -17,7 +17,6 @@
 #include "InitialExperience.h"
 #include "PersistentSettings.h"
 #include "NavigationService.h"
-#include "InteriorMetaDataRepository.h"
 #include "TagSearchRepository.h"
 #include "IAlertBoxFactory.h"
 
@@ -48,7 +47,6 @@ namespace ExampleApp
                                         const bool interiorsAffectedByFlattening,
                                         PersistentSettings::IPersistentSettingsModel& persistentSettings,
                                         Eegeo::Location::NavigationService& navigationService,
-                                        Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
                                         TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                         Eegeo::UI::NativeAlerts::IAlertBoxFactory& alertBoxFactory);
 

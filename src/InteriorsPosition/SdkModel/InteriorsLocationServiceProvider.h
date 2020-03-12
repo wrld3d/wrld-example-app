@@ -8,7 +8,6 @@
 #include "CurrentLocationService.h"
 #include "InteriorsExplorerModel.h"
 #include "ApplicationConfiguration.h"
-#include "InteriorMetaDataRepository.h"
 #include "ApplicationInteriorTrackingInfo.h"
 #include "AboutPageViewModel.h"
 #include "ILocationProvider.h"
@@ -26,7 +25,7 @@ namespace ExampleApp
                                                  Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                  ExampleApp::LocationProvider::ILocationProvider& locationProvider,
                                                  std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices,
-                                                 Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                                 const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                                  ExampleAppMessaging::TMessageBus& messageBus);
                 
                 ~InteriorsLocationServiceProvider();
@@ -44,7 +43,7 @@ namespace ExampleApp
                 Eegeo::Helpers::TCallback0<InteriorsLocationServiceProvider> m_interiorExplorerEnteredCallback;
                 void OnInteriorExplorerExit();
                 Eegeo::Helpers::TCallback0<InteriorsLocationServiceProvider> m_interiorExplorerExitCallback;
-                Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& m_interiorMetaDataRepository;
+                const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& m_interiorMetaDataService;
             };
         }
     }

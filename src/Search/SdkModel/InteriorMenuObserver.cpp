@@ -6,6 +6,7 @@
 #include "document.h"
 #include "writer.h"
 #include "YelpCategoryModel.h"
+#include "IInteriorMetaDataService.h"
 
 namespace ExampleApp
 {
@@ -14,7 +15,7 @@ namespace ExampleApp
         namespace SdkModel
         {
             InteriorMenuObserver::InteriorMenuObserver(Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
-                                                       Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository& interiorMetaDataRepo,
+                                                       Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                                        TagSearch::View::ITagSearchRepository& tagSearchRepository,
                                                        Search::Yelp::SdkModel::YelpCategoryMapperUpdater& yelpCategoryMapperUpdater,
                                                        std::vector<TagSearch::View::TagSearchModel> defaultFindMenuEntries,
@@ -22,7 +23,7 @@ namespace ExampleApp
             : m_tagSearchRepository(tagSearchRepository)
             , m_interiorSelectionChangedCallback(this, &InteriorMenuObserver::OnSelectionChanged)
             , m_interiorSelectionModel(interiorSelectionModel)
-            , m_interiorMetaDataRepo(interiorMetaDataRepo)
+            , m_interiorMetaDataService(interiorMetaDataService)
             , m_hasSelectedInterior(false)
             , m_hasSearchMenuItems(false)
             , m_yelpCategoryMapperUpdater(yelpCategoryMapperUpdater)
@@ -31,29 +32,34 @@ namespace ExampleApp
             , m_shouldOverrideIndoorSearchMenuItems(false)
             , m_idToBeLoaded()
             , m_defaultIconKey(defaultIconKey)
+            , m_interiorMetaDataAddedHandler(this, &InteriorMenuObserver::OnInteriorMetaDataAdded)
+            , m_interiorMetaDataRemovedHandler(this, &InteriorMenuObserver::OnInteriorMetaDataRemoved)
             {
                 m_interiorSelectionModel.RegisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
                 m_hasSelectedInterior = m_interiorSelectionModel.IsInteriorSelected();
-                m_interiorMetaDataRepo.AddObserver(*this);
+                m_interiorMetaDataService.GetInteriorMetaDataModelAddedEvent().Register(m_interiorMetaDataAddedHandler);
+                m_interiorMetaDataService.GetInteriorMetaDataModelRemovedEvent().Register(m_interiorMetaDataRemovedHandler);
             }
             
             InteriorMenuObserver::~InteriorMenuObserver()
             {
-                m_interiorMetaDataRepo.RemoveObserver(*this);
+                m_interiorMetaDataService.GetInteriorMetaDataModelAddedEvent().Unregister(m_interiorMetaDataAddedHandler);
+                m_interiorMetaDataService.GetInteriorMetaDataModelRemovedEvent().Unregister(m_interiorMetaDataRemovedHandler);
                 m_interiorSelectionModel.UnregisterSelectionChangedCallback(m_interiorSelectionChangedCallback);
             }
-            
-            void InteriorMenuObserver::OnItemAdded(const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository::ItemType& item)
+
+            void InteriorMenuObserver::OnInteriorMetaDataAdded(const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataModelMessage& message)
             {
-                if (m_loadInteriorOnAdd && m_interiorMetaDataRepo.Contains(m_idToBeLoaded))
+                if (m_loadInteriorOnAdd && m_interiorMetaDataService.Exists(m_idToBeLoaded.Value()))
                 {
                     OnEnterInterior(m_idToBeLoaded);
                     m_loadInteriorOnAdd = false;
                 }
             }
 
-            void InteriorMenuObserver::OnItemRemoved(const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataRepository::ItemType& item)
+            void InteriorMenuObserver::OnInteriorMetaDataRemoved(const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataModelMessage& message)
             {
+
             }
 
             void InteriorMenuObserver::OnSelectionChanged(const Eegeo::Resources::Interiors::InteriorId& interiorId)
@@ -63,7 +69,7 @@ namespace ExampleApp
                 {
                     OnExitInterior();
                 }
-                else if (!m_interiorMetaDataRepo.Contains(interiorId))
+                else if (!m_interiorMetaDataService.Exists(interiorId.Value()))
                 {
                     m_loadInteriorOnAdd = true;
                     m_idToBeLoaded = interiorId;
@@ -78,10 +84,12 @@ namespace ExampleApp
             
             void InteriorMenuObserver::ApplyCustomInteriorSearchMenuItems(const Eegeo::Resources::Interiors::InteriorId& interiorId)
             {
-                const Eegeo::Resources::Interiors::MetaData::InteriorMetaDataDto* dto = m_interiorMetaDataRepo.Get(interiorId);
-                
-                std::string user_data = "";
-                user_data = dto->GetUserData();
+                std::string user_data;
+                if (!m_interiorMetaDataService.TryGetUserData(interiorId.Value(), user_data))
+                {
+                    return;
+                }
+
                 rapidjson::Document document;
                 if (!document.Parse<0>(user_data.c_str()).HasParseError())
                 {

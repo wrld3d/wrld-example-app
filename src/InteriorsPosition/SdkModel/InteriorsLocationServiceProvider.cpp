@@ -21,7 +21,7 @@ namespace ExampleApp
                                                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                                                ExampleApp::LocationProvider::ILocationProvider& locationProvider,
                                                                                std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices,
-                                                                               Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                                                               const Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                                                                ExampleAppMessaging::TMessageBus& messageBus)
             : m_locationProvider(locationProvider)
             , m_interiorLocationServices(interiorLocationServices)
@@ -30,7 +30,7 @@ namespace ExampleApp
             , m_messageBus(messageBus)
             , m_interiorExplorerEnteredCallback(this, &InteriorsLocationServiceProvider::OnInteriorExplorerEntered)
             , m_interiorExplorerExitCallback(this, &InteriorsLocationServiceProvider::OnInteriorExplorerExit)
-            , m_interiorMetaDataRepository(interiorMetaDataRepository)
+            , m_interiorMetaDataService(interiorMetaDataService)
             {
                 m_interiorsExplorerModel.InsertInteriorExplorerEnteredCallback(m_interiorExplorerEnteredCallback);
                 m_interiorsExplorerModel.InsertInteriorExplorerExitedCallback(m_interiorExplorerExitCallback);
@@ -49,7 +49,7 @@ namespace ExampleApp
                 
                 if(interiorId.IsValid())
                 {
-                    InteriorsPosition::TryAndGetInteriorTrackingInfo(interiorTrackingInfoList, interiorId, m_interiorMetaDataRepository);
+                    InteriorsPosition::TryAndGetInteriorTrackingInfo(interiorTrackingInfoList, interiorId, m_interiorMetaDataService);
                 }
                 else
                 {

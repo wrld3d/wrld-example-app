@@ -23,7 +23,7 @@ namespace ExampleApp
                                                Eegeo::Resources::Interiors::InteriorSelectionModel& interiorSelectionModel,
                                                ExampleApp::LocationProvider::ILocationProvider& locationProvider,
                                                std::map<std::string, Eegeo::Location::ILocationService&> interiorLocationServices,
-                                               Eegeo::Resources::Interiors::MetaData::InteriorMetaDataRepository& interiorMetaDataRepository,
+                                               Eegeo::Resources::Interiors::MetaData::IInteriorMetaDataService& interiorMetaDataService,
                                                Eegeo::Resources::Interiors::InteriorInteractionModel& interiorInteractionModel,
                                                CameraTransitions::SdkModel::ICameraTransitionController& cameraTransitionController,
                                                Compass::SdkModel::ICompassModel& compassModel,
