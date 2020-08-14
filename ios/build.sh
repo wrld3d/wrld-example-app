@@ -33,7 +33,7 @@ usage()
     echo -e "--product-version <tPRODUCT_VERSION>\t\tPRODUCT_VERSION of app, default ${product_version}." >&2
     echo -e "--build-version <tBUILD_VERSION>\t\tBUILD_VERSION of app, default ${build_version}." >&2
     echo -e "--development-team <DEVELOPMENT_TEAM>\tA valid Apple developer team id, for code signing and running on device." >&2
-    echo -e "--resolve-codesign-identity\t\t\tAttempt to resolve ambiguous codesign identity matching TEAM_ID and 'iPhone Developer' (default OFF)." >&2
+    echo -e "--resolve-codesign-identity\t\t\tAttempt to resolve ambiguous codesign identity matching TEAM_ID and 'Apple Development' (default OFF)." >&2
     echo -e "--pretty-print\t\t\t\tPretty-print xcodebuild output (requires xcpretty)." >&2
     echo -e "-h,--help\t\t\t\tDisplay this usage message." >&2
 }

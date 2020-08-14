@@ -25,7 +25,7 @@ endif()
 message (STATUS "Using DEVELOPMENT_TEAM: ${DEVELOPMENT_TEAM}")
 
 if (RESOLVE_CODE_SIGN_IDENTITY)
-  message (STATUS "RESOLVE_CODE_SIGN_IDENTITY enabled - attempting to find codesign identity matching DEVELOPMENT_TEAM '${DEVELOPMENT_TEAM}' for 'iPhone Developer'")
+  message (STATUS "RESOLVE_CODE_SIGN_IDENTITY enabled - attempting to find codesign identity matching DEVELOPMENT_TEAM '${DEVELOPMENT_TEAM}' for 'Apple Development'")
 
   execute_process(
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/templates/ios/find_codesign_identity.sh "${DEVELOPMENT_TEAM}"
@@ -40,13 +40,13 @@ if (RESOLVE_CODE_SIGN_IDENTITY)
       OUTPUT_VARIABLE AVAILABLE_CODE_SIGN_IDENTITIES
     )
 
-    message (SEND_ERROR "Failed to find valid codesign identity matching DEVELOPMENT_TEAM '${DEVELOPMENT_TEAM}' for 'iPhone Developer'. Available codesigning identities in keychain are:")
+    message (SEND_ERROR "Failed to find valid codesign identity matching DEVELOPMENT_TEAM '${DEVELOPMENT_TEAM}' for 'Apple Development'. Available codesigning identities in keychain are:")
     message (SEND_ERROR "${AVAILABLE_CODE_SIGN_IDENTITIES}")
     message (FATAL_ERROR "Please resolve missing codesign identity before continuing.")
 
   endif()
 else()
-  set(FRAMEWORK_CODE_SIGN_IDENTITY "iPhone Developer")
+  set(FRAMEWORK_CODE_SIGN_IDENTITY "Apple Development")
 endif()
 
 message (STATUS "Using FRAMEWORK_CODE_SIGN_IDENTITY: ${FRAMEWORK_CODE_SIGN_IDENTITY}")
@@ -190,7 +190,7 @@ set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=RelWithD
 set_xcode_property (${executable_name} DEBUG_INFORMATION_FORMAT[variant=Release] "dwarf-with-dsym")
 
 set_xcode_property (${executable_name} GCC_TREAT_WARNINGS_AS_ERRORS "YES")
-set_xcode_property (${executable_name} CODE_SIGN_IDENTITY "iPhone Developer")
+set_xcode_property (${executable_name} CODE_SIGN_IDENTITY "Apple Development")
 set_xcode_property (${executable_name} DEVELOPMENT_TEAM "${DEVELOPMENT_TEAM}")
 set_xcode_property (${executable_name} IPHONEOS_DEPLOYMENT_TARGET "9.0")
 set_xcode_property (${executable_name} TARGETED_DEVICE_FAMILY "1,2")

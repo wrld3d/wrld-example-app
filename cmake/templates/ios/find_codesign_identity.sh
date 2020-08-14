@@ -17,7 +17,7 @@ function trap_exit {
 trap 'trap_exit' EXIT
 
 
-regExpName=".*\biPhone Developer\b.*"
+regExpName=".*\bApple Development\b.*"
 regExpOrg=".*\b$TEAM_ID\b.*"
 
 MATCHING_CERTIFICATE_NAME=""
