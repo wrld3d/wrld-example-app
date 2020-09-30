@@ -3,6 +3,7 @@
 #include "InteriorEntityHighlightHelpers.h"
 #include "SearchResultModel.h"
 #include "document.h"
+#include "Interiors.h"
 
 namespace ExampleApp
 {
@@ -68,6 +69,52 @@ namespace ExampleApp
                     }
                     
                     return entities;
+                }
+
+                float GetBorderThicknessFromValue(rapidjson::Value& value) {
+                    const auto defaultHighlightBorderThickness = Eegeo::Resources::Interiors::Highlights::DefaultInteriorHighlightBorderThickness;
+
+                    if (value.IsNumber()) {
+                        return static_cast<float>(value.GetDouble());
+                    }
+                    else {
+                        return defaultHighlightBorderThickness;
+                    }
+                }
+
+                std::vector<float> GetHighlightBorderThicknessFromSearchResultJson(const std::string& jsonData)
+                {
+                    rapidjson::Document json;
+                    std::vector<float> borderThickness;
+
+                    const auto highlightBorderThicknessTag = "highlight_border_thickness";
+                    const auto entityHighlightBorderThicknessTag = "entity_highlight_border_thickness";
+
+                    const auto defaultHighlightBorderThickness = Eegeo::Resources::Interiors::Highlights::DefaultInteriorHighlightBorderThickness;
+
+                    if (!json.Parse<0>(jsonData.c_str()).HasParseError() )
+                    {
+                        if(json.HasMember("highlight"))
+                        {
+                            borderThickness.push_back( json.HasMember(highlightBorderThicknessTag) ? GetBorderThicknessFromValue(json[highlightBorderThicknessTag]): defaultHighlightBorderThickness );
+                        }
+
+                        if(json.HasMember("entity_highlight"))
+                        {
+                            borderThickness.push_back( json.HasMember(entityHighlightBorderThicknessTag) ? GetBorderThicknessFromValue(json[entityHighlightBorderThicknessTag]): defaultHighlightBorderThickness );
+                        }
+                    }
+
+                    if (borderThickness.size() == 0){
+                        borderThickness.push_back(defaultHighlightBorderThickness);
+                    }
+
+                    return borderThickness;
+                }
+
+                std::vector<float> GetHighlightBorderThicknessFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult)
+                {
+                    return GetHighlightBorderThicknessFromSearchResultJson(selectedSearchResult.GetJsonData());
                 }
             }
         }

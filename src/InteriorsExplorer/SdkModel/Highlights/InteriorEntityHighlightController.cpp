@@ -268,16 +268,15 @@ namespace ExampleApp
                     {
                         return;
                     }
-                    rapidjson::Document json;
-                    std::string highlightedRoomId = "";
                     
                     std::vector<std::string> filteredEntityIds = GetEntityIdsFromSearchResultModel(searchResult);
                     std::vector<Eegeo::v4> highlightColors = m_highlightColorMapper.GetColors(searchResult);
+                    std::vector<float> highlightBorderThickness = GetHighlightBorderThicknessFromSearchResultModel(searchResult);
                     
                     if (m_interiorInteractionModel.HasInteriorModel())
                     {
                         const std::string& interiorId = m_interiorInteractionModel.GetInteriorModel()->GetId().Value();
-                        m_interiorsHighlightService.SetHighlights(interiorId, filteredEntityIds, highlightColors.front());
+                        m_interiorsHighlightService.SetHighlights(interiorId, filteredEntityIds, highlightColors.front(), highlightBorderThickness.front());
                      }
                 }
                 
@@ -289,9 +288,6 @@ namespace ExampleApp
                     {
                         OnInteriorChanged();
                     }
-                    
-                    rapidjson::Document json;
-                    std::string highlightedRoomId = "";
                     
                     if (m_searchResultsIndex >= 0)
                     {
