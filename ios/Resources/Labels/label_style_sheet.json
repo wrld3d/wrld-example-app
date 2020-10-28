@@ -1432,6 +1432,7 @@
         "label_anchor_category": "interior_facility_toilets",
         "label_style_name": "interior_facility_high_priority"
     },
+    {
         "label_anchor_category": "interior_facility_toilets_ladies",
         "label_style_name": "interior_facility_high_priority"
     },
