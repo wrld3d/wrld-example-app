@@ -54,6 +54,18 @@
         "label_icon_key": "bathroom"
     },
     {
+        "label_anchor_category": "interior_facility_toilets_men",
+        "label_icon_key": "toilet_men"
+    },
+    {
+        "label_anchor_category": "interior_facility_toilets_ladies",
+        "label_icon_key": "toilet_ladies"
+    },
+    {
+        "label_anchor_category": "interior_facility_toilets_generic",
+        "label_icon_key": "toilet_generic"
+    },
+    {
         "label_anchor_category": "indoor_map",
         "label_icon_key": "indoor_map"
     }

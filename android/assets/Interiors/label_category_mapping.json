@@ -5,18 +5,18 @@
 	},
 	{
 		"name": "men's bathroom",
-		"tag": "bathroom"
+		"tag": "toilets_men"
 	},
 	{
 		"name": "women's bathroom",
-		"tag": "bathroom"
+		"tag": "toilets_ladies"
+	},
+	{
+		"name": "toilet",
+		"tag": "toilets_generic"
 	},
 	{
 		"name": "bathroom",
-		"tag": "bathroom"
-	},
-	{
-		"name": "toilets",
 		"tag": "bathroom"
 	},
 	{
@@ -34,6 +34,18 @@
 	"tag_to_label_anchor_category": [{
 		"tag": "bathroom",
 		"label_anchor_category": "interior_facility_toilets"
+	},
+	{
+		"tag": "toilets_men",
+		"label_anchor_category": "interior_facility_toilets_men"
+	},
+	{
+		"tag": "toilets_ladies",
+		"label_anchor_category": "interior_facility_toilets_ladies"
+	},
+	{
+		"tag": "toilets_generic",
+		"label_anchor_category": "interior_facility_toilets_generic"
 	},
 	{
 		"tag": "elevator",
@@ -79,6 +91,18 @@
     },
     {
         "label_anchor_category": "interior_facility_toilets",
+        "maximum_priority": -1
+    },
+    {
+        "label_anchor_category": "interior_facility_toilets_men",
+        "maximum_priority": -1
+    },
+    {
+        "label_anchor_category": "interior_facility_toilets_ladies",
+        "maximum_priority": -1
+    },
+    {
+        "label_anchor_category": "interior_facility_toilets_generic",
         "maximum_priority": -1
     },
     {
