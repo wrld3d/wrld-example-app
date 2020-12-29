@@ -49,28 +49,21 @@ namespace ExampleApp
                 std::vector<Eegeo::v4> HighlightColorMapper::GetColorsFromJson(const std::string& jsonData) const
                 {
                     rapidjson::Document json;
-                    
-                    std::vector<Eegeo::v4>highlightColors;
-                    
-                    auto highlightColorTag = "highlight_color";
-                    auto entityHighlightColorTag = "entity_highlight_color";
+                    std::vector<Eegeo::v4> highlightColors;
+
+                    const auto highlightColorTag = "highlight_color";
+                    const auto entityHighlightColorTag = "entity_highlight_color";
 
                     if (!json.Parse<0>(jsonData.c_str()).HasParseError() )
                     {
 
-                        if(json.HasMember("highlight"))
-                        {
-                            highlightColors.push_back( json.HasMember(highlightColorTag) ? GetColorFromValue(json[highlightColorTag]): m_defaultColor );
-                        }
-                        
-                        if(json.HasMember("entity_highlight"))
-                        {
-                            highlightColors.push_back( json.HasMember(entityHighlightColorTag) ? GetColorFromValue(json[entityHighlightColorTag]): m_defaultColor );
-                        }
+                        highlightColors.push_back( json.HasMember(highlightColorTag) ? GetColorFromValue(json[highlightColorTag]): m_defaultColor );
+                        highlightColors.push_back( json.HasMember(entityHighlightColorTag) ? GetColorFromValue(json[entityHighlightColorTag]): m_defaultColor );
                         
                     }
                     
                     if (highlightColors.size() == 0){
+                        highlightColors.push_back(m_defaultColor);
                         highlightColors.push_back(m_defaultColor);
                     }
                     
