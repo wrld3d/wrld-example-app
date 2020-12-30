@@ -27,43 +27,37 @@ namespace ExampleApp
                     return entities;
                 }
                 
-                std::vector<std::string> GetEntityIdsFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult)
+                std::vector<std::string> GetEntityIdsFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult, const std::string& key)
                 {
-                    return GetEntityIdsFromSearchResultJson(selectedSearchResult.GetJsonData());
+                    return GetEntityIdsFromSearchResultJson(selectedSearchResult.GetJsonData(), key);
                 }
 
                 std::vector<std::string> GetEntityIdsFromSearchResultJson(const std::string& jsonData)
+                {
+                    std::vector<std::string> highlightIds = GetEntityIdsFromSearchResultJson(jsonData, "highlight");
+                    std::vector<std::string> entityHighlightIds = GetEntityIdsFromSearchResultJson(jsonData, "entity_highlight");
+                    highlightIds.insert(std::end(highlightIds), std::begin(entityHighlightIds), std::end(entityHighlightIds));
+                    return highlightIds;
+                }
+
+                std::vector<std::string> GetEntityIdsFromSearchResultJson(const std::string& jsonData, const std::string& key)
                 {
                     rapidjson::Document json;
                     std::vector<std::string> entities;
 
                     if (!json.Parse<0>(jsonData.c_str()).HasParseError())
                     {
-                        if(json.HasMember("highlight"))
+                        if(json.HasMember(key.c_str()))
                         {
-                            const rapidjson::Value& areaHighlight = json["highlight"];
-                            if(areaHighlight.IsString())
+                            const rapidjson::Value& highlight = json[key.c_str()];
+                            if(highlight.IsString())
                             {
-                                entities.push_back(areaHighlight.GetString());
+                                entities.push_back(highlight.GetString());
                             }
                             else
                             {
-                                std::vector<std::string> areaHighlights = GetEntityIdsFromJsonArray(areaHighlight);
-                                entities.insert(std::end(entities), std::begin(areaHighlights), std::end(areaHighlights));
-                            }
-                        }
-                        
-                        if(json.HasMember("entity_highlight")  )
-                        {
-                            const rapidjson::Value& entityHighlight = json["entity_highlight"];
-                            if(entityHighlight.IsString())
-                            {
-                                entities.push_back(entityHighlight.GetString());
-                            }
-                            else
-                            {
-                                std::vector<std::string> entityHighlights = GetEntityIdsFromJsonArray(entityHighlight);
-                                entities.insert(std::end(entities), std::begin(entityHighlights), std::end(entityHighlights));
+                                std::vector<std::string> highlights = GetEntityIdsFromJsonArray(highlight);
+                                entities.insert(std::end(entities), std::begin(highlights), std::end(highlights));
                             }
                         }
                     }
@@ -94,18 +88,13 @@ namespace ExampleApp
 
                     if (!json.Parse<0>(jsonData.c_str()).HasParseError() )
                     {
-                        if(json.HasMember("highlight"))
-                        {
-                            borderThickness.push_back( json.HasMember(highlightBorderThicknessTag) ? GetBorderThicknessFromValue(json[highlightBorderThicknessTag]): defaultHighlightBorderThickness );
-                        }
+                        borderThickness.push_back( json.HasMember(highlightBorderThicknessTag) ? GetBorderThicknessFromValue(json[highlightBorderThicknessTag]): defaultHighlightBorderThickness );
 
-                        if(json.HasMember("entity_highlight"))
-                        {
-                            borderThickness.push_back( json.HasMember(entityHighlightBorderThicknessTag) ? GetBorderThicknessFromValue(json[entityHighlightBorderThicknessTag]): defaultHighlightBorderThickness );
-                        }
+                        borderThickness.push_back( json.HasMember(entityHighlightBorderThicknessTag) ? GetBorderThicknessFromValue(json[entityHighlightBorderThicknessTag]): defaultHighlightBorderThickness );
                     }
 
                     if (borderThickness.size() == 0){
+                        borderThickness.push_back(defaultHighlightBorderThickness);
                         borderThickness.push_back(defaultHighlightBorderThickness);
                     }
 

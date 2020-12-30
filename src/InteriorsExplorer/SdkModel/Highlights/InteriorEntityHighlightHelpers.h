@@ -15,7 +15,8 @@ namespace ExampleApp
         {
             namespace Highlights
             {
-                std::vector<std::string> GetEntityIdsFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult);
+                std::vector<std::string> GetEntityIdsFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult, const std::string& key);
+                std::vector<std::string> GetEntityIdsFromSearchResultJson(const std::string& jsonData, const std::string& key);
                 std::vector<std::string> GetEntityIdsFromSearchResultJson(const std::string& jsonData);
 
                 std::vector<float> GetHighlightBorderThicknessFromSearchResultModel(const Search::SdkModel::SearchResultModel& selectedSearchResult);

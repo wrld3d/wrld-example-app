@@ -269,15 +269,25 @@ namespace ExampleApp
                         return;
                     }
                     
-                    std::vector<std::string> filteredEntityIds = GetEntityIdsFromSearchResultModel(searchResult);
+                    std::vector<std::string> filteredHighlightIds = GetEntityIdsFromSearchResultModel(searchResult, "highlight");
+                    std::vector<std::string> filteredEntityHighlightIds = GetEntityIdsFromSearchResultModel(searchResult, "entity_highlight");
                     std::vector<Eegeo::v4> highlightColors = m_highlightColorMapper.GetColors(searchResult);
                     std::vector<float> highlightBorderThickness = GetHighlightBorderThicknessFromSearchResultModel(searchResult);
                     
                     if (m_interiorInteractionModel.HasInteriorModel())
                     {
                         const std::string& interiorId = m_interiorInteractionModel.GetInteriorModel()->GetId().Value();
-                        m_interiorsHighlightService.SetHighlights(interiorId, filteredEntityIds, highlightColors.front(), highlightBorderThickness.front());
-                     }
+
+			if (filteredHighlightIds.size() > 0)
+			{
+                            m_interiorsHighlightService.SetHighlights(interiorId, filteredHighlightIds, highlightColors[0], highlightBorderThickness[0]);
+			}
+
+			if (filteredEntityHighlightIds.size() > 0)
+			{
+                            m_interiorsHighlightService.SetHighlights(interiorId, filteredEntityHighlightIds, highlightColors[1], highlightBorderThickness[1]);
+			}
+                    }
                 }
                 
                 void InteriorEntityHighlightController::ApplyHighlights(const std::vector<Search::SdkModel::SearchResultModel> &results)
