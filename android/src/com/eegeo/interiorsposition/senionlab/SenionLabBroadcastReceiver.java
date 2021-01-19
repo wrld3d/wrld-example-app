@@ -1,104 +1,60 @@
 package com.eegeo.interiorsposition.senionlab;
 
-import com.senionlab.slutilities.geofencing.interfaces.SLGeometry;
-import com.senionlab.slutilities.service.SLBroadcastReceiver;
-import com.senionlab.slutilities.type.LocationAvailability;
-import com.senionlab.slutilities.type.SLCoordinate3D;
-import com.senionlab.slutilities.type.SLHeadingStatus;
-import com.senionlab.slutilities.type.SLMotionType;
+import com.senion.ips.Subscription;
 
-class SenionLabBroadcastReceiver extends SLBroadcastReceiver
+class SenionLabBroadcastReceiver
 {
-    private final Object m_errorLock = new Object();
-    private final Object m_updateLock = new Object();
     private long m_nativeCallerPointer;
     private SenionLabLocationManager m_locationManager;
+
+    private final Object m_errorLock = new Object();
+
+    private Subscription m_geoMessengerReceiver;
+    private Subscription m_positioningReceiver;
+    private Subscription m_statusReceiver;
 
     public SenionLabBroadcastReceiver(SenionLabLocationManager locationManager, long nativeCallerPointer)
     {
         m_nativeCallerPointer = nativeCallerPointer;
         m_locationManager = locationManager;
     }
-    
+
     public void registerReceiver()
     {
-    	m_locationManager.registerReceiver(this);
+        m_locationManager.onSdkReady(new SenionLabLocationManager.SdkReadyCallback()
+        {
+            @Override
+            public void invoke()
+            {
+                sdkReady();
+            }
+        });
     }
 
     public void unregisterReceiver()
     {
-        m_locationManager.unregisterReceiver(this);
-    }
-
-    @Override
-    public void didUpdateLocation(SLCoordinate3D location, double horizontalAccuracyInMeters)
-    {
-        synchronized (m_updateLock)
+        if(m_geoMessengerReceiver != null)
         {
-            SenionLabBroadcastReceiverJniMethods.DidUpdateLocation(m_nativeCallerPointer,
-                                                                   location.getLatitude(),
-                                                                   location.getLongitude(),
-                                                                   horizontalAccuracyInMeters,
-                                                                   location.getFloorNr().intValue());
+            m_locationManager.unregisterReceiver(m_geoMessengerReceiver);
+        }
+        if(m_positioningReceiver != null)
+        {
+            m_locationManager.unregisterReceiver(m_positioningReceiver);
+        }
+        if(m_statusReceiver != null)
+        {
+            m_locationManager.unregisterReceiver(m_statusReceiver);
         }
     }
-    
-    @Override
-    public void didUpdateLocationAvailability(LocationAvailability locationAvailability)
+
+    private void sdkReady()
     {
-    	boolean available = locationAvailability == LocationAvailability.AVAILABLE;
-    	m_locationManager.updateAvailability(available);
+        m_geoMessengerReceiver = m_locationManager.registerGeoMessengerReceiver(new SenionLabGeoMessengerReceiver(this));
+        m_positioningReceiver = m_locationManager.registerPositioningReceiver(new SenionLabPositioningReceiver(this, m_nativeCallerPointer));
+        m_statusReceiver = m_locationManager.registerStatusReceiver(new SenionLabStatusReceiver(this));
     }
 
-    @Override
-    public void didEnterGeometry(SLGeometry slGeometry)
-    {
-        didLocationError(false);
-    }
-
-    @Override
-    public void didLeaveGeometry(SLGeometry slGeometry)
-    {
-        didLocationError(false);
-    }
-
-    @Override
-    public void didUpdateHeading(double v, SLHeadingStatus slHeadingStatus)
-    {
-        didLocationError(false);
-    }
-
-    @Override
-    public void didUpdateMotionType(SLMotionType slMotionType)
-    {
-        didLocationError(false);
-    }
-
-    @Override
-    public void didFinishLoadingManager()
-    {
-        didLocationError(false);
-    }
-
-    @Override
-    public void errorWhileLoadingManager(String s)
-    {
-        didLocationError(true);
-    }
-
-    @Override
-    public void errorWifiNotEnabled()
-    {
-        didLocationError(true);
-    }
-
-    @Override
-    public void errorBleNotEnabled()
-    {
-        didLocationError(true);
-    }
-
-    private void didLocationError(final boolean didError)
+    public void didLocationError(final boolean didError)
     {
         synchronized (m_errorLock)
         {

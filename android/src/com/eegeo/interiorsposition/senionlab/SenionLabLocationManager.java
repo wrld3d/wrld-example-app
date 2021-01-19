@@ -3,59 +3,117 @@ package com.eegeo.interiorsposition.senionlab;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.DialogInterface;
+
+import java.util.ArrayList;
 import android.content.Intent;
+import android.util.Log;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
-import com.senionlab.slutilities.service.SLBroadcastReceiver;
-import com.senionlab.slutilities.service.SLConsumer;
-import com.senionlab.slutilities.service.SLServiceManager;
-import com.senionlab.slutilities.type.SLIndoorLocationException;
 
-public class SenionLabLocationManager implements SLConsumer
+import com.senion.ips.ZoneDetectionApi;
+import com.senion.ips.PositioningApi;
+import com.senion.ips.SenionIPS.StatusListener;
+import com.senion.ips.SenionIPSManager;
+import com.senion.ips.SenionIPSHandle;
+import com.senion.ips.MapKey;
+import com.senion.ips.ApiKey;
+import com.senion.ips.Subscription;
+
+public class SenionLabLocationManager
 {
     private final MainActivity m_activity;
-    private final SLServiceManager m_serviceManager;
-    private boolean m_consumerIsBound = false;
-    
+
     private static AlertDialog m_connectionDialog = null;
+
+    private SenionIPSManager m_stepInsideSdkManager;
+    private SenionIPSHandle m_stepInsideSdk;
+    private ArrayList<Subscription> m_subscriptions = new ArrayList<Subscription>();
+    private long m_nativeCallerPointer;
+    BluetoothAdapter m_bluetoothAdapter;
+
+    ArrayList<SdkReadyCallback> m_sdkReadyCallbacks = new ArrayList<SdkReadyCallback>();
+    private boolean m_isSdkReady = false;
 
     public SenionLabLocationManager(MainActivity activity, long nativeCallerPointer)
     {
         m_activity = activity;
-        m_serviceManager = SLServiceManager.getInstance(m_activity);
+        m_nativeCallerPointer = nativeCallerPointer;
+        m_bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
     public void askUserToEnableBluetoothIfDisabled()
     {
     	BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		
-		if(bluetoothAdapter != null && !bluetoothAdapter.isEnabled())
+		if(m_bluetoothAdapter != null && !m_bluetoothAdapter.isEnabled())
 		{
 			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			m_activity.startActivity(enableBtIntent);
 		}
     }
-    
-	public void startUpdatingLocation(final String apiKey, final String apiSecret) throws SLIndoorLocationException
+
+    private void onAttachedToSdk(SenionIPSHandle sdk)
     {
-		m_serviceManager.start(apiKey, apiSecret);
-		bindService();
-	}
+        m_stepInsideSdk = sdk;
+        m_isSdkReady = true;
+        for(SdkReadyCallback callback : m_sdkReadyCallbacks)
+        {
+            callback.invoke();
+        }
+        m_sdkReadyCallbacks.clear();
+        m_stepInsideSdk.start();
+
+    }
+
+    private final SenionIPSManager.AttachCallback attachCallback = new SenionIPSManager.AttachCallback()
+    {
+        public void onAttached(SenionIPSHandle sdk) {
+            if (m_activity.isDestroyed()) return;
+            onAttachedToSdk(sdk);
+        }
+    };
+
+    public void startUpdatingLocation(final String mapKey, final String apiSecret)
+    {
+        ArrayList<MapKey> mapKeyList = new ArrayList<MapKey>();
+
+        mapKeyList.add(new MapKey(mapKey));
+
+        m_stepInsideSdkManager = new SenionIPSManager.Builder(getContext())
+                .withApiKey(new ApiKey(apiSecret))
+                .withMapKeys(mapKeyList)
+                .build();
+
+        m_stepInsideSdkManager.initialize();
+
+        m_stepInsideSdkManager.attachHighPerformanceMode(m_activity, attachCallback);
+    }
 
     public void stopUpdatingLocation()
     {
-        unbindService();
-        
-        try
+
+        for (Subscription subscription : m_subscriptions)
         {
-        	m_serviceManager.stop();
+            subscription.unsubscribe();
         }
-        catch(SLIndoorLocationException slIndoorLocationException)
-    	{
-    		slIndoorLocationException.printStackTrace();
-    	}
-        
+
+        if (m_stepInsideSdk != null)
+        {
+            try
+            {
+                m_stepInsideSdk.stop();
+                m_stepInsideSdk.detach();
+            }
+            catch(Exception e)
+            {
+                String message = e.getMessage();
+                Log.v("SLLocationManager", message == null ? "exception with no message" : message);
+            }
+
+            m_isSdkReady = false;
+        }
+
+        m_stepInsideSdkManager.terminate();
         if(m_connectionDialog != null)
 		{
     		m_connectionDialog.dismiss();
@@ -63,94 +121,52 @@ public class SenionLabLocationManager implements SLConsumer
 		}
     }
 
-    public void registerReceiver(SLBroadcastReceiver receiver)
+    public Subscription registerGeoMessengerReceiver(ZoneDetectionApi.Listener listener)
     {
-        m_serviceManager.registerReceiver(receiver);
+        Subscription subscription = m_stepInsideSdk.zoneDetection().addListener(listener);
+        m_subscriptions.add(subscription);
+        return subscription;
     }
 
-    public void unregisterReceiver(SLBroadcastReceiver receiver)
+    public Subscription registerStatusReceiver(StatusListener listener)
     {
-        m_serviceManager.unregisterReceiver(receiver);
+        Subscription subscription = m_stepInsideSdk.addStatusListener(listener);
+        m_subscriptions.add(subscription);
+        return subscription;
     }
 
-    @Override
+    public Subscription registerPositioningReceiver(PositioningApi.Listener listener)
+    {
+        Subscription subscription = m_stepInsideSdk.positioning().addListener(listener);
+        m_subscriptions.add(subscription);
+        return subscription;
+    }
+
+    public void unregisterReceiver(Subscription subscription)
+    {
+        m_subscriptions.remove(subscription);
+        subscription.unsubscribe();
+    }
+
     public Context getContext()
     {
         return m_activity.getApplicationContext();
     }
 
-    @Override
-    public void didBindToService()
-    {
-    }
-    
-    public void updateAvailability(boolean available)
-    {
-    	if(available)
-    	{
-    		showConnectionDialog("Senion available", "Recently connected to Senion.");
-    	}
-    	else
-    	{
-    		showConnectionDialog("Senion unavailable", "Recently lost connection to Senion.");
-    	}
+
+    public interface SdkReadyCallback {
+        void invoke();
     }
 
-    private void bindService()
-    {
-        if (!m_consumerIsBound)
+    public void onSdkReady(SdkReadyCallback callback){
+        if(m_isSdkReady)
         {
-        	try
-        	{
-        		m_serviceManager.bindService(this);
-        	}
-        	catch(SLIndoorLocationException slIndoorLocationException)
-        	{
-        		slIndoorLocationException.printStackTrace();
-        	}
-        	
-            m_consumerIsBound = true;
+            callback.invoke();
+        }
+        else
+        {
+            m_sdkReadyCallbacks.add(callback);
         }
     }
 
-    private void unbindService()
-    {
-        if (m_consumerIsBound)
-        {
-        	try
-        	{
-        		m_serviceManager.unbindService(this);
-        	}
-        	catch(SLIndoorLocationException slIndoorLocationException)
-        	{
-        		slIndoorLocationException.printStackTrace();
-        	}
-        	
-            m_consumerIsBound = false;
-        }
-    }
-    
-    private void showConnectionDialog(String Title, String message)
-    {
-    	/*
-    	AlertDialog.Builder builder = new AlertDialog.Builder(m_activity);
-        builder.setTitle(Title);
-        builder.setMessage(message);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-            	m_connectionDialog.dismiss();
-            	m_connectionDialog = null;
-            }
-        });
-        
-        if(m_connectionDialog != null)
-        {
-        	m_connectionDialog.dismiss();
-        }
-        m_connectionDialog = builder.show();
-        //*/
-    }
 }
