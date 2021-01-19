@@ -29,7 +29,6 @@ public class SenionLabLocationManager
     private SenionIPSHandle m_stepInsideSdk;
     private ArrayList<Subscription> m_subscriptions = new ArrayList<Subscription>();
     private long m_nativeCallerPointer;
-    BluetoothAdapter m_bluetoothAdapter;
 
     ArrayList<SdkReadyCallback> m_sdkReadyCallbacks = new ArrayList<SdkReadyCallback>();
     private boolean m_isSdkReady = false;
@@ -38,14 +37,13 @@ public class SenionLabLocationManager
     {
         m_activity = activity;
         m_nativeCallerPointer = nativeCallerPointer;
-        m_bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     }
 
     public void askUserToEnableBluetoothIfDisabled()
     {
     	BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		
-		if(m_bluetoothAdapter != null && !m_bluetoothAdapter.isEnabled())
+		if(bluetoothAdapter != null && !bluetoothAdapter.isEnabled())
 		{
 			Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 			m_activity.startActivity(enableBtIntent);
