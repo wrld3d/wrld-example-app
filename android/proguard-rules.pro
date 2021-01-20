@@ -8,6 +8,7 @@
 
 -keep class com.google.android.gms.* { public *; }
 -dontwarn com.google.android.gms.**
+-dontwarn com.senion.**
 
 -keep public class java.lang.management.* { public *; }
 -dontwarn java.lang.management.**
@@ -56,7 +57,10 @@
 -keep class javax.lang.model.element.** { *; }
 -dontwarn javax.lang.model.element.**
 
--keep class com.senionlab.** { *; }
+-dontnote com.google.android.gms.**
+-dontnote com.senion.**
+
+-keep class com.senion.** { *; }
 
 -keep class com.indooratlas.** { *; }
 -dontwarn com.indooratlas.**

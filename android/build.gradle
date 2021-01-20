@@ -18,6 +18,9 @@ allprojects {
         maven {
             url 'https://maven.google.com'
         }
+        maven {
+            url('file://' + new File('libs/senion-ips-6.0.0-AAR').absolutePath)
+        }
     }
 }
 
@@ -50,7 +53,7 @@ android {
 
     defaultConfig {
         applicationId getApplicationIdFromProjectProperty()
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         multiDexEnabled true
         versionCode getVersionCodeFromProjectProperty()
@@ -175,4 +178,7 @@ dependencies {
     implementation project(':wrld-navigation-release')
     implementation project(':wrld-navigation-widget-release')
     implementation project(':wrld-navigation-search-release')
+    implementation 'com.senion.ips:senion-ips:6.0.0'
+    implementation 'com.google.android.gms:play-services:12.0.0'
+    implementation 'android.arch.lifecycle:extensions:1.1.1'
 }

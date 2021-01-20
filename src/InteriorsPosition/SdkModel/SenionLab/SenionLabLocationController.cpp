@@ -25,6 +25,7 @@ namespace ExampleApp
                 , m_appModeChangedCallback(this, &SenionLabLocationController::OnAppModeChanged)
                 , m_interiorMetaDataService(interiorMetaDataService)
                 , m_messageBus(messageBus)
+                , m_updatingLocation(false)
                 {
                     m_appModeModel.RegisterAppModeChangedCallback(m_appModeChangedCallback);
                 }
@@ -36,8 +37,6 @@ namespace ExampleApp
                 
                 void SenionLabLocationController::OnAppModeChanged()
                 {
-                    m_locationManager.StopUpdatingLocation();
-
                     typedef std::map<std::string, ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo> TrackingInfoMap;
 
                     const Eegeo::Resources::Interiors::InteriorId& interiorId = m_interiorSelectionModel.GetSelectedInteriorId();
@@ -60,21 +59,34 @@ namespace ExampleApp
                         {
                             const ApplicationConfig::SdkModel::ApplicationInteriorTrackingInfo& trackingInfo = trackingInfoEntry->second;
 
-                            if (trackingInfo.GetType() == "Senion")
+                            if (!m_updatingLocation && trackingInfo.GetType() == "Senion")
                             {
                                 const std::string& apiKey = trackingInfo.GetConfig().GetApiKey();
                                 const std::string& apiSecret = trackingInfo.GetConfig().GetApiSecret();
                                 const std::map<int, std::string>& floorMap = trackingInfo.GetFloorIndexMap();
 
-                                m_locationManager.StartUpdatingLocation(apiKey, apiSecret, floorMap);
                                 m_messageBus.Publish(AboutPage::AboutPageIndoorPositionSettingsMessage(
                                         apiKey,
                                         apiSecret,
                                         floorMap,
                                         trackingInfo.GetInteriorId().Value()));
+
+                                StartUpdatingLocation(apiKey, apiSecret, floorMap);
                             }
                         }
                     }
+                }
+
+                void SenionLabLocationController::StartUpdatingLocation(const std::string& apikey, const std::string& apiSecret, const std::map<int, std::string>& floorMap)
+                {
+                    m_locationManager.StartUpdatingLocation(apikey, apiSecret, floorMap);
+                    m_updatingLocation = true;
+                }
+
+                void SenionLabLocationController::StopUpdatingLocation()
+                {
+                    m_locationManager.StopUpdatingLocation();
+                    m_updatingLocation = false;
                 }
             }
         }
