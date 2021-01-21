@@ -30,5 +30,4 @@ ios/XcodeBuild/
 *.iml
 **/local.properties
 ios/Include/SenionLab/*.framework
-android/libs/SLDistribution_4.13.1-rc1.jar
-
+android/libs/senion-ips-6.0.0-AAR/

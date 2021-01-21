@@ -37,6 +37,12 @@ namespace ExampleApp
                     ExampleAppMessaging::TMessageBus& m_messageBus;
                     
                     void OnAppModeChanged();
+
+                    void StartUpdatingLocation(const std::string& apikey, const std::string& apiSecret, const std::map<int, std::string>& floorMap);
+
+                    void StopUpdatingLocation();
+
+                    bool m_updatingLocation;
                 };
             }
         }
