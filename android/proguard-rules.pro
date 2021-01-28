@@ -67,3 +67,6 @@
 
 -keep class com.wrld.widgets.navigation.** { *; }
 -dontwarn com.wrld.widgets.navigation.**
+
+-keep class org.apache.commons.codec.** { *; }
+-dontwarn org.apache.commons.codec.**
