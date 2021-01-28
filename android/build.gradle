@@ -52,7 +52,7 @@ def getApplicationIdFromProjectProperty = { ->
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId getApplicationIdFromProjectProperty()
