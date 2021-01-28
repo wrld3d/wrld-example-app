@@ -1,6 +1,6 @@
 package com.eegeo.interiorsposition.senionlab;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.senion.ips.ZoneDetectionApi;
 import com.senion.ips.Zone;

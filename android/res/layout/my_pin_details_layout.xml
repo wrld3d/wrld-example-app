@@ -1,32 +1,32 @@
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/my_pin_details_view">
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/left_guideline"
         app:layout_constraintGuide_percent="@fraction/poiCreationLeftGuidePercentage"
         android:orientation="vertical"/>
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/right_guideline"
         app:layout_constraintGuide_percent="@fraction/poiCreationRightGuidePercentage"
         android:orientation="vertical"/>
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/top_guideline"
         app:layout_constraintGuide_percent="@fraction/poiCreationTopGuidePercentage"
         android:orientation="horizontal"/>
 
-    <android.support.constraint.Guideline
+    <androidx.constraintlayout.widget.Guideline
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/bottom_guideline"
@@ -193,4 +193,4 @@
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
