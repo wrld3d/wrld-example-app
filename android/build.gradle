@@ -21,6 +21,9 @@ allprojects {
         maven {
             url('file://' + new File('libs/senion-ips-6.0.0-AAR').absolutePath)
         }
+        maven {
+            url "https://indooratlas-ltd.bintray.com/mvn-public"
+        }
     }
 }
 
@@ -89,7 +92,7 @@ android {
             res.srcDirs = ['res']
             java.srcDirs = ['src']
             assets.srcDirs = ['assets']
-            jniLibs.srcDirs = ['libs', 'libs/indooratlas']
+            jniLibs.srcDirs = ['libs']
         }
 
         androidTest {
@@ -181,4 +184,5 @@ dependencies {
     implementation 'com.senion.ips:senion-ips:6.0.0'
     implementation 'com.google.android.gms:play-services:12.0.0'
     implementation 'android.arch.lifecycle:extensions:1.1.1'
+    implementation "com.indooratlas.android:indooratlas-android-sdk:3.4.0@aar"
 }
