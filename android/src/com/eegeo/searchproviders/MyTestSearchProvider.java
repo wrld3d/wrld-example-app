@@ -4,7 +4,7 @@ package com.eegeo.searchproviders;
 
 import android.app.Activity;
 import android.graphics.Typeface;
-import android.support.v4.content.res.ResourcesCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.eegeo.mobileexampleapp.R;
 import com.wrld.widgets.search.model.SearchProvider;

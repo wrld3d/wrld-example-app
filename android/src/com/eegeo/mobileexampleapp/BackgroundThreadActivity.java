@@ -12,7 +12,6 @@ import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
-import com.eegeo.recce.*;
 import com.wrld.widgets.search.WrldSearchWidget;
 
 
@@ -24,9 +23,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.DisplayMetrics;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.app.Activity;
 import android.content.Intent;
@@ -34,7 +32,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
-import android.view.View;
 import android.app.SearchManager;
 
 import net.hockeyapp.android.CrashManager;

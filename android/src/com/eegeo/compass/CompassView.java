@@ -6,17 +6,15 @@ import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
 import com.eegeo.mobileexampleapp.R;
 import com.eegeo.runtimepermissions.RuntimePermissionDispatcher;
-import com.wrld.widgets.navigation.widget.WrldNavWidget;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.graphics.Paint;
-import android.support.v4.app.ActivityCompat;
+
+import androidx.core.app.ActivityCompat;
 import android.view.View;
-import android.view.ViewPropertyAnimator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
