@@ -18,12 +18,6 @@ allprojects {
         maven {
             url 'https://maven.google.com'
         }
-        maven {
-            url('file://' + new File('libs/senion-ips-6.2.0-AAR').absolutePath)
-        }
-        maven {
-            url "https://indooratlas-ltd.bintray.com/mvn-public"
-        }
     }
 }
 
@@ -181,8 +175,6 @@ dependencies {
     implementation project(':wrld-navigation-release')
     implementation project(':wrld-navigation-widget-release')
     implementation project(':wrld-navigation-search-release')
-    implementation 'com.senion.ips:senion-ips:6.2.0'
     implementation 'com.google.android.gms:play-services:12.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation "com.indooratlas.android:indooratlas-android-sdk:3.4.0@aar"
 }

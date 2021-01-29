@@ -1,6 +1,6 @@
 package com.eegeo.interiorsposition.senionlab;
 
-import com.senion.ips.Subscription;
+//import com.senion.ips.Subscription;
 
 class SenionLabBroadcastReceiver
 {
@@ -9,9 +9,9 @@ class SenionLabBroadcastReceiver
 
     private final Object m_errorLock = new Object();
 
-    private Subscription m_geoMessengerReceiver;
-    private Subscription m_positioningReceiver;
-    private Subscription m_statusReceiver;
+ //   private Subscription m_geoMessengerReceiver;
+ //   private Subscription m_positioningReceiver;
+ //   private Subscription m_statusReceiver;
 
     public SenionLabBroadcastReceiver(SenionLabLocationManager locationManager, long nativeCallerPointer)
     {
@@ -33,7 +33,7 @@ class SenionLabBroadcastReceiver
 
     public void unregisterReceiver()
     {
-        if(m_geoMessengerReceiver != null)
+     /*   if(m_geoMessengerReceiver != null)
         {
             m_locationManager.unregisterReceiver(m_geoMessengerReceiver);
         }
@@ -44,14 +44,14 @@ class SenionLabBroadcastReceiver
         if(m_statusReceiver != null)
         {
             m_locationManager.unregisterReceiver(m_statusReceiver);
-        }
+        }*/
     }
 
     private void sdkReady()
     {
-        m_geoMessengerReceiver = m_locationManager.registerGeoMessengerReceiver(new SenionLabGeoMessengerReceiver(this));
+        /*m_geoMessengerReceiver = m_locationManager.registerGeoMessengerReceiver(new SenionLabGeoMessengerReceiver(this));
         m_positioningReceiver = m_locationManager.registerPositioningReceiver(new SenionLabPositioningReceiver(this, m_nativeCallerPointer));
-        m_statusReceiver = m_locationManager.registerStatusReceiver(new SenionLabStatusReceiver(this));
+        m_statusReceiver = m_locationManager.registerStatusReceiver(new SenionLabStatusReceiver(this));*/
     }
 
     public void didLocationError(final boolean didError)

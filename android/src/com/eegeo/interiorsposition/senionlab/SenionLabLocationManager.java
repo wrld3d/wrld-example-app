@@ -10,14 +10,14 @@ import android.util.Log;
 
 import com.eegeo.entrypointinfrastructure.MainActivity;
 
-import com.senion.ips.ZoneDetectionApi;
-import com.senion.ips.PositioningApi;
-import com.senion.ips.SenionIPS.StatusListener;
-import com.senion.ips.SenionIPSManager;
-import com.senion.ips.SenionIPSHandle;
-import com.senion.ips.MapKey;
-import com.senion.ips.ApiKey;
-import com.senion.ips.Subscription;
+//import com.senion.ips.ZoneDetectionApi;
+//import com.senion.ips.PositioningApi;
+//import com.senion.ips.SenionIPS.StatusListener;
+//import com.senion.ips.SenionIPSManager;
+//import com.senion.ips.SenionIPSHandle;
+//import com.senion.ips.MapKey;
+//import com.senion.ips.ApiKey;
+//import com.senion.ips.Subscription;
 
 public class SenionLabLocationManager
 {
@@ -25,9 +25,9 @@ public class SenionLabLocationManager
 
     private static AlertDialog m_connectionDialog = null;
 
-    private SenionIPSManager m_stepInsideSdkManager;
-    private SenionIPSHandle m_stepInsideSdk;
-    private ArrayList<Subscription> m_subscriptions = new ArrayList<Subscription>();
+    //private SenionIPSManager m_stepInsideSdkManager;
+    //private SenionIPSHandle m_stepInsideSdk;
+    //private ArrayList<Subscription> m_subscriptions = new ArrayList<Subscription>();
     private long m_nativeCallerPointer;
 
     ArrayList<SdkReadyCallback> m_sdkReadyCallbacks = new ArrayList<SdkReadyCallback>();
@@ -50,7 +50,7 @@ public class SenionLabLocationManager
 		}
     }
 
-    private void onAttachedToSdk(SenionIPSHandle sdk)
+    /*private void onAttachedToSdk(SenionIPSHandle sdk)
     {
         m_stepInsideSdk = sdk;
         m_isSdkReady = true;
@@ -61,19 +61,19 @@ public class SenionLabLocationManager
         m_sdkReadyCallbacks.clear();
         m_stepInsideSdk.start();
 
-    }
+    }*/
 
-    private final SenionIPSManager.AttachCallback attachCallback = new SenionIPSManager.AttachCallback()
+    /*private final SenionIPSManager.AttachCallback attachCallback = new SenionIPSManager.AttachCallback()
     {
         public void onAttached(SenionIPSHandle sdk) {
             if (m_activity.isDestroyed()) return;
             onAttachedToSdk(sdk);
         }
-    };
+    };*/
 
     public void startUpdatingLocation(final String mapKey, final String apiSecret)
     {
-        ArrayList<MapKey> mapKeyList = new ArrayList<MapKey>();
+     /*  ArrayList<MapKey> mapKeyList = new ArrayList<MapKey>();
 
         mapKeyList.add(new MapKey(mapKey));
 
@@ -84,12 +84,12 @@ public class SenionLabLocationManager
 
         m_stepInsideSdkManager.initialize();
 
-        m_stepInsideSdkManager.attachHighPerformanceMode(m_activity, attachCallback);
+        m_stepInsideSdkManager.attachHighPerformanceMode(m_activity, attachCallback); */
     }
 
     public void stopUpdatingLocation()
     {
-
+        /*
         for (Subscription subscription : m_subscriptions)
         {
             subscription.unsubscribe();
@@ -116,10 +116,10 @@ public class SenionLabLocationManager
 		{
     		m_connectionDialog.dismiss();
     		m_connectionDialog = null;
-		}
+		}*/
     }
 
-    public Subscription registerGeoMessengerReceiver(ZoneDetectionApi.Listener listener)
+ /*   public Subscription registerGeoMessengerReceiver(ZoneDetectionApi.Listener listener)
     {
         Subscription subscription = m_stepInsideSdk.zoneDetection().addListener(listener);
         m_subscriptions.add(subscription);
@@ -144,7 +144,7 @@ public class SenionLabLocationManager
     {
         m_subscriptions.remove(subscription);
         subscription.unsubscribe();
-    }
+    }*/
 
     public Context getContext()
     {
