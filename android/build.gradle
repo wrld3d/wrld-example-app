@@ -162,6 +162,8 @@ if (project.hasProperty("external.signing")) {
     logger.lifecycle("no external.signing property supplied." )
 }
 
+def appCenterSdkVersion = '4.1.0'
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -185,4 +187,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services:12.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation "com.indooratlas.android:indooratlas-android-sdk:3.4.0@aar"
+    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
 }

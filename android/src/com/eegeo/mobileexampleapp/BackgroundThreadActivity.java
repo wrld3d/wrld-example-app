@@ -12,6 +12,7 @@ import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
+import com.microsoft.appcenter.Constants;
 import com.wrld.widgets.search.WrldSearchWidget;
 
 
@@ -34,11 +35,10 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.app.SearchManager;
 
-import net.hockeyapp.android.CrashManager;
-import net.hockeyapp.android.Constants;
-import net.hockeyapp.android.CrashManagerListener;
-import net.hockeyapp.android.NativeCrashManager;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.crashes.Crashes;
 
+import net.hockeyapp.android.NativeCrashManager;
 
 public class BackgroundThreadActivity extends MainActivity
 {
@@ -402,12 +402,9 @@ public class BackgroundThreadActivity extends MainActivity
     	return m_hockeyAppId.length() == 32;
     }
     private void registerCrashLogging()
-    {    
-    	CrashManager.register(this, m_hockeyAppId, new CrashManagerListener() {
-    		public boolean shouldAutoUploadCrashes() {
-    			return true;
-    		}
-    	});
+    {
+        AppCenter.start(getApplication(), m_hockeyAppId, Crashes.class);
+
     }
 
     private class ThreadedUpdateRunner implements Runnable
