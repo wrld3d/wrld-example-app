@@ -1,7 +1,10 @@
 package net.hockeyapp.android;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
@@ -17,9 +20,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.util.Log;
+import android.util.Base64;
 
 import com.microsoft.appcenter.Constants;
+
+import static java.lang.System.in;
 
 public class NativeCrashManager {
 
@@ -145,12 +150,31 @@ public class NativeCrashManager {
       }
     }.start();
 
-
   }
 
   public static String readFileDataInBase64(String dumpFileName) {
-    // TODO: read dump file and convert to Base64 String
-    return "TnVsbCBwb2ludGVyIGV4Y2VwdGlvbiBmcm9tIEFuZHJvaWQgYXBw";
+
+    File logFile = new File(Constants.FILES_PATH, dumpFileName);
+
+    int length = (int) logFile.length();
+    byte[] bytes = new byte[length];
+
+    try {
+      FileInputStream in = new FileInputStream(logFile);
+      in.read(bytes);
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        in.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+
+    return Base64.encodeToString(bytes, Base64.DEFAULT);;
   }
   
   private static String[] searchForDumpFiles() {
