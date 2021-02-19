@@ -27,12 +27,11 @@ import com.microsoft.appcenter.Constants;
 import static java.lang.System.in;
 
 public class NativeCrashManager {
-
-  public static void handleDumpFiles(Activity activity, String identifier) {
+  public static void handleDumpFiles(Activity activity, String identifier, String installId) {
     PackageDetails.loadFromContext(activity);
     String[] filenames = searchForDumpFiles();
     for (String dumpFilename : filenames) {
-      uploadCrashReport(activity, identifier, dumpFilename);
+      uploadCrashReport(activity, identifier, dumpFilename, installId);
     }
   }
 
@@ -112,7 +111,7 @@ public class NativeCrashManager {
     return jsonArray;
   }
 
-  public static void uploadCrashReport(final Activity activity, final String identifier, final String dumpFilename) {
+  public static void uploadCrashReport(final Activity activity, final String identifier, final String dumpFilename, final String installId) {
     new Thread() {
       @Override
       public void run() {
@@ -122,7 +121,7 @@ public class NativeCrashManager {
 
           httpPost.addHeader("Content-Type", "application/json");
           httpPost.addHeader("app-secret", identifier);
-          httpPost.addHeader("install-id", "00000000-0000-0000-0000-000000000001");
+          httpPost.addHeader("install-id", installId);
 
           JSONObject jsonObj = new JSONObject();
           jsonObj.put("logs", createJsonParams(dumpFilename));
@@ -174,7 +173,7 @@ public class NativeCrashManager {
       }
     }
 
-    return Base64.encodeToString(bytes, Base64.DEFAULT);;
+    return Base64.encodeToString(bytes, Base64.DEFAULT);
   }
   
   private static String[] searchForDumpFiles() {
