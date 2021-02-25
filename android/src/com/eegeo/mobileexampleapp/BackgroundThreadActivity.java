@@ -40,7 +40,7 @@ import android.app.SearchManager;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.crashes.Crashes;
 
-import net.hockeyapp.android.NativeCrashManager;
+import com.eegeo.nativecrashmanager.NativeCrashManager;
 
 public class BackgroundThreadActivity extends MainActivity
 {

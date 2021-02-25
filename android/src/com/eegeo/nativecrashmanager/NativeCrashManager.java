@@ -1,4 +1,4 @@
-package net.hockeyapp.android;
+package com.eegeo.nativecrashmanager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.util.Base64;
 
+import com.eegeo.mobileexampleapp.BuildConfig;
 import com.microsoft.appcenter.Constants;
 
 import static java.lang.System.in;
@@ -52,7 +53,7 @@ public class NativeCrashManager {
       deviceObj.put("appVersion", PackageDetails.APP_VERSION);
       deviceObj.put("appBuild", "1");
       deviceObj.put("sdkName", "appcenter.android");
-      deviceObj.put("sdkVersion", "1.0.0");
+      deviceObj.put("sdkVersion", "4.1.0");
       deviceObj.put("osName", "android");
       deviceObj.put("osVersion", PackageDetails.ANDROID_VERSION);
       deviceObj.put("model", PackageDetails.PHONE_MODEL);
@@ -78,10 +79,9 @@ public class NativeCrashManager {
       logObj.put("appLaunchTimestamp", currentDateTime);
       logObj.put("id", errorId);
       logObj.put("fatal", true);
-      logObj.put("processName", "com.microsoft.appcenter.wrld.project");
+      logObj.put("processName", BuildConfig.APPLICATION_ID);
 
       logObj.put("device", getDeviceInfo());
-      logObj.put("userId", "<userid>");
 
       JSONObject exceptionObj = new JSONObject();
       exceptionObj.put("type", "CustomerIssueDynamicID");
