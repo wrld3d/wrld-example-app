@@ -4,6 +4,7 @@ package com.eegeo.mobileexampleapp;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +13,8 @@ import com.eegeo.entrypointinfrastructure.EegeoSurfaceView;
 import com.eegeo.entrypointinfrastructure.MainActivity;
 import com.eegeo.entrypointinfrastructure.NativeJniCalls;
 import com.eegeo.helpers.IRuntimePermissionResultHandler;
+import com.microsoft.appcenter.Constants;
+import com.microsoft.appcenter.utils.async.AppCenterConsumer;
 import com.wrld.widgets.search.WrldSearchWidget;
 
 
@@ -34,11 +37,10 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.app.SearchManager;
 
-import net.hockeyapp.android.CrashManager;
-import net.hockeyapp.android.Constants;
-import net.hockeyapp.android.CrashManagerListener;
-import net.hockeyapp.android.NativeCrashManager;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.crashes.Crashes;
 
+import com.eegeo.nativecrashmanager.NativeCrashManager;
 
 public class BackgroundThreadActivity extends MainActivity
 {
@@ -80,7 +82,6 @@ public class BackgroundThreadActivity extends MainActivity
         m_hockeyAppId = readHockeyAppId();
         Constants.loadFromContext(this);
         NativeJniCalls.setUpBreakpad(Constants.FILES_PATH);
-        NativeCrashManager.handleDumpFiles(this, m_hockeyAppId);
 
         PackageInfo pInfo = null;
         try 
@@ -168,6 +169,17 @@ public class BackgroundThreadActivity extends MainActivity
     	{
     		registerCrashLogging();
     	}
+
+    	final Activity activity = this;
+
+        AppCenter.getInstallId().thenAccept(new AppCenterConsumer<UUID>() {
+            @Override
+            public void accept(UUID uuid) {
+                if(uuid != null) {
+                    NativeCrashManager.handleDumpFiles(activity, m_hockeyAppId, uuid.toString());
+                }
+            }
+        });
 
     }
 
@@ -399,15 +411,12 @@ public class BackgroundThreadActivity extends MainActivity
 
     private boolean hasValidHockeyAppId()
     {
-    	return m_hockeyAppId.length() == 32;
+    	return m_hockeyAppId.length() == 36;
     }
     private void registerCrashLogging()
-    {    
-    	CrashManager.register(this, m_hockeyAppId, new CrashManagerListener() {
-    		public boolean shouldAutoUploadCrashes() {
-    			return true;
-    		}
-    	});
+    {
+        AppCenter.start(getApplication(), m_hockeyAppId, Crashes.class);
+
     }
 
     private class ThreadedUpdateRunner implements Runnable
