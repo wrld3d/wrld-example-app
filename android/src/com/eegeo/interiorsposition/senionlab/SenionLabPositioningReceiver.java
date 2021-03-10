@@ -2,11 +2,11 @@ package com.eegeo.interiorsposition.senionlab;
 
 import androidx.annotation.NonNull;
 
-//import com.senion.ips.PositioningApi;
-//import com.senion.ips.Heading;
-//import com.senion.ips.Location;
+import com.senion.ips.PositioningApi;
+import com.senion.ips.Heading;
+import com.senion.ips.Location;
 
-class SenionLabPositioningReceiver //extends PositioningApi.Listener
+class SenionLabPositioningReceiver extends PositioningApi.Listener
 {
     private final Object m_updateLock = new Object();
     private long m_nativeCallerPointer;
@@ -18,7 +18,7 @@ class SenionLabPositioningReceiver //extends PositioningApi.Listener
         m_broadcastReceiver = broadcastReceiver;
     }
 
-    /*@Override
+    @Override
     public void onLocationUpdated(@NonNull Location location)
     {
         synchronized (m_updateLock)
@@ -37,5 +37,5 @@ class SenionLabPositioningReceiver //extends PositioningApi.Listener
     public void onHeadingUpdated(@NonNull Heading heading)
     {
         m_broadcastReceiver.didLocationError(false);
-    }*/
+    }
 }

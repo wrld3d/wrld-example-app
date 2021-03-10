@@ -2,21 +2,21 @@ package com.eegeo.interiorsposition.senionlab;
 
 import androidx.annotation.NonNull;
 
-//import com.senion.ips.SenionIPS;
-//import com.senion.ips.SenionIPSError;
+import com.senion.ips.SenionIPS;
+import com.senion.ips.SenionIPSError;
 
-class SenionLabStatusReceiver //extends SenionIPS.StatusListener
+class SenionLabStatusReceiver extends SenionIPS.StatusListener
 {
-    //private SenionLabBroadcastReceiver m_broadcastReceiver;
+    private SenionLabBroadcastReceiver m_broadcastReceiver;
 
-    public SenionLabStatusReceiver(/*SenionLabBroadcastReceiver broadcastReceiver*/)
+    public SenionLabStatusReceiver(SenionLabBroadcastReceiver broadcastReceiver)
     {
-        //m_broadcastReceiver = broadcastReceiver;
+        m_broadcastReceiver = broadcastReceiver;
     }
 
-    /*@Override
+    @Override
     public void onError(@NonNull SenionIPSError error)
     {
         m_broadcastReceiver.didLocationError(true);
-    }*/
+    }
 }
