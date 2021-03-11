@@ -4,18 +4,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import com.eegeo.entrypointinfrastructure.MainActivity;
-//import com.indooratlas.android.sdk.IALocation;
-//import com.indooratlas.android.sdk.IALocationListener;
-//import com.indooratlas.android.sdk.IALocationManager;
-//import com.indooratlas.android.sdk.IALocationRequest;
-//import com.indooratlas.android.sdk.IARegion;
+import com.indooratlas.android.sdk.IALocation;
+import com.indooratlas.android.sdk.IALocationListener;
+import com.indooratlas.android.sdk.IALocationManager;
+import com.indooratlas.android.sdk.IALocationRequest;
+import com.indooratlas.android.sdk.IARegion;
 
-public class IndoorAtlasLocationManager //implements IALocationListener, IARegion.Listener
+public class IndoorAtlasLocationManager implements IALocationListener, IARegion.Listener
 {
     private final MainActivity m_activity;
     private long m_nativeCallerPointer;
     
-    //private IALocationManager m_locationManager;
+    private IALocationManager m_locationManager;
     private String m_floorPlanId;
     
     private static AlertDialog m_connectionDialog = null;
@@ -33,11 +33,11 @@ public class IndoorAtlasLocationManager //implements IALocationListener, IARegio
 			@Override
 			public void run()
 			{
-				/*Bundle extras = new Bundle();
+				Bundle extras = new Bundle();
 				extras.putString(IALocationManager.EXTRA_API_KEY, apiKey);
 				extras.putString(IALocationManager.EXTRA_API_SECRET, apiSecret);
 				m_locationManager = IALocationManager.create(m_activity, extras);
-				m_locationManager.registerRegionListener(IndoorAtlasLocationManager.this);
+				/*m_locationManager.registerRegionListener(IndoorAtlasLocationManager.this);
 				
 				IALocationRequest locationRequest = IALocationRequest.create();
 				m_locationManager.requestLocationUpdates(locationRequest, IndoorAtlasLocationManager.this);
@@ -56,12 +56,12 @@ public class IndoorAtlasLocationManager //implements IALocationListener, IARegio
 			{
 				IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, false);
 				
-				/*if(m_locationManager != null)
+				if(m_locationManager != null)
 				{
-					m_locationManager.unregisterRegionListener(IndoorAtlasLocationManager.this);
-					m_locationManager.removeLocationUpdates(IndoorAtlasLocationManager.this);
+					//m_locationManager.unregisterRegionListener(IndoorAtlasLocationManager.this);
+					//m_locationManager.removeLocationUpdates(IndoorAtlasLocationManager.this);
 					m_locationManager = null;
-				}*/
+				}
 			}
 		});
     	
@@ -72,11 +72,11 @@ public class IndoorAtlasLocationManager //implements IALocationListener, IARegio
 		}
     }
     
-    /*@Override
+    @Override
     public void onLocationChanged(IALocation location)
     {
-    	IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, true);
-    	IndoorAtlasLocationManagerJniMethods.DidUpdateLocation(m_nativeCallerPointer, location.getLatitude(), location.getLongitude(), location.getAccuracy(), m_floorPlanId);
+    	//IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, true);
+    	//IndoorAtlasLocationManagerJniMethods.DidUpdateLocation(m_nativeCallerPointer, location.getLatitude(), location.getLongitude(), location.getAccuracy(), m_floorPlanId);
     }
     
     @Override
@@ -96,8 +96,8 @@ public class IndoorAtlasLocationManager //implements IALocationListener, IARegio
     @Override
     public void onEnterRegion(IARegion region)
     {
-		if(region.getType() == IARegion.TYPE_FLOOR_PLAN)
-		{
+	if(region.getType() == IARegion.TYPE_FLOOR_PLAN)
+	{
             m_floorPlanId = region.getId();
         }
     }
@@ -105,7 +105,7 @@ public class IndoorAtlasLocationManager //implements IALocationListener, IARegio
     @Override
     public void onExitRegion(IARegion region)
     {
-    }*/
+    }
     
     private void showConnectionDialog(String Title, String message)
     {
@@ -128,6 +128,6 @@ public class IndoorAtlasLocationManager //implements IALocationListener, IARegio
         	m_connectionDialog.dismiss();
         }
         m_connectionDialog = builder.show();
-        //*/
+        */
     }
 }
