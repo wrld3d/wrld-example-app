@@ -37,12 +37,12 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
 				extras.putString(IALocationManager.EXTRA_API_KEY, apiKey);
 				extras.putString(IALocationManager.EXTRA_API_SECRET, apiSecret);
 				m_locationManager = IALocationManager.create(m_activity, extras);
-				/*m_locationManager.registerRegionListener(IndoorAtlasLocationManager.this);
+				m_locationManager.registerRegionListener(IndoorAtlasLocationManager.this);
 				
 				IALocationRequest locationRequest = IALocationRequest.create();
 				m_locationManager.requestLocationUpdates(locationRequest, IndoorAtlasLocationManager.this);
 				
-				IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, true);*/
+				IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, true);
 			}
 		});
 	}
@@ -58,8 +58,8 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
 				
 				if(m_locationManager != null)
 				{
-					//m_locationManager.unregisterRegionListener(IndoorAtlasLocationManager.this);
-					//m_locationManager.removeLocationUpdates(IndoorAtlasLocationManager.this);
+					m_locationManager.unregisterRegionListener(IndoorAtlasLocationManager.this);
+					m_locationManager.removeLocationUpdates(IndoorAtlasLocationManager.this);
 					m_locationManager = null;
 				}
 			}
@@ -75,8 +75,8 @@ public class IndoorAtlasLocationManager implements IALocationListener, IARegion.
     @Override
     public void onLocationChanged(IALocation location)
     {
-    	//IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, true);
-    	//IndoorAtlasLocationManagerJniMethods.DidUpdateLocation(m_nativeCallerPointer, location.getLatitude(), location.getLongitude(), location.getAccuracy(), m_floorPlanId);
+           IndoorAtlasLocationManagerJniMethods.SetIsAuthorized(m_nativeCallerPointer, true);
+           IndoorAtlasLocationManagerJniMethods.DidUpdateLocation(m_nativeCallerPointer, location.getLatitude(), location.getLongitude(), location.getAccuracy(), m_floorPlanId);
     }
     
     @Override
