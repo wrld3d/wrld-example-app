@@ -48,6 +48,8 @@
     <string>If you allow access to Bluetooth your indoor location accuracy will increase.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>If you allow access to your location the app can display your position in the map.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>If you allow access to your location the app can display your position in the map.</string>
     <key>NSSpeechRecognitionUsageDescription</key>
     <string>If you allow access to the Speech Recognition feature you can search using your voice.</string>
     <key>NSMicrophoneUsageDescription</key>
