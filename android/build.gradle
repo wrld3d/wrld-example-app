@@ -22,7 +22,7 @@ allprojects {
             url('file://' + new File('libs/senion-ips-6.2.0-AAR').absolutePath)
         }
         maven {
-            url "https://indooratlas-ltd.bintray.com/mvn-public"
+            url "https://dl.cloudsmith.io/public/indooratlas/mvn-public/maven/"
         }
     }
 }
