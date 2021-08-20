@@ -1,10 +1,10 @@
 <a href="http://www.wrld3d.com/">
-    <img src="http://cdn2.eegeo.com/wp-content/uploads/2017/04/WRLD_Blue.png"  align="right" height="80px" />
+    <img src="http://cdn2.wrld3d.com/wp-content/uploads/2017/04/WRLD_Blue.png"  align="right" height="80px" />
 </a>
 
 # Getting Started on iOS
 
-![WRLD](http://cdn2.eegeo.com/wp-content/uploads/2017/04/screenselection01.png)
+![WRLD](http://cdn2.wrld3d.com/wp-content/uploads/2017/04/screenselection01.png)
 
 Before you begin, ensure you have completed the initial steps as described in the [root of the repository](https://github.com/wrld3d/wrld-example-app).
 

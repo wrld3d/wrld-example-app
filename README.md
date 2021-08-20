@@ -1,10 +1,10 @@
 <a href="http://www.wrld3d.com/">
-    <img src="http://cdn2.eegeo.com/wp-content/uploads/2017/04/WRLD_Blue.png"  align="right" height="80px" />
+    <img src="http://cdn2.wrld3d.com/wp-content/uploads/2017/04/WRLD_Blue.png"  align="right" height="80px" />
 </a>
 
 # WRLD Example App
 
-![WRLD](http://cdn2.eegeo.com/wp-content/uploads/2017/04/screenselection01.png)
+![WRLD](http://cdn2.wrld3d.com/wp-content/uploads/2017/04/screenselection01.png)
 
 * [Support](#support)
 * [Getting Started](#getting-started)
@@ -79,7 +79,7 @@ This app uses third-party search service providers to allow users to search for 
 
 The [WRLD Example App](https://github.com/wrld3d/wrld-example-app) demonstrates a variety of SDK features and is a good starting point to learn how the SDK works.
 
-![WRLD Example App features](http://cdn2.eegeo.com/wp-content/uploads/2017/04/FeatureExamples.jpg)
+![WRLD Example App features](http://cdn2.wrld3d.com/wp-content/uploads/2017/04/FeatureExamples.jpg)
 
 See [here](https://www.wrld3d.com/3d-maps/) to learn more about what the WRLD SDK has to offer.
 

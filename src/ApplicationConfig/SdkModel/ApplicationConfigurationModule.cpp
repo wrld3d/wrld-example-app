@@ -28,7 +28,7 @@ namespace ExampleApp
                     const std::string emptyFlurryApiKey;
                     const std::string emptyYelpApiKey;
                     const std::string emptyGeoNamesUserName;
-                    const std::string eegeoSearchServiceUrl = "https://poi.eegeo.com/v1.1";
+                    const std::string eegeoSearchServiceUrl = "https://poi.wrld3d.com/v1.1";
                     const std::string emptyMyPinsWebServiceUrl;
                     const std::string emptyMyPinsWebServiceAuthToken;
                     const std::string emptyMyPinsPoiSetId;
