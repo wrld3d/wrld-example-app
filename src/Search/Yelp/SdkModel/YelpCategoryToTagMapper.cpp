@@ -37,7 +37,7 @@ namespace ExampleApp
         {
             namespace SdkModel
             {
-                const char* YelpCategoryTaxonomyUrl("https://cdn1.eegeo.com/search/yelp/v2/en/category.json.gz");
+                const char* YelpCategoryTaxonomyUrl("https://cdn1.wrld3d.com/search/yelp/v2/en/category.json.gz");
                 
                 YelpCategoryToTagMapper::YelpCategoryToTagMapper(Eegeo::Web::IWebLoadRequestFactory& webRequestFactory,
                                                        const std::map<std::string, std::string>& yelpToApplicationTagMap,

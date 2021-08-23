@@ -64,7 +64,7 @@ namespace ExampleApp
                 
                 Eegeo::Web::TWebLoadRequestCompletionCallback<MapsceneLoader> m_configRequestCompleteCallback;
                 Eegeo::Web::IWebLoadRequestFactory& m_webRequestFactory;
-                const std::string CONFIG_FILES_HOME = "http://mapscene.eegeo.com";
+                const std::string CONFIG_FILES_HOME = "http://mapscene.wrld3d.com";
                 
                 Eegeo::Helpers::TCallback0<MapsceneLoader> m_startupSearchCameraTransitionCompleteCallback;
                 std::string m_startupSearchTag;
