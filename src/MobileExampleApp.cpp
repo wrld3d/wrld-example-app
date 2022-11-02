@@ -832,7 +832,7 @@ namespace ExampleApp
                                                                                                      m_pSearchModule->GetSearchQueryPerformer(),
                                                                                                      m_pSearchModule->GetSearchRefreshService(),
                                                                                                      m_pInteriorsExplorerModule->GetScreenControlViewModel(),
-                                                                                                     mapModule.GetLabelsModule().GetDebugLabelLayerFilterModel(),
+                                                                                                     mapModule.GetLabelsModule().GetModifiableLabelLayerFilterModel(),
                                                                                                      mapModule.GetInteriorsStreamingModule().GetInteriorMarkerLabelLayerId(),
                                                                                                      m_messageBus,
                                                                                                      m_pWatermarkModule->GetWatermarkViewModel());
